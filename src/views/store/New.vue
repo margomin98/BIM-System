@@ -67,7 +67,7 @@
             <div class="input-group-prepend">
               廠商：
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"  placeholder="最多輸入100字">
           </div>
         </div>
         <div class="col">
@@ -75,7 +75,7 @@
             <div class="input-group-prepend">
               規格：
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入100字">
           </div>
         </div>
         <div class="col">
@@ -83,7 +83,7 @@
             <div class="input-group-prepend">
               型號：
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入100字">
           </div>
         </div>
         <div class="row">
@@ -145,7 +145,7 @@
             <div class="input-group-prepend">
               備註：
             </div>
-            <textarea class="form-control" aria-label="With textarea"></textarea>
+            <textarea class="form-control" aria-label="With textarea" placeholder="最多輸入500字"></textarea>
           </div>
         </div>
       </div>

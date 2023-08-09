@@ -5,6 +5,7 @@ import Store_Datagrid from '../views/store/Datagrid.vue'
 import Store_New from '../views/store/New.vue'
 import Store_Edit from '../views/store/Edit.vue'
 import Store_View from '../views/store/View.vue'
+import Store_Return from '../views/store/Return.vue'
 
 const routes = [
   {
@@ -36,9 +37,14 @@ const routes = [
   }
   ,
   {
-    path: '/store_View',
+    path: '/store_view',
     name: 'Store_View',
     component:Store_View
+  },
+  {
+    path: '/store_return',
+    name: 'Store_Return',
+    component:Store_Return
   }
 ]
 
