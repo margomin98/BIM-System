@@ -8,11 +8,13 @@
     </div>
     <div class="col">
       <div class="button_wrap d-flex">
-        <button class="add_btn">
+        
         <router-link to="/store_new">
-  新品入庫
+<button class="add_btn"> 
+ 新品入庫
+ </button>
         </router-link>
-      </button>
+      
         <button class="return_btn">
   歸還入庫
       </button>

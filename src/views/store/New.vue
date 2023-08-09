@@ -126,7 +126,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                保固開始日
+                保固開始日：
               </div>
               <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
             </div>
@@ -134,7 +134,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                保固到期日
+                保固到期日：
               </div>
               <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
             </div>
@@ -254,7 +254,7 @@
             color: white;
             font-weight: 700;
             font-size: 20px;
-            width: 110px;
+            width: 120px;
             text-align: end;
             span {
               @include red_star
