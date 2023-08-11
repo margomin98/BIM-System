@@ -271,7 +271,7 @@ export default {
       //使用axios method:post傳送新品入庫表單
       const axios = require('axios');
       try {
-        const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/NewAssetsIn', formData, {
+        const response = await axios.post('/AssetsInMng/NewAssetsIn', formData, {
           // const response = await axios.post('/AssetsInMng/NewAssetsIn', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -298,7 +298,7 @@ export default {
     async function getApplicationInfo() {
       const axios = require('axios');
       try {
-        const response = await axios.get('http://192.168.0.176:7008/GetDBdata/GetApplicationInfo');
+        const response = await axios.get('/GetDBdata/GetApplicationInfo');
         console.log(response);
         const data = response.data;
         if (data.state === 'success') {
