@@ -9,6 +9,8 @@ import { createApp } from 'vue'
 import { createStore } from 'vuex';
 import EasyUI from 'v3-easyui';
 import 'bootstrap/dist/css/bootstrap.css';
+import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
+import 'ag-grid-community/styles/ag-theme-alpine.css'; // Optional theme CSS
 
 const myvarient = createStore({
   state() {

@@ -27,10 +27,9 @@
                 <span>*</span>設備總類：{{ EquipTypeName }}
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
-                  {{ EquipTypeName || '請選擇' }}
-                </button>
+                <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{ selectedType || '請選擇' }}
+            </button>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
                   <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
                   <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
@@ -44,10 +43,9 @@
                 <span>*</span>設備分類：{{ EquipCategoryName }}
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
-                  {{ EquipCategoryName || '請選擇' }}
-                </button>
+                <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ selectedCategory || '請選擇' }}
+              </button>
                 <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                   <p class="dropdown-item" @click="selectCabinet('選項1')">選項1</p>
                   <p class="dropdown-item" @click="selectCabinet('選項2')">選項2</p>
@@ -70,8 +68,7 @@
             <div class="input-group-prepend">
               廠商：{{ VendorName }}
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-              v-model="VendorName">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"  placeholder="最多輸入100字">
           </div>
         </div>
         <div class="col">
@@ -79,8 +76,7 @@
             <div class="input-group-prepend">
               規格：{{ ProductSpec }}
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-              v-model="ProductSpec">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入100字">
           </div>
         </div>
         <div class="col">
@@ -88,8 +84,7 @@
             <div class="input-group-prepend">
               型號：{{ ProductType }}
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-              v-model="ProductType">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入100字">
           </div>
         </div>
         <div class="row">
@@ -109,10 +104,9 @@
                 <span>*</span>單位：{{ Unit }}
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
-                  {{ Unit || '請選擇' }}
-                </button>
+                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ selectedAreaItem || '請選擇' }}
+              </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p class="dropdown-item" @click="selectArea('選項1')">選項1</p>
                   <p class="dropdown-item" @click="selectArea('選項2')">選項2</p>
@@ -121,20 +115,22 @@
             </div>
           </div>
         </div>
-        <div class="col">
-          <div class="input-group mb-4">
-            <div class="input-group-prepend">
-              保固期限：{{ WarrantyDate }}
-            </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-              v-model="WarrantyDate">
-          </div>
-        </div>
+<div class="row">
+  <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+    <div class="input-group mb-4">
+      <div class="input-group-prepend">
+        保固期限：
+      </div>
+      <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+    </div>
+  </div>
+</div>
+
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                保固開始日 {{ WarrantyStartDate }}
+                保固開始日：
               </div>
               <input type="date" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
                 v-model="WarrantyStartDate">
@@ -143,7 +139,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                保固到期日 {{ WarrantyEndDate }}
+                保固到期日：
               </div>
               <input type="date" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
                 v-model="WarrantyEndDate">
@@ -155,7 +151,7 @@
             <div class="input-group-prepend">
               備註：{{ Memo }}
             </div>
-            <textarea class="form-control" aria-label="With textarea" v-model="Memo"></textarea>
+            <textarea class="form-control" aria-label="With textarea" placeholder="最多輸入500字"></textarea>
           </div>
         </div>
       </div>
@@ -383,54 +379,63 @@ export default {
         .dropdown-menu {
           width: 100%;
         }
-
-        button {
-          @include dropdown-btn;
-          width: 180px;
-          color: black;
-          justify-content: space-between;
-          align-items: center;
-        }
       }
-
-      .input-group {
-        .input-number {
-          @include count_btn;
+      .content {
+        @include content_bg;
+        .dropdown {
+          .dropdown-menu {
+            width: 100%;
+          }
+          button {
+            @include dropdown-btn;
+            width: 180px;
+            color: black;
+            justify-content: space-between;
+            align-items: center;
+          }
         }
-
-        .form-control {
-          height: 35px;
-          border-radius: 0;
-        }
-
-        .input-group-prepend {
-          color: white;
-          font-weight: 700;
-          font-size: 20px;
-          width: 110px;
-          text-align: end;
-
-          span {
-            @include red_star
+        .input-group {
+          .input-number {
+            @include count_btn;
+          }
+          .form-control {
+            height: 35px;
+            border-radius: 0;
+          }
+          .input-group-prepend {
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            width: 120px;
+            text-align: end;
+            span {
+              @include red_star
+            }
           }
         }
       }
-    }
-
-    .button_wrap {
-      @include bottom_btn_wrap;
-
-      button {
-        &:nth-child(1) {
-          @include new_item_back_btn
+      .button_wrap {
+        @include bottom_btn_wrap;
+        margin-bottom: 5%;
+        button {
+          &:nth-child(1) {
+            @include back_to_previous_btn;
+            &:hover {
+          background-color: #5d85bb;
         }
-
-        &:nth-child(2) {
-          @include empty_btn
+          }
+          &:nth-child(2) {
+            @include empty_btn;
+            &:hover {
+          background-color: #5e7aa2;
         }
-
-        &:nth-child(3) {
-          @include search_and_send_btn
+          }
+          &:nth-child(3) {
+            @include search_and_send_btn;
+            &:hover {
+          background-color: #5D85BD;
+        }
+          }
         }
       }
 
