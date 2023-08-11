@@ -4,26 +4,26 @@
       <router-link class="navbar-brand" to="/home">
         <img src="@/assets/navbar/logo.png" alt="logo">
       </router-link>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img src="../assets/navbar/store.png" alt="入庫管理">
           入庫管理
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
          <router-link to="/store_new">新品入庫</router-link>
-         <router-link to="">歸還入庫</router-link>
-         <router-link to="store_datagrid">入庫填報管理</router-link>
-         <router-link to="/">入庫作業</router-link>
+         <router-link to="/store_return">歸還入庫</router-link>
+         <router-link to="/store_datagrid">入庫填報管理</router-link>
+         <router-link to="/store_process_datagrid">入庫作業</router-link>
         </div>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img src="../assets/navbar/deliver.png" alt="出庫管理">
           出庫管理
         </a>
@@ -34,7 +34,7 @@
         </div>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img src="../assets/navbar/file.png" alt="資產管理">
           資產管理
         </a>
@@ -45,7 +45,7 @@
          <router-link to="">搜尋資產</router-link>
         </div>
       </li>      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img src="../assets/navbar/setting.png" alt="系統管理">
           系統管理
         </a>
@@ -75,6 +75,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.navbar-nav .nav-link.active, .navbar-nav .nav-link.show {
+    color: white;
+}
 .navbar{
   height: 60px;
   width: 100%;
@@ -94,12 +97,18 @@ nav{
 align-items: center;
 gap: 15px;
 margin-left: 50px;
+a{
+  display: flex;
+    align-items: center;
+    gap: 5px;
+}
   }
 .dropdown-menu{
     border-radius: 0px 0px 5px 5px;
     background: #2D4864;
     box-shadow: 4px 2px 4px 0px rgba(0, 0, 0, 0.25);
     margin-top: 15px;
+    left: calc(100% - 111%);
 a{
   padding: 0 10px;
   text-decoration: none;

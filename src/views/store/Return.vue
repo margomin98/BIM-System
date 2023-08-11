@@ -23,7 +23,7 @@
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              廠商：
+             <span>*</span>資產編號：
             </div>
             <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"  placeholder="最多輸入100字">
           </div>
@@ -42,7 +42,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                <span>*</span>單位：
+            單位：
               </div>
                         <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default"  readonly>
 
@@ -95,7 +95,7 @@
       @include readonly_box;
     }
     h1 {
-      margin-top: 50px;
+      margin-top: 180px;
       text-align: center;
       font-size: 55px;
       font-weight: 600;
@@ -133,27 +133,28 @@
           }
         }
       }
-      .button_wrap {
+           .button_wrap {
         @include bottom_btn_wrap;
+        margin-bottom: 5%;
         button {
           &:nth-child(1) {
-            @include new_item_back_btn
-          }
-          &:nth-child(2) {
-            @include empty_btn
-          }
-          &:nth-child(3) {
-            @include search_and_send_btn
-          }
-        }
-        button.back_btn:hover {
+            @include back_to_previous_btn;
+            &:hover {
           background-color: #5d85bb;
         }
-        button.send_btn:hover {
+          }
+          &:nth-child(2) {
+            @include empty_btn;
+            &:hover {
           background-color: #5e7aa2;
         }
-        button.empty_btn:hover {
+          }
+          &:nth-child(3) {
+            @include search_and_send_btn;
+            &:hover {
           background-color: #5D85BD;
+        }
+          }
         }
       }
     }

@@ -112,7 +112,8 @@
             </div>
           </div>
         </div>
-        <div class="col">
+        <div class='row'>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-12">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
               保固期限：
@@ -120,11 +121,13 @@
             <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
           </div>
         </div>
+        </div>
+
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                保固開始日
+                保固開始日：
               </div>
               <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
             </div>
@@ -132,7 +135,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                保固到期日
+                保固到期日：
               </div>
               <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
             </div>
@@ -143,7 +146,7 @@
             <div class="input-group-prepend">
               備註：
             </div>
-            <textarea class="form-control readonly_box" aria-label="With textarea" readonly></textarea>
+            <input class="form-control readonly_box" aria-label="With textarea" readonly>
           </div>
         </div>
       </div>
@@ -160,44 +163,9 @@
     components: {
       Navbar
     },
-    data() {
-      return {
-        selectedType: '',
-        selectedCategory: '',
-        selectedAreaItem: '',
-        count: 1,
-        incrementing: true
-      };
-    },
+   
     methods: {
-      selectStatus(item) {
-        this.selectedType = item;
-        this.showDatePicker = false;
-      },
-      selectArea(item) {
-        this.selectedAreaItem = item;
-        this.showDatePicker = false;
-      },
-      selectCabinet(item) {
-        this.selectedCategory = item;
-        this.showDatePicker = false;
-      },
-      clear() {
-        // Clear input fields
-        const inputFields = document.querySelectorAll('.form-control');
-        inputFields.forEach((input) => {
-          input.value = '';
-        });
-        // Clear dropdowns
-        this.selectedType = '';
-        this.selectedCategory = '';
-        this.selectedAreaItem = '';
-        // Clear input-number
-        this.count = 1;
-        // Clear other data properties if needed
-        // Close dropdown menus
-        this.showDatePicker = false;
-      },
+     
       goBack() {
         window.history.back();
       }
@@ -270,12 +238,12 @@
     margin-bottom: 5%;
         button {
           &:nth-child(1) {
-            @include new_item_back_btn
+            @include back_to_previous_btn;
+            &:hover {
+          background-color: #5d85bb;
+        }
           }
 
-        }
-        button.back_btn:hover {
-          background-color: #5d85bb;
         }
 
       }

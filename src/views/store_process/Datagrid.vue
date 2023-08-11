@@ -2,17 +2,7 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>入庫填報</h1>
-    </div>
-    <div class="col">
-      <div class="button_wrap d-flex">
-        <router-link to="/store_new">
-          <button class="add_btn">新品入庫</button>
-        </router-link>
-        <router-link to="/store_return">
-          <button class="return_btn">歸還入庫</button>
-        </router-link>
-      </div>
+      <h1>入庫作業</h1>
     </div>
     <div class="container-fluid datagrid_section">
       <div class="row">
@@ -36,8 +26,8 @@
           <p>狀態</p>
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{ selectedItem || "請選擇" }}
-                </button>
+                      {{ selectedItem || "請選擇" }}
+                    </button>
             <div class="dropdown-menu" aria-labelledby="statusDropdown">
               <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
               <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
@@ -48,8 +38,8 @@
           <p>區域</p>
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{ selectedAreaItem || "請選擇" }}
-                </button>
+                      {{ selectedAreaItem || "請選擇" }}
+                    </button>
             <div class="dropdown-menu" aria-labelledby="areaDropdown">
               <p class="dropdown-item" @click="selectArea('選項1')">選項1</p>
               <p class="dropdown-item" @click="selectArea('選項2')">選項2</p>
@@ -60,11 +50,23 @@
           <p>櫃位</p>
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{ selectedLocateItem || "請選擇" }}
-                </button>
+                      {{ selectedLocateItem || "請選擇" }}
+                    </button>
             <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
               <p class="dropdown-item" @click="selectCabinet('選項1')">選項1</p>
               <p class="dropdown-item" @click="selectCabinet('選項2')">選項2</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+          <p>日期類型</p>
+          <div class="dropdown">
+            <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{ selectedItem || "請選擇" }}
+                    </button>
+            <div class="dropdown-menu" aria-labelledby="statusDropdown">
+              <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
+              <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
             </div>
           </div>
         </div>
@@ -74,8 +76,8 @@
             <div class="input-container">
               <input type="date" v-model="selectedDate" class="date-input" @focus="showDatePicker = true" @blur="showDatePicker = false" />
               <span class="icon" @click="showDatePicker = !showDatePicker">
-                    <i class="fas fa-calendar"></i>
-                  </span>
+                        <i class="fas fa-calendar"></i>
+                      </span>
               <div class="date-picker" v-if="showDatePicker">
                 <datepicker v-model="selectedDate"></datepicker>
               </div>
@@ -88,8 +90,8 @@
             <div class="input-container">
               <input type="date" v-model="selectedEndDate" class="date-input" @focus="showEndDatePicker = true" @blur="showEndDatePicker = false" />
               <span class="icon" @click="showEndDatePicker = !showEndDatePicker">
-                    <i class="fas fa-calendar"></i>
-                  </span>
+                        <i class="fas fa-calendar"></i>
+                      </span>
               <div class="date-picker" v-if="showEndDatePicker">
                 <datepicker v-model="selectedEndDate"></datepicker>
               </div>
@@ -102,9 +104,10 @@
       <div class="button_wrap d-flex">
         <button class="search_btn">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
+        <button class="export_btn">匯出</button>
       </div>
     </div>
-    <ag-grid-vue style="height: 300px" class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true">
+    <ag-grid-vue style="height: 350px" class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true">
     </ag-grid-vue>
   </div>
 </template>
@@ -113,14 +116,14 @@
   import {
     AgGridVue
   } from "ag-grid-vue3";
-  import Button from "@/components/Storage_return_button";
+  import Storage_process_button from "@/components/Storage_process_button";
   import Delete from "@/components/Delete_button";
   import Navbar from "@/components/Navbar.vue";
   export default {
     components: {
       Navbar,
       AgGridVue,
-      Button,
+      Storage_process_button,
       Delete
     },
     setup() {
@@ -128,8 +131,8 @@
         columnDefs: [{
             suppressMovable: true,
             field: "",
-            cellRenderer: "Button",
-            width: '150px',
+            cellRenderer: "Storage_process_button",
+            width: '300px',
           },
           {
             headerName: "編號",
@@ -213,6 +216,22 @@
             suppressMovable: true
           },
           {
+            headerName: "入庫日期",
+            field: "price",
+            unSortIcon: true,
+            sortable: true,
+            width: '170px',
+            suppressMovable: true
+          },
+          {
+            headerName: "入庫人員",
+            field: "make",
+            unSortIcon: true,
+            sortable: true,
+            width: '150px',
+            suppressMovable: true
+          },
+          {
             field: "",
             cellRenderer: "Delete",
           }
@@ -249,6 +268,7 @@
       return {
         selectedItem: "",
         selectedLocateItem: "",
+        selectedDateTypeItem: "",
         selectedAreaItem: "",
         selectedStartDate: null,
         selectedEndDate: null,
@@ -289,6 +309,10 @@
         this.selectedLocateItem = item;
         this.showDatePicker = false;
       },
+      selectDateType(item) {
+        this.selectedDateTypeItem = item;
+        this.showDatePicker = false;
+      },
       // Clear other data properties if needed
       clear() {
         // Clear input fields
@@ -302,7 +326,7 @@
         this.selectedItem = "";
         this.selectedAreaItem = "";
         this.selectedLocateItem = "";
-        // Clear selected date
+        this.selectedDateTypeItem = "";
         this.selectedDate = null;
         // Clear other data properties if needed
       },
@@ -341,18 +365,6 @@
       .button_wrap {
         margin-bottom: 25px;
         gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          &:hover {
-            background-color: #537ebc;
-          }
-        }
-        .return_btn {
-          @include datagrid_button_no2;
-          &:hover {
-            background-color: #708fba;
-          }
-        }
         .search_btn {
           @include search_and_send_btn;
           &:hover {
@@ -363,6 +375,12 @@
           @include empty_btn;
           &:hover {
             background-color: #5d85bd;
+          }
+        }
+        .export_btn {
+          @include export_btn;
+          &:hover {
+            background-color: #274266;
           }
         }
       }
@@ -414,31 +432,18 @@
     }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .main_section {
-      padding: 0 5%;
+     .main_section {
+      padding: 5%;
       h1 {
         margin-top: 30px;
         text-align: center;
         font-size: 55px;
         font-weight: 600;
         @include title_color;
-        margin-bottom: 20px;
       }
       .button_wrap {
         margin-bottom: 25px;
         gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          &:hover {
-            background-color: #537ebc;
-          }
-        }
-        .return_btn {
-          @include datagrid_button_no2;
-          &:hover {
-            background-color: #708fba;
-          }
-        }
         .search_btn {
           @include search_and_send_btn;
           &:hover {
@@ -449,6 +454,12 @@
           @include empty_btn;
           &:hover {
             background-color: #5d85bd;
+          }
+        }
+        .export_btn {
+          @include export_btn;
+          &:hover {
+            background-color: #274266;
           }
         }
       }
@@ -501,7 +512,7 @@
     }
   }
   @media only screen and (max-width: 767px) {
-    .main_section {
+  .main_section {
       padding: 5%;
       h1 {
         margin-top: 30px;
@@ -524,15 +535,7 @@
             background-color: #537ebc;
           }
         }
-        .return_btn {
-          @include datagrid_button_no2;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
-          &:hover {
-            background-color: #708fba;
-          }
-        }
+       
         .search_btn {
           @include search_and_send_btn;
           font-size: 18px;
@@ -549,6 +552,15 @@
           height: auto;
           &:hover {
             background-color: #5d85bd;
+          }
+        }
+        .export_btn {
+          @include export_btn;
+          font-size: 18px;
+          width: 100%;
+          height: auto;
+          &:hover {
+            background-color: #274266;
           }
         }
       }

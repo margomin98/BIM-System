@@ -28,12 +28,14 @@
             <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly placeholder="5335584">
           </div>
         </div>
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              入庫單狀態：
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                入庫單狀態：
+              </div>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly placeholder="備料中">
             </div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly placeholder="備料中">
           </div>
         </div>
         <div class="col">
@@ -51,9 +53,9 @@
                 <span>*</span>設備總類：
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{ selectedType || '請選擇' }}
-          </button>
+                <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{ selectedType || '請選擇' }}
+            </button>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
                   <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
                   <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
@@ -62,14 +64,14 @@
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4">
-              <div class="input-group-prepend">
+            <div class="input-group mb-4 align_end_box">
+              <div class="input-group-prepend align_end_box">
                 <span>*</span>設備分類：
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{ selectedCategory || '請選擇' }}
-            </button>
+                <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ selectedCategory || '請選擇' }}
+              </button>
                 <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                   <p class="dropdown-item" @click="selectCabinet('選項1')">選項1</p>
                   <p class="dropdown-item" @click="selectCabinet('選項2')">選項2</p>
@@ -122,14 +124,14 @@
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4">
+            <div class="input-group mb-4 align_end_box">
               <div class="input-group-prepend">
                 <span>*</span>單位：
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{ selectedAreaItem || '請選擇' }}
-            </button>
+                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ selectedAreaItem || '請選擇' }}
+              </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p class="dropdown-item" @click="selectArea('選項1')">選項1</p>
                   <p class="dropdown-item" @click="selectArea('選項2')">選項2</p>
@@ -138,29 +140,31 @@
             </div>
           </div>
         </div>
-        <div class="col">
-          <div class="input-group mb-4">
-            <div class="input-group-prepend">
-              保固期限：
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                保固期限：
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
           </div>
         </div>
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                保固開始日
+                保固開始日:&nbsp;
               </div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              <input type="text" class="form-control text_input" aria-label="Default" aria-describedby="inputGroup-sizing-default">
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                保固到期日
+                保固到期日:
               </div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              <input type="text" class="form-control text_input" aria-label="Default" aria-describedby="inputGroup-sizing-default">
             </div>
           </div>
         </div>
@@ -256,6 +260,9 @@
         }
       }
       .content {
+        .align_end_box {
+          justify-content: end
+        }
         @include content_bg;
         .dropdown {
           .dropdown-menu {
@@ -263,7 +270,7 @@
           }
           button {
             @include dropdown-btn;
-            width: 187px;
+            width: 199px;
             color: black;
             justify-content: space-between;
             align-items: center;
@@ -271,6 +278,7 @@
         }
         .input-group {
           .input-number {
+            width: 199px;
             @include count_btn;
           }
           .form-control {
@@ -294,23 +302,23 @@
         margin-bottom: 5%;
         button {
           &:nth-child(1) {
-            @include new_item_back_btn
-          }
-          &:nth-child(2) {
-            @include empty_btn
-          }
-          &:nth-child(3) {
-            @include search_and_send_btn
-          }
-        }
-        button.back_btn:hover {
+            @include back_to_previous_btn;
+            &:hover {
           background-color: #5d85bb;
         }
-        button.send_btn:hover {
+          }
+          &:nth-child(2) {
+            @include empty_btn;
+            &:hover {
           background-color: #5e7aa2;
         }
-        button.empty_btn:hover {
+          }
+          &:nth-child(3) {
+            @include search_and_send_btn;
+            &:hover {
           background-color: #5D85BD;
+        }
+          }
         }
       }
     }

@@ -27,7 +27,7 @@
                 <span>*</span>設備總類：
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {{ selectedType || '請選擇' }}
             </button>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
@@ -43,7 +43,7 @@
                 <span>*</span>設備分類：
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ selectedCategory || '請選擇' }}
               </button>
                 <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
@@ -103,7 +103,7 @@
                 <span>*</span>單位：
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ selectedAreaItem || '請選擇' }}
               </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
@@ -114,14 +114,17 @@
             </div>
           </div>
         </div>
-        <div class="col">
-          <div class="input-group mb-4">
-            <div class="input-group-prepend">
-              保固期限：
-            </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-          </div>
-        </div>
+<div class="row">
+  <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+    <div class="input-group mb-4">
+      <div class="input-group-prepend">
+        保固期限：
+      </div>
+      <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+    </div>
+  </div>
+</div>
+
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
@@ -264,25 +267,26 @@
       }
       .button_wrap {
         @include bottom_btn_wrap;
+        margin-bottom: 5%;
         button {
           &:nth-child(1) {
-            @include new_item_back_btn
-          }
-          &:nth-child(2) {
-            @include empty_btn
-          }
-          &:nth-child(3) {
-            @include search_and_send_btn
-          }
-        }
-        button.back_btn:hover {
+            @include back_to_previous_btn;
+            &:hover {
           background-color: #5d85bb;
         }
-        button.send_btn:hover {
+          }
+          &:nth-child(2) {
+            @include empty_btn;
+            &:hover {
           background-color: #5e7aa2;
         }
-        button.empty_btn:hover {
+          }
+          &:nth-child(3) {
+            @include search_and_send_btn;
+            &:hover {
           background-color: #5D85BD;
+        }
+          }
         }
       }
     }
