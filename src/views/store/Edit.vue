@@ -20,6 +20,14 @@
         </div>
       </div>
       <div class="content">
+       <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-4 checkbox_section">
+              <div class="input-group-prepend">資產類型：</div>
+              <input type="checkbox" /> 耗材
+            </div>
+          </div>
+        </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -240,6 +248,9 @@
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
   .main_section {
+     .checkbox_section {
+        @include checkbox;
+      }
     .readonly_box {
       @include readonly_box;
     }

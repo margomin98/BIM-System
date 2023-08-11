@@ -38,13 +38,50 @@ border:none;
 color: white;
 font-weight: 700;
 }
+@mixin checkbox{
+    align-items: center;
+    gap: 5px;
+    font-size: 18px;
+    color: white;
+    font-weight: 700;
+}
 
 @mixin readonly_box {
     background: #B4B4B4;
     font-weight: 700;
     border: 0;
 }
-
+@mixin modal_window{
+    .modal-header {
+        background: #3D4E61;
+        padding: 1% 2% 1% 43%;
+        align-items: center;
+        .modal_title {
+          h5 {
+            color: white;
+            font-weight: 700;
+          }
+        }
+        .modal_close {
+          color: white;
+          font-weight: 700;
+        }
+       
+      }
+       .modal-body {
+          .input-group-prepend {
+            width: auto;
+          }
+        }
+      .modal-footer {
+        border: none;
+        padding: 0 0 10px;
+        button {
+          width: 80px;
+          height: 30px;
+        }
+      }
+}
 @mixin delete_button{
     border:none;
     border-radius: 7px;
@@ -264,20 +301,11 @@ align-items: center;
 
 @mixin choose_file_btn{
     height: 35px;
-    width: 150px;
+    width: 100px;
     border-radius: 5px;
     background: #7CA6DD;
     border:none;
     color:white;
     font-weight: 700;
-}
-@mixin upload_file_btn{
-    height: 35px;
-    width: 150px;
-    border-radius: 5px;
-background: #4881CF;
-border:none;
-color:white;
-font-weight: 700;
 }
 //store_process_css

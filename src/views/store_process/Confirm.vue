@@ -12,6 +12,9 @@
         <div>
           <p>申請入庫日期: 2023/04/01</p>
         </div>
+         <div>
+          <p>資產類型：耗材</p>
+        </div>
       </div>
       <div class="content">
         <div class="col">
@@ -128,14 +131,80 @@
               <div class="input-group mb-3">
                 <div class="input-group-prepend">交付人員：</div>
                 <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
-                <button>驗證</button>
+                <button data-bs-toggle="modal" data-bs-target="#auth_1">驗證</button>
+                <div class="modal fade" id="auth_1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <div class='modal_title'>
+                          <h5 class="modal-title" id="exampleModalLabel">帳號驗證</h5>
+                        </div>
+                        <div class='modal_close'>
+                          <p data-bs-dismiss="modal">X</p>
+                        </div>
+                      </div>
+                      <div class="modal-body">
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="input-group mb-3">
+                              <div class="input-group-prepend">帳號：</div>
+                              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" />
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <div class="input-group">
+                              <div class="input-group-prepend">密碼：</div>
+                              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer justify-content-center">
+                        <button type="button" class="auth_btn" data-bs-dismiss="modal">驗證</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-12">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">入庫人員：</div>
                 <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
-                <button>驗證</button>
+                <button data-bs-toggle="modal" data-bs-target="#auth_2">驗證</button>
+             <div class="modal fade" id="auth_2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <div class='modal_title'>
+                          <h5 class="modal-title" id="exampleModalLabel">帳號驗證</h5>
+                        </div>
+                        <div class='modal_close'>
+                          <p data-bs-dismiss="modal">X</p>
+                        </div>
+                      </div>
+                      <div class="modal-body">
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="input-group mb-3">
+                              <div class="input-group-prepend">帳號：</div>
+                              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" />
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <div class="input-group">
+                              <div class="input-group-prepend">密碼：</div>
+                              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer justify-content-center">
+                        <button type="button" class="auth_btn" data-bs-dismiss="modal">驗證</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -164,7 +233,7 @@
 </script>
 
 <style lang="scss" scoped>
-      @import "@/assets/css/global.scss";
+  @import "@/assets/css/global.scss";
   .main_section {
     .readonly_box {
       @include readonly_box;
@@ -229,18 +298,18 @@
         justify-content: center;
         padding: 0 28%;
         margin-bottom: 5%;
-        gap:20px;
+        gap: 20px;
         button.back_btn {
           @include back_to_previous_btn;
           &:hover {
-          background-color: #5d85bb;
-        }
+            background-color: #5d85bb;
+          }
         }
         button.send_btn {
           @include search_and_send_btn;
           &:hover {
-          background-color: #5e7aa2;
-        }
+            background-color: #5e7aa2;
+          }
         }
       }
       .confirm_section {
@@ -250,24 +319,30 @@
           height: 80px;
           padding: 20px;
           button {
-         @include auth_btn;
-              &:hover {
-                background: #5a6d87;
-              
+            @include auth_btn;
+            &:hover {
+              background: #5a6d87;
             }
           }
-            .form-control {
-              height: 35px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              font-weight: 700;
-              font-size: 20px;
-              width: 120px;
-              text-align: end;
-            }
+          .form-control {
+            height: 35px;
+            border-radius: 0;
           }
-      }
+          .input-group-prepend {
+            font-weight: 700;
+            font-size: 20px;
+            width: 120px;
+            text-align: end;
+          }
+        }
+        .modal-content {
+      width: 400px;
+    margin: auto;
+        }
+        .modal {
+       @include modal_window
+        }
       }
     }
+  }
 </style>

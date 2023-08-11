@@ -12,6 +12,9 @@
         <div>
           <p>申請入庫日期: 2023/04/01</p>
         </div>
+         <div>
+          <p>資產類型：耗材</p>
+        </div>
       </div>
       <div class="content">
         <div class="col">
@@ -23,10 +26,8 @@
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                狀態：
-              </div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly placeholder="備料中">
+              <div class="input-group-prepend">狀態：</div>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly placeholder="備料中" />
             </div>
           </div>
         </div>
@@ -85,10 +86,8 @@
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                保固期限：
-              </div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
+              <div class="input-group-prepend">保固期限：</div>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
             </div>
           </div>
         </div>
@@ -123,7 +122,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">備註：</div>
-            <input class="form-control readonly_box" aria-label="With textarea" readonly>
+            <input class="form-control readonly_box" aria-label="With textarea" readonly />
           </div>
         </div>
       </div>
@@ -131,14 +130,14 @@
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">
-                              1
-                            </button>
+                1
+              </button>
             <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
-                              2
-                            </button>
+                2
+              </button>
             <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">
-                              3
-                            </button>
+                3
+              </button>
           </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -158,36 +157,28 @@
             <div class="row">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    區域：
-                  </div>
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
+                  <div class="input-group-prepend">區域：</div>
+                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    櫃位：
-                  </div>
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
+                  <div class="input-group-prepend">櫃位：</div>
+                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    數量：
-                  </div>
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
+                  <div class="input-group-prepend">數量：</div>
+                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    單位：
-                  </div>
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
+                  <div class="input-group-prepend">單位：</div>
+                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
                 </div>
               </div>
             </div>
@@ -199,38 +190,27 @@
             </div>
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  備註：
-                </div>
-                <input class="form-control readonly_box" aria-label="With textarea" readonly>
+                <div class="input-group-prepend">備註：</div>
+                <input class="form-control readonly_box" aria-label="With textarea" readonly />
               </div>
             </div>
             <div class="col">
-              <div class="input-group mb-3">
+              <div class="input-group">
                 <div class="input-group-prepend">資產照片：</div>
-                <div class="mb-3 file_wrap">
-                  <button class='choose_btn' @click="openFileExplorer">選擇檔案</button>
-                  <button class='upload_btn'>上傳檔案</button>
-                  <input ref="fileInput" type="file" style="display: none;" multiple @change="handleFileChange" />
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    照片. JPG
+                  </button>
+                <div class="delete_icon">
+                  <img src="@/assets/trash.png" alt="刪除" />
                 </div>
-                <div class='selected_file' v-if="selectedFiles.length">
-                  <p>已選擇的檔案:</p>
-                  <ul>
-                    <li v-for="(file, index) in selectedFiles" :key="index">
-                      <p @click="openImageModal(file.name)">{{ file.name }}</p>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div v-for="(file, index) in selectedFiles" :key="index" :id="'imageModal' + index" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="imageModalLabel">{{ file.name }}</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <img :src="file.src" alt="Uploaded Image" class="img-fluid" />
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">照片標題</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">...</div>
                     </div>
                   </div>
                 </div>
@@ -253,36 +233,28 @@
             <div class="row">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    區域：
-                  </div>
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
+                  <div class="input-group-prepend">區域：</div>
+                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    櫃位：
-                  </div>
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
+                  <div class="input-group-prepend">櫃位：</div>
+                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    數量：
-                  </div>
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
+                  <div class="input-group-prepend">數量：</div>
+                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    單位：
-                  </div>
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
+                  <div class="input-group-prepend">單位：</div>
+                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
                 </div>
               </div>
             </div>
@@ -294,38 +266,27 @@
             </div>
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  備註：
-                </div>
-                <input class="form-control readonly_box" aria-label="With textarea" readonly>
+                <div class="input-group-prepend">備註：</div>
+                <input class="form-control readonly_box" aria-label="With textarea" readonly />
               </div>
             </div>
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">資產照片：</div>
-                <div class="mb-3 file_wrap">
-                  <button class='choose_btn' @click="openFileExplorer">選擇檔案</button>
-                  <button class='upload_btn'>上傳檔案</button>
-                  <input ref="fileInput" type="file" style="display: none;" multiple @change="handleFileChange" />
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    照片. JPG
+                  </button>
+                <div class="delete_icon">
+                  <img src="@/assets/trash.png" alt="刪除" />
                 </div>
-                <div class='selected_file' v-if="selectedFiles.length">
-                  <p>已選擇的檔案:</p>
-                  <ul>
-                    <li v-for="(file, index) in selectedFiles" :key="index">
-                      <p @click="openImageModal(file.name)">{{ file.name }}</p>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div v-for="(file, index) in selectedFiles" :key="index" :id="'imageModal' + index" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="imageModalLabel">{{ file.name }}</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <img :src="file.src" alt="Uploaded Image" class="img-fluid" />
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">照片標題</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">...</div>
                     </div>
                   </div>
                 </div>
@@ -348,36 +309,28 @@
             <div class="row">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    區域：
-                  </div>
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
+                  <div class="input-group-prepend">區域：</div>
+                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    櫃位：
-                  </div>
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
+                  <div class="input-group-prepend">櫃位：</div>
+                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    數量：
-                  </div>
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
+                  <div class="input-group-prepend">數量：</div>
+                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    單位：
-                  </div>
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
+                  <div class="input-group-prepend">單位：</div>
+                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
                 </div>
               </div>
             </div>
@@ -389,38 +342,27 @@
             </div>
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  備註：
-                </div>
-                <input class="form-control readonly_box" aria-label="With textarea" readonly>
+                <div class="input-group-prepend">備註：</div>
+                <input class="form-control readonly_box" aria-label="With textarea" readonly />
               </div>
             </div>
             <div class="col">
-              <div class="input-group mb-3">
+              <div class="input-group mb-3 project_img">
                 <div class="input-group-prepend">資產照片：</div>
-                <div class="mb-3 file_wrap">
-                  <button class='choose_btn' @click="openFileExplorer">選擇檔案</button>
-                  <button class='upload_btn'>上傳檔案</button>
-                  <input ref="fileInput" type="file" style="display: none;" multiple @change="handleFileChange" />
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    照片. JPG
+                  </button>
+                <div class="delete_icon">
+                  <img src="@/assets/trash.png" alt="刪除" />
                 </div>
-                <div class='selected_file' v-if="selectedFiles.length">
-                  <p>已選擇的檔案:</p>
-                  <ul>
-                    <li v-for="(file, index) in selectedFiles" :key="index">
-                      <p @click="openImageModal(file.name)">{{ file.name }}</p>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div v-for="(file, index) in selectedFiles" :key="index" :id="'imageModal' + index" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="imageModalLabel">{{ file.name }}</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <img :src="file.src" alt="Uploaded Image" class="img-fluid" />
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">照片標題</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">...</div>
                     </div>
                   </div>
                 </div>
@@ -449,12 +391,12 @@
           tab1: [],
           tab2: [],
           tab3: [],
-        }
+        },
       };
     },
     methods: {
       openImageModal(imageName) {
-        const index = this.selectedFiles.findIndex(file => file.name === imageName);
+        const index = this.selectedFiles.findIndex((file) => file.name === imageName);
         if (index !== -1) {
           const modalId = `imageModal${index}`;
           const modal = new bootstrap.Modal(document.getElementById(modalId));
@@ -464,17 +406,17 @@
       storeImages() {
         const imagePaths = this.selectedFiles.map((file) => URL.createObjectURL(file));
         this.storedImages = [...this.storedImages, ...imagePaths];
-        localStorage.setItem('storedImages', JSON.stringify(this.storedImages));
+        localStorage.setItem("storedImages", JSON.stringify(this.storedImages));
         this.selectedFiles = [];
       },
       openFileExplorer() {
         this.$refs.fileInput.click();
       },
       handleFileChange(event) {
-        this.selectedFiles = Array.from(event.target.files).map(file => {
+        this.selectedFiles = Array.from(event.target.files).map((file) => {
           return {
             src: URL.createObjectURL(file),
-            name: file.name
+            name: file.name,
           };
         });
       },
@@ -483,7 +425,7 @@
       },
     },
     mounted() {
-      const storedImages = JSON.parse(localStorage.getItem('storedImages'));
+      const storedImages = JSON.parse(localStorage.getItem("storedImages"));
       if (storedImages) {
         this.storedImages = storedImages;
       }
@@ -553,29 +495,29 @@
         button.back_btn {
           @include back_to_previous_btn;
           &:hover {
-          background-color: #5d85bb;
-        }
+            background-color: #5d85bb;
+          }
         }
       }
       .tab_section {
         .nav-tabs {
           button {
-           @include tab_section_num;
-            background: #5C7897;
+            @include tab_section_num;
+            background: #5c7897;
           }
           .active {
-              @include tab_section_num;
-            background: #3E4E5F;
+            @include tab_section_num;
+            background: #3e4e5f;
           }
         }
         .tab-content {
-          background: #3E4E5F;
+          background: #3e4e5f;
           padding: 50px 30px;
           .input-group {
             .selected_file {
               margin-left: 20px;
               li {
-                color: white
+                color: white;
               }
               p {
                 margin-bottom: 0;
@@ -597,23 +539,18 @@
               width: 120px;
               text-align: end;
             }
-            .file_wrap {
-              display: flex;
-              flex-direction: column;
-              .choose_btn {
-                margin-bottom: 10px;
-                @include choose_file_btn;
-                &:hover {
-                background: #3f608f;
+            button {
+              border: none;
+              font-weight: 800;
+              color: white;
+              font-size: 18px;
+              padding: 0;
+              text-decoration: underline;
+              &::before {
+                content: "1.";
+                font-weight: 800;
+                font-size: 18px;
               }
-              }
-              .upload_btn {
-                @include upload_file_btn;
-                &:hover {
-                background: #2f507e;
-              }
-              }
-              
             }
           }
         }
