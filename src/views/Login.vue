@@ -47,14 +47,14 @@ export default {
       const formData = new FormData();
       formData.append('userName', userName.value);
       formData.append('userPassword', userPassword.value);
+      console.log(formData.get('userName'));
+      console.log(formData.get('userPassword'));
       const axios = require('axios');
       try {
         const response = await axios.post('/Account/Login', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
-            'Origin': 'http://192.168.0.225:8080',
           },
-          // withCredentials: true 
         });
 
         console.log(response);

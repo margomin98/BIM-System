@@ -22,18 +22,27 @@
       <div class="content">
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-4 check_box_wrap">
+              <div class="input-group-prepend check_box">
+                資產類型：
+              </div>
+              <input type="checkbox" class='check_box'/>耗材
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
                 <span>*</span>設備總類：{{ EquipTypeName }}
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
+                <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
                   {{ EquipTypeName || '請選擇' }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                  <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                  <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+                  <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectStatus(`${item}`)">{{ item }}</p>
                 </div>
               </div>
             </div>
@@ -44,13 +53,12 @@
                 <span>*</span>設備分類：{{ EquipCategoryName }}
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
+                <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(EquipTypeArray.length > 0) }">
                   {{ EquipCategoryName || '請選擇' }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
-                  <p class="dropdown-item" @click="selectCabinet('選項1')">選項1</p>
-                  <p class="dropdown-item" @click="selectCabinet('選項2')">選項2</p>
+                  <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCabinet(`${item}`)">{{ item }}</p>
                 </div>
               </div>
             </div>
@@ -61,8 +69,7 @@
             <div class="input-group-prepend">
               <span>*</span>物品名稱：{{ AssetName }}
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-              placeholder="最多輸入20字" v-model="AssetName">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入20字" v-model="AssetName">
           </div>
         </div>
         <div class="col">
@@ -71,7 +78,7 @@
               廠商：{{ VendorName }}
             </div>
             <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-              v-model="VendorName">
+              placeholder="最多輸入100字" v-model="VendorName">
           </div>
         </div>
         <div class="col">
@@ -80,7 +87,7 @@
               規格：{{ ProductSpec }}
             </div>
             <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-              v-model="ProductSpec">
+              placeholder="最多輸入100字" v-model="ProductSpec">
           </div>
         </div>
         <div class="col">
@@ -89,7 +96,7 @@
               型號：{{ ProductType }}
             </div>
             <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-              v-model="ProductType">
+              placeholder="最多輸入100字" v-model="ProductType">
           </div>
         </div>
         <div class="row">
@@ -109,44 +116,44 @@
                 <span>*</span>單位：{{ Unit }}
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-toggle="dropdown"
+                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false">
                   {{ Unit || '請選擇' }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                  <p class="dropdown-item" @click="selectArea('選項1')">選項1</p>
-                  <p class="dropdown-item" @click="selectArea('選項2')">選項2</p>
+                  <p v-for="(item, index) in UnitArray" :key="index" class="dropdown-item" @click="selectArea(`${item}`)">{{ item }}</p>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="input-group mb-4">
-            <div class="input-group-prepend">
-              保固期限：{{ WarrantyDate }}
-            </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-              v-model="WarrantyDate">
           </div>
         </div>
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                保固開始日 {{ WarrantyStartDate }}
+                保固期限：{{ WarrantyDate }}
               </div>
-              <input type="date" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-                v-model="WarrantyStartDate">
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
+                v-model="WarrantyDate">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                保固開始日： {{ WarrantyStartDate }}
+              </div>
+              <input type="date" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="WarrantyStartDate">
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                保固到期日 {{ WarrantyEndDate }}
+                保固到期日： {{ WarrantyEndDate }}
               </div>
-              <input type="date" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-                v-model="WarrantyEndDate">
+              <input type="date" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="WarrantyEndDate">
             </div>
           </div>
         </div>
@@ -155,7 +162,7 @@
             <div class="input-group-prepend">
               備註：{{ Memo }}
             </div>
-            <textarea class="form-control" aria-label="With textarea" v-model="Memo"></textarea>
+            <textarea class="form-control" aria-label="With textarea" placeholder="最多輸入500字"></textarea>
           </div>
         </div>
       </div>
@@ -171,56 +178,57 @@
 <script>
 import Navbar from '@/components/Navbar.vue';
 import router from '@/router';
-import { onMounted, ref } from 'vue';
-
+import {
+  onMounted,
+  ref
+} from 'vue';
 export default {
   components: {
     Navbar
   },
   setup() {
-    const today = new Date();
-    const Applicant = ref('');//申請人 發API 帶入
-    const ApplicationDate = ref(getDate());//申請日期 function帶入
-    const EquipTypeName = ref('');//設備總類 *必填
-    const EquipCategoryName = ref('');//設備分類 *必填
-    const AssetName = ref('');//物品名稱 *必填
-    const VendorName = ref('');//廠商
-    const ProductSpec = ref('');//規格
-    const ProductType = ref('');//型號
-    const Count = ref(1);//數量 *必填
-    const Unit = ref('');//單位 *必填
-    const WarrantyDate = ref('');//保固期限
-    const WarrantyStartDate = ref(null);//保固開始日
-    const WarrantyEndDate = ref(null);//保固到期日
-    const Memo = ref('');//備註
-    const incrementing = ref(true);
+    const Applicant = ref(''); //申請人 發API 帶入
+    const ApplicationDate = ref(''); //申請日期 function帶入
+    const EquipTypeName = ref(''); //設備總類 *必填
+    const EquipTypeArray = ref([]); //設備總類陣列 request拿到
+    const EquipCategoryName = ref(''); //設備分類 *必填
+    const EquipCategoryArray = ref([]); //設備分類陣列 request拿到
+    const AssetName = ref(''); //物品名稱 *必填
+    const VendorName = ref(''); //廠商
+    const ProductSpec = ref(''); //規格
+    const ProductType = ref(''); //型號
+    const Count = ref(1); //數量 *必填
+    const Unit = ref(''); //單位 *必填
+    const UnitArray = (['個', '支', '台', '件', '把', '枝', '本', '根', '隻', '張', '條', '塊', '顆', '雙', '箱', '包',]);
+    const WarrantyDate = ref(''); //保固期限
+    const WarrantyStartDate = ref(''); //保固開始日
+    const WarrantyEndDate = ref(''); //保固到期日
+    const Memo = ref(''); //備註
     function getDate() {
+      const today = new Date();
       var date = '';
-      date += (today.getFullYear() + '/');
-      date += ((today.getMonth() + 1) + '/');
-      date += ((today.getDate()));
+      date += (today.getFullYear() + '-');
+      date += ((today.getMonth() + 1).toString().padStart(2, '0') + '-');
+      date += ((today.getDate()).toString().padStart(2, '0'));
       return date;
     }
-
     function selectStatus(item) {
       EquipTypeName.value = item;
+      console.log('選擇的總類:', EquipTypeName.value);
+      getEquipCategoryName();
       showDatePicker.value = false;
     }
-
     function selectArea(item) {
       Unit.value = item;
       showDatePicker.value = false;
     }
-
     function selectCabinet(item) {
       EquipCategoryName.value = item;
       showDatePicker.value = false;
     }
-
     function goBack() {
       window.history.back();
     }
-
     function clear() {
       // Clear input fields
       Applicant.value = '';
@@ -238,19 +246,15 @@ export default {
       Memo.value = '';
       showDatePicker.value = false;
     }
-
     async function submit() {
       // 檢查所有required項目
       // 假設 WarrantyStartDate 是日期變數
-
       if (!EquipCategoryName.value || !EquipTypeName.value || !AssetName.value || !Count.value || !Unit.value) {
         alert('請填寫所有必填項目');
         return;
       }
       const formData = new FormData();
       const formFields = {
-        'Applicant': Applicant.value,
-        'ApplicationDate': ApplicationDate.value,
         'EquipTypeName': EquipTypeName.value,
         'EquipCategoryName': EquipCategoryName.value,
         'AssetName': AssetName.value,
@@ -267,6 +271,7 @@ export default {
       //將表格資料append到 formData
       for (const fieldName in formFields) {
         formData.append(fieldName, formFields[fieldName]);
+        console.log(formData.get(`${fieldName}`));
       }
       //使用axios method:post傳送新品入庫表單
       const axios = require('axios');
@@ -283,12 +288,16 @@ export default {
           //新品表單傳送成功，跳轉至入庫管理頁面
           console.log(data.state);
           console.log(data.messages);
-        }
-        else if (data.state === 'error') {
+          alert(data.messages);
+          router.push('/home');
+        } else if (data.state === 'error') {
           //新品表單傳送失敗
           alert(data.messages);
         }
-        else {
+        else if (data.state === 'input_error') {
+          //新品表單格式失敗
+          alert(data.messages);
+        } else {
           throw new Error('Request was not successful');
         }
       } catch (error) {
@@ -302,14 +311,13 @@ export default {
         console.log(response);
         const data = response.data;
         if (data.state === 'success') {
-          console.log('申請人名稱:' , data.resultList.Applicant);
-          console.log('Get成功 資料如下\n',data.resultList);
-          Applicant.value = data.resultList.Applicant;
-        }
-        else if (data.state === 'error') {
+          console.log('申請人名稱:', data.resultList.Applicant);
+          if (data.resultList.Applicant) {
+            Applicant.value = data.resultList.Applicant;
+          }
+        } else if (data.state === 'error') {
           alert(data.messages);
-        }
-        else if(data.state === 'account_error') {
+        } else if (data.state === 'account_error') {
           alert(data.messages);
           router.push('/');
         }
@@ -317,29 +325,75 @@ export default {
         console.error('Error sending applicant info request to backend');
       }
     }
-    onMounted(()=> {
+
+    async function getEquipTypeName() {
+      if (EquipTypeArray.value.length == 0) {
+        const axios = require('axios');
+        try {
+          const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetEquipType');
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('總類Get成功 資料如下\n', data.resultList.EquipType);
+            EquipTypeArray.value = data.resultList.EquipType;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error('Error sending applicant info request to backend');
+        }
+      }
+    }
+    async function getEquipCategoryName() {
+      EquipCategoryName.value = '';
+      const axios = require('axios');
+      try {
+        const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${EquipTypeName.value}`);
+        console.log(response);
+        const data = response.data;
+        if (data.state === 'success') {
+          console.log('分類Get成功 資料如下\n', data.resultList.EquipCategory);
+          EquipCategoryArray.value = data.resultList.EquipCategory;
+        } else if (data.state === 'error') {
+          alert(data.messages);
+        } else if (data.state === 'account_error') {
+          alert(data.messages);
+          router.push('/');
+        }
+      } catch (error) {
+        console.error('Error sending applicant info request to backend');
+      }
+    }
+
+    onMounted(() => {
       getApplicationInfo();
+      ApplicationDate.value = getDate();
     });
     const showDatePicker = ref(false); // Assuming this is used somewhere in your template
-
     return {
-      today,
       getDate,
       Applicant,
       ApplicationDate,
       EquipTypeName,
+      EquipTypeArray,
+      getEquipTypeName,
       EquipCategoryName,
+      EquipCategoryArray,
+      getEquipCategoryName,
       AssetName,
       VendorName,
       ProductSpec,
       ProductType,
       Count,
       Unit,
+      UnitArray,
       WarrantyDate,
       WarrantyStartDate,
       WarrantyEndDate,
       Memo,
-      incrementing,
       selectStatus,
       selectArea,
       selectCabinet,
@@ -349,103 +403,115 @@ export default {
       showDatePicker,
     };
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/css/global.scss';
-
-.main_section {
-  h1 {
-    margin-top: 50px;
-    text-align: center;
-    font-size: 55px;
-    font-weight: 600;
-    @include title_color;
-  }
-
-  .info_wrap {
-    padding: 1% 32% 0;
-
-    .fixed_info {
-      @include fixed_info;
-
-      p {
-        font-size: 20px;
-        margin-bottom: 0;
-      }
+  @import '@/assets/css/global.scss';
+  .main_section {
+    h1 {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 55px;
+      font-weight: 600;
+      @include title_color;
     }
-
-    .content {
-      @include content_bg;
-
-      .dropdown {
-        .dropdown-menu {
-          width: 100%;
-        }
-
-        button {
-          @include dropdown-btn;
-          width: 180px;
-          color: black;
-          justify-content: space-between;
-          align-items: center;
-        }
-      }
-
-      .input-group {
-        .input-number {
-          @include count_btn;
-        }
-
-        .form-control {
-          height: 35px;
-          border-radius: 0;
-        }
-
-        .input-group-prepend {
-          color: white;
-          font-weight: 700;
-          font-size: 20px;
-          width: 110px;
-          text-align: end;
-
-          span {
-            @include red_star
+    .info_wrap {
+       .button_wrap {
+          @include bottom_btn_wrap;
+          margin-bottom: 5%;
+          button {
+            &:nth-child(1) {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              @include empty_btn;
+              &:hover {
+                background-color: #5e7aa2;
+              }
+            }
+            &:nth-child(3) {
+              @include search_and_send_btn;
+              &:hover {
+                background-color: #5D85BD;
+              }
+            }
           }
         }
-      }
-    }
-
-    .button_wrap {
-      @include bottom_btn_wrap;
-
-      button {
-        &:nth-child(1) {
-          @include new_item_back_btn
+        button.back_btn:hover {
+          background-color: #5d85bb;
         }
-
-        &:nth-child(2) {
-          @include empty_btn
+        button.send_btn:hover {
+          background-color: #5e7aa2;
         }
-
-        &:nth-child(3) {
-          @include search_and_send_btn
+        button.empty_btn:hover {
+          background-color: #5D85BD;
+        }
+        .input-group-prepend {
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            width: 120px;
+            text-align: end;
+            span {
+              @include red_star
+            }
+          }
+        
+            .input-number {
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              border-radius: 0;
+          }
+      padding: 1% 32% 0;
+      .fixed_info {
+        @include fixed_info;
+        p {
+          font-size: 20px;
+          margin-bottom: 0;
         }
       }
+      .content {
+        .check_box_wrap{
+       font-weight: 700;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+         .check_box{  
+            margin-right:5px;
+        } 
+        }
+        
+        @include content_bg;
+        .dropdown {
+          .dropdown-menu {
+            width: 100%;
+          }
+        }
+        .content {
+          @include content_bg;
 
-      button.back_btn:hover {
-        background-color: #5d85bb;
-      }
-
-      button.send_btn:hover {
-        background-color: #5e7aa2;
-      }
-
-      button.empty_btn:hover {
-        background-color: #5D85BD;
+        
+        }
+                  .dropdown {
+            .dropdown-menu {
+              width: 100%;
+            }
+           .dropdown-toggle {
+              @include dropdown-btn;
+              width: 180px;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+       
       }
     }
   }
-}
 </style>
