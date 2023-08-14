@@ -20,6 +20,16 @@
         </div>
       </div>
       <div class="content">
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-4 check_box_wrap">
+              <div class="input-group-prepend check_box">
+                資產類型：
+              </div>
+              <input type="checkbox" class='check_box'/>耗材
+            </div>
+          </div>
+        </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -260,6 +270,15 @@
         }
       }
       .content {
+          .check_box_wrap{
+       font-weight: 700;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+         .check_box{  
+            margin-right:5px;
+        } 
+        }
         .align_end_box {
           justify-content: end
         }

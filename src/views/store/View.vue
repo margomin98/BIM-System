@@ -18,6 +18,11 @@
             申請入庫日期: 2023/04/01
           </p>
         </div>
+                <div>
+          <p>
+         資產類型：耗材
+          </p>
+        </div>
       </div>
       <div class="content">
         <div class="col">
