@@ -32,8 +32,7 @@
                   {{ EquipTypeName || '請選擇' }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                  <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item"
-                    @click="selectStatus(`${item}`)">{{ item }}</p>
+                  <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectStatus(`${item}`)">{{ item }}</p>
                 </div>
               </div>
             </div>
@@ -49,8 +48,7 @@
                   {{ EquipCategoryName || '請選擇' }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
-                  <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item"
-                    @click="selectCabinet(`${item}`)">{{ item }}</p>
+                  <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCabinet(`${item}`)">{{ item }}</p>
                 </div>
               </div>
             </div>
@@ -114,7 +112,7 @@
                   {{ Unit || '請選擇' }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                  <p v-for="(item , index) in UnitArray" :key="index" class="dropdown-item" @click="selectArea(`${item}`)">{{ item }}</p>
+                  <p v-for="(item, index) in UnitArray" :key="index" class="dropdown-item" @click="selectArea(`${item}`)">{{ item }}</p>
                 </div>
               </div>
             </div>
@@ -126,7 +124,8 @@
               <div class="input-group-prepend">
                 保固期限：{{ WarrantyDate }}
               </div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="WarrantyDate">
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
+                v-model="WarrantyDate">
             </div>
           </div>
         </div>
@@ -181,9 +180,8 @@ export default {
     Navbar
   },
   setup() {
-    const today = new Date();
     const Applicant = ref(''); //申請人 發API 帶入
-    const ApplicationDate = ref(getDate()); //申請日期 function帶入
+    const ApplicationDate = ref(''); //申請日期 function帶入
     const EquipTypeName = ref(''); //設備總類 *必填
     const EquipTypeArray = ref([]); //設備總類陣列 request拿到
     const EquipCategoryName = ref(''); //設備分類 *必填
@@ -196,11 +194,11 @@ export default {
     const Unit = ref(''); //單位 *必填
     const UnitArray = (['個', '支', '台', '件', '把', '枝', '本', '根', '隻', '張', '條', '塊', '顆', '雙', '箱', '包',]);
     const WarrantyDate = ref(''); //保固期限
-    const WarrantyStartDate = ref(null); //保固開始日
-    const WarrantyEndDate = ref(null); //保固到期日
+    const WarrantyStartDate = ref(''); //保固開始日
+    const WarrantyEndDate = ref(''); //保固到期日
     const Memo = ref(''); //備註
-    const incrementing = ref(true);
     function getDate() {
+      const today = new Date();
       var date = '';
       date += (today.getFullYear() + '-');
       date += ((today.getMonth() + 1).toString().padStart(2, '0') + '-');
@@ -288,6 +286,10 @@ export default {
         } else if (data.state === 'error') {
           //新品表單傳送失敗
           alert(data.messages);
+        }
+        else if (data.state === 'input_error') {
+          //新品表單格式失敗
+          alert(data.messages);
         } else {
           throw new Error('Request was not successful');
         }
@@ -303,8 +305,9 @@ export default {
         const data = response.data;
         if (data.state === 'success') {
           console.log('申請人名稱:', data.resultList.Applicant);
-          console.log('Get成功 資料如下\n', data.resultList);
-          Applicant.value = data.resultList.Applicant;
+          if (data.resultList.Applicant) {
+            Applicant.value = data.resultList.Applicant;
+          }
         } else if (data.state === 'error') {
           alert(data.messages);
         } else if (data.state === 'account_error') {
@@ -360,10 +363,10 @@ export default {
 
     onMounted(() => {
       getApplicationInfo();
+      ApplicationDate.value = getDate();
     });
     const showDatePicker = ref(false); // Assuming this is used somewhere in your template
     return {
-      today,
       getDate,
       Applicant,
       ApplicationDate,
@@ -384,7 +387,6 @@ export default {
       WarrantyStartDate,
       WarrantyEndDate,
       Memo,
-      incrementing,
       selectStatus,
       selectArea,
       selectCabinet,
