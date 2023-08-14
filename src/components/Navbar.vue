@@ -72,7 +72,7 @@
       </div>
     </nav>
   </div>
-</div></template>
+</template>
 
 <script>
 import router from '@/router';
