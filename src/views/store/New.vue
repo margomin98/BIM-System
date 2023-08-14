@@ -22,6 +22,16 @@
       <div class="content">
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-4 check_box_wrap">
+              <div class="input-group-prepend check_box">
+                資產類型：
+              </div>
+              <input type="checkbox" class='check_box'/>耗材
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
                 <span>*</span>設備總類：{{ EquipTypeName }}
@@ -59,8 +69,7 @@
             <div class="input-group-prepend">
               <span>*</span>物品名稱：{{ AssetName }}
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-              placeholder="最多輸入20字" v-model="AssetName">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入20字" v-model="AssetName">
           </div>
         </div>
         <div class="col">
@@ -136,8 +145,7 @@
               <div class="input-group-prepend">
                 保固開始日： {{ WarrantyStartDate }}
               </div>
-              <input type="date" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-                v-model="WarrantyStartDate">
+              <input type="date" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="WarrantyStartDate">
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -145,8 +153,7 @@
               <div class="input-group-prepend">
                 保固到期日： {{ WarrantyEndDate }}
               </div>
-              <input type="date" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-                v-model="WarrantyEndDate">
+              <input type="date" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="WarrantyEndDate">
             </div>
           </div>
         </div>
@@ -400,100 +407,111 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/css/global.scss';
-
-.main_section {
-  h1 {
-    margin-top: 50px;
-    text-align: center;
-    font-size: 55px;
-    font-weight: 600;
-    @include title_color;
-  }
-
-  .info_wrap {
-    padding: 1% 32% 0;
-
-    .fixed_info {
-      @include fixed_info;
-
-      p {
-        font-size: 20px;
-        margin-bottom: 0;
-      }
+  @import '@/assets/css/global.scss';
+  .main_section {
+    h1 {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 55px;
+      font-weight: 600;
+      @include title_color;
     }
-
-    .content {
-      @include content_bg;
-
-      .dropdown {
-        .dropdown-menu {
-          width: 100%;
+    .info_wrap {
+       .button_wrap {
+          @include bottom_btn_wrap;
+          margin-bottom: 5%;
+          button {
+            &:nth-child(1) {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              @include empty_btn;
+              &:hover {
+                background-color: #5e7aa2;
+              }
+            }
+            &:nth-child(3) {
+              @include search_and_send_btn;
+              &:hover {
+                background-color: #5D85BD;
+              }
+            }
+          }
         }
-
-        button {
-          @include dropdown-btn;
-          width: 180px;
-          color: black;
-          justify-content: space-between;
-          align-items: center;
+        button.back_btn:hover {
+          background-color: #5d85bb;
         }
-      }
-
-      .input-group {
-        .input-number {
-          @include count_btn;
+        button.send_btn:hover {
+          background-color: #5e7aa2;
         }
-
-        .form-control {
-          height: 35px;
-          border-radius: 0;
+        button.empty_btn:hover {
+          background-color: #5D85BD;
         }
-
         .input-group-prepend {
-          color: white;
-          font-weight: 700;
-          font-size: 20px;
-          width: 120px;
-          text-align: end;
-
-          span {
-            @include red_star
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            width: 120px;
+            text-align: end;
+            span {
+              @include red_star
+            }
           }
+        
+            .input-number {
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              border-radius: 0;
+          }
+      padding: 1% 32% 0;
+      .fixed_info {
+        @include fixed_info;
+        p {
+          font-size: 20px;
+          margin-bottom: 0;
         }
       }
-    }
-
-    .button_wrap {
-      @include bottom_btn_wrap;
-      margin-bottom: 5%;
-
-      button {
-        &:nth-child(1) {
-          @include back_to_previous_btn;
-
-          &:hover {
-            background-color: #5d85bb;
+      .content {
+        .check_box_wrap{
+       font-weight: 700;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+         .check_box{  
+            margin-right:5px;
+        } 
+        }
+        
+        @include content_bg;
+        .dropdown {
+          .dropdown-menu {
+            width: 100%;
           }
         }
+        .content {
+          @include content_bg;
 
-        &:nth-child(2) {
-          @include empty_btn;
-
-          &:hover {
-            background-color: #5e7aa2;
-          }
+        
         }
-
-        &:nth-child(3) {
-          @include search_and_send_btn;
-
-          &:hover {
-            background-color: #5D85BD;
+                  .dropdown {
+            .dropdown-menu {
+              width: 100%;
+            }
+           .dropdown-toggle {
+              @include dropdown-btn;
+              width: 180px;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
           }
-        }
+       
       }
     }
   }
-}
 </style>

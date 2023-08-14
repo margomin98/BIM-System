@@ -12,6 +12,9 @@
         <div>
           <p>申請入庫日期: 2023/04/01</p>
         </div>
+        <div>
+          <p>資產類型：耗材</p>
+        </div>
       </div>
       <div class="content">
         <div class="col">
@@ -131,14 +134,14 @@
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">
-                              1
-                            </button>
+                                1
+                              </button>
             <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
-                              2
-                            </button>
+                                2
+                              </button>
             <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">
-                              3
-                            </button>
+                                3
+                              </button>
           </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -205,36 +208,15 @@
                 <input class="form-control readonly_box" aria-label="With textarea" readonly>
               </div>
             </div>
-            <div class="col">
+            <div class="col product_img">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">資產照片：</div>
-                <div class="mb-3 file_wrap">
-                  <button class='choose_btn' @click="openFileExplorer">選擇檔案</button>
-                  <button class='upload_btn'>上傳檔案</button>
-                  <input ref="fileInput" type="file" style="display: none;" multiple @change="handleFileChange" />
-                </div>
-                <div class='selected_file' v-if="selectedFiles.length">
-                  <p>已選擇的檔案:</p>
-                  <ul>
-                    <li v-for="(file, index) in selectedFiles" :key="index">
-                      <p @click="openImageModal(file.name)">{{ file.name }}</p>
-                    </li>
-                  </ul>
-                </div>
+             <div class='d-flex'>
+              <p class='m-0'>xx.jpg</p>
+              <img class='delete_icon' src="@/assets/trash.png">
+             </div>
               </div>
-              <div v-for="(file, index) in selectedFiles" :key="index" :id="'imageModal' + index" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="imageModalLabel">{{ file.name }}</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <img :src="file.src" alt="Uploaded Image" class="img-fluid" />
-                    </div>
-                  </div>
-                </div>
-              </div>
+            
             </div>
           </div>
           <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
@@ -300,36 +282,15 @@
                 <input class="form-control readonly_box" aria-label="With textarea" readonly>
               </div>
             </div>
-            <div class="col">
+          <div class="col product_img">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">資產照片：</div>
-                <div class="mb-3 file_wrap">
-                  <button class='choose_btn' @click="openFileExplorer">選擇檔案</button>
-                  <button class='upload_btn'>上傳檔案</button>
-                  <input ref="fileInput" type="file" style="display: none;" multiple @change="handleFileChange" />
-                </div>
-                <div class='selected_file' v-if="selectedFiles.length">
-                  <p>已選擇的檔案:</p>
-                  <ul>
-                    <li v-for="(file, index) in selectedFiles" :key="index">
-                      <p @click="openImageModal(file.name)">{{ file.name }}</p>
-                    </li>
-                  </ul>
-                </div>
+             <div class='d-flex'>
+              <p class='m-0'>xx.jpg</p>
+              <img class='delete_icon' src="@/assets/trash.png">
+             </div>
               </div>
-              <div v-for="(file, index) in selectedFiles" :key="index" :id="'imageModal' + index" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="imageModalLabel">{{ file.name }}</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <img :src="file.src" alt="Uploaded Image" class="img-fluid" />
-                    </div>
-                  </div>
-                </div>
-              </div>
+            
             </div>
           </div>
           <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
@@ -395,36 +356,15 @@
                 <input class="form-control readonly_box" aria-label="With textarea" readonly>
               </div>
             </div>
-            <div class="col">
+          <div class="col product_img">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">資產照片：</div>
-                <div class="mb-3 file_wrap">
-                  <button class='choose_btn' @click="openFileExplorer">選擇檔案</button>
-                  <button class='upload_btn'>上傳檔案</button>
-                  <input ref="fileInput" type="file" style="display: none;" multiple @change="handleFileChange" />
-                </div>
-                <div class='selected_file' v-if="selectedFiles.length">
-                  <p>已選擇的檔案:</p>
-                  <ul>
-                    <li v-for="(file, index) in selectedFiles" :key="index">
-                      <p @click="openImageModal(file.name)">{{ file.name }}</p>
-                    </li>
-                  </ul>
-                </div>
+             <div class='d-flex'>
+              <p class='m-0'>xx.jpg</p>
+              <img class='delete_icon' src="@/assets/trash.png">
+             </div>
               </div>
-              <div v-for="(file, index) in selectedFiles" :key="index" :id="'imageModal' + index" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="imageModalLabel">{{ file.name }}</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <img :src="file.src" alt="Uploaded Image" class="img-fluid" />
-                    </div>
-                  </div>
-                </div>
-              </div>
+            
             </div>
           </div>
         </div>
@@ -553,18 +493,18 @@
         button.back_btn {
           @include back_to_previous_btn;
           &:hover {
-          background-color: #5d85bb;
-        }
+            background-color: #5d85bb;
+          }
         }
       }
       .tab_section {
         .nav-tabs {
           button {
-           @include tab_section_num;
+            @include tab_section_num;
             background: #5C7897;
           }
           .active {
-              @include tab_section_num;
+            @include tab_section_num;
             background: #3E4E5F;
           }
         }
@@ -597,24 +537,20 @@
               width: 120px;
               text-align: end;
             }
-            .file_wrap {
-              display: flex;
-              flex-direction: column;
-              .choose_btn {
-                margin-bottom: 10px;
-                @include choose_file_btn;
-                &:hover {
-                background: #3f608f;
+       
+          }
+             .product_img{
+              img{
+                width: 25px;
+    height: 25px;
+    align-self: center;
+    margin-left: 5px;
               }
-              }
-              .upload_btn {
-                @include upload_file_btn;
-                &:hover {
-                background: #2f507e;
-              }
-              }
-              
+            p{
+                color:white;
+            font-weight:800
             }
+          
           }
         }
       }
