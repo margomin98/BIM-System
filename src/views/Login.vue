@@ -1,109 +1,162 @@
 <template>
   <div class="home">
- <div class="container-fluid d-flex">
-  <div class="col-xl-6 col-lg-6 col-md-6 col-12 left">
-<div class="logo">
-  <img src="../assets/login/login_logo.png" alt="logo">
-</div>
-<div class="human text-center">
-  <img src="../assets/login/login_img.png" alt="任務">
-</div>
-  </div>
-  <div class="col-xl-6 col-lg-6 col-md-6 col-12 right">
-<div class="title">
-  <h1>
-  資產管理系統
-  </h1>
-</div>
-<div class="form">
-  <p>帳號</p>
-  <input class="text_input" type="text">
-  <p class="mt-3">密碼</p>
-  <input  class="text_input" type="text">
-  <div class="tick">
-    <input type="checkbox">記住我
-  </div>
-</div>
-<div class="login_btn">
-  <router-link to="/home">
-  <button>登錄</button>
-  </router-link>
-</div>
-  </div>
- </div>
+    <div class="container-fluid d-flex">
+      <div class="col-xl-6 col-lg-6 col-md-6 col-12 left">
+        <div class="logo">
+          <img src="../assets/login/login_logo.png" alt="logo">
+        </div>
+        <div class="human text-center">
+          <img src="../assets/login/login_img.png" alt="任務">
+        </div>
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-6 col-12 right">
+        <div class="title">
+          <h1>
+            資產管理系統
+          </h1>
+        </div>
+        <div class="form">
+          <p>帳號{{ userName }}</p>
+          <input class="text_input" type="text" v-model="userName">
+          <p class="mt-3">密碼{{ userPassword }}</p>
+          <input class="text_input" type="text" @keyup.enter="login" v-model="userPassword">
+          <div class="tick">
+            <input type="checkbox">記住我
+          </div>
+        </div>
+        <div class="login_btn">
+          <button @click="login">登錄</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { ref } from 'vue'
+import router from '@/router';
 
 
 export default {
   name: 'Login',
+  setup() {
+    const userName = ref('test');
+    const userPassword = ref('Test_123');
+    async function login() {
+      // console.log(event);
+      const formData = new FormData();
+      formData.append('userName', userName.value);
+      formData.append('userPassword', userPassword.value);
+      const axios = require('axios');
+      try {
+        const response = await axios.post('http://192.168.0.176:7008/Account/Login', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Origin': 'http://192.168.0.225:8080',
+          },
+          // withCredentials: true 
+        });
 
+        console.log(response);
+        const data = response.data;
+        if (data.state === 'success') {
+          //接收成功，跳轉至首頁
+
+          console.log(data.state);
+          console.log(data.messages);
+          router.push('/home');
+        }
+        else if (data.state === 'error') {
+          alert(data.messages);
+        }
+        else {
+          throw new Error('Request was not successful');
+        }
+      } catch (error) {
+        console.error('Error sending data to backend', error);
+      }
+    }
+
+    return {
+      userName,
+      userPassword,
+      login,
+    }
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-.left{
+.left {
   display: flex;
-    flex-direction: column;
-    .logo{
-      margin:20px;
-      text-align: left;
-    }
+  flex-direction: column;
+
+  .logo {
+    margin: 20px;
+    text-align: left;
+  }
 }
-.right{
+
+.right {
   padding-right: 10%;
-    margin-top: 13%;
-  h1{
+  margin-top: 13%;
+
+  h1 {
     color: #132238;
     font-size: 65px;
     font-weight: 700;
     margin-bottom: 40px;
     text-align: center;
   }
-  .form{
-    margin:auto;
+
+  .form {
+    margin: auto;
     width: 350px;
-   
-    p{
-       margin-bottom: 5px;
+
+    p {
+      margin-bottom: 5px;
       font-size: 25px;
-    font-weight: 700;
-    text-align: left;
+      font-weight: 700;
+      text-align: left;
     }
-    .text_input{
+
+    .text_input {
       width: 100%;
-    border: none;
-    height: 45px;
-    border-radius: 5px;
-    background: #A7AFBB;
+      border: none;
+      height: 45px;
+      border-radius: 5px;
+      background: #A7AFBB;
     }
   }
-  .tick{
+
+  .tick {
     margin-top: 20px;
     text-align: left;
     font-size: 20px;
     font-weight: 700;
-    input{
+
+    input {
       box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.25);
       margin-right: 10px;
     }
   }
-  .login_btn{
+
+  .login_btn {
     text-align: center;
-    button{
+
+    button {
       width: 355px;
-      color:white;
+      color: white;
       font-weight: 700;
       border-radius: 10px;
-      margin:50px auto 0;
+      margin: 50px auto 0;
       height: 45px;
-background: var(--c-4, #132238);
+      background: var(--c-4, #132238);
     }
   }
 }
-.home{
+
+.home {
   background-image: url('../assets/login/login_bg.png');
   height: 100vh;
 }
