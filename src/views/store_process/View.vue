@@ -547,7 +547,11 @@
               padding: 0;
               text-decoration: underline;
               &::before {
+<<<<<<< Updated upstream
                 content: "1.";
+=======
+                content: "·";
+>>>>>>> Stashed changes
                 font-weight: 800;
                 font-size: 18px;
               }
