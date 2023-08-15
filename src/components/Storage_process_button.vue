@@ -1,7 +1,7 @@
 <template>
   <div class='button_wrap'>
     <button @click="alertclick('檢視')">檢視</button>
-    <button @click="alertclick('通知入庫')">通知入庫</button>
+    <button @click="alertclick('通知入庫')">通知交付</button>
         <button @click="alertclick('交付')">交付</button>
     <button @click="alertclick('入庫')">入庫</button>
   </div>
