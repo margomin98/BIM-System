@@ -365,7 +365,7 @@ export default {
           alert(data.messages);
         } else if (data.state === 'account_error') {
           alert(data.messages);
-          router.push('/');
+          router.push({ name: 'Store_Datagrid' });
         }
       } catch (error) {
         console.error('Error sending applicant info request to backend');
@@ -539,4 +539,5 @@ export default {
 
     }
   }
-}</style>
+}
+</style>

@@ -273,7 +273,7 @@ export default {
           console.log(data.state);
           console.log(data.messages);
           alert(data.messages);
-          router.push('/home');
+          router.push({name: 'Store_Datagrid'});
         } else if (data.state === 'error') {
           //新品表單傳送失敗
           alert(data.messages);
