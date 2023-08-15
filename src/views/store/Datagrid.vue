@@ -18,7 +18,6 @@
       <div class="row">
         <div class="col-xl-2 col-lg-2 col-md-6 col-12">
           <p>設備總類</p>
-          <!-- <input type="text"> -->
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
@@ -32,7 +31,6 @@
         </div>
         <div class="col-xl-2 col-lg-2 col-md-6 col-12">
           <p>設備分類</p>
-          <!-- <input type="text"> -->
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(EquipTypeName !== '') }">
