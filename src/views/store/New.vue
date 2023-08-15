@@ -24,7 +24,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4 check_box_wrap">
               <div class="input-group-prepend check_box">
-                資產類型：{{ IsConsumable }}
+                資產類型：
               </div>
               <input type="checkbox" class='check_box' v-model="IsConsumable" />耗材
             </div>
@@ -34,7 +34,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                <span>*</span>設備總類：{{ EquipTypeName }}
+                <span>*</span>設備總類：
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown"
@@ -51,7 +51,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                <span>*</span>設備分類：{{ EquipCategoryName }}
+                <span>*</span>設備分類：
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown"
@@ -69,7 +69,7 @@
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              <span>*</span>物品名稱：{{ AssetName }}
+              <span>*</span>物品名稱：
             </div>
             <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
               placeholder="最多輸入20字" v-model="AssetName">
@@ -78,7 +78,7 @@
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              廠商：{{ VendorName }}
+              廠商：
             </div>
             <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
               placeholder="最多輸入100字" v-model="VendorName">
@@ -87,7 +87,7 @@
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              規格：{{ ProductSpec }}
+              規格：
             </div>
             <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
               placeholder="最多輸入100字" v-model="ProductSpec">
@@ -96,7 +96,7 @@
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              型號：{{ ProductType }}
+              型號：
             </div>
             <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
               placeholder="最多輸入100字" v-model="ProductType">
@@ -106,7 +106,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                <span>*</span>數量：{{ Count }}
+                <span>*</span>數量：
               </div>
               <div class="number-input-box">
                 <input class="input-number" type="number" v-model="Count" min="1">
@@ -116,7 +116,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                <span>*</span>單位：{{ Unit }}
+                <span>*</span>單位：
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown"
@@ -135,7 +135,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                保固期限：{{ WarrantyDate }}
+                保固期限：
               </div>
               <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
                 v-model="WarrantyDate">
@@ -147,7 +147,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                保固開始日： {{ WarrantyStartDate }}
+                保固開始日： 
               </div>
               <input type="date" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
                 v-model="WarrantyStartDate">
@@ -156,7 +156,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                保固到期日： {{ WarrantyEndDate }}
+                保固到期日：
               </div>
               <input type="date" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
                 v-model="WarrantyEndDate">
@@ -166,7 +166,7 @@
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              備註：{{ Memo }}
+              備註：
             </div>
             <textarea class="form-control" aria-label="With textarea" placeholder="最多輸入500字"></textarea>
           </div>
@@ -526,6 +526,11 @@ export default {
       .dropdown {
         .dropdown-menu {
           width: 100%;
+          p {
+            &:hover {
+              cursor: pointer;
+            }
+          }
         }
 
         .dropdown-toggle {

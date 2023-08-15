@@ -17,7 +17,7 @@
     <div class="container-fluid datagrid_section">
       <div class="row">
         <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>設備總類{{ EquipTypeName }}</p>
+          <p>設備總類</p>
           <!-- <input type="text"> -->
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown"
@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>設備分類 {{ EquipCategoryName }}</p>
+          <p>設備分類</p>
           <!-- <input type="text"> -->
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown"
@@ -49,11 +49,11 @@
           <input type="text" v-model="AssetId" />
         </div> -->
         <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>物品名稱 {{ AssetName }}</p>
+          <p>物品名稱</p>
           <input type="text" v-model="AssetName" />
         </div>
         <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>狀態 {{ Status }}</p>
+          <p>狀態</p>
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
@@ -90,7 +90,7 @@
           </div>
         </div> -->
         <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>申請入庫日期（起） {{ StartDate }}</p>
+          <p>申請入庫日期（起</p>
           <div class="date-selector">
             <div class="input-container">
               <input type="date" v-model="StartDate" class="date-input" />
@@ -98,7 +98,7 @@
           </div>
         </div>
         <div class="col-xl-2 col-lg-2 col-md-6 col-12 flex-col">
-          <p>申請入庫日期(迄) {{ EndDate }}</p>
+          <p>申請入庫日期(迄)</p>
           <div class="date-selector">
             <div class="input-container">
               <input type="date" v-model="EndDate" class="date-input" />
@@ -113,7 +113,7 @@
         <button class="empty_btn" @click="clear">清空</button>
       </div>
     </div>
-    <ag-grid-vue style="height: 500px" class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData"
+    <ag-grid-vue style="height: 517px" class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData"
       :paginationPageSize="pageSize" :pagination="true">
     </ag-grid-vue>
   </div>
@@ -145,7 +145,7 @@ export default {
     const StartDate = ref(''); //申請入庫日期(起)
     const EndDate = ref(''); //申請入庫日期(迄)
     const total = 100;
-    const pageSize = 20;
+    const pageSize = 10;
     const pagePosition = ref("bottom");
     const pageOptions = [
       { value: "bottom", text: "Bottom" },
@@ -479,6 +479,7 @@ export default {
           width: 100%;
           font-size: 18px;
           height: 100%;
+          border: none;
         }
 
         .dropdown {
@@ -486,9 +487,14 @@ export default {
           height: 35px;
           @include dropdown_btn;
 
-          .dropdown-toggle::after {
-            font-size: 20px;
-            margin-left: 60%;
+          .dropdown-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            &::after {
+              font-size: 20px;
+              // margin-left: 60%;
+            }
           }
 
           .dropdown-menu {
@@ -499,6 +505,9 @@ export default {
               font-size: 18px;
               color: black;
               font-weight: normal;
+              &:hover {
+                cursor: pointer;
+              }
             }
           }
         }
