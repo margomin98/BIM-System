@@ -1,7 +1,7 @@
 <template>
   <div class='button_wrap'>
-    <button @click="alertclick()">檢視</button>
-    <button >編輯</button>
+    <button @click="viewDetails()">檢視</button>
+    <button @click="viewEdit()">編輯</button>
   </div>
 </template>
 
@@ -14,16 +14,24 @@ export default {
   props: ['params'], // 声明 params 为 props
   setup(props) {
     const router = useRouter();
+    const search_id = props.params.data.AI_ID;
 
-    async function alertclick() {
+    function viewDetails() {
       // console.log(props.params.data.AI_ID);
-      const AI_ID = props.params.data.AI_ID;
-      if (AI_ID !== '') {
-        router.push({ name: 'Store_View', query: { AI_ID } });
+      if (search_id !== '') {
+        router.push({ name: 'Store_View', query: { search_id } });
+      }
+    }
+
+    function viewEdit() {
+      // console.log(props.params.data.search_id);
+      if (search_id !== '') {
+        router.push({ name: 'Store_Edit', query: { search_id } });
       }
     }
     return { 
-      alertclick,
+      viewDetails,
+      viewEdit,
     };
   },
 };

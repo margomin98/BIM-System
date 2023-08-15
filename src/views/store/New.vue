@@ -10,7 +10,7 @@
       <div class="fixed_info">
         <div>
           <p>
-            申請人員: 陳奕迅{{ Applicant }}
+            申請人員: {{ Applicant }}
           </p>
         </div>
         <div>
@@ -24,9 +24,9 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4 check_box_wrap">
               <div class="input-group-prepend check_box">
-                資產類型：
+                資產類型：{{ IsConsumable }}
               </div>
-              <input type="checkbox" class='check_box' />耗材
+              <input type="checkbox" class='check_box' v-model="IsConsumable" />耗材
             </div>
           </div>
         </div>
@@ -195,6 +195,7 @@ export default {
   setup() {
     const Applicant = ref(''); //申請人 發API 帶入
     const ApplicationDate = ref(''); //申請日期 function帶入
+    const IsConsumable = ref(false);
     const EquipTypeName = ref(''); //設備總類 *必填
     const EquipTypeArray = ref([]); //設備總類陣列 request拿到
     const EquipCategoryName = ref(''); //設備分類 *必填
@@ -213,8 +214,8 @@ export default {
     function getDate() {
       const today = new Date();
       var date = '';
-      date += (today.getFullYear() + '-');
-      date += ((today.getMonth() + 1).toString().padStart(2, '0') + '-');
+      date += (today.getFullYear() + '/');
+      date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
       date += ((today.getDate()).toString().padStart(2, '0'));
       return date;
     }
@@ -234,7 +235,7 @@ export default {
     }
     function clear() {
       // Clear input fields
-      Applicant.value = '';
+      IsConsumable.value = false;
       EquipTypeName.value = '';
       EquipCategoryName.value = '';
       AssetName.value = '';
@@ -257,6 +258,7 @@ export default {
       }
       const formData = new FormData();
       const formFields = {
+        'IsConsumable': IsConsumable.value,
         'EquipTypeName': EquipTypeName.value,
         'EquipCategoryName': EquipCategoryName.value,
         'AssetName': AssetName.value,
@@ -309,7 +311,7 @@ export default {
     async function getApplicationInfo() {
       const axios = require('axios');
       try {
-        const response = await axios.get('http://192.168.0.176:7008/GetDBdata/GetApplicationInfo');
+        const response = await axios.get('http://192.168.0.176:7008/GetDBdata/GetApplicant');
         console.log(response);
         const data = response.data;
         if (data.state === 'success') {
@@ -378,6 +380,7 @@ export default {
       getDate,
       Applicant,
       ApplicationDate,
+      IsConsumable,
       EquipTypeName,
       EquipTypeArray,
       getEquipTypeName,

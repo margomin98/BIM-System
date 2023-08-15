@@ -15,7 +15,7 @@
         </div>
         <div>
           <p>
-            申請入庫日期: {{  details.ApplicationDate }}
+            申請入庫日期: {{ details.ApplicationDate }}
           </p>
         </div>
         <div>
@@ -25,6 +25,14 @@
         </div>
       </div>
       <div class="content">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+          <div class="input-group mb-4 check_box_wrap">
+            <div class="input-group-prepend check_box">
+              資產類型：
+            </div>
+            <input type="checkbox" class='check_box' v-model="details.IsConsumable" disabled />耗材
+          </div>
+        </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -187,7 +195,7 @@ export default {
   setup() {
     const route = useRoute();
     const router = useRouter();
-    const AI_ID = route.query.AI_ID;
+    const AI_ID = route.query.search_id;
     const details = ref({});
     // console.log(AI_ID);
     async function getDetails() {

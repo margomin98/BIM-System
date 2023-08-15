@@ -274,7 +274,7 @@ export default {
       //將表格資料append到 formData
       for (const fieldName in formFields) {
         formData.append(fieldName, formFields[fieldName]);
-        console.log(formData.get(`${fieldName}`));
+        // console.log(formData.get(`${fieldName}`));
       }
       //使用axios method:post傳送新品入庫表單
       const axios = require('axios');
@@ -288,7 +288,7 @@ export default {
         const data = response.data;
         if (data.state === 'success') {
           //新品表單傳送成功，跳轉至入庫管理頁面
-          console.log(data.state);
+          // console.log(data.state);
           console.log(data.messages);
           console.log('datagrid', data.resultList);
           rowData.value = data.resultList;
