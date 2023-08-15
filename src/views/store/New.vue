@@ -168,7 +168,7 @@
             <div class="input-group-prepend">
               備註：
             </div>
-            <textarea class="form-control" aria-label="With textarea" placeholder="最多輸入500字"></textarea>
+            <textarea class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="Memo"></textarea>
           </div>
         </div>
       </div>
@@ -293,7 +293,7 @@ export default {
           console.log(data.state);
           console.log(data.messages);
           alert(data.messages);
-          router.push('/home');
+          router.push({name: 'Store_Datagrid'});
         } else if (data.state === 'error') {
           //新品表單傳送失敗
           alert(data.messages);

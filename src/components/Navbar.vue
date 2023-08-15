@@ -85,7 +85,7 @@ export default {
     async function logout() {
       const axios = require('axios');
       try {
-        const response = await axios.post('http://192.168.0.176:7008/Account/LogOff');
+        const response = await axios.post('/Account/LogOff');
         console.log(response);
         if (response.status === 200) {
           //接收成功，跳轉至首頁

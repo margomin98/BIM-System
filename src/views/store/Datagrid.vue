@@ -125,6 +125,7 @@ import { AgGridVue } from "ag-grid-vue3";
 import Storage_return_button from "@/components/Storage_return_button";
 import Delete_button from "@/components/Delete_button";
 import Navbar from "@/components/Navbar.vue";
+import router from "@/router";
 
 export default {
   components: {
@@ -287,18 +288,23 @@ export default {
         console.log(response);
         const data = response.data;
         if (data.state === 'success') {
-          //新品表單傳送成功，跳轉至入庫管理頁面
+          //取得datagrid成功
           // console.log(data.state);
           console.log(data.messages);
           console.log('datagrid', data.resultList);
           rowData.value = data.resultList;
         } else if (data.state === 'error') {
-          //新品表單傳送失敗
+          //取得datagrid失敗
           alert(data.messages);
         }
         else if (data.state === 'input_error') {
-          //新品表單格式失敗
+          //取得datagrid格式錯誤
           alert(data.messages);
+        }
+        else if (data.state === 'account_error') {
+          //尚未登入
+          alert(data.messages);
+          router.push('/');
         } else {
           throw new Error('Request was not successful');
         }
@@ -491,6 +497,7 @@ export default {
             display: flex;
             justify-content: space-between;
             align-items: center;
+
             &::after {
               font-size: 20px;
               // margin-left: 60%;
@@ -505,6 +512,7 @@ export default {
               font-size: 18px;
               color: black;
               font-weight: normal;
+
               &:hover {
                 cursor: pointer;
               }
