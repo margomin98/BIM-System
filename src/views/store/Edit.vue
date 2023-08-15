@@ -24,7 +24,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4 check_box_wrap">
               <div class="input-group-prepend check_box">
-                資產類型：{{ details.IsConsumable }}
+                資產類型
               </div>
               <input type="checkbox" class='check_box' v-model="details.IsConsumable" />耗材
             </div>
@@ -36,7 +36,7 @@
               編號：
             </div>
             <input type="text" class="form-control readonly_box" aria-label="Default"
-              aria-describedby="inputGroup-sizing-default" readonly placeholder="5335584" v-model="details.AI_ID">
+              aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID">
           </div>
         </div>
         <div class="row">
@@ -53,17 +53,17 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              資產編號： {{ AssetsId }}
+              資產編號：
             </div>
             <input type="text" class="form-control readonly_box" aria-label="Default"
-              aria-describedby="inputGroup-sizing-default" readonly placeholder="(ex)X12235584">
+              aria-describedby="inputGroup-sizing-default" readonly v-model="details.AssetsId">
           </div>
         </div>
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                <span>*</span>設備總類：{{ details.EquipTypeName }}
+                <span>*</span>設備總類：
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown"
@@ -80,7 +80,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4 align_end_box">
               <div class="input-group-prepend align_end_box">
-                <span>*</span>設備分類：{{ details.EquipCategoryName }}
+                <span>*</span>設備分類：
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown"
@@ -98,7 +98,7 @@
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              <span>*</span>物品名稱：{{ details.AssetName }}
+              <span>*</span>物品名稱：
             </div>
             <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
               placeholder="最多輸入20字" v-model="details.AssetName">
@@ -107,7 +107,7 @@
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              廠商： {{ details.VendorName }}
+              廠商： 
             </div>
             <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
               placeholder="最多輸入100字" v-model="details.VendorName">
@@ -116,7 +116,7 @@
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              規格：{{ details.ProductSpec }}
+              規格：
             </div>
             <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
               placeholder="最多輸入100字" v-model="details.ProductSpec">
@@ -125,7 +125,7 @@
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              型號：{{ details.ProductType }}
+              型號：
             </div>
             <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
               placeholder="最多輸入100字" v-model="details.ProductType">
@@ -135,7 +135,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                <span>*</span>數量：{{ details.Count }}
+                <span>*</span>數量：
               </div>
               <div class="number-input-box">
                 <input class="input-number" type="number" v-model="details.Count" min="1" />
@@ -145,7 +145,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4 align_end_box">
               <div class="input-group-prepend">
-                <span>*</span>單位：{{ details.Unit }}
+                <span>*</span>單位：
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown"
@@ -164,7 +164,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                保固期限：{{ details.WarrantyDate }}
+                保固期限：
               </div>
               <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.WarrantyDate">
             </div>
@@ -174,7 +174,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                保固開始日:&nbsp; {{ details.WarrantyStartDate }}
+                保固開始日:&nbsp; 
               </div>
               <input type="date" class="form-control text_input" aria-label="Default"
                 aria-describedby="inputGroup-sizing-default" v-model="details.WarrantyStartDate">
@@ -183,7 +183,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                保固到期日: {{ details.WarrantyEndDate }}
+                保固到期日: 
               </div>
               <input type="date" class="form-control text_input" aria-label="Default"
                 aria-describedby="inputGroup-sizing-default" v-model="details.WarrantyEndDate">
@@ -193,7 +193,7 @@
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              備註：{{ details.Memo }}
+              備註：
             </div>
             <textarea class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="details.Memo"></textarea>
           </div>
@@ -273,7 +273,7 @@ export default {
           console.log(data.state);
           console.log(data.messages);
           alert(data.messages);
-          router.push('/home');
+          router.push({name: 'Store_Datagrid'});
         } else if (data.state === 'error') {
           //新品表單傳送失敗
           alert(data.messages);
@@ -298,6 +298,12 @@ export default {
         if (data.state === 'success') {
           console.log('Details Get成功 資料如下\n', data.resultList);
           details.value = data.resultList;
+          for(let key in details.value) {
+            if(details.value[key] === null) {
+              details.value[key] = '';
+            }
+          }
+          console.log('處理過後', details.value);
         } else if (data.state === 'error') {
           alert(data.messages);
         } else if (data.state === 'account_error') {
@@ -369,12 +375,19 @@ export default {
     };
 
     const clear = () => {
-
-
+      details.value.IsConsumable = false;
       details.value.EquipTypeName = '';
       details.value.EquipCategoryName = '';
-      details.value.Unit = '';
+      details.value.AssetName = '';
+      details.value.VendorName = '';
+      details.value.ProductSpec = '';
+      details.value.ProductType = '';
       details.value.Count = 1;
+      details.value.Unit = '';
+      details.value.WarrantyDate = '';
+      details.value.WarrantyStartDate = '';
+      details.value.WarrantyEndDate = '';
+      details.value.Memo = '';
     };
 
     const goBack = () => {
