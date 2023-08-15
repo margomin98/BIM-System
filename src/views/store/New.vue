@@ -10,7 +10,7 @@
       <div class="fixed_info">
         <div>
           <p>
-            申請人員: 陳奕迅{{ Applicant }}
+            申請人員: {{ Applicant }}
           </p>
         </div>
         <div>
@@ -24,9 +24,9 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4 check_box_wrap">
               <div class="input-group-prepend check_box">
-                資產類型：
+                資產類型：{{ IsConsumable }}
               </div>
-              <input type="checkbox" class='check_box'/>耗材
+              <input type="checkbox" class='check_box' v-model="IsConsumable" />耗材
             </div>
           </div>
         </div>
@@ -37,12 +37,13 @@
                 <span>*</span>設備總類：{{ EquipTypeName }}
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown"
+                <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
                   {{ EquipTypeName || '請選擇' }}
                 </button>
-                <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                  <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectStatus(`${item}`)">{{ item }}</p>
+                <div class="dropdown-menu" aria-labelledby="typeDropdown">
+                  <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item"
+                    @click="selectType(`${item}`)">{{ item }}</p>
                 </div>
               </div>
             </div>
@@ -53,12 +54,13 @@
                 <span>*</span>設備分類：{{ EquipCategoryName }}
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(EquipTypeArray.length > 0) }">
+                <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(EquipTypeName !== '') }">
                   {{ EquipCategoryName || '請選擇' }}
                 </button>
-                <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
-                  <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCabinet(`${item}`)">{{ item }}</p>
+                <div class="dropdown-menu" aria-labelledby="categoryDropdown">
+                  <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item"
+                    @click="selectCategory(`${item}`)">{{ item }}</p>
                 </div>
               </div>
             </div>
@@ -69,7 +71,8 @@
             <div class="input-group-prepend">
               <span>*</span>物品名稱：{{ AssetName }}
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入20字" v-model="AssetName">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
+              placeholder="最多輸入20字" v-model="AssetName">
           </div>
         </div>
         <div class="col">
@@ -121,7 +124,8 @@
                   {{ Unit || '請選擇' }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                  <p v-for="(item, index) in UnitArray" :key="index" class="dropdown-item" @click="selectArea(`${item}`)">{{ item }}</p>
+                  <p v-for="(item, index) in UnitArray" :key="index" class="dropdown-item" @click="selectUnit(`${item}`)">
+                    {{ item }}</p>
                 </div>
               </div>
             </div>
@@ -145,7 +149,8 @@
               <div class="input-group-prepend">
                 保固開始日： {{ WarrantyStartDate }}
               </div>
-              <input type="date" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="WarrantyStartDate">
+              <input type="date" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
+                v-model="WarrantyStartDate">
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -153,7 +158,8 @@
               <div class="input-group-prepend">
                 保固到期日： {{ WarrantyEndDate }}
               </div>
-              <input type="date" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="WarrantyEndDate">
+              <input type="date" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
+                v-model="WarrantyEndDate">
             </div>
           </div>
         </div>
@@ -189,6 +195,7 @@ export default {
   setup() {
     const Applicant = ref(''); //申請人 發API 帶入
     const ApplicationDate = ref(''); //申請日期 function帶入
+    const IsConsumable = ref(false);
     const EquipTypeName = ref(''); //設備總類 *必填
     const EquipTypeArray = ref([]); //設備總類陣列 request拿到
     const EquipCategoryName = ref(''); //設備分類 *必填
@@ -207,31 +214,28 @@ export default {
     function getDate() {
       const today = new Date();
       var date = '';
-      date += (today.getFullYear() + '-');
-      date += ((today.getMonth() + 1).toString().padStart(2, '0') + '-');
+      date += (today.getFullYear() + '/');
+      date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
       date += ((today.getDate()).toString().padStart(2, '0'));
       return date;
     }
-    function selectStatus(item) {
+    function selectType(item) {
       EquipTypeName.value = item;
       console.log('選擇的總類:', EquipTypeName.value);
       getEquipCategoryName();
-      showDatePicker.value = false;
     }
-    function selectArea(item) {
-      Unit.value = item;
-      showDatePicker.value = false;
-    }
-    function selectCabinet(item) {
+    function selectCategory(item) {
       EquipCategoryName.value = item;
-      showDatePicker.value = false;
+    }
+    function selectUnit(item) {
+      Unit.value = item;
     }
     function goBack() {
       window.history.back();
     }
     function clear() {
       // Clear input fields
-      Applicant.value = '';
+      IsConsumable.value = false;
       EquipTypeName.value = '';
       EquipCategoryName.value = '';
       AssetName.value = '';
@@ -244,7 +248,6 @@ export default {
       WarrantyStartDate.value = '';
       WarrantyEndDate.value = '';
       Memo.value = '';
-      showDatePicker.value = false;
     }
     async function submit() {
       // 檢查所有required項目
@@ -255,6 +258,7 @@ export default {
       }
       const formData = new FormData();
       const formFields = {
+        'IsConsumable': IsConsumable.value,
         'EquipTypeName': EquipTypeName.value,
         'EquipCategoryName': EquipCategoryName.value,
         'AssetName': AssetName.value,
@@ -307,7 +311,7 @@ export default {
     async function getApplicationInfo() {
       const axios = require('axios');
       try {
-        const response = await axios.get('/GetDBdata/GetApplicationInfo');
+        const response = await axios.get('http://192.168.0.176:7008/GetDBdata/GetApplicant');
         console.log(response);
         const data = response.data;
         if (data.state === 'success') {
@@ -372,11 +376,11 @@ export default {
       getApplicationInfo();
       ApplicationDate.value = getDate();
     });
-    const showDatePicker = ref(false); // Assuming this is used somewhere in your template
     return {
       getDate,
       Applicant,
       ApplicationDate,
+      IsConsumable,
       EquipTypeName,
       EquipTypeArray,
       getEquipTypeName,
@@ -394,124 +398,145 @@ export default {
       WarrantyStartDate,
       WarrantyEndDate,
       Memo,
-      selectStatus,
-      selectArea,
-      selectCabinet,
+      selectType,
+      selectUnit,
+      selectCategory,
       goBack,
       clear,
       submit,
-      showDatePicker,
     };
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  @import '@/assets/css/global.scss';
-  .main_section {
-    h1 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 55px;
-      font-weight: 600;
-      @include title_color;
-    }
-    .info_wrap {
-       .button_wrap {
-          @include bottom_btn_wrap;
-          margin-bottom: 5%;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-            &:nth-child(2) {
-              @include empty_btn;
-              &:hover {
-                background-color: #5e7aa2;
-              }
-            }
-            &:nth-child(3) {
-              @include search_and_send_btn;
-              &:hover {
-                background-color: #5D85BD;
-              }
-            }
-          }
-        }
-        button.back_btn:hover {
-          background-color: #5d85bb;
-        }
-        button.send_btn:hover {
-          background-color: #5e7aa2;
-        }
-        button.empty_btn:hover {
-          background-color: #5D85BD;
-        }
-        .input-group-prepend {
-            color: white;
-            font-weight: 700;
-            font-size: 20px;
-            width: 120px;
-            text-align: end;
-            span {
-              @include red_star
-            }
-          }
-        
-            .input-number {
-              @include count_btn;
-            }
-            .form-control {
-              height: 35px;
-              border-radius: 0;
-          }
-      padding: 1% 32% 0;
-      .fixed_info {
-        @include fixed_info;
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-      }
-      .content {
-        .check_box_wrap{
-       font-weight: 700;
-    align-items: center;
-    color: white;
-    font-size: 20px;
-         .check_box{  
-            margin-right:5px;
-        } 
-        }
-        
-        @include content_bg;
-        .dropdown {
-          .dropdown-menu {
-            width: 100%;
-          }
-        }
-        .content {
-          @include content_bg;
+@import '@/assets/css/global.scss';
 
-        
-        }
-                  .dropdown {
-            .dropdown-menu {
-              width: 100%;
-            }
-           .dropdown-toggle {
-              @include dropdown-btn;
-              width: 180px;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
+.main_section {
+  h1 {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 55px;
+    font-weight: 600;
+    @include title_color;
+  }
+
+  .info_wrap {
+    .button_wrap {
+      @include bottom_btn_wrap;
+      margin-bottom: 5%;
+
+      button {
+        &:nth-child(1) {
+          @include back_to_previous_btn;
+
+          &:hover {
+            background-color: #5d85bb;
           }
-       
+        }
+
+        &:nth-child(2) {
+          @include empty_btn;
+
+          &:hover {
+            background-color: #5e7aa2;
+          }
+        }
+
+        &:nth-child(3) {
+          @include search_and_send_btn;
+
+          &:hover {
+            background-color: #5D85BD;
+          }
+        }
       }
+    }
+
+    button.back_btn:hover {
+      background-color: #5d85bb;
+    }
+
+    button.send_btn:hover {
+      background-color: #5e7aa2;
+    }
+
+    button.empty_btn:hover {
+      background-color: #5D85BD;
+    }
+
+    .input-group-prepend {
+      color: white;
+      font-weight: 700;
+      font-size: 20px;
+      width: 120px;
+      text-align: end;
+
+      span {
+        @include red_star
+      }
+    }
+
+    .input-number {
+      @include count_btn;
+    }
+
+    .form-control {
+      height: 35px;
+      border-radius: 0;
+    }
+
+    padding: 1% 32% 0;
+
+    .fixed_info {
+      @include fixed_info;
+
+      p {
+        font-size: 20px;
+        margin-bottom: 0;
+      }
+    }
+
+    .content {
+      .check_box_wrap {
+        font-weight: 700;
+        align-items: center;
+        color: white;
+        font-size: 20px;
+
+        .check_box {
+          margin-right: 5px;
+        }
+      }
+
+      @include content_bg;
+
+      .dropdown {
+        .dropdown-menu {
+          width: 100%;
+        }
+      }
+
+      .content {
+        @include content_bg;
+
+
+      }
+
+      .dropdown {
+        .dropdown-menu {
+          width: 100%;
+        }
+
+        .dropdown-toggle {
+          @include dropdown-btn;
+          width: 180px;
+          color: black;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+
     }
   }
-</style>
+}</style>
