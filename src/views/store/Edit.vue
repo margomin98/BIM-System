@@ -10,12 +10,12 @@
       <div class="fixed_info">
         <div>
           <p>
-            申請人員: 陳奕迅
+            申請人員: 陳奕迅 {{ Applicant }}
           </p>
         </div>
         <div>
           <p>
-            申請入庫日期: 2023/04/01
+            申請入庫日期: {{ ApplicationDate }}
           </p>
         </div>
       </div>
@@ -33,7 +33,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              編號：
+              編號：{{ AI_ID }}
             </div>
             <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly placeholder="5335584">
           </div>
@@ -42,7 +42,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                入庫單狀態：
+                入庫單狀態： {{ Status }}
               </div>
               <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly placeholder="備料中">
             </div>
@@ -51,7 +51,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              資產編號：
+              資產編號： {{ AssetsId }}
             </div>
             <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly placeholder="X12235584">
           </div>
@@ -60,15 +60,15 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                <span>*</span>設備總類：
+                <span>*</span>設備總類：{{ EquipTypeName }}
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{ selectedType || '請選擇' }}
+              {{ EquipTypeName || '請選擇' }}
             </button>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                  <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                  <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+                  <p class="dropdown-item" @click="selectType('選項1')">選項1</p>
+                  <p class="dropdown-item" @click="selectType('選項2')">選項2</p>
                 </div>
               </div>
             </div>
@@ -76,15 +76,15 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4 align_end_box">
               <div class="input-group-prepend align_end_box">
-                <span>*</span>設備分類：
+                <span>*</span>設備分類：{{ EquipCategoryName }}
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ selectedCategory || '請選擇' }}
+                {{ EquipCategoryName || '請選擇' }}
               </button>
                 <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
-                  <p class="dropdown-item" @click="selectCabinet('選項1')">選項1</p>
-                  <p class="dropdown-item" @click="selectCabinet('選項2')">選項2</p>
+                  <p class="dropdown-item" @click="selectCategory('選項1')">選項1</p>
+                  <p class="dropdown-item" @click="selectCategory('選項2')">選項2</p>
                 </div>
               </div>
             </div>
@@ -93,7 +93,7 @@
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              <span>*</span>物品名稱：
+              <span>*</span>物品名稱：{{ AssetName }}
             </div>
             <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入20字">
           </div>
@@ -101,7 +101,7 @@
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              廠商：
+              廠商： {{ VendorName }}
             </div>
             <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入100字">
           </div>
@@ -109,7 +109,7 @@
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              規格：
+              規格：{{ ProductSpec }}
             </div>
             <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入100字">
           </div>
@@ -117,7 +117,7 @@
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              型號：
+              型號：{{ ProductType }}
             </div>
             <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入100字">
           </div>
@@ -126,21 +126,21 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                <span>*</span>數量：
+                <span>*</span>數量：{{ Count }}
               </div>
               <div class="number-input-box">
-                <input class="input-number" type="number" v-model="count" min="1" />
+                <input class="input-number" type="number" v-model="Count" min="1" />
               </div>
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4 align_end_box">
               <div class="input-group-prepend">
-                <span>*</span>單位：
+                <span>*</span>單位：{{ Unit }}
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ selectedAreaItem || '請選擇' }}
+                {{ Unit || '請選擇' }}
               </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p class="dropdown-item" @click="selectArea('選項1')">選項1</p>
@@ -166,7 +166,7 @@
               <div class="input-group-prepend">
                 保固開始日:&nbsp;
               </div>
-              <input type="text" class="form-control text_input" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              <input type="date" class="form-control text_input" aria-label="Default" aria-describedby="inputGroup-sizing-default">
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -174,7 +174,7 @@
               <div class="input-group-prepend">
                 保固到期日:
               </div>
-              <input type="text" class="form-control text_input" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              <input type="date" class="form-control text_input" aria-label="Default" aria-describedby="inputGroup-sizing-default">
             </div>
           </div>
         </div>
@@ -197,54 +197,75 @@
 </template>
 
 <script>
-  import Navbar from '@/components/Navbar.vue'
-  export default {
-    components: {
-      Navbar
-    },
-    data() {
-      return {
-        selectedType: '',
-        selectedCategory: '',
-        selectedAreaItem: '',
-        count: 1,
-        incrementing: true
-      };
-    },
-    methods: {
-      selectStatus(item) {
-        this.selectedType = item;
-        this.showDatePicker = false;
-      },
-      selectArea(item) {
-        this.selectedAreaItem = item;
-        this.showDatePicker = false;
-      },
-      selectCabinet(item) {
-        this.selectedCategory = item;
-        this.showDatePicker = false;
-      },
-      clear() {
-        // Clear input fields
-        const inputFields = document.querySelectorAll('.form-control');
-        inputFields.forEach((input) => {
-          input.value = '';
-        });
-        // Clear dropdowns
-        this.selectedType = '';
-        this.selectedCategory = '';
-        this.selectedAreaItem = '';
-        // Clear input-number
-        this.count = 1;
-        // Clear other data properties if needed
-        // Close dropdown menus
-        this.showDatePicker = false;
-      },
-      goBack() {
-        window.history.back();
-      }
-    }
+import { ref } from 'vue';
+import Navbar from '@/components/Navbar.vue';
+
+export default {
+  components: {
+    Navbar
+  },
+  setup() {
+    const Applicant = ref('');
+    const ApplicationDate = ref('');
+    const AI_ID = ref('');
+    const Status = ref('');
+    const AssetsId = ref('');
+    const EquipTypeName = ref('');
+    const EquipCategoryName = ref('');
+    const AssetName = ref('');
+    const VendorName = ref('');
+    const ProductSpec = ref('');
+    const ProductType = ref('');
+    const Count = ref(1);
+    const Unit = ref('');
+
+    const selectType = (item) => {
+      EquipTypeName.value = item;
+    };
+
+    const selectArea = (item) => {
+      Unit.value = item;
+    };
+
+    const selectCategory = (item) => {
+      EquipCategoryName.value = item;
+    };
+
+    const clear = () => {
+      
+
+      EquipTypeName.value = '';
+      EquipCategoryName.value = '';
+      Unit.value = '';
+      Count.value = 1;
+    };
+
+    const goBack = () => {
+      window.history.back();
+    };
+
+    return {
+      Applicant,
+      ApplicationDate,
+      AI_ID,
+      Status,
+      AssetsId,
+      EquipTypeName,
+      EquipCategoryName,
+      AssetName,
+      VendorName,
+      ProductSpec,
+      ProductType,
+      Count,
+      Unit,
+      selectType,
+      selectArea,
+      selectCategory,
+      clear,
+      goBack
+    };
   }
+};
 </script>
 
 <style lang="scss" scoped>

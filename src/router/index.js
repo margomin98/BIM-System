@@ -47,7 +47,8 @@ const routes = [
   {
     path: '/store_view',
     name: 'Store_View',
-    component:Store_View
+    component:Store_View,
+    props: true, // 允许接收参数
   },
   {
     path: '/store_return',
