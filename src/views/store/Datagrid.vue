@@ -59,7 +59,7 @@
           </div>
         </div>
         <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>申請入庫日期（起</p>
+          <p>申請入庫日期(起)</p>
           <div class="date-selector">
             <div class="input-container">
               <input type="date" v-model="StartDate" class="date-input" />
