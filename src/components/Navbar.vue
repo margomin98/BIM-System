@@ -48,7 +48,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <router-link to="">權限管理</router-link>
-              <router-link to="">參數管理</router-link>
+              <router-link to="/system_parameter">參數管理</router-link>
             </div>
           </li>
         </ul>

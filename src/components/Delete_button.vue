@@ -5,28 +5,27 @@
 </template>
 
 <script>
-export default {
-   setup(props){
+  export default {
+    setup(props) {
       function alertclick(s) {
         alert("hi")
       }
-      return {alertclick}
+      return {
+        alertclick
+      }
     }
-}
+  }
 </script>
 
 
 <style lang="scss" scoped>
-@import '@/assets/css/global.scss';
-
-.button_wrap{
-  
- button{
-@include delete_button;
- }
- button:hover{
-  background:#FF7272
-}
-}
-
+  @import '@/assets/css/global.scss';
+  .button_wrap {
+    button {
+      @include delete_button;
+    }
+    &:hover {
+      background: #FF7272
+    }
+  }
 </style>

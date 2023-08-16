@@ -225,7 +225,7 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">上一頁</button>
-        <button class="send_btn" @click="submit" :disabled ="!canSubmit()">送出</button>
+        <button class="send_btn send_btn_disabled" @click="submit" :disabled ="!canSubmit()">送出</button>
       </div>
     </div>
   </div>
@@ -390,6 +390,9 @@ export default {
         &:hover {
           background-color: #5e7aa2;
         }
+      }
+      button.send_btn_disabled{
+        background:#878787;
       }
     }
 

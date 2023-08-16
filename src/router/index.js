@@ -24,6 +24,10 @@ import Rent_View from '../views/rent/View.vue'
 import Rent_Edit from '../views/rent/Edit.vue'
 //出庫作業
 
+//系統管理
+import System_parameter from '../views/system/Parameter'
+
+//系統管理
 
 const routes = [
   {
@@ -104,6 +108,11 @@ const routes = [
     path: '/rent_edit',
     name: 'Rent_Edit',
     component:Rent_Edit,
+  },
+  {
+    path: '/system_parameter',
+    name: 'System_parameter',
+    component:System_parameter,
   },
 ]
 
