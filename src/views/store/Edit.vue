@@ -24,7 +24,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4 check_box_wrap">
               <div class="input-group-prepend check_box">
-                資產類型
+                資產類型：
               </div>
               <input type="checkbox" class='check_box' v-model="details.IsConsumable" />耗材
             </div>
@@ -85,7 +85,7 @@
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(details.EquipTypeName !== '') }">
-                  {{ details.EquipCategoryName || '請選擇' }}
+                  {{ details.EquipCategoryName || EquipCategoryInit }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                   <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item"
@@ -224,6 +224,7 @@ export default {
     const AI_ID = route.query.search_id;
     const EquipTypeArray = ref([]);
     const EquipCategoryArray = ref([]);
+    const EquipCategoryInit = ref('請先選擇設備總類');
     const UnitArray = (['個', '支', '台', '件', '把', '枝', '本', '根', '隻', '張', '條', '塊', '顆', '雙', '箱', '包',]);
 
     const details = ref({});
@@ -279,7 +280,7 @@ export default {
           alert(data.messages);
         }
         else if (data.state === 'input_error') {
-          //新品表單格式失敗
+          //新品表單格式錯誤
           alert(data.messages);
         } else {
           throw new Error('Request was not successful');
@@ -304,6 +305,7 @@ export default {
             }
           }
           console.log('處理過後', details.value);
+          getEquipCategoryName();
         } else if (data.state === 'error') {
           alert(data.messages);
         } else if (data.state === 'account_error') {
@@ -337,7 +339,6 @@ export default {
       }
     }
     async function getEquipCategoryName() {
-      details.value.EquipCategoryName = '';
       const axios = require('axios');
       try {
         const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${details.value.EquipTypeName}`);
@@ -359,11 +360,14 @@ export default {
     onMounted(() => {
       //依ID帶入系統資料
       getDetails();
+      console.log('123');
     });
     const selectType = (item) => {
       //選擇總類完後 嘗試取得分類
       details.value.EquipTypeName = item;
+      details.value.EquipCategoryName = '';
       getEquipCategoryName();
+      EquipCategoryInit.value = '請選擇';
     };
 
     const selectUnit = (item) => {
@@ -378,6 +382,7 @@ export default {
       details.value.IsConsumable = false;
       details.value.EquipTypeName = '';
       details.value.EquipCategoryName = '';
+      EquipCategoryInit.value = '請先選擇設備總類'
       details.value.AssetName = '';
       details.value.VendorName = '';
       details.value.ProductSpec = '';
@@ -398,6 +403,7 @@ export default {
       EquipTypeArray,
       getEquipTypeName,
       EquipCategoryArray,
+      EquipCategoryInit,
       getEquipCategoryName,
       UnitArray,
       details,
@@ -461,6 +467,11 @@ export default {
       .dropdown {
         .dropdown-menu {
           width: 100%;
+          p {
+            &:hover {
+              cursor: pointer;
+            }
+          }
         }
 
         button {
