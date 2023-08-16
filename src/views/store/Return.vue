@@ -90,7 +90,9 @@
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
-  .main_section {
+
+  @media only screen and (min-width: 1200px){
+ .main_section {
       .readonly_box {
       @include readonly_box;
     }
@@ -103,6 +105,81 @@
     }
     .info_wrap {
       padding: 1% 32% 0;
+      .fixed_info {
+        @include fixed_info;
+        p {
+          font-size: 20px;
+          margin-bottom: 0;
+        }
+      }
+      .content {
+        @include content_bg;
+
+        .input-group {
+          .input-number {
+            @include count_btn;
+             width:100px;
+          }
+          .form-control {
+            height: 37px;
+            border-radius: 0;
+            width:100px;
+          }
+          .input-group-prepend {
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            width: 100px;
+            text-align: end;
+            span {
+              @include red_star
+            }
+          }
+        }
+      }
+           .button_wrap {
+        @include bottom_btn_wrap;
+        margin-bottom: 5%;
+        button {
+          &:nth-child(1) {
+            @include back_to_previous_btn;
+            &:hover {
+          background-color: #5d85bb;
+        }
+          }
+          &:nth-child(2) {
+            @include empty_btn;
+            &:hover {
+          background-color: #5e7aa2;
+        }
+          }
+          &:nth-child(3) {
+            @include search_and_send_btn;
+            &:hover {
+          background-color: #5D85BD;
+        }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+@media only screen and (min-width: 768px) and (max-width: 1199px){
+ .main_section {
+      .readonly_box {
+      @include readonly_box;
+    }
+    h1 {
+      margin-top: 180px;
+      text-align: center;
+      font-size: 55px;
+      font-weight: 600;
+      @include title_color;
+    }
+    .info_wrap {
+      padding: 0 5%;
       .fixed_info {
         @include fixed_info;
         p {
@@ -159,4 +236,84 @@
       }
     }
   }
+}
+
+@media only screen and (max-width: 767px){
+ .main_section {
+      .readonly_box {
+      @include readonly_box;
+    }
+    h1 {
+      margin-top: 180px;
+      text-align: center;
+      font-size: 50px;
+      font-weight: 600;
+      @include title_color;
+    }
+    .info_wrap {
+      padding:0 5%;
+      .fixed_info {
+        @include fixed_info;
+            height: unset;
+    flex-direction: column;
+    padding: 10px;
+        p {
+          font-size: 20px;
+          margin-bottom: 0;
+        }
+      }
+      .content {
+        @include content_bg;
+padding:20px 40px;
+        .input-group {
+          .input-number {
+            @include count_btn;
+            
+          }
+          .form-control {
+            height: 35px;
+            border-radius: 0;
+          }
+          .input-group-prepend {
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            width: 100px;
+            white-space:nowrap;
+            text-align: end;
+            span {
+              @include red_star
+            }
+          }
+        }
+      }
+           .button_wrap {
+        @include bottom_btn_wrap;
+            padding: 0 8%;
+        margin-bottom: 5%;
+        button {
+          &:nth-child(1) {
+            @include back_to_previous_btn;
+            &:hover {
+          background-color: #5d85bb;
+        }
+          }
+          &:nth-child(2) {
+            @include empty_btn;
+            &:hover {
+          background-color: #5e7aa2;
+        }
+          }
+          &:nth-child(3) {
+            @include search_and_send_btn;
+            &:hover {
+          background-color: #5D85BD;
+        }
+          }
+        }
+      }
+    }
+  }
+}
+
 </style>

@@ -2,80 +2,55 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>入庫填報</h1>
+      <h1>出庫填報</h1>
     </div>
     <div class="col">
       <div class="button_wrap d-flex">
-        <router-link to="/store_new">
-          <button class="add_btn">新品入庫</button>
-        </router-link>
-        <router-link to="/store_return">
-          <button class="return_btn">歸還入庫</button>
+        <router-link to="/rent_new">
+          <button class="add_btn">新增資產出庫單</button>
         </router-link>
       </div>
     </div>
     <div class="container-fluid datagrid_section">
       <div class="row">
         <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>設備總類</p>
+          <p>單號</p>
           <input type="text" />
         </div>
         <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>設備分類</p>
+          <p>專案名稱</p>
           <input type="text" />
         </div>
         <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>資產編號</p>
-          <input type="text" />
-        </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>物品名稱</p>
-          <input type="text" />
-        </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>狀態</p>
+          <p>用途</p>
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{ selectedItem || "請選擇" }}
-                </button>
+                    {{ selectedItem || "請選擇" }}
+                  </button>
             <div class="dropdown-menu" aria-labelledby="statusDropdown">
               <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
               <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
             </div>
           </div>
         </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>區域</p>
+        <div class="col-xl-3 col-lg-2 col-md-6 col-12">
+          <p>狀態</p>
           <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{ selectedAreaItem || "請選擇" }}
-                </button>
-            <div class="dropdown-menu" aria-labelledby="areaDropdown">
-              <p class="dropdown-item" @click="selectArea('選項1')">選項1</p>
-              <p class="dropdown-item" @click="selectArea('選項2')">選項2</p>
+            <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ selectedItem || "請選擇" }}
+                  </button>
+            <div class="dropdown-menu" aria-labelledby="statusDropdown">
+              <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
+              <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
             </div>
           </div>
         </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>櫃位</p>
-          <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{ selectedLocateItem || "請選擇" }}
-                </button>
-            <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
-              <p class="dropdown-item" @click="selectCabinet('選項1')">選項1</p>
-              <p class="dropdown-item" @click="selectCabinet('選項2')">選項2</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+        <div class="col-xl-2 col-lg-2 col-md-6 col-12  flex-col">
           <p>申請入庫日期（起）</p>
           <div class="date-selector">
             <div class="input-container">
               <input type="date" v-model="selectedDate" class="date-input" @focus="showDatePicker = true" @blur="showDatePicker = false" />
-              <span class="icon" @click="showDatePicker = !showDatePicker">
-                    <i class="fas fa-calendar"></i>
-                  </span>
+              
               <div class="date-picker" v-if="showDatePicker">
                 <datepicker v-model="selectedDate"></datepicker>
               </div>
@@ -87,9 +62,7 @@
           <div class="date-selector">
             <div class="input-container">
               <input type="date" v-model="selectedEndDate" class="date-input" @focus="showEndDatePicker = true" @blur="showEndDatePicker = false" />
-              <span class="icon" @click="showEndDatePicker = !showEndDatePicker">
-                    <i class="fas fa-calendar"></i>
-                  </span>
+             
               <div class="date-picker" v-if="showEndDatePicker">
                 <datepicker v-model="selectedEndDate"></datepicker>
               </div>
@@ -102,9 +75,10 @@
       <div class="button_wrap d-flex">
         <button class="search_btn">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
+                <button class="export_btn">匯出</button>
       </div>
     </div>
-    <ag-grid-vue style="height: 300px" class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true">
+    <ag-grid-vue style="height: 300px; background-color: #402a2a;" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true">
     </ag-grid-vue>
   </div>
 </template>
@@ -132,7 +106,7 @@
             width: '150px',
           },
           {
-            headerName: "編號",
+            headerName: "單號",
             field: "make",
             unSortIcon: true,
             sortable: true,
@@ -140,7 +114,7 @@
             suppressMovable: true
           },
           {
-            headerName: "設備總類",
+            headerName: "專案名稱",
             field: "model",
             unSortIcon: true,
             sortable: true,
@@ -148,7 +122,7 @@
             suppressMovable: true
           },
           {
-            headerName: "設備分類",
+            headerName: "說明",
             field: "price",
             unSortIcon: true,
             sortable: true,
@@ -156,7 +130,7 @@
             suppressMovable: true
           },
           {
-            headerName: "資產編號",
+            headerName: "用途",
             field: "make",
             unSortIcon: true,
             sortable: true,
@@ -164,7 +138,7 @@
             suppressMovable: true
           },
           {
-            headerName: "物品名稱",
+            headerName: "狀態",
             field: "model",
             unSortIcon: true,
             sortable: true,
@@ -172,36 +146,11 @@
             suppressMovable: true
           },
           {
-            headerName: "狀態",
-            field: "price",
-            unSortIcon: true,
-            sortable: true,
-            width: '100px',
-            suppressMovable: true
-          },
-          {
-            headerName: "區域",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '100px',
-            suppressMovable: true
-          },
-          {
-            headerName: "櫃位",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: '100px',
-            suppressMovable: true,
-            suppressMovable: true
-          },
-          {
             headerName: "申請入庫日期",
             field: "price",
             unSortIcon: true,
             sortable: true,
-            width: '170px',
+            width: '180px',
             suppressMovable: true
           },
           {
@@ -212,7 +161,8 @@
             width: '150px',
             suppressMovable: true
           },
-          {
+           {
+            width:'300px',
             field: "",
             cellRenderer: "Delete",
           }
@@ -279,11 +229,11 @@
     methods: {
       selectStatus(item) {
         this.selectedItem = item;
-        this.showDatePicker = false;
+        
       },
       selectArea(item) {
         this.selectedAreaItem = item;
-        this.showDatePicker = false;
+       
       },
       selectCabinet(item) {
         this.selectedLocateItem = item;
@@ -328,9 +278,6 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-    .ag-header-container{
-     background: #1F4E5F;
-        }
   @media only screen and (min-width: 1200px) {
     .main_section {
       padding: 0 10%;
@@ -346,14 +293,9 @@
         gap: 20px;
         .add_btn {
           @include datagrid_button_no1;
+          width: 195px;
           &:hover {
             background-color: #537ebc;
-          }
-        }
-        .return_btn {
-          @include datagrid_button_no2;
-          &:hover {
-            background-color: #708fba;
           }
         }
         .search_btn {
@@ -368,11 +310,17 @@
             background-color: #5d85bd;
           }
         }
+         .export_btn {
+          @include export_btn;
+          &:hover {
+            background-color: #274266;
+          }
+        }
       }
       .datagrid_section {
         .row {
           gap: 20px 50px;
-          padding: 40px 125px;
+          padding: 40px 0 40px 16%;
           @include datagrid_bg;
           p {
             @include datagrid_title;
@@ -432,14 +380,15 @@
         gap: 20px;
         .add_btn {
           @include datagrid_button_no1;
+          width:190px;
           &:hover {
             background-color: #537ebc;
           }
         }
-        .return_btn {
-          @include datagrid_button_no2;
+           .export_btn {
+          @include export_btn;
           &:hover {
-            background-color: #708fba;
+            background-color: #274266;
           }
         }
         .search_btn {
@@ -527,13 +476,13 @@
             background-color: #537ebc;
           }
         }
-        .return_btn {
-          @include datagrid_button_no2;
+      .export_btn {
+          @include export_btn;
           font-size: 18px;
           width: 100%;
           height: auto;
           &:hover {
-            background-color: #708fba;
+            background-color: #274266;
           }
         }
         .search_btn {

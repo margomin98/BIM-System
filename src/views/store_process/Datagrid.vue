@@ -352,6 +352,7 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
+ 
   @media only screen and (min-width: 1200px) {
     .main_section {
       padding: 0 10%;

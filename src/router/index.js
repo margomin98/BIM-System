@@ -14,6 +14,16 @@ import Store_Process_Datagrid from '../views/store_process/Datagrid.vue'
 import Store_Process_View from '../views/store_process/View.vue'
 import Store_Process_Confirm from '../views/store_process/Confirm.vue'
 import Store_Process_Edit from '../views/store_process/Edit.vue'
+//入庫作業
+
+
+//出庫作業
+import Rent_Datagrid from '../views/rent/Datagrid.vue'
+import Rent_New from '../views/rent/New.vue'
+import Rent_View from '../views/rent/View.vue'
+import Rent_Edit from '../views/rent/Edit.vue'
+//出庫作業
+
 
 const routes = [
   {
@@ -73,6 +83,26 @@ const routes = [
     path: '/store_process_edit',
     name: 'Store_Process_Edit',
     component:Store_Process_Edit,
+  },
+  {
+    path: '/rent_datagrid',
+    name: 'Rent_Datagrid',
+    component:Rent_Datagrid,
+  },
+  {
+    path: '/rent_new',
+    name: 'Rent_New',
+    component:Rent_New,
+    
+  },{
+    path: '/rent_view',
+    name: 'Rent_View',
+    component:Rent_View,
+  },
+  {
+    path: '/rent_edit',
+    name: 'Rent_Edit',
+    component:Rent_Edit,
   },
 ]
 

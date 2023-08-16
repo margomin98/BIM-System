@@ -19,7 +19,6 @@ a{
   text-decoration: none;
 }
 .ag-header-container{
-        background: #1F4E5F;
         span{
             color:white;
             font-weight:700;
