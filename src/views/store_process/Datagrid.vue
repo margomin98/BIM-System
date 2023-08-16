@@ -86,8 +86,9 @@
               {{ DateCategory || "請選擇" }}
             </button>
             <div class="dropdown-menu" aria-labelledby="statusDropdown">
-              <p class="dropdown-item" @click="selectDateType('申請入庫')">申請入庫</p>
-              <p class="dropdown-item" @click="selectDateType('申請歸還')">申請歸還</p>
+              <p class="dropdown-item" @click="selectDateType('申請')">申請</p>
+              <p class="dropdown-item" @click="selectDateType('交付')">交付</p>
+              <p class="dropdown-item" @click="selectDateType('入庫')">入庫</p>
             </div>
           </div>
         </div>
