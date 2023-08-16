@@ -56,7 +56,7 @@
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(EquipTypeName !== '') }">
-                  {{ EquipCategoryName || '請選擇' }}
+                  {{ EquipCategoryName || EquipCategoryInit }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                   <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item"
@@ -200,6 +200,7 @@ export default {
     const EquipTypeArray = ref([]); //設備總類陣列 request拿到
     const EquipCategoryName = ref(''); //設備分類 *必填
     const EquipCategoryArray = ref([]); //設備分類陣列 request拿到
+    const EquipCategoryInit = ref('請先選擇設備總類');
     const AssetName = ref(''); //物品名稱 *必填
     const VendorName = ref(''); //廠商
     const ProductSpec = ref(''); //規格
@@ -221,8 +222,10 @@ export default {
     }
     function selectType(item) {
       EquipTypeName.value = item;
-      console.log('選擇的總類:', EquipTypeName.value);
+      // console.log('選擇的總類:', EquipTypeName.value);
       getEquipCategoryName();
+      EquipCategoryInit.value = '請選擇';
+
     }
     function selectCategory(item) {
       EquipCategoryName.value = item;
@@ -238,6 +241,7 @@ export default {
       IsConsumable.value = false;
       EquipTypeName.value = '';
       EquipCategoryName.value = '';
+      EquipCategoryInit.value = '請先選擇設備總類'
       AssetName.value = '';
       VendorName.value = '';
       ProductSpec.value = '';
@@ -386,6 +390,7 @@ export default {
       getEquipTypeName,
       EquipCategoryName,
       EquipCategoryArray,
+      EquipCategoryInit,
       getEquipCategoryName,
       AssetName,
       VendorName,

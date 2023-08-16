@@ -20,19 +20,11 @@
         </div>
         <div>
           <p>
-            資產類型：耗材
+            資產類型：{{ details.IsConsumable ? '':'非'}}耗材
           </p>
         </div>
       </div>
       <div class="content">
-        <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-          <div class="input-group mb-4 check_box_wrap">
-            <div class="input-group-prepend check_box">
-              資產類型：
-            </div>
-            <input type="checkbox" class='check_box' v-model="details.IsConsumable" disabled />耗材
-          </div>
-        </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -207,6 +199,10 @@ export default {
         if (data.state === 'success') {
           console.log('Details Get成功 資料如下\n', data.resultList);
           details.value = data.resultList;
+          if( details.value.WarrantyStartDate && details.value.WarrantyEndDate) {
+            details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g,'/');
+            details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g,'/');
+          }
         } else if (data.state === 'error') {
           alert(data.messages);
         } else if (data.state === 'account_error') {
@@ -263,7 +259,16 @@ export default {
 
     .content {
       @include content_bg;
+      .check_box_wrap {
+        font-weight: 700;
+        align-items: center;
+        color: white;
+        font-size: 20px;
 
+        .check_box {
+          margin-right: 5px;
+        }
+      }
       .dropdown {
         .dropdown-menu {
           width: 100%;
