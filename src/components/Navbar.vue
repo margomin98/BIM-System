@@ -107,7 +107,7 @@ export default {
         const data = response.data;
         if (data.state === 'success') {
           //接收成功，顯示使用者名稱
-          console.log(data.messages);
+          // console.log(data.messages);
           userName.value = data.resultList.Applicant;
         }
         else if (data.state === 'error') {
