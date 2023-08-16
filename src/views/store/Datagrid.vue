@@ -461,7 +461,8 @@
           .dropdown-menu {
             width: 100%;
             transform: translate3d(-1px, 35px, 0px) !important;
-
+            max-height: 250px; 
+            overflow-y: auto;
             p {
               font-size: 18px;
               color: black;

@@ -378,9 +378,15 @@
 
 <script>
   import Navbar from "@/components/Navbar.vue";
+import { useRoute } from "vue-router";
   export default {
     components: {
       Navbar,
+    },
+    setup() {
+      const route = useRoute();
+      const AI_ID = route.query.search_id;
+      console.log(AI_ID);
     },
     data() {
       return {

@@ -107,7 +107,7 @@
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              廠商： 
+              廠商：
             </div>
             <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
               placeholder="最多輸入100字" v-model="details.VendorName">
@@ -166,7 +166,8 @@
               <div class="input-group-prepend">
                 保固期限：
               </div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.WarrantyDate">
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
+                v-model="details.WarrantyDate">
             </div>
           </div>
         </div>
@@ -174,7 +175,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                保固開始日:&nbsp; 
+                保固開始日:&nbsp;
               </div>
               <input type="date" class="form-control text_input" aria-label="Default"
                 aria-describedby="inputGroup-sizing-default" v-model="details.WarrantyStartDate">
@@ -183,7 +184,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                保固到期日: 
+                保固到期日:
               </div>
               <input type="date" class="form-control text_input" aria-label="Default"
                 aria-describedby="inputGroup-sizing-default" v-model="details.WarrantyEndDate">
@@ -195,7 +196,8 @@
             <div class="input-group-prepend">
               備註：
             </div>
-            <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="details.Memo"></textarea>
+            <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入500字"
+              v-model="details.Memo"></textarea>
           </div>
         </div>
       </div>
@@ -274,7 +276,7 @@ export default {
           console.log(data.state);
           console.log(data.messages);
           alert(data.messages);
-          router.push({name: 'Store_Datagrid'});
+          router.push({ name: 'Store_Datagrid' });
         } else if (data.state === 'error') {
           //新品表單傳送失敗
           alert(data.messages);
@@ -299,8 +301,8 @@ export default {
         if (data.state === 'success') {
           console.log('Details Get成功 資料如下\n', data.resultList);
           details.value = data.resultList;
-          for(let key in details.value) {
-            if(details.value[key] === null) {
+          for (let key in details.value) {
+            if (details.value[key] === null) {
               details.value[key] = '';
             }
           }
@@ -467,6 +469,9 @@ export default {
       .dropdown {
         .dropdown-menu {
           width: 100%;
+          max-height: 250px;
+          overflow-y: auto;
+
           p {
             &:hover {
               cursor: pointer;
