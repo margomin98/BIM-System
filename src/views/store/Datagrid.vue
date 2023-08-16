@@ -42,10 +42,6 @@
             </div>
           </div>
         </div>
-        <!-- <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>資產編號 {{ AssetId }}</p>
-          <input type="text" v-model="AssetId" />
-        </div> -->
         <div class="col-xl-2 col-lg-2 col-md-6 col-12">
           <p>物品名稱</p>
           <input type="text" v-model="AssetName" />
@@ -63,39 +59,15 @@
             </div>
           </div>
         </div>
-        <!-- <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>區域</p>
-          <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              {{ selectedAreaItem || "請選擇" }}
-            </button>
-            <div class="dropdown-menu" aria-labelledby="areaDropdown">
-              <p class="dropdown-item" @click="selectArea('選項1')">選項1</p>
-            </div>
-          </div>
-        </div>
         <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>櫃位</p>
-          <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              {{ selectedLocateItem || "請選擇" }}
-            </button>
-            <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
-              <p class="dropdown-item" @click="selectCabinet('選項1')">選項1</p>
-            </div>
-          </div>
-        </div> -->
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>申請入庫日期（起</p>
+          <p>申請入庫日期(起)</p>
           <div class="date-selector">
             <div class="input-container">
               <input type="date" v-model="StartDate" class="date-input" />
             </div>
           </div>
         </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12 flex-col">
+        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
           <p>申請入庫日期(迄)</p>
           <div class="date-selector">
             <div class="input-container">
