@@ -238,7 +238,7 @@ export default {
         field: "Applicant",
         unSortIcon: true,
         sortable: true,
-        width: 150,
+        width: 180,
         suppressMovable: true
       },
       {
