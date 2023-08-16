@@ -50,7 +50,7 @@
             </div>
           </div>
         </div>
-        <div class="col">
+        <div v-if="details.AssetsId" class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               資產編號：

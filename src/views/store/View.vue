@@ -43,7 +43,7 @@
               aria-describedby="inputGroup-sizing-default" readonly v-model="details.Status">
           </div>
         </div>
-        <div class="col">
+        <div v-if="details.AssetsId" class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               資產編號：
@@ -165,7 +165,7 @@
             <div class="input-group-prepend">
               備註：
             </div>
-            <input class="form-control readonly_box" aria-label="With textarea" readonly v-model="details.Memo">
+            <textarea class="form-control readonly_box" style="height: 150px;" aria-label="With textarea" readonly v-model="details.Memo"></textarea>
           </div>
         </div>
       </div>
