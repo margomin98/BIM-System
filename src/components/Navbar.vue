@@ -64,8 +64,8 @@
 
       </div>
 
-      <p class="username">{{ backendResponse }}您好！Admin</p>
-      <div @click="logout()" style="cursor: pointer;">
+      <p class="username">{{ userName }}&nbsp;&nbsp;您好！</p>
+      <div @click="logout" style="cursor: pointer;">
         <p class="logout">登出
           <img src="../assets/navbar/logout.png" alt="登出">
         </p>
@@ -76,11 +76,12 @@
 
 <script>
 import router from '@/router';
-import { useStore } from 'vuex';
+import { onMounted , ref } from 'vue';
 
 export default {
   name: 'Navbar',
   setup() {
+    const userName = ref('');
     //登出function 沒有回傳值，正確直接回登入頁面
     async function logout() {
       const axios = require('axios');
@@ -97,13 +98,39 @@ export default {
         console.error('Error sending data to backend', error);
       }
     }
+    //取得navbar使用者名稱
+    async function getUserName() {
+      const axios = require('axios');
+      try {
+        const response = await axios.get('http://192.168.0.176:7008/GetDBdata/GetApplicant');
+        console.log(response);
+        const data = response.data;
+        if (data.state === 'success') {
+          //接收成功，顯示使用者名稱
+          console.log(data.messages);
+          userName.value = data.resultList.Applicant;
+        }
+        else if (data.state === 'error') {
+          alert(data.messages);
+        }
+        else if (data.state === 'account_error') {
+          alert(data.messages);
+          router.push('/');
+        }
+        else {
+          throw new Error('Request was not successful');
+        }
+      } catch (error) {
+        console.error('Error sending data to backend', error);
+      }
+    }
 
-    //獲取已登入名稱
-    const store = useStore();
-    const backendResponse = store.state.backendResponse;
+    onMounted(()=> {
+      getUserName();
+    });
     return {
+      userName,
       logout,
-      backendResponse,
     }
   },
 }
