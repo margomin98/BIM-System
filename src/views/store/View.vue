@@ -165,7 +165,7 @@
             <div class="input-group-prepend">
               備註：
             </div>
-            <textarea class="form-control readonly_box" style="height: 150px;" aria-label="With textarea" readonly v-model="details.Memo"></textarea>
+            <textarea style="height: 200px;" class="form-control readonly_box"  aria-label="With textarea" readonly v-model="details.Memo"></textarea>
           </div>
         </div>
       </div>
