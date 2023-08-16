@@ -78,8 +78,11 @@
                 <button class="export_btn">匯出</button>
       </div>
     </div>
-    <ag-grid-vue style="height: 300px; background-color: #402a2a;" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true">
+   <div style="width: 100%">
+          <ag-grid-vue style="width: 100%; height:300px; background-color: #402a2a;" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true">
     </ag-grid-vue>
+    </div>
+
   </div>
 </template>
 
@@ -162,7 +165,7 @@
             suppressMovable: true
           },
            {
-            width:'300px',
+            width:'100',
             field: "",
             cellRenderer: "Delete",
           }
@@ -331,6 +334,7 @@
             height: 35px;
           }
           button {
+            border:none;
             padding: 0;
             width: 100%;
             font-size: 18px;
@@ -340,9 +344,11 @@
             width: 200px;
             height: 35px;
             @include dropdown_btn;
-            .dropdown-toggle::after {
-              font-size: 20px;
-              margin-left: 60%;
+              .dropdown-toggle {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              border: none;
             }
             .dropdown-menu {
               width: 100%;
@@ -428,9 +434,11 @@
             width: 100%;
             height: 35px;
             @include dropdown_btn;
-            .dropdown-toggle::after {
-              font-size: 20px;
-              margin-left: 75%;
+            .dropdown-toggle {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              border: none;
             }
             .dropdown-menu {
               width: 100%;
@@ -529,9 +537,11 @@
             width: 100%;
             height: 35px;
             @include dropdown_btn;
-            .dropdown-toggle::after {
-              font-size: 20px;
-              margin-left: 75%;
+           .dropdown-toggle {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              border: none;
             }
             .dropdown-menu {
               width: 100%;

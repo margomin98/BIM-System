@@ -108,9 +108,7 @@
               <div class="input-group-prepend">
                 <span>*</span>數量：
               </div>
-              <div class="number-input-box">
                 <input class="input-number" type="number" v-model="Count" min="1">
-              </div>
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -416,7 +414,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/css/global.scss';
-
+@media only screen and (min-width: 1200px){
 .main_section {
   h1 {
     margin-top: 50px;
@@ -550,4 +548,294 @@ export default {
     }
   }
 }
+}
+
+
+@media only screen and (min-width: 768px) and (max-width: 1199px){
+.main_section {
+  h1 {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 55px;
+    font-weight: 600;
+    @include title_color;
+  }
+
+  .info_wrap {
+    .button_wrap {
+      @include bottom_btn_wrap;
+      margin-bottom: 5%;
+
+      button {
+        &:nth-child(1) {
+          @include back_to_previous_btn;
+
+          &:hover {
+            background-color: #5d85bb;
+          }
+        }
+
+        &:nth-child(2) {
+          @include empty_btn;
+
+          &:hover {
+            background-color: #5e7aa2;
+          }
+        }
+
+        &:nth-child(3) {
+          @include search_and_send_btn;
+
+          &:hover {
+            background-color: #5D85BD;
+          }
+        }
+      }
+    }
+
+    button.back_btn:hover {
+      background-color: #5d85bb;
+    }
+
+    button.send_btn:hover {
+      background-color: #5e7aa2;
+    }
+
+    button.empty_btn:hover {
+      background-color: #5D85BD;
+    }
+
+    .input-group-prepend {
+      color: white;
+      font-weight: 700;
+      font-size: 20px;
+      width: 120px;
+      text-align: end;
+
+      span {
+        @include red_star
+      }
+    }
+
+    .input-number {
+      @include count_btn;
+    }
+
+    .form-control {
+      height: 35px;
+      border-radius: 0;
+    }
+
+    padding: 1% 5% 0;
+
+    .fixed_info {
+      @include fixed_info;
+
+      p {
+        font-size: 20px;
+        margin-bottom: 0;
+      }
+    }
+
+    .content {
+      .check_box_wrap {
+        font-weight: 700;
+        align-items: center;
+        color: white;
+        font-size: 20px;
+
+        .check_box {
+          margin-right: 5px;
+        }
+      }
+
+      @include content_bg;
+
+      .dropdown {
+        .dropdown-menu {
+          width: 100%;
+        }
+      }
+
+      .content {
+        @include content_bg;
+
+
+      }
+
+      .dropdown {
+        .dropdown-menu {
+          width: 100%;
+          p {
+            &:hover {
+              cursor: pointer;
+            }
+          }
+        }
+
+        .dropdown-toggle {
+          @include dropdown-btn;
+          width: 180px;
+          color: black;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+
+    }
+  }
+}
+}
+
+@media only screen and (max-width: 767px){
+.main_section {
+  h1 {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 50px;
+    font-weight: 600;
+    @include title_color;
+  }
+
+  .info_wrap {
+    .button_wrap {
+      @include bottom_btn_wrap;
+      margin-bottom: 5%;
+      padding:0 5%;
+
+      button {
+        &:nth-child(1) {
+          @include back_to_previous_btn;
+
+          &:hover {
+            background-color: #5d85bb;
+          }
+        }
+
+        &:nth-child(2) {
+          @include empty_btn;
+
+          &:hover {
+            background-color: #5e7aa2;
+          }
+        }
+
+        &:nth-child(3) {
+          @include search_and_send_btn;
+
+          &:hover {
+            background-color: #5D85BD;
+          }
+        }
+      }
+    }
+
+    button.back_btn:hover {
+      background-color: #5d85bb;
+    }
+
+    button.send_btn:hover {
+      background-color: #5e7aa2;
+    }
+
+    button.empty_btn:hover {
+      background-color: #5D85BD;
+    }
+
+   
+.input-group{
+  
+  flex-direction:column;
+  .input-number {
+       margin-left: unset !important;
+      @include count_btn;
+    }
+
+    .form-control {
+         height: 35px;
+    width: 100%;
+    margin-left: unset !important;
+    }
+     .input-group-prepend {
+   color: white;
+    font-weight: 700;
+    font-size: 20px;
+    width: 120px;
+    margin-bottom: 5px;
+
+      span {
+        @include red_star
+      }
+    }
+}
+    
+
+    padding: 1% 5% 0;
+
+    .fixed_info {
+      @include fixed_info;
+      height:unset;
+    flex-direction: column;
+    padding: 10px;
+      p {
+        font-size: 20px;
+        margin-bottom: 0;
+      }
+    }
+
+    .content {
+      .check_box_wrap {
+        font-weight: 700;
+        align-items: center;
+        color: white;
+        font-size: 20px;
+  flex-direction:row ;
+          display:flex;
+        .check_box {
+          margin-right: 5px;
+        
+        }
+      }
+
+      @include content_bg;
+
+      .dropdown {
+        .dropdown-menu {
+          width: 100%;
+        }
+      }
+
+      .content {
+        @include content_bg;
+
+
+      }
+
+      .dropdown {
+        margin-left:unset !important;
+        .dropdown-menu {
+          width: 100%;
+          p {
+            &:hover {
+              cursor: pointer;
+            }
+          }
+        }
+
+        .dropdown-toggle {
+          @include dropdown-btn;
+          width:100%;
+          color: black;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+
+    }
+  }
+}
+}
+
+
+
 </style>

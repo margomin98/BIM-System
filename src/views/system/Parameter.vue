@@ -1,0 +1,615 @@
+<template>
+  <Navbar />
+  <div class="main_section">
+    <div class="title col">
+      <h1>參數管理</h1>
+    </div>
+    <div class="info_wrap col">
+      <div class="tab_section mt-2">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="equipment-tab" data-bs-toggle="tab" data-bs-target="#equipment" type="button" role="tab" aria-controls="equipment" aria-selected="true">
+                                        設備總類
+                                      </button>
+            <button class="nav-link" id="storage-tab" data-bs-toggle="tab" data-bs-target="#storage" type="button" role="tab" aria-controls="storage" aria-selected="false">
+                                        儲位區域
+                                      </button>
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="equipment" role="tabpanel" aria-labelledby="equipment-tab" tabindex="0">
+            <div class='row g-0'>
+              <div class='col-xl-6 col-lg-6 col-md-6 col-12 grid'>
+                <div style='width:100%'>
+                  <ag-grid-vue style="width: 100%" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData" @column-resized="onColumnResized">
+                  </ag-grid-vue>
+                </div>
+              </div>
+              <div class='col-xl-6 col-lg-6 col-md-6 col-12 submit_section'>
+                <p>新增設備總類</p>
+                <div class='d-flex'>
+                  <input class="form-control" aria-label="With textarea" placeholder='最多十個字'>
+                  <button type="button">新增</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="storage" role="tabpanel" aria-labelledby="storage-tab" tabindex="0">
+            <div class='row g-0'>
+              <div class='col-xl-6 col-lg-6 col-md-6 col-12 grid'>
+                <div style='width:100%'>
+                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData" @column-resized="onColumnResized">
+                  </ag-grid-vue>
+                </div>
+              </div>
+              <div class='col-xl-6 col-lg-6 col-md-6 col-12 submit_section'>
+                <p>新增設備總類</p>
+                <div class='d-flex'>
+                  <input class="form-control" aria-label="With textarea" placeholder='最多十個字'>
+                  <button type="button">新增</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col button_wrap">
+        <button class="back_btn" @click="goBack">上一頁</button>
+        <button class="send_btn">送出</button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import {
+    AgGridVue
+  } from "ag-grid-vue3";
+  import Navbar from "@/components/Navbar.vue";
+  import Parameter_button from "@/components/Parameter_button";
+  export default {
+    components: {
+      Navbar,
+      AgGridVue,
+      Parameter_button
+    },
+    setup() {
+      return {
+        columnDefs: [{
+            field: "make",
+            cellRenderer: 'Parameter_button',
+            width: '170',
+            rowDrag: true
+          },
+          {
+            field: "model",
+            flex: 1,
+            suppressSizeToFit: true
+          }
+        ],
+        rowData: [{
+            make: "Toyota",
+            model: "Celica",
+            price: 35000
+          },
+          {
+            make: "Ford",
+            model: "Mondeo",
+            price: 32000
+          }
+        ],
+      };
+    },
+    methods: {
+      goBack() {
+        window.history.back();
+      },
+    },
+  };
+</script>
+
+<style lang="scss" scoped>
+  @import "@/assets/css/global.scss";
+  @media only screen and (min-width: 1200px) {
+    .main_section {
+      .ag-theme-alpine{
+         height: 450px
+      }
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        padding: 1% 20% 0;
+        .button_wrap {
+          display: flex;
+          margin-top: 30px;
+          justify-content: center;
+          gap: 20px;
+          margin-bottom: 5%;
+          button {
+            &:nth-child(1) {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              @include search_and_send_btn;
+              &:hover {
+                background-color: #5e7aa2;
+              }
+            }
+          }
+        }
+        .tab_section {
+          .nav-tabs {
+            button {
+              @include tab_section_num;
+              background: #5C7897;
+              width: 100px;
+              height: 50px;
+            }
+            .active {
+              @include tab_section_num;
+              background: #3E4E5F;
+              width: 100px;
+              height: 50px;
+            }
+          }
+          .tab-content {
+            background: #3E4E5F;
+            padding: 20px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            border-top-right-radius: 10px;
+            .grid {
+              padding: 30px;
+              border-top-left-radius: 5px;
+              border-bottom-left-radius: 5px;
+              background: #7B8799
+            }
+            .submit_section {
+              background: #132238;
+              padding: 30px;
+              border-top-right-radius: 5px;
+              border-bottom-right-radius: 5px;
+              button {
+                @include datagrid_edit_button;
+                height: 35px;
+                margin-left: 25px;
+                width: 70px;
+                font-size: 18px;
+                &:hover {
+                  background: #3B6162;
+                  color: white;
+                }
+              }
+              p {
+                color: white;
+                font-weight: 800;
+                font-size: 20px;
+              }
+              .form-control {
+                height: 35px;
+                width: 400px;
+              }
+            }
+            .modal {
+              .modal-header {
+                background: #3D4E61;
+                color: white;
+                .close_icon {
+                  color: white;
+                  font-weight: 700;
+                  margin-bottom: 0;
+                }
+              }
+            }
+            .input-group {
+              span {
+                @include red_star
+              }
+              .selected_file {
+                margin-left: 20px;
+                p.title {
+                  font-weight: 700;
+                  color: white;
+                  margin-bottom: 5px;
+                }
+                .file_upload_wrap {
+                  margin-bottom: 0;
+                  display: flex;
+                  img {
+                    width: 25px;
+                    height: 25px;
+                  }
+                  p {
+                    margin-bottom: 0;
+                    font-weight: 700;
+                    color: white;
+                    &::before {
+                      margin-right: 10px;
+                      content: '·';
+                      font-weight: 700;
+                      color: white;
+                    }
+                  }
+                }
+              }
+              .input-number {
+                @include count_btn;
+              }
+              .form-control {
+                height: 35px;
+                border-radius: 0;
+              }
+              .input-group-prepend {
+                color: white;
+                font-weight: 700;
+                font-size: 20px;
+                width: 120px;
+                text-align: end;
+              }
+              .file_wrap {
+                display: flex;
+                flex-direction: column;
+                .choose_btn {
+                  margin-bottom: 10px;
+                  @include choose_file_btn;
+                  &:hover {
+                    background: #3f608f;
+                  }
+                }
+                .upload_btn {
+                  @include upload_file_btn;
+                  &:hover {
+                    background: #2f507e;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  @media only screen and (min-width: 768px) and (max-width: 1199px) {
+        .ag-theme-alpine{
+         height: 450px
+      }
+    .main_section {
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        padding: 0 5%;
+        .button_wrap {
+          display: flex;
+          margin-top: 30px;
+          justify-content: center;
+          gap: 20px;
+          margin-bottom: 5%;
+          button {
+            &:nth-child(1) {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              @include search_and_send_btn;
+              &:hover {
+                background-color: #5e7aa2;
+              }
+            }
+          }
+        }
+        .tab_section {
+          .nav-tabs {
+            button {
+              @include tab_section_num;
+              background: #5C7897;
+              width: 100px;
+              height: 50px;
+            }
+            .active {
+              @include tab_section_num;
+              background: #3E4E5F;
+              width: 100px;
+              height: 50px;
+            }
+          }
+          .tab-content {
+            background: #3E4E5F;
+            padding: 20px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            border-top-right-radius: 10px;
+            .grid {
+              padding: 20px;
+              border-top-left-radius: 5px;
+              border-bottom-left-radius: 5px;
+              background: #7B8799
+            }
+            .submit_section {
+              background: #132238;
+              padding: 20px;
+              border-top-right-radius: 5px;
+              border-bottom-right-radius: 5px;
+              button {
+                @include datagrid_edit_button;
+                height: 35px;
+                margin-left: 10px;
+                width: 90px;
+                font-size: 18px;
+                &:hover {
+                  background: #3B6162;
+                  color: white;
+                }
+              }
+              p {
+                color: white;
+                font-weight: 800;
+                font-size: 20px;
+              }
+              .form-control {
+                height: 35px;
+                width: 400px;
+              }
+            }
+            .modal {
+              .modal-header {
+                background: #3D4E61;
+                color: white;
+                .close_icon {
+                  color: white;
+                  font-weight: 700;
+                  margin-bottom: 0;
+                }
+              }
+            }
+            .input-group {
+              span {
+                @include red_star
+              }
+              .selected_file {
+                margin-left: 20px;
+                p.title {
+                  font-weight: 700;
+                  color: white;
+                  margin-bottom: 5px;
+                }
+                .file_upload_wrap {
+                  margin-bottom: 0;
+                  display: flex;
+                  img {
+                    width: 25px;
+                    height: 25px;
+                  }
+                  p {
+                    margin-bottom: 0;
+                    font-weight: 700;
+                    color: white;
+                    &::before {
+                      margin-right: 10px;
+                      content: '·';
+                      font-weight: 700;
+                      color: white;
+                    }
+                  }
+                }
+              }
+              .input-number {
+                @include count_btn;
+              }
+              .form-control {
+                height: 35px;
+                border-radius: 0;
+              }
+              .input-group-prepend {
+                color: white;
+                font-weight: 700;
+                font-size: 20px;
+                width: 120px;
+                text-align: end;
+              }
+              .file_wrap {
+                display: flex;
+                flex-direction: column;
+                .choose_btn {
+                  margin-bottom: 10px;
+                  @include choose_file_btn;
+                  &:hover {
+                    background: #3f608f;
+                  }
+                }
+                .upload_btn {
+                  @include upload_file_btn;
+                  &:hover {
+                    background: #2f507e;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 767px) {
+        .ag-theme-alpine{
+         height: 250px !important
+      }
+      .main_section {
+      h1 {
+margin-top: 50px;
+    margin-bottom: 20px;
+        text-align: center;
+        font-size: 50px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        padding: 0 5%;
+        .button_wrap {
+          display: flex;
+          margin-top: 30px;
+          justify-content: center;
+          gap: 20px;
+          margin-bottom: 5%;
+          button {
+            &:nth-child(1) {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              @include search_and_send_btn;
+              &:hover {
+                background-color: #5e7aa2;
+              }
+            }
+          }
+        }
+        .tab_section {
+          .nav-tabs {
+            button {
+              @include tab_section_num;
+              background: #5C7897;
+              width: 100px;
+              height: 50px;
+            }
+            .active {
+              @include tab_section_num;
+              background: #3E4E5F;
+              width: 100px;
+              height: 50px;
+            }
+          }
+          .tab-content {
+            background: #3E4E5F;
+            padding: 20px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            border-top-right-radius: 10px;
+            .grid {
+              padding: 20px;
+              border-top-left-radius: 5px;
+              border-bottom-left-radius: 5px;
+              background: #7B8799
+            }
+            .submit_section {
+              background: #132238;
+              padding: 20px;
+              border-top-right-radius: 5px;
+              border-bottom-right-radius: 5px;
+              button {
+                @include datagrid_edit_button;
+                height: 35px;
+                margin-left: 10px;
+                width: 90px;
+                font-size: 18px;
+                &:hover {
+                  background: #3B6162;
+                  color: white;
+                }
+              }
+              p {
+                color: white;
+                font-weight: 800;
+                font-size: 20px;
+              }
+              .form-control {
+                height: 35px;
+                width: 400px;
+              }
+            }
+            .modal {
+              .modal-header {
+                background: #3D4E61;
+                color: white;
+                .close_icon {
+                  color: white;
+                  font-weight: 700;
+                  margin-bottom: 0;
+                }
+              }
+            }
+            .input-group {
+              span {
+                @include red_star
+              }
+              .selected_file {
+                margin-left: 20px;
+                p.title {
+                  font-weight: 700;
+                  color: white;
+                  margin-bottom: 5px;
+                }
+                .file_upload_wrap {
+                  margin-bottom: 0;
+                  display: flex;
+                  img {
+                    width: 25px;
+                    height: 25px;
+                  }
+                  p {
+                    margin-bottom: 0;
+                    font-weight: 700;
+                    color: white;
+                    &::before {
+                      margin-right: 10px;
+                      content: '·';
+                      font-weight: 700;
+                      color: white;
+                    }
+                  }
+                }
+              }
+              .input-number {
+                @include count_btn;
+              }
+              .form-control {
+                height: 35px;
+                border-radius: 0;
+              }
+              .input-group-prepend {
+                color: white;
+                font-weight: 700;
+                font-size: 20px;
+                width: 120px;
+                text-align: end;
+              }
+              .file_wrap {
+                display: flex;
+                flex-direction: column;
+                .choose_btn {
+                  margin-bottom: 10px;
+                  @include choose_file_btn;
+                  &:hover {
+                    background: #3f608f;
+                  }
+                }
+                .upload_btn {
+                  @include upload_file_btn;
+                  &:hover {
+                    background: #2f507e;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+</style>

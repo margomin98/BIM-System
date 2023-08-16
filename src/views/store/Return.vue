@@ -3,7 +3,7 @@
   <div class="main_section">
     <div class="title col">
       <h1>
-資料歸還入庫
+        資料歸還入庫
       </h1>
     </div>
     <div class="info_wrap col">
@@ -23,29 +23,26 @@
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-             <span>*</span>資產編號：
+              <span>*</span>資產編號：
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"  placeholder="最多輸入100字">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入100字">
           </div>
         </div>
-        <div class="row">
+        <div class="row g-0">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
                 <span>*</span>數量：
               </div>
-              <div class="number-input-box">
-                <input class="input-number" type="number" v-model="count" min="1" />
-              </div>
+              <input class="input-number" type="number" v-model="count" min="1" />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-            單位：
+                單位：
               </div>
-                        <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default"  readonly>
-
+              <input type="text" class=" readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
             </div>
           </div>
         </div>
@@ -67,7 +64,6 @@
     },
     data() {
       return {
- 
         count: 1,
         incrementing: true
       };
@@ -90,230 +86,242 @@
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
-
-  @media only screen and (min-width: 1200px){
- .main_section {
+  @media only screen and (min-width: 1200px) {
+    .main_section {
       .readonly_box {
-      @include readonly_box;
-    }
-    h1 {
-      margin-top: 180px;
-      text-align: center;
-      font-size: 55px;
-      font-weight: 600;
-      @include title_color;
-    }
-    .info_wrap {
-      padding: 1% 32% 0;
-      .fixed_info {
-        @include fixed_info;
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
+        @include readonly_box;
       }
-      .content {
-        @include content_bg;
-
-        .input-group {
-          .input-number {
-            @include count_btn;
-             width:100px;
-          }
-          .form-control {
-            height: 37px;
-            border-radius: 0;
-            width:100px;
-          }
-          .input-group-prepend {
-            color: white;
-            font-weight: 700;
+      h1 {
+        margin-top: 180px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        padding: 1% 32% 0;
+        .fixed_info {
+          @include fixed_info;
+          p {
             font-size: 20px;
-            width: 100px;
-            text-align: end;
-            span {
-              @include red_star
+            margin-bottom: 0;
+          }
+        }
+        .content {
+          @include content_bg;
+          .input-group {
+            justify-content: end;
+            .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+              margin-left: 10px;
+              border-radius: 5px;
+              width: 205px;
+            }
+            .input-number {
+              @include count_btn;
+            }
+            .form-control {
+              height: 37px;
+              border-radius: 0;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              text-align: end;
+              span {
+                @include red_star
+              }
             }
           }
         }
-      }
-           .button_wrap {
-        @include bottom_btn_wrap;
-        margin-bottom: 5%;
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-            &:hover {
-          background-color: #5d85bb;
-        }
-          }
-          &:nth-child(2) {
-            @include empty_btn;
-            &:hover {
-          background-color: #5e7aa2;
-        }
-          }
-          &:nth-child(3) {
-            @include search_and_send_btn;
-            &:hover {
-          background-color: #5D85BD;
-        }
+        .button_wrap {
+          @include bottom_btn_wrap;
+          margin-bottom: 5%;
+          button {
+            &:nth-child(1) {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              @include empty_btn;
+              &:hover {
+                background-color: #5e7aa2;
+              }
+            }
+            &:nth-child(3) {
+              @include search_and_send_btn;
+              &:hover {
+                background-color: #5D85BD;
+              }
+            }
           }
         }
       }
     }
   }
-}
-
-
-@media only screen and (min-width: 768px) and (max-width: 1199px){
- .main_section {
+  @media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .main_section {
       .readonly_box {
-      @include readonly_box;
-    }
-    h1 {
-      margin-top: 180px;
-      text-align: center;
-      font-size: 55px;
-      font-weight: 600;
-      @include title_color;
-    }
-    .info_wrap {
-      padding: 0 5%;
-      .fixed_info {
-        @include fixed_info;
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
+        @include readonly_box;
       }
-      .content {
-        @include content_bg;
-
-        .input-group {
-          .input-number {
-            @include count_btn;
-          }
-          .form-control {
-            height: 35px;
-            border-radius: 0;
-          }
-          .input-group-prepend {
-            color: white;
-            font-weight: 700;
+      h1 {
+        margin-top: 180px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        padding: 0 5%;
+        .fixed_info {
+          @include fixed_info;
+          p {
             font-size: 20px;
-            width: 120px;
-            text-align: end;
-            span {
-              @include red_star
+            margin-bottom: 0;
+          }
+        }
+        .content {
+          @include content_bg;
+          padding: 20px 10px;
+          .input-group {
+            justify-content: end;
+            .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+              margin-left: 10px;
+              border-radius: 5px;
+              width: 205px;
+            }
+            .input-number {
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              border-radius: 0;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 120px;
+              text-align: end;
+              span {
+                @include red_star
+              }
             }
           }
         }
-      }
-           .button_wrap {
-        @include bottom_btn_wrap;
-        margin-bottom: 5%;
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-            &:hover {
-          background-color: #5d85bb;
-        }
-          }
-          &:nth-child(2) {
-            @include empty_btn;
-            &:hover {
-          background-color: #5e7aa2;
-        }
-          }
-          &:nth-child(3) {
-            @include search_and_send_btn;
-            &:hover {
-          background-color: #5D85BD;
-        }
+        .button_wrap {
+          @include bottom_btn_wrap;
+          margin-bottom: 5%;
+          button {
+            &:nth-child(1) {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              @include empty_btn;
+              &:hover {
+                background-color: #5e7aa2;
+              }
+            }
+            &:nth-child(3) {
+              @include search_and_send_btn;
+              &:hover {
+                background-color: #5D85BD;
+              }
+            }
           }
         }
       }
     }
   }
-}
-
-@media only screen and (max-width: 767px){
- .main_section {
+  @media only screen and (max-width: 767px) {
+    .main_section {
       .readonly_box {
-      @include readonly_box;
-    }
-    h1 {
-      margin-top: 180px;
-      text-align: center;
-      font-size: 50px;
-      font-weight: 600;
-      @include title_color;
-    }
-    .info_wrap {
-      padding:0 5%;
-      .fixed_info {
-        @include fixed_info;
-            height: unset;
-    flex-direction: column;
-    padding: 10px;
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
+        @include readonly_box;
+        height:35px;
+        margin-left:unset !important;
       }
-      .content {
-        @include content_bg;
-padding:20px 40px;
-        .input-group {
-          .input-number {
-            @include count_btn;
-            
-          }
-          .form-control {
-            height: 35px;
-            border-radius: 0;
-          }
-          .input-group-prepend {
-            color: white;
-            font-weight: 700;
+      h1 {
+        margin-top: 100px;
+        text-align: center;
+        font-size: 50px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        padding: 0 5%;
+        .fixed_info {
+          @include fixed_info;
+          height: unset;
+          flex-direction: column;
+          padding: 10px;
+          p {
             font-size: 20px;
-            width: 100px;
-            white-space:nowrap;
-            text-align: end;
-            span {
-              @include red_star
+            margin-bottom: 0;
+          }
+        }
+        .content {
+          @include content_bg;
+          .input-group {
+            flex-direction:column;
+.input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    margin-left: unset;
+    border-radius: 5px;
+    
+    margin-top: 5px;
+    height:35px;
+}
+            .input-number {
+              @include count_btn;
+               margin-left:unset !important;
+            }
+            .form-control {
+              height: 35px;
+              width: 100%;
+              border-radius: 0;
+               margin-left:unset !important;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 100px;
+              white-space: nowrap;              span {
+                @include red_star
+              }
             }
           }
         }
-      }
-           .button_wrap {
-        @include bottom_btn_wrap;
-            padding: 0 8%;
-        margin-bottom: 5%;
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-            &:hover {
-          background-color: #5d85bb;
-        }
-          }
-          &:nth-child(2) {
-            @include empty_btn;
-            &:hover {
-          background-color: #5e7aa2;
-        }
-          }
-          &:nth-child(3) {
-            @include search_and_send_btn;
-            &:hover {
-          background-color: #5D85BD;
-        }
+        .button_wrap {
+          @include bottom_btn_wrap;
+          padding: 0 8%;
+          margin-bottom: 5%;
+          button {
+            &:nth-child(1) {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              @include empty_btn;
+              &:hover {
+                background-color: #5e7aa2;
+              }
+            }
+            &:nth-child(3) {
+              @include search_and_send_btn;
+              &:hover {
+                background-color: #5D85BD;
+              }
+            }
           }
         }
       }
     }
   }
-}
-
 </style>
