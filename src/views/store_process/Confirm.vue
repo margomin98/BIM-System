@@ -185,8 +185,12 @@
                 <div class="input-group-prepend">入庫人員：</div>
                 <input type="text" class="form-control readonly_box" aria-label="Default"
                   aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(2)" />
+                    <span>
+                  <img src="@/assets/accept.png">
+                  </span>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
                   驗證
+                
                 </button>
                 <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false"
                   tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
@@ -412,8 +416,8 @@ export default {
         }
 
         .form-control {
-          height: 35px;
-          border-radius: 0;
+          height: 35px;    margin-right: 5px;
+         
         }
 
         .input-group-prepend {
@@ -421,6 +425,10 @@ export default {
           font-size: 20px;
           width: 120px;
           text-align: end;
+           position:relative;
+          span{
+            position:absolute;
+          }
         }
       }
 
