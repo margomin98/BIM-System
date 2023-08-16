@@ -157,14 +157,6 @@ export default {
         width: 150,
         suppressMovable: true
       },
-      // {
-      //   headerName: "資產編號",
-      //   field: "AssetsId",
-      //   unSortIcon: true,
-      //   sortable: true,
-      //   width: 150,
-      //   suppressMovable: true
-      // },
       {
         headerName: "物品名稱",
         field: "AssetName",
@@ -181,23 +173,6 @@ export default {
         width: 100,
         suppressMovable: true
       },
-      // {
-      //   headerName: "區域",
-      //   field: "AreaName",
-      //   unSortIcon: true,
-      //   sortable: true,
-      //   width: 100,
-      //   suppressMovable: true
-      // },
-      // {
-      //   headerName: "櫃位",
-      //   field: "LayerName",
-      //   unSortIcon: true,
-      //   sortable: true,
-      //   width: 100,
-      //   suppressMovable: true,
-      //   suppressMovable: true
-      // },
       {
         headerName: "申請入庫日期",
         field: "ApplicationDate",
