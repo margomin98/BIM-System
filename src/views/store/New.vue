@@ -37,10 +37,9 @@
                 <span>*</span>設備總類：
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                  {{ EquipTypeName || '請選擇' }}
-                </button>
+                <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
+                      {{ EquipTypeName || '請選擇' }}
+                    </button>
                 <div class="dropdown-menu" aria-labelledby="typeDropdown">
                   <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item"
                     @click="selectType(`${item}`)">{{ item }}</p>
@@ -54,10 +53,9 @@
                 <span>*</span>設備分類：
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(EquipTypeName !== '') }">
-                  {{ EquipCategoryName || EquipCategoryInit }}
-                </button>
+                <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(EquipTypeName !== '') }">
+                      {{ EquipCategoryName || EquipCategoryInit }}
+                    </button>
                 <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                   <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item"
                     @click="selectCategory(`${item}`)">{{ item }}</p>
@@ -117,10 +115,9 @@
                 <span>*</span>單位：
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
-                  {{ Unit || '請選擇' }}
-                </button>
+                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{ Unit || '請選擇' }}
+                    </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in UnitArray" :key="index" class="dropdown-item" @click="selectUnit(`${item}`)">
                     {{ item }}</p>
@@ -132,7 +129,8 @@
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
-              <div class="input-group-prepend" style='justify-content: end; display: flex;'>
+              <div class="input-group-prepend" style='justify-content: end;
+      display: flex;'>
                 保固期限：
               </div>
               <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
@@ -172,7 +170,6 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">上一頁</button>
-        <!-- <button class="empty_btn" @click="clear">清空</button> -->
         <button class="send_btn" @click="submit">送出</button>
       </div>
     </div>
@@ -413,58 +410,42 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/css/global.scss';
-// .input-group {
-//   flex-wrap:unset !important
-// }
-
-
-@media only screen and (min-width: 1200px) {
-  .main_section {
-    h1 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 55px;
-      font-weight: 600;
-      @include title_color;
-    }
-
-    //       .row_wrap {
-    //   display: flex;  
-    //   gap: 0px 0px;
-
-    // }
-
-    .info_wrap {
-      width: calc(100% - 60%);
-      margin: auto;
-
-      .button_wrap {
-        @include bottom_btn_wrap;
-        margin-bottom: 5%;
-
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-
-            &:hover {
-              background-color: #5d85bb;
+  @import '@/assets/css/global.scss'; // .input-group {
+  //   flex-wrap:unset !important
+  // }
+  @media only screen and (min-width: 1200px) {
+    .main_section {
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
+      }
+      //       .row_wrap {
+      //   display: flex;  
+      //   gap: 0px 0px;
+      // }
+      .info_wrap {
+        width: calc(100% - 60%);
+        margin: auto;
+        .button_wrap {
+          display: flex;
+          justify-content: space-between;
+          margin: 30px auto 5%;
+          width: 220px;
+          button {
+            &:nth-child(1) {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
+              }
             }
-          }
-
-          &:nth-child(2) {
-            @include empty_btn;
-
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
-
-          &:nth-child(3) {
-            @include search_and_send_btn;
-
-            &:hover {
-              background-color: #5D85BD;
+            &:nth-child(2) {
+              @include search_and_send_btn;
+              &:hover {
+                background-color: #5D85BD;
+              }
             }
           }
         }
@@ -493,74 +474,73 @@ export default {
         span {
           @include red_star
         }
-      }
-
-      .input-number {
-        @include count_btn;
-      }
-
-
-      .fixed_info {
-        @include fixed_info;
-
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
+        button.send_btn:hover {
+          background-color: #5e7aa2;
         }
-      }
-
-      .content {
         .input-group-prepend {
-          width: 120px;
-        }
-
-        .check_box_wrap {
-          font-weight: 700;
-          align-items: center;
           color: white;
+          font-weight: 700;
           font-size: 20px;
-
-          .check_box {
-            margin-right: 5px;
+          width: calc(100px + 6%);
+          text-align: end;
+          white-space: nowrap;
+          span {
+            @include red_star
           }
         }
-
-        @include content_bg;
-
-        .input-number,
-        .form-control,
-        .row_wrap button {
-          width: 218px;
-          /* Set the same width as input-group-prepend */
+        .input-number {
+          @include count_btn;
         }
-
-        .dropdown {
-          width: 218px;
-
-          .dropdown-menu {
-            width: 100%;
-            max-height: 250px;
-            overflow-y: auto;
-
-            p {
-              &:hover {
-                cursor: pointer;
-              }
+        .fixed_info {
+          @include fixed_info;
+          p {
+            font-size: 20px;
+            margin-bottom: 0;
+          }
+        }
+        .content {
+          .input-group-prepend {
+            width: 120px;
+          }
+          .check_box_wrap {
+            font-weight: 700;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            .check_box {
+              margin-right: 5px;
             }
           }
-
-          .dropdown-toggle {
-            width: 100%;
-            @include dropdown-btn;
-            color: black;
-            justify-content: space-between;
-            align-items: center;
+          @include content_bg;
+          .input-number,
+          .form-control,
+          .row_wrap button {
+            width: 218px;
+            /* Set the same width as input-group-prepend */
+          }
+          .dropdown {
+            width: 218px;
+            .dropdown-menu {
+              width: 100%;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            .dropdown-toggle {
+              width: 100%;
+              @include dropdown-btn;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
           }
         }
       }
     }
   }
-}
+
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
@@ -603,28 +583,26 @@ export default {
           }
         }
       }
-
-      button.back_btn:hover {
-        background-color: #5d85bb;
-      }
-
-      button.send_btn:hover {
-        background-color: #5e7aa2;
-      }
-
-      button.empty_btn:hover {
-        background-color: #5D85BD;
-      }
-
-      .input-group-prepend {
-        color: white;
-        font-weight: 700;
-        font-size: 20px;
-        width: 120px;
-        text-align: end;
-
-        span {
-          @include red_star
+      .info_wrap {
+        .button_wrap {
+          display: flex;
+    justify-content: space-between;
+    margin: 30px auto 5%;
+    width: 220px;
+          button {
+            &:nth-child(1) {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              @include search_and_send_btn;
+              &:hover {
+                background-color: #5D85BD;
+              }
+            }
+          }
         }
       }
 
@@ -791,23 +769,31 @@ export default {
           margin-bottom: 0;
         }
       }
-
-      .content {
-        .check_box_wrap {
-          font-weight: 700;
-          align-items: baseline;
-          color: white;
-          font-size: 20px;
-          flex-direction: row;
-          display: flex;
-
-          .check_box_div {
-            width: 100px;
-            white-space: nowrap;
-          }
-
-          .check_box {
-            margin-right: 5px;
+      .info_wrap {
+        .button_wrap {
+      display: flex;
+    justify-content: space-between;
+    margin: 30px auto 5%;
+    width: 220px;
+          button {
+            &:nth-child(1) {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              @include empty_btn;
+              &:hover {
+                background-color: #5e7aa2;
+              }
+            }
+            &:nth-child(3) {
+              @include search_and_send_btn;
+              &:hover {
+                background-color: #5D85BD;
+              }
+            }
           }
         }
 
@@ -847,9 +833,8 @@ export default {
       }
     }
   }
-}
-
 .input-group {
   flex-wrap: nowrap !important;
+}
 }
 </style>

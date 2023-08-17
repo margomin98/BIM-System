@@ -67,11 +67,14 @@
   } from "ag-grid-vue3";
   import Navbar from "@/components/Navbar.vue";
   import Parameter_button from "@/components/Parameter_button";
+    import Edit_pen from "@/components/Edit_pen";
+
   export default {
     components: {
       Navbar,
       AgGridVue,
-      Parameter_button
+      Parameter_button,
+         Edit_pen
     },
     setup() {
       return {
@@ -82,9 +85,14 @@
             rowDrag: true
           },
           {
-            field: "model",
+        field: "model",
             flex: 1,
-            suppressSizeToFit: true
+            suppressSizeToFit: true,
+            editable: true,
+            cellRenderer: 'Edit_pen',
+            suppressClickEdit: true,
+            
+            enableRtl: true,
           }
         ],
         rowData: [{

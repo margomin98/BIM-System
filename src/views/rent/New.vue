@@ -6,26 +6,17 @@
         資產出庫填報
       </h1>
     </div>
+    
     <div class="info_wrap col">
-      <form>
-        <div class="row g-0">
-          <div class="col d-flex wrap">
-            <label for="inputTitle1" class="form-label">
-                            <p>
-                            申請日期
-                            </p>
-                            </label>
-            <input type="text" class="form-control" id="inputTitle1" style=' border-right:1px solid black'>
-          </div>
-          <div class="col d-flex wrap">
-            <label for="inputTitle2" class="form-label">
-                            <p>
-                            申請人員
-                            </p>
-                            </label>
-            <input type="text" class="form-control" id="inputTitle2">
-          </div>
+          <div class="fixed_info">
+        <div>
+          <p>申請人員：陳奕迅</p>
         </div>
+          <div>
+          <p>申請日期：2022/02/20</p>
+        </div>
+      </div>
+      <form>
         <div class="row g-0">
           <div class="col d-flex wrap">
             <label style=' border-right:1px solid black' for="inputTitle1" class="form-label">
@@ -321,6 +312,7 @@
         @include fixed_info;
         background: #528091;
         border-radius: 0;
+         border-top: 1px solid black;
         border-left: 1px solid black;
         border-right: 1px solid black;
         p {
@@ -329,7 +321,9 @@
         }
       }
       .second_content {
-        border: 1px solid black;
+       border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
         background: #D9D9D9;
         .submit_btn {
           margin-bottom: 20px;
@@ -407,7 +401,9 @@
         }
       }
       form {
-        border: 1px solid black;
+       border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
         .form-check {
           margin-left: 10px;
         }
