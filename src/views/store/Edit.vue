@@ -456,7 +456,8 @@
           goBack,
         };
       }
-    };
+    }
+  }
 </script>
 
 <style lang="scss" scoped>
