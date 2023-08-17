@@ -1,13 +1,14 @@
 <template>
   <div class='button_wrap'>
     <button @click="routeTo('檢視')">檢視</button>
-    <button @click="changeStatus">通知交付</button>
-    <button @click="routeTo('交付')">交付</button>
-    <button @click="routeTo('入庫')">入庫</button>
+    <button @click="changeStatus" :disabled="isDisabled.deliveryNotify">{{deliveryNotify}}</button>
+    <button @click="routeTo('交付')" :disabled="isDisabled.delivery">交付</button>
+    <button @click="routeTo('入庫')" :disabled="isDisabled.edit">入庫</button>
   </div>
 </template>
 
 <script>
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 export default {
@@ -15,7 +16,13 @@ export default {
   setup(props) {
     const router = useRouter();
     const search_id = props.params.data.AI_ID;
-
+    const deliveryNotify = ref('通知交付');
+    const isDisabled = ref({
+      deliveryNotify: false,
+      delivery: false,
+      edit: false,
+    });
+    
     function routeTo(view) {
       switch (view) {
         case '檢視':
@@ -29,19 +36,20 @@ export default {
           break;
       }
     }
+    //改變狀態 通知交付or暫停交付
     async function changeStatus() {
       const axios = require('axios');
       const response = await axios.get(`http://192.168.0.176:7008/AssetsInMng/DeliveryNotification?id=${search_id}`);
       try {
         const data = response.data;
-        console.log(data);
         if(data.state === 'success') {
+          console.log(data.messages);
           // emit('refresh' , data.message);
-          params.refresh(data.message);
+          props.params.colDef.cellRendererParams.refresh();
         } else if( data.state === 'error') {
-          alert(data.message);
+          alert(data.messages);
         } else if( data.state === 'account_error') {
-          alert(data.message);
+          alert(data.messages);
           router.push('/');
         }
       } 
@@ -49,9 +57,34 @@ export default {
         console.log(error);  
       }
     }
+
+    function checkButton() {
+      const disabledStatus = props.params.data.Status;
+      if(disabledStatus === '申請入庫' || disabledStatus ==='申請歸還' || disabledStatus ==='可交付') {
+        isDisabled.value.deliveryNotify = false;
+        isDisabled.value.delivery = false;
+      }
+      else {
+        isDisabled.value.deliveryNotify = true;
+        isDisabled.value.delivery = true;
+      }
+
+      if(disabledStatus === '待入庫') {
+        isDisabled.value.edit = false;
+      }
+      else {
+        isDisabled.value.edit = true;
+      }
+    }
+    onMounted(()=> {
+      deliveryNotify.value = props.params.data.Status !== '可交付' ? '通知交付' : '暫停交付';
+      checkButton();
+    });
     return {
+      deliveryNotify,
       routeTo,
       changeStatus,
+      isDisabled,
     }
   }
 }
