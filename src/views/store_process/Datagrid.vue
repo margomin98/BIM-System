@@ -178,7 +178,7 @@ export default {
       field: "",
       cellRenderer: "Storage_process_button",
       cellRendererParams: {
-        refresh: params.refresh, // 传递回调函数的 ref 给渲染器组件
+        // refresh: params.refresh, // 传递回调函数的 ref 给渲染器组件
       },
       width: 300,
     },
