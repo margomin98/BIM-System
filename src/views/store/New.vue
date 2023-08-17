@@ -205,7 +205,7 @@ export default {
     const ProductType = ref(''); //型號
     const Count = ref(1); //數量 *必填
     const Unit = ref(''); //單位 *必填
-    const UnitArray = (['個', '對', '箱', '包','組',]);
+    const UnitArray = (['個', '對', '箱', '包', '組',]);
     const WarrantyDate = ref(''); //保固期限
     const WarrantyStartDate = ref(''); //保固開始日
     const WarrantyEndDate = ref(''); //保固到期日
@@ -541,6 +541,7 @@ export default {
             width: 100%;
             max-height: 250px;
             overflow-y: auto;
+
             p {
               &:hover {
                 cursor: pointer;
@@ -850,4 +851,5 @@ export default {
 
 .input-group {
   flex-wrap: nowrap !important;
-}</style>
+}
+</style>
