@@ -1,9 +1,9 @@
 <template>
   <div class='button_wrap'>
-    <button @click="routeTo('檢視')">檢視</button>
-    <button @click="changeStatus">通知交付</button>
-    <button @click="routeTo('交付')">交付</button>
-    <button @click="routeTo('入庫')">入庫</button>
+    <button class='btn1' @click="routeTo('檢視')">檢視</button>
+    <button class='btn2'  @click="changeStatus">通知交付</button>
+    <button class='btn3' @click="routeTo('交付')">交付</button>
+    <button class='btn4' @click="routeTo('入庫')">入庫</button>
   </div>
 </template>
 
@@ -59,42 +59,41 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
-
-.button_wrap {
-  :nth-child(1) {
+ .btn1 {
     @include datagrid_view_button;
-  }
-
-  :nth-child(2) {
-    @include datagrid_inform_button;
-  }
-
-  :nth-child(3) {
-    @include datagrid_pass_button;
-  }
-
-  :nth-child(4) {
-    @include datagrid_edit_button;
-  }
-
-  button:nth-child(1):hover {
+    &:hover {
     background: #1D7072;
     color: white
   }
-
-  button:nth-child(2):hover {
-    background: #64a1a3;
+  }
+   .btn2 {
+    @include datagrid_inform_button;
+    &:hover {
+  background: #64a1a3;
     color: white
   }
-
-  button:nth-child(3):hover {
-    background: #597c7c;
+  }
+   .btn3 {
+    @include datagrid_pass_button;
+    &:hover {
+  background: #597c7c;
     color: white
   }
-
-  button:nth-child(4):hover {
+  }
+   .btn4 {
+    @include datagrid_edit_button;
+    &:hover {
     background: #3B6162;
     color: white
   }
+  }
+
+  .disabled_btn{
+  @include disabled_btn;
+  :hover{
+    @include disabled_btn;
+  }
 }
+
+
 </style>
