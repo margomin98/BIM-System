@@ -123,7 +123,8 @@
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
-              <div class="input-group-prepend">
+              <div class="input-group-prepend" style='justify-content: end;
+    display: flex;'>
                 保固期限：
               </div>
               <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="WarrantyDate">
@@ -415,15 +416,12 @@
         font-weight: 600;
         @include title_color;
       }
-      .row_wrap {
-  display: flex;  
-  gap: 0px 0px;
-  .input-group{
-    button{
-      width:calc(100px + 6%);
-    }
-  }
-}
+//       .row_wrap {
+//   display: flex;  
+//   gap: 0px 0px;
+ 
+// }
+
       .info_wrap {
             width: calc(100% - 60%);
     margin: auto;
@@ -474,10 +472,7 @@
         .input-number {
           @include count_btn;
         }
-        .form-control {
-          height: 35px;
-          border-radius: 0;
-        }
+   
         
         .fixed_info {
           @include fixed_info;
@@ -487,6 +482,9 @@
           }
         }
         .content {
+           .input-group-prepend {
+          width: 120px;
+        }
           .check_box_wrap {
             font-weight: 700;
             align-items: center;
@@ -497,24 +495,21 @@
             }
           }
           @include content_bg;
+          .input-number,.form-control,.row_wrap button {
+          width: 218px; /* Set the same width as input-group-prepend */
+        }
           .dropdown {
+             width:  218px;
             .dropdown-menu {
               width: 100%;
-            }
-          }
-          .content {
-            @include content_bg;
-          }
-          .dropdown {
-            .dropdown-menu {
-              width: 100%;
-              p {
+               p {
                 &:hover {
                   cursor: pointer;
                 }
               }
             }
-            .dropdown-toggle {
+             .dropdown-toggle {
+                            width: 100%;
               @include dropdown-btn;
               color: black;
               justify-content: space-between;
@@ -760,9 +755,6 @@
   .input-group{
     flex-wrap: nowrap !important;
   }
-  .form-control {
-  width: 100% !important;
-  height: 35px !important;
-}
+
 
 </style>

@@ -504,11 +504,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-
-            &::after {
-              font-size: 20px;
-              // margin-left: 60%;
-            }
           }
 
           .dropdown-menu {
@@ -618,9 +613,11 @@
           height: 35px;
           @include dropdown_btn;
 
-          .dropdown-toggle::after {
-            font-size: 20px;
-            margin-left: 75%;
+          .dropdown-toggle{
+                display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
           }
 
           .dropdown-menu {
@@ -740,9 +737,11 @@
           height: 35px;
           @include dropdown_btn;
 
-          .dropdown-toggle::after {
-            font-size: 20px;
-            margin-left: 75%;
+          .dropdown-toggle {
+               display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
           }
 
           .dropdown-menu {

@@ -26,6 +26,7 @@ import Rent_Edit from '../views/rent/Edit.vue'
 
 //系統管理
 import System_parameter from '../views/system/Parameter'
+import System_parameter_edit from '../views/system/Parameter_edit'
 
 //系統管理
 
@@ -113,6 +114,10 @@ const routes = [
     path: '/system_parameter',
     name: 'System_parameter',
     component:System_parameter,
+  }, {
+    path: '/system_parameter_edit',
+    name: 'System_parameter_edit',
+    component:System_parameter_edit,
   },
 ]
 
