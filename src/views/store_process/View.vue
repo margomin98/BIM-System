@@ -439,7 +439,9 @@ import { useRoute } from "vue-router";
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-  .main_section {
+ 
+  @media only screen and (min-width: 1200px){
+ .main_section {
     .readonly_box {
       @include readonly_box;
     }
@@ -562,4 +564,262 @@ import { useRoute } from "vue-router";
       }
     }
   }
+}
+
+
+@media only screen and (min-width: 768px) and (max-width: 1199px){
+ .main_section {
+    .readonly_box {
+      @include readonly_box;
+    }
+    h1 {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 55px;
+      font-weight: 600;
+      @include title_color;
+    }
+    .info_wrap {
+      padding: 1% 5% 0;
+      .fixed_info {
+        @include fixed_info;
+        p {
+          font-size: 20px;
+          margin-bottom: 0;
+        }
+      }
+      .content {
+        @include content_bg;
+        .dropdown {
+          .dropdown-menu {
+            width: 100%;
+          }
+          button {
+            @include dropdown-btn;
+            width: 187px;
+            color: black;
+            justify-content: space-between;
+            align-items: center;
+          }
+        }
+        .input-group {
+          .input-number {
+            @include count_btn;
+          }
+          .form-control {
+            height: 35px;
+            border-radius: 0;
+          }
+          .input-group-prepend {
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            width: 120px;
+            text-align: end;
+          }
+        }
+      }
+      .button_wrap {
+        display: flex;
+        margin-top: 30px;
+        justify-content: center;
+        padding: 0 28%;
+        margin-bottom: 5%;
+        button.back_btn {
+          @include back_to_previous_btn;
+          &:hover {
+            background-color: #5d85bb;
+          }
+        }
+      }
+      .tab_section {
+        .nav-tabs {
+          button {
+            @include tab_section_num;
+            background: #5C7897;
+          }
+          .active {
+            @include tab_section_num;
+            background: #3E4E5F;
+          }
+        }
+        .tab-content {
+          background: #3E4E5F;
+          padding: 50px 30px;
+          .input-group {
+            .selected_file {
+              margin-left: 20px;
+              li {
+                color: white
+              }
+              p {
+                margin-bottom: 0;
+                font-weight: 700;
+                color: white;
+              }
+            }
+            .input-number {
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              border-radius: 0;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 120px;
+              text-align: end;
+            }
+       
+          }
+             .product_img{
+              img{
+                width: 25px;
+    height: 25px;
+    align-self: center;
+    margin-left: 5px;
+              }
+            p{
+                color:white;
+            font-weight:800
+            }
+          
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 767px){
+ .main_section {
+    .readonly_box {
+      @include readonly_box;
+    }
+    h1 {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 50px;
+      font-weight: 600;
+      @include title_color;
+    }
+    .info_wrap {
+      padding: 1% 5% 0;
+      .fixed_info {
+        @include fixed_info;
+        height: unset;
+    padding: 10px;
+    flex-direction: column;
+        p {
+          font-size: 20px;
+          margin-bottom: 0;
+        }
+      }
+      .content {
+        @include content_bg;
+        .dropdown {
+          .dropdown-menu {
+            width: 100%;
+          }
+          button {
+            @include dropdown-btn;
+            width: 187px;
+            color: black;
+            justify-content: space-between;
+            align-items: center;
+          }
+        }
+        .input-group {
+          .input-number {
+            @include count_btn;
+          }
+          .form-control {
+            height: 35px;
+            border-radius: 0;
+          }
+          .input-group-prepend {
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            width: 120px;
+            text-align: end;
+          }
+        }
+      }
+      .button_wrap {
+        display: flex;
+        margin-top: 30px;
+        justify-content: center;
+        padding: 0 28%;
+        margin-bottom: 5%;
+        button.back_btn {
+          @include back_to_previous_btn;
+          &:hover {
+            background-color: #5d85bb;
+          }
+        }
+      }
+      .tab_section {
+        .nav-tabs {
+          button {
+            @include tab_section_num;
+            background: #5C7897;
+          }
+          .active {
+            @include tab_section_num;
+            background: #3E4E5F;
+          }
+        }
+        .tab-content {
+          background: #3E4E5F;
+          padding: 50px 30px;
+          .input-group {
+            .selected_file {
+              margin-left: 20px;
+              li {
+                color: white
+              }
+              p {
+                margin-bottom: 0;
+                font-weight: 700;
+                color: white;
+              }
+            }
+            .input-number {
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              border-radius: 0;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 120px;
+              text-align: end;
+            }
+       
+          }
+             .product_img{
+              img{
+                width: 25px;
+    height: 25px;
+    align-self: center;
+    margin-left: 5px;
+              }
+            p{
+                color:white;
+            font-weight:800
+            }
+          
+          }
+        }
+      }
+    }
+  }
+}
+
 </style>

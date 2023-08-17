@@ -134,14 +134,14 @@
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">
-                                  1
-                                </button>
+                                    1
+                                  </button>
             <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
-                                  2
-                                </button>
+                                    2
+                                  </button>
             <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">
-                                  3
-                                </button>
+                                    3
+                                  </button>
           </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -301,7 +301,7 @@
                 <input class="form-control" aria-label="With textarea">
               </div>
             </div>
-               <div class="col">
+            <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">資產照片：</div>
                 <div class="mb-3 file_wrap">
@@ -394,7 +394,7 @@
                 <input class="form-control" aria-label="With textarea">
               </div>
             </div>
-           <div class="col">
+            <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">資產照片：</div>
                 <div class="mb-3 file_wrap">
@@ -496,7 +496,9 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-  .main_section {
+
+  @media only screen and (min-width: 1200px){
+ .main_section {
     .readonly_box {
       @include readonly_box;
     }
@@ -684,4 +686,396 @@
       }
     }
   }
+}
+
+
+@media only screen and (min-width: 768px) and (max-width: 1199px){
+ .main_section {
+    .readonly_box {
+      @include readonly_box;
+    }
+    h1 {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 55px;
+      font-weight: 600;
+      @include title_color;
+    }
+    .info_wrap {
+      padding: 1% 5% 0;
+      .fixed_info {
+        @include fixed_info;
+        p {
+          font-size: 20px;
+          margin-bottom: 0;
+        }
+      }
+      .content {
+        @include content_bg;
+        .dropdown {
+          .dropdown-menu {
+            width: 100%;
+          }
+          button {
+            @include dropdown-btn;
+            width: 187px;
+            color: black;
+            justify-content: space-between;
+            align-items: center;
+          }
+        }
+        .input-group {
+          .input-number {
+            @include count_btn;
+          }
+          .form-control {
+            height: 35px;
+            border-radius: 0;
+          }
+          .input-group-prepend {
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            width: 120px;
+            text-align: end;
+          }
+        }
+      }
+      .button_wrap {
+        display: flex;
+        margin-top: 30px;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 5%;
+        button {
+          &:nth-child(1) {
+            @include back_to_previous_btn;
+            &:hover {
+              background-color: #5d85bb;
+            }
+          }
+          &:nth-child(2) {
+            @include empty_btn;
+            &:hover {
+              background-color: #5e7aa2;
+            }
+          }
+          &:nth-child(3) {
+            display: inline-flex;
+            padding: 10px 10px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            background: #385E96;
+            height: 40px;
+            width: 90px;
+            color: #FFF;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            border: none;
+            &:hover {
+              background-color: #57677c;
+            }
+          }
+          &:nth-child(4) {
+            @include search_and_send_btn;
+            &:hover {
+              background-color: #5e7aa2;
+            }
+          }
+        }
+      }
+      .tab_section {
+        .nav-tabs {
+          button {
+            @include tab_section_num;
+            background: #5C7897;
+          }
+          .active {
+            @include tab_section_num;
+            background: #3E4E5F;
+          }
+        }
+        .tab-content {
+          background: #3E4E5F;
+          padding: 50px 30px;
+          .modal {
+            .modal-header {
+              background: #3D4E61;
+              color: white;
+              .close_icon {
+                color: white;
+                font-weight: 700;
+                margin-bottom: 0;
+              }
+            }
+          }
+          .input-group {
+            span {
+              @include red_star
+            }
+            .selected_file {
+              margin-left: 20px;
+              p.title {
+                font-weight: 700;
+                color: white;
+                margin-bottom: 5px;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  margin-bottom: 0;
+                  font-weight: 700;
+                  color: white;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
+            }
+            .input-number {
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              border-radius: 0;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 120px;
+              text-align: end;
+            }
+            .file_wrap {
+              display: flex;
+              flex-direction: column;
+              .choose_btn {
+                margin-bottom: 10px;
+                @include choose_file_btn;
+                &:hover {
+                  background: #3f608f;
+                }
+              }
+              .upload_btn {
+                @include upload_file_btn;
+                &:hover {
+                  background: #2f507e;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 767px){
+ .main_section {
+    .readonly_box {
+      @include readonly_box;
+    }
+    h1 {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 50px;
+      font-weight: 600;
+      @include title_color;
+    }
+    .info_wrap {
+      padding: 1% 5% 0;
+      .fixed_info {
+        @include fixed_info;
+            flex-direction: column;
+    padding: 10px;
+    height:unset;
+        p {
+          font-size: 20px;
+          margin-bottom: 0;
+        }
+      }
+      .content {
+        @include content_bg;
+        .dropdown {
+          .dropdown-menu {
+            width: 100%;
+          }
+          button {
+            @include dropdown-btn;
+            width: 187px;
+            color: black;
+            justify-content: space-between;
+            align-items: center;
+          }
+        }
+        .input-group {
+          .input-number {
+            @include count_btn;
+          }
+          .form-control {
+            height: 35px;
+            border-radius: 0;
+          }
+          .input-group-prepend {
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            width: 120px;
+            text-align: end;
+          }
+        }
+      }
+      .button_wrap {
+        display: flex;
+        margin-top: 30px;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 5%;
+        button {
+          &:nth-child(1) {
+            @include back_to_previous_btn;
+            padding: 10px;
+            &:hover {
+              background-color: #5d85bb;
+            }
+          }
+          &:nth-child(2) {
+            @include empty_btn;
+            padding: 10px;
+            &:hover {
+              background-color: #5e7aa2;
+            }
+          }
+          &:nth-child(3) {
+            display: inline-flex;
+            padding: 10px 10px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            background: #385E96;
+            height: 40px;
+            width: 90px;
+            color: #FFF;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            border: none;
+            padding: 10px;
+            &:hover {
+              background-color: #57677c;
+            }
+          }
+          &:nth-child(4) {
+            @include search_and_send_btn;
+            padding: 10px;
+            &:hover {
+              background-color: #5e7aa2;
+            }
+          }
+        }
+      }
+      .tab_section {
+        .nav-tabs {
+          button {
+            @include tab_section_num;
+            background: #5C7897;
+          }
+          .active {
+            @include tab_section_num;
+            background: #3E4E5F;
+          }
+        }
+        .tab-content {
+          background: #3E4E5F;
+          padding: 50px 30px;
+          .modal {
+            .modal-header {
+              background: #3D4E61;
+              color: white;
+              .close_icon {
+                color: white;
+                font-weight: 700;
+                margin-bottom: 0;
+              }
+            }
+          }
+          .input-group {
+            span {
+              @include red_star
+            }
+            .selected_file {
+              margin-left: 20px;
+              p.title {
+                font-weight: 700;
+                color: white;
+                margin-bottom: 5px;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  margin-bottom: 0;
+                  font-weight: 700;
+                  color: white;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
+            }
+            .input-number {
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              border-radius: 0;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 120px;
+              text-align: end;
+            }
+            .file_wrap {
+              display: flex;
+              flex-direction: column;
+              .choose_btn {
+                margin-bottom: 10px;
+                @include choose_file_btn;
+                &:hover {
+                  background: #3f608f;
+                }
+              }
+              .upload_btn {
+                @include upload_file_btn;
+                &:hover {
+                  background: #2f507e;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 </style>

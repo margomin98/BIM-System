@@ -164,7 +164,7 @@ export default {
       field: "EquipCategoryName",
       unSortIcon: true,
       sortable: true,
-      width: 150,
+      width: 160,
       suppressMovable: true
     },
     {
@@ -172,7 +172,7 @@ export default {
       field: "AssetName",
       unSortIcon: true,
       sortable: true,
-      width: 250,
+      width: 275,
       suppressMovable: true
     },
     {
@@ -188,7 +188,7 @@ export default {
       field: "ApplicationDate",
       unSortIcon: true,
       sortable: true,
-      width: 200,
+      width: 170,
       suppressMovable: true
     },
     {
@@ -196,7 +196,7 @@ export default {
       field: "Applicant",
       unSortIcon: true,
       sortable: true,
-      width: 180,
+      width: 170,
       suppressMovable: true
     },
     {
@@ -452,11 +452,6 @@ export default {
             display: flex;
             justify-content: space-between;
             align-items: center;
-
-            &::after {
-              font-size: 20px;
-              // margin-left: 60%;
-            }
           }
 
           .dropdown-menu {
@@ -568,9 +563,11 @@ export default {
           height: 35px;
           @include dropdown_btn;
 
-          .dropdown-toggle::after {
-            font-size: 20px;
-            margin-left: 75%;
+          .dropdown-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: none;
           }
 
           .dropdown-menu {
@@ -690,9 +687,11 @@ export default {
           height: 35px;
           @include dropdown_btn;
 
-          .dropdown-toggle::after {
-            font-size: 20px;
-            margin-left: 75%;
+          .dropdown-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: none;
           }
 
           .dropdown-menu {
@@ -717,5 +716,4 @@ export default {
       text-align: left importtant;
     }
   }
-}
-</style>
+}</style>
