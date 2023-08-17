@@ -38,23 +38,23 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                    {{ EquipTypeName || '請選擇' }}
-                  </button>
+                      {{ EquipTypeName || '請選擇' }}
+                    </button>
                 <div class="dropdown-menu" aria-labelledby="typeDropdown">
                   <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
                 </div>
               </div>
             </div>
           </div>
-             <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
                 <span>*</span>設備分類：
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(EquipTypeName !== '') }">
-                    {{ EquipCategoryName || EquipCategoryInit }}
-                  </button>
+                      {{ EquipCategoryName || EquipCategoryInit }}
+                    </button>
                 <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                   <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
                 </div>
@@ -110,8 +110,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ Unit || '請選擇' }}
-                  </button>
+                      {{ Unit || '請選擇' }}
+                    </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in UnitArray" :key="index" class="dropdown-item" @click="selectUnit(`${item}`)">
                     {{ item }}</p>
@@ -124,7 +124,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend" style='justify-content: end;
-    display: flex;'>
+      display: flex;'>
                 保固期限：
               </div>
               <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="WarrantyDate">
@@ -160,7 +160,6 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">上一頁</button>
-        <button class="empty_btn" @click="clear">清空</button>
         <button class="send_btn" @click="submit">送出</button>
       </div>
     </div>
@@ -220,23 +219,6 @@
       }
       function goBack() {
         window.history.back();
-      }
-      function clear() {
-        // Clear input fields
-        IsConsumable.value = false;
-        EquipTypeName.value = '';
-        EquipCategoryName.value = '';
-        EquipCategoryInit.value = '請先選擇設備總類'
-        AssetName.value = '';
-        VendorName.value = '';
-        ProductSpec.value = '';
-        ProductType.value = '';
-        Count.value = 1;
-        Unit.value = '';
-        WarrantyDate.value = '';
-        WarrantyStartDate.value = '';
-        WarrantyEndDate.value = '';
-        Memo.value = '';
       }
       async function submit() {
         // 檢查所有required項目
@@ -393,7 +375,6 @@
         selectUnit,
         selectCategory,
         goBack,
-        clear,
         submit,
       };
     }
@@ -401,12 +382,9 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@/assets/css/global.scss';
-  // .input-group {
+  @import '@/assets/css/global.scss'; // .input-group {
   //   flex-wrap:unset !important
   // }
-
-
   @media only screen and (min-width: 1200px) {
     .main_section {
       h1 {
@@ -416,18 +394,18 @@
         font-weight: 600;
         @include title_color;
       }
-//       .row_wrap {
-//   display: flex;  
-//   gap: 0px 0px;
- 
-// }
-
+      //       .row_wrap {
+      //   display: flex;  
+      //   gap: 0px 0px;
+      // }
       .info_wrap {
-            width: calc(100% - 60%);
-    margin: auto;
+        width: calc(100% - 60%);
+        margin: auto;
         .button_wrap {
-          @include bottom_btn_wrap;
-          margin-bottom: 5%;
+          display: flex;
+          justify-content: space-between;
+          margin: 30px auto 5%;
+          width: 220px;
           button {
             &:nth-child(1) {
               @include back_to_previous_btn;
@@ -436,12 +414,6 @@
               }
             }
             &:nth-child(2) {
-              @include empty_btn;
-              &:hover {
-                background-color: #5e7aa2;
-              }
-            }
-            &:nth-child(3) {
               @include search_and_send_btn;
               &:hover {
                 background-color: #5D85BD;
@@ -455,16 +427,13 @@
         button.send_btn:hover {
           background-color: #5e7aa2;
         }
-        button.empty_btn:hover {
-          background-color: #5D85BD;
-        }
         .input-group-prepend {
           color: white;
           font-weight: 700;
           font-size: 20px;
-          width:calc(100px + 6%);
+          width: calc(100px + 6%);
           text-align: end;
-          white-space:nowrap;
+          white-space: nowrap;
           span {
             @include red_star
           }
@@ -472,8 +441,6 @@
         .input-number {
           @include count_btn;
         }
-   
-        
         .fixed_info {
           @include fixed_info;
           p {
@@ -482,9 +449,9 @@
           }
         }
         .content {
-           .input-group-prepend {
-          width: 120px;
-        }
+          .input-group-prepend {
+            width: 120px;
+          }
           .check_box_wrap {
             font-weight: 700;
             align-items: center;
@@ -495,21 +462,24 @@
             }
           }
           @include content_bg;
-          .input-number,.form-control,.row_wrap button {
-          width: 218px; /* Set the same width as input-group-prepend */
-        }
+          .input-number,
+          .form-control,
+          .row_wrap button {
+            width: 218px;
+            /* Set the same width as input-group-prepend */
+          }
           .dropdown {
-             width:  218px;
+            width: 218px;
             .dropdown-menu {
               width: 100%;
-               p {
+              p {
                 &:hover {
                   cursor: pointer;
                 }
               }
             }
-             .dropdown-toggle {
-                            width: 100%;
+            .dropdown-toggle {
+              width: 100%;
               @include dropdown-btn;
               color: black;
               justify-content: space-between;
@@ -531,8 +501,10 @@
       }
       .info_wrap {
         .button_wrap {
-          @include bottom_btn_wrap;
-          margin-bottom: 5%;
+          display: flex;
+    justify-content: space-between;
+    margin: 30px auto 5%;
+    width: 220px;
           button {
             &:nth-child(1) {
               @include back_to_previous_btn;
@@ -541,12 +513,6 @@
               }
             }
             &:nth-child(2) {
-              @include empty_btn;
-              &:hover {
-                background-color: #5e7aa2;
-              }
-            }
-            &:nth-child(3) {
               @include search_and_send_btn;
               &:hover {
                 background-color: #5D85BD;
@@ -639,9 +605,10 @@
       }
       .info_wrap {
         .button_wrap {
-          @include bottom_btn_wrap;
-          margin-bottom: 5%;
-          padding: 0 8%;
+      display: flex;
+    justify-content: space-between;
+    margin: 30px auto 5%;
+    width: 220px;
           button {
             &:nth-child(1) {
               @include back_to_previous_btn;
@@ -752,9 +719,7 @@
       }
     }
   }
-  .input-group{
+  .input-group {
     flex-wrap: nowrap !important;
   }
-
-
 </style>

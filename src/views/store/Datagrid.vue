@@ -78,7 +78,7 @@
         <button class="empty_btn" @click="clear">清空</button>
       </div>
     </div>
-    <ag-grid-vue style="height: 517px" class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true">
+    <ag-grid-vue style="height: 400px" class="ag-theme-alpine mb-5 " :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true">
     </ag-grid-vue>
   </div>
 </template>
@@ -176,22 +176,7 @@
             sortable: true,
             width: 100,
             suppressMovable: true
-          }, <<
-          << << < HEAD
-          // {
-          //   headerName: "區域",
-          //   field: "AreaName",
-          //   unSortIcon: true,
-          //   sortable: true,
-          //   width: 100,
-          //   suppressMovable: true
-          // },
-          // {
-          //   headerName: "櫃位",
-          unSortIcon: true,
-          sortable: true,
-          width: 180,
-          suppressMovable: true
+          
         },
         {
           field: "",
