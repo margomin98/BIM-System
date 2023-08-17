@@ -164,7 +164,7 @@ export default {
       field: "EquipCategoryName",
       unSortIcon: true,
       sortable: true,
-      width: 150,
+      width: 160,
       suppressMovable: true
     },
     {
@@ -172,7 +172,7 @@ export default {
       field: "AssetName",
       unSortIcon: true,
       sortable: true,
-      width: 250,
+      width: 275,
       suppressMovable: true
     },
     {
@@ -181,6 +181,22 @@ export default {
       unSortIcon: true,
       sortable: true,
       width: 100,
+      suppressMovable: true
+    },
+    {
+      headerName: "申請入庫日期",
+      field: "ApplicationDate",
+      unSortIcon: true,
+      sortable: true,
+      width: 170,
+      suppressMovable: true
+    },
+    {
+      headerName: "申請人員",
+      field: "Applicant",
+      unSortIcon: true,
+      sortable: true,
+      width: 170,
       suppressMovable: true
     },
     {
