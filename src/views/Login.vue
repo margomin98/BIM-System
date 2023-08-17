@@ -16,10 +16,10 @@
           </h1>
         </div>
         <div class="form">
-          <p>帳號{{ userName }}</p>
+          <p>帳號</p>
           <input class="text_input" type="text" v-model="userName">
-          <p class="mt-3">密碼{{ userPassword }}</p>
-          <input class="text_input" type="text" @keyup.enter="login" v-model="userPassword">
+          <p class="mt-3">密碼</p>
+          <input class="text_input" type="password" @keyup.enter="login" v-model="userPassword">
           <div class="tick">
             <input type="checkbox">記住我
           </div>

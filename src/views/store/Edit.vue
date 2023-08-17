@@ -227,7 +227,7 @@ export default {
     const EquipTypeArray = ref([]);
     const EquipCategoryArray = ref([]);
     const EquipCategoryInit = ref('請先選擇設備總類');
-    const UnitArray = (['個', '支', '台', '件', '把', '枝', '本', '根', '隻', '張', '條', '塊', '顆', '雙', '箱', '包',]);
+    const UnitArray = (['個', '對', '箱', '包','組',]);
 
     const details = ref({});
 
