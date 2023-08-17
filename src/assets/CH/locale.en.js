@@ -130,7 +130,7 @@ const AG_GRID_LOCALE_EN = {
   nextPage: '下一頁',
   lastPage: '最後一頁',
   firstPage: '第一頁',
-  previousPage: '上一頁',
+  previousPage: '回上一頁',
 
   // Pivoting
   pivotColumnGroupTotals: '總共',

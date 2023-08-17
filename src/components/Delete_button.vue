@@ -1,6 +1,6 @@
 <template>
   <div class='button_wrap'>
-    <button @click="alertclick('刪除')">刪除</button>
+    <button class='btn' @click="alertclick('刪除')">刪除</button>
   </div>
 </template>
 
@@ -20,12 +20,24 @@
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
-  .button_wrap {
-    button {
-      @include delete_button;
-    }
-    &:hover {
+.button_wrap{
+   display:flex;
+  align-items:center;
+
+.btn{
+  @include delete_button;
+   &:hover {
       background: #FF7272
     }
+}
+
+.disabled_btn{
+  @include disabled_btn;
+  width: 50px;
+  &:hover{
+      @include disabled_btn;
+  width: 50px;
   }
+}
+}
 </style>

@@ -30,7 +30,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <router-link to="/rent_datagrid">出口填報</router-link>
-              <router-link to="">出庫作業</router-link>
+              <router-link to="/rent_process_datagrid">出庫作業</router-link>
               <router-link to="">出庫審核</router-link>
             </div>
           </li>
@@ -52,7 +52,7 @@
               <img src="../assets/navbar/setting.png" alt="系統管理"> 系統管理
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <router-link to="">權限管理</router-link>
+              <router-link to="/authority">權限管理</router-link>
               <router-link to="/system_parameter">參數管理</router-link>
             </div>
           </li>

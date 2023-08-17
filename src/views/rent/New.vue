@@ -139,7 +139,7 @@
           <div class="col d-flex wrap">
             <label for="inputTextarea" class="form-label">
                             <p>
-                            備註：
+                            規格需求：
                             </p>
                             </label>
             <div>
@@ -162,7 +162,7 @@
       </div>
     </div>
     <div class="col button_wrap">
-      <button class="back_btn" @click="goBack">上一頁</button>
+      <button class="back_btn" @click="goBack">回上一頁</button>
       <button class="empty_btn" @click="clear">清空</button>
       <button class="send_btn" @click="submit">送出</button>
     </div>
