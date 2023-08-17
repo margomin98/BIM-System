@@ -48,8 +48,8 @@
               {{ Status || "請選擇" }}
             </button>
             <div class="dropdown-menu" aria-labelledby="statusDropdown">
-              <p v-for="(item, index) in StatusArray" :key="index" class="dropdown-item"
-                @click="selectStatus(`${item}`)">{{ item }}</p>
+              <p v-for="(item, index) in StatusArray" :key="index" class="dropdown-item" @click="selectStatus(`${item}`)">
+                {{ item }}</p>
             </div>
           </div>
         </div>
@@ -74,8 +74,8 @@
               {{ LayerName || LayerInit }}
             </button>
             <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
-              <p v-for="(item, index) in LayerArray" :key="index" class="dropdown-item"
-                @click="selectLayer(`${item}`)">{{ item }}</p>
+              <p v-for="(item, index) in LayerArray" :key="index" class="dropdown-item" @click="selectLayer(`${item}`)">{{
+                item }}</p>
             </div>
           </div>
         </div>
@@ -107,7 +107,7 @@
           <div class="date-selector">
             <div class="input-container">
               <input type="date" v-model="EndDate" class="date-input" @focus="showEndDatePicker = true"
-                @blur="showEndDatePicker = false" :disabled="DateCategory === ''"/>
+                @blur="showEndDatePicker = false" :disabled="DateCategory === ''" />
             </div>
           </div>
         </div>
@@ -161,6 +161,9 @@ export default {
     const total = ref(100);
     const pageSize = ref(10);
     const data = ref([]);
+    const handleRefresh = ref(message => {
+      alert(message);
+    });
     const pagePosition = ref("bottom");
     const pageOptions = ref([
       { value: "bottom", text: "Bottom" },
@@ -168,20 +171,23 @@ export default {
       { value: "both", text: "Both" }
     ]);
 
-    
+
 
     const columnDefs = [{
       suppressMovable: true,
       field: "",
       cellRenderer: "Storage_process_button",
-      width: '300px',
+      cellRendererParams: {
+        refresh: params.refresh, // 传递回调函数的 ref 给渲染器组件
+      },
+      width: 300,
     },
     {
       headerName: "編號",
       field: "AI_ID",
       unSortIcon: true,
       sortable: true,
-      width: '150px',
+      width: 150,
       suppressMovable: true
     },
     {
@@ -189,7 +195,7 @@ export default {
       field: "EquipTypeName",
       unSortIcon: true,
       sortable: true,
-      width: '150px',
+      width: 150,
       suppressMovable: true
     },
     {
@@ -197,7 +203,7 @@ export default {
       field: "EquipCategoryName",
       unSortIcon: true,
       sortable: true,
-      width: '150px',
+      width: 150,
       suppressMovable: true
     },
     {
@@ -205,7 +211,7 @@ export default {
       field: "AssetsId",
       unSortIcon: true,
       sortable: true,
-      width: '150px',
+      width: 150,
       suppressMovable: true
     },
     {
@@ -213,7 +219,7 @@ export default {
       field: "AssetName",
       unSortIcon: true,
       sortable: true,
-      width: '160px',
+      width: 160,
       suppressMovable: true
     },
     {
@@ -221,7 +227,7 @@ export default {
       field: "Status",
       unSortIcon: true,
       sortable: true,
-      width: '100px',
+      width: 100,
       suppressMovable: true
     },
     {
@@ -229,7 +235,7 @@ export default {
       field: "AreaName",
       unSortIcon: true,
       sortable: true,
-      width: '100px',
+      width: 100,
       suppressMovable: true
     },
     {
@@ -237,7 +243,7 @@ export default {
       field: "LayerName",
       unSortIcon: true,
       sortable: true,
-      width: '100px',
+      width: 100,
       suppressMovable: true,
       suppressMovable: true
     },
@@ -246,7 +252,7 @@ export default {
       field: "ApplicationDate",
       unSortIcon: true,
       sortable: true,
-      width: '170px',
+      width: 170,
       suppressMovable: true
     },
     {
@@ -254,7 +260,7 @@ export default {
       field: "Applicant",
       unSortIcon: true,
       sortable: true,
-      width: '150px',
+      width: 150,
       suppressMovable: true
     },
     {
@@ -262,7 +268,7 @@ export default {
       field: "DeliveryDate",
       unSortIcon: true,
       sortable: true,
-      width: '170px',
+      width: 170,
       suppressMovable: true
     },
     {
@@ -270,7 +276,7 @@ export default {
       field: "DeliveryOperator",
       unSortIcon: true,
       sortable: true,
-      width: '150px',
+      width: 150,
       suppressMovable: true
     },
     {
@@ -278,7 +284,7 @@ export default {
       field: "AssetsInDate",
       unSortIcon: true,
       sortable: true,
-      width: '170px',
+      width: 170,
       suppressMovable: true
     },
     {
@@ -286,7 +292,7 @@ export default {
       field: "AssetsInOperator",
       unSortIcon: true,
       sortable: true,
-      width: '150px',
+      width: 150,
       suppressMovable: true
     },
     {
@@ -294,19 +300,32 @@ export default {
       cellRenderer: "Delete",
     }
     ];
-    const rowData = ref([]);
+    const rowData = ref([
+      {
+        AI_ID: 'S202300001',
+        EquipTypeName: "Type A",
+        EquipCategoryName: "Category X",
+        AssetsId: "A123",
+        AssetName: "Asset 1",
+        Status: "申請入庫",
+        AreaName: "Area 1",
+        LayerName: "Layer 1",
+        ApplicationDate: "2023/08/14",
+        Applicant: "John Doe"
+      },
+    ]);
 
     async function submit() {
       const formData = new FormData();
       const formFields = {
         'EquipTypeName': EquipTypeName.value,
         'EquipCategoryName': EquipCategoryName.value,
-        'AssetsId':AssetsId.value,
+        'AssetsId': AssetsId.value,
         'AssetName': AssetName.value,
         'Status': Status.value,
-        'AreaName':AreaName.value,
-        'LayerName':LayerName.value,
-        'DateCategory':DateCategory.value,
+        'AreaName': AreaName.value,
+        'LayerName': LayerName.value,
+        'DateCategory': DateCategory.value,
         'StartDate': StartDate.value,
         'EndDate': EndDate.value,
       };
@@ -349,7 +368,7 @@ export default {
         console.error('Error sending data to backend', error);
       }
     }
-    
+
     async function getEquipTypeName() {
       if (EquipTypeArray.value.length == 0) {
         const axios = require('axios');
@@ -415,23 +434,23 @@ export default {
     }
 
     async function getLayerName() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetLayerName?id=${AreaName.value}`);
-          console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('Layer Get成功 資料如下\n', data.resultList.LayerName);
-            LayerArray.value = data.resultList.LayerName;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error('Error sending applicant info request to backend');
+      const axios = require('axios');
+      try {
+        const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetLayerName?id=${AreaName.value}`);
+        console.log(response);
+        const data = response.data;
+        if (data.state === 'success') {
+          console.log('Layer Get成功 資料如下\n', data.resultList.LayerName);
+          LayerArray.value = data.resultList.LayerName;
+        } else if (data.state === 'error') {
+          alert(data.messages);
+        } else if (data.state === 'account_error') {
+          alert(data.messages);
+          router.push('/');
         }
+      } catch (error) {
+        console.error('Error sending applicant info request to backend');
+      }
     }
 
     function selectType(item) {
@@ -440,15 +459,15 @@ export default {
       getEquipCategoryName();
       EquipCategoryInit.value = '請選擇';
     }
-    
+
     function selectCategory(item) {
       EquipCategoryName.value = item;
     }
-    
+
     const selectStatus = (item) => {
       Status.value = item;
     };
-    
+
     const selectArea = (item) => {
       AreaName.value = item;
       LayerName.value = '';
@@ -481,11 +500,12 @@ export default {
       submit();
     };
 
+ 
     const frameworkComponents = {
       agGridVue: AgGridVue
     };
 
-    onMounted(()=> {
+    onMounted(() => {
       submit();
     });
     return {
@@ -608,18 +628,20 @@ export default {
             display: flex;
             justify-content: space-between;
             align-items: center;
-border:none;
+            border: none;
           }
 
           .dropdown-menu {
             width: 100%;
             transform: translate3d(-1px, 35px, 0px) !important;
-            max-height: 250px; 
+            max-height: 250px;
             overflow-y: auto;
+
             p {
               font-size: 18px;
               color: black;
               font-weight: normal;
+
               &:hover {
                 cursor: pointer;
               }
@@ -708,12 +730,13 @@ border:none;
           width: 100%;
           height: 35px;
           @include dropdown_btn;
-   .dropdown-toggle {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              border: none;
-            }
+
+          .dropdown-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: none;
+          }
 
           .dropdown-menu {
             width: 100%;
@@ -831,12 +854,13 @@ border:none;
           width: 100%;
           height: 35px;
           @include dropdown_btn;
-   .dropdown-toggle {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              border: none;
-            }
+
+          .dropdown-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: none;
+          }
 
           .dropdown-menu {
             width: 100%;
