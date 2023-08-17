@@ -30,113 +30,119 @@
     border: none;
 }
 
-@mixin auth_btn{
+@mixin auth_btn {
     width: 70px;
     background: #3569AF;
-border:none;
-color: white;
-font-weight: 700;
+    border: none;
+    color: white;
+    font-weight: 700;
 }
+
 @mixin disabled_btn {
-    margin:0 5px;
+    margin: 0 5px;
     background: #898989;
     font-weight: 700;
-    cursor:default;
+    cursor: default;
     border-radius: 7px;
     width: auto;
-height: 30px;
-align-items: center;
+    height: 30px;
+    align-items: center;
     display: inline-flex;
     justify-content: center;
-    border:none;
+    border: none;
 }
+
 @mixin readonly_box {
     background: #B4B4B4;
     font-weight: 700;
     border: 0;
 }
+
 @mixin disabled_btn {
-    margin:0 5px;
+    margin: 0 5px;
     background: #898989;
     font-weight: 700;
-    cursor:default;
+    cursor: default;
     border-radius: 7px;
     width: auto;
-height: 30px;
-align-items: center;
+    height: 30px;
+    align-items: center;
     display: inline-flex;
     justify-content: center;
-    border:none;
+    border: none;
 }
-@mixin delete_button{
-    border:none;
+
+@mixin delete_button {
+    border: none;
     border-radius: 7px;
-background: var(--c-5, #E94B4B);
-width: 50px;
-height: 30px;
-align-items: center;
+    background: var(--c-5, #E94B4B);
+    width: 50px;
+    height: 30px;
+    align-items: center;
     display: inline-flex;
     justify-content: center;
     font-weight: 700;
     font-size: 15px;
-    margin:0 5px;
+    margin: 0 5px;
 }
 
 //data grid css
-@mixin datagrid_view_button{
-    border:none;
+@mixin datagrid_view_button {
+    border: none;
     border-radius: 7px;
-background: var(--c-5, #79A8A9);
-width: 50px;
-height: 30px;
-align-items: center;
+    background: var(--c-5, #79A8A9);
+    width: 50px;
+    height: 30px;
+    align-items: center;
     display: inline-flex;
     justify-content: center;
     font-weight: 700;
     font-size: 15px;
-    margin:0 5px;
+    margin: 0 5px;
 }
 
-@mixin datagrid_edit_button{
-    border:none;
-    margin:0 5px;
+@mixin datagrid_edit_button {
+    border: none;
+    margin: 0 5px;
     border-radius: 7px;
     background: var(--c-2, #98CCD3);
-width: 50px;
-height: 30px;
-align-items: center;
+    width: 50px;
+    height: 30px;
+    align-items: center;
     display: inline-flex;
     justify-content: center;
     font-weight: 700;
     font-size: 15px;
 }
 
-@mixin datagrid_inform_button{
-    border:none;
-    margin:0 5px;
+@mixin datagrid_inform_button {
+    border: none;
+    margin: 0 5px;
     border-radius: 7px;
     background: var(--c-2, #529496);
-width: 80px;
-height: 30px;
-align-items: center;
+    width: 80px;
+    height: 30px;
+    align-items: center;
     display: inline-flex;
     justify-content: center;
     font-weight: 700;
     font-size: 15px;
 }
-@mixin datagrid_pass_button{
-    border:none;
-    margin:0 5px;
+
+@mixin datagrid_pass_button {
+    border: none;
+    margin: 0 5px;
     border-radius: 7px;
     background: var(--c-2, #2E95A3);
-width: 50px;
-height: 30px;
-align-items: center;
+    width: 50px;
+    height: 30px;
+    align-items: center;
     display: inline-flex;
     justify-content: center;
     font-weight: 700;
     font-size: 15px;
 }
+
 @mixin datagrid_button_no1 {
     display: inline-flex;
     padding: 10px 25px;
@@ -202,6 +208,7 @@ align-items: center;
     justify-content: center;
     align-items: center;
 }
+
 @mixin export_btn {
     border-radius: 10px;
     background: #7893B7;
@@ -273,34 +280,36 @@ align-items: center;
 
 //store_process_css
 
-@mixin tab_section_num{
+@mixin tab_section_num {
     box-shadow: 4px 0px 4px 0px rgba(0, 0, 0, 0.25);
     border-top: 1px solid rgba(0, 0, 0, 0.50);
     color: white;
     font-weight: 700;
-    width: 80px;   
+    width: 80px;
     border-left: 0;
     border-bottom: 0;
     border-radius: 10px 10px 0px 0px;
     border-right: 1px solid rgba(0, 0, 0, 0.50);
 }
 
-@mixin choose_file_btn{
+@mixin choose_file_btn {
     height: 35px;
     width: 150px;
     border-radius: 5px;
     background: #7CA6DD;
-    border:none;
-    color:white;
+    border: none;
+    color: white;
     font-weight: 700;
 }
-@mixin upload_file_btn{
+
+@mixin upload_file_btn {
     height: 35px;
     width: 150px;
     border-radius: 5px;
-background: #4881CF;
-border:none;
-color:white;
-font-weight: 700;
+    background: #4881CF;
+    border: none;
+    color: white;
+    font-weight: 700;
 }
+
 //store_process_css
