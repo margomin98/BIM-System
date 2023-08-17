@@ -449,30 +449,8 @@ export default {
             }
           }
         }
-      }
-
-      button.back_btn:hover {
-        background-color: #5d85bb;
-      }
-
-      button.send_btn:hover {
-        background-color: #5e7aa2;
-      }
-
-      button.empty_btn:hover {
-        background-color: #5D85BD;
-      }
-
-      .input-group-prepend {
-        color: white;
-        font-weight: 700;
-        font-size: 20px;
-        width: calc(100px + 6%);
-        text-align: end;
-        white-space: nowrap;
-
-        span {
-          @include red_star
+        button.back_btn:hover {
+          background-color: #5d85bb;
         }
         button.send_btn:hover {
           background-color: #5e7aa2;
@@ -516,7 +494,7 @@ export default {
           .form-control,
           .row_wrap button {
             width: 218px;
-            /* Set the same width as input-group-prepend */
+        
           }
           .dropdown {
             width: 218px;
@@ -540,48 +518,14 @@ export default {
       }
     }
   }
-
-
-@media only screen and (min-width: 768px) and (max-width: 1199px) {
-  .main_section {
-    h1 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 55px;
-      font-weight: 600;
-      @include title_color;
-    }
-
-    .info_wrap {
-      .button_wrap {
-        @include bottom_btn_wrap;
-        margin-bottom: 5%;
-
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-
-          &:nth-child(2) {
-            @include empty_btn;
-
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
-
-          &:nth-child(3) {
-            @include search_and_send_btn;
-
-            &:hover {
-              background-color: #5D85BD;
-            }
-          }
-        }
+  @media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .main_section {
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
       }
       .info_wrap {
         .button_wrap {
@@ -604,170 +548,88 @@ export default {
             }
           }
         }
-      }
-
-      .input-number {
-        @include count_btn;
-      }
-
-      .form-control {
-        height: 35px;
-        border-radius: 0;
-      }
-
-      padding: 1% 5% 0;
-
-      .fixed_info {
-        @include fixed_info;
-
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
+        button.back_btn:hover {
+          background-color: #5d85bb;
         }
-      }
-
-      .content {
-        .check_box_wrap {
-          font-weight: 700;
-          align-items: center;
-          color: white;
-          font-size: 20px;
-
-          .check_box {
-            margin-right: 5px;
-          }
+        button.send_btn:hover {
+          background-color: #5e7aa2;
         }
-
-        @include content_bg;
-
-        .dropdown {
-          .dropdown-menu {
-            width: 100%;
-          }
+        button.empty_btn:hover {
+          background-color: #5D85BD;
         }
-
-        .content {
-          @include content_bg;
-        }
-
-        .dropdown {
-          .dropdown-menu {
-            width: 100%;
-
-            p {
-              &:hover {
-                cursor: pointer;
-              }
-            }
-          }
-
-          .dropdown-toggle {
-            @include dropdown-btn;
-            width: 180px;
-            color: black;
-            justify-content: space-between;
-            align-items: center;
-          }
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 767px) {
-  .main_section {
-    h1 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 50px;
-      font-weight: 600;
-      @include title_color;
-    }
-
-    .info_wrap {
-      .button_wrap {
-        @include bottom_btn_wrap;
-        margin-bottom: 5%;
-        padding: 0 8%;
-
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-
-          &:nth-child(2) {
-            @include empty_btn;
-
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
-
-          &:nth-child(3) {
-            @include search_and_send_btn;
-
-            &:hover {
-              background-color: #5D85BD;
-            }
-          }
-        }
-      }
-
-      button.back_btn:hover {
-        background-color: #5d85bb;
-      }
-
-      button.send_btn:hover {
-        background-color: #5e7aa2;
-      }
-
-      button.empty_btn:hover {
-        background-color: #5D85BD;
-      }
-
-      .input-group {
-        flex-direction: column;
-
-        .input-number {
-          margin-left: unset !important;
-          @include count_btn;
-        }
-
-        .form-control {
-          height: 35px;
-          width: 100%;
-          margin-left: unset !important;
-        }
-
         .input-group-prepend {
           color: white;
           font-weight: 700;
           font-size: 20px;
           width: 120px;
-          margin-bottom: 5px;
-
+          text-align: end;
           span {
             @include red_star
           }
         }
-      }
-
-      padding: 1% 5% 0;
-
-      .fixed_info {
-        @include fixed_info;
-        height: unset;
-        flex-direction: column;
-        padding: 10px;
-
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
+        .input-number {
+          @include count_btn;
         }
+        .form-control {
+          height: 35px;
+          border-radius: 0;
+        }
+        padding: 1% 5% 0;
+        .fixed_info {
+          @include fixed_info;
+          p {
+            font-size: 20px;
+            margin-bottom: 0;
+          }
+        }
+        .content {
+          .check_box_wrap {
+            font-weight: 700;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            .check_box {
+              margin-right: 5px;
+            }
+          }
+          @include content_bg;
+          .dropdown {
+            .dropdown-menu {
+              width: 100%;
+            }
+          }
+          .content {
+            @include content_bg;
+          }
+          .dropdown {
+            .dropdown-menu {
+              width: 100%;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            .dropdown-toggle {
+              @include dropdown-btn;
+              width: 180px;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 767px) {
+    .main_section {
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 50px;
+        font-weight: 600;
+        @include title_color;
       }
       .info_wrap {
         .button_wrap {
@@ -796,45 +658,98 @@ export default {
             }
           }
         }
-
-        @include content_bg;
-
-        .dropdown {
-          .dropdown-menu {
-            width: 100%;
+        button.back_btn:hover {
+          background-color: #5d85bb;
+        }
+        button.send_btn:hover {
+          background-color: #5e7aa2;
+        }
+        button.empty_btn:hover {
+          background-color: #5D85BD;
+        }
+        .input-group {
+          flex-direction: column;
+          .input-number {
+            margin-left: unset !important;
+            @include count_btn;
           }
-        }
-
-        .content {
-          @include content_bg;
-        }
-
-        .dropdown {
-          margin-left: unset !important;
-
-          .dropdown-menu {
+          .form-control {
+            height: 35px;
             width: 100%;
-
-            p {
-              &:hover {
-                cursor: pointer;
-              }
+            margin-left: unset !important;
+          }
+          .input-group-prepend {
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            width: 120px;
+            margin-bottom: 5px;
+            span {
+              @include red_star
             }
           }
-
-          .dropdown-toggle {
-            @include dropdown-btn;
-            width: 100%;
-            color: black;
-            justify-content: space-between;
-            align-items: center;
+        }
+        padding: 1% 5% 0;
+        .fixed_info {
+          @include fixed_info;
+          height: unset;
+          flex-direction: column;
+          padding: 10px;
+          p {
+            font-size: 20px;
+            margin-bottom: 0;
+          }
+        }
+        .content {
+          .check_box_wrap {
+            font-weight: 700;
+            align-items: baseline;
+            color: white;
+            font-size: 20px;
+            flex-direction: row;
+            display: flex;
+            .check_box_div {
+              width: 100px;
+              white-space: nowrap;
+            }
+            .check_box {
+              margin-right: 5px;
+            }
+          }
+          @include content_bg;
+          .dropdown {
+            .dropdown-menu {
+              width: 100%;
+            }
+          }
+          .content {
+            @include content_bg;
+          }
+          .dropdown {
+            margin-left: unset !important;
+            .dropdown-menu {
+              width: 100%;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            .dropdown-toggle {
+              @include dropdown-btn;
+              width: 100%;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
           }
         }
       }
     }
   }
-.input-group {
-  flex-wrap: nowrap !important;
-}
-}
+  .input-group {
+    flex-wrap: nowrap !important;
+  }
+
+
 </style>
