@@ -48,7 +48,7 @@
             </div>
           </div>
         </div>
-        <div class="col">
+        <div v-if="details.AssetsId" class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               資產編號 :
@@ -64,8 +64,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                    {{ details.EquipTypeName || '請選擇' }}
-                  </button>
+                      {{ details.EquipTypeName || '請選擇' }}
+                    </button>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
                   <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
                 </div>
@@ -79,8 +79,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(details.EquipTypeName !== '') }">
-                    {{ details.EquipCategoryName || EquipCategoryInit }}
-                  </button>
+                      {{ details.EquipCategoryName || EquipCategoryInit }}
+                    </button>
                 <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                   <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
                 </div>
@@ -99,7 +99,7 @@
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              廠商 :
+              廠商：
             </div>
             <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入100字" v-model="details.VendorName">
           </div>
@@ -138,8 +138,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ details.Unit || '請選擇' }}
-                  </button>
+                      {{ details.Unit || '請選擇' }}
+                    </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in UnitArray" :key="index" class="dropdown-item" @click="selectUnit(`${item}`)">
                     {{ item }}</p>
@@ -170,7 +170,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                保固到期日 :
+                保固到期日:
               </div>
               <input type="date" class="form-control text_input" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.WarrantyEndDate">
             </div>
@@ -181,7 +181,7 @@
             <div class="input-group-prepend">
               備註 :
             </div>
-            <textarea class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="details.Memo"></textarea>
+            <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="details.Memo"></textarea>
           </div>
         </div>
       </div>
@@ -267,11 +267,29 @@
           } else if (data.state === 'error') {
             //新品表單傳送失敗
             alert(data.messages);
-          } else if (data.state === 'input_error') {
-            //新品表單格式錯誤
-            alert(data.messages);
-          } else {
-            throw new Error('Request was not successful');
+          }
+          const formData = new FormData();
+          const formFields = {
+            'AI_ID': details.value.AI_ID,
+            'Status': details.value.Status,
+            'IsConsumable': details.value.IsConsumable,
+            'EquipTypeName': details.value.EquipTypeName,
+            'EquipCategoryName': details.value.EquipCategoryName,
+            'AssetName': details.value.AssetName,
+            'VendorName': details.value.VendorName,
+            'ProductSpec': details.value.ProductSpec,
+            'ProductType': details.value.ProductType,
+            'Count': details.value.Count,
+            'Unit': details.value.Unit,
+            'WarrantyDate': details.value.WarrantyDate,
+            'WarrantyStartDate': details.value.WarrantyStartDate,
+            'WarrantyEndDate': details.value.WarrantyEndDate,
+            'Memo': details.value.Memo,
+          };
+          //將表格資料append到 formData
+          for (const fieldName in formFields) {
+            formData.append(fieldName, formFields[fieldName]);
+            console.log(formData.get(`${fieldName}`));
           }
         } catch (error) {
           console.error('Error sending data to backend', error);
@@ -307,12 +325,51 @@
         if (EquipTypeArray.value.length == 0) {
           const axios = require('axios');
           try {
-            const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetEquipType');
+            const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/ApplicationEdit ', formData, {
+              // const response = await axios.post('/AssetsInMng/NewAssetsIn', formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            });
             console.log(response);
             const data = response.data;
             if (data.state === 'success') {
-              console.log('總類Get成功 資料如下\n', data.resultList.EquipType);
-              EquipTypeArray.value = data.resultList.EquipType;
+              //新品表單傳送成功，跳轉至入庫管理頁面
+              console.log(data.state);
+              console.log(data.messages);
+              alert(data.messages);
+              router.push({
+                name: 'Store_Datagrid'
+              });
+            } else if (data.state === 'error') {
+              //新品表單傳送失敗
+              alert(data.messages);
+            } else if (data.state === 'input_error') {
+              //新品表單格式錯誤
+              alert(data.messages);
+            } else {
+              throw new Error('Request was not successful');
+            }
+          } catch (error) {
+            console.error('Error sending data to backend', error);
+          }
+        }
+        async function getDetails() {
+          const axios = require('axios');
+          try {
+            const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/GetApplicationInfo?ai_id=${AI_ID}`);
+            console.log(response);
+            const data = response.data;
+            if (data.state === 'success') {
+              console.log('Details Get成功 資料如下\n', data.resultList);
+              details.value = data.resultList;
+              for (let key in details.value) {
+                if (details.value[key] === null) {
+                  details.value[key] = '';
+                }
+              }
+              console.log('處理過後', details.value);
+              getEquipCategoryName();
             } else if (data.state === 'error') {
               alert(data.messages);
             } else if (data.state === 'account_error') {
@@ -320,356 +377,338 @@
               router.push('/');
             }
           } catch (error) {
-            console.error('Error sending applicant info request to backend');
+            console.error(error);
           }
         }
-      }
-      async function getEquipCategoryName() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${details.value.EquipTypeName}`);
-          console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('分類Get成功 資料如下\n', data.resultList.EquipCategory);
-            EquipCategoryArray.value = data.resultList.EquipCategory;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
+        async function getEquipTypeName() {
+          if (EquipTypeArray.value.length == 0) {
+            const axios = require('axios');
+            try {
+              const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetEquipType');
+              console.log(response);
+              const data = response.data;
+              if (data.state === 'success') {
+                console.log('總類Get成功 資料如下\n', data.resultList.EquipType);
+                EquipTypeArray.value = data.resultList.EquipType;
+              } else if (data.state === 'error') {
+                alert(data.messages);
+              } else if (data.state === 'account_error') {
+                alert(data.messages);
+                router.push('/');
+              }
+            } catch (error) {
+              console.error('Error sending applicant info request to backend');
+            }
           }
-        } catch (error) {
-          console.error('Error sending EquipTypeName request to backend');
         }
+        async function getEquipCategoryName() {
+          const axios = require('axios');
+          try {
+            const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${details.value.EquipTypeName}`);
+            console.log(response);
+            const data = response.data;
+            if (data.state === 'success') {
+              console.log('分類Get成功 資料如下\n', data.resultList.EquipCategory);
+              EquipCategoryArray.value = data.resultList.EquipCategory;
+            } else if (data.state === 'error') {
+              alert(data.messages);
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            }
+          } catch (error) {
+            console.error('Error sending EquipTypeName request to backend');
+          }
+        }
+        onMounted(() => {
+          //依ID帶入系統資料
+          getDetails();
+          console.log('123');
+        });
+        const selectType = (item) => {
+          //選擇總類完後 嘗試取得分類
+          details.value.EquipTypeName = item;
+          details.value.EquipCategoryName = '';
+          getEquipCategoryName();
+          EquipCategoryInit.value = '請選擇';
+        };
+        const selectUnit = (item) => {
+          details.value.Unit = item;
+        };
+        const selectCategory = (item) => {
+          details.value.EquipCategoryName = item;
+        };
+        const goBack = () => {
+          window.history.back();
+        };
+        return {
+          EquipTypeArray,
+          getEquipTypeName,
+          EquipCategoryArray,
+          EquipCategoryInit,
+          getEquipCategoryName,
+          UnitArray,
+          details,
+          selectType,
+          selectUnit,
+          selectCategory,
+          submit,
+          goBack,
+        };
       }
-      onMounted(() => {
-        //依ID帶入系統資料
-        getDetails();
-        console.log('123');
-      });
-      const selectType = (item) => {
-        //選擇總類完後 嘗試取得分類
-        details.value.EquipTypeName = item;
-        details.value.EquipCategoryName = '';
-        getEquipCategoryName();
-        EquipCategoryInit.value = '請選擇';
-      };
-      const selectUnit = (item) => {
-        details.value.Unit = item;
-      };
-      const selectCategory = (item) => {
-        details.value.EquipCategoryName = item;
-      };
-      const goBack = () => {
-        window.history.back();
-      };
-      return {
-        EquipTypeArray,
-        getEquipTypeName,
-        EquipCategoryArray,
-        EquipCategoryInit,
-        getEquipCategoryName,
-        UnitArray,
-        details,
-        selectType,
-        selectUnit,
-        selectCategory,
-        submit,
-        goBack,
-      };
-    }
-  };
+    };
 </script>
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
-
   @media only screen and (min-width: 1200px) {
-      .main_section {
-    .readonly_box {
-      @include readonly_box;
-    }
-    h1 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 55px;
-      font-weight: 600;
-      @include title_color;
-    }
-    .info_wrap {
-      margin: auto;
-      width: 700px;
-      .fixed_info {
-        @include fixed_info;
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
+    .main_section {
+      .readonly_box {
+        @include readonly_box;
       }
-      .content {
-        .check_box_wrap {
-          font-weight: 700;
-          align-items: center;
-          color: white;
-          font-size: 20px;
-          .check_box {
-            margin-right: 5px;
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        margin: auto;
+        width: 700px;
+        .fixed_info {
+          @include fixed_info;
+          p {
+            font-size: 20px;
+            margin-bottom: 0;
           }
+        }
+        .align_end_box {
+          justify-content: end
         }
         @include content_bg;
         .dropdown {
           .dropdown-menu {
             width: 100%;
+            max-height: 250px;
+            overflow-y: auto;
             p {
               &:hover {
                 cursor: pointer;
               }
             }
           }
+        }
+        .button_wrap {
+          display: flex;
+          justify-content: space-between;
+          margin: 30px auto 5%;
+          width: 220px;
           button {
-            @include dropdown-btn;
-            width: 199px;
-            height:35px;
-            color: black;
-            justify-content: space-between;
-            align-items: center;
-          }
-        }
-        .input-group {
-          flex-wrap: nowrap;
-          .input-number {
-            width: 199px;
-            @include count_btn;
-          }
-          .form-control {
-            height: 35px;
-            border-radius: 0;
-          }
-          .input-group-prepend {
-            color: white;
-            font-weight: 700;
-            font-size: 20px;
-            width: 120px;
-            text-align: end;
-            white-space: nowrap;
-            span {
-              @include red_star
-            }
-          }
-        }
-      }
-      .button_wrap {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px auto 5%;
-        width: 220px;
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-          &:nth-child(2) {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5D85BD;
-            }
-          }
-        }
-      }
-    }
-  }}
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-      .main_section {
-    .readonly_box {
-      @include readonly_box;
-    }
-    h1 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 55px;
-      font-weight: 600;
-      @include title_color;
-    }
-    .info_wrap {
-      margin: auto;
-      width: 600px;
-      .fixed_info {
-        @include fixed_info;
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-      }
-      .content {
-        .check_box_wrap {
-          font-weight: 700;
-          align-items: center;
-          color: white;
-          font-size: 20px;
-          .check_box {
-            margin-right: 5px;
-          }
-        }
-        @include content_bg;
-        .dropdown {
-          .dropdown-menu {
-            width: 100%;
-            p {
+            &:nth-child(1) {
+              @include back_to_previous_btn;
               &:hover {
-                cursor: pointer;
+                background-color: #5d85bb;
               }
             }
-          }
-          button {
-            @include dropdown-btn;
-            width: 199px;
-            color: black;
-            justify-content: space-between;
-            align-items: center;
-          }
-        }
-        .input-group {
-          .input-number {
-            width: 199px;
-            @include count_btn;
-          }
-          .form-control {
-            height: 35px;
-            border-radius: 0;
-          }
-          .input-group-prepend {
-            color: white;
-            font-weight: 700;
-            font-size: 20px;
-            width: 120px;
-            text-align: end;
-            white-space: nowrap;
-            span {
-              @include red_star
-            }
-          }
-        }
-      }
-      .button_wrap {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px auto 5%;
-        width: 220px;
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-          &:nth-child(2) {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5D85BD;
+            &:nth-child(2) {
+              @include search_and_send_btn;
+              &:hover {
+                background-color: #5D85BD;
+              }
             }
           }
         }
       }
     }
   }
+  @media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .main_section {
+      .readonly_box {
+        @include readonly_box;
+      }
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        margin: auto;
+        width: 600px;
+        .fixed_info {
+          @include fixed_info;
+          p {
+            font-size: 20px;
+            margin-bottom: 0;
+          }
+        }
+        .content {
+          .check_box_wrap {
+            font-weight: 700;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            .check_box {
+              margin-right: 5px;
+            }
+          }
+          @include content_bg;
+          .dropdown {
+            .dropdown-menu {
+              width: 100%;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            button {
+              @include dropdown-btn;
+              width: 199px;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group {
+            .input-number {
+              width: 199px;
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              border-radius: 0;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 120px;
+              text-align: end;
+              white-space: nowrap;
+              span {
+                @include red_star
+              }
+            }
+          }
+        }
+        .button_wrap {
+          display: flex;
+          justify-content: space-between;
+          margin: 30px auto 5%;
+          width: 220px;
+          button {
+            &:nth-child(1) {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              @include search_and_send_btn;
+              &:hover {
+                background-color: #5D85BD;
+              }
+            }
+          }
+        }
+      }
+    }
   }
   @media only screen and (max-width: 767px) {
-      .main_section {
-    .readonly_box {
-      @include readonly_box;
-    }
-    h1 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 55px;
-      font-weight: 600;
-      @include title_color;
-    }
-    .info_wrap {
-      margin: auto;
-    
-      .fixed_info {
-        @include fixed_info;
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
+    .main_section {
+      .readonly_box {
+        @include readonly_box;
       }
-      .content {
-        .check_box_wrap {
-          font-weight: 700;
-          align-items: center;
-          color: white;
-          font-size: 20px;
-          .check_box {
-            margin-right: 5px;
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        margin: auto;
+        .fixed_info {
+          @include fixed_info;
+          p {
+            font-size: 20px;
+            margin-bottom: 0;
           }
         }
-
-        @include content_bg;
-        .dropdown {
-          .dropdown-menu {
-            width: 100%;
-            p {
-              &:hover {
-                cursor: pointer;
+        .content {
+          .check_box_wrap {
+            font-weight: 700;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            .check_box {
+              margin-right: 5px;
+            }
+          }
+          @include content_bg;
+          .dropdown {
+            .dropdown-menu {
+              width: 100%;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            button {
+              @include dropdown-btn;
+              width: 199px;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group {
+            .input-number {
+              width: 199px;
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              border-radius: 0;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 100px;
+              text-align: end;
+              white-space: nowrap;
+              span {
+                @include red_star
               }
             }
           }
+        }
+        .button_wrap {
+          display: flex;
+          justify-content: space-between;
+          margin: 30px auto 5%;
+          width: 220px;
           button {
-            @include dropdown-btn;
-            width: 199px;
-            color: black;
-            justify-content: space-between;
-            align-items: center;
-          }
-        }
-        .input-group {
-          .input-number {
-            width: 199px;
-            @include count_btn;
-          }
-          .form-control {
-            height: 35px;
-            border-radius: 0;
-          }
-          .input-group-prepend {
-            color: white;
-            font-weight: 700;
-            font-size: 20px;
-            width: 100px;
-            text-align: end;
-            white-space: nowrap;
-            span {
-              @include red_star
+            &:nth-child(1) {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
+              }
             }
-          }
-        }
-      }
-      .button_wrap {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px auto 5%;
-        width: 220px;
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-          &:nth-child(2) {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5D85BD;
+            &:nth-child(2) {
+              @include search_and_send_btn;
+              &:hover {
+                background-color: #5D85BD;
+              }
             }
           }
         }
       }
     }
-  }
   }
 </style>

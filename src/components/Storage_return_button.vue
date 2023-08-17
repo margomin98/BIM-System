@@ -11,7 +11,7 @@ import { useRouter } from 'vue-router';
 
 
 export default {
-  props: ['params'], // 声明 params 为 props
+  props: ['params'],
   setup(props) {
     const router = useRouter();
     const search_id = props.params.data.AI_ID;

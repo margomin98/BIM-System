@@ -154,7 +154,8 @@
             <div class="input-group-prepend">
               備註：
             </div>
-            <textarea class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="Memo"></textarea>
+            <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入500字"
+              v-model="Memo"></textarea>
           </div>
         </div>
       </div>
@@ -722,4 +723,6 @@
   .input-group {
     flex-wrap: nowrap !important;
   }
+
+
 </style>
