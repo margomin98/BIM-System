@@ -194,123 +194,124 @@
 </template>
 
 <script>
-  import {
-    ref,
-    onMounted
-  } from 'vue';
-  import Navbar from '@/components/Navbar.vue';
-  import {
-    useRoute,
-    useRouter
-  } from 'vue-router';
-  export default {
-    components: {
-      Navbar
-    },
-    setup() {
-      const route = useRoute();
-      const router = useRouter();
-      const AI_ID = route.query.search_id;
-      const EquipTypeArray = ref([]);
-      const EquipCategoryArray = ref([]);
-      const EquipCategoryInit = ref('請先選擇設備總類');
-      const UnitArray = (['個', '支', '台', '件', '把', '枝', '本', '根', '隻', '張', '條', '塊', '顆', '雙', '箱', '包', ]);
-      const details = ref({});
-      async function submit() {
-        // 檢查所有required項目
-        if (!details.value.EquipCategoryName || !details.value.EquipTypeName || !details.value.AssetName || !details.value.Count || !details.value.Unit) {
-          alert('請填寫所有必填項目');
-          return;
-        }
-        const formData = new FormData();
-        const formFields = {
-          'AI_ID': details.value.AI_ID,
-          'Status': details.value.Status,
-          'IsConsumable': details.value.IsConsumable,
-          'EquipTypeName': details.value.EquipTypeName,
-          'EquipCategoryName': details.value.EquipCategoryName,
-          'AssetName': details.value.AssetName,
-          'VendorName': details.value.VendorName,
-          'ProductSpec': details.value.ProductSpec,
-          'ProductType': details.value.ProductType,
-          'Count': details.value.Count,
-          'Unit': details.value.Unit,
-          'WarrantyDate': details.value.WarrantyDate,
-          'WarrantyStartDate': details.value.WarrantyStartDate,
-          'WarrantyEndDate': details.value.WarrantyEndDate,
-          'Memo': details.value.Memo,
-        };
-        //將表格資料append到 formData
-        for (const fieldName in formFields) {
-          formData.append(fieldName, formFields[fieldName]);
-          console.log(formData.get(`${fieldName}`));
-        }
-        //使用axios method:post傳送新品入庫表單
-        const axios = require('axios');
-        try {
-          const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/ApplicationEdit ', formData, {
-            // const response = await axios.post('/AssetsInMng/NewAssetsIn', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
-          console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            //新品表單傳送成功，跳轉至入庫管理頁面
-            console.log(data.state);
-            console.log(data.messages);
-            alert(data.messages);
-            router.push({
-              name: 'Store_Datagrid'
-            });
-          } else if (data.state === 'error') {
-            //新品表單傳送失敗
-            alert(data.messages);
-          }
-          const formData = new FormData();
-          const formFields = {
-            'AI_ID': details.value.AI_ID,
-            'Status': details.value.Status,
-            'IsConsumable': details.value.IsConsumable,
-            'EquipTypeName': details.value.EquipTypeName,
-            'EquipCategoryName': details.value.EquipCategoryName,
-            'AssetName': details.value.AssetName,
-            'VendorName': details.value.VendorName,
-            'ProductSpec': details.value.ProductSpec,
-            'ProductType': details.value.ProductType,
-            'Count': details.value.Count,
-            'Unit': details.value.Unit,
-            'WarrantyDate': details.value.WarrantyDate,
-            'WarrantyStartDate': details.value.WarrantyStartDate,
-            'WarrantyEndDate': details.value.WarrantyEndDate,
-            'Memo': details.value.Memo,
-          };
-          //將表格資料append到 formData
-          for (const fieldName in formFields) {
-            formData.append(fieldName, formFields[fieldName]);
-            console.log(formData.get(`${fieldName}`));
-          }
-        } catch (error) {
-          console.error('Error sending data to backend', error);
-        }
+import { ref, onMounted } from 'vue';
+import Navbar from '@/components/Navbar.vue';
+import { useRoute, useRouter } from 'vue-router';
+
+export default {
+  components: {
+    Navbar
+  },
+  setup() {
+    const route = useRoute();
+    const router = useRouter();
+
+    const AI_ID = route.query.search_id;
+    const EquipTypeArray = ref([]);
+    const EquipCategoryArray = ref([]);
+    const EquipCategoryInit = ref('請先選擇設備總類');
+    const UnitArray = (['個', '對', '箱', '包','組',]);
+
+    const details = ref({});
+
+    async function submit() {
+      // 檢查所有required項目
+      if (!details.value.EquipCategoryName || !details.value.EquipTypeName || !details.value.AssetName || !details.value.Count || !details.value.Unit) {
+        alert('請填寫所有必填項目');
+        return;
       }
-      async function getDetails() {
+      const formData = new FormData();
+      const formFields = {
+        'AI_ID': details.value.AI_ID,
+        'Status': details.value.Status,
+        'IsConsumable': details.value.IsConsumable,
+        'EquipTypeName': details.value.EquipTypeName,
+        'EquipCategoryName': details.value.EquipCategoryName,
+        'AssetName': details.value.AssetName,
+        'VendorName': details.value.VendorName,
+        'ProductSpec': details.value.ProductSpec,
+        'ProductType': details.value.ProductType,
+        'Count': details.value.Count,
+        'Unit': details.value.Unit,
+        'WarrantyDate': details.value.WarrantyDate,
+        'WarrantyStartDate': details.value.WarrantyStartDate,
+        'WarrantyEndDate': details.value.WarrantyEndDate,
+        'Memo': details.value.Memo,
+      };
+      //將表格資料append到 formData
+      for (const fieldName in formFields) {
+        formData.append(fieldName, formFields[fieldName]);
+        console.log(formData.get(`${fieldName}`));
+      }
+      //使用axios method:post傳送新品入庫表單
+      const axios = require('axios');
+      try {
+        const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/ApplicationEdit ', formData, {
+          // const response = await axios.post('/AssetsInMng/NewAssetsIn', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        console.log(response);
+        const data = response.data;
+        if (data.state === 'success') {
+          //新品表單傳送成功，跳轉至入庫管理頁面
+          console.log(data.state);
+          console.log(data.messages);
+          alert(data.messages);
+          router.push({ name: 'Store_Datagrid' });
+        } else if (data.state === 'error') {
+          //新品表單傳送失敗
+          alert(data.messages);
+        }
+        else if (data.state === 'input_error') {
+          //新品表單格式錯誤
+          alert(data.messages);
+        } else {
+          throw new Error('Request was not successful');
+        }
+      } catch (error) {
+        console.error('Error sending data to backend', error);
+      }
+    }
+
+    async function getDetails() {
+      const axios = require('axios');
+      try {
+        const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/GetApplicationInfo?ai_id=${AI_ID}`);
+        console.log(response);
+        const data = response.data;
+        if (data.state === 'success') {
+          console.log('Details Get成功 資料如下\n', data.resultList);
+          details.value = data.resultList;
+          for (let key in details.value) {
+            if (details.value[key] === null) {
+              details.value[key] = '';
+            }
+          }
+          console.log('處理過後', details.value);
+          getEquipCategoryName();
+        } else if (data.state === 'error') {
+          alert(data.messages);
+        } else if (data.state === 'account_error') {
+          alert(data.messages);
+          router.push('/');
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    async function getEquipTypeName() {
+      if (EquipTypeArray.value.length == 0) {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/GetApplicationInfo?ai_id=${AI_ID}`);
+          const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetEquipType');
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
-            console.log('Details Get成功 資料如下\n', data.resultList);
-            details.value = data.resultList;
-            for (let key in details.value) {
-              if (details.value[key] === null) {
-                details.value[key] = '';
-              }
-            }
-            console.log('處理過後', details.value);
-            getEquipCategoryName();
+            console.log('總類Get成功 資料如下\n', data.resultList.EquipType);
+            EquipTypeArray.value = data.resultList.EquipType;
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -318,146 +319,90 @@
             router.push('/');
           }
         } catch (error) {
-          console.error(error);
+          console.error('Error sending applicant info request to backend');
         }
       }
-      async function getEquipTypeName() {
-        if (EquipTypeArray.value.length == 0) {
-          const axios = require('axios');
-          try {
-            const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/ApplicationEdit ', formData, {
-              // const response = await axios.post('/AssetsInMng/NewAssetsIn', formData, {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            });
-            console.log(response);
-            const data = response.data;
-            if (data.state === 'success') {
-              //新品表單傳送成功，跳轉至入庫管理頁面
-              console.log(data.state);
-              console.log(data.messages);
-              alert(data.messages);
-              router.push({
-                name: 'Store_Datagrid'
-              });
-            } else if (data.state === 'error') {
-              //新品表單傳送失敗
-              alert(data.messages);
-            } else if (data.state === 'input_error') {
-              //新品表單格式錯誤
-              alert(data.messages);
-            } else {
-              throw new Error('Request was not successful');
-            }
-          } catch (error) {
-            console.error('Error sending data to backend', error);
-          }
+    }
+    async function getEquipCategoryName() {
+      const axios = require('axios');
+      try {
+        const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${details.value.EquipTypeName}`);
+        console.log(response);
+        const data = response.data;
+        if (data.state === 'success') {
+          console.log('分類Get成功 資料如下\n', data.resultList.EquipCategory);
+          EquipCategoryArray.value = data.resultList.EquipCategory;
+        } else if (data.state === 'error') {
+          alert(data.messages);
+        } else if (data.state === 'account_error') {
+          alert(data.messages);
+          router.push('/');
         }
-        async function getDetails() {
-          const axios = require('axios');
-          try {
-            const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/GetApplicationInfo?ai_id=${AI_ID}`);
-            console.log(response);
-            const data = response.data;
-            if (data.state === 'success') {
-              console.log('Details Get成功 資料如下\n', data.resultList);
-              details.value = data.resultList;
-              for (let key in details.value) {
-                if (details.value[key] === null) {
-                  details.value[key] = '';
-                }
-              }
-              console.log('處理過後', details.value);
-              getEquipCategoryName();
-            } else if (data.state === 'error') {
-              alert(data.messages);
-            } else if (data.state === 'account_error') {
-              alert(data.messages);
-              router.push('/');
-            }
-          } catch (error) {
-            console.error(error);
-          }
-        }
-        async function getEquipTypeName() {
-          if (EquipTypeArray.value.length == 0) {
-            const axios = require('axios');
-            try {
-              const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetEquipType');
-              console.log(response);
-              const data = response.data;
-              if (data.state === 'success') {
-                console.log('總類Get成功 資料如下\n', data.resultList.EquipType);
-                EquipTypeArray.value = data.resultList.EquipType;
-              } else if (data.state === 'error') {
-                alert(data.messages);
-              } else if (data.state === 'account_error') {
-                alert(data.messages);
-                router.push('/');
-              }
-            } catch (error) {
-              console.error('Error sending applicant info request to backend');
-            }
-          }
-        }
-        async function getEquipCategoryName() {
-          const axios = require('axios');
-          try {
-            const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${details.value.EquipTypeName}`);
-            console.log(response);
-            const data = response.data;
-            if (data.state === 'success') {
-              console.log('分類Get成功 資料如下\n', data.resultList.EquipCategory);
-              EquipCategoryArray.value = data.resultList.EquipCategory;
-            } else if (data.state === 'error') {
-              alert(data.messages);
-            } else if (data.state === 'account_error') {
-              alert(data.messages);
-              router.push('/');
-            }
-          } catch (error) {
-            console.error('Error sending EquipTypeName request to backend');
-          }
-        }
-        onMounted(() => {
-          //依ID帶入系統資料
-          getDetails();
-          console.log('123');
-        });
-        const selectType = (item) => {
-          //選擇總類完後 嘗試取得分類
-          details.value.EquipTypeName = item;
-          details.value.EquipCategoryName = '';
-          getEquipCategoryName();
-          EquipCategoryInit.value = '請選擇';
-        };
-        const selectUnit = (item) => {
-          details.value.Unit = item;
-        };
-        const selectCategory = (item) => {
-          details.value.EquipCategoryName = item;
-        };
-        const goBack = () => {
-          window.history.back();
-        };
-        return {
-          EquipTypeArray,
-          getEquipTypeName,
-          EquipCategoryArray,
-          EquipCategoryInit,
-          getEquipCategoryName,
-          UnitArray,
-          details,
-          selectType,
-          selectUnit,
-          selectCategory,
-          submit,
-          goBack,
-        };
+      } catch (error) {
+        console.error('Error sending EquipTypeName request to backend');
       }
+    }
+    onMounted(() => {
+      //依ID帶入系統資料
+      getDetails();
+      console.log('123');
+    });
+    const selectType = (item) => {
+      //選擇總類完後 嘗試取得分類
+      details.value.EquipTypeName = item;
+      details.value.EquipCategoryName = '';
+      getEquipCategoryName();
+      EquipCategoryInit.value = '請選擇';
     };
+
+    const selectUnit = (item) => {
+      details.value.Unit = item;
+    };
+
+    const selectCategory = (item) => {
+      details.value.EquipCategoryName = item;
+    };
+
+    const clear = () => {
+      details.value.IsConsumable = false;
+      details.value.EquipTypeName = '';
+      details.value.EquipCategoryName = '';
+      EquipCategoryInit.value = '請先選擇設備總類'
+      details.value.AssetName = '';
+      details.value.VendorName = '';
+      details.value.ProductSpec = '';
+      details.value.ProductType = '';
+      details.value.Count = 1;
+      details.value.Unit = '';
+      details.value.WarrantyDate = '';
+      details.value.WarrantyStartDate = '';
+      details.value.WarrantyEndDate = '';
+      details.value.Memo = '';
+    };
+
+    const goBack = () => {
+      window.history.back();
+    };
+
+    return {
+      EquipTypeArray,
+      getEquipTypeName,
+      EquipCategoryArray,
+      EquipCategoryInit,
+      getEquipCategoryName,
+      UnitArray,
+      details,
+      selectType,
+      selectUnit,
+      selectCategory,
+      submit,
+      clear,
+      goBack,
+    };
+  }
+};
 </script>
+
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
@@ -476,6 +421,20 @@
       .info_wrap {
         margin: auto;
         width: 700px;
+          .input-group-prepend {
+          color: white;
+          font-weight: 700;
+          font-size: 20px;
+          width: calc(100px + 6%);
+          text-align: end;
+          white-space: nowrap;
+          span {
+            @include red_star
+          }
+        }
+         .input-number {
+          @include count_btn;
+        }
         .fixed_info {
           @include fixed_info;
           p {
@@ -483,22 +442,42 @@
             margin-bottom: 0;
           }
         }
-        .align_end_box {
-          justify-content: end
-        }
-        @include content_bg;
-        .dropdown {
-          .dropdown-menu {
-            width: 100%;
-            max-height: 250px;
-            overflow-y: auto;
-            p {
-              &:hover {
-                cursor: pointer;
-              }
+     
+        .content{
+                  @include content_bg;
+                  .input-group-prepend {
+            width: 120px;
+          }
+            .check_box_wrap {
+            font-weight: 700;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            .check_box {
+              margin-right: 5px;
             }
           }
-        }
+       
+
+      .dropdown {
+            width: 218px;
+            .dropdown-menu {
+              width: 100%;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            .dropdown-toggle {
+              width: 100%;
+              @include dropdown-btn;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+              }
         .button_wrap {
           display: flex;
           justify-content: space-between;
@@ -519,6 +498,7 @@
             }
           }
         }
+   
       }
     }
   }

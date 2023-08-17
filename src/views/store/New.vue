@@ -467,7 +467,7 @@
           .form-control,
           .row_wrap button {
             width: 218px;
-            /* Set the same width as input-group-prepend */
+        
           }
           .dropdown {
             width: 218px;
