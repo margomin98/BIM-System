@@ -24,7 +24,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4 check_box_wrap">
               <div class="input-group-prepend check_box">
-                資產類型：
+                資產類型 :
               </div>
               <input type="checkbox" class='check_box' v-model="details.IsConsumable" />耗材
             </div>
@@ -33,63 +33,56 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              編號：
+              編號 :
             </div>
-            <input type="text" class="form-control readonly_box" aria-label="Default"
-              aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID">
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID">
           </div>
         </div>
-        <div class="row">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+        <div class="row g-0">
+          <div class="col-xl-6 col-lg-7 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                入庫單狀態：
+                入庫單狀態 :
               </div>
-              <input type="text" class="form-control readonly_box" aria-label="Default"
-                aria-describedby="inputGroup-sizing-default" readonly placeholder="備料中" v-model="details.Status">
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly placeholder="備料中" v-model="details.Status">
             </div>
           </div>
         </div>
         <div v-if="details.AssetsId" class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              資產編號：
+              資產編號 :
             </div>
-            <input type="text" class="form-control readonly_box" aria-label="Default"
-              aria-describedby="inputGroup-sizing-default" readonly v-model="details.AssetsId">
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AssetsId">
           </div>
         </div>
-        <div class="row">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+        <div class="row row_wrap g-0">
+          <div class="col-xl-6 col-lg-12 col-md-12 col">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                <span>*</span>設備總類：
+                <span>*</span>設備總類 :
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                  {{ details.EquipTypeName || '請選擇' }}
-                </button>
+                <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
+                      {{ details.EquipTypeName || '請選擇' }}
+                    </button>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                  <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item"
-                    @click="selectType(`${item}`)">{{ item }}</p>
+                  <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4 align_end_box">
-              <div class="input-group-prepend align_end_box">
-                <span>*</span>設備分類：
+          <div class="col-xl-6 col-lg-12 col-md-12 col">
+            <div class="input-group mb-4 ">
+              <div class="input-group-prepend ">
+                <span>*</span>設備分類 :
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(details.EquipTypeName !== '') }">
-                  {{ details.EquipCategoryName || EquipCategoryInit }}
-                </button>
+                <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(details.EquipTypeName !== '') }">
+                      {{ details.EquipCategoryName || EquipCategoryInit }}
+                    </button>
                 <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
-                  <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item"
-                    @click="selectCategory(`${item}`)">{{ item }}</p>
+                  <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
                 </div>
               </div>
             </div>
@@ -98,10 +91,9 @@
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              <span>*</span>物品名稱：
+              <span>*</span>物品名稱 :
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-              placeholder="最多輸入20字" v-model="details.AssetName">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入20字" v-model="details.AssetName">
           </div>
         </div>
         <div class="col">
@@ -109,49 +101,45 @@
             <div class="input-group-prepend">
               廠商：
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-              placeholder="最多輸入100字" v-model="details.VendorName">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入100字" v-model="details.VendorName">
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              規格：
+              規格 :
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-              placeholder="最多輸入100字" v-model="details.ProductSpec">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入100字" v-model="details.ProductSpec">
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              型號：
+              型號 :
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-              placeholder="最多輸入100字" v-model="details.ProductType">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入100字" v-model="details.ProductType">
           </div>
         </div>
-        <div class="row">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+        <div class="row g-0">
+          <div class="col-xl-6 col-lg-12 col-md-12 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                <span>*</span>數量：
+                <span>*</span>數量 :
               </div>
               <div class="number-input-box">
                 <input class="input-number" type="number" v-model="details.Count" min="1" />
               </div>
             </div>
           </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4 align_end_box">
+          <div class="col-xl-6 col-lg-12 col-md-12 col-12">
+            <div class="input-group mb-4 ">
               <div class="input-group-prepend">
-                <span>*</span>單位：
+                <span>*</span>單位 :
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
-                  {{ details.Unit || '請選擇' }}
-                </button>
+                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{ details.Unit || '請選擇' }}
+                    </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in UnitArray" :key="index" class="dropdown-item" @click="selectUnit(`${item}`)">
                     {{ item }}</p>
@@ -160,25 +148,23 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+        <div class="row g-0">
+          <div class="col-xl-6 col-lg-7 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                保固期限：
+                保固期限 :
               </div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-                v-model="details.WarrantyDate">
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.WarrantyDate">
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row g-0">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                保固開始日:&nbsp;
+                保固開始日 :
               </div>
-              <input type="date" class="form-control text_input" aria-label="Default"
-                aria-describedby="inputGroup-sizing-default" v-model="details.WarrantyStartDate">
+              <input type="date" class="form-control text_input" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.WarrantyStartDate">
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -186,24 +172,21 @@
               <div class="input-group-prepend">
                 保固到期日:
               </div>
-              <input type="date" class="form-control text_input" aria-label="Default"
-                aria-describedby="inputGroup-sizing-default" v-model="details.WarrantyEndDate">
+              <input type="date" class="form-control text_input" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.WarrantyEndDate">
             </div>
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              備註：
+              備註 :
             </div>
-            <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入500字"
-              v-model="details.Memo"></textarea>
+            <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="details.Memo"></textarea>
           </div>
         </div>
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">上一頁</button>
-        <button class="empty_btn" @click="clear">清空</button>
         <button class="send_btn" @click="submit">送出</button>
       </div>
     </div>
@@ -422,43 +405,18 @@ export default {
 
 
 <style lang="scss" scoped>
-@import '@/assets/css/global.scss';
-
-.main_section {
-  .readonly_box {
-    @include readonly_box;
-  }
-
-  h1 {
-    margin-top: 50px;
-    text-align: center;
-    font-size: 55px;
-    font-weight: 600;
-    @include title_color;
-  }
-
-  .info_wrap {
-    padding: 1% 31% 0;
-
-    .fixed_info {
-      @include fixed_info;
-
-      p {
-        font-size: 20px;
-        margin-bottom: 0;
+  @import '@/assets/css/global.scss';
+  @media only screen and (min-width: 1200px) {
+    .main_section {
+      .readonly_box {
+        @include readonly_box;
       }
-    }
-
-    .content {
-      .check_box_wrap {
-        font-weight: 700;
-        align-items: center;
-        color: white;
-        font-size: 20px;
-
-        .check_box {
-          margin-right: 5px;
-        }
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
       }
       .info_wrap {
         margin: auto;
@@ -523,65 +481,214 @@ export default {
         .button_wrap {
           display: flex;
           justify-content: space-between;
-          align-items: center;
-        }
-      }
-
-      .input-group {
-        .input-number {
-          width: 199px;
-          @include count_btn;
-        }
-
-        .form-control {
-          height: 35px;
-          border-radius: 0;
-        }
-
-        .input-group-prepend {
-          color: white;
-          font-weight: 700;
-          font-size: 20px;
-          width: 120px;
-          text-align: end;
-
-          span {
-            @include red_star
-          }
-        }
-      }
-    }
-
-    .button_wrap {
-      @include bottom_btn_wrap;
-      margin-bottom: 5%;
-
-      button {
-        &:nth-child(1) {
-          @include back_to_previous_btn;
-
-          &:hover {
-            background-color: #5d85bb;
-          }
-        }
-
-        &:nth-child(2) {
-          @include empty_btn;
-
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-
-        &:nth-child(3) {
-          @include search_and_send_btn;
-
-          &:hover {
-            background-color: #5D85BD;
+          margin: 30px auto 5%;
+          width: 220px;
+          button {
+            &:nth-child(1) {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              @include search_and_send_btn;
+              &:hover {
+                background-color: #5D85BD;
+              }
+            }
           }
         }
    
       }
     }
   }
-}</style>
+  @media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .main_section {
+      .readonly_box {
+        @include readonly_box;
+      }
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        margin: auto;
+        width: 600px;
+        .fixed_info {
+          @include fixed_info;
+          p {
+            font-size: 20px;
+            margin-bottom: 0;
+          }
+        }
+        .content {
+          .check_box_wrap {
+            font-weight: 700;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            .check_box {
+              margin-right: 5px;
+            }
+          }
+          @include content_bg;
+          .dropdown {
+            .dropdown-menu {
+              width: 100%;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            button {
+              @include dropdown-btn;
+              width: 199px;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group {
+            .input-number {
+              width: 199px;
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              border-radius: 0;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 120px;
+              text-align: end;
+              white-space: nowrap;
+              span {
+                @include red_star
+              }
+            }
+          }
+        }
+        .button_wrap {
+          display: flex;
+          justify-content: space-between;
+          margin: 30px auto 5%;
+          width: 220px;
+          button {
+            &:nth-child(1) {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              @include search_and_send_btn;
+              &:hover {
+                background-color: #5D85BD;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 767px) {
+    .main_section {
+      .readonly_box {
+        @include readonly_box;
+      }
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        margin: auto;
+        .fixed_info {
+          @include fixed_info;
+          p {
+            font-size: 20px;
+            margin-bottom: 0;
+          }
+        }
+        .content {
+          .check_box_wrap {
+            font-weight: 700;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            .check_box {
+              margin-right: 5px;
+            }
+          }
+          @include content_bg;
+          .dropdown {
+            .dropdown-menu {
+              width: 100%;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            button {
+              @include dropdown-btn;
+              width: 199px;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group {
+            .input-number {
+              width: 199px;
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              border-radius: 0;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 100px;
+              text-align: end;
+              white-space: nowrap;
+              span {
+                @include red_star
+              }
+            }
+          }
+        }
+        .button_wrap {
+          display: flex;
+          justify-content: space-between;
+          margin: 30px auto 5%;
+          width: 220px;
+          button {
+            &:nth-child(1) {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              @include search_and_send_btn;
+              &:hover {
+                background-color: #5D85BD;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+</style>
