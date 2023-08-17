@@ -91,6 +91,7 @@ export default {
       isDisabled,
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
