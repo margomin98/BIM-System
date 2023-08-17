@@ -121,7 +121,7 @@
       </div>
     </div>
     <ag-grid-vue style="height: 530px" class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData"
-      :paginationAutoPageSize="true" :pagination="true">
+      :paginationPageSize="pageSize" :pagination="true">
     </ag-grid-vue>
   </div>
 </template>
@@ -178,7 +178,7 @@ export default {
       field: "",
       cellRenderer: "Storage_process_button",
       cellRendererParams: {
-        // refresh: params.refresh, // 传递回调函数的 ref 给渲染器组件
+        refresh: submit, // 传递回调函数的 ref 给渲染器组件
       },
       width: 300,
     },
@@ -741,7 +741,8 @@ export default {
           .dropdown-menu {
             width: 100%;
             transform: translate3d(-1px, 35px, 0px) !important;
-
+            max-height: 250px;
+            overflow-y: auto;
             p {
               font-size: 18px;
               color: black;

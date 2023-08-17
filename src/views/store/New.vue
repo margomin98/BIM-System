@@ -41,7 +41,8 @@
                         {{ EquipTypeName || '請選擇' }}
                       </button>
                 <div class="dropdown-menu" aria-labelledby="typeDropdown">
-                  <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
+                  <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item"
+                    @click="selectType(`${item}`)">{{ item }}</p>
                 </div>
               </div>
             </div>
@@ -56,7 +57,8 @@
                         {{ EquipCategoryName || EquipCategoryInit }}
                       </button>
                 <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                  <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
+                  <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item"
+                    @click="selectCategory(`${item}`)">{{ item }}</p>
                 </div>
               </div>
             </div>
@@ -67,7 +69,8 @@
             <div class="input-group-prepend">
               <span>*</span>物品名稱 :
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入20字" v-model="AssetName">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
+              placeholder="最多輸入20字" v-model="AssetName">
           </div>
         </div>
         <div class="col">
@@ -75,7 +78,8 @@
             <div class="input-group-prepend">
               廠商 :
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入100字" v-model="VendorName">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
+              placeholder="最多輸入100字" v-model="VendorName">
           </div>
         </div>
         <div class="col">
@@ -83,7 +87,8 @@
             <div class="input-group-prepend">
               規格 :
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入100字" v-model="ProductSpec">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
+              placeholder="最多輸入100字" v-model="ProductSpec">
           </div>
         </div>
         <div class="col">
@@ -91,7 +96,8 @@
             <div class="input-group-prepend">
               型號 :
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入100字" v-model="ProductType">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
+              placeholder="最多輸入100字" v-model="ProductType">
           </div>
         </div>
    <div class="row g-0 row_wrap">
@@ -126,7 +132,8 @@
               <div class="input-group-prepend">
                 保固期限 :
               </div>
-              <input id='date_wrap' type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="WarrantyDate">
+              <input  id='date_wrap' type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
+                v-model="WarrantyDate">
             </div>
           </div>
         </div>
@@ -136,7 +143,8 @@
               <div class="input-group-prepend ">
                 保固開始日 :
               </div>
-              <input  type="date" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="WarrantyStartDate">
+              <input type="date" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
+                v-model="WarrantyStartDate">
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -144,7 +152,8 @@
               <div class="input-group-prepend date_wrap">
                 保固到期日 :
               </div>
-              <input  type="date" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="WarrantyEndDate">
+              <input type="date" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
+                v-model="WarrantyEndDate">
             </div>
           </div>
         </div>
@@ -166,130 +175,167 @@
 </template>
 
 <script>
-  import Navbar from '@/components/Navbar.vue';
-  import router from '@/router';
-  import {
-    onMounted,
-    ref
-  } from 'vue';
-  export default {
-    components: {
-      Navbar
-    },
-    setup() {
-      const Applicant = ref(''); //申請人 發API 帶入
-      const ApplicationDate = ref(''); //申請日期 function帶入
-      const IsConsumable = ref(false);
-      const EquipTypeName = ref(''); //設備總類 *必填
-      const EquipTypeArray = ref([]); //設備總類陣列 request拿到
-      const EquipCategoryName = ref(''); //設備分類 *必填
-      const EquipCategoryArray = ref([]); //設備分類陣列 request拿到
-      const EquipCategoryInit = ref('請先選擇設備總類');
-      const AssetName = ref(''); //物品名稱 *必填
-      const VendorName = ref(''); //廠商
-      const ProductSpec = ref(''); //規格
-      const ProductType = ref(''); //型號
-      const Count = ref(1); //數量 *必填
-      const Unit = ref(''); //單位 *必填
-      const UnitArray = (['個', '支', '台', '件', '把', '枝', '本', '根', '隻', '張', '條', '塊', '顆', '雙', '箱', '包', ]);
-      const WarrantyDate = ref(''); //保固期限
-      const WarrantyStartDate = ref(''); //保固開始日
-      const WarrantyEndDate = ref(''); //保固到期日
-      const Memo = ref(''); //備註
-      function getDate() {
-        const today = new Date();
-        var date = '';
-        date += (today.getFullYear() + '/');
-        date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
-        date += ((today.getDate()).toString().padStart(2, '0'));
-        return date;
+import Navbar from '@/components/Navbar.vue';
+import router from '@/router';
+import {
+  onMounted,
+  ref
+} from 'vue';
+export default {
+  components: {
+    Navbar
+  },
+  setup() {
+    const Applicant = ref(''); //申請人 發API 帶入
+    const ApplicationDate = ref(''); //申請日期 function帶入
+    const IsConsumable = ref(false);
+    const EquipTypeName = ref(''); //設備總類 *必填
+    const EquipTypeArray = ref([]); //設備總類陣列 request拿到
+    const EquipCategoryName = ref(''); //設備分類 *必填
+    const EquipCategoryArray = ref([]); //設備分類陣列 request拿到
+    const EquipCategoryInit = ref('請先選擇設備總類');
+    const AssetName = ref(''); //物品名稱 *必填
+    const VendorName = ref(''); //廠商
+    const ProductSpec = ref(''); //規格
+    const ProductType = ref(''); //型號
+    const Count = ref(1); //數量 *必填
+    const Unit = ref(''); //單位 *必填
+    const UnitArray = (['個', '對', '箱', '包', '組',]);
+    const WarrantyDate = ref(''); //保固期限
+    const WarrantyStartDate = ref(''); //保固開始日
+    const WarrantyEndDate = ref(''); //保固到期日
+    const Memo = ref(''); //備註
+    function getDate() {
+      const today = new Date();
+      var date = '';
+      date += (today.getFullYear() + '/');
+      date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
+      date += ((today.getDate()).toString().padStart(2, '0'));
+      return date;
+    }
+    function selectType(item) {
+      EquipTypeName.value = item;
+      // console.log('選擇的總類:', EquipTypeName.value);
+      getEquipCategoryName();
+      EquipCategoryInit.value = '請選擇';
+    }
+    function selectCategory(item) {
+      EquipCategoryName.value = item;
+    }
+    function selectUnit(item) {
+      Unit.value = item;
+    }
+    function goBack() {
+      window.history.back();
+    }
+    function clear() {
+      // Clear input fields
+      IsConsumable.value = false;
+      EquipTypeName.value = '';
+      EquipCategoryName.value = '';
+      EquipCategoryInit.value = '請先選擇設備總類'
+      AssetName.value = '';
+      VendorName.value = '';
+      ProductSpec.value = '';
+      ProductType.value = '';
+      Count.value = 1;
+      Unit.value = '';
+      WarrantyDate.value = '';
+      WarrantyStartDate.value = '';
+      WarrantyEndDate.value = '';
+      Memo.value = '';
+    }
+    async function submit() {
+      // 檢查所有required項目
+      // 假設 WarrantyStartDate 是日期變數
+      if (!EquipCategoryName.value || !EquipTypeName.value || !AssetName.value || !Count.value || !Unit.value) {
+        alert('請填寫所有必填項目');
+        return;
       }
-      function selectType(item) {
-        EquipTypeName.value = item;
-        // console.log('選擇的總類:', EquipTypeName.value);
-        getEquipCategoryName();
-        EquipCategoryInit.value = '請選擇';
+      const formData = new FormData();
+      const formFields = {
+        'IsConsumable': IsConsumable.value,
+        'EquipTypeName': EquipTypeName.value,
+        'EquipCategoryName': EquipCategoryName.value,
+        'AssetName': AssetName.value,
+        'VendorName': VendorName.value,
+        'ProductSpec': ProductSpec.value,
+        'ProductType': ProductType.value,
+        'Count': Count.value,
+        'Unit': Unit.value,
+        'WarrantyDate': WarrantyDate.value,
+        'WarrantyStartDate': WarrantyStartDate.value,
+        'WarrantyEndDate': WarrantyEndDate.value,
+        'Memo': Memo.value
+      };
+      //將表格資料append到 formData
+      for (const fieldName in formFields) {
+        formData.append(fieldName, formFields[fieldName]);
+        console.log(formData.get(`${fieldName}`));
       }
-      function selectCategory(item) {
-        EquipCategoryName.value = item;
-      }
-      function selectUnit(item) {
-        Unit.value = item;
-      }
-      function goBack() {
-        window.history.back();
-      }
-      async function submit() {
-        // 檢查所有required項目
-        // 假設 WarrantyStartDate 是日期變數
-        if (!EquipCategoryName.value || !EquipTypeName.value || !AssetName.value || !Count.value || !Unit.value) {
-          alert('請填寫所有必填項目');
-          return;
-        }
-        const formData = new FormData();
-        const formFields = {
-          'IsConsumable': IsConsumable.value,
-          'EquipTypeName': EquipTypeName.value,
-          'EquipCategoryName': EquipCategoryName.value,
-          'AssetName': AssetName.value,
-          'VendorName': VendorName.value,
-          'ProductSpec': ProductSpec.value,
-          'ProductType': ProductType.value,
-          'Count': Count.value,
-          'Unit': Unit.value,
-          'WarrantyDate': WarrantyDate.value,
-          'WarrantyStartDate': WarrantyStartDate.value,
-          'WarrantyEndDate': WarrantyEndDate.value,
-          'Memo': Memo.value
-        };
-        //將表格資料append到 formData
-        for (const fieldName in formFields) {
-          formData.append(fieldName, formFields[fieldName]);
-          console.log(formData.get(`${fieldName}`));
-        }
-        //使用axios method:post傳送新品入庫表單
-        const axios = require('axios');
-        try {
-          const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/NewAssetsIn', formData, {
-            // const response = await axios.post('/AssetsInMng/NewAssetsIn', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
+      //使用axios method:post傳送新品入庫表單
+      const axios = require('axios');
+      try {
+        const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/NewAssetsIn', formData, {
+          // const response = await axios.post('/AssetsInMng/NewAssetsIn', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        console.log(response);
+        const data = response.data;
+        if (data.state === 'success') {
+          //新品表單傳送成功，跳轉至入庫管理頁面
+          console.log(data.state);
+          console.log(data.messages);
+          alert(data.messages);
+          router.push({
+            name: 'Store_Datagrid'
           });
-          console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            //新品表單傳送成功，跳轉至入庫管理頁面
-            console.log(data.state);
-            console.log(data.messages);
-            alert(data.messages);
-            router.push({
-              name: 'Store_Datagrid'
-            });
-          } else if (data.state === 'error') {
-            //新品表單傳送失敗
-            alert(data.messages);
-          } else if (data.state === 'input_error') {
-            //新品表單格式失敗
-            alert(data.messages);
-          } else {
-            throw new Error('Request was not successful');
-          }
-        } catch (error) {
-          console.error('Error sending data to backend', error);
+        } else if (data.state === 'error') {
+          //新品表單傳送失敗
+          alert(data.messages);
+        } else if (data.state === 'input_error') {
+          //新品表單格式失敗
+          alert(data.messages);
+        } else {
+          throw new Error('Request was not successful');
         }
+      } catch (error) {
+        console.error('Error sending data to backend', error);
       }
-      async function getApplicationInfo() {
+    }
+    async function getApplicationInfo() {
+      const axios = require('axios');
+      try {
+        const response = await axios.get('http://192.168.0.176:7008/GetDBdata/GetApplicant');
+        console.log(response);
+        const data = response.data;
+        if (data.state === 'success') {
+          console.log('申請人名稱:', data.resultList.Applicant);
+          if (data.resultList.Applicant) {
+            Applicant.value = data.resultList.Applicant;
+          }
+        } else if (data.state === 'error') {
+          alert(data.messages);
+        } else if (data.state === 'account_error') {
+          alert(data.messages);
+          router.push('/');
+        }
+      } catch (error) {
+        console.error('Error sending applicant info request to backend');
+      }
+    }
+    async function getEquipTypeName() {
+      if (EquipTypeArray.value.length == 0) {
         const axios = require('axios');
         try {
-          const response = await axios.get('http://192.168.0.176:7008/GetDBdata/GetApplicant');
+          const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetEquipType');
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
-            console.log('申請人名稱:', data.resultList.Applicant);
-            if (data.resultList.Applicant) {
-              Applicant.value = data.resultList.Applicant;
-            }
+            console.log('總類Get成功 資料如下\n', data.resultList.EquipType);
+            EquipTypeArray.value = data.resultList.EquipType;
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -300,84 +346,65 @@
           console.error('Error sending applicant info request to backend');
         }
       }
-      async function getEquipTypeName() {
-        if (EquipTypeArray.value.length == 0) {
-          const axios = require('axios');
-          try {
-            const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetEquipType');
-            console.log(response);
-            const data = response.data;
-            if (data.state === 'success') {
-              console.log('總類Get成功 資料如下\n', data.resultList.EquipType);
-              EquipTypeArray.value = data.resultList.EquipType;
-            } else if (data.state === 'error') {
-              alert(data.messages);
-            } else if (data.state === 'account_error') {
-              alert(data.messages);
-              router.push('/');
-            }
-          } catch (error) {
-            console.error('Error sending applicant info request to backend');
-          }
-        }
-      }
-      async function getEquipCategoryName() {
-        EquipCategoryName.value = '';
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${EquipTypeName.value}`);
-          console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('分類Get成功 資料如下\n', data.resultList.EquipCategory);
-            EquipCategoryArray.value = data.resultList.EquipCategory;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push({
-              name: 'Store_Datagrid'
-            });
-          }
-        } catch (error) {
-          console.error('Error sending applicant info request to backend');
-        }
-      }
-      onMounted(() => {
-        getApplicationInfo();
-        ApplicationDate.value = getDate();
-      });
-      return {
-        getDate,
-        Applicant,
-        ApplicationDate,
-        IsConsumable,
-        EquipTypeName,
-        EquipTypeArray,
-        getEquipTypeName,
-        EquipCategoryName,
-        EquipCategoryArray,
-        EquipCategoryInit,
-        getEquipCategoryName,
-        AssetName,
-        VendorName,
-        ProductSpec,
-        ProductType,
-        Count,
-        Unit,
-        UnitArray,
-        WarrantyDate,
-        WarrantyStartDate,
-        WarrantyEndDate,
-        Memo,
-        selectType,
-        selectUnit,
-        selectCategory,
-        goBack,
-        submit,
-      };
     }
+    async function getEquipCategoryName() {
+      EquipCategoryName.value = '';
+      const axios = require('axios');
+      try {
+        const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${EquipTypeName.value}`);
+        console.log(response);
+        const data = response.data;
+        if (data.state === 'success') {
+          console.log('分類Get成功 資料如下\n', data.resultList.EquipCategory);
+          EquipCategoryArray.value = data.resultList.EquipCategory;
+        } else if (data.state === 'error') {
+          alert(data.messages);
+        } else if (data.state === 'account_error') {
+          alert(data.messages);
+          router.push({
+            name: 'Store_Datagrid'
+          });
+        }
+      } catch (error) {
+        console.error('Error sending applicant info request to backend');
+      }
+    }
+    onMounted(() => {
+      getApplicationInfo();
+      ApplicationDate.value = getDate();
+    });
+    return {
+      getDate,
+      Applicant,
+      ApplicationDate,
+      IsConsumable,
+      EquipTypeName,
+      EquipTypeArray,
+      getEquipTypeName,
+      EquipCategoryName,
+      EquipCategoryArray,
+      EquipCategoryInit,
+      getEquipCategoryName,
+      AssetName,
+      VendorName,
+      ProductSpec,
+      ProductType,
+      Count,
+      Unit,
+      UnitArray,
+      WarrantyDate,
+      WarrantyStartDate,
+      WarrantyEndDate,
+      Memo,
+      selectType,
+      selectUnit,
+      selectCategory,
+      goBack,
+      clear,
+      submit,
+    };
   }
+}
 </script>
 
 <style lang="scss" scoped>

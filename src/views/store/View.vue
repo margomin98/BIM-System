@@ -20,7 +20,7 @@
         </div>
         <div>
           <p>
-            資產類型：{{ details.IsConsumable ? '':'非'}}耗材
+            資產類型：{{ details.IsConsumable ? '耗材':'重要資產'}}
           </p>
         </div>
       </div>

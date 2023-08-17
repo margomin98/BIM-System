@@ -64,8 +64,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                              {{ details.EquipTypeName || '請選擇' }}
-                            </button>
+                      {{ details.EquipTypeName || '請選擇' }}
+                    </button>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
                   <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
                 </div>
@@ -79,8 +79,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(details.EquipTypeName !== '') }">
-                              {{ details.EquipCategoryName || EquipCategoryInit }}
-                            </button>
+                      {{ details.EquipCategoryName || EquipCategoryInit }}
+                    </button>
                 <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                   <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
                 </div>
@@ -138,8 +138,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              {{ details.Unit || '請選擇' }}
-                            </button>
+                      {{ details.Unit || '請選擇' }}
+                    </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in UnitArray" :key="index" class="dropdown-item" @click="selectUnit(`${item}`)">
                     {{ item }}</p>
