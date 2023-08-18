@@ -48,7 +48,7 @@
         </div>
       </div>
       <div class="col button_wrap">
-        <button class="back_btn" @click="goBack">上一頁</button>
+        <button class="back_btn" @click="goBack">回上一頁</button>
         <button class="empty_btn" @click="clear">清空</button>
         <button class="send_btn">送出</button>
       </div>
@@ -99,7 +99,8 @@
         @include title_color;
       }
       .info_wrap {
-        padding: 1% 32% 0;
+     margin: 30px auto 5%;
+    width: 636px;
         .fixed_info {
           @include fixed_info;
           p {
@@ -135,8 +136,10 @@
           }
         }
         .button_wrap {
-          @include bottom_btn_wrap;
-          margin-bottom: 5%;
+          display: flex;
+          justify-content: space-between;
+          margin: 30px auto 5%;
+          width: 320px;
           button {
             &:nth-child(1) {
               @include back_to_previous_btn;
@@ -174,7 +177,8 @@
         @include title_color;
       }
       .info_wrap {
-        padding: 0 5%;
+     margin: 30px auto 5%;
+    width: 660px;
         .fixed_info {
           @include fixed_info;
           p {
@@ -184,9 +188,8 @@
         }
         .content {
           @include content_bg;
-          padding: 20px 10px;
           .input-group {
-            justify-content: end;
+              flex-wrap: nowrap;
             .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
               margin-left: 10px;
               border-radius: 5px;
@@ -212,8 +215,10 @@
           }
         }
         .button_wrap {
-          @include bottom_btn_wrap;
-          margin-bottom: 5%;
+        display: flex;
+          justify-content: space-between;
+          margin: 30px auto 5%;
+          width: 320px;
           button {
             &:nth-child(1) {
               @include back_to_previous_btn;
@@ -297,9 +302,10 @@
           }
         }
         .button_wrap {
-          @include bottom_btn_wrap;
-          padding: 0 8%;
-          margin-bottom: 5%;
+     display: flex;
+          justify-content: space-between;
+          margin: 30px auto 5%;
+          width: 290px;
           button {
             &:nth-child(1) {
               @include back_to_previous_btn;

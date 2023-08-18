@@ -91,53 +91,68 @@ export default {
       isDisabled,
     }
   }
-}
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/global.scss";
-
-.btn1 {
-  @include datagrid_view_button;
-
-  &:hover {
-    background: #1D7072;
-    color: white
+  @import "@/assets/css/global.scss";
+  .btn1 {
+    @include datagrid_view_button;
+    &:hover {
+      background: #1D7072;
+      color: white
+    }
   }
-}
-
-.btn2 {
-  @include datagrid_inform_button;
-
-  &:hover {
-    background: #64a1a3;
-    color: white
+  .btn2 {
+    @include datagrid_inform_button;
+    &:hover {
+      background: #64a1a3;
+      color: white
+    }
   }
-}
-
-.btn3 {
-  @include datagrid_pass_button;
-
-  &:hover {
-    background: #597c7c;
-    color: white
+  .btn3 {
+    @include datagrid_pass_button;
+    &:hover {
+      background: #597c7c;
+      color: white
+    }
   }
-}
-
-.btn4 {
-  @include datagrid_edit_button;
-
-  &:hover {
-    background: #3B6162;
-    color: white
+  .btn4 {
+    @include datagrid_edit_button;
+    &:hover {
+      background: #3B6162;
+      color: white
+    }
   }
-}
-
-.disabled_btn {
-  @include disabled_btn;
-
-  &:hover {
+  .disabled_btn1 {
     @include disabled_btn;
+    width: 50px;
+     :hover {
+      @include disabled_btn;
+      width: 50px;
+    }
   }
-}
+  .disabled_btn2 {
+    @include disabled_btn;
+    width: 80px;
+     :hover {
+      @include disabled_btn;
+      width: 80px;
+    }
+  }
+  .disabled_btn3 {
+    @include disabled_btn;
+    width: 50px;
+     :hover {
+      @include disabled_btn;
+      width: 50px;
+    }
+  }
+  .disabled_btn4 {
+    @include disabled_btn;
+    width: 50px;
+     :hover {
+      @include disabled_btn;
+      width: 50px;
+    }
+  }
 </style>

@@ -170,7 +170,7 @@
         </div>
       </div>
       <div class="col button_wrap">
-        <button class="back_btn" @click="goBack">上一頁</button>
+        <button class="back_btn" @click="goBack">回上一頁</button>
       </div>
     </div>
   </div>
@@ -232,101 +232,391 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/css/global.scss';
 
-.main_section {
+// .main_section {
 
-  .readonly_box {
-    @include readonly_box;
-  }
+//   .readonly_box {
+//     @include readonly_box;
+//   }
 
-  h1 {
-    margin-top: 50px;
-    text-align: center;
-    font-size: 55px;
-    font-weight: 600;
-    @include title_color;
-  }
+//   h1 {
+//     margin-top: 50px;
+//     text-align: center;
+//     font-size: 55px;
+//     font-weight: 600;
+//     @include title_color;
+//   }
 
-  .info_wrap {
-    padding: 1% 31% 0;
+//   .info_wrap {
+//     padding: 1% 31% 0;
 
-    .fixed_info {
-      @include fixed_info;
+//     .fixed_info {
+//       @include fixed_info;
 
-      p {
-        font-size: 20px;
-        margin-bottom: 0;
+//       p {
+//         font-size: 20px;
+//         margin-bottom: 0;
+//       }
+//     }
+
+//     .content {
+//       @include content_bg;
+//       .check_box_wrap {
+//         font-weight: 700;
+//         align-items: center;
+//         color: white;
+//         font-size: 20px;
+
+//         .check_box {
+//           margin-right: 5px;
+//         }
+//       }
+//       .dropdown {
+//         .dropdown-menu {
+//           width: 100%;
+//         }
+
+//         button {
+//           @include dropdown-btn;
+//           width: 187px;
+//           color: black;
+//           justify-content: space-between;
+//           align-items: center;
+//         }
+//       }
+
+//       .input-group {
+//         .input-number {
+//           @include count_btn;
+//         }
+
+//         .form-control {
+//           height: 35px;
+//           border-radius: 0;
+//         }
+
+//         .input-group-prepend {
+//           color: white;
+//           font-weight: 700;
+//           font-size: 20px;
+//           width: 120px;
+//           text-align: end;
+
+//           span {
+//             @include red_star
+//           }
+//         }
+//       }
+//     }
+
+//     .button_wrap {
+//       display: flex;
+//       margin-top: 30px;
+//       justify-content: center;
+//       padding: 0 28%;
+//       margin-bottom: 5%;
+
+//       button {
+//         &:nth-child(1) {
+//           @include back_to_previous_btn;
+
+//           &:hover {
+//             background-color: #5d85bb;
+//           }
+//         }
+
+//       }
+
+//     }
+//   }
+// }
+  @media only screen and (min-width: 1200px) {
+    .main_section {
+      .readonly_box {
+        @include readonly_box;
       }
-    }
-
-    .content {
-      @include content_bg;
-      .check_box_wrap {
-        font-weight: 700;
-        align-items: center;
-        color: white;
-        font-size: 20px;
-
-        .check_box {
-          margin-right: 5px;
-        }
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
       }
-      .dropdown {
-        .dropdown-menu {
-          width: 100%;
-        }
-
-        button {
-          @include dropdown-btn;
-          width: 187px;
-          color: black;
-          justify-content: space-between;
-          align-items: center;
-        }
-      }
-
-      .input-group {
-        .input-number {
-          @include count_btn;
-        }
-
-        .form-control {
-          height: 35px;
-          border-radius: 0;
-        }
-
+      .info_wrap {
+        margin: auto;
+        width: 700px;
         .input-group-prepend {
           color: white;
           font-weight: 700;
           font-size: 20px;
-          width: 120px;
+          width: calc(100px + 6%);
           text-align: end;
-
+          white-space: nowrap;
           span {
             @include red_star
           }
         }
-      }
-    }
-
-    .button_wrap {
-      display: flex;
-      margin-top: 30px;
-      justify-content: center;
-      padding: 0 28%;
-      margin-bottom: 5%;
-
-      button {
-        &:nth-child(1) {
-          @include back_to_previous_btn;
-
-          &:hover {
-            background-color: #5d85bb;
+        .input-number {
+          @include count_btn;
+          width: 200px;
+        }
+        .fixed_info {
+          @include fixed_info;
+          p {
+            font-size: 20px;
+            margin-bottom: 0;
           }
         }
-
+        .content {
+          @include content_bg;
+          .input-group-prepend {
+            width: 120px;
+          }
+          .check_box_wrap {
+            font-weight: 700;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            .check_box {
+              margin-right: 5px;
+            }
+          }
+          .row_wrap {
+            .input-group {
+              flex-wrap: nowrap
+            }
+            .flex {
+              width: 130px
+            }
+          }
+          .dropdown {
+            width: 218px;
+            .dropdown-menu {
+              width: 100%;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            .dropdown-toggle {
+              width: 100%;
+              @include dropdown-btn;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+        }
+        .button_wrap {
+          display: flex;
+    justify-content: center;
+    margin: 30px auto 5%;
+          button {
+            &:nth-child(1) {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
+              }
+            }
+            
+          }
+        }
       }
-
     }
   }
-}
+    @media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .main_section {
+      .readonly_box {
+        @include readonly_box;
+      }
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        margin: auto;
+        width: 700px;
+        .fixed_info {
+          @include fixed_info;
+          p {
+            font-size: 20px;
+            margin-bottom: 0;
+          }
+        }
+        .content {
+          .check_box_wrap {
+            font-weight: 700;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            .check_box {
+              margin-right: 5px;
+            }
+          }
+          .row_wrap {
+            .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+              margin-left: 6px;
+              border-radius: 5px;
+            }
+          }
+          @include content_bg;
+          .dropdown {
+            .dropdown-menu {
+              width: 100%;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            button {
+              @include dropdown-btn;
+              width: 199px;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group {
+            .input-number {
+              width: 199px;
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              border-radius: 0;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 120px;
+              text-align: end;
+              white-space: nowrap;
+              span {
+                @include red_star
+              }
+            }
+          }
+          #size_wrap {
+            flex: 0.74
+          }
+        }
+        .button_wrap {
+          display: flex;
+    justify-content: center;
+    margin: 30px auto 5%;
+          button {
+            &:nth-child(1) {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
+              }
+            }
+            
+          }
+        }
+        #unit,
+        #number {
+          flex-wrap: nowrap
+        }
+      }
+    }
+  }
+   @media only screen and (max-width: 767px) {
+    .main_section {
+      .readonly_box {
+        @include readonly_box;
+      }
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 50px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        margin: auto;
+        padding: 0 5%;
+        .fixed_info {
+          @include fixed_info;
+          p {
+            font-size: 20px;
+            margin-bottom: 0;
+          }
+        }
+        .content {
+          @include content_bg;
+          .dropdown {
+            .dropdown-menu {
+              width: 100%;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            button {
+              @include dropdown-btn;
+              width: 100%;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+            margin-left: unset;
+            border-radius: 5px;
+          }
+          .input-group {
+            flex-direction: column;
+            .input-number {
+              width: 100%;
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              width: 100%;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              white-space: nowrap;
+              span {
+                @include red_star
+              }
+            }
+          }
+          .check_box_wrap {
+            flex-direction: row;
+            font-weight: 700;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            .check_box {
+              margin-right: 5px;
+            }
+          }
+        }
+        .button_wrap {
+          display: flex;
+    justify-content: center;
+    margin: 30px auto 5%;
+          button {
+            &:nth-child(1) {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
+              }
+            }
+            
+          }
+        }
+      }
+    }
+  }
 </style>

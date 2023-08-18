@@ -31,7 +31,7 @@
         </div>
       </div>
       <div class="col button_wrap">
-        <button class="back_btn" @click="goBack">上一頁</button>
+        <button class="back_btn" @click="goBack">回上一頁</button>
         <button class="send_btn">送出</button>
       </div>
     </div>
@@ -43,21 +43,21 @@
     AgGridVue
   } from "ag-grid-vue3";
   import Navbar from "@/components/Navbar.vue";
-  import Parameter_button from "@/components/Parameter_button";
+import Delete from "@/components/Delete_button";
   import Edit_pen from "@/components/Edit_pen";
   export default {
     components: {
       Navbar,
       AgGridVue,
-      Parameter_button,
+         Delete,
       Edit_pen
     },
     setup() {
       return {
         columnDefs: [{
             field: "make",
-            cellRenderer: 'Parameter_button',
-            width: '170',
+       cellRenderer: "Delete",
+            width: '120',
             rowDrag: true,
           },
           {
