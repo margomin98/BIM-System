@@ -273,7 +273,6 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="empty_btn">清空</button>
         <button class="save_btn">暫存</button>
         <button class="send_btn">送出</button>
       </div>
