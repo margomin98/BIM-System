@@ -219,6 +219,7 @@ export default {
     function goBack() {
       window.history.back();
     }
+
     return {
       goBack,
       AI_ID,
