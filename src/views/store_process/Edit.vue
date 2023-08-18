@@ -162,7 +162,7 @@
             </button>
           </div>
         </nav>
-        <div class="tab-content" id="nav-tabContent">
+        <div v-if="formData.length >0" class="tab-content" id="nav-tabContent">
 
           <div v-for="(item, index) in formData" :key="index"
             :class="['tab-pane', 'fade', { 'show active': index === 0 }]" :id="'tab' + (index + 1)" role="tabpanel"
@@ -170,15 +170,15 @@
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend"><span>*</span>物品名稱：</div>
-                <input type="text" class="form-control" aria-label="Default"
-                  aria-describedby="inputGroup-sizing-default" />
+                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
+                  v-model="item.AssetName" />
               </div>
             </div>
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend"><span>*</span>資產編號：</div>
-                <input type="text" class="form-control" aria-label="Default"
-                  aria-describedby="inputGroup-sizing-default" />
+                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
+                  v-model="item.AssetsId" />
               </div>
             </div>
             <div class="row">
@@ -187,8 +187,17 @@
                   <div class="input-group-prepend">
                     <span>*</span>區域：
                   </div>
-                  <input type="text" class="form-control" aria-label="Default"
-                    aria-describedby="inputGroup-sizing-default">
+                  <div class="dropdown">
+                    <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false" @click="getAreaName(index)">
+                      {{ item.AreaName || '請選擇' }}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="areaDropdown">
+                      <p v-for="(item, area_index) in item.AreaArray" :key="area_index" class="dropdown-item"
+                        @click="selectArea(index ,`${item}`)">
+                        {{ item }}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -196,28 +205,17 @@
                   <div class="input-group-prepend">
                     <span>*</span> 櫃位：
                   </div>
-                  <input type="text" class="form-control" aria-label="Default"
-                    aria-describedby="inputGroup-sizing-default">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span>*</span>數量：
+                  <div class="dropdown">
+                    <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false" :disabled="item.AreaName === ''">
+                      {{ item.LayerName || item.LayerInit }}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
+                      <p v-for="(item, layer_index) in item.LayerArray" :key="layer_index" class="dropdown-item"
+                        @click="selectLayer(index , `${item}`)">{{
+                          item }}</p>
+                    </div>
                   </div>
-                  <input type="text" class="form-control" aria-label="Default"
-                    aria-describedby="inputGroup-sizing-default">
-                </div>
-              </div>
-              <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span>*</span>單位：
-                  </div>
-                  <input type="text" class="form-control" aria-label="Default"
-                    aria-describedby="inputGroup-sizing-default">
                 </div>
               </div>
             </div>
@@ -225,7 +223,7 @@
               <div class="input-group mb-3">
                 <div class="input-group-prepend">S/N：</div>
                 <input type="text" class="form-control" aria-label="Default"
-                  aria-describedby="inputGroup-sizing-default" />
+                  aria-describedby="inputGroup-sizing-default" v-model="item.SN"/>
               </div>
             </div>
             <div class="col">
@@ -233,7 +231,7 @@
                 <div class="input-group-prepend">
                   備註：
                 </div>
-                <input class="form-control" aria-label="With textarea">
+                <input class="form-control" aria-label="With textarea" v-model="item.Memo">
               </div>
             </div>
             <div class="col">
@@ -241,31 +239,35 @@
               <div class="input-group mb-3">
                 <div class="input-group-prepend">資產照片：</div>
                 <div class="mb-3 file_wrap">
-                  <button class='choose_btn' @click="openFileExplorer">選擇檔案</button>
-                  <input ref="fileInput" type="file" style="display: none;" multiple @change="handleFileChange" />
+                  <button class='choose_btn' @click="openFileExplorer(index)">選擇檔案</button>
+                  <input type="file" accept="image/*" ref="fileInputs" style="display: none;" multiple @change="handleFileChange(index)" />
                 </div>
                 <div class='selected_file'>
                   <p class='title'>已選擇的檔案:</p>
-                  <p class='file_upload_wrap' v-for="(file, index) in selectedFiles" :key="index">
-                  <p @click="openImageModal(file.name)">{{ file.name }}</p>
-                  <img class='delete_icon' src="@/assets/trash.png" @click="deleteFile(index)">
+                  <p class='file_upload_wrap' v-for="(file, img_index) in item.File" :key="img_index"
+                    style="cursor: pointer;">
+                  <p @click="showImage(index, img_index)" data-bs-toggle="modal" data-bs-target="#img_modal">{{ file.name
+                  }}</p>
+                  <img class='delete_icon' src="@/assets/trash.png" @click="deleteFile(index, img_index)"
+                    style="margin-left: 10px;">
                   </p>
                 </div>
               </div>
-              <!-- 列出已選擇檔案 -->
-              <div v-for="(file, index) in selectedFiles" :key="index" :id="'imageModal' + index" class="modal fade"
-                tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="imageModalLabel">{{ file.name }}</h5>
-                      <p data-bs-dismiss="modal" class='close_icon'>X</p>
-                    </div>
-                    <div class="modal-body">
-                      <img :src="file.src" alt="Uploaded Image" class="img-fluid" />
-                    </div>
-                  </div>
-                </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- 列出已選擇檔案 -->
+        <div class="modal fade" id="img_modal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">{{ modalTitle }}</h5>
+                <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
+              </div>
+              <div v-if="formData" class="modal-body">
+                <img :src="imageUrl" alt="Uploaded Image" class="img-fluid" />
               </div>
             </div>
           </div>
@@ -274,14 +276,14 @@
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
         <button class="save_btn">暫存</button>
-        <button class="send_btn">送出</button>
+        <button class="send_btn" @click="submit">送出</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, onMounted, reactive , nextTick  } from 'vue';
+import { ref, onMounted, reactive, nextTick } from 'vue';
 import Navbar from "@/components/Navbar.vue";
 import { useRoute } from 'vue-router';
 
@@ -292,40 +294,152 @@ export default {
   setup() {
     const route = useRoute();
     const tabNumber = route.query.tab_number;
+    onMounted(() => {
+      initFormDataArray();
+    });
+    //下半部表單部分
     const formData = reactive([]);
+    const fileInputs = reactive([]);
+    const selectedData = ref(0);
+    const selectedImage = ref(0);
+    const imageUrl = ref('');
+    const modalTitle = ref('');
     function initFormDataArray() {
       for (let i = 0; i < tabNumber; i++) {
         formData.push({
-          AssetName: '',
+          AssetName: '1',
           AssetsId: '',
           AreaName: '',
+          AreaArray: [],
           LayerName: '',
+          LayerArray: [],
+          LayerInit: '請先選擇區域',
           Count: '',
           Unit: '',
           SN: '',
           Memo: '',
           File: [],
-          previewUrl: []
+          previewUrl: [],
         });
       }
     }
-    const fileInputRef = ref(null);
 
-    let currentTabIndex = null;
+    
+    async function getAreaName(index) {
+      if (formData[index].AreaArray.length == 0) {
+        const axios = require('axios');
+        try {
+          const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetAreaName');
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('Area Get成功 資料如下\n', data.resultList.AreaName);
+            formData[index].AreaArray = data.resultList.AreaName;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error('Error sending applicant info request to backend');
+        }
+      }
+    }
 
-    const openFileExplorer = async (tabIndex) => {
-      currentTabIndex = tabIndex;
-      await nextTick(); // 等待下一個 DOM 更新周期，確保元素被初始化
-      fileInputRef.value.click();
-    };
-    onMounted(() => {
-      initFormDataArray();
-    });
+    async function getLayerName(index) {
+      const axios = require('axios');
+      try {
+        const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetLayerName?id=${formData[index].AreaName}`);
+        console.log(response);
+        const data = response.data;
+        if (data.state === 'success') {
+          console.log('Layer Get成功 資料如下\n', data.resultList.LayerName);
+          formData[index].LayerArray = data.resultList.LayerName;
+        } else if (data.state === 'error') {
+          alert(data.messages);
+        } else if (data.state === 'account_error') {
+          alert(data.messages);
+          router.push('/');
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
 
+    function selectArea(index , item) {
+      formData[index].AreaName = item ;
+      getLayerName(index);
+      formData[index].LayerInit = '請選擇';
+    }
+
+    function selectLayer(index , item) {
+      formData[index].LayerName = item ;
+    }
+
+    function submit() {
+      console.log(formData);
+    }
+
+    
+    function openFileExplorer(index) {
+      fileInputs[index].click();
+    }
+    
+    function handleFileChange(index) {
+      const files = event.target.files;
+      if( formData[index].File.length + files.length >5) {
+        alert('上傳至多5張圖片');
+        return
+      }
+      console.log(event.target.files);
+      var imgArray = formData[index].File;
+      for (let i = 0; i < files.length; i++) {
+        imgArray.push(files[i]);
+      }
+      const previewUrl = formData[index].previewUrl;
+      for (let i = 0; i < files.length; i++) {
+        // console.log(imgArray[i].name);
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          previewUrl.push(e.target.result);
+        }
+        reader.readAsDataURL(files[i]);
+      }
+      console.log(previewUrl);
+      console.log(formData[index].previewUrl);
+    }
+
+    function showImage(index, img_index) {
+      selectedData.value = index;
+      selectedImage.value = img_index;
+      getImageUrl();
+    }
+    function deleteFile(index, img_index) {
+      formData[index].File.splice(img_index, 1);
+      formData[index].previewUrl.splice(img_index, 1);
+    }
+    function getImageUrl() {
+      imageUrl.value = formData[selectedData.value].previewUrl[selectedImage.value];
+      modalTitle.value = formData[selectedData.value].File[selectedImage.value].name;
+    }
     return {
       formData,
-      fileInputRef,
+      selectedData,
+      selectedImage,
+      fileInputs,
+      imageUrl,
+      modalTitle,
+      getAreaName,
+      getLayerName,
+      selectArea,
+      selectLayer,
+      submit,
       openFileExplorer,
+      handleFileChange,
+      showImage,
+      deleteFile,
+      getImageUrl,
     }
   },
 };
