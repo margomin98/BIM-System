@@ -238,7 +238,7 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="send_btn send_btn_disabled" @click="submit" :disabled="!canSubmit()">送出</button>
+        <button class="send_btn" @click="submit" :disabled="!canSubmit()" :class="{ send_btn_disabled:!canSubmit() }">送出</button>
       </div>
     </div>
   </div>
