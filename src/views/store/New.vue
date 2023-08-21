@@ -277,7 +277,6 @@ export default {
       const axios = require('axios');
       try {
         const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/NewAssetsIn', formData, {
-          // const response = await axios.post('/AssetsInMng/NewAssetsIn', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
