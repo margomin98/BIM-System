@@ -2,19 +2,12 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>出庫作業</h1>
+      <h1>出庫審核</h1>
     </div>
     <div class="container-fluid datagrid_section">
+    
       <div class="row">
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>單號</p>
-          <input type="text" />
-        </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>專案名稱</p>
-          <input type="text" />
-        </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+      <div class="col-xl-2 col-lg-2 col-md-6 col-12">
           <p>用途</p>
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -38,6 +31,15 @@
             </div>
           </div>
         </div>
+        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+          <p>單號</p>
+          <input type="text" />
+        </div>
+        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+          <p>專案名稱</p>
+          <input type="text" />
+        </div>
+     
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
           <p>日期類型</p>
           <div class="dropdown">
@@ -84,7 +86,8 @@
       </div>
     </div>
    <div style="width: 100%">
-          <ag-grid-vue style="width: 100%; height:300px; background-color: #402a2a;" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true">
+          <ag-grid-vue style="width: 100%; height:300px; background-color: #402a2a;" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true" :alwaysShowHorizontalScroll="true"
+         >
     </ag-grid-vue>
     </div>
 
@@ -95,14 +98,14 @@
   import {
     AgGridVue
   } from "ag-grid-vue3";
-  import Rent_process_button from "@/components/Rent_process_button";
+  import Rent_review_button from "@/components/Rent_review_button";
   import Delete from "@/components/Delete_button";
   import Navbar from "@/components/Navbar.vue";
   export default {
     components: {
       Navbar,
       AgGridVue,
-      Rent_process_button,
+      Rent_review_button,
       Delete
     },
     setup() {
@@ -110,15 +113,15 @@
         columnDefs: [{
             suppressMovable: true,
             field: "",
-            cellRenderer: "Rent_process_button",
-            width: '310',
+            cellRenderer: "Rent_review_button",
+            width: '150',
           },
           {
             headerName: "單號",
             field: "make",
             unSortIcon: true,
             sortable: true,
-            width: '140',
+            width: '150',
             suppressMovable: true
           },
           {
@@ -171,14 +174,14 @@
           },
           
           {
-            headerName: "出庫日期",
+            headerName: "審核日期",
             field: "make",
             unSortIcon: true,
             sortable: true,
             width: '150',
             suppressMovable: true
           },{
-            headerName: "出庫人員",
+            headerName: "審核人員",
             field: "make",
             unSortIcon: true,
             sortable: true,
@@ -217,6 +220,7 @@
             price: 72000
           },
         ],
+
       };
     },
     data() {
@@ -306,7 +310,7 @@
     .main_section {
       padding: 0 10%;
       h1 {
-           margin-bottom: 20px;
+       margin-bottom: 20px;
     margin-top: 30px;
         text-align: center;
         font-size: 55px;

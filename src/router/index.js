@@ -16,24 +16,29 @@ import Store_Process_Confirm from "../views/store_process/Confirm.vue";
 import Store_Process_Edit from "../views/store_process/Edit.vue";
 //入庫作業
 
-//出庫作業
+//出庫填報
 import Rent_Datagrid from "../views/rent/Datagrid.vue";
 import Rent_New from "../views/rent/New.vue";
 import Rent_View from "../views/rent/View.vue";
 import Rent_Edit from "../views/rent/Edit.vue";
+//出庫填報
+
 //出庫作業
+import Rent_Process_Datagrid from "../views/rent_process/Datagrid";
+import Rent_Process_New from "../views/rent_process/New";
+import Rent_Process_View from "../views/rent_process/View";
+//出庫作業
+
+//出庫審核
+import Rent_Review_Datagrid from "../views/rent_review/Datagrid";
+import Rent_Review_View from "../views/rent_review/View.vue";
+//出庫審核
 
 //系統管理
 import System_Parameter from "../views/system/Parameter";
 import System_Parameter_Edit from "../views/system/Parameter_edit";
 import Authority from "../views/system/Authority";
 //系統管理
-
-//出庫作業
-import Rent_Process_Datagrid from "../views/rent_process/Datagrid";
-import Rent_Process_New from "../views/rent_process/New";
-
-//出庫作業
 
 const routes = [
   {
@@ -136,6 +141,21 @@ const routes = [
     path: "/rent_process_new",
     name: "Rent_Process_New",
     component: Rent_Process_New,
+  },
+  {
+    path: "/rent_process_view",
+    name: "Rent_Process_View",
+    component: Rent_Process_View,
+  },
+  {
+    path: "/rent_review_datagrid",
+    name: "Rent_Review_Datagrid",
+    component: Rent_Review_Datagrid,
+  },
+  {
+    path: "/rent_review_view",
+    name: "Rent_Review_View",
+    component: Rent_Review_View,
   },
 ];
 

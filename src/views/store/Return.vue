@@ -25,7 +25,7 @@
             <div class="input-group-prepend">
               <span>*</span>資產編號：
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="請輸入資產編號">
+            <input  ref="inputElement"  type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="請輸入資產編號">
           </div>
         </div>
         <div class="row g-0">
@@ -80,7 +80,11 @@
         });
         this.count = 1;
       }
-    }
+    },
+   mounted() {
+    // Focus the input element when the component is mounted
+    this.$refs.inputElement.focus();
+  }
   }
 </script>
 

@@ -10,17 +10,17 @@
       <div class="fixed_info">
         <div>
           <p>
-            申請人員: {{ details.Applicant }}
+            申請人員 : {{ details.Applicant }}
           </p>
         </div>
         <div>
           <p>
-            申請入庫日期: {{ details.ApplicationDate }}
+            申請入庫日期 : {{ details.ApplicationDate }}
           </p>
         </div>
         <div>
           <p>
-            資產類型：{{ details.IsConsumable ? '耗材':'重要資產'}}
+            資產類型 : {{ details.IsConsumable ? '耗材':'重要資產'}}
           </p>
         </div>
       </div>

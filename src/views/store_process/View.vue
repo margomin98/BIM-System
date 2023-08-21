@@ -7,13 +7,13 @@
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
-          <p>申請人員: 陳奕迅</p>
+          <p>申請人員 : 陳奕迅</p>
         </div>
         <div>
-          <p>申請入庫日期: 2023/04/01</p>
+          <p>申請入庫日期 : 2023/04/01</p>
         </div>
         <div>
-          <p>資產類型：耗材</p>
+          <p>資產類型 : 耗材</p>
         </div>
       </div>
       <div class="content">
@@ -134,14 +134,14 @@
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">
-                                1
-                              </button>
+                                    1
+                                  </button>
             <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
-                                2
-                              </button>
+                                    2
+                                  </button>
             <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">
-                                3
-                              </button>
+                                    3
+                                  </button>
           </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -211,12 +211,11 @@
             <div class="col product_img">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">資產照片：</div>
-             <div class='d-flex'>
-              <p class='m-0'>xx.jpg</p>
-              <img class='delete_icon' src="@/assets/trash.png">
-             </div>
+                <div class='d-flex'>
+                  <p class='m-0'>xx.jpg</p>
+                  <img class='delete_icon' src="@/assets/trash.png">
+                </div>
               </div>
-            
             </div>
           </div>
           <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
@@ -282,15 +281,14 @@
                 <input class="form-control readonly_box" aria-label="With textarea" readonly>
               </div>
             </div>
-          <div class="col product_img">
+            <div class="col product_img">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">資產照片：</div>
-             <div class='d-flex'>
-              <p class='m-0'>xx.jpg</p>
-              <img class='delete_icon' src="@/assets/trash.png">
-             </div>
+                <div class='d-flex'>
+                  <p class='m-0'>xx.jpg</p>
+                  <img class='delete_icon' src="@/assets/trash.png">
+                </div>
               </div>
-            
             </div>
           </div>
           <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
@@ -356,15 +354,14 @@
                 <input class="form-control readonly_box" aria-label="With textarea" readonly>
               </div>
             </div>
-          <div class="col product_img">
+            <div class="col product_img">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">資產照片：</div>
-             <div class='d-flex'>
-              <p class='m-0'>xx.jpg</p>
-              <img class='delete_icon' src="@/assets/trash.png">
-             </div>
+                <div class='d-flex'>
+                  <p class='m-0'>xx.jpg</p>
+                  <img class='delete_icon' src="@/assets/trash.png">
+                </div>
               </div>
-            
             </div>
           </div>
         </div>
@@ -378,7 +375,9 @@
 
 <script>
   import Navbar from "@/components/Navbar.vue";
-import { useRoute } from "vue-router";
+  import {
+    useRoute
+  } from "vue-router";
   export default {
     components: {
       Navbar,
@@ -439,98 +438,43 @@ import { useRoute } from "vue-router";
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
- 
-  @media only screen and (min-width: 1200px){
- .main_section {
-    .readonly_box {
-      @include readonly_box;
-    }
-    h1 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 55px;
-      font-weight: 600;
-      @include title_color;
-    }
-    .info_wrap {
-      padding: 1% 31% 0;
-      .fixed_info {
-        @include fixed_info;
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
+  @media only screen and (min-width: 1200px) {
+    .main_section {
+      .readonly_box {
+        @include readonly_box;
       }
-      .content {
-        @include content_bg;
-        .dropdown {
-          .dropdown-menu {
-            width: 100%;
-          }
-          button {
-            @include dropdown-btn;
-            width: 187px;
-            color: black;
-            justify-content: space-between;
-            align-items: center;
-          }
-        }
-        .input-group {
-          .input-number {
-            @include count_btn;
-          }
-          .form-control {
-            height: 35px;
-            border-radius: 0;
-          }
-          .input-group-prepend {
-            color: white;
-            font-weight: 700;
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        margin: auto;
+        width: 800px;
+        .fixed_info {
+          @include fixed_info;
+          p {
             font-size: 20px;
-            width: 120px;
-            text-align: end;
+            margin-bottom: 0;
           }
         }
-      }
-      .button_wrap {
-        display: flex;
-        margin-top: 30px;
-        justify-content: center;
-        padding: 0 28%;
-        margin-bottom: 5%;
-        button.back_btn {
-          @include back_to_previous_btn;
-          &:hover {
-            background-color: #5d85bb;
-          }
-        }
-      }
-      .tab_section {
-        .nav-tabs {
-          button {
-            @include tab_section_num;
-            background: #5C7897;
-          }
-          .active {
-            @include tab_section_num;
-            background: #3E4E5F;
-          }
-        }
-        .tab-content {
-          background: #3E4E5F;
-          padding: 50px 30px;
-          .input-group {
-            .selected_file {
-              margin-left: 20px;
-              li {
-                color: white
-              }
-              p {
-                margin-bottom: 0;
-                font-weight: 700;
-                color: white;
-              }
+        .content {
+          @include content_bg;
+          .dropdown {
+            .dropdown-menu {
+              width: 100%;
             }
+            button {
+              @include dropdown-btn;
+              width: 187px;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group {
             .input-number {
               @include count_btn;
             }
@@ -545,119 +489,116 @@ import { useRoute } from "vue-router";
               width: 120px;
               text-align: end;
             }
-       
           }
-             .product_img{
-              img{
-                width: 25px;
-    height: 25px;
-    align-self: center;
-    margin-left: 5px;
-              }
-            p{
-                color:white;
-            font-weight:800
+        }
+        .button_wrap {
+          display: flex;
+          margin-top: 30px;
+          justify-content: center;
+          padding: 0 28%;
+          margin-bottom: 5%;
+          button.back_btn {
+            @include back_to_previous_btn;
+            &:hover {
+              background-color: #5d85bb;
             }
-          
+          }
+        }
+        .tab_section {
+          .nav-tabs {
+            button {
+              @include tab_section_num;
+              background: #5C7897;
+            }
+            .active {
+              @include tab_section_num;
+              background: #3E4E5F;
+            }
+          }
+          .tab-content {
+            background: #3E4E5F;
+            padding: 50px 30px;
+            .input-group {
+              .selected_file {
+                margin-left: 20px;
+                li {
+                  color: white
+                }
+                p {
+                  margin-bottom: 0;
+                  font-weight: 700;
+                  color: white;
+                }
+              }
+              .input-number {
+                @include count_btn;
+              }
+              .form-control {
+                height: 35px;
+                border-radius: 0;
+              }
+              .input-group-prepend {
+                color: white;
+                font-weight: 700;
+                font-size: 20px;
+                width: 120px;
+                text-align: end;
+              }
+            }
+            .product_img {
+              img {
+                width: 25px;
+                height: 25px;
+                align-self: center;
+                margin-left: 5px;
+              }
+              p {
+                color: white;
+                font-weight: 800
+              }
+            }
           }
         }
       }
     }
   }
-}
-
-
-@media only screen and (min-width: 768px) and (max-width: 1199px){
- .main_section {
-    .readonly_box {
-      @include readonly_box;
-    }
-    h1 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 55px;
-      font-weight: 600;
-      @include title_color;
-    }
-    .info_wrap {
-      padding: 1% 5% 0;
-      .fixed_info {
-        @include fixed_info;
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
+  @media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .main_section {
+      .readonly_box {
+        @include readonly_box;
       }
-      .content {
-        @include content_bg;
-        .dropdown {
-          .dropdown-menu {
-            width: 100%;
-          }
-          button {
-            @include dropdown-btn;
-            width: 187px;
-            color: black;
-            justify-content: space-between;
-            align-items: center;
-          }
-        }
-        .input-group {
-          .input-number {
-            @include count_btn;
-          }
-          .form-control {
-            height: 35px;
-            border-radius: 0;
-          }
-          .input-group-prepend {
-            color: white;
-            font-weight: 700;
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        margin: auto;
+        width: 800px;
+        .fixed_info {
+          @include fixed_info;
+          p {
             font-size: 20px;
-            width: 120px;
-            text-align: end;
+            margin-bottom: 0;
           }
         }
-      }
-      .button_wrap {
-        display: flex;
-        margin-top: 30px;
-        justify-content: center;
-        padding: 0 28%;
-        margin-bottom: 5%;
-        button.back_btn {
-          @include back_to_previous_btn;
-          &:hover {
-            background-color: #5d85bb;
-          }
-        }
-      }
-      .tab_section {
-        .nav-tabs {
-          button {
-            @include tab_section_num;
-            background: #5C7897;
-          }
-          .active {
-            @include tab_section_num;
-            background: #3E4E5F;
-          }
-        }
-        .tab-content {
-          background: #3E4E5F;
-          padding: 50px 30px;
-          .input-group {
-            .selected_file {
-              margin-left: 20px;
-              li {
-                color: white
-              }
-              p {
-                margin-bottom: 0;
-                font-weight: 700;
-                color: white;
-              }
+        .content {
+          @include content_bg;
+          .dropdown {
+            .dropdown-menu {
+              width: 100%;
             }
+            button {
+              @include dropdown-btn;
+              width: 187px;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group {
             .input-number {
               @include count_btn;
             }
@@ -672,154 +613,209 @@ import { useRoute } from "vue-router";
               width: 120px;
               text-align: end;
             }
-       
           }
-             .product_img{
-              img{
-                width: 25px;
-    height: 25px;
-    align-self: center;
-    margin-left: 5px;
-              }
-            p{
-                color:white;
-            font-weight:800
+        }
+        .button_wrap {
+          display: flex;
+          margin-top: 30px;
+          justify-content: center;
+          padding: 0 28%;
+          margin-bottom: 5%;
+          button.back_btn {
+            @include back_to_previous_btn;
+            &:hover {
+              background-color: #5d85bb;
             }
-          
+          }
+        }
+        .tab_section {
+          .nav-tabs {
+            button {
+              @include tab_section_num;
+              background: #5C7897;
+            }
+            .active {
+              @include tab_section_num;
+              background: #3E4E5F;
+            }
+          }
+          .tab-content {
+            background: #3E4E5F;
+            padding: 50px 30px;
+            .input-group {
+              .selected_file {
+                margin-left: 20px;
+                li {
+                  color: white
+                }
+                p {
+                  margin-bottom: 0;
+                  font-weight: 700;
+                  color: white;
+                }
+              }
+              .input-number {
+                @include count_btn;
+              }
+              .form-control {
+                height: 35px;
+                border-radius: 0;
+              }
+              .input-group-prepend {
+                color: white;
+                font-weight: 700;
+                font-size: 20px;
+                width: 120px;
+                text-align: end;
+              }
+            }
+            .product_img {
+              img {
+                width: 25px;
+                height: 25px;
+                align-self: center;
+                margin-left: 5px;
+              }
+              p {
+                color: white;
+                font-weight: 800
+              }
+            }
           }
         }
       }
     }
   }
-}
-
-@media only screen and (max-width: 767px){
- .main_section {
-    .readonly_box {
-      @include readonly_box;
-    }
-    h1 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 50px;
-      font-weight: 600;
-      @include title_color;
-    }
-    .info_wrap {
-      padding: 1% 5% 0;
-      .fixed_info {
-        @include fixed_info;
-        height: unset;
-    padding: 10px;
-    flex-direction: column;
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
+  @media only screen and (max-width: 767px) {
+    .main_section {
+      .readonly_box {
+        @include readonly_box;
       }
-      .content {
-        @include content_bg;
-        .dropdown {
-          .dropdown-menu {
-            width: 100%;
-          }
-          button {
-            @include dropdown-btn;
-            width: 187px;
-            color: black;
-            justify-content: space-between;
-            align-items: center;
-          }
-        }
-        .input-group {
-          .input-number {
-            @include count_btn;
-          }
-          .form-control {
-            height: 35px;
-            border-radius: 0;
-          }
-          .input-group-prepend {
-            color: white;
-            font-weight: 700;
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 50px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        margin: auto;
+        padding: 0 5%;
+        .fixed_info {
+          @include fixed_info;
+          height: unset;
+          padding: 10px;
+          flex-direction: column;
+          p {
             font-size: 20px;
-            width: 120px;
-            text-align: end;
+            margin-bottom: 0;
           }
         }
-      }
-      .button_wrap {
-        display: flex;
-        margin-top: 30px;
-        justify-content: center;
-        padding: 0 28%;
-        margin-bottom: 5%;
-        button.back_btn {
-          @include back_to_previous_btn;
-          &:hover {
-            background-color: #5d85bb;
-          }
-        }
-      }
-      .tab_section {
-        .nav-tabs {
-          button {
-            @include tab_section_num;
-            background: #5C7897;
-          }
-          .active {
-            @include tab_section_num;
-            background: #3E4E5F;
-          }
-        }
-        .tab-content {
-          background: #3E4E5F;
-          padding: 50px 30px;
-          .input-group {
-            .selected_file {
-              margin-left: 20px;
-              li {
-                color: white
-              }
-              p {
-                margin-bottom: 0;
-                font-weight: 700;
-                color: white;
-              }
+        .content {
+          @include content_bg;
+          .dropdown {
+            .dropdown-menu {
+              width: 100%;
             }
+            button {
+              @include dropdown-btn;
+              width: 187px;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group {
+            flex-direction: column;
             .input-number {
               @include count_btn;
             }
             .form-control {
               height: 35px;
               border-radius: 0;
+              width: 100%;
+              margin-left: unset !important;
+              margin-top: 5px;
             }
             .input-group-prepend {
               color: white;
               font-weight: 700;
               font-size: 20px;
-              width: 120px;
-              text-align: end;
             }
-       
           }
-             .product_img{
-              img{
-                width: 25px;
-    height: 25px;
-    align-self: center;
-    margin-left: 5px;
-              }
-            p{
-                color:white;
-            font-weight:800
+        }
+        .button_wrap {
+          display: flex;
+          margin-top: 30px;
+          justify-content: center;
+          padding: 0 28%;
+          margin-bottom: 5%;
+          button.back_btn {
+            @include back_to_previous_btn;
+            &:hover {
+              background-color: #5d85bb;
             }
-          
+          }
+        }
+        .tab_section {
+          .nav-tabs {
+            button {
+              @include tab_section_num;
+              background: #5C7897;
+            }
+            .active {
+              @include tab_section_num;
+              background: #3E4E5F;
+            }
+          }
+          .tab-content {
+            background: #3E4E5F;
+            padding: 50px 30px;
+            .input-group {
+              flex-direction: column;
+              .selected_file {
+                margin-left: 20px;
+                li {
+                  color: white
+                }
+                p {
+                  margin-bottom: 0;
+                  font-weight: 700;
+                  color: white;
+                }
+              }
+              .input-number {
+                @include count_btn;
+              }
+              .form-control {
+                height: 35px;
+                border-radius: 0;
+                width: 100%;
+                margin-left: unset !important;
+                margin-top: 5px;
+              }
+              .input-group-prepend {
+                color: white;
+                font-weight: 700;
+                font-size: 20px;
+                width: 120px;
+              }
+            }
+            .product_img {
+              img {
+                width: 25px;
+                height: 25px;
+                align-self: center;
+                margin-left: 5px;
+              }
+              p {
+                color: white;
+                font-weight: 800
+              }
+            }
           }
         }
       }
     }
   }
-}
-
 </style>

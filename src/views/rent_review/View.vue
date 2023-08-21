@@ -1,90 +1,8 @@
 <template>
   <Navbar />
-  <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div class="fixed_info">
-            <div>
-              <p>檢索資產</p>
-            </div>
-            <button type="button" class="close" data-bs-dismiss="modal">x</button>
-          </div>
-          <div class='second_content'>
-            <div class='wrap1'>
-              <div class='col-xl-3 col-lg-3 col-md-3 col-12' style='padding-left:0'>
-                <p>設備總類</p>
-                <div class="dropdown">
-                  <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                              {{ selectedItem || "請選擇" }}
-                                                            </button>
-                  <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                    <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                    <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
-                  </div>
-                </div>
-              </div>
-              <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-                <p>設備分類</p>
-                <div class="dropdown">
-                  <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                              {{ selectedItem || "請選擇" }}
-                                                            </button>
-                  <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                    <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                    <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
-                  </div>
-                </div>
-              </div>
-              <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-                <p>物品名稱</p>
-                <div class="dropdown">
-                  <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                              {{ selectedItem || "請選擇" }}
-                                                            </button>
-                  <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                    <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                    <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-lg-3 col-md-3 col-12">
-                <p>數量</p>
-                <div class="number-input-box">
-                  <input class="input-number" type="number" v-model="count" min="1" />
-                </div>
-              </div>
-            </div>
-            <div class="row g-0">
-              <div class="col-12 d-flex wrap2">
-                <label for="inputTextarea" class="form-label">
-                                                      <p>
-                                                      規格需求：
-                                                      </p>
-                                                      </label>
-                <div>
-                </div>
-                <textarea class="form-control" id="inputTextarea" rows="3" placeholder='請填寫說明，最多100字'></textarea>
-              </div>
-            </div>
-            <div class='col d-flex justify-content-center'>
-              <button class="btn submit_btn" type="button">搜尋庫存</button>
-            </div>
-          </div>
-          <div class="fixed_info">
-            <div>
-              <p>目前資產庫存</p>
-            </div>
-          </div>
-          <ag-grid-vue style="height: 300px" class="ag-theme-alpine list" :columnDefs="columnDefs3" :rowData="rowData3" :defaultColDef="defaultColDef3" :paginationAutoPageSize="true">
-          </ag-grid-vue>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="main_section">
     <div class="title col">
-      <h1>資產出庫備料作業</h1>
+      <h1>資產出庫審核作業</h1>
     </div>
     <div class="info_wrap col">
       <div class="fixed_info">
@@ -100,37 +18,34 @@
       </div>
       <form>
         <div class="row g-0">
-          <div class="col d-flex wrap column_section">
+          <div class="col d-flex wrap">
             <label for="inputTitle1" class="form-label use">
-                                            <p>
-                                           用&ensp;&ensp;&ensp;&ensp;途</p>
-                                            </label>
-            <div class="option">
-              <div class='content'>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox1">
-                  <label class="form-check-label" for="checkbox1">內部領用</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox2">
-                  <label class="form-check-label" for="checkbox2">借測</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox3">
-                  <label class="form-check-label" for="checkbox3">維修</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox1">
-                  <label class="form-check-label" for="checkbox1">出貨</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox2">
-                  <label class="form-check-label" for="checkbox2">報廢</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox3">
-                  <label class="form-check-label" for="checkbox3">退貨</label>
-                </div>
+                                      <p>用&ensp;&ensp;&ensp;&ensp;途</p>
+                                    </label>
+            <div class=" option">
+              <div class="form-check ">
+                <input class="form-check-input" type="checkbox" value="" id="checkbox1" />
+                <label class="form-check-label" for="checkbox1">內部領用</label>
+              </div>
+              <div class="form-check ">
+                <input class="form-check-input" type="checkbox" value="" id="checkbox2" />
+                <label class="form-check-label" for="checkbox2">借測</label>
+              </div>
+              <div class="form-check ">
+                <input class="form-check-input" type="checkbox" value="" id="checkbox3" />
+                <label class="form-check-label" for="checkbox3">維修</label>
+              </div>
+              <div class="form-check ">
+                <input class="form-check-input" type="checkbox" value="" id="checkbox1" />
+                <label class="form-check-label" for="checkbox1">出貨</label>
+              </div>
+              <div class="form-check ">
+                <input class="form-check-input" type="checkbox" value="" id="checkbox2" />
+                <label class="form-check-label" for="checkbox2">報廢</label>
+              </div>
+              <div class="form-check ">
+                <input class="form-check-input" type="checkbox" value="" id="checkbox3" />
+                <label class="form-check-label" for="checkbox3">退貨</label>
               </div>
             </div>
           </div>
@@ -138,29 +53,27 @@
         <div class="row g-0">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                                        <p>專案代碼</p>
-                                      </label>
-            <div class="input-group" id='readonly_box'>
-              <p class='readonly_box' readonly>文字</p>
+                                      <p>專案代碼</p>
+                                    </label>
+            <div class="input-group">
+              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                                        <p>專案名稱</p>
-                                      </label>
-            <div class="input-group" id='readonly_box'>
-              <p class='readonly_box' readonly>文字</p>
+                                      <p>專案名稱</p>
+                                    </label>
+            <div class="input-group">
+              <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly />
             </div>
           </div>
         </div>
         <div class="row g-0">
           <div class="col d-flex wrap" style="border: none">
             <label for="inputTextarea" class="form-label">
-                                        <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
-                                      </label>
-            <div class="input-group" id='readonly_box'>
-              <p class='readonly_box' readonly>文字</p>
-            </div>
+                                      <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
+                                    </label>
+            <textarea class="form-control readonly_box" id="inputTextarea" rows="1" readoonly></textarea>
           </div>
         </div>
       </form>
@@ -176,7 +89,7 @@
       <modal-overlay v-if="modalVisible" @close="closeModal" />
       <div class="fixed_info">
         <div>
-          <p>資產出庫細項</p>
+          <p>資產出口細項</p>
         </div>
       </div>
       <div class="third_content">
@@ -200,26 +113,64 @@
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                                        <p>備料人員</p>
-                                      </label>
+                                      <p>備料人員</p>
+                                    </label>
             <div class="input-group">
               <input type="text" class="form-control readonly_box" id="inputWithButton" readonly />
             </div>
           </div>
+          <div class="col d-flex wrap">
+            <label for="inputWithTitle" class="form-label project_name">
+                                      <p>備註</p>
+                                    </label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="inputWithTitle" placeholder='自由填寫，最多100字' />
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <div class='five_content'>
+        <div class="fixed_info">
+          <div>
+            <p>審核簽章</p>
+          </div>
+        </div>
+        <div class="row g-0">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
+            <label for="inputWithButton" class="form-label">
+                                      <p><span>*</span>審核人員</p>
+                                    </label>
+            <div class="input-group">
+              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly />
+            </div>
+            <button type="button">驗證</button>
+          </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                                        <p>備料完成日期</p>
-                                      </label>
+                                       <p><span>*</span>審核結果</p>
+                                    </label>
             <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly />
+              <input type="checkbox">通過
+              <input type="checkbox">不通過
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                                        <p>備料備註</p>
-                                      </label>
+                                      <p>審核日期</p>
+                                    </label>
             <div class="input-group">
               <input type="text" class="form-control" id="inputWithTitle" placeholder='自由填寫，最多100字' />
+            </div>
+          </div>
+        </div>
+        <div class="row g-0">
+          <div class="col d-flex wrap">
+            <label for="inputWithButton" class="form-label">
+                                      <p>審核意見</p>
+                                    </label>
+            <div class="input-group">
+              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly />
             </div>
           </div>
         </div>
@@ -236,10 +187,7 @@
   import {
     AgGridVue
   } from "ag-grid-vue3";
-  import Storage_button from "@/components/Storage_button";
-  import Storage_view from "@/components/Storage_list_view_button";
   import Storage_add from "@/components/Storage_add_button";
-  import Delete_button from "@/components/Delete_button";
   import Navbar from "@/components/Navbar.vue";
   import {
     onMounted,
@@ -249,20 +197,11 @@
     components: {
       Navbar,
       AgGridVue,
-      Storage_button,
-      Delete_button,
-      Storage_view,
       Storage_add
     },
     setup() {
       return {
         columnDefs1: [{
-            suppressMovable: true,
-            field: "",
-            cellRenderer: "Storage_button",
-            width: "115",
-          },
-          {
             headerName: "項目",
             field: "make",
             unSortIcon: true,
@@ -343,12 +282,6 @@
           },
         ],
         columnDefs2: [{
-            suppressMovable: true,
-            field: "",
-            cellRenderer: "Delete_button",
-            width: "100"
-          },
-          {
             headerName: "需求項目",
             field: "make",
             unSortIcon: true,
@@ -460,127 +393,6 @@
             price: 72000,
           },
         ],
-        columnDefs3: [{
-            suppressMovable: true,
-            field: "",
-            cellRenderer: "Storage_add",
-            width: "75"
-          },
-          {
-            suppressMovable: true,
-            field: "項目",
-            cellRenderer: "Storage_view",
-            width: "100"
-          },
-          {
-            headerName: "資產編號",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "物品名稱",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "儲位區域",
-            field: "price",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "儲位櫃位",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "廠商",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "型號",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "規格",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "數量",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "100",
-            suppressMovable: true,
-          },
-          {
-            headerName: "單位",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "100",
-            suppressMovable: true,
-          },
-        ],
-        rowData3: [{
-            make: "Toyota",
-            model: "Celica",
-            price: 35000,
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000,
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000,
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000,
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000,
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000,
-          },
-        ],
-      };
-    },
-    data() {
-      return {
-        count: 1,
       };
     },
   };
@@ -588,16 +400,11 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-  .readonly_box {
+  .option {
     @include readonly_box;
+    height: 100%;
     width: 100%;
-    height: 100%;
-    justify-content: center;
-    display: flex;
     align-items: center;
-  }
-  .input-group {
-    height: 100%;
   }
   @media only screen and (min-width: 1200px) {
     .modal {
@@ -734,9 +541,6 @@
             margin-bottom: 0;
           }
         }
-        #readonly_box {
-          border-left: black 1px solid;
-        }
         .second_content {
           border-left: 1px solid black;
           border-right: 1px solid black;
@@ -775,13 +579,9 @@
         }
         .fourth_content {
           border-left: 1px solid black;
-          border-bottom: 1px solid black;
-          background: white;
+          border-right: 1px solid black;
           .fixed_info {
-            border-top: none;
-            border-left: none;
-            border-right: 1px solid black;
-            border-bottom: 1px solid black;
+            border: none;
           }
           .form-check {
             margin-left: 10px;
@@ -789,8 +589,76 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-right: 1px solid black;
             border-left: 1px solid black;
+          }
+          .wrap {
+            background: white;
+            border-bottom: 1px solid black;
+            border-top: 1px solid black;
+            align-items: center;
+            label.use {
+              border-right: 1px solid black;
+            }
+            .option {
+              display: flex
+            }
+            .project_name {
+              border-left: 1px solid black
+            }
+          }
+          .form-label {
+            font-weight: 700;
+            font-size: 20px;
+            white-space: nowrap;
+            height: 50px;
+            align-items: center;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 0 10px;
+            width: 150px;
+            p {
+              margin-bottom: 0;
+              text-align: center;
+            }
+          }
+        }
+           .five_content {
+          border-left: 1px solid black;
+          border-right: 1px solid black;
+          span{
+            @include red_star
+          }
+          .fixed_info {
+            border: none;
+          }
+          .form-check {
+            margin-left: 10px;
+          }
+          .form-control {
+            height: auto;
+            border-radius: 0;
+            border-left: 1px solid black;
+          }
+          .wrap {
+            background: white;
+            border-bottom: 1px solid black;
+            border-top: 1px solid black;
+            align-items: center;
+            button{
+                  margin: 0 10px;
+                  border-radius:7px;
+    height: 30px;
+    width: 100px;
+    border: none;
+       background: #48658C;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+             &:hover {
+              background-color: #5d85bd;
+            }
+            }
           }
           .form-label {
             font-weight: 700;
@@ -822,7 +690,6 @@
             border-left: 1px solid black;
           }
           .wrap {
-            border-bottom: 1px solid black;
             background: white;
             border-bottom: 0.5px solid black;
             align-items: center;
@@ -830,14 +697,7 @@
               border-right: 1px solid black;
             }
             .option {
-              @include readonly_box;
-              height: 100%;
-              width: 100%;
-              align-items: center;
-              display: flex;
-              .content {
-                display: flex
-              }
+              display: flex
             }
             .project_name {
               border-left: 1px solid black
@@ -1033,9 +893,6 @@
             margin-bottom: 0;
           }
         }
-        #readonly_box {
-          border-left: 1px solid black;
-        }
         .second_content {
           border-left: 1px solid black;
           border-right: 1px solid black;
@@ -1072,13 +929,9 @@
         }
         .fourth_content {
           border-left: 1px solid black;
-          border-bottom: 1px solid black;
-          background: white;
+          border-right: 1px solid black;
           .fixed_info {
-            border-top: none;
-            border-left: none;
-            border-right: 1px solid black;
-            border-bottom: 1px solid black;
+            border: none;
           }
           .form-check {
             margin-left: 10px;
@@ -1086,8 +939,22 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-right: 1px solid black;
             border-left: 1px solid black;
+          }
+          .wrap {
+            background: white;
+            border-bottom: 1px solid black;
+            border-top: 1px solid black;
+            align-items: center;
+            label.use {
+              border-right: 1px solid black;
+            }
+            .option {
+              display: flex
+            }
+            .project_name {
+              border-left: 1px solid black
+            }
           }
           .form-label {
             font-weight: 700;
@@ -1099,7 +966,6 @@
             display: flex;
             justify-content: center;
             padding: 0 10px;
-            width: 150px;
             p {
               margin-bottom: 0;
               text-align: center;
@@ -1126,14 +992,7 @@
               border-right: 1px solid black
             }
             .option {
-              @include readonly_box;
-              height: 100%;
-              width: 100%;
-              align-items: center;
-              display: flex;
-              .content {
-                display: flex
-              }
+              display: flex
             }
             .project_name {
               border-left: 1px solid black
@@ -1376,14 +1235,11 @@
           }
         }
         .fourth_content {
+          border-bottom: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
-          background: white;
           .fixed_info {
-            border-bottom: 1px solid black;
-            border-top: none;
-            border-left: none;
-            border-right: none;
+            border: none;
           }
           .form-check {
             margin-left: 10px;
@@ -1391,20 +1247,27 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-bottom: 1px solid black;
             border-left: 1px solid black;
           }
+          .wrap {
+            background: white;
+            border-top: 1px solid black;
+            align-items: center;
+            .option {
+              display: flex
+            }
+          }
           .form-label {
-            border-bottom: 1px solid black;
             font-weight: 700;
             font-size: 20px;
             white-space: nowrap;
+            height: 50px;
             align-items: center;
             margin: 0;
             display: flex;
             justify-content: center;
             width: 220px;
-            height: 50px;
+            height: 30px;
             p {
               font-size: 18px;
               margin-bottom: 0;
@@ -1437,25 +1300,14 @@
               justify-content: space-evenly;
             }
             .option {
-              height: 100%;
-              width: 100%;
-              font-size: 18px;
-              background: #B4B4B4;
-              font-weight: 700;
-              .content {
-                padding: 5px;
-                display: grid;
-                grid-template-columns: 1fr 1fr 1fr;
-                grid-template-rows: 1fr 1fr;
-                gap: 0px 0px;
-                grid-auto-flow: row;
-                grid-template-areas: ". . ." ". . .";
-                white-space: nowrap;
-                justify-items: center;
-                div {
-                  width: 90px;
-                }
-              }
+              padding: 5px;
+              display: grid;
+              grid-template-columns: 1fr 1fr 1fr;
+              grid-template-rows: 1fr 1fr;
+              gap: 0px 0px;
+              grid-auto-flow: row;
+              grid-template-areas: ". . ." ". . .";
+              white-space: nowrap;
             }
           }
           .form-label {
