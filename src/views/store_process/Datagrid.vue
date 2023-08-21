@@ -314,6 +314,18 @@ export default {
         ApplicationDate: "2023/08/14",
         Applicant: "John Doe"
       },
+      {
+        AI_ID: 'S202300002',
+        EquipTypeName: "Type B",
+        EquipCategoryName: "Category X",
+        AssetsId: "A123",
+        AssetName: "Asset 1",
+        Status: "待入庫",
+        AreaName: "Area 1",
+        LayerName: "Layer 1",
+        ApplicationDate: "2023/08/14",
+        Applicant: "John Doe"
+      },
     ]);
 
     async function submit() {
