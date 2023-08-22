@@ -259,7 +259,7 @@
                     style="cursor: pointer;">
                   <p @click="showImage(index, img_index)" data-bs-toggle="modal" data-bs-target="#img_modal">{{ file.name
                   }}</p>
-                  <img class='delete_icon' src="@/assets/trash.png" @click="deleteFile(index, img_index)"
+                  <img class='delete_icon' src="@/assets/trash.png" @click="deleteNewFile(index, img_index)"
                     style="margin-left: 10px;">
                   </p>
                 </div>
@@ -363,6 +363,7 @@ export default {
           SN: initArray.SN,
           itemMemo: initArray.itemMemo,
           existFile: initArray.existFile,
+          deleteFile: [],
           newFile: [],
           previewUrl: [],
         });
@@ -446,11 +447,6 @@ export default {
         form.append('itemLayerName', myForm.itemLayerName);
         form.append('SN', myForm.SN);
         form.append('itemMemo', myForm.itemMemo);
-        if (myForm.existFile) {
-          for (let j = 0; j < myForm.existFile.length; j++) {
-            form.append('existFile', myForm.existFile[j]);
-          }
-        }
         if (myForm.newFile) {
           for (let j = 0; j < myForm.newFile.length; j++) {
             form.append('newFile', myForm.newFile[j]);
@@ -626,7 +622,7 @@ export default {
       selectedImage.value = img_index;
       getImageUrl();
     }
-    function deleteFile(index, img_index) {
+    function deleteNewFile(index, img_index) {
       formData[index].newFile.splice(img_index, 1);
       formData[index].previewUrl.splice(img_index, 1);
     }
@@ -659,7 +655,7 @@ export default {
       openFileExplorer,
       handleFileChange,
       showImage,
-      deleteFile,
+      deleteNewFile,
       getImageUrl,
       checkSpace,
       goBack,
