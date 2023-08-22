@@ -36,7 +36,7 @@ export default {
           router.push({ name: 'Store_Process_Confirm', query: { search_id } });
           break;
         case '入庫':
-          router.push({ name: 'Store_Process_Edit', query: { search_id ,tab_number: 3 } });
+          router.push({ name: 'Store_Process_Edit', query: { search_id } });
           break;
       }
     }

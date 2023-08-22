@@ -217,7 +217,8 @@
                   </div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown"
-                      aria-haspopup="true" aria-expanded="false" :disabled="item.itemAreaName === null || item.itemAreaName === ''">
+                      aria-haspopup="true" aria-expanded="false"
+                      :disabled="item.itemAreaName === null || item.itemAreaName === ''">
                       {{ item.itemLayerName || item.LayerInit }}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
@@ -249,15 +250,26 @@
               <div class="input-group mb-3">
                 <div class="input-group-prepend">資產照片：</div>
                 <div class="mb-3 file_wrap">
-                  <button class='choose_btn' @click="openFileExplorer(index)" :disabled="item.AssetsId === '' || item.AssetsId === null ">選擇檔案</button>
+                  <button class='choose_btn' @click="openFileExplorer(index)"
+                    :disabled="item.AssetsId === '' || item.AssetsId === null">選擇檔案</button>
                   <input type="file" accept="image/*" ref="fileInputs" style="display: none;" multiple
                     @change="handleFileChange(index)" />
                 </div>
                 <div class='selected_file'>
+                  <p class='title'>已上傳的檔案:</p>
+                  <p class='file_upload_wrap' v-for="(file, img_index) in item.existFile" :key="img_index"
+                    style="cursor: pointer;">
+                  <p @click="showExistFileImage(index, img_index)" data-bs-toggle="modal" data-bs-target="#existFile_modal">
+                    {{
+                      file.FileName
+                    }}</p>
+                  <img class='delete_icon' src="@/assets/trash.png" style="margin-left: 10px;">
+                  </p>
                   <p class='title'>已選擇的檔案:</p>
                   <p class='file_upload_wrap' v-for="(file, img_index) in item.newFile" :key="img_index"
                     style="cursor: pointer;">
-                  <p @click="showImage(index, img_index)" data-bs-toggle="modal" data-bs-target="#img_modal">{{ file.name
+                  <p @click="showNewFileImage(index, img_index)" data-bs-toggle="modal" data-bs-target="#newFile_modal">{{
+                    file.name
                   }}</p>
                   <img class='delete_icon' src="@/assets/trash.png" @click="deleteNewFile(index, img_index)"
                     style="margin-left: 10px;">
@@ -268,17 +280,30 @@
             </div>
           </div>
         </div>
-        <!-- 列出已選擇檔案 -->
-        <div class="modal fade" id="img_modal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel"
-          aria-hidden="true">
+        <!-- ExistFileModal -->
+        <div class="modal fade" id="existFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="imageModalLabel">{{ modalTitle }}</h5>
+                <h5 class="modal-title">{{ existFileModalTitle }}</h5>
                 <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
               </div>
               <div v-if="formData" class="modal-body">
-                <img :src="imageUrl" alt="Uploaded Image" class="img-fluid" />
+                <img :src="existFileImageUrl" alt="Existed Image" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- NewFileModal -->
+        <div class="modal fade" id="newFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">{{ newFileModalTitle }}</h5>
+                <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
+              </div>
+              <div v-if="formData" class="modal-body">
+                <img :src="newFileImageUrl" alt="Uploaded Image" class="img-fluid" />
               </div>
             </div>
           </div>
@@ -343,10 +368,14 @@ export default {
     //下半部表單部分
     const formData = reactive([]);
     const fileInputs = reactive([]);
-    const selectedData = ref(0);
-    const selectedImage = ref(0);
-    const imageUrl = ref('');
-    const modalTitle = ref('');
+    const newFileData = ref(0);
+    const newFileImage = ref(0);
+    const newFileImageUrl = ref('');
+    const newFileModalTitle = ref('');
+    const existFileData = ref(0);
+    const existFileImage = ref(0);
+    const existFileImageUrl = ref('');
+    const existFileModalTitle = ref('');
 
     //生成tab資料
     function initFormDataArray() {
@@ -354,7 +383,7 @@ export default {
         const initArray = details.value.Tabs[i];
         formData.push({
           AssetName: initArray.itemAssetName,
-          AssetsId: initArray.AssetsId  || 'BF12345678',
+          AssetsId: initArray.AssetsId || 'BF12345678',
           itemAreaName: initArray.itemAreaName,
           AreaArray: [],
           itemLayerName: initArray.itemLayerName,
@@ -367,6 +396,9 @@ export default {
           newFile: [],
           previewUrl: [],
         });
+        if(initArray.itemLayerName){
+          getLayerName(i);
+        }
       }
     }
 
@@ -439,14 +471,22 @@ export default {
       for (let i = 0; i < tabNumber.value; i++) {
         const myForm = formData[i];
         const form = new FormData();
-        form.append('AI_ID', AI_ID);
-        form.append('PadNum', i);
-        form.append('AssetName', myForm.AssetName);
-        form.append('AssetsId', myForm.AssetsId);
-        form.append('itemAreaName', myForm.itemAreaName);
-        form.append('itemLayerName', myForm.itemLayerName);
-        form.append('SN', myForm.SN);
-        form.append('itemMemo', myForm.itemMemo);
+        const formFields = {
+          'AI_ID': AI_ID,
+          'Pad': i,
+          'AssetName': myForm.AssetName,
+          'AssetsId': myForm.AssetsId,
+          'itemAreaName': myForm.itemAreaName,
+          'itemLayerName': myForm.itemLayerName,
+          'SN': myForm.SN,
+          'itemMemo': myForm.itemMemo,
+        };
+        for (const fieldName in formFields) {
+          if (formFields[fieldName] !== '' && formFields[fieldName] !== null) {
+            form.append(fieldName, formFields[fieldName]);
+            console.log(form.get(`${fieldName}`));
+          }
+        }
         if (myForm.newFile) {
           for (let j = 0; j < myForm.newFile.length; j++) {
             form.append('newFile', myForm.newFile[j]);
@@ -510,7 +550,7 @@ export default {
           InputMessages += '頁籤 ' + (i + 1) + ' :　櫃位必填' + '\n';
         }
       }
-      if(InputError) {
+      if (InputError) {
         alert(InputMessages);
         return;
       }
@@ -619,18 +659,27 @@ export default {
       // console.log(formData[index].previewUrl);
     }
 
-    function showImage(index, img_index) {
-      selectedData.value = index;
-      selectedImage.value = img_index;
-      getImageUrl();
+    function showNewFileImage(index, img_index) {
+      newFileData.value = index;
+      newFileImage.value = img_index;
+      getNewFileUrl();
+    }
+    function showExistFileImage(index, img_index) {
+      existFileData.value = index;
+      existFileImage.value = img_index;
+      getExistFileUrl();
     }
     function deleteNewFile(index, img_index) {
       formData[index].newFile.splice(img_index, 1);
       formData[index].previewUrl.splice(img_index, 1);
     }
-    function getImageUrl() {
-      imageUrl.value = formData[selectedData.value].previewUrl[selectedImage.value];
-      modalTitle.value = formData[selectedData.value].newFile[selectedImage.value].name;
+    function getNewFileUrl() {
+      newFileImageUrl.value = formData[newFileData.value].previewUrl[newFileImage.value];
+      newFileModalTitle.value = formData[newFileData.value].newFile[newFileImage.value].name;
+    }
+    function getExistFileUrl() {
+      existFileImageUrl.value = details.value.Tabs[existFileData.value].existFile[existFileImage.value].FileLink;
+      existFileModalTitle.value = details.value.Tabs[existFileData.value].existFile[existFileImage.value].FileName;
     }
 
     function checkSpace(AssetsId) {
@@ -643,11 +692,11 @@ export default {
       details,
       tabNumber,
       formData,
-      selectedData,
-      selectedImage,
       fileInputs,
-      imageUrl,
-      modalTitle,
+      newFileImageUrl,
+      newFileModalTitle,
+      existFileImageUrl,
+      existFileModalTitle,
       getAreaName,
       getLayerName,
       selectArea,
@@ -656,9 +705,9 @@ export default {
       submit,
       openFileExplorer,
       handleFileChange,
-      showImage,
+      showNewFileImage,
+      showExistFileImage,
       deleteNewFile,
-      getImageUrl,
       checkSpace,
       goBack,
     }
