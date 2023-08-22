@@ -42,7 +42,7 @@ import router from '@/router';
 export default {
   name: 'Login',
   setup() {
-    const userName = ref('test');
+    const userName = ref('');
     const userPassword = ref('Test_123');
     const errorHint = ref('');
     async function login() {

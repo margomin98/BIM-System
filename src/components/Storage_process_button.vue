@@ -22,9 +22,9 @@ export default {
     const search_id = props.params.data.AI_ID;
     const deliveryNotify = ref('通知交付');
     const isDisabled = ref({
-      deliveryNotify: false,
-      delivery: false,
-      edit: false,
+      deliveryNotify: false,//通知交付
+      delivery: false,//交付
+      edit: false,//入庫
     });
 
     function routeTo(view) {
@@ -64,12 +64,17 @@ export default {
 
     function checkButton() {
       const disabledStatus = props.params.data.Status;
-      if (disabledStatus === '申請入庫' || disabledStatus === '申請歸還' || disabledStatus === '可交付') {
+      if (disabledStatus === '申請入庫' || disabledStatus === '申請歸還' || disabledStatus === '可交付' ) {
         isDisabled.value.deliveryNotify = false;
-        isDisabled.value.delivery = false;
       }
       else {
         isDisabled.value.deliveryNotify = true;
+      }
+
+      if (disabledStatus === '可交付') {
+        isDisabled.value.delivery = false;
+      }
+      else {
         isDisabled.value.delivery = true;
       }
 

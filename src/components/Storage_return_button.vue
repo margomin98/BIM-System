@@ -37,7 +37,7 @@ export default {
 
     function checkButton() {
       const disabledStatus = props.params.data.Status;
-      if(disabledStatus === '已入庫' || disabledStatus === '已歸還') {
+      if(disabledStatus === '待入庫' || disabledStatus === '已入庫' || disabledStatus === '已歸還') {
         isDisabled.value = true;
       }
       else {

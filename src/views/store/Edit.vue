@@ -306,7 +306,6 @@ export default {
       const axios = require('axios');
       try {
         const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/ApplicationEdit ', formData, {
-          // const response = await axios.post('/AssetsInMng/NewAssetsIn', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -314,15 +313,13 @@ export default {
         console.log(response);
         const data = response.data;
         if (data.state === 'success') {
-          //新品表單傳送成功，跳轉至入庫管理頁面
-          console.log(data.state);
-          console.log(data.messages);
-          alert(data.messages);
-          router.push({
-            name: 'Store_Datagrid'
-          });
+          //新品表單編輯成功，跳轉至入庫管理頁面
+          let msg = data.messages;
+          msg+= '\n編號:'+data.resultList.AI_ID;
+          alert(msg);
+          router.push({ name: 'Store_Datagrid' });
         } else if (data.state === 'error') {
-          //新品表單傳送失敗
+          //新品表單編輯失敗
           alert(data.messages);
         } else if (data.state === 'input_error') {
           //新品表單格式錯誤

@@ -143,6 +143,14 @@ export default {
       width: 150,
     },
     {
+      headerName: "狀態",
+      field: "Status",
+      unSortIcon: true,
+      sortable: true,
+      width: 100,
+      suppressMovable: true
+    },
+    {
       headerName: "編號",
       field: "AI_ID",
       unSortIcon: true,
@@ -172,14 +180,6 @@ export default {
       unSortIcon: true,
       sortable: true,
       width: 275,
-      suppressMovable: true
-    },
-    {
-      headerName: "狀態",
-      field: "Status",
-      unSortIcon: true,
-      sortable: true,
-      width: 100,
       suppressMovable: true
     },
     {

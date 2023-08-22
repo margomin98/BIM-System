@@ -95,6 +95,22 @@
             </div>
           </div>
         </div>
+        <div v-if="details.IsConsumable" class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">包裝數量：</div>
+              <input type="text" class="form-control readonly_box" aria-label="Default"
+                aria-describedby="inputGroup-sizing-default" readonly v-model="details.PackageNum" />
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">包裝單位：</div>
+              <input type="text" class="form-control readonly_box" aria-label="Default"
+                aria-describedby="inputGroup-sizing-default" readonly v-model="details.PackageUnit" />
+            </div>
+          </div>
+        </div>
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -250,8 +266,7 @@
               <div class="input-group mb-3">
                 <div class="input-group-prepend">資產照片：</div>
                 <div class="mb-3 file_wrap">
-                  <button class='choose_btn' @click="openFileExplorer(index)"
-                    :disabled="item.AssetsId === '' || item.AssetsId === null">選擇檔案</button>
+                  <button class='choose_btn' @click="openFileExplorer(index)">選擇檔案</button>
                   <input type="file" accept="image/*" ref="fileInputs" style="display: none;" multiple
                     @change="handleFileChange(index)" />
                 </div>
@@ -284,7 +299,7 @@
         </div>
         <!-- ExistFileModal -->
         <div class="modal fade" id="existFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">{{ existFileModalTitle }}</h5>
@@ -298,7 +313,7 @@
         </div>
         <!-- NewFileModal -->
         <div class="modal fade" id="newFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">{{ newFileModalTitle }}</h5>
@@ -324,6 +339,7 @@
 import { ref, onMounted, reactive } from 'vue';
 import Navbar from "@/components/Navbar.vue";
 import { useRoute } from 'vue-router';
+import router from '@/router';
 
 export default {
   components: {
@@ -460,15 +476,25 @@ export default {
     async function temp() {
       const formDataArray = [];
       let promises = [];
+      var InputMessages = '';
+      var InputError = false;
       //檢查暫存必填項目(物品名稱)
       for (let i = 0; i < tabNumber.value; i++) {
         const form = formData[i];
+        const pattern = /^(BF\d{8})$/;
         if (!form.AssetName) {
           alert('物品名稱必填');
           return
         }
+        if (form.AssetsId && !pattern.test(form.AssetsId)) {
+          InputError = true;
+          InputMessages += '頁籤 ' + (i + 1) + ' :　資產編號不符合格式' + '\n';
+        }
       }
-
+      if (InputError) {
+        alert(InputMessages);
+        return;
+      }
       // 將陣列資料整理成N個FormData分N次傳送
       for (let i = 0; i < tabNumber.value; i++) {
         const myForm = formData[i];
@@ -491,7 +517,9 @@ export default {
           }
         }
         if (myForm.deleteFile.length > 0) {
-          form.append('deleteFile', myForm.deleteFile);
+          for (let j = 0; j < myForm.deleteFile.length; j++) {
+            form.append('deleteFile', myForm.deleteFile[j]);
+          }
         }
         if (myForm.newFile) {
           for (let j = 0; j < myForm.newFile.length; j++) {
@@ -500,15 +528,15 @@ export default {
         }
         // 在這邊將每張form傳到後端使用promise陣列接起來
         formDataArray.push(form);
-        const promise = sendFormData(form);
+        const promise = sendFormData(form, 'temp');
         promises.push(promise);
       }
       await Promise.all(promises)
         .then(result => {
           const allSuccess = result.every(result => result === 'success');
           if (allSuccess) {
-            alert('表單暫存成功\n單號為:'+ AI_ID);
-            // window.location.reload();
+            alert('表單暫存成功\n單號為:' + AI_ID);
+            window.location.reload();
           } else {
             alert('表單暫存失敗');
           }
@@ -516,19 +544,6 @@ export default {
         .catch(error => {
           console.error(error);
         })
-    }
-
-
-    async function sendFormData(formData) {
-      const axios = require('axios');
-      try {
-        const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/TempAssetsIn', formData);
-        console.log(response.data);
-        return response.data.state;
-      } catch (error) {
-        console.error(error);
-      }
-
     }
     async function submit() {
       const formDataArray = [];
@@ -562,21 +577,34 @@ export default {
         alert(InputMessages);
         return;
       }
+      //檢查資產編號是否有重複
+      if (checkAssetsIdRepeat()) {
+        return;
+      }
+
       // 將陣列資料整理成N個FormData分N次傳送
       for (let i = 0; i < tabNumber.value; i++) {
         const myForm = formData[i];
         const form = new FormData();
-        form.append('AI_ID', AI_ID);
-        form.append('PadNum', i);
-        form.append('AssetName', myForm.AssetName);
-        form.append('AssetsId', myForm.AssetsId);
-        form.append('itemAreaName', myForm.itemAreaName);
-        form.append('itemLayerName', myForm.itemLayerName);
-        form.append('SN', myForm.SN);
-        form.append('itemMemo', myForm.itemMemo);
-        if (myForm.existFile) {
-          for (let j = 0; j < myForm.existFile.length; j++) {
-            form.append('existFile', myForm.existFile[j]);
+        const formFields = {
+          'AI_ID': AI_ID,
+          'PadNum': i,
+          'AssetName': myForm.AssetName,
+          'AssetsId': myForm.AssetsId,
+          'itemAreaName': myForm.itemAreaName,
+          'itemLayerName': myForm.itemLayerName,
+          'SN': myForm.SN,
+          'itemMemo': myForm.itemMemo,
+        };
+        for (const fieldName in formFields) {
+          if (formFields[fieldName] !== '' && formFields[fieldName] !== null) {
+            form.append(fieldName, formFields[fieldName]);
+            console.log(form.get(`${fieldName}`));
+          }
+        }
+        if (myForm.deleteFile.length > 0) {
+          for (let j = 0; j < myForm.deleteFile.length; j++) {
+            form.append('deleteFile', myForm.deleteFile[j]);
           }
         }
         if (myForm.newFile) {
@@ -586,21 +614,43 @@ export default {
         }
         // 在這邊將每張form傳到後端使用promise陣列接起來
         formDataArray.push(form);
-        // const promise = sendFormData(form);
+        // const promise = sendFormData(form, 'submit');
         // promises.push(promise);
       }
-      for (const formData of formDataArray) {
-        console.log('FormData Object:');
-        console.log('---');
-        for (const [key, value] of formData.entries()) {
-          console.log(key, ':', value);
-        }
-        console.log('---');
+
+      // await Promise.all(promises)
+      //   .then(result => {
+      //     const allSuccess = result.every(result => result === 'success');
+      //     if (allSuccess) {
+      //       alert('入庫成功\n單號為:' + AI_ID);
+      //       // router.push({ name: 'Store_Process_Datagrid' });
+      //     } else {
+      //       alert('入庫失敗');
+      //     }
+      //   })
+      //   .catch(error => {
+      //     console.error(error);
+      //   })
+    }
+
+    async function sendFormData(formData, type) {
+      var baseUrl = '';
+      if (type === 'temp')
+        baseUrl = '/AssetsInMng/TempAssetsIn'
+      else if (type === 'submit') {
+        baseUrl = '/AssetsInMng/AssetsIn'
+      }
+      const axios = require('axios');
+      try {
+        const response = await axios.post(`http://192.168.0.176:7008${baseUrl}`, formData);
+        console.log(response.data);
+        return response.data.state;
+      } catch (error) {
+        console.error(error);
       }
 
-      await Promise.all(promises);
-      console.log(promises);
     }
+
     function openFileExplorer(index) {
       fileInputs[index].click();
     }
@@ -618,7 +668,7 @@ export default {
         }
       }
       //圖片總數量不超過五張
-      if (formData[index].newFile.length + files.length > 5) {
+      if (formData[index].newFile.length + formData[index].existFile.length + files.length > 5) {
         alert('上傳至多5張圖片');
         return;
       }
@@ -695,9 +745,44 @@ export default {
       existFileImageUrl.value = details.value.Tabs[existFileData.value].existFile[existFileImage.value].FileLink;
       existFileModalTitle.value = details.value.Tabs[existFileData.value].existFile[existFileImage.value].FileName;
     }
-    
+
     function checkSpace(AssetsId) {
       return !/^\s+$/.test(AssetsId);
+    }
+    //檢查 1. AssetsId之間是否重複 2. AseetsId比對資料庫是否重複
+    async function checkAssetsIdRepeat() {
+      var myForm = [];
+      for (let i = 0; i < tabNumber.value; i++) {
+        const form = formData[i];
+        myForm.push(form.AssetsId);
+      }
+      console.log(myForm);
+      //1.
+      var seen = {};
+      for (const value of myForm) {
+        if (seen[value]) {
+          alert('input之間有重複')
+          return true
+        }
+        seen[value] = true;
+      }
+      //2.
+      const repeatForm = new FormData();
+      for (let i = 0; i < tabNumber.value; i++) {
+        repeatForm.append('assetsIds', myForm[i]);
+      }
+      const axios =require('axios');
+      const response = await axios.post('http://192.168.0.176:7008/GetDBdata/CheckAssetsInID',repeatForm);
+      try {
+        const data = response.data;
+        if(data.state === 'error') {
+          alert(data.messages);
+          return true;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+      return false;
     }
     function goBack() {
       window.history.back();
