@@ -454,8 +454,8 @@ export default {
         }
         // 在這邊將每張form傳到後端使用promise陣列接起來
         formDataArray.push(form);
-        // const promise = sendFormData(form);
-        // promises.push(promise);
+        const promise = sendFormData(form);
+        promises.push(promise);
       }
       // for (const formData of formDataArray) {
       //   console.log('FormData Object:');
@@ -466,9 +466,22 @@ export default {
       //   console.log('---');
       // }
       await Promise.all(promises);
-      console.log(promises);
+      alert('全部有回應');
+      // console.log(promises);
     }
 
+
+    async function sendFormData(formData) {
+      const axios = require('axios');
+      try {
+        const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/TempAssetsIn', formData);
+        console.log(response.data);
+        return response.data;
+      } catch (error) {
+        console.error(error);
+      }
+
+    }
     async function submit() {
       const formDataArray = [];
       let promises = [];
@@ -540,17 +553,6 @@ export default {
       await Promise.all(promises);
       console.log(promises);
     }
-    async function sendFormData(formData) {
-      const axios = require('axios');
-      try {
-        const response = await axios.post('your_post_url_here', formData);
-        return response.data;
-      } catch (error) {
-        console.error(error);
-      }
-
-    }
-
     function openFileExplorer(index) {
       fileInputs[index].click();
     }
