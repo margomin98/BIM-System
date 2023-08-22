@@ -26,21 +26,22 @@
               <div class="input-group-prepend check_box">
                 資產類型 :
               </div>
-              <input type="checkbox" class='check_box' v-model="IsConsumable" />耗材
-               <input type="checkbox" class='check_box' v-mod />資產
+              <input type="radio" class='check_box' value="true" v-model="isConsumableComputed"/>耗材
+              <input type="radio" class='check_box' value="false" v-model="isConsumableComputed"/>資產
             </div>
           </div>
         </div>
         <div class="row row_wrap g-0">
- <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-             <div class="input-group mb-4">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-4">
               <div class="input-group-prepend equipment_wrap">
                 <span>*</span>設備總類 :
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                        {{ EquipTypeName || '請選擇' }}
-                      </button>
+                <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
+                  {{ EquipTypeName || '請選擇' }}
+                </button>
                 <div class="dropdown-menu" aria-labelledby="typeDropdown">
                   <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item"
                     @click="selectType(`${item}`)">{{ item }}</p>
@@ -48,15 +49,16 @@
               </div>
             </div>
           </div>
-       <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
                 <span>*</span>設備分類 :
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(EquipTypeName !== '') }">
-                        {{ EquipCategoryName || EquipCategoryInit }}
-                      </button>
+                <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(EquipTypeName !== '') }">
+                  {{ EquipCategoryName || EquipCategoryInit }}
+                </button>
                 <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                   <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item"
                     @click="selectCategory(`${item}`)">{{ item }}</p>
@@ -101,8 +103,8 @@
               placeholder="最多輸入100字" v-model="ProductType">
           </div>
         </div>
-   <div class="row g-0 row_wrap">
-         <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+        <div class="row g-0 row_wrap">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4" id='number'>
               <div class="input-group-prepend">
                 <span>*</span>數量 :
@@ -110,15 +112,16 @@
               <input class="input-number" type="number" v-model="Count" min="1">
             </div>
           </div>
-     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4" id='unit'>
               <div class="input-group-prepend">
                 <span>*</span>單位 :
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ Unit || '請選擇' }}
-                      </button>
+                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  {{ Unit || '請選擇' }}
+                </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in UnitArray" :key="index" class="dropdown-item" @click="selectUnit(`${item}`)">
                     {{ item }}</p>
@@ -127,19 +130,47 @@
             </div>
           </div>
         </div>
-        <div class="row g-0">
-             <div class="col-xl-6 col-lg-7 col-md-7 col-12">
-            <div class="input-group mb-4">
+        <div v-show="IsConsumable" class="row g-0 row_wrap">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-4" id='number'>
               <div class="input-group-prepend">
-                保固期限 :
+                <span>*</span>包裝數量 :
               </div>
-              <input  id='date_wrap' type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-                v-model="WarrantyDate">
+              <input class="input-number" type="number" v-model="PackageNum" min="1">
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-4" id='unit'>
+              <div class="input-group-prepend">
+                <span>*</span>包裝單位 :
+              </div>
+              <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  {{ PackageUnit || '請選擇' }}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="areaDropdown">
+                  <p v-for="(item, index) in PackageUnitArray" :key="index" class="dropdown-item"
+                    @click="selectPackageUnit(`${item}`)">
+                    {{ item }}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <div class="row g-0">
-           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+          <div class="col-xl-6 col-lg-7 col-md-7 col-12">
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                保固期限 :
+              </div>
+              <input id='date_wrap' type="text" class="form-control" aria-label="Default"
+                aria-describedby="inputGroup-sizing-default" v-model="WarrantyDate">
+            </div>
+          </div>
+        </div>
+        <div class="row g-0">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend ">
                 保固開始日 :
@@ -163,7 +194,8 @@
             <div class="input-group-prepend">
               備註 :
             </div>
-            <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="Memo"></textarea>
+            <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入500字"
+              v-model="Memo"></textarea>
           </div>
         </div>
       </div>
@@ -179,6 +211,7 @@
 import Navbar from '@/components/Navbar.vue';
 import router from '@/router';
 import {
+computed,
   onMounted,
   ref
 } from 'vue';
@@ -201,11 +234,23 @@ export default {
     const ProductType = ref(''); //型號
     const Count = ref(1); //數量 *必填
     const Unit = ref(''); //單位 *必填
-    const UnitArray = (['個', '對', '箱', '包', '組',]);
+    const UnitArray = (['個', '對', '箱', '包', '組', '台', '件']);
+    const PackageNum = ref(1);
+    const PackageUnit = ref('');
+    const PackageUnitArray = (['個', '支', '枝', '隻', '根', '條', '顆']);
     const WarrantyDate = ref(''); //保固期限
     const WarrantyStartDate = ref(''); //保固開始日
     const WarrantyEndDate = ref(''); //保固到期日
     const Memo = ref(''); //備註
+
+    const isConsumableComputed = computed({
+      get() {
+        return IsConsumable.value.toString();
+      },
+      set(value) {
+        IsConsumable.value = value === 'true';
+      }
+    });
     function getDate() {
       const today = new Date();
       var date = '';
@@ -226,30 +271,22 @@ export default {
     function selectUnit(item) {
       Unit.value = item;
     }
+    function selectPackageUnit(item) {
+      PackageUnit.value = item;
+    }
     function goBack() {
       window.history.back();
     }
-    function clear() {
-      // Clear input fields
-      IsConsumable.value = false;
-      EquipTypeName.value = '';
-      EquipCategoryName.value = '';
-      EquipCategoryInit.value = '請先選擇設備總類'
-      AssetName.value = '';
-      VendorName.value = '';
-      ProductSpec.value = '';
-      ProductType.value = '';
-      Count.value = 1;
-      Unit.value = '';
-      WarrantyDate.value = '';
-      WarrantyStartDate.value = '';
-      WarrantyEndDate.value = '';
-      Memo.value = '';
-    }
     async function submit() {
       // 檢查所有required項目
-      // 假設 WarrantyStartDate 是日期變數
-      if (!EquipCategoryName.value || !EquipTypeName.value || !AssetName.value || !Count.value || !Unit.value) {
+      // 耗材需額外檢查包裝數量、單位
+      if (IsConsumable.value) {
+        if (!PackageNum.value || !PackageUnit.value || PackageNum.value == 0) {
+          alert('請填寫所有必填項目');
+          return;
+        }
+      }
+      if (!EquipCategoryName.value || !EquipTypeName.value || !AssetName.value || !Count.value || !Unit.value || Count.value == 0) {
         alert('請填寫所有必填項目');
         return;
       }
@@ -272,7 +309,11 @@ export default {
       //將表格資料append到 formData
       for (const fieldName in formFields) {
         formData.append(fieldName, formFields[fieldName]);
-        console.log(formData.get(`${fieldName}`));
+      }
+      //耗材額外將包裝數量、單位append到 formData
+      if(IsConsumable.value) {
+        formData.append('PackageNum',PackageNum.value);
+        formData.append('PackageUnit',PackageUnit.value);
       }
       //使用axios method:post傳送新品入庫表單
       const axios = require('axios');
@@ -373,7 +414,9 @@ export default {
       getApplicationInfo();
       ApplicationDate.value = getDate();
     });
+
     return {
+      isConsumableComputed,
       getDate,
       Applicant,
       ApplicationDate,
@@ -392,15 +435,18 @@ export default {
       Count,
       Unit,
       UnitArray,
+      PackageNum,
+      PackageUnit,
+      PackageUnitArray,
       WarrantyDate,
       WarrantyStartDate,
       WarrantyEndDate,
       Memo,
       selectType,
       selectUnit,
+      selectPackageUnit,
       selectCategory,
       goBack,
-      clear,
       submit,
     };
   }
@@ -408,311 +454,376 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '@/assets/css/global.scss'; 
-  @media only screen and (min-width: 1200px) {
-    .main_section {
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .info_wrap {
-        margin: auto;
-        width: 700px;
-        .button_wrap {
-          display: flex;
-          justify-content: space-between;
-          margin: 30px auto 5%;
-          width: 220px;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
+@import '@/assets/css/global.scss';
+
+@media only screen and (min-width: 1200px) {
+  .main_section {
+    h1 {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 55px;
+      font-weight: 600;
+      @include title_color;
+    }
+
+    .info_wrap {
+      margin: auto;
+      width: 700px;
+
+      .button_wrap {
+        display: flex;
+        justify-content: space-between;
+        margin: 30px auto 5%;
+        width: 220px;
+
+        button {
+          &:nth-child(1) {
+            @include back_to_previous_btn;
+
+            &:hover {
+              background-color: #5d85bb;
             }
-            &:nth-child(2) {
-              @include search_and_send_btn;
-              &:hover {
-                background-color: #5D85BD;
-              }
+          }
+
+          &:nth-child(2) {
+            @include search_and_send_btn;
+
+            &:hover {
+              background-color: #5D85BD;
             }
           }
         }
-     
-        .input-group-prepend {
-          color: white;
-          font-weight: 700;
+      }
+
+      .input-group-prepend {
+        color: white;
+        font-weight: 700;
+        font-size: 20px;
+        width: calc(100px + 6%);
+        text-align: end;
+        white-space: nowrap;
+
+        span {
+          @include red_star
+        }
+      }
+
+      .input-number {
+        @include count_btn;
+        width: 200px;
+      }
+
+      .fixed_info {
+        @include fixed_info;
+
+        p {
           font-size: 20px;
-          width: calc(100px + 6%);
-          text-align: end;
-          white-space: nowrap;
-          span {
-            @include red_star
-          }
-        }
-        .input-number {
-          @include count_btn;
-          width: 200px;
-        }
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .content {
-           @include content_bg;
-          .input-group-prepend {
-            width: 120px;
-          }
-          .check_box_wrap {
-            font-weight: 700;
-            align-items: center;
-            color: white;
-            font-size: 20px;
-            .check_box {
-              margin-right: 5px;
-            }
-          }
-               .row_wrap {
-            .input-group {
-              flex-wrap: nowrap
-            }
-            .flex {
-              width: 130px
-            }
-               .equipment_wrap{
-          width:132px;
-        }
-          }
-          .dropdown {
-            width: 218px;
-            .dropdown-menu {
-              width: 100%;
-              p {
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-            }
-            .dropdown-toggle {
-              width: 100%;
-              @include dropdown-btn;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
+          margin-bottom: 0;
         }
       }
-    }
-  }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .main_section {
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
-     .info_wrap {
-        margin: auto;
-        width: 700px;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
+
+      .content {
+        @include content_bg;
+
+        .input-group-prepend {
+          width: 120px;
+        }
+
+        .check_box_wrap {
+          font-weight: 700;
+          align-items: center;
+          color: white;
+          font-size: 20px;
+
+          .check_box {
+            margin-right: 5px;
           }
         }
-        .content {
-        
-          .check_box_wrap {
-            font-weight: 700;
-            align-items: center;
-            color: white;
-            font-size: 20px;
-            .check_box {
-              margin-right: 5px;
-            }
-          }
-          .row_wrap {
-            .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-              margin-left: 6px;
-              border-radius: 5px;
-            }
-          }
-          @include content_bg;
-          .dropdown {
-            .dropdown-menu {
-              width: 100%;
-              p {
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-            }
-            button {
-              @include dropdown-btn;
-              width: 199px;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
+
+        .row_wrap {
           .input-group {
-            .input-number {
-              width: 199px;
-              @include count_btn;
-            }
-            .form-control {
-              height: 35px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              width: 120px;
-              text-align: end;
-              white-space: nowrap;
-              span {
-                @include red_star
+            flex-wrap: nowrap
+          }
+
+          .flex {
+            width: 130px
+          }
+
+          .equipment_wrap {
+            width: 132px;
+          }
+        }
+
+        .dropdown {
+          width: 218px;
+
+          .dropdown-menu {
+            width: 100%;
+
+            p {
+              &:hover {
+                cursor: pointer;
               }
             }
           }
-     #date_wrap{
-      flex:0.74
-     }
-        }
-        .button_wrap {
-          display: flex;
-          justify-content: space-between;
-          margin: 30px auto 5%;
-          width: 220px;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-            &:nth-child(2) {
-              @include search_and_send_btn;
-              &:hover {
-                background-color: #5D85BD;
-              }
-            }
+
+          .dropdown-toggle {
+            width: 100%;
+            @include dropdown-btn;
+            color: black;
+            justify-content: space-between;
+            align-items: center;
           }
-        }
-        #unit,#number{
-          flex-wrap:nowrap
         }
       }
     }
   }
-  @media only screen and (max-width: 767px) {
-    .main_section {
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 50px;
-        font-weight: 600;
-        @include title_color;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  .main_section {
+    h1 {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 55px;
+      font-weight: 600;
+      @include title_color;
+    }
+
+    .info_wrap {
+      margin: auto;
+      width: 700px;
+
+      .fixed_info {
+        @include fixed_info;
+
+        p {
+          font-size: 20px;
+          margin-bottom: 0;
+        }
       }
-           .info_wrap {
-        margin: auto;
-        padding: 0 5%;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
+
+      .content {
+
+        .check_box_wrap {
+          font-weight: 700;
+          align-items: center;
+          color: white;
+          font-size: 20px;
+
+          .check_box {
+            margin-right: 5px;
           }
         }
-        .content {
-          @include content_bg;
-          .dropdown {
-            .dropdown-menu {
-              width: 100%;
-              p {
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-            }
-            button {
-              @include dropdown-btn;
-              width: 100%;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
+
+        .row_wrap {
           .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-            margin-left: unset;
+            margin-left: 6px;
             border-radius: 5px;
           }
-          .input-group {
-            flex-direction: column;
-            .input-number {
-              width: 100%;
-              @include count_btn;
-            }
-            .form-control {
-              height: 35px;
-              width: 100%;
-            }
-        .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              margin-right: 10px;
-              white-space: nowrap;
-              span {
-                @include red_star
+        }
+
+        @include content_bg;
+
+        .dropdown {
+          .dropdown-menu {
+            width: 100%;
+
+            p {
+              &:hover {
+                cursor: pointer;
               }
             }
           }
-            .check_box_wrap {
-            gap: 5px;
-            flex-direction: row;
-            font-weight: 700;
+
+          button {
+            @include dropdown-btn;
+            width: 199px;
+            color: black;
+            justify-content: space-between;
             align-items: center;
+          }
+        }
+
+        .input-group {
+          .input-number {
+            width: 199px;
+            @include count_btn;
+          }
+
+          .form-control {
+            height: 35px;
+            border-radius: 0;
+          }
+
+          .input-group-prepend {
             color: white;
+            font-weight: 700;
             font-size: 20px;
-            .check {
-              margin-right: 5px;
+            width: 120px;
+            text-align: end;
+            white-space: nowrap;
+
+            span {
+              @include red_star
             }
           }
         }
-        .button_wrap {
-          display: flex;
-          justify-content: space-between;
-          margin: 30px auto 5%;
-          width: 220px;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
+
+        #date_wrap {
+          flex: 0.74
+        }
+      }
+
+      .button_wrap {
+        display: flex;
+        justify-content: space-between;
+        margin: 30px auto 5%;
+        width: 220px;
+
+        button {
+          &:nth-child(1) {
+            @include back_to_previous_btn;
+
+            &:hover {
+              background-color: #5d85bb;
+            }
+          }
+
+          &:nth-child(2) {
+            @include search_and_send_btn;
+
+            &:hover {
+              background-color: #5D85BD;
+            }
+          }
+        }
+      }
+
+      #unit,
+      #number {
+        flex-wrap: nowrap
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .main_section {
+    h1 {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 50px;
+      font-weight: 600;
+      @include title_color;
+    }
+
+    .info_wrap {
+      margin: auto;
+      padding: 0 5%;
+
+      .fixed_info {
+        @include fixed_info;
+
+        p {
+          font-size: 20px;
+          margin-bottom: 0;
+        }
+      }
+
+      .content {
+        @include content_bg;
+
+        .dropdown {
+          .dropdown-menu {
+            width: 100%;
+
+            p {
               &:hover {
-                background-color: #5d85bb;
+                cursor: pointer;
               }
             }
-            &:nth-child(2) {
-              @include search_and_send_btn;
-              &:hover {
-                background-color: #5D85BD;
-              }
+          }
+
+          button {
+            @include dropdown-btn;
+            width: 100%;
+            color: black;
+            justify-content: space-between;
+            align-items: center;
+          }
+        }
+
+        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+          margin-left: unset;
+          border-radius: 5px;
+        }
+
+        .input-group {
+          flex-direction: column;
+
+          .input-number {
+            width: 100%;
+            @include count_btn;
+          }
+
+          .form-control {
+            height: 35px;
+            width: 100%;
+          }
+
+          .input-group-prepend {
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            margin-right: 10px;
+            white-space: nowrap;
+
+            span {
+              @include red_star
+            }
+          }
+        }
+
+        .check_box_wrap {
+          gap: 5px;
+          flex-direction: row;
+          font-weight: 700;
+          align-items: center;
+          color: white;
+          font-size: 20px;
+
+          .check {
+            margin-right: 5px;
+          }
+        }
+      }
+
+      .button_wrap {
+        display: flex;
+        justify-content: space-between;
+        margin: 30px auto 5%;
+        width: 220px;
+
+        button {
+          &:nth-child(1) {
+            @include back_to_previous_btn;
+
+            &:hover {
+              background-color: #5d85bb;
+            }
+          }
+
+          &:nth-child(2) {
+            @include search_and_send_btn;
+
+            &:hover {
+              background-color: #5D85BD;
             }
           }
         }
       }
     }
   }
-  
+}
 </style>

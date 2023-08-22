@@ -1,12 +1,13 @@
 <template>
   <div class='button_wrap'>
     <button @click="viewDetails()">檢視</button>
-    <button @click="viewEdit()">編輯</button>
+    <button :class="{ disabled: isDisabled, btn_edit: !isDisabled}" @click="viewEdit()" :disabled="isDisabled">編輯</button>
   </div>
 </template>
 
 <script>
 // import router from '@/router';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 
@@ -15,7 +16,11 @@ export default {
   setup(props) {
     const router = useRouter();
     const search_id = props.params.data.AI_ID;
+    const isDisabled = ref(false);
 
+    onMounted(()=> {
+      checkButton();
+    });
     function viewDetails() {
       // console.log(props.params.data.AI_ID);
       if (search_id !== '') {
@@ -29,9 +34,21 @@ export default {
         router.push({ name: 'Store_Edit', query: { search_id } });
       }
     }
+
+    function checkButton() {
+      const disabledStatus = props.params.data.Status;
+      if(disabledStatus === '已入庫' || disabledStatus === '已歸還') {
+        isDisabled.value = true;
+      }
+      else {
+        isDisabled.value = false;
+      }
+
+    }
     return { 
       viewDetails,
       viewEdit,
+      isDisabled,
     };
   },
 };
@@ -52,12 +69,19 @@ export default {
     color: white
   }
 
-  :nth-child(2) {
-    @include datagrid_edit_button
+  .btn_edit {
+    @include datagrid_edit_button;
+    &:hover {
+      background: #3B6162;
+      color: white
+    }
   }
-
-  button:nth-child(2):hover {
-    background: #3B6162;
-    color: white
+  .disabled {
+    @include disabled_btn;
+    width: 50px;
+     :hover {
+      @include disabled_btn;
+      width: 50px;
+    }
   }
 }</style>

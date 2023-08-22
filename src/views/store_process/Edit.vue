@@ -259,11 +259,13 @@
                   <p class='title'>已上傳的檔案:</p>
                   <p class='file_upload_wrap' v-for="(file, img_index) in item.existFile" :key="img_index"
                     style="cursor: pointer;">
-                  <p @click="showExistFileImage(index, img_index)" data-bs-toggle="modal" data-bs-target="#existFile_modal">
+                  <p @click="showExistFileImage(index, img_index)" data-bs-toggle="modal"
+                    data-bs-target="#existFile_modal">
                     {{
                       file.FileName
                     }}</p>
-                  <img class='delete_icon' src="@/assets/trash.png" style="margin-left: 10px;">
+                  <img class='delete_icon' src="@/assets/trash.png" @click="deleteExistFile(index, img_index)"
+                    style="margin-left: 10px;">
                   </p>
                   <p class='title'>已選擇的檔案:</p>
                   <p class='file_upload_wrap' v-for="(file, img_index) in item.newFile" :key="img_index"
@@ -383,7 +385,7 @@ export default {
         const initArray = details.value.Tabs[i];
         formData.push({
           AssetName: initArray.itemAssetName,
-          AssetsId: initArray.AssetsId || 'BF12345678',
+          AssetsId: initArray.AssetsId,
           itemAreaName: initArray.itemAreaName,
           AreaArray: [],
           itemLayerName: initArray.itemLayerName,
@@ -396,7 +398,7 @@ export default {
           newFile: [],
           previewUrl: [],
         });
-        if(initArray.itemLayerName){
+        if (initArray.itemLayerName) {
           getLayerName(i);
         }
       }
@@ -473,7 +475,7 @@ export default {
         const form = new FormData();
         const formFields = {
           'AI_ID': AI_ID,
-          'Pad': i,
+          'PadNum': i,
           'AssetName': myForm.AssetName,
           'AssetsId': myForm.AssetsId,
           'itemAreaName': myForm.itemAreaName,
@@ -481,11 +483,15 @@ export default {
           'SN': myForm.SN,
           'itemMemo': myForm.itemMemo,
         };
+
         for (const fieldName in formFields) {
           if (formFields[fieldName] !== '' && formFields[fieldName] !== null) {
             form.append(fieldName, formFields[fieldName]);
             console.log(form.get(`${fieldName}`));
           }
+        }
+        if (myForm.deleteFile.length > 0) {
+          form.append('deleteFile', myForm.deleteFile);
         }
         if (myForm.newFile) {
           for (let j = 0; j < myForm.newFile.length; j++) {
@@ -497,17 +503,19 @@ export default {
         const promise = sendFormData(form);
         promises.push(promise);
       }
-      // for (const formData of formDataArray) {
-      //   console.log('FormData Object:');
-      //   console.log('---');
-      //   for (const [key, value] of formData.entries()) {
-      //     console.log(key, ':', value);
-      //   }
-      //   console.log('---');
-      // }
-      await Promise.all(promises);
-      alert('全部有回應');
-      // console.log(promises);
+      await Promise.all(promises)
+        .then(result => {
+          const allSuccess = result.every(result => result === 'success');
+          if (allSuccess) {
+            alert('表單暫存成功\n單號為:'+ AI_ID);
+            // window.location.reload();
+          } else {
+            alert('表單暫存失敗');
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        })
     }
 
 
@@ -516,7 +524,7 @@ export default {
       try {
         const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/TempAssetsIn', formData);
         console.log(response.data);
-        return response.data;
+        return response.data.state;
       } catch (error) {
         console.error(error);
       }
@@ -673,6 +681,12 @@ export default {
       formData[index].newFile.splice(img_index, 1);
       formData[index].previewUrl.splice(img_index, 1);
     }
+    function deleteExistFile(index, img_index) {
+      const deleteFileName = formData[index].existFile[img_index].FileName;
+      formData[index].deleteFile.push(deleteFileName);
+      console.log(formData);
+      formData[index].existFile.splice(img_index, 1);
+    }
     function getNewFileUrl() {
       newFileImageUrl.value = formData[newFileData.value].previewUrl[newFileImage.value];
       newFileModalTitle.value = formData[newFileData.value].newFile[newFileImage.value].name;
@@ -681,7 +695,7 @@ export default {
       existFileImageUrl.value = details.value.Tabs[existFileData.value].existFile[existFileImage.value].FileLink;
       existFileModalTitle.value = details.value.Tabs[existFileData.value].existFile[existFileImage.value].FileName;
     }
-
+    
     function checkSpace(AssetsId) {
       return !/^\s+$/.test(AssetsId);
     }
@@ -707,6 +721,7 @@ export default {
       handleFileChange,
       showNewFileImage,
       showExistFileImage,
+      deleteExistFile,
       deleteNewFile,
       checkSpace,
       goBack,
