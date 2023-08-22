@@ -1,7 +1,7 @@
 <template>
   <div>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  搜索庫存
++
   </button>
   </div>
 </template>
@@ -14,15 +14,15 @@
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
   button {
-    @include empty_btn;
+    @include datagrid_edit_button;
+    border-radius: 50%;
     height: 30px;
-    width: 80px;
-    font-size: 15px;
+    width: 30px;
+        font-weight: 700;
+    font-size: 20px;
     &:hover {
-      background-color: #5e7aa2;
-      height: 30px;
-      width: 80px;
-      font-size: 15px;
+      background: #3B6162;
+      color: white
     }
   }
 </style>

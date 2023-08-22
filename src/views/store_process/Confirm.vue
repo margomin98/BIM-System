@@ -142,7 +142,7 @@
           </div>
           <div class="row auth g-0">
             <div class="col-xl-6 col-lg-6 col-md-6 col-12 input-container">
-              <div class="input-group mb-3">
+              <div class="input-group">
                 <div class="input-group-prepend">交付人員：</div>
                 <div class="input-with-icon">
                   <input type="text" class="form-control readonly_box" aria-label="Default"
@@ -188,7 +188,7 @@
               </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-12 input-container">
-              <div class="input-group mb-3">
+              <div class="input-group">
                 <div class="input-group-prepend">入庫人員：</div>
                 <div class="input-with-icon">
                   <input type="text" class="form-control readonly_box" aria-label="Default"
@@ -210,7 +210,7 @@
                       </div>
                       <div class="modal-body">
                         <div class="col">
-                          <div class="input-group mb-3">
+                          <div class="input-group">
                             <div class="input-group-prepend">帳號：</div>
                             <input type="text" class="form-control" aria-label="Default"
                               aria-describedby="inputGroup-sizing-default" v-model="validation.user2.account" />
@@ -457,8 +457,8 @@ export default {
     }
 
     .info_wrap {
-      padding: 1% 29% 0;
-
+       margin: auto;
+        width: 800px;
       .fixed_info {
         @include fixed_info;
 
@@ -549,6 +549,7 @@ export default {
             display: flex;
             white-space: nowrap;
             flex-wrap: nowrap;
+        justify-content: center;
           }
 
           button {
@@ -561,13 +562,13 @@ export default {
 
           .form-control {
             height: 35px;
+            width:150px;
             margin-right: 5px;
           }
 
           .input-group-prepend {
             font-weight: 700;
             font-size: 20px;
-            width: 120px;
             text-align: end;
             position: relative;
 
@@ -654,8 +655,8 @@ export default {
     }
 
     .info_wrap {
-      padding: 1% 5% 0;
-
+       margin: auto;
+        width: 800px;
       .fixed_info {
         @include fixed_info;
 
@@ -879,21 +880,24 @@ export default {
         }
 
         .input-group {
+          flex-direction: column;
           .input-number {
             @include count_btn;
           }
 
           .form-control {
+            width: 100%;
             height: 35px;
             border-radius: 0;
+            margin-left: unset !important;
           }
 
           .input-group-prepend {
+                        margin-bottom: 5px;
+
             color: white;
             font-weight: 700;
             font-size: 20px;
-            width: 120px;
-            text-align: end;
           }
         }
       }
@@ -931,12 +935,14 @@ export default {
         .auth {
           border-radius: 0 0 10px 10px;
           background: white;
-          padding: 10px 10px 0 10px;
+           padding: 10px;
 
           .input-group {
             display: flex;
             white-space: nowrap;
             flex-wrap: nowrap;
+            justify-content: center;
+            margin: 5px 0;
           }
 
           button {

@@ -10,12 +10,12 @@
       <div class="fixed_info">
         <div>
           <p>
-            申請人員: {{ Applicant }}
+            申請人員 : {{ Applicant }}
           </p>
         </div>
         <div>
           <p>
-            申請入庫日期: {{ ApplicationDate }}
+            申請入庫日期 : {{ ApplicationDate }}
           </p>
         </div>
       </div>
@@ -27,13 +27,14 @@
                 資產類型 :
               </div>
               <input type="checkbox" class='check_box' v-model="IsConsumable" />耗材
+               <input type="checkbox" class='check_box' v-mod />資產
             </div>
           </div>
         </div>
         <div class="row row_wrap g-0">
  <div class="col-xl-6 col-lg-6 col-md-6 col-12">
              <div class="input-group mb-4">
-              <div class="input-group-prepend">
+              <div class="input-group-prepend equipment_wrap">
                 <span>*</span>設備總類 :
               </div>
               <div class="dropdown">
@@ -440,6 +441,7 @@ export default {
             }
           }
         }
+     
         .input-group-prepend {
           color: white;
           font-weight: 700;
@@ -483,6 +485,9 @@ export default {
             .flex {
               width: 130px
             }
+               .equipment_wrap{
+          width:132px;
+        }
           }
           .dropdown {
             width: 218px;
@@ -663,23 +668,25 @@ export default {
               height: 35px;
               width: 100%;
             }
-            .input-group-prepend {
+        .input-group-prepend {
               color: white;
               font-weight: 700;
               font-size: 20px;
+              margin-right: 10px;
               white-space: nowrap;
               span {
                 @include red_star
               }
             }
           }
-          .check_box_wrap {
+            .check_box_wrap {
+            gap: 5px;
             flex-direction: row;
             font-weight: 700;
             align-items: center;
             color: white;
             font-size: 20px;
-            .check_box {
+            .check {
               margin-right: 5px;
             }
           }

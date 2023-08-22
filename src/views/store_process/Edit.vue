@@ -447,6 +447,11 @@ export default {
         form.append('itemLayerName', myForm.itemLayerName);
         form.append('SN', myForm.SN);
         form.append('itemMemo', myForm.itemMemo);
+        if (myForm.existFile) {
+          for (let j = 0; j < myForm.existFile.length; j++) {
+            form.append('existFile', myForm.existFile[j]);
+          }
+        }
         if (myForm.newFile) {
           for (let j = 0; j < myForm.newFile.length; j++) {
             form.append('newFile', myForm.newFile[j]);

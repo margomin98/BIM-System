@@ -120,7 +120,7 @@
         <button class="export_btn">匯出</button>
       </div>
     </div>
-    <ag-grid-vue style="height: 530px" class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData"
+    <ag-grid-vue style="height: 300px" class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData"
       :paginationPageSize="pageSize" :pagination="true">
     </ag-grid-vue>
   </div>
@@ -183,6 +183,14 @@ export default {
       width: 300,
     },
     {
+      headerName: "狀態",
+      field: "Status",
+      unSortIcon: true,
+      sortable: true,
+      width: 100,
+      suppressMovable: true
+    },
+    {
       headerName: "編號",
       field: "AI_ID",
       unSortIcon: true,
@@ -222,14 +230,7 @@ export default {
       width: 160,
       suppressMovable: true
     },
-    {
-      headerName: "狀態",
-      field: "Status",
-      unSortIcon: true,
-      sortable: true,
-      width: 100,
-      suppressMovable: true
-    },
+    
     {
       headerName: "區域",
       field: "AreaName",
@@ -571,7 +572,7 @@ export default {
     padding: 0 10%;
 
     h1 {
-      margin-top: 30px;
+         margin: 50px 0 20px;
       text-align: center;
       font-size: 55px;
       font-weight: 600;

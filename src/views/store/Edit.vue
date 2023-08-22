@@ -10,12 +10,12 @@
       <div class="fixed_info">
         <div>
           <p>
-            申請人員: {{ details.Applicant }}
+            申請人員 : {{ details.Applicant }}
           </p>
         </div>
         <div>
           <p>
-            申請入庫日期: {{ details.ApplicationDate }}
+            申請入庫日期 : {{ details.ApplicationDate }}
           </p>
         </div>
       </div>
@@ -26,7 +26,8 @@
               <div class="input-group-prepend check_box">
                 資產類型 :
               </div>
-              <input type="checkbox" class='check_box' v-model="details.IsConsumable" />耗材
+              <input type="checkbox" class='check_box check' v-model="details.IsConsumable" />耗材
+              <input type="checkbox" class='check_box check' />資產
             </div>
           </div>
         </div>
@@ -64,8 +65,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                      {{ details.EquipTypeName || '請選擇' }}
-                    </button>
+                        {{ details.EquipTypeName || '請選擇' }}
+                      </button>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
                   <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
                 </div>
@@ -79,8 +80,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(details.EquipTypeName !== '') }">
-                      {{ details.EquipCategoryName || EquipCategoryInit }}
-                    </button>
+                        {{ details.EquipCategoryName || EquipCategoryInit }}
+                      </button>
                 <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                   <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
                 </div>
@@ -138,8 +139,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ details.Unit || '請選擇' }}
-                    </button>
+                        {{ details.Unit || '請選擇' }}
+                      </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in UnitArray" :key="index" class="dropdown-item" @click="selectUnit(`${item}`)">
                     {{ item }}</p>
@@ -670,6 +671,7 @@
               color: white;
               font-weight: 700;
               font-size: 20px;
+              margin-right: 10px;
               white-space: nowrap;
               span {
                 @include red_star
@@ -677,12 +679,13 @@
             }
           }
           .check_box_wrap {
+            gap: 5px;
             flex-direction: row;
             font-weight: 700;
             align-items: center;
             color: white;
             font-size: 20px;
-            .check_box {
+            .check {
               margin-right: 5px;
             }
           }

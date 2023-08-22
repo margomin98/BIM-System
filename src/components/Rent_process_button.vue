@@ -2,7 +2,7 @@
   <div class="button_wrap">
     <button class="btn1" @click="routeTo('檢視')">檢視</button>
     <button class="btn2" @click="changeStatus">備料</button>
-    <button class="btn3" @click="routeTo('交付')">通知出庫</button>
+    <button class="btn3" @click="routeTo('交付')">通知交付</button>
     <button class="btn4" @click="routeTo('入庫')">交付</button>
   </div>
 </template>

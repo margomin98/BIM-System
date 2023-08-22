@@ -19,7 +19,9 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <router-link to="/store_new">新品入庫</router-link>
               <router-link to="/store_return">歸還入庫</router-link>
+              
               <router-link to="/store_datagrid">入庫填報管理</router-link>
+              <div class='dropdown-divider' style='border-color:white'></div>
               <router-link to="/store_process_datagrid">入庫作業</router-link>
             </div>
           </li>
@@ -29,9 +31,9 @@
               <img src="../assets/navbar/deliver.png" alt="出庫管理"> 出庫管理
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <router-link to="/rent_datagrid">出口填報</router-link>
-              <router-link to="/rent_process_datagrid">出庫作業</router-link>
-              <router-link to="">出庫審核</router-link>
+              <router-link to="/rent_datagrid">出庫填報管理</router-link>
+              <router-link to="/rent_process_datagrid">出庫作業管理</router-link>
+              <router-link to="/rent_review_datagrid">出庫審核管理</router-link>
             </div>
           </li>
           <li class="nav-item dropdown">
