@@ -13,7 +13,7 @@
           <p>申請入庫日期: {{ details.ApplicationDate }}</p>
         </div>
         <div>
-          <p>資產類型：{{ details.IsConsumable ? '耗材' : '重要資產' }}</p>
+          <p>資產類型：{{ details.IsConsumable ? '耗材' : '資產' }}</p>
         </div>
       </div>
       <div class="content">

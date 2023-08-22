@@ -578,10 +578,9 @@ export default {
         return;
       }
       //檢查資產編號是否有重複
-      if (checkAssetsIdRepeat()) {
+      if (await checkAssetsIdRepeat()) {
         return;
       }
-
       // 將陣列資料整理成N個FormData分N次傳送
       for (let i = 0; i < tabNumber.value; i++) {
         const myForm = formData[i];
@@ -614,23 +613,23 @@ export default {
         }
         // 在這邊將每張form傳到後端使用promise陣列接起來
         formDataArray.push(form);
-        // const promise = sendFormData(form, 'submit');
-        // promises.push(promise);
+        const promise = sendFormData(form, 'submit');
+        promises.push(promise);
       }
 
-      // await Promise.all(promises)
-      //   .then(result => {
-      //     const allSuccess = result.every(result => result === 'success');
-      //     if (allSuccess) {
-      //       alert('入庫成功\n單號為:' + AI_ID);
-      //       // router.push({ name: 'Store_Process_Datagrid' });
-      //     } else {
-      //       alert('入庫失敗');
-      //     }
-      //   })
-      //   .catch(error => {
-      //     console.error(error);
-      //   })
+      await Promise.all(promises)
+        .then(result => {
+          const allSuccess = result.every(result => result === 'success');
+          if (allSuccess) {
+            alert('入庫成功\n單號為:' + AI_ID);
+            router.push({ name: 'Store_Process_Datagrid' });
+          } else {
+            alert('入庫失敗');
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        })
     }
 
     async function sendFormData(formData, type) {
@@ -668,10 +667,19 @@ export default {
         }
       }
       //圖片總數量不超過五張
-      if (formData[index].newFile.length + formData[index].existFile.length + files.length > 5) {
+      if(formData[index].existFile){
+        if (formData[index].newFile.length + formData[index].existFile.length + files.length > 5) {
+          alert('上傳至多5張圖片');
+          return;
+        }
+      }
+      else {
+        if (formData[index].newFile.length + files.length > 5) {
         alert('上傳至多5張圖片');
         return;
       }
+      }
+
       console.log(event.target.files);
       // 压缩并处理图像
       const imgArray = formData[index].newFile;
