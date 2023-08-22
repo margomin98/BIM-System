@@ -447,11 +447,6 @@ export default {
         form.append('itemLayerName', myForm.itemLayerName);
         form.append('SN', myForm.SN);
         form.append('itemMemo', myForm.itemMemo);
-        if (myForm.existFile) {
-          for (let j = 0; j < myForm.existFile.length; j++) {
-            form.append('existFile', myForm.existFile[j]);
-          }
-        }
         if (myForm.newFile) {
           for (let j = 0; j < myForm.newFile.length; j++) {
             form.append('newFile', myForm.newFile[j]);
@@ -462,18 +457,18 @@ export default {
         // const promise = sendFormData(form);
         // promises.push(promise);
       }
-      for (const formData of formDataArray) {
-        console.log('FormData Object:');
-        console.log('---');
-        for (const [key, value] of formData.entries()) {
-          console.log(key, ':', value);
-        }
-        console.log('---');
-      }
-
+      // for (const formData of formDataArray) {
+      //   console.log('FormData Object:');
+      //   console.log('---');
+      //   for (const [key, value] of formData.entries()) {
+      //     console.log(key, ':', value);
+      //   }
+      //   console.log('---');
+      // }
       await Promise.all(promises);
       console.log(promises);
     }
+
     async function submit() {
       const formDataArray = [];
       let promises = [];
