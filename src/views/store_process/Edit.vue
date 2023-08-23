@@ -166,7 +166,7 @@
             <div class="input-group mb-3">
               <div class="input-group-prepend">入庫日期：</div>
               <input type="text" class="form-control readonly_box" aria-label="Default"
-                aria-describedby="inputGroup-sizing-default" readonly v-model="details.AssetsInDate" />
+                aria-describedby="inputGroup-sizing-default" readonly v-model="today" />
             </div>
           </div>
         </div>
@@ -345,10 +345,20 @@ export default {
     const route = useRoute();
     const tabNumber = ref(0);
     const AI_ID = route.query.search_id;
+    var today = ref('');
     onMounted(() => {
       getDetails();
+      today.value = getDate();
     });
     //上半部表單部分
+    function getDate() {
+      const today = new Date();
+      var date = '';
+      date += (today.getFullYear() + '/');
+      date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
+      date += ((today.getDate()).toString().padStart(2, '0'));
+      return date;
+    }
     const details = ref({});
     //依照單號取得資料並生成tab資料
     async function getDetails() {
@@ -365,9 +375,20 @@ export default {
           //生成tab資料
           initFormDataArray();
 
-          if (details.value.WarrantyStartDate && details.value.WarrantyEndDate) {
+          if(details.value.WarrantyStartDate) {
             details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
+          }
+          if(details.value.WarrantyEndDate) {
             details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
+          }
+          if(details.value.AssetsInDate) {
+            details.value.AssetsInDate = details.value.AssetsInDate.replace(/-/g, '/');
+          }
+          if(details.value.DeliveryDate) {
+            details.value.DeliveryDate = details.value.DeliveryDate.replace(/-/g, '/');
+          }
+          if(details.value.ApplicationDate) {
+            details.value.ApplicationDate = details.value.ApplicationDate.replace(/-/g, '/');
           }
         } else if (data.state === 'error') {
           alert(data.messages);
@@ -815,6 +836,7 @@ export default {
       window.history.back();
     }
     return {
+      today,
       details,
       tabNumber,
       formData,
@@ -823,6 +845,7 @@ export default {
       newFileModalTitle,
       existFileImageUrl,
       existFileModalTitle,
+      getDate,
       getAreaName,
       getLayerName,
       selectArea,
