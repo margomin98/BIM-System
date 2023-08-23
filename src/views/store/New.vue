@@ -602,17 +602,22 @@ export default {
           margin-bottom: 0;
         }
       }
-
-      .content {
-
-        .check_box_wrap {
-          font-weight: 700;
-          align-items: center;
-          color: white;
-          font-size: 20px;
-
-          .check_box {
-            margin-right: 5px;
+           .info_wrap {
+        margin: auto;
+        padding: 0 5%;
+        .fixed_info {
+          display: flex;
+    background: #3D4E61;
+    color: white;
+    font-size: 25px;
+    font-weight: 700;
+    align-items: center;
+    border-radius: 10px 10px 0px 0px;
+    flex-direction: column;
+    padding: 10px;
+          p {
+            font-size: 20px;
+            margin-bottom: 0;
           }
         }
 

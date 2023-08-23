@@ -40,6 +40,10 @@ import System_Parameter_Edit from "../views/system/Parameter_edit";
 import Authority from "../views/system/Authority";
 //系統管理
 
+//權限不足
+import Authorized from "../views/Authorized";
+//權限不足
+
 const routes = [
   {
     path: "/",
@@ -51,6 +55,12 @@ const routes = [
     name: "home",
     component: Home,
   },
+  {
+    path: "/authorized",
+    name: "authorized",
+    component: Authorized,
+  },
+  
   {
     path: "/store_datagrid",
     name: "Store_Datagrid",

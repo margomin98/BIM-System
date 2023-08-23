@@ -118,7 +118,7 @@
             field: "make",
             unSortIcon: true,
             sortable: true,
-            width: '140',
+            width: '130',
             suppressMovable: true
           },
           {
@@ -347,6 +347,9 @@
           gap: 20px 50px;
           padding: 40px;
           @include datagrid_bg;
+          .col-xl-2{
+            margin:0 3px;
+          }
           p {
             @include datagrid_title;
           }

@@ -22,7 +22,7 @@
         <div class="col-xl-2 col-lg-2 col-md-6 col-12">
           <p>設備分類</p>
           <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown"
+            <button style='  overflow: hidden;text-overflow: ellipsis;white-space: nowrap' class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(EquipTypeName !== '') }">
               {{ EquipCategoryName || EquipCategoryInit }}
             </button>
@@ -611,9 +611,9 @@ export default {
     .datagrid_section {
       .row {
         gap: 20px 50px;
-        padding: 40px 125px;
+        padding: 40px calc(100% - 98%);
         @include datagrid_bg;
-
+justify-content: center;
         p {
           @include datagrid_title;
         }
