@@ -30,8 +30,7 @@
                 {{ selectedRole || "請選擇" }}
               </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p class="dropdown-item" @click="selectrole('選項1')">選項1</p>
-                <p class="dropdown-item" @click="selectrole('選項2')">選項2</p>
+                <p v-for="(item , index) in roleArray" :key="index" class="dropdown-item" @click="selectRole(item)">{{ item}}</p>
               </div>
             </div>
           </div>
@@ -39,7 +38,7 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="send_btn">送出</button>
+        <button class="send_btn" @click="submit">送出</button>
       </div>
     </div>
   </div>
@@ -47,7 +46,8 @@
 
 <script>
 import Navbar from "@/components/Navbar.vue";
-import { reactive, ref } from "vue";
+import router from "@/router";
+import { ref } from "vue";
 export default {
   components: {
     Navbar,
@@ -57,6 +57,7 @@ export default {
     const queryText = ref('');
     const queryArray = ref([]);
     const selectedRole = ref('');
+    const roleArray = ['訪客', '系統管理員', '設備工程師', '倉管人員', '主管']
     async function queryAccount() {
       const axios = require('axios');
       const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/SearchName?name=${queryText.value}`);
@@ -69,9 +70,29 @@ export default {
         console.error(error);
       }
     }
-
+    async function submit() {
+      const axios = require('axios');
+      const form = new FormData();
+      form.append('userName' , queryText.value);
+      form.append('role' , selectedRole.value);
+      const response = await axios.post('http://192.168.0.176:7008/AuthorityMng/AccoutChangeRole', form);
+      try {
+        const data = response.data;
+        if(data.state === 'success') {
+          let msg = data.messages+'\n';
+          msg+= `${queryText.value}　變更為　${selectedRole.value}`
+          alert(msg);
+          router.push('/home');
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
     function selectAccount(item) {
       queryText.value = item;
+    }
+    function selectRole(item) {
+      selectedRole.value = item;
     }
     function goBack() {
       window.history.back();
@@ -80,7 +101,10 @@ export default {
       queryText,
       queryArray,
       selectedRole,
+      roleArray,
+      submit,
       selectAccount,
+      selectRole,
       queryAccount,
       goBack,
     }
