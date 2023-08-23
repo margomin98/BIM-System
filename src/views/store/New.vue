@@ -159,7 +159,7 @@
           </div>
         </div>
         <div class="row g-0">
-          <div class="col-xl-6 col-lg-7 col-md-7 col-12">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
                 保固期限 :
@@ -594,92 +594,6 @@ export default {
       margin: auto;
       width: 700px;
 
-      .fixed_info {
-        @include fixed_info;
-
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-      }
-           .info_wrap {
-        margin: auto;
-        padding: 0 5%;
-        .fixed_info {
-          display: flex;
-    background: #3D4E61;
-    color: white;
-    font-size: 25px;
-    font-weight: 700;
-    align-items: center;
-    border-radius: 10px 10px 0px 0px;
-    flex-direction: column;
-    padding: 10px;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-
-        .row_wrap {
-          .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-            margin-left: 6px;
-            border-radius: 5px;
-          }
-        }
-
-        @include content_bg;
-
-        .dropdown {
-          .dropdown-menu {
-            width: 100%;
-
-            p {
-              &:hover {
-                cursor: pointer;
-              }
-            }
-          }
-
-          button {
-            @include dropdown-btn;
-            width: 199px;
-            color: black;
-            justify-content: space-between;
-            align-items: center;
-          }
-        }
-
-        .input-group {
-          .input-number {
-            width: 199px;
-            @include count_btn;
-          }
-
-          .form-control {
-            height: 35px;
-            border-radius: 0;
-          }
-
-          .input-group-prepend {
-            color: white;
-            font-weight: 700;
-            font-size: 20px;
-            width: 120px;
-            text-align: end;
-            white-space: nowrap;
-
-            span {
-              @include red_star
-            }
-          }
-        }
-
-        #date_wrap {
-          flex: 0.74
-        }
-      }
-
       .button_wrap {
         display: flex;
         justify-content: space-between;
@@ -705,9 +619,87 @@ export default {
         }
       }
 
-      #unit,
-      #number {
-        flex-wrap: nowrap
+      .input-group-prepend {
+        color: white;
+        font-weight: 700;
+        font-size: 20px;
+        width: calc(100px + 6%);
+        text-align: end;
+        white-space: nowrap;
+
+        span {
+          @include red_star
+        }
+      }
+
+      .input-number {
+        @include count_btn;
+        width: 200px;
+      }
+
+      .fixed_info {
+        @include fixed_info;
+
+        p {
+          font-size: 20px;
+          margin-bottom: 0;
+        }
+      }
+
+      .content {
+        @include content_bg;
+
+        .input-group-prepend {
+          width: 120px;
+        }
+
+        .check_box_wrap {
+          font-weight: 700;
+          align-items: center;
+          color: white;
+          font-size: 20px;
+
+          .check_box {
+            margin-right: 5px;
+          }
+        }
+
+        .row_wrap {
+          .input-group {
+            flex-wrap: nowrap
+          }
+
+          .flex {
+            width: 130px
+          }
+
+          .equipment_wrap {
+            width: 132px;
+          }
+        }
+
+        .dropdown {
+          width: 218px;
+
+          .dropdown-menu {
+            width: 100%;
+            max-height: 250px;
+            overflow-y: auto;
+            p {
+              &:hover {
+                cursor: pointer;
+              }
+            }
+          }
+
+          .dropdown-toggle {
+            width: 100%;
+            @include dropdown-btn;
+            color: black;
+            justify-content: space-between;
+            align-items: center;
+          }
+        }
       }
     }
   }

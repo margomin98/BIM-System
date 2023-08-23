@@ -554,7 +554,7 @@ export default {
       h1 {
         margin-top: 50px;
         text-align: center;
-        font-size: 50px;
+        font-size: 40px;
         font-weight: 600;
         @include title_color;
       }

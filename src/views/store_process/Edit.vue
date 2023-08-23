@@ -783,18 +783,19 @@
   @import "@/assets/css/global.scss";
 
 .nav {
-  overflow: scroll;
+  overflow-x: scroll;
+  overflow-y: hidden;
   flex-wrap: nowrap;
 }
 
-/* Existing scrollbar styles */
 ::-webkit-scrollbar {
-  width: 1%;
+
+height: 6px;
 }
-
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.4);
-
+border-radius: 5px;
+      background-color: rgb(176, 175, 175);
+      border: 1px solid rgb(86, 85, 85);
 }
 
   @media only screen and (min-width: 1200px) {

@@ -564,7 +564,7 @@
       h1 {
         margin-top: 30px;
         text-align: center;
-        font-size: 50px;
+        font-size: 40px;
         font-weight: 600;
         @include title_color;
         margin-bottom: 20px;

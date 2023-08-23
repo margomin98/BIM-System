@@ -717,7 +717,7 @@ export default {
     h1 {
       margin-top: 50px;
       text-align: center;
-      font-size: 50px;
+      font-size: 40px;
       font-weight: 600;
       @include title_color;
     }
@@ -727,14 +727,15 @@ export default {
       padding: 0 5%;
 
       .fixed_info {
-        @include fixed_info;
-
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
+          @include fixed_info;
+          flex-direction: column;
+          padding: 10px;
+          height: unset;
+          p {
+            font-size: 20px;
+            margin-bottom: 0;
+          }
         }
-      }
-
       .content {
         @include content_bg;
 
