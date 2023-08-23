@@ -8,8 +8,8 @@ import 'v3-easyui/dist/themes/vue.css';
 import { createApp } from 'vue'
 import EasyUI from 'v3-easyui';
 import '../src/assets/css/bootstrap.css';
-import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
-import '../src/assets/css/ad-grid.css'; // Optional theme CSS
+import 'ag-grid-community/styles/ag-grid.css'; 
+import '../src/assets/css/ad-grid.css';
 
 
 

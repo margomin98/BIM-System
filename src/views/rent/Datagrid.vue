@@ -12,6 +12,7 @@
       </div>
     </div>
     <div class="container-fluid datagrid_section">
+      <div class="content">
       <div class="row">
         <div class="col-xl-2 col-lg-2 col-md-6 col-12">
           <p>單號</p>
@@ -67,6 +68,7 @@
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
     <div class="col justify-content-center d-flex">
@@ -316,10 +318,20 @@
         }
       }
       .datagrid_section {
+         .content{
+      background: rgba(82, 136, 156, 0.8);
+    border-radius: 10px;
+    margin-bottom: 30px;
+    height: 250px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+        }
         .row {
-          gap: 20px 50px;
-          padding: 40px 0 40px 16%;
-          @include datagrid_bg;
+        display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap:40px 5px;
           p {
             @include datagrid_title;
           }

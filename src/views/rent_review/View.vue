@@ -20,32 +20,34 @@
         <div class="row g-0">
           <div class="col d-flex wrap">
             <label for="inputTitle1" class="form-label use">
-                                      <p>用&ensp;&ensp;&ensp;&ensp;途</p>
-                                    </label>
-            <div class=" option">
-              <div class="form-check ">
-                <input class="form-check-input" type="checkbox" value="" id="checkbox1" />
-                <label class="form-check-label" for="checkbox1">內部領用</label>
-              </div>
-              <div class="form-check ">
-                <input class="form-check-input" type="checkbox" value="" id="checkbox2" />
-                <label class="form-check-label" for="checkbox2">借測</label>
-              </div>
-              <div class="form-check ">
-                <input class="form-check-input" type="checkbox" value="" id="checkbox3" />
-                <label class="form-check-label" for="checkbox3">維修</label>
-              </div>
-              <div class="form-check ">
-                <input class="form-check-input" type="checkbox" value="" id="checkbox1" />
-                <label class="form-check-label" for="checkbox1">出貨</label>
-              </div>
-              <div class="form-check ">
-                <input class="form-check-input" type="checkbox" value="" id="checkbox2" />
-                <label class="form-check-label" for="checkbox2">報廢</label>
-              </div>
-              <div class="form-check ">
-                <input class="form-check-input" type="checkbox" value="" id="checkbox3" />
-                <label class="form-check-label" for="checkbox3">退貨</label>
+                                              <p>用&ensp;&ensp;&ensp;&ensp;途</p>
+                                            </label>
+            <div class="option">
+              <div class='content'>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="checkbox1">
+                  <label class="form-check-label" for="checkbox1">內部領用</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="checkbox2">
+                  <label class="form-check-label" for="checkbox2">借測</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="checkbox3">
+                  <label class="form-check-label" for="checkbox3">維修</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="checkbox1">
+                  <label class="form-check-label" for="checkbox1">出貨</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="checkbox2">
+                  <label class="form-check-label" for="checkbox2">報廢</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="checkbox3">
+                  <label class="form-check-label" for="checkbox3">退貨</label>
+                </div>
               </div>
             </div>
           </div>
@@ -53,16 +55,16 @@
         <div class="row g-0">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                                      <p>專案代碼</p>
-                                    </label>
+                                              <p>專案代碼</p>
+                                            </label>
             <div class="input-group">
               <input type="text" class="form-control readonly_box" id="inputWithButton" readonly />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                                      <p>專案名稱</p>
-                                    </label>
+                                              <p>專案名稱</p>
+                                            </label>
             <div class="input-group">
               <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly />
             </div>
@@ -71,8 +73,8 @@
         <div class="row g-0">
           <div class="col d-flex wrap" style="border: none">
             <label for="inputTextarea" class="form-label">
-                                      <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
-                                    </label>
+                                              <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
+                                            </label>
             <textarea class="form-control readonly_box" id="inputTextarea" rows="1" readoonly></textarea>
           </div>
         </div>
@@ -113,22 +115,21 @@
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                                      <p>備料人員</p>
-                                    </label>
-            <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly />
+                                              <p>備料人員</p>
+                                            </label>
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box" readonly>文字內容</p>
             </div>
           </div>
           <div class="col d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                                      <p>備註</p>
-                                    </label>
-            <div class="input-group">
-              <input type="text" class="form-control" id="inputWithTitle" placeholder='自由填寫，最多100字' />
+                                              <p>備註</p>
+                                            </label>
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box" readonly>文字內容</p>
             </div>
           </div>
         </div>
-        
       </div>
       <div class='five_content'>
         <div class="fixed_info">
@@ -139,38 +140,37 @@
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                                      <p><span>*</span>審核人員</p>
-                                    </label>
-            <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly />
+                                              <p><span>*</span>審核人員</p>
+                                            </label>
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box" readonly>文字內容</p>
             </div>
             <button type="button">驗證</button>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                                       <p><span>*</span>審核結果</p>
-                                    </label>
+                                               <p><span>*</span>審核結果</p>
+                                            </label>
             <div class="input-group">
-              <input type="checkbox">通過
-              <input type="checkbox">不通過
+              <input type="checkbox" />通過 <input type="checkbox" />不通過
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                                      <p>審核日期</p>
-                                    </label>
-            <div class="input-group">
-              <input type="text" class="form-control" id="inputWithTitle" placeholder='自由填寫，最多100字' />
+                                              <p>審核日期</p>
+                                            </label>
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box" readonly>文字內容</p>
             </div>
           </div>
         </div>
         <div class="row g-0">
           <div class="col d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                                      <p>審核意見</p>
-                                    </label>
+                                              <p>審核意見</p>
+                                            </label>
             <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly />
+              <input type="text" class="form-control" id="inputWithButton" />
             </div>
           </div>
         </div>
@@ -406,115 +406,19 @@
     width: 100%;
     align-items: center;
   }
+  .input-group {
+    height: 100%;
+  }
+  .readonly_box {
+    @include readonly_box;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
   @media only screen and (min-width: 1200px) {
-    .modal {
-      padding: 0 5%;
-      .modal-content {
-        background-color: unset;
-        border: 0;
-        .modal-body {
-          padding: 0;
-        }
-      }
-      .fixed_info {
-        @include fixed_info;
-        background: #528091;
-        border-radius: 0;
-        border: 1px solid black;
-        padding: 0 10px;
-        div {
-          flex-grow: 1;
-          text-align: center;
-        }
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-        button {
-          border: none;
-          background: none;
-          color: white;
-          font-weight: 700;
-          font-size: 22px;
-          align-self: start;
-        }
-      }
-      .list {
-        border-left: 1px solid black;
-        border-bottom: 1px solid black;
-        border-right: 1px solid black;
-      }
-      .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        background: #D9D9D9;
-        .submit_btn {
-          margin-bottom: 20px;
-          background: #48658C;
-          color: white;
-          font-weight: 700;
-          width: 100px;
-          font-size: 18px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-        .wrap1,
-        .wrap2 {
-          display: flex;
-          justify-content: space-evenly;
-          padding: 10px 80px;
-          .input-number {
-            @include count_btn;
-          }
-          .number-input-box {
-            color: black;
-            .input-number {
-              width: 100%;
-            }
-          }
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
-          }
-          .dropdown {
-            button {
-              background: white;
-              width: 100%;
-              border: none;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            }
-            .dropdown-menu {
-              width: 225px;
-              .dropdown-item {
-                text-align: left;
-              }
-            }
-          }
-          div {
-            padding: 0 5px;
-            p {
-              text-align: center;
-              white-space: nowrap;
-              font-size: 18px;
-              font-weight: 700;
-              margin-bottom: 5px;
-            }
-          }
-        }
-      }
-    }
     .main_section {
-      .readonly_box {
-        @include readonly_box;
-      }
       h1 {
         margin-top: 50px;
         text-align: center;
@@ -596,15 +500,6 @@
             border-bottom: 1px solid black;
             border-top: 1px solid black;
             align-items: center;
-            label.use {
-              border-right: 1px solid black;
-            }
-            .option {
-              display: flex
-            }
-            .project_name {
-              border-left: 1px solid black
-            }
           }
           .form-label {
             font-weight: 700;
@@ -616,18 +511,25 @@
             display: flex;
             justify-content: center;
             padding: 0 10px;
-            width: 150px;
+            width: 115px;
             p {
               margin-bottom: 0;
               text-align: center;
             }
           }
+          #readonly_box {
+            border-left: 1px solid black;
+          }
+          .wrap:nth-child(1) {
+            border-right: 1px solid black;
+          }
         }
-           .five_content {
+        .five_content {
           border-left: 1px solid black;
-          border-right: 1px solid black;
-          span{
-            @include red_star
+          background: white;
+          border-bottom: 1px solid black;
+          span {
+            @include red_star;
           }
           .fixed_info {
             border: none;
@@ -642,22 +544,21 @@
           }
           .wrap {
             background: white;
-            border-bottom: 1px solid black;
             border-top: 1px solid black;
             align-items: center;
-            button{
-                  margin: 0 10px;
-                  border-radius:7px;
-    height: 30px;
-    width: 100px;
-    border: none;
-       background: #48658C;
-            color: white;
-            font-weight: 700;
-            font-size: 18px;
-             &:hover {
-              background-color: #5d85bd;
-            }
+            button {
+              margin: 0 10px;
+              border-radius: 7px;
+              height: 30px;
+              width: 100px;
+              border: none;
+              background: #48658c;
+              color: white;
+              font-weight: 700;
+              font-size: 18px;
+              &:hover {
+                background-color: #5d85bd;
+              }
             }
           }
           .form-label {
@@ -670,10 +571,39 @@
             display: flex;
             justify-content: center;
             padding: 0 10px;
-            width: 150px;
+            width: 100px;
             p {
               margin-bottom: 0;
               text-align: center;
+            }
+          }
+          .wrap:nth-child(1) {
+            #readonly_box {
+              border-left: 1px solid black;
+            }
+            .input-group {
+              border-right: 1px solid black;
+            }
+          }
+          .wrap:nth-child(2) {
+            border-left: 1px solid black;
+            label {
+              width: 100px;
+            }
+            .input-group {
+              border-left: 1px solid black;
+              border-right: 1px solid black;
+              gap: 5px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              font-weight: 700;
+            }
+          }
+          .wrap:nth-child(3) {
+            border-right: 1px solid black;
+            #readonly_box {
+              border-left: 1px solid black;
             }
           }
         }
@@ -685,7 +615,6 @@
             margin-left: 10px;
           }
           .form-control {
-            height: auto;
             border-radius: 0;
             border-left: 1px solid black;
           }
@@ -697,7 +626,14 @@
               border-right: 1px solid black;
             }
             .option {
-              display: flex
+              @include readonly_box;
+              height: 100%;
+              width: 100%;
+              align-items: center;
+              display: flex;
+              .content {
+                display: flex
+              }
             }
             .project_name {
               border-left: 1px solid black
@@ -730,10 +666,6 @@
         .input-number {
           @include count_btn;
         }
-        .form-control {
-          height: 50px !important;
-          border-radius: 0;
-        }
       }
       .button_wrap {
         display: flex;
@@ -758,115 +690,7 @@
     }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .modal {
-      padding: 0 5%;
-      .modal-content {
-        background-color: unset;
-        border: 0;
-        .modal-body {
-          padding: 0;
-        }
-      }
-      .fixed_info {
-        @include fixed_info;
-        background: #528091;
-        border-radius: 0;
-        border: 1px solid black;
-        padding: 0 10px;
-        div {
-          flex-grow: 1;
-          text-align: center;
-        }
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-        button {
-          border: none;
-          background: none;
-          color: white;
-          font-weight: 700;
-          font-size: 22px;
-          align-self: start;
-        }
-      }
-      .list {
-        border-left: 1px solid black;
-        border-bottom: 1px solid black;
-        border-right: 1px solid black;
-      }
-      .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        background: #D9D9D9;
-        .submit_btn {
-          margin-bottom: 20px;
-          background: #48658C;
-          color: white;
-          font-weight: 700;
-          width: 100px;
-          font-size: 18px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-        .wrap1,
-        .wrap2 {
-          display: flex;
-          justify-content: space-evenly;
-          padding: 10px 80px;
-          .input-number {
-            @include count_btn;
-          }
-          .number-input-box {
-            color: black;
-            .input-number {
-              width: 100%;
-            }
-          }
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
-          }
-          .dropdown {
-            button {
-              background: white;
-              width: 150px;
-              border: none;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            }
-            .dropdown-menu {
-              width: 150px;
-              .dropdown-item {
-                text-align: left;
-              }
-            }
-          }
-          div {
-            padding: 0 5px;
-            p {
-              width: 150px;
-              text-align: center;
-              white-space: nowrap;
-              font-size: 18px;
-              font-weight: 700;
-              margin-bottom: 5px;
-            }
-          }
-        }
-      }
-    }
     .main_section {
-      .readonly_box {
-        @include readonly_box;
-      }
       h1 {
         margin-top: 50px;
         text-align: center;
@@ -901,7 +725,9 @@
         }
         .third_content {
           .list {
-            border: 1px solid black;
+            border-top: 1px solid black;
+            border-left: 1px solid black;
+            border-right: 1px solid black;
             button {
               @include delete_button;
               &:hover {
@@ -946,14 +772,66 @@
             border-bottom: 1px solid black;
             border-top: 1px solid black;
             align-items: center;
-            label.use {
-              border-right: 1px solid black;
+          }
+          .form-label {
+            font-weight: 700;
+            font-size: 20px;
+            white-space: nowrap;
+            height: 50px;
+            align-items: center;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 0 10px;
+            width: 115px;
+            p {
+              margin-bottom: 0;
+              text-align: center;
             }
-            .option {
-              display: flex
-            }
-            .project_name {
-              border-left: 1px solid black
+          }
+          #readonly_box {
+            border-left: 1px solid black;
+          }
+          .wrap:nth-child(1) {
+            border-right: 1px solid black;
+          }
+        }
+        .five_content {
+          border-left: 1px solid black;
+          background: white;
+          border-bottom: 1px solid black;
+          span {
+            @include red_star;
+          }
+          .fixed_info {
+            border: none;
+          }
+          .form-check {
+            margin-left: 10px;
+          }
+          .form-control {
+            height: auto;
+            border-radius: 0;
+            border-left: 1px solid black;
+          }
+          .wrap {
+            background: white;
+            border-top: 1px solid black;
+            align-items: center;
+            button {
+              white-space: nowrap;
+              margin: 0 10px;
+              border-radius: 7px;
+              height: 30px;
+              width: 100px;
+              border: none;
+              background: #48658c;
+              color: white;
+              font-weight: 700;
+              font-size: 18px;
+              &:hover {
+                background-color: #5d85bd;
+              }
             }
           }
           .form-label {
@@ -966,9 +844,39 @@
             display: flex;
             justify-content: center;
             padding: 0 10px;
+            width: 100px;
             p {
               margin-bottom: 0;
               text-align: center;
+            }
+          }
+          .wrap:nth-child(1) {
+            #readonly_box {
+              border-left: 1px solid black;
+            }
+            .input-group {
+              border-right: 1px solid black;
+            }
+          }
+          .wrap:nth-child(2) {
+            border-left: 1px solid black;
+            label {
+              width: 100px;
+            }
+            .input-group {
+              border-left: 1px solid black;
+              border-right: 1px solid black;
+              gap: 2px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              font-weight: 700;
+            }
+          }
+          .wrap:nth-child(3) {
+            border-right: 1px solid black;
+            #readonly_box {
+              border-left: 1px solid black;
             }
           }
         }
@@ -980,19 +888,25 @@
             margin-left: 10px;
           }
           .form-control {
-            height: auto;
             border-radius: 0;
             border-left: 1px solid black;
           }
           .wrap {
             background: white;
-            border-bottom: 1px solid black;
+            border-bottom: 0.5px solid black;
             align-items: center;
             label.use {
-              border-right: 1px solid black
+              border-right: 1px solid black;
             }
             .option {
-              display: flex
+              @include readonly_box;
+              height: 100%;
+              width: 100%;
+              align-items: center;
+              display: flex;
+              .content {
+                display: flex
+              }
             }
             .project_name {
               border-left: 1px solid black
@@ -1025,10 +939,6 @@
         .input-number {
           @include count_btn;
         }
-        .form-control {
-          height: 50px !important;
-          border-radius: 0;
-        }
       }
       .button_wrap {
         display: flex;
@@ -1053,120 +963,6 @@
     }
   }
   @media only screen and (max-width: 767px) {
-    .modal {
-      padding: 0 5%;
-      .modal-content {
-        background-color: unset;
-        border: 0;
-        .modal-body {
-          padding: 0;
-        }
-      }
-      .fixed_info {
-        @include fixed_info;
-        background: #528091;
-        border-radius: 0;
-        border: 1px solid black;
-        padding: 0 10px;
-        div {
-          flex-grow: 1;
-          text-align: center;
-        }
-        p {
-          font-size: 18px;
-          margin-bottom: 0;
-        }
-        button {
-          border: none;
-          background: none;
-          color: white;
-          font-weight: 700;
-          font-size: 22px;
-          align-self: start;
-        }
-      }
-      .list {
-        border-left: 1px solid black;
-        border-bottom: 1px solid black;
-        border-right: 1px solid black;
-      }
-      .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        background: #D9D9D9;
-        .submit_btn {
-          margin-bottom: 20px;
-          background: #48658C;
-          color: white;
-          font-weight: 700;
-          width: 100px;
-          font-size: 18px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-        .wrap1 {
-          justify-content: space-evenly;
-          padding: 20px 20px 0;
-          .input-number {
-            @include count_btn;
-          }
-          .number-input-box {
-            color: black;
-            .input-number {
-              width: 100%;
-            }
-          }
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
-          }
-          .dropdown {
-            button {
-              background: white;
-              width: 100%;
-              border: none;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            }
-            .dropdown-menu {
-              width: 225px;
-              .dropdown-item {
-                text-align: left;
-              }
-            }
-          }
-          div {
-            margin: 10px 0;
-            p {
-              white-space: nowrap;
-              font-size: 18px;
-              font-weight: 700;
-              margin-bottom: 5px;
-            }
-          }
-        }
-        .wrap2 {
-          flex-direction: column;
-          padding: 0 20px;
-          margin-bottom: 20px;
-          p {
-            margin-bottom: 0;
-          }
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
-          }
-        }
-      }
-    }
     .main_section {
       .readonly_box {
         @include readonly_box;
@@ -1234,12 +1030,15 @@
             margin-bottom: 0;
           }
         }
-        .fourth_content {
+         .fourth_content {
           border-bottom: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
           .fixed_info {
             border: none;
+          }
+          #readonly_box {
+            border-left: 1px solid black;
           }
           .form-check {
             margin-left: 10px;
@@ -1254,19 +1053,18 @@
             border-top: 1px solid black;
             align-items: center;
             .option {
-              display: flex
+              display: flex;
             }
           }
           .form-label {
             font-weight: 700;
             font-size: 20px;
             white-space: nowrap;
-            height: 50px;
             align-items: center;
             margin: 0;
             display: flex;
             justify-content: center;
-            width: 220px;
+            width: 190px;
             height: 30px;
             p {
               font-size: 18px;
@@ -1275,6 +1073,99 @@
             }
           }
         }
+        .five_content {
+          border-bottom: 1px solid black;
+          border-left: 1px solid black;
+          .fixed_info {
+            border: none;
+          }
+          .form-check {
+            margin-left: 10px;
+          }
+          .form-control {
+            border-radius: 0;
+          }
+          #readonly_box {
+            border-left: 1px solid black;
+            background: #b4b4b4;
+            font-weight: 700;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+          }
+          .wrap {
+            background: white;
+            border-top: 1px solid black;
+            align-items: center;
+            button {
+              margin: 0 10px;
+              border-radius: 7px;
+              height: 30px;
+              width: 100px;
+              border: none;
+              background: #48658c;
+              color: white;
+              font-weight: 700;
+              font-size: 18px;
+              &:hover {
+                background-color: #5d85bd;
+              }
+            }
+          }
+          .form-label {
+            font-weight: 700;
+            font-size: 20px;
+            white-space: nowrap;
+            align-items: center;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            height: 30px;
+            p {
+              font-size: 18px;
+              margin-bottom: 0;
+              text-align: center;
+            }
+          }
+          .wrap:nth-child(3) {
+            border-right: 1px solid black;
+           
+            label {
+              width: 270px;
+              
+            }
+          }
+          .wrap:nth-child(1) {
+            border-right: 1px solid black;
+             #readonly_box{
+               border-right: 1px solid black;
+            }
+            label {
+              width:270px;
+            }
+            .input-group {
+              border-left: 1px solid black;
+            }
+          }
+          .wrap:nth-child(2) {
+            border-right: 1px solid black;
+            label {
+              height: 40px;
+              width:270px;
+            }
+            .input-group {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              gap: 5px;
+              font-weight: 700;
+              border-left: 1px solid black;
+            }
+          }
+      
+        }
+       
         form {
           border-top: 1px solid black;
           border-left: 1px solid black;
@@ -1300,14 +1191,25 @@
               justify-content: space-evenly;
             }
             .option {
-              padding: 5px;
-              display: grid;
-              grid-template-columns: 1fr 1fr 1fr;
-              grid-template-rows: 1fr 1fr;
-              gap: 0px 0px;
-              grid-auto-flow: row;
-              grid-template-areas: ". . ." ". . .";
-              white-space: nowrap;
+              height: 100%;
+              width: 100%;
+              font-size: 18px;
+              background: #B4B4B4;
+              font-weight: 700;
+              .content {
+                padding: 5px;
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: 1fr 1fr;
+                gap: 0px 0px;
+                grid-auto-flow: row;
+                grid-template-areas: ". . ." ". . .";
+                white-space: nowrap;
+                justify-items: center;
+                div {
+                  width: 90px;
+                }
+              }
             }
           }
           .form-label {
@@ -1338,10 +1240,7 @@
         .input-number {
           @include count_btn;
         }
-        .form-control {
-          height: 50px !important;
-          border-radius: 0;
-        }
+      
       }
       .button_wrap {
         display: flex;

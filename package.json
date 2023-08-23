@@ -8,6 +8,7 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
+    "ag-charts-vue3": "^8.1.0",
     "ag-grid-community": "^30.0.6",
     "ag-grid-vue3": "^30.0.6",
     "axios": "^1.4.0",
