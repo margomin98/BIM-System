@@ -14,10 +14,13 @@
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend"><span>*</span>帳號：</div>
-            <input class="dropdown-toggle" type="text" id="InputDropdown" data-bs-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false" @keyup="queryAccount" v-model="queryText">
-            <div v-if="queryArray" class="dropdown-menu" aria-labelledby="InputDropdown">
-              <p v-for="(item , index) in queryArray" :key="index" class="dropdown-item" @click="selectAccount(item)">{{item}}</p>
+            <div class="dropdown align-items-center">
+              <input class="w-100 no-outline" type="text" id="InputDropdown" data-bs-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false" @keyup="queryAccount" v-model="queryText" style="border: none;">
+              <div v-if="queryArray" class="dropdown-menu" aria-labelledby="InputDropdown">
+                <p v-for="(item, index) in queryArray" :key="index" class="dropdown-item" @click="selectAccount(item)">
+                  {{ item }}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -30,7 +33,8 @@
                 {{ selectedRole || "請選擇" }}
               </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p v-for="(item , index) in roleArray" :key="index" class="dropdown-item" @click="selectRole(item)">{{ item}}</p>
+                <p v-for="(item, index) in roleArray" :key="index" class="dropdown-item" @click="selectRole(item)">{{
+                  item }}</p>
               </div>
             </div>
           </div>
@@ -63,7 +67,7 @@ export default {
       const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/SearchName?name=${queryText.value}`);
       try {
         const data = response.data;
-        if(data.state === 'success') {
+        if (data.state === 'success') {
           queryArray.value = data.resultList;
         }
       } catch (error) {
@@ -73,14 +77,14 @@ export default {
     async function submit() {
       const axios = require('axios');
       const form = new FormData();
-      form.append('userName' , queryText.value);
-      form.append('role' , selectedRole.value);
+      form.append('userName', queryText.value);
+      form.append('role', selectedRole.value);
       const response = await axios.post('http://192.168.0.176:7008/AuthorityMng/AccoutChangeRole', form);
       try {
         const data = response.data;
-        if(data.state === 'success') {
-          let msg = data.messages+'\n';
-          msg+= `${queryText.value}　變更為　${selectedRole.value}`
+        if (data.state === 'success') {
+          let msg = data.messages + '\n';
+          msg += `${queryText.value}　變更為　${selectedRole.value}`
           alert(msg);
           router.push('/home');
         }
@@ -140,12 +144,13 @@ export default {
 
       .content {
         @include content_bg;
-
+        .no-outline:focus {
+          outline: none;
+        }
         .dropdown {
           width: 100%;
           height: 35px;
           @include dropdown_btn;
-
           .dropdown-toggle {
             display: flex;
             justify-content: space-between;
@@ -422,4 +427,5 @@ export default {
       }
     }
   }
-}</style>
+}
+</style>
