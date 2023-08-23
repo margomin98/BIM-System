@@ -1,8 +1,3 @@
-view   
-
-
-
-
 <template>
   <Navbar />
   <div class="main_section">
