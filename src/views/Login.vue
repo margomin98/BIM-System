@@ -17,9 +17,11 @@
         </div>
         <div class="form">
           <p>帳號</p>
-          <input class="text_input" type="text" v-model="userName">
+          <input class="text_input" type="text" @keyup.enter="login" v-model="userName">
           <p class="mt-3">密碼</p>
           <input class="text_input" type="password" @keyup.enter="login" v-model="userPassword">
+          <span style="color: rgb(243, 22, 22);">{{ errorHint }}</span>
+          
           <div class="tick">
             <input type="checkbox">記住我
           </div>
@@ -40,8 +42,9 @@ import router from '@/router';
 export default {
   name: 'Login',
   setup() {
-    const userName = ref('test');
+    const userName = ref('');
     const userPassword = ref('Test_123');
+    const errorHint = ref('');
     async function login() {
       // console.log(event);
       const formData = new FormData();
@@ -64,22 +67,26 @@ export default {
 
           console.log(data.state);
           console.log(data.messages);
+          errorHint.value = '';
           router.push('/home');
         }
         else if (data.state === 'error') {
-          alert(data.messages);
+          // alert(data.messages);
+          var hint = data.messages.toString().replace(/[\[\]"]/g, "");
+          errorHint.value = hint;
         }
         else {
           throw new Error('Request was not successful');
         }
       } catch (error) {
-        console.error('Error sending data to backend', error);
+        console.error(error);
       }
     }
 
     return {
       userName,
       userPassword,
+      errorHint,
       login,
     }
   },

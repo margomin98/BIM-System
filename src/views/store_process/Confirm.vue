@@ -13,7 +13,7 @@
           <p>申請入庫日期: {{ details.ApplicationDate }}</p>
         </div>
         <div>
-          <p>資產類型：{{ details.IsConsumable ? '耗材' : '重要資產' }}</p>
+          <p>資產類型：{{ details.IsConsumable ? '耗材' : '資產' }}</p>
         </div>
       </div>
       <div class="content">
@@ -92,6 +92,22 @@
               <div class="input-group-prepend">單位：</div>
               <input type="text" class="form-control readonly_box" aria-label="Default"
                 aria-describedby="inputGroup-sizing-default" readonly v-model="details.Unit" />
+            </div>
+          </div>
+        </div>
+        <div v-if="details.IsConsumable" class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">包裝數量：</div>
+              <input type="text" class="form-control readonly_box" aria-label="Default"
+                aria-describedby="inputGroup-sizing-default" readonly v-model="details.PackageNum" />
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">包裝單位：</div>
+              <input type="text" class="form-control readonly_box" aria-label="Default"
+                aria-describedby="inputGroup-sizing-default" readonly v-model="details.PackageUnit" />
             </div>
           </div>
         </div>

@@ -7,13 +7,13 @@
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
-          <p>申請人員 : 陳奕迅</p>
+          <p>申請人員: {{ details.Applicant }}</p>
         </div>
         <div>
-          <p>申請入庫日期 : 2023/04/01</p>
+          <p>申請入庫日期: {{ details.ApplicationDate }}</p>
         </div>
         <div>
-          <p>資產類型 : 耗材</p>
+          <p>資產類型:{{ details.IsConsumable ? '耗材' : '資產' }}</p>
         </div>
       </div>
       <div class="content">
@@ -124,11 +124,7 @@
           </div>
         </div>
         <div class="col">
-          <div class="input-group mb-3">
             <div class="input-group-prepend">備註：</div>
-            <input class="form-control readonly_box" aria-label="With textarea" readonly>
-          </div>
-        </div>
       </div>
       <div class="tab_section mt-5">
         <nav>
@@ -143,6 +139,7 @@
                 3
               </button>
           </div>
+
         </nav>
         <div v-if="formData.length >0" class="tab-content" id="nav-tabContent">
           <div v-for="(item, index) in formData" :key="index" :class="['tab-pane', 'fade', { 'show active': index === 0 }]" :id="'tab' + (index + 1)" role="tabpanel" aria-labelledby="tab1-tab">
@@ -161,9 +158,7 @@
             <div class="row">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span>*</span>區域：
-                  </div>
+                  <div class="input-group-prepend"><span>*</span>區域：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName(index)">
                         {{ item.AreaName || '請選擇' }}
@@ -177,16 +172,13 @@
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span>*</span> 櫃位：
-                  </div>
+                  <div class="input-group-prepend"><span>*</span> 櫃位：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="item.AreaName === ''">
                         {{ item.LayerName || item.LayerInit }}
                       </button>
                     <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                       <p v-for="(item, layer_index) in item.LayerArray" :key="layer_index" class="dropdown-item" @click="selectLayer(index , `${item}`)">{{ item }}</p>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -201,17 +193,13 @@
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   備註：
-                </div>
-                <input class="form-control" aria-label="With textarea" v-model="item.Memo">
-              </div>
-            </div>
-            <div class="col">
-              <!-- 選擇檔案button -->
+                <input class="form-control" aria-label="With textarea" v-model="item.itemMemo">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">資產照片：</div>
                 <div class="mb-3 file_wrap">
                   <button class='choose_btn' @click="openFileExplorer(index)">選擇檔案</button>
-                  <input type="file" accept="image/*" ref="fileInputs" style="display: none;" multiple @change="handleFileChange(index)" />
+                  <input type="file" accept="image/*" ref="fileInputs" style="display: none;" multiple
+                    @change="handleFileChange(index)" />
                 </div>
                 <div class='selected_file'>
                   <p class='title'>已選擇的檔案:</p>
@@ -230,11 +218,25 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="imageModalLabel">{{ modalTitle }}</h5>
+                <h5 class="modal-title">{{ existFileModalTitle }}</h5>
                 <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
               </div>
               <div v-if="formData" class="modal-body">
-                <img :src="imageUrl" alt="Uploaded Image" class="img-fluid" />
+                <img :src="existFileImageUrl" alt="Existed Image" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- NewFileModal -->
+        <div class="modal fade" id="newFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">{{ newFileModalTitle }}</h5>
+                <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
+              </div>
+              <div v-if="formData" class="modal-body">
+                <img :src="newFileImageUrl" alt="Uploaded Image" class="img-fluid" />
               </div>
             </div>
           </div>
@@ -242,7 +244,7 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="save_btn">暫存</button>
+        <button class="save_btn" @click="temp">暫存</button>
         <button class="send_btn" @click="submit">送出</button>
       </div>
     </div>
@@ -429,7 +431,8 @@
           @include fixed_info;
           p {
             font-size: 20px;
-            margin-bottom: 0;
+            width: 120px;
+            text-align: end;
           }
         }
         .content {
@@ -622,7 +625,8 @@ width:800px;
           @include fixed_info;
           p {
             font-size: 20px;
-            margin-bottom: 0;
+            width: 120px;
+            text-align: end;
           }
         }
         .content {
@@ -849,9 +853,6 @@ width:800px;
               font-size: 20px;
               width: 120px;
               margin-bottom: 5px;
-            }
-          }
-        }
         .button_wrap {
           display: flex;
           margin-top: 30px;
