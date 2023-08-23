@@ -73,7 +73,7 @@
       <div class="button_wrap d-flex">
         <button class="search_btn">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
-        <button class="export_btn">匯出</button>
+        <!-- <button class="export_btn">匯出</button> -->
       </div>
     </div>
     <div style="width: 100%">

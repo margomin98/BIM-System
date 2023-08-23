@@ -254,7 +254,8 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="send_btn" @click="submit" :disabled="!canSubmit()" :class="{ send_btn_disabled:!canSubmit() }">送出</button>
+        <button class="send_btn" @click="submit" :disabled="!canSubmit()"
+          :class="{ send_btn_disabled: !canSubmit() }">送出</button>
       </div>
     </div>
   </div>
@@ -386,36 +387,38 @@ export default {
     }
     async function submit() {
       const axios = require('axios');
-        const formData = new FormData();
-        const formFields = {
-          'AI_ID': details.value.AI_ID,
-          'DeliveryOperator': validation.value.user1.account,
-          'AssetsInOperator': validation.value.user2.account,
-        };
-        //將表格資料append到 formData
-        for (const fieldName in formFields) {
-          formData.append(fieldName, formFields[fieldName]);
-          console.log(formData.get(`${fieldName}`));
+      const formData = new FormData();
+      const formFields = {
+        'AI_ID': details.value.AI_ID,
+        'DeliveryOperator': validation.value.user1.account,
+        'AssetsInOperator': validation.value.user2.account,
+      };
+      //將表格資料append到 formData
+      for (const fieldName in formFields) {
+        formData.append(fieldName, formFields[fieldName]);
+        console.log(formData.get(`${fieldName}`));
+      }
+      const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/Delivery', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      try {
+        const data = response.data;
+        console.log(data);
+        if (data.state === 'success') {
+          let msg = data.messages;
+          msg += '\n編號:' + data.resultList.AI_ID;
+          alert(msg);
+          router.push({ name: 'Store_Process_Datagrid' });
         }
-        const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/Delivery', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-        try {
-          const data = response.data;
-          console.log(data);
-          if (data.state === 'success') {
-            alert(data.messages);
-            router.push({name: 'Store_Process_Datagrid'});
-          }
-          else if (data.state === 'error') {
-            alert(data.messages);
-            console.log('error state', response);
-          }
-        } catch (error) {
-          console.error(error);
+        else if (data.state === 'error') {
+          alert(data.messages);
+          console.log('error state', response);
         }
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     function getDate() {
@@ -473,8 +476,9 @@ export default {
     }
 
     .info_wrap {
-       margin: auto;
-        width: 800px;
+      margin: auto;
+      width: 800px;
+
       .fixed_info {
         @include fixed_info;
 
@@ -565,7 +569,7 @@ export default {
             display: flex;
             white-space: nowrap;
             flex-wrap: nowrap;
-        justify-content: center;
+            justify-content: center;
           }
 
           button {
@@ -578,7 +582,7 @@ export default {
 
           .form-control {
             height: 35px;
-            width:150px;
+            width: 150px;
             margin-right: 5px;
           }
 
@@ -671,8 +675,9 @@ export default {
     }
 
     .info_wrap {
-       margin: auto;
-        width: 800px;
+      margin: auto;
+      width: 800px;
+
       .fixed_info {
         @include fixed_info;
 
@@ -897,6 +902,7 @@ export default {
 
         .input-group {
           flex-direction: column;
+
           .input-number {
             @include count_btn;
           }
@@ -909,7 +915,7 @@ export default {
           }
 
           .input-group-prepend {
-                        margin-bottom: 5px;
+            margin-bottom: 5px;
 
             color: white;
             font-weight: 700;
@@ -951,7 +957,7 @@ export default {
         .auth {
           border-radius: 0 0 10px 10px;
           background: white;
-           padding: 10px;
+          padding: 10px;
 
           .input-group {
             display: flex;

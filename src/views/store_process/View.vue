@@ -248,7 +248,6 @@
                 <div class="input-group-prepend">資產照片：</div>
 
                 <div class='selected_file'>
-                  <p class='title'>已上傳的檔案:</p>
                   <p class='file_upload_wrap' v-for="(file, img_index) in item.existFile" :key="img_index"
                     style="cursor: pointer;">
                   <p @click="showExistFileImage(index, img_index)" data-bs-toggle="modal"
@@ -256,8 +255,6 @@
                     {{
                       file.FileName
                     }}</p>
-                  <img class='delete_icon' src="@/assets/trash.png" @click="deleteExistFile(index, img_index)"
-                    style="margin-left: 10px;">
                   </p>
                 </div>
               </div>
