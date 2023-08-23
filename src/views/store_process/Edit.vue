@@ -209,7 +209,7 @@ edit
                   v-model="item.AssetsId" placeholder="BFXXXXXXXX" />
               </div>
             </div>
-            <div class="row">
+            <div class="row g-0">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend"><span>*</span>區域：</div>
@@ -227,7 +227,7 @@ edit
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                <div class="input-group mb-3">
+                <div class="input-group mb-3 justify-content-end">
                   <div class="input-group-prepend"><span>*</span> 櫃位：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown"
@@ -987,6 +987,7 @@ export default {
           background: #3E4E5F;
           padding: 50px 30px;
 
+
           .modal {
             .modal-header {
               background: #3D4E61;
@@ -1001,8 +1002,7 @@ export default {
           }
 
           .dropdown {
-            width: 50%;
-
+width: 60%;
             .dropdown-menu {
               width: 100%;
               max-height: 250px;
@@ -1025,6 +1025,7 @@ export default {
           }
 
           .input-group {
+             flex-wrap: nowrap;
             span {
               @include red_star
             }
@@ -1242,6 +1243,7 @@ export default {
           background: #3E4E5F;
           padding: 50px 30px;
 
+
           .modal {
             .modal-header {
               background: #3D4E61;
@@ -1255,7 +1257,31 @@ export default {
             }
           }
 
+          .dropdown {
+width: 60%;
+            .dropdown-menu {
+              width: 100%;
+              max-height: 250px;
+              overflow-y: auto;
+
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+
+            button {
+              @include dropdown-btn;
+              width: 100%;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+
           .input-group {
+             flex-wrap: nowrap;
             span {
               @include red_star
             }
@@ -1466,6 +1492,10 @@ export default {
       }
 
       .tab_section {
+        .input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    margin-left:unset !important;
+}
+
         .nav-tabs {
           button {
             @include tab_section_num;
@@ -1482,6 +1512,7 @@ export default {
           background: #3E4E5F;
           padding: 50px 30px;
 
+
           .modal {
             .modal-header {
               background: #3D4E61;
@@ -1495,14 +1526,38 @@ export default {
             }
           }
 
+          .dropdown {
+            margin-left: unset !important;
+              margin-top: 5px;
+            .dropdown-menu {
+              width: 100%;
+              max-height: 250px;
+              overflow-y: auto;
+
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+
+            button {
+              @include dropdown-btn;
+              width: 100%;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+
           .input-group {
+             flex-direction: column;
             span {
               @include red_star
             }
 
             .selected_file {
-              margin-left: 20px;
-
+             
               p.title {
                 font-weight: 700;
                 color: white;
@@ -1539,22 +1594,25 @@ export default {
 
             .form-control {
               height: 35px;
+              width: 100%;
               border-radius: 0;
+              margin-left: unset !important;
+              margin-top: 5px;
             }
 
             .input-group-prepend {
               color: white;
               font-weight: 700;
               font-size: 20px;
-              width: 120px;
-              text-align: end;
+              width: 100%;
             }
 
             .file_wrap {
               display: flex;
               flex-direction: column;
-
+            
               .choose_btn {
+                margin-top: 5px;
                 margin-bottom: 10px;
                 @include choose_file_btn;
 
