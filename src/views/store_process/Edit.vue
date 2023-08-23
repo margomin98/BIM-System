@@ -210,9 +210,7 @@
             <div class="row">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span>*</span>區域：
-                  </div>
+                  <div class="input-group-prepend"><span>*</span>區域：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown"
                       aria-haspopup="true" aria-expanded="false" @click="getAreaName(index)">
@@ -228,9 +226,7 @@
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span>*</span> 櫃位：
-                  </div>
+                  <div class="input-group-prepend"><span>*</span> 櫃位：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown"
                       aria-haspopup="true" aria-expanded="false"
@@ -495,6 +491,10 @@ export default {
         alert(InputMessages);
         return;
       }
+      // 暫存 送出前查詢
+      if (await queryFormData()) {
+        return;
+      }
       // 將陣列資料整理成N個FormData分N次傳送
       for (let i = 0; i < tabNumber.value; i++) {
         const myForm = formData[i];
@@ -581,6 +581,10 @@ export default {
       if (await checkAssetsIdRepeat()) {
         return;
       }
+      // 暫存 送出前查詢
+      if (await queryFormData()) {
+        return;
+      }
       // 將陣列資料整理成N個FormData分N次傳送
       for (let i = 0; i < tabNumber.value; i++) {
         const myForm = formData[i];
@@ -632,6 +636,21 @@ export default {
         })
     }
 
+    async function queryFormData() {
+      const axios = require('axios');
+      const response = await axios.get(`http://192.168.0.176:7008/AssetsInMng/AssetsInAdd?ai_id=${AI_ID}`);
+      const data = response.data;
+      try {
+        if (data.state !== 'success') {
+          alert(data.messages);
+          return true;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+      console.log(data.messages);
+      return false;
+    }
     async function sendFormData(formData, type) {
       var baseUrl = '';
       if (type === 'temp')
@@ -667,7 +686,7 @@ export default {
         }
       }
       //圖片總數量不超過五張
-      if(formData[index].existFile){
+      if (formData[index].existFile) {
         if (formData[index].newFile.length + formData[index].existFile.length + files.length > 5) {
           alert('上傳至多5張圖片');
           return;
@@ -675,9 +694,9 @@ export default {
       }
       else {
         if (formData[index].newFile.length + files.length > 5) {
-        alert('上傳至多5張圖片');
-        return;
-      }
+          alert('上傳至多5張圖片');
+          return;
+        }
       }
 
       console.log(event.target.files);
@@ -779,11 +798,11 @@ export default {
       for (let i = 0; i < tabNumber.value; i++) {
         repeatForm.append('assetsIds', myForm[i]);
       }
-      const axios =require('axios');
-      const response = await axios.post('http://192.168.0.176:7008/GetDBdata/CheckAssetsInID',repeatForm);
+      const axios = require('axios');
+      const response = await axios.post('http://192.168.0.176:7008/GetDBdata/CheckAssetsInID', repeatForm);
       try {
         const data = response.data;
-        if(data.state === 'error') {
+        if (data.state === 'error') {
           alert(data.messages);
           return true;
         }
@@ -858,6 +877,12 @@ export default {
         .dropdown {
           .dropdown-menu {
             width: 100%;
+
+            p {
+              &:hover {
+                cursor: pointer;
+              }
+            }
           }
 
           button {
@@ -970,6 +995,30 @@ export default {
                 font-weight: 700;
                 margin-bottom: 0;
               }
+            }
+          }
+
+          .dropdown {
+            width: 50%;
+
+            .dropdown-menu {
+              width: 100%;
+              max-height: 250px;
+              overflow-y: auto;
+
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+
+            button {
+              @include dropdown-btn;
+              width: 100%;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
             }
           }
 
