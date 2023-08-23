@@ -1612,6 +1612,7 @@ width: 60%;
               flex-direction: column;
             
               .choose_btn {
+                margin-top: 5px;
                 margin-bottom: 10px;
                 @include choose_file_btn;
 
