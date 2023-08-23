@@ -1,3 +1,8 @@
+view   
+
+
+
+
 <template>
   <Navbar />
   <div class="main_section">
@@ -423,7 +428,6 @@ export default {
   },
 };
 </script>
-
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
 
@@ -442,7 +446,8 @@ export default {
     }
 
     .info_wrap {
-      padding: 1% 31% 0;
+    width:800px;
+    margin:auto;
 
       .fixed_info {
         @include fixed_info;
@@ -580,12 +585,13 @@ export default {
             }
 
             .selected_file {
-              margin-left: 20px;
-
+              margin-left: 10px;
+    display: flex;
+    align-items: center;
               p.title {
                 font-weight: 700;
                 color: white;
-                margin-bottom: 5px;
+                margin-bottom: unset !important;
               }
 
               .file_upload_wrap {
@@ -673,8 +679,8 @@ export default {
     }
 
     .info_wrap {
-      padding: 1% 5% 0;
-
+      padding:0 5%;
+    margin:auto;
       .fixed_info {
         @include fixed_info;
 
@@ -811,12 +817,13 @@ export default {
             }
 
             .selected_file {
-              margin-left: 20px;
-
+              margin-left: 10px;
+    display: flex;
+    align-items: center;
               p.title {
                 font-weight: 700;
                 color: white;
-                margin-bottom: 5px;
+                margin-bottom: unset !important;
               }
 
               .file_upload_wrap {
@@ -935,6 +942,7 @@ export default {
         }
 
         .input-group {
+          flex-direction: column;
           .input-number {
             @include count_btn;
           }
@@ -942,14 +950,16 @@ export default {
           .form-control {
             height: 35px;
             border-radius: 0;
+            width: 100%;
+            margin-top: 5px;
+            margin-left: unset !important;
           }
 
           .input-group-prepend {
             color: white;
             font-weight: 700;
             font-size: 20px;
-            width: 120px;
-            text-align: end;
+            width: 100%;
           }
         }
       }
@@ -1041,19 +1051,21 @@ export default {
               }
             }
           }
+     .input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    margin-left: unset !important;
 
+}
           .input-group {
+            flex-direction: column;
             span {
               @include red_star
             }
 
             .selected_file {
-              margin-left: 20px;
-
+         
               p.title {
                 font-weight: 700;
                 color: white;
-                margin-bottom: 5px;
               }
 
               .file_upload_wrap {
@@ -1087,14 +1099,16 @@ export default {
             .form-control {
               height: 35px;
               border-radius: 0;
+              width: 100%;
+              margin-left: unset !important;
+              margin-top: 5px;
             }
 
             .input-group-prepend {
               color: white;
               font-weight: 700;
               font-size: 20px;
-              width: 120px;
-              text-align: end;
+              width: 100%;
             }
 
             .file_wrap {
