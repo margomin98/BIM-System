@@ -860,7 +860,7 @@ export default {
     }
 
     .info_wrap {
-      width:900px;
+      width:800px;
     margin:auto;
       .fixed_info {
         @include fixed_info;
