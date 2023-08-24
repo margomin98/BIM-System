@@ -236,133 +236,88 @@
 </template>
 
 <script>
-  import Navbar from "@/components/Navbar.vue";
-  import {
-    onMounted,
-    ref
-  } from "vue";
-  import {
-    useRoute,
-    useRouter
-  } from "vue-router";
-  export default {
-    components: {
-      Navbar,
-    },
-    setup() {
-      const route = useRoute();
-      const router = useRouter();
-      const AI_ID = route.query.search_id;
-      const deliveryDate = ref('');
-      const details = ref({});
-      async function getDetails() {
+import Navbar from "@/components/Navbar.vue";
+import { onMounted, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+export default {
+  components: {
+    Navbar,
+  },
+  setup() {
+    const route = useRoute();
+    const router = useRouter();
+    const AI_ID = route.query.search_id;
+    const deliveryDate = ref('');
+    const details = ref({});
+    async function getDetails() {
+      const axios = require('axios');
+      try {
+        const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/GetApplicationInfo?ai_id=${AI_ID}`);
+        console.log(response);
+        const data = response.data;
+        if (data.state === 'success') {
+          console.log('Details Get成功 資料如下\n', data.resultList);
+          details.value = data.resultList;
+          if (details.value.WarrantyStartDate && details.value.WarrantyEndDate) {
+            details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
+            details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
+          }
+        } else if (data.state === 'error') {
+          alert(data.messages);
+        } else if (data.state === 'account_error') {
+          alert(data.messages);
+          router.push('/');
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    const validation = ref({
+      user1: {
+        account: 'user_1',
+        password: 'Test_123',
+        isValidate: false,
+      },
+      user2: {
+        account: 'user_2',
+        password: 'Test_123',
+        isValidate: false,
+      },
+    });
+    //分別使用帳號密碼驗證、改變驗證狀態
+    async function validate(user) {
+      if (user === 1) {
         const axios = require('axios');
+        const formData = new FormData();
+        const formFields = {
+          'userName': validation.value.user1.account,
+          'userPassword': validation.value.user1.password,
+        };
+        //將表格資料append到 formData
+        for (const fieldName in formFields) {
+          formData.append(fieldName, formFields[fieldName]);
+          console.log(formData.get(`${fieldName}`));
+        }
+        const response = await axios.post('http://192.168.0.176:7008/Account/IdentityValidationForD_Operator', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/GetApplicationInfo?ai_id=${AI_ID}`);
-          console.log(response);
           const data = response.data;
+          console.log(data);
           if (data.state === 'success') {
-            console.log('Details Get成功 資料如下\n', data.resultList);
-            details.value = data.resultList;
-            if (details.value.WarrantyStartDate && details.value.WarrantyEndDate) {
-              details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
-              details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
-            }
-          } else if (data.state === 'error') {
+            validation.value.user1.isValidate = true;
+          }
+          else if (data.state === 'error') {
             alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
+            validation.value.user1.isValidate = false;
           }
         } catch (error) {
           console.error(error);
         }
       }
-      const validation = ref({
-        user1: {
-          account: 'user_1',
-          password: 'Test_123',
-          isValidate: false,
-        },
-        user2: {
-          account: 'user_2',
-          password: 'Test_123',
-          isValidate: false,
-        },
-      });
-      //分別使用帳號密碼驗證、改變驗證狀態
-      async function validate(user) {
-        if (user === 1) {
-          const axios = require('axios');
-          const formData = new FormData();
-          const formFields = {
-            'userName': validation.value.user1.account,
-            'userPassword': validation.value.user1.password,
-          };
-          //將表格資料append到 formData
-          for (const fieldName in formFields) {
-            formData.append(fieldName, formFields[fieldName]);
-            console.log(formData.get(`${fieldName}`));
-          }
-          const response = await axios.post('http://192.168.0.176:7008/Account/IdentityValidationForD_Operator', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
-          try {
-            const data = response.data;
-            console.log(data);
-            if (data.state === 'success') {
-              validation.value.user1.isValidate = true;
-            } else if (data.state === 'error') {
-              alert(data.messages);
-              validation.value.user1.isValidate = false;
-            }
-          } catch (error) {
-            console.error(error);
-          }
-        } else if (user === 2) {
-          const axios = require('axios');
-          const formData = new FormData();
-          const formFields = {
-            'userName': validation.value.user2.account,
-            'userPassword': validation.value.user2.password,
-          };
-          //將表格資料append到 formData
-          for (const fieldName in formFields) {
-            formData.append(fieldName, formFields[fieldName]);
-            console.log(formData.get(`${fieldName}`));
-          }
-          const response = await axios.post('http://192.168.0.176:7008/Account/IdentityValidationForAI_Operator', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
-          try {
-            const data = response.data;
-            console.log(data);
-            if (data.state === 'success') {
-              validation.value.user2.isValidate = true;
-            } else if (data.state === 'error') {
-              alert(data.messages);
-              validation.value.user2.isValidate = false;
-            }
-          } catch (error) {
-            console.error(error);
-          }
-        }
-      }
-      function validationStatus(user) {
-        if (user === 1) {
-          return validation.value.user1.isValidate ? validation.value.user1.account : '未驗證'
-        } else if (user === 2) {
-          return validation.value.user2.isValidate ? validation.value.user2.account : '未驗證'
-        }
-      }
-      function canSubmit() {
-        return validation.value.user1.isValidate && validation.value.user2.isValidate;
-      }
-      async function submit() {
+      else if (user === 2) {
         const axios = require('axios');
         const formData = new FormData();
         const formFields = {
@@ -675,6 +630,7 @@
       }
     }
   }
+}
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
       .readonly_box {
@@ -856,7 +812,7 @@
       }
     }
   }
-}
+
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
@@ -1091,4 +1047,5 @@
       }
     }
   }
+}
 </style>

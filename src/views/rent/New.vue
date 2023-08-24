@@ -667,7 +667,7 @@ export default {
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
-  .main_section {
+   .main_section {
     h1 {
       margin-top: 50px;
       text-align: center;
@@ -678,7 +678,7 @@ export default {
 
     .info_wrap {
       margin: auto;
-      padding: 0 5%;
+      width: 1000px;
 
       .code_search {
         background: #48658C;
@@ -697,7 +697,7 @@ export default {
       }
 
       #readonly_box {
-        border-left: 1px solid black;
+        border-left: black 1px solid;
       }
 
       .input-group-prepend {
@@ -776,6 +776,18 @@ export default {
 
             .dropdown-menu {
               width: 180px;
+              max-height: 250px;
+              overflow-y: auto;
+
+              p {
+                font-size: 18px;
+                color: black;
+                font-weight: normal;
+
+                &:hover {
+                  cursor: pointer;
+                }
+              }
 
               .dropdown-item {
                 text-align: left;
@@ -831,6 +843,7 @@ export default {
         }
 
         .form-control {
+
           border-left: 1px solid black;
         }
 
@@ -848,8 +861,9 @@ export default {
             display: flex
           }
 
-          #project_name {
-            border-left: 1px solid black
+          #project_name,
+          #project_id {
+            border-left: 1px solid black;
           }
         }
 
