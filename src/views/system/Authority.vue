@@ -29,8 +29,8 @@
           <div class="input-group-prepend"><span>*</span>權限：</div>
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ selectedRole || "請選擇" }}
-              </button>
+                  {{ selectedRole || "請選擇" }}
+                </button>
             <div class="dropdown-menu" aria-labelledby="statusDropdown">
               <p v-for="(item, index) in roleArray" :key="index" class="dropdown-item" @click="selectRole(item)">{{ item }}</p>
             </div>

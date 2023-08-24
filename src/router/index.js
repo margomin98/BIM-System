@@ -93,7 +93,7 @@ const routes = [
   },
   {
     path: "/store_delete",
-    name: "Store_delete",
+    name: "Store_Delete",
     component: Store_Delete,
   },
   {

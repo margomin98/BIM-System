@@ -129,7 +129,7 @@
 <script>
 import { AgGridVue } from "ag-grid-vue3";
 import Storage_process_button from "@/components/Storage_process_button";
-import Delete from "@/components/Delete_button";
+import Delete from "@/components/Storage_process_delete_button";
 import Navbar from "@/components/Navbar.vue";
 import { onMounted, ref } from "vue";
 

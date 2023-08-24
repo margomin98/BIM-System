@@ -19,10 +19,10 @@
         <div class="row g-0">
           <div class="col d-flex wrap column_section">
             <label for="inputTitle1" class="form-label use">
-              <p>
-                <span>*</span>用&ensp;&ensp;&ensp;&ensp;途
-              </p>
-            </label>
+                <p>
+                  <span>*</span>用&ensp;&ensp;&ensp;&ensp;途
+                </p>
+              </label>
             <div class="option">
               <div class="form-check">
                 <input class="form-check-input" type="radio" value="內部領用" id="radio1" v-model="myForm.Use">
@@ -54,10 +54,10 @@
         <div class="row g-0">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap column_section">
             <label for="inputWithButton" class="form-label">
-              <p>
-                <span>*</span>專案代碼
-              </p>
-            </label>
+                <p>
+                  <span>*</span>專案代碼
+                </p>
+              </label>
             <div class="input-group">
               <input type="text" class="form-control" id="project_id" placeholder="代碼為六碼數字" v-model="myForm.ProjectCode">
               <button class="btn code_search" type="button" @click="">搜索</button>
@@ -65,10 +65,10 @@
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label" id='project_name'>
-              <p>
-                專案名稱
-              </p>
-            </label>
+                <p>
+                  專案名稱
+                </p>
+              </label>
             <div class="input-group" id='readonly_box'>
               <p class='readonly_box' readonly>{{ myForm.ProjectName }}</p>
             </div>
@@ -77,12 +77,11 @@
         <div class="row g-0">
           <div class="col d-flex wrap column_section" style='border:none'>
             <label for="inputTextarea" class="form-label">
-              <p>
-                &nbsp;&nbsp;說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明
-              </p>
-            </label>
-            <textarea class="form-control" id="inputTextarea" placeholder='請填寫說明，最多100字'
-              v-model="myForm.Description"></textarea>
+                <p>
+                  &nbsp;&nbsp;說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明
+                </p>
+              </label>
+            <textarea class="form-control" id="inputTextarea" placeholder='請填寫說明，最多100字' v-model="myForm.Description"></textarea>
           </div>
         </div>
       </form>
@@ -96,26 +95,22 @@
           <div class='col-xl-3 col-lg-3 col-md-3 col-12' style='padding-left:0'>
             <p><span>*</span>設備總類</p>
             <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                {{ myForm.EquipTypeName || '請選擇' }}
-              </button>
+              <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
+                  {{ myForm.EquipTypeName || '請選擇' }}
+                </button>
               <div class="dropdown-menu" aria-labelledby="typeDropdown">
-                <p v-for="(item, index) in myForm.EquipTypeArray" :key="index" class="dropdown-item"
-                  @click="selectType(`${item}`)">{{ item }}</p>
+                <p v-for="(item, index) in myForm.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
               </div>
             </div>
           </div>
           <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
             <p><span>*</span>設備分類</p>
             <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(myForm.EquipTypeName !== '') }">
-                {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
-              </button>
+              <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(myForm.EquipTypeName !== '') }">
+                  {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
+                </button>
               <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                <p v-for="(item, index) in myForm.EquipCategoryArray" :key="index" class="dropdown-item"
-                  @click="selectCategory(`${item}`)">{{ item }}</p>
+                <p v-for="(item, index) in myForm.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
               </div>
             </div>
           </div>
@@ -135,12 +130,11 @@
         <div class="row g-0">
           <div class="col-12 d-flex wrap text_input">
             <label for="inputTextarea" class="form-label">
-              <p>規格需求：</p>
-            </label>
+                <p>規格需求：</p>
+              </label>
             <div>
             </div>
-            <textarea class="form-control" id="inputTextarea" placeholder='請填寫說明，最多100字'
-              v-model="myForm.RequiredSpec"></textarea>
+            <textarea class="form-control" id="inputTextarea" placeholder='請填寫說明，最多100字' v-model="myForm.RequiredSpec"></textarea>
           </div>
         </div>
         <div class='col d-flex justify-content-center'>
@@ -153,9 +147,7 @@
         </div>
       </div>
       <div class='third_content'>
-        <ag-grid-vue style="width: 100%; height:300px; background-color: #402a2a;" id='grid_table' class="ag-theme-alpine"
-          @grid-ready="onGridReady" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="5"
-          :pagination="true">
+        <ag-grid-vue style="width: 100%; height:300px; background-color: #402a2a;" id='grid_table' class="ag-theme-alpine" @grid-ready="onGridReady" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="5" :pagination="true">
         </ag-grid-vue>
       </div>
     </div>
@@ -167,130 +159,112 @@
 </template>
 
 <script>
-import {
-  AgGridVue
-} from "ag-grid-vue3";
-import Delete from "@/components/Rent_New_Delete_button";
-import Navbar from '@/components/Navbar.vue';
-import {
-  onMounted,
-  reactive,
-  ref
-} from 'vue';
-import router from "@/router";
-export default {
-  components: {
-    Navbar,
-    AgGridVue,
-    Delete
-  },
-  setup() {
-    const gridApi = ref(null);
-    const myForm = reactive({
-      ApplicationDate: '',
-      Applicant: '',
-      Use: '',
-      ProjectCode: '',
-      ProjectName: '請搜尋專案代碼',
-      Description: '',
-      EquipTypeName: '',
-      EquipTypeArray: [],
-      EquipCategoryArray: [],
-      EquipCategoryName: '',
-      EquipCategoryInit: '請先選擇設備總類',
-      ProductName: '',
-      Number: 1,
-      RequiredSpec: '',
-    });
-    const columnDefs = [{
-      suppressMovable: true,
-      field: "",
-      cellRenderer: "Delete",
-      width: 100,
+  import {
+    AgGridVue
+  } from "ag-grid-vue3";
+  import Delete from "@/components/Rent_New_Delete_button";
+  import Navbar from '@/components/Navbar.vue';
+  import {
+    onMounted,
+    reactive,
+    ref
+  } from 'vue';
+  import router from "@/router";
+  export default {
+    components: {
+      Navbar,
+      AgGridVue,
+      Delete
     },
-    {
-      headerName: "設備總類",
-      field: "EquipTypeName",
-      unSortIcon: true,
-      sortable: true,
-      width: 150,
-      suppressMovable: true
-    },
-    {
-      headerName: "設備分類",
-      field: "EquipCategoryName",
-      unSortIcon: true,
-      sortable: true,
-      width: 150,
-      suppressMovable: true
-    },
-    {
-      headerName: "物品名稱",
-      field: "ProductName",
-      unSortIcon: true,
-      sortable: true,
-      width: 150,
-      suppressMovable: true
-    },
-    {
-      headerName: "數量",
-      field: "Number",
-      unSortIcon: true,
-      sortable: true,
-      width: 100,
-      suppressMovable: true
-    },
-    {
-      headerName: "規格需求",
-      field: "RequiredSpec",
-      unSortIcon: true,
-      sortable: true,
-      flex: 1,
-      suppressMovable: true
-    }]
-    const rowData = ref([]);
-
-    onMounted(() => {
-      getApplicationInfo();
-      myForm.ApplicationDate = getDate();
-    });
-    function getDate() {
-      const today = new Date();
-      var date = '';
-      date += (today.getFullYear() + '/');
-      date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
-      date += ((today.getDate()).toString().padStart(2, '0'));
-      return date;
-    }
-    async function getApplicationInfo() {
-      const axios = require('axios');
-      try {
-        const response = await axios.get('http://192.168.0.176:7008/GetDBdata/GetApplicant');
-        // console.log(response);
-        const data = response.data;
-        if (data.state === 'success') {
-          console.log('申請人名稱:', data.resultList.Applicant);
-          if (data.resultList.Applicant) {
-            myForm.Applicant = data.resultList.Applicant;
-          }
-        } else if (data.state === 'error') {
-          alert(data.messages);
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
+    setup() {
+      const gridApi = ref(null);
+      const myForm = reactive({
+        ApplicationDate: '',
+        Applicant: '',
+        Use: '',
+        ProjectCode: '',
+        ProjectName: '請搜尋專案代碼',
+        Description: '',
+        EquipTypeName: '',
+        EquipTypeArray: [],
+        EquipCategoryArray: [],
+        EquipCategoryName: '',
+        EquipCategoryInit: '請先選擇設備總類',
+        ProductName: '',
+        Number: 1,
+        RequiredSpec: '',
+      });
+      const columnDefs = [{
+          suppressMovable: true,
+          field: "",
+          cellRenderer: "Delete",
+          width: 100,
+        },
+        {
+          headerName: "設備總類",
+          field: "EquipTypeName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true
+        },
+        {
+          headerName: "設備分類",
+          field: "EquipCategoryName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true
+        },
+        {
+          headerName: "物品名稱",
+          field: "ProductName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true
+        },
+        {
+          headerName: "數量",
+          field: "Number",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          suppressMovable: true
+        },
+        {
+          headerName: "規格需求",
+          field: "RequiredSpec",
+          unSortIcon: true,
+          sortable: true,
+          flex: 1,
+          suppressMovable: true
         }
-      } catch (error) {
-        console.error(error);
+      ]
+      const rowData = ref([]);
+      onMounted(() => {
+        getApplicationInfo();
+        myForm.ApplicationDate = getDate();
+      });
+      function getDate() {
+        const today = new Date();
+        var date = '';
+        date += (today.getFullYear() + '/');
+        date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
+        date += ((today.getDate()).toString().padStart(2, '0'));
+        return date;
       }
-    }
-    async function getEquipTypeName() {
-      if (myForm.EquipTypeArray.length == 0) {
+      async function getApplicationInfo() {
         const axios = require('axios');
         try {
-          const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetEquipType');
+          const response = await axios.get('http://192.168.0.176:7008/GetDBdata/GetApplicant');
+          // console.log(response);
           const data = response.data;
           if (data.state === 'success') {
-            myForm.EquipTypeArray = data.resultList.EquipType;
+            console.log('申請人名稱:', data.resultList.Applicant);
+            if (data.resultList.Applicant) {
+              myForm.Applicant = data.resultList.Applicant;
+            }
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -298,991 +272,866 @@ export default {
             router.push('/');
           }
         } catch (error) {
-          console.error('Error sending applicant info request to backend');
+          console.error(error);
         }
       }
-    }
-    async function getEquipCategoryName() {
-      myForm.EquipCategoryName = '';
-      const axios = require('axios');
-      try {
-        const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${myForm.EquipTypeName}`);
-        const data = response.data;
-        if (data.state === 'success') {
-          myForm.EquipCategoryArray = data.resultList.EquipCategory;
-        } else if (data.state === 'error') {
-          alert(data.messages);
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
+      async function getEquipTypeName() {
+        if (myForm.EquipTypeArray.length == 0) {
+          const axios = require('axios');
+          try {
+            const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetEquipType');
+            const data = response.data;
+            if (data.state === 'success') {
+              myForm.EquipTypeArray = data.resultList.EquipType;
+            } else if (data.state === 'error') {
+              alert(data.messages);
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            }
+          } catch (error) {
+            console.error('Error sending applicant info request to backend');
+          }
         }
-      } catch (error) {
-        console.error('Error sending applicant info request to backend', error);
       }
-    }
-    async function getProjectName() {
-      const axios = require('axios');
-      const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/SearchProjectName${myForm.ProjectCode}`);
-      try {
-        const data = response.data;
-        console.log(data);
-        if (data.state === 'success') {
-          myForm.ProjectName = data.resultList;
+      async function getEquipCategoryName() {
+        myForm.EquipCategoryName = '';
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${myForm.EquipTypeName}`);
+          const data = response.data;
+          if (data.state === 'success') {
+            myForm.EquipCategoryArray = data.resultList.EquipCategory;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error('Error sending applicant info request to backend', error);
         }
-        else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
+      }
+      async function getProjectName() {
+        const axios = require('axios');
+        const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/SearchProjectName${myForm.ProjectCode}`);
+        try {
+          const data = response.data;
+          console.log(data);
+          if (data.state === 'success') {
+            myForm.ProjectName = data.resultList;
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          } else {
+            myForm.ProjectName = '查無此專案 請重新輸入'
+          }
+        } catch (error) {
+          console.error(error);
         }
-        else {
-          myForm.ProjectName = '查無此專案 請重新輸入'
+      }
+      function selectType(item) {
+        myForm.EquipTypeName = item;
+        // console.log('選擇的總類:', EquipTypeName.value);
+        getEquipCategoryName();
+        myForm.EquipCategoryInit = '請選擇';
+      }
+      function selectCategory(item) {
+        myForm.EquipCategoryName = item;
+      }
+      async function submit() {
+        // 檢查必填項目: 1.用途 2.專案代碼 3.出庫項目(至少一項)
+        if (!myForm.Use || !myForm.ProjectCode || rowData.value.length === 0) {
+          alert('請輸入必填項目');
+          return
         }
-      } catch (error) {
-        console.error(error);
+        // 檢查2.專案代碼是否為6碼數字
+        if (!/^\d{6}$/.test(myForm.ProjectCode)) {
+          alert('專案代碼格式錯誤');
+          return
+        }
+        const form = new FormData();
+        const formFields = {
+          'Use': myForm.Use,
+          'ProjectCode': myForm.ProjectCode,
+          'Description': myForm.Description,
+        };
+        for (const fieldName in formFields) {
+          if (formFields[fieldName] !== '' && formFields[fieldName] !== null) {
+            form.append(fieldName, formFields[fieldName]);
+            // console.log(form.get(`${fieldName}`));
+          }
+        }
+        for (let i = 0; i < rowData.value.length; i++) {
+          // console.log(rowData.value[i]);
+          form.append('itemList', rowData.value[i]);
+        }
+        // console.log(form.getAll('itemList'));
+        const axios = require('axios');
+        const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/NewAssetsOut', form);
+        try {
+          const data = response.data;
+          if (data.state === 'success') {
+            let msg = data.messages + '\n';
+            msg += '單號為:' + data.resultList.AO_ID;
+            alert(msg);
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          }
+        } catch (error) {
+          console.error(error);
+        }
       }
-    }
-    function selectType(item) {
-      myForm.EquipTypeName = item;
-      // console.log('選擇的總類:', EquipTypeName.value);
-      getEquipCategoryName();
-      myForm.EquipCategoryInit = '請選擇';
-    }
-    function selectCategory(item) {
-      myForm.EquipCategoryName = item;
-    }
-    async function submit() {
-      // 檢查必填項目: 1.用途 2.專案代碼 3.出庫項目(至少一項)
-      if (!myForm.Use || !myForm.ProjectCode || rowData.value.length === 0) {
-        alert('請輸入必填項目');
-        return
+      function insertItemList() {
+        //檢查必填子項目
+        if (!myForm.EquipTypeName || !myForm.EquipCategoryName || !myForm.ProductName || myForm.Number < 1) {
+          alert('請輸入必填子項目');
+          return
+        }
+        // 檢查 物品名稱是否為 不為全空格 且 20字內
+        if (!/^(?![ 　]+$).{1,20}$/.test(myForm.ProductName)) {
+          alert('物品名稱格式錯誤');
+          return
+        }
+        rowData.value.push({
+          EquipTypeName: myForm.EquipTypeName,
+          EquipCategoryName: myForm.EquipCategoryName,
+          ProductName: myForm.ProductName,
+          Number: myForm.Number,
+          RequiredSpec: myForm.RequiredSpec,
+        });
+        console.log(gridApi.value.setRowData);
+        setTimeout(() => {
+          gridApi.value.setRowData(rowData.value);
+        }, 0);
+        //清空子項目
+        myForm.EquipTypeName = '';
+        myForm.EquipCategoryName = '';
+        myForm.EquipCategoryInit = '請先選擇設備總類';
+        myForm.ProductName = '';
+        myForm.Number = 1;
+        myForm.RequiredSpec = '';
       }
-      // 檢查專案代碼是否為6碼數字
-      if (!/^\d{6}$/.test(myForm.ProjectCode)) {
-        alert('專案代碼格式錯誤');
-        return
-      }
-      const form = new FormData();
-      const formFields = {
-        'Use': myForm.Use,
-        'ProjectCode': myForm.ProjectCode,
-        'Description': myForm.Description,
+      const onGridReady = (params) => {
+        // 賦值 gridApi
+        gridApi.value = params.api;
       };
-      for (const fieldName in formFields) {
-        if (formFields[fieldName] !== '' && formFields[fieldName] !== null) {
-          form.append(fieldName, formFields[fieldName]);
-          // console.log(form.get(`${fieldName}`));
-        }
+      function goBack() {
+        window.history.back();
       }
-      for (let i = 0; i < rowData.value.length; i++) {
-        // console.log(rowData.value[i]);
-        form.append('itemList', rowData.value[i]);
-      }
-      // console.log(form.getAll('itemList'));
-      const axios = require('axios');
-      const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/NewAssetsOut',form);
-      try {
-        const data = response.data;
-        if(data.state === 'success') {
-          let msg = data.messages + '\n' ;
-          msg+= '單號為:' + data.resultList.AO_ID;
-          alert(msg);
-        }
-        else if(data.state === 'error') {
-          alert(data.messages);
-        }
-      } catch (error) {
-        console.error(error);
-      }
+      return {
+        myForm,
+        columnDefs,
+        rowData,
+        getEquipTypeName,
+        selectType,
+        selectCategory,
+        getProjectName,
+        submit,
+        insertItemList,
+        onGridReady,
+        goBack,
+      };
+    },
+    data() {
+      return {
+        rowHeight: 35,
+        count: 1,
+      };
     }
-    function insertItemList() {
-      //檢查必填子項目
-      if(!myForm.EquipTypeName || !myForm.EquipCategoryName || !myForm.ProductName || myForm.Number < 1) {
-        alert('請輸入必填子項目');
-        return
-      }
-      rowData.value.push({
-        EquipTypeName: myForm.EquipTypeName,
-        EquipCategoryName: myForm.EquipCategoryName,
-        ProductName: myForm.ProductName,
-        Number: myForm.Number,
-        RequiredSpec: myForm.RequiredSpec,
-      });
-      console.log(gridApi.value.setRowData);
-      setTimeout(() => {
-        gridApi.value.setRowData(rowData.value);
-      }, 0);
-      //清空子項目
-      myForm.EquipTypeName = '';
-      myForm.EquipCategoryName = '';
-      myForm.EquipCategoryInit = '請先選擇設備總類';
-      myForm.ProductName = '';
-      myForm.Number = 1;
-      myForm.RequiredSpec = '';
-    }
-
-    const onGridReady = (params) => {
-      // 賦值 gridApi
-      gridApi.value = params.api;
-    };
-
-    function goBack() {
-      window.history.back();
-    }
-    return {
-      myForm,
-      columnDefs,
-      rowData,
-      getEquipTypeName,
-      selectType,
-      selectCategory,
-      getProjectName,
-      submit,
-      insertItemList,
-      onGridReady,
-      goBack,
-    };
-  },
-  data() {
-    return {
-      rowHeight: 35,
-      count: 1,
-    };
-  }
-};
+  };
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/css/global.scss';
-
-.readonly_box {
-  @include readonly_box;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  display: flex;
-  align-items: center;
-}
-
-@media only screen and (min-width: 1200px) {
-  .main_section {
-    h1 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 55px;
-      font-weight: 600;
-      @include title_color;
-    }
-
-    .info_wrap {
-      margin: auto;
-      width: 1000px;
-
-      .code_search {
-        background: #48658C;
-        color: white;
-        font-weight: 800;
-        height: 30px;
-        width: 60px;
-        margin-right: 10px;
-        display: flex;
-        align-self: center;
-        align-items: center;
-
-        &:hover {
-          background-color: #5d85bd;
-        }
+  @import '@/assets/css/global.scss';
+  .readonly_box {
+    @include readonly_box;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+  @media only screen and (min-width: 1200px) {
+    .main_section {
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
       }
-
-      #readonly_box {
-        border-left: black 1px solid;
-      }
-
-      .input-group-prepend {
-        width: 100% !important;
-        text-align: center !important;
-      }
-
-      span {
-        @include red_star
-      }
-
-      .fixed_info {
-        @include fixed_info;
-        background: #528091;
-        border-radius: 0;
-        border-top: 1px solid black;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-      }
-
-      .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        border-top: 1px solid black;
-        background: #D9D9D9;
-
-        .submit_btn {
-          margin-bottom: 20px;
+      .info_wrap {
+        margin: auto;
+        width: 1000px;
+        .code_search {
           background: #48658C;
           color: white;
-          font-weight: 700;
-          width: 80px;
-          font-size: 18px;
+          font-weight: 800;
           height: 30px;
+          width: 60px;
+          margin-right: 10px;
           display: flex;
-          justify-content: center;
+          align-self: center;
           align-items: center;
-
           &:hover {
             background-color: #5d85bd;
           }
         }
-
-        .wrap {
-          justify-content: space-evenly;
-          padding: 10px 80px;
-
-          .number-input-box {
-            color: black;
-
-            .input-number {
-              width: 100%;
-            }
+        #readonly_box {
+          border-left: black 1px solid;
+        }
+        .input-group-prepend {
+          width: 100% !important;
+          text-align: center !important;
+        }
+        span {
+          @include red_star
+        }
+        .fixed_info {
+          @include fixed_info;
+          background: #528091;
+          border-radius: 0;
+          border-top: 1px solid black;
+          border-left: 1px solid black;
+          border-right: 1px solid black;
+          p {
+            font-size: 20px;
+            margin-bottom: 0;
           }
-
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
+        }
+        .second_content {
+          border-left: 1px solid black;
+          border-right: 1px solid black;
+          border-top: 1px solid black;
+          background: #D9D9D9;
+          .submit_btn {
+            margin-bottom: 20px;
+            background: #48658C;
+            color: white;
+            font-weight: 700;
+            width: 80px;
             font-size: 18px;
-          }
-
-          .dropdown {
-            button {
-              background: white;
-              width: 100%;
-              border: none;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &:hover {
+              background-color: #5d85bd;
             }
-
-            .dropdown-menu {
-              width: 180px;
-              max-height: 250px;
-              overflow-y: auto;
-
-              p {
-                font-size: 18px;
-                color: black;
-                font-weight: normal;
-
-                &:hover {
-                  cursor: pointer;
+          }
+          .wrap {
+            justify-content: space-evenly;
+            padding: 10px 80px;
+            .number-input-box {
+              color: black;
+              .input-number {
+                width: 100%;
+              }
+            }
+            .form-label {
+              white-space: nowrap;
+              font-weight: 800;
+              font-size: 18px;
+            }
+            .dropdown {
+              button {
+                background: white;
+                width: 100%;
+                border: none;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              }
+              .dropdown-menu {
+                width: 180px;
+                max-height: 250px;
+                overflow-y: auto;
+                p {
+                  font-size: 18px;
+                  color: black;
+                  font-weight: normal;
+                  &:hover {
+                    cursor: pointer;
+                  }
+                }
+                .dropdown-item {
+                  text-align: left;
                 }
               }
-
-              .dropdown-item {
-                text-align: left;
+            }
+            div {
+              padding: 0 5px;
+              p {
+                text-align: center;
+                white-space: nowrap;
+                font-size: 18px;
+                font-weight: 700;
+                margin-bottom: 5px;
               }
             }
           }
-
-          div {
-            padding: 0 5px;
-
-            p {
-              text-align: center;
-              white-space: nowrap;
-              font-size: 18px;
-              font-weight: 700;
-              margin-bottom: 5px;
-            }
-          }
         }
-      }
-
-      .third_content {
-        border: 1px solid black;
-
-        .list {
+        .third_content {
           border: 1px solid black;
-
-          button {
-            @include delete_button;
-
-            &:hover {
-              background: #FF7272
+          .list {
+            border: 1px solid black;
+            button {
+              @include delete_button;
+              &:hover {
+                background: #FF7272
+              }
             }
           }
+          .delete {
+            border-top: 0px solid #484143;
+            border-right: 0px dashed #484143;
+            border-bottom: 0px dashed #484143;
+            border-left: 1px solid #484143;
+            width: 70px;
+          }
         }
-
-        .delete {
-          border-top: 0px solid #484143;
-          border-right: 0px dashed #484143;
-          border-bottom: 0px dashed #484143;
-          border-left: 1px solid #484143;
-          width: 70px;
-        }
-      }
-
-      form {
-        border-top: 1px solid black;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-
-        .form-check {
-          margin-left: 10px;
-        }
-
-        .form-control {
-
+        form {
+          border-top: 1px solid black;
           border-left: 1px solid black;
-        }
-
-        .wrap {
-          background: white;
-          border-bottom: 0.5px solid black;
-          align-items: center;
-
-          label.use,
-          #project_id {
-            border-right: 1px solid black;
+          border-right: 1px solid black;
+          .form-check {
+            margin-left: 10px;
           }
-
-          .option {
-            display: flex
-          }
-
-          #project_name,
-          #project_id {
+          .form-control {
             border-left: 1px solid black;
           }
-        }
-
-        .form-label {
-          font-weight: 700;
-          font-size: 20px;
-          white-space: nowrap;
-          height: 50px;
-          align-items: center;
-          margin: 0;
-          display: flex;
-          justify-content: center;
-          padding: 0 30px;
-
-          p {
-            width: 100px;
-            margin-bottom: 0;
-            text-align: center;
+          .wrap {
+            background: white;
+            border-bottom: 0.5px solid black;
+            align-items: center;
+            label.use,
+            #project_id {
+              border-right: 1px solid black;
+            }
+            .option {
+              display: flex
+            }
+            #project_name,
+            #project_id {
+              border-left: 1px solid black;
+            }
+          }
+          .form-label {
+            font-weight: 700;
+            font-size: 20px;
+            white-space: nowrap;
+            height: 50px;
+            align-items: center;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 0 30px;
+            p {
+              width: 100px;
+              margin-bottom: 0;
+              text-align: center;
+            }
           }
         }
-      }
-
-      .input-group {
-        height: 100%;
-      }
-
-      .input-group-prepend {
-        color: white;
-        font-weight: 700;
-        font-size: 20px;
-        width: 120px;
-        text-align: end;
-
-        span {
-          @include red_star
+        .input-group {
+          height: 100%;
         }
-      }
-
-      .input-number {
-        @include count_btn;
-      }
-
-      .form-control {
-        height: 100%;
-        border-radius: 0;
-      }
-    }
-
-    .button_wrap {
-      display: flex;
-      justify-content: space-between;
-      margin: 30px auto 5%;
-      width: 220px;
-
-      button {
-        &:nth-child(1) {
-          @include back_to_previous_btn;
-
-          &:hover {
-            background-color: #5d85bb;
-          }
-        }
-
-        &:nth-child(2) {
-          @include search_and_send_btn;
-
-          &:hover {
-            background-color: #5D85BD;
-          }
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (min-width: 768px) and (max-width: 1199px) {
-  .main_section {
-    h1 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 55px;
-      font-weight: 600;
-      @include title_color;
-    }
-
-    .info_wrap {
-      margin: auto;
-      padding: 0 5%;
-
-      .code_search {
-        background: #48658C;
-        color: white;
-        font-weight: 800;
-        height: 30px;
-        width: 60px;
-        margin-right: 10px;
-        display: flex;
-        align-self: center;
-        align-items: center;
-
-        &:hover {
-          background-color: #5d85bd;
-        }
-      }
-
-      #readonly_box {
-        border-left: 1px solid black;
-      }
-
-      .input-group-prepend {
-        width: 100% !important;
-        text-align: center !important;
-      }
-
-      span {
-        @include red_star
-      }
-
-      .fixed_info {
-        @include fixed_info;
-        background: #528091;
-        border-radius: 0;
-        border-top: 1px solid black;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-      }
-
-      .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        border-top: 1px solid black;
-        background: #D9D9D9;
-
-        .submit_btn {
-          margin-bottom: 20px;
-          background: #48658C;
+        .input-group-prepend {
           color: white;
           font-weight: 700;
-          width: 80px;
-          font-size: 18px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-
-        .wrap {
-          justify-content: space-evenly;
-          padding: 10px 80px;
-
-          .number-input-box {
-            color: black;
-
-            .input-number {
-              width: 100%;
-            }
-          }
-
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
-          }
-
-          .dropdown {
-            button {
-              background: white;
-              width: 100%;
-              border: none;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            }
-
-            .dropdown-menu {
-              width: 180px;
-
-              .dropdown-item {
-                text-align: left;
-              }
-            }
-          }
-
-          div {
-            padding: 0 5px;
-
-            p {
-              text-align: center;
-              white-space: nowrap;
-              font-size: 18px;
-              font-weight: 700;
-              margin-bottom: 5px;
-            }
-          }
-        }
-      }
-
-      .third_content {
-        border: 1px solid black;
-
-        .list {
-          border: 1px solid black;
-
-          button {
-            @include delete_button;
-
-            &:hover {
-              background: #FF7272
-            }
-          }
-        }
-
-        .delete {
-          border-top: 0px solid #484143;
-          border-right: 0px dashed #484143;
-          border-bottom: 0px dashed #484143;
-          border-left: 1px solid #484143;
-          width: 70px;
-        }
-      }
-
-      form {
-        border-top: 1px solid black;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-
-        .form-check {
-          margin-left: 10px;
-        }
-
-        .form-control {
-          border-left: 1px solid black;
-        }
-
-        .wrap {
-          background: white;
-          border-bottom: 0.5px solid black;
-          align-items: center;
-
-          label.use,
-          #project_id {
-            border-right: 1px solid black;
-          }
-
-          .option {
-            display: flex
-          }
-
-          #project_name {
-            border-left: 1px solid black
-          }
-        }
-
-        .form-label {
-          font-weight: 700;
           font-size: 20px;
-          white-space: nowrap;
-          height: 50px;
-          align-items: center;
-          margin: 0;
-          display: flex;
-          justify-content: center;
-          padding: 0 30px;
-
-          p {
-            width: 100px;
-            margin-bottom: 0;
-            text-align: center;
+          width: 120px;
+          text-align: end;
+          span {
+            @include red_star
           }
         }
-      }
-
-      .input-group {
-        height: 100%;
-      }
-
-      .input-group-prepend {
-        color: white;
-        font-weight: 700;
-        font-size: 20px;
-        width: 120px;
-        text-align: end;
-
-        span {
-          @include red_star
+        .input-number {
+          @include count_btn;
         }
-      }
-
-      .input-number {
-        @include count_btn;
-      }
-
-      .form-control {
-        height: 100% ;
-        border-radius: 0;
-      }
-    }
-
-    .button_wrap {
-      display: flex;
-      justify-content: space-between;
-      margin: 30px auto 5%;
-      width: 220px;
-
-      button {
-        &:nth-child(1) {
-          @include back_to_previous_btn;
-
-          &:hover {
-            background-color: #5d85bb;
-          }
-        }
-
-        &:nth-child(2) {
-          @include search_and_send_btn;
-
-          &:hover {
-            background-color: #5D85BD;
-          }
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 767px) {
-  .main_section {
-    h1 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 40px;
-      font-weight: 600;
-      @include title_color;
-    }
-
-    .info_wrap {
-      margin: auto;
-      padding: 0 5%;
-
-      .code_search {
-        background: #48658C;
-        color: white;
-        font-weight: 800;
-        height: 30px;
-        width: 60px;
-        margin-right: 10px;
-        display: flex;
-        align-self: center;
-        align-items: center;
-
-        &:hover {
-          background-color: #5d85bd;
-        }
-      }
-
-      .input-group-prepend {
-        width: 100% !important;
-        text-align: center !important;
-      }
-
-      span {
-        @include red_star
-      }
-
-      .fixed_info {
-        @include fixed_info;
-        background: #528091;
-        border-radius: 0;
-        border-top: 1px solid black;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        flex-direction: column;
-        height: unset;
-        padding: 10px;
-
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-      }
-
-      .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        border-top: 1px solid black;
-        background: #D9D9D9;
-
-        .submit_btn {
-          margin: 20px 0;
-          background: #48658C;
-          color: white;
-          font-weight: 700;
-          width: 80px;
-          font-size: 18px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-
-        .wrap {
-          padding: 20px 20px 0;
-          flex-direction: column;
-
-          .number-input-box {
-            color: black;
-
-            .input-number {
-              width: 100%;
-            }
-          }
-
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
-            margin-bottom: 0;
-          }
-
-          .dropdown {
-            button {
-              background: white;
-              width: 100%;
-              border: none;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            }
-
-            .dropdown-menu {
-              width: 180px;
-
-              .dropdown-item {
-                text-align: left;
-              }
-            }
-          }
-
-          div {
-            margin-bottom: 10px;
-
-            p {
-              text-align: center;
-              white-space: nowrap;
-              font-size: 18px;
-              font-weight: 700;
-              margin-bottom: 5px;
-            }
-          }
-        }
-
-        .text_input {
-          padding: 0 20px;
-
-          div {
-            display: none;
-          }
-
-          p {
-            margin-bottom: 0;
-            padding-bottom: 5px
-          }
-
-          .form-control {
-            height: 150px
-          }
-        }
-      }
-
-      .column_section {
-        flex-direction: column;
-
-        #inputWithButton {
-          border-right: 1px solid black;
-        }
-      }
-
-      .third_content {
-        border: 1px solid black;
-
-        .list {
-          border: 1px solid black;
-
-          button {
-            @include delete_button;
-
-            &:hover {
-              background: #FF7272
-            }
-          }
-        }
-
-        .delete {
-          border-top: 0px solid #484143;
-          border-right: 0px dashed #484143;
-          border-bottom: 0px dashed #484143;
-          border-left: 1px solid #484143;
-          width: 70px;
-        }
-      }
-
-      form {
-        border-top: 1px solid black;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-
-        .form-check {
-          margin-left: 10px;
-          font-size: 18px;
-        }
-
         .form-control {
-          height: 50px;
+          height: 100%;
           border-radius: 0;
         }
-
-        .wrap {
-          background: white;
-          border-bottom: 0.5px solid black;
-          align-items: center;
-          flex-direction: column;
-
-          label.use,
-          .form-label {
-            border-bottom: 1px solid black;
-            width: 100%;
-            height: 30px;
-          }
-
-          .option {
-            padding: 5px;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            gap: 0px 0px;
-            grid-auto-flow: row;
-            grid-template-areas: ". . ." ". . .";
-            white-space: nowrap;
-            justify-items: center;
-            width: 100%;
-
-            div {
-              width: 90px;
+      }
+      .button_wrap {
+        display: flex;
+        justify-content: space-between;
+        margin: 30px auto 5%;
+        width: 220px;
+        button {
+          &:nth-child(1) {
+            @include back_to_previous_btn;
+            &:hover {
+              background-color: #5d85bb;
             }
           }
-
-          #project_id {
-            border-right: black solid 1px
-          }
-        }
-
-        .form-label {
-          font-weight: 700;
-          font-size: 20px;
-          white-space: nowrap;
-          height: 50px;
-          align-items: center;
-          margin: 0;
-          display: flex;
-          justify-content: center;
-
-          p {
-            width: 100px;
-            margin-bottom: 0;
-            text-align: center;
-          }
-        }
-      }
-
-      .input-group-prepend {
-        color: white;
-        font-weight: 700;
-        font-size: 20px;
-        width: 120px;
-        text-align: end;
-
-        span {
-          @include red_star
-        }
-      }
-
-      .input-number {
-        @include count_btn;
-      }
-    }
-
-    .button_wrap {
-      display: flex;
-      justify-content: space-between;
-      margin: 30px auto 5%;
-      width: 220px;
-
-      button {
-        &:nth-child(1) {
-          @include back_to_previous_btn;
-
-          &:hover {
-            background-color: #5d85bb;
-          }
-        }
-
-        &:nth-child(2) {
-          @include search_and_send_btn;
-
-          &:hover {
-            background-color: #5D85BD;
+          &:nth-child(2) {
+            @include search_and_send_btn;
+            &:hover {
+              background-color: #5D85BD;
+            }
           }
         }
       }
     }
   }
-}
+  @media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .main_section {
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        margin: auto;
+        padding: 0 5%;
+        .code_search {
+          background: #48658C;
+          color: white;
+          font-weight: 800;
+          height: 30px;
+          width: 60px;
+          margin-right: 10px;
+          display: flex;
+          align-self: center;
+          align-items: center;
+          &:hover {
+            background-color: #5d85bd;
+          }
+        }
+        #readonly_box {
+          border-left: 1px solid black;
+        }
+        .input-group-prepend {
+          width: 100% !important;
+          text-align: center !important;
+        }
+        span {
+          @include red_star
+        }
+        .fixed_info {
+          @include fixed_info;
+          background: #528091;
+          border-radius: 0;
+          border-top: 1px solid black;
+          border-left: 1px solid black;
+          border-right: 1px solid black;
+          p {
+            font-size: 20px;
+            margin-bottom: 0;
+          }
+        }
+        .second_content {
+          border-left: 1px solid black;
+          border-right: 1px solid black;
+          border-top: 1px solid black;
+          background: #D9D9D9;
+          .submit_btn {
+            margin-bottom: 20px;
+            background: #48658C;
+            color: white;
+            font-weight: 700;
+            width: 80px;
+            font-size: 18px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &:hover {
+              background-color: #5d85bd;
+            }
+          }
+          .wrap {
+            justify-content: space-evenly;
+            padding: 10px 80px;
+            .number-input-box {
+              color: black;
+              .input-number {
+                width: 100%;
+              }
+            }
+            .form-label {
+              white-space: nowrap;
+              font-weight: 800;
+              font-size: 18px;
+            }
+            .dropdown {
+              button {
+                background: white;
+                width: 100%;
+                border: none;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              }
+              .dropdown-menu {
+                width: 180px;
+                .dropdown-item {
+                  text-align: left;
+                }
+              }
+            }
+            div {
+              padding: 0 5px;
+              p {
+                text-align: center;
+                white-space: nowrap;
+                font-size: 18px;
+                font-weight: 700;
+                margin-bottom: 5px;
+              }
+            }
+          }
+        }
+        .third_content {
+          border: 1px solid black;
+          .list {
+            border: 1px solid black;
+            button {
+              @include delete_button;
+              &:hover {
+                background: #FF7272
+              }
+            }
+          }
+          .delete {
+            border-top: 0px solid #484143;
+            border-right: 0px dashed #484143;
+            border-bottom: 0px dashed #484143;
+            border-left: 1px solid #484143;
+            width: 70px;
+          }
+        }
+        form {
+          border-top: 1px solid black;
+          border-left: 1px solid black;
+          border-right: 1px solid black;
+          .form-check {
+            margin-left: 10px;
+          }
+          .form-control {
+            border-left: 1px solid black;
+          }
+          .wrap {
+            background: white;
+            border-bottom: 0.5px solid black;
+            align-items: center;
+            label.use,
+            #project_id {
+              border-right: 1px solid black;
+            }
+            .option {
+              display: flex
+            }
+            #project_name {
+              border-left: 1px solid black
+            }
+          }
+          .form-label {
+            font-weight: 700;
+            font-size: 20px;
+            white-space: nowrap;
+            height: 50px;
+            align-items: center;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 0 30px;
+            p {
+              width: 100px;
+              margin-bottom: 0;
+              text-align: center;
+            }
+          }
+        }
+        .input-group {
+          height: 100%;
+        }
+        .input-group-prepend {
+          color: white;
+          font-weight: 700;
+          font-size: 20px;
+          width: 120px;
+          text-align: end;
+          span {
+            @include red_star
+          }
+        }
+        .input-number {
+          @include count_btn;
+        }
+        .form-control {
+          height: 100%;
+          border-radius: 0;
+        }
+      }
+      .button_wrap {
+        display: flex;
+        justify-content: space-between;
+        margin: 30px auto 5%;
+        width: 220px;
+        button {
+          &:nth-child(1) {
+            @include back_to_previous_btn;
+            &:hover {
+              background-color: #5d85bb;
+            }
+          }
+          &:nth-child(2) {
+            @include search_and_send_btn;
+            &:hover {
+              background-color: #5D85BD;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 767px) {
+    .main_section {
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 40px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        margin: auto;
+        padding: 0 5%;
+        .code_search {
+          background: #48658C;
+          color: white;
+          font-weight: 800;
+          height: 30px;
+          width: 60px;
+          margin-right: 10px;
+          display: flex;
+          align-self: center;
+          align-items: center;
+          &:hover {
+            background-color: #5d85bd;
+          }
+        }
+        .input-group-prepend {
+          width: 100% !important;
+          text-align: center !important;
+        }
+        span {
+          @include red_star
+        }
+        .fixed_info {
+          @include fixed_info;
+          background: #528091;
+          border-radius: 0;
+          border-top: 1px solid black;
+          border-left: 1px solid black;
+          border-right: 1px solid black;
+          flex-direction: column;
+          height: unset;
+          padding: 10px;
+          p {
+            font-size: 20px;
+            margin-bottom: 0;
+          }
+        }
+        .second_content {
+          border-left: 1px solid black;
+          border-right: 1px solid black;
+          border-top: 1px solid black;
+          background: #D9D9D9;
+          .submit_btn {
+            margin: 20px 0;
+            background: #48658C;
+            color: white;
+            font-weight: 700;
+            width: 80px;
+            font-size: 18px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &:hover {
+              background-color: #5d85bd;
+            }
+          }
+          .wrap {
+            padding: 20px 20px 0;
+            flex-direction: column;
+            .number-input-box {
+              color: black;
+              .input-number {
+                width: 100%;
+              }
+            }
+            .form-label {
+              white-space: nowrap;
+              font-weight: 800;
+              font-size: 18px;
+              margin-bottom: 0;
+            }
+            .dropdown {
+              button {
+                background: white;
+                width: 100%;
+                border: none;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              }
+              .dropdown-menu {
+                width: 180px;
+                .dropdown-item {
+                  text-align: left;
+                }
+              }
+            }
+            div {
+              margin-bottom: 10px;
+              p {
+                text-align: center;
+                white-space: nowrap;
+                font-size: 18px;
+                font-weight: 700;
+                margin-bottom: 5px;
+              }
+            }
+          }
+          .text_input {
+            padding: 0 20px;
+            div {
+              display: none;
+            }
+            p {
+              margin-bottom: 0;
+              padding-bottom: 5px
+            }
+            .form-control {
+              height: 150px
+            }
+          }
+        }
+        .column_section {
+          flex-direction: column;
+          #inputWithButton {
+            border-right: 1px solid black;
+          }
+        }
+        .third_content {
+          border: 1px solid black;
+          .list {
+            border: 1px solid black;
+            button {
+              @include delete_button;
+              &:hover {
+                background: #FF7272
+              }
+            }
+          }
+          .delete {
+            border-top: 0px solid #484143;
+            border-right: 0px dashed #484143;
+            border-bottom: 0px dashed #484143;
+            border-left: 1px solid #484143;
+            width: 70px;
+          }
+        }
+        form {
+          border-top: 1px solid black;
+          border-left: 1px solid black;
+          border-right: 1px solid black;
+          .form-check {
+            margin-left: 10px;
+            font-size: 18px;
+          }
+          .form-control {
+            height: 50px;
+            border-radius: 0;
+          }
+          .wrap {
+            background: white;
+            border-bottom: 0.5px solid black;
+            align-items: center;
+            flex-direction: column;
+            label.use,
+            .form-label {
+              border-bottom: 1px solid black;
+              width: 100%;
+              height: 30px;
+            }
+            .option {
+              padding: 5px;
+              display: grid;
+              grid-template-columns: 1fr 1fr 1fr;
+              grid-template-rows: 1fr 1fr;
+              gap: 0px 0px;
+              grid-auto-flow: row;
+              grid-template-areas: ". . ." ". . .";
+              white-space: nowrap;
+              justify-items: center;
+              width: 100%;
+              div {
+                width: 90px;
+              }
+            }
+            #project_id {
+              border-right: black solid 1px
+            }
+          }
+          .form-label {
+            font-weight: 700;
+            font-size: 20px;
+            white-space: nowrap;
+            height: 50px;
+            align-items: center;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            p {
+              width: 100px;
+              margin-bottom: 0;
+              text-align: center;
+            }
+          }
+        }
+        .input-group-prepend {
+          color: white;
+          font-weight: 700;
+          font-size: 20px;
+          width: 120px;
+          text-align: end;
+          span {
+            @include red_star
+          }
+        }
+        .input-number {
+          @include count_btn;
+        }
+      }
+      .button_wrap {
+        display: flex;
+        justify-content: space-between;
+        margin: 30px auto 5%;
+        width: 220px;
+        button {
+          &:nth-child(1) {
+            @include back_to_previous_btn;
+            &:hover {
+              background-color: #5d85bb;
+            }
+          }
+          &:nth-child(2) {
+            @include search_and_send_btn;
+            &:hover {
+              background-color: #5D85BD;
+            }
+          }
+        }
+      }
+    }
+  }
 </style>
