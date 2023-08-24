@@ -57,73 +57,87 @@ const routes = [
     path: "/",
     name: "login",
     component: Login,
+    meta: {auth: false, request: ''},
   },
   {
     path: "/home",
     name: "home",
     component: Home,
+    meta: {auth: false, request: ''},
   },
   {
     path: "/authorized",
     name: "authorized",
     component: Authorized,
+    meta: {auth: false, request: ''},
   },
   
   {
     path: "/store_datagrid",
     name: "Store_Datagrid",
     component: Store_Datagrid,
+    meta: {auth: true, request: 'AI_Detail'},
   },
   {
     path: "/store_new",
     name: "Store_New",
     component: Store_New,
+    meta: {auth: true, request: 'AI_Create'},
   },
   {
     path: "/store_edit",
     name: "Store_Edit",
     component: Store_Edit,
+    meta: {auth: true, request: 'AI_Edit'},
   },
   {
     path: "/store_view",
     name: "Store_View",
     component: Store_View,
     props: true, // 允许接收参数
+    meta: {auth: true, request: 'AI_Detail'},
   },
   {
     path: "/store_return",
     name: "Store_Return",
     component: Store_Return,
+    meta: {auth: true, request: 'AI_Create'},
   },
   {
     path: "/store_delete",
     name: "Store_Delete",
     component: Store_Delete,
+    meta: {auth: true, request: 'AI_Delete'},
   },
   {
     path: "/store_process_datagrid",
     name: "Store_Process_Datagrid",
     component: Store_Process_Datagrid,
+    meta: {auth: true, request: 'AIP_Detail'},
   },
   {
     path: "/store_process_view",
     name: "Store_Process_View",
     component: Store_Process_View,
+    meta: {auth: true, request: 'AIP_Detail'},
   },
   {
     path: "/store_process_confirm",
     name: "Store_Process_Confirm",
     component: Store_Process_Confirm,
+    meta: {auth: true, request: 'AIP_DeliveryProcess'},
   },
   {
     path: "/store_process_edit",
     name: "Store_Process_Edit",
     component: Store_Process_Edit,
+    meta: {auth: true, request: 'AIP_Edit'},
   },
   {
     path: "/store_process_delete",
     name: "Store_Process_Delete",
     component: Store_Process_Delete,
+    meta: {auth: true, request: 'AIP_Delete'},
   }, 
   {
     path: "/assets_datagrid",
@@ -197,4 +211,38 @@ const router = createRouter({
   routes,
 });
 
+router.beforeEach(async (to, from, next) => {
+  if (to.meta.auth) {
+    const axios = require('axios');
+    try {
+      const request = to.meta.request
+      const response = await axios.get(`/GetParameter/HasPermission?id=${request}`);
+      const data = response.data;
+
+      if (data.state === 'success') {
+        if(data.resultList === true) {
+          next();
+        }
+        else {
+          alert('您未有訪問此頁面的權限\n將重新引導至無權限頁面')
+          next({ name: 'authorized' });
+        }
+      } 
+      else if(data.state === 'account_error') {
+        alert(data.messages);
+        next({ name: 'login' });
+      }
+      else {
+        alert(data.messages);
+        next(false);
+      }
+    } catch (error) {
+      // 处理请求错误
+      console.error('Error checking permission:', error);
+      next(false); // 阻止导航继续
+    }
+  } else {
+    next();
+  }
+});
 export default router;
