@@ -434,7 +434,7 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
 .nav {
-    overflow-x: scroll;
+    overflow-x: auto;
     overflow-y: hidden;
     flex-wrap: nowrap;
   }
