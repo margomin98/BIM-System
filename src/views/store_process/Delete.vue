@@ -394,7 +394,7 @@
         form.append('AI_ID' , AI_ID);
 
         const axios = require('axios');
-        const response = await axios.post(`http://192.168.0.176:7008/`,form);
+        const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/ApplicationDelete',form);
         try {
           const data = response.data;
           if(data.state === 'success') {
