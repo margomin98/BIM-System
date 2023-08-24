@@ -433,7 +433,21 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
-
+.nav {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+  }
+  
+  ::-webkit-scrollbar {
+  
+  height: 6px;
+  }
+  ::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+        background-color: rgb(176, 175, 175);
+        border: 1px solid rgb(86, 85, 85);
+  }
 @media only screen and (min-width: 1200px) {
   .main_section {
     .readonly_box {

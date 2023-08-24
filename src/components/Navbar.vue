@@ -36,7 +36,7 @@
               <img src="../assets/navbar/file.png" alt="資產管理"> 資產管理
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <router-link to="">資產管理</router-link>
+              <router-link to="/assets_datagrid">資產管理</router-link>
               <router-link to="">設備集成管理</router-link>
               <router-link to="">盤點管理</router-link>
               <router-link to="">搜尋資產</router-link>

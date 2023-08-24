@@ -147,12 +147,12 @@
                 <div class="input-with-icon">
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(1)" />
                   <span class="icon-container">
-                      <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user1.isValidate" />
-                    </span>
+                        <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user1.isValidate" />
+                      </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
-                    驗證
-                  </button>
+                      驗證
+                    </button>
                 <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content ">
@@ -188,12 +188,12 @@
                 <div class="input-with-icon">
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(2)" />
                   <span class="icon-container">
-                      <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user2.isValidate" />
-                    </span>
+                        <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user2.isValidate" />
+                      </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
-                    驗證
-                  </button>
+                      驗證
+                    </button>
                 <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content ">
@@ -228,270 +228,231 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="send_btn" @click="submit" :disabled="!canSubmit()"
-          :class="{ send_btn_disabled: !canSubmit() }">送出</button>
+        <button class="send_btn" @click="submit" :disabled="!canSubmit()" :class="{ send_btn_disabled: !canSubmit() }">送出</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Navbar from "@/components/Navbar.vue";
-import { onMounted, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
-export default {
-  components: {
-    Navbar,
-  },
-  setup() {
-    const route = useRoute();
-    const router = useRouter();
-    const AI_ID = route.query.search_id;
-    const deliveryDate = ref('');
-    const details = ref({});
-    async function getDetails() {
-      const axios = require('axios');
-      try {
-        const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/GetApplicationInfo?ai_id=${AI_ID}`);
-        console.log(response);
-        const data = response.data;
-        if (data.state === 'success') {
-          console.log('Details Get成功 資料如下\n', data.resultList);
-          details.value = data.resultList;
-          if (details.value.WarrantyStartDate && details.value.WarrantyEndDate) {
-            details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
-            details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
-          }
-        } else if (data.state === 'error') {
-          alert(data.messages);
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    const validation = ref({
-      user1: {
-        account: 'user_1',
-        password: 'Test_123',
-        isValidate: false,
-      },
-      user2: {
-        account: 'user_2',
-        password: 'Test_123',
-        isValidate: false,
-      },
-    });
-    //分別使用帳號密碼驗證、改變驗證狀態
-    async function validate(user) {
-      if (user === 1) {
+  import Navbar from "@/components/Navbar.vue";
+  import {
+    onMounted,
+    ref
+  } from "vue";
+  import {
+    useRoute,
+    useRouter
+  } from "vue-router";
+  export default {
+    components: {
+      Navbar,
+    },
+    setup() {
+      const route = useRoute();
+      const router = useRouter();
+      const AI_ID = route.query.search_id;
+      const deliveryDate = ref('');
+      const details = ref({});
+      async function getDetails() {
         const axios = require('axios');
-        const formData = new FormData();
-        const formFields = {
-          'userName': validation.value.user1.account,
-          'userPassword': validation.value.user1.password,
-        };
-        //將表格資料append到 formData
-        for (const fieldName in formFields) {
-          formData.append(fieldName, formFields[fieldName]);
-          console.log(formData.get(`${fieldName}`));
-        }
-        const response = await axios.post('http://192.168.0.176:7008/Account/IdentityValidationForD_Operator', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
         try {
+          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/GetApplicationInfo?ai_id=${AI_ID}`);
+          console.log(response);
           const data = response.data;
-          console.log(data);
           if (data.state === 'success') {
-            validation.value.user1.isValidate = true;
-          }
-          else if (data.state === 'error') {
+            console.log('Details Get成功 資料如下\n', data.resultList);
+            details.value = data.resultList;
+            if (details.value.WarrantyStartDate && details.value.WarrantyEndDate) {
+              details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
+              details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
+            }
+          } else if (data.state === 'error') {
             alert(data.messages);
-            validation.value.user1.isValidate = false;
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
           }
         } catch (error) {
           console.error(error);
         }
       }
-      else if (user === 2) {
-        const axios = require('axios');
-        const formData = new FormData();
-        const formFields = {
-          'userName': validation.value.user2.account,
-          'userPassword': validation.value.user2.password,
-        };
-        //將表格資料append到 formData
-        for (const fieldName in formFields) {
-          formData.append(fieldName, formFields[fieldName]);
-          console.log(formData.get(`${fieldName}`));
-        }
-        const response = await axios.post('http://192.168.0.176:7008/Account/IdentityValidationForAI_Operator', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-        try {
-          const data = response.data;
-          console.log(data);
-          if (data.state === 'success') {
-            validation.value.user2.isValidate = true;
-          }
-          else if (data.state === 'error') {
-            alert(data.messages);
-            validation.value.user2.isValidate = false;
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    }
-    function validationStatus(user) {
-      if (user === 1) {
-        return validation.value.user1.isValidate ? validation.value.user1.account : '未驗證'
-      } else if (user === 2) {
-        return validation.value.user2.isValidate ? validation.value.user2.account : '未驗證'
-      }
-    }
-    function canSubmit() {
-      return validation.value.user1.isValidate && validation.value.user2.isValidate;
-    }
-    async function submit() {
-      const axios = require('axios');
-      const formData = new FormData();
-      const formFields = {
-        'AI_ID': details.value.AI_ID,
-        'DeliveryOperator': validation.value.user1.account,
-        'AssetsInOperator': validation.value.user2.account,
-      };
-      //將表格資料append到 formData
-      for (const fieldName in formFields) {
-        formData.append(fieldName, formFields[fieldName]);
-        console.log(formData.get(`${fieldName}`));
-      }
-      const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/Delivery', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
+      const validation = ref({
+        user1: {
+          account: 'user_1',
+          password: 'Test_123',
+          isValidate: false,
+        },
+        user2: {
+          account: 'user_2',
+          password: 'Test_123',
+          isValidate: false,
         },
       });
-      try {
-        const data = response.data;
-        console.log(data);
-        if (data.state === 'success') {
-          let msg = data.messages;
-          msg += '\n編號:' + data.resultList.AI_ID;
-          alert(msg);
-          router.push({ name: 'Store_Process_Datagrid' });
+      //分別使用帳號密碼驗證、改變驗證狀態
+      async function validate(user) {
+        if (user === 1) {
+          const axios = require('axios');
+          const formData = new FormData();
+          const formFields = {
+            'userName': validation.value.user1.account,
+            'userPassword': validation.value.user1.password,
+          };
+          //將表格資料append到 formData
+          for (const fieldName in formFields) {
+            formData.append(fieldName, formFields[fieldName]);
+            console.log(formData.get(`${fieldName}`));
+          }
+          const response = await axios.post('http://192.168.0.176:7008/Account/IdentityValidationForD_Operator', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+          try {
+            const data = response.data;
+            console.log(data);
+            if (data.state === 'success') {
+              validation.value.user1.isValidate = true;
+            } else if (data.state === 'error') {
+              alert(data.messages);
+              validation.value.user1.isValidate = false;
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        } else if (user === 2) {
+          const axios = require('axios');
+          const formData = new FormData();
+          const formFields = {
+            'userName': validation.value.user2.account,
+            'userPassword': validation.value.user2.password,
+          };
+          //將表格資料append到 formData
+          for (const fieldName in formFields) {
+            formData.append(fieldName, formFields[fieldName]);
+            console.log(formData.get(`${fieldName}`));
+          }
+          const response = await axios.post('http://192.168.0.176:7008/Account/IdentityValidationForAI_Operator', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+          try {
+            const data = response.data;
+            console.log(data);
+            if (data.state === 'success') {
+              validation.value.user2.isValidate = true;
+            } else if (data.state === 'error') {
+              alert(data.messages);
+              validation.value.user2.isValidate = false;
+            }
+          } catch (error) {
+            console.error(error);
+          }
         }
-        else if (data.state === 'error') {
-          alert(data.messages);
-          console.log('error state', response);
-        }
-      } catch (error) {
-        console.error(error);
       }
-    }
-
-    function getDate() {
-      const today = new Date();
-      var date = '';
-      date += (today.getFullYear() + '/');
-      date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
-      date += ((today.getDate()).toString().padStart(2, '0'));
-      return date;
-    }
-    onMounted(() => {
-      getDetails();
-      deliveryDate.value = getDate();
-    });
-    function goBack() {
-      window.history.back();
-    }
-    return {
-      validation,
-      validate,
-      validationStatus,
-      canSubmit,
-      submit,
-      goBack,
-      deliveryDate,
-      details,
-    }
-  },
-};
+      function validationStatus(user) {
+        if (user === 1) {
+          return validation.value.user1.isValidate ? validation.value.user1.account : '未驗證'
+        } else if (user === 2) {
+          return validation.value.user2.isValidate ? validation.value.user2.account : '未驗證'
+        }
+      }
+      function canSubmit() {
+        return validation.value.user1.isValidate && validation.value.user2.isValidate;
+      }
+      async function submit() {
+        const axios = require('axios');
+        const formData = new FormData();
+        const formFields = {
+          'AI_ID': details.value.AI_ID,
+          'DeliveryOperator': validation.value.user1.account,
+          'AssetsInOperator': validation.value.user2.account,
+        };
+        //將表格資料append到 formData
+        for (const fieldName in formFields) {
+          formData.append(fieldName, formFields[fieldName]);
+          console.log(formData.get(`${fieldName}`));
+        }
+        const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/Delivery', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        try {
+          const data = response.data;
+          console.log(data);
+          if (data.state === 'success') {
+            let msg = data.messages;
+            msg += '\n編號:' + data.resultList.AI_ID;
+            alert(msg);
+            router.push({
+              name: 'Store_Process_Datagrid'
+            });
+          } else if (data.state === 'error') {
+            alert(data.messages);
+            console.log('error state', response);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      function getDate() {
+        const today = new Date();
+        var date = '';
+        date += (today.getFullYear() + '/');
+        date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
+        date += ((today.getDate()).toString().padStart(2, '0'));
+        return date;
+      }
+      onMounted(() => {
+        getDetails();
+        deliveryDate.value = getDate();
+      });
+      function goBack() {
+        window.history.back();
+      }
+      return {
+        validation,
+        validate,
+        validationStatus,
+        canSubmit,
+        submit,
+        goBack,
+        deliveryDate,
+        details,
+      }
+    },
+  };
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/global.scss";
-
-@media only screen and (min-width: 1200px) {
-  .main_section {
-    .readonly_box {
-      @include readonly_box;
-    }
-
-    h1 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 55px;
-      font-weight: 600;
-      @include title_color;
-    }
-
-    h2 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 35px;
-      font-weight: 600;
-      @include title_color;
-    }
-
-    .info_wrap {
-      margin: auto;
-      width: 800px;
-
-      .fixed_info {
-        @include fixed_info;
-
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
+  @import "@/assets/css/global.scss";
+  @media only screen and (min-width: 1200px) {
+    .main_section {
+      .readonly_box {
+        @include readonly_box;
       }
-
-      .content {
-        @include content_bg;
-
-        .dropdown {
-          .dropdown-menu {
-            width: 100%;
-          }
-
-          button {
-            @include dropdown-btn;
-            width: 187px;
-            color: black;
-            justify-content: space-between;
-            align-items: center;
-          }
-        }
-
-        .input-group {
-          .input-number {
-            @include count_btn;
-          }
-
-          .form-control {
-            height: 35px;
-            border-radius: 0;
-          }
-
-          .input-group-prepend {
-            color: white;
-            font-weight: 700;
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
+      }
+      h2 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 35px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        margin: auto;
+        width: 800px;
+        .fixed_info {
+          @include fixed_info;
+          p {
             font-size: 20px;
             margin-bottom: 0;
           }
@@ -522,107 +483,137 @@ export default {
               color: white;
               font-weight: 700;
               font-size: 20px;
-              width: 120px;
-              text-align: end;
+              margin-bottom: 0;
             }
           }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 28%;
-          margin-bottom: 5%;
-          gap: 20px;
-          button.back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
+          .content {
+            @include content_bg;
+            .dropdown {
+              .dropdown-menu {
+                width: 100%;
+              }
+              button {
+                @include dropdown-btn;
+                width: 187px;
+                color: black;
+                justify-content: space-between;
+                align-items: center;
+              }
             }
-          }
-          button.send_btn {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
-          button.send_btn_disabled {
-            background: #878787;
-            &:hover {
-              background: #878787;
-            }
-          }
-        }
-        .confirm_section {
-          .auth {
-            border-radius: 0 0 10px 10px;
-            background: white;
-            height: 80px;
-            padding: 20px;
             .input-group {
-              display: flex;
-              white-space: nowrap;
-              flex-wrap: nowrap;
-              justify-content: center;
-            }
-            button {
-              @include auth_btn;
-              &:hover {
-                background: #5a6d87;
+              .input-number {
+                @include count_btn;
               }
-            }
-            .form-control {
-              height: 35px;
-              width: 150px;
-              margin-right: 5px;
-            }
-            .input-group-prepend {
-              font-weight: 700;
-              font-size: 20px;
-              text-align: end;
-              position: relative;
-              span {
-                position: absolute;
+              .form-control {
+                height: 35px;
+                border-radius: 0;
               }
-            }
-            .input-container {
-              position: relative;
-            }
-            .input-with-icon {
-              position: relative;
-            }
-            .checkmark-icon {
-              position: absolute;
-              top: 10%;
-              left: 93%;
-              transform: translateY(-50%);
-              width: 20px;
-              height: 20px;
+              .input-group-prepend {
+                color: white;
+                font-weight: 700;
+                font-size: 20px;
+                width: 120px;
+                text-align: end;
+              }
             }
           }
-          .modal {
-            .modal-body {
-              padding: 16px 16px 0;
-            }
-            .modal-content {
-              width: 400px;
-              margin: auto;
-            }
-            .input-group-prepend {
-              width: auto;
-            }
-            .modal-footer {
-              padding: 0 12px 12px;
-              border: none;
-            }
-            .modal-header {
-              h5 {
-                font-weight: 700;
+          .button_wrap {
+            display: flex;
+            margin-top: 30px;
+            justify-content: center;
+            padding: 0 28%;
+            margin-bottom: 5%;
+            gap: 20px;
+            button.back_btn {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
               }
-              background: #3D4E61;
-              color: white;
-              .close_icon {
-                cursor: pointer;
+            }
+            button.send_btn {
+              @include search_and_send_btn;
+              &:hover {
+                background-color: #5e7aa2;
+              }
+            }
+            button.send_btn_disabled {
+              background: #878787;
+              &:hover {
+                background: #878787;
+              }
+            }
+          }
+          .confirm_section {
+            .auth {
+              border-radius: 0 0 10px 10px;
+              background: white;
+              height: 80px;
+              padding: 20px;
+              .input-group {
+                display: flex;
+                white-space: nowrap;
+                flex-wrap: nowrap;
+                justify-content: center;
+              }
+              button {
+                @include auth_btn;
+                &:hover {
+                  background: #5a6d87;
+                }
+              }
+              .form-control {
+                height: 35px;
+                width: 150px;
+                margin-right: 5px;
+              }
+              .input-group-prepend {
+                font-weight: 700;
+                font-size: 20px;
+                text-align: end;
+                position: relative;
+                span {
+                  position: absolute;
+                }
+              }
+              .input-container {
+                position: relative;
+              }
+              .input-with-icon {
+                position: relative;
+              }
+              .checkmark-icon {
+                position: absolute;
+                top: 10%;
+                left: 93%;
+                transform: translateY(-50%);
+                width: 20px;
+                height: 20px;
+              }
+            }
+            .modal {
+              .modal-body {
+                padding: 16px 16px 0;
+              }
+              .modal-content {
+                width: 400px;
+                margin: auto;
+              }
+              .input-group-prepend {
+                width: auto;
+              }
+              .modal-footer {
+                padding: 0 12px 12px;
+                border: none;
+              }
+              .modal-header {
+                h5 {
+                  font-weight: 700;
+                }
+                background: #3D4E61;
+                color: white;
+                .close_icon {
+                  cursor: pointer;
+                }
               }
             }
           }
@@ -630,7 +621,6 @@ export default {
       }
     }
   }
-}
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
       .readonly_box {
@@ -715,41 +705,34 @@ export default {
           }
         }
       }
-
       .confirm_section {
         .auth {
           border-radius: 0 0 10px 10px;
           background: white;
           height: 80px;
           padding: 20px;
-
           .input-group {
             display: flex;
             white-space: nowrap;
             flex-wrap: nowrap;
             justify-content: center;
           }
-
           button {
             @include auth_btn;
-
             &:hover {
               background: #5a6d87;
             }
           }
-
           .form-control {
             height: 35px;
             width: 150px;
             margin-right: 5px;
           }
-
           .input-group-prepend {
             font-weight: 700;
             font-size: 20px;
             text-align: end;
             position: relative;
-
             span {
               position: absolute;
             }
@@ -812,46 +795,15 @@ export default {
       }
     }
   }
-
-
-@media only screen and (min-width: 768px) and (max-width: 1199px) {
-  .main_section {
-    .readonly_box {
-      @include readonly_box;
-    }
-
-    h1 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 55px;
-      font-weight: 600;
-      @include title_color;
-    }
-
-    h2 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 35px;
-      font-weight: 600;
-      @include title_color;
-    }
-
-    .info_wrap {
-      margin: auto;
-      width: 800px;
-
-      .fixed_info {
-        @include fixed_info;
-
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
+  @media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .main_section {
+      .readonly_box {
+        @include readonly_box;
       }
       h1 {
         margin-top: 50px;
         text-align: center;
-        font-size: 50px;
+        font-size: 55px;
         font-weight: 600;
         @include title_color;
       }
@@ -863,67 +815,33 @@ export default {
         @include title_color;
       }
       .info_wrap {
-        padding: 1% 5% 0;
+        margin: auto;
+        width: 800px;
         .fixed_info {
           @include fixed_info;
-          flex-direction: column;
-
-          .input-number {
-            @include count_btn;
-          }
-
-          .form-control {
-            width: 100%;
-            height: 35px;
-            border-radius: 0;
-            margin-left: unset !important;
-          }
-
-          .input-group-prepend {
-            margin-bottom: 5px;
-
-            color: white;
-            font-weight: 700;
+          p {
             font-size: 20px;
             margin-bottom: 0;
           }
         }
-        .content {
-          @include content_bg;
-          .dropdown {
-            .dropdown-menu {
-              width: 100%;
-            }
-            button {
-              @include dropdown-btn;
-              width: 187px;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
+        h1 {
+          margin-top: 50px;
+          text-align: center;
+          font-size: 50px;
+          font-weight: 600;
+          @include title_color;
         }
-
-        button.send_btn {
-          @include search_and_send_btn;
-
-          &:hover {
-            background-color: #5e7aa2;
-          }
+        h2 {
+          margin-top: 50px;
+          text-align: center;
+          font-size: 35px;
+          font-weight: 600;
+          @include title_color;
         }
-
-        button.send_btn_disabled {
-          background: #878787;
-        }
-      }
-
-      .confirm_section {
-        .auth {
-          border-radius: 0 0 10px 10px;
-          background: white;
-          padding: 10px;
-
-          .input-group {
+        .info_wrap {
+          padding: 1% 5% 0;
+          .fixed_info {
+            @include fixed_info;
             flex-direction: column;
             .input-number {
               @include count_btn;
@@ -939,25 +857,22 @@ export default {
               color: white;
               font-weight: 700;
               font-size: 20px;
+              margin-bottom: 0;
             }
           }
-        }
-        .info {
-          display: flex;
-          flex-direction: row-reverse;
-          justify-content: flex-end;
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 15%;
-          margin-bottom: 5%;
-          gap: 20px;
-          button.back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
+          .content {
+            @include content_bg;
+            .dropdown {
+              .dropdown-menu {
+                width: 100%;
+              }
+              button {
+                @include dropdown-btn;
+                width: 187px;
+                color: black;
+                justify-content: space-between;
+                align-items: center;
+              }
             }
           }
           button.send_btn {
@@ -976,70 +891,123 @@ export default {
             background: white;
             padding: 10px;
             .input-group {
-              display: flex;
-              white-space: nowrap;
-              flex-wrap: nowrap;
-              justify-content: center;
-              margin: 5px 0;
-            }
-            button {
-              @include auth_btn;
-              &:hover {
-                background: #5a6d87;
+              flex-direction: column;
+              .input-number {
+                @include count_btn;
               }
-            }
-            .form-control {
-              height: 35px;
-              margin-right: 5px;
-            }
-            .input-group-prepend {
-              font-weight: 700;
-              font-size: 20px;
-              width: 120px;
-              text-align: end;
-              position: relative;
-              span {
-                position: absolute;
+              .form-control {
+                width: 100%;
+                height: 35px;
+                border-radius: 0;
+                margin-left: unset !important;
               }
-            }
-            .input-container {
-              position: relative;
-            }
-            .input-with-icon {
-              position: relative;
-            }
-            .checkmark-icon {
-              position: absolute;
-              top: 10%;
-              left: 93%;
-              transform: translateY(-50%);
-              width: 20px;
-              height: 20px;
+              .input-group-prepend {
+                margin-bottom: 5px;
+                color: white;
+                font-weight: 700;
+                font-size: 20px;
+              }
             }
           }
-          .modal {
-            .modal-body {
-              padding: 16px 16px 0;
-            }
-            .modal-content {
-              width: 400px;
-              margin: auto;
-            }
-            .input-group-prepend {
-              width: auto;
-            }
-            .modal-footer {
-              padding: 0 12px 12px;
-              border: none;
-            }
-            .modal-header {
-              h5 {
-                font-weight: 700;
+          .info {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+          }
+          .button_wrap {
+            display: flex;
+            margin-top: 30px;
+            justify-content: center;
+            padding: 0 15%;
+            margin-bottom: 5%;
+            gap: 20px;
+            button.back_btn {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
               }
-              background: #3D4E61;
-              color: white;
-              .close_icon {
-                cursor: pointer;
+            }
+            button.send_btn {
+              @include search_and_send_btn;
+              &:hover {
+                background-color: #5e7aa2;
+              }
+            }
+            button.send_btn_disabled {
+              background: #878787;
+            }
+          }
+          .confirm_section {
+            .auth {
+              border-radius: 0 0 10px 10px;
+              background: white;
+              padding: 10px;
+              .input-group {
+                display: flex;
+                white-space: nowrap;
+                flex-wrap: nowrap;
+                justify-content: center;
+                margin: 5px 0;
+              }
+              button {
+                @include auth_btn;
+                &:hover {
+                  background: #5a6d87;
+                }
+              }
+              .form-control {
+                height: 35px;
+                margin-right: 5px;
+              }
+              .input-group-prepend {
+                font-weight: 700;
+                font-size: 20px;
+                width: 120px;
+                text-align: end;
+                position: relative;
+                span {
+                  position: absolute;
+                }
+              }
+              .input-container {
+                position: relative;
+              }
+              .input-with-icon {
+                position: relative;
+              }
+              .checkmark-icon {
+                position: absolute;
+                top: 10%;
+                left: 93%;
+                transform: translateY(-50%);
+                width: 20px;
+                height: 20px;
+              }
+            }
+            .modal {
+              .modal-body {
+                padding: 16px 16px 0;
+              }
+              .modal-content {
+                width: 400px;
+                margin: auto;
+              }
+              .input-group-prepend {
+                width: auto;
+              }
+              .modal-footer {
+                padding: 0 12px 12px;
+                border: none;
+              }
+              .modal-header {
+                h5 {
+                  font-weight: 700;
+                }
+                background: #3D4E61;
+                color: white;
+                .close_icon {
+                  cursor: pointer;
+                }
               }
             }
           }
@@ -1047,5 +1015,4 @@ export default {
       }
     }
   }
-}
 </style>
