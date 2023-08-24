@@ -110,7 +110,7 @@
           },
           {
             headerName: "單號",
-            field: "make",
+            field: "AO_ID",
             unSortIcon: true,
             sortable: true,
             width: '150px',
@@ -118,7 +118,7 @@
           },
           {
             headerName: "專案名稱",
-            field: "model",
+            field: "ProjectName",
             unSortIcon: true,
             sortable: true,
             width: '150px',
@@ -126,7 +126,7 @@
           },
           {
             headerName: "說明",
-            field: "price",
+            field: "Description",
             unSortIcon: true,
             sortable: true,
             width: '150px',
@@ -134,7 +134,7 @@
           },
           {
             headerName: "用途",
-            field: "make",
+            field: "Use",
             unSortIcon: true,
             sortable: true,
             width: '150px',
@@ -150,7 +150,7 @@
           },
           {
             headerName: "申請人員",
-            field: "make",
+            field: "Applicant",
             unSortIcon: true,
             sortable: true,
             width: '150px',
@@ -158,7 +158,7 @@
           },
           {
             headerName: "申請日期",
-            field: "make",
+            field: "ApplicationDate",
             unSortIcon: true,
             sortable: true,
             width: '150px',
