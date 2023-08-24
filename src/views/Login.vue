@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="container-fluid d-flex">
-      <div class="col-xl-6 col-lg-6 col-md-6 col-12 left">
+      <div class="col-xl-6 col-lg-6 col-md-12 col-12 left">
         <div class="logo">
           <img src="../assets/login/login_logo.png" alt="logo">
         </div>
@@ -9,7 +9,7 @@
           <img src="../assets/login/login_img.png" alt="任務">
         </div>
       </div>
-      <div class="col-xl-6 col-lg-6 col-md-6 col-12 right">
+      <div class="col-xl-6 col-lg-6 col-md-12 col-12 right">
         <div class="title">
           <h1>
             資產管理系統
@@ -21,7 +21,6 @@
           <p class="mt-3">密碼</p>
           <input class="text_input" type="password" @keyup.enter="login" v-model="userPassword">
           <span style="color: rgb(243, 22, 22);">{{ errorHint }}</span>
-          
           <div class="tick">
             <input type="checkbox">記住我
           </div>
@@ -35,304 +34,268 @@
 </template>
 
 <script>
-import { ref } from 'vue'
-import router from '@/router';
-
-
-export default {
-  name: 'Login',
-  setup() {
-    const userName = ref('');
-    const userPassword = ref('Test_123');
-    const errorHint = ref('');
-    async function login() {
-      // console.log(event);
-      const formData = new FormData();
-      formData.append('userName', userName.value);
-      formData.append('userPassword', userPassword.value);
-      console.log(formData.get('userName'));
-      console.log(formData.get('userPassword'));
-      const axios = require('axios');
-      try {
-        const response = await axios.post('http://192.168.0.176:7008/Account/Login', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-
-        console.log(response);
-        const data = response.data;
-        if (data.state === 'success') {
-          //接收成功，跳轉至首頁
-
-          console.log(data.state);
-          console.log(data.messages);
-          errorHint.value = '';
-          router.push('/home');
+  import {
+    ref
+  } from 'vue'
+  import router from '@/router';
+  export default {
+    name: 'Login',
+    setup() {
+      const userName = ref('');
+      const userPassword = ref('Test_123');
+      const errorHint = ref('');
+      async function login() {
+        // console.log(event);
+        const formData = new FormData();
+        formData.append('userName', userName.value);
+        formData.append('userPassword', userPassword.value);
+        console.log(formData.get('userName'));
+        console.log(formData.get('userPassword'));
+        const axios = require('axios');
+        try {
+          const response = await axios.post('http://192.168.0.176:7008/Account/Login', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            //接收成功，跳轉至首頁
+            console.log(data.state);
+            console.log(data.messages);
+            errorHint.value = '';
+            router.push('/home');
+          } else if (data.state === 'error') {
+            // alert(data.messages);
+            var hint = data.messages.toString().replace(/[\[\]"]/g, "");
+            errorHint.value = hint;
+          } else {
+            throw new Error('Request was not successful');
+          }
+        } catch (error) {
+          console.error(error);
         }
-        else if (data.state === 'error') {
-          // alert(data.messages);
-          var hint = data.messages.toString().replace(/[\[\]"]/g, "");
-          errorHint.value = hint;
-        }
-        else {
-          throw new Error('Request was not successful');
-        }
-      } catch (error) {
-        console.error(error);
       }
-    }
-
-    return {
-      userName,
-      userPassword,
-      errorHint,
-      login,
-    }
-  },
-}
+      return {
+        userName,
+        userPassword,
+        errorHint,
+        login,
+      }
+    },
+  }
 </script>
 
 <style lang="scss" scoped>
-
-@media only screen and (min-width: 1200px){
-  .home {
-  background-image: url('../assets/login/login_bg.png');
-  height: 100vh;
-  background-repeat: no-repeat;
-		background-size: cover;
-
-  .left {
-  display: flex;
-  flex-direction: column;
-
-  .logo {
-    margin: 20px;
-    text-align: left;
-  }
-}
-
-.right {
-  margin-top: 13%;
-
-  padding:0 18% 0 8%;
-  h1 {
-    color: #132238;
-    font-size: 60px;
-    white-space: nowrap;
-    display: flex;
-    justify-content: center;
-    font-weight: 700;
-    margin-bottom: 40px;
-    text-align: center;
-  }
-
-  .form {
-    margin: auto;
-    p {
-      margin-bottom: 5px;
-      font-size: 25px;
-      font-weight: 700;
-      text-align: left;
-    }
-
-    .text_input {
-      width: 100%;
-      border: none;
-      height: 45px;
-      border-radius: 5px;
-      background: #A7AFBB;
-    }
-  }
-
-  .tick {
-    margin-top: 20px;
-    text-align: left;
-    font-size: 20px;
-    font-weight: 700;
-
-    input {
-      box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.25);
-      margin-right: 10px;
-    }
-  }
-
-  .login_btn {
-    text-align: center;
-
-    button {
-      width:100%;
-      color: white;
-      font-weight: 700;
-      border-radius: 10px;
-      margin: 50px auto 0;
-      height: 45px;
-      background: var(--c-4, #132238);
+  @media only screen and (min-width: 1200px) {
+    .home {
+      background-image: url('../assets/login/login_bg.png');
+      height: 100vh;
+      background-repeat: no-repeat;
+      background-size: cover;
+      .left {
+        display: flex;
+        flex-direction: column;
+        .logo {
+          margin: 20px;
+          text-align: left;
+        }
+      }
+      .right {
+        margin-top: 13%;
+        padding: 0 18% 0 8%;
+        h1 {
+          color: #132238;
+          font-size: 60px;
+          white-space: nowrap;
+          display: flex;
+          justify-content: center;
+          font-weight: 700;
+          margin-bottom: 40px;
+          text-align: center;
+        }
+        .form {
+          margin: auto;
+          p {
+            margin-bottom: 5px;
+            font-size: 25px;
+            font-weight: 700;
+            text-align: left;
+          }
+          .text_input {
+            width: 100%;
+            border: none;
+            height: 45px;
+            border-radius: 5px;
+            background: #A7AFBB;
+          }
+        }
+        .tick {
+          margin-top: 20px;
+          text-align: left;
+          font-size: 20px;
+          font-weight: 700;
+          input {
+            box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.25);
+            margin-right: 10px;
+          }
+        }
+        .login_btn {
+          text-align: center;
+          button {
+            width: 100%;
+            color: white;
+            font-weight: 700;
+            border-radius: 10px;
+            margin: 50px auto 0;
+            height: 45px;
+            background: var(--c-4, #132238);
+          }
+        }
+      }
     }
   }
-}
-}
-}
-
-
-@media only screen and (min-width: 768px) and (max-width: 1199px){
-  .home{
-    background-image: url('../assets/login/login_bg.png');
-  height: 100vh;
-  background-repeat: no-repeat;
-		background-size: cover;
-  .left {
-  display: flex;
-  flex-direction: column;
-.human{
-  img{
-    width: 80%;
-  }
-}
-  .logo {
-    margin: 20px;
-    text-align: left;
-  }
-}
-
-.right {
-  margin-top: 13%;
-
-  padding:0 5% 0;
-  h1 {
-    color: #132238;
-    font-size: 50px;
-    font-weight: 700;
-    margin-bottom: 40px;
-    text-align: center;
-  }
-
-  .form {
-    margin: auto;
-    p {
-      margin-bottom: 5px;
-      font-size: 25px;
-      font-weight: 700;
-      text-align: left;
-    }
-
-    .text_input {
-      width: 100%;
-      border: none;
-      height: 45px;
-      border-radius: 5px;
-      background: #A7AFBB;
-    }
-  }
-
-  .tick {
-    margin-top: 20px;
-    text-align: left;
-    font-size: 20px;
-    font-weight: 700;
-
-    input {
-      box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.25);
-      margin-right: 10px;
-    }
-  }
-
-  .login_btn {
-    text-align: center;
-
-    button {
-      width:100%;
-      color: white;
-      font-weight: 700;
-      border-radius: 10px;
-      margin: 50px auto 0;
-      height: 45px;
-      background: var(--c-4, #132238);
+  @media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .home {
+      background-image: url('../assets/login/login_bg_md.png');
+      height: 100vh;
+      background-repeat: no-repeat;
+      background-size: cover;
+      div {
+        flex-direction: column;
+      }
+      .left {
+        display: flex;
+        align-self: center;
+        text-align: center;
+        .human {
+          img {
+            display: none;
+          }
+        }
+        .logo {
+          margin-top: 70px;
+        }
+      }
+      .right {
+        margin: 13% auto 0;
+        width: 500px;
+        h1 {
+          color: #132238;
+          font-size: 50px;
+          font-weight: 700;
+          margin-bottom: 40px;
+          text-align: center;
+        }
+        .form {
+          margin: auto;
+          p {
+            margin-bottom: 5px;
+            font-size: 25px;
+            font-weight: 700;
+            text-align: left;
+          }
+          .text_input {
+            width: 100%;
+            border: none;
+            height: 45px;
+            border-radius: 5px;
+            background: #A7AFBB;
+          }
+        }
+        .tick {
+          margin-top: 20px;
+          text-align: left;
+          font-size: 20px;
+          font-weight: 700;
+          input {
+            box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.25);
+            margin-right: 10px;
+          }
+        }
+        .login_btn {
+          text-align: center;
+          button {
+            width: 100%;
+            color: white;
+            font-weight: 700;
+            border-radius: 10px;
+            margin: 50px auto 0;
+            height: 45px;
+            background: var(--c-4, #132238);
+          }
+        }
+      }
     }
   }
-}
-}
-}
-
-@media only screen and (max-width: 767px){
-  .home{
-    background-image: url('../assets/login/login_bg_xs.png');
-  height: 100vh;
-  background-repeat: no-repeat;
-		background-size: cover;
- div{
-  flex-direction: column;
- }
-  .left {
-
-.human{
-  display: none;
-}
-  .logo {
-    text-align: center;
-    margin: 40px 20px 20px;
-  }
-}
-
-.right {
-  margin-top:80px;
-    padding: 0 15%;
-  h1 {
-    color: #132238;
-    font-size: 40px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-
-  .form {
-    margin: auto;
-    p {
-      margin-bottom: 5px;
-      font-size: 20px;
-      font-weight: 700;
-      text-align: left;
-    }
-
-    .text_input {
-      width: 100%;
-      border: none;
-      height: 45px;
-      border-radius: 5px;
-      background: #A7AFBB;
-    }
-  }
-
-  .tick {
-    margin-top: 20px;
-    text-align: left;
-    font-size: 20px;
-    font-weight: 700;
-
-    input {
-      box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.25);
-      margin-right: 10px;
-    }
-  }
-
-  .login_btn {
-    text-align: center;
-
-    button {
-      width: 100%;
-      color: white;
-      font-weight: 700;
-      border-radius: 10px;
-      margin: 20px auto 0;
-      height: 45px;
-      background: var(--c-4, #132238);
+  @media only screen and (max-width: 767px) {
+    .home {
+      background-image: url('../assets/login/login_bg_xs.png');
+      height: 100vh;
+      background-repeat: no-repeat;
+      background-size: cover;
+      div {
+        flex-direction: column;
+      }
+      .left {
+        .human {
+          display: none;
+        }
+        .logo {
+          text-align: center;
+          margin: 40px 20px 20px;
+        }
+      }
+      .right {
+        margin-top: 80px;
+        padding: 0 15%;
+        h1 {
+          color: #132238;
+          font-size: 40px;
+          font-weight: 700;
+          margin-bottom: 20px;
+          text-align: center;
+        }
+        .form {
+          margin: auto;
+          p {
+            margin-bottom: 5px;
+            font-size: 20px;
+            font-weight: 700;
+            text-align: left;
+          }
+          .text_input {
+            width: 100%;
+            border: none;
+            height: 45px;
+            border-radius: 5px;
+            background: #A7AFBB;
+          }
+        }
+        .tick {
+          margin-top: 20px;
+          text-align: left;
+          font-size: 20px;
+          font-weight: 700;
+          input {
+            box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.25);
+            margin-right: 10px;
+          }
+        }
+        .login_btn {
+          text-align: center;
+          button {
+            width: 100%;
+            color: white;
+            font-weight: 700;
+            border-radius: 10px;
+            margin: 20px auto 0;
+            height: 45px;
+            background: var(--c-4, #132238);
+          }
+        }
+      }
     }
   }
-}
- }
-}
-
-
-
-
 </style>

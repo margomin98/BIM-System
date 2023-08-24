@@ -36,6 +36,10 @@ import Rent_Review_Datagrid from "../views/rent_review/Datagrid";
 import Rent_Review_View from "../views/rent_review/View.vue";
 //出庫審核
 
+//資產管理
+import Assets_Datagrid from "../views/assets/Datagrid.vue";
+//資產管理
+
 //系統管理
 import System_Parameter from "../views/system/Parameter";
 import System_Parameter_Edit from "../views/system/Parameter_edit";
@@ -120,6 +124,11 @@ const routes = [
     path: "/store_process_delete",
     name: "Store_Process_Delete",
     component: Store_Process_Delete,
+  }, 
+  {
+    path: "/assets_datagrid",
+    name: "Assets_Datagrid",
+    component: Assets_Datagrid,
   },
   {
     path: "/rent_datagrid",
