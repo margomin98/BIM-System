@@ -211,38 +211,38 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach(async (to, from, next) => {
-  if (to.meta.auth) {
-    const axios = require('axios');
-    try {
-      const request = to.meta.request
-      const response = await axios.get(`/GetParameter/HasPermission?id=${request}`);
-      const data = response.data;
+// router.beforeEach(async (to, from, next) => {
+//   if (to.meta.auth) {
+//     const axios = require('axios');
+//     try {
+//       const request = to.meta.request
+//       const response = await axios.get(`/GetParameter/HasPermission?id=${request}`);
+//       const data = response.data;
 
-      if (data.state === 'success') {
-        if(data.resultList === true) {
-          next();
-        }
-        else {
-          alert('您未有訪問此頁面的權限\n將重新引導至無權限頁面')
-          next({ name: 'authorized' });
-        }
-      } 
-      else if(data.state === 'account_error') {
-        alert(data.messages);
-        next({ name: 'login' });
-      }
-      else {
-        alert(data.messages);
-        next(false);
-      }
-    } catch (error) {
-      // 处理请求错误
-      console.error('Error checking permission:', error);
-      next(false); // 阻止导航继续
-    }
-  } else {
-    next();
-  }
-});
+//       if (data.state === 'success') {
+//         if(data.resultList === true) {
+//           next();
+//         }
+//         else {
+//           alert('您未有訪問此頁面的權限\n將重新引導至無權限頁面')
+//           next({ name: 'authorized' });
+//         }
+//       } 
+//       else if(data.state === 'account_error') {
+//         alert(data.messages);
+//         next({ name: 'login' });
+//       }
+//       else {
+//         alert(data.messages);
+//         next(false);
+//       }
+//     } catch (error) {
+//       // 处理请求错误
+//       console.error('Error checking permission:', error);
+//       next(false); // 阻止导航继续
+//     }
+//   } else {
+//     next();
+//   }
+// });
 export default router;

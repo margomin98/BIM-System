@@ -222,7 +222,8 @@
           unSortIcon: true,
           sortable: true,
           width: 150,
-          suppressMovable: true
+          suppressMovable: true,
+          resizable: true
         },
         {
           headerName: "數量",
@@ -238,7 +239,8 @@
           unSortIcon: true,
           sortable: true,
           flex: 1,
-          suppressMovable: true
+          suppressMovable: true,
+          resizable: true
         }
       ]
       const rowData = ref([]);
