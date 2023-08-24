@@ -3,11 +3,14 @@
 </template>
 
 <script>
-	export default {
-	}
+	export default {}
 </script>
 
 <style lang="scss">
+	.container-fluid {
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+	}
 	body {
 		background-image: url('@/assets/body/bg.png');
 		padding-right: unset !important;
@@ -22,9 +25,10 @@
 	.ag-cell-value {
 		display: flex;
 		align-self: center;
-		div{
-			    display: flex;
-				align-items:center;
+		font-size: 18px;
+		div {
+			display: flex;
+			align-items: center;
 		}
 	}
 	.ag-header-container {
@@ -62,5 +66,10 @@
 		span {
 			color: white
 		}
+	}
+	.info_icon {
+		height: 20px;
+		width: 20px;
+		margin: 0 3px 5px;
 	}
 </style>

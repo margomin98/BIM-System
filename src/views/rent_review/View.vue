@@ -85,7 +85,7 @@
         </div>
       </div>
       <div class="second_content">
-        <ag-grid-vue style="height: 300px" class="ag-theme-alpine list" :columnDefs="columnDefs1" :rowData="rowData1" :defaultColDef="defaultColDef1" :paginationAutoPageSize="true">
+        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :defaultColDef="defaultColDef1" :paginationAutoPageSize="true">
         </ag-grid-vue>
       </div>
       <modal-overlay v-if="modalVisible" @close="closeModal" />
@@ -95,7 +95,7 @@
         </div>
       </div>
       <div class="third_content">
-        <ag-grid-vue style="height: 300px" class="ag-theme-alpine list" :columnDefs="columnDefs2" :rowData="rowData2" :defaultColDef="defaultColDef" :paginationAutoPageSize="true">
+        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs2" :rowData="rowData2" :defaultColDef="defaultColDef" :paginationAutoPageSize="true">
         </ag-grid-vue>
       </div>
       <div class="fixed_info_count">
@@ -198,6 +198,11 @@
       Navbar,
       AgGridVue,
       Storage_add
+    },
+    data() {
+      return {
+        rowHeight: 35,
+      };
     },
     setup() {
       return {

@@ -120,7 +120,7 @@
         <button class="export_btn">匯出</button>
       </div>
     </div>
-    <ag-grid-vue style="height: 300px" class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData"
+    <ag-grid-vue style="height: 380px" class="ag-theme-alpine" :rowHeight="rowHeight" :columnDefs="columnDefs" :rowData="rowData"
       :paginationPageSize="pageSize" :pagination="true">
     </ag-grid-vue>
   </div>
@@ -140,6 +140,11 @@ export default {
     Storage_process_button,
     Delete,
   },
+  data(){
+      return{
+        rowHeight: 35,
+      }
+    },
   setup() {
     const EquipTypeName = ref(''); //設備總類 *必填
     const EquipTypeArray = ref([]); //設備總類陣列 request拿到

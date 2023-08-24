@@ -45,6 +45,7 @@ export default {
 
   :nth-child(1) {
     @include datagrid_view_button;
+    height: 25px;
   }
 
   button:nth-child(1):hover {
@@ -53,7 +54,8 @@ export default {
   }
 
   :nth-child(2) {
-    @include datagrid_edit_button
+    @include datagrid_edit_button;
+    height: 25px;
   }
 
   button:nth-child(2):hover {

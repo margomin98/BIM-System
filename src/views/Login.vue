@@ -94,7 +94,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.left {
+
+@media only screen and (min-width: 1200px){
+  .home {
+  background-image: url('../assets/login/login_bg.png');
+  height: 100vh;
+  background-repeat: no-repeat;
+		background-size: cover;
+
+  .left {
   display: flex;
   flex-direction: column;
 
@@ -105,12 +113,15 @@ export default {
 }
 
 .right {
-  padding-right: 10%;
   margin-top: 13%;
 
+  padding:0 18% 0 8%;
   h1 {
     color: #132238;
-    font-size: 65px;
+    font-size: 60px;
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
     font-weight: 700;
     margin-bottom: 40px;
     text-align: center;
@@ -118,8 +129,6 @@ export default {
 
   .form {
     margin: auto;
-    width: 350px;
-
     p {
       margin-bottom: 5px;
       font-size: 25px;
@@ -152,7 +161,7 @@ export default {
     text-align: center;
 
     button {
-      width: 355px;
+      width:100%;
       color: white;
       font-weight: 700;
       border-radius: 10px;
@@ -162,9 +171,168 @@ export default {
     }
   }
 }
-
-.home {
-  background-image: url('../assets/login/login_bg.png');
-  height: 100vh;
 }
+}
+
+
+@media only screen and (min-width: 768px) and (max-width: 1199px){
+  .home{
+    background-image: url('../assets/login/login_bg.png');
+  height: 100vh;
+  background-repeat: no-repeat;
+		background-size: cover;
+  .left {
+  display: flex;
+  flex-direction: column;
+.human{
+  img{
+    width: 80%;
+  }
+}
+  .logo {
+    margin: 20px;
+    text-align: left;
+  }
+}
+
+.right {
+  margin-top: 13%;
+
+  padding:0 5% 0;
+  h1 {
+    color: #132238;
+    font-size: 50px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .form {
+    margin: auto;
+    p {
+      margin-bottom: 5px;
+      font-size: 25px;
+      font-weight: 700;
+      text-align: left;
+    }
+
+    .text_input {
+      width: 100%;
+      border: none;
+      height: 45px;
+      border-radius: 5px;
+      background: #A7AFBB;
+    }
+  }
+
+  .tick {
+    margin-top: 20px;
+    text-align: left;
+    font-size: 20px;
+    font-weight: 700;
+
+    input {
+      box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.25);
+      margin-right: 10px;
+    }
+  }
+
+  .login_btn {
+    text-align: center;
+
+    button {
+      width:100%;
+      color: white;
+      font-weight: 700;
+      border-radius: 10px;
+      margin: 50px auto 0;
+      height: 45px;
+      background: var(--c-4, #132238);
+    }
+  }
+}
+}
+}
+
+@media only screen and (max-width: 767px){
+  .home{
+    background-image: url('../assets/login/login_bg_xs.png');
+  height: 100vh;
+  background-repeat: no-repeat;
+		background-size: cover;
+ div{
+  flex-direction: column;
+ }
+  .left {
+
+.human{
+  display: none;
+}
+  .logo {
+    text-align: center;
+    margin: 40px 20px 20px;
+  }
+}
+
+.right {
+  margin-top:80px;
+    padding: 0 15%;
+  h1 {
+    color: #132238;
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .form {
+    margin: auto;
+    p {
+      margin-bottom: 5px;
+      font-size: 20px;
+      font-weight: 700;
+      text-align: left;
+    }
+
+    .text_input {
+      width: 100%;
+      border: none;
+      height: 45px;
+      border-radius: 5px;
+      background: #A7AFBB;
+    }
+  }
+
+  .tick {
+    margin-top: 20px;
+    text-align: left;
+    font-size: 20px;
+    font-weight: 700;
+
+    input {
+      box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.25);
+      margin-right: 10px;
+    }
+  }
+
+  .login_btn {
+    text-align: center;
+
+    button {
+      width: 100%;
+      color: white;
+      font-weight: 700;
+      border-radius: 10px;
+      margin: 20px auto 0;
+      height: 45px;
+      background: var(--c-4, #132238);
+    }
+  }
+}
+ }
+}
+
+
+
+
 </style>

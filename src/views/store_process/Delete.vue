@@ -2,9 +2,14 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>資產入庫作業</h1>
+      <h1>刪除項目</h1>
     </div>
     <div class="info_wrap col">
+      <div class="warn">
+        <h4>
+          確定刪除以下項目嗎？
+        </h4>
+      </div>
       <div class="fixed_info">
         <div>
           <p>申請人員: {{ details.Applicant }}</p>
@@ -163,8 +168,8 @@
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button v-for="tab in parseInt(tabNumber)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab" :aria-selected="tab === 0">
-                  {{ tab }}
-                </button>
+                {{ tab }}
+              </button>
           </div>
         </nav>
         <div v-if="formData.length > 0" class="tab-content" id="nav-tabContent">
@@ -261,6 +266,7 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
+        <button class="delete_btn">刪除</button>
       </div>
     </div>
   </div>
@@ -395,16 +401,31 @@
     flex-wrap: nowrap;
     border: none;
   }
-   ::-webkit-scrollbar {
+  ::-webkit-scrollbar {
     height: 6px;
   }
-   ::-webkit-scrollbar-thumb {
+  ::-webkit-scrollbar-thumb {
     border-radius: 5px;
     background-color: rgb(176, 175, 175);
     border: 1px solid rgb(86, 85, 85);
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
+      .warn {
+        text-align: center;
+        padding: 10px 0;
+        background: #9f0000;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        h4 {
+          color: white;
+          margin-bottom: 0;
+          font-weight: 700;
+          &::before {
+            content: "\26A0";
+          }
+        }
+      }
       .readonly_box {
         @include readonly_box;
       }
@@ -460,13 +481,30 @@
           display: flex;
           margin-top: 30px;
           justify-content: center;
-          gap: 20px;
           margin-bottom: 5%;
           button {
             &:nth-child(1) {
               @include back_to_previous_btn;
               &:hover {
                 background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              background: var(--c-5, #E94B4B);
+              justify-content: center;
+              align-items: center;
+              display: inline-flex;
+              border-radius: 10px;
+              height: 40px;
+              width: 90px;
+              color: #FFF;
+              text-align: center;
+              font-size: 20px;
+              font-weight: 700;
+              border: none;
+              margin: 0 10px;
+              &:hover {
+                background-color: #a51e1e;
               }
             }
           }
@@ -551,6 +589,21 @@
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
+      .warn {
+        text-align: center;
+        padding: 10px 0;
+        background: #9f0000;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        h4 {
+          color: white;
+          margin-bottom: 0;
+          font-weight: 700;
+          &::before {
+            content: "\26A0";
+          }
+        }
+      }
       .readonly_box {
         @include readonly_box;
       }
@@ -606,13 +659,30 @@
           display: flex;
           margin-top: 30px;
           justify-content: center;
-          gap: 20px;
           margin-bottom: 5%;
           button {
             &:nth-child(1) {
               @include back_to_previous_btn;
               &:hover {
                 background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              background: var(--c-5, #E94B4B);
+              justify-content: center;
+              align-items: center;
+              display: inline-flex;
+              border-radius: 10px;
+              height: 40px;
+              width: 90px;
+              color: #FFF;
+              text-align: center;
+              font-size: 20px;
+              font-weight: 700;
+              border: none;
+              margin: 0 10px;
+              &:hover {
+                background-color: #a51e1e;
               }
             }
           }
@@ -697,6 +767,21 @@
   }
   @media only screen and (max-width: 767px) {
     .main_section {
+      .warn {
+        text-align: center;
+        padding: 10px 0;
+        background: #9f0000;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        h4 {
+          color: white;
+          margin-bottom: 0;
+          font-weight: 700;
+          &::before {
+            content: "\26A0";
+          }
+        }
+      }
       .readonly_box {
         @include readonly_box;
       }
@@ -762,7 +847,6 @@
           display: flex;
           margin-top: 30px;
           justify-content: center;
-          gap: 20px;
           margin-bottom: 5%;
           button {
             &:nth-child(1) {
@@ -770,6 +854,24 @@
               padding: 10px;
               &:hover {
                 background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              background: var(--c-5, #E94B4B);
+              justify-content: center;
+              align-items: center;
+              display: inline-flex;
+              border-radius: 10px;
+              height: 40px;
+              width: 90px;
+              color: #FFF;
+              text-align: center;
+              font-size: 20px;
+              font-weight: 700;
+              border: none;
+              margin: 0 10px;
+              &:hover {
+                background-color: #a51e1e;
               }
             }
           }

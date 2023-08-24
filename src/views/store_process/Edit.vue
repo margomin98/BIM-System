@@ -74,7 +74,8 @@
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend">數量：</div>
+              <div class="input-group-prepend info"><img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"> 數量：
+              </div>
               <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Count" />
             </div>
           </div>
@@ -88,7 +89,7 @@
         <div v-if="details.IsConsumable" class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend">包裝數量：</div>
+              <div class="input-group-prepend info"><img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">包裝數量：</div>
               <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.PackageNum" />
             </div>
           </div>
@@ -162,8 +163,8 @@
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button v-for="tab in parseInt(tabNumber)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab" :aria-selected="tab === 0">
-                {{ tab }}
-              </button>
+                    {{ tab }}
+                  </button>
           </div>
         </nav>
         <div v-if="formData.length > 0" class="tab-content" id="nav-tabContent">
@@ -186,8 +187,8 @@
                   <div class="input-group-prepend"><span>*</span>區域：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName(index)">
-                        {{ item.itemAreaName || '請選擇' }}
-                      </button>
+                            {{ item.itemAreaName || '請選擇' }}
+                          </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="(item, area_index) in item.AreaArray" :key="area_index" class="dropdown-item" @click="selectArea(index, `${item}`)">
                         {{ item }}</p>
@@ -200,8 +201,8 @@
                   <div class="input-group-prepend"><span>*</span> 櫃位：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="item.itemAreaName === null || item.itemAreaName === ''">
-                        {{ item.itemLayerName || item.LayerInit }}
-                      </button>
+                            {{ item.itemLayerName || item.LayerInit }}
+                          </button>
                     <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                       <p v-for="(item, layer_index) in item.LayerArray" :key="layer_index" class="dropdown-item" @click="selectLayer(index, `${item}`)">{{ item }}</p>
                     </div>
@@ -781,23 +782,20 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-
-.nav {
-  overflow-x: scroll;
-  overflow-y: hidden;
-  flex-wrap: nowrap;
-}
-
-::-webkit-scrollbar {
-
-height: 6px;
-}
-::-webkit-scrollbar-thumb {
-border-radius: 5px;
-      background-color: rgb(176, 175, 175);
-      border: 1px solid rgb(86, 85, 85);
-}
-
+  .nav {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    border: none;
+  }
+   ::-webkit-scrollbar {
+    height: 6px;
+  }
+   ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: rgb(176, 175, 175);
+    border: 1px solid rgb(86, 85, 85);
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .readonly_box {
@@ -1000,12 +998,6 @@ border-radius: 5px;
                   @include choose_file_btn;
                   &:hover {
                     background: #3f608f;
-                  }
-                }
-                .upload_btn {
-                  @include upload_file_btn;
-                  &:hover {
-                    background: #2f507e;
                   }
                 }
               }
@@ -1214,12 +1206,6 @@ border-radius: 5px;
                     background: #3f608f;
                   }
                 }
-                .upload_btn {
-                  @include upload_file_btn;
-                  &:hover {
-                    background: #2f507e;
-                  }
-                }
               }
             }
           }
@@ -1283,6 +1269,11 @@ border-radius: 5px;
               font-size: 20px;
               width: 100%;
             }
+          }
+          .info {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
           }
         }
         .button_wrap {
@@ -1439,12 +1430,6 @@ border-radius: 5px;
                   @include choose_file_btn;
                   &:hover {
                     background: #3f608f;
-                  }
-                }
-                .upload_btn {
-                  @include upload_file_btn;
-                  &:hover {
-                    background: #2f507e;
                   }
                 }
               }

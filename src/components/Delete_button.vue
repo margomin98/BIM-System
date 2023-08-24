@@ -26,6 +26,7 @@
 
 .btn{
   @include delete_button;
+  height: 25px;
    &:hover {
       background: #FF7272
     }
@@ -33,6 +34,7 @@
 
 .disabled_btn{
   @include disabled_btn;
+  height: 25px;
   width: 50px;
   &:hover{
       @include disabled_btn;

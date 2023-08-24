@@ -3,10 +3,15 @@
   <div class="main_section">
     <div class="title col">
       <h1>
-        檢視入庫填報
+        刪除項目
       </h1>
     </div>
     <div class="info_wrap col">
+      <div class="warn">
+        <h4>
+          確定刪除以下項目嗎？
+        </h4>
+      </div>
       <div class="fixed_info">
         <div>
           <p>
@@ -174,6 +179,7 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
+        <button class="delete_btn">刪除</button>
       </div>
     </div>
   </div>
@@ -320,6 +326,21 @@
   // }
   @media only screen and (min-width: 1200px) {
     .main_section {
+      .warn {
+        text-align: center;
+        padding: 10px 0;
+        background: #9f0000;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        h4 {
+          color: white;
+          margin-bottom: 0;
+          font-weight: 700;
+          &::before {
+            content: "\26A0";
+          }
+        }
+      }
       .readonly_box {
         @include readonly_box;
       }
@@ -407,6 +428,24 @@
                 background-color: #5d85bb;
               }
             }
+            &:nth-child(2) {
+              background: var(--c-5, #E94B4B);
+              justify-content: center;
+              align-items: center;
+              display: inline-flex;
+              border-radius: 10px;
+              height: 40px;
+              width: 90px;
+              color: #FFF;
+              text-align: center;
+              font-size: 20px;
+              font-weight: 700;
+              border: none;
+              margin: 0 10px;
+              &:hover {
+                background-color: #a51e1e;
+              }
+            }
           }
         }
       }
@@ -414,6 +453,21 @@
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
+      .warn {
+        text-align: center;
+        padding: 10px 0;
+        background: #9f0000;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        h4 {
+          color: white;
+          margin-bottom: 0;
+          font-weight: 700;
+          &::before {
+            content: "\26A0";
+          }
+        }
+      }
       .readonly_box {
         @include readonly_box;
       }
@@ -504,6 +558,24 @@
                 background-color: #5d85bb;
               }
             }
+            &:nth-child(2) {
+              background: var(--c-5, #E94B4B);
+              justify-content: center;
+              align-items: center;
+              display: inline-flex;
+              border-radius: 10px;
+              height: 40px;
+              width: 90px;
+              color: #FFF;
+              text-align: center;
+              font-size: 20px;
+              font-weight: 700;
+              border: none;
+              margin: 0 10px;
+              &:hover {
+                background-color: #a51e1e;
+              }
+            }
           }
         }
         #unit,
@@ -515,6 +587,21 @@
   }
   @media only screen and (max-width: 767px) {
     .main_section {
+      .warn {
+        text-align: center;
+        padding: 10px 0;
+        background: #9f0000;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        h4 {
+          color: white;
+          margin-bottom: 0;
+          font-weight: 700;
+          &::before {
+            content: "\26A0";
+          }
+        }
+      }
       .readonly_box {
         @include readonly_box;
       }
@@ -612,6 +699,24 @@
               @include back_to_previous_btn;
               &:hover {
                 background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              background: var(--c-5, #E94B4B);
+              justify-content: center;
+              align-items: center;
+              display: inline-flex;
+              border-radius: 10px;
+              height: 40px;
+              width: 90px;
+              color: #FFF;
+              text-align: center;
+              font-size: 20px;
+              font-weight: 700;
+              border: none;
+              margin: 0 10px;
+              &:hover {
+                background-color: #a51e1e;
               }
             }
           }

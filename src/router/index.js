@@ -7,6 +7,7 @@ import Store_New from "../views/store/New.vue";
 import Store_Edit from "../views/store/Edit.vue";
 import Store_View from "../views/store/View.vue";
 import Store_Return from "../views/store/Return.vue";
+import Store_Delete from "../views/store/Delete";
 //入庫填報
 
 //入庫作業
@@ -14,6 +15,7 @@ import Store_Process_Datagrid from "../views/store_process/Datagrid.vue";
 import Store_Process_View from "../views/store_process/View.vue";
 import Store_Process_Confirm from "../views/store_process/Confirm.vue";
 import Store_Process_Edit from "../views/store_process/Edit.vue";
+import Store_Process_Delete from "../views/store_process/Delete.vue";
 //入庫作業
 
 //出庫填報
@@ -43,6 +45,8 @@ import Authority from "../views/system/Authority";
 //權限不足
 import Authorized from "../views/Authorized";
 //權限不足
+
+
 
 const routes = [
   {
@@ -88,6 +92,11 @@ const routes = [
     component: Store_Return,
   },
   {
+    path: "/store_delete",
+    name: "Store_delete",
+    component: Store_Delete,
+  },
+  {
     path: "/store_process_datagrid",
     name: "Store_Process_Datagrid",
     component: Store_Process_Datagrid,
@@ -106,6 +115,11 @@ const routes = [
     path: "/store_process_edit",
     name: "Store_Process_Edit",
     component: Store_Process_Edit,
+  },
+  {
+    path: "/store_process_delete",
+    name: "Store_Process_Delete",
+    component: Store_Process_Delete,
   },
   {
     path: "/rent_datagrid",
