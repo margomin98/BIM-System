@@ -59,8 +59,8 @@
               </p>
             </label>
             <div class="input-group">
-              <input type="text" class="form-control" id="project_id" v-model="myForm.ProjectCode">
-              <button class="btn code_search" type="button" @click="getProjectName">搜索</button>
+              <input type="text" class="form-control" id="project_id" placeholder="代碼為六碼數字" v-model="myForm.ProjectCode">
+              <button class="btn code_search" type="button" @click="">搜索</button>
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap">
@@ -88,13 +88,13 @@
       </form>
       <div class="fixed_info">
         <div>
-          <p>填寫項目</p>
+          <p>填寫項目(請輸入必填子項目後再新增)</p>
         </div>
       </div>
       <div class='second_content'>
         <div class='wrap d-flex'>
           <div class='col-xl-3 col-lg-3 col-md-3 col-12' style='padding-left:0'>
-            <p>設備總類</p>
+            <p><span>*</span>設備總類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
@@ -107,7 +107,7 @@
             </div>
           </div>
           <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-            <p>設備分類</p>
+            <p><span>*</span>設備分類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(myForm.EquipTypeName !== '') }">
@@ -120,13 +120,13 @@
             </div>
           </div>
           <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-            <p>物品名稱</p>
+            <p><span>*</span>物品名稱</p>
             <div class="number-input-box">
-              <input class="input-number" type="text" v-model="myForm.ProductName" />
+              <input class="input-number" type="text" placeholder="最多輸入20字" v-model="myForm.ProductName" />
             </div>
           </div>
           <div class="col-xl-3 col-lg-3 col-md-3 col-12">
-            <p>數量</p>
+            <p><span>*</span>數量</p>
             <div class="number-input-box">
               <input class="input-number" type="number" v-model="myForm.Number" min="1" />
             </div>
@@ -149,12 +149,13 @@
       </div>
       <div class="fixed_info">
         <div>
-          <p>資產出庫項目</p>
+          <p><span>*</span>資產出庫項目(請至少新增一項)</p>
         </div>
       </div>
       <div class='third_content'>
         <ag-grid-vue style="width: 100%; height:300px; background-color: #402a2a;" id='grid_table' class="ag-theme-alpine"
-          :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true" :pagination="true">
+          @grid-ready="onGridReady" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="5"
+          :pagination="true">
         </ag-grid-vue>
       </div>
     </div>
@@ -169,7 +170,7 @@
 import {
   AgGridVue
 } from "ag-grid-vue3";
-import Delete from "@/components/Delete_button";
+import Delete from "@/components/Rent_New_Delete_button";
 import Navbar from '@/components/Navbar.vue';
 import {
   onMounted,
@@ -184,6 +185,7 @@ export default {
     Delete
   },
   setup() {
+    const gridApi = ref(null);
     const myForm = reactive({
       ApplicationDate: '',
       Applicant: '',
@@ -247,6 +249,7 @@ export default {
       suppressMovable: true
     }]
     const rowData = ref([]);
+
     onMounted(() => {
       getApplicationInfo();
       myForm.ApplicationDate = getDate();
@@ -323,10 +326,10 @@ export default {
       try {
         const data = response.data;
         console.log(data);
-        if(data.state === 'success') {
+        if (data.state === 'success') {
           myForm.ProjectName = data.resultList;
         }
-        else if(data.state === 'account_error') {
+        else if (data.state === 'account_error') {
           alert(data.messages);
           router.push('/');
         }
@@ -347,10 +350,55 @@ export default {
       myForm.EquipCategoryName = item;
     }
     async function submit() {
-      // 檢查必填項目- 1.用途 2.專案代碼 3.出庫項目
-      alert();
+      // 檢查必填項目: 1.用途 2.專案代碼 3.出庫項目(至少一項)
+      if (!myForm.Use || !myForm.ProjectCode || rowData.value.length === 0) {
+        alert('請輸入必填項目');
+        return
+      }
+      // 檢查專案代碼是否為6碼數字
+      if (!/^\d{6}$/.test(myForm.ProjectCode)) {
+        alert('專案代碼格式錯誤');
+        return
+      }
+      const form = new FormData();
+      const formFields = {
+        'Use': myForm.Use,
+        'ProjectCode': myForm.ProjectCode,
+        'Description': myForm.Description,
+      };
+      for (const fieldName in formFields) {
+        if (formFields[fieldName] !== '' && formFields[fieldName] !== null) {
+          form.append(fieldName, formFields[fieldName]);
+          // console.log(form.get(`${fieldName}`));
+        }
+      }
+      for (let i = 0; i < rowData.value.length; i++) {
+        // console.log(rowData.value[i]);
+        form.append('itemList', rowData.value[i]);
+      }
+      // console.log(form.getAll('itemList'));
+      const axios = require('axios');
+      const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/NewAssetsOut',form);
+      try {
+        const data = response.data;
+        if(data.state === 'success') {
+          let msg = data.messages + '\n' ;
+          msg+= '單號為:' + data.resultList.AO_ID;
+          alert(msg);
+        }
+        else if(data.state === 'error') {
+          alert(data.messages);
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
     function insertItemList() {
+      //檢查必填子項目
+      if(!myForm.EquipTypeName || !myForm.EquipCategoryName || !myForm.ProductName || myForm.Number < 1) {
+        alert('請輸入必填子項目');
+        return
+      }
       rowData.value.push({
         EquipTypeName: myForm.EquipTypeName,
         EquipCategoryName: myForm.EquipCategoryName,
@@ -358,7 +406,26 @@ export default {
         Number: myForm.Number,
         RequiredSpec: myForm.RequiredSpec,
       });
-      console.log(rowData);
+      console.log(gridApi.value.setRowData);
+      setTimeout(() => {
+        gridApi.value.setRowData(rowData.value);
+      }, 0);
+      //清空子項目
+      myForm.EquipTypeName = '';
+      myForm.EquipCategoryName = '';
+      myForm.EquipCategoryInit = '請先選擇設備總類';
+      myForm.ProductName = '';
+      myForm.Number = 1;
+      myForm.RequiredSpec = '';
+    }
+
+    const onGridReady = (params) => {
+      // 賦值 gridApi
+      gridApi.value = params.api;
+    };
+
+    function goBack() {
+      window.history.back();
     }
     return {
       myForm,
@@ -370,13 +437,10 @@ export default {
       getProjectName,
       submit,
       insertItemList,
+      onGridReady,
+      goBack,
     };
   },
-  data() {
-    return {
-      count: 1,
-    };
-  }
 };
 </script>
 
