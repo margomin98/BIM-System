@@ -697,7 +697,7 @@ export default {
       }
 
       .form-control {
-        height: 50px !important;
+        height: 100%;
         border-radius: 0;
       }
     }
@@ -956,7 +956,7 @@ export default {
       }
 
       .form-control {
-        height: 50px !important;
+        height: 100% ;
         border-radius: 0;
       }
     }
