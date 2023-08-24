@@ -49,7 +49,7 @@
                 </div>
               </div>
               <div class="col-xl-3 col-lg-3 col-md-3 col-12">
-                <p>數量</p>
+                <p>數量 <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"></p>
                 <div class="number-input-box">
                   <input class="input-number" type="number" v-model="count" min="1" />
                 </div>
@@ -76,7 +76,7 @@
               <p>目前資產庫存</p>
             </div>
           </div>
-          <ag-grid-vue style="height: 300px" class="ag-theme-alpine list" :columnDefs="columnDefs3" :rowData="rowData3" :defaultColDef="defaultColDef3" :paginationAutoPageSize="true">
+          <ag-grid-vue style="height: 380px" class="ag-theme-alpine list"  :rowHeight="rowHeight" :columnDefs="columnDefs3" :rowData="rowData3" :defaultColDef="defaultColDef3" :paginationAutoPageSize="true">
           </ag-grid-vue>
         </div>
       </div>
@@ -170,7 +170,7 @@
         </div>
       </div>
       <div class="second_content">
-        <ag-grid-vue style="height: 300px" class="ag-theme-alpine list" :columnDefs="columnDefs1" :rowData="rowData1" :defaultColDef="defaultColDef1" :paginationAutoPageSize="true">
+        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list"  :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :defaultColDef="defaultColDef1" :paginationAutoPageSize="true">
         </ag-grid-vue>
       </div>
       <modal-overlay v-if="modalVisible" @close="closeModal" />
@@ -180,7 +180,7 @@
         </div>
       </div>
       <div class="third_content">
-        <ag-grid-vue style="height: 300px" class="ag-theme-alpine list" :columnDefs="columnDefs2" :rowData="rowData2" :defaultColDef="defaultColDef" :paginationAutoPageSize="true">
+        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list"  :rowHeight="rowHeight" :columnDefs="columnDefs2" :rowData="rowData2" :defaultColDef="defaultColDef" :paginationAutoPageSize="true">
         </ag-grid-vue>
       </div>
       <div class="fixed_info_count">
@@ -581,6 +581,7 @@
     data() {
       return {
         count: 1,
+        rowHeight: 35,
       };
     },
   };

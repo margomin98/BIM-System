@@ -62,6 +62,7 @@ export default {
 
   :nth-child(1) {
     @include datagrid_view_button;
+    height: 25px;
   }
 
   button:nth-child(1):hover {
@@ -71,6 +72,7 @@ export default {
 
   .btn_edit {
     @include datagrid_edit_button;
+    height: 25px;
     &:hover {
       background: #3B6162;
       color: white
@@ -78,6 +80,7 @@ export default {
   }
   .disabled {
     @include disabled_btn;
+    height: 25px;
     width: 50px;
      :hover {
       @include disabled_btn;

@@ -15,12 +15,12 @@
   @import "@/assets/css/global.scss";
   button {
     @include empty_btn;
-    height: 30px;
+    height: 25px;
     width: 80px;
     font-size: 15px;
     &:hover {
       background-color: #5e7aa2;
-      height: 30px;
+      height: 25px;
       width: 80px;
       font-size: 15px;
     }

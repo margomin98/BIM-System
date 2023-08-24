@@ -3,7 +3,7 @@
   <div class="main_section">
     <div class="title col">
       <h1>
-      編輯資產出庫填報
+        編輯資產出庫填報
       </h1>
     </div>
     <div class="info_wrap col">
@@ -14,7 +14,7 @@
         <div>
           <p>申請日期：2022/02/20</p>
         </div>
-          <div>
+        <div>
           <p>單號：1458613</p>
         </div>
       </div>
@@ -22,9 +22,9 @@
         <div class="row g-0">
           <div class="col d-flex wrap column_section">
             <label for="inputTitle1" class="form-label use">
-                                      <p>
-                                      <span>*</span>用&ensp;&ensp;&ensp;&ensp;途</p>
-                                      </label>
+                                        <p>
+                                        <span>*</span>用&ensp;&ensp;&ensp;&ensp;途</p>
+                                        </label>
             <div class="option">
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="checkbox1">
@@ -55,33 +55,33 @@
         </div>
         <div class="row g-0">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap column_section">
-            <label for="inputWithButton" class="form-label" >
-                                      <p>
-                                      <span>*</span>專案代碼
-                                      </p>
-                                      </label>
+            <label for="inputWithButton" class="form-label">
+                                        <p>
+                                        <span>*</span>專案代碼
+                                        </p>
+                                        </label>
             <div class="input-group">
-          <input type="text" class="form-control" id="inputWithTitle">
+              <input type="text" class="form-control" id="inputWithTitle">
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label" id='project_name'> 
-                                      <p>
-                                      專案名稱
-                                      </p>
-                                      </label>
+                                        <p>
+                                        專案名稱
+                                        </p>
+                                        </label>
             <div class="input-group" id='readonly_box'>
-             <p class='readonly_box' readonly>14564</p>
+              <p class='readonly_box' readonly>14564</p>
             </div>
           </div>
         </div>
         <div class="row g-0">
           <div class="col d-flex wrap column_section" style='border:none'>
             <label for="inputTextarea" class="form-label">
-                                      <p>
-                                      說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明
-                                      </p>
-                                      </label>
+                                        <p>
+                                        說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明
+                                        </p>
+                                        </label>
             <textarea class="form-control" id="inputTextarea" rows="1" placeholder='請填寫說明，最多100字'></textarea>
           </div>
         </div>
@@ -97,8 +97,8 @@
             <p><span>*</span>設備總類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                              {{ selectedItem || "請選擇" }}
-                                            </button>
+                                                {{ selectedItem || "請選擇" }}
+                                              </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
                 <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
@@ -109,8 +109,8 @@
             <p><span>*</span>設備分類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                              {{ selectedItem || "請選擇" }}
-                                            </button>
+                                                {{ selectedItem || "請選擇" }}
+                                              </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
                 <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
@@ -121,8 +121,8 @@
             <p><span>*</span>物品名稱</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                              {{ selectedItem || "請選擇" }}
-                                            </button>
+                                                {{ selectedItem || "請選擇" }}
+                                              </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
                 <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
@@ -130,7 +130,7 @@
             </div>
           </div>
           <div class="col-xl-3 col-lg-3 col-md-3 col-12">
-            <p><span>*</span>數量</p>
+            <p><span>*</span>數量<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"></p>
             <div class="number-input-box">
               <input class="input-number" type="number" v-model="count" min="1" />
             </div>
@@ -154,7 +154,7 @@
         </div>
       </div>
       <div class='third_content'>
-        <ag-grid-vue style="width: 100%; height:300px; background-color: #402a2a;" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true">
+        <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true">
         </ag-grid-vue>
       </div>
     </div>
@@ -266,6 +266,7 @@
     data() {
       return {
         count: 1,
+        rowHeight: 35,
       };
     }
   };
@@ -273,7 +274,7 @@
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
-  .readonly_box{
+  .readonly_box {
     @include readonly_box;
     width: 100%;
     height: 100%;
@@ -307,8 +308,8 @@
             background-color: #5d85bd;
           }
         }
-        #readonly_box{
-          border-left:black 1px solid;
+        #readonly_box {
+          border-left: black 1px solid;
         }
         .input-group-prepend {
           width: 100% !important;
@@ -418,23 +419,23 @@
             margin-left: 10px;
           }
           .form-control {
-    
-    border-left: 1px solid black;
+            border-left: 1px solid black;
           }
-         
           .wrap {
             background: white;
             border-bottom: 0.5px solid black;
             align-items: center;
-            label.use,#project_id {
+            label.use,
+            #project_id {
               border-right: 1px solid black;
             }
             .option {
               display: flex
             }
-          #project_name,#project_id {
-            border-left: 1px solid black;
-          } 
+            #project_name,
+            #project_id {
+              border-left: 1px solid black;
+            }
           }
           .form-label {
             font-weight: 700;
@@ -453,8 +454,8 @@
             }
           }
         }
-        .input-group{
-          height:100%;
+        .input-group {
+          height: 100%;
         }
         .input-group-prepend {
           color: white;
@@ -470,7 +471,7 @@
           @include count_btn;
         }
         .form-control {
-          height: 50px !important;
+          height: 100%;
           border-radius: 0;
         }
       }
@@ -521,10 +522,10 @@
           &:hover {
             background-color: #5d85bd;
           }
-         
-        } #readonly_box{
-            border-left:1px solid black;
-          }
+        }
+        #readonly_box {
+          border-left: 1px solid black;
+        }
         .input-group-prepend {
           width: 100% !important;
           text-align: center !important;
@@ -633,20 +634,20 @@
             margin-left: 10px;
           }
           .form-control {
-    border-left: 1px solid black;
+            border-left: 1px solid black;
           }
           .wrap {
             background: white;
             border-bottom: 0.5px solid black;
             align-items: center;
-            label.use ,#project_id {
+            label.use,
+            #project_id {
               border-right: 1px solid black;
             }
             .option {
               display: flex
             }
-         
-              #project_name {
+            #project_name {
               border-left: 1px solid black
             }
           }
@@ -667,8 +668,8 @@
             }
           }
         }
-        .input-group{
-              height: 100%;
+        .input-group {
+          height: 100%;
         }
         .input-group-prepend {
           color: white;
@@ -684,7 +685,7 @@
           @include count_btn;
         }
         .form-control {
-          height: 50px !important;
+          height: 100%;
           border-radius: 0;
         }
       }
@@ -781,7 +782,6 @@
           .wrap {
             padding: 20px 20px 0;
             flex-direction: column;
-          
             .number-input-box {
               color: black;
               .input-number {
@@ -837,8 +837,8 @@
         }
         .column_section {
           flex-direction: column;
-          p{
-            text-align:center;
+          p {
+            text-align: center;
           }
           #inputWithButton {
             border-right: 1px solid black;
@@ -895,15 +895,14 @@
               grid-auto-flow: row;
               grid-template-areas: ". . ." ". . .";
               white-space: nowrap;
-              justify-items:right;
-              width:100%;
-
-              div{
-                       width:90px;
+              justify-items: right;
+              width: 100%;
+              div {
+                width: 90px;
               }
             }
-              #project_id {
-              border-right:black solid 1px
+            #project_id {
+              border-right: black solid 1px
             }
           }
           .form-label {

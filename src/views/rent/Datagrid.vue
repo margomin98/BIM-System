@@ -79,7 +79,7 @@
       </div>
     </div>
     <div style="width: 100%">
-      <ag-grid-vue style="width: 100%; height:300px; background-color: #402a2a;" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true">
+      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;margin-bottom:50px" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true">
       </ag-grid-vue>
     </div>
   </div>
@@ -99,6 +99,7 @@
       Button,
       Delete
     },
+ 
     setup() {
       return {
         columnDefs: [{
@@ -169,7 +170,33 @@
             cellRenderer: "Delete",
           }
         ],
-        rowData: [{
+        rowData: [
+          {
+            make: "Toyota",
+            model: "Celica",
+            price: 35000
+          },
+          {
+            make: "Ford",
+            model: "Mondeo",
+            price: 32000
+          },
+          {
+            make: "Toyota",
+            model: "Celica",
+            price: 35000
+          },
+          {
+            make: "Ford",
+            model: "Mondeo",
+            price: 32000
+          },
+          {
+            make: "Porsche",
+            model: "Boxster",
+            price: 72000
+          },
+          {
             make: "Toyota",
             model: "Celica",
             price: 35000
@@ -199,6 +226,7 @@
     },
     data() {
       return {
+        rowHeight: 35,
         selectedItem: "",
         selectedLocateItem: "",
         selectedAreaItem: "",

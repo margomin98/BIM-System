@@ -16,63 +16,62 @@
     </div>
     <div class="container-fluid datagrid_section">
       <div class="content">
-      <div class='row'>
-        
-     
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>設備總類</p>
-          <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                {{ EquipTypeName || '請選擇' }}
-              </button>
-            <div class="dropdown-menu" aria-labelledby="typeDropdown">
-              <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
+        <div class='row'>
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+            <p>設備總類</p>
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
+                  {{ EquipTypeName || '請選擇' }}
+                </button>
+              <div class="dropdown-menu" aria-labelledby="typeDropdown">
+                <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+            <p>設備分類</p>
+            <div class="dropdown">
+              <button style='  overflow: hidden;text-overflow: ellipsis;white-space: nowrap' class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(EquipTypeName !== '') }">
+                  {{ EquipCategoryName || EquipCategoryInit }}
+                </button>
+              <div class="dropdown-menu" aria-labelledby="categoryDropdown">
+                <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+            <p>物品名稱</p>
+            <input type="text" v-model="AssetName" />
+          </div>
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+            <p>狀態</p>
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{ Status || "請選擇" }}
+                </button>
+              <div class="dropdown-menu" aria-labelledby="statusDropdown">
+                <p v-for="(item, index) in StatusArray" :key="index" class="dropdown-item" @click="selectStatus(`${item}`)">
+                  {{ item }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+            <p>申請入庫日期(起)</p>
+            <div class="date-selector">
+              <div class="input-container">
+                <input type="date" v-model="StartDate" class="date-input" />
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12 flex-col">
+            <p>申請入庫日期(迄)</p>
+            <div class="date-selector">
+              <div class="input-container">
+                <input type="date" v-model="EndDate" class="date-input" />
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>設備分類</p>
-          <div class="dropdown">
-            <button style='  overflow: hidden;text-overflow: ellipsis;white-space: nowrap' class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(EquipTypeName !== '') }">
-                {{ EquipCategoryName || EquipCategoryInit }}
-              </button>
-            <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-              <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>物品名稱</p>
-          <input type="text" v-model="AssetName" />
-        </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>狀態</p>
-          <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ Status || "請選擇" }}
-              </button>
-            <div class="dropdown-menu" aria-labelledby="statusDropdown">
-              <p v-for="(item, index) in StatusArray" :key="index" class="dropdown-item" @click="selectStatus(`${item}`)">
-                {{ item }}</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>申請入庫日期(起)</p>
-          <div class="date-selector">
-            <div class="input-container">
-              <input type="date" v-model="StartDate" class="date-input" />
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12 flex-col">
-          <p>申請入庫日期(迄)</p>
-          <div class="date-selector">
-            <div class="input-container">
-              <input type="date" v-model="EndDate" class="date-input" />
-            </div>
-          </div>
-        </div> </div>
       </div>
     </div>
     <div class="col justify-content-center d-flex">
@@ -81,7 +80,7 @@
         <button class="empty_btn" @click="clear">清空</button>
       </div>
     </div>
-    <ag-grid-vue style="height: 300px" class="ag-theme-alpine mb-5 " :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true">
+    <ag-grid-vue style="height: 380px" class="ag-theme-alpine mb-5 " :rowHeight="rowHeight" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true">
     </ag-grid-vue>
   </div>
 </template>
@@ -104,6 +103,11 @@
       AgGridVue,
       Storage_return_button,
       Delete_button,
+    },
+    data() {
+      return {
+        rowHeight: 35,
+      }
     },
     setup() {
       const EquipTypeName = ref(''); //設備總類 *必填
@@ -138,7 +142,7 @@
           field: "",
           cellRenderer: "Storage_return_button",
           cellRendererParams: {}, // 空对象，无需传递参数
-          width: 150,
+          width: 150
         },
         {
           headerName: "編號",
@@ -405,21 +409,20 @@
         }
       }
       .datagrid_section {
-        .content{
-      background: rgba(82, 136, 156, 0.8);
-    border-radius: 10px;
-    margin-bottom: 30px;
-    height: 250px;
-    align-items: center;
-    display: flex;
-    justify-content: center;
+        .content {
+          background: rgba(82, 136, 156, 0.8);
+          border-radius: 10px;
+          margin-bottom: 30px;
+          height: 250px;
+          align-items: center;
+          display: flex;
+          justify-content: center;
         }
         .row {
-             display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap:40px 5px;
-    
+          display: grid;
+          grid-template-rows: 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+          gap: 40px 5px;
           p {
             @include datagrid_title;
           }
@@ -564,7 +567,7 @@
       h1 {
         margin-top: 30px;
         text-align: center;
-        font-size: 50px;
+        font-size: 40px;
         font-weight: 600;
         @include title_color;
         margin-bottom: 20px;

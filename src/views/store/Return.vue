@@ -255,9 +255,9 @@
         margin-left:unset !important;
       }
       h1 {
-        margin-top: 100px;
+        margin-top: 80px;
         text-align: center;
-        font-size: 50px;
+        font-size: 40px;
         font-weight: 600;
         @include title_color;
       }
@@ -309,22 +309,27 @@
      display: flex;
           justify-content: space-between;
           margin: 30px auto 5%;
-          width: 350px;
+          width: 260px;
           button {
             &:nth-child(1) {
               @include back_to_previous_btn;
+              width: 100px;
               &:hover {
                 background-color: #5d85bb;
               }
             }
             &:nth-child(2) {
               @include empty_btn;
+              width: 70px;
+              padding: 5px;
               &:hover {
                 background-color: #5e7aa2;
               }
             }
             &:nth-child(3) {
               @include search_and_send_btn;
+              width: 70px;
+              padding: 5px;
               &:hover {
                 background-color: #5D85BD;
               }
