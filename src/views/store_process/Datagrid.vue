@@ -117,7 +117,7 @@
       <div class="button_wrap d-flex">
         <button class="search_btn" @click="submit">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
-        <button class="export_btn">匯出</button>
+        <!-- <button class="export_btn">匯出</button> -->
       </div>
     </div>
     <ag-grid-vue style="height: 380px" class="ag-theme-alpine" :rowHeight="rowHeight" :columnDefs="columnDefs" :rowData="rowData"

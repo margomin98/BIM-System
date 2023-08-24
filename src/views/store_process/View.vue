@@ -128,17 +128,19 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">交付人員：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Applicant" />
+              <input type="text" class="form-control readonly_box" aria-label="Default"
+                aria-describedby="inputGroup-sizing-default" readonly v-model="details.DeliveryOperator" />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">交付日期：</div>
+
               <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ApplicationDate" />
-            </div>
+
+              <input type="text" class="form-control readonly_box" aria-label="Default"
           </div>
         </div>
-        <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">入庫人員：</div>
@@ -218,12 +220,13 @@
               <div class="input-group mb-3">
                 <div class="input-group-prepend">資產照片：</div>
                 <div class='selected_file'>
-                  <p class='title'>已上傳的檔案:</p>
-                  <p class='file_upload_wrap' v-for="(file, img_index) in item.existFile" :key="img_index" style="cursor: pointer;">
-                    <p @click="showExistFileImage(index, img_index)" data-bs-toggle="modal" data-bs-target="#existFile_modal">
-                      {{ file.FileName }}
-                    </p>
-                    <img class='delete_icon' src="@/assets/trash.png" @click="deleteExistFile(index, img_index)" style="margin-left: 10px;">
+                  <p class='file_upload_wrap' v-for="(file, img_index) in item.existFile" :key="img_index"
+                    style="cursor: pointer;">
+                  <p @click="showExistFileImage(index, img_index)" data-bs-toggle="modal"
+                    data-bs-target="#existFile_modal">
+                    {{
+                      file.FileName
+                    }}</p>
                   </p>
                 </div>
               </div>
@@ -267,55 +270,59 @@
 </template>
 
 <script>
-  import {
-    ref,
-    onMounted,
-    reactive
-  } from 'vue';
-  import Navbar from "@/components/Navbar.vue";
-  import {
-    useRoute
-  } from 'vue-router';
-  import router from '@/router';
-  export default {
-    components: {
-      Navbar,
-    },
-    setup() {
-      const route = useRoute();
-      const tabNumber = ref(0);
-      const AI_ID = route.query.search_id;
-      onMounted(() => {
-        getDetails();
-      });
-      //上半部表單部分
-      const details = ref({});
-      //依照單號取得資料並生成tab資料
-      async function getDetails() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
-          console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            // console.log('Details Get成功 資料如下\n', data.resultList);
-            details.value = data.resultList;
-            console.log('Details Get成功 資料如下\n', details.value);
-            tabNumber.value = details.value.Count;
-            //生成tab資料
-            initFormDataArray();
-            if (details.value.WarrantyStartDate && details.value.WarrantyEndDate) {
-              details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
-              details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
-            }
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
+import { ref, onMounted, reactive } from 'vue';
+import Navbar from "@/components/Navbar.vue";
+import { useRoute } from 'vue-router';
+import router from '@/router';
+
+export default {
+  components: {
+    Navbar,
+  },
+  setup() {
+    const route = useRoute();
+    const tabNumber = ref(0);
+    const AI_ID = route.query.search_id;
+    onMounted(() => {
+      getDetails();
+    });
+    //上半部表單部分
+    const details = ref({});
+    //依照單號取得資料並生成tab資料
+    async function getDetails() {
+      const axios = require('axios');
+      try {
+        const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
+        console.log(response);
+        const data = response.data;
+        if (data.state === 'success') {
+          // console.log('Details Get成功 資料如下\n', data.resultList);
+          details.value = data.resultList;
+          console.log('Details Get成功 資料如下\n', details.value);
+          tabNumber.value = details.value.Count;
+          //生成tab資料
+          initFormDataArray();
+
+          if(details.value.WarrantyStartDate) {
+            details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
           }
-        } catch (error) {
-          console.error(error);
+          if(details.value.WarrantyEndDate) {
+            details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
+          }
+          if(details.value.AssetsInDate) {
+            details.value.AssetsInDate = details.value.AssetsInDate.replace(/-/g, '/');
+          }
+          if(details.value.DeliveryDate) {
+            details.value.DeliveryDate = details.value.DeliveryDate.replace(/-/g, '/');
+          }
+          if(details.value.ApplicationDate) {
+            details.value.ApplicationDate = details.value.ApplicationDate.replace(/-/g, '/');
+          }
+        } else if (data.state === 'error') {
+          alert(data.messages);
+        } else if (data.state === 'account_error') {
+          alert(data.messages);
+          router.push('/');
         }
       }
       //下半部表單部分
