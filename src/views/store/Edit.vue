@@ -165,7 +165,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                <span>*</span>包裝數量 :
+                <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包"><span>*</span>包裝數量 :
               </div>
               <div class="number-input-box">
                 <input class="input-number" type="number" v-model="details.PackageNum" min="1" />
@@ -273,6 +273,10 @@ export default {
       if (!details.value.EquipCategoryName || !details.value.EquipTypeName || !details.value.AssetName || !details.value.Count || !details.value.Unit || details.value.Count == 0) {
         alert('請填寫所有必填項目');
         return;
+      }
+      if (!/^.{1,10}$/.test(details.value.WarrantyDate)) {
+        alert('保固期限格式錯誤');
+        return
       }
       const formData = new FormData();
       const formFields = {

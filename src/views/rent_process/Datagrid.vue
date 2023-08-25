@@ -111,6 +111,7 @@
             field: "",
             cellRenderer: "Rent_process_button",
             width: '310',
+            resizable: true,
           },
           {
             headerName: "單號",
@@ -118,6 +119,7 @@
             unSortIcon: true,
             sortable: true,
             width: '130',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -126,6 +128,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -134,6 +137,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -142,6 +146,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -150,6 +155,7 @@
             unSortIcon: true,
             sortable: true,
             width: '160',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -158,6 +164,7 @@
             unSortIcon: true,
             sortable: true,
             width: '180',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -166,6 +173,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -174,6 +182,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150',
+            resizable: true,
             suppressMovable: true
           }, {
             headerName: "備料日期",
@@ -181,6 +190,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -189,11 +199,13 @@
             unSortIcon: true,
             sortable: true,
             width: '150',
+            resizable: true,
             suppressMovable: true
           },
           {
             width: '100',
             field: "",
+            resizable: true,
             cellRenderer: "Delete",
           }
         ],

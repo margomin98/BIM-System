@@ -19,14 +19,14 @@ export default {
     function viewDetails() {
       // console.log(props.params.data.AI_ID);
       if (search_id !== '') {
-        router.push({ name: 'Store_View', query: { search_id } });
+        router.push({ name: 'Rent_View', query: { search_id } });
       }
     }
 
     function viewEdit() {
       // console.log(props.params.data.search_id);
       if (search_id !== '') {
-        router.push({ name: 'Store_Edit', query: { search_id } });
+        router.push({ name: 'Rent_Edit', query: { search_id } });
       }
     }
     return { 

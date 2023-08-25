@@ -60,7 +60,7 @@
                 </label>
             <div class="input-group">
               <input type="text" class="form-control" id="project_id" placeholder="代碼為六碼數字" v-model="myForm.ProjectCode">
-              <button class="btn code_search" type="button" @click="">搜索</button>
+              <button class="btn code_search" type="button" @click="getProjectName">搜索</button>
             </div>
           </div>
           <div class="col d-flex wrap">
@@ -170,6 +170,7 @@
     ref
   } from 'vue';
   import router from "@/router";
+import { Form } from "v3-easyui";
   export default {
     components: {
       Navbar,
@@ -199,6 +200,7 @@
           field: "",
           cellRenderer: "Delete",
           width: 100,
+          resizable: true,
         },
         {
           headerName: "設備總類",
@@ -206,6 +208,7 @@
           unSortIcon: true,
           sortable: true,
           width: 150,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -214,6 +217,7 @@
           unSortIcon: true,
           sortable: true,
           width: 150,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -222,7 +226,8 @@
           unSortIcon: true,
           sortable: true,
           width: 150,
-          suppressMovable: true
+          suppressMovable: true,
+          resizable: true
         },
         {
           headerName: "數量",
@@ -230,6 +235,7 @@
           unSortIcon: true,
           sortable: true,
           width: 100,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -238,7 +244,8 @@
           unSortIcon: true,
           sortable: true,
           flex: 1,
-          suppressMovable: true
+          suppressMovable: true,
+          resizable: true
         }
       ]
       const rowData = ref([]);
@@ -313,8 +320,10 @@
         }
       }
       async function getProjectName() {
+        const form = new FormData();
+        form.append('projectCode' , myForm.ProjectCode);
         const axios = require('axios');
-        const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/SearchProjectName${myForm.ProjectCode}`);
+        const response = await axios.post('http://192.168.0.176:7008/GetDBdata/SearchProjectName',form);
         try {
           const data = response.data;
           console.log(data);
@@ -344,7 +353,7 @@
           alert('請輸入必填項目');
           return;
         }
-        if (!/^\d{6}$/.test(myForm.ProjectCode)) {
+        if (!/^(?![ 　]{10}$)[\s\S]{1,10}$/.test(myForm.ProjectCode)) {
           alert('專案代碼格式錯誤');
           return;
         }
