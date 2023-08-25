@@ -9,13 +9,13 @@
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
-          <p>單號：193489274</p>
+          <p>單號：{{ details.AO_ID }}</p>
         </div>
         <div>
-          <p>申請人員：陳奕迅</p>
+          <p>申請人員：{{ details.Applicant }}</p>
         </div>
         <div>
-          <p>申請日期：2022/02/20</p>
+          <p>申請日期：{{ details.ApplicationDate }}</p>
         </div>
       </div>
       <form>
@@ -24,29 +24,9 @@
             <label for="inputTitle1" class="form-label use"><p>用&ensp;&ensp;&ensp;&ensp;途</p></label>
             <div class="option">
               <div class='content'>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox1">
-                  <label class="form-check-label" for="checkbox1">內部領用</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox2">
-                  <label class="form-check-label" for="checkbox2">借測</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox3">
-                  <label class="form-check-label" for="checkbox3">維修</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox1">
-                  <label class="form-check-label" for="checkbox1">出貨</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox2">
-                  <label class="form-check-label" for="checkbox2">報廢</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox3">
-                  <label class="form-check-label" for="checkbox3">退貨</label>
+                <div class="form-check" v-for="(option, index) in options" :key="index">
+                  <input class="form-check-input" type="radio" :value="option" :id="'radio' + (index + 1)" v-model="details.Use" :disabled="option !== details.Use && details.Use !== ''">
+                  <label class="form-check-label" :for="'radio' + (index + 1)">{{ option }}</label>
                 </div>
               </div>
             </div>
@@ -56,20 +36,20 @@
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label"><p>專案代碼</p></label>
             <div class="input-group" id='readonly_box'>
-              <p class='readonly_box' readonly>文字</p>
+              <p class='readonly_box' readonly>{{ details.ProjectCode }}</p>
             </div>
           </div>
           <div class="col d-flex wrap">
             <label for="inputWithTitle" class="form-label" id='project_name'><p>專案名稱</p></label>
             <div class="input-group" id='readonly_box'>
-              <p class='readonly_box' readonly>文字</p>
+              <p class='readonly_box' readonly>{{ details.ProjectName }}</p>
             </div>
           </div>
         </div>
         <div class="row g-0">
           <div class="col d-flex wrap" style='border:none'>
             <label for="inputTextarea" class="form-label"><p>説&ensp;&ensp;&ensp;&ensp;明</p></label>
-            <textarea id='readonly_box' class='readonly_box' readonly></textarea>
+            <textarea id='readonly_box' class='readonly_box' readonly>{{ details.Description }}</textarea>
           </div>
         </div>
       </form>
@@ -79,7 +59,7 @@
         </div>
       </div>
       <div class='third_content'>
-        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true">
+        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true">
         </ag-grid-vue>
       </div>
     </div>
@@ -93,6 +73,10 @@
   import {
     AgGridVue
   } from "ag-grid-vue3";
+  import {
+    useRoute,
+    useRouter
+  } from 'vue-router';
   import Delete from "@/components/Delete_button";
   import Navbar from '@/components/Navbar.vue';
   import {
@@ -106,92 +90,101 @@
       Delete
     },
     setup() {
-      return {
-        columnDefs: [{
-            headerName: "",
-            suppressMovable: true,
-            field: "number",
-            width: '45',
-          },
-          {
-            headerName: "設備總類",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            suppressMovable: true
-          },
-          {
-            headerName: "設備分類",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            suppressMovable: true
-          },
-          {
-            headerName: "物品名稱",
-            field: "price",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            suppressMovable: true
-          },
-          {
-            headerName: "數量",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '100',
-            suppressMovable: true
-          },
-          {
-            autoHeight: true,
-            headerName: "規格需求",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            flex: 1,
-            suppressMovable: true
+      const columnDefs = [{
+          suppressMovable: true,
+          field: "id",
+          width: 100,
+          resizable: true,
+        },
+        {
+          headerName: "設備總類",
+          field: "EquipTypeName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "設備分類",
+          field: "EquipCategoryName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "物品名稱",
+          field: "ProductName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true,
+          resizable: true
+        },
+        {
+          headerName: "數量",
+          field: "Number",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "規格需求",
+          field: "RequiredSpec",
+          unSortIcon: true,
+          sortable: true,
+          flex: 1,
+          suppressMovable: true,
+          resizable: true
+        }
+      ]
+      const rowData = ref([]);
+      const route = useRoute();
+      const router = useRouter();
+      const AI_ID = route.query.search_id;
+      const details = ref({});
+      const options = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨'];
+      async function getDetails() {
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/AO_GetApplicationInfo?ao_id=${AI_ID}`);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('Details Get成功 資料如下\n', data.resultList);
+            details.value = data.resultList;
+            rowData.value = data.resultList.ItemList;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
           }
-        ],
-        rowData: [{
-            number: "1",
-            make: "Toyota",
-            model: "Mondeo",
-            price: 35000
-          },
-          {
-            number: "2",
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            number: "3",
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            number: "4",
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            number: "5",
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000
-          },
-        ],
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      onMounted(() => {
+        getDetails();
+      });
+      function goBack() {
+        window.history.back();
+      }
+      return {
+        columnDefs,
+        rowData,
+        details,
+        options,
+        goBack,
       };
     },
     data() {
       return {
         rowHeight: 35,
-        count: 1,
       };
     }
   };

@@ -29,6 +29,7 @@ import Rent_Edit from "../views/rent/Edit.vue";
 import Rent_Process_Datagrid from "../views/rent_process/Datagrid";
 import Rent_Process_New from "../views/rent_process/New";
 import Rent_Process_Confirm from "../views/rent_process/Confirm";
+import Rent_Process_View from "../views/rent_process/View";
 //出庫作業
 
 //出庫審核
@@ -202,9 +203,9 @@ const routes = [
     component: Rent_Process_Confirm,
   },
   {
-    path: "/rent_process_confirm",
-    name: "Rent_Process_Confirm",
-    component: Rent_Process_Confirm,
+    path: "/rent_process_view",
+    name: "Rent_Process_View",
+    component: Rent_Process_View,
   },
   {
     path: "/rent_review_datagrid",
@@ -241,7 +242,6 @@ const router = createRouter({
 //           next();
 //         }
 //         else {
-//           alert('您未有訪問此頁面的權限\n將重新引導至無權限頁面')
 //           next({ name: 'authorized' });
 //         }
 //       } 

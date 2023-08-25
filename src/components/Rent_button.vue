@@ -14,7 +14,7 @@ export default {
   props: ['params'],
   setup(props) {
     const router = useRouter();
-    const search_id = props.params.data.AI_ID;
+    const search_id = props.params.data.AO_ID;
 
     function viewDetails() {
       // console.log(props.params.data.AI_ID);
