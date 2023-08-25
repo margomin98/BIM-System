@@ -16,11 +16,11 @@
             <div class="input-group-prepend"><span>*</span>帳號：</div>
             <div class="search_section">
               <div class="input-wrapper">
-                <input v-model="inputValue" @input="filterOptions" @click="handleInputClick" @blur="handleBlur" ref="input" />
+                <input @input="queryAccount" @focus="showOptions = true;" @blur="handleBlur" v-model="inputValue" />
               </div>
-              <div class="arrow-icon" @click="handleInputClick"></div>
-              <ul v-if="showOptions && filteredOptions.length > 0" class="options-list">
-                <li v-for="(option, index) in filteredOptions" :key="index" @click="selectOption(option)">{{ option }}</li>
+              <ul v-if="showOptions" class="options-list">
+                <li v-for="(option, index) in dropdownOptions" :key="index" @click="selectAccount(option)">{{ option }}
+                </li>
               </ul>
             </div>
           </div>
@@ -29,11 +29,10 @@
           <div class="input-group-prepend"><span>*</span>權限：</div>
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ selectedItem || "請選擇" }}
-                          </button>
+                  {{ selectedRole || "請選擇" }}
+                </button>
             <div class="dropdown-menu" aria-labelledby="statusDropdown">
-              <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-              <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+              <p v-for="(item, index) in roleArray" :key="index" class="dropdown-item" @click="selectRole(item)">{{ item }}</p>
             </div>
           </div>
         </div>
@@ -48,7 +47,9 @@
 
 <script>
   import Navbar from "@/components/Navbar.vue";
+  import router from "@/router";
   import {
+    onMounted,
     ref
   } from 'vue';
   export default {
@@ -56,47 +57,73 @@
       Navbar
     },
     setup() {
-      const inputValue = ref('');
-      const dropdownOptions = ["ben", "lisa", "mic", "michael"];
+      const inputValue = ref(''); //帳號
+      const dropdownOptions = ref([]); //帳號搜尋結果(選項)
       const filteredOptions = ref(dropdownOptions);
-      const showOptions = ref(false);
-      const filterOptions = () => {
-        if (inputValue.value.trim() === '') {
-          filteredOptions.value = dropdownOptions;
-        } else {
-          filteredOptions.value = dropdownOptions.filter(option =>
-            option.toLowerCase().includes(inputValue.value.toLowerCase())
-          );
+      const selectedRole = ref(''); //權限
+      const roleArray = ['訪客', '系統管理員', '設備工程師', '倉管人員', '主管'] //權限選項
+      const showOptions = ref(false); //控制搜尋選單出現與否
+      onMounted(() => {
+        queryAccount();
+      });
+      async function queryAccount() {
+        const axios = require('axios');
+        const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/SearchName?name=${inputValue.value}`);
+        try {
+          const data = response.data;
+          if (data.state === 'success') {
+            dropdownOptions.value = data.resultList;
+          }
+        } catch (error) {
+          console.error(error);
         }
-      };
-      const selectOption = (option) => {
-        inputValue.value = option;
+      }
+      async function submit() {
+        const axios = require('axios');
+        const form = new FormData();
+        form.append('userName', inputValue.value);
+        form.append('role', selectedRole.value);
+        const response = await axios.post('http://192.168.0.176:7008/AuthorityMng/AccoutChangeRole', form);
+        try {
+          const data = response.data;
+          if (data.state === 'success') {
+            let msg = data.messages + '\n';
+            msg += `${inputValue.value}　變更為　${selectedRole.value}`
+            alert(msg);
+            router.push('/home');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      function selectAccount(item) {
+        inputValue.value = item;
         showOptions.value = false;
-      };
-      const handleBlur = () => {
-        if (!filteredOptions.value.includes(inputValue.value)) {
-          inputValue.value = '';
-        }
-      };
-      const handleInputClick = () => {
-        if (inputValue.value.trim() !== '') {
-          filterOptions();
-        }
-        showOptions.value = !showOptions.value;
-      };
-      const showDropdown = ref(false);
-      const toggleDropdown = () => {
-        showDropdown.value = !showDropdown.value;
-      };
+      }
+      function selectRole(item) {
+        selectedRole.value = item;
+      }
+      function handleBlur() {
+        setTimeout(() => {
+          showOptions.value = false;
+        }, 100);
+      }
+      function goBack() {
+        window.history.back();
+      }
       return {
         inputValue,
+        dropdownOptions,
         filteredOptions,
-        filterOptions,
+        selectedRole,
+        roleArray,
         showOptions,
-        selectOption,
+        queryAccount,
+        submit,
+        selectAccount,
+        selectRole,
         handleBlur,
-        handleInputClick,
-        toggleDropdown
+        goBack,
       };
     }
   };

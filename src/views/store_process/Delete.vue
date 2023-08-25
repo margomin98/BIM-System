@@ -183,7 +183,7 @@
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend"><span>*</span>資產編號：</div>
-                <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.AssetsId" readonly/>
+                <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.AssetsId" readonly />
               </div>
             </div>
             <div class="row">
@@ -192,7 +192,7 @@
                   <div class="input-group-prepend">
                     <span>*</span>區域：
                   </div>
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.itemAreaName" placeholder="BFXXXXXXXX" readonly/>
+                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.itemAreaName" placeholder="BFXXXXXXXX" readonly />
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -200,14 +200,14 @@
                   <div class="input-group-prepend">
                     <span>*</span> 櫃位：
                   </div>
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.itemLayerName" placeholder="BFXXXXXXXX" readonly/>
+                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.itemLayerName" placeholder="BFXXXXXXXX" readonly />
                 </div>
               </div>
             </div>
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">S/N：</div>
-                <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.SN" readonly/>
+                <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.SN" readonly />
               </div>
             </div>
             <div class="col">
@@ -266,7 +266,21 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="delete_btn">刪除</button>
+        <button class="delete_btn" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>
+      </div>
+      <!-- DeleteModal -->
+      <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-body">
+              確定刪除這筆項目嗎？
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">否</button>
+              <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" @click="deleteData">是</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -374,6 +388,28 @@
         existFileImageUrl.value = details.value.Tabs[existFileData.value].existFile[existFileImage.value].FileLink;
         existFileModalTitle.value = details.value.Tabs[existFileData.value].existFile[existFileImage.value].FileName;
       }
+
+      async function deleteData() {
+        const form = new FormData();
+        form.append('AI_ID' , AI_ID);
+
+        const axios = require('axios');
+        const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/ApplicationDelete',form);
+        try {
+          const data = response.data;
+          if(data.state === 'success') {
+            let msg = data.messages + '\n';
+            msg+= '單號為'+data.resultList.AI_ID;
+            alert(msg);
+            router.push({name: 'Store_Datagrid'});
+          }
+          else if(data.state === 'error') {
+            alert(data.messages);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
       function goBack() {
         window.history.back();
       }
@@ -389,6 +425,7 @@
         showNewFileImage,
         showExistFileImage,
         goBack,
+        deleteData,
       }
     },
   };

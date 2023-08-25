@@ -19,10 +19,10 @@
         <div class="row g-0">
           <div class="col d-flex wrap column_section">
             <label for="inputTitle1" class="form-label use">
-                <p>
-                  <span>*</span>用&ensp;&ensp;&ensp;&ensp;途
-                </p>
-              </label>
+                  <p>
+                    <span>*</span>用&ensp;&ensp;&ensp;&ensp;途
+                  </p>
+                </label>
             <div class="option">
               <div class="form-check">
                 <input class="form-check-input" type="radio" value="內部領用" id="radio1" v-model="myForm.Use">
@@ -54,10 +54,10 @@
         <div class="row g-0">
           <div class="col-xl-5 col-lg-5 col-md-5 col-12 d-flex wrap column_section">
             <label for="inputWithButton" class="form-label">
-                <p>
-                  <span>*</span>專案代碼
-                </p>
-              </label>
+                  <p>
+                    <span>*</span>專案代碼
+                  </p>
+                </label>
             <div class="input-group">
               <input type="text" class="form-control" id="project_id" placeholder="代碼為六碼數字" v-model="myForm.ProjectCode">
               <button class="btn code_search" type="button" @click="">搜索</button>
@@ -65,10 +65,10 @@
           </div>
           <div class="col d-flex wrap">
             <label for="inputWithTitle" class="form-label" id='project_name'>
-                <p>
-                  專案名稱
-                </p>
-              </label>
+                  <p>
+                    專案名稱
+                  </p>
+                </label>
             <div class="input-group" id='readonly_box'>
               <p class='readonly_box' readonly>{{ myForm.ProjectName }}</p>
             </div>
@@ -77,10 +77,10 @@
         <div class="row g-0">
           <div class="col d-flex wrap column_section" style='border:none'>
             <label for="inputTextarea" class="form-label">
-                <p>
-                  &nbsp;&nbsp;說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明
-                </p>
-              </label>
+                  <p>
+                    &nbsp;&nbsp;說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明
+                  </p>
+                </label>
             <textarea class="form-control" id="inputTextarea" placeholder='請填寫說明，最多100字' v-model="myForm.Description"></textarea>
           </div>
         </div>
@@ -96,8 +96,8 @@
             <p><span>*</span>設備總類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                  {{ myForm.EquipTypeName || '請選擇' }}
-                </button>
+                    {{ myForm.EquipTypeName || '請選擇' }}
+                  </button>
               <div class="dropdown-menu" aria-labelledby="typeDropdown">
                 <p v-for="(item, index) in myForm.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
               </div>
@@ -107,8 +107,8 @@
             <p><span>*</span>設備分類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(myForm.EquipTypeName !== '') }">
-                  {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
-                </button>
+                    {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
+                  </button>
               <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                 <p v-for="(item, index) in myForm.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
               </div>
@@ -130,8 +130,8 @@
         <div class="row g-0">
           <div class="col-12 d-flex wrap text_input">
             <label for="inputTextarea" class="form-label">
-                <p>規格需求：</p>
-              </label>
+                  <p>規格需求：</p>
+                </label>
             <div>
             </div>
             <textarea class="form-control" id="inputTextarea" placeholder='請填寫說明，最多100字' v-model="myForm.RequiredSpec"></textarea>
@@ -237,7 +237,7 @@
           field: "RequiredSpec",
           unSortIcon: true,
           sortable: true,
-          width: 300,
+          flex: 1,
           suppressMovable: true
         }
       ]
@@ -340,36 +340,24 @@
         myForm.EquipCategoryName = item;
       }
       async function submit() {
-        // 檢查必填項目: 1.用途 2.專案代碼 3.出庫項目(至少一項)
         if (!myForm.Use || !myForm.ProjectCode || rowData.value.length === 0) {
           alert('請輸入必填項目');
-          return
+          return;
         }
-        // 檢查專案代碼是否為6碼數字
         if (!/^\d{6}$/.test(myForm.ProjectCode)) {
           alert('專案代碼格式錯誤');
-          return
+          return;
         }
-        const form = new FormData();
-        const formFields = {
-          'Use': myForm.Use,
-          'ProjectCode': myForm.ProjectCode,
-          'Description': myForm.Description,
+        const requestData = {
+          Use: myForm.Use,
+          ProjectCode: myForm.ProjectCode,
+          Description: myForm.Description,
+          itemList: rowData.value,
         };
-        for (const fieldName in formFields) {
-          if (formFields[fieldName] !== '' && formFields[fieldName] !== null) {
-            form.append(fieldName, formFields[fieldName]);
-            // console.log(form.get(`${fieldName}`));
-          }
-        }
-        for (let i = 0; i < rowData.value.length; i++) {
-          // console.log(rowData.value[i]);
-          form.append('itemList', rowData.value[i]);
-        }
-        // console.log(form.getAll('itemList'));
-        const axios = require('axios');
-        const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/NewAssetsOut', form);
+        console.log(requestData);
         try {
+          const axios = require('axios');
+          const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/NewAssetsOut', requestData);
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages + '\n';
@@ -386,6 +374,11 @@
         //檢查必填子項目
         if (!myForm.EquipTypeName || !myForm.EquipCategoryName || !myForm.ProductName || myForm.Number < 1) {
           alert('請輸入必填子項目');
+          return
+        }
+        // 檢查 物品名稱是否為 不為全空格 且 20字內
+        if (!/^(?![ 　]+$).{1,20}$/.test(myForm.ProductName)) {
+          alert('物品名稱格式錯誤');
           return
         }
         rowData.value.push({

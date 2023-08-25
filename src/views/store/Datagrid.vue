@@ -94,7 +94,7 @@
     AgGridVue
   } from "ag-grid-vue3";
   import Storage_return_button from "@/components/Storage_return_button";
-  import Delete_button from "@/components/Delete_button";
+  import Delete_button from "@/components/Storage_delete_button";
   import Navbar from "@/components/Navbar.vue";
   import router from "@/router";
   export default {
@@ -141,8 +141,15 @@
           suppressMovable: true,
           field: "",
           cellRenderer: "Storage_return_button",
-          cellRendererParams: {}, // 空对象，无需传递参数
           width: 150
+        },
+        {
+          headerName: "狀態",
+          field: "Status",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          suppressMovable: true
         },
         {
           headerName: "編號",
@@ -174,14 +181,6 @@
           unSortIcon: true,
           sortable: true,
           width: 275,
-          suppressMovable: true
-        },
-        {
-          headerName: "狀態",
-          field: "Status",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
           suppressMovable: true
         },
         {

@@ -25,7 +25,7 @@
         </div>
         <div>
           <p>
-            資產類型 : {{ details.IsConsumable ? '耗材':'資產'}}
+            資產類型 : {{ details.IsConsumable ? '耗材' : '資產' }}
           </p>
         </div>
       </div>
@@ -179,7 +179,22 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="delete_btn">刪除</button>
+        <!-- Modal Trigger -->
+        <button class="delete_btn" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>
+      </div>
+      <!-- Modal -->
+      <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-body">
+              確定刪除這筆項目嗎？
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">否</button>
+              <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" @click="deleteData">是</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -195,6 +210,7 @@
     onMounted,
     ref
   } from 'vue';
+import { Form } from 'v3-easyui';
   export default {
     components: {
       Navbar
@@ -228,6 +244,28 @@
           console.error(error);
         }
       }
+
+      async function deleteData() {
+        const form = new FormData();
+        form.append('AI_ID' , AI_ID);
+
+        const axios = require('axios');
+        const response = await axios.post(`http://192.168.0.176:7008/AssetsInMng/ApplicationDelete`,form);
+        try {
+          const data = response.data;
+          if(data.state === 'success') {
+            let msg = data.messages + '\n';
+            msg+= '單號為'+data.resultList.AI_ID;
+            alert(msg);
+            router.push({name: 'Store_Datagrid'});
+          }
+          else if(data.state === 'error') {
+            alert(data.messages);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
       onMounted(() => {
         getDetails();
       });
@@ -238,6 +276,7 @@
         goBack,
         AI_ID,
         details,
+        deleteData,
       }
     },
   }
