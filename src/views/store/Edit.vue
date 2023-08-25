@@ -165,7 +165,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                <span>*</span>包裝數量 :
+                <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包"><span>*</span>包裝數量 :
               </div>
               <div class="number-input-box">
                 <input class="input-number" type="number" v-model="details.PackageNum" min="1" />
