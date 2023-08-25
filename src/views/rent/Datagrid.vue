@@ -86,7 +86,7 @@
   import {
     AgGridVue
   } from "ag-grid-vue3";
-  import Rent_review_button from "@/components/Rent_review_button";
+  import Rent_button from "@/components/Rent_button";
   import Delete from "@/components/Delete_button.vue";
   import Navbar from "@/components/Navbar.vue";
   import router from "@/router";
@@ -94,7 +94,7 @@
     components: {
       Navbar,
       AgGridVue,
-      Rent_review_button,
+      Rent_button,
       Delete,
     },
     data() {
@@ -115,7 +115,7 @@
       const columnDefs = [{
             suppressMovable: true,
             field: "",
-            cellRenderer: "Rent_review_button",
+            cellRenderer: "Rent_button",
             width: '150px',
             resizable: true,
           },

@@ -3,7 +3,7 @@
   <div class="main_section">
     <div class="title col">
       <h1>
-        檢視資產出庫填報
+        檢視出庫填報
       </h1>
     </div>
     <div class="info_wrap col">
