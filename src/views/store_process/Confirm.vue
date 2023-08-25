@@ -525,6 +525,7 @@ export default {
             font-size: 20px;
             width: 120px;
             text-align: end;
+            white-space: nowrap;
           }
         }
       }
@@ -724,6 +725,7 @@ export default {
             font-size: 20px;
             width: 120px;
             text-align: end;
+            white-space: nowrap;
           }
         }
       }
@@ -920,7 +922,9 @@ export default {
 
           .input-group-prepend {
             margin-bottom: 5px;
-
+            display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
             color: white;
             font-weight: 700;
             font-size: 20px;
