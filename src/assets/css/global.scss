@@ -309,10 +309,13 @@
     justify-content: space-around;
     background: #3D4E61;
     color: white;
-    font-size: 25px;
-    font-weight: 700;
     align-items: center;
     border-radius: 10px 10px 0px 0px;
     height: 50px;
+    width: 150px;
+    h4{
+        margin-bottom: 0;
+    font-weight: 700;
+    }
 }
 //assets_view_css

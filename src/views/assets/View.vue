@@ -1,21 +1,14 @@
 <template>
   <Navbar />
   <div class="main_section">
-    <div class="swiper-container">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">Slide 1</div>
-        <div class="swiper-slide">Slide 2</div>
-        <div class="swiper-slide">Slide 3</div>
-        <!-- Add more slides as needed -->
-      </div>
-    </div>
+   
     <div class="title col">
       <h1>檢視資產</h1>
     </div>
     <div class="info_wrap col">
       <div class="fixed_title">
         <div>
-          <h4>資產咨詢</h4>
+          <h4>資產資訊</h4>
         </div>
        
       </div>
@@ -30,7 +23,7 @@
       <div class="content">
         <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend">編號：</div>
+            <div class="input-group-prepend">資產編號：</div>
             <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID" />
           </div>
         </div>
@@ -70,6 +63,11 @@
             <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.VendorName" />
           </div>
         </div>
+              <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">型號：</div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductType" />
+          </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">規格：</div>
@@ -78,16 +76,15 @@
         </div>
         <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend">型號：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductType" />
+            <div class="input-group-prepend">S/N：</div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductSpec" />
           </div>
+        </div>
         </div>
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend info">
-                <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">數量：
-              </div>
+              <div class="input-group-prepend">總庫存數量：</div>
               <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Count" />
             </div>
           </div>
@@ -98,19 +95,17 @@
             </div>
           </div>
         </div>
-        <div v-if="details.IsConsumable" class="row">
+        <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend info">
-                <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">包裝數量：
-              </div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.PackageNum" />
+              <div class="input-group-prepend">儲位區域：</div>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Count" />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend">包裝單位：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.PackageUnit" />
+              <div class="input-group-prepend">儲位櫃位：</div>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Unit" />
             </div>
           </div>
         </div>
@@ -141,9 +136,30 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">備註：</div>
-            <textarea style="height: 250px;" class="form-control readonly_box" aria-label="With textarea" readonly v-model="details.Memo"></textarea>
+            <textarea style="height: 150px;" class="form-control readonly_box" aria-label="With textarea" readonly v-model="details.Memo"></textarea>
           </div>
         </div>
+      </div>
+      <div class="col button_wrap">
+        <button class="back_btn" @click="goBack">回上一頁</button>
+        <button class="send_btn" @click="submit" :disabled="!canSubmit()" :class="{ send_btn_disabled: !canSubmit() }">送出</button>
+      </div>
+    </div>
+    <div class="info_wrap col">
+      <div class="fixed_title">
+        <div>
+          <h4>資產資訊</h4>
+        </div>
+       
+      </div>
+      <div class="content">
+        <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">Slide 1</div>
+        <div class="swiper-slide">Slide 2</div>
+        <div class="swiper-slide">Slide 3</div>
+      </div>
+    </div>
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
@@ -171,12 +187,7 @@
       Swiper,
     },
     setup() {
-      const onSwiper = (swiper) => {
-        console.log(swiper);
-      };
-      const onSlideChange = () => {
-        console.log('slide change');
-      };
+   
       const route = useRoute();
       const router = useRouter();
       const AI_ID = route.query.search_id;
@@ -397,6 +408,7 @@
         width: 800px;
         .fixed_info {
           @include fixed_info;
+          border-radius: 0 10px 0 0;
           p {
             font-size: 20px;
             margin-bottom: 0;
@@ -404,10 +416,7 @@
         }
         .fixed_title {
           @include fixed_title;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
+         
         }
         .content {
           @include content_bg;
