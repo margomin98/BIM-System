@@ -170,7 +170,6 @@
     ref
   } from 'vue';
   import router from "@/router";
-import { Form } from "v3-easyui";
   export default {
     components: {
       Navbar,
@@ -383,6 +382,7 @@ import { Form } from "v3-easyui";
             let msg = data.messages + '\n';
             msg += '單號為:' + data.resultList.AO_ID;
             alert(msg);
+            router.push({name: 'Rent_Datagrid'});
           } else if (data.state === 'error') {
             alert(data.messages);
           }
