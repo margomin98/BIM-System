@@ -59,7 +59,7 @@
                   </p>
                 </label>
             <div class="input-group">
-              <input type="text" class="form-control" id="project_id" placeholder="代碼為六碼數字" v-model="myForm.ProjectCode">
+              <input type="text" class="form-control" id="project_id" placeholder="10個字以內" v-model="myForm.ProjectCode">
               <button class="btn code_search" type="button" @click="getProjectName">搜索</button>
             </div>
           </div>
@@ -170,7 +170,6 @@
     ref
   } from 'vue';
   import router from "@/router";
-import { Form } from "v3-easyui";
   export default {
     components: {
       Navbar,
@@ -185,6 +184,7 @@ import { Form } from "v3-easyui";
         Use: '',
         ProjectCode: '',
         ProjectName: '請搜尋專案代碼',
+        ProjectValid: false,
         Description: '',
         EquipTypeName: '',
         EquipTypeArray: [],
@@ -320,6 +320,10 @@ import { Form } from "v3-easyui";
         }
       }
       async function getProjectName() {
+        if (!/^(?![ 　]{10}$)[\s\S]{1,10}$/.test(myForm.ProjectCode)) {
+          alert('專案代碼格式錯誤');
+          return;
+        }
         const form = new FormData();
         form.append('projectCode' , myForm.ProjectCode);
         const axios = require('axios');
@@ -329,11 +333,13 @@ import { Form } from "v3-easyui";
           console.log(data);
           if (data.state === 'success') {
             myForm.ProjectName = data.resultList;
+            myForm.ProjectValid = true;
           } else if (data.state === 'account_error') {
             alert(data.messages);
             router.push('/');
           } else {
-            myForm.ProjectName = '查無此專案 請重新輸入'
+            myForm.ProjectValid = false;
+            myForm.ProjectName = data.messages.toString()
           }
         } catch (error) {
           console.error(error);
@@ -351,6 +357,10 @@ import { Form } from "v3-easyui";
       async function submit() {
         if (!myForm.Use || !myForm.ProjectCode || rowData.value.length === 0) {
           alert('請輸入必填項目');
+          return;
+        }
+        if(!myForm.ProjectValid) {
+          alert('請確定專案代碼查詢正確')
           return;
         }
         if (!/^(?![ 　]{10}$)[\s\S]{1,10}$/.test(myForm.ProjectCode)) {
@@ -372,6 +382,7 @@ import { Form } from "v3-easyui";
             let msg = data.messages + '\n';
             msg += '單號為:' + data.resultList.AO_ID;
             alert(msg);
+            router.push({name: 'Rent_Datagrid'});
           } else if (data.state === 'error') {
             alert(data.messages);
           }

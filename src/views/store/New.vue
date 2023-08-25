@@ -159,7 +159,7 @@
               <div class="input-group-prepend">
                 保固期限 :
               </div>
-              <input id='date_wrap' type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="WarrantyDate">
+              <input id='date_wrap' type="text" class="form-control" aria-label="Default" placeholder="最多輸入10字" v-model="WarrantyDate">
             </div>
           </div>
         </div>
@@ -279,6 +279,10 @@
         if (!EquipCategoryName.value || !EquipTypeName.value || !AssetName.value || !Count.value || !Unit.value || Count.value == 0) {
           alert('請填寫所有必填項目');
           return;
+        }
+        if (WarrantyDate.value && !/^.{1,10}$/.test(WarrantyDate.value)) {
+          alert('保固期限格式錯誤');
+          return
         }
         const formData = new FormData();
         const formFields = {

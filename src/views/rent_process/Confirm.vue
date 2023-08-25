@@ -2,7 +2,7 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>資產出庫交付作業</h1>
+      <h1>檢視出庫作業</h1>
     </div>
     <div class="info_wrap col">
       <div class="fixed_info">
@@ -193,21 +193,21 @@
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                    <p><span>*</span>領用人員</p>
+                    <p>領用人員</p>
                   </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
-            <button type="button">驗證</button>
+            <!-- <button type="button">驗證</button> -->
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                    <p><span>*</span>交付人員</p>
+                    <p>交付人員</p>
                   </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
-            <button type="button">驗證</button>
+            <!-- <button type="button">驗證</button> -->
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name" id="done_date">

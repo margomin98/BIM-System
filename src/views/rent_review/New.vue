@@ -1,93 +1,12 @@
 <template>
   <Navbar />
-  <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div class="fixed_info">
-            <div>
-              <p>檢索資產</p>
-            </div>
-            <button type="button" class="close" data-bs-dismiss="modal">x</button>
-          </div>
-          <div class='second_content'>
-            <div class='wrap1'>
-              <div class='col-xl-3 col-lg-3 col-md-3 col-12' style='padding-left:0'>
-                <p>設備總類</p>
-                <div class="dropdown">
-                  <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                              {{ selectedItem || "請選擇" }}
-                                                            </button>
-                  <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                    <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                    <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
-                  </div>
-                </div>
-              </div>
-              <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-                <p>設備分類</p>
-                <div class="dropdown">
-                  <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                              {{ selectedItem || "請選擇" }}
-                                                            </button>
-                  <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                    <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                    <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
-                  </div>
-                </div>
-              </div>
-              <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-                <p>物品名稱</p>
-                <div class="dropdown">
-                  <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                              {{ selectedItem || "請選擇" }}
-                                                            </button>
-                  <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                    <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                    <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-lg-3 col-md-3 col-12">
-                <p>數量 <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"></p>
-                <div class="number-input-box">
-                  <input class="input-number readonly_box" readonly />
-                </div>
-              </div>
-            </div>
-            <div class="row g-0">
-              <div class="col-12 d-flex wrap2">
-                <label for="inputTextarea" class="form-label">
-                                                      <p>
-                                                      規格需求：
-                                                      </p>
-                                                      </label>
-                <div>
-                </div>
-                <textarea class="form-control readonly_box" id="inputTextarea" rows="3" readonly></textarea>
-              </div>
-            </div>
-            <div class='col d-flex justify-content-center'>
-              <button class="btn submit_btn" type="button">搜尋庫存</button>
-            </div>
-          </div>
-          <div class="fixed_info">
-            <div>
-              <p>目前資產庫存</p>
-            </div>
-          </div>
-          <ag-grid-vue style="height: 380px" class="ag-theme-alpine list"  :rowHeight="rowHeight" :columnDefs="columnDefs3" :rowData="rowData3" :defaultColDef="defaultColDef3" :paginationAutoPageSize="true">
-          </ag-grid-vue>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="main_section">
     <div class="title col">
-      <h1>出庫備料作業</h1>
+      <h1>審核出庫作業</h1>
     </div>
     <div class="info_wrap col">
-      <div class="fixed_info"> <div>
+      <div class="fixed_info">
+        <div>
           <p>單號：121564564</p>
         </div>
         <div>
@@ -96,15 +15,13 @@
         <div>
           <p>申請日期：2022/02/20</p>
         </div>
-       
       </div>
       <form>
         <div class="row g-0">
-          <div class="col d-flex wrap column_section">
+          <div class="col d-flex wrap">
             <label for="inputTitle1" class="form-label use">
-                                            <p>
-                                           用&ensp;&ensp;&ensp;&ensp;途</p>
-                                            </label>
+                                                    <p>用&ensp;&ensp;&ensp;&ensp;途</p>
+                                                  </label>
             <div class="option">
               <div class='content'>
                 <div class="form-check">
@@ -136,31 +53,29 @@
           </div>
         </div>
         <div class="row g-0">
-          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                                        <p>專案代碼</p>
-                                      </label>
-            <div class="input-group" id='readonly_box'>
-              <p class='readonly_box' readonly>文字</p>
+                                                    <p>專案代碼</p>
+                                                  </label>
+            <div class="input-group">
+              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly />
             </div>
           </div>
-          <div class="col d-flex wrap">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                                        <p>專案名稱</p>
-                                      </label>
-            <div class="input-group" id='readonly_box'>
-              <p class='readonly_box' readonly>文字</p>
+                                                    <p>專案名稱</p>
+                                                  </label>
+            <div class="input-group">
+              <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly />
             </div>
           </div>
         </div>
         <div class="row g-0">
           <div class="col d-flex wrap" style="border: none">
             <label for="inputTextarea" class="form-label">
-                                        <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
-                                      </label>
-            <div class="input-group" id='readonly_box'>
-              <p class='readonly_box' readonly>文字</p>
-            </div>
+                                                    <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
+                                                  </label>
+            <textarea class="form-control readonly_box" id="inputTextarea" rows="1" readoonly></textarea>
           </div>
         </div>
       </form>
@@ -170,7 +85,7 @@
         </div>
       </div>
       <div class="second_content">
-        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list"  :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :defaultColDef="defaultColDef1" :paginationAutoPageSize="true">
+        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :defaultColDef="defaultColDef1" :paginationAutoPageSize="true">
         </ag-grid-vue>
       </div>
       <modal-overlay v-if="modalVisible" @close="closeModal" />
@@ -180,7 +95,7 @@
         </div>
       </div>
       <div class="third_content">
-        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list"  :rowHeight="rowHeight" :columnDefs="columnDefs2" :rowData="rowData2" :defaultColDef="defaultColDef" :paginationAutoPageSize="true">
+        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs2" :rowData="rowData2" :defaultColDef="defaultColDef" :paginationAutoPageSize="true">
         </ag-grid-vue>
       </div>
       <div class="fixed_info_count">
@@ -200,25 +115,61 @@
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                                        <p>備料人員</p>
-                                      </label>
+                                                    <p>備料人員</p>
+                                                  </label>
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box" readonly>文字內容</p>
+            </div>
+          </div>
+          <div class="col d-flex wrap">
+            <label for="inputWithTitle" class="form-label project_name">
+                                                    <p>備註</p>
+                                                  </label>
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box" readonly>文字內容</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='five_content'>
+        <div class="fixed_info">
+          <div>
+            <p>審核簽章</p>
+          </div>
+        </div>
+        <div class="row g-0">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
+            <label for="inputWithButton" class="form-label">
+                                                    <p><span>*</span>審核人員</p>
+                                                  </label>
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box" readonly>文字內容</p>
+            </div>
+            <button type="button">驗證</button>
+          </div>
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
+            <label for="inputWithTitle" class="form-label project_name">
+                                                     <p><span>*</span>審核結果</p>
+                                                  </label>
             <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly />
+              <input type="checkbox" />通過 <input type="checkbox" />不通過
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                                        <p>備料完成日期</p>
-                                      </label>
-            <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly />
+                                                    <p>審核日期</p>
+                                                  </label>
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box" readonly>文字內容</p>
             </div>
           </div>
-          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name">
-                                        <p>備料備註</p>
-                                      </label>
-                                      <div class="input-group">
+        </div>
+        <div class="row g-0">
+          <div class="col d-flex wrap">
+            <label for="inputWithButton" class="form-label">
+                                                    <p>審核意見</p>
+                                                  </label>
+            <div class="input-group">
               <textarea placeholder="最多100字" class="form-control" id="inputTextarea" style="height:100%" rows="1"></textarea>
               </div>
           </div>
@@ -236,10 +187,7 @@
   import {
     AgGridVue
   } from "ag-grid-vue3";
-  import Storage_button from "@/components/Storage_button";
-  import Storage_view from "@/components/Storage_list_view_button";
   import Storage_add from "@/components/Storage_add_button";
-  import Delete_button from "@/components/Delete_button";
   import Navbar from "@/components/Navbar.vue";
   import {
     onMounted,
@@ -249,20 +197,16 @@
     components: {
       Navbar,
       AgGridVue,
-      Storage_button,
-      Delete_button,
-      Storage_view,
       Storage_add
+    },
+    data() {
+      return {
+        rowHeight: 35,
+      };
     },
     setup() {
       return {
         columnDefs1: [{
-            suppressMovable: true,
-            field: "",
-            cellRenderer: "Storage_button",
-            width: "115",
-          },
-          {
             headerName: "項目",
             field: "make",
             unSortIcon: true,
@@ -343,12 +287,6 @@
           },
         ],
         columnDefs2: [{
-            suppressMovable: true,
-            field: "",
-            cellRenderer: "Delete_button",
-            width: "100"
-          },
-          {
             headerName: "需求項目",
             field: "make",
             unSortIcon: true,
@@ -419,14 +357,6 @@
             sortable: true,
             width: "100",
             suppressMovable: true,
-          },
-          {
-            headerName: "備註",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
           }
         ],
         rowData2: [{
@@ -460,122 +390,6 @@
             price: 72000,
           },
         ],
-        columnDefs3: [{
-            suppressMovable: true,
-            field: "",
-            cellRenderer: "Storage_add",
-            width: "75"
-          },
-          {
-            headerName: "資產編號",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "物品名稱",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "儲位區域",
-            field: "price",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "儲位櫃位",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "廠商",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "型號",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "規格",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "數量",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "100",
-            suppressMovable: true,
-          },
-          {
-            headerName: "單位",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "100",
-            suppressMovable: true,
-          },
-        ],
-        rowData3: [{
-            make: "Toyota",
-            model: "Celica",
-            price: 35000,
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000,
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000,
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000,
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000,
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000,
-          },
-        ],
-      };
-    },
-    data() {
-      return {
-        count: 1,
-        rowHeight: 35,
       };
     },
   };
@@ -583,6 +397,15 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
+  .option {
+    @include readonly_box;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+  }
+  .input-group {
+    height: 100%;
+  }
   .readonly_box {
     @include readonly_box;
     width: 100%;
@@ -591,118 +414,8 @@
     display: flex;
     align-items: center;
   }
-  .input-group {
-    height: 100%;
-  }
   @media only screen and (min-width: 1200px) {
-    .modal {
-      padding: 0 5%;
-      .modal-content {
-        background-color: unset;
-        border: 0;
-        .modal-body {
-          padding: 0;
-        }
-      }
-      .fixed_info {
-        @include fixed_info;
-        background: #528091;
-        border-radius: 0;
-        border: 1px solid black;
-        padding: 0 10px;
-        div {
-          flex-grow: 1;
-          text-align: center;
-        }
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-        button {
-          border: none;
-          background: none;
-          color: white;
-          font-weight: 700;
-          font-size: 22px;
-          align-self: start;
-        }
-      }
-      .list {
-        border-left: 1px solid black;
-        border-bottom: 1px solid black;
-        border-right: 1px solid black;
-      }
-      .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        background: #D9D9D9;
-        .submit_btn {
-          margin-bottom: 20px;
-          background: #48658C;
-          color: white;
-          font-weight: 700;
-          width: 100px;
-          font-size: 18px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-        .wrap1,
-        .wrap2 {
-          display: flex;
-          justify-content: space-evenly;
-          padding: 10px 80px;
-          .input-number {
-            @include count_btn;
-          }
-          .number-input-box {
-            color: black;
-            .input-number {
-              width: 100%;
-            }
-          }
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
-          }
-          .dropdown {
-            button {
-              background: white;
-              width: 100%;
-              border: none;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            }
-            .dropdown-menu {
-              width: 225px;
-              .dropdown-item {
-                text-align: left;
-              }
-            }
-          }
-          div {
-            padding: 0 5px;
-            p {
-              text-align: center;
-              white-space: nowrap;
-              font-size: 18px;
-              font-weight: 700;
-              margin-bottom: 5px;
-            }
-          }
-        }
-      }
-    }
     .main_section {
-      .readonly_box {
-        @include readonly_box;
-      }
       h1 {
         margin-top: 50px;
         text-align: center;
@@ -728,9 +441,6 @@
             font-size: 20px;
             margin-bottom: 0;
           }
-        }
-        #readonly_box {
-          border-left: black 1px solid;
         }
         .second_content {
           border-left: 1px solid black;
@@ -770,13 +480,9 @@
         }
         .fourth_content {
           border-left: 1px solid black;
-          border-bottom: 1px solid black;
-          background: white;
+          border-right: 1px solid black;
           .fixed_info {
-            border-top: none;
-            border-left: none;
-            border-right: 1px solid black;
-            border-bottom: 1px solid black;
+            border: none;
           }
           .form-check {
             margin-left: 10px;
@@ -784,8 +490,13 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-right: 1px solid black;
             border-left: 1px solid black;
+          }
+          .wrap {
+            background: white;
+            border-bottom: 1px solid black;
+            border-top: 1px solid black;
+            align-items: center;
           }
           .form-label {
             font-weight: 700;
@@ -797,10 +508,99 @@
             display: flex;
             justify-content: center;
             padding: 0 10px;
-            width: 150px;
+            width: 115px;
             p {
               margin-bottom: 0;
               text-align: center;
+            }
+          }
+          #readonly_box {
+            border-left: 1px solid black;
+          }
+          .wrap:nth-child(1) {
+            border-right: 1px solid black;
+          }
+        }
+        .five_content {
+          border-left: 1px solid black;
+          background: white;
+          border-bottom: 1px solid black;
+          span {
+            @include red_star;
+          }
+          .fixed_info {
+            border: none;
+          }
+          .form-check {
+            margin-left: 10px;
+          }
+          .form-control {
+            height: auto;
+            border-radius: 0;
+            border-left: 1px solid black;
+          }
+          .wrap {
+            background: white;
+            border-top: 1px solid black;
+            align-items: center;
+            button {
+              margin: 0 10px;
+              border-radius: 7px;
+              height: 30px;
+              width: 100px;
+              border: none;
+              background: #48658c;
+              color: white;
+              font-weight: 700;
+              font-size: 18px;
+              &:hover {
+                background-color: #5d85bd;
+              }
+            }
+          }
+          .form-label {
+            font-weight: 700;
+            font-size: 20px;
+            white-space: nowrap;
+            height: 50px;
+            align-items: center;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 0 10px;
+            width: 100px;
+            p {
+              margin-bottom: 0;
+              text-align: center;
+            }
+          }
+          .wrap:nth-child(1) {
+            #readonly_box {
+              border-left: 1px solid black;
+            }
+            .input-group {
+              border-right: 1px solid black;
+            }
+          }
+          .wrap:nth-child(2) {
+            border-left: 1px solid black;
+            label {
+              width: 100px;
+            }
+            .input-group {
+              border-left: 1px solid black;
+              border-right: 1px solid black;
+              gap: 5px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              font-weight: 700;
+            }
+          }
+          .wrap:nth-child(3) {
+            border-right: 1px solid black;
+            #readonly_box {
+              border-left: 1px solid black;
             }
           }
         }
@@ -812,12 +612,10 @@
             margin-left: 10px;
           }
           .form-control {
-            height: auto;
             border-radius: 0;
             border-left: 1px solid black;
           }
           .wrap {
-            border-bottom: 1px solid black;
             background: white;
             border-bottom: 0.5px solid black;
             align-items: center;
@@ -865,7 +663,6 @@
         .input-number {
           @include count_btn;
         }
-       
       }
       .button_wrap {
         display: flex;
@@ -890,115 +687,7 @@
     }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .modal {
-      padding: 0 5%;
-      .modal-content {
-        background-color: unset;
-        border: 0;
-        .modal-body {
-          padding: 0;
-        }
-      }
-      .fixed_info {
-        @include fixed_info;
-        background: #528091;
-        border-radius: 0;
-        border: 1px solid black;
-        padding: 0 10px;
-        div {
-          flex-grow: 1;
-          text-align: center;
-        }
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-        button {
-          border: none;
-          background: none;
-          color: white;
-          font-weight: 700;
-          font-size: 22px;
-          align-self: start;
-        }
-      }
-      .list {
-        border-left: 1px solid black;
-        border-bottom: 1px solid black;
-        border-right: 1px solid black;
-      }
-      .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        background: #D9D9D9;
-        .submit_btn {
-          margin-bottom: 20px;
-          background: #48658C;
-          color: white;
-          font-weight: 700;
-          width: 100px;
-          font-size: 18px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-        .wrap1,
-        .wrap2 {
-          display: flex;
-          justify-content: space-evenly;
-          padding: 10px 80px;
-          .input-number {
-            @include count_btn;
-          }
-          .number-input-box {
-            color: black;
-            .input-number {
-              width: 100%;
-            }
-          }
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
-          }
-          .dropdown {
-            button {
-              background: white;
-              width: 150px;
-              border: none;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            }
-            .dropdown-menu {
-              width: 150px;
-              .dropdown-item {
-                text-align: left;
-              }
-            }
-          }
-          div {
-            padding: 0 5px;
-            p {
-              width: 150px;
-              text-align: center;
-              white-space: nowrap;
-              font-size: 18px;
-              font-weight: 700;
-              margin-bottom: 5px;
-            }
-          }
-        }
-      }
-    }
     .main_section {
-      .readonly_box {
-        @include readonly_box;
-      }
       h1 {
         margin-top: 50px;
         text-align: center;
@@ -1025,9 +714,6 @@
             margin-bottom: 0;
           }
         }
-        #readonly_box {
-          border-left: 1px solid black;
-        }
         .second_content {
           border-left: 1px solid black;
           border-right: 1px solid black;
@@ -1036,7 +722,9 @@
         }
         .third_content {
           .list {
-            border: 1px solid black;
+            border-top: 1px solid black;
+            border-left: 1px solid black;
+            border-right: 1px solid black;
             button {
               @include delete_button;
               &:hover {
@@ -1064,44 +752,10 @@
         }
         .fourth_content {
           border-left: 1px solid black;
-          border-bottom: 1px solid black;
-          background: white;
-          .fixed_info {
-            border-top: none;
-            border-left: none;
-            border-right: 1px solid black;
-            border-bottom: 1px solid black;
-          }
-          .form-check {
-            margin-left: 10px;
-          }
-          .form-control {
-            height: auto;
-            border-radius: 0;
-            border-right: 1px solid black;
-            border-left: 1px solid black;
-          }
-          .form-label {
-            font-weight: 700;
-            font-size: 20px;
-            white-space: nowrap;
-            height: 50px;
-            align-items: center;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            padding: 0 10px;
-            width: 150px;
-            p {
-              margin-bottom: 0;
-              text-align: center;
-            }
-          }
-        }
-        form {
-          border-top: 1px solid black;
-          border-left: 1px solid black;
           border-right: 1px solid black;
+          .fixed_info {
+            border: none;
+          }
           .form-check {
             margin-left: 10px;
           }
@@ -1113,9 +767,133 @@
           .wrap {
             background: white;
             border-bottom: 1px solid black;
+            border-top: 1px solid black;
+            align-items: center;
+          }
+          .form-label {
+            font-weight: 700;
+            font-size: 20px;
+            white-space: nowrap;
+            height: 50px;
+            align-items: center;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 0 10px;
+            width: 115px;
+            p {
+              margin-bottom: 0;
+              text-align: center;
+            }
+          }
+          #readonly_box {
+            border-left: 1px solid black;
+          }
+          .wrap:nth-child(1) {
+            border-right: 1px solid black;
+          }
+        }
+        .five_content {
+          border-left: 1px solid black;
+          background: white;
+          border-bottom: 1px solid black;
+          span {
+            @include red_star;
+          }
+          .fixed_info {
+            border: none;
+          }
+          .form-check {
+            margin-left: 10px;
+          }
+          .form-control {
+            height: auto;
+            border-radius: 0;
+            border-left: 1px solid black;
+          }
+          .wrap {
+            background: white;
+            border-top: 1px solid black;
+            align-items: center;
+            button {
+              white-space: nowrap;
+              margin: 0 10px;
+              border-radius: 7px;
+              height: 30px;
+              width: 100px;
+              border: none;
+              background: #48658c;
+              color: white;
+              font-weight: 700;
+              font-size: 18px;
+              &:hover {
+                background-color: #5d85bd;
+              }
+            }
+          }
+          .form-label {
+            font-weight: 700;
+            font-size: 20px;
+            white-space: nowrap;
+            height: 50px;
+            align-items: center;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 0 10px;
+            width: 100px;
+            p {
+              margin-bottom: 0;
+              text-align: center;
+            }
+          }
+          .wrap:nth-child(1) {
+            #readonly_box {
+              border-left: 1px solid black;
+            }
+            .input-group {
+              border-right: 1px solid black;
+            }
+          }
+          .wrap:nth-child(2) {
+            border-left: 1px solid black;
+            label {
+              width: 100px;
+            }
+            .input-group {
+              border-left: 1px solid black;
+              border-right: 1px solid black;
+              gap: 2px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              font-weight: 700;
+            }
+          }
+          .wrap:nth-child(3) {
+            border-right: 1px solid black;
+            #readonly_box {
+              border-left: 1px solid black;
+            }
+          }
+        }
+        form {
+          border-top: 1px solid black;
+          border-left: 1px solid black;
+          border-right: 1px solid black;
+          .form-check {
+            margin-left: 10px;
+          }
+          .form-control {
+            border-radius: 0;
+            border-left: 1px solid black;
+          }
+          .wrap {
+            background: white;
+            border-bottom: 0.5px solid black;
             align-items: center;
             label.use {
-              border-right: 1px solid black
+              border-right: 1px solid black;
             }
             .option {
               @include readonly_box;
@@ -1158,7 +936,6 @@
         .input-number {
           @include count_btn;
         }
-
       }
       .button_wrap {
         display: flex;
@@ -1183,120 +960,6 @@
     }
   }
   @media only screen and (max-width: 767px) {
-    .modal {
-      padding: 0 5%;
-      .modal-content {
-        background-color: unset;
-        border: 0;
-        .modal-body {
-          padding: 0;
-        }
-      }
-      .fixed_info {
-        @include fixed_info;
-        background: #528091;
-        border-radius: 0;
-        border: 1px solid black;
-        padding: 0 10px;
-        div {
-          flex-grow: 1;
-          text-align: center;
-        }
-        p {
-          font-size: 18px;
-          margin-bottom: 0;
-        }
-        button {
-          border: none;
-          background: none;
-          color: white;
-          font-weight: 700;
-          font-size: 22px;
-          align-self: start;
-        }
-      }
-      .list {
-        border-left: 1px solid black;
-        border-bottom: 1px solid black;
-        border-right: 1px solid black;
-      }
-      .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        background: #D9D9D9;
-        .submit_btn {
-          margin-bottom: 20px;
-          background: #48658C;
-          color: white;
-          font-weight: 700;
-          width: 100px;
-          font-size: 18px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-        .wrap1 {
-          justify-content: space-evenly;
-          padding: 20px 20px 0;
-          .input-number {
-            @include count_btn;
-          }
-          .number-input-box {
-            color: black;
-            .input-number {
-              width: 100%;
-            }
-          }
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
-          }
-          .dropdown {
-            button {
-              background: white;
-              width: 100%;
-              border: none;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            }
-            .dropdown-menu {
-              width: 225px;
-              .dropdown-item {
-                text-align: left;
-              }
-            }
-          }
-          div {
-            margin: 10px 0;
-            p {
-              white-space: nowrap;
-              font-size: 18px;
-              font-weight: 700;
-              margin-bottom: 5px;
-            }
-          }
-        }
-        .wrap2 {
-          flex-direction: column;
-          padding: 0 20px;
-          margin-bottom: 20px;
-          p {
-            margin-bottom: 0;
-          }
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
-          }
-        }
-      }
-    }
     .main_section {
       .readonly_box {
         @include readonly_box;
@@ -1365,14 +1028,14 @@
           }
         }
         .fourth_content {
+          border-bottom: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
-          background: white;
           .fixed_info {
-            border-bottom: 1px solid black;
-            border-top: none;
-            border-left: none;
-            border-right: none;
+            border: none;
+          }
+          #readonly_box {
+            border-left: 1px solid black;
           }
           .form-check {
             margin-left: 10px;
@@ -1380,11 +1043,17 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-bottom: 1px solid black;
             border-left: 1px solid black;
           }
+          .wrap {
+            background: white;
+            border-top: 1px solid black;
+            align-items: center;
+            .option {
+              display: flex;
+            }
+          }
           .form-label {
-            border-bottom: 1px solid black;
             font-weight: 700;
             font-size: 20px;
             white-space: nowrap;
@@ -1392,12 +1061,101 @@
             margin: 0;
             display: flex;
             justify-content: center;
-            width: 220px;
-            height: 50px;
+            width: 190px;
+            height: 30px;
             p {
               font-size: 18px;
               margin-bottom: 0;
               text-align: center;
+            }
+          }
+        }
+        .five_content {
+          border-bottom: 1px solid black;
+          border-left: 1px solid black;
+          .fixed_info {
+            border: none;
+          }
+          .form-check {
+            margin-left: 10px;
+          }
+          .form-control {
+            border-radius: 0;
+          }
+          #readonly_box {
+            border-left: 1px solid black;
+            background: #b4b4b4;
+            font-weight: 700;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+          }
+          .wrap {
+            background: white;
+            border-top: 1px solid black;
+            align-items: center;
+            button {
+              margin: 0 10px;
+              border-radius: 7px;
+              height: 30px;
+              width: 100px;
+              border: none;
+              background: #48658c;
+              color: white;
+              font-weight: 700;
+              font-size: 18px;
+              &:hover {
+                background-color: #5d85bd;
+              }
+            }
+          }
+          .form-label {
+            font-weight: 700;
+            font-size: 20px;
+            white-space: nowrap;
+            align-items: center;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            height: 30px;
+            p {
+              font-size: 18px;
+              margin-bottom: 0;
+              text-align: center;
+            }
+          }
+          .wrap:nth-child(3) {
+            border-right: 1px solid black;
+            label {
+              width: 270px;
+            }
+          }
+          .wrap:nth-child(1) {
+            border-right: 1px solid black;
+            #readonly_box {
+              border-right: 1px solid black;
+            }
+            label {
+              width: 270px;
+            }
+            .input-group {
+              border-left: 1px solid black;
+            }
+          }
+          .wrap:nth-child(2) {
+            border-right: 1px solid black;
+            label {
+              height: 40px;
+              width: 270px;
+            }
+            .input-group {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              gap: 5px;
+              font-weight: 700;
+              border-left: 1px solid black;
             }
           }
         }
@@ -1475,7 +1233,6 @@
         .input-number {
           @include count_btn;
         }
-        
       }
       .button_wrap {
         display: flex;

@@ -2,7 +2,7 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>資產入庫作業</h1>
+      <h1>檢視入庫作業</h1>
     </div>
     <div class="info_wrap col">
       <div class="fixed_info">
@@ -215,7 +215,7 @@
                     <span>*</span>區域：
                   </div>
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-                  v-model="item.itemAreaName" placeholder="BFXXXXXXXX" readonly/>
+                  v-model="item.itemAreaName" readonly/>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -224,7 +224,7 @@
                     <span>*</span> 櫃位：
                   </div>
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-                  v-model="item.itemLayerName" placeholder="BFXXXXXXXX" readonly/>
+                  v-model="item.itemLayerName" readonly/>
                 </div>
               </div>
             </div>
@@ -606,8 +606,6 @@ export default {
 
             .selected_file {
               margin-left: 10px;
-    display: flex;
-    align-items: center;
               p.title {
                 font-weight: 700;
                 color: white;
@@ -839,8 +837,6 @@ export default {
 
             .selected_file {
               margin-left: 10px;
-    display: flex;
-    align-items: center;
               p.title {
                 font-weight: 700;
                 color: white;

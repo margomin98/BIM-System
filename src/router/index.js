@@ -34,6 +34,7 @@ import Rent_Process_Confirm from "../views/rent_process/Confirm";
 //出庫審核
 import Rent_Review_Datagrid from "../views/rent_review/Datagrid";
 import Rent_Review_View from "../views/rent_review/View.vue";
+import Rent_Review_New from "../views/rent_review/New.vue";
 //出庫審核
 
 //資產管理
@@ -201,6 +202,11 @@ const routes = [
     component: Rent_Process_Confirm,
   },
   {
+    path: "/rent_process_confirm",
+    name: "Rent_Process_Confirm",
+    component: Rent_Process_Confirm,
+  },
+  {
     path: "/rent_review_datagrid",
     name: "Rent_Review_Datagrid",
     component: Rent_Review_Datagrid,
@@ -209,6 +215,11 @@ const routes = [
     path: "/rent_review_view",
     name: "Rent_Review_View",
     component: Rent_Review_View,
+  },
+  {
+    path: "/rent_review_new",
+    name: "Rent_Review_New",
+    component: Rent_Review_New,
   },
 ];
 
