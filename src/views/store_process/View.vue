@@ -510,6 +510,7 @@ export default {
     width: 120px;
     text-align: end;
     white-space: nowrap;
+    
           }
         }
       }
@@ -980,6 +981,9 @@ export default {
             font-weight: 700;
             font-size: 20px;
             width: 100%;
+            display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
           }
         }
       }

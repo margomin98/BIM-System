@@ -98,8 +98,11 @@
         <div class="row g-0 row_wrap">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4" id='number'>
-              <div class="input-group-prepend info">
+              <div class="input-group-prepend info  d-xl-block d-lg-block d-md-block d-none">
                 <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"><span>*</span>數量 :
+              </div>
+              <div class="input-group-prepend info  d-xl-none d-lg-none d-md-none d-block">
+                <span>*</span>數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
               </div>
               <input class="input-number" type="number" v-model="Count" min="1">
             </div>
@@ -124,8 +127,11 @@
         <div v-show="IsConsumable" class="row g-0 row_wrap">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4" id='number'>
-              <div class="input-group-prepend">
+              <div class="input-group-prepend d-xl-block d-lg-block d-md-block d-none">
                 <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包"><span>*</span>包裝數量 :
+              </div>
+              <div class="input-group-prepend d-xl-none d-lg-none d-md-none d-block">
+               <span>*</span> 包裝數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
               </div>
               <input class="input-number" type="number" v-model="PackageNum" min="1">
             </div>
@@ -497,6 +503,7 @@
           @include content_bg;
           .input-group-prepend {
             width: 120px;
+            white-space: nowrap;
           }
           .check_box_wrap {
             font-weight: 700;
@@ -600,6 +607,7 @@
           @include content_bg;
           .input-group-prepend {
             width: 120px;
+            white-space: nowrap;
           }
           .check_box_wrap {
             font-weight: 700;
@@ -703,6 +711,7 @@
               font-size: 20px;
               margin-right: 10px;
               white-space: nowrap;
+           
               span {
                 @include red_star
               }
