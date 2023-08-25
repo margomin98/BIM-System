@@ -28,7 +28,6 @@ import Rent_Edit from "../views/rent/Edit.vue";
 //出庫作業
 import Rent_Process_Datagrid from "../views/rent_process/Datagrid";
 import Rent_Process_New from "../views/rent_process/New";
-import Rent_Process_View from "../views/rent_process/View";
 import Rent_Process_Confirm from "../views/rent_process/Confirm";
 //出庫作業
 
@@ -198,9 +197,9 @@ const routes = [
     component: Rent_Process_New,
   },
   {
-    path: "/rent_process_view",
-    name: "Rent_Process_View",
-    component: Rent_Process_View,
+    path: "/rent_process_confirm",
+    name: "Rent_Process_Confirm",
+    component: Rent_Process_Confirm,
   },
   {
     path: "/rent_process_confirm",
