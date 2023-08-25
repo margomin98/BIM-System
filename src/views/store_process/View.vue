@@ -603,8 +603,7 @@ export default {
 
             .selected_file {
               margin-left: 10px;
-    display: flex;
-    align-items: center;
+
               p.title {
                 font-weight: 700;
                 color: white;
@@ -835,8 +834,6 @@ export default {
 
             .selected_file {
               margin-left: 10px;
-    display: flex;
-    align-items: center;
               p.title {
                 font-weight: 700;
                 color: white;

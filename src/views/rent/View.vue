@@ -7,7 +7,8 @@
       </h1>
     </div>
     <div class="info_wrap col">
-      <div class="fixed_info"><div>
+      <div class="fixed_info">
+        <div>
           <p>單號：193489274</p>
         </div>
         <div>
@@ -16,15 +17,11 @@
         <div>
           <p>申請日期：2022/02/20</p>
         </div>
-        
       </div>
       <form>
         <div class="row g-0">
           <div class="col d-flex wrap column_section">
-            <label for="inputTitle1" class="form-label use">
-                                            <p>
-                                           用&ensp;&ensp;&ensp;&ensp;途</p>
-                                            </label>
+            <label for="inputTitle1" class="form-label use"><p>用&ensp;&ensp;&ensp;&ensp;途</p></label>
             <div class="option">
               <div class='content'>
                 <div class="form-check">
@@ -57,21 +54,13 @@
         </div>
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithButton" class="form-label">
-                                  <p>
-                                專案代碼
-                                  </p>
-                                  </label>
+            <label for="inputWithButton" class="form-label"><p>專案代碼</p></label>
             <div class="input-group" id='readonly_box'>
               <p class='readonly_box' readonly>文字</p>
             </div>
           </div>
           <div class="col d-flex wrap">
-            <label for="inputWithTitle" class="form-label" id='project_name'>
-                                  <p>
-                                  專案名稱
-                                  </p>
-                                  </label>
+            <label for="inputWithTitle" class="form-label" id='project_name'><p>專案名稱</p></label>
             <div class="input-group" id='readonly_box'>
               <p class='readonly_box' readonly>文字</p>
             </div>
@@ -79,12 +68,8 @@
         </div>
         <div class="row g-0">
           <div class="col d-flex wrap" style='border:none'>
-            <label for="inputTextarea" class="form-label">
-                                  <p>
-                                 説&ensp;&ensp;&ensp;&ensp;明
-                                  </p>
-                                  </label>
-                                  <textarea  id='readonly_box' class='readonly_box' readonly></textarea>
+            <label for="inputTextarea" class="form-label"><p>説&ensp;&ensp;&ensp;&ensp;明</p></label>
+            <textarea id='readonly_box' class='readonly_box' readonly></textarea>
           </div>
         </div>
       </form>
@@ -166,7 +151,7 @@
             field: "model",
             unSortIcon: true,
             sortable: true,
-            flex:1,
+            flex: 1,
             suppressMovable: true
           }
         ],
