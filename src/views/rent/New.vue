@@ -18,57 +18,25 @@
       <form>
         <div class="row g-0">
           <div class="col d-flex wrap column_section">
-            <label for="inputTitle1" class="form-label use">
-                  <p>
-                    <span>*</span>用&ensp;&ensp;&ensp;&ensp;途
-                  </p>
-                </label>
+            <label for="inputTitle1" class="form-label use"><p><span>*</span>用&ensp;&ensp;&ensp;&ensp;途</p></label>
             <div class="option">
-              <div class="form-check">
-                <input class="form-check-input" type="radio" value="內部領用" id="radio1" v-model="myForm.Use">
-                <label class="form-check-label" for="radio1">內部領用</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" value="借測" id="radio2" v-model="myForm.Use">
-                <label class="form-check-label" for="radio2">借測</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" value="維修" id="radio3" v-model="myForm.Use">
-                <label class="form-check-label" for="radio3">維修</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" value="出貨" id="radio4" v-model="myForm.Use">
-                <label class="form-check-label" for="radio4">出貨</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" value="報廢" id="radio5" v-model="myForm.Use">
-                <label class="form-check-label" for="radio5">報廢</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" value="退貨" id="radio6" v-model="myForm.Use">
-                <label class="form-check-label" for="radio6">退貨</label>
+              <div class="form-check" v-for="(option, index) in options" :key="index">
+                <input class="form-check-input" type="radio" :value="option" :id="'radio' + (index + 1)" v-model="myForm.Use">
+                <label class="form-check-label" :for="'radio' + (index + 1)">{{ option }}</label>
               </div>
             </div>
           </div>
         </div>
         <div class="row g-0">
           <div class="col-xl-5 col-lg-5 col-md-5 col-12 d-flex wrap column_section">
-            <label for="inputWithButton" class="form-label">
-                  <p>
-                    <span>*</span>專案代碼
-                  </p>
-                </label>
+            <label for="inputWithButton" class="form-label"><p><span>*</span>專案代碼</p></label>
             <div class="input-group">
               <input type="text" class="form-control" id="project_id" placeholder="10個字以內" v-model="myForm.ProjectCode">
               <button class="btn code_search" type="button" @click="getProjectName">搜索</button>
             </div>
           </div>
           <div class="col d-flex wrap">
-            <label for="inputWithTitle" class="form-label" id='project_name'>
-                  <p>
-                    專案名稱
-                  </p>
-                </label>
+            <label for="inputWithTitle" class="form-label" id='project_name'><p>專案名稱</p></label>
             <div class="input-group" id='readonly_box'>
               <p class='readonly_box' readonly>{{ myForm.ProjectName }}</p>
             </div>
@@ -76,11 +44,7 @@
         </div>
         <div class="row g-0">
           <div class="col d-flex wrap column_section" style='border:none'>
-            <label for="inputTextarea" class="form-label">
-                  <p>
-                    &nbsp;&nbsp;說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明
-                  </p>
-                </label>
+            <label for="inputTextarea" class="form-label"><p>&nbsp;&nbsp;說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p></label>
             <textarea class="form-control" id="inputTextarea" placeholder='請填寫說明，最多100字' v-model="myForm.Description"></textarea>
           </div>
         </div>
@@ -96,8 +60,8 @@
             <p><span>*</span>設備總類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                    {{ myForm.EquipTypeName || '請選擇' }}
-                  </button>
+                            {{ myForm.EquipTypeName || '請選擇' }}
+                          </button>
               <div class="dropdown-menu" aria-labelledby="typeDropdown">
                 <p v-for="(item, index) in myForm.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
               </div>
@@ -107,8 +71,8 @@
             <p><span>*</span>設備分類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(myForm.EquipTypeName !== '') }">
-                    {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
-                  </button>
+                            {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
+                          </button>
               <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                 <p v-for="(item, index) in myForm.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
               </div>
@@ -130,8 +94,8 @@
         <div class="row g-0">
           <div class="col-12 d-flex wrap text_input">
             <label for="inputTextarea" class="form-label">
-                  <p>規格需求：</p>
-                </label>
+                          <p>規格需求：</p>
+                        </label>
             <div>
             </div>
             <textarea class="form-control" id="inputTextarea" placeholder='請填寫說明，最多100字' v-model="myForm.RequiredSpec"></textarea>
@@ -178,6 +142,7 @@
     },
     setup() {
       const gridApi = ref(null);
+      const options = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨'];
       const myForm = reactive({
         ApplicationDate: '',
         Applicant: '',
@@ -194,7 +159,7 @@
         ProductName: '',
         Number: 1,
         RequiredSpec: '',
-      });
+      })
       const columnDefs = [{
           suppressMovable: true,
           field: "",
@@ -325,9 +290,9 @@
           return;
         }
         const form = new FormData();
-        form.append('projectCode' , myForm.ProjectCode);
+        form.append('projectCode', myForm.ProjectCode);
         const axios = require('axios');
-        const response = await axios.post('http://192.168.0.176:7008/GetDBdata/SearchProjectName',form);
+        const response = await axios.post('http://192.168.0.176:7008/GetDBdata/SearchProjectName', form);
         try {
           const data = response.data;
           console.log(data);
@@ -359,7 +324,7 @@
           alert('請輸入必填項目');
           return;
         }
-        if(!myForm.ProjectValid) {
+        if (!myForm.ProjectValid) {
           alert('請確定專案代碼查詢正確')
           return;
         }
@@ -382,7 +347,9 @@
             let msg = data.messages + '\n';
             msg += '單號為:' + data.resultList.AO_ID;
             alert(msg);
-            router.push({name: 'Rent_Datagrid'});
+            router.push({
+              name: 'Rent_Datagrid'
+            });
           } else if (data.state === 'error') {
             alert(data.messages);
           }
@@ -429,6 +396,7 @@
       }
       return {
         myForm,
+        options,
         columnDefs,
         rowData,
         getEquipTypeName,

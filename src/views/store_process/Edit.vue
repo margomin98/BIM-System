@@ -213,7 +213,7 @@
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">S/N：</div>
-                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.SN" />
+                <input type="text" class="form-control" aria-label="Default"  placeholder="最多輸入100字" v-model="item.SN" />
               </div>
             </div>
             <div class="col">
@@ -221,7 +221,7 @@
                 <div class="input-group-prepend">
                   備註：
                 </div>
-                <input class="form-control" aria-label="With textarea" v-model="item.itemMemo">
+                <input class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="item.itemMemo">
               </div>
             </div>
             <div class="col">
@@ -767,7 +767,7 @@ export default {
       var seen = {};
       for (const value of myForm) {
         if (seen[value]) {
-          alert('input之間有重複')
+          alert('頁籤內資產編號不可重複，請再次確認資產編號欄位')
           return true
         }
         seen[value] = true;

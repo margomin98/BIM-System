@@ -55,7 +55,6 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="send_btn">送出</button>
       </div>
     </div>
   </div>

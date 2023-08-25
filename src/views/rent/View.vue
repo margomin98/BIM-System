@@ -145,13 +145,13 @@
       const rowData = ref([]);
       const route = useRoute();
       const router = useRouter();
-      const AI_ID = route.query.search_id;
+      const AO_ID = route.query.search_id;
       const details = ref({});
       const options = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨'];
       async function getDetails() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/AO_GetApplicationInfo?ao_id=${AI_ID}`);
+          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/AO_GetApplicationInfo?ao_id=${AO_ID}`);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
