@@ -187,7 +187,12 @@
       Swiper,
     },
     setup() {
-   
+      const onSwiper = (swiper) => {
+        console.log(swiper);
+      };
+      const onSlideChange = () => {
+        console.log('slide change');
+      };
       const route = useRoute();
       const router = useRouter();
       const AI_ID = route.query.search_id;
