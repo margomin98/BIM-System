@@ -274,6 +274,9 @@ export default {
         alert('請填寫所有必填項目');
         return;
       }
+      if (!/^[\s\S]{1,10}$/.test(details.WarrantyDate)) {
+        alert('保固期限格式錯誤')
+      }
       const formData = new FormData();
       const formFields = {
         'AI_ID': details.value.AI_ID,
