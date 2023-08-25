@@ -18,7 +18,7 @@
               <router-link to="/store_return">歸還入庫</router-link>
               <router-link to="/store_datagrid">入庫填報管理</router-link>
               <div class='dropdown-divider' style='border-color:white'></div>
-              <router-link to="/store_process_datagrid">入庫作業</router-link>
+              <router-link to="/store_process_datagrid">入庫作業管理</router-link>
             </div>
           </li>
           <li class="nav-item dropdown">

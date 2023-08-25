@@ -2,7 +2,7 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>入庫填報</h1>
+      <h1>入庫填報管理</h1>
     </div>
     <div class="col">
       <div class="button_wrap d-flex">

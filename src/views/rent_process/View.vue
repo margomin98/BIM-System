@@ -7,21 +7,21 @@
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
+          <p>單號：121564564</p>
+        </div>
+        <div>
           <p>申請人員：陳奕迅</p>
         </div>
         <div>
           <p>申請日期：2022/02/20</p>
-        </div>
-        <div>
-          <p>單號：121564564</p>
         </div>
       </div>
       <form>
         <div class="row g-0">
           <div class="col d-flex wrap column_section">
             <label for="inputTitle1" class="form-label use">
-                <p>用&ensp;&ensp;&ensp;&ensp;途</p>
-              </label>
+                    <p>用&ensp;&ensp;&ensp;&ensp;途</p>
+                  </label>
             <div class="option">
               <div class="content">
                 <div class="form-check">
@@ -53,18 +53,18 @@
           </div>
         </div>
         <div class="row g-0">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                <p>專案代碼</p>
-              </label>
+                    <p>專案代碼</p>
+                  </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字</p>
             </div>
           </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap">
+          <div class="col d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                <p>專案名稱</p>
-              </label>
+                    <p>專案名稱</p>
+                  </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字</p>
             </div>
@@ -73,8 +73,8 @@
         <div class="row g-0">
           <div class="col d-flex wrap" style="border: none">
             <label for="inputTextarea" class="form-label">
-                <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
-              </label>
+                    <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
+                  </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>14564</p>
             </div>
@@ -87,17 +87,17 @@
         </div>
       </div>
       <div class="second_content">
-        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list"  :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :defaultColDef="defaultColDef1" :paginationAutoPageSize="true">
+        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :defaultColDef="defaultColDef1" :paginationAutoPageSize="true">
         </ag-grid-vue>
       </div>
       <modal-overlay v-if="modalVisible" @close="closeModal" />
       <div class="fixed_info">
         <div>
-          <p>資產出口細項</p>
+          <p>資產出庫細項</p>
         </div>
       </div>
       <div class="third_content">
-        <ag-grid-vue :suppressRowClickSelection="true" style="height: 380px" class="ag-theme-alpine list"  :rowHeight="rowHeight" :columnDefs="columnDefs2" :rowData="rowData2" :defaultColDef="defaultColDef" :paginationAutoPageSize="true">
+        <ag-grid-vue :suppressRowClickSelection="true" style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs2" :rowData="rowData2" :defaultColDef="defaultColDef" :paginationAutoPageSize="true">
         </ag-grid-vue>
       </div>
       <div class="fixed_info_count">
@@ -117,24 +117,24 @@
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                <p>備料人員</p>
-              </label>
+                    <p>備料人員</p>
+                  </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                <p>備料完成日期</p>
-              </label>
+                    <p>備料完成日期</p>
+                  </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                <p>備註</p>
-              </label>
+                    <p>備註</p>
+                  </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
@@ -150,24 +150,24 @@
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                <p>審核人員</p>
-              </label>
+                    <p>審核人員</p>
+                  </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                <p>審核結果</p>
-              </label>
+                    <p>審核結果</p>
+                  </label>
             <div class="input-group" id="readonly_box">
               <input type="checkbox" />通過 <input type="checkbox" />不通過
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                <p>審核日期</p>
-              </label>
+                    <p>審核日期</p>
+                  </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
@@ -176,8 +176,8 @@
         <div class="row g-0">
           <div class="col d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                <p>審核意見</p>
-              </label>
+                    <p>審核意見</p>
+                  </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
@@ -193,8 +193,8 @@
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                <p><span>*</span>領用人員</p>
-              </label>
+                    <p><span>*</span>領用人員</p>
+                  </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
@@ -202,8 +202,8 @@
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                <p><span>*</span>交付人員</p>
-              </label>
+                    <p><span>*</span>交付人員</p>
+                  </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
@@ -211,8 +211,8 @@
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name" id="done_date">
-                <p>交付完成日期</p>
-              </label>
+                    <p>交付完成日期</p>
+                  </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
@@ -221,8 +221,8 @@
         <div class="row g-0">
           <div class="col d-flex wrap">
             <label for="inputWithButton" class="form-label" id="memo">
-                <p>備註</p>
-              </label>
+                    <p>備註</p>
+                  </label>
             <div class="input-group" id="memo_input">
               <input type="text" class="form-control" />
             </div>
@@ -497,7 +497,7 @@
       }
       .info_wrap {
         margin: auto;
-        width: 1100px;
+        width: 1000px;
         .input-group-prepend {
           width: 100% !important;
           text-align: center !important;

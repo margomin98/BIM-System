@@ -2,76 +2,74 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>出庫審核</h1>
+      <h1>出庫審核管理</h1>
     </div>
     <div class="container-fluid datagrid_section">
-    
-      <div class="row">
-      <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>用途</p>
-          <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ selectedItem || "請選擇" }}
-                  </button>
-            <div class="dropdown-menu" aria-labelledby="statusDropdown">
-              <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-              <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>狀態</p>
-          <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ selectedItem || "請選擇" }}
-                  </button>
-            <div class="dropdown-menu" aria-labelledby="statusDropdown">
-              <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-              <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>單號</p>
-          <input type="text" />
-        </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>專案名稱</p>
-          <input type="text" />
-        </div>
-     
+      <div class="content">
+        <div class="row">
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>日期類型</p>
-          <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ selectedItem || "請選擇" }}
-                  </button>
-            <div class="dropdown-menu" aria-labelledby="statusDropdown">
-              <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-              <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
-            </div>
+            <p>單號</p>
+            <input type="text" />
           </div>
-        </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12  flex-col">
-          <p>日期(起)</p>
-          <div class="date-selector">
-            <div class="input-container">
-              <input type="date" v-model="selectedDate" class="date-input" @focus="showDatePicker = true" @blur="showDatePicker = false" />
-              
-              <div class="date-picker" v-if="showDatePicker">
-                <datepicker v-model="selectedDate"></datepicker>
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+            <p>專案名稱</p>
+            <input type="text" />
+          </div>
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+            <p>用途</p>
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{ selectedItem || "請選擇" }}
+                    </button>
+              <div class="dropdown-menu" aria-labelledby="statusDropdown">
+                <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
+                <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12 flex-col">
-          <p>日期(迄)</p>
-          <div class="date-selector">
-            <div class="input-container">
-              <input type="date" v-model="selectedEndDate" class="date-input" @focus="showEndDatePicker = true" @blur="showEndDatePicker = false" />
-             
-              <div class="date-picker" v-if="showEndDatePicker">
-                <datepicker v-model="selectedEndDate"></datepicker>
+          <div class="col-xl-3 col-lg-2 col-md-6 col-12">
+            <p>狀態</p>
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{ selectedItem || "請選擇" }}
+                    </button>
+              <div class="dropdown-menu" aria-labelledby="statusDropdown">
+                <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
+                <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+            <p>日期類型</p>
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{ selectedItem || "請選擇" }}
+                    </button>
+              <div class="dropdown-menu" aria-labelledby="statusDropdown">
+                <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
+                <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12  flex-col">
+            <p>日期(起)</p>
+            <div class="date-selector">
+              <div class="input-container">
+                <input type="date" v-model="selectedDate" class="date-input" @focus="showDatePicker = true" @blur="showDatePicker = false" />
+                <div class="date-picker" v-if="showDatePicker">
+                  <datepicker v-model="selectedDate"></datepicker>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12 flex-col">
+            <p>日期(迄)</p>
+            <div class="date-selector">
+              <div class="input-container">
+                <input type="date" v-model="selectedEndDate" class="date-input" @focus="showEndDatePicker = true" @blur="showEndDatePicker = false" />
+                <div class="date-picker" v-if="showEndDatePicker">
+                  <datepicker v-model="selectedEndDate"></datepicker>
+                </div>
               </div>
             </div>
           </div>
@@ -347,11 +345,21 @@
           }
         }
       }
-      .datagrid_section {
+      .datagrid_section {    
+         .content {
+          background: rgba(82, 136, 156, 0.8);
+          border-radius: 10px;
+          margin-bottom: 30px;
+          height: 250px;
+          align-items: center;
+          display: flex;
+          justify-content: center;
+        }
         .row {
-          gap: 20px 50px;
-          padding: 40px;
-          @include datagrid_bg;
+          display: grid;
+          grid-template-rows: 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+          gap: 40px 5px;
            .col-xl-2{
             margin:0 3px;
           }

@@ -2,7 +2,7 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>入庫作業</h1>
+      <h1>入庫作業管理</h1>
     </div>
     <div class="container-fluid datagrid_section">
       <div class="row">

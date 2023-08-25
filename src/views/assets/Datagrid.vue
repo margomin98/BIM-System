@@ -396,7 +396,8 @@
     padding: 0 2%;
         }
         .row {
-          gap:10px 0;
+          gap: 20px 50px;
+          padding: 40px;
           // display: grid;
     // grid-template-rows: 1fr 1fr;
     // grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
