@@ -82,7 +82,8 @@
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"><div class="input-group-prepend">數量：</div>
+              <div class="input-group-prepend info"><img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"> 數量：
+              </div>
               <input type="text" class="form-control readonly_box" aria-label="Default"
                 aria-describedby="inputGroup-sizing-default" readonly v-model="details.Count" />
             </div>
@@ -98,7 +99,7 @@
         <div v-if="details.IsConsumable" class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包"><div class="input-group-prepend">包裝數量：</div>
+              <div class="input-group-prepend info"><img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">包裝數量：</div>
               <input type="text" class="form-control readonly_box" aria-label="Default"
                 aria-describedby="inputGroup-sizing-default" readonly v-model="details.PackageNum" />
             </div>
@@ -214,7 +215,7 @@
                     <span>*</span>區域：
                   </div>
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-                  v-model="item.itemAreaName" readonly/>
+                  v-model="item.itemAreaName" placeholder="BFXXXXXXXX" readonly/>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -223,7 +224,7 @@
                     <span>*</span> 櫃位：
                   </div>
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-                  v-model="item.itemLayerName" readonly/>
+                  v-model="item.itemLayerName" placeholder="BFXXXXXXXX" readonly/>
                 </div>
               </div>
             </div>
@@ -504,10 +505,12 @@ export default {
 
           .input-group-prepend {
             color: white;
-            font-weight: 700;
-            font-size: 20px;
-            width: 120px;
-            text-align: end;
+    font-weight: 700;
+    font-size: 20px;
+    width: 120px;
+    text-align: end;
+    white-space: nowrap;
+    
           }
         }
       }
@@ -603,7 +606,6 @@ export default {
 
             .selected_file {
               margin-left: 10px;
-
               p.title {
                 font-weight: 700;
                 color: white;
@@ -739,6 +741,7 @@ export default {
             font-size: 20px;
             width: 120px;
             text-align: end;
+            white-space:nowrap;
           }
         }
       }
@@ -974,6 +977,9 @@ export default {
             font-weight: 700;
             font-size: 20px;
             width: 100%;
+            display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
           }
         }
       }

@@ -894,6 +894,7 @@ export default {
               font-size: 20px;
               width: 120px;
               text-align: end;
+              white-space: nowrap;
             }
           }
         }
@@ -1100,6 +1101,7 @@ export default {
               font-size: 20px;
               width: 120px;
               text-align: end;
+              white-space: nowrap;
             }
           }
         }
@@ -1238,6 +1240,7 @@ export default {
                 font-size: 20px;
                 width: 120px;
                 text-align: end;
+                
               }
               .file_wrap {
                 display: flex;

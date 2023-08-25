@@ -38,6 +38,7 @@ import Rent_Review_View from "../views/rent_review/View.vue";
 
 //資產管理
 import Assets_Datagrid from "../views/assets/Datagrid.vue";
+import Assets_View from "../views/assets/View.vue";
 //資產管理
 
 //系統管理
@@ -143,6 +144,11 @@ const routes = [
     path: "/assets_datagrid",
     name: "Assets_Datagrid",
     component: Assets_Datagrid,
+  },
+  {
+    path: "/assets_view",
+    name: "Assets_View",
+    component: Assets_View,
   },
   {
     path: "/rent_datagrid",
