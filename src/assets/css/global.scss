@@ -302,3 +302,17 @@
 }
 
 //store_process_css
+
+//assets_view_css
+@mixin fixed_title {
+    display: flex;
+    justify-content: space-around;
+    background: #3D4E61;
+    color: white;
+    font-size: 25px;
+    font-weight: 700;
+    align-items: center;
+    border-radius: 10px 10px 0px 0px;
+    height: 50px;
+}
+//assets_view_css

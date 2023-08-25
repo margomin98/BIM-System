@@ -11,6 +11,4 @@ import '../src/assets/css/bootstrap.css';
 import 'ag-grid-community/styles/ag-grid.css'; 
 import '../src/assets/css/ad-grid.css';
 
-
-
 createApp(App).use(EasyUI).use(store).use(router).mount('#app')

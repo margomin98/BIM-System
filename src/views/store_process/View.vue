@@ -82,7 +82,8 @@
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend">數量：</div>
+              <div class="input-group-prepend info"><img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"> 數量：
+              </div>
               <input type="text" class="form-control readonly_box" aria-label="Default"
                 aria-describedby="inputGroup-sizing-default" readonly v-model="details.Count" />
             </div>
@@ -98,7 +99,7 @@
         <div v-if="details.IsConsumable" class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend">包裝數量：</div>
+              <div class="input-group-prepend info"><img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">包裝數量：</div>
               <input type="text" class="form-control readonly_box" aria-label="Default"
                 aria-describedby="inputGroup-sizing-default" readonly v-model="details.PackageNum" />
             </div>
