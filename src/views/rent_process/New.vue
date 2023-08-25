@@ -51,7 +51,7 @@
               <div class="col-xl-3 col-lg-3 col-md-3 col-12">
                 <p>數量 <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"></p>
                 <div class="number-input-box">
-                  <input class="input-number" type="number" v-model="count" min="1" />
+                  <input class="input-number readonly_box" readonly />
                 </div>
               </div>
             </div>
@@ -64,7 +64,7 @@
                                                       </label>
                 <div>
                 </div>
-                <textarea class="form-control" id="inputTextarea" rows="3" placeholder='請填寫說明，最多100字'></textarea>
+                <textarea class="form-control readonly_box" id="inputTextarea" rows="3" readonly></textarea>
               </div>
             </div>
             <div class='col d-flex justify-content-center'>
@@ -87,16 +87,16 @@
       <h1>資產出庫備料作業</h1>
     </div>
     <div class="info_wrap col">
-      <div class="fixed_info">
+      <div class="fixed_info"> <div>
+          <p>單號：121564564</p>
+        </div>
         <div>
           <p>申請人員：陳奕迅</p>
         </div>
         <div>
           <p>申請日期：2022/02/20</p>
         </div>
-        <div>
-          <p>單號：121564564</p>
-        </div>
+       
       </div>
       <form>
         <div class="row g-0">
@@ -136,7 +136,7 @@
           </div>
         </div>
         <div class="row g-0">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
                                         <p>專案代碼</p>
                                       </label>
@@ -144,7 +144,7 @@
               <p class='readonly_box' readonly>文字</p>
             </div>
           </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap">
+          <div class="col d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
                                         <p>專案名稱</p>
                                       </label>
@@ -218,9 +218,9 @@
             <label for="inputWithTitle" class="form-label project_name">
                                         <p>備料備註</p>
                                       </label>
-            <div class="input-group">
-              <input type="text" class="form-control" id="inputWithTitle" placeholder='自由填寫，最多100字' />
-            </div>
+                                      <div class="input-group">
+              <textarea placeholder="最多100字" class="form-control" id="inputTextarea" style="height:100%" rows="1"></textarea>
+              </div>
           </div>
         </div>
       </div>
@@ -465,12 +465,6 @@
             field: "",
             cellRenderer: "Storage_add",
             width: "75"
-          },
-          {
-            suppressMovable: true,
-            field: "項目",
-            cellRenderer: "Storage_view",
-            width: "100"
           },
           {
             headerName: "資產編號",
@@ -871,10 +865,7 @@
         .input-number {
           @include count_btn;
         }
-        .form-control {
-          height: 50px !important;
-          border-radius: 0;
-        }
+       
       }
       .button_wrap {
         display: flex;
@@ -1167,10 +1158,7 @@
         .input-number {
           @include count_btn;
         }
-        .form-control {
-          height: 50px !important;
-          border-radius: 0;
-        }
+
       }
       .button_wrap {
         display: flex;
@@ -1487,10 +1475,7 @@
         .input-number {
           @include count_btn;
         }
-        .form-control {
-          height: 50px !important;
-          border-radius: 0;
-        }
+        
       }
       .button_wrap {
         display: flex;

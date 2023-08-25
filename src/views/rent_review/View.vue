@@ -7,21 +7,21 @@
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
+          <p>單號：121564564</p>
+        </div>
+        <div>
           <p>申請人員：陳奕迅</p>
         </div>
         <div>
           <p>申請日期：2022/02/20</p>
-        </div>
-        <div>
-          <p>單號：121564564</p>
         </div>
       </div>
       <form>
         <div class="row g-0">
           <div class="col d-flex wrap">
             <label for="inputTitle1" class="form-label use">
-                                              <p>用&ensp;&ensp;&ensp;&ensp;途</p>
-                                            </label>
+                                                    <p>用&ensp;&ensp;&ensp;&ensp;途</p>
+                                                  </label>
             <div class="option">
               <div class='content'>
                 <div class="form-check">
@@ -55,16 +55,16 @@
         <div class="row g-0">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                                              <p>專案代碼</p>
-                                            </label>
+                                                    <p>專案代碼</p>
+                                                  </label>
             <div class="input-group">
               <input type="text" class="form-control readonly_box" id="inputWithButton" readonly />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                                              <p>專案名稱</p>
-                                            </label>
+                                                    <p>專案名稱</p>
+                                                  </label>
             <div class="input-group">
               <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly />
             </div>
@@ -73,8 +73,8 @@
         <div class="row g-0">
           <div class="col d-flex wrap" style="border: none">
             <label for="inputTextarea" class="form-label">
-                                              <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
-                                            </label>
+                                                    <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
+                                                  </label>
             <textarea class="form-control readonly_box" id="inputTextarea" rows="1" readoonly></textarea>
           </div>
         </div>
@@ -91,7 +91,7 @@
       <modal-overlay v-if="modalVisible" @close="closeModal" />
       <div class="fixed_info">
         <div>
-          <p>資產出口細項</p>
+          <p>資產出庫細項</p>
         </div>
       </div>
       <div class="third_content">
@@ -115,16 +115,16 @@
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                                              <p>備料人員</p>
-                                            </label>
+                                                    <p>備料人員</p>
+                                                  </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
           </div>
           <div class="col d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                                              <p>備註</p>
-                                            </label>
+                                                    <p>備註</p>
+                                                  </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
@@ -140,8 +140,8 @@
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                                              <p><span>*</span>審核人員</p>
-                                            </label>
+                                                    <p><span>*</span>審核人員</p>
+                                                  </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
@@ -149,16 +149,16 @@
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                                               <p><span>*</span>審核結果</p>
-                                            </label>
+                                                     <p><span>*</span>審核結果</p>
+                                                  </label>
             <div class="input-group">
               <input type="checkbox" />通過 <input type="checkbox" />不通過
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                                              <p>審核日期</p>
-                                            </label>
+                                                    <p>審核日期</p>
+                                                  </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
@@ -167,11 +167,11 @@
         <div class="row g-0">
           <div class="col d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                                              <p>審核意見</p>
-                                            </label>
+                                                    <p>審核意見</p>
+                                                  </label>
             <div class="input-group">
-              <input type="text" class="form-control" id="inputWithButton" />
-            </div>
+              <textarea placeholder="最多100字" class="form-control" id="inputTextarea" style="height:100%" rows="1"></textarea>
+              </div>
           </div>
         </div>
       </div>
@@ -356,14 +356,6 @@
             unSortIcon: true,
             sortable: true,
             width: "100",
-            suppressMovable: true,
-          },
-          {
-            headerName: "備註",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
             suppressMovable: true,
           }
         ],
@@ -1035,7 +1027,7 @@
             margin-bottom: 0;
           }
         }
-         .fourth_content {
+        .fourth_content {
           border-bottom: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
@@ -1135,19 +1127,17 @@
           }
           .wrap:nth-child(3) {
             border-right: 1px solid black;
-           
             label {
               width: 270px;
-              
             }
           }
           .wrap:nth-child(1) {
             border-right: 1px solid black;
-             #readonly_box{
-               border-right: 1px solid black;
+            #readonly_box {
+              border-right: 1px solid black;
             }
             label {
-              width:270px;
+              width: 270px;
             }
             .input-group {
               border-left: 1px solid black;
@@ -1157,7 +1147,7 @@
             border-right: 1px solid black;
             label {
               height: 40px;
-              width:270px;
+              width: 270px;
             }
             .input-group {
               display: flex;
@@ -1168,9 +1158,7 @@
               border-left: 1px solid black;
             }
           }
-      
         }
-       
         form {
           border-top: 1px solid black;
           border-left: 1px solid black;
@@ -1245,7 +1233,6 @@
         .input-number {
           @include count_btn;
         }
-      
       }
       .button_wrap {
         display: flex;

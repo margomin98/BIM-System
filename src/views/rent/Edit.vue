@@ -9,22 +9,22 @@
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
+          <p>單號：1458613</p>
+        </div>
+        <div>
           <p>申請人員：陳奕迅</p>
         </div>
         <div>
           <p>申請日期：2022/02/20</p>
-        </div>
-        <div>
-          <p>單號：1458613</p>
         </div>
       </div>
       <form>
         <div class="row g-0">
           <div class="col d-flex wrap column_section">
             <label for="inputTitle1" class="form-label use">
-                                        <p>
-                                        <span>*</span>用&ensp;&ensp;&ensp;&ensp;途</p>
-                                        </label>
+                                          <p>
+                                          <span>*</span>用&ensp;&ensp;&ensp;&ensp;途</p>
+                                          </label>
             <div class="option">
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="checkbox1">
@@ -54,22 +54,22 @@
           </div>
         </div>
         <div class="row g-0">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap column_section">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap column_section">
             <label for="inputWithButton" class="form-label">
-                                        <p>
-                                        <span>*</span>專案代碼
-                                        </p>
-                                        </label>
+                                          <p>
+                                          <span>*</span>專案代碼
+                                          </p>
+                                          </label>
             <div class="input-group">
               <input type="text" class="form-control" id="inputWithTitle">
             </div>
           </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap">
+          <div class="col d-flex wrap">
             <label for="inputWithTitle" class="form-label" id='project_name'> 
-                                        <p>
-                                        專案名稱
-                                        </p>
-                                        </label>
+                                          <p>
+                                          專案名稱
+                                          </p>
+                                          </label>
             <div class="input-group" id='readonly_box'>
               <p class='readonly_box' readonly>14564</p>
             </div>
@@ -78,10 +78,10 @@
         <div class="row g-0">
           <div class="col d-flex wrap column_section" style='border:none'>
             <label for="inputTextarea" class="form-label">
-                                        <p>
-                                        說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明
-                                        </p>
-                                        </label>
+                                          <p>
+                                          說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明
+                                          </p>
+                                          </label>
             <textarea class="form-control" id="inputTextarea" rows="1" placeholder='請填寫說明，最多100字'></textarea>
           </div>
         </div>
@@ -97,8 +97,8 @@
             <p><span>*</span>設備總類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                {{ selectedItem || "請選擇" }}
-                                              </button>
+                                                  {{ selectedItem || "請選擇" }}
+                                                </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
                 <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
@@ -109,8 +109,8 @@
             <p><span>*</span>設備分類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                {{ selectedItem || "請選擇" }}
-                                              </button>
+                                                  {{ selectedItem || "請選擇" }}
+                                                </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
                 <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
@@ -121,8 +121,8 @@
             <p><span>*</span>物品名稱</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                {{ selectedItem || "請選擇" }}
-                                              </button>
+                                                  {{ selectedItem || "請選擇" }}
+                                                </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
                 <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>

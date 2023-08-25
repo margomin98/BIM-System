@@ -2,12 +2,12 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>出庫填報</h1>
+      <h1>出庫填報管理</h1>
     </div>
     <div class="col">
       <div class="button_wrap d-flex">
         <router-link to="/rent_new">
-          <button class="add_btn">新增資產出庫單</button>
+          <button class="add_btn">出庫填報</button>
         </router-link>
       </div>
     </div>
@@ -58,7 +58,7 @@
           </div>
         </div>
         <div class="col-xl-2 col-lg-2 col-md-6 col-12 flex-col">
-          <p>申請入庫日期(迄)</p>
+          <p>申請出庫日期(迄)</p>
           <div class="date-selector">
             <div class="input-container">
               <input type="date" v-model="selectedEndDate" class="date-input" @focus="showEndDatePicker = true" @blur="showEndDatePicker = false" />
@@ -149,7 +149,7 @@
             suppressMovable: true
           },
           {
-            headerName: "申請人員",
+            headerName: "申請出庫日期",
             field: "Applicant",
             unSortIcon: true,
             sortable: true,
@@ -321,7 +321,6 @@
         gap: 20px;
         .add_btn {
           @include datagrid_button_no1;
-          width: 195px;
           &:hover {
             background-color: #537ebc;
           }
@@ -421,7 +420,6 @@
         gap: 20px;
         .add_btn {
           @include datagrid_button_no1;
-          width: 190px;
           &:hover {
             background-color: #537ebc;
           }
