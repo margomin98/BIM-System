@@ -274,7 +274,7 @@ export default {
         alert('請填寫所有必填項目');
         return;
       }
-      if (!/^.{1,10}$/.test(details.value.WarrantyDate)) {
+      if ( details.value.WarrantyDate &&!/^.{1,10}$/.test(details.value.WarrantyDate)) {
         alert('保固期限格式錯誤');
         return
       }
