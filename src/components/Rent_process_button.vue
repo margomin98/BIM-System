@@ -15,7 +15,7 @@ export default {
   props: ["params", "refresh"],
   setup(props) {
     const router = useRouter();
-    const search_id = props.params.data.AI_ID;
+    const search_id = props.params.data.AO_ID;
     function routeTo(view) {
       switch (view) {
         case "檢視":

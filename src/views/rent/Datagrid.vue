@@ -65,13 +65,13 @@
     </div>
     <div class="col justify-content-center d-flex">
       <div class="button_wrap d-flex">
-        <button class="search_btn">檢索</button>
+        <button class="search_btn" @click="submit">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
         <!-- <button class="export_btn">匯出</button> -->
       </div>
     </div>
     <div style="width: 100%">
-      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;margin-bottom:50px" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true"
+      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;margin-bottom:50px" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize"
         :pagination="true">
       </ag-grid-vue>
     </div>
@@ -108,9 +108,9 @@
       const Use = ref('');
       const UseArray = ['內部領用', '借測', '維修', '借測', '出貨', '報廢', '退貨']
       const Status = ref(''); //狀態
-      const StatusArray = ref(['已填報', '已備料', '審核通過', '可交付', '部分交付', '已交付', '審核不通過' ])
-      const StartDate = ref(''); //申請入庫日期(起)
-      const EndDate = ref(''); //申請入庫日期(迄)
+      const StatusArray = ref(['已填報', '已備料', '可交付', '部分交付', '已交付', '審核通過' , '審核不通過' ])
+      const StartDate = ref(''); //申請出庫日期(起)
+      const EndDate = ref(''); //申請出庫日期(迄)
       const pageSize = 10;
       const columnDefs = [{
             suppressMovable: true,
@@ -133,7 +133,7 @@
             field: "ProjectName",
             unSortIcon: true,
             sortable: true,
-            width: '150px',
+            width: '170px',
             resizable: true,
             suppressMovable: true
           },
@@ -152,7 +152,7 @@
             field: "Use",
             unSortIcon: true,
             sortable: true,
-            width: '150px',
+            width: '130px',
             resizable: true,
             suppressMovable: true
           },
@@ -161,12 +161,12 @@
             field: "model",
             unSortIcon: true,
             sortable: true,
-            width: '160px',
+            width: '130px',
             resizable: true,
             suppressMovable: true
           },
           {
-            headerName: "申請出庫日期",
+            headerName: "申請人員",
             field: "Applicant",
             unSortIcon: true,
             sortable: true,
@@ -175,11 +175,11 @@
             suppressMovable: true
           },
           {
-            headerName: "申請日期",
+            headerName: "申請出庫日期",
             field: "ApplicationDate",
             unSortIcon: true,
             sortable: true,
-            width: '150px',
+            width: '170px',
             resizable: true,
             suppressMovable: true
           },
@@ -205,9 +205,7 @@
         //將表格資料append到 formData
         for (const fieldName in formFields) {
           formData.append(fieldName, formFields[fieldName]);
-          // console.log(formData.get(`${fieldName}`));
         }
-        //使用axios method:post傳送新品入庫表單
         const axios = require('axios');
         try {
           const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/Applications', formData);
@@ -235,53 +233,6 @@
           console.error('Error sending data to backend', error);
         }
       }
-      async function getEquipTypeName() {
-        if (EquipTypeArray.value.length == 0) {
-          const axios = require('axios');
-          try {
-            const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetEquipType');
-            console.log(response);
-            const data = response.data;
-            if (data.state === 'success') {
-              console.log('總類Get成功 資料如下\n', data.resultList.EquipType);
-              EquipTypeArray.value = data.resultList.EquipType;
-            } else if (data.state === 'error') {
-              alert(data.messages);
-            } else if (data.state === 'account_error') {
-              alert(data.messages);
-              router.push('/');
-            }
-          } catch (error) {
-            console.error('Error sending applicant info request to backend');
-          }
-        }
-      }
-      async function getEquipCategoryName() {
-        EquipCategoryName.value = '';
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${EquipTypeName.value}`);
-          console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('分類Get成功 資料如下\n', data.resultList.EquipCategory);
-            EquipCategoryArray.value = data.resultList.EquipCategory;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error('Error sending applicant info request to backend', error);
-        }
-      }
-      function selectType(item) {
-        EquipTypeName.value = item;
-        // console.log('選擇的總類:', EquipTypeName.value);
-        getEquipCategoryName();
-        EquipCategoryInit.value = '請選擇';
-      }
       function selectUse(item) {
         Use.value = item;
       }
@@ -289,10 +240,9 @@
         Status.value = item;
       };
       const clear = () => {
-        EquipTypeName.value = '';
-        EquipCategoryName.value = '';
-        EquipCategoryInit.value = '請先選擇設備總類';
-        AssetName.value = '';
+        AO_ID.value = '';
+        ProjectName.value = '';
+        Use.value = '';
         Status.value = '';
         StartDate.value = '';
         EndDate.value = '';
@@ -314,7 +264,6 @@
         StartDate,
         EndDate,
         pageSize,
-        selectType,
         selectUse,
         selectStatus,
         submit,
