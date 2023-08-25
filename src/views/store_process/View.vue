@@ -505,10 +505,11 @@ export default {
 
           .input-group-prepend {
             color: white;
-            font-weight: 700;
-            font-size: 20px;
-            width: 120px;
-            text-align: end;
+    font-weight: 700;
+    font-size: 20px;
+    width: 120px;
+    text-align: end;
+    white-space: nowrap;
           }
         }
       }
@@ -741,6 +742,7 @@ export default {
             font-size: 20px;
             width: 120px;
             text-align: end;
+            white-space:nowrap;
           }
         }
       }
