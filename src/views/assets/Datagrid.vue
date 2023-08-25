@@ -135,6 +135,7 @@
             field: "",
             cellRenderer: "Button",
             width: '150',
+            resizable: true,
           },
           {
             headerName: "資產編號",
@@ -142,6 +143,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -150,6 +152,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -158,6 +161,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -166,6 +170,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -174,6 +179,7 @@
             unSortIcon: true,
             sortable: true,
             width: '100',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -182,6 +188,7 @@
             unSortIcon: true,
             sortable: true,
             width: '100',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -190,6 +197,7 @@
             unSortIcon: true,
             sortable: true,
             width: '110',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -198,6 +206,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150px',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -206,6 +215,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150px',
+            resizable: true,
             suppressMovable: true
           }
         ],

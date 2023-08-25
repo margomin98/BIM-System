@@ -117,6 +117,7 @@
             field: "",
             cellRenderer: "Rent_review_button",
             width: '150px',
+            resizable: true,
           },
           {
             headerName: "單號",
@@ -124,7 +125,8 @@
             unSortIcon: true,
             sortable: true,
             width: '150px',
-            suppressMovable: true
+            suppressMovable: true,
+            resizable: true,
           },
           {
             headerName: "專案名稱",
@@ -132,6 +134,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150px',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -140,6 +143,8 @@
             unSortIcon: true,
             sortable: true,
             width: '150px',
+            flex: 1,
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -148,6 +153,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150px',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -156,6 +162,7 @@
             unSortIcon: true,
             sortable: true,
             width: '160px',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -164,6 +171,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150px',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -172,11 +180,13 @@
             unSortIcon: true,
             sortable: true,
             width: '150px',
+            resizable: true,
             suppressMovable: true
           },
           {
             width: '100',
             field: "",
+            resizable: true,
             cellRenderer: "Delete",
           }
       ];

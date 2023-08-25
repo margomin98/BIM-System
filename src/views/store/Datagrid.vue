@@ -141,6 +141,7 @@
           suppressMovable: true,
           field: "",
           cellRenderer: "Storage_return_button",
+          resizable: true,
           width: 150
         },
         {
@@ -149,6 +150,7 @@
           unSortIcon: true,
           sortable: true,
           width: 100,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -157,6 +159,7 @@
           unSortIcon: true,
           sortable: true,
           width: 150,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -165,6 +168,7 @@
           unSortIcon: true,
           sortable: true,
           width: 150,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -173,6 +177,7 @@
           unSortIcon: true,
           sortable: true,
           width: 160,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -181,6 +186,7 @@
           unSortIcon: true,
           sortable: true,
           width: 275,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -189,6 +195,7 @@
           unSortIcon: true,
           sortable: true,
           width: 170,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -197,10 +204,12 @@
           unSortIcon: true,
           sortable: true,
           width: 170,
+          resizable: true,
           suppressMovable: true
         },
         {
           field: "",
+          resizable: true,
           cellRenderer: "Delete_button",
         }
       ];

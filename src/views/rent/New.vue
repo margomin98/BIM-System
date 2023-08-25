@@ -200,6 +200,7 @@ import { Form } from "v3-easyui";
           field: "",
           cellRenderer: "Delete",
           width: 100,
+          resizable: true,
         },
         {
           headerName: "設備總類",
@@ -207,6 +208,7 @@ import { Form } from "v3-easyui";
           unSortIcon: true,
           sortable: true,
           width: 150,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -215,6 +217,7 @@ import { Form } from "v3-easyui";
           unSortIcon: true,
           sortable: true,
           width: 150,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -232,6 +235,7 @@ import { Form } from "v3-easyui";
           unSortIcon: true,
           sortable: true,
           width: 100,
+          resizable: true,
           suppressMovable: true
         },
         {

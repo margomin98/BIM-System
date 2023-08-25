@@ -187,6 +187,7 @@
             suppressMovable: true,
             field: "",
             cellRenderer: "Delete",
+            resizable: true,
             width: '100'
           },
           {
@@ -195,6 +196,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -203,6 +205,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -211,6 +214,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -219,6 +223,7 @@
             unSortIcon: true,
             sortable: true,
             width: '100',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -227,6 +232,7 @@
             unSortIcon: true,
             sortable: true,
             flex: 1,
+            resizable: true,
             suppressMovable: true
           }
         ],

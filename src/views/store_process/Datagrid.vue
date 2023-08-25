@@ -185,6 +185,7 @@ export default {
       cellRendererParams: {
         refresh: submit, // 传递回调函数的 ref 给渲染器组件
       },
+      resizable: true,
       width: 300,
     },
     {
@@ -193,6 +194,7 @@ export default {
       unSortIcon: true,
       sortable: true,
       width: 100,
+      resizable: true,
       suppressMovable: true
     },
     {
@@ -201,6 +203,7 @@ export default {
       unSortIcon: true,
       sortable: true,
       width: 150,
+      resizable: true,
       suppressMovable: true
     },
     {
@@ -209,6 +212,7 @@ export default {
       unSortIcon: true,
       sortable: true,
       width: 150,
+      resizable: true,
       suppressMovable: true
     },
     {
@@ -217,6 +221,7 @@ export default {
       unSortIcon: true,
       sortable: true,
       width: 150,
+      resizable: true,
       suppressMovable: true
     },
     {
@@ -225,6 +230,7 @@ export default {
       unSortIcon: true,
       sortable: true,
       width: 150,
+      resizable: true,
       suppressMovable: true
     },
     {
@@ -233,6 +239,7 @@ export default {
       unSortIcon: true,
       sortable: true,
       width: 160,
+      resizable: true,
       suppressMovable: true
     },
     
@@ -242,6 +249,7 @@ export default {
       unSortIcon: true,
       sortable: true,
       width: 100,
+      resizable: true,
       suppressMovable: true
     },
     {
@@ -250,8 +258,8 @@ export default {
       unSortIcon: true,
       sortable: true,
       width: 100,
+      resizable: true,
       suppressMovable: true,
-      suppressMovable: true
     },
     {
       headerName: "申請入庫日期",
@@ -259,6 +267,7 @@ export default {
       unSortIcon: true,
       sortable: true,
       width: 170,
+      resizable: true,
       suppressMovable: true
     },
     {
@@ -267,6 +276,7 @@ export default {
       unSortIcon: true,
       sortable: true,
       width: 150,
+      resizable: true,
       suppressMovable: true
     },
     {
@@ -275,6 +285,7 @@ export default {
       unSortIcon: true,
       sortable: true,
       width: 170,
+      resizable: true,
       suppressMovable: true
     },
     {
@@ -283,6 +294,7 @@ export default {
       unSortIcon: true,
       sortable: true,
       width: 150,
+      resizable: true,
       suppressMovable: true
     },
     {
@@ -291,6 +303,7 @@ export default {
       unSortIcon: true,
       sortable: true,
       width: 170,
+      resizable: true,
       suppressMovable: true
     },
     {
@@ -299,10 +312,12 @@ export default {
       unSortIcon: true,
       sortable: true,
       width: 150,
+      resizable: true,
       suppressMovable: true
     },
     {
       field: "",
+      resizable: true,
       cellRenderer: "Delete",
     }
     ];

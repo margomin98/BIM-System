@@ -113,6 +113,7 @@
             field: "",
             cellRenderer: "Rent_review_button",
             width: '150',
+            resizable: true,
           },
           {
             headerName: "單號",
@@ -120,6 +121,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -128,6 +130,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -136,6 +139,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -144,6 +148,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -152,6 +157,7 @@
             unSortIcon: true,
             sortable: true,
             width: '160',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -160,6 +166,7 @@
             unSortIcon: true,
             sortable: true,
             width: '180',
+            resizable: true,
             suppressMovable: true
           },
           {
@@ -168,6 +175,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150',
+            resizable: true,
             suppressMovable: true
           },
           
@@ -177,6 +185,7 @@
             unSortIcon: true,
             sortable: true,
             width: '150',
+            resizable: true,
             suppressMovable: true
           },{
             headerName: "審核人員",
@@ -184,12 +193,14 @@
             unSortIcon: true,
             sortable: true,
             width: '150',
+            resizable: true,
             suppressMovable: true
           },
            {
             width:'100',
             field: "",
             cellRenderer: "Delete",
+            resizable: true,
           }
         ],
         rowData: [{
