@@ -1,7 +1,6 @@
 <template>
   <Navbar />
   <div class="main_section">
-   
     <div class="title col">
       <h1>檢視資產</h1>
     </div>
@@ -10,7 +9,6 @@
         <div>
           <h4>資產資訊</h4>
         </div>
-       
       </div>
       <div class="fixed_info">
         <div>
@@ -63,23 +61,23 @@
             <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.VendorName" />
           </div>
         </div>
-              <div class="col">
+        <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">型號：</div>
             <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductType" />
           </div>
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">規格：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductSpec" />
+          <div class="col">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">規格：</div>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductSpec" />
+            </div>
           </div>
-        </div>
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">S/N：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductSpec" />
+          <div class="col">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">S/N：</div>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductSpec" />
+            </div>
           </div>
-        </div>
         </div>
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -150,16 +148,23 @@
         <div>
           <h4>資產資訊</h4>
         </div>
-       
       </div>
       <div class="content">
-        <div class="swiper-container">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">Slide 1</div>
-        <div class="swiper-slide">Slide 2</div>
-        <div class="swiper-slide">Slide 3</div>
-      </div>
-    </div>
+        <swiper-container class='swiper_section' :slides-per-view="3" :space-between="spaceBetween" :centered-slides="true" :pagination="pagination" :modules="modules" :breakpoints="{
+              768: {
+                slidesPerView: 3,
+              },
+            }" @progress="onProgress" @slidechange="onSlideChange">
+          <swiper-slide>
+            <img src="https://www.cityonelimo.com/uploaded_files/seo-flyer/BLOG072202304240720_Remote%20work%20image.jpeg" alt="">
+          </swiper-slide>
+          <swiper-slide>
+            <img src="https://www.theforage.com/blog/wp-content/uploads/2022/12/how-many-work-hours-in-a-year.jpg" alt="">
+          </swiper-slide>
+          <swiper-slide>
+            <img src="https://static01.nyt.com/images/2021/01/17/fashion/13workathome/13workathome-superJumbo.jpg" alt="">
+          </swiper-slide>
+        </swiper-container>
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
@@ -170,6 +175,9 @@
 </template>
 
 <script>
+  import {
+    register
+  } from 'swiper/element/bundle';
   import Navbar from "@/components/Navbar.vue";
   import {
     onMounted,
@@ -180,7 +188,11 @@
     useRouter
   } from "vue-router";
   import Swiper from 'swiper';
-  import 'swiper/swiper-bundle.css';
+  import '@/assets/css/swiper-bundle.css';
+  import {
+    Pagination
+  } from 'swiper/modules';
+  register();
   export default {
     components: {
       Navbar,
@@ -367,10 +379,16 @@
         details,
         onSwiper,
         onSlideChange,
+        pagination: {
+          clickable: true,
+          renderBullet: function(index, className) {
+            return '<span class="' + className + '">' + (index + 1) + '</span>';
+          },
+        },
+        modules: [Pagination],
       }
     },
     mounted() {
-      // Initialize Swiper when the component is mounted
       this.swiper = new Swiper('.swiper-container', {
         // Swiper configuration options
         pagination: {
@@ -379,7 +397,6 @@
       });
     },
     beforeDestroy() {
-      // Destroy Swiper when the component is destroyed
       if (this.swiper) {
         this.swiper.destroy();
       }
@@ -389,6 +406,22 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
+	.swiper_section {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      gap:10px;
+   
+swiper-slide{
+  margin:0 10px;
+  width:auto !important;
+     img {
+        display: flex;
+        width: 100%;
+        height: 100%
+    }
+}
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .readonly_box {
@@ -421,7 +454,6 @@
         }
         .fixed_title {
           @include fixed_title;
-         
         }
         .content {
           @include content_bg;
@@ -480,7 +512,6 @@
             }
           }
         }
-    
       }
     }
   }
@@ -567,7 +598,6 @@
             background: #878787;
           }
         }
-       
       }
     }
   }
@@ -658,7 +688,6 @@
             background: #878787;
           }
         }
-       
       }
     }
   }
