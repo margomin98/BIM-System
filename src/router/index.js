@@ -242,7 +242,6 @@ const router = createRouter({
 //           next();
 //         }
 //         else {
-//           alert('您未有訪問此頁面的權限\n將重新引導至無權限頁面')
 //           next({ name: 'authorized' });
 //         }
 //       } 
