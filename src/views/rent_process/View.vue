@@ -193,7 +193,7 @@
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                    <p><span>*</span>領用人員</p>
+                    <p>領用人員</p>
                   </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
@@ -202,7 +202,7 @@
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                    <p><span>*</span>交付人員</p>
+                    <p>交付人員</p>
                   </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>

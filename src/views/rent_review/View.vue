@@ -140,16 +140,16 @@
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                                                    <p><span>*</span>審核人員</p>
+                                                    <p>審核人員</p>
                                                   </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
-            <button type="button">驗證</button>
+            <!-- <button type="button">驗證</button> -->
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                                                     <p><span>*</span>審核結果</p>
+                                                     <p>審核結果</p>
                                                   </label>
             <div class="input-group">
               <input type="checkbox" />通過 <input type="checkbox" />不通過
