@@ -215,7 +215,7 @@
                     <span>*</span>區域：
                   </div>
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-                  v-model="item.itemAreaName" placeholder="BFXXXXXXXX" readonly/>
+                  v-model="item.itemAreaName" readonly/>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -224,7 +224,7 @@
                     <span>*</span> 櫃位：
                   </div>
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-                  v-model="item.itemLayerName" placeholder="BFXXXXXXXX" readonly/>
+                  v-model="item.itemLayerName" readonly/>
                 </div>
               </div>
             </div>
