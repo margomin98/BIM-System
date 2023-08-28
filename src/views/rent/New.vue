@@ -359,8 +359,6 @@
             router.push({
               name: 'Rent_Datagrid'
             });
-          } else if (data.state === 'input_error') {
-            alert(data.messages);
           } else if (data.state === 'error') {
             alert(data.messages);
           }

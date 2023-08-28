@@ -147,7 +147,6 @@
       const router = useRouter();
       const AO_ID = route.query.search_id;
       const gridApi = ref(null);
-      const deleteList = ref([]);
       const options = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨'];
       const columnDefs = [{
           suppressMovable: true,
@@ -217,6 +216,7 @@
         ProductName: '',
         Number: 1,
         RequiredSpec: '',
+        deleteList: [],
         itemList: [],
       });
       async function getDetails() {
@@ -370,8 +370,6 @@
             router.push({
               name: 'Rent_Datagrid'
             });
-          } else if (data.state === 'input_error') {
-            alert(data.messages);
           } else if (data.state === 'error') {
             alert(data.messages);
           }
@@ -421,7 +419,7 @@
         gridApi.value = params.api;
       };
       function updateDeleteList(newValue) {
-      deleteList.value.push(newValue);
+      myForm.deleteList.push(newValue);
     }
       onMounted(() => {
         getDetails();
@@ -431,7 +429,6 @@
       }
       return {
         options,
-        deleteList,
         columnDefs,
         rowData,
         details,

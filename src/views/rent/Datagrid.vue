@@ -116,7 +116,7 @@
             suppressMovable: true,
             field: "",
             cellRenderer: "Rent_button",
-            width: '150px',
+            width: 150,
             resizable: true,
           },
           {
@@ -124,7 +124,7 @@
             field: "AO_ID",
             unSortIcon: true,
             sortable: true,
-            width: '150px',
+            width: 150,
             suppressMovable: true,
             resizable: true,
           },
@@ -133,7 +133,7 @@
             field: "ProjectName",
             unSortIcon: true,
             sortable: true,
-            width: '170px',
+            width: 170,
             resizable: true,
             suppressMovable: true
           },
@@ -142,7 +142,7 @@
             field: "Description",
             unSortIcon: true,
             sortable: true,
-            width: '150px',
+            width: 150,
             flex: 1,
             resizable: true,
             suppressMovable: true
@@ -152,16 +152,16 @@
             field: "Use",
             unSortIcon: true,
             sortable: true,
-            width: '130px',
+            width: 130,
             resizable: true,
             suppressMovable: true
           },
           {
             headerName: "狀態",
-            field: "model",
+            field: "Status",
             unSortIcon: true,
             sortable: true,
-            width: '130px',
+            width: 130,
             resizable: true,
             suppressMovable: true
           },
@@ -170,7 +170,7 @@
             field: "Applicant",
             unSortIcon: true,
             sortable: true,
-            width: '150px',
+            width: 120,
             resizable: true,
             suppressMovable: true
           },
@@ -179,14 +179,14 @@
             field: "ApplicationDate",
             unSortIcon: true,
             sortable: true,
-            width: '170px',
+            width: 170,
             resizable: true,
             suppressMovable: true
           },
           {
-            width: '100',
             field: "",
             resizable: true,
+            width: 100,
             cellRenderer: "Delete",
           }
       ];
