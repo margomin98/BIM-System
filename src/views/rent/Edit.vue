@@ -34,10 +34,11 @@
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap column_section">
             <label for="inputWithButton" class="form-label"><p><span>*</span>專案代碼</p></label>
             <div class="input-group">
-              <input type="text" class="form-control" id="inputWithTitle" v-model="details.ProjectCode">
-            </div>
+              <input type="text" class="form-control" id="project_id" v-model="details.ProjectCode">
+     <button class="btn code_search" type="button" @click="getProjectName">搜索</button>
+                </div>
           </div>
-          <button class="btn code_search" type="button" @click="getProjectName">搜索</button>
+      
           <div class="col d-flex wrap">
             <label for="inputWithTitle" class="form-label" id='project_name'> <p>專案名稱</p></label>
             <div class="input-group" id='readonly_box'>
@@ -58,7 +59,7 @@
         </div>
       </div>
       <div class='second_content'>
-        <div class='wrap d-flex'>
+        <div class='wrap d-flex first_row'>
           <div class='col-xl-3 col-lg-3 col-md-3 col-12' style='padding-left:0'>
             <p><span>*</span>設備總類</p>
             <div class="dropdown">
@@ -562,7 +563,7 @@
               }
             }
             div {
-              padding: 0 5px;
+           
               p {
                 text-align: center;
                 white-space: nowrap;
@@ -570,6 +571,12 @@
                 font-weight: 700;
                 margin-bottom: 5px;
               }
+            }
+            
+          }
+          .first_row {
+            div:nth-child(1),div:nth-child(3){
+              padding: 0 5px;
             }
           }
         }
@@ -650,6 +657,7 @@
         }
         .input-number {
           @include count_btn;
+          width: 100%;
         }
         .form-control {
           height: 100%;
@@ -777,7 +785,6 @@
               }
             }
             div {
-              padding: 0 5px;
               p {
                 text-align: center;
                 white-space: nowrap;
@@ -785,6 +792,11 @@
                 font-weight: 700;
                 margin-bottom: 5px;
               }
+            }
+          }
+          .first_row {
+            div:nth-child(1),div:nth-child(3){
+              padding: 0 5px;
             }
           }
         }
@@ -864,6 +876,7 @@
         }
         .input-number {
           @include count_btn;
+        width: 100%;
         }
         .form-control {
           height: 100%;
@@ -992,7 +1005,7 @@
               }
             }
             div {
-              margin-bottom: 10px;
+              margin-bottom: 5px;
               p {
                 text-align: center;
                 white-space: nowrap;
@@ -1114,6 +1127,7 @@
         }
         .input-number {
           @include count_btn;
+          width: 100%;
         }
       }
       .button_wrap {

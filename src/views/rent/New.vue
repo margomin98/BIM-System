@@ -63,7 +63,7 @@
         </div>
       </div>
       <div class='second_content'>
-        <div class='wrap d-flex'>
+        <div class='wrap d-flex first_row'>
           <div class='col-xl-3 col-lg-3 col-md-3 col-12' style='padding-left:0'>
             <p><span>*</span>設備總類</p>
             <div class="dropdown">
@@ -546,7 +546,6 @@
               }
             }
             div {
-              padding: 0 5px;
               p {
                 text-align: center;
                 white-space: nowrap;
@@ -554,6 +553,11 @@
                 font-weight: 700;
                 margin-bottom: 5px;
               }
+            }
+          }
+          .first_row {
+            div:nth-child(1),div:nth-child(3){
+              padding: 0 5px;
             }
           }
         }
@@ -771,7 +775,6 @@
               }
             }
             div {
-              padding: 0 5px;
               p {
                 text-align: center;
                 white-space: nowrap;
@@ -779,6 +782,11 @@
                 font-weight: 700;
                 margin-bottom: 5px;
               }
+            }
+          }
+          .first_row {
+            div:nth-child(1),div:nth-child(3){
+              padding: 0 5px;
             }
           }
         }

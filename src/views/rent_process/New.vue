@@ -651,6 +651,7 @@ import { useRoute, useRouter } from "vue-router";
     .main_section {
       .readonly_box {
         @include readonly_box;
+        height: 100%;
       }
       h1 {
         margin-top: 50px;
@@ -679,6 +680,7 @@ import { useRoute, useRouter } from "vue-router";
           }
         }
         #readonly_box {
+          background-color: #B4B4B4;
           border-left: black 1px solid;
         }
         .second_content {
@@ -727,6 +729,9 @@ import { useRoute, useRouter } from "vue-router";
             border-right: 1px solid black;
             border-bottom: 1px solid black;
           }
+          .input-group {
+            border-left: 1px solid black;
+          }
           .form-check {
             margin-left: 10px;
           }
@@ -734,7 +739,14 @@ import { useRoute, useRouter } from "vue-router";
             height: auto;
             border-radius: 0;
             border-right: 1px solid black;
-            border-left: 1px solid black;
+          }
+          .wrap:nth-child(3) .input-group {
+            border-right: 1px solid black;
+            textarea {
+              padding: 0 6px;
+              border-bottom: 0;
+              border-right: 0;
+            }
           }
           .form-label {
             font-weight: 700;
@@ -763,7 +775,7 @@ import { useRoute, useRouter } from "vue-router";
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
+            padding: 0;
           }
           .wrap {
             border-bottom: 1px solid black;
@@ -946,6 +958,7 @@ import { useRoute, useRouter } from "vue-router";
     .main_section {
       .readonly_box {
         @include readonly_box;
+        height: 100%;
       }
       h1 {
         margin-top: 50px;
@@ -974,7 +987,8 @@ import { useRoute, useRouter } from "vue-router";
           }
         }
         #readonly_box {
-          border-left: 1px solid black;
+          background-color: #B4B4B4;
+          border-left: black 1px solid;
         }
         .second_content {
           border-left: 1px solid black;
@@ -984,7 +998,9 @@ import { useRoute, useRouter } from "vue-router";
         }
         .third_content {
           .list {
-            border: 1px solid black;
+            border-top: 1px solid black;
+            border-left: 1px solid black;
+            border-right: 1px solid black;
             button {
               @include delete_button;
               &:hover {
@@ -1020,6 +1036,9 @@ import { useRoute, useRouter } from "vue-router";
             border-right: 1px solid black;
             border-bottom: 1px solid black;
           }
+          .input-group {
+            border-left: 1px solid black;
+          }
           .form-check {
             margin-left: 10px;
           }
@@ -1027,7 +1046,14 @@ import { useRoute, useRouter } from "vue-router";
             height: auto;
             border-radius: 0;
             border-right: 1px solid black;
-            border-left: 1px solid black;
+          }
+          .wrap:nth-child(3) .input-group {
+            border-right: 1px solid black;
+            textarea {
+              padding: 0 6px;
+              border-bottom: 0;
+              border-right: 0;
+            }
           }
           .form-label {
             font-weight: 700;
@@ -1056,14 +1082,15 @@ import { useRoute, useRouter } from "vue-router";
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
+            padding: 0;
           }
           .wrap {
-            background: white;
             border-bottom: 1px solid black;
+            background: white;
+            border-bottom: 0.5px solid black;
             align-items: center;
             label.use {
-              border-right: 1px solid black
+              border-right: 1px solid black;
             }
             .option {
               @include readonly_box;
@@ -1248,6 +1275,9 @@ import { useRoute, useRouter } from "vue-router";
       .readonly_box {
         @include readonly_box;
       }
+      #readonly_box {
+        background: #B4B4B4;
+      }
       h1 {
         margin-top: 50px;
         text-align: center;
@@ -1321,14 +1351,25 @@ import { useRoute, useRouter } from "vue-router";
             border-left: none;
             border-right: none;
           }
+          .row {
+            flex-direction: column;
+            .wrap {
+              flex-direction: column;
+            }
+          }
           .form-check {
             margin-left: 10px;
           }
-          .form-control {
+          .wrap:nth-child(1) .form-control,
+          .wrap:nth-child(2) .form-control {
             height: auto;
             border-radius: 0;
             border-bottom: 1px solid black;
-            border-left: 1px solid black;
+          }
+          .wrap:nth-child(3) .form-control {
+            height: auto;
+            border-radius: 0;
+            border-bottom: 1px solid black;
           }
           .form-label {
             border-bottom: 1px solid black;
@@ -1339,8 +1380,6 @@ import { useRoute, useRouter } from "vue-router";
             margin: 0;
             display: flex;
             justify-content: center;
-            width: 220px;
-            height: 50px;
             p {
               font-size: 18px;
               margin-bottom: 0;

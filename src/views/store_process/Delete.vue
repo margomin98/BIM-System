@@ -509,7 +509,7 @@
               color: white;
               font-weight: 700;
               font-size: 20px;
-              width: 120px;
+              width: 125px;
               text-align: end;
             }
           }
@@ -687,7 +687,7 @@
               color: white;
               font-weight: 700;
               font-size: 20px;
-              width: 120px;
+              width: 125px;
               text-align: end;
             }
           }

@@ -75,8 +75,8 @@
             <label for="inputTextarea" class="form-label">
                     <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
                   </label>
-            <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly>14564</p>
+                  <div class="input-group" id='readonly_box'>
+              <textarea class="form-control readonly_box" readonly></textarea>
             </div>
           </div>
         </div>
@@ -135,8 +135,8 @@
             <label for="inputWithTitle" class="form-label project_name">
                     <p>備註</p>
                   </label>
-            <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly>文字內容</p>
+                  <div class="input-group" id='readonly_box'>
+              <textarea class="form-control readonly_box" readonly></textarea>
             </div>
           </div>
         </div>
@@ -192,10 +192,10 @@
         </div>
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithButton" class="form-label">
+            <label for="inputWithButton" class="form-label ">
                     <span>*</span><p>領用人員</p>
                   </label>
-            <div class="input-group" id="readonly_box">
+            <div class="input-group use_acc" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
             <button type="button">驗證</button>
@@ -223,8 +223,8 @@
             <label for="inputWithButton" class="form-label" id="memo">
                     <p>備註</p>
                   </label>
-            <div class="input-group" id="memo_input">
-              <input type="text" class="form-control" />
+                  <div class="input-group" id="memo_input">
+              <textarea class="form-control" placeholder="最多100字"></textarea>
             </div>
           </div>
         </div>
@@ -515,6 +515,8 @@
           }
         }
         #readonly_box {
+          padding: 0;
+          background-color: #B4B4B4;
           border-left: black 1px solid;
         }
         .second_content {
@@ -567,7 +569,7 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
+            padding: 0;
           }
           .form-label {
             font-weight: 700;
@@ -606,7 +608,7 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
+            padding: 0;
           }
           #readonly_box {
             background: #b4b4b4;
@@ -667,7 +669,7 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
+            padding:5px 10px 0;
           }
           .wrap {
             background: white;
@@ -704,26 +706,39 @@
               text-align: center;
             }
           }
+       
           .wrap:nth-child(2) {
             border-right: 1px solid black;
             label {
+              
               width: 80%;
             }
             #readonly_box {
               border-right: 1px solid black;
             }
+         
           }
           .wrap:nth-child(3) {
             border-right: 1px solid black;
+            
           }
           .wrap:nth-child(1) {
             border-right: 1px solid black;
-            #readonly_box {
-              border-right: 1px solid black;
+            textarea{
+              
+              border-bottom: 0;
             }
             #memo {
-              width: 119px;
+              width: 120px;
+              border:none
             }
+         
+          }
+          #memo_input{
+            border-left: 1px solid black;
+          }
+          .use_acc{
+            border-right: 1px solid black;
           }
         }
         form {
@@ -736,7 +751,7 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
+            padding: 0;
           }
           .wrap {
             background: white;
@@ -784,10 +799,7 @@
           width: 120px;
           text-align: end;
         }
-        .form-control {
-          height: 50px !important;
-          border-radius: 0;
-        }
+        
       }
       .button_wrap {
         display: flex;
@@ -813,9 +825,6 @@
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
-      .readonly_box {
-        @include readonly_box;
-      }
       h1 {
         margin-top: 50px;
         text-align: center;
@@ -825,7 +834,7 @@
       }
       .info_wrap {
         margin: auto;
-        padding: 0 5%;
+    padding:0 5%;
         .input-group-prepend {
           width: 100% !important;
           text-align: center !important;
@@ -843,6 +852,8 @@
           }
         }
         #readonly_box {
+          padding: 0;
+          background-color: #B4B4B4;
           border-left: black 1px solid;
         }
         .second_content {
@@ -895,7 +906,7 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
+            padding: 0;
           }
           .form-label {
             font-weight: 700;
@@ -923,9 +934,6 @@
         .five_content {
           border-left: 1px solid black;
           border-bottom: 1px solid black;
-          span {
-            @include red_star;
-          }
           .fixed_info {
             border: none;
             border-top: 1px solid black;
@@ -937,7 +945,7 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
+            padding: 0;
           }
           #readonly_box {
             background: #b4b4b4;
@@ -978,7 +986,6 @@
               display: flex;
               justify-content: center;
               align-content: center;
-              gap: 5px;
             }
           }
         }
@@ -986,11 +993,13 @@
           border-left: 1px solid black;
           background: white;
           border-bottom: 1px solid black;
+          
           span {
             @include red_star;
           }
           .fixed_info {
             border: none;
+            border-right: 1px solid black;
           }
           .form-check {
             margin-left: 10px;
@@ -998,23 +1007,21 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
+            padding:5px 10px 0;
           }
           .wrap {
             background: white;
             border-top: 1px solid black;
             align-items: center;
             button {
-              margin: 0 10px;
+              margin: 0 5px;
               border-radius: 7px;
               height: 30px;
-              width: 100px;
+              width: 50%;
               border: none;
               background: #48658c;
               color: white;
               font-weight: 700;
-              font-size: 18px;
-              white-space: nowrap;
               &:hover {
                 background-color: #5d85bd;
               }
@@ -1036,26 +1043,39 @@
               text-align: center;
             }
           }
+       
           .wrap:nth-child(2) {
             border-right: 1px solid black;
             label {
+              
               width: 80%;
             }
             #readonly_box {
               border-right: 1px solid black;
             }
+         
           }
           .wrap:nth-child(3) {
             border-right: 1px solid black;
+            
           }
           .wrap:nth-child(1) {
             border-right: 1px solid black;
-            #readonly_box {
-              border-right: 1px solid black;
+            textarea{
+              
+              border-bottom: 0;
             }
             #memo {
-              width: 119px;
+              width: 120px;
+              border:none
             }
+         
+          }
+          #memo_input{
+            border-left: 1px solid black;
+          }
+          .use_acc{
+            border-right: 1px solid black;
           }
         }
         form {
@@ -1068,7 +1088,7 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
+            padding: 0;
           }
           .wrap {
             background: white;
@@ -1116,10 +1136,7 @@
           width: 120px;
           text-align: end;
         }
-        .form-control {
-          height: 50px !important;
-          border-radius: 0;
-        }
+        
       }
       .button_wrap {
         display: flex;
@@ -1147,6 +1164,9 @@
     .main_section {
       .readonly_box {
         @include readonly_box;
+      }
+      #readonly_box{
+        background: #b4b4b4;
       }
       h1 {
         margin-top: 50px;
@@ -1218,21 +1238,20 @@
           .fixed_info {
             border: none;
           }
-          #readonly_box {
-            border-left: 1px solid black;
-          }
+         
+        
           .form-check {
             margin-left: 10px;
           }
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
           }
           .wrap {
             background: white;
             border-top: 1px solid black;
             align-items: center;
+            flex-direction: column;
             .option {
               display: flex;
             }
@@ -1245,8 +1264,9 @@
             margin: 0;
             display: flex;
             justify-content: center;
-            width: 190px;
+            width: 100%;
             height: 30px;
+            border-bottom: 1px solid black;
             p {
               font-size: 18px;
               margin-bottom: 0;
@@ -1262,7 +1282,6 @@
             border: none;
           }
           #readonly_box {
-            border-left: 1px solid black;
             background: #b4b4b4;
             font-weight: 700;
             display: flex;
@@ -1277,17 +1296,18 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
           }
           .wrap {
             background: white;
             border-top: 1px solid black;
             align-items: center;
+            flex-direction:column;
             .option {
               display: flex;
             }
           }
           .form-label {
+            border-bottom: 1px solid black;
             font-weight: 700;
             font-size: 20px;
             white-space: nowrap;
@@ -1296,7 +1316,7 @@
             margin: 0;
             display: flex;
             justify-content: center;
-            width: 190px;
+            width: 100%;
             height: 30px;
             p {
               font-size: 18px;
@@ -1306,10 +1326,11 @@
           }
         }
         .six_content {
-          border-bottom: 1px solid black;
+          border-top: 1px solid black; border-bottom: 1px solid black;
           border-left: 1px solid black;
           .fixed_info {
             border: none;
+            border-right: 1px solid black;
           }
           .form-check {
             margin-left: 10px;
@@ -1317,23 +1338,23 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
+            border:none
           }
           #readonly_box {
-            border-left: 1px solid black;
             background: #b4b4b4;
             font-weight: 700;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 5px;
+            border-bottom: 1px solid black;
           }
           .wrap {
             background: white;
-            border-top: 1px solid black;
             align-items: center;
+            flex-direction: column;
             button {
-              margin: 0 10px;
+              margin: 10px;
               border-radius: 7px;
               height: 30px;
               width: 100px;
@@ -1342,12 +1363,14 @@
               color: white;
               font-weight: 700;
               font-size: 18px;
+         
               &:hover {
                 background-color: #5d85bd;
               }
             }
           }
           .form-label {
+            border-bottom: 1px solid black;
             font-weight: 700;
             font-size: 20px;
             white-space: nowrap;
@@ -1355,7 +1378,7 @@
             margin: 0;
             display: flex;
             justify-content: center;
-            width: 220px;
+            width: 100%;
             height: 30px;
             p {
               font-size: 18px;
@@ -1363,31 +1386,23 @@
               text-align: center;
             }
           }
-          .wrap:nth-child(3) {
-            label {
-              width: 217px;
-            }
-          }
-          #memo,
-          #done_date {
-            width: 230px;
-          }
-          .wrap:nth-child(1),
+       
+      
+          .wrap:nth-child(1){
+            border-right: 1px solid black;
+       
+         
+          } 
           .wrap:nth-child(2) {
+            border-top: 1px solid black;
             border-right: 1px solid black;
-            label {
-              width: 270px;
-            }
-            .input-group {
-              border-right: 1px solid black;
-            }
-          }
-          .wrap:nth-child(3) {
+         
+          }  .wrap:nth-child(3)  {
             border-right: 1px solid black;
+   border-top: 1px solid black;
+         
           }
-          #memo_input {
-            border-right: none;
-          }
+         
         }
         form {
           border-top: 1px solid black;

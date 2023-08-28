@@ -75,8 +75,9 @@
             <label for="inputTextarea" class="form-label">
                                                     <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
                                                   </label>
-            <textarea class="form-control readonly_box" id="inputTextarea" rows="1" readoonly></textarea>
-          </div>
+                                                  <div class="input-group" id='readonly_box'>
+              <textarea class="form-control readonly_box" readonly></textarea>
+            </div>          </div>
         </div>
       </form>
       <div class="fixed_info">
@@ -125,9 +126,9 @@
             <label for="inputWithTitle" class="form-label project_name">
                                                     <p>備註</p>
                                                   </label>
-            <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly>文字內容</p>
-            </div>
+                                                  <div class="input-group" id='readonly_box'>
+              <textarea class="form-control readonly_box" readonly></textarea>
+            </div>  
           </div>
         </div>
       </div>
@@ -170,7 +171,7 @@
                                                     <p>審核意見</p>
                                                   </label>
             <div class="input-group">
-              <textarea placeholder="最多100字" class="form-control" id="inputTextarea" style="height:100%" rows="1"></textarea>
+              <textarea placeholder="最多100字" class="form-control" id="inputTextarea"></textarea>
               </div>
           </div>
         </div>
@@ -413,6 +414,7 @@
     justify-content: center;
     display: flex;
     align-items: center;
+    
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
@@ -422,6 +424,9 @@
         font-size: 55px;
         font-weight: 600;
         @include title_color;
+      }
+      #readonly_box{
+        background-color: #B4B4B4;
       }
       .info_wrap {
         margin: auto;
@@ -490,7 +495,7 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
+            padding: 0;
           }
           .wrap {
             background: white;
@@ -537,7 +542,8 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
+       border:none;
+            padding:5px 10px 0;
           }
           .wrap {
             background: white;
@@ -603,6 +609,9 @@
               border-left: 1px solid black;
             }
           }
+          .input-group{
+            border-left: 1px solid black;
+          }
         }
         form {
           border-top: 1px solid black;
@@ -613,15 +622,13 @@
           }
           .form-control {
             border-radius: 0;
-            border-left: 1px solid black;
+      padding: 0;
           }
           .wrap {
             background: white;
             border-bottom: 0.5px solid black;
             align-items: center;
-            label.use {
-              border-right: 1px solid black;
-            }
+          
             .option {
               @include readonly_box;
               height: 100%;
@@ -636,6 +643,7 @@
               border-left: 1px solid black
             }
           }
+       
           .form-label {
             font-weight: 700;
             font-size: 20px;
@@ -651,6 +659,12 @@
               margin-bottom: 0;
               text-align: center;
             }
+          }
+          .row:nth-child(1) .form-label,.row:nth-child(2) .form-label{
+            border-right: 1px solid black;
+          }
+          .row:nth-child(3) .input-group{
+            border-left: 1px solid black;
           }
         }
         .input-group-prepend {
@@ -695,9 +709,12 @@
         font-weight: 600;
         @include title_color;
       }
+      #readonly_box{
+        background-color: #B4B4B4;
+      }
       .info_wrap {
         margin: auto;
-        padding: 0 5%;
+padding: 0 5%;
         .input-group-prepend {
           width: 100% !important;
           text-align: center !important;
@@ -762,7 +779,7 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
+            padding: 0;
           }
           .wrap {
             background: white;
@@ -809,14 +826,14 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
+       border:none;
+       padding:5px 10px 0;
           }
           .wrap {
             background: white;
             border-top: 1px solid black;
             align-items: center;
             button {
-              white-space: nowrap;
               margin: 0 10px;
               border-radius: 7px;
               height: 30px;
@@ -863,7 +880,7 @@
             .input-group {
               border-left: 1px solid black;
               border-right: 1px solid black;
-              gap: 2px;
+              gap: 5px;
               display: flex;
               justify-content: center;
               align-items: center;
@@ -876,6 +893,9 @@
               border-left: 1px solid black;
             }
           }
+          .input-group{
+            border-left: 1px solid black;
+          }
         }
         form {
           border-top: 1px solid black;
@@ -886,15 +906,13 @@
           }
           .form-control {
             border-radius: 0;
-            border-left: 1px solid black;
+      padding: 0;
           }
           .wrap {
             background: white;
             border-bottom: 0.5px solid black;
             align-items: center;
-            label.use {
-              border-right: 1px solid black;
-            }
+          
             .option {
               @include readonly_box;
               height: 100%;
@@ -909,6 +927,7 @@
               border-left: 1px solid black
             }
           }
+       
           .form-label {
             font-weight: 700;
             font-size: 20px;
@@ -924,6 +943,12 @@
               margin-bottom: 0;
               text-align: center;
             }
+          }
+          .row:nth-child(1) .form-label,.row:nth-child(2) .form-label{
+            border-right: 1px solid black;
+          }
+          .row:nth-child(3) .input-group{
+            border-left: 1px solid black;
           }
         }
         .input-group-prepend {
@@ -1035,7 +1060,11 @@
             border: none;
           }
           #readonly_box {
-            border-left: 1px solid black;
+            background: #b4b4b4;
+            font-weight: 700;
+            display: flex;
+            justify-content: center;
+            align-items: center;
           }
           .form-check {
             margin-left: 10px;
@@ -1043,17 +1072,18 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
           }
           .wrap {
             background: white;
             border-top: 1px solid black;
             align-items: center;
+            flex-direction: column;
             .option {
               display: flex;
             }
           }
           .form-label {
+            border-bottom: 1px solid black;
             font-weight: 700;
             font-size: 20px;
             white-space: nowrap;
@@ -1061,7 +1091,7 @@
             margin: 0;
             display: flex;
             justify-content: center;
-            width: 190px;
+            width: 100%;
             height: 30px;
             p {
               font-size: 18px;
@@ -1073,6 +1103,9 @@
         .five_content {
           border-bottom: 1px solid black;
           border-left: 1px solid black;
+          span{
+            @include red_star
+          }
           .fixed_info {
             border: none;
           }
@@ -1083,20 +1116,22 @@
             border-radius: 0;
           }
           #readonly_box {
-            border-left: 1px solid black;
             background: #b4b4b4;
             font-weight: 700;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 5px;
+            border: none;
           }
           .wrap {
             background: white;
             border-top: 1px solid black;
+   
             align-items: center;
+            flex-direction: column;
             button {
-              margin: 0 10px;
+              
+              margin: 10px;
               border-radius: 7px;
               height: 30px;
               width: 100px;
@@ -1110,6 +1145,9 @@
               }
             }
           }
+          .wrap:nth-child(1) #readonly_box{
+          border-bottom:1px solid black;
+          }
           .form-label {
             font-weight: 700;
             font-size: 20px;
@@ -1119,43 +1157,29 @@
             display: flex;
             justify-content: center;
             height: 30px;
+            border-bottom: 1px solid black;
+            width: 100%;
             p {
               font-size: 18px;
               margin-bottom: 0;
               text-align: center;
             }
           }
-          .wrap:nth-child(3) {
+          .wrap:nth-child(3),  .wrap:nth-child(1) {
             border-right: 1px solid black;
-            label {
-              width: 270px;
-            }
+       
           }
-          .wrap:nth-child(1) {
-            border-right: 1px solid black;
-            #readonly_box {
-              border-right: 1px solid black;
-            }
-            label {
-              width: 270px;
-            }
-            .input-group {
-              border-left: 1px solid black;
-            }
-          }
+     
           .wrap:nth-child(2) {
             border-right: 1px solid black;
-            label {
-              height: 40px;
-              width: 270px;
-            }
+     
             .input-group {
               display: flex;
               justify-content: center;
               align-items: center;
-              gap: 5px;
+             padding: 10px;
               font-weight: 700;
-              border-left: 1px solid black;
+              gap: 5px;
             }
           }
         }

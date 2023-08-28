@@ -6,99 +6,98 @@
     </div>
     <div class="container-fluid datagrid_section">
       <div class="content">
-      <div class="row">
-      
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>設備總類</p>
-          <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ selectedItem || "請選擇" }}
-                    </button>
-            <div class="dropdown-menu" aria-labelledby="statusDropdown">
-              <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-              <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+        <div class="row">
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+            <p>設備總類</p>
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ selectedItem || "請選擇" }}
+                      </button>
+              <div class="dropdown-menu" aria-labelledby="statusDropdown">
+                <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
+                <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>設備分類</p>
-          <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ selectedItem || "請選擇" }}
-                    </button>
-            <div class="dropdown-menu" aria-labelledby="statusDropdown">
-              <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-              <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+            <p>設備分類</p>
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ selectedItem || "請選擇" }}
+                      </button>
+              <div class="dropdown-menu" aria-labelledby="statusDropdown">
+                <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
+                <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>資產編號</p>
-          <input type="text" />
-        </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>資產名稱</p>
-          <input type="text" />
-        </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>狀態</p>
-          <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ selectedItem || "請選擇" }}
-                    </button>
-            <div class="dropdown-menu" aria-labelledby="statusDropdown">
-              <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-              <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+            <p>資產編號</p>
+            <input type="text" />
+          </div>
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+            <p>資產名稱</p>
+            <input type="text" />
+          </div>
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+            <p>狀態</p>
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ selectedItem || "請選擇" }}
+                      </button>
+              <div class="dropdown-menu" aria-labelledby="statusDropdown">
+                <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
+                <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>區域</p>
-          <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ selectedItem || "請選擇" }}
-                    </button>
-            <div class="dropdown-menu" aria-labelledby="statusDropdown">
-              <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-              <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+            <p>區域</p>
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ selectedItem || "請選擇" }}
+                      </button>
+              <div class="dropdown-menu" aria-labelledby="statusDropdown">
+                <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
+                <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-          <p>櫃位</p>
-          <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ selectedItem || "請選擇" }}
-                    </button>
-            <div class="dropdown-menu" aria-labelledby="statusDropdown">
-              <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-              <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+            <p>櫃位</p>
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ selectedItem || "請選擇" }}
+                      </button>
+              <div class="dropdown-menu" aria-labelledby="statusDropdown">
+                <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
+                <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12  flex-col">
-          <p>入庫日期(起)</p>
-          <div class="date-selector">
-            <div class="input-container">
-              <input type="date" v-model="selectedDate" class="date-input" @focus="showDatePicker = true" @blur="showDatePicker = false" />
-              <div class="date-picker" v-if="showDatePicker">
-                <datepicker v-model="selectedDate"></datepicker>
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12  flex-col">
+            <p>入庫日期(起)</p>
+            <div class="date-selector">
+              <div class="input-container">
+                <input type="date" v-model="selectedDate" class="date-input" @focus="showDatePicker = true" @blur="showDatePicker = false" />
+                <div class="date-picker" v-if="showDatePicker">
+                  <datepicker v-model="selectedDate"></datepicker>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12 flex-col">
+            <p>入庫日期(迄)</p>
+            <div class="date-selector">
+              <div class="input-container">
+                <input type="date" v-model="selectedEndDate" class="date-input" @focus="showEndDatePicker = true" @blur="showEndDatePicker = false" />
+                <div class="date-picker" v-if="showEndDatePicker">
+                  <datepicker v-model="selectedEndDate"></datepicker>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12 flex-col">
-          <p>入庫日期(迄)</p>
-          <div class="date-selector">
-            <div class="input-container">
-              <input type="date" v-model="selectedEndDate" class="date-input" @focus="showEndDatePicker = true" @blur="showEndDatePicker = false" />
-              <div class="date-picker" v-if="showEndDatePicker">
-                <datepicker v-model="selectedEndDate"></datepicker>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       </div>
     </div>
     <div class="col justify-content-center d-flex">
@@ -109,7 +108,8 @@
       </div>
     </div>
     <div style="width: 100%">
-      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;margin-bottom:50px" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true">
+      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;margin-bottom:50px" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true"
+        :pagination="true">
       </ag-grid-vue>
     </div>
   </div>
@@ -127,7 +127,6 @@
       AgGridVue,
       Button
     },
- 
     setup() {
       return {
         columnDefs: [{
@@ -219,8 +218,7 @@
             suppressMovable: true
           }
         ],
-        rowData: [
-          {
+        rowData: [{
             make: "Toyota",
             model: "Celica",
             price: 35000
@@ -395,23 +393,19 @@
         }
       }
       .datagrid_section {
-         .content{
-      background: rgba(82, 136, 156, 0.8);
-    border-radius: 10px;
-    margin-bottom: 30px;
-    height: 250px;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    padding: 0 2%;
+        .content {
+          background: rgba(82, 136, 156, 0.8);
+          border-radius: 10px;
+          margin-bottom: 30px;
+          height: 250px;
+          align-items: center;
+          display: flex;
+          justify-content: center;
+          padding: 0 2%;
         }
         .row {
           gap: 20px 50px;
           padding: 40px;
-          // display: grid;
-    // grid-template-rows: 1fr 1fr;
-    // grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    // gap: 40px 5px;
           p {
             @include datagrid_title;
           }

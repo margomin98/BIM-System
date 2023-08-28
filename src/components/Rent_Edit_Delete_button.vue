@@ -33,7 +33,7 @@ export default {
 
   .btn {
     @include delete_button;
-
+height: 25px;
     &:hover {
       background: #FF7272
     }
