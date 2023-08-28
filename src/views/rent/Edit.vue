@@ -324,6 +324,9 @@
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             rowData.value = data.resultList.ItemList;
+            if(data.resultList.ProjectCode) {
+              myForm.ProjectValid = true
+            }
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -350,7 +353,7 @@
         const requestData = {
           AO_ID: AO_ID,
           Use: details.value.Use,
-          ProjectName: details.value.ProjectName,
+          ProjectCode: details.value.ProjectCode,
           Description: details.value.Description,
           deleteList: myForm.deleteList,
           ItemList: myForm.itemList,
@@ -367,6 +370,8 @@
             router.push({
               name: 'Rent_Datagrid'
             });
+          } else if (data.state === 'input_error') {
+            alert(data.messages);
           } else if (data.state === 'error') {
             alert(data.messages);
           }
