@@ -37,6 +37,7 @@
               <input type="text" class="form-control" id="inputWithTitle" v-model="details.ProjectCode">
             </div>
           </div>
+          <button class="btn code_search" type="button" @click="getProjectName">搜索</button>
           <div class="col d-flex wrap">
             <label for="inputWithTitle" class="form-label" id='project_name'> <p>專案名稱</p></label>
             <div class="input-group" id='readonly_box'>
@@ -93,7 +94,7 @@
         </div>
         <div class="row g-0">
           <div class="col-12 d-flex wrap text_input">
-            <label for="inputTextarea" class="form-label"><p>規格需求：{{ deleteList }}</p></label>
+            <label for="inputTextarea" class="form-label"><p>規格需求：</p></label>
             <div>
             </div>
             <textarea class="form-control" id="inputTextarea" rows="3" placeholder='請填寫說明，最多100字'></textarea>
@@ -153,7 +154,7 @@
           field: "",
           cellRenderer: "Delete",
           cellRendererParams: {
-            lose: updateDeleteList
+            insertDeleteList: updateDeleteList
           },
           width: 100,
           resizable: true,
@@ -216,6 +217,7 @@
         ProductName: '',
         Number: 1,
         RequiredSpec: '',
+        itemList: [],
       });
       async function getDetails() {
         const axios = require('axios');
@@ -227,6 +229,7 @@
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             rowData.value = data.resultList.ItemList;
+
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -276,26 +279,27 @@
         }
       }
       async function getProjectName() {
-        if (!/^(?![ 　]{10}$)[\s\S]{1,10}$/.test(myForm.ProjectCode)) {
+        if (!/^(?![ 　]{10}$)[\s\S]{1,10}$/.test(details.value.ProjectCode)) {
           alert('專案代碼格式錯誤');
           return;
         }
+        details.value.ProjectCode = details.value.ProjectCode.trim()
         const form = new FormData();
-        form.append('projectCode', myForm.ProjectCode);
+        form.append('projectCode', details.value.ProjectCode);
         const axios = require('axios');
         const response = await axios.post('http://192.168.0.176:7008/GetDBdata/SearchProjectName', form);
         try {
           const data = response.data;
           console.log(data);
           if (data.state === 'success') {
-            myForm.ProjectName = data.resultList;
+            details.value.ProjectName = data.resultList;
             myForm.ProjectValid = true;
           } else if (data.state === 'account_error') {
             alert(data.messages);
             router.push('/');
           } else {
             myForm.ProjectValid = false;
-            myForm.ProjectName = data.messages.toString()
+            details.valueProjectName = data.messages.toString()
           }
         } catch (error) {
           console.error(error);
@@ -330,6 +334,46 @@
           console.error(error);
         }
       }
+      async function submit() {
+        if (!details.value.Use || !details.value.ProjectCode || rowData.value.length === 0) {
+          alert('請輸入必填項目');
+          return;
+        }
+        if (!myForm.ProjectValid) {
+          alert('請確定專案代碼查詢正確')
+          return;
+        }
+        if (!/^(?![ 　]{10}$)[\s\S]{1,10}$/.test(myForm.ProjectCode)) {
+          alert('專案代碼格式錯誤');
+          return;
+        }
+        const requestData = {
+          AO_ID: AO_ID,
+          Use: details.value.Use,
+          ProjectName: details.value.ProjectName,
+          Description: details.value.Description,
+          deleteList: myForm.deleteList,
+          ItemList: myForm.itemList,
+        };
+        console.log(requestData);
+        try {
+          const axios = require('axios');
+          const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/ApplicationEdit', requestData);
+          const data = response.data;
+          if (data.state === 'success') {
+            let msg = data.messages + '\n';
+            msg += '單號為:' + data.resultList.AO_ID;
+            alert(msg);
+            router.push({
+              name: 'Rent_Datagrid'
+            });
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
       function insertItemList() {
         //檢查必填子項目
         if (!myForm.EquipTypeName || !myForm.EquipCategoryName || !myForm.ProductName || myForm.Number < 1) {
@@ -342,6 +386,13 @@
           return
         }
         rowData.value.push({
+          EquipTypeName: myForm.EquipTypeName,
+          EquipCategoryName: myForm.EquipCategoryName,
+          ProductName: myForm.ProductName,
+          Number: myForm.Number,
+          RequiredSpec: myForm.RequiredSpec,
+        });
+        myForm.itemList.push({
           EquipTypeName: myForm.EquipTypeName,
           EquipCategoryName: myForm.EquipCategoryName,
           ProductName: myForm.ProductName,
@@ -384,6 +435,7 @@
         selectType,
         selectCategory,
         getProjectName,
+        submit,
         insertItemList,
         onGridReady,
         updateDeleteList,

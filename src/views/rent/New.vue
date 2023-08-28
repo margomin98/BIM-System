@@ -289,6 +289,7 @@
           alert('專案代碼格式錯誤');
           return;
         }
+        myForm.ProjectCode = myForm.ProjectCode.trim();
         const form = new FormData();
         form.append('projectCode', myForm.ProjectCode);
         const axios = require('axios');
@@ -334,9 +335,9 @@
         }
         const requestData = {
           Use: myForm.Use,
-          ProjectCode: myForm.ProjectCode,
+          ProjectName: myForm.ProjectName,
           Description: myForm.Description,
-          itemList: rowData.value,
+          ItemList: rowData.value,
         };
         console.log(requestData);
         try {

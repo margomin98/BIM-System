@@ -13,8 +13,8 @@ export default {
       // const index = props.params.data.index;
       const rowNode = props.params.node;
       props.params.api.applyTransaction({remove: [rowNode.data]});
-      console.log(props.params);
-      props.params.lose(props.params.data.id);
+      // console.log(props.params);
+      props.params.insertDeleteList(props.params.data.item_id);
     }
     return {
       deleteRow
