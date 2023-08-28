@@ -986,6 +986,7 @@
               display: flex;
               justify-content: center;
               align-content: center;
+              width: 280px;
             }
           }
         }
@@ -1017,7 +1018,7 @@
               margin: 0 5px;
               border-radius: 7px;
               height: 30px;
-              width: 50%;
+              width:150px;
               border: none;
               background: #48658c;
               color: white;
@@ -1048,7 +1049,7 @@
             border-right: 1px solid black;
             label {
               
-              width: 80%;
+              width: 40%;
             }
             #readonly_box {
               border-right: 1px solid black;
@@ -1065,8 +1066,12 @@
               
               border-bottom: 0;
             }
+            label {
+              
+              width: 40%;
+            }
             #memo {
-              width: 120px;
+              width: 110px;
               border:none
             }
          
@@ -1306,6 +1311,7 @@
               display: flex;
             }
           }
+         
           .form-label {
             border-bottom: 1px solid black;
             font-weight: 700;
@@ -1325,8 +1331,7 @@
             }
           }
         }
-        .six_content {
-          border-top: 1px solid black; border-bottom: 1px solid black;
+        .six_content { border-bottom: 1px solid black;
           border-left: 1px solid black;
           .fixed_info {
             border: none;

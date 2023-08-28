@@ -20,8 +20,8 @@
         <div class="row g-0">
           <div class="col d-flex wrap column_section">
             <label for="inputTitle1" class="form-label use">
-                        <p>用&ensp;&ensp;&ensp;&ensp;途</p>
-                      </label>
+                          <p>用&ensp;&ensp;&ensp;&ensp;途</p>
+                        </label>
             <div class="option">
               <div class="content">
                 <div class="form-check">
@@ -55,16 +55,16 @@
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                        <p>專案代碼</p>
-                      </label>
+                          <p>專案代碼</p>
+                        </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字</p>
             </div>
           </div>
           <div class="col d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                        <p>專案名稱</p>
-                      </label>
+                          <p>專案名稱</p>
+                        </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字</p>
             </div>
@@ -73,8 +73,8 @@
         <div class="row g-0">
           <div class="col d-flex wrap" style="border: none">
             <label for="inputTextarea" class="form-label">
-                        <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
-                      </label>
+                          <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
+                        </label>
             <div class="input-group" id='readonly_box'>
               <textarea class="form-control readonly_box" readonly></textarea>
             </div>
@@ -117,24 +117,24 @@
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                        <p>備料人員</p>
-                      </label>
+                          <p>備料人員</p>
+                        </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                        <p>備料完成日期</p>
-                      </label>
+                          <p>備料完成日期</p>
+                        </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                        <p>備註</p>
-                      </label>
+                          <p>備註</p>
+                        </label>
             <div class="input-group" id='readonly_box'>
               <textarea class="form-control readonly_box" readonly></textarea>
             </div>
@@ -150,24 +150,24 @@
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                        <p>審核人員</p>
-                      </label>
+                          <p>審核人員</p>
+                        </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                        <p>審核結果</p>
-                      </label>
+                          <p>審核結果</p>
+                        </label>
             <div class="input-group" id="readonly_box">
               <input type="checkbox" />通過 <input type="checkbox" />不通過
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                        <p>審核日期</p>
-                      </label>
+                          <p>審核日期</p>
+                        </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
@@ -176,8 +176,8 @@
         <div class="row g-0">
           <div class="col d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                        <p>審核意見</p>
-                      </label>
+                          <p>審核意見</p>
+                        </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
@@ -193,8 +193,8 @@
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                        <p>領用人員</p>
-                      </label>
+                          <p>領用人員</p>
+                        </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
@@ -202,8 +202,8 @@
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                        <p>交付人員</p>
-                      </label>
+                          <p>交付人員</p>
+                        </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
@@ -211,8 +211,8 @@
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name" id="done_date">
-                        <p>交付完成日期</p>
-                      </label>
+                          <p>交付完成日期</p>
+                        </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
@@ -221,10 +221,10 @@
         <div class="row g-0">
           <div class="col d-flex wrap">
             <label for="inputWithButton" class="form-label" id="memo">
-                        <p>備註</p>
-                      </label>
+                          <p>備註</p>
+                        </label>
             <div class="input-group" id="memo_input">
-              <textarea class="form-control"></textarea>
+              <textarea class="form-control" placeholder="最多100字"></textarea>
             </div>
           </div>
         </div>
@@ -674,20 +674,7 @@
             background: white;
             border-top: 1px solid black;
             align-items: center;
-            button {
-              margin: 0 10px;
-              border-radius: 7px;
-              height: 30px;
-              width: 100px;
-              border: none;
-              background: #48658c;
-              color: white;
-              font-weight: 700;
-              font-size: 18px;
-              &:hover {
-                background-color: #5d85bd;
-              }
-            }
+          
           }
           .form-label {
             font-weight: 700;
@@ -968,7 +955,7 @@
               display: flex;
               justify-content: center;
               align-content: center;
-              gap: 5px;
+              width: 280px;
             }
           }
         }
@@ -995,20 +982,6 @@
             background: white;
             border-top: 1px solid black;
             align-items: center;
-            button {
-              margin: 0 10px;
-              border-radius: 7px;
-              height: 30px;
-              width: 100px;
-              border: none;
-              background: #48658c;
-              color: white;
-              font-weight: 700;
-              font-size: 18px;
-              &:hover {
-                background-color: #5d85bd;
-              }
-            }
           }
           .form-label {
             font-weight: 700;
@@ -1293,6 +1266,7 @@
           }
         }
         .six_content {
+          border-bottom: 1px solid black;
           border-left: 1px solid black;
           .fixed_info {
             border-top: 1px solid black;
@@ -1321,20 +1295,6 @@
             border-top: 1px solid black;
             align-items: center;
             flex-direction: column;
-            button {
-              margin: 0 10px;
-              border-radius: 7px;
-              height: 30px;
-              width: 100px;
-              border: none;
-              background: #48658c;
-              color: white;
-              font-weight: 700;
-              font-size: 18px;
-              &:hover {
-                background-color: #5d85bd;
-              }
-            }
           }
           .form-label {
             border-right: 1px solid black;
@@ -1356,9 +1316,6 @@
           }
           .input-group {
             border-right: 1px solid black;
-          }
-          .wrap:nth-child(1) .input-group textarea {
-            border-bottom: 1px solid black;
           }
         }
         form {
