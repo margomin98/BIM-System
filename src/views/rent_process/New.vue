@@ -17,7 +17,7 @@
                 <p>設備總類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                  {{ selectedItem || "請選擇" }}
+                                                                  {{ searchParams.EquipTypeName || "請選擇" }}
                                                                 </button>
                   <div class="dropdown-menu" aria-labelledby="statusDropdown">
                     <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
@@ -29,7 +29,7 @@
                 <p>設備分類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                  {{ selectedItem || "請選擇" }}
+                                                                  {{ searchParams.EquipCategoryName || "請選擇" }}
                                                                 </button>
                   <div class="dropdown-menu" aria-labelledby="statusDropdown">
                     <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
@@ -39,33 +39,23 @@
               </div>
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
                 <p>物品名稱</p>
-                <div class="dropdown">
-                  <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                  {{ selectedItem || "請選擇" }}
-                                                                </button>
-                  <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                    <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                    <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
-                  </div>
+                <div class="number-input-box">
+                  <input class="input-number" type="text" placeholder="最多輸入20字" v-model="searchParams.ProductName" />
                 </div>
               </div>
               <div class="col-xl-3 col-lg-3 col-md-3 col-12">
                 <p>數量 <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"></p>
                 <div class="number-input-box">
-                  <input class="input-number readonly_box" readonly />
+                  <input class="input-number readonly_box" readonly  v-model="searchParams.Number"/>
                 </div>
               </div>
             </div>
             <div class="row g-0">
               <div class="col-12 d-flex wrap2">
-                <label for="inputTextarea" class="form-label">
-                                                          <p>
-                                                          規格需求：
-                                                          </p>
-                                                          </label>
+                <label for="inputTextarea" class="form-label"><p>規格需求：</p></label>
                 <div>
                 </div>
-                <textarea class="form-control readonly_box" id="inputTextarea" rows="3" readonly></textarea>
+                <textarea class="form-control readonly_box" id="inputTextarea" rows="3" readonly>{{ searchParams.RequiredSpec }}</textarea>
               </div>
             </div>
             <div class='col d-flex justify-content-center'>
@@ -209,9 +199,11 @@
   import Navbar from "@/components/Navbar.vue";
   import {
     onMounted,
-    ref
+    ref,
+    reactive,
   } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { Form } from "v3-easyui";
   export default {
     components: {
       Navbar,
@@ -227,6 +219,13 @@ import { useRoute, useRouter } from "vue-router";
       const AO_ID = route.query.search_id;
       const details = ref({});
       const options = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨'];
+      const searchParams = reactive({
+        EquipTypeName: '',
+        EquipCategoryName: '',
+        ProductName: '',
+        Number: 1,
+        RequiredSpec: '',
+      });
       onMounted(()=>{
         getDetails();
       });
@@ -234,6 +233,9 @@ import { useRoute, useRouter } from "vue-router";
           suppressMovable: true,
           field: "",
           cellRenderer: "Storage_button",
+          cellRendererParams: {
+            searchList: searchListFunction,
+          },
           width: 115,
           resizable: true,
         }, 
@@ -510,20 +512,53 @@ import { useRoute, useRouter } from "vue-router";
           console.error(error);
         }
       }
+      async function searchInventory() {
+        const axios = require('axios');
+        try {
+          const form = new FormData();
+          form.append('EquipTypeName', searchParams.EquipTypeName);
+          form.append('EquipCategoryName', searchParams.EquipCategoryName);
+          form.append('ProductName', searchParams.ProductName);
+          const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/SearchInventory');
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('Details Get成功 資料如下\n', data.resultList);
+            details.value = data.resultList;
+            rowData3.value = data.resultList.ItemList;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      function searchListFunction(data) {
+        // alert(data);
+        console.log(data);
+        searchParams.EquipTypeName = data.EquipTypeName;
+        searchParams.EquipCategoryName = data.EquipCategoryName;
+        searchParams.Number = data.Number;
+        searchParams.RequiredSpec = data.RequiredSpec;
+        searchInventory();
+      }
       return {
+        details,
+        options,
+        searchParams,
         columnDefs1,
         columnDefs2,
         columnDefs3,
         rowData1,
         rowData2,
         rowData3,
-        details,
-        options,
+        searchInventory,
       };
     },
     data() {
       return {
-        count: 1,
         rowHeight: 35,
       };
     },
