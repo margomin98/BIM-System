@@ -1,7 +1,7 @@
 <template>
   <div class='button_wrap'>
-    <button @click="viewDetails()">編輯</button>
-    <button @click="viewEdit()">刪除</button>
+    <button @click="viewEdit()">編輯</button>
+    <button @click="viewDelete()">刪除</button>
   </div>
 </template>
 
@@ -15,22 +15,23 @@
     setup(props) {
       const router = useRouter();
       const search_id = props.params.data.AI_ID;
-      function viewDetails() {
+      function viewDelete() {
+        alert('刪除')
         // console.log(props.params.data.AI_ID);
-        if (search_id !== '') {
-          router.push({
-            name: 'Store_View',
-            query: {
-              search_id
-            }
-          });
-        }
+        // if (search_id !== '') {
+        //   router.push({
+        //     name: 'Store_View',
+        //     query: {
+        //       search_id
+        //     }
+        //   });
+        // }
       }
       function viewEdit() {
         // console.log(props.params.data.search_id);
         if (search_id !== '') {
           router.push({
-            name: 'Store_Edit',
+            name: 'System_Parameter_Edit',
             query: {
               search_id
             }
@@ -38,7 +39,7 @@
         }
       }
       return {
-        viewDetails,
+        viewDelete,
         viewEdit,
       };
     },

@@ -1,9 +1,9 @@
 <template>
   <div class="button_wrap">
     <button class="btn1" @click="routeTo('檢視')">檢視</button>
+    <button class="btn2" @click="routeTo('備料')">備料</button>
     <button class="btn3" @click="changeStatus">通知交付</button>
     <button class="btn4" @click="routeTo('交付')">交付</button>
-    <button class="btn2" @click="routeTo('備料')">備料</button>
   </div>
 </template>
 

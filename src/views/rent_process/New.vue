@@ -1,5 +1,6 @@
 <template>
   <Navbar />
+  <!-- Modal視窗 -->
   <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
       <div class="modal-content">
@@ -89,47 +90,24 @@
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
-          <p>單號：121564564</p>
+          <p>單號：{{ details.AO_ID}}</p>
         </div>
         <div>
-          <p>申請人員：陳奕迅</p>
+          <p>申請人員：{{ details.Applicant}}</p>
         </div>
         <div>
-          <p>申請日期：2022/02/20</p>
+          <p>申請日期：{{ details.ApplicationDate}}</p>
         </div>
       </div>
       <form>
         <div class="row g-0">
           <div class="col d-flex wrap column_section">
-            <label for="inputTitle1" class="form-label use">
-                                                <p>
-                                               用&ensp;&ensp;&ensp;&ensp;途</p>
-                                                </label>
+            <label for="inputTitle1" class="form-label use"><p>用&ensp;&ensp;&ensp;&ensp;途</p></label>
             <div class="option">
               <div class='content'>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox1">
-                  <label class="form-check-label" for="checkbox1">內部領用</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox2">
-                  <label class="form-check-label" for="checkbox2">借測</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox3">
-                  <label class="form-check-label" for="checkbox3">維修</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox1">
-                  <label class="form-check-label" for="checkbox1">出貨</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox2">
-                  <label class="form-check-label" for="checkbox2">報廢</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox3">
-                  <label class="form-check-label" for="checkbox3">退貨</label>
+                <div class="form-check" v-for="(option, index) in options" :key="index">
+                  <input class="form-check-input" type="radio" :value="option" :id="'radio' + (index + 1)" v-model="details.Use" :disabled="option !== details.Use && details.Use !== ''">
+                  <label class="form-check-label" :for="'radio' + (index + 1)">{{ option }}</label>
                 </div>
               </div>
             </div>
@@ -137,29 +115,23 @@
         </div>
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithButton" class="form-label">
-                                            <p>專案代碼</p>
-                                          </label>
+            <label for="inputWithButton" class="form-label"><p>專案代碼</p></label>
             <div class="input-group" id='readonly_box'>
-              <p class='readonly_box' readonly>文字</p>
+              <p class='readonly_box' readonly> {{  details.ProjectCode }}</p>
             </div>
           </div>
           <div class="col d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name">
-                                            <p>專案名稱</p>
-                                          </label>
+            <label for="inputWithTitle" class="form-label project_name"><p>專案名稱</p></label>
             <div class="input-group" id='readonly_box'>
-              <p class='readonly_box' readonly>文字</p>
+              <p class='readonly_box' readonly>{{ details.ProjectName}}</p>
             </div>
           </div>
         </div>
         <div class="row g-0">
           <div class="col d-flex wrap" style="border: none">
-            <label for="inputTextarea" class="form-label">
-                                            <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
-                                          </label>
+            <label for="inputTextarea" class="form-label"><p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p></label>
             <div class="input-group" id='readonly_box'>
-              <textarea class="form-control readonly_box" readonly></textarea>
+              <p class='readonly_box' readonly>{{ details.Description}}</p>
             </div>
           </div>
         </div>
@@ -199,27 +171,21 @@
         </div>
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithButton" class="form-label">
-                                            <p>備料人員</p>
-                                          </label>
+            <label for="inputWithButton" class="form-label"><p>備料人員</p></label>
             <div class="input-group">
               <input type="text" class="form-control readonly_box" id="inputWithButton" readonly />
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name">
-                                            <p>備料完成日期</p>
-                                          </label>
+            <label for="inputWithTitle" class="form-label project_name"><p>備料完成日期</p></label>
             <div class="input-group">
               <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly />
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name">
-                                            <p>備料備註</p>
-                                          </label>
+            <label for="inputWithTitle" class="form-label project_name"><p>備料備註</p></label>
             <div class="input-group">
-              <textarea placeholder="最多100字" class="form-control" id="inputTextarea"></textarea>
+              <textarea placeholder="最多100字" class="form-control" id="inputTextarea" style="height:100%" rows="1"></textarea>
             </div>
           </div>
         </div>
@@ -245,6 +211,7 @@
     onMounted,
     ref
   } from "vue";
+import { useRoute, useRouter } from "vue-router";
   export default {
     components: {
       Navbar,
@@ -255,212 +222,78 @@
       Storage_add
     },
     setup() {
-      return {
-        columnDefs1: [{
-            suppressMovable: true,
-            field: "",
-            cellRenderer: "Storage_button",
-            width: "115",
-          },
-          {
-            headerName: "項目",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: "100",
-            suppressMovable: true,
-          },
-          {
-            headerName: "設備總類",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "設備分類",
-            field: "price",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "物品名稱",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: "140",
-            suppressMovable: true,
-          },
-          {
-            headerName: "數量",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "100",
-            suppressMovable: true,
-          },
-          {
-            headerName: "規格需求",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            flex: 1,
-            suppressMovable: true,
-          }
-        ],
-        rowData1: [{
-            make: "Toyota",
-            model: "Celica",
-            price: 35000,
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000,
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000,
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000,
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000,
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000,
-          },
-        ],
-        columnDefs2: [{
-            suppressMovable: true,
-            field: "",
-            cellRenderer: "Delete_button",
-            width: "100"
-          },
-          {
-            headerName: "需求項目",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "資產編號",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "資產名稱",
-            field: "price",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "儲位區域",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "廠商",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "250",
-            suppressMovable: true,
-          },
-          {
-            headerName: "型號",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "規格",
-            field: "price",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "數量",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: "100",
-            suppressMovable: true,
-          },
-          {
-            headerName: "單位",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "100",
-            suppressMovable: true,
-          },
-          {
-            headerName: "備註",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          }
-        ],
-        rowData2: [{
-            make: "Toyota",
-            model: "Celica",
-            price: 35000,
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000,
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000,
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000,
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000,
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000,
-          },
-        ],
-        columnDefs3: [{
+      const rowData = ref([]);
+      const route = useRoute();
+      const router = useRouter();
+      const AO_ID = route.query.search_id;
+      const details = ref({});
+      const options = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨'];
+      onMounted(()=>{
+        getDetails();
+      });
+      const columnDefs1 = [{
+          suppressMovable: true,
+          field: "",
+          cellRenderer: "Storage_button",
+          width: 115,
+          resizable: true,
+        }, 
+        {
+          suppressMovable: true,
+          headerName: "項目",
+          field: "id",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          resizable: true,
+        },
+        {
+          headerName: "設備總類",
+          field: "EquipTypeName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "設備分類",
+          field: "EquipCategoryName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "物品名稱",
+          field: "ProductName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true,
+          resizable: true
+        },
+        {
+          headerName: "數量",
+          field: "Number",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "規格需求",
+          field: "RequiredSpec",
+          unSortIcon: true,
+          sortable: true,
+          flex: 1,
+          suppressMovable: true,
+          resizable: true
+        }
+      ]
+      const columnDefs2 = [{
             suppressMovable: true,
             field: "",
             cellRenderer: "Storage_add",
@@ -538,6 +371,142 @@
             width: "100",
             suppressMovable: true,
           },
+      ]
+      const columnDefs3 = [{
+            suppressMovable: true,
+            field: "",
+            cellRenderer: "Storage_add",
+            width: "75"
+          },
+          {
+            headerName: "資產編號",
+            field: "make",
+            unSortIcon: true,
+            sortable: true,
+            width: "150",
+            suppressMovable: true,
+          },
+          {
+            headerName: "物品名稱",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: "150",
+            suppressMovable: true,
+          },
+          {
+            headerName: "儲位區域",
+            field: "price",
+            unSortIcon: true,
+            sortable: true,
+            width: "150",
+            suppressMovable: true,
+          },
+          {
+            headerName: "儲位櫃位",
+            field: "make",
+            unSortIcon: true,
+            sortable: true,
+            width: "150",
+            suppressMovable: true,
+          },
+          {
+            headerName: "廠商",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: "150",
+            suppressMovable: true,
+          },
+          {
+            headerName: "型號",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: "150",
+            suppressMovable: true,
+          },
+          {
+            headerName: "規格",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: "150",
+            suppressMovable: true,
+          },
+          {
+            headerName: "數量",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: "100",
+            suppressMovable: true,
+          },
+          {
+            headerName: "單位",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: "100",
+            suppressMovable: true,
+          },
+      ]
+      const rowData1 = ref([]);
+      async function getDetails() {
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('Details Get成功 資料如下\n', data.resultList);
+            details.value = data.resultList;
+            rowData1.value = data.resultList.ItemList;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      return {
+        columnDefs1,
+        columnDefs2,
+        columnDefs3,
+        rowData1,
+        rowData2: [{
+            make: "Toyota",
+            model: "Celica",
+            price: 35000,
+          },
+          {
+            make: "Ford",
+            model: "Mondeo",
+            price: 32000,
+          },
+          {
+            make: "Toyota",
+            model: "Celica",
+            price: 35000,
+          },
+          {
+            make: "Ford",
+            model: "Mondeo",
+            price: 32000,
+          },
+          {
+            make: "Porsche",
+            model: "Boxster",
+            price: 72000,
+          },
+          {
+            make: "Porsche",
+            model: "Boxster",
+            price: 72000,
+          },
         ],
         rowData3: [{
             make: "Toyota",
@@ -570,6 +539,8 @@
             price: 72000,
           },
         ],
+        details,
+        options,
       };
     },
     data() {

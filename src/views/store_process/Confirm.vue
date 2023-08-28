@@ -83,7 +83,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend info">
-                <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">數量：
+                <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">包裝數量：
               </div>
               <input type="text" class="form-control readonly_box" aria-label="Default"
                 aria-describedby="inputGroup-sizing-default" readonly v-model="details.Count" />
@@ -91,7 +91,7 @@
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend">單位：</div>
+              <div class="input-group-prepend">包裝單位：</div>
               <input type="text" class="form-control readonly_box" aria-label="Default"
                 aria-describedby="inputGroup-sizing-default" readonly v-model="details.Unit" />
             </div>
@@ -101,7 +101,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend info">
-                <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">包裝數量：
+                <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">數量：
               </div>
               <input type="text" class="form-control readonly_box" aria-label="Default"
                 aria-describedby="inputGroup-sizing-default" readonly v-model="details.PackageNum" />
@@ -109,7 +109,7 @@
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend">包裝單位：</div>
+              <div class="input-group-prepend">單位：</div>
               <input type="text" class="form-control readonly_box" aria-label="Default"
                 aria-describedby="inputGroup-sizing-default" readonly v-model="details.PackageUnit" />
             </div>
@@ -304,17 +304,17 @@ export default {
     }
     const validation = ref({
       user1: {
-        account: 'user_1',
-        password: 'Test_123',
+        account: '',
+        password: '',
         isValidate: false,
       },
       user2: {
-        account: 'user_2',
-        password: 'Test_123',
+        account: '',
+        password: '',
         isValidate: false,
       },
     });
-    //分別使用帳號密碼驗證、改變驗證狀態
+    //分別使用帳號密碼驗證、改變驗證狀態 user1為設備工程師 user2為倉管人員
     async function validate(user) {
       if (user === 1) {
         const axios = require('axios');
@@ -328,7 +328,7 @@ export default {
           formData.append(fieldName, formFields[fieldName]);
           console.log(formData.get(`${fieldName}`));
         }
-        const response = await axios.post('http://192.168.0.176:7008/Account/IdentityValidationForD_Operator', formData, {
+        const response = await axios.post('http://192.168.0.176:7008/Account/IdentityValidationForE_Operator', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -359,7 +359,7 @@ export default {
           formData.append(fieldName, formFields[fieldName]);
           console.log(formData.get(`${fieldName}`));
         }
-        const response = await axios.post('http://192.168.0.176:7008/Account/IdentityValidationForAI_Operator', formData, {
+        const response = await axios.post('http://192.168.0.176:7008/Account/IdentityValidationForW_Operator', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
