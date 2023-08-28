@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="col">
-          <div class="input-group mb-3">
+          <div class="input-group mb-4">
             <div class="input-group-prepend">
               編號 :
             </div>
@@ -41,8 +41,8 @@
           </div>
         </div>
         <div class="row g-0">
-          <div class="col-xl-6 col-lg-7 col-md-7 col-12">
-            <div class="input-group mb-3">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 入庫單狀態 :
               </div>
@@ -52,7 +52,7 @@
           </div>
         </div>
         <div v-if="details.AssetsId" class="col">
-          <div class="input-group mb-3">
+          <div class="input-group mb-4">
             <div class="input-group-prepend">
               資產編號 :
             </div>
@@ -192,8 +192,8 @@
           </div>
         </div>
         <div class="row g-0">
-          <div class="col-xl-6 col-lg-7 col-md-7 col-12">
-            <div class="input-group mb-3">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 保固期限 :
               </div>
@@ -473,7 +473,7 @@ export default {
 
     .info_wrap {
       margin: auto;
-      width: 700px;
+      width: 750px;
 
       .input-group-prepend {
         color: white;
@@ -490,7 +490,7 @@ export default {
 
       .input-number {
         @include count_btn;
-        width: 200px;
+        width: 220px;
       }
 
       .fixed_info {
@@ -506,7 +506,7 @@ export default {
         @include content_bg;
 
         .input-group-prepend {
-          width: 120px;
+          width: 125px;
         }
 
         .check_box_wrap {
@@ -526,7 +526,7 @@ export default {
           }
 
           .flex {
-            width: 130px
+            width: 125px
           }
         }
 
@@ -597,7 +597,25 @@ export default {
 
     .info_wrap {
       margin: auto;
-      width: 700px;
+      width: 750px;
+
+      .input-group-prepend {
+        color: white;
+        font-weight: 700;
+        font-size: 20px;
+        width: calc(100px + 6%);
+        text-align: end;
+        white-space: nowrap;
+
+        span {
+          @include red_star
+        }
+      }
+
+      .input-number {
+        @include count_btn;
+        width: 220px;
+      }
 
       .fixed_info {
         @include fixed_info;
@@ -609,6 +627,12 @@ export default {
       }
 
       .content {
+        @include content_bg;
+
+        .input-group-prepend {
+          width: 125px;
+        }
+
         .check_box_wrap {
           font-weight: 700;
           align-items: center;
@@ -621,15 +645,18 @@ export default {
         }
 
         .row_wrap {
-          .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-            margin-left: 6px;
-            border-radius: 5px;
+          .input-group {
+            flex-wrap: nowrap
+          }
+
+          .flex {
+            width: 125px
           }
         }
 
-        @include content_bg;
-
         .dropdown {
+          width: 218px;
+
           .dropdown-menu {
             width: 100%;
 
@@ -640,42 +667,13 @@ export default {
             }
           }
 
-          button {
+          .dropdown-toggle {
+            width: 100%;
             @include dropdown-btn;
-            width: 199px;
             color: black;
             justify-content: space-between;
             align-items: center;
           }
-        }
-
-        .input-group {
-          .input-number {
-            width: 199px;
-            @include count_btn;
-          }
-
-          .form-control {
-            height: 35px;
-            border-radius: 0;
-          }
-
-          .input-group-prepend {
-            color: white;
-            font-weight: 700;
-            font-size: 20px;
-            width: 120px;
-            text-align: end;
-            white-space: nowrap;
-
-            span {
-              @include red_star
-            }
-          }
-        }
-
-        #size_wrap {
-          flex: 0.74
         }
       }
 
@@ -702,11 +700,6 @@ export default {
             }
           }
         }
-      }
-
-      #unit,
-      #number {
-        flex-wrap: nowrap
       }
     }
   }
