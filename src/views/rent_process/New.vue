@@ -77,7 +77,7 @@
               <p>目前資產庫存</p>
             </div>
           </div>
-          <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs3" :rowData="rowData3" :defaultColDef="defaultColDef3" :paginationAutoPageSize="true">
+          <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs3" :rowData="rowData3" :paginationAutoPageSize="true">
           </ag-grid-vue>
         </div>
       </div>
@@ -142,7 +142,7 @@
         </div>
       </div>
       <div class="second_content">
-        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :defaultColDef="defaultColDef1" :paginationAutoPageSize="true">
+        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :paginationAutoPageSize="true">
         </ag-grid-vue>
       </div>
       <modal-overlay v-if="modalVisible" @close="closeModal" />
@@ -152,7 +152,7 @@
         </div>
       </div>
       <div class="third_content">
-        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs2" :rowData="rowData2" :defaultColDef="defaultColDef" :paginationAutoPageSize="true">
+        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs2" :rowData="rowData2" :paginationAutoPageSize="true">
         </ag-grid-vue>
       </div>
       <div class="fixed_info_count">
@@ -222,7 +222,6 @@ import { useRoute, useRouter } from "vue-router";
       Storage_add
     },
     setup() {
-      const rowData = ref([]);
       const route = useRoute();
       const router = useRouter();
       const AO_ID = route.query.search_id;
@@ -294,172 +293,203 @@ import { useRoute, useRouter } from "vue-router";
         }
       ]
       const columnDefs2 = [{
-            suppressMovable: true,
-            field: "",
-            cellRenderer: "Delete_button",
-            width: 100,
-          },
-          {
-            headerName: "資產編號",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "物品名稱",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "儲位區域",
-            field: "price",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "儲位櫃位",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "廠商",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "型號",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "規格",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "數量",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "100",
-            suppressMovable: true,
-          },
-          {
-            headerName: "單位",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "100",
-            suppressMovable: true,
-          },
-          {
-            headerName: "備註",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "100",
-            suppressMovable: true,
-          },
+        suppressMovable: true,
+        field: "",
+        cellRenderer: "Delete_button",
+        width: 100,
+        resizable: true,
+      },
+      {
+        headerName: "資產編號",
+        field: "AssetsId",
+        unSortIcon: true,
+        sortable: true,
+        width: 150,
+        suppressMovable: true,
+        resizable: true,
+      },
+      {
+        headerName: "物品名稱",
+        field: "AssetName",
+        unSortIcon: true,
+        sortable: true,
+        width: 150,
+        suppressMovable: true,
+        resizable: true,
+      },
+      {
+        headerName: "儲位區域",
+        field: "AreaName",
+        unSortIcon: true,
+        sortable: true,
+        width: 150,
+        suppressMovable: true,
+        resizable: true,
+      },
+      {
+        headerName: "儲位櫃位",
+        field: "LayerName",
+        unSortIcon: true,
+        sortable: true,
+        width: 150,
+        suppressMovable: true,
+        resizable: true,
+      },
+      {
+        headerName: "廠商",
+        field: "VendorName",
+        unSortIcon: true,
+        sortable: true,
+        width: 150,
+        suppressMovable: true,
+        resizable: true,
+      },
+      {
+        headerName: "型號",
+        field: "ProductType",
+        unSortIcon: true,
+        sortable: true,
+        width: 150,
+        suppressMovable: true,
+        resizable: true,
+      },
+      {
+        headerName: "規格",
+        field: "ProductSpec",
+        unSortIcon: true,
+        sortable: true,
+        width: 150,
+        suppressMovable: true,
+        resizable: true,
+      },
+      {
+        headerName: "數量",
+        field: "OM_Number",
+        unSortIcon: true,
+        sortable: true,
+        width: 100,
+        suppressMovable: true,
+        resizable: true,
+      },
+      {
+        headerName: "單位",
+        field: "OM_Unit",
+        unSortIcon: true,
+        sortable: true,
+        width: 100,
+        suppressMovable: true,
+        resizable: true,
+      },
+      {
+        headerName: "備註",
+        field: "model",
+        unSortIcon: true,
+        sortable: true,
+        width: 100,
+        suppressMovable: true,
+        resizable: true,
+      },
       ]
       const columnDefs3 = [{
-            suppressMovable: true,
-            field: "",
-            cellRenderer: "Storage_add",
-            width: "75"
-          },
-          {
-            headerName: "資產編號",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "物品名稱",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "儲位區域",
-            field: "price",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "儲位櫃位",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "廠商",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "型號",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "規格",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "數量",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "100",
-            suppressMovable: true,
-          },
-          {
-            headerName: "單位",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "100",
-            suppressMovable: true,
-          },
+        suppressMovable: true,
+        field: "",
+        cellRenderer: "Storage_add",
+        width: 75
+      },
+      {
+        headerName: "資產編號",
+        field: "AssetsId",
+        unSortIcon: true,
+        sortable: true,
+        width: 150,
+        suppressMovable: true,
+        resizable: true,
+      },
+      {
+        headerName: "物品名稱",
+        field: "AssetName",
+        unSortIcon: true,
+        sortable: true,
+        width: 150,
+        suppressMovable: true,
+        resizable: true,
+      },
+      {
+        headerName: "儲位區域",
+        field: "AreaName",
+        unSortIcon: true,
+        sortable: true,
+        width: 150,
+        suppressMovable: true,
+        resizable: true,
+      },
+      {
+        headerName: "儲位櫃位",
+        field: "LayerName",
+        unSortIcon: true,
+        sortable: true,
+        width: 150,
+        suppressMovable: true,
+        resizable: true,
+      },
+      {
+        headerName: "廠商",
+        field: "VendorName",
+        unSortIcon: true,
+        sortable: true,
+        width: 150,
+        suppressMovable: true,
+        resizable: true,
+      },
+      {
+        headerName: "型號",
+        field: "ProductType",
+        unSortIcon: true,
+        sortable: true,
+        width: 150,
+        suppressMovable: true,
+        resizable: true,
+      },
+      {
+        headerName: "規格",
+        field: "ProductSpec",
+        unSortIcon: true,
+        sortable: true,
+        width: 150,
+        suppressMovable: true,
+        resizable: true,
+      },
+      {
+        headerName: "數量",
+        field: "OM_Number",
+        unSortIcon: true,
+        sortable: true,
+        width: 100,
+        suppressMovable: true,
+        resizable: true,
+      },
+      {
+        headerName: "單位",
+        field: "OM_Unit",
+        unSortIcon: true,
+        sortable: true,
+        width: 100,
+        suppressMovable: true,
+        resizable: true,
+      },
+      {
+        headerName: "備註",
+        field: "model",
+        unSortIcon: true,
+        sortable: true,
+        width: 100,
+        suppressMovable: true,
+        resizable: true,
+      },
       ]
       const rowData1 = ref([]);
+      const rowData2 = ref([]);
+      const rowData3 = ref([]);
       async function getDetails() {
         const axios = require('axios');
         try {
@@ -485,68 +515,8 @@ import { useRoute, useRouter } from "vue-router";
         columnDefs2,
         columnDefs3,
         rowData1,
-        rowData2: [{
-            make: "Toyota",
-            model: "Celica",
-            price: 35000,
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000,
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000,
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000,
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000,
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000,
-          },
-        ],
-        rowData3: [{
-            make: "Toyota",
-            model: "Celica",
-            price: 35000,
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000,
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000,
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000,
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000,
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000,
-          },
-        ],
+        rowData2,
+        rowData3,
         details,
         options,
       };

@@ -1,13 +1,27 @@
 <template>
   <div>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="searchByRow()">
   搜索庫存
   </button>
   </div>
 </template>
 
 <script>
+export default {
+  props: ['params'],
+  setup(props) {
+    function searchByRow() {
 
+      // const rowNode = props.params.node;
+      // props.params.api.applyTransaction({remove: [rowNode.data]});
+      // console.log(props.params);
+      props.params.searchList(props.params.data);
+    }
+    return {
+      searchByRow,
+    }
+  }
+}
 </script>
 
 

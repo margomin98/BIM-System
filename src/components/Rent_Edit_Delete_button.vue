@@ -1,6 +1,6 @@
 <template>
   <div class='button_wrap'>
-    <button class='btn' @click="deleteRow('刪除')">刪除</button>
+    <button class='btn' @click="deleteRow()">刪除</button>
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 export default {
   props: ['params', 'parentRef'],
   setup(props) {
-    function deleteRow(s) {
+    function deleteRow() {
 
       // const index = props.params.data.index;
       const rowNode = props.params.node;
