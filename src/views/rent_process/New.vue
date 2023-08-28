@@ -296,8 +296,8 @@ import { useRoute, useRouter } from "vue-router";
       const columnDefs2 = [{
             suppressMovable: true,
             field: "",
-            cellRenderer: "Storage_add",
-            width: "75"
+            cellRenderer: "Delete_button",
+            width: 100,
           },
           {
             headerName: "資產編號",
@@ -365,6 +365,14 @@ import { useRoute, useRouter } from "vue-router";
           },
           {
             headerName: "單位",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: "100",
+            suppressMovable: true,
+          },
+          {
+            headerName: "備註",
             field: "model",
             unSortIcon: true,
             sortable: true,
