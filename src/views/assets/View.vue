@@ -138,43 +138,112 @@
           </div>
         </div>
       </div>
-      <div class="col button_wrap">
-        <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="send_btn" @click="submit" :disabled="!canSubmit()" :class="{ send_btn_disabled: !canSubmit() }">送出</button>
-      </div>
     </div>
-    <div class="info_wrap col">
+    <div class="info_wrap col photo">
       <div class="fixed_title">
         <div>
-          <h4>資產資訊</h4>
+          <h4>資產照片</h4>
         </div>
       </div>
       <div class="content">
-        <swiper-container class='swiper_section' :slides-per-view="3" :space-between="spaceBetween" :centered-slides="true" :pagination="pagination" :modules="modules" :breakpoints="{
-              768: {
-                slidesPerView: 3,
-              },
-            }" @progress="onProgress" @slidechange="onSlideChange">
+        <swiper-container class='swiper_section' :space-between="20" :pagination="pagination" :modules="modules" :breakpoints="{
+                0: {
+            slidesPerView: 1,
+          },
+          768: {
+            slidesPerView: 3,
+          },
+          1200: {
+            slidesPerView: 3,
+          },
+                        }" @progress="onProgress" @slidechange="onSlideChange">
           <swiper-slide>
             <img src="https://www.cityonelimo.com/uploaded_files/seo-flyer/BLOG072202304240720_Remote%20work%20image.jpeg" alt="">
           </swiper-slide>
           <swiper-slide>
-            <img src="https://www.theforage.com/blog/wp-content/uploads/2022/12/how-many-work-hours-in-a-year.jpg" alt="">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Sun_Down_%28250260941%29.jpeg" alt="">
+          </swiper-slide>
+          <swiper-slide>
+            <img src="https://www.cityonelimo.com/uploaded_files/seo-flyer/BLOG072202304240720_Remote%20work%20image.jpeg" alt="">
+          </swiper-slide>
+          <swiper-slide>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Sun_Down_%28250260941%29.jpeg" alt="">
           </swiper-slide>
           <swiper-slide>
             <img src="https://static01.nyt.com/images/2021/01/17/fashion/13workathome/13workathome-superJumbo.jpg" alt="">
           </swiper-slide>
         </swiper-container>
+        <div class="swiper_pagination">
+        </div>
+      </div>
+    </div>
+    <div class="info_wrap col log">
+      <div class="fixed_title">
+        <div>
+          <h4>進出庫歷史紀錄</h4>
+        </div>
+      </div>
+      <div class="content">
+        <div class="row">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-6">
+            <p>作業日期(起)</p>
+            <div class="date-selector">
+              <div class="input-container">
+                <input type="date" v-model="selectedDate" class="date-input" @focus="showDatePicker = true" @blur="showDatePicker = false" />
+                <div class="date-picker" v-if="showDatePicker">
+                  <datepicker v-model="selectedDate"></datepicker>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-4 col-md-4 col-6">
+            <p>作業日期(迄)</p>
+            <div class="date-selector">
+              <div class="input-container">
+                <input type="date" v-model="selectedEndDate" class="date-input" @focus="showEndDatePicker = true" @blur="showEndDatePicker = false" />
+                <div class="date-picker" v-if="showEndDatePicker">
+                  <datepicker v-model="selectedEndDate"></datepicker>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12">
+            <p>作業行為</p>
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          {{ selectedItem || "請選擇" }}
+                        </button>
+              <div class="dropdown-menu" aria-labelledby="statusDropdown">
+                <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
+                <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="col button_wrap">
-        <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="send_btn" @click="submit" :disabled="!canSubmit()" :class="{ send_btn_disabled: !canSubmit() }">送出</button>
+        <button class="search_btn">檢索</button>
+        <button class="empty_btn">清空</button>
       </div>
+      <div class="info_wrap">
+      <div style="width: 100%">
+      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;margin-bottom:50px" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true"
+        :pagination="true">
+      </ag-grid-vue>
+    </div>
+    </div>
+      <div class="col button_wrap">
+      <button class="back_btn" @click="goBack">回上一頁</button>
+    </div>
     </div>
   </div>
 </template>
 
 <script>
+  import {
+    AgGridVue
+  } from "ag-grid-vue3";
+  import Button from "@/components/Storage_list_view_button";
   import {
     register
   } from 'swiper/element/bundle';
@@ -196,6 +265,8 @@
   export default {
     components: {
       Navbar,
+      AgGridVue,
+      Button,
       Swiper,
     },
     setup() {
@@ -380,19 +451,133 @@
         onSwiper,
         onSlideChange,
         pagination: {
+          el: '.swiper_pagination', // Use the class name of the pagination div
           clickable: true,
-          renderBullet: function(index, className) {
-            return '<span class="' + className + '">' + (index + 1) + '</span>';
-          },
         },
         modules: [Pagination],
+        columnDefs: [{
+            suppressMovable: true,
+            field: "",
+            cellRenderer: "Button",
+            width: '100',
+
+          },
+          {
+            headerName: "作業日期",
+            field: "make",
+            unSortIcon: true,
+            sortable: true,
+            width: '150',
+            suppressMovable: true
+          },
+          {
+            headerName: "作業行為",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: '150',
+            suppressMovable: true
+          },
+          {
+            headerName: "單號",
+            field: "price",
+            unSortIcon: true,
+            sortable: true,
+            width: '300',
+            resizable:true,
+            suppressMovable: true
+          },
+          {
+            headerName: "數量",
+            field: "make",
+            unSortIcon: true,
+            sortable: true,
+            width: '100',
+            suppressMovable: true
+          },
+          {
+            headerName: "單位",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: '100',
+            suppressMovable: true
+          },
+          {
+            headerName: "申請人員",
+            field: "make",
+            unSortIcon: true,
+            sortable: true,
+            width: '150',
+            suppressMovable: true
+          },
+          {
+            headerName: "承辦人員",
+            field: "make",
+            unSortIcon: true,
+            sortable: true,
+            width: '150',
+            suppressMovable: true
+          }
+        ],
+        rowData: [{
+            make: "Toyota",
+            model: "Celica",
+            price: 35000
+          },
+          {
+            make: "Ford",
+            model: "Mondeo",
+            price: 32000
+          },
+          {
+            make: "Toyota",
+            model: "Celica",
+            price: 35000
+          },
+          {
+            make: "Ford",
+            model: "Mondeo",
+            price: 32000
+          },
+          {
+            make: "Porsche",
+            model: "Boxster",
+            price: 72000
+          },
+          {
+            make: "Toyota",
+            model: "Celica",
+            price: 35000
+          },
+          {
+            make: "Ford",
+            model: "Mondeo",
+            price: 32000
+          },
+          {
+            make: "Toyota",
+            model: "Celica",
+            price: 35000
+          },
+          {
+            make: "Ford",
+            model: "Mondeo",
+            price: 32000
+          },
+          {
+            make: "Porsche",
+            model: "Boxster",
+            price: 72000
+          },
+        ],
       }
     },
     mounted() {
       this.swiper = new Swiper('.swiper-container', {
         // Swiper configuration options
         pagination: {
-          el: '.swiper-pagination',
+          el: '.swiper_pagination',
         },
       });
     },
@@ -406,21 +591,16 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-	.swiper_section {
-      height: 200px;
+  .swiper_section {
+    height: 300px;
+    swiper-slide {
       display: flex;
       align-items: center;
-      gap:10px;
-   
-swiper-slide{
-  margin:0 10px;
-  width:auto !important;
-     img {
-        display: flex;
-        width: 100%;
-        height: 100%
     }
-}
+    swiper-slide img {
+      width: 100%;
+      margin: auto;
+    }
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
@@ -434,13 +614,7 @@ swiper-slide{
         font-weight: 600;
         @include title_color;
       }
-      h2 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 35px;
-        font-weight: 600;
-        @include title_color;
-      }
+    
       .info_wrap {
         margin: auto;
         width: 800px;
@@ -457,13 +631,14 @@ swiper-slide{
         }
         .content {
           @include content_bg;
+          
           .dropdown {
             .dropdown-menu {
               width: 100%;
             }
             button {
               @include dropdown-btn;
-              width: 187px;
+              width: 100%;
               color: black;
               justify-content: space-between;
               align-items: center;
@@ -486,6 +661,10 @@ swiper-slide{
             }
           }
         }
+        
+        .content:nth-child(1),.content:nth-child(2){
+          border-radius:0px 10px 10px 10px
+        }
         .button_wrap {
           display: flex;
           margin-top: 30px;
@@ -499,19 +678,58 @@ swiper-slide{
               background-color: #5d85bb;
             }
           }
-          button.send_btn {
+          button.empty_btn {
+            @include empty_btn;
+            &:hover {
+              background-color: #244f86;
+            }
+          }
+          button.search_btn {
             @include search_and_send_btn;
             &:hover {
               background-color: #5e7aa2;
             }
           }
-          button.send_btn_disabled {
-            background: #878787;
-            &:hover {
-              background: #878787;
+        }
+        .dropdown {
+          width: calc(100% - 10%);
+          height: 35px;
+          @include dropdown_btn;
+          .dropdown-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: none;
+          }
+          .dropdown-menu {
+            width: 100%;
+            transform: translate3d(-1px, 35px, 0px) !important;
+            p {
+              font-size: 18px;
+              color: black;
+              font-weight: normal;
             }
           }
         }
+      }
+    
+      .log {
+        p {
+          @include datagrid_title;
+        }
+        input {
+          display: flex;
+          border: none;
+          border-radius: 5px;
+          background-color: white;
+          padding: 5px 10px;
+          font-size: 18px;
+          width: 200px;
+          height: 35px;
+        }
+      }
+      .photo {
+        margin: 5% auto;
       }
     }
   }
@@ -527,32 +745,31 @@ swiper-slide{
         font-weight: 600;
         @include title_color;
       }
-      h2 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 35px;
-        font-weight: 600;
-        @include title_color;
-      }
+    
       .info_wrap {
         margin: auto;
-        width: 800px;
+       padding:0 5%;
         .fixed_info {
           @include fixed_info;
+          border-radius: 0 10px 0 0;
           p {
             font-size: 20px;
             margin-bottom: 0;
           }
         }
+        .fixed_title {
+          @include fixed_title;
+        }
         .content {
           @include content_bg;
+          
           .dropdown {
             .dropdown-menu {
               width: 100%;
             }
             button {
               @include dropdown-btn;
-              width: 187px;
+              width: 100%;
               color: black;
               justify-content: space-between;
               align-items: center;
@@ -575,6 +792,11 @@ swiper-slide{
             }
           }
         }
+        
+        .content:nth-child(1),.content:nth-child(2){
+          border-radius:0px 10px 10px 10px
+        }
+    
         .button_wrap {
           display: flex;
           margin-top: 30px;
@@ -588,16 +810,60 @@ swiper-slide{
               background-color: #5d85bb;
             }
           }
-          button.send_btn {
+          button.empty_btn {
+            @include empty_btn;
+            &:hover {
+              background-color: #244f86;
+            }
+          }
+          button.search_btn {
             @include search_and_send_btn;
             &:hover {
               background-color: #5e7aa2;
             }
           }
-          button.send_btn_disabled {
-            background: #878787;
+        }
+        .dropdown {
+          width: calc(100% - 10%);
+          height: 35px;
+          @include dropdown_btn;
+          .dropdown-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: none;
+          }
+          .dropdown-menu {
+            width: 100%;
+            transform: translate3d(-1px, 35px, 0px) !important;
+            p {
+              font-size: 18px;
+              color: black;
+              font-weight: normal;
+            }
           }
         }
+      }
+      .info_wrap:nth-child(4) .info_wrap{
+        padding:0;
+      }
+      .log {
+        p {
+          @include datagrid_title;
+        }
+        input {
+          display: flex;
+          border: none;
+          border-radius: 5px;
+          background-color: white;
+          padding: 5px 10px;
+          font-size: 18px;
+          width: 200px;
+          height: 35px;
+        }
+      }
+      .photo {
+        margin: 5% auto;
       }
     }
   }
@@ -613,20 +879,22 @@ swiper-slide{
         font-weight: 600;
         @include title_color;
       }
-      h2 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 35px;
-        font-weight: 600;
-        @include title_color;
+
+      .photo{
+        margin:5% auto;
       }
       .info_wrap {
         padding: 1% 5% 0;
+ 
+        .fixed_title {
+          @include fixed_title;
+        }
         .fixed_info {
           @include fixed_info;
           flex-direction: column;
           height: unset;
           padding: 10px;
+          border-radius:0 10px 0 0;
           p {
             font-size: 20px;
             margin-bottom: 0;
@@ -634,13 +902,16 @@ swiper-slide{
         }
         .content {
           @include content_bg;
+          .row{
+            gap:10px 0;
+          }
           .dropdown {
             .dropdown-menu {
               width: 100%;
             }
             button {
               @include dropdown-btn;
-              width: 187px;
+              width:100%;
               color: black;
               justify-content: space-between;
               align-items: center;
@@ -648,6 +919,7 @@ swiper-slide{
           }
           .input-group {
             flex-direction: column;
+
             .input-number {
               @include count_btn;
             }
@@ -664,30 +936,57 @@ swiper-slide{
               font-size: 20px;
             }
           }
+     
+        }
+        
+        .content:nth-child(1),.content:nth-child(2){
+          border-radius:0px 10px 10px 10px
         }
         .button_wrap {
           display: flex;
           margin-top: 30px;
           justify-content: center;
-          padding: 0 15%;
+          padding: 0 20%;
           margin-bottom: 5%;
           gap: 20px;
           button.back_btn {
             @include back_to_previous_btn;
+            
             &:hover {
               background-color: #5d85bb;
             }
           }
-          button.send_btn {
+          button.empty_btn {
+            @include empty_btn;
+            &:hover {
+              background-color: #244f86;
+            }
+          }
+          button.search_btn {
             @include search_and_send_btn;
             &:hover {
               background-color: #5e7aa2;
             }
           }
-          button.send_btn_disabled {
-            background: #878787;
-          }
         }
+      }
+      .info_wrap:nth-child(4) .info_wrap{
+        padding:0;
+      }
+      .log {
+        p {
+          @include datagrid_title;
+        }
+        input {
+          display: flex;
+          border: none;
+          border-radius: 5px;
+          background-color: white;
+          padding: 5px 10px;
+          font-size: 18px;
+          width:100% 
+        }
+
       }
     }
   }

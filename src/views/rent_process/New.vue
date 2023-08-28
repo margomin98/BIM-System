@@ -16,8 +16,8 @@
                 <p>設備總類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                              {{ selectedItem || "請選擇" }}
-                                                            </button>
+                                                                  {{ selectedItem || "請選擇" }}
+                                                                </button>
                   <div class="dropdown-menu" aria-labelledby="statusDropdown">
                     <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
                     <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
@@ -28,8 +28,8 @@
                 <p>設備分類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                              {{ selectedItem || "請選擇" }}
-                                                            </button>
+                                                                  {{ selectedItem || "請選擇" }}
+                                                                </button>
                   <div class="dropdown-menu" aria-labelledby="statusDropdown">
                     <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
                     <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
@@ -40,8 +40,8 @@
                 <p>物品名稱</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                              {{ selectedItem || "請選擇" }}
-                                                            </button>
+                                                                  {{ selectedItem || "請選擇" }}
+                                                                </button>
                   <div class="dropdown-menu" aria-labelledby="statusDropdown">
                     <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
                     <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
@@ -58,10 +58,10 @@
             <div class="row g-0">
               <div class="col-12 d-flex wrap2">
                 <label for="inputTextarea" class="form-label">
-                                                      <p>
-                                                      規格需求：
-                                                      </p>
-                                                      </label>
+                                                          <p>
+                                                          規格需求：
+                                                          </p>
+                                                          </label>
                 <div>
                 </div>
                 <textarea class="form-control readonly_box" id="inputTextarea" rows="3" readonly></textarea>
@@ -76,7 +76,7 @@
               <p>目前資產庫存</p>
             </div>
           </div>
-          <ag-grid-vue style="height: 380px" class="ag-theme-alpine list"  :rowHeight="rowHeight" :columnDefs="columnDefs3" :rowData="rowData3" :defaultColDef="defaultColDef3" :paginationAutoPageSize="true">
+          <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs3" :rowData="rowData3" :defaultColDef="defaultColDef3" :paginationAutoPageSize="true">
           </ag-grid-vue>
         </div>
       </div>
@@ -87,7 +87,8 @@
       <h1>出庫備料作業</h1>
     </div>
     <div class="info_wrap col">
-      <div class="fixed_info"> <div>
+      <div class="fixed_info">
+        <div>
           <p>單號：121564564</p>
         </div>
         <div>
@@ -96,15 +97,14 @@
         <div>
           <p>申請日期：2022/02/20</p>
         </div>
-       
       </div>
       <form>
         <div class="row g-0">
           <div class="col d-flex wrap column_section">
             <label for="inputTitle1" class="form-label use">
-                                            <p>
-                                           用&ensp;&ensp;&ensp;&ensp;途</p>
-                                            </label>
+                                                <p>
+                                               用&ensp;&ensp;&ensp;&ensp;途</p>
+                                                </label>
             <div class="option">
               <div class='content'>
                 <div class="form-check">
@@ -138,16 +138,16 @@
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                                        <p>專案代碼</p>
-                                      </label>
+                                            <p>專案代碼</p>
+                                          </label>
             <div class="input-group" id='readonly_box'>
               <p class='readonly_box' readonly>文字</p>
             </div>
           </div>
           <div class="col d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                                        <p>專案名稱</p>
-                                      </label>
+                                            <p>專案名稱</p>
+                                          </label>
             <div class="input-group" id='readonly_box'>
               <p class='readonly_box' readonly>文字</p>
             </div>
@@ -156,10 +156,10 @@
         <div class="row g-0">
           <div class="col d-flex wrap" style="border: none">
             <label for="inputTextarea" class="form-label">
-                                        <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
-                                      </label>
+                                            <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
+                                          </label>
             <div class="input-group" id='readonly_box'>
-              <p class='readonly_box' readonly>文字</p>
+              <textarea class="form-control readonly_box" readonly></textarea>
             </div>
           </div>
         </div>
@@ -170,7 +170,7 @@
         </div>
       </div>
       <div class="second_content">
-        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list"  :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :defaultColDef="defaultColDef1" :paginationAutoPageSize="true">
+        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :defaultColDef="defaultColDef1" :paginationAutoPageSize="true">
         </ag-grid-vue>
       </div>
       <modal-overlay v-if="modalVisible" @close="closeModal" />
@@ -180,7 +180,7 @@
         </div>
       </div>
       <div class="third_content">
-        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list"  :rowHeight="rowHeight" :columnDefs="columnDefs2" :rowData="rowData2" :defaultColDef="defaultColDef" :paginationAutoPageSize="true">
+        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs2" :rowData="rowData2" :defaultColDef="defaultColDef" :paginationAutoPageSize="true">
         </ag-grid-vue>
       </div>
       <div class="fixed_info_count">
@@ -200,27 +200,27 @@
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                                        <p>備料人員</p>
-                                      </label>
+                                            <p>備料人員</p>
+                                          </label>
             <div class="input-group">
               <input type="text" class="form-control readonly_box" id="inputWithButton" readonly />
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                                        <p>備料完成日期</p>
-                                      </label>
+                                            <p>備料完成日期</p>
+                                          </label>
             <div class="input-group">
               <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly />
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                                        <p>備料備註</p>
-                                      </label>
-                                      <div class="input-group">
-              <textarea placeholder="最多100字" class="form-control" id="inputTextarea" style="height:100%" rows="1"></textarea>
-              </div>
+                                            <p>備料備註</p>
+                                          </label>
+            <div class="input-group">
+              <textarea placeholder="最多100字" class="form-control" id="inputTextarea"></textarea>
+            </div>
           </div>
         </div>
       </div>
@@ -702,6 +702,7 @@
     .main_section {
       .readonly_box {
         @include readonly_box;
+        height: 100%;
       }
       h1 {
         margin-top: 50px;
@@ -730,6 +731,7 @@
           }
         }
         #readonly_box {
+          background-color: #B4B4B4;
           border-left: black 1px solid;
         }
         .second_content {
@@ -778,6 +780,9 @@
             border-right: 1px solid black;
             border-bottom: 1px solid black;
           }
+          .input-group {
+            border-left: 1px solid black;
+          }
           .form-check {
             margin-left: 10px;
           }
@@ -785,7 +790,14 @@
             height: auto;
             border-radius: 0;
             border-right: 1px solid black;
-            border-left: 1px solid black;
+          }
+          .wrap:nth-child(3) .input-group {
+            border-right: 1px solid black;
+            textarea {
+              padding: 0 6px;
+              border-bottom: 0;
+              border-right: 0;
+            }
           }
           .form-label {
             font-weight: 700;
@@ -814,7 +826,7 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
+            padding: 0;
           }
           .wrap {
             border-bottom: 1px solid black;
@@ -865,7 +877,6 @@
         .input-number {
           @include count_btn;
         }
-       
       }
       .button_wrap {
         display: flex;
@@ -998,6 +1009,7 @@
     .main_section {
       .readonly_box {
         @include readonly_box;
+        height: 100%;
       }
       h1 {
         margin-top: 50px;
@@ -1026,7 +1038,8 @@
           }
         }
         #readonly_box {
-          border-left: 1px solid black;
+          background-color: #B4B4B4;
+          border-left: black 1px solid;
         }
         .second_content {
           border-left: 1px solid black;
@@ -1036,7 +1049,9 @@
         }
         .third_content {
           .list {
-            border: 1px solid black;
+            border-top: 1px solid black;
+            border-left: 1px solid black;
+            border-right: 1px solid black;
             button {
               @include delete_button;
               &:hover {
@@ -1072,6 +1087,9 @@
             border-right: 1px solid black;
             border-bottom: 1px solid black;
           }
+          .input-group {
+            border-left: 1px solid black;
+          }
           .form-check {
             margin-left: 10px;
           }
@@ -1079,7 +1097,14 @@
             height: auto;
             border-radius: 0;
             border-right: 1px solid black;
-            border-left: 1px solid black;
+          }
+          .wrap:nth-child(3) .input-group {
+            border-right: 1px solid black;
+            textarea {
+              padding: 0 6px;
+              border-bottom: 0;
+              border-right: 0;
+            }
           }
           .form-label {
             font-weight: 700;
@@ -1108,14 +1133,15 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
+            padding: 0;
           }
           .wrap {
-            background: white;
             border-bottom: 1px solid black;
+            background: white;
+            border-bottom: 0.5px solid black;
             align-items: center;
             label.use {
-              border-right: 1px solid black
+              border-right: 1px solid black;
             }
             .option {
               @include readonly_box;
@@ -1158,7 +1184,6 @@
         .input-number {
           @include count_btn;
         }
-
       }
       .button_wrap {
         display: flex;
@@ -1301,6 +1326,9 @@
       .readonly_box {
         @include readonly_box;
       }
+      #readonly_box {
+        background: #B4B4B4;
+      }
       h1 {
         margin-top: 50px;
         text-align: center;
@@ -1374,14 +1402,25 @@
             border-left: none;
             border-right: none;
           }
+          .row {
+            flex-direction: column;
+            .wrap {
+              flex-direction: column;
+            }
+          }
           .form-check {
             margin-left: 10px;
           }
-          .form-control {
+          .wrap:nth-child(1) .form-control,
+          .wrap:nth-child(2) .form-control {
             height: auto;
             border-radius: 0;
             border-bottom: 1px solid black;
-            border-left: 1px solid black;
+          }
+          .wrap:nth-child(3) .form-control {
+            height: auto;
+            border-radius: 0;
+            border-bottom: 1px solid black;
           }
           .form-label {
             border-bottom: 1px solid black;
@@ -1392,8 +1431,6 @@
             margin: 0;
             display: flex;
             justify-content: center;
-            width: 220px;
-            height: 50px;
             p {
               font-size: 18px;
               margin-bottom: 0;
@@ -1475,7 +1512,6 @@
         .input-number {
           @include count_btn;
         }
-        
       }
       .button_wrap {
         display: flex;

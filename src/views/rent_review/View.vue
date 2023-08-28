@@ -20,8 +20,8 @@
         <div class="row g-0">
           <div class="col d-flex wrap">
             <label for="inputTitle1" class="form-label use">
-                                                    <p>用&ensp;&ensp;&ensp;&ensp;途</p>
-                                                  </label>
+                                                      <p>用&ensp;&ensp;&ensp;&ensp;途</p>
+                                                    </label>
             <div class="option">
               <div class='content'>
                 <div class="form-check">
@@ -53,18 +53,18 @@
           </div>
         </div>
         <div class="row g-0">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                                                    <p>專案代碼</p>
-                                                  </label>
+                                                      <p>專案代碼</p>
+                                                    </label>
             <div class="input-group">
               <input type="text" class="form-control readonly_box" id="inputWithButton" readonly />
             </div>
           </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap">
+          <div class="col d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                                                    <p>專案名稱</p>
-                                                  </label>
+                                                      <p>專案名稱</p>
+                                                    </label>
             <div class="input-group">
               <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly />
             </div>
@@ -73,9 +73,11 @@
         <div class="row g-0">
           <div class="col d-flex wrap" style="border: none">
             <label for="inputTextarea" class="form-label">
-                                                    <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
-                                                  </label>
-            <textarea class="form-control readonly_box" id="inputTextarea" rows="1" readoonly></textarea>
+                                                      <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
+                                                    </label>
+            <div class="input-group" id='readonly_box'>
+              <textarea class="form-control readonly_box" readonly></textarea>
+            </div>
           </div>
         </div>
       </form>
@@ -115,18 +117,18 @@
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                                                    <p>備料人員</p>
-                                                  </label>
+                                                      <p>備料人員</p>
+                                                    </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
           </div>
           <div class="col d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                                                    <p>備註</p>
-                                                  </label>
-            <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly>文字內容</p>
+                                                      <p>備註</p>
+                                                    </label>
+            <div class="input-group" id='readonly_box'>
+              <textarea class="form-control readonly_box" readonly></textarea>
             </div>
           </div>
         </div>
@@ -140,8 +142,8 @@
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                                                    <p>審核人員</p>
-                                                  </label>
+                                                      <p>審核人員</p>
+                                                    </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
@@ -149,16 +151,16 @@
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                                                     <p>審核結果</p>
-                                                  </label>
+                                                       <p>審核結果</p>
+                                                    </label>
             <div class="input-group">
               <input type="checkbox" />通過 <input type="checkbox" />不通過
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
-                                                    <p>審核日期</p>
-                                                  </label>
+                                                      <p>審核日期</p>
+                                                    </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>文字內容</p>
             </div>
@@ -167,11 +169,11 @@
         <div class="row g-0">
           <div class="col d-flex wrap">
             <label for="inputWithButton" class="form-label">
-                                                    <p>審核意見</p>
-                                                  </label>
+                                                      <p>審核意見</p>
+                                                    </label>
             <div class="input-group">
-              <textarea placeholder="最多100字" class="form-control" id="inputTextarea" style="height:100%" rows="1"></textarea>
-              </div>
+              <textarea placeholder="最多100字" class="form-control" id="inputTextarea"></textarea>
+            </div>
           </div>
         </div>
       </div>
@@ -423,6 +425,11 @@
         font-weight: 600;
         @include title_color;
       }
+      #readonly_box {
+        padding: 0;
+        background-color: #B4B4B4;
+        border-left: black 1px solid;
+      }
       .info_wrap {
         margin: auto;
         width: 1000px;
@@ -490,7 +497,7 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
+            padding: 0;
           }
           .wrap {
             background: white;
@@ -514,11 +521,26 @@
               text-align: center;
             }
           }
-          #readonly_box {
-            border-left: 1px solid black;
-          }
           .wrap:nth-child(1) {
             border-right: 1px solid black;
+          }
+         
+          .wrap:nth-child(2) #readonly_box {
+            height: 100%;
+            width: 100%;
+            background-color: #B4B4B4;
+            text-align-last: left;
+          }
+          #readonly_box:nth-child(1) {
+            border-left: 1px solid black;
+          }
+          #readonly_box {
+            display: flex;
+            align-items: center;
+            textarea {
+              height: 100%;
+              text-align: center;
+            }
           }
         }
         .five_content {
@@ -536,27 +558,14 @@
           }
           .form-control {
             height: auto;
+            padding:5px 10px 0;
             border-radius: 0;
-            border-left: 1px solid black;
           }
           .wrap {
             background: white;
             border-top: 1px solid black;
             align-items: center;
-            button {
-              margin: 0 10px;
-              border-radius: 7px;
-              height: 30px;
-              width: 100px;
-              border: none;
-              background: #48658c;
-              color: white;
-              font-weight: 700;
-              font-size: 18px;
-              &:hover {
-                background-color: #5d85bd;
-              }
-            }
+       
           }
           .form-label {
             font-weight: 700;
@@ -575,16 +584,18 @@
             }
           }
           .wrap:nth-child(1) {
-            #readonly_box {
+     
+         
+         
+            textarea{
               border-left: 1px solid black;
-            }
-            .input-group {
-              border-right: 1px solid black;
+              border:none
             }
           }
           .wrap:nth-child(2) {
             border-left: 1px solid black;
             label {
+              
               width: 100px;
             }
             .input-group {
@@ -599,10 +610,18 @@
           }
           .wrap:nth-child(3) {
             border-right: 1px solid black;
+          
             #readonly_box {
               border-left: 1px solid black;
             }
           }
+          .row:nth-child(3) .input-group{
+              border-left: 1px solid black;
+              border-right: 1px solid black;
+          }
+        }
+        .wrap:nth-child(2) .input-group input, .wrap:nth-child(1) .input-group input{
+          border-left:1px solid black
         }
         form {
           border-top: 1px solid black;
@@ -613,7 +632,7 @@
           }
           .form-control {
             border-radius: 0;
-            border-left: 1px solid black;
+            padding: 0;
           }
           .wrap {
             background: white;
@@ -695,9 +714,14 @@
         font-weight: 600;
         @include title_color;
       }
+      #readonly_box {
+        padding: 0;
+        background-color: #B4B4B4;
+        border-left: black 1px solid;
+      }
       .info_wrap {
         margin: auto;
-        padding: 0 5%;
+   padding: 0 5%;
         .input-group-prepend {
           width: 100% !important;
           text-align: center !important;
@@ -762,7 +786,7 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
+            padding: 0;
           }
           .wrap {
             background: white;
@@ -786,11 +810,26 @@
               text-align: center;
             }
           }
-          #readonly_box {
-            border-left: 1px solid black;
-          }
           .wrap:nth-child(1) {
             border-right: 1px solid black;
+          }
+         
+          .wrap:nth-child(2) #readonly_box {
+            height: 100%;
+            width: 100%;
+            background-color: #B4B4B4;
+            text-align-last: left;
+          }
+          #readonly_box:nth-child(1) {
+            border-left: 1px solid black;
+          }
+          #readonly_box {
+            display: flex;
+            align-items: center;
+            textarea {
+              height: 100%;
+              text-align: center;
+            }
           }
         }
         .five_content {
@@ -808,28 +847,14 @@
           }
           .form-control {
             height: auto;
+            padding:5px 10px 0;
             border-radius: 0;
-            border-left: 1px solid black;
           }
           .wrap {
             background: white;
             border-top: 1px solid black;
             align-items: center;
-            button {
-              white-space: nowrap;
-              margin: 0 10px;
-              border-radius: 7px;
-              height: 30px;
-              width: 100px;
-              border: none;
-              background: #48658c;
-              color: white;
-              font-weight: 700;
-              font-size: 18px;
-              &:hover {
-                background-color: #5d85bd;
-              }
-            }
+       
           }
           .form-label {
             font-weight: 700;
@@ -848,22 +873,23 @@
             }
           }
           .wrap:nth-child(1) {
-            #readonly_box {
+     
+         
+         
+            textarea{
               border-left: 1px solid black;
-            }
-            .input-group {
-              border-right: 1px solid black;
+              border:none
             }
           }
           .wrap:nth-child(2) {
             border-left: 1px solid black;
             label {
+              
               width: 100px;
             }
             .input-group {
               border-left: 1px solid black;
               border-right: 1px solid black;
-              gap: 2px;
               display: flex;
               justify-content: center;
               align-items: center;
@@ -872,10 +898,18 @@
           }
           .wrap:nth-child(3) {
             border-right: 1px solid black;
+          
             #readonly_box {
               border-left: 1px solid black;
             }
           }
+          .row:nth-child(3) .input-group{
+              border-left: 1px solid black;
+              border-right: 1px solid black;
+          }
+        }
+        .wrap:nth-child(2) .input-group input, .wrap:nth-child(1) .input-group input{
+          border-left:1px solid black
         }
         form {
           border-top: 1px solid black;
@@ -886,7 +920,7 @@
           }
           .form-control {
             border-radius: 0;
-            border-left: 1px solid black;
+            padding: 0;
           }
           .wrap {
             background: white;
@@ -1034,8 +1068,11 @@
           .fixed_info {
             border: none;
           }
-          #readonly_box {
-            border-left: 1px solid black;
+        #readonly_box{
+          background-color: #B4B4B4;
+        }
+          .wrap:nth-child(2) #readonly_box {
+            width: 100%;
           }
           .form-check {
             margin-left: 10px;
@@ -1043,17 +1080,18 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            border-left: 1px solid black;
           }
           .wrap {
             background: white;
             border-top: 1px solid black;
             align-items: center;
+            flex-direction: column;
             .option {
               display: flex;
             }
           }
           .form-label {
+            border-bottom: 1px solid black;
             font-weight: 700;
             font-size: 20px;
             white-space: nowrap;
@@ -1061,7 +1099,7 @@
             margin: 0;
             display: flex;
             justify-content: center;
-            width: 190px;
+            width: 100%;
             height: 30px;
             p {
               font-size: 18px;
@@ -1080,10 +1118,10 @@
             margin-left: 10px;
           }
           .form-control {
+            border-right: 1px solid black;
             border-radius: 0;
           }
           #readonly_box {
-            border-left: 1px solid black;
             background: #b4b4b4;
             font-weight: 700;
             display: flex;
@@ -1095,20 +1133,8 @@
             background: white;
             border-top: 1px solid black;
             align-items: center;
-            button {
-              margin: 0 10px;
-              border-radius: 7px;
-              height: 30px;
-              width: 100px;
-              border: none;
-              background: #48658c;
-              color: white;
-              font-weight: 700;
-              font-size: 18px;
-              &:hover {
-                background-color: #5d85bd;
-              }
-            }
+            flex-direction: column;
+           
           }
           .form-label {
             font-weight: 700;
@@ -1119,6 +1145,9 @@
             display: flex;
             justify-content: center;
             height: 30px;
+            width:100%;
+            border-bottom: 1px solid black;
+
             p {
               font-size: 18px;
               margin-bottom: 0;
@@ -1127,35 +1156,26 @@
           }
           .wrap:nth-child(3) {
             border-right: 1px solid black;
-            label {
-              width: 270px;
-            }
+           
           }
           .wrap:nth-child(1) {
             border-right: 1px solid black;
-            #readonly_box {
-              border-right: 1px solid black;
-            }
-            label {
-              width: 270px;
-            }
-            .input-group {
-              border-left: 1px solid black;
-            }
+             .input-group textarea{
+              border:none
+              }
+      
+   
           }
           .wrap:nth-child(2) {
             border-right: 1px solid black;
-            label {
-              height: 40px;
-              width: 270px;
-            }
+         
             .input-group {
+              padding: 5px;
               display: flex;
               justify-content: center;
               align-items: center;
               gap: 5px;
               font-weight: 700;
-              border-left: 1px solid black;
             }
           }
         }

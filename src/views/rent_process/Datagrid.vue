@@ -19,8 +19,8 @@
             <p>用途</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ selectedItem || "請選擇" }}
-                    </button>
+                        {{ selectedItem || "請選擇" }}
+                      </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
                 <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
@@ -31,8 +31,8 @@
             <p>狀態</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ selectedItem || "請選擇" }}
-                    </button>
+                        {{ selectedItem || "請選擇" }}
+                      </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
                 <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
@@ -43,8 +43,8 @@
             <p>日期類型</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ selectedItem || "請選擇" }}
-                    </button>
+                        {{ selectedItem || "請選擇" }}
+                      </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
                 <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
@@ -159,15 +159,6 @@
             suppressMovable: true
           },
           {
-            headerName: "申請日期",
-            field: "price",
-            unSortIcon: true,
-            sortable: true,
-            width: '180',
-            resizable: true,
-            suppressMovable: true
-          },
-          {
             headerName: "申請人員",
             field: "make",
             unSortIcon: true,
@@ -177,14 +168,15 @@
             suppressMovable: true
           },
           {
-            headerName: "出庫日期",
-            field: "make",
+            headerName: "申請日期",
+            field: "price",
             unSortIcon: true,
             sortable: true,
             width: '150',
             resizable: true,
             suppressMovable: true
-          }, {
+          }, 
+          {
             headerName: "備料日期",
             field: "make",
             unSortIcon: true,
@@ -195,6 +187,15 @@
           },
           {
             headerName: "審核日期",
+            field: "make",
+            unSortIcon: true,
+            sortable: true,
+            width: '150',
+            resizable: true,
+            suppressMovable: true
+          },
+          {
+            headerName: "出庫日期",
             field: "make",
             unSortIcon: true,
             sortable: true,

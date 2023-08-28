@@ -68,8 +68,8 @@
 		}
 	}
 	.info_icon {
-		height: 20px;
-		width: 20px;
-		margin: 0 3px 5px;
+		height: 14.5px;
+		width: 14.5px;
+		margin: 0 2px 5px;
 	}
 </style>
