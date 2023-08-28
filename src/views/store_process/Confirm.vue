@@ -304,13 +304,13 @@ export default {
     }
     const validation = ref({
       user1: {
-        account: 'user_1',
-        password: 'Test_123',
+        account: '',
+        password: '',
         isValidate: false,
       },
       user2: {
-        account: 'user_2',
-        password: 'Test_123',
+        account: '',
+        password: '',
         isValidate: false,
       },
     });

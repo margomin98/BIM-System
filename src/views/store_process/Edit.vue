@@ -583,14 +583,14 @@
           }
           if(form.SN && !/^.{1,100}$/.test(form.SN.trim())) {
             InputError = true;
-            InputMessages += '頁籤 ' + (i + 1) + ' :　S/N超過字數限制' + '\n';
+            InputMessages += '頁籤 ' + (i + 1) + ' :　S/N不可輸入超過100字' + '\n';
           }
           if(form.itemMemo) {
             form.itemMemo = form.itemMemo.trim();
           }
           if(form.itemMemo && !/^.{1,500}$/.test(form.itemMemo.trim())) {
             InputError = true;
-            InputMessages += '頁籤 ' + (i + 1) + ' :　備註超過字數限制' + '\n';
+            InputMessages += '頁籤 ' + (i + 1) + ' :　備註不可輸入超過500字' + '\n';
           }
         }
         if (InputError) {

@@ -42,7 +42,7 @@
     name: 'Login',
     setup() {
       const userName = ref('');
-      const userPassword = ref('Test_123');
+      const userPassword = ref('');
       const errorHint = ref('');
       async function login() {
         // console.log(event);

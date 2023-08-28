@@ -176,7 +176,7 @@ const routes = [
     path: "/rent_edit",
     name: "Rent_Edit",
     component: Rent_Edit,
-    meta: {auth: true, request: 'AO_Delete'},
+    meta: {auth: true, request: 'AO_Edit'},
   },
   {
     path: "/authority",

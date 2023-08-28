@@ -92,6 +92,7 @@
     setup() {
       const columnDefs = [{
           suppressMovable: true,
+          headerName: "項目",
           field: "id",
           width: 100,
           resizable: true,
