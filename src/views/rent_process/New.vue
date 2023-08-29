@@ -42,9 +42,9 @@
                 </div>
               </div>
               <div class="col-xl-3 col-lg-3 col-md-3 col-12">
-                <p>數量 <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"></p>
+                <p>已選/所需 數量 <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"></p>
                 <div class="number-input-box">
-                  <input class="input-number readonly_box" readonly v-model="searchParams.Number" />
+                  <p class="input-number readonly_box" readonly>{{  searchParams.selectedNumber }} / {{  searchParams.Number }}</p>
                 </div>
               </div>
             </div>
@@ -57,7 +57,7 @@
               </div>
             </div>
             <div class='col d-flex justify-content-center'>
-              <button class="btn submit_btn" type="button" @click="searchInventory">搜尋庫存</button>
+              <button class="btn submit_btn" type="button" @click="searchInventory(searchParams.id , searchParams.item_id)">搜尋庫存</button>
             </div>
           </div>
           <div class="fixed_info">
@@ -223,6 +223,7 @@
       const options = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨'];
       const gridApi2 = ref(null);
       const gridApi3 = ref(null);
+      const selectedNumberArray = ref([]);
       const searchParams = reactive({
         EquipTypeName: '',
         EquipTypeArray: [],
@@ -232,6 +233,9 @@
         ProductName: '',
         Number: 1,
         RequiredSpec: '',
+        id: 1,
+        item_id: '',
+        selectedNumber: 0,
       });
       onMounted(() => {
         getDetails();
@@ -241,7 +245,18 @@
           field: "",
           cellRenderer: "Storage_button",
           cellRendererParams: {
-            searchList: searchListFunction,
+            searchList: data=> {
+              console.log(data);
+              searchParams.EquipTypeName = data.EquipTypeName;
+              getEquipCategoryName();
+              searchParams.EquipCategoryName = data.EquipCategoryName;
+              searchParams.Number = data.Number;
+              searchParams.RequiredSpec = data.RequiredSpec;
+              searchParams.id = data.id;
+              searchParams.item_id = data.item_id;
+              searchParams.selectedNumber = selectedNumberArray.value[data.id]
+              searchInventory(searchParams.id , searchParams.item_id);
+            },
           },
           width: 115,
           resizable: true,
@@ -306,7 +321,11 @@
           field: "",
           cellRenderer: "Delete_button",
           cellRendererParams: {
-            addDeleteList: addDeleteListFunction,
+            deleteMaterial: (data)=> {
+              selectedNumberArray.value[data.id] -= data.selectNumber
+              searchParams.selectedNumber = selectedNumberArray.value[data.id]
+              getDetails()
+            },
           },
           width: 100,
           resizable: true,
@@ -322,6 +341,15 @@
         },
         {
           headerName: "數量",
+          field: "OM_Number",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
+          headerName: "選擇數量",
           field: "selectNumber",
           unSortIcon: true,
           sortable: true,
@@ -407,7 +435,27 @@
           field: "",
           cellRenderer: "Storage_add",
           cellRendererParams: {
-            addMaterial: addMeterialFunction,
+            numberIsValid: (data)=>{
+              // 檢查選擇數量是否正常 1.超過 2.為零 3.正常執行
+              if((data.selectNumber + searchParams.selectedNumber) > searchParams.Number || data.selectNumber === 0) {
+                // 1. || 2.
+                return false;
+              }
+              // 2. 正常執行
+              return true;
+            },
+            addMaterial: data => {
+                selectedNumberArray.value[data.id] += data.selectNumber
+                searchParams.selectedNumber = selectedNumberArray.value[data.id]
+                // searchInventory刷新庫存數量
+                searchInventory(searchParams.id , searchParams.item_id);
+                // getDetail刷新rowData1、2
+                getDetails();
+                // rowData2.value.push(data);
+                // setTimeout(() => {
+                //   gridApi2.value.setRowData(rowData2.value);
+                // }, 50);
+            },
           },
           width: 75,
           resizable: true,
@@ -422,15 +470,15 @@
           suppressMovable: true,
           resizable: true,
         },
-        {
-          headerName: "所選數量",
-          field: "selectNumber",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-          resizable: true,
-        },
+        // {
+        //   headerName: "所選數量",
+        //   field: "selectNumber",
+        //   unSortIcon: true,
+        //   sortable: true,
+        //   width: 100,
+        //   suppressMovable: true,
+        //   resizable: true,
+        // },
         {
           headerName: "單位",
           field: "OM_Unit",
@@ -548,12 +596,15 @@
         const axios = require('axios');
         try {
           const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
-          console.log(response);
           const data = response.data;
           if (data.state === 'success') {
-            console.log('Details Get成功 資料如下\n', data.resultList);
+            // console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             rowData1.value = data.resultList.ItemList;
+            rowData2.value = data.resultList.OM_List;
+            for(let i =1; i<=rowData1.value.length ; i++) {
+              selectedNumberArray.value[i]= 0;
+            }
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -564,7 +615,7 @@
           console.error(error);
         }
       }
-      async function searchInventory() {
+      async function searchInventory(data_id , data_item_id) {
         const axios = require('axios');
         try {
           const form = new FormData();
@@ -577,7 +628,9 @@
             // console.log('Details Get成功 資料如下\n', data.resultList);
             rowData3.value = data.resultList.map(item => ({
               ...item,
-              selectNumber: item.OM_Number
+              item_id: data_item_id,
+              selectNumber: item.OM_Number,
+              id: data_id,
             }));
             console.log(rowData3.value);
           } else if (data.state === 'error') {
@@ -599,24 +652,9 @@
       function selectCategory(item) {
         searchParams.EquipCategoryName = item;
       }
-      function searchListFunction(data) {
-        console.log(data);
-        searchParams.EquipTypeName = data.EquipTypeName;
-        getEquipCategoryName();
-        searchParams.EquipCategoryName = data.EquipCategoryName;
-        searchParams.Number = data.Number;
-        searchParams.RequiredSpec = data.RequiredSpec;
-        searchInventory();
-      }
+
       function addDeleteListFunction() {
         
-      }
-      function addMeterialFunction(data) {
-        rowData2.value.push(data);
-        gridApi2.value.setRowData(rowData2.value);
-      }
-      function updateNumberFunction(data) {
-        gridApi3.value.setRowData
       }
       const onGridReady2 = (params) => {
         gridApi2.value = params.api;
@@ -624,6 +662,9 @@
       const onGridReady3 = (params) => {
         gridApi3.value = params.api;
       };
+      function goBack() {
+        window.history.back();
+      }
       return {
         details,
         options,
@@ -640,6 +681,7 @@
         searchInventory,
         onGridReady2,
         onGridReady3,
+        goBack,
       };
     },
     data() {

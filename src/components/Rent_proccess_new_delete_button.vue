@@ -1,20 +1,45 @@
 <template>
   <div class='button_wrap'>
-    <button class='btn' @click="addDeleteList()">刪除</button>
+    <button class='btn' @click="Delete()">刪除</button>
   </div>
 </template>
 
 <script>
   export default {
     setup(props) {
-      function addDeleteList() {
+      function Delete() {
         // API將物品還回去之後，將物品從資料中刪除
-        const rowNode = props.params.node;
-        props.params.api.applyTransaction({remove: [rowNode.data]});
-        // alert("hiii")
+
+        //API here
+        AddToInventory();
+        props.params.deleteMaterial(props.params.data)
+        //之後刪掉
+        // const rowNode = props.params.node;
+        // props.params.api.applyTransaction({remove: [rowNode.data]});
+      }
+      async function AddToInventory() {
+        const axios = require('axios');
+        const requestData = {
+          OM_id: props.params.data.OM_id,
+          AssetsId: props.params.data.AssetsId,
+          OM_Number: props.params.data.OM_Number,
+        }
+        try {
+          const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/AddToInventory', requestData);
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('刪除暫存結果:' +data);
+            props.params.deleteMaterial(props.params.data)
+          }
+          else {
+            alert(data.messages);
+          }
+        } catch (error) {
+          console.error(error);
+        }
       }
       return {
-        addDeleteList,
+        Delete,
       }
     }
   }
