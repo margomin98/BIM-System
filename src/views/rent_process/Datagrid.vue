@@ -109,9 +109,9 @@
       const AO_ID = ref('');
       const ProjectName = ref('');
       const Use = ref('');
-      const UseArray = ['內部領用', '借測', '維修', '借測', '出貨', '報廢', '退貨']
+      const UseArray = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨']
       const Status = ref(''); //狀態
-      const StatusArray = ref(['已填報', '已備料', '可交付', '部分交付', '已交付', '審核通過' , '審核不通過' ])
+      const StatusArray = ref(['已填報', '待審核', '待交付', '可交付', '部分交付', '已交付' , '審核不通過' ])
       const DateCategory = ref('');
       const DateCategoryArray = ['申請日期' , '出庫日期' , '備料日期' , '審核日期'];
       const StartDate = ref(''); //申請出庫日期(起)
@@ -121,8 +121,20 @@
             suppressMovable: true,
             field: "",
             cellRenderer: "Rent_process_button",
+            cellRendererParams:{
+              refresh: submit,
+            },
             width: 300,
             resizable: true,
+          },
+          {
+            headerName: "狀態",
+            field: "Status",
+            unSortIcon: true,
+            sortable: true,
+            width: 130,
+            resizable: true,
+            suppressMovable: true
           },
           {
             headerName: "單號",
@@ -154,15 +166,6 @@
           {
             headerName: "用途",
             field: "Use",
-            unSortIcon: true,
-            sortable: true,
-            width: 130,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "狀態",
-            field: "Status",
             unSortIcon: true,
             sortable: true,
             width: 130,
@@ -403,10 +406,15 @@
             .dropdown-menu {
               width: 100%;
               transform: translate3d(-1px, 35px, 0px) !important;
+              max-height: 250px;
+              overflow-y: auto;
               p {
                 font-size: 18px;
                 color: black;
                 font-weight: normal;
+                &:hover {
+                  cursor: pointer;
+                }
               }
             }
           }

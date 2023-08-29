@@ -15,7 +15,7 @@ export default {
   props: ['params'],
   setup(props) {
     const router = useRouter();
-    const search_id = props.params.data.AI_ID;
+    const search_id = props.params.data.AO_ID;
     const isDisabled = ref(false);
 
     onMounted(()=> {
@@ -24,14 +24,14 @@ export default {
     function viewDetails() {
       // console.log(props.params.data.AI_ID);
       if (search_id !== '') {
-        router.push({ name: 'Store_View', query: { search_id } });
+        router.push({ name: 'Assets_View', query: { search_id } });
       }
     }
 
     function viewEdit() {
       // console.log(props.params.data.search_id);
       if (search_id !== '') {
-        router.push({ name: 'Store_Edit', query: { search_id } });
+        router.push({ name: 'Assets_Edit', query: { search_id } });
       }
     }
 

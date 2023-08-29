@@ -106,9 +106,9 @@
       const AO_ID = ref('');
       const ProjectName = ref('');
       const Use = ref('');
-      const UseArray = ['內部領用', '借測', '維修', '借測', '出貨', '報廢', '退貨']
+      const UseArray = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨']
       const Status = ref(''); //狀態
-      const StatusArray = ref(['已填報', '已備料', '可交付', '部分交付', '已交付', '審核通過' , '審核不通過' ])
+      const StatusArray = ref(['已填報', '待審核', '待交付', '可交付', '部分交付', '已交付' , '審核不通過' ])
       const StartDate = ref(''); //申請出庫日期(起)
       const EndDate = ref(''); //申請出庫日期(迄)
       const pageSize = 10;
@@ -118,6 +118,15 @@
             cellRenderer: "Rent_button",
             width: 150,
             resizable: true,
+          },
+          {
+            headerName: "狀態",
+            field: "Status",
+            unSortIcon: true,
+            sortable: true,
+            width: 130,
+            resizable: true,
+            suppressMovable: true
           },
           {
             headerName: "單號",
@@ -150,15 +159,6 @@
           {
             headerName: "用途",
             field: "Use",
-            unSortIcon: true,
-            sortable: true,
-            width: 130,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "狀態",
-            field: "Status",
             unSortIcon: true,
             sortable: true,
             width: 130,

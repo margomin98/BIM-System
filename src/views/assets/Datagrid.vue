@@ -119,7 +119,7 @@
   import {
     AgGridVue
   } from "ag-grid-vue3";
-  import Button from "@/components/Storage_return_button";
+  import Button from "@/components/Assets_return_button";
   import Navbar from "@/components/Navbar.vue";
   export default {
     components: {

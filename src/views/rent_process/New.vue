@@ -161,19 +161,19 @@
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label"><p>備料人員</p></label>
             <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly />
+              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly v-model="details.PreparedPerson"/>
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name"><p>備料完成日期</p></label>
             <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly />
+              <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly v-model="details.PrepareDate"/>
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name"><p>備料備註</p></label>
             <div class="input-group">
-              <textarea placeholder="最多輸入100字" class="form-control" id="inputTextarea" style="height:100%" rows="1" v-model="PrepareMemo"></textarea>
+              <textarea placeholder="最多輸入100字" class="form-control" id="inputTextarea" style="height:100%" rows="1" v-model="details.PrepareMemo"></textarea>
             </div>
           </div>
         </div>
@@ -610,6 +610,13 @@
         }
       }
       async function searchInventory(data_id , data_item_id) {
+        if(searchParams.ProductName) {
+          searchParams.ProductName = searchParams.ProductName.trim();
+        }
+        if(searchParams.ProductName && !/^.{1,20}$/.test(searchParams.ProductName)) {
+          alert('物品名稱不可輸入超過20字')
+          return
+        }
         const axios = require('axios');
         try {
           const form = new FormData();
@@ -648,13 +655,13 @@
       }
 
       async function submit() {
-        if( PrepareMemo.value && !/^.{1,100}$/.test(PrepareMemo.value)) {
+        if( details.value.PrepareMemo && !/^.{1,100}$/.test(details.value.PrepareMemo)) {
           alert('備料備註不可輸入超過100字');
           return
         }
         const requestData = {
           AO_ID: AO_ID,
-          PrepareMemo: PrepareMemo.value,
+          PrepareMemo: details.value.PrepareMemo,
         };
         console.log(requestData);
         try {
@@ -815,6 +822,16 @@
             }
             .dropdown-menu {
               width: 225px;
+              max-height: 250px;
+              overflow-y: auto;
+              p {
+                font-size: 18px;
+                color: black;
+                font-weight: normal;
+                &:hover {
+                  cursor: pointer;
+                }
+              }
               .dropdown-item {
                 text-align: left;
               }

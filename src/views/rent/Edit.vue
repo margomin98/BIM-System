@@ -35,10 +35,9 @@
             <label for="inputWithButton" class="form-label"><p><span>*</span>專案代碼</p></label>
             <div class="input-group">
               <input type="text" class="form-control" id="project_id" placeholder="最多輸入10字" v-model="details.ProjectCode">
-     <button class="btn code_search" type="button" @click="getProjectName">搜索</button>
-                </div>
+              <button class="btn code_search" type="button" @click="getProjectName">搜索</button>
+            </div>
           </div>
-      
           <div class="col d-flex wrap">
             <label for="inputWithTitle" class="form-label" id='project_name'> <p>專案名稱</p></label>
             <div class="input-group" id='readonly_box'>
@@ -64,8 +63,8 @@
             <p><span>*</span>設備總類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                            {{ myForm.EquipTypeName || '請選擇' }}
-                          </button>
+                              {{ myForm.EquipTypeName || '請選擇' }}
+                            </button>
               <div class="dropdown-menu" aria-labelledby="typeDropdown">
                 <p v-for="(item, index) in myForm.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
               </div>
@@ -75,8 +74,8 @@
             <p><span>*</span>設備分類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(myForm.EquipTypeName !== '') }">
-                            {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
-                          </button>
+                              {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
+                            </button>
               <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                 <p v-for="(item, index) in myForm.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
               </div>
@@ -229,7 +228,6 @@
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             rowData.value = data.resultList.ItemList;
-
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -240,7 +238,6 @@
           console.error(error);
         }
       }
-
       async function getEquipTypeName() {
         if (myForm.EquipTypeArray.length == 0) {
           const axios = require('axios');
@@ -426,8 +423,8 @@
         gridApi.value = params.api;
       };
       function updateDeleteList(newValue) {
-      myForm.deleteList.push(newValue);
-    }
+        myForm.deleteList.push(newValue);
+      }
       onMounted(() => {
         getDetails();
       });
@@ -563,13 +560,22 @@
               }
               .dropdown-menu {
                 width: 180px;
+                max-height: 250px;
+                overflow-y: auto;
+                p {
+                  font-size: 18px;
+                  color: black;
+                  font-weight: normal;
+                  &:hover {
+                    cursor: pointer;
+                  }
+                }
                 .dropdown-item {
                   text-align: left;
                 }
               }
             }
             div {
-           
               p {
                 text-align: center;
                 white-space: nowrap;
@@ -578,10 +584,10 @@
                 margin-bottom: 5px;
               }
             }
-            
           }
           .first_row {
-            div:nth-child(1),div:nth-child(3){
+            div:nth-child(1),
+            div:nth-child(3) {
               padding: 0 5px;
             }
           }
@@ -801,7 +807,8 @@
             }
           }
           .first_row {
-            div:nth-child(1),div:nth-child(3){
+            div:nth-child(1),
+            div:nth-child(3) {
               padding: 0 5px;
             }
           }
@@ -882,7 +889,7 @@
         }
         .input-number {
           @include count_btn;
-        width: 100%;
+          width: 100%;
         }
         .form-control {
           height: 100%;
