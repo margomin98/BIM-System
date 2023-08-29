@@ -2,7 +2,7 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>檢視資產</h1>
+      <h1>編輯資產</h1>
     </div>
     <div class="info_wrap col">
       <div class="fixed_title">
@@ -38,44 +38,44 @@
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend">設備總類：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.EquipTypeName" />
+              <div class="input-group-prepend"><span>*</span>設備總類：</div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.EquipTypeName" />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend">設備分類：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.EquipCategoryName" />
+              <div class="input-group-prepend"><span>*</span>設備分類：</div>
+              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.EquipCategoryName" />
             </div>
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend">物品名稱：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AssetName" />
+            <div class="input-group-prepend"><span>*</span>物品名稱：</div>
+            <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.AssetName" />
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">廠商：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.VendorName" />
+            <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.VendorName" />
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">型號：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductType" />
+            <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.ProductType" />
           </div>
           <div class="col">
             <div class="input-group mb-3">
               <div class="input-group-prepend">規格：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductSpec" />
+              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.ProductSpec" />
             </div>
           </div>
           <div class="col">
             <div class="input-group mb-3">
               <div class="input-group-prepend">S/N：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductSpec" />
+              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.ProductSpec" />
             </div>
           </div>
         </div>
@@ -96,14 +96,14 @@
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend">儲位區域：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Count" />
+              <div class="input-group-prepend"><span>*</span>儲位區域：</div>
+              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.Count" />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend">儲位櫃位：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Unit" />
+              <div class="input-group-prepend"><span>*</span>儲位櫃位：</div>
+              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.Unit" />
             </div>
           </div>
         </div>
@@ -113,7 +113,7 @@
               <div class="input-group-prepend">
                 保固期限：
               </div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.WarrantyDate">
+              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.WarrantyDate">
             </div>
           </div>
         </div>
@@ -121,20 +121,20 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">保固開始日：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.WarrantyStartDate" />
+              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.WarrantyStartDate" />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">保固到期日：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.WarrantyEndDate" />
+              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.WarrantyEndDate" />
             </div>
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">備註：</div>
-            <textarea style="height: 150px;" class="form-control readonly_box" aria-label="With textarea" readonly v-model="details.Memo"></textarea>
+            <textarea style="height: 150px;" class="form-control " aria-label="With textarea" v-model="details.Memo"></textarea>
           </div>
         </div>
       </div>
@@ -175,6 +175,9 @@
         </swiper-container>
         <div class="swiper_pagination">
         </div>
+      </div>
+      <div class="col button_wrap">
+        <button class="select_btn">選擇檔案</button>
       </div>
     </div>
     <div class="info_wrap col log">
@@ -563,10 +566,11 @@
     },
   }
 </script>
-
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-
+  span {
+    @include red_star
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .swiper_section {
@@ -605,7 +609,6 @@
         font-weight: 600;
         @include title_color;
       }
-    
       .info_wrap {
         margin: auto;
         width: 800px;
@@ -622,7 +625,6 @@
         }
         .content {
           @include content_bg;
-          
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -652,10 +654,6 @@
             }
           }
         }
-        
-        .content:nth-child(1),.content:nth-child(2){
-          border-radius:0px 10px 10px 10px
-        }
         .button_wrap {
           display: flex;
           margin-top: 30px;
@@ -671,6 +669,13 @@
           }
           button.empty_btn {
             @include empty_btn;
+            &:hover {
+              background-color: #244f86;
+            }
+          }
+          button.select_btn {
+            @include empty_btn;
+            width: 150px;
             &:hover {
               background-color: #244f86;
             }
@@ -703,7 +708,6 @@
           }
         }
       }
-    
       .log {
         .info_wrap {
           width: 100%;
@@ -782,10 +786,9 @@
         font-weight: 600;
         @include title_color;
       }
-    
       .info_wrap {
         margin: auto;
-       padding:0 5%;
+        padding: 0 5%;
         .fixed_info {
           @include fixed_info;
           border-radius: 0 10px 0 0;
@@ -799,7 +802,6 @@
         }
         .content {
           @include content_bg;
-          
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -829,11 +831,10 @@
             }
           }
         }
-        
-        .content:nth-child(1),.content:nth-child(2){
-          border-radius:0px 10px 10px 10px
+        .content:nth-child(1),
+        .content:nth-child(2) {
+          border-radius: 0px 10px 10px 10px
         }
-    
         .button_wrap {
           display: flex;
           margin-top: 30px;
@@ -849,6 +850,13 @@
           }
           button.empty_btn {
             @include empty_btn;
+            &:hover {
+              background-color: #244f86;
+            }
+          }
+          button.select_btn {
+            @include empty_btn;
+            width: 150px;
             &:hover {
               background-color: #244f86;
             }
@@ -881,8 +889,8 @@
           }
         }
       }
-      .info_wrap:nth-child(4) .info_wrap{
-        padding:0;
+      .info_wrap:nth-child(4) .info_wrap {
+        padding: 0;
       }
       .log {
         .info_wrap {
@@ -959,13 +967,11 @@
         font-weight: 600;
         @include title_color;
       }
-
-      .photo{
-        margin:5% auto;
+      .photo {
+        margin: 5% auto;
       }
       .info_wrap {
         padding: 1% 5% 0;
- 
         .fixed_title {
           @include fixed_title;
         }
@@ -974,7 +980,7 @@
           flex-direction: column;
           height: unset;
           padding: 10px;
-          border-radius:0 10px 0 0;
+          border-radius: 0 10px 0 0;
           p {
             font-size: 20px;
             margin-bottom: 0;
@@ -982,8 +988,8 @@
         }
         .content {
           @include content_bg;
-          .row{
-            gap:10px 0;
+          .row {
+            gap: 10px 0;
           }
           .dropdown {
             .dropdown-menu {
@@ -991,7 +997,7 @@
             }
             button {
               @include dropdown-btn;
-              width:100%;
+              width: 100%;
               color: black;
               justify-content: space-between;
               align-items: center;
@@ -999,7 +1005,6 @@
           }
           .input-group {
             flex-direction: column;
-
             .input-number {
               @include count_btn;
             }
@@ -1016,11 +1021,10 @@
               font-size: 20px;
             }
           }
-     
         }
-        
-        .content:nth-child(1),.content:nth-child(2){
-          border-radius:0px 10px 10px 10px
+        .content:nth-child(1),
+        .content:nth-child(2) {
+          border-radius: 0px 10px 10px 10px
         }
         .button_wrap {
           display: flex;
@@ -1031,27 +1035,36 @@
           gap: 20px;
           button.back_btn {
             @include back_to_previous_btn;
-            
             &:hover {
               background-color: #5d85bb;
             }
           }
           button.empty_btn {
             @include empty_btn;
+            padding: 5px;
+            &:hover {
+              background-color: #244f86;
+            }
+          }
+          button.select_btn {
+            @include empty_btn;
+            padding: 5px;
+            width: 140px;
             &:hover {
               background-color: #244f86;
             }
           }
           button.search_btn {
             @include search_and_send_btn;
+            padding: 5px;
             &:hover {
               background-color: #5e7aa2;
             }
           }
         }
       }
-      .info_wrap:nth-child(4) .info_wrap{
-        padding:0;
+      .info_wrap:nth-child(4) .info_wrap {
+        padding: 0;
       }
       .log {
         .info_wrap {

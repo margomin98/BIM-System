@@ -667,7 +667,7 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            padding: 0;
+            padding:5px 10px 0;
             border-bottom: 0
           }
           .wrap {
@@ -975,7 +975,7 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            padding: 0;
+            padding:5px 10px 0;
             border-bottom: 0
           }
           .wrap {

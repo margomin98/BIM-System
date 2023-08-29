@@ -53,7 +53,7 @@
           </div>
         </div>
         <div class="row g-0">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label">
                                                     <p>專案代碼</p>
                                                   </label>
@@ -61,7 +61,7 @@
               <input type="text" class="form-control readonly_box" id="inputWithButton" readonly />
             </div>
           </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex wrap">
+          <div class=" col d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
                                                     <p>專案名稱</p>
                                                   </label>
@@ -834,10 +834,10 @@ padding: 0 5%;
             border-top: 1px solid black;
             align-items: center;
             button {
-              margin: 0 10px;
+              margin: 0 5px;
               border-radius: 7px;
               height: 30px;
-              width: 100px;
+              width: 150px;
               border: none;
               background: #48658c;
               color: white;
@@ -875,12 +875,11 @@ padding: 0 5%;
           .wrap:nth-child(2) {
             border-left: 1px solid black;
             label {
-              width: 100px;
+              width: 150px;
             }
             .input-group {
               border-left: 1px solid black;
               border-right: 1px solid black;
-              gap: 5px;
               display: flex;
               justify-content: center;
               align-items: center;
@@ -891,6 +890,7 @@ padding: 0 5%;
             border-right: 1px solid black;
             #readonly_box {
               border-left: 1px solid black;
+      
             }
           }
           .input-group{
@@ -1114,6 +1114,7 @@ padding: 0 5%;
           }
           .form-control {
             border-radius: 0;
+            border: none;
           }
           #readonly_box {
             background: #b4b4b4;

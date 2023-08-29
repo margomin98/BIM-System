@@ -72,4 +72,7 @@
 		width: 14.5px;
 		margin: 0 2px 5px;
 	}
+	.swiper-button-next {
+    color: pink !important;
+}
 </style>
