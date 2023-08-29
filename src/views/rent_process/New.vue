@@ -591,9 +591,11 @@
             rowData2.value.forEach(item => {
               selectedNumberArray.value[item.OM_List_id] += item.OM_Number;
             });
+            totleNeed.value = 0;
             rowData1.value.forEach(item => {
               totleNeed.value += item.Number;
             });
+            totleSelect.value = 0;
             selectedNumberArray.value.forEach(item => {
               totleSelect.value += item;
             });
