@@ -146,17 +146,17 @@
         </div>
       </div>
       <div class="content">
-        <swiper-container class='swiper_section' :pagination="pagination" :autoHeight="true" :space-between="20" :modules="modules" :breakpoints="{
-                    0: {
-                slidesPerView: 1,
-              },
-              768: {
-                slidesPerView: 3,
-              },
-              1200: {
-                slidesPerView: 3,
-              },
-                            }" @progress="onProgress" @slidechange="onSlideChange">
+        <swiper-container class='swiper_section' :space-between="20" :pagination="pagination" :modules="modules" :breakpoints="{
+                0: {
+            slidesPerView: 1,
+          },
+          768: {
+            slidesPerView: 3,
+          },
+          1200: {
+            slidesPerView: 3,
+          },
+                        }" @progress="onProgress" @slidechange="onSlideChange">
           <swiper-slide>
             <img src="https://www.cityonelimo.com/uploaded_files/seo-flyer/BLOG072202304240720_Remote%20work%20image.jpeg" alt="">
           </swiper-slide>
@@ -183,58 +183,58 @@
           <h4>進出庫歷史紀錄</h4>
         </div>
       </div>
-      <div class="content_wrap">
-        <div class="content">
-          <div class="row">
-            <div class="col-xl-4 col-lg-4 col-md-4 col-6">
-              <p>作業日期(起)</p>
-              <div class="date-selector">
-                <div class="input-container">
-                  <input type="date" v-model="selectedDate" class="date-input" @focus="showDatePicker = true" @blur="showDatePicker = false" />
-                  <div class="date-picker" v-if="showDatePicker">
-                    <datepicker v-model="selectedDate"></datepicker>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-4 col-lg-4 col-md-4 col-6">
-              <p>作業日期(迄)</p>
-              <div class="date-selector">
-                <div class="input-container">
-                  <input type="date" v-model="selectedEndDate" class="date-input" @focus="showEndDatePicker = true" @blur="showEndDatePicker = false" />
-                  <div class="date-picker" v-if="showEndDatePicker">
-                    <datepicker v-model="selectedEndDate"></datepicker>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-4 col-lg-4 col-md-4 col-12">
-              <p>作業行為</p>
-              <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              {{ selectedItem || "請選擇" }}
-                            </button>
-                <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                  <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                  <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+      <div class="content">
+        <div class="row">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-6">
+            <p>作業日期(起)</p>
+            <div class="date-selector">
+              <div class="input-container">
+                <input type="date" v-model="selectedDate" class="date-input" @focus="showDatePicker = true" @blur="showDatePicker = false" />
+                <div class="date-picker" v-if="showDatePicker">
+                  <datepicker v-model="selectedDate"></datepicker>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col button_wrap">
-          <button class="search_btn">檢索</button>
-          <button class="empty_btn">清空</button>
-        </div>
-        <div class="info_wrap">
-          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;margin-bottom:50px" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true"
-            :pagination="true">
-          </ag-grid-vue>
+          <div class="col-xl-4 col-lg-4 col-md-4 col-6">
+            <p>作業日期(迄)</p>
+            <div class="date-selector">
+              <div class="input-container">
+                <input type="date" v-model="selectedEndDate" class="date-input" @focus="showEndDatePicker = true" @blur="showEndDatePicker = false" />
+                <div class="date-picker" v-if="showEndDatePicker">
+                  <datepicker v-model="selectedEndDate"></datepicker>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12">
+            <p>作業行為</p>
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          {{ selectedItem || "請選擇" }}
+                        </button>
+              <div class="dropdown-menu" aria-labelledby="statusDropdown">
+                <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
+                <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col button_wrap">
-        <button class="back_btn" @click="goBack">回上一頁</button>
+        <button class="search_btn">檢索</button>
+        <button class="empty_btn">清空</button>
       </div>
+      <div class="info_wrap">
+      <div style="width: 100%">
+      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;margin-bottom:50px" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true"
+        :pagination="true">
+      </ag-grid-vue>
+    </div>
+    </div>
+      <div class="col button_wrap">
+      <button class="back_btn" @click="goBack">回上一頁</button>
+    </div>
     </div>
   </div>
 </template>
@@ -256,6 +256,8 @@
     useRoute,
     useRouter
   } from "vue-router";
+  import Swiper from 'swiper';
+  import '@/assets/css/swiper-bundle.css';
   import {
     Pagination
   } from 'swiper/modules';
@@ -265,8 +267,15 @@
       Navbar,
       AgGridVue,
       Button,
+      Swiper,
     },
     setup() {
+      const onSwiper = (swiper) => {
+        console.log(swiper);
+      };
+      const onSlideChange = () => {
+        console.log('slide change');
+      };
       const route = useRoute();
       const router = useRouter();
       const AI_ID = route.query.search_id;
@@ -439,7 +448,10 @@
         goBack,
         deliveryDate,
         details,
+        onSwiper,
+        onSlideChange,
         pagination: {
+          el: '.swiper_pagination', // Use the class name of the pagination div
           clickable: true,
         },
         modules: [Pagination],
@@ -448,6 +460,7 @@
             field: "",
             cellRenderer: "Button",
             width: '100',
+
           },
           {
             headerName: "作業日期",
@@ -471,7 +484,7 @@
             unSortIcon: true,
             sortable: true,
             width: '300',
-            resizable: true,
+            resizable:true,
             suppressMovable: true
           },
           {
@@ -560,27 +573,37 @@
         ],
       }
     },
+    mounted() {
+      this.swiper = new Swiper('.swiper-container', {
+        // Swiper configuration options
+        pagination: {
+          el: '.swiper_pagination',
+        },
+      });
+    },
+    beforeDestroy() {
+      if (this.swiper) {
+        this.swiper.destroy();
+      }
+    },
   }
 </script>
 
-
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-  .swiper-button-next {
-    color: pink;
+  .swiper_section {
+    height: 300px;
+    swiper-slide {
+      display: flex;
+      align-items: center;
+    }
+    swiper-slide img {
+      width: 100%;
+      margin: auto;
+    }
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
-      .swiper_section {
-        swiper-slide {
-          align-self: baseline;
-        }
-        swiper-slide img {
-          width: 100%;
-          height: auto;
-          padding: 40px 0;
-        }
-      }
       .readonly_box {
         @include readonly_box;
       }
@@ -591,6 +614,7 @@
         font-weight: 600;
         @include title_color;
       }
+    
       .info_wrap {
         margin: auto;
         width: 800px;
@@ -607,6 +631,7 @@
         }
         .content {
           @include content_bg;
+          
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -635,6 +660,10 @@
               text-align: end;
             }
           }
+        }
+        
+        .content:nth-child(1),.content:nth-child(2){
+          border-radius:0px 10px 10px 10px
         }
         .button_wrap {
           display: flex;
@@ -683,58 +712,29 @@
           }
         }
       }
+    
       .log {
-        .info_wrap {
-          width: 100%;
-          #grid_table {
-            margin-bottom: 0 !important;
-          }
+        p {
+          @include datagrid_title;
         }
-        .content_wrap {
-          background-color: #E6EAEC;
-          border-radius: 0 10px 10px 10px;
-          padding: 20px;
-          box-shadow: 6px 2px 6px 2px rgba(0, 0, 0, 0.25);
-          .content {
-            border-radius: 10px;
-          }
-          p {
-            @include datagrid_title;
-          }
-          input {
-            display: flex;
-            border: none;
-            border-radius: 5px;
-            background-color: white;
-            padding: 5px 10px;
-            font-size: 18px;
-            width: 200px;
-            height: 35px;
-          }
+        input {
+          display: flex;
+          border: none;
+          border-radius: 5px;
+          background-color: white;
+          padding: 5px 10px;
+          font-size: 18px;
+          width: 200px;
+          height: 35px;
         }
       }
       .photo {
-        .content {
-          border-radius: 0 10px 10px 10px;
-          box-shadow: 6px 2px 6px 2px rgba(0, 0, 0, 0.25);
-          background-color: #e5e8e9;
-        }
         margin: 5% auto;
       }
     }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
-      .swiper_section {
-        swiper-slide {
-          align-self: baseline;
-        }
-        swiper-slide img {
-          width: 100%;
-          height: auto;
-          padding: 40px 0;
-        }
-      }
       .readonly_box {
         @include readonly_box;
       }
@@ -745,9 +745,10 @@
         font-weight: 600;
         @include title_color;
       }
+    
       .info_wrap {
         margin: auto;
-        padding: 0 5%;
+       padding:0 5%;
         .fixed_info {
           @include fixed_info;
           border-radius: 0 10px 0 0;
@@ -761,6 +762,7 @@
         }
         .content {
           @include content_bg;
+          
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -790,10 +792,11 @@
             }
           }
         }
-        .content:nth-child(1),
-        .content:nth-child(2) {
-          border-radius: 0px 10px 10px 10px
+        
+        .content:nth-child(1),.content:nth-child(2){
+          border-radius:0px 10px 10px 10px
         }
+    
         .button_wrap {
           display: flex;
           margin-top: 30px;
@@ -841,56 +844,31 @@
           }
         }
       }
-      .info_wrap:nth-child(4) .info_wrap {
-        padding: 0;
+      .info_wrap:nth-child(4) .info_wrap{
+        padding:0;
       }
       .log {
-        .info_wrap {
-          width: 100%;
-          #grid_table {
-            margin-bottom: 0 !important;
-          }
+        p {
+          @include datagrid_title;
         }
-        .content_wrap {
-          background-color: #E6EAEC;
-          border-radius: 0 10px 10px 10px;
-          padding: 20px;
-          box-shadow: 6px 2px 6px 2px rgba(0, 0, 0, 0.25);
-          .content {
-            border-radius: 10px;
-          }
-          p {
-            @include datagrid_title;
-          }
-          input {
-            display: flex;
-            border: none;
-            border-radius: 5px;
-            background-color: white;
-            padding: 5px 10px;
-            font-size: 18px;
-            width: 200px;
-            height: 35px;
-          }
+        input {
+          display: flex;
+          border: none;
+          border-radius: 5px;
+          background-color: white;
+          padding: 5px 10px;
+          font-size: 18px;
+          width: 200px;
+          height: 35px;
         }
       }
       .photo {
-        .content {
-          border-radius: 0 10px 10px 10px;
-          box-shadow: 6px 2px 6px 2px rgba(0, 0, 0, 0.25);
-          background-color: #e5e8e9;
-        }
         margin: 5% auto;
       }
     }
   }
   @media only screen and (max-width: 767px) {
     .main_section {
-      .swiper_section swiper-slide img {
-        width: 100%;
-        height: auto;
-        padding: 40px;
-      }
       .readonly_box {
         @include readonly_box;
       }
@@ -901,11 +879,13 @@
         font-weight: 600;
         @include title_color;
       }
-      .photo {
-        margin: 5% auto;
+
+      .photo{
+        margin:5% auto;
       }
       .info_wrap {
         padding: 1% 5% 0;
+ 
         .fixed_title {
           @include fixed_title;
         }
@@ -914,7 +894,7 @@
           flex-direction: column;
           height: unset;
           padding: 10px;
-          border-radius: 0 10px 0 0;
+          border-radius:0 10px 0 0;
           p {
             font-size: 20px;
             margin-bottom: 0;
@@ -922,8 +902,8 @@
         }
         .content {
           @include content_bg;
-          .row {
-            gap: 10px 0;
+          .row{
+            gap:10px 0;
           }
           .dropdown {
             .dropdown-menu {
@@ -931,7 +911,7 @@
             }
             button {
               @include dropdown-btn;
-              width: 100%;
+              width:100%;
               color: black;
               justify-content: space-between;
               align-items: center;
@@ -939,6 +919,7 @@
           }
           .input-group {
             flex-direction: column;
+
             .input-number {
               @include count_btn;
             }
@@ -955,10 +936,11 @@
               font-size: 20px;
             }
           }
+     
         }
-        .content:nth-child(1),
-        .content:nth-child(2) {
-          border-radius: 0px 10px 10px 10px
+        
+        .content:nth-child(1),.content:nth-child(2){
+          border-radius:0px 10px 10px 10px
         }
         .button_wrap {
           display: flex;
@@ -969,67 +951,42 @@
           gap: 20px;
           button.back_btn {
             @include back_to_previous_btn;
+            
             &:hover {
               background-color: #5d85bb;
             }
           }
           button.empty_btn {
             @include empty_btn;
-            padding: 5px;
             &:hover {
               background-color: #244f86;
             }
           }
           button.search_btn {
             @include search_and_send_btn;
-            padding: 5px;
             &:hover {
               background-color: #5e7aa2;
             }
           }
         }
       }
-      .info_wrap:nth-child(4) .info_wrap {
-        padding: 0;
+      .info_wrap:nth-child(4) .info_wrap{
+        padding:0;
       }
       .log {
-        .info_wrap {
-          width: 100%;
-          #grid_table {
-            margin-bottom: 0 !important;
-          }
+        p {
+          @include datagrid_title;
         }
-        .content_wrap {
-          background-color: #E6EAEC;
-          border-radius: 0 10px 10px 10px;
-          padding: 20px;
-          box-shadow: 6px 2px 6px 2px rgba(0, 0, 0, 0.25);
-          .content {
-            border-radius: 10px;
-          }
-          p {
-            @include datagrid_title;
-          }
-          input {
-            display: flex;
-            border: none;
-            border-radius: 5px;
-            background-color: white;
-            padding: 5px 10px;
-            font-size: 18px;
-            width: 100%;
-            height: 35px;
-          }
+        input {
+          display: flex;
+          border: none;
+          border-radius: 5px;
+          background-color: white;
+          padding: 5px 10px;
+          font-size: 18px;
+          width:100% 
         }
-      }
-      .photo {
-        .content {
-          padding: 0;
-          border-radius: 0 10px 10px 10px;
-          box-shadow: 6px 2px 6px 2px rgba(0, 0, 0, 0.25);
-          background-color: #e5e8e9;
-        }
-        margin: 5% auto;
+
       }
     }
   }
