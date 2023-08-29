@@ -145,10 +145,10 @@
       </div>
       <div class="fixed_info_count">
         <div>
-          <p>總出庫數量：10個</p>
+          <p>總出庫數量：{{ totleNeed}}個</p>
         </div>
         <div>
-          <p>已備數量: 6個</p>
+          <p>已備數量: {{ totleSelect}}個</p>
         </div>
       </div>
       <div class='fourth_content'>
@@ -173,7 +173,7 @@
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name"><p>備料備註</p></label>
             <div class="input-group">
-              <textarea placeholder="最多100字" class="form-control" id="inputTextarea" style="height:100%" rows="1"></textarea>
+              <textarea placeholder="最多輸入100字" class="form-control" id="inputTextarea" style="height:100%" rows="1" v-model="PrepareMemo"></textarea>
             </div>
           </div>
         </div>
@@ -223,7 +223,10 @@
       const options = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨'];
       const gridApi2 = ref(null);
       const gridApi3 = ref(null);
-      const selectedNumberArray = ref([]);
+      const selectedNumberArray = ref([]);//紀錄不同項目已選數量array
+      const totleNeed = ref(0);//總所需數量
+      const totleSelect = ref(0);//總已備數量
+      const PrepareMemo = ref('');
       const searchParams = reactive({
         EquipTypeName: '',
         EquipTypeArray: [],
@@ -236,9 +239,6 @@
         id: 1,
         item_id: '',
         selectedNumber: 0,
-      });
-      onMounted(() => {
-        getDetails();
       });
       const columnDefs1 = [{
           suppressMovable: true,
@@ -333,7 +333,7 @@
         {
           suppressMovable: true,
           headerName: "項目",
-          field: "id",
+          field: "OM_List_id",
           unSortIcon: true,
           sortable: true,
           width: 100,
@@ -342,15 +342,6 @@
         {
           headerName: "數量",
           field: "OM_Number",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "選擇數量",
-          field: "selectNumber",
           unSortIcon: true,
           sortable: true,
           width: 100,
@@ -444,17 +435,13 @@
               // 2. 正常執行
               return true;
             },
-            addMaterial: data => {
+            addMaterial: (data) => {
                 selectedNumberArray.value[data.id] += data.selectNumber
                 searchParams.selectedNumber = selectedNumberArray.value[data.id]
                 // searchInventory刷新庫存數量
                 searchInventory(searchParams.id , searchParams.item_id);
                 // getDetail刷新rowData1、2
                 getDetails();
-                // rowData2.value.push(data);
-                // setTimeout(() => {
-                //   gridApi2.value.setRowData(rowData2.value);
-                // }, 50);
             },
           },
           width: 75,
@@ -470,15 +457,6 @@
           suppressMovable: true,
           resizable: true,
         },
-        // {
-        //   headerName: "所選數量",
-        //   field: "selectNumber",
-        //   unSortIcon: true,
-        //   sortable: true,
-        //   width: 100,
-        //   suppressMovable: true,
-        //   resizable: true,
-        // },
         {
           headerName: "單位",
           field: "OM_Unit",
@@ -555,6 +533,9 @@
       const rowData1 = ref([]);
       const rowData2 = ref([]);
       const rowData3 = ref([]);
+      onMounted(() => {
+        getDetails();
+      });
       async function getEquipTypeName() {
         if (searchParams.EquipTypeArray.length == 0) {
           const axios = require('axios');
@@ -598,13 +579,24 @@
           const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
           const data = response.data;
           if (data.state === 'success') {
-            // console.log('Details Get成功 資料如下\n', data.resultList);
+            console.log('getDetails 成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             rowData1.value = data.resultList.ItemList;
             rowData2.value = data.resultList.OM_List;
+            // 初始化已選數量array(從1開始)
             for(let i =1; i<=rowData1.value.length ; i++) {
               selectedNumberArray.value[i]= 0;
             }
+            // 遍歷OM_list 將已選數量疊加上去
+            rowData2.value.forEach(item => {
+              selectedNumberArray.value[item.OM_List_id] += item.OM_Number;
+            });
+            rowData1.value.forEach(item => {
+              totleNeed.value += item.Number;
+            });
+            selectedNumberArray.value.forEach(item => {
+              totleSelect.value += item;
+            });
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -653,8 +645,33 @@
         searchParams.EquipCategoryName = item;
       }
 
-      function addDeleteListFunction() {
-        
+      async function submit() {
+        if( PrepareMemo.value && !/^.{1,100}$/.test(PrepareMemo.value)) {
+          alert('備料備註不可輸入超過100字');
+          return
+        }
+        const requestData = {
+          AO_ID: AO_ID,
+          PrepareMemo: PrepareMemo.value,
+        };
+        console.log(requestData);
+        try {
+          const axios = require('axios');
+          const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/MaterialPreparation', requestData);
+          const data = response.data;
+          if (data.state === 'success') {
+            let msg = data.messages + '\n';
+            msg += '單號為:' + data.resultList.AO_ID;
+            alert(msg);
+            router.push({
+              name: 'Rent_Process_Datagrid'
+            });
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          }
+        } catch (error) {
+          console.error(error);
+        }
       }
       const onGridReady2 = (params) => {
         gridApi2.value = params.api;
@@ -675,10 +692,14 @@
         rowData1,
         rowData2,
         rowData3,
+        totleNeed,
+        totleSelect,
+        PrepareMemo,
         getEquipTypeName,
         selectType,
         selectCategory,
         searchInventory,
+        submit,
         onGridReady2,
         onGridReady3,
         goBack,
