@@ -16,60 +16,48 @@
               <div class='col-xl-3 col-lg-3 col-md-3 col-12' style='padding-left:0'>
                 <p>設備總類</p>
                 <div class="dropdown">
-                  <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                  {{ selectedItem || "請選擇" }}
-                                                                </button>
-                  <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                    <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                    <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+                  <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
+                      {{ searchParams.EquipTypeName || '請選擇' }}
+                    </button>
+                  <div class="dropdown-menu" aria-labelledby="typeDropdown">
+                    <p v-for="(item, index) in searchParams.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
                   </div>
                 </div>
               </div>
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
                 <p>設備分類</p>
                 <div class="dropdown">
-                  <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                  {{ selectedItem || "請選擇" }}
-                                                                </button>
-                  <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                    <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                    <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+                  <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
+                      {{ searchParams.EquipCategoryName || searchParams.EquipCategoryInit }}
+                    </button>
+                  <div class="dropdown-menu" aria-labelledby="categoryDropdown">
+                    <p v-for="(item, index) in searchParams.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
                   </div>
                 </div>
               </div>
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
                 <p>物品名稱</p>
-                <div class="dropdown">
-                  <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                  {{ selectedItem || "請選擇" }}
-                                                                </button>
-                  <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                    <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                    <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
-                  </div>
+                <div class="number-input-box">
+                  <input class="input-number" type="text" placeholder="最多輸入20字" v-model="searchParams.ProductName" />
                 </div>
               </div>
               <div class="col-xl-3 col-lg-3 col-md-3 col-12">
                 <p>數量 <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"></p>
                 <div class="number-input-box">
-                  <input class="input-number readonly_box" readonly />
+                  <input class="input-number readonly_box" readonly v-model="searchParams.Number" />
                 </div>
               </div>
             </div>
             <div class="row g-0">
               <div class="col-12 d-flex wrap2">
-                <label for="inputTextarea" class="form-label">
-                                                          <p>
-                                                          規格需求：
-                                                          </p>
-                                                          </label>
+                <label for="inputTextarea" class="form-label"><p>規格需求：</p></label>
                 <div>
                 </div>
-                <textarea class="form-control readonly_box" id="inputTextarea" rows="3" readonly></textarea>
+                <textarea class="form-control readonly_box" id="inputTextarea" rows="3" readonly>{{ searchParams.RequiredSpec }}</textarea>
               </div>
             </div>
             <div class='col d-flex justify-content-center'>
-              <button class="btn submit_btn" type="button">搜尋庫存</button>
+              <button class="btn submit_btn" type="button" @click="searchInventory">搜尋庫存</button>
             </div>
           </div>
           <div class="fixed_info">
@@ -77,7 +65,7 @@
               <p>目前資產庫存</p>
             </div>
           </div>
-          <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs3" :rowData="rowData3" :paginationAutoPageSize="true">
+          <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="50" :columnDefs="columnDefs3" :rowData="rowData3" :paginationAutoPageSize="true" @grid-ready="onGridReady3">
           </ag-grid-vue>
         </div>
       </div>
@@ -117,7 +105,7 @@
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label"><p>專案代碼</p></label>
             <div class="input-group" id='readonly_box'>
-              <p class='readonly_box' readonly> {{  details.ProjectCode }}</p>
+              <p class='readonly_box' readonly> {{ details.ProjectCode }}</p>
             </div>
           </div>
           <div class="col d-flex wrap">
@@ -145,14 +133,14 @@
         <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :paginationAutoPageSize="true">
         </ag-grid-vue>
       </div>
-      <modal-overlay v-if="modalVisible" @close="closeModal" />
+      <!-- <modal-overlay v-if="modalVisible" @close="closeModal" /> -->
       <div class="fixed_info">
         <div>
           <p>資產出庫細項</p>
         </div>
       </div>
       <div class="third_content">
-        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs2" :rowData="rowData2" :paginationAutoPageSize="true">
+        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs2" :rowData="rowData2" :paginationAutoPageSize="true" @grid-ready="onGridReady2">
         </ag-grid-vue>
       </div>
       <div class="fixed_info_count">
@@ -205,13 +193,18 @@
   import Storage_button from "@/components/Storage_button";
   import Storage_view from "@/components/Storage_list_view_button";
   import Storage_add from "@/components/Storage_add_button";
+  import Storage_number from "@/components/Storage_number_input"
   import Delete_button from "@/components/Delete_button";
   import Navbar from "@/components/Navbar.vue";
   import {
     onMounted,
-    ref
+    ref,
+    reactive,
   } from "vue";
-import { useRoute, useRouter } from "vue-router";
+  import {
+    useRoute,
+    useRouter
+  } from "vue-router";
   export default {
     components: {
       Navbar,
@@ -219,7 +212,8 @@ import { useRoute, useRouter } from "vue-router";
       Storage_button,
       Delete_button,
       Storage_view,
-      Storage_add
+      Storage_add,
+      Storage_number,
     },
     setup() {
       const route = useRoute();
@@ -227,16 +221,31 @@ import { useRoute, useRouter } from "vue-router";
       const AO_ID = route.query.search_id;
       const details = ref({});
       const options = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨'];
-      onMounted(()=>{
+      const gridApi2 = ref(null);
+      const gridApi3 = ref(null);
+      const searchParams = reactive({
+        EquipTypeName: '',
+        EquipTypeArray: [],
+        EquipCategoryName: '',
+        EquipCategoryArray: [],
+        EquipCategoryInit: '請先選擇設備總類',
+        ProductName: '',
+        Number: 1,
+        RequiredSpec: '',
+      });
+      onMounted(() => {
         getDetails();
       });
       const columnDefs1 = [{
           suppressMovable: true,
           field: "",
           cellRenderer: "Storage_button",
+          cellRendererParams: {
+            searchList: searchListFunction,
+          },
           width: 115,
           resizable: true,
-        }, 
+        },
         {
           suppressMovable: true,
           headerName: "項目",
@@ -293,203 +302,248 @@ import { useRoute, useRouter } from "vue-router";
         }
       ]
       const columnDefs2 = [{
-        suppressMovable: true,
-        field: "",
-        cellRenderer: "Delete_button",
-        width: 100,
-        resizable: true,
-      },
-      {
-        headerName: "資產編號",
-        field: "AssetsId",
-        unSortIcon: true,
-        sortable: true,
-        width: 150,
-        suppressMovable: true,
-        resizable: true,
-      },
-      {
-        headerName: "物品名稱",
-        field: "AssetName",
-        unSortIcon: true,
-        sortable: true,
-        width: 150,
-        suppressMovable: true,
-        resizable: true,
-      },
-      {
-        headerName: "儲位區域",
-        field: "AreaName",
-        unSortIcon: true,
-        sortable: true,
-        width: 150,
-        suppressMovable: true,
-        resizable: true,
-      },
-      {
-        headerName: "儲位櫃位",
-        field: "LayerName",
-        unSortIcon: true,
-        sortable: true,
-        width: 150,
-        suppressMovable: true,
-        resizable: true,
-      },
-      {
-        headerName: "廠商",
-        field: "VendorName",
-        unSortIcon: true,
-        sortable: true,
-        width: 150,
-        suppressMovable: true,
-        resizable: true,
-      },
-      {
-        headerName: "型號",
-        field: "ProductType",
-        unSortIcon: true,
-        sortable: true,
-        width: 150,
-        suppressMovable: true,
-        resizable: true,
-      },
-      {
-        headerName: "規格",
-        field: "ProductSpec",
-        unSortIcon: true,
-        sortable: true,
-        width: 150,
-        suppressMovable: true,
-        resizable: true,
-      },
-      {
-        headerName: "數量",
-        field: "OM_Number",
-        unSortIcon: true,
-        sortable: true,
-        width: 100,
-        suppressMovable: true,
-        resizable: true,
-      },
-      {
-        headerName: "單位",
-        field: "OM_Unit",
-        unSortIcon: true,
-        sortable: true,
-        width: 100,
-        suppressMovable: true,
-        resizable: true,
-      },
-      {
-        headerName: "備註",
-        field: "model",
-        unSortIcon: true,
-        sortable: true,
-        width: 100,
-        suppressMovable: true,
-        resizable: true,
-      },
+          suppressMovable: true,
+          field: "",
+          cellRenderer: "Delete_button",
+          width: 100,
+          resizable: true,
+        },
+        {
+          headerName: "所選數量",
+          field: "selectNumber",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
+          headerName: "資產編號",
+          field: "AssetsId",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
+          headerName: "物品名稱",
+          field: "AssetName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
+          headerName: "儲位區域",
+          field: "AreaName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
+          headerName: "儲位櫃位",
+          field: "LayerName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
+          headerName: "廠商",
+          field: "VendorName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
+          headerName: "型號",
+          field: "ProductType",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
+          headerName: "規格",
+          field: "ProductSpec",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
+          headerName: "數量",
+          field: "OM_Number",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
+          headerName: "單位",
+          field: "OM_Unit",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          suppressMovable: true,
+          resizable: true,
+        },
       ]
       const columnDefs3 = [{
-        suppressMovable: true,
-        field: "",
-        cellRenderer: "Storage_add",
-        width: 75
-      },
-      {
-        headerName: "資產編號",
-        field: "AssetsId",
-        unSortIcon: true,
-        sortable: true,
-        width: 150,
-        suppressMovable: true,
-        resizable: true,
-      },
-      {
-        headerName: "物品名稱",
-        field: "AssetName",
-        unSortIcon: true,
-        sortable: true,
-        width: 150,
-        suppressMovable: true,
-        resizable: true,
-      },
-      {
-        headerName: "儲位區域",
-        field: "AreaName",
-        unSortIcon: true,
-        sortable: true,
-        width: 150,
-        suppressMovable: true,
-        resizable: true,
-      },
-      {
-        headerName: "儲位櫃位",
-        field: "LayerName",
-        unSortIcon: true,
-        sortable: true,
-        width: 150,
-        suppressMovable: true,
-        resizable: true,
-      },
-      {
-        headerName: "廠商",
-        field: "VendorName",
-        unSortIcon: true,
-        sortable: true,
-        width: 150,
-        suppressMovable: true,
-        resizable: true,
-      },
-      {
-        headerName: "型號",
-        field: "ProductType",
-        unSortIcon: true,
-        sortable: true,
-        width: 150,
-        suppressMovable: true,
-        resizable: true,
-      },
-      {
-        headerName: "規格",
-        field: "ProductSpec",
-        unSortIcon: true,
-        sortable: true,
-        width: 150,
-        suppressMovable: true,
-        resizable: true,
-      },
-      {
-        headerName: "數量",
-        field: "OM_Number",
-        unSortIcon: true,
-        sortable: true,
-        width: 100,
-        suppressMovable: true,
-        resizable: true,
-      },
-      {
-        headerName: "單位",
-        field: "OM_Unit",
-        unSortIcon: true,
-        sortable: true,
-        width: 100,
-        suppressMovable: true,
-        resizable: true,
-      },
-      {
-        headerName: "備註",
-        field: "model",
-        unSortIcon: true,
-        sortable: true,
-        width: 100,
-        suppressMovable: true,
-        resizable: true,
-      },
+          suppressMovable: true,
+          field: "",
+          cellRenderer: "Storage_add",
+          cellRendererParams: {
+            addMaterial: addMaterialData,
+          },
+          width: 75,
+          resizable: true,
+        },
+        {
+          headerName: "數量",
+          field: "OM_Number",
+          cellRenderer: "Storage_number",
+          cellRendererParams: {
+            updateNumber: updateNumberFunction,
+          },
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
+          headerName: "所選數量",
+          field: "selectNumber",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
+          headerName: "單位",
+          field: "OM_Unit",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
+          headerName: "資產編號",
+          field: "AssetsId",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
+          headerName: "物品名稱",
+          field: "AssetName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
+          headerName: "儲位區域",
+          field: "AreaName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
+          headerName: "儲位櫃位",
+          field: "LayerName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
+          headerName: "廠商",
+          field: "VendorName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
+          headerName: "型號",
+          field: "ProductType",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
+          headerName: "規格",
+          field: "ProductSpec",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true,
+          resizable: true,
+        },
       ]
       const rowData1 = ref([]);
       const rowData2 = ref([]);
       const rowData3 = ref([]);
+      async function getEquipTypeName() {
+        if (searchParams.EquipTypeArray.length == 0) {
+          const axios = require('axios');
+          try {
+            const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetEquipType');
+            const data = response.data;
+            if (data.state === 'success') {
+              searchParams.EquipTypeArray = data.resultList.EquipType;
+            } else if (data.state === 'error') {
+              alert(data.messages);
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            }
+          } catch (error) {
+            console.error('Error sending applicant info request to backend');
+          }
+        }
+      }
+      async function getEquipCategoryName() {
+        searchParams.EquipCategoryName = '';
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${searchParams.EquipTypeName}`);
+          const data = response.data;
+          if (data.state === 'success') {
+            searchParams.EquipCategoryArray = data.resultList.EquipCategory;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error('Error sending applicant info request to backend', error);
+        }
+      }
       async function getDetails() {
         const axios = require('axios');
         try {
@@ -510,20 +564,83 @@ import { useRoute, useRouter } from "vue-router";
           console.error(error);
         }
       }
+      async function searchInventory() {
+        const axios = require('axios');
+        try {
+          const form = new FormData();
+          form.append('EquipTypeName', searchParams.EquipTypeName);
+          form.append('EquipCategoryName', searchParams.EquipCategoryName);
+          form.append('ProductName', searchParams.ProductName);
+          const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/SearchInventory', form);
+          const data = response.data;
+          if (data.state === 'success') {
+            // console.log('Details Get成功 資料如下\n', data.resultList);
+            rowData3.value = data.resultList.map(item => ({
+              ...item,
+              selectNumber: 1
+            }));
+            console.log(rowData3.value);
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      function selectType(item) {
+        searchParams.EquipTypeName = item;
+        // console.log('選擇的總類:', EquipTypeName.value);
+        getEquipCategoryName();
+        searchParams.EquipCategoryInit = '請選擇';
+      }
+      function selectCategory(item) {
+        searchParams.EquipCategoryName = item;
+      }
+      function searchListFunction(data) {
+        console.log(data);
+        searchParams.EquipTypeName = data.EquipTypeName;
+        getEquipCategoryName();
+        searchParams.EquipCategoryName = data.EquipCategoryName;
+        searchParams.Number = data.Number;
+        searchParams.RequiredSpec = data.RequiredSpec;
+        searchInventory();
+      }
+      function updateNumberFunction(data) {
+        gridApi3.value.setRowData
+      }
+      function addMaterialData(data) {
+        rowData2.value.push(data);
+        gridApi2.value.setRowData(rowData2.value);
+      }
+      const onGridReady2 = (params) => {
+        gridApi2.value = params.api;
+      };
+      const onGridReady3 = (params) => {
+        gridApi3.value = params.api;
+      };
       return {
+        details,
+        options,
+        searchParams,
         columnDefs1,
         columnDefs2,
         columnDefs3,
         rowData1,
         rowData2,
         rowData3,
-        details,
-        options,
+        getEquipTypeName,
+        selectType,
+        selectCategory,
+        searchInventory,
+        onGridReady2,
+        onGridReady3,
       };
     },
     data() {
       return {
-        count: 1,
         rowHeight: 35,
       };
     },
