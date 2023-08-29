@@ -2,7 +2,7 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>檢視資產</h1>
+      <h1>編輯資產</h1>
     </div>
     <div class="info_wrap col">
       <div class="fixed_title">
@@ -38,44 +38,44 @@
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend">設備總類：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.EquipTypeName" />
+              <div class="input-group-prepend"><span>*</span>設備總類：</div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.EquipTypeName" />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend">設備分類：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.EquipCategoryName" />
+              <div class="input-group-prepend"><span>*</span>設備分類：</div>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.EquipCategoryName" />
             </div>
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend">物品名稱：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AssetName" />
+            <div class="input-group-prepend"><span>*</span>物品名稱：</div>
+            <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.AssetName" />
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">廠商：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.VendorName" />
+            <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.VendorName" />
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">型號：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductType" />
+            <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.ProductType" />
           </div>
           <div class="col">
             <div class="input-group mb-3">
               <div class="input-group-prepend">規格：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductSpec" />
+              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.ProductSpec" />
             </div>
           </div>
           <div class="col">
             <div class="input-group mb-3">
               <div class="input-group-prepend">S/N：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductSpec" />
+              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.ProductSpec" />
             </div>
           </div>
         </div>
@@ -96,14 +96,14 @@
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend">儲位區域：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Count" />
+              <div class="input-group-prepend"><span>*</span>儲位區域：</div>
+              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.Count" />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend">儲位櫃位：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Unit" />
+              <div class="input-group-prepend"><span>*</span>儲位櫃位：</div>
+              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.Unit" />
             </div>
           </div>
         </div>
@@ -113,7 +113,7 @@
               <div class="input-group-prepend">
                 保固期限：
               </div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.WarrantyDate">
+              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.WarrantyDate">
             </div>
           </div>
         </div>
@@ -121,20 +121,20 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">保固開始日：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.WarrantyStartDate" />
+              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.WarrantyStartDate" />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">保固到期日：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.WarrantyEndDate" />
+              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.WarrantyEndDate" />
             </div>
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">備註：</div>
-            <textarea style="height: 150px;" class="form-control readonly_box" aria-label="With textarea" readonly v-model="details.Memo"></textarea>
+            <textarea style="height: 150px;" class="form-control " aria-label="With textarea" v-model="details.Memo"></textarea>
           </div>
         </div>
       </div>
@@ -146,7 +146,7 @@
         </div>
       </div>
       <div class="content">
-        <swiper-container class='swiper_section' :pagination="pagination" :autoHeight="true" :space-between="20" :modules="modules" :breakpoints="{
+        <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{
                     0: {
                 slidesPerView: 1,
               },
@@ -157,24 +157,27 @@
                 slidesPerView: 3,
               },
                             }" @progress="onProgress" @slidechange="onSlideChange">
-          <swiper-slide>
+          <swiper-slide class="custom-slide">
             <img src="https://www.cityonelimo.com/uploaded_files/seo-flyer/BLOG072202304240720_Remote%20work%20image.jpeg" alt="">
           </swiper-slide>
-          <swiper-slide>
+          <swiper-slide class="custom-slide">
             <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Sun_Down_%28250260941%29.jpeg" alt="">
           </swiper-slide>
-          <swiper-slide>
+          <swiper-slide class="custom-slide">
             <img src="https://www.cityonelimo.com/uploaded_files/seo-flyer/BLOG072202304240720_Remote%20work%20image.jpeg" alt="">
           </swiper-slide>
-          <swiper-slide>
+          <swiper-slide class="custom-slide">
             <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Sun_Down_%28250260941%29.jpeg" alt="">
           </swiper-slide>
-          <swiper-slide>
+          <swiper-slide class="custom-slide">
             <img src="https://static01.nyt.com/images/2021/01/17/fashion/13workathome/13workathome-superJumbo.jpg" alt="">
           </swiper-slide>
         </swiper-container>
         <div class="swiper_pagination">
         </div>
+      </div>
+      <div class="col button_wrap">
+        <button class="select_btn">選擇檔案</button>
       </div>
     </div>
     <div class="info_wrap col log">
@@ -256,6 +259,7 @@
     useRoute,
     useRouter
   } from "vue-router";
+  import Swiper from 'swiper';
   import {
     Pagination
   } from 'swiper/modules';
@@ -562,18 +566,32 @@
     },
   }
 </script>
-
-
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-  .swiper-button-next {
-    color: pink;
+  span {
+    @include red_star
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .swiper_section {
         swiper-slide {
           align-self: baseline;
+          &::after {
+            cursor: pointer;
+            content: "x";
+            position: absolute;
+            top: 25px;
+            right: -14px;
+            background: #E94B4B;
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: 700;
+          }
         }
         swiper-slide img {
           width: 100%;
@@ -655,6 +673,13 @@
               background-color: #244f86;
             }
           }
+          button.select_btn {
+            @include empty_btn;
+            width: 150px;
+            &:hover {
+              background-color: #244f86;
+            }
+          }
           button.search_btn {
             @include search_and_send_btn;
             &:hover {
@@ -728,6 +753,22 @@
       .swiper_section {
         swiper-slide {
           align-self: baseline;
+          &::after {
+            cursor: pointer;
+            content: "x";
+            position: absolute;
+            top: 25px;
+            right: -14px;
+            background: #E94B4B;
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: 700;
+          }
         }
         swiper-slide img {
           width: 100%;
@@ -813,6 +854,13 @@
               background-color: #244f86;
             }
           }
+          button.select_btn {
+            @include empty_btn;
+            width: 150px;
+            &:hover {
+              background-color: #244f86;
+            }
+          }
           button.search_btn {
             @include search_and_send_btn;
             &:hover {
@@ -886,10 +934,28 @@
   }
   @media only screen and (max-width: 767px) {
     .main_section {
-      .swiper_section swiper-slide img {
-        width: 100%;
-        height: auto;
-        padding: 40px;
+      .swiper_section swiper-slide {
+        &::after {
+          cursor: pointer;
+          content: "x";
+          position: absolute;
+          top: 25px;
+          right: 28px;
+          background: #E94B4B;
+          height: 30px;
+          width: 30px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: white;
+          font-weight: 700;
+        }
+        img {
+          width: 100%;
+          height: auto;
+          padding: 40px;
+        }
       }
       .readonly_box {
         @include readonly_box;
@@ -976,6 +1042,14 @@
           button.empty_btn {
             @include empty_btn;
             padding: 5px;
+            &:hover {
+              background-color: #244f86;
+            }
+          }
+          button.select_btn {
+            @include empty_btn;
+            padding: 5px;
+            width: 140px;
             &:hover {
               background-color: #244f86;
             }
