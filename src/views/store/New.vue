@@ -3,7 +3,7 @@
   <div class="main_section">
     <div class="title col">
       <h1>
-        資料新品入庫
+        新品入庫
       </h1>
     </div>
     <div class="info_wrap col">

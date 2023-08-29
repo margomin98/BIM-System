@@ -454,6 +454,7 @@
       }
       function selectArea(index, item) {
         formData[index].itemAreaName = item;
+        formData[index].itemLayerName = '';
         getLayerName(index);
         formData[index].LayerInit = '請選擇';
       }
