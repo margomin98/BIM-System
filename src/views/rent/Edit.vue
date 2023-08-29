@@ -34,7 +34,7 @@
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap column_section">
             <label for="inputWithButton" class="form-label"><p><span>*</span>專案代碼</p></label>
             <div class="input-group">
-              <input type="text" class="form-control" id="project_id" v-model="details.ProjectCode">
+              <input type="text" class="form-control" id="project_id" placeholder="最多輸入10字" v-model="details.ProjectCode">
      <button class="btn code_search" type="button" @click="getProjectName">搜索</button>
                 </div>
           </div>
@@ -49,7 +49,7 @@
         <div class="row g-0">
           <div class="col d-flex wrap column_section" style='border:none'>
             <label for="inputTextarea" class="form-label"><p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p></label>
-            <textarea class="form-control" id="inputTextarea" rows="1" placeholder='請填寫說明，最多100字' v-model="details.Description"></textarea>
+            <textarea class="form-control" id="inputTextarea" rows="1" placeholder='最多輸入100字' v-model="details.Description"></textarea>
           </div>
         </div>
       </form>
@@ -98,7 +98,7 @@
             <label for="inputTextarea" class="form-label"><p>規格需求：</p></label>
             <div>
             </div>
-            <textarea class="form-control" id="inputTextarea" rows="3" placeholder='請填寫說明，最多100字'></textarea>
+            <textarea class="form-control" id="inputTextarea" rows="3" placeholder='最多輸入100字'></textarea>
           </div>
         </div>
         <div class='col d-flex justify-content-center'>
@@ -208,7 +208,6 @@
       const rowData = ref([]);
       const details = ref({});
       const myForm = reactive({
-        ProjectValid: false,
         EquipTypeName: '',
         EquipTypeArray: [],
         EquipCategoryArray: [],
@@ -294,12 +293,10 @@
           console.log(data);
           if (data.state === 'success') {
             details.value.ProjectName = data.resultList;
-            myForm.ProjectValid = true;
           } else if (data.state === 'account_error') {
             alert(data.messages);
             router.push('/');
           } else {
-            myForm.ProjectValid = false;
             details.valueProjectName = data.messages.toString()
           }
         } catch (error) {
@@ -325,9 +322,6 @@
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             rowData.value = data.resultList.ItemList;
-            if(data.resultList.ProjectCode) {
-              myForm.ProjectValid = true
-            }
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -343,13 +337,16 @@
           alert('請輸入必填項目');
           return;
         }
-        if (!myForm.ProjectValid) {
-          alert('請確定專案代碼查詢正確')
-          return;
-        }
         if (!/^(?![ 　]{10}$)[\s\S]{1,10}$/.test(myForm.ProjectCode)) {
           alert('專案代碼格式錯誤');
           return;
+        }
+        if (details.value.Description) {
+          details.value.Description = details.value.Description.trim();
+        }
+        if (details.value.Description && !/^.{1,100}$/.test(details.value.Description.trim())) {
+          alert('說明不可輸入超過100字')
+          return
         }
         const requestData = {
           AO_ID: AO_ID,
@@ -380,13 +377,22 @@
       }
       function insertItemList() {
         //檢查必填子項目
+        myForm.ProductName = myForm.ProductName.trim()
         if (!myForm.EquipTypeName || !myForm.EquipCategoryName || !myForm.ProductName || myForm.Number < 1) {
           alert('請輸入必填子項目');
           return
         }
-        // 檢查 物品名稱是否為 不為全空格 且 20字內
-        if (!/^(?![ 　]+$).{1,20}$/.test(myForm.ProductName)) {
-          alert('物品名稱格式錯誤');
+        // 檢查 物品名稱是否20字內
+        if (!/^.{1,20}$/.test(myForm.ProductName)) {
+          alert('物品名稱不可輸入超過20字');
+          return
+        }
+        // 如果有規格需求 不能超過100字
+        if (myForm.RequiredSpec) {
+          myForm.RequiredSpec = myForm.RequiredSpec.trim();
+        }
+        if (myForm.RequiredSpec && !/^.{1,100}$/.test(myForm.RequiredSpec.trim())) {
+          alert('規格需求不可輸入超過100字')
           return
         }
         rowData.value.push({

@@ -273,13 +273,13 @@
     setup() {
       const route = useRoute();
       const router = useRouter();
-      const AI_ID = route.query.search_id;
+      const AO_ID = route.query.search_id;
       const deliveryDate = ref('');
       const details = ref({});
       async function getDetails() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/GetApplicationInfo?ai_id=${AI_ID}`);
+          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -428,7 +428,7 @@
         return date;
       }
       onMounted(() => {
-        getDetails();
+        // getDetails();
         deliveryDate.value = getDate();
       });
       function goBack() {
