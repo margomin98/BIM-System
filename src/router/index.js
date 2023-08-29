@@ -41,7 +41,13 @@ import Rent_Review_New from "../views/rent_review/New.vue";
 //資產管理
 import Assets_Datagrid from "../views/assets/Datagrid.vue";
 import Assets_View from "../views/assets/View.vue";
+import Assets_Edit from "../views/assets/Edit.vue";
+import Assets_Search from "../views/assets/Search.vue";
 //資產管理
+
+//設備整合
+import Equipment_Datagrid from "../views/equipment/Datagrid.vue";
+//設備整合
 
 //系統管理
 import System_Parameter from "../views/system/Parameter";
@@ -155,6 +161,18 @@ const routes = [
     meta: {auth: true, request: 'AssetMgr_Detail'},
   },
   {
+    path: "/assets_edit",
+    name: "Assets_Edit",
+    component: Assets_Edit,
+    // meta: {auth: true, request: 'AssetMgr_Detail'},
+  },
+  {
+    path: "/assets_search",
+    name: "Assets_Searcg",
+    component: Assets_Search,
+    // meta: {auth: true, request: 'AssetMgr_Detail'},
+  },
+  {
     path: "/rent_datagrid",
     name: "Rent_Datagrid",
     component: Rent_Datagrid,
@@ -177,6 +195,12 @@ const routes = [
     name: "Rent_Edit",
     component: Rent_Edit,
     meta: {auth: true, request: 'AO_Edit'},
+  },
+  {
+    path: "/equipment_datagrid",
+    name: "Equipment_datagrid",
+    component: Equipment_Datagrid,
+    // meta: {auth: true, request: 'AO_Detail'},
   },
   {
     path: "/authority",
