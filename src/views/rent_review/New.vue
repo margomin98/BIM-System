@@ -7,46 +7,24 @@
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
-          <p>單號：121564564</p>
+          <p>單號：{{ details.AO_ID}}</p>
         </div>
         <div>
-          <p>申請人員：陳奕迅</p>
+          <p>申請人員：{{ details.Applicant}}</p>
         </div>
         <div>
-          <p>申請日期：2022/02/20</p>
+          <p>申請日期：{{ details.ApplicationDate}}</p>
         </div>
       </div>
       <form>
         <div class="row g-0">
           <div class="col d-flex wrap">
-            <label for="inputTitle1" class="form-label use">
-                                                    <p>用&ensp;&ensp;&ensp;&ensp;途</p>
-                                                  </label>
+            <label for="inputTitle1" class="form-label use"><p>用&ensp;&ensp;&ensp;&ensp;途</p></label>
             <div class="option">
               <div class='content'>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox1">
-                  <label class="form-check-label" for="checkbox1">內部領用</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox2">
-                  <label class="form-check-label" for="checkbox2">借測</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox3">
-                  <label class="form-check-label" for="checkbox3">維修</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox1">
-                  <label class="form-check-label" for="checkbox1">出貨</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox2">
-                  <label class="form-check-label" for="checkbox2">報廢</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkbox3">
-                  <label class="form-check-label" for="checkbox3">退貨</label>
+                <div class="form-check" v-for="(option, index) in options" :key="index">
+                  <input class="form-check-input" type="radio" :value="option" :id="'radio' + (index + 1)" v-model="details.Use" :disabled="option !== details.Use && details.Use !== ''">
+                  <label class="form-check-label" :for="'radio' + (index + 1)">{{ option }}</label>
                 </div>
               </div>
             </div>
@@ -54,30 +32,25 @@
         </div>
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithButton" class="form-label">
-                                                    <p>專案代碼</p>
-                                                  </label>
+            <label for="inputWithButton" class="form-label"><p>專案代碼</p></label>
             <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly />
+              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly v-model=" details.ProjectCode"/>
             </div>
           </div>
           <div class=" col d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name">
-                                                    <p>專案名稱</p>
-                                                  </label>
+            <label for="inputWithTitle" class="form-label project_name"><p>專案名稱</p></label>
             <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly />
+              <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly v-model=" details.ProjectName"/>
             </div>
           </div>
         </div>
         <div class="row g-0">
           <div class="col d-flex wrap" style="border: none">
-            <label for="inputTextarea" class="form-label">
-                                                    <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
-                                                  </label>
-                                                  <div class="input-group" id='readonly_box'>
-              <textarea class="form-control readonly_box" readonly></textarea>
-            </div>          </div>
+            <label for="inputTextarea" class="form-label"><p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p></label>
+            <div class="input-group" id='readonly_box'>
+              <textarea class="form-control readonly_box" readonly v-model=" details.Description"></textarea>
+            </div>
+          </div>
         </div>
       </form>
       <div class="fixed_info">
@@ -86,17 +59,16 @@
         </div>
       </div>
       <div class="second_content">
-        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :defaultColDef="defaultColDef1" :paginationAutoPageSize="true">
+        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :paginationAutoPageSize="true">
         </ag-grid-vue>
       </div>
-      <modal-overlay v-if="modalVisible" @close="closeModal" />
       <div class="fixed_info">
         <div>
           <p>資產出庫細項</p>
         </div>
       </div>
       <div class="third_content">
-        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs2" :rowData="rowData2" :defaultColDef="defaultColDef" :paginationAutoPageSize="true">
+        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs2" :rowData="rowData2" :paginationAutoPageSize="true">
         </ag-grid-vue>
       </div>
       <div class="fixed_info_count">
@@ -115,20 +87,16 @@
         </div>
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithButton" class="form-label">
-                                                    <p>備料人員</p>
-                                                  </label>
+            <label for="inputWithButton" class="form-label"><p>備料人員</p></label>
             <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly>文字內容</p>
+              <p class="readonly_box" readonly> {{ details.PreparedPerson }}</p>
             </div>
           </div>
           <div class="col d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name">
-                                                    <p>備註</p>
-                                                  </label>
-                                                  <div class="input-group" id='readonly_box'>
-              <textarea class="form-control readonly_box" readonly></textarea>
-            </div>  
+            <label for="inputWithTitle" class="form-label project_name"><p>備註</p></label>
+            <div class="input-group" id='readonly_box'>
+              <textarea class="form-control readonly_box" readonly v-model="details.PrepareMemo"></textarea>
+            </div>
           </div>
         </div>
       </div>
@@ -140,46 +108,38 @@
         </div>
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithButton" class="form-label">
-                                                    <p><span>*</span>審核人員</p>
-                                                  </label>
+            <label for="inputWithButton" class="form-label"><p><span>*</span>審核人員</p></label>
             <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly>文字內容</p>
+              <p class="readonly_box" readonly>{{ details.VerifyPerson || '未驗證'}} </p>
             </div>
             <button type="button">驗證</button>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name">
-                                                     <p><span>*</span>審核結果</p>
-                                                  </label>
+            <label for="inputWithTitle" class="form-label project_name"><p><span>*</span>審核結果</p></label>
             <div class="input-group">
-              <input type="checkbox" />通過 <input type="checkbox" />不通過
+              <input type="radio" value="true" v-model="verifyOption" />通過 <input type="radio" value="false" v-model="verifyOption" />不通過
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name">
-                                                    <p>審核日期</p>
-                                                  </label>
+            <label for="inputWithTitle" class="form-label project_name"><p>審核日期</p></label>
             <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly>文字內容</p>
+              <p class="readonly_box" readonly> {{ details.VerifyDate }}</p>
             </div>
           </div>
         </div>
         <div class="row g-0">
           <div class="col d-flex wrap">
-            <label for="inputWithButton" class="form-label">
-                                                    <p>審核意見</p>
-                                                  </label>
+            <label for="inputWithButton" class="form-label"><p>審核意見</p></label>
             <div class="input-group">
-              <textarea placeholder="最多100字" class="form-control" id="inputTextarea"></textarea>
-              </div>
+              <textarea placeholder="最多100字" class="form-control" id="inputTextarea" v-model="details.VerifyMemo"></textarea>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class="col button_wrap">
       <button class="back_btn" @click="goBack">回上一頁</button>
-      <button class="send_btn" @click="submit">送出</button>
+      <button class="send_btn" :class="{send_btn_disabled: !isVerified}" @click="submit" :disabled="isVerified">送出</button>
     </div>
   </div>
 </template>
@@ -188,6 +148,10 @@
   import {
     AgGridVue
   } from "ag-grid-vue3";
+  import {
+    useRoute,
+    useRouter
+  } from 'vue-router';
   import Storage_add from "@/components/Storage_add_button";
   import Navbar from "@/components/Navbar.vue";
   import {
@@ -206,191 +170,182 @@
       };
     },
     setup() {
+      const route = useRoute();
+      const router = useRouter();
+      const AO_ID = route.query.search_id;
+      const details = ref({});
+      const options = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨'];
+      const isVerified = ref(false);
+      const verifyOption = ref(false);
+      const columnDefs1 = [{
+          headerName: "項目",
+          field: "id",
+          unSortIcon: true,
+          sortable: true,
+          width: "100",
+          suppressMovable: true,
+        },
+        {
+          headerName: "設備總類",
+          field: "EquipTypeName",
+          unSortIcon: true,
+          sortable: true,
+          width: "150",
+          suppressMovable: true,
+        },
+        {
+          headerName: "設備分類",
+          field: "EquipCategoryName",
+          unSortIcon: true,
+          sortable: true,
+          width: "150",
+          suppressMovable: true,
+        },
+        {
+          headerName: "物品名稱",
+          field: "ProductName",
+          unSortIcon: true,
+          sortable: true,
+          width: "140",
+          suppressMovable: true,
+        },
+        {
+          headerName: "數量",
+          field: "Number",
+          unSortIcon: true,
+          sortable: true,
+          width: "100",
+          suppressMovable: true,
+        },
+        {
+          headerName: "規格需求",
+          field: "RequiredSpec",
+          unSortIcon: true,
+          sortable: true,
+          flex: 1,
+          suppressMovable: true,
+        }
+      ];
+      const columnDefs2 = [{
+          headerName: "項目",
+          field: "OM_List_id",
+          unSortIcon: true,
+          sortable: true,
+          width: "150",
+          suppressMovable: true,
+        },
+        {
+          headerName: "資產編號",
+          field: "AssetsId",
+          unSortIcon: true,
+          sortable: true,
+          width: "150",
+          suppressMovable: true,
+        },
+        {
+          headerName: "資產名稱",
+          field: "AssetName",
+          unSortIcon: true,
+          sortable: true,
+          width: "150",
+          suppressMovable: true,
+        },
+        {
+          headerName: "儲位區域",
+          field: "AreaName",
+          unSortIcon: true,
+          sortable: true,
+          width: "150",
+          suppressMovable: true,
+        },
+        {
+          headerName: "儲位櫃位",
+          field: "LayerName",
+          unSortIcon: true,
+          sortable: true,
+          width: "150",
+          suppressMovable: true,
+        },
+        {
+          headerName: "廠商",
+          field: "VendorName",
+          unSortIcon: true,
+          sortable: true,
+          width: "250",
+          suppressMovable: true,
+        },
+        {
+          headerName: "型號",
+          field: "ProductType",
+          unSortIcon: true,
+          sortable: true,
+          width: "150",
+          suppressMovable: true,
+        },
+        {
+          headerName: "規格",
+          field: "ProductSpec",
+          unSortIcon: true,
+          sortable: true,
+          width: "150",
+          suppressMovable: true,
+        },
+        {
+          headerName: "數量",
+          field: "OM_Number",
+          unSortIcon: true,
+          sortable: true,
+          width: "100",
+          suppressMovable: true,
+        },
+        {
+          headerName: "單位",
+          field: "OM_Unit",
+          unSortIcon: true,
+          sortable: true,
+          width: "100",
+          suppressMovable: true,
+        }
+      ];
+      const rowData1 = ref([]);
+      const rowData2 = ref([]);
+      async function getDetails() {
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('Details Get成功 資料如下\n', data.resultList);
+            details.value = data.resultList;
+            rowData1.value = data.resultList.ItemList;
+            rowData2.value = data.resultList.OM_List;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      onMounted(() => {
+        getDetails();
+      });
+      function goBack() {
+        window.history.back();
+      }
       return {
-        columnDefs1: [{
-            headerName: "項目",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: "100",
-            suppressMovable: true,
-          },
-          {
-            headerName: "設備總類",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "設備分類",
-            field: "price",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "物品名稱",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: "140",
-            suppressMovable: true,
-          },
-          {
-            headerName: "數量",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "100",
-            suppressMovable: true,
-          },
-          {
-            headerName: "規格需求",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            flex: 1,
-            suppressMovable: true,
-          }
-        ],
-        rowData1: [{
-            make: "Toyota",
-            model: "Celica",
-            price: 35000,
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000,
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000,
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000,
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000,
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000,
-          },
-        ],
-        columnDefs2: [{
-            headerName: "需求項目",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "資產編號",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "資產名稱",
-            field: "price",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "儲位區域",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "廠商",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "250",
-            suppressMovable: true,
-          },
-          {
-            headerName: "型號",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "規格",
-            field: "price",
-            unSortIcon: true,
-            sortable: true,
-            width: "150",
-            suppressMovable: true,
-          },
-          {
-            headerName: "數量",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: "100",
-            suppressMovable: true,
-          },
-          {
-            headerName: "單位",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: "100",
-            suppressMovable: true,
-          }
-        ],
-        rowData2: [{
-            make: "Toyota",
-            model: "Celica",
-            price: 35000,
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000,
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000,
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000,
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000,
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000,
-          },
-        ],
+        details,
+        options,
+        isVerified,
+        verifyOption,
+        columnDefs1,
+        columnDefs2,
+        rowData1,
+        rowData2,
+        goBack,
       };
     },
   };
@@ -414,7 +369,6 @@
     justify-content: center;
     display: flex;
     align-items: center;
-    
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
@@ -425,7 +379,7 @@
         font-weight: 600;
         @include title_color;
       }
-      #readonly_box{
+      #readonly_box {
         background-color: #B4B4B4;
       }
       .info_wrap {
@@ -542,8 +496,8 @@
           .form-control {
             height: auto;
             border-radius: 0;
-       border:none;
-            padding:5px 10px 0;
+            border: none;
+            padding: 5px 10px 0;
           }
           .wrap {
             background: white;
@@ -609,7 +563,7 @@
               border-left: 1px solid black;
             }
           }
-          .input-group{
+          .input-group {
             border-left: 1px solid black;
           }
         }
@@ -622,13 +576,12 @@
           }
           .form-control {
             border-radius: 0;
-      padding: 0;
+            padding: 0;
           }
           .wrap {
             background: white;
             border-bottom: 0.5px solid black;
             align-items: center;
-          
             .option {
               @include readonly_box;
               height: 100%;
@@ -643,7 +596,6 @@
               border-left: 1px solid black
             }
           }
-       
           .form-label {
             font-weight: 700;
             font-size: 20px;
@@ -660,10 +612,11 @@
               text-align: center;
             }
           }
-          .row:nth-child(1) .form-label,.row:nth-child(2) .form-label{
+          .row:nth-child(1) .form-label,
+          .row:nth-child(2) .form-label {
             border-right: 1px solid black;
           }
-          .row:nth-child(3) .input-group{
+          .row:nth-child(3) .input-group {
             border-left: 1px solid black;
           }
         }
@@ -690,11 +643,20 @@
               background-color: #5d85bb;
             }
           }
-          &:nth-child(2) {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5D85BD;
-            }
+
+        }
+        .send_btn {
+          @include search_and_send_btn;
+
+          &:hover {
+            background-color: #5e7aa2;
+          }
+        }
+        .send_btn_disabled {
+          background: #878787;
+
+          &:hover {
+            background: #878787;
           }
         }
       }
@@ -709,12 +671,12 @@
         font-weight: 600;
         @include title_color;
       }
-      #readonly_box{
+      #readonly_box {
         background-color: #B4B4B4;
       }
       .info_wrap {
         margin: auto;
-padding: 0 5%;
+        padding: 0 5%;
         .input-group-prepend {
           width: 100% !important;
           text-align: center !important;
@@ -826,8 +788,8 @@ padding: 0 5%;
           .form-control {
             height: auto;
             border-radius: 0;
-       border:none;
-       padding:5px 10px 0;
+            border: none;
+            padding: 5px 10px 0;
           }
           .wrap {
             background: white;
@@ -890,10 +852,9 @@ padding: 0 5%;
             border-right: 1px solid black;
             #readonly_box {
               border-left: 1px solid black;
-      
             }
           }
-          .input-group{
+          .input-group {
             border-left: 1px solid black;
           }
         }
@@ -906,13 +867,12 @@ padding: 0 5%;
           }
           .form-control {
             border-radius: 0;
-      padding: 0;
+            padding: 0;
           }
           .wrap {
             background: white;
             border-bottom: 0.5px solid black;
             align-items: center;
-          
             .option {
               @include readonly_box;
               height: 100%;
@@ -927,7 +887,6 @@ padding: 0 5%;
               border-left: 1px solid black
             }
           }
-       
           .form-label {
             font-weight: 700;
             font-size: 20px;
@@ -944,10 +903,11 @@ padding: 0 5%;
               text-align: center;
             }
           }
-          .row:nth-child(1) .form-label,.row:nth-child(2) .form-label{
+          .row:nth-child(1) .form-label,
+          .row:nth-child(2) .form-label {
             border-right: 1px solid black;
           }
-          .row:nth-child(3) .input-group{
+          .row:nth-child(3) .input-group {
             border-left: 1px solid black;
           }
         }
@@ -974,11 +934,19 @@ padding: 0 5%;
               background-color: #5d85bb;
             }
           }
-          &:nth-child(2) {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5D85BD;
-            }
+        }
+        .send_btn {
+          @include search_and_send_btn;
+
+          &:hover {
+            background-color: #5e7aa2;
+          }
+        }
+        .send_btn_disabled {
+          background: #878787;
+
+          &:hover {
+            background: #878787;
           }
         }
       }
@@ -1103,7 +1071,7 @@ padding: 0 5%;
         .five_content {
           border-bottom: 1px solid black;
           border-left: 1px solid black;
-          span{
+          span {
             @include red_star
           }
           .fixed_info {
@@ -1127,11 +1095,9 @@ padding: 0 5%;
           .wrap {
             background: white;
             border-top: 1px solid black;
-   
             align-items: center;
             flex-direction: column;
             button {
-              
               margin: 10px;
               border-radius: 7px;
               height: 30px;
@@ -1146,8 +1112,8 @@ padding: 0 5%;
               }
             }
           }
-          .wrap:nth-child(1) #readonly_box{
-          border-bottom:1px solid black;
+          .wrap:nth-child(1) #readonly_box {
+            border-bottom: 1px solid black;
           }
           .form-label {
             font-weight: 700;
@@ -1166,19 +1132,17 @@ padding: 0 5%;
               text-align: center;
             }
           }
-          .wrap:nth-child(3),  .wrap:nth-child(1) {
+          .wrap:nth-child(3),
+          .wrap:nth-child(1) {
             border-right: 1px solid black;
-       
           }
-     
           .wrap:nth-child(2) {
             border-right: 1px solid black;
-     
             .input-group {
               display: flex;
               justify-content: center;
               align-items: center;
-             padding: 10px;
+              padding: 10px;
               font-weight: 700;
               gap: 5px;
             }
@@ -1271,11 +1235,19 @@ padding: 0 5%;
               background-color: #5d85bb;
             }
           }
-          &:nth-child(2) {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5D85BD;
-            }
+        }
+        .send_btn {
+          @include search_and_send_btn;
+
+          &:hover {
+            background-color: #5e7aa2;
+          }
+        }
+        .send_btn_disabled {
+          background: #878787;
+
+          &:hover {
+            background: #878787;
           }
         }
       }
