@@ -89,7 +89,7 @@
           <div class="col-xl-3 col-lg-3 col-md-3 col-12">
             <p><span>*</span>數量<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"></p>
             <div class="number-input-box">
-              <input class="input-number" type="number" v-model="count" min="1" />
+              <input class="input-number" type="number" v-model="myForm.Number" min="1" />
             </div>
           </div>
         </div>

@@ -194,7 +194,7 @@
   import Storage_view from "@/components/Storage_list_view_button";
   import Storage_add from "@/components/Storage_add_button";
   import Storage_number from "@/components/Storage_number_input"
-  import Delete_button from "@/components/Delete_button";
+  import Delete_button from "@/components/Rent_proccess_new_delete_button";
   import Navbar from "@/components/Navbar.vue";
   import {
     onMounted,
@@ -305,11 +305,23 @@
           suppressMovable: true,
           field: "",
           cellRenderer: "Delete_button",
+          cellRendererParams: {
+            addDeleteList: addDeleteListFunction,
+          },
           width: 100,
           resizable: true,
         },
         {
-          headerName: "所選數量",
+          suppressMovable: true,
+          headerName: "項目",
+          field: "id",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          resizable: true,
+        },
+        {
+          headerName: "數量",
           field: "selectNumber",
           unSortIcon: true,
           sortable: true,
@@ -381,15 +393,6 @@
           resizable: true,
         },
         {
-          headerName: "數量",
-          field: "OM_Number",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
           headerName: "單位",
           field: "OM_Unit",
           unSortIcon: true,
@@ -404,7 +407,7 @@
           field: "",
           cellRenderer: "Storage_add",
           cellRendererParams: {
-            addMaterial: addMaterialData,
+            addMaterial: addMeterialFunction,
           },
           width: 75,
           resizable: true,
@@ -413,9 +416,6 @@
           headerName: "數量",
           field: "OM_Number",
           cellRenderer: "Storage_number",
-          cellRendererParams: {
-            updateNumber: updateNumberFunction,
-          },
           unSortIcon: true,
           sortable: true,
           width: 100,
@@ -577,7 +577,7 @@
             // console.log('Details Get成功 資料如下\n', data.resultList);
             rowData3.value = data.resultList.map(item => ({
               ...item,
-              selectNumber: 1
+              selectNumber: item.OM_Number
             }));
             console.log(rowData3.value);
           } else if (data.state === 'error') {
@@ -608,12 +608,15 @@
         searchParams.RequiredSpec = data.RequiredSpec;
         searchInventory();
       }
-      function updateNumberFunction(data) {
-        gridApi3.value.setRowData
+      function addDeleteListFunction() {
+        
       }
-      function addMaterialData(data) {
+      function addMeterialFunction(data) {
         rowData2.value.push(data);
         gridApi2.value.setRowData(rowData2.value);
+      }
+      function updateNumberFunction(data) {
+        gridApi3.value.setRowData
       }
       const onGridReady2 = (params) => {
         gridApi2.value = params.api;

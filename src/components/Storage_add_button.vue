@@ -11,10 +11,7 @@ export default {
   props: ['params'],
   setup(props) {
     function add() {
-
-      // const rowNode = props.params.node;
-      // props.params.api.applyTransaction({remove: [rowNode.data]});
-      // console.log(props.params);
+      // call API將物品從資料庫扣除後，加入出庫細項
       console.log(props.params.node);
       props.params.addMaterial(props.params.data);
     }
