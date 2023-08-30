@@ -410,6 +410,11 @@ computed,
         }
       }
       async function submit() {
+        validation.VerifyMemo.trim();
+        if(validation.VerifyMemo && !/^.{1,100}$/.test(validation.VerifyMemo)) {
+          alert('審核意見不可輸入超過100字')
+          return
+        }
         const axios = require('axios');
         const formData = new FormData();
         const formFields = {
