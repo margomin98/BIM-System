@@ -213,20 +213,7 @@
           cellRenderer: "Delete_button",
         }
       ];
-      const rowData = ref([
-        // {
-        //   AI_ID: 'S202300001',
-        //   EquipTypeName: "Type A",
-        //   EquipCategoryName: "Category X",
-        //   AssetsId: "A123",
-        //   AssetName: "Asset 1",
-        //   Status: "Active",
-        //   AreaName: "Area 1",
-        //   LayerName: "Layer 1",
-        //   ApplicationDate: "2023/08/14",
-        //   Applicant: "John Doe"
-        // },
-      ]);
+      const rowData = ref([]);
       async function submit() {
         const formData = new FormData();
         const formFields = {

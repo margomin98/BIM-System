@@ -289,8 +289,6 @@
           field: "OM_IsExecute",
           width: 55,
           suppressMovable: true,
-          editable: true,
-          // checkboxSelection: true,
           resizable: true,
         },
         {

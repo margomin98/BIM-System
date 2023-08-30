@@ -171,7 +171,7 @@
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name" id="done_date"><p>交付完成日期</p></label>
             <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly>文字內容</p>
+              <p class="readonly_box" readonly>{{ DeliveryDate}}</p>
             </div>
           </div>
         </div>
@@ -281,6 +281,7 @@
       const rowHeight = 35;
       const gridApi = ref(null);
       const DeliveryMemo = ref('');
+      const DeliveryDate = ref('');
       const validation = ref({
         user1: {
           account: 'user_1',
@@ -454,6 +455,7 @@
       const rowData2 = ref([]);
       onMounted(() => {
         getDetails();
+        DeliveryDate.value = getDate();
       });
       async function getDetails() {
         const axios = require('axios');
@@ -574,20 +576,14 @@
         });
         console.log('OM_List', OM_List);
         const axios = require('axios');
-        const formData = new FormData();
-        const formFields = {
+        const requestData = {
           'AO_ID': details.value.AO_ID,
           'Recipient': validation.value.user1.resultName,
           'DeliveryOperator': validation.value.user2.resultName,
           'DeliveryMemo': DeliveryMemo.value,
           'OM_List': OM_List,
         };
-        //將表格資料append到 formData
-        for (const fieldName in formFields) {
-          formData.append(fieldName, formFields[fieldName]);
-          console.log(formData.get(`${fieldName}`));
-        }
-        const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/Delivery', formData);
+        const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/Delivery',requestData);
         try {
           const data = response.data;
           console.log(data);
@@ -596,7 +592,7 @@
             msg += '\n編號:' + data.resultList.AO_ID;
             alert(msg);
             router.push({
-              name: 'Store_Process_Datagrid'
+              name: 'Rent_Process_Datagrid'
             });
           } else if (data.state === 'error') {
             alert(data.messages);
@@ -612,6 +608,14 @@
       // const selectedNodes = gridApi.value.getSelectedNodes();
       // const selectedData = selectedNodes.map(node => node.data);
       // console.log('Selected Row Data:', selectedData);
+      function getDate() {
+        const today = new Date();
+        var date = '';
+        date += (today.getFullYear() + '/');
+        date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
+        date += ((today.getDate()).toString().padStart(2, '0'));
+        return date;
+      }
       function goBack() {
         window.history.back();
       }
@@ -627,6 +631,7 @@
         rowData2,
         validation,
         DeliveryMemo,
+        DeliveryDate,
         validate,
         validationStatus,
         canSubmit,
