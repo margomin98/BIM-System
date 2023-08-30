@@ -80,9 +80,6 @@
             <div class="date-selector">
               <div class="input-container">
                 <input type="date" v-model="selectedDate" class="date-input" @focus="showDatePicker = true" @blur="showDatePicker = false" />
-                <div class="date-picker" v-if="showDatePicker">
-                  <datepicker v-model="selectedDate"></datepicker>
-                </div>
               </div>
             </div>
           </div>
@@ -91,9 +88,6 @@
             <div class="date-selector">
               <div class="input-container">
                 <input type="date" v-model="selectedEndDate" class="date-input" @focus="showEndDatePicker = true" @blur="showEndDatePicker = false" />
-                <div class="date-picker" v-if="showEndDatePicker">
-                  <datepicker v-model="selectedEndDate"></datepicker>
-                </div>
               </div>
             </div>
           </div>
@@ -108,7 +102,7 @@
       </div>
     </div>
     <div style="width: 100%">
-      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;margin-bottom:50px" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true"
+      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;margin-bottom:50px" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true"
         :pagination="true">
       </ag-grid-vue>
     </div>
@@ -121,6 +115,7 @@
   } from "ag-grid-vue3";
   import Button from "@/components/Assets_return_button";
   import Navbar from "@/components/Navbar.vue";
+import { onMounted, reactive, ref } from "vue";
   export default {
     components: {
       Navbar,
@@ -128,147 +123,159 @@
       Button
     },
     setup() {
-      return {
-        columnDefs: [{
+      const details = ref({});
+      const searchParams = reactive({
+        EquipTypeName: '',
+        EquipCategoryName: '',
+        AssetsId: '',
+        AssetName: '',
+        Status: '',
+        AreaName: '',
+        LayerName: '',
+        StartDate: '',
+        EndDate: '',
+      });
+      const columnDefs =[{
             suppressMovable: true,
             field: "",
             cellRenderer: "Button",
-            width: '150',
+            width: 150,
             resizable: true,
           },
           {
             headerName: "資產編號",
-            field: "make",
+            field: "AssetsId",
             unSortIcon: true,
             sortable: true,
-            width: '150',
+            width: 150,
             resizable: true,
             suppressMovable: true
           },
           {
             headerName: "物品名稱",
-            field: "model",
+            field: "AssetName",
             unSortIcon: true,
             sortable: true,
-            width: '150',
+            width: 150,
             resizable: true,
             suppressMovable: true
           },
           {
             headerName: "設備總類",
-            field: "price",
+            field: "EquipTypeName",
             unSortIcon: true,
             sortable: true,
-            width: '150',
+            width: 150,
             resizable: true,
             suppressMovable: true
           },
           {
             headerName: "設備分類",
-            field: "make",
+            field: "EquipCategoryName",
             unSortIcon: true,
             sortable: true,
-            width: '150',
+            width: 150,
             resizable: true,
             suppressMovable: true
           },
           {
             headerName: "區域",
-            field: "model",
+            field: "AreaName",
             unSortIcon: true,
             sortable: true,
-            width: '100',
+            width: 100,
             resizable: true,
             suppressMovable: true
           },
           {
             headerName: "櫃位",
-            field: "make",
+            field: "LayerName",
             unSortIcon: true,
             sortable: true,
-            width: '100',
+            width: 100,
             resizable: true,
             suppressMovable: true
           },
           {
             headerName: "狀態",
-            field: "make",
+            field: "Status",
             unSortIcon: true,
             sortable: true,
-            width: '110',
+            width: 110,
             resizable: true,
             suppressMovable: true
           },
           {
             headerName: "入庫日期",
-            field: "make",
+            field: "InboundDate",
             unSortIcon: true,
             sortable: true,
-            width: '150px',
+            width: 150,
             resizable: true,
             suppressMovable: true
           },
           {
             headerName: "入庫人員",
-            field: "make",
+            field: "AssetsInOperator",
             unSortIcon: true,
             sortable: true,
-            width: '150px',
+            width: 150,
             resizable: true,
             suppressMovable: true
           }
-        ],
-        rowData: [{
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000
-          },
-        ],
+        ];
+      const rowData = ref([]);
+      onMounted(()=>{
+        submit();
+      });
+      async function submit() {
+        const formData = new FormData();
+        const formFields = {
+          'EquipTypeName': searchParams.EquipTypeName,
+          'EquipCategoryName': searchParams.EquipCategoryName,
+          'AssetsId': searchParams.AssetsId,
+          'AssetName': searchParams.AssetName,
+          'Status': searchParams.Status,
+          'AreaName': searchParams.AreaName,
+          'LayerName': searchParams.LayerName,
+          'StartDate': searchParams.StartDate,
+          'EndDate': searchParams.EndDate,
+        };
+        //將表格資料append到 formData
+        for (const fieldName in formFields) {
+          formData.append(fieldName, formFields[fieldName]);
+        }
+        const axios = require('axios');
+        try {
+          const response = await axios.post('http://192.168.0.176:7008/InventoryMng/Assets', formData);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            //取得datagrid成功
+            // console.log(data.state);
+            console.log('datagrid', data.resultList);
+            rowData.value = data.resultList;
+          } else if (data.state === 'error') {
+            //取得datagrid失敗
+            alert(data.messages);
+          } else if (data.state === 'input_error') {
+            //取得datagrid格式錯誤
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            //尚未登入
+            alert(data.messages);
+            router.push('/');
+          } else {
+            throw new Error('Request was not successful');
+          }
+        } catch (error) {
+          console.error('Error sending data to backend', error);
+        }
+      }
+      return {
+        details,
+        columnDefs,
+        rowData,
       };
     },
     data() {

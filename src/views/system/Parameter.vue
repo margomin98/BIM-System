@@ -18,15 +18,15 @@
             <div class='row g-0'>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 grid'>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData" @rowDragEnd="onRowDragEnd">
+                  <ag-grid-vue style="width: 100%" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData1" @rowDragEnd="onRowDragEnd('equip_type' ,$event)" @cellValueChanged="onCellValueChanged('equip_type')" @grid-ready="dataApi1">
                   </ag-grid-vue>
                 </div>
               </div>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 submit_section'>
                 <p>新增設備總類</p>
                 <div class='d-flex'>
-                  <input class="form-control" aria-label="With textarea" placeholder='最多十個字'>
-                  <button type="button">新增</button>
+                  <input class="form-control" aria-label="With textarea" placeholder='最多輸入10字' v-model="newType">
+                  <button type="button" @click="insertNewType('equip_type')">新增</button>
                 </div>
               </div>
             </div>
@@ -36,15 +36,15 @@
             <div class='row g-0'>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 grid'>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData">
+                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData2" @rowDragEnd="onRowDragEnd('area' ,$event)" @cellValueChanged="onCellValueChanged('area')" @grid-ready="dataApi2">
                   </ag-grid-vue>
                 </div>
               </div>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 submit_section'>
-                <p>新增設備總類</p>
+                <p>新增儲位區域</p>
                 <div class='d-flex'>
-                  <input class="form-control" aria-label="With textarea" placeholder='最多十個字'>
-                  <button type="button">新增</button>
+                  <input class="form-control" aria-label="With textarea" placeholder='最多輸入10字' v-model="newArea">
+                  <button type="button" @click="insertNewType('area')">新增</button>
                 </div>
               </div>
             </div>
@@ -65,7 +65,10 @@
   import Navbar from "@/components/Navbar.vue";
   import Parameter_button from "@/components/Parameter_button";
   import Edit_pen from "@/components/Edit_pen";
-  import { ref } from "vue";
+  import {
+reactive,
+    ref
+  } from "vue";
   export default {
     components: {
       Navbar,
@@ -74,44 +77,141 @@
       Edit_pen
     },
     setup() {
-      const rowData = ref([{
-            make: "Toyota",
-            model: "設備總類1",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "設備總類2",
-            price: 32000
-          },
-          {
-            make: "Ford",
-            model: "設備總類3",
-            price: 32000
-          },
-        ]);
-      function onRowDragEnd() {
-        console.log(rowData.value);
+      const newType = ref('');
+      const newArea = ref('');
+      const rowData1 = ref([{
+          model: "設備總類1",
+        },
+        {
+          model: "設備總類2",
+        },
+        {
+          model: "設備總類3",
+        },
+        {
+          model: "設備總類4",
+        },
+        {
+          model: "設備總類5",
+        },
+        {
+          model: "設備總類6",
+        },
+      ]);
+      const rowData2 = ref([{
+          model: "儲位區域1",
+        },
+        {
+          model: "儲位區域2",
+        },
+        {
+          model: "儲位區域3",
+        },
+        {
+          model: "儲位區域4",
+        },
+        {
+          model: "儲位區域5",
+        },
+        {
+          model: "儲位區域6",
+        },
+      ]);
+      const grid = reactive({
+        row1: null,
+        row2: null,
+      })
+      // 移動
+      function onRowDragEnd(type, event) {
+        const newRowIndex = event.overIndex;
+        console.log('newRowIndex', newRowIndex);
+        const draggedData = event.node.data;
+        console.log('draggedData', draggedData);
+        let originalIndex = -1;
+        switch (type) {
+          case 'equip_type':
+            originalIndex = rowData1.value.findIndex(item => item.model === draggedData.model);
+            console.log('originalIndex', originalIndex);
+            rowData1.value.splice(originalIndex, 1);
+            rowData1.value.splice(newRowIndex, 0, draggedData);
+            console.log('rowData1', rowData1.value);
+            break;
+          case 'area':
+            originalIndex = rowData2.value.findIndex(item => item.model === draggedData.model);
+            console.log('originalIndex', originalIndex);
+            rowData2.value.splice(originalIndex, 1);
+            rowData2.value.splice(newRowIndex, 0, draggedData);
+            console.log('rowData2', rowData2.value);
+            break;
+          default:
+            break;
+        }
       }
+      // 編輯
+      function onCellValueChanged(type) {
+        switch (type) {
+          case 'equip_type':
+            console.log(rowData1.value);
+            break;
+          case 'area':
+            console.log(rowData2.value);
+            break;
+        }
+      }
+      // 新增
+      function insertNewType(type) {
+        switch (type) {
+          case 'equip_type':
+            rowData1.value.push({
+              model: newType.value,
+            });
+            newType.value = '';
+            setTimeout(() => {
+              grid.row1.setRowData(rowData1.value)
+            }, 50);
+            break;
+          case 'area':
+            rowData2.value.push({
+              model: newArea.value,
+            });
+            setTimeout(() => {
+              grid.row2.setRowData(rowData2.value)
+            }, 50);
+            newArea.value = '';
+            break;
+        }
+        // API here if OK then refresh datagrid
+      }
+      // 刪除
+      const dataApi1 = (params) => {
+        grid.row1 = params.api;
+      };
+      const dataApi2 = (params) => {
+        grid.row2 = params.api;
+      };
       return {
+        newType,
+        newArea,
         onRowDragEnd,
+        onCellValueChanged,
+        insertNewType,
         columnDefs: [{
             field: "make",
             cellRenderer: 'Parameter_button',
-            width: '170',
+            width: 170,
             rowDrag: true
           },
           {
             field: "model",
             flex: 1,
-            suppressSizeToFit: true,
             editable: true,
             cellRenderer: 'Edit_pen',
-            suppressClickEdit: true,
-            enableRtl: true,
           }
         ],
-        rowData,
+        rowData1,
+        rowData2,
+        dataApi1,
+        dataApi2,
       };
     },
     methods: {
