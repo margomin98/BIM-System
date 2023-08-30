@@ -682,7 +682,9 @@
         const axios = require('axios');
         try {
           const response = await axios.post(`http://192.168.0.176:7008${baseUrl}`, formData);
-          console.log(response.data);
+          if(response.data.state !== 'success') {
+            console.error(response.data.messages);
+          }
           return response.data.state;
         } catch (error) {
           console.error(error);

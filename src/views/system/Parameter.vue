@@ -8,20 +8,17 @@
       <div class="tab_section mt-2">
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button class="nav-link active" id="equipment-tab" data-bs-toggle="tab" data-bs-target="#equipment" type="button" role="tab" aria-controls="equipment" aria-selected="true">
-                                        設備總類
-                                      </button>
-            <button class="nav-link" id="storage-tab" data-bs-toggle="tab" data-bs-target="#storage" type="button" role="tab" aria-controls="storage" aria-selected="false">
-                                        儲位區域
-                                      </button>
+            <button class="nav-link active" id="equipment-tab" data-bs-toggle="tab" data-bs-target="#equipment" type="button" role="tab" aria-controls="equipment" aria-selected="true">設備總類</button>
+            <button class="nav-link" id="storage-tab" data-bs-toggle="tab" data-bs-target="#storage" type="button" role="tab" aria-controls="storage" aria-selected="false">儲位區域</button>
           </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
+          <!-- 設備總類tab -->
           <div class="tab-pane fade show active" id="equipment" role="tabpanel" aria-labelledby="equipment-tab" tabindex="0">
             <div class='row g-0'>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 grid'>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData" @column-resized="onColumnResized">
+                  <ag-grid-vue style="width: 100%" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData" @rowDragEnd="onRowDragEnd">
                   </ag-grid-vue>
                 </div>
               </div>
@@ -34,11 +31,12 @@
               </div>
             </div>
           </div>
+          <!-- 儲位區域tab -->
           <div class="tab-pane fade" id="storage" role="tabpanel" aria-labelledby="storage-tab" tabindex="0">
             <div class='row g-0'>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 grid'>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData" @column-resized="onColumnResized">
+                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData">
                   </ag-grid-vue>
                 </div>
               </div>
@@ -66,17 +64,37 @@
   } from "ag-grid-vue3";
   import Navbar from "@/components/Navbar.vue";
   import Parameter_button from "@/components/Parameter_button";
-    import Edit_pen from "@/components/Edit_pen";
-
+  import Edit_pen from "@/components/Edit_pen";
+  import { ref } from "vue";
   export default {
     components: {
       Navbar,
       AgGridVue,
       Parameter_button,
-         Edit_pen
+      Edit_pen
     },
     setup() {
+      const rowData = ref([{
+            make: "Toyota",
+            model: "設備總類1",
+            price: 35000
+          },
+          {
+            make: "Ford",
+            model: "設備總類2",
+            price: 32000
+          },
+          {
+            make: "Ford",
+            model: "設備總類3",
+            price: 32000
+          },
+        ]);
+      function onRowDragEnd() {
+        console.log(rowData.value);
+      }
       return {
+        onRowDragEnd,
         columnDefs: [{
             field: "make",
             cellRenderer: 'Parameter_button',
@@ -84,27 +102,16 @@
             rowDrag: true
           },
           {
-        field: "model",
+            field: "model",
             flex: 1,
             suppressSizeToFit: true,
             editable: true,
             cellRenderer: 'Edit_pen',
             suppressClickEdit: true,
-            
             enableRtl: true,
           }
         ],
-        rowData: [{
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          }
-        ],
+        rowData,
       };
     },
     methods: {
@@ -119,8 +126,8 @@
   @import "@/assets/css/global.scss";
   @media only screen and (min-width: 1200px) {
     .main_section {
-      .ag-theme-alpine{
-         height: 450px
+      .ag-theme-alpine {
+        height: 450px
       }
       h1 {
         margin-top: 50px;
@@ -285,9 +292,9 @@
     }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
-        .ag-theme-alpine{
-         height: 450px
-      }
+    .ag-theme-alpine {
+      height: 450px
+    }
     .main_section {
       h1 {
         margin-top: 50px;
@@ -452,13 +459,13 @@
     }
   }
   @media only screen and (max-width: 767px) {
-        .ag-theme-alpine{
-         height: 250px !important
-      }
-      .main_section {
+    .ag-theme-alpine {
+      height: 250px !important
+    }
+    .main_section {
       h1 {
-margin-top: 50px;
-    margin-bottom: 20px;
+        margin-top: 50px;
+        margin-bottom: 20px;
         text-align: center;
         font-size: 50px;
         font-weight: 600;

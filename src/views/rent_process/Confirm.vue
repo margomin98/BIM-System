@@ -570,7 +570,7 @@
         let OM_List = [];
         rowData2.value.forEach( item=> {
           OM_List.push({
-            OM_id: item.AssetsId,
+            OM_id: item.OM_id,
             OM_IsExecute: item.OM_IsExecute,
           });
         });
