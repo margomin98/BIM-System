@@ -108,8 +108,8 @@
       const StatusArray = ref(['待審核' , '審核通過', '審核不通過'])
       const DateCategory = ref('');
       const DateCategoryArray = ['申請日期', '審核日期'];
-      const StartDate = ref(''); //申請出庫日期(起)
-      const EndDate = ref(''); //申請出庫日期(迄)
+      const StartDate = ref(''); //日期(起)
+      const EndDate = ref(''); //日期(迄)
       const pageSize = 10;
       const columnDefs = [{
           suppressMovable: true,

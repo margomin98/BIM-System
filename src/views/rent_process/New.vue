@@ -145,10 +145,10 @@
       </div>
       <div class="fixed_info_count">
         <div>
-          <p>總出庫數量：{{ totleNeed}}個</p>
+          <p>總出庫數量：{{ totalNeed}}個</p>
         </div>
         <div>
-          <p>已備數量: {{ totleSelect}}個</p>
+          <p>已備數量: {{ totalSelect}}個</p>
         </div>
       </div>
       <div class='fourth_content'>
@@ -224,8 +224,8 @@
       const gridApi2 = ref(null);
       const gridApi3 = ref(null);
       const selectedNumberArray = ref([]);//紀錄不同項目已選數量array
-      const totleNeed = ref(0);//總所需數量
-      const totleSelect = ref(0);//總已備數量
+      const totalNeed = ref(0);//總所需數量
+      const totalSelect = ref(0);//總已備數量
       const PrepareMemo = ref('');
       const searchParams = reactive({
         EquipTypeName: '',
@@ -591,13 +591,13 @@
             rowData2.value.forEach(item => {
               selectedNumberArray.value[item.OM_List_id] += item.OM_Number;
             });
-            totleNeed.value = 0;
+            totalNeed.value = 0;
             rowData1.value.forEach(item => {
-              totleNeed.value += item.Number;
+              totalNeed.value += item.Number;
             });
-            totleSelect.value = 0;
+            totalSelect.value = 0;
             selectedNumberArray.value.forEach(item => {
-              totleSelect.value += item;
+              totalSelect.value += item;
             });
           } else if (data.state === 'error') {
             alert(data.messages);
@@ -701,8 +701,8 @@
         rowData1,
         rowData2,
         rowData3,
-        totleNeed,
-        totleSelect,
+        totalNeed,
+        totalSelect,
         PrepareMemo,
         getEquipTypeName,
         selectType,

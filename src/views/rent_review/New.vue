@@ -34,13 +34,13 @@
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label"><p>專案代碼</p></label>
             <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly v-model=" details.ProjectCode"/>
+              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly v-model=" details.ProjectCode" />
             </div>
           </div>
           <div class=" col d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name"><p>專案名稱</p></label>
             <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly v-model=" details.ProjectName"/>
+              <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly v-model=" details.ProjectName" />
             </div>
           </div>
         </div>
@@ -73,10 +73,10 @@
       </div>
       <div class="fixed_info_count">
         <div>
-          <p>總出庫數量：10個</p>
+          <p>總出庫數量：{{ totalNeed}} 個</p>
         </div>
         <div>
-          <p>已備數量: 6個</p>
+          <p>已備數量: {{ totalSelect}} 個</p>
         </div>
       </div>
       <div class='fourth_content'>
@@ -109,15 +109,18 @@
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label"><p><span>*</span>審核人員</p></label>
-            <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly>{{ details.VerifyPerson || '未驗證'}} </p>
+            <div class="input-group input-with-icon" id="readonly_box">
+              <p class="readonly_box" readonly>{{ validationStatus()}} </p>
+              <span class="icon-container">
+                    <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.isVerified" />
+                  </span>
             </div>
-            <button type="button">驗證</button>
+            <button type="button" data-bs-toggle="modal" data-bs-target="#verifyModal">驗證</button>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name"><p><span>*</span>審核結果</p></label>
             <div class="input-group">
-              <input type="radio" value="true" v-model="verifyOption" />通過 <input type="radio" value="false" v-model="verifyOption" />不通過
+              <input type="radio" value="true" v-model="optionValue" />通過 <input type="radio" value="false" v-model="optionValue" />不通過
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
@@ -131,15 +134,43 @@
           <div class="col d-flex wrap">
             <label for="inputWithButton" class="form-label"><p>審核意見</p></label>
             <div class="input-group">
-              <textarea placeholder="最多100字" class="form-control" id="inputTextarea" v-model="details.VerifyMemo"></textarea>
+              <textarea placeholder="最多100字" class="form-control" id="inputTextarea" v-model="validation.VerifyMemo"></textarea>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="verifyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content ">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel2">審核人員驗證</h5>
+            <p class='m-0 close_icon' data-bs-dismiss="modal">X</p>
+          </div>
+          <div class="modal-body">
+            <div class="col">
+              <div class="input-group">
+                <div class="input-group-prepend">帳號：</div>
+                <input type="text" class="form-control" aria-label="Default" v-model="validation.account" />
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">密碼：</div>
+                <input type="password" class="form-control" aria-label="Default" v-model="validation.password" />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer m-auto">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="validate()">驗證</button>
           </div>
         </div>
       </div>
     </div>
     <div class="col button_wrap">
       <button class="back_btn" @click="goBack">回上一頁</button>
-      <button class="send_btn" :class="{send_btn_disabled: !isVerified}" @click="submit" :disabled="isVerified">送出</button>
+      <button class="send_btn" :class="{send_btn_disabled: !validation.isVerified}" @click="submit" :disabled="!validation.isVerified">送出</button>
     </div>
   </div>
 </template>
@@ -155,7 +186,9 @@
   import Storage_add from "@/components/Storage_add_button";
   import Navbar from "@/components/Navbar.vue";
   import {
+computed,
     onMounted,
+    reactive,
     ref
   } from "vue";
   export default {
@@ -173,16 +206,24 @@
       const route = useRoute();
       const router = useRouter();
       const AO_ID = route.query.search_id;
+      const totalNeed = ref(0);//總所需數量
+      const totalSelect = ref(0);//總已備數量
+      const validation = reactive({
+        account: '',
+        password: '',
+        VerifyMemo: '',
+        VerifyOption: false,
+        isVerified: false,
+        VerifyPerson: '',
+      })
       const details = ref({});
       const options = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨'];
-      const isVerified = ref(false);
-      const verifyOption = ref(false);
       const columnDefs1 = [{
           headerName: "項目",
           field: "id",
           unSortIcon: true,
           sortable: true,
-          width: "100",
+          width: 100,
           suppressMovable: true,
         },
         {
@@ -190,7 +231,7 @@
           field: "EquipTypeName",
           unSortIcon: true,
           sortable: true,
-          width: "150",
+          width: 150,
           suppressMovable: true,
         },
         {
@@ -198,7 +239,7 @@
           field: "EquipCategoryName",
           unSortIcon: true,
           sortable: true,
-          width: "150",
+          width: 150,
           suppressMovable: true,
         },
         {
@@ -206,7 +247,7 @@
           field: "ProductName",
           unSortIcon: true,
           sortable: true,
-          width: "140",
+          width: 140,
           suppressMovable: true,
         },
         {
@@ -214,7 +255,7 @@
           field: "Number",
           unSortIcon: true,
           sortable: true,
-          width: "100",
+          width: 100,
           suppressMovable: true,
         },
         {
@@ -231,7 +272,7 @@
           field: "OM_List_id",
           unSortIcon: true,
           sortable: true,
-          width: "150",
+          width: 100,
           suppressMovable: true,
         },
         {
@@ -239,7 +280,7 @@
           field: "AssetsId",
           unSortIcon: true,
           sortable: true,
-          width: "150",
+          width: 150,
           suppressMovable: true,
         },
         {
@@ -247,47 +288,7 @@
           field: "AssetName",
           unSortIcon: true,
           sortable: true,
-          width: "150",
-          suppressMovable: true,
-        },
-        {
-          headerName: "儲位區域",
-          field: "AreaName",
-          unSortIcon: true,
-          sortable: true,
-          width: "150",
-          suppressMovable: true,
-        },
-        {
-          headerName: "儲位櫃位",
-          field: "LayerName",
-          unSortIcon: true,
-          sortable: true,
-          width: "150",
-          suppressMovable: true,
-        },
-        {
-          headerName: "廠商",
-          field: "VendorName",
-          unSortIcon: true,
-          sortable: true,
-          width: "250",
-          suppressMovable: true,
-        },
-        {
-          headerName: "型號",
-          field: "ProductType",
-          unSortIcon: true,
-          sortable: true,
-          width: "150",
-          suppressMovable: true,
-        },
-        {
-          headerName: "規格",
-          field: "ProductSpec",
-          unSortIcon: true,
-          sortable: true,
-          width: "150",
+          width: 150,
           suppressMovable: true,
         },
         {
@@ -295,7 +296,7 @@
           field: "OM_Number",
           unSortIcon: true,
           sortable: true,
-          width: "100",
+          width: 100,
           suppressMovable: true,
         },
         {
@@ -303,9 +304,49 @@
           field: "OM_Unit",
           unSortIcon: true,
           sortable: true,
-          width: "100",
+          width: 100,
           suppressMovable: true,
-        }
+        },
+        {
+          headerName: "儲位區域",
+          field: "AreaName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true,
+        },
+        {
+          headerName: "儲位櫃位",
+          field: "LayerName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true,
+        },
+        {
+          headerName: "廠商",
+          field: "VendorName",
+          unSortIcon: true,
+          sortable: true,
+          width: 250,
+          suppressMovable: true,
+        },
+        {
+          headerName: "型號",
+          field: "ProductType",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true,
+        },
+        {
+          headerName: "規格",
+          field: "ProductSpec",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true,
+        },
       ];
       const rowData1 = ref([]);
       const rowData2 = ref([]);
@@ -320,6 +361,14 @@
             details.value = data.resultList;
             rowData1.value = data.resultList.ItemList;
             rowData2.value = data.resultList.OM_List;
+            totalNeed.value = 0;
+            rowData1.value.forEach(item => {
+              totalNeed.value += item.Number;
+            });
+            totalSelect.value = 0;
+            rowData2.value.forEach(item => {
+              totalSelect.value += item.OM_Number;
+            });
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -333,18 +382,94 @@
       onMounted(() => {
         getDetails();
       });
+      async function validate() {
+        const axios = require('axios');
+        const formData = new FormData();
+        const formFields = {
+          'userName': validation.account,
+          'userPassword': validation.password,
+        };
+        //將表格資料append到 formData
+        for (const fieldName in formFields) {
+          formData.append(fieldName, formFields[fieldName]);
+          console.log(formData.get(`${fieldName}`));
+        }
+        const response = await axios.post('http://192.168.0.176:7008/Account/IdentityValidationForA_Operator', formData);
+        try {
+          const data = response.data;
+          console.log(data);
+          if (data.state === 'success') {
+            validation.isVerified = true;
+            validation.VerifyPerson = validation.account;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+            validation.isVerified = false;
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      async function submit() {
+        const axios = require('axios');
+        const formData = new FormData();
+        const formFields = {
+          'AO_ID': details.value.AO_ID,
+          'VerifyPerson': validation.VerifyPerson,
+          'VerifyResult': validation.VerifyOption,
+          'VerifyMemo': validation.VerifyMemo,
+        };
+        //將表格資料append到 formData
+        for (const fieldName in formFields) {
+          formData.append(fieldName, formFields[fieldName]);
+          console.log(formData.get(`${fieldName}`));
+        }
+        const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/Verify', formData);
+        try {
+          const data = response.data;
+          console.log(data);
+          if (data.state === 'success') {
+            let msg = data.messages;
+            msg += '\n編號:' + data.resultList.AO_ID;
+            alert(msg);
+            router.push({
+              name: 'Rent_Review_Datagrid'
+            });
+          } else if (data.state === 'error') {
+            alert(data.messages);
+            console.log('error state', response);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      const optionValue = computed({
+        get() {
+          return validation.VerifyOption.toString()
+        },
+        set(value) {
+          return validation.VerifyOption = value === 'true'
+        }
+      });
+      function validationStatus() {
+        return validation.isVerified ? validation.VerifyPerson : '未驗證'
+      }
       function goBack() {
         window.history.back();
       }
       return {
+        totalNeed,
+        totalSelect,
+        validation,
         details,
         options,
-        isVerified,
-        verifyOption,
         columnDefs1,
         columnDefs2,
         rowData1,
         rowData2,
+        validate,
+        submit,
+        optionValue,
+        validationStatus,
         goBack,
       };
     },
@@ -369,6 +494,43 @@
     justify-content: center;
     display: flex;
     align-items: center;
+  }
+  .modal {
+    .modal-body {
+      padding: 16px 16px 0;
+    }
+    .modal-content {
+      width: 400px;
+      margin: auto;
+    }
+    .input-group-prepend {
+      width: auto;
+    }
+    .modal-footer {
+      padding: 0 12px 12px;
+      border: none;
+    }
+    .modal-header {
+      h5 {
+        font-weight: 700;
+      }
+      background: #3D4E61;
+      color: white;
+      .close_icon {
+        cursor: pointer;
+      }
+    }
+  }
+  .input-with-icon {
+    position: relative;
+  }
+  .checkmark-icon {
+    position: absolute;
+    top: 10%;
+    left: 93%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
@@ -643,18 +805,15 @@
               background-color: #5d85bb;
             }
           }
-
         }
         .send_btn {
           @include search_and_send_btn;
-
           &:hover {
             background-color: #5e7aa2;
           }
         }
         .send_btn_disabled {
           background: #878787;
-
           &:hover {
             background: #878787;
           }
@@ -937,14 +1096,12 @@
         }
         .send_btn {
           @include search_and_send_btn;
-
           &:hover {
             background-color: #5e7aa2;
           }
         }
         .send_btn_disabled {
           background: #878787;
-
           &:hover {
             background: #878787;
           }
@@ -1238,14 +1395,12 @@
         }
         .send_btn {
           @include search_and_send_btn;
-
           &:hover {
             background-color: #5e7aa2;
           }
         }
         .send_btn_disabled {
           background: #878787;
-
           &:hover {
             background: #878787;
           }
