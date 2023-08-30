@@ -653,6 +653,10 @@
           alert('備料備註不可輸入超過100字');
           return
         }
+        if( rowData2.value.length === 0 ) {
+          alert('請至少出庫一個細項');
+          return
+        }
         const requestData = {
           AO_ID: AO_ID,
           PrepareMemo: details.value.PrepareMemo,

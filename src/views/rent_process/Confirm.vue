@@ -577,11 +577,11 @@
         console.log('OM_List', OM_List);
         const axios = require('axios');
         const requestData = {
-          'AO_ID': details.value.AO_ID,
-          'Recipient': validation.value.user1.resultName,
-          'DeliveryOperator': validation.value.user2.resultName,
-          'DeliveryMemo': DeliveryMemo.value,
-          'OM_List': OM_List,
+          AO_ID: details.value.AO_ID,
+          Recipient: validation.value.user1.resultName,
+          DeliveryOperator: validation.value.user2.resultName,
+          DeliveryMemo: DeliveryMemo.value,
+          OM_List: OM_List,
         };
         const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/Delivery',requestData);
         try {

@@ -126,7 +126,7 @@
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name"><p>審核日期</p></label>
             <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly> {{ details.VerifyDate }}</p>
+              <p class="readonly_box" readonly> {{ VerifyDate }}</p>
             </div>
           </div>
         </div>
@@ -208,6 +208,7 @@
       const AO_ID = route.query.search_id;
       const totalNeed = ref(0); //總所需數量
       const totalSelect = ref(0); //總已備數量
+      const VerifyDate = ref('');
       const validation = reactive({
         account: '',
         password: '',
@@ -381,6 +382,7 @@
       }
       onMounted(() => {
         getDetails();
+        VerifyDate.value = getDate();
       });
       async function validate() {
         const axios = require('axios');
@@ -461,6 +463,14 @@
       function goBack() {
         window.history.back();
       }
+      function getDate() {
+        const today = new Date();
+        var date = '';
+        date += (today.getFullYear() + '/');
+        date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
+        date += ((today.getDate()).toString().padStart(2, '0'));
+        return date;
+      }
       return {
         totalNeed,
         totalSelect,
@@ -471,6 +481,7 @@
         columnDefs2,
         rowData1,
         rowData2,
+        VerifyDate,
         validate,
         submit,
         optionValue,
