@@ -161,13 +161,13 @@
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label"><p>備料人員</p></label>
             <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly v-model="details.PreparedPerson"/>
+              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly v-model="PreparedPerson"/>
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name"><p>備料完成日期</p></label>
             <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly v-model="details.PrepareDate"/>
+              <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly v-model="PreparedDate"/>
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
@@ -226,6 +226,8 @@
       const selectedNumberArray = ref([]);//紀錄不同項目已選數量array
       const totalNeed = ref(0);//總所需數量
       const totalSelect = ref(0);//總已備數量
+      const PreparedPerson = ref('');
+      const PreparedDate = ref('');
       const PrepareMemo = ref('');
       const searchParams = reactive({
         EquipTypeName: '',
@@ -535,6 +537,8 @@
       const rowData3 = ref([]);
       onMounted(() => {
         getDetails();
+        getApplicationInfo();
+        PreparedDate.value = getDate();
       });
       async function getEquipTypeName() {
         if (searchParams.EquipTypeArray.length == 0) {
@@ -644,16 +648,6 @@
           console.error(error);
         }
       }
-      function selectType(item) {
-        searchParams.EquipTypeName = item;
-        // console.log('選擇的總類:', EquipTypeName.value);
-        getEquipCategoryName();
-        searchParams.EquipCategoryInit = '請選擇';
-      }
-      function selectCategory(item) {
-        searchParams.EquipCategoryName = item;
-      }
-
       async function submit() {
         if( details.value.PrepareMemo && !/^.{1,100}$/.test(details.value.PrepareMemo)) {
           alert('備料備註不可輸入超過100字');
@@ -682,6 +676,44 @@
           console.error(error);
         }
       }
+      function selectType(item) {
+        searchParams.EquipTypeName = item;
+        // console.log('選擇的總類:', EquipTypeName.value);
+        getEquipCategoryName();
+        searchParams.EquipCategoryInit = '請選擇';
+      }
+      function selectCategory(item) {
+        searchParams.EquipCategoryName = item;
+      }
+      async function getApplicationInfo() {
+        const axios = require('axios');
+        try {
+          const response = await axios.get('http://192.168.0.176:7008/GetDBdata/GetApplicant');
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('備料人員名稱:', data.resultList.Applicant);
+            if (data.resultList.Applicant) {
+              PreparedPerson.value = data.resultList.Applicant;
+            }
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error('Error sending applicant info request to backend');
+        }
+      }
+      function getDate() {
+        const today = new Date();
+        var date = '';
+        date += (today.getFullYear() + '/');
+        date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
+        date += ((today.getDate()).toString().padStart(2, '0'));
+        return date;
+      }
       const onGridReady2 = (params) => {
         gridApi2.value = params.api;
       };
@@ -704,11 +736,14 @@
         totalNeed,
         totalSelect,
         PrepareMemo,
+        PreparedPerson,
+        PreparedDate,
         getEquipTypeName,
         selectType,
         selectCategory,
         searchInventory,
         submit,
+        getDate,
         onGridReady2,
         onGridReady3,
         goBack,

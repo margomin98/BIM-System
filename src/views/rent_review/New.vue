@@ -112,8 +112,8 @@
             <div class="input-group input-with-icon" id="readonly_box">
               <p class="readonly_box" readonly>{{ validationStatus()}} </p>
               <span class="icon-container">
-                    <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.isVerified" />
-                  </span>
+                <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.isVerified" />
+              </span>
             </div>
             <button type="button" data-bs-toggle="modal" data-bs-target="#verifyModal">驗證</button>
           </div>
@@ -150,7 +150,7 @@
           </div>
           <div class="modal-body">
             <div class="col">
-              <div class="input-group">
+              <div class="input-group mb-3">
                 <div class="input-group-prepend">帳號：</div>
                 <input type="text" class="form-control" aria-label="Default" v-model="validation.account" />
               </div>
@@ -186,7 +186,7 @@
   import Storage_add from "@/components/Storage_add_button";
   import Navbar from "@/components/Navbar.vue";
   import {
-computed,
+    computed,
     onMounted,
     reactive,
     ref
@@ -206,8 +206,8 @@ computed,
       const route = useRoute();
       const router = useRouter();
       const AO_ID = route.query.search_id;
-      const totalNeed = ref(0);//總所需數量
-      const totalSelect = ref(0);//總已備數量
+      const totalNeed = ref(0); //總所需數量
+      const totalSelect = ref(0); //總已備數量
       const validation = reactive({
         account: '',
         password: '',
@@ -411,7 +411,7 @@ computed,
       }
       async function submit() {
         validation.VerifyMemo.trim();
-        if(validation.VerifyMemo && !/^.{1,100}$/.test(validation.VerifyMemo)) {
+        if (validation.VerifyMemo && !/^.{1,100}$/.test(validation.VerifyMemo)) {
           alert('審核意見不可輸入超過100字')
           return
         }
@@ -510,6 +510,8 @@ computed,
     }
     .input-group-prepend {
       width: auto;
+      font-weight: 700;
+      font-size: 20px;
     }
     .modal-footer {
       padding: 0 12px 12px;

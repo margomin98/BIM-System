@@ -230,7 +230,7 @@
                       </div>
                       <div class="modal-body">
                         <div class="col">
-                          <div class="input-group">
+                          <div class="input-group mb-3">
                             <div class="input-group-prepend">帳號：</div>
                             <input type="text" class="form-control" aria-label="Default"
                               aria-describedby="inputGroup-sizing-default" v-model="validation.user2.account" />
@@ -258,8 +258,7 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="send_btn" @click="submit" :disabled="!canSubmit()"
-          :class="{ send_btn_disabled: !canSubmit() }">送出</button>
+        <button class="send_btn" @click="submit" :disabled="!canSubmit()" :class="{ send_btn_disabled: !canSubmit() }">送出</button>
       </div>
     </div>
   </div>
