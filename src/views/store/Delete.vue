@@ -183,7 +183,7 @@
         <button class="delete_btn" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>
       </div>
       <!-- Modal -->
-      <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+      <div class="modal fade delete_modal" id="deleteModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-sm">
           <div class="modal-content">
             <div class="modal-body">
@@ -210,7 +210,9 @@
     onMounted,
     ref
   } from 'vue';
-import { Form } from 'v3-easyui';
+  import {
+    Form
+  } from 'v3-easyui';
   export default {
     components: {
       Navbar
@@ -244,22 +246,21 @@ import { Form } from 'v3-easyui';
           console.error(error);
         }
       }
-
       async function deleteData() {
         const form = new FormData();
-        form.append('AI_ID' , AI_ID);
-
+        form.append('AI_ID', AI_ID);
         const axios = require('axios');
-        const response = await axios.post(`http://192.168.0.176:7008/AssetsInMng/ApplicationDelete`,form);
+        const response = await axios.post(`http://192.168.0.176:7008/AssetsInMng/ApplicationDelete`, form);
         try {
           const data = response.data;
-          if(data.state === 'success') {
+          if (data.state === 'success') {
             let msg = data.messages + '\n';
-            msg+= '單號為'+data.resultList.AI_ID;
+            msg += '單號為' + data.resultList.AI_ID;
             alert(msg);
-            router.push({name: 'Store_Datagrid'});
-          }
-          else if(data.state === 'error') {
+            router.push({
+              name: 'Store_Datagrid'
+            });
+          } else if (data.state === 'error') {
             alert(data.messages);
           }
         } catch (error) {
@@ -363,6 +364,43 @@ import { Form } from 'v3-easyui';
   //     }
   //   }
   // }
+  .delete_modal {
+    .modal-content {
+      border: solid 1px black;
+      border-radius: 0;
+      .modal-body {
+        background: #E94B4B;
+        text-align: center;
+        font-weight: 700;
+        color: white;
+        border-bottom: solid 1px black;
+      }
+      .modal-footer {
+        margin: auto;
+        gap: 10px;
+        button:nth-child(1) {
+          background-color: #7E7E7E;
+          border: none;
+          color: white;
+          width: 50px;
+          font-weight: 700;
+          &:hover {
+            background-color: #464242;
+          }
+        }
+        button:nth-child(2) {
+          background-color: #E94B4B;
+          border: none;
+          color: white;
+          width: 50px;
+          font-weight: 700;
+          &:hover {
+            background-color: #a70e0e;
+          }
+        }
+      }
+    }
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .warn {

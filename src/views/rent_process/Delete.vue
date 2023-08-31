@@ -2,9 +2,14 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>資產出庫檢視</h1>
+      <h1>刪除項目</h1>
     </div>
     <div class="info_wrap col">
+      <div class="warn">
+        <h4>
+          確定刪除以下項目嗎？
+        </h4>
+      </div>
       <div class="fixed_info">
         <div>
           <p>單號：{{ details.AO_ID}}</p>
@@ -179,7 +184,21 @@
     </div>
     <div class="col button_wrap">
       <button class="back_btn" @click="goBack">回上一頁</button>
+      <button class="delete_btn" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>
     </div>
+    <div class="modal fade delete_modal" id="deleteModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-body">
+              確定刪除這筆項目嗎？
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">否</button>
+              <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" @click="deleteData">是</button>
+            </div>
+          </div>
+        </div>
+      </div>
   </div>
 </template>
 
@@ -284,13 +303,11 @@
         },
       ];
       const columnDefs2 = [{
-          headerName: "交付確認",
+          headerName: "",
           field: "OM_IsExecute",
-          width: 120,
+          width: 55,
           suppressMovable: true,
-          // checkboxSelection: true,
           resizable: true,
-          cellStyle: { 'justify-content': 'center' },
         },
         {
           headerName: "項目",
@@ -492,6 +509,53 @@
       function canSubmit() {
         return validation.value.user1.isValidate && validation.value.user2.isValidate;
       }
+      async function submit() {
+        DeliveryMemo.value.trim();
+        if (DeliveryMemo.value && !/^.{1,100}$/.test(DeliveryMemo.value)) {
+          alert('交付備註不可輸入超過100字')
+          return
+        }
+        let OM_List = [];
+        rowData2.value.forEach( item=> {
+          OM_List.push({
+            OM_id: item.AssetsId,
+            OM_IsExecute: item.OM_IsExecute,
+          });
+        });
+        console.log('OM_List', OM_List);
+        const axios = require('axios');
+        const formData = new FormData();
+        const formFields = {
+          'AO_ID': details.value.AO_ID,
+          'Recipient': validation.value.user1.resultName,
+          'DeliveryOperator': validation.value.user2.resultName,
+          'DeliveryMemo': DeliveryMemo.value,
+          'OM_List': OM_List,
+        };
+        //將表格資料append到 formData
+        for (const fieldName in formFields) {
+          formData.append(fieldName, formFields[fieldName]);
+          console.log(formData.get(`${fieldName}`));
+        }
+        const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/Delivery', formData);
+        try {
+          const data = response.data;
+          console.log(data);
+          if (data.state === 'success') {
+            let msg = data.messages;
+            msg += '\n編號:' + data.resultList.AO_ID;
+            alert(msg);
+            router.push({
+              name: 'Store_Process_Datagrid'
+            });
+          } else if (data.state === 'error') {
+            alert(data.messages);
+            console.log('error state', response);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
       const onGridReady = (params) => {
         gridApi.value = params.api;
       };
@@ -516,6 +580,7 @@
         validate,
         validationStatus,
         canSubmit,
+        submit,
         onGridReady,
         goBack,
       };
@@ -525,6 +590,44 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
+  
+  .delete_modal {
+    .modal-content {
+      border: solid 1px black;
+      border-radius: 0;
+      .modal-body {
+        background: #E94B4B;
+        text-align: center;
+        font-weight: 700;
+        color: white;
+        border-bottom: solid 1px black;
+      }
+      .modal-footer {
+        margin: auto;
+        gap: 10px;
+        button:nth-child(1) {
+          background-color: #7E7E7E;
+          border: none;
+          color: white;
+          width: 50px;
+          font-weight: 700;
+          &:hover {
+            background-color: #464242;
+          }
+        }
+        button:nth-child(2) {
+          background-color: #E94B4B;
+          border: none;
+          color: white;
+          width: 50px;
+          font-weight: 700;
+          &:hover {
+            background-color: #a70e0e;
+          }
+        }
+      }
+    }
+  }
   .readonly_box {
     @include readonly_box;
     width: 100%;
@@ -547,6 +650,21 @@
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
+      .warn {
+        text-align: center;
+        padding: 10px 0;
+        background: #9f0000;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        h4 {
+          color: white;
+          margin-bottom: 0;
+          font-weight: 700;
+          &::before {
+            content: "\26A0";
+          }
+        }
+      }
       h1 {
         margin-top: 50px;
         text-align: center;
@@ -838,7 +956,7 @@
       }
       .button_wrap {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         margin: 30px auto 5%;
         width: 220px;
         button {
@@ -848,13 +966,45 @@
               background-color: #5d85bb;
             }
           }
-       
+          &:nth-child(2) {
+              background: var(--c-5, #E94B4B);
+              justify-content: center;
+              align-items: center;
+              display: inline-flex;
+              border-radius: 10px;
+              height: 40px;
+              width: 90px;
+              color: #FFF;
+              text-align: center;
+              font-size: 20px;
+              font-weight: 700;
+              border: none;
+              margin: 0 10px;
+              &:hover {
+                background-color: #a51e1e;
+              }
+            }
         }
       }
     }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
+      .warn {
+        text-align: center;
+        padding: 10px 0;
+        background: #9f0000;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        h4 {
+          color: white;
+          margin-bottom: 0;
+          font-weight: 700;
+          &::before {
+            content: "\26A0";
+          }
+        }
+      }
       h1 {
         margin-top: 50px;
         text-align: center;
@@ -1141,7 +1291,7 @@
       }
       .button_wrap {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         margin: 30px auto 5%;
         width: 220px;
         button {
@@ -1152,17 +1302,44 @@
             }
           }
           &:nth-child(2) {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5d85bd;
+              background: var(--c-5, #E94B4B);
+              justify-content: center;
+              align-items: center;
+              display: inline-flex;
+              border-radius: 10px;
+              height: 40px;
+              width: 90px;
+              color: #FFF;
+              text-align: center;
+              font-size: 20px;
+              font-weight: 700;
+              border: none;
+              margin: 0 10px;
+              &:hover {
+                background-color: #a51e1e;
+              }
             }
-          }
         }
       }
     }
   }
   @media only screen and (max-width: 767px) {
     .main_section {
+      .warn {
+        text-align: center;
+        padding: 10px 0;
+        background: #9f0000;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        h4 {
+          color: white;
+          margin-bottom: 0;
+          font-weight: 700;
+          &::before {
+            content: "\26A0";
+          }
+        }
+      }
       .readonly_box {
         @include readonly_box;
       }
@@ -1458,7 +1635,7 @@
       }
       .button_wrap {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         margin: 30px auto 5%;
         width: 220px;
         button {
@@ -1469,11 +1646,23 @@
             }
           }
           &:nth-child(2) {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5d85bd;
+              background: var(--c-5, #E94B4B);
+              justify-content: center;
+              align-items: center;
+              display: inline-flex;
+              border-radius: 10px;
+              height: 40px;
+              width: 90px;
+              color: #FFF;
+              text-align: center;
+              font-size: 20px;
+              font-weight: 700;
+              border: none;
+              margin: 0 10px;
+              &:hover {
+                background-color: #a51e1e;
+              }
             }
-          }
         }
       }
     }
