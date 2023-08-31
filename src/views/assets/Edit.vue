@@ -40,13 +40,11 @@
             <div class="input-group mb-3">
               <div class="input-group-prepend"><span>*</span>設備總類：</div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                  {{ details.EquipTypeName || '請選擇' }}
-                </button>
+                <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
+                    {{ details.EquipTypeName || '請選擇' }}
+                  </button>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                  <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item"
-                    @click="selectType(`${item}`)">{{ item }}</p>
+                  <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
                 </div>
               </div>
             </div>
@@ -54,37 +52,44 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend"><span>*</span>設備分類：</div>
-              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.EquipCategoryName" />
+              <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(details.EquipTypeName !== '') }">
+                    {{ details.EquipCategoryName || EquipCategoryInit }}
+                  </button>
+                <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
+                  <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend"><span>*</span>物品名稱：</div>
-            <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.AssetName" />
+            <input type="text" class="form-control " placeholder="最多輸入20字" v-model="details.AssetName" />
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">廠商：</div>
-            <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.VendorName" />
+            <input type="text" class="form-control " placeholder="最多輸入100字" v-model="details.VendorName" />
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">型號：</div>
-            <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.ProductType" />
+            <input type="text" class="form-control " placeholder="最多輸入100字" v-model="details.ProductType" />
           </div>
           <div class="col">
             <div class="input-group mb-3">
               <div class="input-group-prepend">規格：</div>
-              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.ProductSpec" />
+              <input type="text" class="form-control " placeholder="最多輸入100字" v-model="details.ProductSpec" />
             </div>
           </div>
           <div class="col">
             <div class="input-group mb-3">
               <div class="input-group-prepend">S/N：</div>
-              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.SN" />
+              <input type="text" class="form-control " placeholder="最多輸入100字" v-model="details.SN" />
             </div>
           </div>
         </div>
@@ -106,13 +111,27 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend"><span>*</span>儲位區域：</div>
-              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.AreaName" />
+              <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName(index)">
+                  {{ details.AreaName || '請選擇' }}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="areaDropdown">
+                  <p v-for="(item, index) in AreaArray" :key="index" class="dropdown-item" @click="selectArea(index, `${item}`)">{{ item }}</p>
+                </div>
+              </div>
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend"><span>*</span>儲位櫃位：</div>
-              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.LayerName" />
+              <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="details.AreaName === null || details.AreaName === ''">
+                  {{ details.LayerName || LayerInit }}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
+                  <p v-for="(item, index) in LayerArray" :key="index" class="dropdown-item" @click="selectLayer(index, `${item}`)">{{ item }}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -155,8 +174,7 @@
         </div>
       </div>
       <div class="content">
-        <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" 
-        :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}" @progress="onProgress" @slidechange="onSlideChange">
+        <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}" @progress="onProgress" @slidechange="onSlideChange">
           <swiper-slide class="custom-slide">
             <img src="https://www.cityonelimo.com/uploaded_files/seo-flyer/BLOG072202304240720_Remote%20work%20image.jpeg" alt="">
           </swiper-slide>
@@ -215,8 +233,8 @@
               <p>作業行為</p>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              {{ selectedItem || "請選擇" }}
-                            </button>
+                                {{ selectedItem || "請選擇" }}
+                              </button>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
                   <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
                   <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
@@ -298,7 +316,6 @@
           console.error(error);
         }
       }
-
       async function submit() {
         const axios = require('axios');
         const formData = new FormData();
