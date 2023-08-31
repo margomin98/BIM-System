@@ -123,20 +123,6 @@
       const EndDate = ref(''); //申請入庫日期(迄)
       const total = 100;
       const pageSize = 10;
-      const pagePosition = ref("bottom");
-      const pageOptions = [{
-          value: "bottom",
-          text: "Bottom"
-        },
-        {
-          value: "top",
-          text: "Top"
-        },
-        {
-          value: "both",
-          text: "Both"
-        }
-      ];
       const columnDefs = [{
           suppressMovable: true,
           field: "",
@@ -339,7 +325,6 @@
         EquipCategoryArray,
         EquipCategoryInit,
         getEquipCategoryName,
-        // AssetId,
         AssetName,
         Status,
         StatusArray,
@@ -347,8 +332,6 @@
         EndDate,
         total,
         pageSize,
-        pagePosition,
-        pageOptions,
         selectType,
         selectCategory,
         selectStatus,

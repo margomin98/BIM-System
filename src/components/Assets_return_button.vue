@@ -1,13 +1,11 @@
 <template>
   <div class='button_wrap'>
     <button @click="viewDetails()">檢視</button>
-    <button :class="{ disabled: isDisabled, btn_edit: !isDisabled}" @click="viewEdit()" :disabled="isDisabled">編輯</button>
+    <button class="btn_edit" @click="viewEdit()">編輯</button>
   </div>
 </template>
 
 <script>
-// import router from '@/router';
-import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 
@@ -15,40 +13,23 @@ export default {
   props: ['params'],
   setup(props) {
     const router = useRouter();
-    const search_id = props.params.data.AO_ID;
-    const isDisabled = ref(false);
+    const search_id = props.params.data.AssetsId;
 
-    onMounted(()=> {
-      checkButton();
-    });
     function viewDetails() {
-      // console.log(props.params.data.AI_ID);
       if (search_id !== '') {
         router.push({ name: 'Assets_View', query: { search_id } });
       }
     }
 
     function viewEdit() {
-      // console.log(props.params.data.search_id);
       if (search_id !== '') {
         router.push({ name: 'Assets_Edit', query: { search_id } });
       }
     }
 
-    function checkButton() {
-      const disabledStatus = props.params.data.Status;
-      if(disabledStatus === '待入庫' || disabledStatus === '已入庫' || disabledStatus === '已歸還') {
-        isDisabled.value = true;
-      }
-      else {
-        isDisabled.value = false;
-      }
-
-    }
     return { 
       viewDetails,
       viewEdit,
-      isDisabled,
     };
   },
 };
