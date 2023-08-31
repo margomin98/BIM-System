@@ -27,7 +27,7 @@
             </div>
           </div>
           <div class="col-xl-3 col-lg-2 col-md-6 col-12">
-            <p>狀態 {{ Status }}</p>
+            <p>狀態</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ Status || "請選擇" }}
