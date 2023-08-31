@@ -47,6 +47,7 @@ import Assets_Search from "../views/assets/Search.vue";
 
 //設備整合
 import Equipment_Datagrid from "../views/equipment/Datagrid.vue";
+import Equipment_New from "../views/equipment/New.vue";
 //設備整合
 
 //系統管理
@@ -168,7 +169,7 @@ const routes = [
   },
   {
     path: "/assets_search",
-    name: "Assets_Searcg",
+    name: "Assets_Search",
     component: Assets_Search,
     // meta: {auth: true, request: 'AssetMgr_Detail'},
   },
@@ -198,11 +199,18 @@ const routes = [
   },
   {
     path: "/equipment_datagrid",
-    name: "Equipment_datagrid",
+    name: "Equipment_Datagrid",
     component: Equipment_Datagrid,
     // meta: {auth: true, request: 'AO_Detail'},
   },
   {
+    path: "/equipment_new",
+    name: "Equipment_New",
+    component: Equipment_New,
+    // meta: {auth: true, request: 'AO_Detail'},
+  },
+  {
+    
     path: "/authority",
     name: "Authority",
     component: Authority,
