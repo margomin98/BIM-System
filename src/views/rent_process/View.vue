@@ -136,7 +136,7 @@
           <div class="col d-flex wrap">
             <label for="inputWithButton" class="form-label"><p>審核意見</p></label>
             <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly>{{ details.VerifyMemo }}</p>
+              <textarea class="readonly_box" readonly>{{ details.VerifyMemo }}</textarea>
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>審核出庫作業</h1>
+      <h1>出庫審核檢視</h1>
     </div>
     <div class="info_wrap col">
       <div class="fixed_info">
@@ -108,13 +108,13 @@
         </div>
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithButton" class="form-label"><p><span>*</span>審核人員</p></label>
+            <label for="inputWithButton" class="form-label"><p>審核人員</p></label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>{{ details.VerifyPerson}} </p>
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name"><p><span>*</span>審核結果</p></label>
+            <label for="inputWithTitle" class="form-label project_name"><p>審核結果</p></label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly> {{ details.VerifyResult }}</p>
             </div>
@@ -130,7 +130,7 @@
           <div class="col d-flex wrap">
             <label for="inputWithButton" class="form-label"><p>審核意見</p></label>
             <div class="input-group" >
-              <textarea placeholder="最多100字" class="form-control" id="inputTextarea" readonly v-model="details.VerifyMemo"></textarea>
+              <textarea class="form-control" id="inputTextarea" readonly v-model="details.VerifyMemo"></textarea>
             </div>
           </div>
         </div>
@@ -554,6 +554,7 @@
          
             textarea{
               border-left: 1px solid black;
+              background-color: #B4B4B4;
               border:none
             }
           }
@@ -857,6 +858,7 @@
          
             textarea{
               border-left: 1px solid black;
+              background-color: #B4B4B4;
               border:none
             }
           }
@@ -1158,6 +1160,7 @@
           .wrap:nth-child(1) {
             border-right: 1px solid black;
              .input-group textarea{
+              background-color: #B4B4B4;
               border:none
               }
       
