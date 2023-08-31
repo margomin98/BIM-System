@@ -269,6 +269,11 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
+          .row:nth-child(3){
+        textarea{
+          padding: 5px 10px 0;
+        }
+          }
           .form-check {
             margin-left: 10px;
           }
@@ -420,6 +425,11 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
+          .row:nth-child(3){
+        textarea{
+          padding: 5px 10px 0;
+        }
+          }
           .form-check {
             margin-left: 10px;
           }
@@ -574,6 +584,11 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
+          .row:nth-child(3){
+            textarea{
+              padding:10px;
+            }
+          }
           .form-check {
             margin-left: 10px;
           }

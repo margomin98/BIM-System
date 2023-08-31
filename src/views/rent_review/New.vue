@@ -32,15 +32,15 @@
         </div>
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithButton" class="form-label"><p>專案代碼</p></label>
+            <label for="inputWithButton" class="form-label "><p>專案代碼</p></label>
             <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly v-model=" details.ProjectCode" />
+              <input type="text" class="form-control readonly_box text-center" id="inputWithButton" readonly v-model=" details.ProjectCode" />
             </div>
           </div>
           <div class=" col d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name"><p>專案名稱</p></label>
             <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly v-model=" details.ProjectName" />
+              <input type="text" class="form-control readonly_box text-center" id="inputWithTitle" readonly v-model=" details.ProjectName" />
             </div>
           </div>
         </div>
@@ -751,6 +751,14 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
+          .row:nth-child(3){
+            .input-group{
+              padding:0 !important;
+          textarea{
+            padding: 5px 10px 0;
+          }
+          }
+        }
           .form-check {
             margin-left: 10px;
           }
@@ -1039,6 +1047,14 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
+          .row:nth-child(3){
+            .input-group{
+              padding:0 !important;
+          textarea{
+            padding: 5px 10px 0;
+          }
+          }
+        }
           .form-check {
             margin-left: 10px;
           }

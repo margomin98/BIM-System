@@ -64,7 +64,7 @@
   } from "ag-grid-vue3";
   import Navbar from "@/components/Navbar.vue";
   import Parameter_button from "@/components/Parameter_button";
-  import Edit_pen from "@/components/Edit_pen";
+  // import Edit_pen from "@/components/Edit_pen";
   import {
 reactive,
     ref
@@ -74,7 +74,7 @@ reactive,
       Navbar,
       AgGridVue,
       Parameter_button,
-      Edit_pen
+      // Edit_pen
     },
     setup() {
       const newType = ref('');
