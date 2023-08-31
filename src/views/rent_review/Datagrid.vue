@@ -103,7 +103,7 @@
       const AO_ID = ref('');
       const ProjectName = ref('');
       const Use = ref('');
-      const UseArray = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨']
+      const UseArray = [ '出貨', '報廢', '退貨'] //'內部領用', '借測', '維修', 不用審核
       const Status = ref(''); //狀態
       const StatusArray = ref(['待審核' , '通過', '不通過'])
       const DateCategory = ref('');
