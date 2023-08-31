@@ -212,9 +212,6 @@
               <div class="date-selector">
                 <div class="input-container">
                   <input type="date" v-model="selectedDate" class="date-input" @focus="showDatePicker = true" @blur="showDatePicker = false" />
-                  <div class="date-picker" v-if="showDatePicker">
-                    <datepicker v-model="selectedDate"></datepicker>
-                  </div>
                 </div>
               </div>
             </div>

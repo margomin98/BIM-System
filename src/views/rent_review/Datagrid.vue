@@ -74,7 +74,7 @@
       </div>
     </div>
     <div style="width: 100%">
-      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="35" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true" :pagination="true"
+      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="35" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true"
         :alwaysShowHorizontalScroll="true">
       </ag-grid-vue>
     </div>
@@ -198,12 +198,6 @@
           resizable: true,
           suppressMovable: true
         },
-        {
-          width: 100,
-          field: "",
-          cellRenderer: "Delete",
-          resizable: true,
-        }
       ];
       const rowData = ref([]);
       async function submit() {
