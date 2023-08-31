@@ -136,7 +136,7 @@
           <div class="col d-flex wrap">
             <label for="inputWithButton" class="form-label"><p>審核意見</p></label>
             <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly>{{ details.VerifyMemo }}</p>
+              <textarea class="readonly_box form-control" readonly>{{ details.VerifyMemo }}</textarea>
             </div>
           </div>
         </div>
@@ -701,12 +701,51 @@
       h5 {
         font-weight: 700;
       }
-      background: #3D4E61;
-      color: white;
+      background: #528091;
+    color: white;
+    display: flex;
+    justify-content: center;
       .close_icon {
         cursor: pointer;
       }
+      .modal-title{
+        margin: auto;
+      }
     }
+  }
+  #confirmModal{
+    .modal-content{
+      border-radius: 0;
+      border:1px solid black;
+    .modal-body{
+      background: #528091;
+    color: white;
+    font-weight: 700;
+    text-align: center;
+    height: 80px;
+      border-bottom:1px solid black;
+    }
+    .modal-footer{
+    
+          margin: auto;
+    padding: 10px;
+    gap:5px;
+    button:nth-child(1){
+      font-weight: 700;
+    border:none;
+    &:hover{
+      background:#636260
+    }
+    }
+    button:nth-child(2){
+      background: #132238;
+    font-weight: 700;
+    border: none;
+    &:hover{
+      background:#426497
+    }
+    }
+    }}
   }
   .input-with-icon {
     position: relative;
@@ -972,6 +1011,12 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
+          .row:nth-child(3){
+          
+            textarea{
+    padding: 5px 10px 0;
+            }
+          }
           .form-check {
             margin-left: 10px;
           }
@@ -1311,6 +1356,12 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
+          .row:nth-child(3){
+          
+          textarea{
+  padding: 5px 10px 0;
+          }
+        }
           .form-check {
             margin-left: 10px;
           }

@@ -391,7 +391,7 @@
         @include title_color;
       }
       #readonly_box {
-        padding: 0;
+        padding: 0 10px;
         background-color: #B4B4B4;
         border-left: black 1px solid;
       }
@@ -592,6 +592,20 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
+          .row:nth-child(1),.row:nth-child(2){
+            .input-group input{
+              text-align: center;
+              
+            }
+          }
+          .row:nth-child(3){
+            .input-group{
+              padding:0 !important;
+          textarea{
+            padding: 5px 10px 0;
+          }
+          }
+        }
           .form-check {
             margin-left: 10px;
           }
@@ -880,6 +894,24 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
+          .row:nth-child(3){
+            .input-group{
+              padding:0 !important;
+          textarea{
+            padding: 5px 10px 0;
+          }
+          }
+        }
+          .row:nth-child(1),.row:nth-child(2){
+            .input-group input{
+              text-align: center;
+            }
+          }
+          .row:nth-child(3){
+            textarea{
+              padding:0 10px;
+            }
+          }
           .form-check {
             margin-left: 10px;
           }
@@ -1148,6 +1180,11 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
+          .row:nth-child(1),.row:nth-child(2){
+            .input-group input{
+              text-align: center;
+            }
+          }
           .form-check {
             margin-left: 10px;
             font-size: 18px;

@@ -319,3 +319,24 @@
     }
 }
 //assets_view_css
+
+//equipment css
+
+@mixin change_btn{
+    color:white;
+    background: #364E68;
+    border: none;
+    border-radius: 7px;
+font-weight: 700;
+display: flex;
+  padding: 10px 25px;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  padding: 5px;
+  width: 70px;
+  margin-bottom:  10px;
+  &:hover{
+    background: #1f3043
+  }
+  }

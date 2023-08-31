@@ -2,7 +2,7 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>整合設備</h1>
+      <h1>更換設備</h1>
     </div>
     <div class="info_wrap col">
       <div class="fixed_info">
@@ -23,34 +23,7 @@
             <input type="text" class="form-control text-center" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="文字敘述，最多20字" />
           </div>
         </div>
-        <div class="row row_wrap">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend flex">儲位區域：</div>
-              <div class="dropdown">
-                <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-             請選擇
-        </button>
-                <div class="dropdown-menu">
-                  <p>123</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend flex">儲位櫃位：</div>
-              <div class="dropdown">
-                <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-             請選擇
-        </button>
-                <div class="dropdown-menu">
-                  <p>123</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -173,6 +146,10 @@
   </div>
 
         </div>
+      <div class="col">
+      <button class="change_btn">
+      更換
+      </button></div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">資產編號：</div>
@@ -461,7 +438,7 @@
             background:#B5C9D0;
             padding:20px;
             border-radius:10px;
-            margin-bottom:20px;
+            margin-bottom:40px;
         
           .input-group-prepend{
             color:black;
@@ -660,6 +637,9 @@ border-radius:5px;
         }
       }
     }
+.change_btn{
+  @include change_btn
+}
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
@@ -938,6 +918,9 @@ border-radius:5px;
         }
       }
     }
+    .change_btn{
+  @include change_btn
+}
   }
   @media only screen and (max-width: 767px) {
     .main_section {
@@ -1201,5 +1184,8 @@ border-radius:5px;
       
       }
     }
+    .change_btn{
+  @include change_btn
+}
   }
 </style>

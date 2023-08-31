@@ -290,7 +290,9 @@
           suppressMovable: true,
           // checkboxSelection: true,
           resizable: true,
-          cellStyle: { 'justify-content': 'center' },
+          cellStyle: {
+            'justify-content': 'center'
+          },
         },
         {
           headerName: "項目",
@@ -417,7 +419,6 @@
           console.error(error);
         }
       }
-
       //分別使用帳號密碼驗證、改變驗證狀態 user1為設備工程師 user2為倉管人員
       async function validate(user) {
         if (user === 1) {
@@ -574,7 +575,7 @@
           }
         }
         #readonly_box {
-          padding: 0;
+          padding: 0 10px;
           background-color: #B4B4B4;
           border-left: black 1px solid;
         }
@@ -726,14 +727,13 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            padding:5px 10px 0;
+            padding: 5px 10px 0;
             border-bottom: 0
           }
           .wrap {
             background: white;
             border-top: 1px solid black;
             align-items: center;
-          
           }
           .form-label {
             font-weight: 700;
@@ -764,16 +764,12 @@
           }
           .wrap:nth-child(1) {
             border-right: 1px solid black;
-           
             .input-group {
               border-left: 1px solid black;
-               background: #b4b4b4;
+              background: #b4b4b4;
             }
-        
-            
             #memo {
-             
-              width: 124px;
+              width: 122px;
             }
           }
         }
@@ -781,6 +777,14 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
+          .row:nth-child(3){
+            .input-group{
+              padding: 0 !important;
+            }
+            textarea{
+    padding: 5px 10px 0;
+            }
+          }
           .form-check {
             margin-left: 10px;
           }
@@ -848,7 +852,6 @@
               background-color: #5d85bb;
             }
           }
-       
         }
       }
     }
@@ -882,7 +885,7 @@
           }
         }
         #readonly_box {
-          padding: 0;
+          padding: 0 10px;
           background-color: #B4B4B4;
           border-left: black 1px solid;
         }
@@ -1034,7 +1037,7 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            padding:5px 10px 0;
+            padding: 5px 10px 0;
             border-bottom: 0
           }
           .wrap {
@@ -1076,7 +1079,7 @@
               background: #b4b4b4;
             }
             #memo {
-              width: 115px;
+              width: 122px;
             }
           }
         }
@@ -1084,6 +1087,14 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
+          .row:nth-child(3){
+            .input-group{
+              padding: 0 !important;
+            }
+            textarea{
+    padding: 5px 10px 0;
+            }
+          }
           .form-check {
             margin-left: 10px;
           }
@@ -1332,7 +1343,6 @@
             .input-group {
               background: #b4b4b4;
             }
-        
           }
           .fixed_info {
             border-top: 1px solid black;

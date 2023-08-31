@@ -788,6 +788,43 @@
   .input-group {
     height: 100%;
   }
+  #confirmModal{
+    .modal-content{
+      border-radius: 0;
+      border:1px solid black;
+    .modal-body{
+      background: #528091;
+    color: white;
+    font-weight: 700;
+    text-align: center;
+    padding: 20px 10px;
+    border-bottom: 1px solid black;
+    }
+    .modal-footer{
+      padding: 10px;
+    gap: 5px;
+    background: white;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-radius: 0;
+    button:nth-child(1){
+      font-weight: 700;
+    border:none;
+    &:hover{
+      background:#636260
+    }
+    }
+    button:nth-child(2){
+      background: #132238;
+    font-weight: 700;
+    border: none;
+    &:hover{
+      background:#426497
+    }
+    }
+    }}
+  }
   @media only screen and (min-width: 1200px) {
     .modal {
       padding: 0 5%;
@@ -1024,6 +1061,13 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
+          .row:nth-child(3){
+            p{
+              justify-content: left;
+    padding: 5px 10px 0;
+    align-items: normal;
+            }
+          }
           .form-check {
             margin-left: 10px;
           }
@@ -1331,6 +1375,13 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
+          .row:nth-child(3){
+            p{
+              justify-content: left;
+    padding: 5px 10px 0;
+    align-items: normal;
+            }
+          }
           .form-check {
             margin-left: 10px;
           }
@@ -1645,6 +1696,13 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
+          .row:nth-child(3){
+            p{
+              justify-content: left;
+    padding: 5px 10px 0;
+    align-items: normal;
+            }
+          }
           .form-check {
             margin-left: 10px;
             font-size: 18px;

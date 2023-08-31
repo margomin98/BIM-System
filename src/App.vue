@@ -75,4 +75,8 @@
 	.swiper-button-next {
     color: pink !important;
 }
+.readonly_box {
+    pointer-events: none;
+    user-select: none;
+  }
 </style>
