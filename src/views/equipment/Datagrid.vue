@@ -52,7 +52,7 @@
             </div>
           </div>
           <div class="col-xl-2 col-lg-2 col-md-6 col-12  flex-col">
-            <p>日期(起)</p>
+            <p>入庫日期(起)</p>
             <div class="date-selector">
               <div class="input-container">
                 <input type="date" v-model="selectedDate" class="date-input" @focus="showDatePicker = true" @blur="showDatePicker = false" />
@@ -63,7 +63,7 @@
             </div>
           </div>
           <div class="col-xl-2 col-lg-2 col-md-6 col-12 flex-col">
-            <p>日期(迄)</p>
+            <p>入庫日期(迄)</p>
             <div class="date-selector">
               <div class="input-container">
                 <input type="date" v-model="selectedEndDate" class="date-input" @focus="showEndDatePicker = true" @blur="showEndDatePicker = false" />
@@ -112,7 +112,7 @@
             suppressMovable: true,
             field: "",
             cellRenderer: "Equipment_button",
-            width: '190',
+            width: '185',
             resizable: true,
           },
           {

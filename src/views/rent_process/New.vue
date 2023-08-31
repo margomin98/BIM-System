@@ -1275,7 +1275,6 @@
   }
   @media only screen and (max-width: 767px) {
     .modal {
-      padding: 0 5%;
       .modal-content {
         background-color: unset;
         border: 0;
