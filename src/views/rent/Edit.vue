@@ -35,7 +35,7 @@
             <label for="inputWithButton" class="form-label"><p><span>*</span>專案代碼</p></label>
             <div class="input-group">
               <input type="text" class="form-control" id="project_id" placeholder="最多輸入10字" v-model="details.ProjectCode">
-              <button class="btn code_search" type="button" @click="getProjectName">搜索</button>
+              <button class="btn code_search" type="button" @click="getProjectName">搜尋</button>
             </div>
           </div>
           <div class="col d-flex wrap">
@@ -294,7 +294,7 @@
             alert(data.messages);
             router.push('/');
           } else {
-            details.valueProjectName = data.messages.toString()
+            details.value.ProjectName = data.messages.toString()
           }
         } catch (error) {
           console.error(error);
@@ -406,7 +406,6 @@
           Number: myForm.Number,
           RequiredSpec: myForm.RequiredSpec,
         });
-        console.log(gridApi.value.setRowData);
         setTimeout(() => {
           gridApi.value.setRowData(rowData.value);
         }, 0);
@@ -423,7 +422,10 @@
         gridApi.value = params.api;
       };
       function updateDeleteList(newValue) {
-        myForm.deleteList.push(newValue);
+        myForm.deleteList.push(newValue.item_id);
+        const deleteIndex = rowData.value.findIndex(item => item.id === newValue.id)
+        console.log(deleteIndex);
+        rowData.value.splice(deleteIndex, 1);
       }
       onMounted(() => {
         getDetails();

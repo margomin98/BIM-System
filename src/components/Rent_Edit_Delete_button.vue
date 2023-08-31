@@ -12,9 +12,12 @@ export default {
 
       // const index = props.params.data.index;
       const rowNode = props.params.node;
+      // const deletedData = rowNode.data;
+      // const indexToDelete = props.parentRef.rowData.value.findIndex(item => item === deletedData);
+      console.log(props.params.data);
       props.params.api.applyTransaction({remove: [rowNode.data]});
-      // console.log(props.params);
-      props.params.insertDeleteList(props.params.data.item_id);
+      // console.log(props.params.);
+      props.params.insertDeleteList(props.params.data);
     }
     return {
       deleteRow

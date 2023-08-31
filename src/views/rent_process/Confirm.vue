@@ -2,7 +2,7 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>資產出庫交付</h1>
+      <h1>出庫交付作業</h1>
     </div>
     <div class="info_wrap col">
       <div class="fixed_info">
@@ -245,7 +245,21 @@
     </div>
     <div class="col button_wrap">
       <button class="back_btn" @click="goBack">回上一頁</button>
-      <button class="send_btn" @click="submit" :disabled="!canSubmit()" :class="{ send_btn_disabled: !canSubmit() }">送出</button>
+      <button class="send_btn" :disabled="!canSubmit()" :class="{ send_btn_disabled: !canSubmit() }" data-bs-toggle="modal" data-bs-target="#confirmModal">送出</button>
+    </div>
+    <!-- confirmModal -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            按下確認後將無法再次變更交付項目，請確認資產出庫細項是否交付正確
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="submit">確認</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -352,13 +366,14 @@
         },
       ];
       const columnDefs2 = [{
-          headerName: "",
+          headerName: "交付確認",
           field: "OM_IsExecute",
-          width: 55,
+          width: 120,
           suppressMovable: true,
           editable: true,
           // checkboxSelection: true,
           resizable: true,
+          cellStyle: { 'justify-content': 'center' },
         },
         {
           headerName: "項目",

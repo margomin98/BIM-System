@@ -59,7 +59,7 @@
         </div>
       </div>
       <div class='third_content'>
-        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true">
+        <ag-grid-vue style="height: 550px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize">
         </ag-grid-vue>
       </div>
     </div>
@@ -186,6 +186,7 @@
     data() {
       return {
         rowHeight: 35,
+        pageSize: 15
       };
     }
   };
