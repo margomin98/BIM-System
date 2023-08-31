@@ -22,7 +22,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">資產編號：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID" />
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AssetsId" />
           </div>
         </div>
         <div class="row">
@@ -75,7 +75,7 @@
           <div class="col">
             <div class="input-group mb-3">
               <div class="input-group-prepend">S/N：</div>
-              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.ProductSpec" />
+              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.SN" />
             </div>
           </div>
         </div>
@@ -83,7 +83,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">總庫存數量：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Count" />
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Number" />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -97,13 +97,13 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend"><span>*</span>儲位區域：</div>
-              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.Count" />
+              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.AreaName" />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend"><span>*</span>儲位櫃位：</div>
-              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.Unit" />
+              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.LayerName" />
             </div>
           </div>
         </div>
@@ -146,17 +146,8 @@
         </div>
       </div>
       <div class="content">
-        <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{
-                    0: {
-                slidesPerView: 1,
-              },
-              768: {
-                slidesPerView: 3,
-              },
-              1200: {
-                slidesPerView: 3,
-              },
-                            }" @progress="onProgress" @slidechange="onSlideChange">
+        <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" 
+        :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}" @progress="onProgress" @slidechange="onSlideChange">
           <swiper-slide class="custom-slide">
             <img src="https://www.cityonelimo.com/uploaded_files/seo-flyer/BLOG072202304240720_Remote%20work%20image.jpeg" alt="">
           </swiper-slide>
@@ -273,13 +264,12 @@
     setup() {
       const route = useRoute();
       const router = useRouter();
-      const AI_ID = route.query.search_id;
-      const deliveryDate = ref('');
+      const AssetsId = route.query.search_id;
       const details = ref({});
       async function getDetails() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/GetApplicationInfo?ai_id=${AI_ID}`);
+          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/GetAssetInfo?id=${AssetsId}`);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -299,90 +289,7 @@
           console.error(error);
         }
       }
-      const validation = ref({
-        user1: {
-          account: 'user_1',
-          password: 'Test_123',
-          isValidate: false,
-        },
-        user2: {
-          account: 'user_2',
-          password: 'Test_123',
-          isValidate: false,
-        },
-      });
-      //分別使用帳號密碼驗證、改變驗證狀態
-      async function validate(user) {
-        if (user === 1) {
-          const axios = require('axios');
-          const formData = new FormData();
-          const formFields = {
-            'userName': validation.value.user1.account,
-            'userPassword': validation.value.user1.password,
-          };
-          //將表格資料append到 formData
-          for (const fieldName in formFields) {
-            formData.append(fieldName, formFields[fieldName]);
-            console.log(formData.get(`${fieldName}`));
-          }
-          const response = await axios.post('http://192.168.0.176:7008/Account/IdentityValidationForD_Operator', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
-          try {
-            const data = response.data;
-            console.log(data);
-            if (data.state === 'success') {
-              validation.value.user1.isValidate = true;
-            } else if (data.state === 'error') {
-              alert(data.messages);
-              validation.value.user1.isValidate = false;
-            }
-          } catch (error) {
-            console.error(error);
-          }
-        } else if (user === 2) {
-          const axios = require('axios');
-          const formData = new FormData();
-          const formFields = {
-            'userName': validation.value.user2.account,
-            'userPassword': validation.value.user2.password,
-          };
-          //將表格資料append到 formData
-          for (const fieldName in formFields) {
-            formData.append(fieldName, formFields[fieldName]);
-            console.log(formData.get(`${fieldName}`));
-          }
-          const response = await axios.post('http://192.168.0.176:7008/Account/IdentityValidationForAI_Operator', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
-          try {
-            const data = response.data;
-            console.log(data);
-            if (data.state === 'success') {
-              validation.value.user2.isValidate = true;
-            } else if (data.state === 'error') {
-              alert(data.messages);
-              validation.value.user2.isValidate = false;
-            }
-          } catch (error) {
-            console.error(error);
-          }
-        }
-      }
-      function validationStatus(user) {
-        if (user === 1) {
-          return validation.value.user1.isValidate ? validation.value.user1.account : '未驗證'
-        } else if (user === 2) {
-          return validation.value.user2.isValidate ? validation.value.user2.account : '未驗證'
-        }
-      }
-      function canSubmit() {
-        return validation.value.user1.isValidate && validation.value.user2.isValidate;
-      }
+
       async function submit() {
         const axios = require('axios');
         const formData = new FormData();
@@ -419,29 +326,15 @@
           console.error(error);
         }
       }
-      function getDate() {
-        const today = new Date();
-        var date = '';
-        date += (today.getFullYear() + '/');
-        date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
-        date += ((today.getDate()).toString().padStart(2, '0'));
-        return date;
-      }
       onMounted(() => {
         getDetails();
-        deliveryDate.value = getDate();
       });
       function goBack() {
         window.history.back();
       }
       return {
-        validation,
-        validate,
-        validationStatus,
-        canSubmit,
         submit,
         goBack,
-        deliveryDate,
         details,
         pagination: {
           clickable: true,

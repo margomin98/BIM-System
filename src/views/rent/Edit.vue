@@ -34,11 +34,10 @@
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap column_section">
             <label for="inputWithButton" class="form-label"><p><span>*</span>專案代碼</p></label>
             <div class="input-group">
-              <input type="text" class="form-control" id="project_id" v-model="details.ProjectCode">
-     <button class="btn code_search" type="button" @click="getProjectName">搜索</button>
-                </div>
+              <input type="text" class="form-control" id="project_id" placeholder="最多輸入10字" v-model="details.ProjectCode">
+              <button class="btn code_search" type="button" @click="getProjectName">搜索</button>
+            </div>
           </div>
-      
           <div class="col d-flex wrap">
             <label for="inputWithTitle" class="form-label" id='project_name'> <p>專案名稱</p></label>
             <div class="input-group" id='readonly_box'>
@@ -49,7 +48,7 @@
         <div class="row g-0">
           <div class="col d-flex wrap column_section" style='border:none'>
             <label for="inputTextarea" class="form-label"><p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p></label>
-            <textarea class="form-control" id="inputTextarea" rows="1" placeholder='請填寫說明，最多100字' v-model="details.Description"></textarea>
+            <textarea class="form-control" id="inputTextarea" rows="1" placeholder='最多輸入100字' v-model="details.Description"></textarea>
           </div>
         </div>
       </form>
@@ -64,8 +63,8 @@
             <p><span>*</span>設備總類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                            {{ myForm.EquipTypeName || '請選擇' }}
-                          </button>
+                              {{ myForm.EquipTypeName || '請選擇' }}
+                            </button>
               <div class="dropdown-menu" aria-labelledby="typeDropdown">
                 <p v-for="(item, index) in myForm.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
               </div>
@@ -75,8 +74,8 @@
             <p><span>*</span>設備分類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(myForm.EquipTypeName !== '') }">
-                            {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
-                          </button>
+                              {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
+                            </button>
               <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                 <p v-for="(item, index) in myForm.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
               </div>
@@ -89,7 +88,7 @@
           <div class="col-xl-3 col-lg-3 col-md-3 col-12">
             <p><span>*</span>數量<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"></p>
             <div class="number-input-box">
-              <input class="input-number" type="number" v-model="count" min="1" />
+              <input class="input-number" type="number" v-model="myForm.Number" min="1" />
             </div>
           </div>
         </div>
@@ -98,7 +97,7 @@
             <label for="inputTextarea" class="form-label"><p>規格需求：</p></label>
             <div>
             </div>
-            <textarea class="form-control" id="inputTextarea" rows="3" placeholder='請填寫說明，最多100字'></textarea>
+            <textarea class="form-control" id="inputTextarea" rows="3" placeholder='最多輸入100字'></textarea>
           </div>
         </div>
         <div class='col d-flex justify-content-center'>
@@ -208,7 +207,6 @@
       const rowData = ref([]);
       const details = ref({});
       const myForm = reactive({
-        ProjectValid: false,
         EquipTypeName: '',
         EquipTypeArray: [],
         EquipCategoryArray: [],
@@ -230,7 +228,6 @@
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             rowData.value = data.resultList.ItemList;
-
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -241,7 +238,6 @@
           console.error(error);
         }
       }
-
       async function getEquipTypeName() {
         if (myForm.EquipTypeArray.length == 0) {
           const axios = require('axios');
@@ -294,12 +290,10 @@
           console.log(data);
           if (data.state === 'success') {
             details.value.ProjectName = data.resultList;
-            myForm.ProjectValid = true;
           } else if (data.state === 'account_error') {
             alert(data.messages);
             router.push('/');
           } else {
-            myForm.ProjectValid = false;
             details.valueProjectName = data.messages.toString()
           }
         } catch (error) {
@@ -325,9 +319,6 @@
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             rowData.value = data.resultList.ItemList;
-            if(data.resultList.ProjectCode) {
-              myForm.ProjectValid = true
-            }
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -343,13 +334,16 @@
           alert('請輸入必填項目');
           return;
         }
-        if (!myForm.ProjectValid) {
-          alert('請確定專案代碼查詢正確')
-          return;
-        }
         if (!/^(?![ 　]{10}$)[\s\S]{1,10}$/.test(myForm.ProjectCode)) {
           alert('專案代碼格式錯誤');
           return;
+        }
+        if (details.value.Description) {
+          details.value.Description = details.value.Description.trim();
+        }
+        if (details.value.Description && !/^.{1,100}$/.test(details.value.Description.trim())) {
+          alert('說明不可輸入超過100字')
+          return
         }
         const requestData = {
           AO_ID: AO_ID,
@@ -380,13 +374,22 @@
       }
       function insertItemList() {
         //檢查必填子項目
+        myForm.ProductName = myForm.ProductName.trim()
         if (!myForm.EquipTypeName || !myForm.EquipCategoryName || !myForm.ProductName || myForm.Number < 1) {
           alert('請輸入必填子項目');
           return
         }
-        // 檢查 物品名稱是否為 不為全空格 且 20字內
-        if (!/^(?![ 　]+$).{1,20}$/.test(myForm.ProductName)) {
-          alert('物品名稱格式錯誤');
+        // 檢查 物品名稱是否20字內
+        if (!/^.{1,20}$/.test(myForm.ProductName)) {
+          alert('物品名稱不可輸入超過20字');
+          return
+        }
+        // 如果有規格需求 不能超過100字
+        if (myForm.RequiredSpec) {
+          myForm.RequiredSpec = myForm.RequiredSpec.trim();
+        }
+        if (myForm.RequiredSpec && !/^.{1,100}$/.test(myForm.RequiredSpec.trim())) {
+          alert('規格需求不可輸入超過100字')
           return
         }
         rowData.value.push({
@@ -420,8 +423,8 @@
         gridApi.value = params.api;
       };
       function updateDeleteList(newValue) {
-      myForm.deleteList.push(newValue);
-    }
+        myForm.deleteList.push(newValue);
+      }
       onMounted(() => {
         getDetails();
       });
@@ -557,13 +560,22 @@
               }
               .dropdown-menu {
                 width: 180px;
+                max-height: 250px;
+                overflow-y: auto;
+                p {
+                  font-size: 18px;
+                  color: black;
+                  font-weight: normal;
+                  &:hover {
+                    cursor: pointer;
+                  }
+                }
                 .dropdown-item {
                   text-align: left;
                 }
               }
             }
             div {
-           
               p {
                 text-align: center;
                 white-space: nowrap;
@@ -572,10 +584,10 @@
                 margin-bottom: 5px;
               }
             }
-            
           }
           .first_row {
-            div:nth-child(1),div:nth-child(3){
+            div:nth-child(1),
+            div:nth-child(3) {
               padding: 0 5px;
             }
           }
@@ -795,7 +807,8 @@
             }
           }
           .first_row {
-            div:nth-child(1),div:nth-child(3){
+            div:nth-child(1),
+            div:nth-child(3) {
               padding: 0 5px;
             }
           }
@@ -876,7 +889,7 @@
         }
         .input-number {
           @include count_btn;
-        width: 100%;
+          width: 100%;
         }
         .form-control {
           height: 100%;

@@ -123,20 +123,6 @@
       const EndDate = ref(''); //申請入庫日期(迄)
       const total = 100;
       const pageSize = 10;
-      const pagePosition = ref("bottom");
-      const pageOptions = [{
-          value: "bottom",
-          text: "Bottom"
-        },
-        {
-          value: "top",
-          text: "Top"
-        },
-        {
-          value: "both",
-          text: "Both"
-        }
-      ];
       const columnDefs = [{
           suppressMovable: true,
           field: "",
@@ -213,20 +199,7 @@
           cellRenderer: "Delete_button",
         }
       ];
-      const rowData = ref([
-        // {
-        //   AI_ID: 'S202300001',
-        //   EquipTypeName: "Type A",
-        //   EquipCategoryName: "Category X",
-        //   AssetsId: "A123",
-        //   AssetName: "Asset 1",
-        //   Status: "Active",
-        //   AreaName: "Area 1",
-        //   LayerName: "Layer 1",
-        //   ApplicationDate: "2023/08/14",
-        //   Applicant: "John Doe"
-        // },
-      ]);
+      const rowData = ref([]);
       async function submit() {
         const formData = new FormData();
         const formFields = {
@@ -352,7 +325,6 @@
         EquipCategoryArray,
         EquipCategoryInit,
         getEquipCategoryName,
-        // AssetId,
         AssetName,
         Status,
         StatusArray,
@@ -360,8 +332,6 @@
         EndDate,
         total,
         pageSize,
-        pagePosition,
-        pageOptions,
         selectType,
         selectCategory,
         selectStatus,

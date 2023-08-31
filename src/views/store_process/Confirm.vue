@@ -230,7 +230,7 @@
                       </div>
                       <div class="modal-body">
                         <div class="col">
-                          <div class="input-group">
+                          <div class="input-group mb-3">
                             <div class="input-group-prepend">帳號：</div>
                             <input type="text" class="form-control" aria-label="Default"
                               aria-describedby="inputGroup-sizing-default" v-model="validation.user2.account" />
@@ -258,8 +258,7 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="send_btn" @click="submit" :disabled="!canSubmit()"
-          :class="{ send_btn_disabled: !canSubmit() }">送出</button>
+        <button class="send_btn" @click="submit" :disabled="!canSubmit()" :class="{ send_btn_disabled: !canSubmit() }">送出</button>
       </div>
     </div>
   </div>
@@ -307,11 +306,13 @@ export default {
         account: '',
         password: '',
         isValidate: false,
+        resultName: '',
       },
       user2: {
         account: '',
         password: '',
         isValidate: false,
+        resultName: '',
       },
     });
     //分別使用帳號密碼驗證、改變驗證狀態 user1為設備工程師 user2為倉管人員
@@ -338,6 +339,7 @@ export default {
           console.log(data);
           if (data.state === 'success') {
             validation.value.user1.isValidate = true;
+            validation.value.user1.resultName = validation.value.user1.account;
           }
           else if (data.state === 'error') {
             alert(data.messages);
@@ -369,6 +371,7 @@ export default {
           console.log(data);
           if (data.state === 'success') {
             validation.value.user2.isValidate = true;
+            validation.value.user2.resultName = validation.value.user2.account;
           }
           else if (data.state === 'error') {
             alert(data.messages);
@@ -381,9 +384,9 @@ export default {
     }
     function validationStatus(user) {
       if (user === 1) {
-        return validation.value.user1.isValidate ? validation.value.user1.account : '未驗證'
+        return validation.value.user1.isValidate ? validation.value.user1.resultName : '未驗證'
       } else if (user === 2) {
-        return validation.value.user2.isValidate ? validation.value.user2.account : '未驗證'
+        return validation.value.user2.isValidate ? validation.value.user2.resultName : '未驗證'
       }
     }
     function canSubmit() {
@@ -394,8 +397,8 @@ export default {
       const formData = new FormData();
       const formFields = {
         'AI_ID': details.value.AI_ID,
-        'DeliveryOperator': validation.value.user1.account,
-        'AssetsInOperator': validation.value.user2.account,
+        'DeliveryOperator': validation.value.user1.resultName,
+        'AssetsInOperator': validation.value.user2.resultName,
       };
       //將表格資料append到 formData
       for (const fieldName in formFields) {

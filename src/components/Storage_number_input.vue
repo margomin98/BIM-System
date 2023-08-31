@@ -20,14 +20,12 @@
       });
       function changeSelectNumber() {
         const rowNode = props.params.node;
-        // 更新特定行的 selectNumber 字段
-        if(selectNumber.value) {
-          rowNode.data.selectNumber = selectNumber.value;
-          // 将整个更新后的数组重新应用到表格中
-          props.params.api.applyTransaction({
-            update: [rowNode.data]
-          });
-        }
+        // 若input數量為0或空格 則選擇數量為0
+        rowNode.data.selectNumber = selectNumber.value ? selectNumber.value : 0
+        // 将整个更新后的数组重新应用到表格中
+        props.params.api.applyTransaction({
+          update: [rowNode.data]
+        });
       }
       return {
         maxNumber,
