@@ -181,7 +181,21 @@
     </div>
     <div class="col button_wrap">
       <button class="back_btn" @click="goBack">回上一頁</button>
-      <button class="send_btn" @click="submit">送出</button>
+      <button class="send_btn" data-bs-toggle="modal" data-bs-target="#confirmModal">送出</button>
+    </div>
+        <!-- Modal -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-body">
+            按下確認後將無法再次進行備料作業，請確認資產出庫細項是否備料正確
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="submit">確認</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>

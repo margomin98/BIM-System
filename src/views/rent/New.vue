@@ -36,7 +36,7 @@
                 </label>
             <div class="input-group">
               <input type="text" class="form-control" id="project_id" placeholder="最多輸入10字" v-model="myForm.ProjectCode">
-              <button class="btn code_search" type="button" @click="getProjectName">搜索</button>
+              <button class="btn code_search" type="button" @click="getProjectName">搜尋</button>
             </div>
           </div>
           <div class="col d-flex wrap">

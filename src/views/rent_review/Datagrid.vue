@@ -27,7 +27,7 @@
             </div>
           </div>
           <div class="col-xl-3 col-lg-2 col-md-6 col-12">
-            <p>狀態</p>
+            <p>狀態 {{ Status }}</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ Status || "請選擇" }}
@@ -105,7 +105,7 @@
       const Use = ref('');
       const UseArray = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨']
       const Status = ref(''); //狀態
-      const StatusArray = ref(['待審核' , '審核通過', '審核不通過'])
+      const StatusArray = ref(['待審核' , '通過', '不通過'])
       const DateCategory = ref('');
       const DateCategoryArray = ['申請日期', '審核日期'];
       const StartDate = ref(''); //日期(起)

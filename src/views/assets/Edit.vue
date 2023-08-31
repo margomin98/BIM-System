@@ -39,7 +39,16 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend"><span>*</span>設備總類：</div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.EquipTypeName" />
+              <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
+                  {{ details.EquipTypeName || '請選擇' }}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="statusDropdown">
+                  <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item"
+                    @click="selectType(`${item}`)">{{ item }}</p>
+                </div>
+              </div>
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -237,7 +246,7 @@
   import {
     AgGridVue
   } from "ag-grid-vue3";
-  import Button from "@/components/Storage_list_view_button";
+  import Storage_list_view_button from "@/components/Storage_list_view_button";
   import {
     register
   } from 'swiper/element/bundle';
@@ -259,7 +268,7 @@
     components: {
       Navbar,
       AgGridVue,
-      Button,
+      Storage_list_view_button,
     },
     setup() {
       const route = useRoute();
@@ -343,7 +352,7 @@
         columnDefs: [{
             suppressMovable: true,
             field: "",
-            cellRenderer: "Button",
+            cellRenderer: "Storage_list_view_button",
             width: '100',
           },
           {

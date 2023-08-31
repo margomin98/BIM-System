@@ -171,7 +171,7 @@
           <div class="col d-flex wrap">
             <label for="inputWithButton" class="form-label" id="memo"><p>交付備註</p></label>
             <div class="input-group" id="memo_input">
-              <textarea class="form-control" placeholder="最多100字" readonly v-model="details.DeliveryMemo"></textarea>
+              <textarea class="form-control" readonly v-model="details.DeliveryMemo"></textarea>
             </div>
           </div>
         </div>
@@ -179,7 +179,6 @@
     </div>
     <div class="col button_wrap">
       <button class="back_btn" @click="goBack">回上一頁</button>
-      <button class="send_btn" @click="submit">送出</button>
     </div>
   </div>
 </template>
@@ -285,11 +284,13 @@
         },
       ];
       const columnDefs2 = [{
-          headerName: "",
+          headerName: "交付確認",
           field: "OM_IsExecute",
-          width: 55,
+          width: 120,
           suppressMovable: true,
+          // checkboxSelection: true,
           resizable: true,
+          cellStyle: { 'justify-content': 'center' },
         },
         {
           headerName: "項目",
@@ -491,53 +492,6 @@
       function canSubmit() {
         return validation.value.user1.isValidate && validation.value.user2.isValidate;
       }
-      async function submit() {
-        DeliveryMemo.value.trim();
-        if (DeliveryMemo.value && !/^.{1,100}$/.test(DeliveryMemo.value)) {
-          alert('交付備註不可輸入超過100字')
-          return
-        }
-        let OM_List = [];
-        rowData2.value.forEach( item=> {
-          OM_List.push({
-            OM_id: item.AssetsId,
-            OM_IsExecute: item.OM_IsExecute,
-          });
-        });
-        console.log('OM_List', OM_List);
-        const axios = require('axios');
-        const formData = new FormData();
-        const formFields = {
-          'AO_ID': details.value.AO_ID,
-          'Recipient': validation.value.user1.resultName,
-          'DeliveryOperator': validation.value.user2.resultName,
-          'DeliveryMemo': DeliveryMemo.value,
-          'OM_List': OM_List,
-        };
-        //將表格資料append到 formData
-        for (const fieldName in formFields) {
-          formData.append(fieldName, formFields[fieldName]);
-          console.log(formData.get(`${fieldName}`));
-        }
-        const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/Delivery', formData);
-        try {
-          const data = response.data;
-          console.log(data);
-          if (data.state === 'success') {
-            let msg = data.messages;
-            msg += '\n編號:' + data.resultList.AO_ID;
-            alert(msg);
-            router.push({
-              name: 'Store_Process_Datagrid'
-            });
-          } else if (data.state === 'error') {
-            alert(data.messages);
-            console.log('error state', response);
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
       const onGridReady = (params) => {
         gridApi.value = params.api;
       };
@@ -562,7 +516,6 @@
         validate,
         validationStatus,
         canSubmit,
-        submit,
         onGridReady,
         goBack,
       };
