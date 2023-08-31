@@ -176,7 +176,7 @@
           <div class="col d-flex wrap">
             <label for="inputWithButton" class="form-label" id="memo"><p>交付備註</p></label>
             <div class="input-group" id="memo_input">
-              <textarea class="form-control readonly_box" placeholder="最多100字" readonly v-model="details.DeliveryMemo"></textarea>
+              <textarea class="form-control readonly_box" readonly v-model="details.DeliveryMemo"></textarea>
             </div>
           </div>
         </div>
@@ -562,6 +562,27 @@
       // const selectedNodes = gridApi.value.getSelectedNodes();
       // const selectedData = selectedNodes.map(node => node.data);
       // console.log('Selected Row Data:', selectedData);
+      async function deleteData() {
+        const form = new FormData();
+        form.append('ao_id', AO_ID);
+        const axios = require('axios');
+        const response = await axios.post(`http://192.168.0.176:7008/AssetsOutMng/ApplicationDelete`, form);
+        try {
+          const data = response.data;
+          if (data.state === 'success') {
+            let msg = data.messages + '\n';
+            msg += '單號為' + data.resultList.ao_id;
+            alert(msg);
+            router.push({
+              name: 'Rent_Datagrid'
+            });
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
       function goBack() {
         window.history.back();
       }
@@ -582,6 +603,7 @@
         canSubmit,
         submit,
         onGridReady,
+        deleteData,
         goBack,
       };
     },

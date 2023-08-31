@@ -87,7 +87,7 @@
     AgGridVue
   } from "ag-grid-vue3";
   import Rent_button from "@/components/Rent_button";
-  import Delete from "@/components/Delete_button.vue";
+  import Delete from "@/components/Rent_delete_button.vue";
   import Navbar from "@/components/Navbar.vue";
   import router from "@/router";
   export default {

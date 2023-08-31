@@ -75,7 +75,7 @@
       </div>
     </div>
     <div style="width: 100%">
-      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true" :pagination="true">
+      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true">
       </ag-grid-vue>
     </div>
   </div>
@@ -90,7 +90,7 @@
     AgGridVue
   } from "ag-grid-vue3";
   import Rent_process_button from "@/components/Rent_process_button";
-  import Delete from "@/components/Delete_button.vue";
+  import Rent_process_delete_button  from "@/components/Rent_process_delete_button ";
   import Navbar from "@/components/Navbar.vue";
   import router from "@/router";
   export default {
@@ -98,7 +98,7 @@
       Navbar,
       AgGridVue,
       Rent_process_button,
-      Delete,
+      Rent_process_delete_button,
     },
     data() {
       return {
@@ -221,7 +221,7 @@
             field: "",
             resizable: true,
             width: 100,
-            cellRenderer: "Delete",
+            cellRenderer: "Rent_process_delete_button",
           }
       ];
       const rowData = ref([

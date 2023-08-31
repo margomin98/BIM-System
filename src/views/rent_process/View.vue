@@ -171,7 +171,7 @@
           <div class="col d-flex wrap">
             <label for="inputWithButton" class="form-label" id="memo"><p>交付備註</p></label>
             <div class="input-group" id="memo_input">
-              <textarea class="form-control readonly_box" placeholder="最多100字" readonly v-model="details.DeliveryMemo"></textarea>
+              <textarea class="form-control readonly_box" readonly v-model="details.DeliveryMemo"></textarea>
             </div>
           </div>
         </div>

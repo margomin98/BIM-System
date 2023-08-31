@@ -276,8 +276,8 @@
               確定刪除這筆項目嗎？
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">取消</button>
-              <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" @click="deleteData">刪除</button>
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">否</button>
+              <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" @click="deleteData">是</button>
             </div>
           </div>
         </div>

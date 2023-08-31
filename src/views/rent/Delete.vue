@@ -188,6 +188,27 @@
           console.error(error);
         }
       }
+      async function deleteData() {
+        const form = new FormData();
+        form.append('ao_id', AO_ID);
+        const axios = require('axios');
+        const response = await axios.post(`http://192.168.0.176:7008/AssetsOutMng/ApplicationDelete`, form);
+        try {
+          const data = response.data;
+          if (data.state === 'success') {
+            let msg = data.messages + '\n';
+            msg += '單號為' + data.resultList.ao_id;
+            alert(msg);
+            router.push({
+              name: 'Rent_Datagrid'
+            });
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
       onMounted(() => {
         getDetails();
       });
@@ -199,6 +220,7 @@
         rowData,
         details,
         options,
+        deleteData,
         goBack,
       };
     },
