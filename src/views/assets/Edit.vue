@@ -326,40 +326,48 @@
       }
       async function submit() {
         console.log(details.value);
-        // const axios = require('axios');
-        // const formData = new FormData();
-        // const formFields = {
-        //   'AI_ID': details.value.AI_ID,
-        //   'DeliveryOperator': validation.value.user1.account,
-        //   'AssetsInOperator': validation.value.user2.account,
-        // };
-        // //將表格資料append到 formData
-        // for (const fieldName in formFields) {
-        //   formData.append(fieldName, formFields[fieldName]);
-        //   console.log(formData.get(`${fieldName}`));
-        // }
-        // const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/Delivery', formData, {
-        //   headers: {
-        //     'Content-Type': 'multipart/form-data',
-        //   },
-        // });
-        // try {
-        //   const data = response.data;
-        //   console.log(data);
-        //   if (data.state === 'success') {
-        //     let msg = data.messages;
-        //     msg += '\n編號:' + data.resultList.AI_ID;
-        //     alert(msg);
-        //     router.push({
-        //       name: 'Store_Process_Datagrid'
-        //     });
-        //   } else if (data.state === 'error') {
-        //     alert(data.messages);
-        //     console.log('error state', response);
-        //   }
-        // } catch (error) {
-        //   console.error(error);
-        // }
+        const axios = require('axios');
+        const formData = new FormData();
+        const formFields = {
+          'AssetsId': AssetsId,
+          'EquipTypeName': details.value.EquipTypeName,
+          'EquipCategoryName': details.value.EquipCategoryName,
+          'AssetName': details.value.AssetName,
+          'VendorName': details.value.VendorName,
+          'ProductSpec': details.value.ProductSpec,
+          'ProductType': details.value.ProductType,
+          'SN': details.value.SN,
+          'AreaName': details.value.AreaName,
+          'LayerName': details.value.LayerName,
+          'WarrantyDate': details.value.WarrantyDate,
+          'WarrantyStartDate': details.value.WarrantyStartDate,
+          'WarrantyEndDate': details.value.WarrantyEndDate,
+          'Memo': details.value.Memo,
+        };
+        //將表格資料append到 formData
+        for (const fieldName in formFields) {
+          formData.append(fieldName, formFields[fieldName]);
+          console.log(formData.get(`${fieldName}`));
+        }
+
+        const response = await axios.post('http://192.168.0.176:7008/InventoryMng/AssetEdit', formData);
+        try {
+          const data = response.data;
+          console.log(data);
+          if (data.state === 'success') {
+            let msg = data.messages;
+            msg += '\n編號:' + data.resultList.AssetsId;
+            alert(msg);
+            router.push({
+              name: 'Assets_Datagrid'
+            });
+          } else if (data.state === 'error') {
+            alert(data.messages);
+            console.log('error state', response);
+          }
+        } catch (error) {
+          console.error(error);
+        }
       }
       async function getEquipTypeName() {
         if (EquipTypeArray.value.length == 0) {
