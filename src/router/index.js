@@ -23,6 +23,7 @@ import Rent_Datagrid from "../views/rent/Datagrid.vue";
 import Rent_New from "../views/rent/New.vue";
 import Rent_View from "../views/rent/View.vue";
 import Rent_Edit from "../views/rent/Edit.vue";
+import Rent_Delete from "../views/rent/Delete.vue";
 //出庫填報
 
 //出庫作業
@@ -30,12 +31,15 @@ import Rent_Process_Datagrid from "../views/rent_process/Datagrid";
 import Rent_Process_New from "../views/rent_process/New";
 import Rent_Process_Confirm from "../views/rent_process/Confirm";
 import Rent_Process_View from "../views/rent_process/View";
+import Rent_Process_Delete from "../views/rent_process/Delete";
 //出庫作業
 
 //出庫審核
 import Rent_Review_Datagrid from "../views/rent_review/Datagrid";
 import Rent_Review_View from "../views/rent_review/View.vue";
 import Rent_Review_New from "../views/rent_review/New.vue";
+import Rent_Review_Delete from "../views/rent_review/Delete.vue";
+
 //出庫審核
 
 //資產管理
@@ -192,6 +196,12 @@ const routes = [
     meta: {auth: true, request: 'AO_Detail'},
   },
   {
+    path: "/rent_delete",
+    name: "Rent_Delete",
+    component: Rent_Delete,
+    // meta: {auth: true, request: 'AO_Detail'},
+  },
+  {
     path: "/rent_edit",
     name: "Rent_Edit",
     component: Rent_Edit,
@@ -253,6 +263,12 @@ const routes = [
     meta: {auth: true, request: 'AOP_Detail'},
   },
   {
+    path: "/rent_process_delete",
+    name: "Rent_Process_Delete",
+    component: Rent_Process_Delete,
+    // meta: {auth: true, request: 'AOP_Detail'},
+  },
+  {
     path: "/rent_review_datagrid",
     name: "Rent_Review_Datagrid",
     component: Rent_Review_Datagrid,
@@ -269,6 +285,12 @@ const routes = [
     name: "Rent_Review_New",
     component: Rent_Review_New,
     meta: {auth: true, request: 'AOV_Verify'},
+  },
+  {
+    path: "/rent_review_delete",
+    name: "Rent_Review_Delete",
+    component: Rent_Review_Delete,
+    // meta: {auth: true, request: 'AOV_Verify'},
   },
 ];
 

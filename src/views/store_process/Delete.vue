@@ -268,8 +268,8 @@
         <button class="back_btn" @click="goBack">回上一頁</button>
         <button class="delete_btn" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>
       </div>
-      <!-- DeleteModal -->
-      <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+
+      <div class="modal fade delete_modal" id="deleteModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-sm">
           <div class="modal-content">
             <div class="modal-body">
@@ -432,19 +432,42 @@
 </script>
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-  .nav {
-    overflow-x: auto;
-    overflow-y: hidden;
-    flex-wrap: nowrap;
-    border: none;
-  }
-  ::-webkit-scrollbar {
-    height: 6px;
-  }
-  ::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background-color: rgb(176, 175, 175);
-    border: 1px solid rgb(86, 85, 85);
+  .delete_modal {
+    .modal-content {
+      border: solid 1px black;
+      border-radius: 0;
+      .modal-body {
+        background: #E94B4B;
+        text-align: center;
+        font-weight: 700;
+        color: white;
+        border-bottom: solid 1px black;
+      }
+      .modal-footer {
+        margin: auto;
+        gap: 10px;
+        button:nth-child(1) {
+          background-color: #7E7E7E;
+          border: none;
+          color: white;
+          width: 50px;
+          font-weight: 700;
+          &:hover {
+            background-color: #464242;
+          }
+        }
+        button:nth-child(2) {
+          background-color: #E94B4B;
+          border: none;
+          color: white;
+          width: 50px;
+          font-weight: 700;
+          &:hover {
+            background-color: #a70e0e;
+          }
+        }
+      }
+    }
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
