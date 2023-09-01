@@ -76,14 +76,16 @@
           </div>
         </div>
         <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">型號：</div>
-            <input type="text" class="form-control " placeholder="最多輸入100字" v-model="details.ProductType" />
-          </div>
           <div class="col">
             <div class="input-group mb-3">
               <div class="input-group-prepend">規格：</div>
               <input type="text" class="form-control " placeholder="最多輸入100字" v-model="details.ProductSpec" />
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">型號：</div>
+              <input type="text" class="form-control " placeholder="最多輸入100字" v-model="details.ProductType" />
             </div>
           </div>
           <div class="col">

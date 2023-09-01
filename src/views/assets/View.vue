@@ -62,14 +62,16 @@
           </div>
         </div>
         <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">型號：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductType" />
-          </div>
           <div class="col">
             <div class="input-group mb-3">
               <div class="input-group-prepend">規格：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductSpec" />
+              <input type="text" class="form-control readonly_box" readonly v-model="details.ProductSpec" />
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">型號：</div>
+              <input type="text" class="form-control readonly_box" readonly v-model="details.ProductType" />
             </div>
           </div>
           <div class="col">
