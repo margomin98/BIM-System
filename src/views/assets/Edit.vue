@@ -141,7 +141,7 @@
               <div class="input-group-prepend">
                 保固期限：
               </div>
-              <input type="text" class="form-control " readonly v-model="details.WarrantyDate">
+              <input type="text" class="form-control " v-model="details.WarrantyDate">
             </div>
           </div>
         </div>
@@ -177,8 +177,8 @@
         <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" 
         :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
 
-          <swiper-slide v-for="(item , index) in existFile" :key="index" class="custom-slide">
-            <img :src="item" alt="">
+          <swiper-slide v-for="(item , index) in selectFiles.viewFile" :key="index" class="custom-slide">
+            <img :src="item.FileLink" alt="">
             <span @click="deleteFileFunction(index)">x</span>
           </swiper-slide>
         </swiper-container>
@@ -287,16 +287,11 @@
       const LayerArray = ref([]); //櫃位陣列
       const LayerInit = ref('請先選擇區域');
       const fileInputs = ref();
-      const existFile = reactive([
-        'https://www.cityonelimo.com/uploaded_files/seo-flyer/BLOG072202304240720_Remote%20work%20image.jpeg',
-        'https://static01.nyt.com/images/2021/01/17/fashion/13workathome/13workathome-superJumbo.jpg',
-        'https://upload.wikimedia.org/wikipedia/commons/7/7e/Sun_Down_%28250260941%29.jpeg',
-        'https://www.cityonelimo.com/uploaded_files/seo-flyer/BLOG072202304240720_Remote%20work%20image.jpeg',
-        'https://upload.wikimedia.org/wikipedia/commons/7/7e/Sun_Down_%28250260941%29.jpeg',
-      ]);
-      const Files = reactive({
+      const increseId = ref(0);
+      const selectFiles = reactive({
         newFile: [],
         deleteFile: [],
+        viewFile: [],
       })
       onMounted(() => {
         getDetails();
@@ -314,6 +309,17 @@
               details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/\//g, '-');
               details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/\//g, '-');
             }
+            if(details.value.existFile) {
+              details.value.existFile.forEach(item => {
+                selectFiles.viewFile.push({
+                  FileName: item.FileName,
+                  FileLink: item.FileLink,
+                  FileType: 'exist',
+                }); 
+              });
+            }
+            getEquipCategoryName();
+            getLayerName();
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -346,8 +352,10 @@
         };
         //將表格資料append到 formData
         for (const fieldName in formFields) {
-          formData.append(fieldName, formFields[fieldName]);
-          console.log(formData.get(`${fieldName}`));
+          if (formFields[fieldName] !== '' && formFields[fieldName] !== null) {
+              form.append(fieldName, formFields[fieldName]);
+              console.log(form.get(`${fieldName}`));
+            }
         }
 
         const response = await axios.post('http://192.168.0.176:7008/InventoryMng/AssetEdit', formData);
@@ -476,6 +484,10 @@
       function handleFileChange(event) {
         const files = event.target.files;
         const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        if(files.length + selectFiles.viewFile.length > 5) {
+          alert('上傳至多5張圖片');
+          return;
+        }
         //檢查檔名
         for (let i = 0; i < files.length; i++) {
           const fileName = files[i].name;
@@ -508,20 +520,41 @@
                 const originalSize = Math.round(files[i].size / 1024); // 原始大小（KB）
                 const compressedSize = Math.round(compressedFile.size / 1024); // 壓縮後大小（KB）
                 console.log(`原始大小: ${originalSize} KB，壓縮後大小: ${compressedSize} KB`);
-                Files.newFile.push(compressedFile);
-                existFile.push(URL.createObjectURL(compressedFile));
+                selectFiles.newFile.push({
+                  file: compressedFile,
+                  id: increseId.value,
+                });
+                selectFiles.viewFile.push({
+                  FileName: compressedFile.name,
+                  FileLink: URL.createObjectURL(compressedFile),
+                  FileType: 'new',
+                  id: increseId.value,
+                });
+                increseId.value++;
               }, files[i].type, 0.8);
             };
           };
           reader.readAsDataURL(files[i]);
         }
-        console.log('newFile' , Files.newFile);
-        // existFile.push
+        console.log('newFile' , selectFiles.newFile);
       }
       function deleteFileFunction(index) {
-        Files.deleteFile.push(existFile[index]);
-        existFile.splice(index,1);
-        console.log('deleteFile' , Files.deleteFile);
+        const file = selectFiles.viewFile[index];
+        switch (file.FileType) {
+          // 已上傳檔案 ->從輪播陣列刪除 & 加到deleteFile
+          case 'exist':
+            selectFiles.deleteFile.push(file.FileName);
+            selectFiles.viewFile.splice(index,1);
+            console.log('deleteFile' , selectFiles.deleteFile);
+            break;
+          // 新上傳檔案 ->從輪播陣列刪除 & 從newFile移除
+          case 'new':
+            const newFileIndex = selectFiles.newFile.findIndex(item => item.id === file.id);
+            selectFiles.newFile.splice(newFileIndex,1);
+            selectFiles.viewFile.splice(index,1);
+            console.log('newFile' , selectFiles.newFile);
+            break;
+        }
       }
       function goBack() {
         window.history.back();
@@ -536,7 +569,7 @@
         LayerArray,
         LayerInit,
         fileInputs,
-        existFile,
+        selectFiles,
         submit,
         getEquipTypeName,
         getAreaName,
