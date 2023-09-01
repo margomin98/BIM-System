@@ -275,7 +275,7 @@ export default {
         return;
       }
       if ( details.value.WarrantyDate &&!/^.{1,10}$/.test(details.value.WarrantyDate)) {
-        alert('保固期限格式錯誤');
+        alert('保固期限不可輸入超過10字');
         return
       }
       const formData = new FormData();
