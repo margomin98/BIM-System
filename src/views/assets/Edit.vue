@@ -12,19 +12,12 @@
       </div>
       <div class="fixed_info">
         <div>
-          <p>入庫人員: {{ details.AssetsInOperator }}</p>
+          <p>資產編號: {{ AssetsId }}</p>
         </div>
-        <div>
-          <p>入庫日期: {{ details.InboundDate }}</p>
-        </div>
+       
       </div>
       <div class="content">
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">資產編號：</div>
-            <input type="text" class="form-control readonly_box" readonly v-model="AssetsId" />
-          </div>
-        </div>
+       
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -158,6 +151,37 @@
             <div class="input-group mb-3">
               <div class="input-group-prepend">保固到期日：</div>
               <input type="date" class="form-control " v-model="details.WarrantyEndDate" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+             
+                <div class="input-group-prepend flex">保管人員：</div>
+                <div class="dropdown">
+                  <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+             請選擇
+        </button>
+                  <div class="dropdown-menu">
+                    <p>123</p>
+                  </div>
+           
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">入庫人員： </div>
+              <input type="text" class="form-control readonly_box" readonly v-model="details.AssetsInOperator" />
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">入庫日期：</div>
+              <input type="text" class="form-control readonly_box" readonly v-model="details.InboundDate" />
             </div>
           </div>
         </div>
@@ -823,6 +847,7 @@
         }
         .content {
           @include content_bg;
+         
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -859,6 +884,11 @@
               font-size: 20px;
               width: 120px;
               text-align: end;
+            }
+          }
+           .row:nth-child(2),   .row:nth-child(7),  .row:nth-child(10){
+            .input-group{
+              flex-wrap: nowrap;
             }
           }
         }
@@ -903,7 +933,7 @@
           }
         }
         .dropdown {
-          width: calc(100% - 10%);
+          width: calc(100% - 35%);
           height: 35px;
           @include dropdown_btn;
           .dropdown-toggle {
@@ -1002,7 +1032,7 @@
       }
       .info_wrap {
         margin: auto;
-        padding: 0 5%;
+        width: 800px;
         .fixed_info {
           @include fixed_info;
           border-radius: 0 10px 0 0;
@@ -1016,6 +1046,7 @@
         }
         .content {
           @include content_bg;
+         
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -1044,10 +1075,11 @@
               text-align: end;
             }
           }
-        }
-        .content:nth-child(1),
-        .content:nth-child(2) {
-          border-radius: 0px 10px 10px 10px
+           .row:nth-child(2),   .row:nth-child(7),  .row:nth-child(10){
+            .input-group{
+              flex-wrap: nowrap;
+            }
+          }
         }
         .button_wrap {
           display: flex;
@@ -1090,7 +1122,7 @@
           }
         }
         .dropdown {
-          width: calc(100% - 10%);
+          width: calc(100% - 35%);
           height: 35px;
           @include dropdown_btn;
           .dropdown-toggle {
@@ -1160,7 +1192,7 @@
             cursor: pointer;
             position: absolute;
             top: 25px;
-            right: -14px;
+            right: 27px;
             background: #E94B4B;
             height: 30px;
             width: 30px;
@@ -1212,6 +1244,7 @@
             gap: 10px 0;
           }
           .dropdown {
+            margin-left: unset !important;
             .dropdown-menu {
               width: 100%;
             }

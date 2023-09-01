@@ -12,19 +12,14 @@
       </div>
       <div class="fixed_info">
         <div>
-          <p>入庫人員: {{ details.AssetsInOperator }}</p>
+          <p>資產編號: {{ AssetsId }}</p>
         </div>
         <div>
-          <p>入庫日期: {{ details.InboundDate }}</p>
+          <p>物品名稱: {{ details.AssetName }}</p>
         </div>
       </div>
       <div class="content">
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">資產編號：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="AssetsId" />
-          </div>
-        </div>
+
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -49,12 +44,8 @@
             </div>
           </div>
         </div>
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">物品名稱：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AssetName" />
-          </div>
-        </div>
+       
+       
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">廠商：</div>
@@ -130,6 +121,30 @@
             <div class="input-group mb-3">
               <div class="input-group-prepend">保固到期日：</div>
               <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.WarrantyEndDate" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                保管人員：
+              </div>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
+          </div>
+        </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">入庫人員：</div>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Applicant" />
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">入庫日期：</div>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ApplicationDate" />
             </div>
           </div>
         </div>
