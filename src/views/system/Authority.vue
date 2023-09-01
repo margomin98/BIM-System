@@ -9,6 +9,10 @@
         <div>
           <p>變更權限</p>
         </div>
+        <div>
+          <p>目前權限: {{ roleSearchResult }}</p>
+        </div>
+        
       </div>
       <div class="content">
         <div class="col">
@@ -16,7 +20,7 @@
             <div class="input-group-prepend"><span>*</span>帳號：</div>
             <div class="search_section">
               <div class="input-wrapper">
-                <input @input="queryAccount" @focus="showOptions = true;" @blur="handleBlur" v-model="inputValue" />
+                <input @input="searchFunction" @focus="showOptions = true;" @blur="handleBlur" v-model="inputValue" />
               </div>
               <ul v-if="showOptions" class="options-list">
                 <li v-for="(option, index) in dropdownOptions" :key="index" @click="selectAccount(option)">{{ option }}
@@ -29,8 +33,8 @@
           <div class="input-group-prepend"><span>*</span>權限：</div>
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{ selectedRole || "請選擇" }}
-                </button>
+                    {{ selectedRole || "請選擇" }}
+                  </button>
             <div class="dropdown-menu" aria-labelledby="statusDropdown">
               <p v-for="(item, index) in roleArray" :key="index" class="dropdown-item" @click="selectRole(item)">{{ item }}</p>
             </div>
@@ -50,6 +54,7 @@
   import router from "@/router";
   import {
     onMounted,
+    reactive,
     ref
   } from 'vue';
   export default {
@@ -60,22 +65,56 @@
       const inputValue = ref(''); //帳號
       const dropdownOptions = ref([]); //帳號搜尋結果(選項)
       const filteredOptions = ref(dropdownOptions);
+      const roleSearchResult = ref('');
       const selectedRole = ref(''); //權限
-      const roleArray = ['訪客', '系統管理員', '設備工程師', '倉管人員', '主管'] //權限選項
+      const roleArray = ref() //權限選項
       const showOptions = ref(false); //控制搜尋選單出現與否
       onMounted(() => {
-        queryAccount();
+        searchFunction();
+        getRoleOption();
       });
-      async function queryAccount() {
-        const axios = require('axios');
-        const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/SearchName?name=${inputValue.value}`);
-        try {
-          const data = response.data;
-          if (data.state === 'success') {
-            dropdownOptions.value = data.resultList;
+      function searchAccount() {
+        return new Promise(async(resolve, reject) => {
+          try {
+            const axios = require('axios');
+            const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/SearchName?name=${inputValue.value}`);
+            const data = response.data;
+            if (data.state === 'success') {
+              resolve(data.resultList);
+            } else {
+              reject(new Error('Search account failed.'));
+            }
+          } catch (error) {
+            reject(error);
           }
+        });
+      }
+      function searchRole() {
+        return new Promise(async(resolve, reject) => {
+          try {
+            console.log('input', inputValue.value);
+            const axios = require('axios');
+            const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/GetRoleFromName?name=${inputValue.value}`);
+            const data = response.data;
+            if (data.state === 'success') {
+              resolve(data.resultList.role);
+            } else {
+              resolve(''); // Resolve with empty value when role search fails
+            }
+          } catch (error) {
+            reject(error);
+          }
+        });
+      }
+      async function searchFunction() {
+        try {
+          const accountResult = await searchAccount();
+          dropdownOptions.value = accountResult;
+          const roleResult = await searchRole();
+          roleSearchResult.value = roleResult;
         } catch (error) {
           console.error(error);
+          // Handle error
         }
       }
       async function submit() {
@@ -96,8 +135,22 @@
           console.error(error);
         }
       }
+      async function getRoleOption() {
+        const axios = require('axios');
+        const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetRoles');
+        try {
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('get role option:' ,data.resultList);
+            roleArray.value = data.resultList;
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
       function selectAccount(item) {
         inputValue.value = item;
+        searchFunction();
         showOptions.value = false;
       }
       function selectRole(item) {
@@ -115,10 +168,11 @@
         inputValue,
         dropdownOptions,
         filteredOptions,
+        roleSearchResult,
         selectedRole,
         roleArray,
         showOptions,
-        queryAccount,
+        searchFunction,
         submit,
         selectAccount,
         selectRole,
@@ -229,16 +283,20 @@
               align-items: center;
               border: none;
               width: 100%;
-              &:hover {
-                color: black
-              }
+              color: black
             }
             .dropdown-menu {
               width: 100%;
               transform: translate3d(-1px, 35px, 0px) !important;
+              max-height: 250px;
+              overflow-y: auto;
               p {
+                font-size: 18px;
                 color: black;
                 font-weight: normal;
+                &:hover {
+                  cursor: pointer;
+                }
               }
             }
           }
@@ -378,16 +436,20 @@
               align-items: center;
               border: none;
               width: 100%;
-              &:hover {
-                color: black
-              }
+              color: black
             }
             .dropdown-menu {
               width: 100%;
               transform: translate3d(-1px, 35px, 0px) !important;
+              max-height: 250px;
+              overflow-y: auto;
               p {
+                font-size: 18px;
                 color: black;
                 font-weight: normal;
+                &:hover {
+                  cursor: pointer;
+                }
               }
             }
           }
@@ -533,16 +595,20 @@
               align-items: center;
               border: none;
               width: 100%;
-              &:hover {
-                color: black
-              }
+              color: black
             }
             .dropdown-menu {
               width: 100%;
               transform: translate3d(-1px, 35px, 0px) !important;
+              max-height: 250px;
+              overflow-y: auto;
               p {
+                font-size: 18px;
                 color: black;
                 font-weight: normal;
+                &:hover {
+                  cursor: pointer;
+                }
               }
             }
           }
