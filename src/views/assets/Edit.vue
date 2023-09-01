@@ -141,7 +141,7 @@
               <div class="input-group-prepend">
                 保固期限：
               </div>
-              <input type="text" class="form-control " v-model="details.WarrantyDate">
+              <input type="text" class="form-control " placeholder="最多輸入10字" v-model="details.WarrantyDate">
             </div>
           </div>
         </div>
@@ -162,7 +162,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">備註：</div>
-            <textarea style="height: 150px;" class="form-control " aria-label="With textarea" v-model="details.Memo"></textarea>
+            <textarea style="height: 150px;" class="form-control " placeholder="最多輸入500字" aria-label="With textarea" v-model="details.Memo"></textarea>
           </div>
         </div>
       </div>
@@ -204,7 +204,7 @@
               <p>作業日期(起)</p>
               <div class="date-selector">
                 <div class="input-container">
-                  <input type="date" class="date-input"/>
+                  <input type="date" v-model="historyParams.StartDate" class="date-input"/>
                 </div>
               </div>
             </div>
@@ -212,7 +212,7 @@
               <p>作業日期(迄)</p>
               <div class="date-selector">
                 <div class="input-container">
-                  <input type="date" class="date-input" />
+                  <input type="date" v-model="historyParams.EndDate" class="date-input" />
                 </div>
               </div>
             </div>
@@ -220,19 +220,18 @@
               <p>作業行為</p>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ 'selectedItem' || "請選擇" }}
+                                {{ historyParams.Action || "請選擇" }}
                               </button>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                  <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                  <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+                  <p v-for="(item , index) in ActionArray" :key="index" class="dropdown-item" @click="selectAction(item)">{{ item}}</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div class="col button_wrap">
-          <button class="search_btn">檢索</button>
-          <button class="empty_btn">清空</button>
+          <button class="search_btn" @click="searchHistory">檢索</button>
+          <button class="empty_btn" @click="clear">清空</button>
         </div>
         <div class="info_wrap">
           <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;margin-bottom:50px" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true"
@@ -279,6 +278,7 @@
       const route = useRoute();
       const router = useRouter();
       const AssetsId = route.query.search_id;
+      // 上半部表單
       const details = ref({});
       const EquipTypeArray = ref([]); //設備總類陣列 request拿到
       const EquipCategoryArray = ref([]); //設備分類陣列 request拿到
@@ -286,6 +286,7 @@
       const AreaArray = ref([]); //區域陣列
       const LayerArray = ref([]); //櫃位陣列
       const LayerInit = ref('請先選擇區域');
+      // 中間照片
       const fileInputs = ref();
       const increseId = ref(0);
       const selectFiles = reactive({
@@ -293,9 +294,83 @@
         deleteFile: [],
         viewFile: [],
       })
+      //  下半部歷史紀錄
+      const historyParams = reactive({
+        StartDate: '',
+        EndDate: '',
+        Action: '',
+      });
+      const ActionArray = ['入庫' , '歸還' , '借測' , '維修' , '內部領用' , '出貨' , '報廢' , '退貨'];
+      const columnDefs =[{
+            suppressMovable: true,
+            field: "",
+            cellRenderer: "Storage_list_view_button",
+            width: 100,
+          },
+          {
+            headerName: "作業日期",
+            field: "ExecutionDate",
+            unSortIcon: true,
+            sortable: true,
+            width: 150,
+            suppressMovable: true
+          },
+          {
+            headerName: "作業行為",
+            field: "Action",
+            unSortIcon: true,
+            sortable: true,
+            width: 150,
+            suppressMovable: true
+          },
+          {
+            headerName: "單號",
+            field: "AIAO_ID",
+            unSortIcon: true,
+            sortable: true,
+            width: 300,
+            resizable: true,
+            suppressMovable: true
+          },
+          {
+            headerName: "數量",
+            field: "IH_Number",
+            unSortIcon: true,
+            sortable: true,
+            width: 100,
+            suppressMovable: true
+          },
+          {
+            headerName: "單位",
+            field: "IH_Unit",
+            unSortIcon: true,
+            sortable: true,
+            width: 100,
+            suppressMovable: true
+          },
+          {
+            headerName: "申請人員",
+            field: "ApplyPerson",
+            unSortIcon: true,
+            sortable: true,
+            width: 150,
+            suppressMovable: true
+          },
+          {
+            headerName: "承辦人員",
+            field: "ExecutionPerson",
+            unSortIcon: true,
+            sortable: true,
+            width: 150,
+            suppressMovable: true
+          }
+        ] ;
+      const rowData = ref([]);
       onMounted(() => {
         getDetails();
+        searchHistory();
       });
+      // 上半部表單部分 & 送出
       async function getDetails() {
         const axios = require('axios');
         try {
@@ -332,6 +407,39 @@
       }
       async function submit() {
         console.log(details.value);
+        // 檢查必填項目
+        if (!details.value.EquipCategoryName || !details.value.EquipTypeName || !details.value.AssetName || !details.value.AreaName || !details.value.LayerName) {
+          alert('請填寫所有必填項目');
+          return;
+        }
+        if (!/^.{1,20}$/.test(details.value.AssetName)) {
+          alert('物品名稱不可輸入超過20字');
+          return
+        }
+        if ( details.value.VendorName &&!/^.{1,100}$/.test(details.value.VendorName)) {
+          alert('廠商不可輸入超過100字');
+          return
+        }
+        if ( details.value.ProductSpec &&!/^.{1,100}$/.test(details.value.ProductSpec)) {
+          alert('規格不可輸入超過100字');
+          return
+        }
+        if ( details.value.ProductType &&!/^.{1,100}$/.test(details.value.ProductType)) {
+          alert('型號不可輸入超過100字');
+          return
+        }
+        if ( details.value.SN &&!/^.{1,100}$/.test(details.value.SN)) {
+          alert('SN不可輸入超過100字');
+          return
+        }
+        if ( details.value.WarrantyDate &&!/^.{1,10}$/.test(details.value.WarrantyDate)) {
+          alert('保固期限不可輸入超過10字');
+          return
+        }
+        if ( details.value.Memo &&!/^.{1,500}$/.test(details.value.Memo)) {
+          alert('保固期限不可輸入超過500字');
+          return
+        }
         const axios = require('axios');
         const formData = new FormData();
         const formFields = {
@@ -409,7 +517,6 @@
         }
       }
       async function getEquipCategoryName() {
-        details.value.EquipCategoryName = '';
         const axios = require('axios');
         try {
           const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${details.value.EquipTypeName}`);
@@ -471,6 +578,7 @@
       function selectType(item) {
         details.value.EquipTypeName = item;
         // console.log('選擇的總類:', EquipTypeName.value);
+        details.value.EquipCategoryName = '';
         getEquipCategoryName();
         EquipCategoryInit.value = '請選擇';
       }
@@ -487,7 +595,7 @@
       const selectLayer = (item) => {
         details.value.LayerName = item;
       };
-      //輪播部分
+      // 輪播部分 function
       function openFileExplorer() {
         fileInputs.value.click();
       }
@@ -566,6 +674,54 @@
             break;
         }
       }
+      // 歷史紀錄部分function
+      async function searchHistory() {
+        const formData = new FormData();
+        const formFields = {
+          'AssetsId': AssetsId,
+          'Action': historyParams.Action,
+          'StartDate': historyParams.StartDate,
+          'EndDate': historyParams.EndDate,
+        };
+        //將表格資料append到 formData
+        for (const fieldName in formFields) {
+          formData.append(fieldName, formFields[fieldName]);
+        }
+        const axios = require('axios');
+        try {
+          const response = await axios.post('http://192.168.0.176:7008/InventoryMng/AssetsHistory', formData);
+          const data = response.data;
+          if (data.state === 'success') {
+            //取得datagrid成功
+            // console.log(data.state);
+            console.log('datagrid', data.resultList);
+            rowData.value = data.resultList;
+          } else if (data.state === 'error') {
+            //取得datagrid失敗
+            alert(data.messages);
+          } else if (data.state === 'input_error') {
+            //取得datagrid格式錯誤
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            //尚未登入
+            alert(data.messages);
+            router.push('/');
+          } else {
+            throw new Error('Request was not successful');
+          }
+        } catch (error) {
+          console.error('Error sending data to backend', error);
+        }
+      }
+      const selectAction = item =>{
+        historyParams.Action = item;
+      }
+      function clear() {
+        for(const key in historyParams) {
+          historyParams[key] = '';
+        }
+        searchHistory();
+      }
       function goBack() {
         window.history.back();
       }
@@ -580,6 +736,8 @@
         LayerInit,
         fileInputs,
         selectFiles,
+        historyParams,
+        ActionArray,
         submit,
         getEquipTypeName,
         getAreaName,
@@ -590,127 +748,17 @@
         openFileExplorer,
         handleFileChange,
         deleteFileFunction,
+        searchHistory,
+        selectAction,
+        clear,
         goBack,
         rowHeight: 35,
         pagination: {
           clickable: true,
         },
         modules: [Pagination],
-        columnDefs: [{
-            suppressMovable: true,
-            field: "",
-            cellRenderer: "Storage_list_view_button",
-            width: '100',
-          },
-          {
-            headerName: "作業日期",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            suppressMovable: true
-          },
-          {
-            headerName: "作業行為",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            suppressMovable: true
-          },
-          {
-            headerName: "單號",
-            field: "price",
-            unSortIcon: true,
-            sortable: true,
-            width: '300',
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "數量",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '100',
-            suppressMovable: true
-          },
-          {
-            headerName: "單位",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: '100',
-            suppressMovable: true
-          },
-          {
-            headerName: "申請人員",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            suppressMovable: true
-          },
-          {
-            headerName: "承辦人員",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            suppressMovable: true
-          }
-        ],
-        rowData: [{
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000
-          },
-        ],
+        columnDefs,
+        rowData,
       }
     },
   }
@@ -777,12 +825,15 @@
             .dropdown-menu {
               width: 100%;
               max-height: 250px;
-                overflow-y: auto;
-                p {
-                  &:hover {
-                    cursor: pointer;
-                  }
+              overflow-y: auto;
+              p {
+                font-size: 18px;
+                color: black;
+                font-weight: normal;
+                &:hover {
+                  cursor: pointer;
                 }
+              }
             }
             button {
               @include dropdown-btn;

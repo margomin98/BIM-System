@@ -12,10 +12,10 @@
       </div>
       <div class="fixed_info">
         <div>
-          <p>入庫人員: {{ details.Applicant }}</p>
+          <p>入庫人員: {{ details.AssetsInOperator }}</p>
         </div>
         <div>
-          <p>入庫日期: {{ details.ApplicationDate }}</p>
+          <p>入庫日期: {{ details.InboundDate }}</p>
         </div>
       </div>
       <div class="content">
@@ -148,20 +148,9 @@
       <div class="content">
         <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" 
         :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}" @progress="onProgress" @slidechange="onSlideChange">
-          <swiper-slide class="custom-slide">
-            <img src="https://www.cityonelimo.com/uploaded_files/seo-flyer/BLOG072202304240720_Remote%20work%20image.jpeg" alt="">
-          </swiper-slide>
-          <swiper-slide class="custom-slide">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Sun_Down_%28250260941%29.jpeg" alt="">
-          </swiper-slide>
-          <swiper-slide class="custom-slide">
-            <img src="https://www.cityonelimo.com/uploaded_files/seo-flyer/BLOG072202304240720_Remote%20work%20image.jpeg" alt="">
-          </swiper-slide>
-          <swiper-slide class="custom-slide">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Sun_Down_%28250260941%29.jpeg" alt="">
-          </swiper-slide>
-          <swiper-slide class="custom-slide">
-            <img src="https://static01.nyt.com/images/2021/01/17/fashion/13workathome/13workathome-superJumbo.jpg" alt="">
+          <swiper-slide v-for="(item , index) in selectFiles.viewFile" :key="index" class="custom-slide">
+            <img :src="item.FileLink" alt="">
+            <span @click="deleteFileFunction(index)">x</span>
           </swiper-slide>
         </swiper-container>
         <div class="swiper_pagination">
@@ -181,10 +170,7 @@
               <p>作業日期(起)</p>
               <div class="date-selector">
                 <div class="input-container">
-                  <input type="date" v-model="selectedDate" class="date-input" @focus="showDatePicker = true" @blur="showDatePicker = false" />
-                  <div class="date-picker" v-if="showDatePicker">
-                    <datepicker v-model="selectedDate"></datepicker>
-                  </div>
+                  <input type="date" v-model="historyParams.StartDate" class="date-input"/>
                 </div>
               </div>
             </div>
@@ -192,10 +178,7 @@
               <p>作業日期(迄)</p>
               <div class="date-selector">
                 <div class="input-container">
-                  <input type="date" v-model="selectedEndDate" class="date-input" @focus="showEndDatePicker = true" @blur="showEndDatePicker = false" />
-                  <div class="date-picker" v-if="showEndDatePicker">
-                    <datepicker v-model="selectedEndDate"></datepicker>
-                  </div>
+                  <input type="date" v-model="historyParams.EndDate" class="date-input" />
                 </div>
               </div>
             </div>
@@ -203,22 +186,21 @@
               <p>作業行為</p>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              {{ selectedItem || "請選擇" }}
-                            </button>
+                                {{ historyParams.Action || "請選擇" }}
+                              </button>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                  <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                  <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+                  <p v-for="(item , index) in ActionArray" :key="index" class="dropdown-item" @click="selectAction(item)">{{ item}}</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div class="col button_wrap">
-          <button class="search_btn">檢索</button>
-          <button class="empty_btn">清空</button>
+          <button class="search_btn" @click="searchHistory">檢索</button>
+          <button class="empty_btn" @click="clear">清空</button>
         </div>
         <div class="info_wrap">
-          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;margin-bottom:50px" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true"
+          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;margin-bottom:50px" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true"
             :pagination="true">
           </ag-grid-vue>
         </div>
@@ -234,20 +216,20 @@
   import {
     AgGridVue
   } from "ag-grid-vue3";
-  import Button from "@/components/Storage_list_view_button";
+  import Storage_list_view_button from "@/components/Storage_list_view_button";
   import {
     register
   } from 'swiper/element/bundle';
   import Navbar from "@/components/Navbar.vue";
   import {
     onMounted,
-    ref
+    ref,
+    reactive
   } from "vue";
   import {
     useRoute,
     useRouter
   } from "vue-router";
-  import Swiper from 'swiper';
   import {
     Pagination
   } from 'swiper/modules';
@@ -256,13 +238,105 @@
     components: {
       Navbar,
       AgGridVue,
-      Button,
+      Storage_list_view_button,
     },
     setup() {
       const route = useRoute();
       const router = useRouter();
       const AssetsId = route.query.search_id;
+      // 上半部表單
       const details = ref({});
+      const EquipTypeArray = ref([]); //設備總類陣列 request拿到
+      const EquipCategoryArray = ref([]); //設備分類陣列 request拿到
+      const EquipCategoryInit = ref('請先選擇設備總類');
+      const AreaArray = ref([]); //區域陣列
+      const LayerArray = ref([]); //櫃位陣列
+      const LayerInit = ref('請先選擇區域');
+      // 中間照片
+      const fileInputs = ref();
+      const increseId = ref(0);
+      const selectFiles = reactive({
+        newFile: [],
+        deleteFile: [],
+        viewFile: [],
+      })
+      //  下半部歷史紀錄
+      const historyParams = reactive({
+        StartDate: '',
+        EndDate: '',
+        Action: '',
+      });
+      const ActionArray = ['入庫' , '歸還' , '借測' , '維修' , '內部領用' , '出貨' , '報廢' , '退貨'];
+      const columnDefs =[{
+            suppressMovable: true,
+            field: "",
+            cellRenderer: "Storage_list_view_button",
+            width: 100,
+          },
+          {
+            headerName: "作業日期",
+            field: "ExecutionDate",
+            unSortIcon: true,
+            sortable: true,
+            width: 150,
+            suppressMovable: true
+          },
+          {
+            headerName: "作業行為",
+            field: "Action",
+            unSortIcon: true,
+            sortable: true,
+            width: 150,
+            suppressMovable: true
+          },
+          {
+            headerName: "單號",
+            field: "AIAO_ID",
+            unSortIcon: true,
+            sortable: true,
+            width: 300,
+            resizable: true,
+            suppressMovable: true
+          },
+          {
+            headerName: "數量",
+            field: "IH_Number",
+            unSortIcon: true,
+            sortable: true,
+            width: 100,
+            suppressMovable: true
+          },
+          {
+            headerName: "單位",
+            field: "IH_Unit",
+            unSortIcon: true,
+            sortable: true,
+            width: 100,
+            suppressMovable: true
+          },
+          {
+            headerName: "申請人員",
+            field: "ApplyPerson",
+            unSortIcon: true,
+            sortable: true,
+            width: 150,
+            suppressMovable: true
+          },
+          {
+            headerName: "承辦人員",
+            field: "ExecutionPerson",
+            unSortIcon: true,
+            sortable: true,
+            width: 150,
+            suppressMovable: true
+          }
+        ] ;
+      const rowData = ref([]);
+      onMounted(() => {
+        getDetails();
+        searchHistory();
+      });
+      // 上半部表單部分 & 送出
       async function getDetails() {
         const axios = require('axios');
         try {
@@ -273,9 +347,20 @@
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             if (details.value.WarrantyStartDate && details.value.WarrantyEndDate) {
-              details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
-              details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
+              details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/\//g, '-');
+              details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/\//g, '-');
             }
+            if(details.value.existFile) {
+              details.value.existFile.forEach(item => {
+                selectFiles.viewFile.push({
+                  FileName: item.FileName,
+                  FileLink: item.FileLink,
+                  FileType: 'exist',
+                }); 
+              });
+            }
+            getEquipCategoryName();
+            getLayerName();
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -286,173 +371,269 @@
           console.error(error);
         }
       }
-
-      async function submit() {
+      async function getEquipTypeName() {
+        if (EquipTypeArray.value.length == 0) {
+          const axios = require('axios');
+          try {
+            const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetEquipType');
+            console.log(response);
+            const data = response.data;
+            if (data.state === 'success') {
+              console.log('總類Get成功 資料如下\n', data.resultList.EquipType);
+              EquipTypeArray.value = data.resultList.EquipType;
+            } else if (data.state === 'error') {
+              alert(data.messages);
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            }
+          } catch (error) {
+            console.error('Error sending applicant info request to backend');
+          }
+        }
+      }
+      async function getEquipCategoryName() {
         const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${details.value.EquipTypeName}`);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('分類Get成功 資料如下\n', data.resultList.EquipCategory);
+            EquipCategoryArray.value = data.resultList.EquipCategory;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error('Error sending applicant info request to backend', error);
+        }
+      }
+      async function getAreaName() {
+        if (AreaArray.value.length == 0) {
+          const axios = require('axios');
+          try {
+            const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetAreaName');
+            console.log(response);
+            const data = response.data;
+            if (data.state === 'success') {
+              console.log('Area Get成功 資料如下\n', data.resultList.AreaName);
+              AreaArray.value = data.resultList.AreaName;
+            } else if (data.state === 'error') {
+              alert(data.messages);
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            }
+          } catch (error) {
+            console.error('Error sending applicant info request to backend');
+          }
+        }
+      }
+      async function getLayerName() {
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetLayerName?id=${details.value.AreaName}`);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('Layer Get成功 資料如下\n', data.resultList.LayerName);
+            LayerArray.value = data.resultList.LayerName;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error('Error sending applicant info request to backend');
+        }
+      }
+      function selectType(item) {
+        details.value.EquipTypeName = item;
+        // console.log('選擇的總類:', EquipTypeName.value);
+        details.value.EquipCategoryName = '';
+        getEquipCategoryName();
+        EquipCategoryInit.value = '請選擇';
+      }
+      function selectCategory(item) {
+        details.value.EquipCategoryName = item;
+      }
+      const selectArea = (item) => {
+        details.value.AreaName = item;
+        details.value.LayerName = '';
+        //API function here
+        getLayerName();
+        LayerInit.value = '請選擇';
+      };
+      const selectLayer = (item) => {
+        details.value.LayerName = item;
+      };
+      // 輪播部分 function
+      function openFileExplorer() {
+        fileInputs.value.click();
+      }
+      function handleFileChange(event) {
+        const files = event.target.files;
+        const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        if(files.length + selectFiles.viewFile.length > 5) {
+          alert('上傳至多5張圖片');
+          return;
+        }
+        //檢查檔名
+        for (let i = 0; i < files.length; i++) {
+          const fileName = files[i].name;
+          const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
+          if (!imageExtensions.includes(fileExtension.toLowerCase())) {
+            alert(fileExtension + '不在允許的格式範圍內，請重新選取');
+            return;
+          }
+        }
+        // const previewUrl = formData[index].previewUrl;
+        for (let i = 0; i < files.length; i++) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const img = new Image();
+            img.src = e.target.result;
+            img.onload = () => {
+              const canvas = document.createElement('canvas');
+              const maxWidth = 800; // 设置最大宽度
+              const scaleRatio = Math.min(maxWidth / img.width, 1);
+              canvas.width = img.width * scaleRatio;
+              canvas.height = img.height * scaleRatio;
+              const ctx = canvas.getContext('2d');
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+              canvas.toBlob((blob) => {
+                const compressedFile = new File([blob], files[i].name, {
+                  type: files[i].type,
+                  lastModified: files[i].lastModified,
+                });
+                // 记录压缩前后的大小
+                const originalSize = Math.round(files[i].size / 1024); // 原始大小（KB）
+                const compressedSize = Math.round(compressedFile.size / 1024); // 壓縮後大小（KB）
+                console.log(`原始大小: ${originalSize} KB，壓縮後大小: ${compressedSize} KB`);
+                selectFiles.newFile.push({
+                  file: compressedFile,
+                  id: increseId.value,
+                });
+                selectFiles.viewFile.push({
+                  FileName: compressedFile.name,
+                  FileLink: URL.createObjectURL(compressedFile),
+                  FileType: 'new',
+                  id: increseId.value,
+                });
+                increseId.value++;
+              }, files[i].type, 0.8);
+            };
+          };
+          reader.readAsDataURL(files[i]);
+        }
+        console.log('newFile' , selectFiles.newFile);
+      }
+      function deleteFileFunction(index) {
+        const file = selectFiles.viewFile[index];
+        switch (file.FileType) {
+          // 已上傳檔案 ->從輪播陣列刪除 & 加到deleteFile
+          case 'exist':
+            selectFiles.deleteFile.push(file.FileName);
+            selectFiles.viewFile.splice(index,1);
+            console.log('deleteFile' , selectFiles.deleteFile);
+            break;
+          // 新上傳檔案 ->從輪播陣列刪除 & 從newFile移除
+          case 'new':
+            const newFileIndex = selectFiles.newFile.findIndex(item => item.id === file.id);
+            selectFiles.newFile.splice(newFileIndex,1);
+            selectFiles.viewFile.splice(index,1);
+            console.log('newFile' , selectFiles.newFile);
+            break;
+        }
+      }
+      // 歷史紀錄部分function
+      async function searchHistory() {
         const formData = new FormData();
         const formFields = {
-          'AI_ID': details.value.AI_ID,
-          'DeliveryOperator': validation.value.user1.account,
-          'AssetsInOperator': validation.value.user2.account,
+          'AssetsId': AssetsId,
+          'Action': historyParams.Action,
+          'StartDate': historyParams.StartDate,
+          'EndDate': historyParams.EndDate,
         };
         //將表格資料append到 formData
         for (const fieldName in formFields) {
           formData.append(fieldName, formFields[fieldName]);
-          console.log(formData.get(`${fieldName}`));
         }
-        const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/Delivery', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        const axios = require('axios');
         try {
+          const response = await axios.post('http://192.168.0.176:7008/InventoryMng/AssetsHistory', formData);
           const data = response.data;
-          console.log(data);
           if (data.state === 'success') {
-            let msg = data.messages;
-            msg += '\n編號:' + data.resultList.AI_ID;
-            alert(msg);
-            router.push({
-              name: 'Store_Process_Datagrid'
-            });
+            //取得datagrid成功
+            // console.log(data.state);
+            console.log('datagrid', data.resultList);
+            rowData.value = data.resultList;
           } else if (data.state === 'error') {
+            //取得datagrid失敗
             alert(data.messages);
-            console.log('error state', response);
+          } else if (data.state === 'input_error') {
+            //取得datagrid格式錯誤
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            //尚未登入
+            alert(data.messages);
+            router.push('/');
+          } else {
+            throw new Error('Request was not successful');
           }
         } catch (error) {
-          console.error(error);
+          console.error('Error sending data to backend', error);
         }
       }
-      onMounted(() => {
-        getDetails();
-      });
+      const selectAction = item =>{
+        historyParams.Action = item;
+      }
+      function clear() {
+        for(const key in historyParams) {
+          historyParams[key] = '';
+        }
+        searchHistory();
+      }
       function goBack() {
         window.history.back();
       }
       return {
-        submit,
-        goBack,
         AssetsId,
         details,
+        EquipTypeArray,
+        EquipCategoryArray,
+        EquipCategoryInit,
+        AreaArray,
+        LayerArray,
+        LayerInit,
+        fileInputs,
+        selectFiles,
+        historyParams,
+        ActionArray,
+        getEquipTypeName,
+        getAreaName,
+        selectType,
+        selectCategory,
+        selectArea,
+        selectLayer,
+        openFileExplorer,
+        handleFileChange,
+        deleteFileFunction,
+        searchHistory,
+        selectAction,
+        clear,
+        goBack,
+        rowHeight: 35,
         pagination: {
           clickable: true,
         },
         modules: [Pagination],
-        columnDefs: [{
-            suppressMovable: true,
-            field: "",
-            cellRenderer: "Button",
-            width: '100',
-          },
-          {
-            headerName: "作業日期",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            suppressMovable: true
-          },
-          {
-            headerName: "作業行為",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            suppressMovable: true
-          },
-          {
-            headerName: "單號",
-            field: "price",
-            unSortIcon: true,
-            sortable: true,
-            width: '300',
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "數量",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '100',
-            suppressMovable: true
-          },
-          {
-            headerName: "單位",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: '100',
-            suppressMovable: true
-          },
-          {
-            headerName: "申請人員",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            suppressMovable: true
-          },
-          {
-            headerName: "承辦人員",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            suppressMovable: true
-          }
-        ],
-        rowData: [{
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000
-          },
-        ],
+        columnDefs,
+        rowData,
       }
     },
   }
@@ -589,10 +770,15 @@
           .dropdown-menu {
             width: 100%;
             transform: translate3d(-1px, 35px, 0px) !important;
+            max-height: 250px;
+            overflow-y: auto;
             p {
               font-size: 18px;
               color: black;
               font-weight: normal;
+              &:hover {
+                cursor: pointer;
+              }
             }
           }
         }
