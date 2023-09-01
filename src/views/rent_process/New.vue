@@ -17,8 +17,8 @@
                 <p>設備總類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                      {{ searchParams.EquipTypeName || '請選擇' }}
-                    </button>
+                        {{ searchParams.EquipTypeName || '請選擇' }}
+                      </button>
                   <div class="dropdown-menu" aria-labelledby="typeDropdown">
                     <p v-for="(item, index) in searchParams.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
                   </div>
@@ -28,8 +28,8 @@
                 <p>設備分類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
-                      {{ searchParams.EquipCategoryName || searchParams.EquipCategoryInit }}
-                    </button>
+                        {{ searchParams.EquipCategoryName || searchParams.EquipCategoryInit }}
+                      </button>
                   <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                     <p v-for="(item, index) in searchParams.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
                   </div>
@@ -44,7 +44,7 @@
               <div class="col-xl-3 col-lg-3 col-md-3 col-12">
                 <p>已選/所需 數量 <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"></p>
                 <div class="number-input-box">
-                  <p class="input-number readonly_box" readonly>{{  searchParams.selectedNumber }} / {{  searchParams.Number }}</p>
+                  <p class="input-number readonly_box" readonly>{{ searchParams.selectedNumber }} / {{ searchParams.Number }}</p>
                 </div>
               </div>
             </div>
@@ -161,13 +161,13 @@
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label"><p>備料人員</p></label>
             <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly v-model="PreparedPerson"/>
+              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly v-model="PreparedPerson" />
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name"><p>備料完成日期</p></label>
             <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly v-model="PreparedDate"/>
+              <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly v-model="PreparedDate" />
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
@@ -183,7 +183,7 @@
       <button class="back_btn" @click="goBack">回上一頁</button>
       <button class="send_btn" data-bs-toggle="modal" data-bs-target="#confirmModal">送出</button>
     </div>
-        <!-- Modal -->
+    <!-- Modal -->
     <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -237,9 +237,9 @@
       const options = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨'];
       const gridApi2 = ref(null);
       const gridApi3 = ref(null);
-      const selectedNumberArray = ref([]);//紀錄不同項目已選數量array
-      const totalNeed = ref(0);//總所需數量
-      const totalSelect = ref(0);//總已備數量
+      const selectedNumberArray = ref([]); //紀錄不同項目已選數量array
+      const totalNeed = ref(0); //總所需數量
+      const totalSelect = ref(0); //總已備數量
       const PreparedPerson = ref('');
       const PreparedDate = ref('');
       const PrepareMemo = ref('');
@@ -261,7 +261,7 @@
           field: "",
           cellRenderer: "Storage_button",
           cellRendererParams: {
-            searchList: data=> {
+            searchList: data => {
               console.log(data);
               searchParams.EquipTypeName = data.EquipTypeName;
               getEquipCategoryName();
@@ -271,7 +271,7 @@
               searchParams.id = data.id;
               searchParams.item_id = data.item_id;
               searchParams.selectedNumber = selectedNumberArray.value[data.id]
-              searchInventory(searchParams.id , searchParams.item_id);
+              searchInventory(searchParams.id, searchParams.item_id);
             },
           },
           width: 115,
@@ -337,7 +337,7 @@
           field: "",
           cellRenderer: "Delete_button",
           cellRendererParams: {
-            deleteMaterial: (data)=> {
+            deleteMaterial: (data) => {
               selectedNumberArray.value[data.id] -= data.selectNumber
               searchParams.selectedNumber = selectedNumberArray.value[data.id]
               getDetails()
@@ -442,9 +442,9 @@
           field: "",
           cellRenderer: "Storage_add",
           cellRendererParams: {
-            numberIsValid: (data)=>{
+            numberIsValid: (data) => {
               // 檢查選擇數量是否正常 1.超過 2.為零 3.正常執行
-              if((data.selectNumber + searchParams.selectedNumber) > searchParams.Number || data.selectNumber === 0) {
+              if ((data.selectNumber + searchParams.selectedNumber) > searchParams.Number || data.selectNumber === 0) {
                 // 1. || 2.
                 return false;
               }
@@ -452,12 +452,12 @@
               return true;
             },
             addMaterial: (data) => {
-                selectedNumberArray.value[data.id] += data.selectNumber
-                searchParams.selectedNumber = selectedNumberArray.value[data.id]
-                // searchInventory刷新庫存數量
-                searchInventory(searchParams.id , searchParams.item_id);
-                // getDetail刷新rowData1、2
-                getDetails();
+              selectedNumberArray.value[data.id] += data.selectNumber
+              searchParams.selectedNumber = selectedNumberArray.value[data.id]
+              // searchInventory刷新庫存數量
+              searchInventory(searchParams.id, searchParams.item_id);
+              // getDetail刷新rowData1、2
+              getDetails();
             },
           },
           width: 75,
@@ -602,8 +602,8 @@
             rowData1.value = data.resultList.ItemList;
             rowData2.value = data.resultList.OM_List;
             // 初始化已選數量array(從1開始)
-            for(let i =1; i<=rowData1.value.length ; i++) {
-              selectedNumberArray.value[i]= 0;
+            for (let i = 1; i <= rowData1.value.length; i++) {
+              selectedNumberArray.value[i] = 0;
             }
             // 遍歷OM_list 將已選數量疊加上去
             rowData2.value.forEach(item => {
@@ -627,11 +627,11 @@
           console.error(error);
         }
       }
-      async function searchInventory(data_id , data_item_id) {
-        if(searchParams.ProductName) {
+      async function searchInventory(data_id, data_item_id) {
+        if (searchParams.ProductName) {
           searchParams.ProductName = searchParams.ProductName.trim();
         }
-        if(searchParams.ProductName && !/^.{1,20}$/.test(searchParams.ProductName)) {
+        if (searchParams.ProductName && !/^.{1,20}$/.test(searchParams.ProductName)) {
           alert('物品名稱不可輸入超過20字')
           return
         }
@@ -663,11 +663,11 @@
         }
       }
       async function submit() {
-        if( details.value.PrepareMemo && !/^.{1,100}$/.test(details.value.PrepareMemo)) {
+        if (details.value.PrepareMemo && !/^.{1,100}$/.test(details.value.PrepareMemo)) {
           alert('備料備註不可輸入超過100字');
           return
         }
-        if( rowData2.value.length === 0 ) {
+        if (rowData2.value.length === 0) {
           alert('請至少出庫一個細項');
           return
         }
@@ -788,42 +788,43 @@
   .input-group {
     height: 100%;
   }
-  #confirmModal{
-    .modal-content{
+  #confirmModal {
+    .modal-content {
       border-radius: 0;
-      border:1px solid black;
-    .modal-body{
-      background: #528091;
-    color: white;
-    font-weight: 700;
-    text-align: center;
-    padding: 20px 10px;
-    border-bottom: 1px solid black;
+      border: 1px solid black;
+      .modal-body {
+        background: #528091;
+        color: white;
+        font-weight: 700;
+        text-align: center;
+        padding: 20px 10px;
+        border-bottom: 1px solid black;
+      }
+      .modal-footer {
+        padding: 10px;
+        gap: 5px;
+        background: white;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        border-radius: 0;
+        button:nth-child(1) {
+          font-weight: 700;
+          border: none;
+          &:hover {
+            background: #636260
+          }
+        }
+        button:nth-child(2) {
+          background: #132238;
+          font-weight: 700;
+          border: none;
+          &:hover {
+            background: #426497
+          }
+        }
+      }
     }
-    .modal-footer{
-      padding: 10px;
-    gap: 5px;
-    background: white;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    border-radius: 0;
-    button:nth-child(1){
-      font-weight: 700;
-    border:none;
-    &:hover{
-      background:#636260
-    }
-    }
-    button:nth-child(2){
-      background: #132238;
-    font-weight: 700;
-    border: none;
-    &:hover{
-      background:#426497
-    }
-    }
-    }}
   }
   @media only screen and (min-width: 1200px) {
     .modal {
@@ -1061,11 +1062,11 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
-          .row:nth-child(3){
-            p{
+          .row:nth-child(3) {
+            p {
               justify-content: left;
-    padding: 5px 10px 0;
-    align-items: normal;
+              padding: 5px 10px 0;
+              align-items: normal;
             }
           }
           .form-check {
@@ -1375,11 +1376,11 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
-          .row:nth-child(3){
-            p{
+          .row:nth-child(3) {
+            p {
               justify-content: left;
-    padding: 5px 10px 0;
-    align-items: normal;
+              padding: 5px 10px 0;
+              align-items: normal;
             }
           }
           .form-check {
@@ -1696,11 +1697,11 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
-          .row:nth-child(3){
-            p{
+          .row:nth-child(3) {
+            p {
               justify-content: left;
-    padding: 5px 10px 0;
-    align-items: normal;
+              padding: 5px 10px 0;
+              align-items: normal;
             }
           }
           .form-check {

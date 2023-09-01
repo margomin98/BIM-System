@@ -1,7 +1,10 @@
 <template>
   <div class='button_wrap'>
-    <button @click="viewEdit()">編輯</button>
+    <!-- <button @click="viewEdit()">編輯</button> -->
+    
+    <button data-bs-toggle="modal" data-bs-target="#editModal" >編輯</button>
     <button @click="viewDelete()">刪除</button>
+   
   </div>
 </template>
 

@@ -9,9 +9,7 @@
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="equipment-tab" data-bs-toggle="tab" data-bs-target="#equipment" type="button" role="tab" aria-controls="equipment" aria-selected="true">設備總類</button>
-            <button class="nav-link" id="storage-tab" data-bs-toggle="tab" data-bs-target="#equipmentCategory" type="button" role="tab" aria-controls="storage" aria-selected="false">設備分類</button>
-            <button class="nav-link " id="equipment-tab" data-bs-toggle="tab" data-bs-target="#storage" type="button" role="tab" aria-controls="equipment" aria-selected="true">儲位區域</button>
-            <button class="nav-link" id="storage-tab" data-bs-toggle="tab" data-bs-target="#storageLocation" type="button" role="tab" aria-controls="storage" aria-selected="false">儲位櫃位</button>
+            <button class="nav-link" id="storage-tab" data-bs-toggle="tab" data-bs-target="#storage" type="button" role="tab" aria-controls="storage" aria-selected="false">儲位區域</button>
           </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -20,8 +18,7 @@
             <div class='row g-0'>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 grid'>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData1" @rowDragEnd="onRowDragEnd('equip_type' ,$event)" @cellValueChanged="onCellValueChanged('equip_type')"
-                    @grid-ready="dataApi1">
+                  <ag-grid-vue style="width: 100%" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData1" @rowDragEnd="onRowDragEnd('equip_type' ,$event)" @cellValueChanged="onCellValueChanged('equip_type')" @grid-ready="dataApi1">
                   </ag-grid-vue>
                 </div>
               </div>
@@ -34,79 +31,17 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane fade" id="equipmentCategory" role="tabpanel" aria-labelledby="storage-tab" tabindex="0">
-            <div class='row g-0'>
-              <div class='col-xl-6 col-lg-6 col-md-6 col-12 grid'>
-                <div class="col search_dropdown d-flex">
-                  <p>設備總類</p>
-                  <div class="dropdown">
-                    <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ selectedItem || "請選擇" }}
-                      </button>
-                    <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                      <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                      <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
-                    </div>
-                  </div>
-                </div>
-                <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData2" @rowDragEnd="onRowDragEnd('area' ,$event)" @cellValueChanged="onCellValueChanged('area')"
-                    @grid-ready="dataApi2">
-                  </ag-grid-vue>
-                </div>
-              </div>
-              <div class='col-xl-6 col-lg-6 col-md-6 col-12 submit_section'>
-                <p>新增設備分類</p>
-                <div class='d-flex'>
-                  <input class="form-control" aria-label="With textarea" placeholder='最多輸入10字'>
-                  <!-- <input class="form-control" aria-label="With textarea" placeholder='最多輸入10字' v-model="newArea"> -->
-                  <button type="button" @click="insertNewType('area')">新增</button>
-                </div>
-              </div>
-            </div>
-          </div>
           <!-- 儲位區域tab -->
           <div class="tab-pane fade" id="storage" role="tabpanel" aria-labelledby="storage-tab" tabindex="0">
             <div class='row g-0'>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 grid'>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData2" @rowDragEnd="onRowDragEnd('area' ,$event)" @cellValueChanged="onCellValueChanged('area')"
-                    @grid-ready="dataApi2">
+                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData2" @rowDragEnd="onRowDragEnd('area' ,$event)" @cellValueChanged="onCellValueChanged('area')" @grid-ready="dataApi2">
                   </ag-grid-vue>
                 </div>
               </div>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 submit_section'>
                 <p>新增儲位區域</p>
-                <div class='d-flex'>
-                  <input class="form-control" aria-label="With textarea" placeholder='最多輸入10字' v-model="newArea">
-                  <button type="button" @click="insertNewType('area')">新增</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="storageLocation" role="tabpanel" aria-labelledby="storage-tab" tabindex="0">
-            <div class='row g-0'>
-              <div class='col-xl-6 col-lg-6 col-md-6 col-12 grid'>
-                <div class="col search_dropdown d-flex">
-                  <p>儲位區域</p>
-                  <div class="dropdown">
-                    <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ selectedItem || "請選擇" }}
-                      </button>
-                    <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                      <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                      <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
-                    </div>
-                  </div>
-                </div>
-                <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData2" @rowDragEnd="onRowDragEnd('area' ,$event)" @cellValueChanged="onCellValueChanged('area')"
-                    @grid-ready="dataApi2">
-                  </ag-grid-vue>
-                </div>
-              </div>
-              <div class='col-xl-6 col-lg-6 col-md-6 col-12 submit_section'>
-                <p>新增儲位櫃位</p>
                 <div class='d-flex'>
                   <input class="form-control" aria-label="With textarea" placeholder='最多輸入10字' v-model="newArea">
                   <button type="button" @click="insertNewType('area')">新增</button>
@@ -120,26 +55,6 @@
         <button class="back_btn" @click="goBack">回上一頁</button>
       </div>
     </div>
-    <div class="modal fade" data-bs-backdrop="static" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-sm modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-body">
-            <div class="fixed_info">
-              <div>
-                <p>修改名稱</p>
-              </div>
-              <div class="content">
-                <input type="text" placeholder="最多10個字">
-              </div>
-              <div class="button_section">
-                <button type="button" class="btn" data-bs-dismiss="modal">關閉</button>
-                <button type="button" class="btn" data-bs-dismiss="modal">儲存</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -149,9 +64,9 @@
   } from "ag-grid-vue3";
   import Navbar from "@/components/Navbar.vue";
   import Parameter_button from "@/components/Parameter_button";
-  import Edit_pen from "@/components/Edit_pen";
+  // import Edit_pen from "@/components/Edit_pen";
   import {
-    reactive,
+reactive,
     ref
   } from "vue";
   export default {
@@ -159,7 +74,7 @@
       Navbar,
       AgGridVue,
       Parameter_button,
-      Edit_pen
+      // Edit_pen
     },
     setup() {
       const newType = ref('');
@@ -309,67 +224,6 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-  #editModal {
-    .modal-content {
-      border-radius: 0;
-      .modal-body {
-        border: 1px solid black;
-        padding: 0;
-        p {
-          border-bottom: 1px solid black;
-          background: #528091;
-          padding: 10px;
-          text-align: center;
-          font-weight: 700;
-          color: white;
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-        .content {
-          padding: 20px 10px;
-          display: flex;
-          justify-content: center;
-          background: #D9D9D9;
-          input {
-            border: none;
-            border-radius: 10px;
-            text-align: center;
-          }
-        }
-        .button_section {
-          background: #D9D9D9;
-          display: flex;
-          justify-content: center;
-          gap: 0 10px;
-          padding-bottom: 20px;
-           :nth-child(1) {
-            @include search_and_send_btn;
-            font-size: 15px;
-            width: 60px;
-            height: 30px;
-            padding: 6px 12px;
-            background: #6C6C6C;
-            border-radius: 7px;
-            &:hover {
-              background: #30343a;
-              color: white
-            }
-          }
-           :nth-child(2) {
-            @include delete_button;
-            font-size: 15px;
-            width: 60px;
-            height: 30px;
-            background-color: #98CCD3;
-            &:hover {
-              background: #5979ab;
-              color: white
-            }
-          }
-        }
-      }
-    }
-  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .ag-theme-alpine {
@@ -430,41 +284,7 @@
               padding: 30px;
               border-top-left-radius: 5px;
               border-bottom-left-radius: 5px;
-              background: #7B8799;
-              .search_dropdown {
-                @include datagrid_title;
-                background: #132238;
-                padding: 10px;
-                align-items: center;
-                gap: 0 20px;
-                p {
-                  margin-bottom: 0;
-                }
-                .dropdown {
-                  width: 200px;
-                  height: 35px;
-                  @include dropdown_btn;
-                  margin-bottom: 0;
-                  .dropdown-toggle {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    border: none;
-                    width: 100%;
-                    padding: 0;
-                    color: black;
-                  }
-                  .dropdown-menu {
-                    width: 100%;
-                    transform: translate3d(-1px, 35px, 0px) !important;
-                    p {
-                      font-size: 18px;
-                      color: black;
-                      font-weight: normal;
-                    }
-                  }
-                }
-              }
+              background: #7B8799
             }
             .submit_section {
               background: #132238;
@@ -631,41 +451,7 @@
               padding: 20px;
               border-top-left-radius: 5px;
               border-bottom-left-radius: 5px;
-              background: #7B8799;
-              .search_dropdown {
-                @include datagrid_title;
-                background: #132238;
-                padding: 10px;
-                align-items: center;
-                gap: 0 20px;
-                p {
-                  margin-bottom: 0;
-                }
-                .dropdown {
-                  width: 200px;
-                  height: 35px;
-                  @include dropdown_btn;
-                  margin-bottom: 0;
-                  .dropdown-toggle {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    border: none;
-                    width: 100%;
-                    padding: 0;
-                    color: black;
-                  }
-                  .dropdown-menu {
-                    width: 100%;
-                    transform: translate3d(-1px, 35px, 0px) !important;
-                    p {
-                      font-size: 18px;
-                      color: black;
-                      font-weight: normal;
-                    }
-                  }
-                }
-              }
+              background: #7B8799
             }
             .submit_section {
               background: #132238;
@@ -813,10 +599,8 @@
             button {
               @include tab_section_num;
               background: #5C7897;
-              width: auto;
+              width: 100px;
               height: 50px;
-              padding: 5px;
-              white-space: nowrap;
             }
             .active {
               @include tab_section_num;
@@ -835,41 +619,7 @@
               padding: 20px;
               border-top-left-radius: 5px;
               border-bottom-left-radius: 5px;
-              background: #7B8799;
-              .search_dropdown {
-                @include datagrid_title;
-                background: #132238;
-                padding: 10px;
-                align-items: center;
-                gap: 0 20px;
-                p {
-                  margin-bottom: 0;
-                }
-                .dropdown {
-                  width: 200px;
-                  height: 35px;
-                  @include dropdown_btn;
-                  margin-bottom: 0;
-                  .dropdown-toggle {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    border: none;
-                    width: 100%;
-                    padding: 0;
-                    color: black;
-                  }
-                  .dropdown-menu {
-                    width: 100%;
-                    transform: translate3d(-1px, 35px, 0px) !important;
-                    p {
-                      font-size: 18px;
-                      color: black;
-                      font-weight: normal;
-                    }
-                  }
-                }
-              }
+              background: #7B8799
             }
             .submit_section {
               background: #132238;
