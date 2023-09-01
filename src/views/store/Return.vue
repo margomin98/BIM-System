@@ -20,30 +20,38 @@
         </div>
       </div>
       <div class="content">
-        <div class="col">
+        <div class="col-12">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
               <span>*</span>資產編號：
             </div>
-            <input  ref="inputElement"  type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="請輸入資產編號">
+            <input ref="inputElement" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="請輸入資產編號">
           </div>
         </div>
         <div class="row g-0">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+          <div class="col-xl-6 col-lg-12 col-md-12 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
                 <span>*</span>數量：
               </div>
-              <input class="input-number" type="number" v-model="count" min="1" />
+              <input class="input-number " type="number" v-model="count" min="1" />
             </div>
           </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+          <div class="col-xl-6 col-lg-12 col-md-12 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
                 單位：
               </div>
               <input type="text" class=" readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
             </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="input-group d-flex">
+            <div class="input-group-prepend">
+              備註：
+            </div>
+            <textarea class="form-control" placeholder="最多輸入100字"></textarea>
           </div>
         </div>
       </div>
@@ -80,10 +88,10 @@
         this.count = 1;
       }
     },
-   mounted() {
-    // Focus the input element when the component is mounted
-    this.$refs.inputElement.focus();
-  }
+    mounted() {
+      // Focus the input element when the component is mounted
+      this.$refs.inputElement.focus();
+    }
   }
 </script>
 
@@ -102,8 +110,8 @@
         @include title_color;
       }
       .info_wrap {
-     margin: 30px auto 5%;
-    width: 636px;
+        margin: 30px auto 5%;
+        width: 700px;
         .fixed_info {
           @include fixed_info;
           p {
@@ -115,13 +123,12 @@
           @include content_bg;
           .input-group {
             justify-content: end;
-            .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-              margin-left: 10px;
-              border-radius: 5px;
-              width: 205px;
-            }
+            flex-wrap: nowrap;
             .input-number {
               @include count_btn;
+            }
+            .readonly_box {
+              height: 37px;
             }
             .form-control {
               height: 37px;
@@ -132,6 +139,7 @@
               font-weight: 700;
               font-size: 20px;
               text-align: end;
+              width: 140px;
               span {
                 @include red_star
               }
@@ -180,8 +188,9 @@
         @include title_color;
       }
       .info_wrap {
-     margin: 30px auto 5%;
-    width: 660px;
+        margin: 30px auto 5%;
+        width: 800px;
+        padding: 0 5%;
         .fixed_info {
           @include fixed_info;
           p {
@@ -192,25 +201,27 @@
         .content {
           @include content_bg;
           .input-group {
-              flex-wrap: nowrap;
-            .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-              margin-left: 10px;
-              border-radius: 5px;
-              width: 205px;
-            }
+            justify-content: end;
+            width: 100%;
+            flex-wrap: nowrap;
             .input-number {
+              width: 100%;
               @include count_btn;
             }
+            .readonly_box {
+              height: 37px;
+              width: 100%;
+            }
             .form-control {
-              height: 35px;
-              border-radius: 0;
+              height: 37px;
+              width: 100%;
             }
             .input-group-prepend {
               color: white;
               font-weight: 700;
               font-size: 20px;
-              width: 120px;
               text-align: end;
+              width: 150px;
               span {
                 @include red_star
               }
@@ -218,7 +229,7 @@
           }
         }
         .button_wrap {
-        display: flex;
+          display: flex;
           justify-content: space-between;
           margin: 30px auto 5%;
           width: 220px;
@@ -250,8 +261,8 @@
     .main_section {
       .readonly_box {
         @include readonly_box;
-        height:35px;
-        margin-left:unset !important;
+        height: 35px;
+        margin-left: unset !important;
       }
       h1 {
         margin-top: 80px;
@@ -275,37 +286,37 @@
         .content {
           @include content_bg;
           .input-group {
-            flex-direction:column;
-.input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-    margin-left: unset;
-    border-radius: 5px;
-    
-    margin-top: 5px;
-    height:35px;
-}
+            flex-direction: column;
+            .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+              margin-left: unset;
+              border-radius: 5px;
+              margin-top: 5px;
+              height: 35px;
+            }
             .input-number {
               @include count_btn;
-               margin-left:unset !important;
+              margin-left: unset !important;
             }
             .form-control {
               height: 35px;
               width: 100%;
               border-radius: 0;
-               margin-left:unset !important;
+              margin-left: unset !important;
             }
             .input-group-prepend {
               color: white;
               font-weight: 700;
               font-size: 20px;
               width: 100px;
-              white-space: nowrap;              span {
+              white-space: nowrap;
+              span {
                 @include red_star
               }
             }
           }
         }
         .button_wrap {
-     display: flex;
+          display: flex;
           justify-content: space-between;
           margin: 30px auto 5%;
           width: 220px;
