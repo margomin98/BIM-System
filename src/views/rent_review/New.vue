@@ -2,7 +2,7 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>審核出庫作業</h1>
+      <h1>出庫審核作業</h1>
     </div>
     <div class="info_wrap col">
       <div class="fixed_info">
