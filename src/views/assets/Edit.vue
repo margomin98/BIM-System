@@ -353,9 +353,19 @@
         //將表格資料append到 formData
         for (const fieldName in formFields) {
           if (formFields[fieldName] !== '' && formFields[fieldName] !== null) {
-              form.append(fieldName, formFields[fieldName]);
-              console.log(form.get(`${fieldName}`));
+              formData.append(fieldName, formFields[fieldName]);
+              console.log(formData.get(`${fieldName}`));
             }
+        }
+        if(selectFiles.newFile.length >0) {
+          selectFiles.newFile.forEach(item =>{
+            formData.append('newFile' , item.file);
+          });
+        }
+        if(selectFiles.deleteFile.length >0) {
+          selectFiles.deleteFile.forEach(item =>{
+            formData.append('deleteFile' , item);
+          });
         }
 
         const response = await axios.post('http://192.168.0.176:7008/InventoryMng/AssetEdit', formData);
@@ -766,6 +776,13 @@
           .dropdown {
             .dropdown-menu {
               width: 100%;
+              max-height: 250px;
+                overflow-y: auto;
+                p {
+                  &:hover {
+                    cursor: pointer;
+                  }
+                }
             }
             button {
               @include dropdown-btn;
