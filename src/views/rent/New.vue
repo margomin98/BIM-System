@@ -687,7 +687,7 @@
       }
       .info_wrap {
         margin: auto;
-        width: 1000px;
+     padding: 0 5%;
         .code_search {
           background: #48658C;
           color: white;

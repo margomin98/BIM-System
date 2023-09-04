@@ -2,7 +2,7 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>整合設備</h1>
+      <h1>檢視設備整合</h1>
     </div>
     <div class="info_wrap col">
       <div class="fixed_info">
@@ -13,52 +13,24 @@
       <div class="content">
         <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend"><span>*</span>產編：</div>
-            <input type="text" class="form-control text-center" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="請輸入產編" />
+            <div class="input-group-prepend">產編：</div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend"><span>*</span>名稱：</div>
-            <input type="text" class="form-control text-center" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="文字敘述，最多20字" />
+            <div class="input-group-prepend">名稱：</div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
           </div>
         </div>
-        <div class="row row_wrap">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend flex">儲位區域：</div>
-              <div class="dropdown">
-                <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-               請選擇
-          </button>
-                <div class="dropdown-menu">
-                  <p>123</p>
-                </div>
+        <!-- <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">保管人員：</div>
+                <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default"  />
               </div>
             </div>
-          </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend flex">儲位櫃位：</div>
-              <div class="dropdown">
-                <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-               請選擇
-          </button>
-                <div class="dropdown-menu">
-                  <p>123</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">保管人員：</div>
-              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" />
-            </div>
-          </div>
-        </div>
+          </div> -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -82,105 +54,20 @@
         </div>
       </div>
       <div class="content">
-        <div class="search_section">
-          <div class="row row_wrap">
-            <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend flex">設備總類：</div>
-                <div class="dropdown">
-                  <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-               請選擇
-          </button>
-                  <div class="dropdown-menu">
-                    <p>123</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend flex">設備分類：</div>
-                <div class="dropdown">
-                  <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-               請選擇
-          </button>
-                  <div class="dropdown-menu">
-                    <p>123</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="btn_section">
-            <button class="send_btn" data-bs-toggle="modal" data-bs-target="#exampleModal">搜索庫存</button>
-            <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1">
-              <div class="modal-dialog modal-xl modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-body">
-                    <div class="fixed_info">
-                      <div>
-                        <p>檢索資產</p>
-                      </div>
-                      <button type="button" class="close" data-bs-dismiss="modal">x</button>
-                    </div>
-                    <div class='second_content'>
-                      <div class='wrap1'>
-                        <div class='col-xl-3 col-lg-3 col-md-3 col-12' style='padding-left:0'>
-                          <p>設備總類</p>
-                          <div class="dropdown">
-                            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-               請選擇
-          </button>
-                            <div class="dropdown-menu">
-                              <p>123</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-                          <p>設備分類</p>
-                          <div class="dropdown">
-                            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-               請選擇
-          </button>
-                            <div class="dropdown-menu">
-                              <p>123</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-                          <p>物品名稱</p>
-                          <input type="text" class="form-control text-center" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="(模糊搜索)" />
-                        </div>
-                      </div>
-                      <div class='col d-flex justify-content-center'>
-                        <button class="btn submit_btn" type="button" @click="searchInventory">搜尋庫存</button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="fixed_info">
-                    <div>
-                      <p>目前資產庫存</p>
-                    </div>
-                  </div>
-                  <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true" @grid-ready="onGridReady">
-                  </ag-grid-vue>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item_wrap">
-        <div class="item">
+
+    <div class="item_wrap">
+    <div class="item">
+    
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">資產編號：</div>
-            <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" />
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly/>
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">物品名稱：</div>
-            <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" />
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
           </div>
         </div>
         <div class="col count d-flex">
@@ -188,74 +75,80 @@
             <div class="input-group-prepend">數量：</div>
             <div class="num_wrap d-flex ">
               <div class="number-input-box">
-                <input class="input-number" type="number" min="1" />
+                <input class="input-number readonly_box" type="number" readonly />
               </div>
-              <div class="btn_section">
-                <button class="delete_btn">刪除</button>
-              </div>
+            
             </div>
           </div>
-        </div>
-        </div>
-        <div class="item">
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">資產編號：</div>
-            <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" />
-          </div>
-        </div>
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">物品名稱：</div>
-            <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" />
-          </div>
-        </div>
-        <div class="col count d-flex">
-          <div class="input-group">
-            <div class="input-group-prepend">數量：</div>
-            <div class="num_wrap d-flex ">
-              <div class="number-input-box">
-                <input class="input-number" type="number" min="1" />
-              </div>
-              <div class="btn_section">
-                <button class="delete_btn">刪除</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        </div>
-        <div class="item">
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">資產編號：</div>
-            <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" />
-          </div>
-        </div>
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">物品名稱：</div>
-            <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" />
-          </div>
-        </div>
-        <div class="col count d-flex">
-          <div class="input-group">
-            <div class="input-group-prepend">數量：</div>
-            <div class="num_wrap d-flex ">
-              <div class="number-input-box">
-                <input class="input-number" type="number" min="1" />
-              </div>
-              <div class="btn_section">
-                <button class="delete_btn">刪除</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        </div>
         </div>
       </div>
-      <div class="col button_wrap">
+      <div class="item">
+    
+    <div class="col">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">資產編號：</div>
+        <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly/>
+      </div>
+    </div>
+    <div class="col">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">物品名稱：</div>
+        <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
+      </div>
+    </div>
+    <div class="col count d-flex">
+      <div class="input-group">
+        <div class="input-group-prepend">數量：</div>
+        <div class="num_wrap d-flex ">
+          <div class="number-input-box">
+            <input class="input-number readonly_box" type="number" readonly />
+          </div>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="item">
+    
+    <div class="col">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">資產編號：</div>
+        <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly/>
+      </div>
+    </div>
+    <div class="col">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">物品名稱：</div>
+        <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
+      </div>
+    </div>
+    <div class="col count d-flex">
+      <div class="input-group">
+        <div class="input-group-prepend">數量：</div>
+        <div class="num_wrap d-flex ">
+          <div class="number-input-box">
+            <input class="input-number readonly_box" type="number" readonly />
+          </div>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+      </div>
+    </div>
+    </div>
+    <div class="info_wrap col">
+      <div class="fixed_info">
+        <div>
+          <p>更換設備歷史紀錄</p>
+        </div>
+      </div>
+      <div style="width: 100%" class="content">
+      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true">
+      </ag-grid-vue>
+    </div>
+    <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="send_btn" @click="submit">送出</button>
       </div>
     </div>
   </div>
@@ -265,8 +158,9 @@
   import {
     AgGridVue
   } from "ag-grid-vue3";
-  import Button from "@/components/Storage_list_view_button";
-  import Storage_button from "@/components/Storage_add_button";
+  import {
+    register
+  } from 'swiper/element/bundle';
   import Navbar from "@/components/Navbar.vue";
   import {
     onMounted,
@@ -276,92 +170,62 @@
     useRoute,
     useRouter
   } from "vue-router";
+
   export default {
     components: {
       Navbar,
       AgGridVue,
-      Button,
-      Storage_button
     },
     setup() {
       return {
-        columnDefs: [{
-            suppressMovable: true,
-            field: "",
-            cellRenderer: "Storage_button",
-            width: '70'
-          }, {
-            suppressMovable: true,
-            field: "",
-            cellRenderer: "Button",
-            width: '100',
-          },
+        columnDefs: [ 
           {
-            headerName: "資產編號",
+            headerName: "記錄日期",
             field: "make",
             unSortIcon: true,
             sortable: true,
-            width: '180',
+            width: '150',
+            suppressMovable: true
+          },
+          {
+            headerName: "記錄行為",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: '150',
+            suppressMovable: true
+          },
+          {
+            headerName: "設備總類",
+            field: "price",
+            unSortIcon: true,
+            sortable: true,
+            width: '150',
+            suppressMovable: true
+          },
+          {
+            headerName: "設備分類",
+            field: "make",
+            unSortIcon: true,
+            sortable: true,
+            width: '150',
+            suppressMovable: true
+          },
+          {
+            headerName: "資產編號",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: '200',
             resizable: true,
             suppressMovable: true
           },
           {
             headerName: "物品名稱",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "狀態",
             field: "price",
             unSortIcon: true,
             sortable: true,
-            width: '100',
-            suppressMovable: true
-          },
-          {
-            headerName: "儲位區域",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            suppressMovable: true
-          },
-          {
-            headerName: "儲位櫃位",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            suppressMovable: true
-          },
-          {
-            headerName: "廠商",
-            field: "price",
-            unSortIcon: true,
-            sortable: true,
-            width: '160',
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "型號",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "規格",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
+            width: '200',
             resizable: true,
             suppressMovable: true
           },
@@ -380,7 +244,16 @@
             sortable: true,
             width: '100',
             suppressMovable: true
+          },
+          {
+            headerName: "作業人員",
+            field: "make",
+            unSortIcon: true,
+            sortable: true,
+            width: '150',
+            suppressMovable: true
           }
+         
         ],
         rowData: [{
             make: "Toyota",
@@ -494,27 +367,16 @@
               text-align: end;
             }
           }
-          .search_section {
-            background: #B5C9D0;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            .input-group-prepend {
-              color: black;
-            }
-            .btn_section {
-              display: flex;
-              justify-content: center;
-              button.send_btn {
-                @include search_and_send_btn;
-                font-size: 18px;
-                padding: 5px;
-                &:hover {
-                  background-color: #5e7aa2;
-                }
-              }
-            }
-          }
+          .item_wrap {
+          height: 350px;
+    overflow: auto;
+         .item{
+          background-color: #526F8E;
+          border-radius: 10px;
+          padding: 20px;
+          margin:20px 0;
+        }  
+        }
         }
         .button_wrap {
           display: flex;
@@ -529,12 +391,7 @@
               background-color: #5d85bb;
             }
           }
-          button.send_btn {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
+      
         }
         .dropdown {
           width: calc(100% - 10%);
@@ -556,17 +413,7 @@
             }
           }
         }
-        .item_wrap {
-          height: 350px;
-    overflow: auto;
-         .item{
-          background-color: #526F8E;
-          border-radius: 10px;
-          padding: 20px;
-          margin:20px 0;
-        }  
-        }
-       
+      
       }
       .info_wrap:nth-child(3) {
         margin-top: 3%;
@@ -574,21 +421,14 @@
           .input-group {
             justify-content: left
           }
-          .btn_section {
-            margin-left: 10px;
-            .delete_btn {
-              display: flex;
-              align-items: center;
-              @include delete_button;
-              height: 100%;
-              padding: 5px;
-              &:hover {
-                background: #FF7272
-              }
-            }
-          }
+         
         }
       }
+      .info_wrap:nth-child(4) {
+        margin-top: 3%;
+       
+      }
+      
     }
     .modal {
       padding: 0 5%;
@@ -701,6 +541,9 @@
           }
         }
       }
+    }
+    .change_btn {
+      @include change_btn
     }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
@@ -775,27 +618,6 @@
               text-align: end;
             }
           }
-          .search_section {
-            background: #B5C9D0;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            .input-group-prepend {
-              color: black;
-            }
-            .btn_section {
-              display: flex;
-              justify-content: center;
-              button.send_btn {
-                @include search_and_send_btn;
-                font-size: 18px;
-                padding: 5px;
-                &:hover {
-                  background-color: #5e7aa2;
-                }
-              }
-            }
-          }
         }
         .button_wrap {
           display: flex;
@@ -810,12 +632,7 @@
               background-color: #5d85bb;
             }
           }
-          button.send_btn {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
+       
         }
         .dropdown {
           width: calc(100% - 10%);
@@ -854,20 +671,12 @@
           .input-group {
             justify-content: left
           }
-          .btn_section {
-            margin-left: 10px;
-            .delete_btn {
-              display: flex;
-              align-items: center;
-              @include delete_button;
-              height: 100%;
-              padding: 5px;
-              &:hover {
-                background: #FF7272
-              }
-            }
-          }
+        
         }
+      }
+      .info_wrap:nth-child(4) {
+        margin-top: 3%;
+       
       }
     }
     .modal {
@@ -982,6 +791,9 @@
         }
       }
     }
+    .change_btn {
+      @include change_btn
+    }
   }
   @media only screen and (max-width: 767px) {
     .main_section {
@@ -1047,27 +859,6 @@
               font-size: 20px;
             }
           }
-          .search_section {
-            background: #B5C9D0;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            .input-group-prepend {
-              color: black;
-            }
-            .btn_section {
-              display: flex;
-              justify-content: center;
-              button.send_btn {
-                @include search_and_send_btn;
-                font-size: 18px;
-                padding: 5px;
-                &:hover {
-                  background-color: #5e7aa2;
-                }
-              }
-            }
-          }
         }
         .button_wrap {
           display: flex;
@@ -1082,13 +873,7 @@
               background-color: #5d85bb;
             }
           }
-          button.send_btn {
-            @include search_and_send_btn;
-            padding: 5px;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
+   
         }
         .item_wrap {
           height: 350px;
@@ -1112,22 +897,12 @@
             width: 100%;
             margin-left: unset !important;
           }
-          .btn_section {
-            margin-left: 10px;
-            .delete_btn {
-              display: flex;
-              align-items: center;
-              @include delete_button;
-              height: 100%;
-              padding: 5px;
-              width: 80px;
-              font-size: 18px;
-              &:hover {
-                background: #FF7272
-              }
-            }
-          }
+      
         }
+      }
+      .info_wrap:nth-child(4) {
+        margin-top: 3%;
+       
       }
     }
     .modal {
@@ -1240,6 +1015,9 @@
           }
         }
       }
+    }
+    .change_btn {
+      @include change_btn
     }
   }
 </style>

@@ -468,7 +468,7 @@
           padding: 0 2%;
         }
         .row {
-          gap: 20px 50px;
+          gap: 20px 30px;
           padding: 40px;
           p {
             @include datagrid_title;
@@ -494,6 +494,9 @@
               justify-content: space-between;
               align-items: center;
               border: none;
+              overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
             }
             .dropdown-menu {
               width: 100%;

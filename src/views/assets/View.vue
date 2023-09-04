@@ -53,16 +53,14 @@
           </div>
         </div>
         <div class="col">
-          <div class="col">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">規格：</div>
-              <input type="text" class="form-control readonly_box" readonly v-model="details.ProductSpec" />
-            </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">型號：</div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductType" />
           </div>
           <div class="col">
             <div class="input-group mb-3">
-              <div class="input-group-prepend">型號：</div>
-              <input type="text" class="form-control readonly_box" readonly v-model="details.ProductType" />
+              <div class="input-group-prepend">規格：</div>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductSpec" />
             </div>
           </div>
           <div class="col">
@@ -167,6 +165,7 @@
         :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}" @progress="onProgress" @slidechange="onSlideChange">
           <swiper-slide v-for="(item , index) in selectFiles.viewFile" :key="index" class="custom-slide">
             <img :src="item.FileLink" alt="">
+            <span @click="deleteFileFunction(index)">x</span>
           </swiper-slide>
         </swiper-container>
         <div class="swiper_pagination">
@@ -663,7 +662,22 @@
       .swiper_section {
         swiper-slide {
           align-self: baseline;
-
+          &::after {
+            cursor: pointer;
+            content: "x";
+            position: absolute;
+            top: 25px;
+            right: -14px;
+            background: #E94B4B;
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: 700;
+          }
         }
         swiper-slide img {
           width: 100%;
@@ -830,6 +844,22 @@
       .swiper_section {
         swiper-slide {
           align-self: baseline;
+          &::after {
+            cursor: pointer;
+            content: "x";
+            position: absolute;
+            top: 25px;
+            right: -14px;
+            background: #E94B4B;
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: 700;
+          }
         }
         swiper-slide img {
           width: 100%;
@@ -992,6 +1022,22 @@
   @media only screen and (max-width: 767px) {
     .main_section {
       .swiper_section swiper-slide {
+        &::after {
+          cursor: pointer;
+          content: "x";
+          position: absolute;
+          top: 25px;
+          right: 28px;
+          background: #E94B4B;
+          height: 30px;
+          width: 30px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: white;
+          font-weight: 700;
+        }
         img {
           width: 100%;
           height: auto;

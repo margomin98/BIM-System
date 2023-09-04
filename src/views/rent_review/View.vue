@@ -391,7 +391,7 @@
         @include title_color;
       }
       #readonly_box {
-        padding: 0 10px;
+        padding: 0 0 0 10px;
         background-color: #B4B4B4;
         border-left: black 1px solid;
       }
@@ -584,6 +584,7 @@
           .row:nth-child(3) .input-group{
               border-left: 1px solid black;
               border-right: 1px solid black;
+              background-color: #B4B4B4;
           }
         }
         .wrap:nth-child(2) .input-group input, .wrap:nth-child(1) .input-group input{
@@ -695,7 +696,7 @@
         @include title_color;
       }
       #readonly_box {
-        padding: 0;
+        padding: 0 0 0 10px;
         background-color: #B4B4B4;
         border-left: black 1px solid;
       }

@@ -53,6 +53,7 @@ import Assets_Search from "../views/assets/Search.vue";
 import Equipment_Datagrid from "../views/equipment/Datagrid.vue";
 import Equipment_New from "../views/equipment/New.vue";
 import Equipment_Change from "../views/equipment/Change.vue";
+import Equipment_View from "../views/equipment/View.vue";
 //設備整合
 
 //系統管理
@@ -224,6 +225,12 @@ const routes = [
     path: "/equipment_change",
     name: "Equipment_Change",
     component: Equipment_Change,
+    // meta: {auth: true, request: 'AO_Detail'},
+  },
+  {
+    path: "/equipment_view",
+    name: "Equipment_View",
+    component: Equipment_View,
     // meta: {auth: true, request: 'AO_Detail'},
   },
   {

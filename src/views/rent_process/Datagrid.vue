@@ -19,8 +19,8 @@
             <p>用途</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          {{ Use || "請選擇" }}
-                        </button>
+                            {{ Use || "請選擇" }}
+                          </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item , index) in UseArray" :key="index" class="dropdown-item" @click="selectUse(item)">{{ item }}</p>
               </div>
@@ -30,8 +30,8 @@
             <p>狀態</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          {{ Status || "請選擇" }}
-                        </button>
+                            {{ Status || "請選擇" }}
+                          </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item , index) in StatusArray" :key="index" class="dropdown-item" @click="selectStatus(item)">{{ item }}</p>
               </div>
@@ -41,8 +41,8 @@
             <p>日期類型</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          {{ DateCategory || "請選擇" }}
-                        </button>
+                            {{ DateCategory || "請選擇" }}
+                          </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item , index) in DateCategoryArray" :key="index" class="dropdown-item" @click="selectDateCategory(item)">{{ item }}</p>
               </div>
@@ -90,7 +90,7 @@
     AgGridVue
   } from "ag-grid-vue3";
   import Rent_process_button from "@/components/Rent_process_button";
-  import Rent_process_delete_button  from "@/components/Rent_process_delete_button ";
+  import Rent_process_delete_button from "@/components/Rent_process_delete_button ";
   import Navbar from "@/components/Navbar.vue";
   import router from "@/router";
   export default {
@@ -111,121 +111,119 @@
       const Use = ref('');
       const UseArray = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨']
       const Status = ref(''); //狀態
-      const StatusArray = ref(['已填報', '待審核', '待交付', '可交付', '部分交付', '已交付' , '審核不通過' ])
+      const StatusArray = ref(['已填報', '待審核', '待交付', '可交付', '部分交付', '已交付', '審核不通過'])
       const DateCategory = ref('');
-      const DateCategoryArray = ['申請日期' , '出庫日期' , '備料日期' , '審核日期'];
+      const DateCategoryArray = ['申請日期', '出庫日期', '備料日期', '審核日期'];
       const StartDate = ref(''); //申請出庫日期(起)
       const EndDate = ref(''); //申請出庫日期(迄)
       const pageSize = 10;
       const columnDefs = [{
-            suppressMovable: true,
-            field: "",
-            cellRenderer: "Rent_process_button",
-            cellRendererParams:{
-              refresh: submit,
-            },
-            width: 300,
-            resizable: true,
+          suppressMovable: true,
+          field: "",
+          cellRenderer: "Rent_process_button",
+          cellRendererParams: {
+            refresh: submit,
           },
-          {
-            headerName: "狀態",
-            field: "Status",
-            unSortIcon: true,
-            sortable: true,
-            width: 130,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "單號",
-            field: "AO_ID",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            suppressMovable: true,
-            resizable: true,
-          },
-          {
-            headerName: "專案名稱",
-            field: "ProjectName",
-            unSortIcon: true,
-            sortable: true,
-            width: 170,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "說明",
-            field: "Description",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "用途",
-            field: "Use",
-            unSortIcon: true,
-            sortable: true,
-            width: 130,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "申請人員",
-            field: "Applicant",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "申請日期",
-            field: "ApplicationDate",
-            unSortIcon: true,
-            sortable: true,
-            width: 170,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "出庫日期",
-            field: "AssetsOutDate",
-            unSortIcon: true,
-            sortable: true,
-            width: 170,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "備料日期",
-            field: "PrepareDate",
-            unSortIcon: true,
-            sortable: true,
-            width: 170,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "審核日期",
-            field: "VerifyDate",
-            unSortIcon: true,
-            sortable: true,
-            width: 170,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            field: "",
-            resizable: true,
-            width: 100,
-            cellRenderer: "Rent_process_delete_button",
-          }
+          width: 300,
+          resizable: true,
+        },
+        {
+          headerName: "狀態",
+          field: "Status",
+          unSortIcon: true,
+          sortable: true,
+          width: 130,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "單號",
+          field: "AO_ID",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
+          headerName: "專案名稱",
+          field: "ProjectName",
+          unSortIcon: true,
+          sortable: true,
+          width: 170,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "說明",
+          field: "Description",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "用途",
+          field: "Use",
+          unSortIcon: true,
+          sortable: true,
+          width: 130,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "申請人員",
+          field: "Applicant",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "申請日期",
+          field: "ApplicationDate",
+          unSortIcon: true,
+          sortable: true,
+          width: 170,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "備料日期",
+          field: "PrepareDate",
+          unSortIcon: true,
+          sortable: true,
+          width: 170,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "審核日期",
+          field: "VerifyDate",
+          unSortIcon: true,
+          sortable: true,
+          width: 170,
+          resizable: true,
+          suppressMovable: true
+        }, {
+          headerName: "出庫日期",
+          field: "AssetsOutDate",
+          unSortIcon: true,
+          sortable: true,
+          width: 170,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          field: "",
+          resizable: true,
+          width: 100,
+          cellRenderer: "Rent_process_delete_button",
+        }
       ];
-      const rowData = ref([
-      ]);
+      const rowData = ref([]);
       async function submit() {
         const formData = new FormData();
         const formFields = {
