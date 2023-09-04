@@ -168,7 +168,6 @@
           <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
             <swiper-slide v-for="(item , index) in selectFiles.viewFile" :key="index" class="custom-slide">
               <img :src="item.FileLink" alt="">
-              <span @click="deleteFileFunction(index)">x</span>
             </swiper-slide>
           </swiper-container>
           <div class="swiper_pagination">
