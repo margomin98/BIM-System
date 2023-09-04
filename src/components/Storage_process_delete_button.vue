@@ -26,7 +26,7 @@
         // console.log(props.params.data.search_id);
         if (search_id !== '') {
           router.push({
-            name: 'Store_Delete',
+            name: 'Store_Process_Delete',
             query: {
               search_id
             }

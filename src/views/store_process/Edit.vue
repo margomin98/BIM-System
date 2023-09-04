@@ -349,6 +349,10 @@
           const data = response.data;
           if (data.state === 'success') {
             // console.log('Details Get成功 資料如下\n', data.resultList);
+            if(data.resultList.Status !== '待入庫') {
+            window.history.back();
+            // router.push({name: 'Store_Process_Datagrid'});
+            }
             details.value = data.resultList;
             console.log('Details Get成功 資料如下\n', details.value);
             tabNumber.value = details.value.Count;
