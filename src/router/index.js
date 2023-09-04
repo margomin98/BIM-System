@@ -170,7 +170,7 @@ const routes = [
     path: "/assets_edit",
     name: "Assets_Edit",
     component: Assets_Edit,
-    // meta: {auth: true, request: 'AssetMgr_Detail'},
+    meta: {auth: true, request: 'AssetMgr_Edit'},
   },
   {
     path: "/assets_search",
