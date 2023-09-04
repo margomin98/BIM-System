@@ -156,7 +156,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend flex">保管人員：</div>
-              <account-search @Custodian = "setCustodian"></account-search>
+              <account-search @custodian = "setCustodian"></account-search>
               <!-- <div class="dropdown">
                 <input type="text" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="dropdown-menu">
@@ -502,7 +502,7 @@
           console.log(data);
           if (data.state === 'success') {
             let msg = data.messages;
-            msg += '\n編號:' + data.resultList.AssetsId;
+            msg += '\n單號:' + data.resultList.AssetsId;
             alert(msg);
             router.push({
               name: 'Assets_Datagrid'
