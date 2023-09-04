@@ -7,28 +7,7 @@
     <div class="container-fluid datagrid_section">
       <div class="content">
         <div class="row">
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-            <p>設備總類</p>
-            <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                    {{ searchParams.EquipTypeName || '請選擇' }}
-                  </button>
-              <div class="dropdown-menu" aria-labelledby="typeDropdown">
-                <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-            <p>設備分類</p>
-            <div class="dropdown">
-              <button style='  overflow: hidden;text-overflow: ellipsis;white-space: nowrap' class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
-                    {{ searchParams.EquipCategoryName || EquipCategoryInit }}
-                  </button>
-              <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
-              </div>
-            </div>
-          </div>
+          <getEquipDatagrid @EquipTypeName ="setTypeParams" @EquipCategoryName = "setCategoryParams" :clearEquips = "clearEquips"></getEquipDatagrid>
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>資產編號</p>
             <input type="text" v-model="searchParams.AssetsId" />
@@ -107,7 +86,9 @@
   } from "ag-grid-vue3";
   import Assets_return_button from "@/components/Assets_return_button";
   import Navbar from "@/components/Navbar.vue";
+  import getEquipDatagrid from "@/components/API/getEquipDatagrid"
   import {
+nextTick,
     onMounted,
     reactive,
     ref
@@ -117,6 +98,7 @@
       Navbar,
       AgGridVue,
       Assets_return_button,
+      getEquipDatagrid,
     },
     setup() {
       const details = ref({});
@@ -131,13 +113,11 @@
         StartDate: '',
         EndDate: '',
       });
-      const EquipTypeArray = ref([]); //設備總類陣列 request拿到
-      const EquipCategoryArray = ref([]); //設備分類陣列 request拿到
-      const EquipCategoryInit = ref('請先選擇設備總類');
       const StatusArray = ref(['在庫', '內部領用', '借測', '維修', '出貨', '報廢', '退貨', '無庫存', ]);
       const AreaArray = ref([]); //區域陣列
       const LayerArray = ref([]); //櫃位陣列
       const LayerInit = ref('請先選擇區域');
+      const clearEquips = ref(false);
       const pageSize = ref(10);
       const columnDefs = [{
           suppressMovable: true,
@@ -273,48 +253,7 @@
             throw new Error('Request was not successful');
           }
         } catch (error) {
-          console.error('Error sending data to backend', error);
-        }
-      }
-      async function getEquipTypeName() {
-        if (EquipTypeArray.value.length == 0) {
-          const axios = require('axios');
-          try {
-            const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetEquipType');
-            console.log(response);
-            const data = response.data;
-            if (data.state === 'success') {
-              console.log('總類Get成功 資料如下\n', data.resultList.EquipType);
-              EquipTypeArray.value = data.resultList.EquipType;
-            } else if (data.state === 'error') {
-              alert(data.messages);
-            } else if (data.state === 'account_error') {
-              alert(data.messages);
-              router.push('/');
-            }
-          } catch (error) {
-            console.error('Error sending applicant info request to backend');
-          }
-        }
-      }
-      async function getEquipCategoryName() {
-        searchParams.EquipCategoryName = '';
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${searchParams.EquipTypeName}`);
-          console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('分類Get成功 資料如下\n', data.resultList.EquipCategory);
-            EquipCategoryArray.value = data.resultList.EquipCategory;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error('Error sending applicant info request to backend', error);
+          console.error(error);
         }
       }
       async function getAreaName() {
@@ -357,15 +296,6 @@
           console.error('Error sending applicant info request to backend');
         }
       }
-      function selectType(item) {
-        searchParams.EquipTypeName = item;
-        // console.log('選擇的總類:', EquipTypeName.value);
-        getEquipCategoryName();
-        EquipCategoryInit.value = '請選擇';
-      }
-      function selectCategory(item) {
-        searchParams.EquipCategoryName = item;
-      }
       const selectStatus = (item) => {
         searchParams.Status = item;
       };
@@ -379,10 +309,20 @@
       const selectLayer = (item) => {
         searchParams.LayerName = item;
       };
+      const setTypeParams = (data)=> {
+        searchParams.EquipTypeName = data;
+      }
+      const setCategoryParams = (data)=> {
+        searchParams.EquipCategoryName = data;
+      }
       function clear() {
         for (const key in searchParams) {
           searchParams[key] = '';
         }
+        clearEquips.value = true;
+        nextTick(()=> {
+          clearEquips.value = false;
+        });
         EquipCategoryInit.value = '請先選擇設備總類';
         LayerInit.value = '請先選擇區域';
         submit();
@@ -390,25 +330,22 @@
       return {
         details,
         searchParams,
-        EquipTypeArray,
-        EquipCategoryArray,
-        EquipCategoryInit,
         StatusArray,
         AreaArray,
         LayerArray,
         LayerInit,
+        clearEquips,
         pageSize,
         columnDefs,
         rowData,
         rowHeight: 35,
         submit,
-        getEquipTypeName,
         getAreaName,
-        selectType,
-        selectCategory,
         selectStatus,
         selectArea,
         selectLayer,
+        setTypeParams,
+        setCategoryParams,
         clear,
       };
     },

@@ -65,7 +65,7 @@
               <p>目前資產庫存</p>
             </div>
           </div>
-          <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="50" :columnDefs="columnDefs3" :rowData="rowData3" :paginationAutoPageSize="true" @grid-ready="onGridReady3">
+          <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs3" :rowData="rowData3" :paginationAutoPageSize="true" @grid-ready="onGridReady3">
           </ag-grid-vue>
         </div>
       </div>
@@ -205,7 +205,7 @@
     AgGridVue
   } from "ag-grid-vue3";
   import Storage_button from "@/components/Storage_button";
-  import Storage_view from "@/components/Storage_list_view_button";
+  import Rent_process_new_view_button from "@/components/Rent_process_new_view_button";
   import Storage_add from "@/components/Storage_add_button";
   import Storage_number from "@/components/Storage_number_input"
   import Delete_button from "@/components/Rent_proccess_new_delete_button";
@@ -225,7 +225,7 @@
       AgGridVue,
       Storage_button,
       Delete_button,
-      Storage_view,
+      Rent_process_new_view_button,
       Storage_add,
       Storage_number,
     },
@@ -437,7 +437,17 @@
           resizable: true,
         },
       ]
-      const columnDefs3 = [{
+      const columnDefs3 = [
+        {
+          headerName: "",
+          field: "",
+          cellRenderer: "Rent_process_new_view_button",
+          width: 100,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
+        headerName: "選擇",
           suppressMovable: true,
           field: "",
           cellRenderer: "Storage_add",

@@ -15,6 +15,7 @@ export default {
       console.log(props.params.api.setRowData);
       console.log(props.params.api.applyTransaction);
       props.params.api.applyTransaction({remove: [rowNode.data]});
+      props.params.deleteFromData(props.params.data.id);
     }
     return {
       deleteRow
