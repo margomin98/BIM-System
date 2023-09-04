@@ -343,7 +343,7 @@ export default {
         const data = response.data;
         if (data.state === 'success') {
           // 檢查資料狀態是否可編輯
-          if(data.resultList.Status !== '申請入庫' && data.resultList.Status !== '申請歸還') {
+          if(data.resultList.Status !== '申請入庫' && data.resultList.Status !== '申請歸還' && data.resultList.Status !== '可交付') {
             window.history.back();
             // router.push({name: 'Store_Datagrid'});
           }
@@ -540,7 +540,8 @@ export default {
 
           .dropdown-menu {
             width: 100%;
-
+            max-height: 250px;
+            overflow-y: auto;
             p {
               &:hover {
                 cursor: pointer;
@@ -664,7 +665,8 @@ export default {
 
           .dropdown-menu {
             width: 100%;
-
+            max-height: 250px;
+            overflow-y: auto;
             p {
               &:hover {
                 cursor: pointer;
@@ -744,7 +746,8 @@ export default {
         .dropdown {
           .dropdown-menu {
             width: 100%;
-
+            max-height: 250px;
+            overflow-y: auto;
             p {
               &:hover {
                 cursor: pointer;
