@@ -197,7 +197,7 @@
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages + '\n';
-            msg += '單號為' + data.resultList.ao_id;
+            msg += '單號:' + data.resultList.ao_id;
             alert(msg);
             router.push({
               name: 'Rent_Datagrid'

@@ -281,7 +281,7 @@
           return;
         }
         if (WarrantyDate.value && !/^.{1,10}$/.test(WarrantyDate.value)) {
-          alert('保固期限格式錯誤');
+          alert('保固期限不可輸入超過10字');
           return
         }
         const formData = new FormData();
@@ -322,7 +322,7 @@
           if (data.state === 'success') {
             //新品表單傳送成功，跳轉至入庫管理頁面
             let msg = data.messages;
-            msg += '\n編號:' + data.resultList.AI_ID;
+            msg += '\n單號:' + data.resultList.AI_ID;
             alert(msg);
             router.push({
               name: 'Store_Datagrid'

@@ -14,10 +14,8 @@
         <div>
           <p>資產編號: {{ AssetsId }}</p>
         </div>
-       
       </div>
       <div class="content">
-       
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -34,8 +32,8 @@
               <div class="input-group-prepend"><span>*</span>設備總類：</div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                    {{ details.EquipTypeName || '請選擇' }}
-                  </button>
+                      {{ details.EquipTypeName || '請選擇' }}
+                    </button>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
                   <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
                 </div>
@@ -47,8 +45,8 @@
               <div class="input-group-prepend"><span>*</span>設備分類：</div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(details.EquipTypeName !== '') }">
-                    {{ details.EquipCategoryName || EquipCategoryInit }}
-                  </button>
+                      {{ details.EquipCategoryName || EquipCategoryInit }}
+                    </button>
                 <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                   <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
                 </div>
@@ -108,8 +106,8 @@
               <div class="input-group-prepend"><span>*</span>儲位區域：</div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName(index)">
-                  {{ details.AreaName || '請選擇' }}
-                </button>
+                    {{ details.AreaName || '請選擇' }}
+                  </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in AreaArray" :key="index" class="dropdown-item" @click="selectArea(`${item}`)">{{ item }}</p>
                 </div>
@@ -121,8 +119,8 @@
               <div class="input-group-prepend"><span>*</span>儲位櫃位：</div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="details.AreaName === null || details.AreaName === ''">
-                  {{ details.LayerName || LayerInit }}
-                </button>
+                    {{ details.LayerName || LayerInit }}
+                  </button>
                 <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                   <p v-for="(item, index) in LayerArray" :key="index" class="dropdown-item" @click="selectLayer(`${item}`)">{{ item }}</p>
                 </div>
@@ -157,17 +155,14 @@
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-             
-                <div class="input-group-prepend flex">保管人員：</div>
-                <div class="dropdown">
-                  <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-             請選擇
-        </button>
-                  <div class="dropdown-menu">
-                    <p>123</p>
-                  </div>
-           
-              </div>
+              <div class="input-group-prepend flex">保管人員：</div>
+              <account-search @custodian = "setCustodian"></account-search>
+              <!-- <div class="dropdown">
+                <input type="text" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="dropdown-menu">
+                  <p>123</p>
+                </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -188,7 +183,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">備註：</div>
-            <textarea style="height: 150px;" class="form-control " placeholder="最多輸入500字" aria-label="With textarea" v-model="details.Memo"></textarea>
+            <textarea style="height: 150px;" class="form-control readonly_box" readonly aria-label="With textarea" v-model="details.Memo"></textarea>
           </div>
         </div>
       </div>
@@ -200,9 +195,7 @@
         </div>
       </div>
       <div class="content">
-        <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" 
-        :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
-
+        <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
           <swiper-slide v-for="(item , index) in selectFiles.viewFile" :key="index" class="custom-slide">
             <img :src="item.FileLink" alt="">
             <span @click="deleteFileFunction(index)">x</span>
@@ -230,7 +223,7 @@
               <p>作業日期(起)</p>
               <div class="date-selector">
                 <div class="input-container">
-                  <input type="date" v-model="historyParams.StartDate" class="date-input"/>
+                  <input type="date" v-model="historyParams.StartDate" class="date-input" />
                 </div>
               </div>
             </div>
@@ -246,8 +239,8 @@
               <p>作業行為</p>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ historyParams.Action || "請選擇" }}
-                              </button>
+                                  {{ historyParams.Action || "請選擇" }}
+                                </button>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
                   <p v-for="(item , index) in ActionArray" :key="index" class="dropdown-item" @click="selectAction(item)">{{ item}}</p>
                 </div>
@@ -260,8 +253,7 @@
           <button class="empty_btn" @click="clear">清空</button>
         </div>
         <div class="info_wrap">
-          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;margin-bottom:50px" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true"
-            :pagination="true">
+          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;margin-bottom:50px" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true" :pagination="true">
           </ag-grid-vue>
         </div>
       </div>
@@ -276,10 +268,11 @@
   import {
     AgGridVue
   } from "ag-grid-vue3";
-  import Storage_list_view_button from "@/components/Storage_list_view_button";
   import {
     register
   } from 'swiper/element/bundle';
+  import Storage_list_view_button from "@/components/Storage_list_view_button";
+  import AccountSearch from "@/components/API/account_search";
   import Navbar from "@/components/Navbar.vue";
   import {
     onMounted,
@@ -299,6 +292,7 @@
       Navbar,
       AgGridVue,
       Storage_list_view_button,
+      AccountSearch,
     },
     setup() {
       const route = useRoute();
@@ -309,6 +303,7 @@
       const EquipTypeArray = ref([]); //設備總類陣列 request拿到
       const EquipCategoryArray = ref([]); //設備分類陣列 request拿到
       const EquipCategoryInit = ref('請先選擇設備總類');
+      const Custodian = ref('');
       const AreaArray = ref([]); //區域陣列
       const LayerArray = ref([]); //櫃位陣列
       const LayerInit = ref('請先選擇區域');
@@ -326,71 +321,71 @@
         EndDate: '',
         Action: '',
       });
-      const ActionArray = ['入庫' , '歸還' , '借測' , '維修' , '內部領用' , '出貨' , '報廢' , '退貨'];
-      const columnDefs =[{
-            suppressMovable: true,
-            field: "",
-            cellRenderer: "Storage_list_view_button",
-            width: 100,
-          },
-          {
-            headerName: "作業日期",
-            field: "ExecutionDate",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            suppressMovable: true
-          },
-          {
-            headerName: "作業行為",
-            field: "Action",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            suppressMovable: true
-          },
-          {
-            headerName: "單號",
-            field: "AIAO_ID",
-            unSortIcon: true,
-            sortable: true,
-            width: 300,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "數量",
-            field: "IH_Number",
-            unSortIcon: true,
-            sortable: true,
-            width: 100,
-            suppressMovable: true
-          },
-          {
-            headerName: "單位",
-            field: "IH_Unit",
-            unSortIcon: true,
-            sortable: true,
-            width: 100,
-            suppressMovable: true
-          },
-          {
-            headerName: "申請人員",
-            field: "ApplyPerson",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            suppressMovable: true
-          },
-          {
-            headerName: "承辦人員",
-            field: "ExecutionPerson",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            suppressMovable: true
-          }
-        ] ;
+      const ActionArray = ['入庫', '歸還', '借測', '維修', '內部領用', '出貨', '報廢', '退貨'];
+      const columnDefs = [{
+          suppressMovable: true,
+          field: "",
+          cellRenderer: "Storage_list_view_button",
+          width: 100,
+        },
+        {
+          headerName: "作業日期",
+          field: "ExecutionDate",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true
+        },
+        {
+          headerName: "作業行為",
+          field: "Action",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true
+        },
+        {
+          headerName: "單號",
+          field: "AIAO_ID",
+          unSortIcon: true,
+          sortable: true,
+          width: 300,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "數量",
+          field: "IH_Number",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          suppressMovable: true
+        },
+        {
+          headerName: "單位",
+          field: "IH_Unit",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          suppressMovable: true
+        },
+        {
+          headerName: "申請人員",
+          field: "ApplyPerson",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true
+        },
+        {
+          headerName: "承辦人員",
+          field: "ExecutionPerson",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true
+        }
+      ];
       const rowData = ref([]);
       onMounted(() => {
         getDetails();
@@ -410,13 +405,13 @@
               details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/\//g, '-');
               details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/\//g, '-');
             }
-            if(details.value.existFile) {
+            if (details.value.existFile) {
               details.value.existFile.forEach(item => {
                 selectFiles.viewFile.push({
                   FileName: item.FileName,
                   FileLink: item.FileLink,
                   FileType: 'exist',
-                }); 
+                });
               });
             }
             getEquipCategoryName();
@@ -442,27 +437,27 @@
           alert('物品名稱不可輸入超過20字');
           return
         }
-        if ( details.value.VendorName &&!/^.{1,100}$/.test(details.value.VendorName)) {
+        if (details.value.VendorName && !/^.{1,100}$/.test(details.value.VendorName)) {
           alert('廠商不可輸入超過100字');
           return
         }
-        if ( details.value.ProductSpec &&!/^.{1,100}$/.test(details.value.ProductSpec)) {
+        if (details.value.ProductSpec && !/^.{1,100}$/.test(details.value.ProductSpec)) {
           alert('規格不可輸入超過100字');
           return
         }
-        if ( details.value.ProductType &&!/^.{1,100}$/.test(details.value.ProductType)) {
+        if (details.value.ProductType && !/^.{1,100}$/.test(details.value.ProductType)) {
           alert('型號不可輸入超過100字');
           return
         }
-        if ( details.value.SN &&!/^.{1,100}$/.test(details.value.SN)) {
+        if (details.value.SN && !/^.{1,100}$/.test(details.value.SN)) {
           alert('SN不可輸入超過100字');
           return
         }
-        if ( details.value.WarrantyDate &&!/^.{1,10}$/.test(details.value.WarrantyDate)) {
+        if (details.value.WarrantyDate && !/^.{1,10}$/.test(details.value.WarrantyDate)) {
           alert('保固期限不可輸入超過10字');
           return
         }
-        if ( details.value.Memo &&!/^.{1,500}$/.test(details.value.Memo)) {
+        if (details.value.Memo && !/^.{1,500}$/.test(details.value.Memo)) {
           alert('保固期限不可輸入超過500字');
           return
         }
@@ -487,28 +482,27 @@
         //將表格資料append到 formData
         for (const fieldName in formFields) {
           if (formFields[fieldName] !== '' && formFields[fieldName] !== null) {
-              formData.append(fieldName, formFields[fieldName]);
-              console.log(formData.get(`${fieldName}`));
-            }
+            formData.append(fieldName, formFields[fieldName]);
+            console.log(formData.get(`${fieldName}`));
+          }
         }
-        if(selectFiles.newFile.length >0) {
-          selectFiles.newFile.forEach(item =>{
-            formData.append('newFile' , item.file);
+        if (selectFiles.newFile.length > 0) {
+          selectFiles.newFile.forEach(item => {
+            formData.append('newFile', item.file);
           });
         }
-        if(selectFiles.deleteFile.length >0) {
-          selectFiles.deleteFile.forEach(item =>{
-            formData.append('deleteFile' , item);
+        if (selectFiles.deleteFile.length > 0) {
+          selectFiles.deleteFile.forEach(item => {
+            formData.append('deleteFile', item);
           });
         }
-
         const response = await axios.post('http://192.168.0.176:7008/InventoryMng/AssetEdit', formData);
         try {
           const data = response.data;
           console.log(data);
           if (data.state === 'success') {
             let msg = data.messages;
-            msg += '\n編號:' + data.resultList.AssetsId;
+            msg += '\n單號:' + data.resultList.AssetsId;
             alert(msg);
             router.push({
               name: 'Assets_Datagrid'
@@ -621,6 +615,9 @@
       const selectLayer = (item) => {
         details.value.LayerName = item;
       };
+      const setCustodian = (data) => {
+        Custodian.value = data;
+      }
       // 輪播部分 function
       function openFileExplorer() {
         fileInputs.value.click();
@@ -628,7 +625,7 @@
       function handleFileChange(event) {
         const files = event.target.files;
         const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-        if(files.length + selectFiles.viewFile.length > 5) {
+        if (files.length + selectFiles.viewFile.length > 5) {
           alert('上傳至多5張圖片');
           return;
         }
@@ -680,7 +677,7 @@
           };
           reader.readAsDataURL(files[i]);
         }
-        console.log('newFile' , selectFiles.newFile);
+        console.log('newFile', selectFiles.newFile);
       }
       function deleteFileFunction(index) {
         const file = selectFiles.viewFile[index];
@@ -688,15 +685,15 @@
           // 已上傳檔案 ->從輪播陣列刪除 & 加到deleteFile
           case 'exist':
             selectFiles.deleteFile.push(file.FileName);
-            selectFiles.viewFile.splice(index,1);
-            console.log('deleteFile' , selectFiles.deleteFile);
+            selectFiles.viewFile.splice(index, 1);
+            console.log('deleteFile', selectFiles.deleteFile);
             break;
-          // 新上傳檔案 ->從輪播陣列刪除 & 從newFile移除
+            // 新上傳檔案 ->從輪播陣列刪除 & 從newFile移除
           case 'new':
             const newFileIndex = selectFiles.newFile.findIndex(item => item.id === file.id);
-            selectFiles.newFile.splice(newFileIndex,1);
-            selectFiles.viewFile.splice(index,1);
-            console.log('newFile' , selectFiles.newFile);
+            selectFiles.newFile.splice(newFileIndex, 1);
+            selectFiles.viewFile.splice(index, 1);
+            console.log('newFile', selectFiles.newFile);
             break;
         }
       }
@@ -739,11 +736,11 @@
           console.error('Error sending data to backend', error);
         }
       }
-      const selectAction = item =>{
+      const selectAction = item => {
         historyParams.Action = item;
       }
       function clear() {
-        for(const key in historyParams) {
+        for (const key in historyParams) {
           historyParams[key] = '';
         }
         searchHistory();
@@ -757,6 +754,7 @@
         EquipTypeArray,
         EquipCategoryArray,
         EquipCategoryInit,
+        Custodian,
         AreaArray,
         LayerArray,
         LayerInit,
@@ -771,6 +769,7 @@
         selectCategory,
         selectArea,
         selectLayer,
+        setCustodian,
         openFileExplorer,
         handleFileChange,
         deleteFileFunction,
@@ -847,7 +846,6 @@
         }
         .content {
           @include content_bg;
-         
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -886,8 +884,10 @@
               text-align: end;
             }
           }
-           .row:nth-child(2),   .row:nth-child(7),  .row:nth-child(10){
-            .input-group{
+          .row:nth-child(2),
+          .row:nth-child(7),
+          .row:nth-child(10) {
+            .input-group {
               flex-wrap: nowrap;
             }
           }
@@ -918,7 +918,6 @@
               background-color: #244f86;
             }
           }
-
           button.send_btn {
             @include search_and_send_btn;
             &:hover {
@@ -1046,7 +1045,6 @@
         }
         .content {
           @include content_bg;
-         
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -1075,8 +1073,10 @@
               text-align: end;
             }
           }
-           .row:nth-child(2),   .row:nth-child(7),  .row:nth-child(10){
-            .input-group{
+          .row:nth-child(2),
+          .row:nth-child(7),
+          .row:nth-child(10) {
+            .input-group {
               flex-wrap: nowrap;
             }
           }
@@ -1107,7 +1107,6 @@
               background-color: #244f86;
             }
           }
-
           button.send_btn {
             @include search_and_send_btn;
             &:hover {
@@ -1189,20 +1188,20 @@
     .main_section {
       .swiper_section swiper-slide {
         span {
-            cursor: pointer;
-            position: absolute;
-            top: 25px;
-            right: 27px;
-            background: #E94B4B;
-            height: 30px;
-            width: 30px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-weight: 700;
-          }
+          cursor: pointer;
+          position: absolute;
+          top: 25px;
+          right: 27px;
+          background: #E94B4B;
+          height: 30px;
+          width: 30px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: white;
+          font-weight: 700;
+        }
         img {
           width: 100%;
           height: auto;
@@ -1307,7 +1306,6 @@
               background-color: #244f86;
             }
           }
-
           button.send_btn {
             @include search_and_send_btn;
             &:hover {

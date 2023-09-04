@@ -436,7 +436,7 @@
           console.log(data);
           if (data.state === 'success') {
             let msg = data.messages;
-            msg += '\n編號:' + data.resultList.AO_ID;
+            msg += '\n單號:' + data.resultList.AO_ID;
             alert(msg);
             router.push({
               name: 'Rent_Review_Datagrid'

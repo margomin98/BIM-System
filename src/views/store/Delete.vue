@@ -255,7 +255,7 @@
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages + '\n';
-            msg += '單號為' + data.resultList.AI_ID;
+            msg += '單號:' + data.resultList.AI_ID;
             alert(msg);
             router.push({
               name: 'Store_Datagrid'

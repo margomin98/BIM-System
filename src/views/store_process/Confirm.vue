@@ -415,7 +415,7 @@ export default {
         console.log(data);
         if (data.state === 'success') {
           let msg = data.messages;
-          msg += '\n編號:' + data.resultList.AI_ID;
+          msg += '\n單號:' + data.resultList.AI_ID;
           alert(msg);
           router.push({ name: 'Store_Process_Datagrid' });
         }

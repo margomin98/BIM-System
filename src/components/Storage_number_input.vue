@@ -54,6 +54,7 @@
   .number-input-box {
     color: black;
     .input-number {
+      height: 30px;
       width: 100%;
     }
   }

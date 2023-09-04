@@ -543,7 +543,7 @@
           console.log(data);
           if (data.state === 'success') {
             let msg = data.messages;
-            msg += '\n編號:' + data.resultList.AO_ID;
+            msg += '\n單號:' + data.resultList.AO_ID;
             alert(msg);
             router.push({
               name: 'Store_Process_Datagrid'
@@ -571,7 +571,7 @@
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages + '\n';
-            msg += '單號為' + data.resultList.ao_id;
+            msg += '單號:' + data.resultList.ao_id;
             alert(msg);
             router.push({
               name: 'Rent_Datagrid'

@@ -97,7 +97,7 @@
             <label for="inputTextarea" class="form-label"><p>規格需求：</p></label>
             <div>
             </div>
-            <textarea class="form-control" id="inputTextarea" rows="3" placeholder='最多輸入100字'></textarea>
+            <textarea class="form-control" id="inputTextarea" rows="3" placeholder='最多輸入100字' v-model="myForm.RequiredSpec"></textarea>
           </div>
         </div>
         <div class='col d-flex justify-content-center'>

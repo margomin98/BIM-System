@@ -319,7 +319,7 @@ export default {
         if (data.state === 'success') {
           //新品表單編輯成功，跳轉至入庫管理頁面
           let msg = data.messages;
-          msg+= '\n編號:'+data.resultList.AI_ID;
+          msg+= '\n單號:'+data.resultList.AI_ID;
           alert(msg);
           router.push({ name: 'Store_Datagrid' });
         } else if (data.state === 'error') {
