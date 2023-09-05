@@ -26,8 +26,12 @@
               <div class="input-group-prepend check_box">
                 資產類型 :
               </div>
-              <input type="radio" class='check_box' value="false" v-model="isConsumableComputed" />資產
-              <input type="radio" class='check_box' value="true" v-model="isConsumableComputed" />耗材
+              <div class="d-flex align-items-center">
+                <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="false" v-model="isConsumableComputed" :disabled="details.Type === 1"/>
+                <label class="form-check-label check_box" for='radio1'>資產</label>
+                <input type="radio" class='form-check-input check_box' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="true" v-model="isConsumableComputed" :disabled="details.Type === 1"/>
+                <label class="form-check-label check_box" for='radio2'>耗材</label>
+              </div>
             </div>
           </div>
         </div>
