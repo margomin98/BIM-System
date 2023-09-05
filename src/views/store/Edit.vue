@@ -139,7 +139,7 @@
                 <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"> <span>*</span>包裝數量 :
               </div>
               <div class="number-input-box">
-                <input class="input-number" type="number" v-model="details.Count" min="1" />
+                <input class="input-number" type="number" v-model="details.Count" min="1" :readonly="details.Type === 1" :class="{readonly_box: details.Type === 1}"/>
               </div>
             </div>
           </div>
@@ -150,7 +150,7 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
+                  aria-haspopup="true" aria-expanded="false" :disabled="details.Type === 1" >
                   {{ details.Unit || '請選擇' }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
