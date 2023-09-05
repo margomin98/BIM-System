@@ -16,10 +16,10 @@ export default {
     console.log(props.params.data.FormID);
     switch (props.params.data.Type) {
       case 0:
-        linkName.value = 'Store_View';
+        linkName.value = 'Store_Process_View';
         break;
         case 1:
-        linkName.value = 'Rent_View';
+        linkName.value = 'Rent_Process_View';
         break;
       default:
         break;
