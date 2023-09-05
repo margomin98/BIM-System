@@ -229,6 +229,10 @@
           const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/GetApplicationInfo?ai_id=${AI_ID}`);
           console.log(response);
           const data = response.data;
+          if(data.resultList.Status !== '申請入庫' && data.resultList.Status !== '申請歸還' && data.resultList.Status !== '可交付') {
+            window.history.back();
+            // router.push({name: 'Store_Datagrid'});
+          }
           if (data.state === 'success') {
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;

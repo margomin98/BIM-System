@@ -286,6 +286,10 @@ export default {
         const data = response.data;
         if (data.state === 'success') {
           console.log('Details Get成功 資料如下\n', data.resultList);
+          if(data.resultList.Status !== '可交付') {
+            window.history.back();
+            // router.push({name: 'Store_Process_Datagrid'});
+            }
           details.value = data.resultList;
           if (details.value.WarrantyStartDate && details.value.WarrantyEndDate) {
             details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');

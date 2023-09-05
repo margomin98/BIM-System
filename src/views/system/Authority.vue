@@ -92,7 +92,6 @@
       function searchRole() {
         return new Promise(async(resolve, reject) => {
           try {
-            console.log('input', inputValue.value);
             const axios = require('axios');
             const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/GetRoleFromName?name=${inputValue.value}`);
             const data = response.data;
@@ -102,6 +101,7 @@
               resolve(''); // Resolve with empty value when role search fails
             }
           } catch (error) {
+            console.error(error);
             reject(error);
           }
         });

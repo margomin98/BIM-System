@@ -106,7 +106,7 @@
       </div>
       <div class="fixed_info">
         <div>
-          <p>資產出庫項目</p>
+          <p><span>*</span>資產出庫項目(請至少新增一項)</p>
         </div>
       </div>
       <div class='third_content'>
@@ -316,6 +316,10 @@
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
+            // if(data.resultList.Status !== '已填報') {
+            // window.history.back();
+            // // router.push({name: 'Rent_Datagrid'});
+            // }
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             rowData.value = data.resultList.ItemList;

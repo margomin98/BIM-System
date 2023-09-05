@@ -26,8 +26,12 @@
               <div class="input-group-prepend check_box">
                 資產類型 :
               </div>
-              <input type="radio" class='check_box' value="false" v-model="isConsumableComputed" />資產
-              <input type="radio" class='check_box' value="true" v-model="isConsumableComputed" />耗材
+              <div class="d-flex align-items-center">
+                <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="false" v-model="isConsumableComputed" :disabled="details.Type === 1"/>
+                <label class="form-check-label check_box" for='radio1'>資產</label>
+                <input type="radio" class='form-check-input check_box' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="true" v-model="isConsumableComputed" :disabled="details.Type === 1"/>
+                <label class="form-check-label check_box" for='radio2'>耗材</label>
+              </div>
             </div>
           </div>
         </div>
@@ -139,7 +143,7 @@
                 <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"> <span>*</span>包裝數量 :
               </div>
               <div class="number-input-box">
-                <input class="input-number" type="number" v-model="details.Count" min="1" />
+                <input class="input-number" type="number" v-model="details.Count" min="1" :readonly="details.Type === 1" :class="{readonly_box: details.Type === 1}"/>
               </div>
             </div>
           </div>
@@ -148,15 +152,18 @@
               <div class="input-group-prepend">
                 <span>*</span>包裝單位 :
               </div>
-              <div class="dropdown">
+              <div v-if="details.Type === 0" class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
+                  aria-haspopup="true" aria-expanded="false" :disabled="details.Type === 1" >
                   {{ details.Unit || '請選擇' }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in UnitArray" :key="index" class="dropdown-item" @click="selectUnit(`${item}`)">
                     {{ item }}</p>
                 </div>
+              </div>
+              <div v-if="details.Type === 1" class="number-input-box">
+                <input class="input-number" type="text" v-model="details.Unit" min="1" :readonly="details.Type === 1" :class="{readonly_box: details.Type === 1}"/>
               </div>
             </div>
           </div>
@@ -342,6 +349,11 @@ export default {
         console.log(response);
         const data = response.data;
         if (data.state === 'success') {
+          // 檢查資料狀態是否可編輯
+          if(data.resultList.Status !== '申請入庫' && data.resultList.Status !== '申請歸還' && data.resultList.Status !== '可交付') {
+            window.history.back();
+            // router.push({name: 'Store_Datagrid'});
+          }
           console.log('Details Get成功 資料如下\n', data.resultList);
           details.value = data.resultList;
           for (let key in details.value) {
@@ -535,7 +547,8 @@ export default {
 
           .dropdown-menu {
             width: 100%;
-
+            max-height: 250px;
+            overflow-y: auto;
             p {
               &:hover {
                 cursor: pointer;
@@ -659,7 +672,8 @@ export default {
 
           .dropdown-menu {
             width: 100%;
-
+            max-height: 250px;
+            overflow-y: auto;
             p {
               &:hover {
                 cursor: pointer;
@@ -739,7 +753,8 @@ export default {
         .dropdown {
           .dropdown-menu {
             width: 100%;
-
+            max-height: 250px;
+            overflow-y: auto;
             p {
               &:hover {
                 cursor: pointer;

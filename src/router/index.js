@@ -171,7 +171,7 @@ const routes = [
     path: "/assets_edit",
     name: "Assets_Edit",
     component: Assets_Edit,
-    // meta: {auth: true, request: 'AssetMgr_Detail'},
+    meta: {auth: true, request: 'AssetMgr_Edit'},
   },
   {
     path: "/assets_search",
@@ -201,7 +201,7 @@ const routes = [
     path: "/rent_delete",
     name: "Rent_Delete",
     component: Rent_Delete,
-    // meta: {auth: true, request: 'AO_Detail'},
+    meta: {auth: true, request: 'AO_Delete'},
   },
   {
     path: "/rent_edit",
@@ -280,7 +280,7 @@ const routes = [
     path: "/rent_process_delete",
     name: "Rent_Process_Delete",
     component: Rent_Process_Delete,
-    // meta: {auth: true, request: 'AOP_Detail'},
+    meta: {auth: true, request: 'AOP_Delete'},
   },
   {
     path: "/rent_review_datagrid",

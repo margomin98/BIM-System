@@ -180,7 +180,7 @@
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend"><span>*</span>資產編號：</div>
-                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.AssetsId" placeholder="BFXXXXXXXX" />
+                <input type="text" class="form-control" v-model="item.AssetsId" placeholder="BFXXXXXXXX" :class="{'readonly_box': details.Type === 1}" :disabled="details.Type === 1" />
               </div>
             </div>
             <div class="row g-0">
@@ -349,6 +349,10 @@
           const data = response.data;
           if (data.state === 'success') {
             // console.log('Details Get成功 資料如下\n', data.resultList);
+            if(data.resultList.Status !== '待入庫') {
+            window.history.back();
+            // router.push({name: 'Store_Process_Datagrid'});
+            }
             details.value = data.resultList;
             console.log('Details Get成功 資料如下\n', details.value);
             tabNumber.value = details.value.Count;
@@ -601,8 +605,10 @@
           return;
         }
         //檢查資產編號是否有重複
-        if (await checkAssetsIdRepeat()) {
-          return;
+        if(details.value.Type === 0) {
+          if (await checkAssetsIdRepeat()) {
+            return;
+          }
         }
         // 暫存 送出前查詢
         if (await queryFormData()) {

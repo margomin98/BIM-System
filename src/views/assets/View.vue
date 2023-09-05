@@ -128,7 +128,7 @@
               <div class="input-group-prepend">
                 保管人員：
               </div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Custodian">
           </div>
         </div>
         </div>
@@ -161,14 +161,15 @@
         </div>
       </div>
       <div class="content">
-        <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" 
-        :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}" @progress="onProgress" @slidechange="onSlideChange">
-          <swiper-slide v-for="(item , index) in selectFiles.viewFile" :key="index" class="custom-slide">
-            <img :src="item.FileLink" alt="">
-            <span @click="deleteFileFunction(index)">x</span>
-          </swiper-slide>
-        </swiper-container>
-        <div class="swiper_pagination">
+        <h2 v-show="selectFiles.viewFile.length === 0">查無照片</h2>
+        <div v-show="selectFiles.viewFile.length !== 0">
+          <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
+            <swiper-slide v-for="(item , index) in selectFiles.viewFile" :key="index" class="custom-slide">
+              <img :src="item.FileLink" alt="">
+            </swiper-slide>
+          </swiper-container>
+          <div class="swiper_pagination">
+          </div>
         </div>
       </div>
     </div>
@@ -306,7 +307,7 @@
           },
           {
             headerName: "單號",
-            field: "AIAO_ID",
+            field: "FormID",
             unSortIcon: true,
             sortable: true,
             width: 300,
