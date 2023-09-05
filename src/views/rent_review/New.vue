@@ -413,7 +413,7 @@
       }
       async function submit() {
         validation.VerifyMemo.trim();
-        if (validation.VerifyMemo && !/^.{1,100}$/.test(validation.VerifyMemo)) {
+        if (validation.VerifyMemo && !/^[\s\S]{1,100}$/.test(validation.VerifyMemo)) {
           alert('審核意見不可輸入超過100字')
           return
         }

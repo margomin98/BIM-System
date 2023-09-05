@@ -277,7 +277,14 @@ export default {
           return;
         }
       }
-      if (!details.value.EquipCategoryName || !details.value.EquipTypeName || !details.value.AssetName || !details.value.Count || !details.value.Unit || details.value.Count == 0) {
+      //歸還入庫 且為耗材 則不用檢查包裝單位
+      if(details.value.Type !== 1 || !details.value.IsConsumable) {
+        if(!details.value.Unit) {
+          alert('請填寫所有必填項目');
+          return;
+        }
+      }
+      if (!details.value.EquipCategoryName || !details.value.EquipTypeName || !details.value.AssetName || !details.value.Count || details.value.Count == 0) {
         alert('請填寫所有必填項目');
         return;
       }

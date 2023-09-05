@@ -20,7 +20,7 @@
             <div class='row g-0'>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 grid'>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData1" @rowDragEnd="onRowDragEnd('equip_type' ,$event)" @cellValueChanged="onCellValueChanged('equip_type')"
+                  <ag-grid-vue style="width: 100%" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs1" :rowData="rowData1" @rowDragEnd="onRowDragEnd('equip_type' ,$event)" @cellValueChanged="onCellValueChanged('equip_type')"
                     @grid-ready="dataApi1">
                   </ag-grid-vue>
                 </div>
@@ -29,28 +29,28 @@
                 <p>新增設備總類</p>
                 <div class='d-flex'>
                   <input class="form-control" aria-label="With textarea" placeholder='最多輸入10字' v-model="newType">
-                  <button type="button" @click="insertNewType('equip_type')">新增</button>
+                  <button type="button" @click="insertNewType('EquipTypeName')">新增</button>
                 </div>
               </div>
             </div>
           </div>
+          <!-- 設備分類tab -->
           <div class="tab-pane fade" id="equipmentCategory" role="tabpanel" aria-labelledby="storage-tab" tabindex="0">
             <div class='row g-0'>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 grid'>
                 <div class="col search_dropdown d-flex">
                   <p>設備總類</p>
                   <div class="dropdown">
-                    <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ selectedItem || "請選擇" }}
-                      </button>
-                    <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                      <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                      <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+                    <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{ EquipTypeName || '請選擇' }}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="typeDropdown">
+                      <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
                     </div>
                   </div>
                 </div>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData2" @rowDragEnd="onRowDragEnd('area' ,$event)" @cellValueChanged="onCellValueChanged('area')"
+                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs2" :rowData="rowData2" @rowDragEnd="onRowDragEnd('area' ,$event)" @cellValueChanged="onCellValueChanged('area')"
                     @grid-ready="dataApi2">
                   </ag-grid-vue>
                 </div>
@@ -70,7 +70,7 @@
             <div class='row g-0'>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 grid'>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData2" @rowDragEnd="onRowDragEnd('area' ,$event)" @cellValueChanged="onCellValueChanged('area')"
+                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs1" :rowData="rowData2" @rowDragEnd="onRowDragEnd('area' ,$event)" @cellValueChanged="onCellValueChanged('area')"
                     @grid-ready="dataApi2">
                   </ag-grid-vue>
                 </div>
@@ -84,6 +84,7 @@
               </div>
             </div>
           </div>
+          <!-- 儲位櫃位tab -->
           <div class="tab-pane fade" id="storageLocation" role="tabpanel" aria-labelledby="storage-tab" tabindex="0">
             <div class='row g-0'>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 grid'>
@@ -91,8 +92,8 @@
                   <p>儲位區域</p>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ selectedItem || "請選擇" }}
-                      </button>
+                            {{ selectedItem || "請選擇" }}
+                          </button>
                     <div class="dropdown-menu" aria-labelledby="statusDropdown">
                       <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
                       <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
@@ -100,7 +101,7 @@
                   </div>
                 </div>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData2" @rowDragEnd="onRowDragEnd('area' ,$event)" @cellValueChanged="onCellValueChanged('area')"
+                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs2" :rowData="rowData2" @rowDragEnd="onRowDragEnd('area' ,$event)" @cellValueChanged="onCellValueChanged('area')"
                     @grid-ready="dataApi2">
                   </ag-grid-vue>
                 </div>
@@ -120,6 +121,7 @@
         <button class="back_btn" @click="goBack">回上一頁</button>
       </div>
     </div>
+    <!-- Edit Modal -->
     <div class="modal fade" data-bs-backdrop="static" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-sm modal-dialog-centered">
         <div class="modal-content">
@@ -129,7 +131,7 @@
                 <p>修改名稱</p>
               </div>
               <div class="content">
-                <input type="text" placeholder="最多10個字">
+                <input type="text" placeholder="最多輸入10字">
               </div>
               <div class="button_section">
                 <button type="button" class="btn" data-bs-dismiss="modal">關閉</button>
@@ -151,6 +153,7 @@
   import Parameter_button from "@/components/Parameter_button";
   import Edit_pen from "@/components/Edit_pen";
   import {
+    onMounted,
     reactive,
     ref
   } from "vue";
@@ -164,25 +167,93 @@
     setup() {
       const newType = ref('');
       const newArea = ref('');
+      const EquipTypeName = ref('');
+      const EquipTypeArray = ref([]);
+      const columnDefs1 =[{
+            field: "",
+            cellRenderer: 'Parameter_button',
+            width: 170,
+            rowDrag: true
+          },
+          {
+            field: "Name",
+            flex: 1,
+          }
+        ]
+      const columnDefs2 =[{
+            field: "",
+            cellRenderer: 'Parameter_button',
+            width: 170,
+            rowDrag: true
+          },
+          {
+            field: "Name",
+            flex: 1,
+          }
+        ]
       const rowData1 = ref([]);
       const rowData2 = ref([]);
       const grid = reactive({
         row1: null,
         row2: null,
       })
+      onMounted(() => {
+        getDataGrid('EquipTypeName');
+      });
       async function getDataGrid(type) {
         let apiUrl = '';
         const baseUrl = 'http://192.168.0.176:7008';
         const axios = require('axios');
         switch (type) {
           case 'EquipTypeName':
-            apiUrl+= baseUrl+'/GetParameter/GetEquipType'
+            apiUrl += baseUrl + '/GetParameter/EquipTypeParameter'
+            break;
+          case 'EquipCategoryName':
+            apiUrl += baseUrl + '/GetParameter/EquipCategoryParameter?id=' + `${EquipTypeName.value}`
             break;
           case 'AreaName':
-            apiUrl+= baseUrl+'/GetParameter/GetAreaName'
+            apiUrl += baseUrl + '/GetParameter/GetAreaName'
             break;
         }
-        
+        try {
+          const response = await axios.get(`${apiUrl}`);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            switch (type) {
+              case 'EquipTypeName':
+                rowData1.value = data.resultList.TypeList;
+                EquipTypeArray.value = [];
+                data.resultList.TypeList.forEach(item => {
+                  EquipTypeArray.value.push(item.Name)
+                });
+                setTimeout(() => {
+                  grid.row1.setRowData(rowData1.value)
+                }, 50);
+                break;
+              case 'EquipCategoryName':
+                rowData2.value = data.resultList.CategoryList;
+                grid.row2.setRowData(rowData2.value)
+                break;
+              case 'AreaName':
+                data.resultList.EquipType.forEach(item => {
+                  rowData2.value.push({
+                    Area: item,
+                  })
+                });
+                break;
+              default:
+                break;
+            }
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
       }
       // 移動
       function onRowDragEnd(type, event) {
@@ -222,12 +293,59 @@
         }
       }
       // 新增
-      function insertNewType(type) {
+      async function insertNewType(type) {
+        let apiUrl = '';
+        let input = '';
+        const baseUrl = 'http://192.168.0.176:7008';
+        const axios = require('axios');
         switch (type) {
-          case 'equip_type':
-            rowData1.value.push({
-              model: newType.value,
-            });
+          case 'EquipTypeName':
+            apiUrl = baseUrl + '/ParameterMng/CreateEquipmentType'
+            input = newType.value;
+            break;
+          case 'EquipCategoryName':
+            apiUrl = baseUrl + '/GetParameter/EquipCategoryParameter?id='
+            break;
+          case 'AreaName':
+            apiUrl = baseUrl + '/GetParameter/GetAreaName'
+            break;
+        }
+        try {
+          const requestData = {name: input};
+          const response = await axios.post(`${apiUrl}`,requestData);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            switch (type) {
+              case 'EquipTypeName':
+                newType.value = '';
+                getDataGrid('EquipTypeName')
+                break;
+              case 'EquipCategoryName':
+                rowData2.value = data.resultList.CategoryList;
+                grid.row2.setRowData(rowData2.value)
+                break;
+              case 'AreaName':
+                data.resultList.EquipType.forEach(item => {
+                  rowData2.value.push({
+                    Area: item,
+                  })
+                });
+                break;
+              default:
+                break;
+            }
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+        switch (type) {
+          case 'EquipTypeName':
             newType.value = '';
             setTimeout(() => {
               grid.row1.setRowData(rowData1.value)
@@ -252,29 +370,25 @@
       const dataApi2 = (params) => {
         grid.row2 = params.api;
       };
+      const selectType = (item)=>{
+        EquipTypeName.value = item;
+        getDataGrid('EquipCategoryName');
+      }
       return {
         newType,
         newArea,
+        EquipTypeName,
+        EquipTypeArray,
         onRowDragEnd,
         onCellValueChanged,
         insertNewType,
-        columnDefs: [{
-            field: "make",
-            cellRenderer: 'Parameter_button',
-            width: 170,
-            rowDrag: true
-          },
-          {
-            field: "model",
-            flex: 1,
-            editable: true,
-            cellRenderer: 'Edit_pen',
-          }
-        ],
+        columnDefs1,
+        columnDefs2,
         rowData1,
         rowData2,
         dataApi1,
         dataApi2,
+        selectType,
       };
     },
     methods: {
