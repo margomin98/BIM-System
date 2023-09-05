@@ -136,7 +136,7 @@
           <div class="col d-flex wrap">
             <label for="inputWithButton" class="form-label"><p>審核意見</p></label>
             <div class="input-group" id="readonly_box">
-              <textarea class="readonly_box" readonly>{{ details.VerifyMemo }}</textarea>
+              <textarea class="readonly_box form-control" readonly>{{ details.VerifyMemo }}</textarea>
             </div>
           </div>
         </div>
@@ -575,7 +575,7 @@
           }
         }
         #readonly_box {
-          padding: 0 10px;
+          padding: 0 0 0 10px;
           background-color: #B4B4B4;
           border-left: black 1px solid;
         }
@@ -769,7 +769,7 @@
               background: #b4b4b4;
             }
             #memo {
-              width: 122px;
+              width: 123px;
             }
           }
         }
@@ -777,12 +777,12 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
-          .row:nth-child(3){
-            .input-group{
+          .row:nth-child(3) {
+            .input-group {
               padding: 0 !important;
             }
-            textarea{
-    padding: 5px 10px 0;
+            textarea {
+              padding: 5px 10px 0;
             }
           }
           .form-check {
@@ -885,7 +885,7 @@
           }
         }
         #readonly_box {
-          padding: 0 10px;
+          padding: 0 0 0 10px;
           background-color: #B4B4B4;
           border-left: black 1px solid;
         }
@@ -1079,7 +1079,7 @@
               background: #b4b4b4;
             }
             #memo {
-              width: 122px;
+              width: 123px;
             }
           }
         }
@@ -1087,12 +1087,12 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
-          .row:nth-child(3){
-            .input-group{
+          .row:nth-child(3) {
+            .input-group {
               padding: 0 !important;
             }
-            textarea{
-    padding: 5px 10px 0;
+            textarea {
+              padding: 5px 10px 0;
             }
           }
           .form-check {

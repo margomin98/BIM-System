@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="row g-0">
-          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap column_section">
+          <div class="col-xl-5 col-lg-5 col-md-5 col-12 d-flex wrap column_section">
             <label for="inputWithButton" class="form-label"><p><span>*</span>專案代碼</p></label>
             <div class="input-group">
               <input type="text" class="form-control" id="project_id" placeholder="最多輸入10字" v-model="details.ProjectCode">
@@ -872,7 +872,7 @@
             margin: 0;
             display: flex;
             justify-content: center;
-            padding: 0 30px;
+            padding: 0 10px;
             p {
               width: 100px;
               margin-bottom: 0;
@@ -1108,7 +1108,7 @@
               grid-auto-flow: row;
               grid-template-areas: ". . ." ". . .";
               white-space: nowrap;
-              justify-items: right;
+              justify-items: center;
               width: 100%;
               div {
                 width: 90px;

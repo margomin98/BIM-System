@@ -73,10 +73,18 @@
 		margin: 0 2px 5px;
 	}
 	.swiper-button-next {
-    color: pink !important;
-}
-.readonly_box {
-    pointer-events: none;
-    user-select: none;
-  }
+		color: pink !important;
+	}
+	.readonly_box {
+		// pointer-events: none;
+		user-select: none;
+		overflow: hidden;
+		&:focus{
+			outline: none !important;
+background-color: unset !important;
+        box-shadow: unset!important;
+		cursor: pointer;
+		}
+	}
+
 </style>
