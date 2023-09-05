@@ -81,7 +81,7 @@
 		overflow: hidden;
 		&:focus{
 			outline: none !important;
-background-color: unset !important;
+background-color: #B4B4B4 !important;
         box-shadow: unset!important;
 		cursor: pointer;
 		}
