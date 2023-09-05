@@ -16,8 +16,12 @@ export default {
       // const indexToDelete = props.parentRef.rowData.value.findIndex(item => item === deletedData);
       console.log(props.params.data);
       props.params.api.applyTransaction({remove: [rowNode.data]});
-      // console.log(props.params.);
-      props.params.insertDeleteList(props.params.data);
+      const data = props.params.data;
+      if(data.hasOwnProperty('item_id')) {
+        props.params.insertDeleteList(data);
+      }
+      else
+      props.params.removeItemList(data);
     }
     return {
       deleteRow
