@@ -156,13 +156,15 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend flex">保管人員：</div>
-              <account-search @custodian = "setCustodian"></account-search>
-              <!-- <div class="dropdown">
-                <input type="text" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              <!-- <account-search @custodian = "setCustodian" :getCustodian="details.Custodian"></account-search> -->
+              <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{ details.Custodian || '請選擇' }}
+                    </button>
                 <div class="dropdown-menu">
-                  <p>123</p>
+                  <p v-for="(item , index) in CustodianArray" :key="index" class="dropdown-item" @click="selectAccount(item)">{{ item }}</p>
                 </div>
-              </div> -->
+              </div>
             </div>
           </div>
         </div>
@@ -306,7 +308,7 @@
       const EquipTypeArray = ref([]); //設備總類陣列 request拿到
       const EquipCategoryArray = ref([]); //設備分類陣列 request拿到
       const EquipCategoryInit = ref('請先選擇設備總類');
-      const Custodian = ref('');
+      const CustodianArray = ref([]);
       const AreaArray = ref([]); //區域陣列
       const LayerArray = ref([]); //櫃位陣列
       const LayerInit = ref('請先選擇區域');
@@ -392,6 +394,7 @@
       const rowData = ref([]);
       onMounted(() => {
         getDetails();
+        getAccount();
         searchHistory();
       });
       // 上半部表單部分 & 送出
@@ -480,6 +483,7 @@
           'WarrantyDate': details.value.WarrantyDate,
           'WarrantyStartDate': details.value.WarrantyStartDate,
           'WarrantyEndDate': details.value.WarrantyEndDate,
+          'Custodian': details.value.Custodian,
           'Memo': details.value.Memo,
         };
         //將表格資料append到 formData
@@ -598,6 +602,25 @@
           console.error('Error sending applicant info request to backend');
         }
       }
+      async function getAccount() {
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/SearchName?name=`);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('Account Get成功 資料如下\n', data.resultList);
+            CustodianArray.value = data.resultList;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
       function selectType(item) {
         details.value.EquipTypeName = item;
         // console.log('選擇的總類:', EquipTypeName.value);
@@ -619,7 +642,10 @@
         details.value.LayerName = item;
       };
       const setCustodian = (data) => {
-        Custodian.value = data;
+        details.value.Custodian = data;
+      }
+      const selectAccount = (item) => {
+        details.value.Custodian = item;
       }
       // 輪播部分 function
       function openFileExplorer() {
@@ -757,7 +783,7 @@
         EquipTypeArray,
         EquipCategoryArray,
         EquipCategoryInit,
-        Custodian,
+        CustodianArray,
         AreaArray,
         LayerArray,
         LayerInit,
@@ -773,6 +799,7 @@
         selectArea,
         selectLayer,
         setCustodian,
+        selectAccount,
         openFileExplorer,
         handleFileChange,
         deleteFileFunction,

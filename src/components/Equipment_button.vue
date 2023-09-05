@@ -19,14 +19,14 @@ export default {
     function viewDetails() {
       // console.log(props.params.data.AI_ID);
       if (search_id !== '') {
-        router.push({ name: 'Rent_Review_View', query: { search_id } });
+        router.push({ name: 'Equipment_View', query: { search_id } });
       }
     }
 
     function viewEdit() {
       // console.log(props.params.data.search_id);
       if (search_id !== '') {
-        router.push({ name: 'Rent_Review_New', query: { search_id } });
+        router.push({ name: 'Equipment_New', query: { search_id } });
       }
     }
     return { 
