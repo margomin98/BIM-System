@@ -323,7 +323,6 @@ nextTick,
         nextTick(()=> {
           clearEquips.value = false;
         });
-        EquipCategoryInit.value = '請先選擇設備總類';
         LayerInit.value = '請先選擇區域';
         submit();
       }

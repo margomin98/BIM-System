@@ -159,53 +159,31 @@
       Navbar,
       AgGridVue,
       Parameter_button,
-      Edit_pen
+      Edit_pen,
     },
     setup() {
       const newType = ref('');
       const newArea = ref('');
-      const rowData1 = ref([{
-          model: "設備總類1",
-        },
-        {
-          model: "設備總類2",
-        },
-        {
-          model: "設備總類3",
-        },
-        {
-          model: "設備總類4",
-        },
-        {
-          model: "設備總類5",
-        },
-        {
-          model: "設備總類6",
-        },
-      ]);
-      const rowData2 = ref([{
-          model: "儲位區域1",
-        },
-        {
-          model: "儲位區域2",
-        },
-        {
-          model: "儲位區域3",
-        },
-        {
-          model: "儲位區域4",
-        },
-        {
-          model: "儲位區域5",
-        },
-        {
-          model: "儲位區域6",
-        },
-      ]);
+      const rowData1 = ref([]);
+      const rowData2 = ref([]);
       const grid = reactive({
         row1: null,
         row2: null,
       })
+      async function getDataGrid(type) {
+        let apiUrl = '';
+        const baseUrl = 'http://192.168.0.176:7008';
+        const axios = require('axios');
+        switch (type) {
+          case 'EquipTypeName':
+            apiUrl+= baseUrl+'/GetParameter/GetEquipType'
+            break;
+          case 'AreaName':
+            apiUrl+= baseUrl+'/GetParameter/GetAreaName'
+            break;
+        }
+        
+      }
       // 移動
       function onRowDragEnd(type, event) {
         const newRowIndex = event.overIndex;
