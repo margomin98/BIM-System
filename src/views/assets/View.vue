@@ -128,7 +128,7 @@
               <div class="input-group-prepend">
                 保管人員：
               </div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Custodian">
           </div>
         </div>
         </div>

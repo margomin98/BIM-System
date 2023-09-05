@@ -148,7 +148,7 @@
               <div class="input-group-prepend">
                 <span>*</span>包裝單位 :
               </div>
-              <div class="dropdown">
+              <div v-if="details.Type === 0" class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false" :disabled="details.Type === 1" >
                   {{ details.Unit || '請選擇' }}
@@ -157,6 +157,9 @@
                   <p v-for="(item, index) in UnitArray" :key="index" class="dropdown-item" @click="selectUnit(`${item}`)">
                     {{ item }}</p>
                 </div>
+              </div>
+              <div v-if="details.Type === 1" class="number-input-box">
+                <input class="input-number" type="text" v-model="details.Unit" min="1" :readonly="details.Type === 1" :class="{readonly_box: details.Type === 1}"/>
               </div>
             </div>
           </div>
