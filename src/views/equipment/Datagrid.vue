@@ -26,24 +26,23 @@
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>區域</p>
             <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ selectedItem || "請選擇" }}
-                    </button>
-              <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+              <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
+                {{ searchParams.AreaName || '請選擇' }}
+              </button>
+              <div class="dropdown-menu" aria-labelledby="areaDropdown">
+                <p v-for="(item, index) in AreaArray" :key="index" class="dropdown-item" @click="selectArea(`${item}`)">
+                  {{ item }}</p>
               </div>
             </div>
           </div>
-          <div class="col-xl-3 col-lg-2 col-md-6 col-12">
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>櫃位</p>
             <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ selectedItem || "請選擇" }}
-                    </button>
-              <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+              <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="searchParams.AreaName === ''">
+                {{ searchParams.LayerName || LayerInit }}
+              </button>
+              <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
+                <p v-for="(item, index) in LayerArray" :key="index" class="dropdown-item" @click="selectLayer(`${item}`)">{{ item }}</p>
               </div>
             </div>
           </div>
@@ -104,6 +103,11 @@
   import {
     AgGridVue
   } from "ag-grid-vue3";
+  import {
+    onMounted,
+    reactive,
+    ref
+  } from "vue";
   import Equipment_button from "@/components/Equipment_button";
   import Delete from "@/components/Delete_button";
   import Navbar from "@/components/Navbar.vue";
@@ -115,8 +119,20 @@
       Delete
     },
     setup() {
-      return {
-        columnDefs: [{
+      const details = ref({});
+      const searchParams = reactive({
+        IntegrationId: '',
+        IntegrationName: '',
+        AreaName: '',
+        LayerName: '',
+        StartDate: '',
+        EndDate: '',
+      });
+      const AreaArray = ref([]); //區域陣列
+      const LayerArray = ref([]); //櫃位陣列
+      const LayerInit = ref('請先選擇區域');
+      const pageSize = ref(10);
+      const columnDefs = [{
             suppressMovable: true,
             field: "",
             cellRenderer: "Equipment_button",
@@ -194,114 +210,75 @@
             field: "",
             cellRenderer: "Delete",
           }
-        ],
-        rowData: [{
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000
-          },
-        ],
-
-      };
-    },
-    data() {
-      return {
-        rowHeight: 35,
-        selectedItem: "",
-        selectedLocateItem: "",
-        selectedAreaItem: "",
-        selectedStartDate: null,
-        selectedEndDate: null,
-        showStartDatePicker: false,
-        showEndDatePicker: false,
-        total: 100,
-        pageSize: 20,
-        data: [],
-        pagePosition: "bottom",
-        pageOptions: [{
-            value: "bottom",
-            text: "Bottom",
-          },
-          {
-            value: "top",
-            text: "Top",
-          },
-          {
-            value: "both",
-            text: "Both",
-          },
-        ],
-      };
-    },
-    created() {
-      this.data = this.getData(this.total);
-    },
-    methods: {
-      selectStatus(item) {
-        this.selectedItem = item;
+        ];
+      const rowData = ref([]);
+      onMounted(()=>{
         
-      },
-      selectArea(item) {
-        this.selectedAreaItem = item;
-       
-      },
-      selectCabinet(item) {
-        this.selectedLocateItem = item;
-        this.showDatePicker = false;
-      },
-      // Clear other data properties if needed
-      clear() {
-        // Clear input fields
-        const inputFields = document.querySelectorAll(
-          '.datagrid_section input[type="text"]'
-        );
-        inputFields.forEach((input) => {
-          input.value = "";
-        });
-        // Clear dropdowns
-        this.selectedItem = "";
-        this.selectedAreaItem = "";
-        this.selectedLocateItem = "";
-        // Clear selected date
-        this.selectedDate = null;
-        // Clear other data properties if needed
-      },
-      getData(total) {
-        let data = [];
-        for (let i = 1; i <= total; i++) {
-          let amount = Math.floor(Math.random() * 1000);
-          let price = Math.floor(Math.random() * 1000);
-          data.push({
-            inv: "Inv No " + i,
-            name: "Name " + i,
-            amount: amount,
-            price: price,
-            cost: amount * price,
-            note: "Note " + i,
-          });
+      });
+      async function getAreaName() {
+        if (AreaArray.value.length == 0) {
+          const axios = require('axios');
+          try {
+            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetAreaName');
+            console.log(response);
+            const data = response.data;
+            if (data.state === 'success') {
+              console.log('Area Get成功 資料如下\n', data.resultList.AreaName);
+              AreaArray.value = data.resultList.AreaName;
+            } else if (data.state === 'error') {
+              alert(data.messages);
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            }
+          } catch (error) {
+            console.error('Error sending applicant info request to backend');
+          }
         }
-        return data;
-      },
+      }
+      async function getLayerName() {
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetLayerName?id=${searchParams.AreaName}`);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('Layer Get成功 資料如下\n', data.resultList.LayerName);
+            LayerArray.value = data.resultList.LayerName;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error('Error sending applicant info request to backend');
+        }
+      }
+      const selectArea = (item) => {
+        searchParams.AreaName = item;
+        searchParams.LayerName = '';
+        //API function here
+        getLayerName();
+        LayerInit.value = '請選擇';
+      };
+      const selectLayer = (item) => {
+        searchParams.LayerName = item;
+      };
+      return {
+        details,
+        searchParams,
+        AreaArray,
+        LayerArray,
+        LayerInit,
+        pageSize,
+        columnDefs,
+        rowData,
+        rowHeight: 35,
+        getAreaName,
+        selectArea,
+        selectLayer,
+      };
     },
   };
 </script>
@@ -394,10 +371,15 @@
             .dropdown-menu {
               width: 100%;
               transform: translate3d(-1px, 35px, 0px) !important;
+              max-height: 250px;
+              overflow-y: auto;
               p {
                 font-size: 18px;
                 color: black;
                 font-weight: normal;
+                &:hover {
+                  cursor: pointer;
+                }
               }
             }
           }
@@ -484,10 +466,15 @@
             .dropdown-menu {
               width: 100%;
               transform: translate3d(-1px, 35px, 0px) !important;
+              max-height: 250px;
+              overflow-y: auto;
               p {
                 font-size: 18px;
                 color: black;
                 font-weight: normal;
+                &:hover {
+                  cursor: pointer;
+                }
               }
             }
           }
@@ -587,10 +574,15 @@
             .dropdown-menu {
               width: 100%;
               transform: translate3d(-1px, 35px, 0px) !important;
+              max-height: 250px;
+              overflow-y: auto;
               p {
                 font-size: 18px;
                 color: black;
                 font-weight: normal;
+                &:hover {
+                  cursor: pointer;
+                }
               }
             }
           }

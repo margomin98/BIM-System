@@ -88,7 +88,7 @@
   import Navbar from "@/components/Navbar.vue";
   import getEquipDatagrid from "@/components/API/getEquipDatagrid"
   import {
-nextTick,
+    nextTick,
     onMounted,
     reactive,
     ref
