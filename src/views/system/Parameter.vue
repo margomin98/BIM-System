@@ -316,7 +316,7 @@
                 rowData4.value.forEach(item=> {
                   item.type = 'LayerName'
                 })
-                grid.row2.setRowData(rowData4.value)
+                grid.row4.setRowData(rowData4.value)
                 break;
             }
           } else if (data.state === 'error') {
