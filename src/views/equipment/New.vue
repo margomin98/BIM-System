@@ -88,9 +88,7 @@
               <div class="input-group mb-3">
                 <div class="input-group-prepend flex">設備總類：</div>
                 <div class="dropdown">
-                  <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-               請選擇
-          </button>
+                  <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">請選擇</button>
                   <div class="dropdown-menu">
                     <p>123</p>
                   </div>
@@ -101,9 +99,7 @@
               <div class="input-group mb-3">
                 <div class="input-group-prepend flex">設備分類：</div>
                 <div class="dropdown">
-                  <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-               請選擇
-          </button>
+                  <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">請選擇</button>
                   <div class="dropdown-menu">
                     <p>123</p>
                   </div>
@@ -113,6 +109,7 @@
           </div>
           <div class="btn_section">
             <button class="send_btn" data-bs-toggle="modal" data-bs-target="#exampleModal">搜索庫存</button>
+            <!-- Modal -->
             <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1">
               <div class="modal-dialog modal-xl modal-dialog-centered">
                 <div class="modal-content">
@@ -128,9 +125,7 @@
                         <div class='col-xl-3 col-lg-3 col-md-3 col-12' style='padding-left:0'>
                           <p>設備總類</p>
                           <div class="dropdown">
-                            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-               請選擇
-          </button>
+                            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">請選擇</button>
                             <div class="dropdown-menu">
                               <p>123</p>
                             </div>
@@ -139,9 +134,7 @@
                         <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
                           <p>設備分類</p>
                           <div class="dropdown">
-                            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-               請選擇
-          </button>
+                            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">請選擇</button>
                             <div class="dropdown-menu">
                               <p>123</p>
                             </div>
@@ -558,7 +551,7 @@
         }
         .item_wrap {
           height: 350px;
-    overflow: auto;
+          overflow: auto;
          .item{
           background-color: #526F8E;
           border-radius: 10px;
