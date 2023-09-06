@@ -224,7 +224,7 @@
         if (myForm.EquipTypeArray.length == 0) {
           const axios = require('axios');
           try {
-            const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetEquipType');
+            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetEquipType');
             const data = response.data;
             if (data.state === 'success') {
               myForm.EquipTypeArray = data.resultList.EquipType;
@@ -243,7 +243,7 @@
         myForm.EquipCategoryName = '';
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${myForm.EquipTypeName}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${myForm.EquipTypeName}`);
           const data = response.data;
           if (data.state === 'success') {
             myForm.EquipCategoryArray = data.resultList.EquipCategory;
@@ -266,7 +266,7 @@
         const form = new FormData();
         form.append('projectCode', details.value.ProjectCode);
         const axios = require('axios');
-        const response = await axios.post('http://192.168.0.176:7008/GetDBdata/SearchProjectName', form);
+        const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchProjectName', form);
         try {
           const data = response.data;
           console.log(data);
@@ -294,7 +294,7 @@
       async function getDetails() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -343,7 +343,7 @@
         console.log(requestData);
         try {
           const axios = require('axios');
-          const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/ApplicationEdit', requestData);
+          const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/ApplicationEdit', requestData);
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages + '\n';

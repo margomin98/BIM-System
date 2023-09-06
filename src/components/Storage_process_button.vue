@@ -57,7 +57,7 @@
       //改變狀態 通知交付or暫停交付
       async function changeStatus() {
         const axios = require('axios');
-        const response = await axios.get(`http://192.168.0.176:7008/AssetsInMng/DeliveryNotification?id=${search_id}`);
+        const response = await axios.get(`http://192.168.0.177:7008/AssetsInMng/DeliveryNotification?id=${search_id}`);
         try {
           const data = response.data;
           if (data.state === 'success') {

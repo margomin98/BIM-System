@@ -475,7 +475,7 @@
       async function getDetails() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -516,7 +516,7 @@
             formData.append(fieldName, formFields[fieldName]);
             console.log(formData.get(`${fieldName}`));
           }
-          const response = await axios.post('http://192.168.0.176:7008/Account/IdentityValidationForE_Operator', formData, {
+          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidationForE_Operator', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
@@ -546,7 +546,7 @@
             formData.append(fieldName, formFields[fieldName]);
             console.log(formData.get(`${fieldName}`));
           }
-          const response = await axios.post('http://192.168.0.176:7008/Account/IdentityValidationForW_Operator', formData, {
+          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidationForW_Operator', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
@@ -598,7 +598,7 @@
           DeliveryMemo: DeliveryMemo.value,
           OM_List: OM_List,
         };
-        const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/Delivery',requestData);
+        const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/Delivery',requestData);
         try {
           const data = response.data;
           console.log(data);

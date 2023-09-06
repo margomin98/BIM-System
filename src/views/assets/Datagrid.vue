@@ -232,7 +232,7 @@ nextTick,
         }
         const axios = require('axios');
         try {
-          const response = await axios.post('http://192.168.0.176:7008/InventoryMng/Assets', formData);
+          const response = await axios.post('http://192.168.0.177:7008/InventoryMng/Assets', formData);
           const data = response.data;
           if (data.state === 'success') {
             //取得datagrid成功
@@ -260,7 +260,7 @@ nextTick,
         if (AreaArray.value.length == 0) {
           const axios = require('axios');
           try {
-            const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetAreaName');
+            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetAreaName');
             console.log(response);
             const data = response.data;
             if (data.state === 'success') {
@@ -280,7 +280,7 @@ nextTick,
       async function getLayerName() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetLayerName?id=${searchParams.AreaName}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetLayerName?id=${searchParams.AreaName}`);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {

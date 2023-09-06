@@ -175,6 +175,11 @@
         type: '',
         id: '',
       });
+      const deleteParams = reactive({
+        input: '',
+        type: '',
+        id: '',
+      });
       const newArea = ref('');
       const EquipTypeName = ref('');
       const EquipTypeArray = ref([]);
@@ -223,7 +228,7 @@
       // 讀取
       async function getDataGrid(type) {
         let apiUrl = '';
-        const baseUrl = 'http://192.168.0.176:7008';
+        const baseUrl = 'http://192.168.0.177:7008';
         const axios = require('axios');
         switch (type) {
           case 'EquipTypeName':
@@ -310,7 +315,7 @@
         }
         let apiUrl = '';
         let input = null;
-        const baseUrl = 'http://192.168.0.176:7008';
+        const baseUrl = 'http://192.168.0.177:7008';
         const axios = require('axios');
         let requestData = {};
         switch (type) {
@@ -364,7 +369,7 @@
         const input = editParams.input;
         const id = editParams.id;
         const axios = require('axios');
-        const baseUrl = 'http://192.168.0.176:7008'
+        const baseUrl = 'http://192.168.0.177:7008'
         let apiUrl = ''
         let requestData = {
           name: input,
@@ -420,7 +425,7 @@
       async function insertNewType(type) {
         let apiUrl = '';
         let input = '';
-        const baseUrl = 'http://192.168.0.176:7008';
+        const baseUrl = 'http://192.168.0.177:7008';
         const axios = require('axios');
         switch (type) {
           case 'EquipTypeName':

@@ -568,7 +568,7 @@
         if (searchParams.EquipTypeArray.length == 0) {
           const axios = require('axios');
           try {
-            const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetEquipType');
+            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetEquipType');
             const data = response.data;
             if (data.state === 'success') {
               searchParams.EquipTypeArray = data.resultList.EquipType;
@@ -587,7 +587,7 @@
         searchParams.EquipCategoryName = '';
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${searchParams.EquipTypeName}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${searchParams.EquipTypeName}`);
           const data = response.data;
           if (data.state === 'success') {
             searchParams.EquipCategoryArray = data.resultList.EquipCategory;
@@ -604,7 +604,7 @@
       async function getDetails() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
           const data = response.data;
           if (data.state === 'success') {
             console.log('getDetails 成功 資料如下\n', data.resultList);
@@ -651,7 +651,7 @@
           form.append('EquipTypeName', searchParams.EquipTypeName);
           form.append('EquipCategoryName', searchParams.EquipCategoryName);
           form.append('ProductName', searchParams.ProductName);
-          const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/SearchInventory', form);
+          const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/SearchInventory', form);
           const data = response.data;
           if (data.state === 'success') {
             // console.log('Details Get成功 資料如下\n', data.resultList);
@@ -688,7 +688,7 @@
         console.log(requestData);
         try {
           const axios = require('axios');
-          const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/MaterialPreparation', requestData);
+          const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/MaterialPreparation', requestData);
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages + '\n';
@@ -716,7 +716,7 @@
       async function getApplicationInfo() {
         const axios = require('axios');
         try {
-          const response = await axios.get('http://192.168.0.176:7008/GetDBdata/GetApplicant');
+          const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {

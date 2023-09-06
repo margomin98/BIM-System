@@ -57,7 +57,7 @@
       async function changeStatus() {
         const axios = require("axios");
         const response = await axios.get(
-          `http://192.168.0.176:7008/AssetsOutMng/DeliveryNotification?ao_id=${search_id}`
+          `http://192.168.0.177:7008/AssetsOutMng/DeliveryNotification?ao_id=${search_id}`
         );
         try {
           const data = response.data;

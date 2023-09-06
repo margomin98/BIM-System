@@ -31,7 +31,7 @@
           OM_Number: props.params.data.selectNumber,
         }
         try {
-          const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/SubtractFromInventory', requestData);
+          const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/SubtractFromInventory', requestData);
           const data = response.data;
           if (data.state === 'success') {
             console.log('暫存結果:' +data);

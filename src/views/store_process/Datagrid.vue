@@ -344,7 +344,7 @@ export default {
       //使用axios method:post傳送新品入庫表單
       const axios = require('axios');
       try {
-        const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/Operating', formData, {
+        const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/Operating', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -380,7 +380,7 @@ export default {
       if (EquipTypeArray.value.length == 0) {
         const axios = require('axios');
         try {
-          const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetEquipType');
+          const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetEquipType');
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -401,7 +401,7 @@ export default {
       EquipCategoryName.value = '';
       const axios = require('axios');
       try {
-        const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${EquipTypeName.value}`);
+        const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${EquipTypeName.value}`);
         console.log(response);
         const data = response.data;
         if (data.state === 'success') {
@@ -422,7 +422,7 @@ export default {
       if (AreaArray.value.length == 0) {
         const axios = require('axios');
         try {
-          const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetAreaName');
+          const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetAreaName');
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -443,7 +443,7 @@ export default {
     async function getLayerName() {
       const axios = require('axios');
       try {
-        const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetLayerName?id=${AreaName.value}`);
+        const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetLayerName?id=${AreaName.value}`);
         console.log(response);
         const data = response.data;
         if (data.state === 'success') {

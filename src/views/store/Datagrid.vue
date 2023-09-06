@@ -218,7 +218,7 @@
         //使用axios method:post傳送新品入庫表單
         const axios = require('axios');
         try {
-          const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/Applications', formData, {
+          const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/Applications', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
@@ -252,7 +252,7 @@
         if (EquipTypeArray.value.length == 0) {
           const axios = require('axios');
           try {
-            const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetEquipType');
+            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetEquipType');
             console.log(response);
             const data = response.data;
             if (data.state === 'success') {
@@ -273,7 +273,7 @@
         EquipCategoryName.value = '';
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${EquipTypeName.value}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${EquipTypeName.value}`);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {

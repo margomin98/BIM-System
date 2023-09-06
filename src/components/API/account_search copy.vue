@@ -41,7 +41,7 @@
         return new Promise(async(resolve, reject) => {
           try {
             const axios = require('axios');
-            const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/SearchName?name=${inputValue.value}`);
+            const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchName?name=${inputValue.value}`);
             const data = response.data;
             if (data.state === 'success') {
               resolve(data.resultList);

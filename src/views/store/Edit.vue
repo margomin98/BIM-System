@@ -323,7 +323,7 @@ export default {
       //使用axios method:post傳送新品入庫表單
       const axios = require('axios');
       try {
-        const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/ApplicationEdit ', formData, {
+        const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/ApplicationEdit ', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -352,7 +352,7 @@ export default {
     async function getDetails() {
       const axios = require('axios');
       try {
-        const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/GetApplicationInfo?ai_id=${AI_ID}`);
+        const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetApplicationInfo?ai_id=${AI_ID}`);
         console.log(response);
         const data = response.data;
         if (data.state === 'success') {
@@ -384,7 +384,7 @@ export default {
       if (EquipTypeArray.value.length == 0) {
         const axios = require('axios');
         try {
-          const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetEquipType');
+          const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetEquipType');
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -404,7 +404,7 @@ export default {
     async function getEquipCategoryName() {
       const axios = require('axios');
       try {
-        const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${details.value.EquipTypeName}`);
+        const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${details.value.EquipTypeName}`);
         console.log(response);
         const data = response.data;
         if (data.state === 'success') {
