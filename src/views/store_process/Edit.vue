@@ -344,7 +344,7 @@
       async function getDetails() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -422,7 +422,7 @@
         if (formData[index].AreaArray.length == 0) {
           const axios = require('axios');
           try {
-            const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetAreaName');
+            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetAreaName');
             // console.log(response);
             const data = response.data;
             if (data.state === 'success') {
@@ -442,7 +442,7 @@
       async function getLayerName(index) {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetLayerName?id=${formData[index].itemAreaName}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetLayerName?id=${formData[index].itemAreaName}`);
           // console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -667,7 +667,7 @@
       }
       async function queryFormData() {
         const axios = require('axios');
-        const response = await axios.get(`http://192.168.0.176:7008/AssetsInMng/AssetsInAdd?ai_id=${AI_ID}`);
+        const response = await axios.get(`http://192.168.0.177:7008/AssetsInMng/AssetsInAdd?ai_id=${AI_ID}`);
         const data = response.data;
         try {
           if (data.state !== 'success') {
@@ -689,7 +689,7 @@
         }
         const axios = require('axios');
         try {
-          const response = await axios.post(`http://192.168.0.176:7008${baseUrl}`, formData);
+          const response = await axios.post(`http://192.168.0.177:7008${baseUrl}`, formData);
           if(response.data.state !== 'success') {
             console.error(response.data.messages);
           }
@@ -814,7 +814,7 @@
           repeatForm.append('assetsIds', myForm[i]);
         }
         const axios = require('axios');
-        const response = await axios.post('http://192.168.0.176:7008/GetDBdata/CheckAssetsInID', repeatForm);
+        const response = await axios.post('http://192.168.0.177:7008/GetDBdata/CheckAssetsInID', repeatForm);
         try {
           const data = response.data;
           if (data.state === 'error') {

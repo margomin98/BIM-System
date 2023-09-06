@@ -356,7 +356,7 @@
       async function getDetails() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/GetAssetInfo?id=${AssetsId}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetAssetInfo?id=${AssetsId}`);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -391,7 +391,7 @@
         if (EquipTypeArray.value.length == 0) {
           const axios = require('axios');
           try {
-            const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetEquipType');
+            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetEquipType');
             console.log(response);
             const data = response.data;
             if (data.state === 'success') {
@@ -411,7 +411,7 @@
       async function getEquipCategoryName() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${details.value.EquipTypeName}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${details.value.EquipTypeName}`);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -431,7 +431,7 @@
         if (AreaArray.value.length == 0) {
           const axios = require('axios');
           try {
-            const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetAreaName');
+            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetAreaName');
             console.log(response);
             const data = response.data;
             if (data.state === 'success') {
@@ -451,7 +451,7 @@
       async function getLayerName() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetLayerName?id=${details.value.AreaName}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetLayerName?id=${details.value.AreaName}`);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -581,7 +581,7 @@
         }
         const axios = require('axios');
         try {
-          const response = await axios.post('http://192.168.0.176:7008/InventoryMng/AssetsHistory', formData);
+          const response = await axios.post('http://192.168.0.177:7008/InventoryMng/AssetsHistory', formData);
           const data = response.data;
           if (data.state === 'success') {
             //取得datagrid成功
@@ -663,22 +663,6 @@
       .swiper_section {
         swiper-slide {
           align-self: baseline;
-          &::after {
-            cursor: pointer;
-            content: "x";
-            position: absolute;
-            top: 25px;
-            right: -14px;
-            background: #E94B4B;
-            height: 30px;
-            width: 30px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-weight: 700;
-          }
         }
         swiper-slide img {
           width: 100%;
@@ -845,22 +829,6 @@
       .swiper_section {
         swiper-slide {
           align-self: baseline;
-          &::after {
-            cursor: pointer;
-            content: "x";
-            position: absolute;
-            top: 25px;
-            right: -14px;
-            background: #E94B4B;
-            height: 30px;
-            width: 30px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-weight: 700;
-          }
         }
         swiper-slide img {
           width: 100%;
@@ -1023,22 +991,6 @@
   @media only screen and (max-width: 767px) {
     .main_section {
       .swiper_section swiper-slide {
-        &::after {
-          cursor: pointer;
-          content: "x";
-          position: absolute;
-          top: 25px;
-          right: 28px;
-          background: #E94B4B;
-          height: 30px;
-          width: 30px;
-          border-radius: 50%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          color: white;
-          font-weight: 700;
-        }
         img {
           width: 100%;
           height: auto;

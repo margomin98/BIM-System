@@ -401,7 +401,7 @@
       async function getDetails() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/GetAssetInfo?id=${AssetsId}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetAssetInfo?id=${AssetsId}`);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -503,7 +503,7 @@
             formData.append('deleteFile', item);
           });
         }
-        const response = await axios.post('http://192.168.0.176:7008/InventoryMng/AssetEdit', formData);
+        const response = await axios.post('http://192.168.0.177:7008/InventoryMng/AssetEdit', formData);
         try {
           const data = response.data;
           console.log(data);
@@ -526,7 +526,7 @@
         if (EquipTypeArray.value.length == 0) {
           const axios = require('axios');
           try {
-            const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetEquipType');
+            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetEquipType');
             console.log(response);
             const data = response.data;
             if (data.state === 'success') {
@@ -546,7 +546,7 @@
       async function getEquipCategoryName() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${details.value.EquipTypeName}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${details.value.EquipTypeName}`);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -566,7 +566,7 @@
         if (AreaArray.value.length == 0) {
           const axios = require('axios');
           try {
-            const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetAreaName');
+            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetAreaName');
             console.log(response);
             const data = response.data;
             if (data.state === 'success') {
@@ -586,7 +586,7 @@
       async function getLayerName() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetLayerName?id=${details.value.AreaName}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetLayerName?id=${details.value.AreaName}`);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -605,7 +605,7 @@
       async function getAccount() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/SearchName?name=`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchName?name=`);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -741,7 +741,7 @@
         }
         const axios = require('axios');
         try {
-          const response = await axios.post('http://192.168.0.176:7008/InventoryMng/AssetsHistory', formData);
+          const response = await axios.post('http://192.168.0.177:7008/InventoryMng/AssetsHistory', formData);
           const data = response.data;
           if (data.state === 'success') {
             //取得datagrid成功

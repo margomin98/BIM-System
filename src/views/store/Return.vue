@@ -115,7 +115,7 @@ import router from '@/router';
       async function getApplicationInfo() {
         const axios = require('axios');
         try {
-          const response = await axios.get('http://192.168.0.176:7008/GetDBdata/GetApplicant');
+          const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -136,7 +136,7 @@ import router from '@/router';
       async function getAssetsUnit() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/GetUnit?AssetsId=${formParams.AssetsId}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetUnit?AssetsId=${formParams.AssetsId}`);
           const data = response.data;
           if (data.state === 'success') {
             formParams.Unit = data.resultList.Unit;
@@ -207,7 +207,7 @@ import router from '@/router';
             Count: formParams.Count,
             Memo: formParams.Memo,
           };
-          const response = await axios.post('http://192.168.0.176:7008/AssetsInMng/OldAssetsIn', requestData);
+          const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/OldAssetsIn', requestData);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {

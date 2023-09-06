@@ -80,7 +80,7 @@
       async function logout() {
         const axios = require('axios');
         try {
-          const response = await axios.post('http://192.168.0.176:7008/Account/LogOff');
+          const response = await axios.post('http://192.168.0.177:7008/Account/LogOff');
           console.log(response);
           if (response.status === 200) {
             //接收成功，跳轉至首頁
@@ -96,7 +96,7 @@
       async function getUserName() {
         const axios = require('axios');
         try {
-          const response = await axios.get('http://192.168.0.176:7008/GetDBdata/GetApplicant');
+          const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
           // console.log(response);
           const data = response.data;
           if (data.state === 'success') {

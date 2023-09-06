@@ -153,7 +153,8 @@
           field: "",
           cellRenderer: "Delete",
           cellRendererParams: {
-            insertDeleteList: updateDeleteList
+            insertDeleteList: updateDeleteList,
+            removeItemList: updateItemList,
           },
           width: 100,
           resizable: true,
@@ -206,6 +207,7 @@
       ]
       const rowData = ref([]);
       const details = ref({});
+      const increaseId = ref(0);
       const myForm = reactive({
         EquipTypeName: '',
         EquipTypeArray: [],
@@ -218,31 +220,11 @@
         deleteList: [],
         itemList: [],
       });
-      async function getDetails() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/AO_GetApplicationInfo?ao_id=${AO_ID}`);
-          console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('Details Get成功 資料如下\n', data.resultList);
-            details.value = data.resultList;
-            rowData.value = data.resultList.ItemList;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
       async function getEquipTypeName() {
         if (myForm.EquipTypeArray.length == 0) {
           const axios = require('axios');
           try {
-            const response = await axios.get('http://192.168.0.176:7008/GetParameter/GetEquipType');
+            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetEquipType');
             const data = response.data;
             if (data.state === 'success') {
               myForm.EquipTypeArray = data.resultList.EquipType;
@@ -261,7 +243,7 @@
         myForm.EquipCategoryName = '';
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetParameter/GetEquipCategory?id=${myForm.EquipTypeName}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${myForm.EquipTypeName}`);
           const data = response.data;
           if (data.state === 'success') {
             myForm.EquipCategoryArray = data.resultList.EquipCategory;
@@ -284,7 +266,7 @@
         const form = new FormData();
         form.append('projectCode', details.value.ProjectCode);
         const axios = require('axios');
-        const response = await axios.post('http://192.168.0.176:7008/GetDBdata/SearchProjectName', form);
+        const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchProjectName', form);
         try {
           const data = response.data;
           console.log(data);
@@ -312,7 +294,7 @@
       async function getDetails() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -323,6 +305,7 @@
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             rowData.value = data.resultList.ItemList;
+            increaseId.value = data.resultList.ItemList.length+1;
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -360,7 +343,7 @@
         console.log(requestData);
         try {
           const axios = require('axios');
-          const response = await axios.post('http://192.168.0.176:7008/AssetsOutMng/ApplicationEdit', requestData);
+          const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/ApplicationEdit', requestData);
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages + '\n';
@@ -402,6 +385,7 @@
           ProductName: myForm.ProductName,
           Number: myForm.Number,
           RequiredSpec: myForm.RequiredSpec,
+          id: increaseId.value,
         });
         myForm.itemList.push({
           EquipTypeName: myForm.EquipTypeName,
@@ -409,10 +393,13 @@
           ProductName: myForm.ProductName,
           Number: myForm.Number,
           RequiredSpec: myForm.RequiredSpec,
+          id: increaseId.value,
         });
+        increaseId.value++;
         setTimeout(() => {
           gridApi.value.setRowData(rowData.value);
         }, 0);
+        console.log(myForm.itemList);
         //清空子項目
         myForm.EquipTypeName = '';
         myForm.EquipCategoryName = '';
@@ -428,8 +415,17 @@
       function updateDeleteList(newValue) {
         myForm.deleteList.push(newValue.item_id);
         const deleteIndex = rowData.value.findIndex(item => item.id === newValue.id)
-        console.log(deleteIndex);
+        // console.log(deleteIndex);
         rowData.value.splice(deleteIndex, 1);
+      }
+
+      function updateItemList(newValue) {
+        const deleteIndex = rowData.value.findIndex(item => item.id === newValue.id);
+        // console.log(deleteIndex);
+        rowData.value.splice(deleteIndex, 1);
+        const deleteIndex2 = myForm.itemList.findIndex(item => item.id === newValue.id);
+        myForm.itemList.splice(deleteIndex2, 1);
+        console.log(myForm.itemList);
       }
       onMounted(() => {
         getDetails();

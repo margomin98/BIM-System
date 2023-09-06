@@ -57,7 +57,7 @@
     //   });
     //   async function queryAccount() {
     //     const axios = require('axios');
-    //     const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/SearchName?name=${inputValue.value}`);
+    //     const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchName?name=${inputValue.value}`);
     //     try {
     //       const data = response.data;
     //       if (data.state === 'success') {
@@ -72,7 +72,7 @@
     //     const form = new FormData();
     //     form.append('userName', inputValue.value);
     //     form.append('role', selectedRole.value);
-    //     const response = await axios.post('http://192.168.0.176:7008/AuthorityMng/AccoutChangeRole', form);
+    //     const response = await axios.post('http://192.168.0.177:7008/AuthorityMng/AccoutChangeRole', form);
     //     try {
     //       const data = response.data;
     //       if (data.state === 'success') {

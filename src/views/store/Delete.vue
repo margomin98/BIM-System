@@ -226,7 +226,7 @@
       async function getDetails() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.176:7008/GetDBdata/GetApplicationInfo?ai_id=${AI_ID}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetApplicationInfo?ai_id=${AI_ID}`);
           console.log(response);
           const data = response.data;
           if(data.resultList.Status !== '申請入庫' && data.resultList.Status !== '申請歸還' && data.resultList.Status !== '可交付') {
@@ -254,7 +254,7 @@
         const form = new FormData();
         form.append('AI_ID', AI_ID);
         const axios = require('axios');
-        const response = await axios.post(`http://192.168.0.176:7008/AssetsInMng/ApplicationDelete`, form);
+        const response = await axios.post(`http://192.168.0.177:7008/AssetsInMng/ApplicationDelete`, form);
         try {
           const data = response.data;
           if (data.state === 'success') {
