@@ -477,23 +477,24 @@
           case 'EquipTypeName':
             apiUrl = baseUrl + '/ParameterMng/CreateEquipmentType'
             requestData.name = newParams.EquipType;
-            requestData.TypeId = EquipTypeId.value
             break;
           case 'EquipCategoryName':
             apiUrl = baseUrl + '/ParameterMng/CreateEquipmentCategory'
             requestData.name = newParams.EquipCategory;
+            requestData.TypeId = EquipTypeId.value;
             break;
           case 'AreaName':
             apiUrl = baseUrl + '/ParameterMng/CreateArea'
             requestData.name = newParams.Area;
-            requestData.AreaId = AreaId.value
             break;
           case 'LayerName':
             apiUrl = baseUrl + '/ParameterMng/CreateLayer'
             requestData.name = newParams.Layer;
+            requestData.AreaId = AreaId.value;
             break;
         }
         try {
+          console.log('requsetData:',requestData);
           const response = await axios.post(`${apiUrl}`,requestData);
           console.log(response);
           const data = response.data;
