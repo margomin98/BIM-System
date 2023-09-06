@@ -6,7 +6,7 @@
     </div>
     <div class="col">
       <div class="button_wrap d-flex">
-        <router-link to="/store_new">
+        <router-link :to="{name:'Equipment_New'}">
           <button class="add_btn">新增整合箱</button>
         </router-link>
   

@@ -344,7 +344,7 @@
         if (myForm.Description) {
           myForm.Description = myForm.Description.trim();
         }
-        if (myForm.Description && !/^.{1,100}$/.test(myForm.Description.trim())) {
+        if (myForm.Description && !/^[\s\S]{1,100}$/.test(myForm.Description.trim())) {
           alert('說明不可輸入超過100字')
           return
         }
@@ -389,7 +389,7 @@
         if (myForm.RequiredSpec) {
           myForm.RequiredSpec = myForm.RequiredSpec.trim();
         }
-        if (myForm.RequiredSpec && !/^.{1,100}$/.test(myForm.RequiredSpec.trim())) {
+        if (myForm.RequiredSpec && !/^[\s\S]{1,100}$/.test(myForm.RequiredSpec.trim())) {
           alert('規格需求不可輸入超過100字')
           return
         }

@@ -608,6 +608,10 @@
           const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
           const data = response.data;
           if (data.state === 'success') {
+            if(data.resultList.Status !== '已填報') {
+            window.history.back();
+            // router.push({name: 'Rent_Datagrid'});
+            }
             console.log('getDetails 成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             rowData1.value = data.resultList.ItemList;
@@ -674,7 +678,10 @@
         }
       }
       async function submit() {
-        if (details.value.PrepareMemo && !/^.{1,100}$/.test(details.value.PrepareMemo)) {
+        if(details.value.PrepareMemo) {
+          details.value.PrepareMemo = details.value.PrepareMemo.trim();
+        }
+        if (details.value.PrepareMemo && !/^[\s\S]{1,100}$/.test(details.value.PrepareMemo)) {
           alert('備料備註不可輸入超過100字');
           return
         }

@@ -26,7 +26,7 @@ export default {
     function viewEdit() {
       // console.log(props.params.data.search_id);
       if (search_id !== '') {
-        router.push({ name: 'Equipment_New', query: { search_id } });
+        router.push({ name: 'Equipment_Edit', query: { search_id } });
       }
     }
     return { 
