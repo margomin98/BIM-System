@@ -4,6 +4,14 @@
     <div class="title col">
       <h1>設備整合管理</h1>
     </div>
+    <div class="col">
+      <div class="button_wrap d-flex">
+        <router-link to="/store_new">
+          <button class="add_btn">新增整合箱</button>
+        </router-link>
+  
+      </div>
+    </div>
     <div class="container-fluid datagrid_section">
       <div class="content">
         <div class="row">
@@ -316,7 +324,7 @@
         gap: 20px;
         .add_btn {
           @include datagrid_button_no1;
-          width: 195px;
+          width: 150px;
           &:hover {
             background-color: #537ebc;
           }
@@ -419,7 +427,7 @@
         gap: 20px;
         .add_btn {
           @include datagrid_button_no1;
-          width:190px;
+          width:150px;
           &:hover {
             background-color: #537ebc;
           }
