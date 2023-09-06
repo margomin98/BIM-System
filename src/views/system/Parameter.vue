@@ -45,7 +45,7 @@
                       {{ EquipTypeName || '請選擇' }}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="typeDropdown">
-                      <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
+                      <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
                     </div>
                   </div>
                 </div>
@@ -94,7 +94,7 @@
                       {{ AreaName || '請選擇' }}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="typeDropdown">
-                      <p v-for="(item, index) in AreaArray" :key="index" class="dropdown-item" @click="selectArea(`${item}`)">{{ item }}</p>
+                      <p v-for="(item, index) in AreaArray" :key="index" class="dropdown-item" @click="selectArea(item)">{{ item.Name }}</p>
                     </div>
                   </div>
                 </div>
@@ -203,8 +203,10 @@
         id: '',
       });
       const EquipTypeName = ref('');
+      const EquipTypeId = ref('');
       const EquipTypeArray = ref([]);
       const AreaName = ref('');
+      const AreaId = ref('');
       const AreaArray = ref([]);
       const columnDefs =[{
             field: "",
@@ -272,10 +274,11 @@
             switch (type) {
               case 'EquipTypeName':
                 rowData1.value = data.resultList.TypeList;
+                EquipTypeId.value = '';
                 EquipTypeName.value = '';
                 EquipTypeArray.value = [];
                 data.resultList.TypeList.forEach(item => {
-                  EquipTypeArray.value.push(item.Name);
+                  EquipTypeArray.value.push(item);
                 });
                 rowData1.value.forEach(item=> {
                   item.type = 'EquipTypeName'
@@ -294,10 +297,11 @@
                 break;
               case 'AreaName':
                 rowData3.value = data.resultList.AreaList;
+                AreaId.value = '';
                 AreaName.value = '';
                 AreaArray.value = [];
                 data.resultList.AreaList.forEach(item => {
-                  AreaArray.value.push(item.Name);
+                  AreaArray.value.push(item);
                 });
                 rowData3.value.forEach(item=> {
                   item.type = 'AreaName'
@@ -466,29 +470,30 @@
       // 新增
       async function insertNewType(type) {
         let apiUrl = '';
-        let input = '';
         const baseUrl = 'http://192.168.0.177:7008';
         const axios = require('axios');
+        let requestData = {};
         switch (type) {
           case 'EquipTypeName':
             apiUrl = baseUrl + '/ParameterMng/CreateEquipmentType'
-            input = newParams.EquipType;
+            requestData.name = newParams.EquipType;
+            requestData.TypeId = EquipTypeId.value
             break;
           case 'EquipCategoryName':
             apiUrl = baseUrl + '/ParameterMng/CreateEquipmentCategory'
-            input = newParams.EquipCategory;
+            requestData.name = newParams.EquipCategory;
             break;
           case 'AreaName':
             apiUrl = baseUrl + '/ParameterMng/CreateArea'
-            input = newParams.Area;
+            requestData.name = newParams.Area;
+            requestData.AreaId = AreaId.value
             break;
           case 'LayerName':
             apiUrl = baseUrl + '/ParameterMng/CreateLayer'
-            input = newParams.Layer;
+            requestData.name = newParams.Layer;
             break;
         }
         try {
-          const requestData = {name: input};
           const response = await axios.post(`${apiUrl}`,requestData);
           console.log(response);
           const data = response.data;
@@ -585,11 +590,13 @@
         grid.row4 = params.api;
       };
       const selectType = (item)=>{
-        EquipTypeName.value = item;
+        EquipTypeId.value = item.Id
+        EquipTypeName.value = item.Name;
         getDataGrid('EquipCategoryName');
       }
       const selectArea = (item)=>{
-        AreaName.value = item;
+        AreaId.value = item.Id;
+        AreaName.value = item.Name;
         getDataGrid('LayerName');
       }
       return {
@@ -597,8 +604,10 @@
         editParams,
         deleteParams,
         EquipTypeName,
+        EquipTypeId,
         EquipTypeArray,
         AreaName,
+        AreaId,
         AreaArray,
         onRowDragEnd,
         editType,
