@@ -20,7 +20,7 @@
             <div class='row g-0'>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 grid'>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs1" :rowData="rowData1" @rowDragEnd="onRowDragEnd('EquipTypeName' ,$event)"
+                  <ag-grid-vue style="width: 100%" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData1" @rowDragEnd="onRowDragEnd('EquipTypeName' ,$event)"
                     @grid-ready="dataApi1">
                   </ag-grid-vue>
                 </div>
@@ -50,7 +50,7 @@
                   </div>
                 </div>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs2" :rowData="rowData2" @rowDragEnd="onRowDragEnd('EquipCategoryName' ,$event)" 
+                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData2" @rowDragEnd="onRowDragEnd('EquipCategoryName' ,$event)" 
                     @grid-ready="dataApi2">
                   </ag-grid-vue>
                 </div>
@@ -59,7 +59,7 @@
                 <p>新增設備分類</p>
                 <div class='d-flex'>
                   <input class="form-control" aria-label="With textarea" placeholder='最多輸入10字' v-model="newParams.EquipCategory">
-                  <button type="button" @click="insertNewType('area')">新增</button>
+                  <button type="button" @click="insertNewType('EquipCategoryName')">新增</button>
                 </div>
               </div>
             </div>
@@ -69,16 +69,16 @@
             <div class='row g-0'>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 grid'>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs1" :rowData="rowData2" @rowDragEnd="onRowDragEnd('area' ,$event)" 
-                    @grid-ready="dataApi2">
+                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData3" @rowDragEnd="onRowDragEnd('AreaName' ,$event)" 
+                    @grid-ready="dataApi3">
                   </ag-grid-vue>
                 </div>
               </div>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 submit_section'>
                 <p>新增儲位區域</p>
                 <div class='d-flex'>
-                  <input class="form-control" aria-label="With textarea" placeholder='最多輸入10字' v-model="newArea">
-                  <button type="button" @click="insertNewType('area')">新增</button>
+                  <input class="form-control" aria-label="With textarea" placeholder='最多輸入10字' v-model="newParams.Area">
+                  <button type="button" @click="insertNewType('AreaName')">新增</button>
                 </div>
               </div>
             </div>
@@ -90,26 +90,25 @@
                 <div class="col search_dropdown d-flex">
                   <p>儲位區域</p>
                   <div class="dropdown">
-                    <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ selectedItem || "請選擇" }}
-                          </button>
-                    <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                      <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                      <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+                    <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{ AreaName || '請選擇' }}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="typeDropdown">
+                      <p v-for="(item, index) in AreaArray" :key="index" class="dropdown-item" @click="selectArea(`${item}`)">{{ item }}</p>
                     </div>
                   </div>
                 </div>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs2" :rowData="rowData2" @rowDragEnd="onRowDragEnd('area' ,$event)" 
-                    @grid-ready="dataApi2">
+                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData4" @rowDragEnd="onRowDragEnd('LayerName' ,$event)" 
+                    @grid-ready="dataApi4">
                   </ag-grid-vue>
                 </div>
               </div>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 submit_section'>
                 <p>新增儲位櫃位</p>
                 <div class='d-flex'>
-                  <input class="form-control" aria-label="With textarea" placeholder='最多輸入10字' v-model="newArea">
-                  <button type="button" @click="insertNewType('area')">新增</button>
+                  <input class="form-control" aria-label="With textarea" placeholder='最多輸入10字' v-model="newParams.Layer">
+                  <button type="button" @click="insertNewType('LayerName')">新增</button>
                 </div>
               </div>
             </div>
@@ -203,25 +202,11 @@
         type: '',
         id: '',
       });
-      const newArea = ref('');
       const EquipTypeName = ref('');
       const EquipTypeArray = ref([]);
-      const columnDefs1 =[{
-            field: "",
-            cellRenderer: 'Parameter_button',
-            cellRendererParams: {
-              updateEditType: updateEditType,
-              updateDeleteType: updateDeleteType,
-            },
-            width: 170,
-            rowDrag: true
-          },
-          {
-            field: "Name",
-            flex: 1,
-          }
-        ]
-      const columnDefs2 =[{
+      const AreaName = ref('');
+      const AreaArray = ref([]);
+      const columnDefs =[{
             field: "",
             cellRenderer: 'Parameter_button',
             cellRendererParams: {
@@ -238,9 +223,13 @@
         ]
       const rowData1 = ref([]);
       const rowData2 = ref([]);
+      const rowData3 = ref([]);
+      const rowData4 = ref([]);
       const grid = reactive({
         row1: null,
         row2: null,
+        row3: null,
+        row4: null,
       })
       function updateEditType(data) {
         editParams.input = data.Name;
@@ -254,6 +243,7 @@
       }
       onMounted(() => {
         getDataGrid('EquipTypeName');
+        getDataGrid('AreaName');
       });
       // 讀取
       async function getDataGrid(type) {
@@ -268,10 +258,10 @@
             apiUrl += baseUrl + '/GetParameter/EquipCategoryParameter?id=' + `${EquipTypeName.value}`
             break;
           case 'AreaName':
-            apiUrl += baseUrl + '/GetParameter/GetAreaName'
+            apiUrl += baseUrl + '/GetParameter/AreaParameter'
             break;
           case 'LayerName':
-            apiUrl += baseUrl + '/GetParameter/LayerParameter?id=' + ``
+            apiUrl += baseUrl + '/GetParameter/LayerParameter?id=' + `${AreaName.value}`
             break;
         }
         try {
@@ -282,15 +272,17 @@
             switch (type) {
               case 'EquipTypeName':
                 rowData1.value = data.resultList.TypeList;
+                EquipTypeName.value = '';
                 EquipTypeArray.value = [];
                 data.resultList.TypeList.forEach(item => {
-                  EquipTypeArray.value.push(item.Name)
+                  EquipTypeArray.value.push(item.Name);
                 });
                 rowData1.value.forEach(item=> {
                   item.type = 'EquipTypeName'
                 })
                 setTimeout(() => {
-                  grid.row1.setRowData(rowData1.value)
+                  grid.row1.setRowData(rowData1.value);
+                  grid.row2.setRowData([]);
                 }, 50);
                 break;
               case 'EquipCategoryName':
@@ -301,13 +293,26 @@
                 grid.row2.setRowData(rowData2.value)
                 break;
               case 'AreaName':
-                data.resultList.EquipType.forEach(item => {
-                  rowData2.value.push({
-                    Area: item,
-                  })
+                rowData3.value = data.resultList.AreaList;
+                AreaName.value = '';
+                AreaArray.value = [];
+                data.resultList.AreaList.forEach(item => {
+                  AreaArray.value.push(item.Name);
                 });
+                rowData3.value.forEach(item=> {
+                  item.type = 'AreaName'
+                })
+                setTimeout(() => {
+                  grid.row3.setRowData(rowData3.value);
+                  grid.row4.setRowData([]);
+                }, 50);
                 break;
-              default:
+              case 'LayerName':
+                rowData4.value = data.resultList.LayerList;
+                rowData4.value.forEach(item=> {
+                  item.type = 'LayerName'
+                })
+                grid.row2.setRowData(rowData4.value)
                 break;
             }
           } else if (data.state === 'error') {
@@ -330,23 +335,23 @@
         switch (type) {
           case 'EquipTypeName':
             originalIndex = rowData1.value.findIndex(item => item.Id === draggedData.Id);
-            // console.log('originalIndex', originalIndex);
             rowData1.value.splice(originalIndex, 1);
             rowData1.value.splice(newRowIndex, 0, draggedData);
-            // console.log('rowData1', rowData1.value);
             break;
           case 'EquipCategoryName':
-            originalIndex = rowData2.value.findIndex(item => item.model === draggedData.model);
-            // console.log('originalIndex', originalIndex);
+            originalIndex = rowData2.value.findIndex(item => item.Id === draggedData.Id);
             rowData2.value.splice(originalIndex, 1);
             rowData2.value.splice(newRowIndex, 0, draggedData);
-            // console.log('rowData2', rowData2.value);
             break;
           case 'AreaName':
-            apiUrl = baseUrl + '/ParameterMng/EditAreaIndex'
+            originalIndex = rowData3.value.findIndex(item => item.Id === draggedData.Id);
+            rowData3.value.splice(originalIndex, 1);
+            rowData3.value.splice(newRowIndex, 0, draggedData);
             break;
           case 'LayerName':
-            apiUrl = baseUrl + '/ParameterMng/EditLayerIndex'
+          originalIndex = rowData4.value.findIndex(item => item.Id === draggedData.Id);
+            rowData4.value.splice(originalIndex, 1);
+            rowData4.value.splice(newRowIndex, 0, draggedData);
             break;
         }
         let apiUrl = '';
@@ -364,9 +369,11 @@
           break;
           case 'AreaName':
             apiUrl = baseUrl + '/ParameterMng/EditAreaIndex'
+            requestData.AreaList = rowData3.value;
             break;
           case 'LayerName':
             apiUrl = baseUrl + '/ParameterMng/EditLayerIndex'
+            requestData.LayerList = rowData4.value;
             break;
         }
         try {
@@ -473,9 +480,11 @@
             break;
           case 'AreaName':
             apiUrl = baseUrl + '/ParameterMng/CreateArea'
+            input = newParams.Area;
             break;
           case 'LayerName':
             apiUrl = baseUrl + '/ParameterMng/CreateLayer'
+            input = newParams.Layer;
             break;
         }
         try {
@@ -547,11 +556,9 @@
                 getDataGrid('EquipCategoryName')
                 break;
               case 'AreaName':
-                newParams.Area = '';
                 getDataGrid('AreaName')
                 break;
               case 'LayerName':
-                newParams.Layer = '';
                 getDataGrid('LayerName')
                 break;
             }
@@ -571,28 +578,43 @@
       const dataApi2 = (params) => {
         grid.row2 = params.api;
       };
+      const dataApi3 = (params) => {
+        grid.row3 = params.api;
+      };
+      const dataApi4 = (params) => {
+        grid.row4 = params.api;
+      };
       const selectType = (item)=>{
         EquipTypeName.value = item;
         getDataGrid('EquipCategoryName');
+      }
+      const selectArea = (item)=>{
+        AreaName.value = item;
+        getDataGrid('LayerName');
       }
       return {
         newParams,
         editParams,
         deleteParams,
-        newArea,
         EquipTypeName,
         EquipTypeArray,
+        AreaName,
+        AreaArray,
         onRowDragEnd,
         editType,
         insertNewType,
         deleteType,
-        columnDefs1,
-        columnDefs2,
+        columnDefs,
         rowData1,
         rowData2,
+        rowData3,
+        rowData4,
         dataApi1,
         dataApi2,
+        dataApi3,
+        dataApi4,
         selectType,
+        selectArea,
       };
     },
     methods: {
