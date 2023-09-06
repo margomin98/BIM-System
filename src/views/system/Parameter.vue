@@ -50,7 +50,7 @@
                   </div>
                 </div>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs2" :rowData="rowData2" @rowDragEnd="onRowDragEnd('area' ,$event)" 
+                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs2" :rowData="rowData2" @rowDragEnd="onRowDragEnd('EquipCategoryName' ,$event)" 
                     @grid-ready="dataApi2">
                   </ag-grid-vue>
                 </div>
@@ -120,7 +120,7 @@
         <button class="back_btn" @click="goBack">回上一頁</button>
       </div>
     </div>
-    <!-- Edit Modal1 -->
+    <!-- Edit Modal -->
     <div class="modal fade editModal" data-bs-backdrop="static" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-sm modal-dialog-centered">
         <div class="modal-content">
@@ -130,11 +130,34 @@
                 <p>修改名稱</p>
               </div>
               <div class="content">
-                <input type="text" placeholder="最多輸入10字" v-model="editParams.input">
+                <input type="text" id="editInput" placeholder="最多輸入10字" v-model="editParams.input">
               </div>
               <div class="button_section">
                 <button type="button" class="btn" data-bs-dismiss="modal">關閉</button>
                 <button type="button" class="btn" data-bs-dismiss="modal" @click="editType">儲存</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Delete Modal -->
+    <div class="modal fade editModal2" data-bs-backdrop="static" id="editModal2" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="fixed_info">
+              <div>
+                <p>確定刪除參數嗎?</p>
+              </div>
+              <div class="content">
+                <!-- <input type="text" v-model="deleteParams.input" readonly disabled>  -->
+                <span style="font-weight: 700;"> {{ deleteParams.input }} </span>
+                
+              </div>
+              <div class="button_section">
+                <button type="button" class="btn" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn" data-bs-dismiss="modal" @click="deleteType">確定</button>
               </div>
             </div>
           </div>
@@ -188,6 +211,7 @@
             cellRenderer: 'Parameter_button',
             cellRendererParams: {
               updateEditType: updateEditType,
+              updateDeleteType: updateDeleteType,
             },
             width: 170,
             rowDrag: true
@@ -202,6 +226,7 @@
             cellRenderer: 'Parameter_button',
             cellRendererParams: {
               updateEditType: updateEditType,
+              updateDeleteType: updateDeleteType,
             },
             width: 170,
             rowDrag: true
@@ -218,9 +243,14 @@
         row2: null,
       })
       function updateEditType(data) {
-        editParams.input = '' ;
+        editParams.input = data.Name;
         editParams.type = data.type;
         editParams.id =data.Id;
+      }
+      function updateDeleteType(data) {
+        deleteParams.input = data.Name;
+        deleteParams.type = data.type;
+        deleteParams.id =data.Id;
       }
       onMounted(() => {
         getDataGrid('EquipTypeName');
@@ -303,29 +333,34 @@
             // console.log('originalIndex', originalIndex);
             rowData1.value.splice(originalIndex, 1);
             rowData1.value.splice(newRowIndex, 0, draggedData);
-            console.log('rowData1', rowData1.value);
+            // console.log('rowData1', rowData1.value);
             break;
-          case 'area':
+          case 'EquipCategoryName':
             originalIndex = rowData2.value.findIndex(item => item.model === draggedData.model);
-            console.log('originalIndex', originalIndex);
+            // console.log('originalIndex', originalIndex);
             rowData2.value.splice(originalIndex, 1);
             rowData2.value.splice(newRowIndex, 0, draggedData);
-            console.log('rowData2', rowData2.value);
+            // console.log('rowData2', rowData2.value);
+            break;
+          case 'AreaName':
+            apiUrl = baseUrl + '/ParameterMng/EditAreaIndex'
+            break;
+          case 'LayerName':
+            apiUrl = baseUrl + '/ParameterMng/EditLayerIndex'
             break;
         }
         let apiUrl = '';
-        let input = null;
         const baseUrl = 'http://192.168.0.177:7008';
         const axios = require('axios');
         let requestData = {};
         switch (type) {
           case 'EquipTypeName':
             apiUrl = baseUrl + '/ParameterMng/EditEquipmentTypeIndex'
-            input += rowData1.value;
+            requestData.TypeList = rowData1.value;
             break;
           case 'EquipCategoryName':
             apiUrl = baseUrl + '/ParameterMng/EditEquipmentCategoryIndex'
-            input += rowData2.value;
+            requestData.CategoryList = rowData2.value;
           break;
           case 'AreaName':
             apiUrl = baseUrl + '/ParameterMng/EditAreaIndex'
@@ -478,6 +513,58 @@
         }
       }
       // 刪除
+      async function deleteType() {
+        const type = deleteParams.type;
+        const id = deleteParams.id;
+        let apiUrl = '';
+        const baseUrl = 'http://192.168.0.177:7008';
+        const axios = require('axios');
+        switch (type) {
+          case 'EquipTypeName':
+            apiUrl = baseUrl + '/ParameterMng/DeleteEquipmentType'
+            break;
+          case 'EquipCategoryName':
+            apiUrl = baseUrl + '/ParameterMng/DeleteEquipmentCategory'
+            break;
+          case 'AreaName':
+            apiUrl = baseUrl + '/ParameterMng/DeleteArea'
+            break;
+          case 'LayerName':
+            apiUrl = baseUrl + '/ParameterMng/DeleteLayer'
+            break;
+        }
+        try {
+          const requestData = {DeleteId: id};
+          const response = await axios.post(`${apiUrl}`,requestData);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            switch (type) {
+              case 'EquipTypeName':
+                getDataGrid('EquipTypeName')
+                break;
+              case 'EquipCategoryName':
+                getDataGrid('EquipCategoryName')
+                break;
+              case 'AreaName':
+                newParams.Area = '';
+                getDataGrid('AreaName')
+                break;
+              case 'LayerName':
+                newParams.Layer = '';
+                getDataGrid('LayerName')
+                break;
+            }
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
       const dataApi1 = (params) => {
         grid.row1 = params.api;
       };
@@ -491,12 +578,14 @@
       return {
         newParams,
         editParams,
+        deleteParams,
         newArea,
         EquipTypeName,
         EquipTypeArray,
         onRowDragEnd,
         editType,
         insertNewType,
+        deleteType,
         columnDefs1,
         columnDefs2,
         rowData1,
@@ -570,6 +659,68 @@
             background-color: #98CCD3;
             &:hover {
               background: #5979ab;
+              color: white
+            }
+          }
+        }
+      }
+    }
+  }
+  .editModal2 {
+    .modal-content {
+      border-radius: 0;
+      .modal-body {
+        border: 1px solid black;
+        padding: 0;
+        p {
+          border-bottom: 1px solid black;
+          background: #E94B4B;
+          padding: 10px;
+          text-align: center;
+          font-weight: 700;
+          color: white;
+          font-size: 20px;
+          margin-bottom: 0;
+        }
+        .content {
+          padding: 20px 10px;
+          display: flex;
+          justify-content: center;
+          background: #D9D9D9;
+          input {
+            border: none;
+            border-radius: 10px;
+            text-align: center;
+          }
+        }
+        .button_section {
+          background: #D9D9D9;
+          display: flex;
+          justify-content: center;
+          gap: 0 10px;
+          padding-bottom: 20px;
+           :nth-child(1) {
+            @include search_and_send_btn;
+            font-size: 15px;
+            width: 60px;
+            height: 30px;
+            padding: 6px 12px;
+            background: #6C6C6C;
+            border-radius: 7px;
+            &:hover {
+              background: #30343a;
+              color: white
+            }
+          }
+           :nth-child(2) {
+            @include delete_button;
+            font-size: 15px;
+            width: 60px;
+            height: 30px;
+            background-color: #E94B4B;
+            color: white;
+            &:hover {
+              background: #a70e0e;
               color: white
             }
           }

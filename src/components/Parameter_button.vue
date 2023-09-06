@@ -3,7 +3,7 @@
     <!-- <button @click="viewEdit()">編輯</button> -->
     
     <button data-bs-toggle="modal" data-bs-target="#editModal" @click="viewEdit()">編輯</button>
-    <button @click="viewDelete()">刪除</button>
+    <button data-bs-toggle="modal" data-bs-target="#editModal2" @click="viewDelete()">刪除</button>
    
   </div>
 </template>
@@ -16,10 +16,10 @@ import { onMounted, ref } from 'vue';
     setup(props) {
       const data = props.params.data;
       function viewDelete() {
-        alert('刪除')
+        props.params.updateDeleteType(data);
       }
       function viewEdit() {
-        // console.log(type);
+        console.log(data);
         props.params.updateEditType(data);
       }
       return {
