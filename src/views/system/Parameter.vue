@@ -412,11 +412,20 @@
       // 編輯
       async function editType() {
         const type = editParams.type;
-        const input = editParams.input;
+        const input = editParams.input.trim();
         const id = editParams.id;
         const axios = require('axios');
         const baseUrl = 'http://192.168.0.177:7008'
         let apiUrl = ''
+        // 檢查輸入是否符合格式 1. 不為全空白 2. 字數<=10 
+        if(!input) {
+          alert('請輸入欲更改之名稱')
+          return
+        }
+        if( !/^.{1,10}$/.test(input)) {
+          alert('更改名稱不可超過10字')
+          return
+        }
         let requestData = {
           name: input,
         }
@@ -475,19 +484,79 @@
         let requestData = {};
         switch (type) {
           case 'EquipTypeName':
+            if(rowData1.value.length === 256) {
+              alert('已達設備總類數量上限，請先刪除後再新增')
+              return
+            }
+            newParams.EquipType = newParams.EquipType.trim();
+            if(!newParams.EquipType) {
+              alert('請輸入欲新增之名稱')
+              return
+            }
+            if(!/^.{1,10}$/.test(newParams.EquipType)) {
+              alert('新增名稱不可超過10字')
+              return
+            }
             apiUrl = baseUrl + '/ParameterMng/CreateEquipmentType'
             requestData.name = newParams.EquipType;
             break;
           case 'EquipCategoryName':
+            if(!EquipTypeName.value) {
+              alert('請先選擇設備總類')
+              return
+            }
+            if(rowData2.value.length === 256) {
+              alert('已達設備分類數量上限，請先刪除後再新增')
+              return
+            }
+            newParams.EquipCategory = newParams.EquipCategory.trim();
+            if(!newParams.EquipCategory) {
+              alert('請輸入欲新增之名稱')
+              return
+            }
+            if(!/^.{1,10}$/.test(newParams.EquipCategory)) {
+              alert('新增名稱不可超過10字')
+              return
+            }
             apiUrl = baseUrl + '/ParameterMng/CreateEquipmentCategory'
             requestData.name = newParams.EquipCategory;
             requestData.TypeId = EquipTypeId.value;
             break;
           case 'AreaName':
+            if(rowData3.value.length === 256) {
+              alert('已達儲位區域數量上限，請先刪除後再新增')
+              return
+            }
+            newParams.Area = newParams.Area.trim();
+            if(!newParams.Area) {
+              alert('請輸入欲新增之名稱')
+              return
+            }
+            if(!/^.{1,10}$/.test(newParams.Area)) {
+              alert('新增名稱不可超過10字')
+              return
+            }
             apiUrl = baseUrl + '/ParameterMng/CreateArea'
             requestData.name = newParams.Area;
             break;
           case 'LayerName':
+            if(!AreaName.value) {
+              alert('請先選擇儲位區域')
+              return
+            }
+            if(rowData4.value.length === 256) {
+              alert('已達儲位櫃位數量上限，請先刪除後再新增')
+              return
+            }
+            newParams.Layer = newParams.Layer.trim();
+            if(!newParams.Layer) {
+              alert('請輸入欲新增之名稱')
+              return
+            }
+            if(!/^.{1,10}$/.test(newParams.Layer)) {
+              alert('新增名稱不可超過10字')
+              return
+            }
             apiUrl = baseUrl + '/ParameterMng/CreateLayer'
             requestData.name = newParams.Layer;
             requestData.AreaId = AreaId.value;
