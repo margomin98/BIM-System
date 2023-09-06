@@ -121,7 +121,9 @@
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name"><p>審核結果</p></label>
-            <div class="input-group" id="readonly_box">
+            
+      
+          <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly style="margin-bottom: 0;"> {{ details.VerifyResult }}</p>
             </div>
           </div>
@@ -1571,7 +1573,8 @@
             justify-content: center;
             align-items: center;
             gap: 5px;
-            height: 40px;
+            padding: 5px;
+          
           }
           .form-check {
             margin-left: 10px;
@@ -1630,6 +1633,7 @@
             justify-content: center;
             align-items: center;
             gap: 5px;
+            padding: 5px;
             border-bottom: 1px solid black;
           }
           .wrap {

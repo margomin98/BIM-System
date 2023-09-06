@@ -365,6 +365,15 @@
           resizable: true,
         },
         {
+          headerName: "單位",
+          field: "OM_Unit",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
           headerName: "資產編號",
           field: "AssetsId",
           unSortIcon: true,
@@ -427,15 +436,7 @@
           suppressMovable: true,
           resizable: true,
         },
-        {
-          headerName: "單位",
-          field: "OM_Unit",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-          resizable: true,
-        },
+       
       ]
       const columnDefs3 = [
         {

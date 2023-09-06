@@ -56,6 +56,11 @@ import Equipment_Change from "../views/equipment/Change.vue";
 import Equipment_View from "../views/equipment/View.vue";
 //設備整合
 
+//盤點管理
+import Inventory_Datagrid from "../views/inventory/Datagrid";
+import Inventory_New from "../views/inventory/New";
+//盤點管理
+
 //系統管理
 import System_Parameter from "../views/system/Parameter";
 import System_Parameter_Edit from "../views/system/Parameter_edit";
@@ -231,6 +236,18 @@ const routes = [
     path: "/equipment_view",
     name: "Equipment_View",
     component: Equipment_View,
+    // meta: {auth: true, request: 'AO_Detail'},
+  },
+  {
+    path: "/inventory_datagrid",
+    name: "Inventory_Datagrid",
+    component: Inventory_Datagrid,
+    // meta: {auth: true, request: 'AO_Detail'},
+  },
+  {
+    path: "/inventory_new",
+    name: "Inventory_New",
+    component: Inventory_New,
     // meta: {auth: true, request: 'AO_Detail'},
   },
   {

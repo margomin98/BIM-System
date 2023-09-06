@@ -302,6 +302,24 @@
           width: 100,
           suppressMovable: true,
           resizable: true,
+        }, 
+        {
+          headerName: "數量",
+          field: "OM_Number",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          suppressMovable: true,
+          resizable: true,
+        },
+        {
+          headerName: "單位",
+          field: "OM_Unit",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          suppressMovable: true,
+          resizable: true,
         },
         {
           headerName: "資產編號",
@@ -365,25 +383,7 @@
           width: 150,
           suppressMovable: true,
           resizable: true,
-        },
-        {
-          headerName: "數量",
-          field: "OM_Number",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "單位",
-          field: "OM_Unit",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-          resizable: true,
-        },
+        }
       ];
       const rowData1 = ref([]);
       const rowData2 = ref([]);
@@ -534,6 +534,9 @@
     display: flex;
     align-items: center;
   }
+  textarea.readonly_box {
+  resize: vertical; /* or 'none' if you don't want any resizing */
+}
   .input-group {
     height: 100%;
   }
@@ -1299,7 +1302,7 @@
             justify-content: center;
             align-items: center;
             gap: 5px;
-            height: 40px;
+  padding: 5px;
           }
           .form-check {
             margin-left: 10px;
@@ -1313,7 +1316,7 @@
             border-top: 1px solid black;
             align-items: center;
             flex-direction: column;
-            e .option {
+             .option {
               display: flex;
             }
           }

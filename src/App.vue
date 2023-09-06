@@ -59,6 +59,23 @@
 			display: flex;
 		}
 	}
+
+	.grid_checkbox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .ag-selection-checkbox{
+  margin-right: 0 !important;
+  }
+}
+.gold-header{
+	.ag-header-cell-text{
+		cursor: pointer;
+		background: #98CCD3;
+    padding: 5px;
+    border-radius: 7px;
+	}
+}
 	.ag-paging-panel {
 		background: #1F4E5F;
 		font-weight: 700;

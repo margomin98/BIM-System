@@ -103,6 +103,20 @@
     font-size: 15px;
 }
 
+@mixin datagrid_result_button {
+    border: none;
+    margin: 0 5px;
+    border-radius: 7px;
+    background: var(--c-2, #5C9597);
+    width: 50px;
+    height: 30px;
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 15px;
+}
+
 @mixin datagrid_inform_button {
     border: none;
     margin: 0 5px;
