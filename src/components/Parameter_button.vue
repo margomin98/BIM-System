@@ -2,44 +2,25 @@
   <div class='button_wrap'>
     <!-- <button @click="viewEdit()">編輯</button> -->
     
-    <button data-bs-toggle="modal" data-bs-target="#editModal" >編輯</button>
+    <button data-bs-toggle="modal" data-bs-target="#editModal" @click="viewEdit()">編輯</button>
     <button @click="viewDelete()">刪除</button>
    
   </div>
 </template>
 
 <script>
-  // import router from '@/router';
-  import {
-    useRouter
-  } from 'vue-router';
+import { onMounted, ref } from 'vue';
+
   export default {
-    props: ['params'], // 声明 params 为 props
+    props: ['params'],
     setup(props) {
-      const router = useRouter();
-      const search_id = props.params.data.AI_ID;
+      const data = props.params.data;
       function viewDelete() {
         alert('刪除')
-        // console.log(props.params.data.AI_ID);
-        // if (search_id !== '') {
-        //   router.push({
-        //     name: 'Store_View',
-        //     query: {
-        //       search_id
-        //     }
-        //   });
-        // }
       }
       function viewEdit() {
-        // console.log(props.params.data.search_id);
-        if (search_id !== '') {
-          router.push({
-            name: 'System_Parameter_Edit',
-            query: {
-              search_id
-            }
-          });
-        }
+        // console.log(type);
+        props.params.updateEditType(data);
       }
       return {
         viewDelete,

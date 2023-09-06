@@ -663,22 +663,6 @@
       .swiper_section {
         swiper-slide {
           align-self: baseline;
-          &::after {
-            cursor: pointer;
-            content: "x";
-            position: absolute;
-            top: 25px;
-            right: -14px;
-            background: #E94B4B;
-            height: 30px;
-            width: 30px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-weight: 700;
-          }
         }
         swiper-slide img {
           width: 100%;
@@ -845,22 +829,6 @@
       .swiper_section {
         swiper-slide {
           align-self: baseline;
-          &::after {
-            cursor: pointer;
-            content: "x";
-            position: absolute;
-            top: 25px;
-            right: -14px;
-            background: #E94B4B;
-            height: 30px;
-            width: 30px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-weight: 700;
-          }
         }
         swiper-slide img {
           width: 100%;
@@ -1023,22 +991,6 @@
   @media only screen and (max-width: 767px) {
     .main_section {
       .swiper_section swiper-slide {
-        &::after {
-          cursor: pointer;
-          content: "x";
-          position: absolute;
-          top: 25px;
-          right: 28px;
-          background: #E94B4B;
-          height: 30px;
-          width: 30px;
-          border-radius: 50%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          color: white;
-          font-weight: 700;
-        }
         img {
           width: 100%;
           height: auto;

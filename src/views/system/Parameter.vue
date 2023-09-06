@@ -20,7 +20,7 @@
             <div class='row g-0'>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 grid'>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs1" :rowData="rowData1" @rowDragEnd="onRowDragEnd('equip_type' ,$event)" @cellValueChanged="onCellValueChanged('equip_type')"
+                  <ag-grid-vue style="width: 100%" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs1" :rowData="rowData1" @rowDragEnd="onRowDragEnd('EquipTypeName' ,$event)"
                     @grid-ready="dataApi1">
                   </ag-grid-vue>
                 </div>
@@ -28,7 +28,7 @@
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 submit_section'>
                 <p>新增設備總類</p>
                 <div class='d-flex'>
-                  <input class="form-control" aria-label="With textarea" placeholder='最多輸入10字' v-model="newType">
+                  <input class="form-control" aria-label="With textarea" placeholder='最多輸入10字' v-model="newParams.EquipType">
                   <button type="button" @click="insertNewType('EquipTypeName')">新增</button>
                 </div>
               </div>
@@ -50,7 +50,7 @@
                   </div>
                 </div>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs2" :rowData="rowData2" @rowDragEnd="onRowDragEnd('area' ,$event)" @cellValueChanged="onCellValueChanged('area')"
+                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs2" :rowData="rowData2" @rowDragEnd="onRowDragEnd('area' ,$event)" 
                     @grid-ready="dataApi2">
                   </ag-grid-vue>
                 </div>
@@ -58,8 +58,7 @@
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 submit_section'>
                 <p>新增設備分類</p>
                 <div class='d-flex'>
-                  <input class="form-control" aria-label="With textarea" placeholder='最多輸入10字'>
-                  <!-- <input class="form-control" aria-label="With textarea" placeholder='最多輸入10字' v-model="newArea"> -->
+                  <input class="form-control" aria-label="With textarea" placeholder='最多輸入10字' v-model="newParams.EquipCategory">
                   <button type="button" @click="insertNewType('area')">新增</button>
                 </div>
               </div>
@@ -70,7 +69,7 @@
             <div class='row g-0'>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 grid'>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs1" :rowData="rowData2" @rowDragEnd="onRowDragEnd('area' ,$event)" @cellValueChanged="onCellValueChanged('area')"
+                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs1" :rowData="rowData2" @rowDragEnd="onRowDragEnd('area' ,$event)" 
                     @grid-ready="dataApi2">
                   </ag-grid-vue>
                 </div>
@@ -101,7 +100,7 @@
                   </div>
                 </div>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs2" :rowData="rowData2" @rowDragEnd="onRowDragEnd('area' ,$event)" @cellValueChanged="onCellValueChanged('area')"
+                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs2" :rowData="rowData2" @rowDragEnd="onRowDragEnd('area' ,$event)" 
                     @grid-ready="dataApi2">
                   </ag-grid-vue>
                 </div>
@@ -121,8 +120,8 @@
         <button class="back_btn" @click="goBack">回上一頁</button>
       </div>
     </div>
-    <!-- Edit Modal -->
-    <div class="modal fade" data-bs-backdrop="static" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <!-- Edit Modal1 -->
+    <div class="modal fade editModal" data-bs-backdrop="static" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-sm modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-body">
@@ -131,11 +130,11 @@
                 <p>修改名稱</p>
               </div>
               <div class="content">
-                <input type="text" placeholder="最多輸入10字">
+                <input type="text" placeholder="最多輸入10字" v-model="editParams.input">
               </div>
               <div class="button_section">
                 <button type="button" class="btn" data-bs-dismiss="modal">關閉</button>
-                <button type="button" class="btn" data-bs-dismiss="modal">儲存</button>
+                <button type="button" class="btn" data-bs-dismiss="modal" @click="editType">儲存</button>
               </div>
             </div>
           </div>
@@ -165,13 +164,26 @@
       Edit_pen,
     },
     setup() {
-      const newType = ref('');
+      const newParams = reactive({
+        EquipType: '',
+        EquipCategory: '',
+        Area: '',
+        Layer: '',
+      });
+      const editParams = reactive({
+        input: '',
+        type: '',
+        id: '',
+      });
       const newArea = ref('');
       const EquipTypeName = ref('');
       const EquipTypeArray = ref([]);
       const columnDefs1 =[{
             field: "",
             cellRenderer: 'Parameter_button',
+            cellRendererParams: {
+              updateEditType: updateEditType,
+            },
             width: 170,
             rowDrag: true
           },
@@ -183,6 +195,9 @@
       const columnDefs2 =[{
             field: "",
             cellRenderer: 'Parameter_button',
+            cellRendererParams: {
+              updateEditType: updateEditType,
+            },
             width: 170,
             rowDrag: true
           },
@@ -197,9 +212,15 @@
         row1: null,
         row2: null,
       })
+      function updateEditType(data) {
+        editParams.input = '' ;
+        editParams.type = data.type;
+        editParams.id =data.Id;
+      }
       onMounted(() => {
         getDataGrid('EquipTypeName');
       });
+      // 讀取
       async function getDataGrid(type) {
         let apiUrl = '';
         const baseUrl = 'http://192.168.0.176:7008';
@@ -214,6 +235,9 @@
           case 'AreaName':
             apiUrl += baseUrl + '/GetParameter/GetAreaName'
             break;
+          case 'LayerName':
+            apiUrl += baseUrl + '/GetParameter/LayerParameter?id=' + ``
+            break;
         }
         try {
           const response = await axios.get(`${apiUrl}`);
@@ -227,12 +251,18 @@
                 data.resultList.TypeList.forEach(item => {
                   EquipTypeArray.value.push(item.Name)
                 });
+                rowData1.value.forEach(item=> {
+                  item.type = 'EquipTypeName'
+                })
                 setTimeout(() => {
                   grid.row1.setRowData(rowData1.value)
                 }, 50);
                 break;
               case 'EquipCategoryName':
                 rowData2.value = data.resultList.CategoryList;
+                rowData2.value.forEach(item=> {
+                  item.type = 'EquipCategoryName'
+                })
                 grid.row2.setRowData(rowData2.value)
                 break;
               case 'AreaName':
@@ -256,16 +286,16 @@
         }
       }
       // 移動
-      function onRowDragEnd(type, event) {
+      async function onRowDragEnd(type, event) {
         const newRowIndex = event.overIndex;
-        console.log('newRowIndex', newRowIndex);
+        // console.log('newRowIndex', newRowIndex);
         const draggedData = event.node.data;
-        console.log('draggedData', draggedData);
+        // console.log('draggedData', draggedData);
         let originalIndex = -1;
         switch (type) {
-          case 'equip_type':
-            originalIndex = rowData1.value.findIndex(item => item.model === draggedData.model);
-            console.log('originalIndex', originalIndex);
+          case 'EquipTypeName':
+            originalIndex = rowData1.value.findIndex(item => item.Id === draggedData.Id);
+            // console.log('originalIndex', originalIndex);
             rowData1.value.splice(originalIndex, 1);
             rowData1.value.splice(newRowIndex, 0, draggedData);
             console.log('rowData1', rowData1.value);
@@ -277,62 +307,45 @@
             rowData2.value.splice(newRowIndex, 0, draggedData);
             console.log('rowData2', rowData2.value);
             break;
-          default:
-            break;
         }
-      }
-      // 編輯
-      function onCellValueChanged(type) {
-        switch (type) {
-          case 'equip_type':
-            console.log(rowData1.value);
-            break;
-          case 'area':
-            console.log(rowData2.value);
-            break;
-        }
-      }
-      // 新增
-      async function insertNewType(type) {
         let apiUrl = '';
-        let input = '';
+        let input = null;
         const baseUrl = 'http://192.168.0.176:7008';
         const axios = require('axios');
+        let requestData = {};
         switch (type) {
           case 'EquipTypeName':
-            apiUrl = baseUrl + '/ParameterMng/CreateEquipmentType'
-            input = newType.value;
+            apiUrl = baseUrl + '/ParameterMng/EditEquipmentTypeIndex'
+            input += rowData1.value;
             break;
           case 'EquipCategoryName':
-            apiUrl = baseUrl + '/GetParameter/EquipCategoryParameter?id='
-            break;
+            apiUrl = baseUrl + '/ParameterMng/EditEquipmentCategoryIndex'
+            input += rowData2.value;
+          break;
           case 'AreaName':
-            apiUrl = baseUrl + '/GetParameter/GetAreaName'
+            apiUrl = baseUrl + '/ParameterMng/EditAreaIndex'
+            break;
+          case 'LayerName':
+            apiUrl = baseUrl + '/ParameterMng/EditLayerIndex'
             break;
         }
         try {
-          const requestData = {name: input};
           const response = await axios.post(`${apiUrl}`,requestData);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
             switch (type) {
               case 'EquipTypeName':
-                newType.value = '';
                 getDataGrid('EquipTypeName')
                 break;
               case 'EquipCategoryName':
-                rowData2.value = data.resultList.CategoryList;
-                grid.row2.setRowData(rowData2.value)
+                getDataGrid('EquipCategoryName')
                 break;
               case 'AreaName':
-                data.resultList.EquipType.forEach(item => {
-                  rowData2.value.push({
-                    Area: item,
-                  })
-                });
+                getDataGrid('AreaName')
                 break;
-              default:
+              case 'LayerName':
+                getDataGrid('LayerName')
                 break;
             }
           } else if (data.state === 'error') {
@@ -344,24 +357,120 @@
         } catch (error) {
           console.error(error);
         }
+      }
+      // 編輯
+      async function editType() {
+        const type = editParams.type;
+        const input = editParams.input;
+        const id = editParams.id;
+        const axios = require('axios');
+        const baseUrl = 'http://192.168.0.176:7008'
+        let apiUrl = ''
+        let requestData = {
+          name: input,
+        }
         switch (type) {
           case 'EquipTypeName':
-            newType.value = '';
-            setTimeout(() => {
-              grid.row1.setRowData(rowData1.value)
-            }, 50);
+            apiUrl += baseUrl+ '/ParameterMng/EditEquipmentTypeName'
+            requestData.TypeId = id;
             break;
-          case 'area':
-            rowData2.value.push({
-              model: newArea.value,
-            });
-            setTimeout(() => {
-              grid.row2.setRowData(rowData2.value)
-            }, 50);
-            newArea.value = '';
+          case 'EquipCategoryName':
+            apiUrl += baseUrl+ '/ParameterMng/EditEquipmentCategoryName'
+            requestData.CategoryId = id;
+            break;
+          case 'AreaName':
+            apiUrl += baseUrl+ '/ParameterMng/EditAreaName'
+            requestData.AreaId = id;
+            break;
+          case 'LayerName':
+            apiUrl += baseUrl+ '/ParameterMng/EditLayerName'
+            requestData.LayerId = id;
             break;
         }
-        // API here if OK then refresh datagrid
+        try {
+          const response = await axios.post(`${apiUrl}`,requestData);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            switch (type) {
+              case 'EquipTypeName':
+                getDataGrid('EquipTypeName')
+                break;
+              case 'EquipCategoryName':
+                getDataGrid('EquipCategoryName')
+                break;
+              case 'AreaName':
+                getDataGrid('AreaName')
+                break;
+              case 'LayerName':
+                getDataGrid('LayerName')
+                break;
+            }
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      // 新增
+      async function insertNewType(type) {
+        let apiUrl = '';
+        let input = '';
+        const baseUrl = 'http://192.168.0.176:7008';
+        const axios = require('axios');
+        switch (type) {
+          case 'EquipTypeName':
+            apiUrl = baseUrl + '/ParameterMng/CreateEquipmentType'
+            input = newParams.EquipType;
+            break;
+          case 'EquipCategoryName':
+            apiUrl = baseUrl + '/ParameterMng/CreateEquipmentCategory'
+            input = newParams.EquipCategory;
+            break;
+          case 'AreaName':
+            apiUrl = baseUrl + '/ParameterMng/CreateArea'
+            break;
+          case 'LayerName':
+            apiUrl = baseUrl + '/ParameterMng/CreateLayer'
+            break;
+        }
+        try {
+          const requestData = {name: input};
+          const response = await axios.post(`${apiUrl}`,requestData);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            switch (type) {
+              case 'EquipTypeName':
+                newParams.EquipType = '';
+                getDataGrid('EquipTypeName')
+                break;
+              case 'EquipCategoryName':
+                newParams.EquipCategory = '';
+                getDataGrid('EquipCategoryName')
+                break;
+              case 'AreaName':
+                newParams.Area = '';
+                getDataGrid('AreaName')
+                break;
+              case 'LayerName':
+                newParams.Layer = '';
+                getDataGrid('LayerName')
+                break;
+            }
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
       }
       // 刪除
       const dataApi1 = (params) => {
@@ -375,12 +484,13 @@
         getDataGrid('EquipCategoryName');
       }
       return {
-        newType,
+        newParams,
+        editParams,
         newArea,
         EquipTypeName,
         EquipTypeArray,
         onRowDragEnd,
-        onCellValueChanged,
+        editType,
         insertNewType,
         columnDefs1,
         columnDefs2,
@@ -401,7 +511,7 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-  #editModal {
+  .editModal {
     .modal-content {
       border-radius: 0;
       .modal-body {
