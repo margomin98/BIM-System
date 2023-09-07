@@ -656,7 +656,7 @@
           form.append('EquipTypeName', searchParams.EquipTypeName);
           form.append('EquipCategoryName', searchParams.EquipCategoryName);
           form.append('ProductName', searchParams.ProductName);
-          const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/SearchInventory', form);
+          const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchInventory', form);
           const data = response.data;
           if (data.state === 'success') {
             // console.log('Details Get成功 資料如下\n', data.resultList);

@@ -12,7 +12,6 @@
   export default {
     props: ['params'],
     setup(props) {
-
       const maxNumber = props.params.data.OM_Number;
       const selectNumber = ref(1);
       onMounted(() => {
@@ -20,7 +19,9 @@
         selectNumber.value = props.params.data.OM_Number;
       });
       function changeSelectNumber() {
+        // props.params.updateData();
         const rowNode = props.params.node;
+        console.log('rowNode:', rowNode);
         // 若input數量為0或空格 則選擇數量為0
         rowNode.data.selectNumber = selectNumber.value ? selectNumber.value : 0
         // 若input數量大於最大數量 則選擇數量為最大數量

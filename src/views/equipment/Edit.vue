@@ -14,7 +14,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend"><span>*</span>產編：</div>
-            <input type="text" class="form-control text-center" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="請輸入產編" />
+            <input type="text" class="form-control text-center readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
           </div>
         </div>
         <div class="col">
@@ -266,10 +266,6 @@
     useRoute,
     useRouter
   } from "vue-router";
-  import Swiper from 'swiper';
-  import {
-    Pagination
-  } from 'swiper/modules';
   register();
   export default {
     components: {

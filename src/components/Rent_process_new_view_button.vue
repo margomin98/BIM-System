@@ -14,7 +14,7 @@
 export default {
   props: ['params'],
   setup(props){
-    console.log(props.params.data.AssetsId);
+    // console.log(props.params.data.AssetsId);
     return {
       id: props.params.data.AssetsId,
     }

@@ -250,6 +250,7 @@
             alert(data.messages);
             router.push('/');
           } else {
+            alert(data.messages);
             throw new Error('Request was not successful');
           }
         } catch (error) {
