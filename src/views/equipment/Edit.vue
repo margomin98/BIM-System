@@ -13,21 +13,57 @@
       <div class="content">
         <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend"><span>*</span>產編：</div>
-            <input type="text" class="form-control text-center readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
+            <div class="input-group-prepend">產編：</div>
+            <input type="text" class="form-control text-center readonly_box" v-model="formParams.IntegrationId" readonly/>
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend"><span>*</span>名稱：</div>
-            <input type="text" class="form-control text-center" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="文字敘述，最多20字" />
+            <input type="text" class="form-control text-center" v-model="formParams.IntegrationName" placeholder="不可輸入超過20字" />
+          </div>
+        </div>
+        <div class="row row_wrap">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend flex">儲位區域：</div>
+              <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
+                    {{ formParams.AreaName || '請選擇' }}
+                  </button>
+                <div class="dropdown-menu" aria-labelledby="areaDropdown">
+                  <p v-for="(item, index) in AreaArray" :key="index" class="dropdown-item" @click="selectArea(`${item}`)">
+                    {{ item }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend flex">儲位櫃位：</div>
+              <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="formParams.AreaName === ''">
+                    {{ formParams.LayerName || LayerInit }}
+                  </button>
+                <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
+                  <p v-for="(item, index) in LayerArray" :key="index" class="dropdown-item" @click="selectLayer(`${item}`)">{{ item }}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">保管人員：</div>
-              <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" />
+              <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ formParams.Custodian || '請選擇' }}
+                  </button>
+                <div class="dropdown-menu">
+                  <p v-for="(item, index) in CustodianArray" :key="index" class="dropdown-item" @click="selectAccount(item)">{{ item }}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -35,13 +71,13 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">整合人員：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly/>
+              <input type="text" class="form-control readonly_box" v-model="Integration.Integrator" readonly />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">整合日期：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
+              <input type="text" class="form-control readonly_box" v-model="Integration.IntegrateDate" readonly />
             </div>
           </div>
         </div>
@@ -50,7 +86,7 @@
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
-          <p>整合箱內容物</p>
+          <p><span>*</span>整合箱內容物(請至少新增一項)</p>
         </div>
       </div>
       <div class="content">
@@ -60,11 +96,11 @@
               <div class="input-group mb-3">
                 <div class="input-group-prepend flex">設備總類：</div>
                 <div class="dropdown">
-                  <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                 請選擇
-            </button>
-                  <div class="dropdown-menu">
-                    <p>123</p>
+                  <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
+                      {{ searchParams.EquipTypeName || '請選擇' }}
+                    </button>
+                  <div class="dropdown-menu" aria-labelledby="typeDropdown">
+                    <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
                   </div>
                 </div>
               </div>
@@ -73,19 +109,20 @@
               <div class="input-group mb-3">
                 <div class="input-group-prepend flex">設備分類：</div>
                 <div class="dropdown">
-                  <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                 請選擇
-            </button>
-                  <div class="dropdown-menu">
-                    <p>123</p>
+                  <button style='overflow: hidden;text-overflow: ellipsis;white-space: nowrap' class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
+                      {{ searchParams.EquipCategoryName || EquipCategoryInit }}
+                    </button>
+                  <div class="dropdown-menu" aria-labelledby="categoryDropdown">
+                    <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="btn_section">
-            <button class="send_btn" data-bs-toggle="modal" data-bs-target="#exampleModal">搜索庫存</button>
-            <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1">
+            <button class="send_btn" data-bs-toggle="modal" data-bs-target="#searchModal" @click="searchInventory('add')">搜索庫存</button>
+            <!-- Modal -->
+            <div class="modal fade" data-bs-backdrop="static" id="searchModal" tabindex="-1">
               <div class="modal-dialog modal-xl modal-dialog-centered">
                 <div class="modal-content">
                   <div class="modal-body">
@@ -93,35 +130,35 @@
                       <div>
                         <p>檢索資產</p>
                       </div>
-                      <button type="button" class="close" data-bs-dismiss="modal">x</button>
+                      <button type="button" class="close" id="close-modal" data-bs-dismiss="modal">x</button>
                     </div>
                     <div class='second_content'>
                       <div class='wrap1'>
                         <div class='col-xl-3 col-lg-3 col-md-3 col-12' style='padding-left:0'>
                           <p>設備總類</p>
                           <div class="dropdown">
-                            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                 請選擇
-            </button>
-                            <div class="dropdown-menu">
-                              <p>123</p>
+                            <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
+                                {{ searchParams.EquipTypeName || '請選擇' }}
+                              </button>
+                            <div class="dropdown-menu" aria-labelledby="typeDropdown">
+                              <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
                             </div>
                           </div>
                         </div>
                         <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
                           <p>設備分類</p>
                           <div class="dropdown">
-                            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                 請選擇
-            </button>
-                            <div class="dropdown-menu">
-                              <p>123</p>
+                            <button style='overflow: hidden;text-overflow: ellipsis;white-space: nowrap' class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
+                                {{ searchParams.EquipCategoryName || EquipCategoryInit }}
+                              </button>
+                            <div class="dropdown-menu" aria-labelledby="categoryDropdown">
+                              <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
                             </div>
                           </div>
                         </div>
                         <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
                           <p>物品名稱</p>
-                          <input type="text" class="form-control text-center" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="(模糊搜索)" />
+                          <input type="text" class="form-control text-center" placeholder="不可輸入超過20字" v-model="searchParams.ProductName" />
                         </div>
                       </div>
                       <div class='col d-flex justify-content-center'>
@@ -134,7 +171,7 @@
                       <p>目前資產庫存</p>
                     </div>
                   </div>
-                  <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true" @grid-ready="onGridReady">
+                  <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="false" @grid-ready="onGridReady">
                   </ag-grid-vue>
                 </div>
               </div>
@@ -142,102 +179,8 @@
           </div>
         </div>
         <div class="item_wrap">
-          <div class="item">
-            <div class="col">
-              <button class="change_btn">
-          更換
-          </button>
-            </div>
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">資產編號：</div>
-                <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" />
-              </div>
-            </div>
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">物品名稱：</div>
-                <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" />
-              </div>
-            </div>
-            <div class="col count d-flex">
-              <div class="input-group">
-                <div class="input-group-prepend">數量：</div>
-                <div class="num_wrap d-flex ">
-                  <div class="number-input-box">
-                    <input class="input-number" type="number" min="1" />
-                  </div>
-                  <div class="btn_section">
-                    <button class="delete_btn">刪除</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="col">
-              <button class="change_btn">
-          更換
-          </button>
-            </div>
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">資產編號：</div>
-                <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" />
-              </div>
-            </div>
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">物品名稱：</div>
-                <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" />
-              </div>
-            </div>
-            <div class="col count d-flex">
-              <div class="input-group">
-                <div class="input-group-prepend">數量：</div>
-                <div class="num_wrap d-flex ">
-                  <div class="number-input-box">
-                    <input class="input-number" type="number" min="1" />
-                  </div>
-                  <div class="btn_section">
-                    <button class="delete_btn">刪除</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="col">
-              <button class="change_btn">
-          更換
-          </button>
-            </div>
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">資產編號：</div>
-                <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" />
-              </div>
-            </div>
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">物品名稱：</div>
-                <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" />
-              </div>
-            </div>
-            <div class="col count d-flex">
-              <div class="input-group">
-                <div class="input-group-prepend">數量：</div>
-                <div class="num_wrap d-flex ">
-                  <div class="number-input-box">
-                    <input class="input-number" type="number" min="1" />
-                  </div>
-                  <div class="btn_section">
-                    <button class="delete_btn">刪除</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <list-item v-for="(item, index) in formParams.AssetList" :key="index" :edit_btn="true" :delete_btn="true" :AssetData="item" @editAction="handleEdit" @deleteId="handleDelete">
+          </list-item>
         </div>
       </div>
       <div class="col button_wrap">
@@ -252,162 +195,580 @@
   import {
     AgGridVue
   } from "ag-grid-vue3";
-  import Button from "@/components/Storage_list_view_button";
-  import Storage_button from "@/components/Storage_add_button";
-  import {
-    register
-  } from 'swiper/element/bundle';
+  import List_view_button from "@/components/Rent_process_new_view_button";
+  import Equipment_add from "@/components/Equipment_add_button";
+  import Equipment_number from "@/components/Equipment_number_input.vue";
+  import ListItem from "@/components/Equipment/item.vue"
   import Navbar from "@/components/Navbar.vue";
   import {
     onMounted,
-    ref
+    ref,
+    reactive,
   } from "vue";
   import {
     useRoute,
     useRouter
   } from "vue-router";
-  register();
   export default {
     components: {
       Navbar,
       AgGridVue,
-      Button,
-      Storage_button
+      List_view_button,
+      Equipment_add,
+      Equipment_number,
+      ListItem,
     },
     setup() {
-      return {
-        columnDefs: [{
-            suppressMovable: true,
-            field: "",
-            cellRenderer: "Storage_button",
-            width: '70',
-            resizable: true,
-          }, {
-            suppressMovable: true,
-            field: "",
-            cellRenderer: "Button",
-            width: '100',
-            resizable: true,
+      const route = useRoute();
+      const router = useRouter();
+      const details = ref({});
+      const Integration = reactive({ //整合人員、日期
+        Integrator: '',
+        IntegrateDate: '',
+        IntegrationId: route.query.search_id,
+      })
+      const searchParams = reactive({ //搜尋參數
+        EquipTypeName: '',
+        EquipCategoryName: '',
+        ProductName: '',
+        Action: '',
+      })
+      const EquipTypeArray = ref([]); //設備總類陣列 request拿到
+      const EquipCategoryArray = ref([]); //設備分類陣列 request拿到
+      const EquipCategoryInit = ref('請先選擇設備總類');
+      const AreaArray = ref([]); //區域陣列
+      const LayerArray = ref([]); //櫃位陣列
+      const LayerInit = ref('請先選擇區域');
+      const CustodianArray = ref([]);
+      const ChangeParams = reactive({
+        id: '',
+        index: -1,
+      });
+      const gridApi = ref(null);
+      const formParams = reactive({
+        IntegrationId: '',
+        IntegrationName: '',
+        AreaName: '',
+        LayerName: '',
+        Custodian: '',
+        AssetList: [],
+      })
+      const columnDefs = [
+        {
+          suppressMovable: true,
+          field: "",
+          cellRenderer: "List_view_button",
+          resizable: true,
+          width: 100,
+        },
+        {
+          headerName: "新增",
+          suppressMovable: true,
+          field: "",
+          cellRenderer: "Equipment_add",
+          cellRendererParams: {
+            numberIsValid: (data) => {
+              // 檢查選擇數量是否正常 1.超過 2.為零 3.正常執行
+              if (data.selectNumber > data.OM_Number || data.selectNumber === 0) {
+                // 1. || 2.
+                return false;
+              }
+              // 3. 正常執行
+              return true;
+            },
+            addAssetList: (data) => {
+              let exist = false;
+              // 重複項目直接將數量疊上
+              formParams.AssetList.forEach(item =>{
+                if(item.AssetsId === data.AssetsId) {
+                  item.Number += data.selectNumber;
+                  exist = true;
+                }
+              })
+              // 新的項目插入至最前方
+              if(!exist) {
+                formParams.AssetList.splice(0 , 0 ,{
+                  AssetsId: data.AssetsId,
+                  Number: data.selectNumber,
+                  Name: data.AssetName,
+                  Failed: false,
+                })
+              }
+              // 處理完AssetList後更新rowData
+              searchInventory('add')
+            },
+            editAssetList: (data) => {
+              // 更換內容
+              formParams.AssetList.splice(ChangeParams.index, 1, {
+                AssetsId: data.AssetsId,
+                Number: data.selectNumber,
+                Name: data.AssetName,
+                Failed: false,
+              });
+              // 
+              const element = document.querySelector('#close-modal');
+              // console.log(element);
+              element.click();
+              // searchInventory('edit')
+            },
+            action: searchParams.Action,
+
           },
-          {
-            headerName: "資產編號",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '180',
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "物品名稱",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "狀態",
-            field: "price",
-            unSortIcon: true,
-            sortable: true,
-            width: '100',
-            suppressMovable: true
-          },
-          {
-            headerName: "儲位區域",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            suppressMovable: true
-          },
-          {
-            headerName: "儲位櫃位",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            suppressMovable: true
-          },
-          {
-            headerName: "廠商",
-            field: "price",
-            unSortIcon: true,
-            sortable: true,
-            width: '160',
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "型號",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "規格",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "數量",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '100',
-            suppressMovable: true
-          },
-          {
-            headerName: "單位",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '100',
-            suppressMovable: true
+          resizable: true,
+          width: 75,
+        },
+        {
+          headerName: "數量",
+          field: "",
+          cellRenderer: "Equipment_number",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "選擇數量",
+          field: "selectNumber",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "單位",
+          field: "OM_Unit",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "資產編號",
+          field: "AssetsId",
+          unSortIcon: true,
+          sortable: true,
+          width: 180,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "物品名稱",
+          field: "AssetName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "儲位區域",
+          field: "AreaName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "儲位櫃位",
+          field: "LayerName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "廠商",
+          field: "VendorName",
+          unSortIcon: true,
+          sortable: true,
+          width: 160,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "型號",
+          field: "ProductType",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "規格",
+          field: "ProductSpec",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+      ];
+      const rowData = ref([]);
+      onMounted(() => {
+        getApplicationInfo();
+        getAccount();
+        getDetails('initial');
+        Integration.IntegrateDate = getDate();
+      });
+      function getDate() {
+        const today = new Date();
+        var date = '';
+        date += (today.getFullYear() + '/');
+        date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
+        date += ((today.getDate()).toString().padStart(2, '0'));
+        return date;
+      }
+      async function getDetails(type) {
+        const axios = require('axios');
+        const baseUrl = 'http://192.168.0.177:7008'
+        let apiUrl = ''
+        switch (type) {
+          case 'initial':
+            apiUrl += baseUrl + '/GetDBdata/GetIntegrationBoxInfo?id=' + `${Integration.IntegrationId}`
+            break;
+          case 'edit':
+            apiUrl += baseUrl + '/GetDBdata/GetAssetInfo?id=' + `${ChangeParams.id}`
+            break;
+        }
+        try {
+          const response = await axios.get(`${apiUrl}`);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            switch (type) {
+              case 'initial':
+                console.log(data.resultList);
+                details.value = data.resultList;
+                break;
+              case 'edit':
+                searchParams.EquipTypeName = data.resultList.EquipTypeName
+                searchParams.EquipCategoryName = data.resultList.EquipCategoryName
+                console.log(data.resultList.EquipCategoryName);
+                break;
+            
+              default:
+                break;
+            }
+            getEquipCategoryName();
+            getLayerName();
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
           }
-        ],
-        rowData: [{
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000
-          },
-        ],
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      async function getApplicationInfo() {
+        const axios = require('axios');
+        try {
+          const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
+          // console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('申請人名稱:', data.resultList.Applicant);
+            if (data.resultList.Applicant) {
+              Integration.Integrator = data.resultList.Applicant;
+            }
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      async function getAreaName() {
+        if (AreaArray.value.length == 0) {
+          const axios = require('axios');
+          try {
+            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetAreaName');
+            console.log(response);
+            const data = response.data;
+            if (data.state === 'success') {
+              console.log('Area Get成功 資料如下\n', data.resultList.AreaName);
+              AreaArray.value = data.resultList.AreaName;
+            } else if (data.state === 'error') {
+              alert(data.messages);
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            }
+          } catch (error) {
+            console.error('Error sending applicant info request to backend');
+          }
+        }
+      }
+      async function getLayerName() {
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetLayerName?id=${formParams.AreaName}`);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('Layer Get成功 資料如下\n', data.resultList.LayerName);
+            LayerArray.value = data.resultList.LayerName;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error('Error sending applicant info request to backend');
+        }
+      }
+      async function getAccount() {
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchName?name=`);
+          // console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            // console.log('Account Get成功 資料如下\n', data.resultList);
+            CustodianArray.value = data.resultList;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      async function getEquipTypeName() {
+        if (EquipTypeArray.value.length == 0) {
+          const axios = require('axios');
+          try {
+            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetEquipType');
+            console.log(response);
+            const data = response.data;
+            if (data.state === 'success') {
+              console.log('總類Get成功 資料如下\n', data.resultList.EquipType);
+              EquipTypeArray.value = data.resultList.EquipType;
+            } else if (data.state === 'error') {
+              alert(data.messages);
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            }
+          } catch (error) {
+            console.error('Error sending applicant info request to backend', error);
+          }
+        }
+      }
+      async function getEquipCategoryName() {
+        searchParams.EquipCategoryName = '';
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${searchParams.EquipTypeName}`);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('分類Get成功 資料如下\n', data.resultList.EquipCategory);
+            EquipCategoryArray.value = data.resultList.EquipCategory;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error('Error sending applicant info request to backend', error);
+        }
+      }
+      async function searchInventory(action) {
+        // 更新+按鈕的行為
+        if (action === 'add' || action === 'edit') {
+          searchParams.Action = action
+          let column = gridApi.value.getColumnDefs()
+          const columnIndex = column.findIndex(item => item.cellRenderer === 'Equipment_add')
+          column[columnIndex].cellRendererParams.action = action;
+          console.log(column[columnIndex]);
+          gridApi.value.setColumnDefs(column);
+        }
+        // 檢查物品名稱字數
+        if (searchParams.ProductName) {
+          searchParams.ProductName = searchParams.ProductName.trim();
+        }
+        if (searchParams.ProductName && !/^.{1,20}$/.test(searchParams.ProductName)) {
+          alert('物品名稱不可輸入超過20字')
+          return
+        }
+        const axios = require('axios');
+        try {
+          const form = new FormData();
+          form.append('EquipTypeName', searchParams.EquipTypeName);
+          form.append('EquipCategoryName', searchParams.EquipCategoryName);
+          form.append('ProductName', searchParams.ProductName);
+          const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchInventory', form);
+          const data = response.data;
+          if (data.state === 'success') {
+            // console.log('資產搜尋成功 資料如下\n', data.resultList);
+            // 取得資料
+            rowData.value = data.resultList;
+            // 檢查AssetList 處理rowData後refresh
+            // 創建一個Map 用來建Hash-table
+            const assetMap = new Map()
+            // 製作Hash-table
+            formParams.AssetList.forEach(asset =>{
+              assetMap.set(asset.AssetsId , asset.Number)
+            })
+            rowData.value  = rowData.value.filter(item =>{
+              // 若有相對應的id
+              if(assetMap.has(item.AssetsId)) {
+                // 檢查數量 1.拿完->刪除 2.尚未拿完->減去相對應數量
+                const list_number = assetMap.get(item.AssetsId)
+                // 1.
+                if(list_number >= item.OM_Number) {
+                  console.log('編號:'+item.AssetsId+'被拿完了');
+                  return false
+                }
+                // 2.
+                else {
+                  item.OM_Number -= list_number;
+                }
+              }
+              return true;
+            })
+            rowData.value = rowData.value.map(item => ({
+              ...item,
+              selectNumber: item.OM_Number,
+            }));
+            // setTimeout(()=>{
+            //   gridApi.value.setRowData(rowData.value);
+            //   console.log('完成刷新:',rowData.value);
+            // },50);
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      async function submit() {
+        console.log(details.value);
+        // 檢查必填項目
+        if (!formParams.IntegrationId || !formParams.IntegrationName || formParams.AssetList.length === 0) {
+          alert('請填寫所有必填項目');
+          return;
+        }
+        if (!/^.{1,20}$/.test(formParams.IntegrationName)) {
+          alert('物品名稱不可輸入超過20字');
+          return
+        }
+        const axios = require('axios');
+        let requestData = {};
+        for (const keyname in formParams) {
+          if(formParams[keyname] !== null && formParams[keyname] !== '') {
+            requestData[keyname] = formParams[keyname]
+          }
+        }
+        const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/Integrate', requestData);
+        try {
+          const data = response.data;
+          console.log(data);
+          if (data.state === 'success') {
+            let msg = data.messages;
+            msg += '\n單號:' + data.resultList.AssetsId;
+            alert(msg);
+            router.push({
+              name: 'Assets_Datagrid'
+            });
+          } else if (data.state === 'error') {
+            alert(data.messages);
+            console.log('error state', response);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      function selectType(item) {
+        searchParams.EquipTypeName = item;
+        // console.log('選擇的總類:', EquipTypeName.value);
+        getEquipCategoryName();
+        EquipCategoryInit.value = '請選擇';
+      }
+      function selectCategory(item) {
+        searchParams.EquipCategoryName = item;
+      }
+      const selectArea = (item) => {
+        formParams.AreaName = item;
+        formParams.LayerName = '';
+        //API function here
+        getLayerName();
+        LayerInit.value = '請選擇';
+      };
+      const selectLayer = (item) => {
+        formParams.LayerName = item;
+      };
+      const selectAccount = (item) => {
+        formParams.Custodian = item;
+      }
+      const onGridReady = (params) => {
+        gridApi.value = params.api
+      }
+      function handleDelete(id) {
+        const deleteIndex = formParams.AssetList.findIndex(item => item.AssetsId === id)
+        formParams.AssetList.splice(deleteIndex, 1);
+      }
+      function handleEdit(id) {
+        const editIndex = formParams.AssetList.findIndex(item => item.AssetsId === id)
+        ChangeParams.id = id;
+        ChangeParams.index = editIndex;
+        // 預帶入變更資產之設備總類、分類
+        getDetails('edit');
+        searchInventory('edit');
+      }
+      function goBack() {
+        window.history.back();
+      }
+      return {
+        details,
+        Integration,
+        searchParams,
+        AreaArray,
+        LayerArray,
+        LayerInit,
+        EquipTypeArray,
+        EquipCategoryArray,
+        EquipCategoryInit,
+        CustodianArray,
+        gridApi,
+        formParams,
+        columnDefs,
+        rowData,
+        rowHeight: 35,
+        pageSize: 10,
+        getEquipTypeName,
+        getAreaName,
+        searchInventory,
+        submit,
+        selectType,
+        selectCategory,
+        selectArea,
+        selectLayer,
+        selectAccount,
+        onGridReady,
+        handleDelete,
+        handleEdit,
+        goBack,
       };
     },
-    data() {
-      return {
-        rowHeight: 35,
-      }
-    }
   }
 </script>
 <style lang="scss" scoped>

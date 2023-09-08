@@ -20,8 +20,11 @@
           console.log(props.params);
           switch (action) {
             case 'edit':
+              // only for edit equipment
+              props.params.editAssetList(data);
               break;
             case 'add':
+              // for new & edit equipment
               // console.log(data);
               props.params.addAssetList(data);
               break;

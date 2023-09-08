@@ -86,7 +86,7 @@
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
-          <p>整合箱內容物</p>
+          <p><span>*</span>整合箱內容物(請至少新增一項)</p>
         </div>
       </div>
       <div class="content">
@@ -179,7 +179,7 @@
           </div>
         </div>
         <div class="item_wrap">
-          <list-item v-for="(item, index) in formParams.AssetList" :key="index" :edit_btn="true" :delete_btn="true" :AssetData="item" @editAction="handleEdit" @deleteId="handleDelete">
+          <list-item v-for="(item, index) in formParams.AssetList" :key="index" :edit_btn="false" :delete_btn="true" :AssetData="item" @editAction="handleEdit" @deleteId="handleDelete">
           </list-item>
         </div>
       </div>
@@ -227,7 +227,7 @@
         EquipTypeName: '',
         EquipCategoryName: '',
         ProductName: '',
-        Action: '123',
+        Action: '',
       })
       const EquipTypeArray = ref([]); //設備總類陣列 request拿到
       const EquipCategoryArray = ref([]); //設備分類陣列 request拿到
@@ -286,7 +286,6 @@
                   Failed: false,
                 })
               }
-
               // 處理完AssetList後更新rowData
               searchInventory('add')
             },
@@ -300,13 +299,6 @@
           headerName: "數量",
           field: "",
           cellRenderer: "Equipment_number",
-          cellRendererParams: {
-            updateData: ()=>{
-              setTimeout(()=>{
-                gridApi.value.setRowData(rowData.value);
-              },50);
-            }
-          },
           unSortIcon: true,
           sortable: true,
           width: 100,
@@ -588,15 +580,52 @@
               ...item,
               selectNumber: item.OM_Number,
             }));
-            setTimeout(()=>{
-              gridApi.value.setRowData(rowData.value);
-              console.log('完成刷新');
-            },50);
+            // setTimeout(()=>{
+            //   gridApi.value.setRowData(rowData.value);
+            //   console.log('完成刷新:',rowData.value);
+            // },50);
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
             alert(data.messages);
             router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      async function submit() {
+        console.log(details.value);
+        // 檢查必填項目
+        if (!formParams.IntegrationId || !formParams.IntegrationName || formParams.AssetList.length === 0) {
+          alert('請填寫所有必填項目');
+          return;
+        }
+        if (!/^.{1,20}$/.test(formParams.IntegrationName)) {
+          alert('物品名稱不可輸入超過20字');
+          return
+        }
+        const axios = require('axios');
+        let requestData = {};
+        for (const keyname in formParams) {
+          if(formParams[keyname] !== null && formParams[keyname] !== '') {
+            requestData[keyname] = formParams[keyname]
+          }
+        }
+        const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/Integrate', requestData);
+        try {
+          const data = response.data;
+          console.log(data);
+          if (data.state === 'success') {
+            let msg = data.messages;
+            msg += '\n單號:' + data.resultList.AssetsId;
+            alert(msg);
+            router.push({
+              name: 'Assets_Datagrid'
+            });
+          } else if (data.state === 'error') {
+            alert(data.messages);
+            console.log('error state', response);
           }
         } catch (error) {
           console.error(error);
@@ -636,6 +665,9 @@
         // formParams.AssetList.splice(deleteIndex, 1);
         searchInventory('edit');
       }
+      function goBack() {
+        window.history.back();
+      }
       return {
         Integration,
         searchParams,
@@ -655,6 +687,7 @@
         getEquipTypeName,
         getAreaName,
         searchInventory,
+        submit,
         selectType,
         selectCategory,
         selectArea,
@@ -663,6 +696,7 @@
         onGridReady,
         handleDelete,
         handleEdit,
+        goBack,
       };
     },
   }

@@ -6,15 +6,15 @@
     <div class="col">
       <div class="input-group mb-3">
         <div class="input-group-prepend">資產編號：</div>
-        <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default"
-          v-model="AssetData.AssetsId" />
+        <input type="text" class="form-control readonly_box " aria-label="Default" aria-describedby="inputGroup-sizing-default"
+          v-model="AssetData.AssetsId"  readonly/>
       </div>
     </div>
     <div class="col">
       <div class="input-group mb-3">
         <div class="input-group-prepend">物品名稱：</div>
-        <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default"
-          v-model="AssetData.Name" />
+        <input type="text" class="form-control readonly_box " aria-label="Default" aria-describedby="inputGroup-sizing-default"
+          v-model="AssetData.Name"  readonly/>
       </div>
     </div>
     <div class="col count d-flex">
@@ -22,7 +22,7 @@
         <div class="input-group-prepend">數量：</div>
         <div class="num_wrap d-flex ">
           <div class="number-input-box">
-            <input class="input-number" type="text" v-model="AssetData.Number" />
+            <input class="input-number readonly_box " type="text" v-model="AssetData.Number"  readonly/>
           </div>
           <div class="btn_section" v-if="delete_btn">
             <button class="delete_btn" @click="deleteBtn">刪除</button>
