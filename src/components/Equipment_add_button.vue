@@ -1,8 +1,6 @@
 <template>
   <div>
-    <button type="button" class="btn btn-primary" @click="add()">
-          +
-            </button>
+    <button type="button" class="btn btn-primary" @click="add()">+</button>
   </div>
 </template>
 
@@ -17,7 +15,7 @@
           // 根據參數action來決定這次按下按鈕是屬於編輯還是新增
           const action = props.params.action
           // alert(props.params.action)
-          console.log(props.params);
+          // console.log(props.params);
           switch (action) {
             case 'edit':
               // only for edit equipment

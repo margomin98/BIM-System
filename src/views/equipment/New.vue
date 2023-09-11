@@ -179,7 +179,7 @@
           </div>
         </div>
         <div class="item_wrap">
-          <list-item v-for="(item, index) in formParams.AssetList" :key="index" :edit_btn="false" :delete_btn="true" :AssetData="item" @editAction="handleEdit" @deleteId="handleDelete">
+          <list-item v-for="(item, index) in formParams.AssetList" :key="index" :edit_btn="false" :delete_btn="true" :AssetData="item" @deleteId="handleDelete">
           </list-item>
         </div>
       </div>
@@ -229,6 +229,7 @@
         ProductName: '',
         Action: '',
       })
+      const router = useRouter();
       const EquipTypeArray = ref([]); //設備總類陣列 request拿到
       const EquipCategoryArray = ref([]); //設備分類陣列 request拿到
       const EquipCategoryInit = ref('請先選擇設備總類');
@@ -282,7 +283,7 @@
                 formParams.AssetList.splice(0 , 0 ,{
                   AssetsId: data.AssetsId,
                   Number: data.selectNumber,
-                  Name: data.AssetName,
+                  AssetName: data.AssetName,
                   Failed: false,
                 })
               }
@@ -595,7 +596,7 @@
         }
       }
       async function submit() {
-        console.log(details.value);
+        // console.log(details.value);
         // 檢查必填項目
         if (!formParams.IntegrationId || !formParams.IntegrationName || formParams.AssetList.length === 0) {
           alert('請填寫所有必填項目');
@@ -605,6 +606,15 @@
           alert('物品名稱不可輸入超過20字');
           return
         }
+        if (!/^(BF\d{8})$/.test(formParams.IntegrationId)) {
+          alert('資產編號格式錯誤');
+          return
+        }
+        // 檢查設備箱產編是否被使用過
+        if(await checkAssetsIdRepeat()){
+          return
+        }
+        // 送出
         const axios = require('axios');
         let requestData = {};
         for (const keyname in formParams) {
@@ -618,18 +628,38 @@
           console.log(data);
           if (data.state === 'success') {
             let msg = data.messages;
-            msg += '\n單號:' + data.resultList.AssetsId;
+            msg += '\n單號:' + data.resultList.B_Id;
             alert(msg);
             router.push({
-              name: 'Assets_Datagrid'
+              name: 'Equipment_Datagrid'
             });
           } else if (data.state === 'error') {
             alert(data.messages);
             console.log('error state', response);
           }
+            else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
         } catch (error) {
           console.error(error);
         }
+      }
+      async function checkAssetsIdRepeat() {
+        const repeatForm = new FormData();
+        repeatForm.append('assetsIds' , formParams.IntegrationId);
+        const axios = require('axios');
+        const response = await axios.post('http://192.168.0.177:7008/GetDBdata/CheckAssetsInID', repeatForm);
+        try {
+          const data = response.data;
+          if (data.state === 'error') {
+            alert('此資產編號已使用過');
+            return true;
+          }
+        } catch (error) {
+          console.error(error);
+        }
+        return false;
       }
       function selectType(item) {
         searchParams.EquipTypeName = item;
@@ -659,11 +689,6 @@
       function handleDelete(id) {
         const deleteIndex = formParams.AssetList.findIndex(item => item.AssetsId === id)
         formParams.AssetList.splice(deleteIndex, 1);
-      }
-      function handleEdit(id, action) {
-        // const editIndex = formParams.AssetList.findIndex(item => item.AssetsId === id)
-        // formParams.AssetList.splice(deleteIndex, 1);
-        searchInventory('edit');
       }
       function goBack() {
         window.history.back();
@@ -695,7 +720,6 @@
         selectAccount,
         onGridReady,
         handleDelete,
-        handleEdit,
         goBack,
       };
     },

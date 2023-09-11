@@ -14,7 +14,7 @@
       <div class="input-group mb-3">
         <div class="input-group-prepend">物品名稱：</div>
         <input type="text" class="form-control readonly_box " aria-label="Default" aria-describedby="inputGroup-sizing-default"
-          v-model="AssetData.Name"  readonly/>
+          v-model="AssetData.AssetName"  readonly/>
       </div>
     </div>
     <div class="col count d-flex">
@@ -43,10 +43,10 @@ export default {
   },
   setup(props, {emit}) {
     function editBtn() {
-      emit('editAction', props.AssetData.AssetsId)
+      emit('editAction', props.AssetData)
     }
     function deleteBtn() {
-      emit('deleteId', props.AssetData.AssetsId)
+      emit('deleteId', props.AssetData)
     }
     return {
       editBtn,

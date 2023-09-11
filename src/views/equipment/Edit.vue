@@ -14,13 +14,13 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">產編：</div>
-            <input type="text" class="form-control text-center readonly_box" v-model="formParams.IntegrationId" readonly/>
+            <input type="text" class="form-control text-center readonly_box" v-model="details.IntegrationId" readonly/>
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend"><span>*</span>名稱：</div>
-            <input type="text" class="form-control text-center" v-model="formParams.IntegrationName" placeholder="不可輸入超過20字" />
+            <input type="text" class="form-control text-center" v-model="details.IntegrationName" placeholder="不可輸入超過20字" />
           </div>
         </div>
         <div class="row row_wrap">
@@ -29,7 +29,7 @@
               <div class="input-group-prepend flex">儲位區域：</div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
-                    {{ formParams.AreaName || '請選擇' }}
+                    {{ details.AreaName || '請選擇' }}
                   </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in AreaArray" :key="index" class="dropdown-item" @click="selectArea(`${item}`)">
@@ -42,8 +42,8 @@
             <div class="input-group mb-3">
               <div class="input-group-prepend flex">儲位櫃位：</div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="formParams.AreaName === ''">
-                    {{ formParams.LayerName || LayerInit }}
+                <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="details.AreaName === '' || details.AreaName === null">
+                    {{ details.LayerName || LayerInit }}
                   </button>
                 <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                   <p v-for="(item, index) in LayerArray" :key="index" class="dropdown-item" @click="selectLayer(`${item}`)">{{ item }}</p>
@@ -58,7 +58,7 @@
               <div class="input-group-prepend">保管人員：</div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ formParams.Custodian || '請選擇' }}
+                    {{ details.Custodian || '請選擇' }}
                   </button>
                 <div class="dropdown-menu">
                   <p v-for="(item, index) in CustodianArray" :key="index" class="dropdown-item" @click="selectAccount(item)">{{ item }}</p>
@@ -179,7 +179,7 @@
           </div>
         </div>
         <div class="item_wrap">
-          <list-item v-for="(item, index) in formParams.AssetList" :key="index" :edit_btn="true" :delete_btn="true" :AssetData="item" @editAction="handleEdit" @deleteId="handleDelete">
+          <list-item v-for="(item, index) in details.AssetList" :key="index" :edit_btn="true" :delete_btn="true" :AssetData="item" @editAction="handleEdit" @deleteId="handleDelete">
           </list-item>
         </div>
       </div>
@@ -252,6 +252,7 @@
         LayerName: '',
         Custodian: '',
         AssetList: [],
+        DeleteList: [],
       })
       const columnDefs = [
         {
@@ -279,6 +280,22 @@
             addAssetList: (data) => {
               let exist = false;
               // 重複項目直接將數量疊上
+              details.value.AssetList.forEach(item =>{
+                if(item.AssetsId === data.AssetsId) {
+                  item.Number += data.selectNumber;
+                  exist = true;
+                }
+              })
+              // 新的項目插入至最前方
+              if(!exist) {
+                details.value.AssetList.splice(0 , 0 ,{
+                  AssetsId: data.AssetsId,
+                  Number: data.selectNumber,
+                  AssetName: data.AssetName,
+                  Failed: false,
+                })
+              }
+              // 重複項目直接將數量疊上
               formParams.AssetList.forEach(item =>{
                 if(item.AssetsId === data.AssetsId) {
                   item.Number += data.selectNumber;
@@ -290,7 +307,7 @@
                 formParams.AssetList.splice(0 , 0 ,{
                   AssetsId: data.AssetsId,
                   Number: data.selectNumber,
-                  Name: data.AssetName,
+                  AssetName: data.AssetName,
                   Failed: false,
                 })
               }
@@ -300,6 +317,12 @@
             editAssetList: (data) => {
               // 更換內容
               formParams.AssetList.splice(ChangeParams.index, 1, {
+                AssetsId: data.AssetsId,
+                Number: data.selectNumber,
+                Name: data.AssetName,
+                Failed: false,
+              });
+              details.value.AssetList.splice(ChangeParams.index, 1, {
                 AssetsId: data.AssetsId,
                 Number: data.selectNumber,
                 Name: data.AssetName,
@@ -438,13 +461,17 @@
         }
         try {
           const response = await axios.get(`${apiUrl}`);
-          console.log(response);
+          // console.log(response);
           const data = response.data;
           if (data.state === 'success') {
             switch (type) {
               case 'initial':
                 console.log(data.resultList);
                 details.value = data.resultList;
+                details.value.AssetList.forEach(item =>{
+                  item.exist = true;
+                });
+                console.log('details' ,details.value.AssetList);
                 break;
               case 'edit':
                 searchParams.EquipTypeName = data.resultList.EquipTypeName
@@ -493,10 +520,10 @@
           const axios = require('axios');
           try {
             const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetAreaName');
-            console.log(response);
+            // console.log(response);
             const data = response.data;
             if (data.state === 'success') {
-              console.log('Area Get成功 資料如下\n', data.resultList.AreaName);
+              // console.log('Area Get成功 資料如下\n', data.resultList.AreaName);
               AreaArray.value = data.resultList.AreaName;
             } else if (data.state === 'error') {
               alert(data.messages);
@@ -513,10 +540,10 @@
         const axios = require('axios');
         try {
           const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetLayerName?id=${formParams.AreaName}`);
-          console.log(response);
+          // console.log(response);
           const data = response.data;
           if (data.state === 'success') {
-            console.log('Layer Get成功 資料如下\n', data.resultList.LayerName);
+            // console.log('Layer Get成功 資料如下\n', data.resultList.LayerName);
             LayerArray.value = data.resultList.LayerName;
           } else if (data.state === 'error') {
             alert(data.messages);
@@ -525,7 +552,7 @@
             router.push('/');
           }
         } catch (error) {
-          console.error('Error sending applicant info request to backend');
+          console.error(error);
         }
       }
       async function getAccount() {
@@ -552,10 +579,10 @@
           const axios = require('axios');
           try {
             const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetEquipType');
-            console.log(response);
+            // console.log(response);
             const data = response.data;
             if (data.state === 'success') {
-              console.log('總類Get成功 資料如下\n', data.resultList.EquipType);
+              // console.log('總類Get成功 資料如下\n', data.resultList.EquipType);
               EquipTypeArray.value = data.resultList.EquipType;
             } else if (data.state === 'error') {
               alert(data.messages);
@@ -569,14 +596,13 @@
         }
       }
       async function getEquipCategoryName() {
-        searchParams.EquipCategoryName = '';
         const axios = require('axios');
         try {
           const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${searchParams.EquipTypeName}`);
-          console.log(response);
+          // console.log(response);
           const data = response.data;
           if (data.state === 'success') {
-            console.log('分類Get成功 資料如下\n', data.resultList.EquipCategory);
+            // console.log('分類Get成功 資料如下\n', data.resultList.EquipCategory);
             EquipCategoryArray.value = data.resultList.EquipCategory;
           } else if (data.state === 'error') {
             alert(data.messages);
@@ -595,7 +621,7 @@
           let column = gridApi.value.getColumnDefs()
           const columnIndex = column.findIndex(item => item.cellRenderer === 'Equipment_add')
           column[columnIndex].cellRendererParams.action = action;
-          console.log(column[columnIndex]);
+          // console.log(column[columnIndex]);
           gridApi.value.setColumnDefs(column);
         }
         // 檢查物品名稱字數
@@ -617,22 +643,40 @@
           if (data.state === 'success') {
             // console.log('資產搜尋成功 資料如下\n', data.resultList);
             // 取得資料
-            rowData.value = data.resultList;
-            // 檢查AssetList 處理rowData後refresh
+            let tempData = data.resultList;
+            
+            // 檢查DeleteList 
+            formParams.DeleteList.forEach((listItem) =>{
+              const matchingRow = tempData.find((row)=> row.AssetsId === listItem.AssetsId)
+              if(matchingRow) {
+                matchingRow.OM_Number += listItem.Number
+              }
+              else {
+                tempData.splice(0,0,{ ...listItem})
+                tempData[0].AreaName = listItem.itemAreaName
+                tempData[0].LayerName = listItem.itemLayerName
+                tempData[0].OM_Number = listItem.Number
+                delete tempData[0].itemAreaName
+                delete tempData[0].itemLayerName
+                delete tempData[0].Number
+              }
+            })
+            console.log('增加完DeleteList之tempData',tempData);
+            // 檢查AssetList
             // 創建一個Map 用來建Hash-table
             const assetMap = new Map()
             // 製作Hash-table
             formParams.AssetList.forEach(asset =>{
               assetMap.set(asset.AssetsId , asset.Number)
             })
-            rowData.value  = rowData.value.filter(item =>{
+            tempData  = tempData.filter(item =>{
               // 若有相對應的id
               if(assetMap.has(item.AssetsId)) {
                 // 檢查數量 1.拿完->刪除 2.尚未拿完->減去相對應數量
                 const list_number = assetMap.get(item.AssetsId)
                 // 1.
                 if(list_number >= item.OM_Number) {
-                  console.log('編號:'+item.AssetsId+'被拿完了');
+                  // console.log('編號:'+item.AssetsId+'被拿完了');
                   return false
                 }
                 // 2.
@@ -642,10 +686,12 @@
               }
               return true;
             })
-            rowData.value = rowData.value.map(item => ({
+            tempData = tempData.map(item => ({
               ...item,
               selectNumber: item.OM_Number,
             }));
+            rowData.value = tempData;
+            console.log('完成所有處理之rowData',rowData.value);
             // setTimeout(()=>{
             //   gridApi.value.setRowData(rowData.value);
             //   console.log('完成刷新:',rowData.value);
@@ -709,6 +755,7 @@
       const selectArea = (item) => {
         formParams.AreaName = item;
         formParams.LayerName = '';
+        searchParams.EquipCategoryName = '';
         //API function here
         getLayerName();
         LayerInit.value = '請選擇';
@@ -722,13 +769,26 @@
       const onGridReady = (params) => {
         gridApi.value = params.api
       }
-      function handleDelete(id) {
-        const deleteIndex = formParams.AssetList.findIndex(item => item.AssetsId === id)
-        formParams.AssetList.splice(deleteIndex, 1);
+      function handleDelete(data) {
+        console.log(data);
+        let deleteIndex = -1;
+        if(data.exist) {
+          // 資料庫已存在資料欲刪除
+          deleteIndex = details.value.AssetList.findIndex(item => item.AssetsId === data.AssetsId)
+          formParams.DeleteList.splice(0,0,details.value.AssetList[deleteIndex]);
+          console.log('DeleteList',formParams.DeleteList);
+        }
+        else {
+          // 新增資料欲刪除
+          deleteIndex = formParams.AssetList.findIndex(item => item.AssetsId === data.AssetsId)
+          formParams.AssetList.splice(deleteIndex, 1);
+        }
+        deleteIndex = details.value.AssetList.findIndex(item => item.AssetsId === data.AssetsId)
+        details.value.AssetList.splice(deleteIndex, 1);
       }
-      function handleEdit(id) {
-        const editIndex = formParams.AssetList.findIndex(item => item.AssetsId === id)
-        ChangeParams.id = id;
+      function handleEdit(data) {
+        const editIndex = formParams.AssetList.findIndex(item => item.AssetsId === data.AssetsId)
+        ChangeParams.id = data.AssetsId;
         ChangeParams.index = editIndex;
         // 預帶入變更資產之設備總類、分類
         getDetails('edit');
