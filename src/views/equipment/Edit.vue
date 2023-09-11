@@ -709,22 +709,24 @@
       async function submit() {
         console.log(details.value);
         // 檢查必填項目
-        if (!formParams.IntegrationId || !formParams.IntegrationName || formParams.AssetList.length === 0) {
+        if (!details.value.IntegrationName || details.value.AssetList.length === 0) {
           alert('請填寫所有必填項目');
           return;
         }
-        if (!/^.{1,20}$/.test(formParams.IntegrationName)) {
-          alert('物品名稱不可輸入超過20字');
+        if (!/^.{1,20}$/.test(details.value.IntegrationName)) {
+          alert('設備箱名稱不可輸入超過20字');
           return
         }
         const axios = require('axios');
-        let requestData = {};
-        for (const keyname in formParams) {
-          if(formParams[keyname] !== null && formParams[keyname] !== '') {
-            requestData[keyname] = formParams[keyname]
-          }
-        }
-        const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/Integrate', requestData);
+        let requestData = {
+          IntegrationId: details.value.IntegrationId,
+          IntegrationName: details.value.IntegrationName,
+          AreaName: details.value.AreaName,
+          LayerName: details.value.LayerName,
+          Custodian: details.value.Custodian,
+          AssetList: details.value.AssetList,
+        };
+        const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/ChangeEquipment', requestData);
         try {
           const data = response.data;
           console.log(data);
@@ -733,11 +735,15 @@
             msg += '\n單號:' + data.resultList.AssetsId;
             alert(msg);
             router.push({
-              name: 'Assets_Datagrid'
+              name: 'Equipment_Datagrid'
             });
           } else if (data.state === 'error') {
             alert(data.messages);
-            console.log('error state', response);
+            console.error('error state', response.data);
+            // 處理將不足的物品HILIGHT
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
           }
         } catch (error) {
           console.error(error);

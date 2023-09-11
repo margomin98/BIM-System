@@ -603,7 +603,7 @@
           return;
         }
         if (!/^.{1,20}$/.test(formParams.IntegrationName)) {
-          alert('物品名稱不可輸入超過20字');
+          alert('設備箱名稱不可輸入超過20字');
           return
         }
         if (!/^(BF\d{8})$/.test(formParams.IntegrationId)) {
@@ -636,8 +636,7 @@
           } else if (data.state === 'error') {
             alert(data.messages);
             console.log('error state', response);
-          }
-            else if (data.state === 'account_error') {
+          } else if (data.state === 'account_error') {
             alert(data.messages);
             router.push('/');
           }
