@@ -71,13 +71,13 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">整合人員：</div>
-              <input type="text" class="form-control readonly_box" v-model="Integration.Integrator" readonly />
+              <input type="text" class="form-control readonly_box" v-model="details.Integrator" readonly />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">整合日期：</div>
-              <input type="text" class="form-control readonly_box" v-model="Integration.IntegrateDate" readonly />
+              <input type="text" class="form-control readonly_box" v-model="details.IntegrateDate" readonly />
             </div>
           </div>
         </div>
@@ -243,6 +243,7 @@
       const ChangeParams = reactive({
         id: '',
         index: -1,
+        exist: false,
       });
       const gridApi = ref(null);
       const formParams = reactive({
@@ -263,7 +264,7 @@
           width: 100,
         },
         {
-          headerName: "新增",
+          headerName: "選擇",
           suppressMovable: true,
           field: "",
           cellRenderer: "Equipment_add",
@@ -292,7 +293,10 @@
                   AssetsId: data.AssetsId,
                   Number: data.selectNumber,
                   AssetName: data.AssetName,
+                  EquipTypeName: data.EquipTypeName,
+                  EquipCategoryName: data.EquipCategoryName,
                   Failed: false,
+                  error_msg: '',
                 })
               }
               // 重複項目直接將數量疊上
@@ -308,31 +312,48 @@
                   AssetsId: data.AssetsId,
                   Number: data.selectNumber,
                   AssetName: data.AssetName,
+                  EquipTypeName: data.EquipTypeName,
+                  EquipCategoryName: data.EquipCategoryName,
                   Failed: false,
                 })
               }
+              console.log(details.value.AssetList);
               // 處理完AssetList後更新rowData
               searchInventory('add')
             },
             editAssetList: (data) => {
-              // 更換內容
-              formParams.AssetList.splice(ChangeParams.index, 1, {
+              console.log(data);
+              if(ChangeParams.exist) {
+                // 刪除原本
+                formParams.DeleteList.splice(0,0,details.value.AssetList[ChangeParams.index]);
+                console.log('edit DeleteList:', formParams.DeleteList);
+              }
+              console.log('ChangeIndex:',ChangeParams.index);
+              // 更改edit hash-table
+              formParams.AssetList[ChangeParams.index] = {
                 AssetsId: data.AssetsId,
                 Number: data.selectNumber,
-                Name: data.AssetName,
+                AssetName: data.AssetName,
+                EquipTypeName: data.EquipTypeName,
+                EquipCategoryName: data.EquipCategoryName,
                 Failed: false,
-              });
+              };
+              // 更改
               details.value.AssetList.splice(ChangeParams.index, 1, {
                 AssetsId: data.AssetsId,
                 Number: data.selectNumber,
-                Name: data.AssetName,
+                AssetName: data.AssetName,
+                EquipTypeName: data.EquipTypeName,
+                EquipCategoryName: data.EquipCategoryName,
                 Failed: false,
+                error_msg: '',
               });
+              console.log('edit AssetList:', formParams.AssetList);
               // 
               const element = document.querySelector('#close-modal');
               // console.log(element);
               element.click();
-              // searchInventory('edit')
+              searchInventory('edit')
             },
             action: searchParams.Action,
 
@@ -470,6 +491,7 @@
                 details.value = data.resultList;
                 details.value.AssetList.forEach(item =>{
                   item.exist = true;
+                  item.error_msg = '';
                 });
                 console.log('details' ,details.value.AssetList);
                 break;
@@ -539,7 +561,7 @@
       async function getLayerName() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetLayerName?id=${formParams.AreaName}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetLayerName?id=${details.value.AreaName}`);
           // console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -644,7 +666,6 @@
             // console.log('資產搜尋成功 資料如下\n', data.resultList);
             // 取得資料
             let tempData = data.resultList;
-            
             // 檢查DeleteList 
             formParams.DeleteList.forEach((listItem) =>{
               const matchingRow = tempData.find((row)=> row.AssetsId === listItem.AssetsId)
@@ -652,6 +673,19 @@
                 matchingRow.OM_Number += listItem.Number
               }
               else {
+                // DeleteList項目是否有在這次的檢索Datagrid中(符合searchParams)，無則返回
+                if(searchParams.EquipTypeName !== '') {
+                  if(searchParams.EquipTypeName !== listItem.EquipTypeName)
+                    return
+                  if(searchParams.EquipCategoryName !== '') {
+                    if(searchParams.EquipCategoryName !== listItem.EquipCategoryName)
+                      return
+                  }
+                }
+                if(searchParams.ProductName !== '') {
+                  if(!listItem.AssetName.includes(searchParams.ProductName))
+                    return
+                }
                 tempData.splice(0,0,{ ...listItem})
                 tempData[0].AreaName = listItem.itemAreaName
                 tempData[0].LayerName = listItem.itemLayerName
@@ -661,7 +695,7 @@
                 delete tempData[0].Number
               }
             })
-            console.log('增加完DeleteList之tempData',tempData);
+            // console.log('增加完DeleteList之tempData',tempData);
             // 檢查AssetList
             // 創建一個Map 用來建Hash-table
             const assetMap = new Map()
@@ -676,7 +710,6 @@
                 const list_number = assetMap.get(item.AssetsId)
                 // 1.
                 if(list_number >= item.OM_Number) {
-                  // console.log('編號:'+item.AssetsId+'被拿完了');
                   return false
                 }
                 // 2.
@@ -690,8 +723,9 @@
               ...item,
               selectNumber: item.OM_Number,
             }));
+            console.log('searchData',tempData);
             rowData.value = tempData;
-            console.log('完成所有處理之rowData',rowData.value);
+            // console.log('完成所有處理之rowData',rowData.value);
             // setTimeout(()=>{
             //   gridApi.value.setRowData(rowData.value);
             //   console.log('完成刷新:',rowData.value);
@@ -727,20 +761,32 @@
           AssetList: details.value.AssetList,
         };
         const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/ChangeEquipment', requestData);
+        const data = response.data;
         try {
-          const data = response.data;
           console.log(data);
           if (data.state === 'success') {
             let msg = data.messages;
-            msg += '\n單號:' + data.resultList.AssetsId;
+            msg += '\n單號:' + data.resultList.B_Id;
             alert(msg);
             router.push({
               name: 'Equipment_Datagrid'
             });
           } else if (data.state === 'error') {
             alert(data.messages);
-            console.error('error state', response.data);
-            // 處理將不足的物品HILIGHT
+            console.error('error state', data.resultList);
+            // 先將所有項目變回正常色、警告字串初始化
+            details.value.AssetList.forEach((item)=>{
+              item.Failed = false
+              item.error_msg = ''
+            });
+            // 再將不足的物品HILIGHT成紅色、變更警告字串
+            data.resultList.forEach((item)=>{
+              const index = details.value.AssetList.findIndex((list)=>{ list.AssetsId === item.AssetsId})
+              if(index != -1) {
+                details.value.AssetList[index].Failed = true;
+                details.value.AssetList[index].error_msg = '　目前庫存量：' + item.Number;
+              }
+            });
           } else if (data.state === 'account_error') {
             alert(data.messages);
             router.push('/');
@@ -752,6 +798,7 @@
       function selectType(item) {
         searchParams.EquipTypeName = item;
         // console.log('選擇的總類:', EquipTypeName.value);
+        searchParams.EquipCategoryName = '';
         getEquipCategoryName();
         EquipCategoryInit.value = '請選擇';
       }
@@ -759,18 +806,17 @@
         searchParams.EquipCategoryName = item;
       }
       const selectArea = (item) => {
-        formParams.AreaName = item;
-        formParams.LayerName = '';
-        searchParams.EquipCategoryName = '';
+        details.value.AreaName = item;
+        details.value.LayerName = '';
         //API function here
         getLayerName();
         LayerInit.value = '請選擇';
       };
       const selectLayer = (item) => {
-        formParams.LayerName = item;
+        details.value.LayerName = item;
       };
       const selectAccount = (item) => {
-        formParams.Custodian = item;
+        details.value.Custodian = item;
       }
       const onGridReady = (params) => {
         gridApi.value = params.api
@@ -793,11 +839,15 @@
         details.value.AssetList.splice(deleteIndex, 1);
       }
       function handleEdit(data) {
-        const editIndex = formParams.AssetList.findIndex(item => item.AssetsId === data.AssetsId)
+        ChangeParams.exist = data.exist === true;
+        console.log('欲被替換data' , data);
+        const editIndex = details.value.AssetList.findIndex(item => item.AssetsId === data.AssetsId)
         ChangeParams.id = data.AssetsId;
         ChangeParams.index = editIndex;
         // 預帶入變更資產之設備總類、分類
-        getDetails('edit');
+        searchParams.EquipTypeName = data.EquipTypeName
+        searchParams.EquipCategoryName = data.EquipCategoryName
+        getEquipCategoryName();
         searchInventory('edit');
       }
       function goBack() {
@@ -969,11 +1019,16 @@
           .dropdown-menu {
             width: 100%;
             transform: translate3d(-1px, 35px, 0px) !important;
-            p {
-              font-size: 18px;
-              color: black;
-              font-weight: normal;
-            }
+            max-height: 250px;
+              overflow-y: auto;
+              p {
+                font-size: 18px;
+                color: black;
+                font-weight: normal;
+                &:hover {
+                  cursor: pointer;
+                }
+              }
           }
         }
         .item_wrap {
@@ -1252,11 +1307,16 @@
           .dropdown-menu {
             width: 100%;
             transform: translate3d(-1px, 35px, 0px) !important;
-            p {
-              font-size: 18px;
-              color: black;
-              font-weight: normal;
-            }
+            max-height: 250px;
+              overflow-y: auto;
+              p {
+                font-size: 18px;
+                color: black;
+                font-weight: normal;
+                &:hover {
+                  cursor: pointer;
+                }
+              }
           }
         }
       }

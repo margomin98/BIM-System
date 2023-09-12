@@ -285,6 +285,7 @@
                   Number: data.selectNumber,
                   AssetName: data.AssetName,
                   Failed: false,
+                  error_msg: '',
                 })
               }
               // 處理完AssetList後更新rowData
@@ -567,7 +568,7 @@
                 const list_number = assetMap.get(item.AssetsId)
                 // 1.
                 if(list_number >= item.OM_Number) {
-                  console.log('編號:'+item.AssetsId+'被拿完了');
+                  // console.log('編號:'+item.AssetsId+'被拿完了');
                   return false
                 }
                 // 2.
@@ -596,6 +597,8 @@
         }
       }
       async function submit() {
+        formParams.AssetList[0].Failed = true;
+        formParams.AssetList[0].error_msg = '　目前庫存量： 10';
         // console.log(details.value);
         // 檢查必填項目
         if (!formParams.IntegrationId || !formParams.IntegrationName || formParams.AssetList.length === 0) {
@@ -623,8 +626,8 @@
           }
         }
         const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/Integrate', requestData);
+        const data = response.data;
         try {
-          const data = response.data;
           console.log(data);
           if (data.state === 'success') {
             let msg = data.messages;
@@ -636,6 +639,19 @@
           } else if (data.state === 'error') {
             alert(data.messages);
             console.log('error state', response);
+            // 先將所有項目變回正常色、警告字串初始化
+            formParams.AssetList.forEach((item)=>{
+              item.Failed = false
+              item.error_msg = ''
+            });
+            // 再將不足的物品HILIGHT成紅色、變更警告字串
+            data.resultList.forEach((item)=>{
+              const index = formParams.AssetList.findIndex((list)=>{ list.AssetsId === item.AssetsId})
+              if(index != -1) {
+                formParams.AssetList[index].Failed = true;
+                formParams.AssetList[index].error_msg = '　目前庫存量：' + item.Number;
+              }
+            });
           } else if (data.state === 'account_error') {
             alert(data.messages);
             router.push('/');
@@ -685,8 +701,8 @@
       const onGridReady = (params) => {
         gridApi.value = params.api
       }
-      function handleDelete(id) {
-        const deleteIndex = formParams.AssetList.findIndex(item => item.AssetsId === id)
+      function handleDelete(data) {
+        const deleteIndex = formParams.AssetList.findIndex(item => item.AssetsId === data.AssetsId)
         formParams.AssetList.splice(deleteIndex, 1);
       }
       function goBack() {

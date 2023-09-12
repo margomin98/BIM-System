@@ -54,6 +54,7 @@ import Equipment_Datagrid from "../views/equipment/Datagrid.vue";
 import Equipment_New from "../views/equipment/New.vue";
 import Equipment_Edit from "../views/equipment/Edit.vue";
 import Equipment_View from "../views/equipment/View.vue";
+import Equipment_Delete from "../views/equipment/Delete.vue";
 //設備整合
 
 //盤點管理
@@ -237,6 +238,12 @@ const routes = [
     name: "Equipment_View",
     component: Equipment_View,
     meta: {auth: true, request: 'EI_Detail'},
+  },
+  {
+    path: "/equipment_delete",
+    name: "Equipment_Delete",
+    component: Equipment_Delete,
+    meta: {auth: true, request: 'EI_Delete'},
   },
   {
     path: "/inventory_datagrid",

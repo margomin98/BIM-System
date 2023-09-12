@@ -101,7 +101,7 @@
     ref
   } from "vue";
   import Equipment_button from "@/components/Equipment_button";
-  import Delete from "@/components/Delete_button";
+  import Delete from "@/components/Equip_delete_button";
   import Navbar from "@/components/Navbar.vue";
   import {EquipmentDataType} from "@/assets/js/dropdown.js"
   export default {

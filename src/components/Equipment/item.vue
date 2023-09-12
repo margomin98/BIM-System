@@ -27,6 +27,7 @@
           <div class="btn_section" v-if="delete_btn">
             <button class="delete_btn" @click="deleteBtn">刪除</button>
           </div>
+          <p>{{ AssetData.error_msg }}</p>
         </div>
       </div>
     </div>
@@ -239,7 +240,7 @@ span {
         }
 
         .failed_storage {
-          background-color: #8A2828;
+          background-color: #8A2828 !important;
           border: 1px solid white;
         }
       }
@@ -612,7 +613,7 @@ span {
       }
 
       .failed_storage {
-        background-color: #8A2828;
+        background-color: #8A2828 !important;
         border: 1px solid white;
       }
     }
@@ -899,7 +900,7 @@ span {
         }
 
         .failed_storage {
-          background-color: #8A2828;
+          background-color: #8A2828 !important;
           border: 1px solid white;
         }
       }

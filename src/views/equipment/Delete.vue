@@ -2,9 +2,12 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>檢視設備整合</h1>
+      <h1>刪除項目</h1>
     </div>
     <div class="info_wrap col">
+      <div class="warn">
+        <h4>確定刪除以下項目嗎？</h4>
+      </div>
       <div class="fixed_info">
         <div>
           <p>設備整合箱</p>
@@ -86,6 +89,21 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
+        <button class="delete_btn" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade delete_modal" id="deleteModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-body">
+            確定刪除這筆項目嗎？
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">否</button>
+            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" @click="deleteData">是</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -244,6 +262,27 @@
           console.error(error);
         }
       }
+      async function deleteData() {
+        const form = new FormData();
+        form.append('IntegrationId', IntegrationId);
+        const axios = require('axios');
+        const response = await axios.post(`http://192.168.0.177:7008/IntegrationMng/IntegrationDelete`, form);
+        try {
+          const data = response.data;
+          if (data.state === 'success') {
+            let msg = data.messages + '\n';
+            msg += '單號:' + data.resultList.B_Id;
+            alert(msg);
+            router.push({
+              name: 'Store_Datagrid'
+            });
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
       function goBack() {
         window.history.back();
       }
@@ -253,6 +292,7 @@
         rowData,
         pageSize: 10,
         rowHeight: 35,
+        deleteData,
         goBack,
       };
     },
@@ -263,8 +303,60 @@
   span {
     @include red_star
   }
+  .delete_modal {
+    .modal-content {
+      border: solid 1px black;
+      border-radius: 0;
+      .modal-body {
+        background: #E94B4B;
+        text-align: center;
+        font-weight: 700;
+        color: white;
+        border-bottom: solid 1px black;
+      }
+      .modal-footer {
+        margin: auto;
+        gap: 10px;
+        button:nth-child(1) {
+          background-color: #7E7E7E;
+          border: none;
+          color: white;
+          width: 50px;
+          font-weight: 700;
+          &:hover {
+            background-color: #464242;
+          }
+        }
+        button:nth-child(2) {
+          background-color: #E94B4B;
+          border: none;
+          color: white;
+          width: 50px;
+          font-weight: 700;
+          &:hover {
+            background-color: #a70e0e;
+          }
+        }
+      }
+    }
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
+      .warn {
+        text-align: center;
+        padding: 10px 0;
+        background: #9f0000;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        h4 {
+          color: white;
+          margin-bottom: 0;
+          font-weight: 700;
+          &::before {
+            content: "\26A0";
+          }
+        }
+      }
       .readonly_box {
         @include readonly_box;
       }
@@ -353,10 +445,28 @@
           padding: 0 28%;
           margin-bottom: 5%;
           gap: 20px;
-          button.back_btn {
+          .back_btn {
             @include back_to_previous_btn;
             &:hover {
               background-color: #5d85bb;
+            }
+          }
+          .delete_btn {
+            background: var(--c-5, #E94B4B);
+            justify-content: center;
+            align-items: center;
+            display: inline-flex;
+            border-radius: 10px;
+            height: 40px;
+            width: 90px;
+            color: #FFF;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            border: none;
+            margin: 0 10px;
+            &:hover {
+              background-color: #a51e1e;
             }
           }
         }
@@ -399,6 +509,21 @@
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
+      .warn {
+        text-align: center;
+        padding: 10px 0;
+        background: #9f0000;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        h4 {
+          color: white;
+          margin-bottom: 0;
+          font-weight: 700;
+          &::before {
+            content: "\26A0";
+          }
+        }
+      }
       .readonly_box {
         @include readonly_box;
       }
@@ -477,10 +602,28 @@
           padding: 0 28%;
           margin-bottom: 5%;
           gap: 20px;
-          button.back_btn {
+          .back_btn {
             @include back_to_previous_btn;
             &:hover {
               background-color: #5d85bb;
+            }
+          }
+          .delete_btn {
+            background: var(--c-5, #E94B4B);
+            justify-content: center;
+            align-items: center;
+            display: inline-flex;
+            border-radius: 10px;
+            height: 40px;
+            width: 90px;
+            color: #FFF;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            border: none;
+            margin: 0 10px;
+            &:hover {
+              background-color: #a51e1e;
             }
           }
         }
@@ -533,6 +676,21 @@
   }
   @media only screen and (max-width: 767px) {
     .main_section {
+      .warn {
+        text-align: center;
+        padding: 10px 0;
+        background: #9f0000;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        h4 {
+          color: white;
+          margin-bottom: 0;
+          font-weight: 700;
+          &::before {
+            content: "\26A0";
+          }
+        }
+      }
       .readonly_box {
         @include readonly_box;
       }
@@ -603,10 +761,28 @@
           padding: 0 20%;
           margin-bottom: 5%;
           gap: 20px;
-          button.back_btn {
+          .back_btn {
             @include back_to_previous_btn;
             &:hover {
               background-color: #5d85bb;
+            }
+          }
+          .delete_btn {
+            background: var(--c-5, #E94B4B);
+            justify-content: center;
+            align-items: center;
+            display: inline-flex;
+            border-radius: 10px;
+            height: 40px;
+            width: 90px;
+            color: #FFF;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            border: none;
+            margin: 0 10px;
+            &:hover {
+              background-color: #a51e1e;
             }
           }
         }
