@@ -299,6 +299,7 @@
                   error_msg: '',
                 })
               }
+              exist = false;
               // 重複項目直接將數量疊上
               formParams.AssetList.forEach(item =>{
                 if(item.AssetsId === data.AssetsId) {
@@ -498,7 +499,7 @@
               case 'edit':
                 searchParams.EquipTypeName = data.resultList.EquipTypeName
                 searchParams.EquipCategoryName = data.resultList.EquipCategoryName
-                console.log(data.resultList.EquipCategoryName);
+                // console.log(data.resultList.EquipCategoryName);
                 break;
             
               default:
@@ -723,7 +724,7 @@
               ...item,
               selectNumber: item.OM_Number,
             }));
-            console.log('searchData',tempData);
+            // console.log('searchData',tempData);
             rowData.value = tempData;
             // console.log('完成所有處理之rowData',rowData.value);
             // setTimeout(()=>{

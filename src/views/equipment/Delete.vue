@@ -274,7 +274,7 @@
             msg += '單號:' + data.resultList.B_Id;
             alert(msg);
             router.push({
-              name: 'Store_Datagrid'
+              name: 'Equipment_Datagrid'
             });
           } else if (data.state === 'error') {
             alert(data.messages);
