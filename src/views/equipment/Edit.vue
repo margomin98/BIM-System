@@ -782,7 +782,7 @@
             });
             // 再將不足的物品HILIGHT成紅色、變更警告字串
             data.resultList.forEach((item)=>{
-              const index = details.value.AssetList.findIndex((list)=>{ list.AssetsId === item.AssetsId})
+              const index = details.value.AssetList.findIndex(list=>list.AssetsId === item.AssetsId)
               if(index != -1) {
                 details.value.AssetList[index].Failed = true;
                 details.value.AssetList[index].error_msg = '　目前庫存量：' + item.Number;

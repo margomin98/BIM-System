@@ -597,8 +597,6 @@
         }
       }
       async function submit() {
-        formParams.AssetList[0].Failed = true;
-        formParams.AssetList[0].error_msg = '　目前庫存量： 10';
         // console.log(details.value);
         // 檢查必填項目
         if (!formParams.IntegrationId || !formParams.IntegrationName || formParams.AssetList.length === 0) {
