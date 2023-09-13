@@ -165,7 +165,7 @@ const routes = [
     path: "/assets_datagrid",
     name: "Assets_Datagrid",
     component: Assets_Datagrid,
-    meta: {auth: true, request: 'AssetMgr_Detail'},
+    meta: {auth: true, request: 'AssetMgr'},
   },
   {
     path: "/assets_view",
