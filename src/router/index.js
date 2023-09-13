@@ -60,6 +60,11 @@ import Equipment_Delete from "../views/equipment/Delete.vue";
 //盤點管理
 import Inventory_Datagrid from "../views/inventory/Datagrid";
 import Inventory_New from "../views/inventory/New";
+import Inventory_View from "../views/inventory/View";
+import Inventory_Edit from "../views/inventory/Edit";
+import Inventory_Process from "../views/inventory/Process";
+import Inventory_Balance from "../views/inventory/Balance";
+import Inventory_Balance_Result from "../views/inventory/Balance_result";
 //盤點管理
 
 //系統管理
@@ -256,6 +261,42 @@ const routes = [
     name: "Inventory_New",
     component: Inventory_New,
     meta: {auth: true, request: 'IP_Create'},
+  },
+  {
+    path: "/inventory_view",
+    name: "Inventory_View",
+    component: Inventory_View,
+    // meta: {auth: true, request: 'AO_Detail'},
+  },
+  {
+    path: "/inventory_edit",
+    name: "Inventory_Edit",
+    component: Inventory_Edit,
+    // meta: {auth: true, request: 'AO_Detail'},
+  },
+  {
+    path: "/inventory_process",
+    name: "Inventory_Process",
+    component: Inventory_Process,
+    // meta: {auth: true, request: 'AO_Detail'},
+  },
+  {
+    path: "/inventory_balance",
+    name: "Inventory_Balance",
+    component: Inventory_Balance,
+    // meta: {auth: true, request: 'AO_Detail'},
+  },
+  {
+    path: "/inventory_balance_result",
+    name: "Inventory_Balance_Result",
+    component: Inventory_Balance_Result,
+    // meta: {auth: true, request: 'AO_Detail'},
+  },
+  {
+    path: "/inventory_balance_result",
+    name: "Inventory_Balance_Result",
+    component: Inventory_Balance_Result,
+    // meta: {auth: true, request: 'AO_Detail'},
   },
   {
     

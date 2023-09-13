@@ -2,7 +2,7 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>新增盤點計畫</h1>
+      <h1>編輯盤點計畫</h1>
     </div>
     <div class="info_wrap col">
       <div class="fixed_info">
@@ -11,6 +11,12 @@
         </div>
       </div>
       <div class="content">
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">計畫編號：</div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly/>
+          </div>
+        </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend"><span>*</span>標題：</div>
@@ -23,8 +29,8 @@
               <div class="input-group-prepend flex"><span>*</span>盤點人員：</div>
               <div class="dropdown">
                 <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                           請選擇
-                      </button>
+                       請選擇
+                  </button>
                 <div class="dropdown-menu">
                   <p>123</p>
                 </div>
@@ -110,8 +116,8 @@
                       <p>設備總類</p>
                       <div class="dropdown">
                         <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                           請選擇
-                      </button>
+                       請選擇
+                  </button>
                         <div class="dropdown-menu">
                           <p>123</p>
                         </div>
@@ -121,8 +127,8 @@
                       <p>設備分類</p>
                       <div class="dropdown">
                         <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                           請選擇
-                      </button>
+                       請選擇
+                  </button>
                         <div class="dropdown-menu">
                           <p>123</p>
                         </div>
@@ -136,8 +142,8 @@
                       <p>儲位區域</p>
                       <div class="dropdown">
                         <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                           請選擇
-                      </button>
+                       請選擇
+                  </button>
                         <div class="dropdown-menu">
                           <p>123</p>
                         </div>
@@ -147,8 +153,8 @@
                       <p>儲位櫃位</p>
                       <div class="dropdown">
                         <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                           請選擇
-                      </button>
+                       請選擇
+                  </button>
                         <div class="dropdown-menu">
                           <p>123</p>
                         </div>
@@ -548,10 +554,10 @@
               }
             }
           }
-          .date-selector {
-            width: 200px;
-            input {
-              width: 100%
+          .date-selector{
+            width:200px;
+            input{
+              width:100%
             }
           }
         }
@@ -613,6 +619,7 @@
       .row:nth-child(3) {
         .input-group {
           justify-content: flex-start;
+   
         }
       }
     }
@@ -752,7 +759,7 @@
       }
       .info_wrap {
         margin: auto;
-        width: 700px;
+width:700px;
         .fixed_info {
           @include fixed_info;
           p {
@@ -784,12 +791,12 @@
         }
         .content {
           @include content_bg;
-          .organizer_wrap {
-            --bs-gutter-x: unset;
-            .flex:nth-child(1) {
-              width: 210px
-            }
-          }
+.organizer_wrap{
+  --bs-gutter-x:unset;
+.flex:nth-child(1){
+  width:210px
+}
+}
           p {
             text-align: center;
             white-space: nowrap;
@@ -799,6 +806,7 @@
             color: white;
           }
           .dropdown {
+    
             .dropdown-menu {
               width: 100%;
               p {
@@ -814,6 +822,7 @@
               align-items: center;
             }
           }
+
           .input-group {
             flex-wrap: nowrap;
             .input-number {
@@ -848,7 +857,9 @@
                 font-weight: 600;
               }
             }
-          } // .date-selector{
+          }
+     
+          // .date-selector{
           //   width:220px;
           //   input{
           //     width:100%
@@ -911,6 +922,7 @@
       .info_wrap:nth-child(3) {
         margin-top: 3%;
       }
+   
     }
     .modal {
       .dropdown-toggle {
@@ -1027,7 +1039,8 @@
           }
         }
       }
-    }
+    }  
+     
   }
   @media only screen and (max-width: 767px) {
     .main_section {
