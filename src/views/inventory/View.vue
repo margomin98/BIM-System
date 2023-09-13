@@ -2,167 +2,94 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>檢視設備整合</h1>
+      <h1>檢視盤點計畫</h1>
     </div>
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
-          <p>設備整合箱</p>
+          <p>計畫內容</p>
         </div>
       </div>
       <div class="content">
         <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend">產編：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
-          </div>
-        </div>
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">名稱：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
-          </div>
-        </div>
-        <div class="row row_wrap">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend flex">儲位區域：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
-            </div>
-          </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend flex">儲位櫃位：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default"  readonly/>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">保管人員：</div>
-                <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default"  readonly/>
-              </div>
-            </div>
-          </div>
-        <div class="row">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">整合人員：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly/>
-            </div>
-          </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">整合日期：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
-            </div>
-          </div>
-        </div>
-        
-      </div>
-    </div>
-    <div class="info_wrap col">
-      <div class="fixed_info">
-        <div>
-          <p>整合箱內容物</p>
-        </div>
-      </div>
-      <div class="content">
-
-    <div class="item_wrap">
-    <div class="item">
-    
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">資產編號：</div>
+            <div class="input-group-prepend">計畫編號：</div>
             <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly/>
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend">物品名稱：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
+            <div class="input-group-prepend">標題：</div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly/>
           </div>
         </div>
-        <div class="col count d-flex">
-          <div class="input-group">
-            <div class="input-group-prepend">數量：</div>
-            <div class="num_wrap d-flex ">
-              <div class="number-input-box">
-                <input class="input-number readonly_box" type="number" readonly />
+        <div class="row g-0">
+          <div class="col-xl-6 col-lg-6 col-md-12 col-12 d-flex">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">盤點人員：</div>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly/>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-12 col-12 d-flex">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">盤點召集人：</div>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
+            </div>
+          </div>
+        </div>
+        <div class="row g-0">
+          <div class="col-xl-6 col-lg-12 col-md-12 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">盤點開始日期：</div>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-12 col-md-12 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">盤點結束日期：</div>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="input-group" style="   justify-content: flex-start;">
+            <div class="input-group-prepend">盤點類型：</div>
+            <div class="check_section d-flex">
+              <div class="form-check d-flex align-items-center">
+                <input type="radio" id="no1" name="radio" value="no1" />
+                <label for="no1">指定盤</label>
               </div>
-            
+              <div class="form-check d-flex align-items-center">
+                <input type="radio" id="no2" name="radio" value="no2" />
+                <label for="no2">月盤</label>
+              </div>
+              <div class="form-check d-flex align-items-center">
+                <input type="radio" id="no3" name="radio" value="no3" />
+                <label for="no3">季盤</label>
+              </div>
+              <div class="form-check d-flex align-items-center">
+                <input type="radio" id="no4" name="radio" value="no4" />
+                <label for="no4">年盤</label>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="item">
-    
-    <div class="col">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">資產編號：</div>
-        <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly/>
-      </div>
-    </div>
-    <div class="col">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">物品名稱：</div>
-        <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
-      </div>
-    </div>
-    <div class="col count d-flex">
-      <div class="input-group">
-        <div class="input-group-prepend">數量：</div>
-        <div class="num_wrap d-flex ">
-          <div class="number-input-box">
-            <input class="input-number readonly_box" type="number" readonly />
-          </div>
-        
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="item">
-    
-    <div class="col">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">資產編號：</div>
-        <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly/>
-      </div>
-    </div>
-    <div class="col">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">物品名稱：</div>
-        <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
-      </div>
-    </div>
-    <div class="col count d-flex">
-      <div class="input-group">
-        <div class="input-group-prepend">數量：</div>
-        <div class="num_wrap d-flex ">
-          <div class="number-input-box">
-            <input class="input-number readonly_box" type="number" readonly />
-          </div>
-        
-        </div>
-      </div>
-    </div>
-  </div>
-      </div>
-    </div>
     </div>
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
-          <p>更換設備歷史紀錄</p>
+          <p>盤點范圍</p>
         </div>
       </div>
-      <div style="width: 100%" class="content">
-      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true">
-      </ag-grid-vue>
-    </div>
-    <div class="col button_wrap">
+      <div class="content">
+        <div style="width: 100%">
+          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true"
+            :alwaysShowHorizontalScroll="true">
+          </ag-grid-vue>
+        </div>
+      </div>
+      <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
       </div>
     </div>
@@ -173,9 +100,6 @@
   import {
     AgGridVue
   } from "ag-grid-vue3";
-  import {
-    register
-  } from 'swiper/element/bundle';
   import Navbar from "@/components/Navbar.vue";
   import {
     onMounted,
@@ -185,7 +109,6 @@
     useRoute,
     useRouter
   } from "vue-router";
-
   export default {
     components: {
       Navbar,
@@ -193,82 +116,65 @@
     },
     setup() {
       return {
-        columnDefs: [ 
-          {
-            headerName: "記錄日期",
+        columnDefs: [{
+            headerName: "項目",
             field: "make",
             unSortIcon: true,
             sortable: true,
-            width: '150',
-            suppressMovable: true
-          },
-          {
-            headerName: "記錄行為",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            suppressMovable: true
-          },
-          {
-            headerName: "設備總類",
-            field: "price",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            suppressMovable: true
-          },
-          {
-            headerName: "設備分類",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
+            width: '100',
+            resizable: true,
             suppressMovable: true
           },
           {
             headerName: "資產編號",
+            field: "make",
+            unSortIcon: true,
+            sortable: true,
+            width: '140',
+            resizable: true,
+            suppressMovable: true
+          },
+          {
+            headerName: "設備總類",
             field: "model",
             unSortIcon: true,
             sortable: true,
-            width: '200',
-            resizable: true,
+            width: '140',
+            suppressMovable: true
+          },
+          {
+            headerName: "設備分類",
+            field: "price",
+            unSortIcon: true,
+            sortable: true,
+            width: '140',
             suppressMovable: true
           },
           {
             headerName: "物品名稱",
-            field: "price",
+            field: "make",
             unSortIcon: true,
             sortable: true,
-            width: '200',
+            width: '150',
             resizable: true,
             suppressMovable: true
           },
           {
-            headerName: "數量",
-            field: "make",
+            headerName: "儲位區域",
+            field: "model",
             unSortIcon: true,
             sortable: true,
-            width: '100',
+            width: '150',
             suppressMovable: true
           },
           {
-            headerName: "單位",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '100',
-            suppressMovable: true
-          },
-          {
-            headerName: "作業人員",
-            field: "make",
+            headerName: "儲位櫃位",
+            field: "model",
             unSortIcon: true,
             sortable: true,
             width: '150',
             suppressMovable: true
           }
-         
         ],
         rowData: [{
             make: "Toyota",
@@ -312,6 +218,10 @@
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
+      input {
+        @include dropdown_btn;
+        height: 35px;
+      }
       .readonly_box {
         @include readonly_box;
       }
@@ -325,7 +235,7 @@
       }
       .info_wrap {
         margin: auto;
-        width: 700px;
+        width: 800px;
         .fixed_info {
           @include fixed_info;
           p {
@@ -347,7 +257,7 @@
             color: white;
           }
           .dropdown {
-            width: 100%;
+            width: 55%;
             .dropdown-menu {
               width: 100%;
               p {
@@ -378,20 +288,27 @@
               color: white;
               font-weight: 700;
               font-size: 20px;
-              width: 100px;
+              width: 162px;
               text-align: end;
             }
           }
-          .item_wrap {
-          height: 350px;
-    overflow: auto;
-         .item{
-          background-color: #526F8E;
-          border-radius: 10px;
-          padding: 20px;
-          margin:20px 0;
-        }  
-        }
+          .check_section {
+            gap: 10px;
+            .form-check {
+              gap: 5px;
+              padding: 0;
+              input {
+                width: 15px;
+                padding: 0;
+                height: 15px;
+                border-radius: 50%;
+              }
+              label {
+                color: white;
+                font-weight: 600;
+              }
+            }
+          }
         }
         .button_wrap {
           display: flex;
@@ -406,7 +323,12 @@
               background-color: #5d85bb;
             }
           }
-      
+          button.send_btn {
+            @include search_and_send_btn;
+            &:hover {
+              background-color: #5e7aa2;
+            }
+          }
         }
         .dropdown {
           width: calc(100% - 10%);
@@ -428,30 +350,28 @@
             }
           }
         }
-      
+        .item_wrap {
+          height: 350px;
+          overflow: auto;
+          .item {
+            background-color: #526F8E;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+          }
+        }
       }
       .info_wrap:nth-child(3) {
         margin-top: 3%;
-        .count {
-          .input-group {
-            justify-content: left
-          }
-         
-        }
       }
-      .info_wrap:nth-child(4) {
-        margin-top: 3%;
-       
-      }
-      
-    }
-   
-    .change_btn {
-      @include change_btn
     }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
+      input {
+        @include dropdown_btn;
+        height: 35px;
+      }
       .readonly_box {
         @include readonly_box;
       }
@@ -487,7 +407,7 @@
             color: white;
           }
           .dropdown {
-            width: 100%;
+            width: 55%;
             .dropdown-menu {
               width: 100%;
               p {
@@ -518,8 +438,25 @@
               color: white;
               font-weight: 700;
               font-size: 20px;
-              width: 100px;
+              width: 162px;
               text-align: end;
+            }
+          }
+          .check_section {
+            gap: 10px;
+            .form-check {
+              gap: 5px;
+              padding: 0;
+              input {
+                width: 15px;
+                padding: 0;
+                height: 15px;
+                border-radius: 50%;
+              }
+              label {
+                color: white;
+                font-weight: 600;
+              }
             }
           }
         }
@@ -536,7 +473,12 @@
               background-color: #5d85bb;
             }
           }
-       
+          button.send_btn {
+            @include search_and_send_btn;
+            &:hover {
+              background-color: #5e7aa2;
+            }
+          }
         }
         .dropdown {
           width: calc(100% - 10%);
@@ -560,32 +502,18 @@
         }
         .item_wrap {
           height: 350px;
-    overflow: auto;
-         .item{
-          background-color: #526F8E;
-          border-radius: 10px;
-          padding: 20px;
-          margin:20px 0;
-        }  
+          overflow: auto;
+          .item {
+            background-color: #526F8E;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+          }
         }
       }
       .info_wrap:nth-child(3) {
         margin-top: 3%;
-        .count {
-          .input-group {
-            justify-content: left
-          }
-        
-        }
       }
-      .info_wrap:nth-child(4) {
-        margin-top: 3%;
-       
-      }
-    }
-  
-    .change_btn {
-      @include change_btn
     }
   }
   @media only screen and (max-width: 767px) {
@@ -593,10 +521,19 @@
       .readonly_box {
         @include readonly_box;
       }
+      input {
+        @include dropdown_btn;
+        height: 35px;
+        width: 100%
+      }
+      .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+        margin-left: 0 !important;
+        border-radius: 5px;
+      }
       h1 {
         margin-top: 50px;
         text-align: center;
-        font-size: 50px;
+        font-size: 40px;
         font-weight: 600;
         @include title_color;
       }
@@ -613,6 +550,25 @@
           p {
             font-size: 20px;
             margin-bottom: 0;
+          }
+        }
+        .add_btn {
+          display: inline-flex;
+          padding: 10px;
+          justify-content: center;
+          align-items: center;
+          border-radius: 9px;
+          background: #314F7A;
+          height: 50px;
+          width: 150px;
+          color: #FFF;
+          text-align: center;
+          font-size: 18px;
+          font-weight: 700;
+          border: none;
+          margin-bottom: 15px;
+          &:hover {
+            background-color: #456ca7
           }
         }
         .content {
@@ -662,21 +618,28 @@
           gap: 20px;
           button.back_btn {
             @include back_to_previous_btn;
+            padding: 5px;
             &:hover {
               background-color: #5d85bb;
             }
           }
-   
+          button.send_btn {
+            @include search_and_send_btn;
+            padding: 5px;
+            &:hover {
+              background-color: #5e7aa2;
+            }
+          }
         }
         .item_wrap {
           height: 350px;
-    overflow: auto;
-         .item{
-          background-color: #526F8E;
-          border-radius: 10px;
-          padding: 20px;
-          margin:20px 0;
-        }  
+          overflow: auto;
+          .item {
+            background-color: #526F8E;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+          }
         }
       }
       .info_wrap:nth-child(3) {
@@ -690,17 +653,40 @@
             width: 100%;
             margin-left: unset !important;
           }
-      
+          .btn_section {
+            margin-left: 10px;
+            .delete_btn {
+              display: flex;
+              align-items: center;
+              @include delete_button;
+              height: 100%;
+              padding: 5px;
+              width: 80px;
+              font-size: 18px;
+              &:hover {
+                background: #FF7272
+              }
+            }
+          }
         }
       }
-      .info_wrap:nth-child(4) {
-        margin-top: 3%;
-       
-      }
     }
-    
-    .change_btn {
-      @include change_btn
+    .check_section {
+      gap: 10px;
+      .form-check {
+        gap: 5px;
+        padding: 0;
+        input {
+          width: 15px;
+          padding: 0;
+          height: 15px;
+          border-radius: 50%;
+        }
+        label {
+          color: white;
+          font-weight: 600;
+        }
+      }
     }
   }
 </style>

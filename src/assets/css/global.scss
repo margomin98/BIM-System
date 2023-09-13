@@ -227,7 +227,21 @@
     justify-content: center;
     align-items: center;
 }
-
+@mixin save_btn {
+    display: inline-flex;
+    padding: 10px 10px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background: #385E96;
+    height: 40px;
+    width: 100px;
+    color: #FFF;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    border: none;
+}
 @mixin datagrid_title {
     color: #FFF;
     font-size: 20px;
@@ -278,6 +292,7 @@
     font-weight: 700;
     border: none;
 }
+
 
 // new item css
 

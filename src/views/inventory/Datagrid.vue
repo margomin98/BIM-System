@@ -4,6 +4,14 @@
     <div class="title col">
       <h1>盤點計畫管理</h1>
     </div>
+    <div class="col">
+      <div class="button_wrap d-flex">
+        <router-link to="/inventory_new">
+          <button class="add_btn">新增盤點計畫</button>
+        </router-link>
+  
+      </div>
+    </div>
     <div class="container-fluid datagrid_section">
       <div class="content">
         <div class="row">
@@ -23,7 +31,7 @@
               </div>
             </div>
           </div>
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+          <div class="col-xl-3 col-lg-2 col-md-6 col-12">
             <p>盤點狀態</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -35,7 +43,7 @@
               </div>
             </div>
           </div>
-          <div class="col-xl-3 col-lg-2 col-md-6 col-12">
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>日期類型</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -79,7 +87,7 @@
                 <button class="export_btn">匯出</button>
       </div>
     </div>
-   <div style="width: 100%">
+   <div style="width: 100%;margin-bottom:3%">
           <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true" :alwaysShowHorizontalScroll="true"
          >
     </ag-grid-vue>
@@ -368,7 +376,7 @@
         .row {
           display: grid;
           grid-template-rows: 1fr 1fr;
-          grid-template-columns: 1fr 1fr 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr;
           gap: 40px 5px;
            .col-xl-2{
             margin:0 3px;

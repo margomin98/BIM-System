@@ -2,7 +2,7 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>新增盤點計畫</h1>
+      <h1>平帳作業</h1>
     </div>
     <div class="info_wrap col">
       <div class="fixed_info">
@@ -13,62 +13,47 @@
       <div class="content">
         <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend"><span>*</span>標題：</div>
-            <input type="text" class="form-control text-center" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="請輸入產編" />
+            <div class="input-group-prepend">計畫編號：</div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly/>
           </div>
         </div>
-        <div class="row organizer_wrap">
-          <div class="col-xl-6 col-lg-12 col-md-12 col-12 d-flex">
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">標題：</div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly/>
+          </div>
+        </div>
+        <div class="row g-0">
+          <div class="col-xl-6 col-lg-6 col-md-12 col-12 d-flex">
             <div class="input-group mb-3">
-              <div class="input-group-prepend flex"><span>*</span>盤點人員：</div>
-              <div class="dropdown">
-                <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                           請選擇
-                      </button>
-                <div class="dropdown-menu">
-                  <p>123</p>
-                </div>
-              </div>
+              <div class="input-group-prepend">盤點人員：</div>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly/>
             </div>
           </div>
-          <div class="col-xl-6 col-lg-12 col-md-12 col-12 d-flex">
+          <div class="col-xl-6 col-lg-6 col-md-12 col-12 d-flex">
             <div class="input-group mb-3">
               <div class="input-group-prepend">盤點召集人：</div>
-              <input type="text" class="form-control readonly_box organizer" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row g-0">
           <div class="col-xl-6 col-lg-12 col-md-12 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend"><span>*</span>盤點開始日期：</div>
-              <div class="date-selector">
-                <div class="input-container">
-                  <input type="date" v-model="selectedDate" class="date-input" @focus="showDatePicker = true" @blur="showDatePicker = false" />
-                  <div class="date-picker" v-if="showDatePicker">
-                    <datepicker v-model="selectedDate"></datepicker>
-                  </div>
-                </div>
-              </div>
+              <div class="input-group-prepend">盤點開始日期：</div>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
             </div>
           </div>
           <div class="col-xl-6 col-lg-12 col-md-12 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend"><span>*</span>盤點結束日期：</div>
-              <div class="date-selector">
-                <div class="input-container">
-                  <input type="date" v-model="selectedDate" class="date-input" @focus="showDatePicker = true" @blur="showDatePicker = false" />
-                  <div class="date-picker" v-if="showDatePicker">
-                    <datepicker v-model="selectedDate"></datepicker>
-                  </div>
-                </div>
-              </div>
+              <div class="input-group-prepend">盤點結束日期：</div>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
             </div>
           </div>
         </div>
         <div class="col">
-          <div class="input-group" style="   justify-content: flex-start;">
-            <div class="input-group-prepend"><span>*</span>盤點類型：</div>
+          <div class="input-group mb-3 " style="   justify-content: flex-start;">
+            <div class="input-group-prepend">盤點類型：</div>
             <div class="check_section d-flex">
               <div class="form-check d-flex align-items-center">
                 <input type="radio" id="no1" name="radio" value="no1" />
@@ -92,100 +77,153 @@
       </div>
     </div>
     <div class="info_wrap col">
-      <div class="col">
-        <button class="add_btn" data-bs-toggle="modal" data-bs-target="#exampleModal">新增盤點項目</button>
-        <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-body">
-                <div class="fixed_info">
-                  <div>
-                    <p>檢索資產</p>
-                  </div>
-                  <button type="button" class="close" data-bs-dismiss="modal">x</button>
-                </div>
-                <div class='second_content'>
-                  <div class='wrap1'>
-                    <div class='col'>
-                      <p>設備總類</p>
-                      <div class="dropdown">
-                        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                           請選擇
-                      </button>
-                        <div class="dropdown-menu">
-                          <p>123</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class='col'>
-                      <p>設備分類</p>
-                      <div class="dropdown">
-                        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                           請選擇
-                      </button>
-                        <div class="dropdown-menu">
-                          <p>123</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class='col'>
-                      <p>物品名稱</p>
-                      <input type="text" class="form-control text-center" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="(模糊搜索)" />
-                    </div>
-                    <div class='col'>
-                      <p>儲位區域</p>
-                      <div class="dropdown">
-                        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                           請選擇
-                      </button>
-                        <div class="dropdown-menu">
-                          <p>123</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class='col'>
-                      <p>儲位櫃位</p>
-                      <div class="dropdown">
-                        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                           請選擇
-                      </button>
-                        <div class="dropdown-menu">
-                          <p>123</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class='col d-flex justify-content-center'>
-                    <button class="btn submit_btn" type="button" @click="searchInventory">搜尋</button>
-                  </div>
-                </div>
-              </div>
-              <div class="fixed_info">
-                <div>
-                  <p>目前資產庫存</p>
-                </div>
-              </div>
-              <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true" @grid-ready="onGridReady">
-              </ag-grid-vue>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="fixed_info">
         <div>
-          <p>盤點范圍</p>
+          <p>盤點結果</p>
+        </div>
+      </div>
+      <div class="content d-flex">
+        <div>
+          <p>應盤內容 ：</p>
+        </div>
+        <div>
+          <p>合格項目 ：</p>
+        </div>
+        <div>
+          <p>差異項目 ：</p>
+        </div>
+      </div>
+    </div>
+    <div class="info_wrap col">
+      <div class="fixed_info">
+        <div>
+          <p>差異細項</p>
         </div>
       </div>
       <div class="content">
         <div style="width: 100%">
-          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs1" :rowData="rowData1" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true"
+          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true"
+            :alwaysShowHorizontalScroll="true">
+          </ag-grid-vue>
+        </div>
+      </div>
+      <div class="bottom_fixed">
+        <div class="col d-flex">
+          <div class="input-group">
+            <div class="input-group-prepend">認列人員：</div>
+            <input type="text" class="form-control text-center readonly_box" readonly />
+          </div>
+          <button class="send_btn" data-bs-toggle="modal" data-bs-target="#auth_modal">驗證</button>
+        </div>
+        <div class="modal fade" id="auth_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content ">
+              <div class="modal-header">
+                <h5 class="modal-title">認列人員驗證</h5>
+                <p class='m-0 close_icon' data-bs-dismiss="modal">x</p>
+              </div>
+              <div class="modal-body">
+                <div class="col">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">帳號：</div>
+                    <input type="text" class="form-control" />
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">密碼：</div>
+                    <input type="password" class="form-control" />
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer m-auto">
+                <button type="button" class="btn" data-bs-dismiss="modal">驗證</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col button_wrap">
+        <button class="send_btn">確定認列</button>
+      </div>
+    </div>
+    <div class="info_wrap col">
+      <div class="fixed_info">
+        <div>
+          <p>差異細項</p>
+        </div>
+      </div>
+      <div class="content">
+        <div class="search_wrap col">
+          <div class="content">
+            <div class="wrap row">
+              <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
+                <p>設備總類</p>
+                <div class="dropdown">
+                  <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                         請選擇
+                    </button>
+                  <div class="dropdown-menu">
+                    <p>123</p>
+                  </div>
+                </div>
+              </div>
+              <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
+                <p>設備分類</p>
+                <div class="dropdown">
+                  <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                         請選擇
+                    </button>
+                  <div class="dropdown-menu">
+                    <p>123</p>
+                  </div>
+                </div>
+              </div>
+              <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
+                <p>資產編號</p>
+                <input type="text" class="form-control text-center" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="(完整查詢)" />
+              </div>
+              <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
+                <p>物品名稱</p>
+                <input type="text" class="form-control text-center" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="(模糊查詢)" />
+              </div>
+              <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
+                <p>儲位區域</p>
+                <div class="dropdown">
+                  <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                         請選擇
+                    </button>
+                  <div class="dropdown-menu">
+                    <p>123</p>
+                  </div>
+                </div>
+              </div>
+              <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
+                <p>儲位櫃位</p>
+                <div class="dropdown">
+                  <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                         請選擇
+                    </button>
+                  <div class="dropdown-menu">
+                    <p>123</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-12 button">
+              <button class="search_btn">搜索</button>
+              <button class="empty_btn">清空</button>
+            </div>
+          </div>
+        </div>
+        <div style="width: 100%">
+          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs2" :rowData="rowData2" :defaultColDef="defaultColDef2" :paginationAutoPageSize="true" :pagination="true"
             :alwaysShowHorizontalScroll="true">
           </ag-grid-vue>
         </div>
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="send_btn" @click="submit">送出</button>
       </div>
     </div>
   </div>
@@ -195,7 +233,6 @@
   import {
     AgGridVue
   } from "ag-grid-vue3";
-  import Inventory_delete_button from "@/components/Inventory_delete_button";
   import Navbar from "@/components/Navbar.vue";
   import {
     onMounted,
@@ -209,130 +246,18 @@
     components: {
       Navbar,
       AgGridVue,
-      Inventory_delete_button
     },
     setup() {
       return {
         columnDefs: [{
-            headerCheckboxSelection: true, //可以全選
             cellClass: 'grid_checkbox',
             checkboxSelection: true,
-            headerName: "",
+            headerName: "認列",
             field: "",
             unSortIcon: true,
-            width: '50',
+            width: '80',
             suppressMovable: true
-          },
-          {
-            headerName: "資產編號",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '140',
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "設備總類",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: '140',
-            suppressMovable: true
-          },
-          {
-            headerName: "設備分類",
-            field: "price",
-            unSortIcon: true,
-            sortable: true,
-            width: '140',
-            suppressMovable: true
-          },
-          {
-            headerName: "物品名稱",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "儲位區域",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            suppressMovable: true
-          },
-          {
-            headerName: "儲位櫃位",
-            field: "model",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            suppressMovable: true
-          },
-          {
-            headerName: "型號",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
-            suppressMovable: true
-          },
-          {
-            headerName: "數量",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '100',
-            suppressMovable: true
-          },
-          {
-            headerName: "單位",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '100',
-            suppressMovable: true
-          }
-        ],
-        rowData: [{
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000
-          },
-        ],
-        columnDefs1: [{
-            cellRenderer: "Inventory_delete_button",
-            headerName: "",
-            field: "",
-            unSortIcon: true,
-            width: '100',
-            suppressMovable: true
-          },
-          {
+          }, {
             headerName: "項目",
             field: "make",
             unSortIcon: true,
@@ -390,9 +315,173 @@
             sortable: true,
             width: '150',
             suppressMovable: true
+          },
+          {
+            headerName: "應盤數量",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: '150',
+            suppressMovable: true
+          },
+          {
+            headerName: "實盤數量",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: '150',
+            suppressMovable: true
+          },
+          {
+            headerName: "差異",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: '100',
+            suppressMovable: true
+          },
+          {
+            headerName: "單位",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: '100',
+            suppressMovable: true
+          }, {
+            headerName: "認列人員",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: '150',
+            suppressMovable: true
           }
         ],
-        rowData1: [{
+        rowData: [{
+            make: "Toyota",
+            model: "Celica",
+            price: 35000
+          },
+          {
+            make: "Ford",
+            model: "Mondeo",
+            price: 32000
+          },
+          {
+            make: "Toyota",
+            model: "Celica",
+            price: 35000
+          },
+          {
+            make: "Ford",
+            model: "Mondeo",
+            price: 32000
+          },
+          {
+            make: "Porsche",
+            model: "Boxster",
+            price: 72000
+          },
+        ],
+        columnDefs2: [{
+            headerName: "項目",
+            field: "make",
+            unSortIcon: true,
+            sortable: true,
+            width: '100',
+            resizable: true,
+            suppressMovable: true
+          },
+          {
+            headerName: "資產編號",
+            field: "make",
+            unSortIcon: true,
+            sortable: true,
+            width: '140',
+            resizable: true,
+            suppressMovable: true
+          },
+          {
+            headerName: "設備總類",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: '140',
+            suppressMovable: true
+          },
+          {
+            headerName: "設備分類",
+            field: "price",
+            unSortIcon: true,
+            sortable: true,
+            width: '140',
+            suppressMovable: true
+          },
+          {
+            headerName: "物品名稱",
+            field: "make",
+            unSortIcon: true,
+            sortable: true,
+            width: '150',
+            resizable: true,
+            suppressMovable: true
+          },
+          {
+            headerName: "儲位區域",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: '150',
+            suppressMovable: true
+          },
+          {
+            headerName: "儲位櫃位",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: '150',
+            suppressMovable: true
+          },
+          {
+            headerName: "應盤數量",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: '150',
+            suppressMovable: true
+          },
+          {
+            headerName: "實盤數量",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: '150',
+            suppressMovable: true
+          },
+          {
+            headerName: "差異",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: '100',
+            suppressMovable: true
+          },
+          {
+            headerName: "單位",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: '100',
+            suppressMovable: true
+          }, {
+            headerName: "認列人員",
+            field: "model",
+            unSortIcon: true,
+            sortable: true,
+            width: '150',
+            suppressMovable: true
+          }
+        ],
+        rowData2: [{
             make: "Toyota",
             model: "Celica",
             price: 35000
@@ -432,10 +521,6 @@
   span {
     @include red_star
   }
-  .modal-dialog {
-    width: 80% !important;
-    max-width: unset
-  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       input {
@@ -465,25 +550,6 @@
         }
         .fixed_title {
           @include fixed_title;
-        }
-        .add_btn {
-          display: inline-flex;
-          padding: 10px 25px;
-          justify-content: center;
-          align-items: center;
-          border-radius: 9px;
-          background: #314F7A;
-          height: 50px;
-          width: 174px;
-          color: #FFF;
-          text-align: center;
-          font-size: 20px;
-          font-weight: 700;
-          border: none;
-          margin-bottom: 20px;
-          &:hover {
-            background-color: #456ca7
-          }
         }
         .content {
           @include content_bg;
@@ -548,18 +614,12 @@
               }
             }
           }
-          .date-selector {
-            width: 200px;
-            input {
-              width: 100%
-            }
-          }
         }
         .button_wrap {
           display: flex;
           margin-top: 30px;
           justify-content: center;
-          padding: 0 28%;
+          padding: 0 25%;
           margin-bottom: 5%;
           gap: 20px;
           button.back_btn {
@@ -570,12 +630,15 @@
           }
           button.send_btn {
             @include search_and_send_btn;
+            width: 120px;
+            padding: 10px;
             &:hover {
-              background-color: #5e7aa2;
+              background-color: #8eb2e3;
             }
           }
         }
         .dropdown {
+          width: calc(100% - 10%);
           height: 35px;
           @include dropdown_btn;
           .dropdown-toggle {
@@ -588,8 +651,6 @@
             width: 100%;
             transform: translate3d(-1px, 35px, 0px) !important;
             p {
-              padding-top: 5px;
-              text-align: left;
               font-size: 18px;
               color: black;
               font-weight: normal;
@@ -609,126 +670,133 @@
       }
       .info_wrap:nth-child(3) {
         margin-top: 3%;
+        .content {
+          justify-content: space-around;
+        }
       }
-      .row:nth-child(3) {
-        .input-group {
-          justify-content: flex-start;
+      .info_wrap:nth-child(4) {
+        margin-top: 3%;
+        .content {
+          border-radius: unset
+        }
+      }
+      .info_wrap:nth-child(5) {
+        .content {
+          .search_wrap {
+            margin-bottom: 20px;
+            .title {
+              display: flex;
+              justify-content: space-around;
+              background: #3D4E61;
+              color: white;
+              font-size: 25px;
+              font-weight: 700;
+              align-items: center;
+              border-radius: 10px 10px 0px 0px;
+              height: 50px;
+            }
+            .content {
+              border-radius: 10px;
+              background-color: #C3D3DA !important
+            }
+            .button {
+              display: flex;
+              justify-content: center;
+              gap: 20px;
+              margin: 20px auto 0;
+              button.empty_btn {
+                @include empty_btn;
+                padding: 5px;
+                &:hover {
+                  background-color: #244f86;
+                }
+              }
+              button.search_btn {
+                @include search_and_send_btn;
+                padding: 5px;
+                &:hover {
+                  background-color: #5e7aa2;
+                }
+              }
+            }
+            .search_section {
+              padding: 0 80px;
+              width: 100%;
+              input {
+                @include dropdown_btn;
+                width: 100%;
+                height: 35px;
+              }
+            }
+          }
+          .wrap {
+            gap: 10px 0
+          }
+          p {
+            color: black
+          }
+          .dropdown {
+            width: 100%
+          }
+        }
+      }
+    }
+    .bottom_fixed {
+      display: flex;
+      justify-content: space-around;
+      background: white;
+      color: white;
+      font-size: 25px;
+      font-weight: 700;
+      align-items: center;
+      border-radius: 0 0 10px 10px;
+      height: 70px;
+      padding: 0 30%;
+      .input-group {
+        height: auto;
+      }
+      .input-group-prepend {
+        font-size: 20px;
+        margin-bottom: 0;
+        color: black
+      }
+      button {
+        margin-left: 15px;
+        @include auth_btn;
+        font-size: 20px;
+        border-radius: 7px;
+        &:hover {
+          background: #5a6d87;
         }
       }
     }
     .modal {
-      .dropdown-toggle {
-        width: 100%
+      .modal-body {
+        padding: 16px 16px 0;
       }
-      padding: 0 5%;
       .modal-content {
-        background: unset;
-        border: 0;
-        .modal-body {
-          padding: 0;
-        }
+        width: 400px;
+        margin: auto;
       }
-      .fixed_info {
-        @include fixed_info;
-        background: #528091 !important;
-        border-radius: 0!important;
-        border: 1px solid black;
-        padding: 0 10px;
-        div {
-          flex-grow: 1;
-          text-align: center;
-        }
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-        button {
-          border: none;
-          background: none;
-          color: white;
+      input {
+        border: 1px solid lightgrey;
+      }
+      .input-group-prepend {
+        width: auto;
+      }
+      .modal-footer {
+        padding: 0 12px 12px;
+        border: none;
+      }
+      .modal-header {
+        h5 {
           font-weight: 700;
-          font-size: 22px;
-          align-self: start;
         }
-      }
-      .list {
-        border-left: 1px solid black;
-        border-bottom: 1px solid black;
-        border-right: 1px solid black;
-      }
-      .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        background: #D9D9D9;
-        padding: 20px;
-        p.content {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          color: black;
-          background: white;
-          height: 35px;
-          border-radius: 5px;
-        }
-        .submit_btn {
-          margin-top: 20px;
-          background: #48658C;
-          color: white;
-          font-weight: 700;
-          width: 80px;
-          font-size: 20px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-        .wrap1 {
-          display: flex;
-          justify-content: space-evenly;
-          padding: 10px 80px;
-          .input-number {
-            @include count_btn;
-          }
-          .number-input-box {
-            color: black;
-            .input-number {
-              width: 100%;
-            }
-          }
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
-          } // .dropdown {
-          //   button {
-          //     background: white;
-          //     width: 100%;
-          //     border: none;
-          //     display: flex;
-          //     justify-content: space-between;
-          //     align-items: center;
-          //   }
-          //   .dropdown-menu {
-          //     width: 225px;
-          //     .dropdown-item {
-          //       text-align: left;
-          //     }
-          //   }
-          // }
-          div {
-            padding: 0 5px;
-            p {
-              color: black;
-              text-align: center;
-              white-space: nowrap;
-              font-size: 18px;
-              font-weight: 700;
-              margin-bottom: 5px;
-            }
-          }
+        background: #3D4E61;
+        color: white;
+        padding:5px 10px;
+        .close_icon {
+          cursor: pointer;
         }
       }
     }
@@ -752,7 +820,7 @@
       }
       .info_wrap {
         margin: auto;
-        width: 700px;
+        padding: 0 5%;
         .fixed_info {
           @include fixed_info;
           p {
@@ -763,33 +831,8 @@
         .fixed_title {
           @include fixed_title;
         }
-        .add_btn {
-          display: inline-flex;
-          padding: 10px 25px;
-          justify-content: center;
-          align-items: center;
-          border-radius: 9px;
-          background: #314F7A;
-          height: 50px;
-          width: 174px;
-          color: #FFF;
-          text-align: center;
-          font-size: 20px;
-          font-weight: 700;
-          border: none;
-          margin-bottom: 20px;
-          &:hover {
-            background-color: #456ca7
-          }
-        }
         .content {
           @include content_bg;
-          .organizer_wrap {
-            --bs-gutter-x: unset;
-            .flex:nth-child(1) {
-              width: 210px
-            }
-          }
           p {
             text-align: center;
             white-space: nowrap;
@@ -799,6 +842,7 @@
             color: white;
           }
           .dropdown {
+            width: 55%;
             .dropdown-menu {
               width: 100%;
               p {
@@ -815,20 +859,21 @@
             }
           }
           .input-group {
+            justify-content: right;
             flex-wrap: nowrap;
             .input-number {
               @include count_btn;
             }
             .form-control {
               height: 35px;
-              width: 55%;
+              border-radius: 0;
             }
             .input-group-prepend {
               white-space: nowrap;
               color: white;
               font-weight: 700;
               font-size: 20px;
-              width: 170px;
+              width: 162px;
               text-align: end;
             }
           }
@@ -848,18 +893,13 @@
                 font-weight: 600;
               }
             }
-          } // .date-selector{
-          //   width:220px;
-          //   input{
-          //     width:100%
-          //   }
-          // }
+          }
         }
         .button_wrap {
           display: flex;
           margin-top: 30px;
           justify-content: center;
-          padding: 0 28%;
+          padding: 0 25%;
           margin-bottom: 5%;
           gap: 20px;
           button.back_btn {
@@ -870,8 +910,10 @@
           }
           button.send_btn {
             @include search_and_send_btn;
+            width: 120px;
+            padding: 10px;
             &:hover {
-              background-color: #5e7aa2;
+              background-color: #8eb2e3;
             }
           }
         }
@@ -889,8 +931,6 @@
             width: 100%;
             transform: translate3d(-1px, 35px, 0px) !important;
             p {
-              padding-top: 5px;
-              text-align: left;
               font-size: 18px;
               color: black;
               font-weight: normal;
@@ -910,121 +950,133 @@
       }
       .info_wrap:nth-child(3) {
         margin-top: 3%;
+        .content {
+          justify-content: space-around;
+        }
+      }
+      .info_wrap:nth-child(4) {
+        margin-top: 3%;
+        .content {
+          border-radius: unset
+        }
+      }
+      .info_wrap:nth-child(5) {
+        .content {
+          .search_wrap {
+            margin-bottom: 20px;
+            .title {
+              display: flex;
+              justify-content: space-around;
+              background: #3D4E61;
+              color: white;
+              font-size: 25px;
+              font-weight: 700;
+              align-items: center;
+              border-radius: 10px 10px 0px 0px;
+              height: 50px;
+            }
+            .content {
+              border-radius: 10px;
+              background-color: #C3D3DA !important
+            }
+            .button {
+              display: flex;
+              justify-content: center;
+              gap: 20px;
+              margin: 20px auto 0;
+              button.empty_btn {
+                @include empty_btn;
+                padding: 5px;
+                &:hover {
+                  background-color: #244f86;
+                }
+              }
+              button.search_btn {
+                @include search_and_send_btn;
+                padding: 5px;
+                &:hover {
+                  background-color: #5e7aa2;
+                }
+              }
+            }
+            .search_section {
+              padding: 0 80px;
+              width: 100%;
+              input {
+                @include dropdown_btn;
+                width: 100%;
+                height: 35px;
+              }
+            }
+          }
+          .wrap {
+            gap: 10px 0
+          }
+          p {
+            color: black
+          }
+          .dropdown {
+            width: 100%
+          }
+        }
+      }
+    }
+    .bottom_fixed {
+      display: flex;
+      justify-content: space-around;
+      background: white;
+      color: white;
+      font-size: 25px;
+      font-weight: 700;
+      align-items: center;
+      border-radius: 0 0 10px 10px;
+      height: 70px;
+      padding: 0 30%;
+      .input-group {
+        height: auto;
+      }
+      .input-group-prepend {
+        font-size: 20px;
+        margin-bottom: 0;
+        color: black
+      }
+      button {
+        margin-left: 15px;
+        @include auth_btn;
+        font-size: 20px;
+        border-radius: 7px;
+        &:hover {
+          background: #5a6d87;
+        }
       }
     }
     .modal {
-      .dropdown-toggle {
-        width: 100%
+      .modal-body {
+        padding: 16px 16px 0;
       }
-      padding: 0 5%;
       .modal-content {
-        background: unset;
-        border: 0;
-        .modal-body {
-          padding: 0;
-        }
+        width: 400px;
+        margin: auto;
       }
-      .fixed_info {
-        @include fixed_info;
-        background: #528091 !important;
-        border-radius: 0!important;
-        border: 1px solid black;
-        padding: 0 10px;
-        div {
-          flex-grow: 1;
-          text-align: center;
-        }
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-        button {
-          border: none;
-          background: none;
-          color: white;
+      input {
+        border: 1px solid lightgrey;
+      }
+      .input-group-prepend {
+        width: auto;
+      }
+      .modal-footer {
+        padding: 0 12px 12px;
+        border: none;
+      }
+      .modal-header {
+        h5 {
           font-weight: 700;
-          font-size: 22px;
-          align-self: start;
         }
-      }
-      .list {
-        border-left: 1px solid black;
-        border-bottom: 1px solid black;
-        border-right: 1px solid black;
-      }
-      .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        background: #D9D9D9;
-        padding: 20px;
-        p.content {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          color: black;
-          background: white;
-          height: 35px;
-          border-radius: 5px;
-        }
-        .submit_btn {
-          margin-top: 20px;
-          background: #48658C;
-          color: white;
-          font-weight: 700;
-          width: 80px;
-          font-size: 20px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-        .wrap1 {
-          display: flex;
-          justify-content: space-evenly;
-          padding: 20px;
-          .input-number {
-            @include count_btn;
-          }
-          .number-input-box {
-            color: black;
-            .input-number {
-              width: 100%;
-            }
-          }
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
-          } // .dropdown {
-          //   button {
-          //     background: white;
-          //     width: 100%;
-          //     border: none;
-          //     display: flex;
-          //     justify-content: space-between;
-          //     align-items: center;
-          //   }
-          //   .dropdown-menu {
-          //     width: 225px;
-          //     .dropdown-item {
-          //       text-align: left;
-          //     }
-          //   }
-          // }
-          div {
-            padding: 0 5px;
-            p {
-              color: black;
-              text-align: center;
-              white-space: nowrap;
-              font-size: 18px;
-              font-weight: 700;
-              margin-bottom: 5px;
-            }
-          }
+        background: #3D4E61;
+        color: white;
+        padding:5px 10px;
+        .close_icon {
+          cursor: pointer;
         }
       }
     }
@@ -1126,21 +1178,23 @@
           display: flex;
           margin-top: 30px;
           justify-content: center;
-          padding: 0 20%;
+          padding: 0 5%;
           margin-bottom: 5%;
           gap: 20px;
           button.back_btn {
             @include back_to_previous_btn;
             padding: 5px;
+            width: 120px;
             &:hover {
               background-color: #5d85bb;
             }
           }
           button.send_btn {
             @include search_and_send_btn;
+            width: 120px;
             padding: 5px;
             &:hover {
-              background-color: #5e7aa2;
+              background-color: #8eb2e3;
             }
           }
         }
@@ -1156,141 +1210,84 @@
         }
       }
       .info_wrap:nth-child(3) {
-        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-          margin-left: unset !important;
-          border-radius: 5px;
-        }
         margin-top: 3%;
-        .count {
-          .number-input-box {
-            width: 100%;
-            margin-left: unset !important;
+        .content {
+          flex-direction: column;
+          align-items: flex-start;
+          p {
+            text-align: center;
+            white-space: nowrap;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: white;
           }
-          .btn_section {
-            margin-left: 10px;
-            .delete_btn {
+        }
+      }
+      .info_wrap:nth-child(4) {
+        margin-top: 3%;
+        .content {
+          border-radius: unset
+        }
+      }
+      .info_wrap:nth-child(5) {
+        .content {
+          .search_wrap {
+            margin-bottom: 20px;
+            .title {
               display: flex;
+              justify-content: space-around;
+              background: #3D4E61;
+              color: white;
+              font-size: 25px;
+              font-weight: 700;
               align-items: center;
-              @include delete_button;
-              height: 100%;
-              padding: 5px;
-              width: 80px;
-              font-size: 18px;
-              &:hover {
-                background: #FF7272
+              border-radius: 10px 10px 0px 0px;
+              height: 50px;
+            }
+            .content {
+              border-radius: 10px;
+              background-color: #C3D3DA !important
+            }
+            .button {
+              display: flex;
+              justify-content: center;
+              gap: 20px;
+              margin: 20px auto 0;
+              button.empty_btn {
+                @include empty_btn;
+                padding: 5px;
+                &:hover {
+                  background-color: #244f86;
+                }
+              }
+              button.search_btn {
+                @include search_and_send_btn;
+                padding: 5px;
+                &:hover {
+                  background-color: #5e7aa2;
+                }
+              }
+            }
+            .search_section {
+              padding: 0 80px;
+              width: 100%;
+              input {
+                @include dropdown_btn;
+                width: 100%;
+                height: 35px;
               }
             }
           }
-        }
-      }
-    }
-    .modal {
-      padding: 0 5%;
-      .modal-content {
-        background-color: unset;
-        border: 0;
-        .modal-body {
-          padding: 0;
-        }
-      }
-      .fixed_info {
-        @include fixed_info;
-        background: #528091 !important;
-        border-radius: 0!important;
-        border: 1px solid black;
-        padding: 0 10px;
-        div {
-          flex-grow: 1;
-          text-align: center;
-        }
-        p {
-          font-size: 18px;
-          margin-bottom: 0;
-        }
-        button {
-          border: none;
-          background: none;
-          color: white;
-          font-weight: 700;
-          font-size: 22px;
-          position: absolute;
-          right: 3%;
-        }
-      }
-      .list {
-        border-left: 1px solid black;
-        border-bottom: 1px solid black;
-        border-right: 1px solid black;
-      }
-      .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        background: #D9D9D9;
-        padding: 20px;
-        .submit_btn {
-          margin-top: 20px;
-          background: #48658C;
-          color: white;
-          font-weight: 700;
-          width: 80px;
-          font-size: 20px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          &:hover {
-            background-color: #5d85bd;
+          .wrap {
+            gap: 10px 0
           }
-        }
-        .wrap1 {
-          p.content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+          p {
             color: black;
-            background: white;
-            height: 35px;
-            border-radius: 5px;
-          }
-          .input-number {
-            @include count_btn;
-          }
-          .number-input-box {
-            color: black;
-            .input-number {
-              width: 100%;
-            }
-          }
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
+            font-weight: 700;
           }
           .dropdown {
-            button {
-              background: white;
-              width: 100%;
-              border: none;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            }
-            .dropdown-menu {
-              width: 100%;
-              .dropdown-item {
-                text-align: left;
-              }
-            }
-          }
-          div {
-            margin: 10px 0;
-            p {
-              padding: 5px;
-              white-space: nowrap;
-              font-size: 18px;
-              font-weight: 700;
-              margin-bottom: 5px;
-            }
+            width: 100%
           }
         }
       }
@@ -1309,6 +1306,71 @@
         label {
           color: white;
           font-weight: 600;
+        }
+      }
+    }
+    .bottom_fixed {
+      display: flex;
+      justify-content: space-around;
+      background: white;
+      color: white;
+      font-size: 25px;
+      font-weight: 700;
+      align-items: center;
+      border-radius: 0 0 10px 10px;
+      padding: 10px;
+      input {
+        width: 100px
+      }
+      .input-group {
+        height: auto;
+        flex-wrap: nowrap;
+      }
+      .input-group-prepend {
+        font-size: 18px;
+        margin-bottom: 0;
+        color: black;
+        display: flex;
+        align-self: center;
+      }
+      button {
+        margin-left: 10px;
+        @include auth_btn;
+        font-size: 18px;
+        border-radius: 7px;
+        height: auto;
+        &:hover {
+          background: #5a6d87;
+        }
+      }
+    }
+    .modal {
+      .modal-body {
+        padding: 16px 16px 0;
+      }
+      .modal-content {
+        width: 400px;
+        margin: auto;
+      }
+      input {
+        border: 1px solid lightgrey;
+      }
+      .input-group-prepend {
+        width: auto;
+      }
+      .modal-footer {
+        padding: 0 12px 12px;
+        border: none;
+      }
+      .modal-header {
+        h5 {
+          font-weight: 700;
+        }
+        background: #3D4E61;
+        color: white;
+        padding:5px 10px;
+        .close_icon {
+          cursor: pointer;
         }
       }
     }
