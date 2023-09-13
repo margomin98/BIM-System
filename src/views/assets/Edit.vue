@@ -103,7 +103,7 @@
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend"><span>*</span>儲位區域：</div>
+              <div class="input-group-prepend">儲位區域：</div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName(index)">
                     {{ details.AreaName || '請選擇' }}
@@ -116,7 +116,7 @@
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend"><span>*</span>儲位櫃位：</div>
+              <div class="input-group-prepend">儲位櫃位：</div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="details.AreaName === null || details.AreaName === ''">
                     {{ details.LayerName || LayerInit }}
@@ -435,7 +435,7 @@
       async function submit() {
         console.log(details.value);
         // 檢查必填項目
-        if (!details.value.EquipCategoryName || !details.value.EquipTypeName || !details.value.AssetName || !details.value.AreaName || !details.value.LayerName) {
+        if (!details.value.EquipCategoryName || !details.value.EquipTypeName || !details.value.AssetName) {
           alert('請填寫所有必填項目');
           return;
         }

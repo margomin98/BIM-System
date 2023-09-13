@@ -6,7 +6,7 @@
     </div>
     <div class="col">
       <div class="button_wrap d-flex">
-        <router-link to="/store_new">
+        <router-link :to="{name:'Equipment_New'}">
           <button class="add_btn">新增整合箱</button>
         </router-link>
   
@@ -17,33 +17,32 @@
         <div class="row">
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>整合箱產編</p>
-            <input type="text" />
+            <input type="text" v-model="searchParams.IntegrationId"/>
           </div>
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>整合箱名稱</p>
-            <input type="text" />
+            <input type="text" v-model="searchParams.IntegrationName"/>
           </div>
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>區域</p>
             <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ selectedItem || "請選擇" }}
-                    </button>
-              <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+              <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
+                {{ searchParams.AreaName || '請選擇' }}
+              </button>
+              <div class="dropdown-menu" aria-labelledby="areaDropdown">
+                <p v-for="(item, index) in AreaArray" :key="index" class="dropdown-item" @click="selectArea(`${item}`)">
+                  {{ item }}</p>
               </div>
             </div>
           </div>
-          <div class="col-xl-3 col-lg-2 col-md-6 col-12">
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>櫃位</p>
             <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ selectedItem || "請選擇" }}
-                    </button>
-              <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+              <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="searchParams.AreaName === ''">
+                {{ searchParams.LayerName || LayerInit }}
+              </button>
+              <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
+                <p v-for="(item, index) in LayerArray" :key="index" class="dropdown-item" @click="selectLayer(`${item}`)">{{ item }}</p>
               </div>
             </div>
           </div>
@@ -51,33 +50,26 @@
             <p>日期類型</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ selectedItem || "請選擇" }}
+                      {{ searchParams.DateCategory || "請選擇" }}
                     </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+                <p v-for="(item , index) in DateTypeArray" :key="index" class="dropdown-item" @click="selectStatus(item)">{{ item }}</p>
               </div>
             </div>
           </div>
           <div class="col-xl-2 col-lg-2 col-md-6 col-12  flex-col">
-            <p>入庫日期(起)</p>
+            <p>日期(起)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="selectedDate" class="date-input" @focus="showDatePicker = true" @blur="showDatePicker = false" />
-                <div class="date-picker" v-if="showDatePicker">
-                  <datepicker v-model="selectedDate"></datepicker>
-                </div>
+                <input type="date" v-model="searchParams.StartDate" class="date-input" />
               </div>
             </div>
           </div>
           <div class="col-xl-2 col-lg-2 col-md-6 col-12 flex-col">
-            <p>入庫日期(迄)</p>
+            <p>日期(迄)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="selectedEndDate" class="date-input" @focus="showEndDatePicker = true" @blur="showEndDatePicker = false" />
-                <div class="date-picker" v-if="showEndDatePicker">
-                  <datepicker v-model="selectedEndDate"></datepicker>
-                </div>
+                <input type="date" v-model="searchParams.EndDate" class="date-input" />
               </div>
             </div>
           </div>
@@ -86,14 +78,13 @@
     </div>
     <div class="col justify-content-center d-flex">
       <div class="button_wrap d-flex">
-        <button class="search_btn">檢索</button>
+        <button class="search_btn" @click="submit">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
-                <button class="export_btn">匯出</button>
+        <!-- <button class="export_btn">匯出</button> -->
       </div>
     </div>
    <div style="width: 100%">
-          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true" :alwaysShowHorizontalScroll="true"
-         >
+          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true" :pagination="true" :alwaysShowHorizontalScroll="true">
     </ag-grid-vue>
     </div>
 
@@ -104,9 +95,15 @@
   import {
     AgGridVue
   } from "ag-grid-vue3";
+  import {
+    onMounted,
+    reactive,
+    ref
+  } from "vue";
   import Equipment_button from "@/components/Equipment_button";
-  import Delete from "@/components/Delete_button";
+  import Delete from "@/components/Equip_delete_button";
   import Navbar from "@/components/Navbar.vue";
+  import {EquipmentDataType} from "@/assets/js/dropdown.js"
   export default {
     components: {
       Navbar,
@@ -115,193 +112,222 @@
       Delete
     },
     setup() {
-      return {
-        columnDefs: [{
+      const details = ref({});
+      const searchParams = reactive({
+        IntegrationId: '',
+        IntegrationName: '',
+        AreaName: '',
+        LayerName: '',
+        DateCategory: '',
+        StartDate: '',
+        EndDate: '',
+      });
+      const AreaArray = ref([]); //區域陣列
+      const LayerArray = ref([]); //櫃位陣列
+      const LayerInit = ref('請先選擇區域');
+      const DateTypeArray = EquipmentDataType;
+      const pageSize = ref(10);
+      const columnDefs = [{
             suppressMovable: true,
             field: "",
             cellRenderer: "Equipment_button",
-            width: '185',
+            width: 185,
             resizable: true,
           },
           {
             headerName: "整合箱產編",
-            field: "make",
+            field: "IntegrationId",
             unSortIcon: true,
             sortable: true,
-            width: '180',
+            width: 180,
             resizable: true,
             suppressMovable: true
           },
           {
             headerName: "整合箱名稱",
-            field: "model",
+            field: "IntegrationName",
+            flex: 1,
             unSortIcon: true,
             sortable: true,
-            width: '150',
+            width: 150,
             resizable: true,
             suppressMovable: true
           },
           {
             headerName: "區域",
-            field: "price",
+            field: "AreaName",
             unSortIcon: true,
             sortable: true,
-            width: '100',
+            width: 100,
             resizable: true,
             suppressMovable: true
           },
           {
             headerName: "櫃位",
-            field: "make",
+            field: "LayerName",
             unSortIcon: true,
             sortable: true,
-            width: '100',
+            width: 100,
             resizable: true,
             suppressMovable: true
           },
           {
             headerName: "最後更換日期",
-            field: "model",
+            field: "EditTime",
             unSortIcon: true,
             sortable: true,
-            width: '180',
+            width: 180,
             resizable: true,
             suppressMovable: true
           },
           {
             headerName: "整合日期",
-            field: "price",
+            field: "IntegrateDate",
             unSortIcon: true,
             sortable: true,
-            width: '160',
+            width: 160,
             resizable: true,
             suppressMovable: true
           },
           {
             headerName: "整合人員",
-            field: "make",
+            field: "Integrator",
             unSortIcon: true,
             sortable: true,
-            width: '150',
+            width: 150,
             resizable: true,
             suppressMovable: true
           },
-          
-        
-           {
+          {
             suppressMovable: true,
-            width:'100',
+            width: 100,
             field: "",
             cellRenderer: "Delete",
-          }
-        ],
-        rowData: [{
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
           },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000
-          },
-        ],
-
-      };
-    },
-    data() {
-      return {
-        rowHeight: 35,
-        selectedItem: "",
-        selectedLocateItem: "",
-        selectedAreaItem: "",
-        selectedStartDate: null,
-        selectedEndDate: null,
-        showStartDatePicker: false,
-        showEndDatePicker: false,
-        total: 100,
-        pageSize: 20,
-        data: [],
-        pagePosition: "bottom",
-        pageOptions: [{
-            value: "bottom",
-            text: "Bottom",
-          },
-          {
-            value: "top",
-            text: "Top",
-          },
-          {
-            value: "both",
-            text: "Both",
-          },
-        ],
-      };
-    },
-    created() {
-      this.data = this.getData(this.total);
-    },
-    methods: {
-      selectStatus(item) {
-        this.selectedItem = item;
-        
-      },
-      selectArea(item) {
-        this.selectedAreaItem = item;
-       
-      },
-      selectCabinet(item) {
-        this.selectedLocateItem = item;
-        this.showDatePicker = false;
-      },
-      // Clear other data properties if needed
-      clear() {
-        // Clear input fields
-        const inputFields = document.querySelectorAll(
-          '.datagrid_section input[type="text"]'
-        );
-        inputFields.forEach((input) => {
-          input.value = "";
-        });
-        // Clear dropdowns
-        this.selectedItem = "";
-        this.selectedAreaItem = "";
-        this.selectedLocateItem = "";
-        // Clear selected date
-        this.selectedDate = null;
-        // Clear other data properties if needed
-      },
-      getData(total) {
-        let data = [];
-        for (let i = 1; i <= total; i++) {
-          let amount = Math.floor(Math.random() * 1000);
-          let price = Math.floor(Math.random() * 1000);
-          data.push({
-            inv: "Inv No " + i,
-            name: "Name " + i,
-            amount: amount,
-            price: price,
-            cost: amount * price,
-            note: "Note " + i,
-          });
+        ];
+      const rowData = ref([]);
+      onMounted(()=>{
+        submit();
+      });
+      async function submit() {
+        const formData = new FormData();
+        const formFields = {
+          'IntegrationId': searchParams.IntegrationId,
+          'IntegrationName': searchParams.IntegrationName,
+          'AreaName': searchParams.AreaName,
+          'LayerName': searchParams.LayerName,
+          'DateCategory': searchParams.DateCategory,
+          'StartDate': searchParams.StartDate,
+          'EndDate': searchParams.EndDate,
+        };
+        //將表格資料append到 formData
+        for (const fieldName in formFields) {
+          formData.append(fieldName, formFields[fieldName]);
         }
-        return data;
-      },
+        const axios = require('axios');
+        try {
+          const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/IntegrationBoxes', formData);
+          const data = response.data;
+          if (data.state === 'success') {
+            //取得datagrid成功
+            // console.log(data.state);
+            console.log('datagrid', data.resultList);
+            rowData.value = data.resultList;
+          } else if (data.state === 'error') {
+            //取得datagrid失敗
+            alert(data.messages);
+          } else if (data.state === 'input_error') {
+            //取得datagrid格式錯誤
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            //尚未登入
+            alert(data.messages);
+            router.push('/');
+          } else {
+            throw new Error('Request was not successful');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      async function getAreaName() {
+        if (AreaArray.value.length == 0) {
+          const axios = require('axios');
+          try {
+            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetAreaName');
+            console.log(response);
+            const data = response.data;
+            if (data.state === 'success') {
+              console.log('Area Get成功 資料如下\n', data.resultList.AreaName);
+              AreaArray.value = data.resultList.AreaName;
+            } else if (data.state === 'error') {
+              alert(data.messages);
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            }
+          } catch (error) {
+            console.error('Error sending applicant info request to backend');
+          }
+        }
+      }
+      async function getLayerName() {
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetLayerName?id=${searchParams.AreaName}`);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('Layer Get成功 資料如下\n', data.resultList.LayerName);
+            LayerArray.value = data.resultList.LayerName;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error('Error sending applicant info request to backend');
+        }
+      }
+      const selectArea = (item) => {
+        searchParams.AreaName = item;
+        searchParams.LayerName = '';
+        //API function here
+        getLayerName();
+        LayerInit.value = '請選擇';
+      };
+      const selectLayer = (item) => {
+        searchParams.LayerName = item;
+      };
+      const selectStatus = (item) => {
+        searchParams.DateCategory = item;
+      };
+      function clear() {
+        for (const key in searchParams) {
+          searchParams[key] = '';
+        }
+        LayerInit.value = '請先選擇區域';
+        submit();
+      }
+      return {
+        details,
+        searchParams,
+        AreaArray,
+        LayerArray,
+        LayerInit,
+        DateTypeArray,
+        pageSize,
+        columnDefs,
+        rowData,
+        rowHeight: 35,
+        submit,
+        getAreaName,
+        selectArea,
+        selectLayer,
+        selectStatus,
+        clear,
+      };
     },
   };
 </script>
@@ -394,10 +420,15 @@
             .dropdown-menu {
               width: 100%;
               transform: translate3d(-1px, 35px, 0px) !important;
+              max-height: 250px;
+              overflow-y: auto;
               p {
                 font-size: 18px;
                 color: black;
                 font-weight: normal;
+                &:hover {
+                  cursor: pointer;
+                }
               }
             }
           }
@@ -484,10 +515,15 @@
             .dropdown-menu {
               width: 100%;
               transform: translate3d(-1px, 35px, 0px) !important;
+              max-height: 250px;
+              overflow-y: auto;
               p {
                 font-size: 18px;
                 color: black;
                 font-weight: normal;
+                &:hover {
+                  cursor: pointer;
+                }
               }
             }
           }
@@ -587,10 +623,15 @@
             .dropdown-menu {
               width: 100%;
               transform: translate3d(-1px, 35px, 0px) !important;
+              max-height: 250px;
+              overflow-y: auto;
               p {
                 font-size: 18px;
                 color: black;
                 font-weight: normal;
+                &:hover {
+                  cursor: pointer;
+                }
               }
             }
           }

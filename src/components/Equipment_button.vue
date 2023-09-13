@@ -14,7 +14,7 @@ export default {
   props: ['params'],
   setup(props) {
     const router = useRouter();
-    const search_id = props.params.data.AO_ID;
+    const search_id = props.params.data.IntegrationId;
 
     function viewDetails() {
       // console.log(props.params.data.AI_ID);
@@ -26,7 +26,7 @@ export default {
     function viewEdit() {
       // console.log(props.params.data.search_id);
       if (search_id !== '') {
-        router.push({ name: 'Equipment_New', query: { search_id } });
+        router.push({ name: 'Equipment_Edit', query: { search_id } });
       }
     }
     return { 

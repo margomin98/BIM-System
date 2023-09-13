@@ -54,6 +54,7 @@ import Equipment_Datagrid from "../views/equipment/Datagrid.vue";
 import Equipment_New from "../views/equipment/New.vue";
 import Equipment_Edit from "../views/equipment/Edit.vue";
 import Equipment_View from "../views/equipment/View.vue";
+import Equipment_Delete from "../views/equipment/Delete.vue";
 //設備整合
 
 //盤點管理
@@ -187,7 +188,7 @@ const routes = [
     path: "/assets_search",
     name: "Assets_Search",
     component: Assets_Search,
-    // meta: {auth: true, request: 'AssetMgr_Detail'},
+    meta: {auth: true, request: 'SearchInventory'},
   },
   {
     path: "/rent_datagrid",
@@ -223,37 +224,43 @@ const routes = [
     path: "/equipment_datagrid",
     name: "Equipment_Datagrid",
     component: Equipment_Datagrid,
-    // meta: {auth: true, request: 'AO_Detail'},
+    meta: {auth: true, request: 'EI_Detail'},
   },
   {
     path: "/equipment_new",
     name: "Equipment_New",
     component: Equipment_New,
-    // meta: {auth: true, request: 'AO_Detail'},
+    meta: {auth: true, request: 'EI_Create'},
   },
   {
     path: "/equipment_edit",
     name: "Equipment_Edit",
     component: Equipment_Edit,
-    // meta: {auth: true, request: 'AO_Detail'},
+    meta: {auth: true, request: 'EI_Change'},
   },
   {
     path: "/equipment_view",
     name: "Equipment_View",
     component: Equipment_View,
-    // meta: {auth: true, request: 'AO_Detail'},
+    meta: {auth: true, request: 'EI_Detail'},
+  },
+  {
+    path: "/equipment_delete",
+    name: "Equipment_Delete",
+    component: Equipment_Delete,
+    meta: {auth: true, request: 'EI_Delete'},
   },
   {
     path: "/inventory_datagrid",
     name: "Inventory_Datagrid",
     component: Inventory_Datagrid,
-    // meta: {auth: true, request: 'AO_Detail'},
+    meta: {auth: true, request: 'IP_Detail'},
   },
   {
     path: "/inventory_new",
     name: "Inventory_New",
     component: Inventory_New,
-    // meta: {auth: true, request: 'AO_Detail'},
+    meta: {auth: true, request: 'IP_Create'},
   },
   {
     path: "/inventory_view",
@@ -304,12 +311,13 @@ const routes = [
     component: System_Parameter,
     meta: {auth: true, request: 'ParamMgr'},
   },
-  {
-    path: "/system_parameter_edit",
-    name: "System_Parameter_Edit",
-    component: System_Parameter_Edit,
-    meta: {auth: true, request: 'ParamMgr'},
-  },
+  // {
+  //   path: "/system_parameter_edit",
+  //   name: "System_Parameter_Edit",
+  //   component: System_Parameter_Edit,
+  //   meta: {auth: true, request: 'ParamMgr'},
+  //   // 這頁沒使用到
+  // },
   {
     path: "/rent_process_datagrid",
     name: "Rent_Process_Datagrid",
@@ -358,12 +366,13 @@ const routes = [
     component: Rent_Review_New,
     meta: {auth: true, request: 'AOV_Verify'},
   },
-  {
-    path: "/rent_review_delete",
-    name: "Rent_Review_Delete",
-    component: Rent_Review_Delete,
-    // meta: {auth: true, request: 'AOV_Verify'},
-  },
+  // {
+  //   path: "/rent_review_delete",
+  //   name: "Rent_Review_Delete",
+  //   component: Rent_Review_Delete,
+  //   meta: {auth: true, request: 'AOV_Verify'},
+  //   // 這頁沒使用到
+  // },
 ];
 
 const router = createRouter({

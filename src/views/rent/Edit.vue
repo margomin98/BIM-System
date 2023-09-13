@@ -298,10 +298,10 @@
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
-            // if(data.resultList.Status !== '已填報') {
-            // window.history.back();
-            // // router.push({name: 'Rent_Datagrid'});
-            // }
+            if(data.resultList.Status !== '已填報') {
+            window.history.back();
+            // router.push({name: 'Rent_Datagrid'});
+            }
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             rowData.value = data.resultList.ItemList;
@@ -328,7 +328,7 @@
         if (details.value.Description) {
           details.value.Description = details.value.Description.trim();
         }
-        if (details.value.Description && !/^.{1,100}$/.test(details.value.Description.trim())) {
+        if (details.value.Description && !/^[\s\S]{1,100}$/.test(details.value.Description.trim())) {
           alert('說明不可輸入超過100字')
           return
         }
@@ -375,7 +375,7 @@
         if (myForm.RequiredSpec) {
           myForm.RequiredSpec = myForm.RequiredSpec.trim();
         }
-        if (myForm.RequiredSpec && !/^.{1,100}$/.test(myForm.RequiredSpec.trim())) {
+        if (myForm.RequiredSpec && !/^[\s\S]{1,100}$/.test(myForm.RequiredSpec.trim())) {
           alert('規格需求不可輸入超過100字')
           return
         }

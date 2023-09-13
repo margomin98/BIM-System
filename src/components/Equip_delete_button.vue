@@ -1,6 +1,6 @@
 <template>
   <div class='button_wrap'>
-    <button :class="{ disabled_btn: isDisabled, btn: !isDisabled}" @click="viewDelete()" :disabled="isDisabled">刪除</button>
+    <button class="btn" @click="viewDelete()">刪除</button>
   </div>
 </template>
 
@@ -17,16 +17,16 @@
     props: ['params'],
     setup(props) {
       const router = useRouter();
-      const search_id = props.params.data.AO_ID;
+      const search_id = props.params.data.IntegrationId;
       const isDisabled = ref(false);
       onMounted(() => {
-        checkButton();
+        // checkButton();
       });
       function viewDelete() {
         // console.log(props.params.data.search_id);
         if (search_id !== '') {
           router.push({
-            name: 'Rent_Process_Delete',
+            name: 'Equipment_Delete',
             query: {
               search_id
             }
@@ -49,6 +49,7 @@
   };
 </script>
 
+
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
 .button_wrap{
@@ -68,7 +69,8 @@
   height: 25px;
   width: 50px;
   &:hover{
-    width: 50px;
+      @include disabled_btn;
+  width: 50px;
   }
 }
 }

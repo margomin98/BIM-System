@@ -300,14 +300,14 @@
       const DeliveryDate = ref('');
       const validation = ref({
         user1: {
-          account: 'user_1',
-          password: 'Test_123',
+          account: '',
+          password: '',
           isValidate: false,
           resultName: '',
         },
         user2: {
-          account: 'user_2',
-          password: 'Test_123',
+          account: '',
+          password: '',
           isValidate: false,
           resultName: '',
         },
@@ -481,6 +481,10 @@
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
+            if(data.resultList.Status !== '可交付') {
+            window.history.back();
+            // router.push({name: 'Rent_Datagrid'});
+            }
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             rowData1.value = data.resultList.ItemList;
@@ -579,8 +583,10 @@
         return validation.value.user1.isValidate && validation.value.user2.isValidate;
       }
       async function submit() {
-        DeliveryMemo.value.trim();
-        if (DeliveryMemo.value && !/^.{1,100}$/.test(DeliveryMemo.value)) {
+        if(DeliveryMemo.value) {
+          DeliveryMemo.value =  DeliveryMemo.value.trim();
+        }
+        if (DeliveryMemo.value && !/^[\s\S]{1,100}$/.test(DeliveryMemo.value)) {
           alert('交付備註不可輸入超過100字')
           return
         }

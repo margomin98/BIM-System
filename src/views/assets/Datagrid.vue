@@ -88,7 +88,7 @@
   import Navbar from "@/components/Navbar.vue";
   import getEquipDatagrid from "@/components/API/getEquipDatagrid"
   import {
-nextTick,
+    nextTick,
     onMounted,
     reactive,
     ref
@@ -250,6 +250,7 @@ nextTick,
             alert(data.messages);
             router.push('/');
           } else {
+            alert(data.messages);
             throw new Error('Request was not successful');
           }
         } catch (error) {

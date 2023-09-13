@@ -358,6 +358,10 @@
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
+            if(data.resultList.Status !== '待審核') {
+            window.history.back();
+            // router.push({name: 'Rent_Datagrid'});
+            }
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             rowData1.value = data.resultList.ItemList;
@@ -412,7 +416,9 @@
         }
       }
       async function submit() {
-        validation.VerifyMemo.trim();
+        if(validation.VerifyMemo) {
+          validation.VerifyMemo = validation.VerifyMemo.trim();
+        }
         if (validation.VerifyMemo && !/^[\s\S]{1,100}$/.test(validation.VerifyMemo)) {
           alert('審核意見不可輸入超過100字')
           return
