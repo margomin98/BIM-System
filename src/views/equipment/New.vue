@@ -471,7 +471,6 @@
           // console.log(response);
           const data = response.data;
           if (data.state === 'success') {
-            // console.log('Account Get成功 資料如下\n', data.resultList);
             CustodianArray.value = data.resultList;
           } else if (data.state === 'error') {
             alert(data.messages);

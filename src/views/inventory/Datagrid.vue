@@ -17,17 +17,16 @@
         <div class="row">
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>計畫編號</p>
-            <input type="text" />
+            <input type="text" v-model="searchParams.PlanId"/>
           </div>
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>盤點類型</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ selectedItem || "請選擇" }}
-                    </button>
+                {{ searchParams.PlanType || "請選擇" }}
+              </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+                <p v-for="(item , index) in DropdownArray.PlanType" :key="index" class="dropdown-item" @click="selectType(item)">{{ item }}</p>
               </div>
             </div>
           </div>
@@ -35,11 +34,10 @@
             <p>盤點狀態</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ selectedItem || "請選擇" }}
-                    </button>
+                {{ searchParams.PlanStatus || "請選擇" }}
+              </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+                <p v-for="(item , index) in DropdownArray.PlanStatus" :key="index" class="dropdown-item" @click="selectStatus(item)">{{ item }}</p>
               </div>
             </div>
           </div>
@@ -47,11 +45,10 @@
             <p>日期類型</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ selectedItem || "請選擇" }}
-                    </button>
+                {{ searchParams.DateCategory || "請選擇" }}
+              </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p class="dropdown-item" @click="selectStatus('選項1')">選項1</p>
-                <p class="dropdown-item" @click="selectStatus('選項2')">選項2</p>
+                <p v-for="(item , index) in DropdownArray.PlanDateCategory" :key="index" class="dropdown-item" @click="selectDateCategory(item)">{{ item }}</p>
               </div>
             </div>
           </div>
@@ -59,10 +56,7 @@
             <p>日期(起)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="selectedDate" class="date-input" @focus="showDatePicker = true" @blur="showDatePicker = false" />
-                <div class="date-picker" v-if="showDatePicker">
-                  <datepicker v-model="selectedDate"></datepicker>
-                </div>
+                <input type="date" v-model="searchParams.StartDate" class="date-input"/>
               </div>
             </div>
           </div>
@@ -70,10 +64,7 @@
             <p>日期(迄)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="selectedEndDate" class="date-input" @focus="showEndDatePicker = true" @blur="showEndDatePicker = false" />
-                <div class="date-picker" v-if="showEndDatePicker">
-                  <datepicker v-model="selectedEndDate"></datepicker>
-                </div>
+                <input type="date" v-model="searchParams.EndDate" class="date-input"/>
               </div>
             </div>
           </div>
@@ -82,15 +73,13 @@
     </div>
     <div class="col justify-content-center d-flex">
       <div class="button_wrap d-flex">
-        <button class="search_btn">檢索</button>
+        <button class="search_btn" @click="submit">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
-                <button class="export_btn">匯出</button>
       </div>
     </div>
    <div style="width: 100%;margin-bottom:3%">
-          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true" :alwaysShowHorizontalScroll="true"
-         >
-    </ag-grid-vue>
+      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true" :alwaysShowHorizontalScroll="true">
+      </ag-grid-vue>
     </div>
 
   </div>
@@ -100,9 +89,15 @@
   import {
     AgGridVue
   } from "ag-grid-vue3";
+  import {
+    onMounted,
+    reactive,
+    ref
+  } from "vue";
   import Inventory_button from "@/components/Inventory_button";
   import Delete from "@/components/Delete_button";
   import Navbar from "@/components/Navbar.vue";
+  import { PlanType , PlanStatus , PlanDateCategory} from "@/assets/js/dropdown.js"
   export default {
     components: {
       Navbar,
@@ -111,212 +106,180 @@
       Delete
     },
     setup() {
-      return {
-        columnDefs: [{
+      const details = ref({});
+      const DropdownArray = reactive({
+        PlanType: PlanType,
+        PlanStatus: PlanStatus,
+        PlanDateCategory: PlanDateCategory,
+      })
+      const searchParams = reactive({
+        PlanId: '',
+        PlanType: '',
+        PlanStatus: '',
+        DateCategory: '',
+        StartDate: '',
+        EndDate: '',
+      });
+      const columnDefs = [{
             suppressMovable: true,
             field: "",
             cellRenderer: "Inventory_button",
-            width: '340',
+            width: 340,
             resizable: true,
           },
           {
             headerName: "計畫編號",
-            field: "make",
+            field: "PlanId",
             unSortIcon: true,
             sortable: true,
-            width: '150',
+            width: 150,
             resizable: true,
             suppressMovable: true
           },
           {
             headerName: "盤點類型",
-            field: "model",
+            field: "PlanType",
             unSortIcon: true,
             sortable: true,
-            width: '150',
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "設備分類",
-            field: "price",
-            unSortIcon: true,
-            sortable: true,
-            width: '150',
+            width: 150,
             resizable: true,
             suppressMovable: true
           },
           {
             headerName: "盤點狀態",
-            field: "make",
+            field: "PlanStatus",
             unSortIcon: true,
             sortable: true,
-            width: '150',
+            width: 150,
             suppressMovable: true
           },
           {
             headerName: "標題",
-            field: "model",
+            field: "PlanTitle",
             unSortIcon: true,
             sortable: true,
             resizable: true,
-            width: '150',
+            width: 150,
             suppressMovable: true
           },
           {
             headerName: "盤點人員",
-            field: "price",
+            field: "InventoryStaffName",
             unSortIcon: true,
             sortable: true,
-            width: '150',
+            width: 150,
             suppressMovable: true
           },
           {
             headerName: "召集人員",
-            field: "make",
+            field: "ConvenerName",
             unSortIcon: true,
             sortable: true,
-            width: '150',
+            width: 150,
             suppressMovable: true
           },
           {
             headerName: "盤點開始日期",
-            field: "make",
+            field: "PlanStart",
             unSortIcon: true,
             sortable: true,
-            width: '180',
+            width: 180,
             suppressMovable: true
           },
           {
             headerName: "盤點結束日期",
-            field: "make",
+            field: "PlanEnd",
             unSortIcon: true,
             sortable: true,
-            width: '180',
+            width: 180,
             suppressMovable: true
           },
           {
             headerName: "最近編輯時間",
-            field: "make",
+            field: "EditTime",
             unSortIcon: true,
             sortable: true,
-            width: '180',
+            width: 180,
             suppressMovable: true
           },
            {
             suppressMovable: true,
-            width:'100',
+            width: 100,
             field: "",
             cellRenderer: "Delete",
           }
-        ],
-        rowData: [{
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000
-          },
-        ],
-
-      };
-    },
-    data() {
-      return {
-        rowHeight: 35,
-        selectedItem: "",
-        selectedLocateItem: "",
-        selectedAreaItem: "",
-        selectedStartDate: null,
-        selectedEndDate: null,
-        showStartDatePicker: false,
-        showEndDatePicker: false,
-        total: 100,
-        pageSize: 20,
-        data: [],
-        pagePosition: "bottom",
-        pageOptions: [{
-            value: "bottom",
-            text: "Bottom",
-          },
-          {
-            value: "top",
-            text: "Top",
-          },
-          {
-            value: "both",
-            text: "Both",
-          },
-        ],
-      };
-    },
-    created() {
-      this.data = this.getData(this.total);
-    },
-    methods: {
-      selectStatus(item) {
-        this.selectedItem = item;
-        
-      },
-      selectArea(item) {
-        this.selectedAreaItem = item;
-       
-      },
-      selectCabinet(item) {
-        this.selectedLocateItem = item;
-        this.showDatePicker = false;
-      },
-      // Clear other data properties if needed
-      clear() {
-        // Clear input fields
-        const inputFields = document.querySelectorAll(
-          '.datagrid_section input[type="text"]'
-        );
-        inputFields.forEach((input) => {
-          input.value = "";
-        });
-        // Clear dropdowns
-        this.selectedItem = "";
-        this.selectedAreaItem = "";
-        this.selectedLocateItem = "";
-        // Clear selected date
-        this.selectedDate = null;
-        // Clear other data properties if needed
-      },
-      getData(total) {
-        let data = [];
-        for (let i = 1; i <= total; i++) {
-          let amount = Math.floor(Math.random() * 1000);
-          let price = Math.floor(Math.random() * 1000);
-          data.push({
-            inv: "Inv No " + i,
-            name: "Name " + i,
-            amount: amount,
-            price: price,
-            cost: amount * price,
-            note: "Note " + i,
-          });
+      ]
+      const rowData = ref([]);
+      onMounted(()=>{
+        submit();
+      });
+      async function submit() {
+        const formData = new FormData();
+        const formFields = {
+          'PlanId': searchParams.PlanId,
+          'PlanType': searchParams.PlanType,
+          'PlanStatus': searchParams.PlanStatus,
+          'DateCategory': searchParams.DateCategory,
+          'StartDate': searchParams.StartDate,
+          'EndDate': searchParams.EndDate,
+        };
+        //將表格資料append到 formData
+        for (const fieldName in formFields) {
+          formData.append(fieldName, formFields[fieldName]);
         }
-        return data;
-      },
+        const axios = require('axios');
+        try {
+          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryPlans', formData);
+          const data = response.data;
+          if (data.state === 'success') {
+            //取得datagrid成功
+            // console.log(data.state);
+            console.log('datagrid', data.resultList);
+            rowData.value = data.resultList;
+          } else if (data.state === 'error') {
+            //取得datagrid失敗
+            alert(data.messages);
+          } else if (data.state === 'input_error') {
+            //取得datagrid格式錯誤
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            //尚未登入
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      const selectType = (item) => {
+        searchParams.PlanType = item;
+      };
+      const selectStatus = (item) => {
+        searchParams.PlanStatus = item;
+      };
+      const selectDateCategory = (item) => {
+        searchParams.DateCategory = item;
+      };
+      function clear() {
+        for (const key in searchParams) {
+          searchParams[key] = '';
+        }
+        submit();
+      }
+      return {
+        details,
+        searchParams,
+        DropdownArray,
+        columnDefs,
+        rowData,
+        rowHeight: 35,
+        pageSize: 10,
+        submit,
+        selectType,
+        selectStatus,
+        selectDateCategory,
+        clear,
+      };
     },
   };
 </script>

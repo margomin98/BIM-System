@@ -14,7 +14,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend"><span>*</span>標題：</div>
-            <input type="text" class="form-control text-center" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="請輸入產編" />
+            <input type="text" class="form-control text-center" placeholder="不可輸入超過20字" v-model="formParams.PlanTitle"/>
           </div>
         </div>
         <div class="row organizer_wrap">
@@ -23,10 +23,10 @@
               <div class="input-group-prepend flex"><span>*</span>盤點人員：</div>
               <div class="dropdown">
                 <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                           請選擇
-                      </button>
+                  {{ formParams.InventoryStaffName || '請選擇' }}
+                </button>
                 <div class="dropdown-menu">
-                  <p>123</p>
+                  <p v-for="(item , index) in InventoryStaffArray" :key="index" @click="selectStaff(item)">{{ item }}</p>
                 </div>
               </div>
             </div>
@@ -34,7 +34,7 @@
           <div class="col-xl-6 col-lg-12 col-md-12 col-12 d-flex">
             <div class="input-group mb-3">
               <div class="input-group-prepend">盤點召集人：</div>
-              <input type="text" class="form-control readonly_box organizer" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
+              <input type="text" class="form-control readonly_box organizer" readonly />
             </div>
           </div>
         </div>
@@ -44,10 +44,7 @@
               <div class="input-group-prepend"><span>*</span>盤點開始日期：</div>
               <div class="date-selector">
                 <div class="input-container">
-                  <input type="date" v-model="selectedDate" class="date-input" @focus="showDatePicker = true" @blur="showDatePicker = false" />
-                  <div class="date-picker" v-if="showDatePicker">
-                    <datepicker v-model="selectedDate"></datepicker>
-                  </div>
+                  <input type="date" class="date-input" v-model="formParams.PlanStart"/>
                 </div>
               </div>
             </div>
@@ -57,10 +54,7 @@
               <div class="input-group-prepend"><span>*</span>盤點結束日期：</div>
               <div class="date-selector">
                 <div class="input-container">
-                  <input type="date" v-model="selectedDate" class="date-input" @focus="showDatePicker = true" @blur="showDatePicker = false" />
-                  <div class="date-picker" v-if="showDatePicker">
-                    <datepicker v-model="selectedDate"></datepicker>
-                  </div>
+                  <input type="date" class="date-input" v-model="formParams.PlanEnd"/>
                 </div>
               </div>
             </div>
@@ -94,6 +88,7 @@
     <div class="info_wrap col">
       <div class="col">
         <button class="add_btn" data-bs-toggle="modal" data-bs-target="#exampleModal">新增盤點項目</button>
+        <!-- Modal -->
         <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -178,7 +173,7 @@
       </div>
       <div class="content">
         <div style="width: 100%">
-          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs1" :rowData="rowData1" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true"
+          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs1" :rowData="rowData1" :paginationAutoPageSize="true" :pagination="true"
             :alwaysShowHorizontalScroll="true">
           </ag-grid-vue>
         </div>
@@ -199,10 +194,10 @@
   import Navbar from "@/components/Navbar.vue";
   import {
     onMounted,
-    ref
+    ref,
+    reactive,
   } from "vue";
   import {
-    useRoute,
     useRouter
   } from "vue-router";
   export default {
@@ -212,7 +207,42 @@
       Inventory_delete_button
     },
     setup() {
+      const router = useRouter();
+      const InventoryStaffArray = ref([]);
+      const formParams = reactive({
+        PlanTitle: '',
+        InventoryStaffName: '',
+        PlanStart: '',
+        PlanEnd: '',
+        PlanType: '',
+        AssetList: [],
+      })
+      onMounted(()=>{
+        getAccount();
+      });
+      async function getAccount() {
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchName?name=`);
+          const data = response.data;
+          if (data.state === 'success') {
+            InventoryStaffArray.value = data.resultList;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      const selectStaff = (item) =>{
+        formParams.InventoryStaffName = item;
+      }
       return {
+        formParams,
+        InventoryStaffArray,
         columnDefs: [{
             headerCheckboxSelection: true, //可以全選
             cellClass: 'grid_checkbox',
@@ -418,13 +448,10 @@
             price: 72000
           },
         ],
+        rowHeight: 35,
+        selectStaff,
       };
     },
-    data() {
-      return {
-        rowHeight: 35,
-      }
-    }
   }
 </script>
 <style lang="scss" scoped>

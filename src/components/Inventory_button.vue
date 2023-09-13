@@ -17,19 +17,19 @@ export default {
   props: ['params'],
   setup(props) {
     const router = useRouter();
-    const search_id = props.params.data.AO_ID;
+    const search_id = props.params.data.PlanId;
 
     function viewDetails() {
       // console.log(props.params.data.AI_ID);
       if (search_id !== '') {
-        router.push({ name: 'Equipment_View', query: { search_id } });
+        router.push({ name: 'Inventory_View', query: { search_id } });
       }
     }
 
     function viewEdit() {
       // console.log(props.params.data.search_id);
       if (search_id !== '') {
-        router.push({ name: 'Equipment_New', query: { search_id } });
+        router.push({ name: 'Inventory_Edit', query: { search_id } });
       }
     }
     return { 
