@@ -1,6 +1,6 @@
 <template>
   <div class='button_wrap'>
-    <button  @click="viewDelete()" >刪除</button>
+    <button  @click="DeleteFn" >刪除</button>
   </div>
 </template>
 
@@ -8,7 +8,6 @@
   // import router from '@/router';
   import {
     ref,
-    onMounted
   } from 'vue';
   import {
     useRouter
@@ -16,34 +15,13 @@
   export default {
     props: ['params'],
     setup(props) {
-      const router = useRouter();
-      const search_id = props.params.data.AO_ID;
-      const isDisabled = ref(false);
-      onMounted(() => {
-        checkButton();
-      });
-      function viewDelete() {
-        // console.log(props.params.data.search_id);
-        if (search_id !== '') {
-          router.push({
-            name: 'Rent_Delete',
-            query: {
-              search_id
-            }
-          });
-        }
-      }
-      function checkButton() {
-        const disabledStatus = props.params.data.Status;
-        if (disabledStatus !== '已填報') {
-          isDisabled.value = true;
-        } else {
-          isDisabled.value = false;
-        }
+      const data = props.params.data;
+      function DeleteFn() {
+        // console.log('params:' ,data);
+        props.params.deleteFromAssetList(data);
       }
       return {
-        viewDelete,
-        isDisabled,
+        DeleteFn,
       };
     },
   };

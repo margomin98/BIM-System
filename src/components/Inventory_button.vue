@@ -26,7 +26,7 @@ export default {
             router.push({ name: 'Inventory_View', query: { search_id } });
             break;
           case 'Edit':
-            router.push({ name: 'Inventory_View', query: { search_id } });
+            router.push({ name: 'Inventory_Edit', query: { search_id } });
             break;
           case 'Process':
             router.push({ name: 'Inventory_Process', query: { search_id } });
