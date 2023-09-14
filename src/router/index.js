@@ -266,37 +266,31 @@ const routes = [
     path: "/inventory_view",
     name: "Inventory_View",
     component: Inventory_View,
-    // meta: {auth: true, request: 'AO_Detail'},
+    meta: {auth: true, request: 'IP_Detail'},
   },
   {
     path: "/inventory_edit",
     name: "Inventory_Edit",
     component: Inventory_Edit,
-    // meta: {auth: true, request: 'AO_Detail'},
+    meta: {auth: true, request: 'IP_Edit'},
   },
   {
     path: "/inventory_process",
     name: "Inventory_Process",
     component: Inventory_Process,
-    // meta: {auth: true, request: 'AO_Detail'},
+    meta: {auth: true, request: 'IP_InventoryProcess'},
   },
   {
     path: "/inventory_balance",
     name: "Inventory_Balance",
     component: Inventory_Balance,
-    // meta: {auth: true, request: 'AO_Detail'},
+    meta: {auth: true, request: 'IP_FlatProcess'},
   },
   {
     path: "/inventory_balance_result",
     name: "Inventory_Balance_Result",
     component: Inventory_Balance_Result,
-    // meta: {auth: true, request: 'AO_Detail'},
-  },
-  {
-    path: "/inventory_balance_result",
-    name: "Inventory_Balance_Result",
-    component: Inventory_Balance_Result,
-    // meta: {auth: true, request: 'AO_Detail'},
+    meta: {auth: true, request: 'IP_InventoryResult'},
   },
   {
     

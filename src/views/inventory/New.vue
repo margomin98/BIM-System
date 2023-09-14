@@ -34,7 +34,7 @@
           <div class="col-xl-6 col-lg-12 col-md-12 col-12 d-flex">
             <div class="input-group mb-3">
               <div class="input-group-prepend">盤點召集人：</div>
-              <input type="text" class="form-control readonly_box organizer" readonly />
+              <input type="text" class="form-control readonly_box organizer" v-model="ConvenerName" readonly />
             </div>
           </div>
         </div>
@@ -208,7 +208,8 @@
     },
     setup() {
       const router = useRouter();
-      const InventoryStaffArray = ref([]);
+      const InventoryStaffArray = ref([]); //盤點人員選單
+      const ConvenerName = ref('');
       const formParams = reactive({
         PlanTitle: '',
         InventoryStaffName: '',
@@ -219,7 +220,29 @@
       })
       onMounted(()=>{
         getAccount();
+        getApplicationInfo();
       });
+      async function getApplicationInfo() {
+        const axios = require('axios');
+        try {
+          const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
+          // console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('召集人名稱:', data.resultList.Applicant);
+            if (data.resultList.Applicant) {
+              ConvenerName.value = data.resultList.Applicant;
+            }
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
       async function getAccount() {
         const axios = require('axios');
         try {

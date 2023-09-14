@@ -1,10 +1,10 @@
 <template>
   <div class='button_wrap'>
-    <button @click="viewDetails()">檢視</button>
-    <button @click="viewEdit()">編輯</button>
-    <button>盤點</button>
-    <button>平帳</button>
-    <button>結果</button>
+    <button @click="view('View')">檢視</button>
+    <button @click="view('Edit')">編輯</button>
+    <button @click="view('Process')">盤點</button>
+    <button @click="view('Balance')">平帳</button>
+    <button @click="view('Balance_Result')">結果</button>
   </div>
 </template>
 
@@ -19,22 +19,35 @@ export default {
     const router = useRouter();
     const search_id = props.params.data.PlanId;
 
-    function viewDetails() {
-      // console.log(props.params.data.AI_ID);
+    function view(type) {
       if (search_id !== '') {
-        router.push({ name: 'Inventory_View', query: { search_id } });
+        switch (type) {
+          case 'View':
+            router.push({ name: 'Inventory_View', query: { search_id } });
+            break;
+          case 'Edit':
+            router.push({ name: 'Inventory_View', query: { search_id } });
+            break;
+          case 'Process':
+            router.push({ name: 'Inventory_Process', query: { search_id } });
+            break;
+          case 'Balance':
+            router.push({ name: 'Inventory_Balance', query: { search_id } });
+            break;
+          case 'Balance_Result':
+            router.push({ name: 'Inventory_Balance_Result', query: { search_id } });
+            break;
+        }
       }
     }
 
     function viewEdit() {
-      // console.log(props.params.data.search_id);
       if (search_id !== '') {
         router.push({ name: 'Inventory_Edit', query: { search_id } });
       }
     }
     return { 
-      viewDetails,
-      viewEdit,
+      view,
     };
   },
 };
