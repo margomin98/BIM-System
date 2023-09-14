@@ -14,26 +14,26 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">計畫編號：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly/>
+            <input type="text" class="form-control readonly_box" v-model="details.PlanId" readonly/>
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">標題：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly/>
+            <input type="text" class="form-control readonly_box" v-model="details.PlanTitle" readonly/>
           </div>
         </div>
         <div class="row g-0">
           <div class="col-xl-6 col-lg-6 col-md-12 col-12 d-flex">
             <div class="input-group mb-3">
               <div class="input-group-prepend">盤點人員：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly/>
+              <input type="text" class="form-control readonly_box" v-model="details.InventoryStaffName" readonly/>
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-12 col-12 d-flex">
             <div class="input-group mb-3">
               <div class="input-group-prepend">盤點召集人：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
+              <input type="text" class="form-control readonly_box" v-model="details.ConvenerName" readonly />
             </div>
           </div>
         </div>
@@ -41,34 +41,34 @@
           <div class="col-xl-6 col-lg-12 col-md-12 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">盤點開始日期：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
+              <input type="text" class="form-control readonly_box" v-model="details.PlanStart" readonly />
             </div>
           </div>
           <div class="col-xl-6 col-lg-12 col-md-12 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">盤點結束日期：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
+              <input type="text" class="form-control readonly_box" v-model="details.PlanEnd" readonly />
             </div>
           </div>
         </div>
         <div class="col">
-          <div class="input-group mb-3 " style="   justify-content: flex-start;">
+          <div class="input-group" style="   justify-content: flex-start;">
             <div class="input-group-prepend">盤點類型：</div>
             <div class="check_section d-flex">
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no1" name="radio" value="no1" />
+                <input type="radio" id="no1" name="radio" value="指定盤" v-model="details.PlanType" :disabled="details.PlanType !== '指定盤'"/>
                 <label for="no1">指定盤</label>
               </div>
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no2" name="radio" value="no2" />
+                <input type="radio" id="no2" name="radio" value="月盤" v-model="details.PlanType" :disabled="details.PlanType !== '月盤'"/>
                 <label for="no2">月盤</label>
               </div>
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no3" name="radio" value="no3" />
+                <input type="radio" id="no3" name="radio" value="季盤" v-model="details.PlanType" :disabled="details.PlanType !== '季盤'"/>
                 <label for="no3">季盤</label>
               </div>
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no4" name="radio" value="no4" />
+                <input type="radio" id="no4" name="radio" value="年盤" v-model="details.PlanType" :disabled="details.PlanType !== '年盤'"/>
                 <label for="no4">年盤</label>
               </div>
             </div>
@@ -84,13 +84,13 @@
       </div>
       <div class="content d-flex">
         <div>
-          <p>應盤內容 ：</p>
+          <p>應盤內容 ： {{details.ReceivableCount}}項</p>
         </div>
         <div>
-          <p>合格項目 ：</p>
+          <p>合格項目 ： {{details.PassCount}}項</p>
         </div>
         <div>
-          <p>差異項目 ：</p>
+          <p>差異項目 ： {{details.DiscrepancyCount}}項</p>
         </div>
       </div>
     </div>
@@ -102,7 +102,7 @@
       </div>
       <div class="content">
         <div style="width: 100%">
-          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true"
+          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs1" :rowData="rowData1" :paginationAutoPageSize="true" :pagination="true"
             :alwaysShowHorizontalScroll="true">
           </ag-grid-vue>
         </div>
@@ -150,7 +150,7 @@
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
-          <p>差異細項</p>
+          <p>盤點範圍</p>
         </div>
       </div>
       <div class="content">
@@ -217,7 +217,7 @@
           </div>
         </div>
         <div style="width: 100%">
-          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs2" :rowData="rowData2" :defaultColDef="defaultColDef2" :paginationAutoPageSize="true" :pagination="true"
+          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs2" :rowData="rowData2" :paginationAutoPageSize="true" :pagination="true"
             :alwaysShowHorizontalScroll="true">
           </ag-grid-vue>
         </div>
@@ -248,8 +248,11 @@
       AgGridVue,
     },
     setup() {
-      return {
-        columnDefs: [{
+      const route = useRoute();
+      const router = useRouter();
+      const details = ref('');
+      const IP_ID = route.query.search_id;
+      const columnDefs1 =  [{
             cellClass: 'grid_checkbox',
             checkboxSelection: true,
             headerName: "認列",
@@ -259,16 +262,19 @@
             suppressMovable: true
           }, {
             headerName: "項目",
-            field: "make",
-            unSortIcon: true,
-            sortable: true,
-            width: '100',
+            valueGetter: function(params) {
+              // 通过 params.node 获取当前行的 RowNode
+              const rowNode = params.node;
+              // 返回 RowNode 的 id 属性作为该列的值
+              return parseFloat(rowNode.id)+1;
+            },
+            width: 75,
             resizable: true,
             suppressMovable: true
           },
           {
             headerName: "資產編號",
-            field: "make",
+            field: "AssetsId",
             unSortIcon: true,
             sortable: true,
             width: '140',
@@ -277,7 +283,7 @@
           },
           {
             headerName: "設備總類",
-            field: "model",
+            field: "EquipTypeName",
             unSortIcon: true,
             sortable: true,
             width: '140',
@@ -285,7 +291,7 @@
           },
           {
             headerName: "設備分類",
-            field: "price",
+            field: "EquipCategoryName",
             unSortIcon: true,
             sortable: true,
             width: '140',
@@ -293,7 +299,7 @@
           },
           {
             headerName: "物品名稱",
-            field: "make",
+            field: "AssetName",
             unSortIcon: true,
             sortable: true,
             width: '150',
@@ -302,7 +308,7 @@
           },
           {
             headerName: "儲位區域",
-            field: "model",
+            field: "AreaName",
             unSortIcon: true,
             sortable: true,
             width: '150',
@@ -310,23 +316,23 @@
           },
           {
             headerName: "儲位櫃位",
-            field: "model",
+            field: "LayerName",
             unSortIcon: true,
             sortable: true,
             width: '150',
             suppressMovable: true
           },
           {
-            headerName: "應盤數量",
-            field: "model",
+            headerName: "應盤",
+            field: "ReceivableNum",
             unSortIcon: true,
             sortable: true,
             width: '150',
             suppressMovable: true
           },
           {
-            headerName: "實盤數量",
-            field: "model",
+            headerName: "實盤",
+            field: "ActualNum",
             unSortIcon: true,
             sortable: true,
             width: '150',
@@ -334,7 +340,7 @@
           },
           {
             headerName: "差異",
-            field: "model",
+            field: "Discrepancy",
             unSortIcon: true,
             sortable: true,
             width: '100',
@@ -342,46 +348,75 @@
           },
           {
             headerName: "單位",
-            field: "model",
+            field: "Unit",
             unSortIcon: true,
             sortable: true,
             width: '100',
             suppressMovable: true
           }, {
             headerName: "認列人員",
-            field: "model",
+            field: "RecognizePerson",
             unSortIcon: true,
             sortable: true,
             width: '150',
             suppressMovable: true
           }
-        ],
-        rowData: [{
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000
-          },
-        ],
+      ]
+      const rowData1 = ref([]);
+      const rowData2 = ref([]);
+      onMounted(() => {
+        getDetails();
+        getDatagrid();
+      });
+      // 上半部資料 + 差異細項Datagrid
+      async function getDetails() {
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetInventoryResult?id=${IP_ID}`);
+          const data = response.data;
+          if (data.state === 'success') {
+            // 檢查資料狀態是否可編輯
+            // if(data.resultList.Status !== '申請入庫' && data.resultList.Status !== '申請歸還' && data.resultList.Status !== '可交付') {
+            //   window.history.back();
+            //   // router.push({name: 'Store_Datagrid'});
+            // }
+            console.log('上半部資料如下\n', data.resultList);
+            details.value = data.resultList;
+            rowData1.value = data.resultList.AssetList
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      // 下半部盤點範圍Datagrid
+      async function getDatagrid() {
+        const form = new FormData();
+        const axios = require('axios');
+        try {
+          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryResult', form);
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('下半部datagrid\n', data.resultList);
+            rowData2.value = data.resultList;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      return {
+        details,
+        columnDefs1,
+        rowData1,
         columnDefs2: [{
             headerName: "項目",
             field: "make",
@@ -481,32 +516,7 @@
             suppressMovable: true
           }
         ],
-        rowData2: [{
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Toyota",
-            model: "Celica",
-            price: 35000
-          },
-          {
-            make: "Ford",
-            model: "Mondeo",
-            price: 32000
-          },
-          {
-            make: "Porsche",
-            model: "Boxster",
-            price: 72000
-          },
-        ],
+        rowData2,
       };
     },
     data() {

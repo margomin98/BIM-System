@@ -126,6 +126,7 @@
   import Navbar from "@/components/Navbar.vue";
   import Inventory_prccess from "@/components/Inventory_prccess_button.vue"
   import Inventory_number from "@/components/Inventory_process_number_input.vue"
+  import Inventory_view from "@/components/Inventory_view_button.vue"
   import {
     onMounted,
     reactive,
@@ -141,6 +142,7 @@
       AgGridVue,
       Inventory_prccess,
       Inventory_number,
+      Inventory_view,
     },
     setup() {
       const details = ref({}); // 上半部帶入資料
@@ -156,6 +158,12 @@
       const IP_ID = route.query.search_id;
       const columnDefs =  [{
             headerName: "",
+            valueGetter: function(params) {
+              // 通过 params.node 获取当前行的 RowNode
+              const rowNode = params.node;
+              // 返回 RowNode 的 id 属性作为该列的值
+              return parseFloat(rowNode.id)+1;
+            },
             width: 50,
             resizable: true,
             suppressMovable: true
@@ -165,6 +173,13 @@
             field: "Status",
             unSortIcon: true,
             sortable: true,
+            width: 100,
+            resizable: true,
+            suppressMovable: true
+          },
+          {
+            headerName: "檢視",
+            cellRenderer: "Inventory_view",
             width: 100,
             resizable: true,
             suppressMovable: true
