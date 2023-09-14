@@ -464,25 +464,6 @@
           console.error('Error sending applicant info request to backend');
         }
       }
-      async function getAccount() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchName?name=`);
-          // console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            // console.log('Account Get成功 資料如下\n', data.resultList);
-            CustodianArray.value = data.resultList;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
       async function getEquipTypeName() {
         if (EquipTypeArray.value.length == 0) {
           const axios = require('axios');
@@ -522,6 +503,24 @@
           }
         } catch (error) {
           console.error('Error sending applicant info request to backend', error);
+        }
+      }
+      async function getAccount() {
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchName?name=`);
+          // console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            CustodianArray.value = data.resultList;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
         }
       }
       async function searchInventory(action) {

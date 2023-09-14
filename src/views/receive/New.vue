@@ -117,8 +117,12 @@
 <div class="content">
   <button class="upload_file_pt2">選擇檔案</button>
   <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
-            <swiper-slide class="custom-slide">
+            <!-- <swiper-slide class="custom-slide">
         <img src="https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*" alt="">
+              <span >x</span>
+            </swiper-slide> -->
+            <swiper-slide class="custom-slide">
+              <img src="https://i0.wp.com/www.lowcostpetvaccinations.net/wp-content/uploads/2017/04/puppy-1207816_1920.jpg?fit=1920%2C1386&ssl=1" alt="">
               <span >x</span>
             </swiper-slide>
             <swiper-slide class="custom-slide">

@@ -53,7 +53,7 @@
                       {{ searchParams.DateCategory || "請選擇" }}
                     </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p v-for="(item , index) in DateTypeArray" :key="index" class="dropdown-item" @click="selectStatus(item)">{{ item }}</p>
+                <p v-for="(item , index) in DateCategoryArray" :key="index" class="dropdown-item" @click="selectDateCategory(item)">{{ item }}</p>
               </div>
             </div>
           </div>
@@ -103,7 +103,7 @@
   import Equipment_button from "@/components/Equipment_button";
   import Delete from "@/components/Equip_delete_button";
   import Navbar from "@/components/Navbar.vue";
-  import {EquipmentDataType} from "@/assets/js/dropdown.js"
+  import {EquipmentDataCategory} from "@/assets/js/dropdown.js"
   export default {
     components: {
       Navbar,
@@ -125,7 +125,7 @@
       const AreaArray = ref([]); //區域陣列
       const LayerArray = ref([]); //櫃位陣列
       const LayerInit = ref('請先選擇區域');
-      const DateTypeArray = EquipmentDataType;
+      const DateCategoryArray = EquipmentDataCategory;
       const pageSize = ref(10);
       const columnDefs = [{
             suppressMovable: true,
@@ -243,8 +243,6 @@
             //尚未登入
             alert(data.messages);
             router.push('/');
-          } else {
-            throw new Error('Request was not successful');
           }
         } catch (error) {
           console.error(error);
@@ -300,7 +298,7 @@
       const selectLayer = (item) => {
         searchParams.LayerName = item;
       };
-      const selectStatus = (item) => {
+      const selectDateCategory = (item) => {
         searchParams.DateCategory = item;
       };
       function clear() {
@@ -316,7 +314,7 @@
         AreaArray,
         LayerArray,
         LayerInit,
-        DateTypeArray,
+        DateCategoryArray,
         pageSize,
         columnDefs,
         rowData,
@@ -325,7 +323,7 @@
         getAreaName,
         selectArea,
         selectLayer,
-        selectStatus,
+        selectDateCategory,
         clear,
       };
     },
