@@ -2,7 +2,7 @@
   <div class='button_wrap'>
     <button @click="viewDetails()">檢視</button>
     <button class="btn_edit" @click="viewEdit()">編輯</button>
-    <button class="btn_store">入庫</button>
+    <button class="btn_store" @click="viewStore()">入庫</button>
   </div>
 </template>
 
@@ -18,7 +18,7 @@
       function viewDetails() {
         if (search_id !== '') {
           router.push({
-            name: 'Assets_View',
+            name: 'Receive_View',
             query: {
               search_id
             }
@@ -28,7 +28,17 @@
       function viewEdit() {
         if (search_id !== '') {
           router.push({
-            name: 'Assets_Edit',
+            name: 'Receive_Edit',
+            query: {
+              search_id
+            }
+          });
+        }
+      }
+      function viewStore() {
+        if (search_id !== '') {
+          router.push({
+            name: 'Store_New',
             query: {
               search_id
             }
@@ -38,6 +48,7 @@
       return {
         viewDetails,
         viewEdit,
+        viewStore,
       };
     },
   };

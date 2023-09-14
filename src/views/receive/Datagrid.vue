@@ -2,12 +2,12 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>收貨管理</h1>
+      <h1>收貨填報管理</h1>
     </div>
     <div class="col">
       <div class="button_wrap d-flex">
         <router-link to="/receive_new">
-          <button class="add_btn">新增</button>
+          <button class="add_btn">新增收貨</button>
         </router-link>
   
       </div>
@@ -55,13 +55,12 @@
       <div class="button_wrap d-flex">
         <button class="search_btn">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
-                <button class="export_btn">匯出</button>
+        <!-- <button class="export_btn">匯出</button> -->
       </div>
     </div>
    <div style="width: 100%;margin-bottom:3%">
-          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true" :alwaysShowHorizontalScroll="true"
-         >
-    </ag-grid-vue>
+      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :defaultColDef="defaultColDef" :paginationAutoPageSize="true" :pagination="true" :alwaysShowHorizontalScroll="true">
+      </ag-grid-vue>
     </div>
 
   </div>
@@ -72,7 +71,7 @@
     AgGridVue
   } from "ag-grid-vue3";
   import Receive_button from "@/components/Receive_button";
-  import Delete from "@/components/Delete_button";
+  import Delete from "@/components/Receive_delete_button";
   import Navbar from "@/components/Navbar.vue";
   export default {
     components: {
@@ -97,6 +96,7 @@
             sortable: true,
             width: '180',
             resizable: true,
+            flex: 1,
             suppressMovable: true
           },
           {
@@ -106,6 +106,7 @@
             sortable: true,
             width: '180',
             resizable: true,
+            flex: 1,
             suppressMovable: true
           },
           {
@@ -278,7 +279,7 @@
         gap: 20px;
         .add_btn {
           @include datagrid_button_no1;
-          width: 100px;
+          // width: 100px;
           &:hover {
             background-color: #537ebc;
           }
@@ -376,7 +377,7 @@
         gap: 20px;
         .add_btn {
           @include datagrid_button_no1;
-          width:100px;
+          // width:100px;
           &:hover {
             background-color: #537ebc;
           }
