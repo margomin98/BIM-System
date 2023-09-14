@@ -161,7 +161,7 @@
                   <p>目前資產庫存</p>
                 </div>
               </div>
-              <ag-grid-vue style="height: 450px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :paginationPageSize="10" :pagination="true"
+              <ag-grid-vue style="height: 450px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :paginationPageSize="20" :pagination="true"
               :suppressRowClickSelection="true" :rowSelection="'multiple'" @grid-ready="onGridReady1">
               </ag-grid-vue>
             </div>
