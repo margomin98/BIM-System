@@ -15,7 +15,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <router-link to="/receive_new">新增收貨</router-link>
-              <router-link to="/receive_datagrid">收貨填報管理</router-link>
+              <router-link to="/receive_datagrid">收貨管理</router-link>
               <div class='dropdown-divider' style='border-color:white'></div>
               <router-link to="/store_new">新品入庫</router-link>
               <router-link to="/store_return">歸還入庫</router-link>

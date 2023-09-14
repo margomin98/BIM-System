@@ -2,7 +2,7 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>收貨填報管理</h1>
+      <h1>收貨管理</h1>
     </div>
     <div class="col">
       <div class="button_wrap d-flex">

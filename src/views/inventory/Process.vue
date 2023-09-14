@@ -94,7 +94,7 @@
               <div class="input-group ">
                 <div class="search_section">
                   <div class="input-wrapper">
-                    <input ref="myInput" placeholder="請掃描資產編號" class="text-center" v-model="InputAssetsId">
+                    <input ref="myInput" placeholder="請掃描資產編號" class="text-center" v-model="InputAssetsId" @input="handleInput">
                   </div>
                 </div>
               </div>
@@ -124,8 +124,11 @@
     AgGridVue
   } from "ag-grid-vue3";
   import Navbar from "@/components/Navbar.vue";
+  import Inventory_prccess from "@/components/Inventory_prccess_button.vue"
+  import Inventory_number from "@/components/Inventory_process_number_input.vue"
   import {
     onMounted,
+    reactive,
     ref
   } from "vue";
   import {
@@ -136,21 +139,24 @@
     components: {
       Navbar,
       AgGridVue,
-    },
-    mounted() {
-      this.$refs.myInput.focus();
+      Inventory_prccess,
+      Inventory_number,
     },
     setup() {
       const details = ref({}); // 上半部帶入資料
       const route = useRoute();
       const router = useRouter();
       const InputAssetsId = ref('');
+      const inventoryParams = reactive({
+        I_Id: -1,
+        ActualNum: '', //*才能接null或空白
+        Discrepancy: '', //*才能接null或空白
+      });
+      const myInput = ref(null);
       const IP_ID = route.query.search_id;
       const columnDefs =  [{
-            headerName: "項目",
-            width: 100,
-            unSortIcon: true,
-            sortable: true,
+            headerName: "",
+            width: 50,
             resizable: true,
             suppressMovable: true
           },
@@ -172,8 +178,16 @@
             suppressMovable: true
           },
           {
-            headerName: "",
-            field: "",
+            cellRenderer: "Inventory_prccess",
+            cellRendererParams: {
+              // 審核
+              update: (data)=>{
+                inventoryParams.I_Id = data.I_Id;
+                inventoryParams.ActualNum = data.ReceivableNum.toString();
+                inventoryParams.Discrepancy = '0';
+                takeInventory();
+              }
+            },
             width: 80,
             resizable: true,
             suppressMovable: true
@@ -181,6 +195,19 @@
           {
             headerName: "實盤",
             field: "ActualNum",
+            cellRenderer: "Inventory_number",
+            cellRendererParams: {
+              takeParams: (data , Actual) => {
+                let Discrepancy = (data.ReceivableNum-Actual).toString()
+                if (!Actual) {
+                  Discrepancy = '';
+                }
+                inventoryParams.I_Id = data.I_Id;
+                inventoryParams.ActualNum = Actual;
+                inventoryParams.Discrepancy = Discrepancy;
+                takeInventory();
+              }
+            },
             width: 80,
             resizable: true,
             cellStyle: {
@@ -251,6 +278,7 @@
       const rowData = ref([]);
       onMounted(() => {
         confirmItem();
+        myInput.value.focus()
       });
 
       // 上半部帶入資料 1.確定盤點項目 -> 2.帶入資料 3.帶入盤點datagrid
@@ -303,7 +331,7 @@
       }
       // 下半部分盤點範圍datagrid資料
       // 3.
-      async function getDatagrid() {
+      async function getDatagrid(type) {
         const axios = require('axios');
         const form = new FormData();
         if(InputAssetsId.value) {
@@ -316,6 +344,16 @@
           if (data.state === 'success') {
             console.log('下半部datagrid 資料如下\n', data.resultList);
             rowData.value = data.resultList;
+            // 若掃描 QR code
+            if(type === 'take') {
+              // 若為非耗材
+              if(!data.resultList[0].IsConsumables) {
+                inventoryParams.I_Id = data.resultList[0].I_Id ;
+                inventoryParams.ActualNum = '1' ;
+                inventoryParams.Discrepancy = '0';
+                takeInventory();
+              }
+            }
             // grid.api2.setRowData(details.value.AssetList)
           } else if (data.state === 'error') {
             alert(data.messages);
@@ -325,6 +363,75 @@
           }
         } catch (error) {
           console.error(error);
+        }
+      }
+      // 單項盤點
+      async function takeInventory() {
+        const axios = require('axios');
+        let requestData = {};
+        for (const keyname in inventoryParams) {
+          if(inventoryParams[keyname] !== '')
+          requestData[keyname] = inventoryParams[keyname]
+        }
+        console.log('單項盤點requestData:' , requestData);
+        const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/TakeInventory', requestData);
+        const data = response.data;
+        try {
+          console.log(data);
+          if (data.state === 'success') {
+            getDatagrid();
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      // 送出
+      async function submit() {
+        const requestData = {
+          PlanId: IP_ID,
+        };
+        console.log('submit requestData',requestData);
+        try {
+          const axios = require('axios');
+          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryCompleted', requestData);
+          const data = response.data;
+          if (data.state === 'success') {
+            let msg = data.messages + '\n';
+            msg += '單號為:' + data.resultList.IP_Id;
+            alert(msg);
+            router.push({
+              name: 'Inventory_Datagrid'
+            });
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      function handleInput() {
+        // 從空白開始掃描
+        if(InputAssetsId.value.length === 10) {
+          // 更新datagrid，如果是資產 call 盤點function
+          getDatagrid('take');
+        }
+        // 接續上一次結果掃描
+        else if(InputAssetsId.value.length === 20) {
+          // 先將前面的Input清除
+          InputAssetsId.value = InputAssetsId.value.slice(10);
+          // 更新datagrid，如果是資產 call 盤點function
+          getDatagrid('take');
+        }
+        else {
+          // 不是一次input 10個字元
+          if(InputAssetsId.value !== ''){
+            InputAssetsId.value = '';
+          }
         }
       }
       const clear = ()=>{
@@ -337,11 +444,14 @@
       return {
         details,
         InputAssetsId,
+        myInput,
         columnDefs,
         rowData,
         pageSize: 20,
         rowHeight: 35,
         getDatagrid,
+        submit,
+        handleInput,
         clear,
         goBack,
       };
