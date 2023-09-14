@@ -14,73 +14,61 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">計畫編號：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.PlanId" readonly/>
+            <input type="text" class="form-control readonly_box" v-model="details.PlanId" readonly/>
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend"><span>*</span>標題：</div>
-            <input type="text" class="form-control text-center" placeholder="不可輸入超過20字" v-model="details.PlanTitle" />
+            <div class="input-group-prepend">標題：</div>
+            <input type="text" class="form-control readonly_box" v-model="details.PlanTitle" readonly/>
           </div>
         </div>
-        <div class="row organizer_wrap">
-          <div class="col-xl-6 col-lg-12 col-md-12 col-12 d-flex">
+        <div class="row g-0">
+          <div class="col-xl-6 col-lg-6 col-md-12 col-12 d-flex">
             <div class="input-group mb-3">
-              <div class="input-group-prepend flex"><span>*</span>盤點人員：</div>
-              <div class="dropdown">
-                <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    {{ details.InventoryStaffName || '請選擇' }}
-                  </button>
-              </div>
+              <div class="input-group-prepend">盤點人員：</div>
+              <input type="text" class="form-control readonly_box" v-model="details.InventoryStaffName" readonly/>
             </div>
           </div>
-          <div class="col-xl-6 col-lg-12 col-md-12 col-12 d-flex">
+          <div class="col-xl-6 col-lg-6 col-md-12 col-12 d-flex">
             <div class="input-group mb-3">
               <div class="input-group-prepend">盤點召集人：</div>
-              <input type="text" class="form-control readonly_box organizer" v-model="details.ConvenerName" readonly />
+              <input type="text" class="form-control readonly_box" v-model="details.ConvenerName" readonly />
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row g-0">
           <div class="col-xl-6 col-lg-12 col-md-12 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend"><span>*</span>盤點開始日期：</div>
-              <div class="date-selector">
-                <div class="input-container">
-                  <input type="date" class="date-input" v-model="details.PlanStart" />
-                </div>
-              </div>
+              <div class="input-group-prepend">盤點開始日期：</div>
+              <input type="text" class="form-control readonly_box" v-model="details.PlanStart" readonly />
             </div>
           </div>
           <div class="col-xl-6 col-lg-12 col-md-12 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend"><span>*</span>盤點結束日期：</div>
-              <div class="date-selector">
-                <div class="input-container">
-                  <input type="date" class="date-input" v-model="details.PlanEnd" />
-                </div>
-              </div>
+              <div class="input-group-prepend">盤點結束日期：</div>
+              <input type="text" class="form-control readonly_box" v-model="details.PlanEnd" readonly />
             </div>
           </div>
         </div>
         <div class="col">
           <div class="input-group" style="   justify-content: flex-start;">
-            <div class="input-group-prepend"><span>*</span>盤點類型：</div>
+            <div class="input-group-prepend">盤點類型：</div>
             <div class="check_section d-flex">
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no1" name="radio" value="指定盤" v-model="details.PlanType" />
+                <input type="radio" id="no1" name="radio" value="指定盤" v-model="details.PlanType" :disabled="details.PlanType !== '指定盤'"/>
                 <label for="no1">指定盤</label>
               </div>
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no2" name="radio" value="月盤" v-model="details.PlanType" />
+                <input type="radio" id="no2" name="radio" value="月盤" v-model="details.PlanType" :disabled="details.PlanType !== '月盤'"/>
                 <label for="no2">月盤</label>
               </div>
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no3" name="radio" value="季盤" v-model="details.PlanType" />
+                <input type="radio" id="no3" name="radio" value="季盤" v-model="details.PlanType" :disabled="details.PlanType !== '季盤'"/>
                 <label for="no3">季盤</label>
               </div>
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no4" name="radio" value="年盤" v-model="details.PlanType" />
+                <input type="radio" id="no4" name="radio" value="年盤" v-model="details.PlanType" :disabled="details.PlanType !== '年盤'"/>
                 <label for="no4">年盤</label>
               </div>
             </div>
@@ -96,7 +84,7 @@
       </div>
       <div class="content">
         <div style="width: 100%">
-          <ag-grid-vue style="width: 100%; height:465px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs2" :rowData="rowData2" :paginationPageSize="20" :pagination="true"
+          <ag-grid-vue style="width: 100%; height:810px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs2" :rowData="rowData2" :paginationPageSize="20" :pagination="true"
           @grid-ready="onGridReady2" :alwaysShowHorizontalScroll="true">
           </ag-grid-vue>
         </div>

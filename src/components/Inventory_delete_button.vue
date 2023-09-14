@@ -17,7 +17,6 @@
     setup(props) {
       const data = props.params.data;
       function DeleteFn() {
-        // console.log('params:' ,data);
         props.params.deleteFromAssetList(data);
       }
       return {
