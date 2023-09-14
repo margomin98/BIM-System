@@ -67,6 +67,14 @@ import Inventory_Balance from "../views/inventory/Balance";
 import Inventory_Balance_Result from "../views/inventory/Balance_result";
 //盤點管理
 
+//收貨管理
+import Receive_Datagrid from "../views/receive/Datagrid";
+import Receive_New from "../views/receive/New";
+import Receive_Edit from "../views/receive/Edit";
+import Receive_View from "../views/receive/View";
+import Receive_Delete from "../views/receive/Delete";
+//收貨管理
+
 //系統管理
 import System_Parameter from "../views/system/Parameter";
 import System_Parameter_Edit from "../views/system/Parameter_edit";
@@ -291,6 +299,36 @@ const routes = [
     name: "Inventory_Balance_Result",
     component: Inventory_Balance_Result,
     meta: {auth: true, request: 'IP_InventoryResult'},
+  },
+  {
+    path: "/receive_datagrid",
+    name: "Receive_Datagrid",
+    component: Receive_Datagrid,
+    // meta: {auth: true, request: 'IP_Detail'},
+  }, 
+  {
+    path: "/receive_new",
+    name: "Receive_New",
+    component: Receive_New,
+    // meta: {auth: true, request: 'IP_Detail'},
+  },
+  {
+    path: "/receive_edit",
+    name: "Receive_Edit",
+    component: Receive_Edit,
+    // meta: {auth: true, request: 'IP_Detail'},
+  },
+  {
+    path: "/receive_view",
+    name: "Receive_View",
+    component: Receive_View,
+    // meta: {auth: true, request: 'IP_Detail'},
+  },
+  {
+    path: "/receive_delete",
+    name: "Receive_Delete",
+    component: Receive_Delete,
+    // meta: {auth: true, request: 'IP_Detail'},
   },
   {
     

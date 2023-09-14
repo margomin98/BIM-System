@@ -14,6 +14,8 @@
               <img src="../assets/navbar/store.png" alt="入庫管理"> 入庫管理
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <router-link to="/store_new">收貨管理</router-link>
+              <div class='dropdown-divider' style='border-color:white'></div>
               <router-link to="/store_new">新品入庫</router-link>
               <router-link to="/store_return">歸還入庫</router-link>
               <router-link to="/store_datagrid">入庫填報管理</router-link>
