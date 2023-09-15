@@ -111,7 +111,10 @@
         <div class="col d-flex">
           <div class="input-group">
             <div class="input-group-prepend">認列人員：</div>
-            <input type="text" class="form-control text-center readonly_box" readonly />
+            <input type="text" class="form-control text-center readonly_box" readonly v-model="validation.VerifyPerson"/>
+            <span class="icon-container">
+              <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.isVerified" />
+            </span>
           </div>
           <button class="send_btn" data-bs-toggle="modal" data-bs-target="#auth_modal">驗證</button>
         </div>
@@ -127,26 +130,26 @@
                 <div class="col">
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">帳號：</div>
-                    <input type="text" class="form-control" />
+                    <input type="text" class="form-control" v-model="validation.account"/>
                   </div>
                 </div>
                 <div class="col">
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">密碼：</div>
-                    <input type="password" class="form-control" />
+                    <input type="password" class="form-control" v-model="validation.password"/>
                   </div>
                 </div>
               </div>
               <div class="modal-footer m-auto">
-                <button type="button" class="btn" data-bs-dismiss="modal">驗證</button>
+                <button type="button" class="btn" data-bs-dismiss="modal" @click="validate()">驗證</button>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="col button_wrap">
-        <button class="send_btn" @click = "submit">確定認列</button>
-        <button class="send_btn" @click = "force">完成平帳</button>
+        <button class="send_btn" :class="{send_btn_disabled: !validation.isVerified}" @click = "submit" :disabled="!validation.isVerified">確定認列</button>
+        <button class="send_btn" :class="{send_btn_disabled: !validation.isVerified}" @click = "force" :disabled="!validation.isVerified">完成平帳</button>
       </div>
     </div>
     <div class="info_wrap col">
@@ -272,6 +275,13 @@
         LayerName: '',
       });
       const grid = ref(null);
+      const validation = reactive({
+        account: 'user_3',
+        password: 'Test_123',
+        VerifyOption: false,
+        isVerified: false,
+        VerifyPerson: '未驗證',
+      })
       const columnDefs1 =  [
           {
             cellClass: 'grid_checkbox',
@@ -508,11 +518,86 @@
         getDatagrid();
       });
       async function submit() {
+        if(!validation.isVerified) {
+          alert('未驗證');
+          return
+        }
         const rows = grid.value.getSelectedRows();
-        console.log(rows);
+        const AssetList = rows.map(item => ({
+          I_id: item.I_Id,
+          Discrepancy: item.Discrepancy,
+        }));
+        console.log(AssetList);
+        const requestData = {
+          PlanId: IP_ID,
+          RecognizePerson: validation.VerifyPerson,
+          AssetList: AssetList,
+        }
+        const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/BalanceAsset', requestData);
+        const data = response.data;
+        try {
+          console.log(data);
+          if (data.state === 'success') {
+            let msg = data.messages;
+            // msg += '\n單號:' + data.resultList.IP_Id;
+            alert(msg);
+            router.push({
+              name: 'Inventory_Datagrid'
+            });
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
       }
       async function force() {
-
+        const axios = require('axios');
+        const response = await axios.get(`http://192.168.0.177:7008/StocktakingMng/BalanceCompleted?id=${IP_ID}`);
+        try {
+          const data = response.data;
+          console.log(data);
+          if (data.state === 'success') {
+            alert(data.messages);
+            router.push({
+              name: 'Inventory_Datagrid'
+            });
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      async function validate() {
+        const axios = require('axios');
+        const formData = new FormData();
+        const formFields = {
+          'userName': validation.account,
+          'userPassword': validation.password,
+        };
+        //將表格資料append到 formData
+        for (const fieldName in formFields) {
+          formData.append(fieldName, formFields[fieldName]);
+        }
+        const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidationForA_Operator', formData);
+        try {
+          const data = response.data;
+          console.log(data);
+          if (data.state === 'success') {
+            validation.isVerified = true;
+            validation.VerifyPerson = validation.account;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+            validation.isVerified = false;
+            validation.VerifyPerson = '未驗證';
+          }
+        } catch (error) {
+          console.error(error);
+        }
       }
       // 上半部資料 + 差異細項Datagrid
       async function getDetails() {
@@ -686,6 +771,7 @@
         EquipCategoryInit,
         LayerInit,
         searchParams,
+        validation,
         columnDefs1,
         columnDefs2,
         rowData1,
@@ -693,6 +779,7 @@
         rowHeight: 35,
         submit,
         force,
+        validate,
         getDatagrid,
         getAreaName,
         getEquipTypeName,
@@ -711,6 +798,14 @@
   @import "@/assets/css/global.scss";
   span {
     @include red_star
+  }
+  .checkmark-icon {
+    position: absolute;
+    top: 10%;
+    left: 93%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
@@ -825,6 +920,12 @@
             padding: 10px;
             &:hover {
               background-color: #8eb2e3;
+            }
+          }
+          button.send_btn_disabled {
+            background: #878787;
+            &:hover {
+              background: #878787;
             }
           }
         }
@@ -1114,6 +1215,12 @@
               background-color: #8eb2e3;
             }
           }
+          button.send_btn_disabled {
+            background: #878787;
+            &:hover {
+              background: #878787;
+            }
+          }
         }
         .dropdown {
           width: calc(100% - 10%);
@@ -1400,6 +1507,13 @@
             padding: 5px;
             &:hover {
               background-color: #8eb2e3;
+            }
+          }
+
+          button.send_btn_disabled {
+            background: #878787;
+            &:hover {
+              background: #878787;
             }
           }
         }

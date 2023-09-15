@@ -102,13 +102,13 @@
       </div>
       <div class="content">
         <div style="width: 100%">
-          <ag-grid-vue style="width: 100%; height:810px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs1" :rowData="rowData1" :paginationPageSize="20" :pagination="true"
-          :suppressRowClickSelection="true" :rowSelection ="'multiple'" :alwaysShowHorizontalScroll="true" @grid-ready = "onGridReady">
+          <ag-grid-vue style="width: 100%; height:810px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table1' class="ag-theme-alpine" :columnDefs="columnDefs1" :rowData="rowData1" :paginationPageSize="20" :pagination="true"
+          :getRowStyle="rowClassRules" :suppressRowClickSelection="true" :rowSelection ="'multiple'" :alwaysShowHorizontalScroll="true" @grid-ready = "onGridReady">
           </ag-grid-vue>
         </div>
       </div>
     </div>
-    <div class="info_wrap col">
+    <div class="info_wrap col mt-5">
       <div class="fixed_info">
         <div>
           <p>盤點範圍</p>
@@ -178,7 +178,7 @@
           </div>
         </div>
         <div style="width: 100%">
-          <ag-grid-vue style="width: 100%; height:470px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs2" :rowData="rowData2" :paginationAutoPageSize="true" :pagination="true"
+          <ag-grid-vue style="width: 100%; height:470px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table2' class="ag-theme-alpine" :columnDefs="columnDefs2" :rowData="rowData2" :defaultColDef="defaultColDef2" :paginationAutoPageSize="true" :pagination="true"
             :alwaysShowHorizontalScroll="true">
           </ag-grid-vue>
         </div>
@@ -214,6 +214,13 @@
       const router = useRouter();
       const IP_ID = route.query.search_id;
       const details = ref('');
+      const rowClassRules = (params)=>{
+        if(params.data.NotBalanced) {
+          return {
+            'background-color' : '#E94B4B'
+          }
+        }
+      };
       const DropdownArray = reactive({
         EquipType: [],
         EquipCategory: [],
@@ -231,22 +238,7 @@
         LayerName: '',
       });
       const grid = ref(null);
-      const columnDefs1 =  [
-          {
-            cellClass: 'grid_checkbox',
-            checkboxSelection: true,
-            headerName: "認列",
-            field: "",
-            unSortIcon: true,
-            width: '80',
-            checkboxSelection: function(params) {
-              // 根据 NotBalanced 的值决定是否禁用复选框
-              return params.data.NotBalanced;
-            },
-            showDisabledCheckboxes: true,
-            suppressMovable: true,
-          },
-          {
+      const columnDefs1 =  [{
             headerName: "項目",
             valueGetter: function(params) {
               // 通过 params.node 获取当前行的 RowNode
@@ -641,6 +633,7 @@
       }
       return {
         details,
+        rowClassRules,
         DropdownArray,
         EquipCategoryInit,
         LayerInit,
@@ -668,6 +661,8 @@
 </script>
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
+
+
   span {
     @include red_star
   }
@@ -703,6 +698,10 @@
         }
         .content {
           @include content_bg;
+          .row-test {
+            background-color: red !important;
+            color: red;
+          }
           p {
             text-align: center;
             white-space: nowrap;
