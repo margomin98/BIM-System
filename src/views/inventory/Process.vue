@@ -372,7 +372,7 @@
       }
       .info_wrap {
         margin: auto;
-        width: 800px;
+        padding: 0 20%;
         .fixed_info {
           @include fixed_info;
           p {
