@@ -220,33 +220,16 @@
         },
       ]
       // 盤點範圍項目 datagrid
-      const columnDefs2 = [{
-          cellRenderer: "Inventory_delete_button",
-          cellRendererParams: {
-            deleteFromAssetList: (data)=>{
-              // alert(data.AssetsId);
-              const deleteIndex = details.value.AssetList.findIndex((item) => item.AssetsId === data.AssetsId);
-              details.value.AssetList.splice(deleteIndex , 1);
-              grid.api2.setRowData(details.value.AssetList);
-            }
-          },
-          headerName: "",
-          unSortIcon: true,
-          resizable: true,
-          width: 100,
-          suppressMovable: true
-        },
+      const columnDefs2 = [
         {
-          headerName: "項目",
+          // headerName: "項目",
           valueGetter: function(params) {
             // 通过 params.node 获取当前行的 RowNode
             const rowNode = params.node;
             // 返回 RowNode 的 id 属性作为该列的值
             return parseFloat(rowNode.id)+1;
           },
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
+          width: 50,
           resizable: true,
           suppressMovable: true
         },
