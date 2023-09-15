@@ -1,5 +1,5 @@
 <template>
-  <button v-show="display" type="button" class="btn btn-primary" @click="updateActual">>></button>
+  <button v-show="display" type="button" class="btn btn-primary" @click="updateActual">➜</button>
 </template>
 
 <script>
@@ -28,14 +28,16 @@ export default {
 
 
 <style lang="scss" scoped>
-  @import "@/assets/css/global.scss";
-  button {
-    @include datagrid_view_button;
-    height: 25px;
-    color: black;
-    &:hover {
-      background: #1D7072;
-      color: white
-    }
+@import "@/assets/css/global.scss";
+button {
+  @include datagrid_view_button;
+  height: 20px;
+  color: black;
+  width: 40px;
+  border-radius: 15px;
+  &:hover {
+    background: #1D7072;
+    color: white
   }
+}
 </style>

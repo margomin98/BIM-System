@@ -2,10 +2,11 @@
   <div class='button_wrap'>
     <button class="" @click="view('View')">檢視</button>
     <button :class="{ disabled_btn: isDisabled.edit, btn2: !isDisabled.edit }" :disabled="isDisabled.edit" @click="view('Edit')">編輯</button>
-    <button :class="{ disabled_btn: isDisabled.process, btn3: !isDisabled.process }" :disabled="isDisabled.process" @click="view('Process')">盤點</button>
+    <button :class="{ disabled_btn: isDisabled.process, btn3: !isDisabled.process }" :disabled="isDisabled.process" data-bs-toggle="modal" data-bs-target="#staticBackdrop">盤點</button>
     <button :class="{ disabled_btn: isDisabled.balance, btn4: !isDisabled.balance }" :disabled="isDisabled.balance" @click="view('Balance')">平帳</button>
     <button class="" @click="view('Balance_Result')">結果</button>
   </div>
+ 
 </template>
 
 <script>

@@ -2,9 +2,14 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>檢視盤點計畫</h1>
+      <h1>刪除項目</h1>
     </div>
     <div class="info_wrap col">
+      <div class="warn">
+        <h4>
+          確定刪除以下項目嗎？
+        </h4>
+      </div>
       <div class="fixed_info">
         <div>
           <p>計畫內容</p>
@@ -91,7 +96,21 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
+  <button class="delete_btn" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>
       </div>
+      <div class="modal fade delete_modal" id="deleteModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered justify-content-center">
+        <div class="modal-content">
+          <div class="modal-body">
+            確定刪除這筆項目嗎？
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">否</button>
+            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" @click="deleteData">是</button>
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
   </div>
 </template>
@@ -361,6 +380,50 @@
   span {
     @include red_star
   }
+
+  .delete_modal {
+    .modal-content {
+      border: solid 1px black;
+      border-radius: 0;
+      width: 500px;
+      .modal-body {
+        margin: unset;
+        background: #E94B4B;
+        text-align: center;
+        font-weight: 700;
+        color: white;
+        border-bottom: solid 1px black;
+      }
+      .modal-footer {
+        margin: auto;
+    gap: 10px;
+    padding: 20px;
+    background: white;
+    width: 100%;
+    justify-content: center;
+        button:nth-child(1) {
+          background-color: #7E7E7E;
+          border: none;
+          color: white;
+          width: 50px;
+          font-weight: 700;
+          &:hover {
+            background-color: #464242;
+          }
+        }
+        button:nth-child(2) {
+          background-color: #E94B4B;
+          border: none;
+          color: white;
+          width: 50px;
+          font-weight: 700;
+          &:hover {
+            background-color: #a70e0e;
+          }
+        }
+      }
+    }
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       input {
@@ -369,6 +432,21 @@
       }
       .readonly_box {
         @include readonly_box;
+      }
+      .warn {
+        text-align: center;
+        padding: 10px 0;
+        background: #9f0000;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        h4 {
+          color: white;
+          margin-bottom: 0;
+          font-weight: 700;
+          &::before {
+            content: "\26A0";
+          }
+        }
       }
       h1 {
         margin-top: 80px;
@@ -468,7 +546,24 @@
               background-color: #5d85bb;
             }
           }
-         
+          .delete_btn {
+            background: var(--c-5, #E94B4B);
+            justify-content: center;
+            align-items: center;
+            display: inline-flex;
+            border-radius: 10px;
+            height: 40px;
+            width: 90px;
+            color: #FFF;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            border: none;
+            margin: 0 10px;
+            &:hover {
+              background-color: #a51e1e;
+            }
+          }
         }
         .dropdown {
           width: calc(100% - 10%);
@@ -514,6 +609,21 @@
       }
       .readonly_box {
         @include readonly_box;
+      }
+      .warn {
+        text-align: center;
+        padding: 10px 0;
+        background: #9f0000;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        h4 {
+          color: white;
+          margin-bottom: 0;
+          font-weight: 700;
+          &::before {
+            content: "\26A0";
+          }
+        }
       }
       h1 {
         margin-top: 80px;
@@ -613,7 +723,24 @@
               background-color: #5d85bb;
             }
           }
-         
+          .delete_btn {
+            background: var(--c-5, #E94B4B);
+            justify-content: center;
+            align-items: center;
+            display: inline-flex;
+            border-radius: 10px;
+            height: 40px;
+            width: 90px;
+            color: #FFF;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            border: none;
+            margin: 0 10px;
+            &:hover {
+              background-color: #a51e1e;
+            }
+          }
         }
         .dropdown {
           width: calc(100% - 10%);
@@ -671,6 +798,21 @@
         font-size: 40px;
         font-weight: 600;
         @include title_color;
+      }
+      .warn {
+        text-align: center;
+        padding: 10px 0;
+        background: #9f0000;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        h4 {
+          color: white;
+          margin-bottom: 0;
+          font-weight: 700;
+          &::before {
+            content: "\26A0";
+          }
+        }
       }
       .info_wrap {
         padding: 1% 5% 0;
@@ -756,6 +898,24 @@
             padding: 5px;
             &:hover {
               background-color: #5d85bb;
+            }
+          }
+          .delete_btn {
+            background: var(--c-5, #E94B4B);
+            justify-content: center;
+            align-items: center;
+            display: inline-flex;
+            border-radius: 10px;
+            height: 40px;
+            width: 90px;
+            color: #FFF;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            border: none;
+            margin: 0 10px;
+            &:hover {
+              background-color: #a51e1e;
             }
           }
         }
