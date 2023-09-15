@@ -533,6 +533,7 @@
           RecognizePerson: validation.VerifyPerson,
           AssetList: AssetList,
         }
+        const axios = require('axios');
         const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/BalanceAsset', requestData);
         const data = response.data;
         try {
