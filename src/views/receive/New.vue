@@ -63,27 +63,31 @@
       </div>
       <div class="content row g-0">
         <div class="col-xl-2 col-lg-2 col-md-2 col-12">
-          <button class="upload_file_pt1" @click="openFileInput">選擇檔案</button>
-          <input type="file" id="fileInput" ref="fileInput" style="display: none" @change="handleFileSelect" multiple />
+          <button class="upload_file_pt1" @click="openFileInput(0)">選擇檔案</button>
+          <input type="file" id="fileInput" ref="fileInput1" style="display: none" @change="handleDocumentFile($event)" multiple />
         </div>
         <div class="d-flex selected_file col">
-          <div class="icon" v-for="(file, index) in selectedFiles" :key="index">
+          <div class="icon" v-for="(file, index) in fileParams.viewDoc" :key="index">
             <p>{{ file.name }}</p>
             <div>
-              <img src="@/assets/view.png" v-if="isViewPhotoButtonVisible" @click="openPhotoModal">
+              <img src="@/assets/view.png" v-if="file.type === 'pic' || file.type === 'pdf'" @click="handlePreview(file)">
               <img class="close_icon" src="@/assets/trash.png" @click="deleteFile(index)">
             </div>
           </div>
-          <div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+          <!-- Modal Trigger -->
+          <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#photoModal"></button>
+          <!-- Photo Modal -->
+          <div class="modal fade" id="photoModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 800px !important">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="photoModalLabel">瀏覽</h5>
+                  <h5 class="modal-title" id="photoModalLabel">{{ modalParams.title }}</h5>
                   <div class="close_icon">
                     <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
                   </div>
                 </div>
                 <div class="modal-body">
+                  <img :src="modalParams.src" class="w-75">
                 </div>
               </div>
             </div>
@@ -99,7 +103,8 @@
         </div>
       </div>
       <div class="content">
-        <button class="upload_file_pt2">選擇檔案</button>
+        <button class="upload_file_pt2" @click="openFileInput(1)">選擇檔案</button>
+        <input type="file" id="fileInput2" ref="fileInput2" style="display: none" @change="handlePictureFile($event)" multiple />
         <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
           <!-- <swiper-slide class="custom-slide">
           <img src="https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*" alt="">
@@ -154,54 +159,32 @@
     components: {
       Navbar,
     },
-    data() {
-      return {
-        selectedFile1: null,
-        selectedFiles: [],
-        selectedPhotoIndex: -1,
-        isViewPhotoButtonVisible: false,
-      };
-    },
-    methods: {
-      openPhotoModal() {
-        // Use the Bootstrap 5 modal method to show the modal
-        $('#photoModal').modal('show');
-      },
-      openFileInput() {
-        this.$refs.fileInput.click();
-      },
-      handleFileSelect() {
-        const fileInput = this.$refs.fileInput;
-        if (fileInput.files.length > 0) {
-          this.selectedFiles = [...this.selectedFiles, ...fileInput.files];
-          this.isViewPhotoButtonVisible = true; // Show the button when a file is selected
-        }
-      },
-      deleteFile(index) {
-        this.selectedFiles.splice(index, 1);
-      },
-    },
     setup() {
       const Applicant = ref('')
-      const ApplicationDate = ref('')
+      // 上半部表單參數
       const formParams = reactive({
         ShipmentNum: '',
         ShipmentCompany: '',
         GoodsNum: 1,
         ReceivedDate: '',
       })
+      const fileParams = reactive({
+        newDoc: [],
+        viewDoc: [],
+        newPic: [],
+        viewPic: [],
+      })
+      const modalParams = reactive({
+        title: '',
+        src: '',
+      })
+      // 控制按鈕
+      const fileInput1 = ref();
+      const fileInput2 = ref();
       onMounted(()=>{
         getApplicationInfo();
-        ApplicationDate.value = getDate();
       });
-      function getDate() {
-        const today = new Date();
-        var date = '';
-        date += (today.getFullYear() + '/');
-        date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
-        date += ((today.getDate()).toString().padStart(2, '0'));
-        return date;
-      }
+      // 收件人員資訊
       async function getApplicationInfo() {
         const axios = require('axios');
         try {
@@ -223,7 +206,116 @@
           console.error(error);
         }
       }
+      // 控制 "選擇檔案"按鈕
+      const openFileInput = (index)=> {
+        switch (index) {
+          case 0:
+            fileInput1.value.click();
+            break;
+          case 1:
+            fileInput2.value.click();
+            break;
+        
+          default:
+            break;
+        }
+      }
+      // 處理中間物流文件
+      function handleDocumentFile(event) {
+        console.log('DocumentFiles:',event.target.files);
+        const files = event.target.files;
+        const imageExtensions = ['jpg', 'jpeg', 'png', 'gif' , 'pdf' , 'doc' , 'docx'];
+        //檢查副檔名
+        for (let i = 0; i < files.length; i++) {
+          const fileName = files[i].name;
+          const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
+          if (!imageExtensions.includes(fileExtension.toLowerCase())) {
+            alert(fileExtension + '不在允許的格式範圍內，請重新選取');
+            return;
+          }
+        }
+        // 處理檔案
+        const imgArray = fileParams.newDoc;
+        const previewUrl = fileParams.viewDoc;
+        for (let i = 0; i < files.length; i++) {
+          // 依據檔案格式 分為 1.圖片(壓縮、可預覽) 2.pdf(可預覽) 3. doc/docx(都不行)
+          const fileName = files[i].name;
+          const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
+          const reader = new FileReader();
+          // .pdf
+          if(fileExtension === 'pdf') {
+            imgArray.push(files[i]);
+            previewUrl.push({
+              name: files[i].name,
+              link: URL.createObjectURL(files[i]),
+              type: 'pdf',
+            });
+          }
+          // .doc/.docx
+          else if(fileExtension === 'doc' || fileExtension == 'docx') {
+
+          }
+          // 圖片
+          else {
+            reader.onload = (e) => {
+              const img = new Image();
+              img.src = e.target.result;
+              img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const maxWidth = 800; // 设置最大宽度
+                const scaleRatio = Math.min(maxWidth / img.width, 1);
+                canvas.width = img.width * scaleRatio;
+                canvas.height = img.height * scaleRatio;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                canvas.toBlob((blob) => {
+                  const compressedFile = new File([blob], files[i].name, {
+                    // type: files[i].type,
+                    lastModified: files[i].lastModified,
+                  });
+                  // 记录压缩前后的大小
+                  const originalSize = Math.round(files[i].size / 1024); // 原始大小（KB）
+                  const compressedSize = Math.round(compressedFile.size / 1024); // 壓縮後大小（KB）
+                  // console.log(`原始大小: ${originalSize} KB，壓縮後大小: ${compressedSize} KB`);
+                  imgArray.push(compressedFile);
+                  previewUrl.push({
+                    name: files[i].name,
+                    link: URL.createObjectURL(compressedFile),
+                    type: 'pic'
+                  });
+                }, files[i].type, 0.8);
+              };
+            };
+          }
+          reader.readAsDataURL(files[i]);
+        }
+        console.log('uploaded viewDoc:' , fileParams.viewDoc);
+        console.log('uploaded newDoc:' , fileParams.newDoc);
+      }
+      // 處理下半部照片
+      function handlePictureFile(event) {
+        console.log('PictureFiles:',event.target.files);
+      }
+      // 處理物流文件預覽 1.pdf ->開分頁瀏覽 2.pic ->Open Modal
+      function handlePreview(file) {
+        switch (file.type) {
+          case 'pdf':
+            window.open(file.link)
+            break;
+          case 'pic':
+            modalParams.title = file.name ;
+            modalParams.src = file.link;
+            const modal = document.querySelector('#openModal');
+            modal.click();
+            break;
+        
+          default:
+            break;
+        }
+      }
+      // 送出
       async function submit() {
+        // 檢查必填項目
         console.log(formParams);
       }
       function goBack() {
@@ -232,10 +324,18 @@
       return {
         Applicant,
         formParams,
+        fileParams,
+        modalParams,
+        fileInput1,
+        fileInput2,
         pagination: {
           clickable: true,
         },
         modules: [Pagination],
+        openFileInput,
+        handleDocumentFile,
+        handlePictureFile,
+        handlePreview,
         submit,
         goBack,
       }

@@ -699,6 +699,7 @@
         }
       }
       function openFileExplorer(index) {
+        console.log('fileInputs', fileInputs);
         fileInputs[index].click();
       }
       function handleFileChange(index) {

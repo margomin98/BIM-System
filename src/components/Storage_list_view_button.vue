@@ -13,13 +13,19 @@ export default {
   props: ['params'],
   setup(props){
     const linkName = ref('');
-    console.log(props.params.data.FormID);
+    // console.log(props.params.data.FormID);
     switch (props.params.data.Type) {
       case 0:
         linkName.value = 'Store_Process_View';
         break;
-        case 1:
+      case 1:
         linkName.value = 'Rent_Process_View';
+        break;
+      case 2:
+        linkName.value = 'Inventory_View';
+        break;
+      case 3:
+        linkName.value = 'Equipment_View';
         break;
       default:
         break;
