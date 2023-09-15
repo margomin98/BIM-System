@@ -244,8 +244,8 @@
               <p>作業行為</p>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  {{ historyParams.Action || "請選擇" }}
-                                </button>
+                  {{ historyParams.Action || "請選擇" }}
+                </button>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
                   <p v-for="(item , index) in ActionArray" :key="index" class="dropdown-item" @click="selectAction(item)">{{ item}}</p>
                 </div>

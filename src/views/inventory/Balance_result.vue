@@ -246,7 +246,7 @@
               // 返回 RowNode 的 id 属性作为该列的值
               return parseFloat(rowNode.id)+1;
             },
-            width: 75,
+            width: 80,
             resizable: true,
             suppressMovable: true
           },

@@ -289,7 +289,7 @@
             headerName: "認列",
             field: "",
             unSortIcon: true,
-            width: '80',
+            width: 80,
             checkboxSelection: function(params) {
               // 根据 NotBalanced 的值决定是否禁用复选框
               return params.data.NotBalanced;
@@ -523,6 +523,10 @@
           return
         }
         const rows = grid.value.getSelectedRows();
+        if(rows.length === 0) {
+          alert('請至少認列一項');
+          return
+        }
         const AssetList = rows.map(item => ({
           I_id: item.I_Id,
           Discrepancy: item.Discrepancy,

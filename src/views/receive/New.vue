@@ -4,6 +4,7 @@
     <div class="title col">
       <h1>新增收貨單</h1>
     </div>
+    <!-- 上半部收貨資訊 -->
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
@@ -14,31 +15,30 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend"><span>*</span>物流單號：</div>
-            <input type="text" class="form-control text-center" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多20字" />
+            <input type="text" class="form-control text-center" placeholder="不可輸入超過20字" v-model="formParams.ShipmentNum"/>
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend"><span>*</span>貨運公司：</div>
-            <input type="text" class="form-control text-center" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多20字" />
+            <input type="text" class="form-control text-center" placeholder="不可輸入超過20字" v-model="formParams.ShipmentCompany"/>
           </div>
         </div>
         <div class="col">
           <div class="input-group  mb-3">
-        <div class="input-group-prepend"><span>*</span>到貨件數：</div>
-        <div class="num_wrap d-flex ">
-          <div class="number-input-box">
-            <input class="input-number " type="number" min="0" value="0"/>
+            <div class="input-group-prepend"><span>*</span>到貨件數：</div>
+            <div class="num_wrap d-flex ">
+              <div class="number-input-box">
+                <input class="input-number " type="number" min="1" v-model="formParams.GoodsNum"/>
+              </div>
+            </div>
           </div>
-      
-        </div>
-      </div>
         </div>
         <div class="row g-0">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
             <div class="input-group mb-3">
               <div class="input-group-prepend">收件人員：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
+              <input type="text" class="form-control readonly_box" readonly  v-model="Applicant"/>
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -46,10 +46,7 @@
               <div class="input-group-prepend"><span>*</span>收件日期：</div>
               <div class="date-selector">
                 <div class="input-container">
-                  <input type="date" v-model="selectedDate" class="date-input" @focus="showDatePicker = true" @blur="showDatePicker = false" />
-                  <div class="date-picker" v-if="showDatePicker">
-                    <datepicker v-model="selectedDate"></datepicker>
-                  </div>
+                  <input type="date" class="date-input" v-model="formParams.ReceivedDate"/>
                 </div>
               </div>
             </div>
@@ -57,100 +54,87 @@
         </div>
       </div>
     </div>
+    <!-- 中間物流文件上傳 -->
     <div class="info_wrap col">
-
       <div class="fixed_info">
         <div>
           <p>物流文件上傳</p>
         </div>
       </div>
       <div class="content row g-0">
-      <div class="col-xl-2 col-lg-2 col-md-2 col-12">
-        <button class="upload_file_pt1" @click="openFileInput">選擇檔案</button>
-  <input
-  type="file"
-  id="fileInput"
-  ref="fileInput"
-  style="display: none"
-  @change="handleFileSelect"
-  multiple
-  />
-  </div>
-  <div class="d-flex selected_file col">
- 
-    <div class="icon" v-for="(file, index) in selectedFiles" :key="index">
-  <p>{{ file.name }}</p>
-  <div>
-    <img src="@/assets/view.png" v-if="isViewPhotoButtonVisible" @click="openPhotoModal">
-    <img class="close_icon" src="@/assets/trash.png" @click="deleteFile(index)">
-  </div>
-</div>
-
- <div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="photoModalLabel">瀏覽</h5>
-        <div class="close_icon"> <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p></div>
-       
-      </div>
-
-      <div class="modal-body">
-         </div>
-
-    
-    </div>
-  </div>
-</div>
-    </div>
-     
-     
-      </div>
-    </div>
-    <div class="info_wrap mt-5 col">
-
-<div class="fixed_info">
-  <div>
-    <p>照片上傳</p>
-  </div>
-</div>
-<div class="content">
-  <button class="upload_file_pt2">選擇檔案</button>
-  <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
-            <!-- <swiper-slide class="custom-slide">
-        <img src="https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*" alt="">
-              <span >x</span>
-            </swiper-slide> -->
-            <swiper-slide class="custom-slide">
-              <img src="https://i0.wp.com/www.lowcostpetvaccinations.net/wp-content/uploads/2017/04/puppy-1207816_1920.jpg?fit=1920%2C1386&ssl=1" alt="">
-              <span >x</span>
-            </swiper-slide>
-            <swiper-slide class="custom-slide">
-        <img src="https://i0.wp.com/www.lowcostpetvaccinations.net/wp-content/uploads/2017/04/puppy-1207816_1920.jpg?fit=1920%2C1386&ssl=1" alt="">
-              <span >x</span>
-            </swiper-slide>
-            <swiper-slide class="custom-slide">
-        <img src="https://s.yimg.com/ny/api/res/1.2/EZEK5GzpMlq._h78wAHZCA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQyNw--/https://media.zenfs.com/en/pethelpful_915/9aa1987931d5905e8c42d7306b59ee14" alt="">
-              <span >x</span>
-            </swiper-slide>
-            <swiper-slide class="custom-slide">
-        <img src="https://i.pinimg.com/1200x/5f/4b/83/5f4b83282d834386a8ef3414a5cc3fb0.jpg" alt="">
-              <span >x</span>
-            </swiper-slide>
-          </swiper-container>
-          <div class="swiper_pagination">
+        <div class="col-xl-2 col-lg-2 col-md-2 col-12">
+          <button class="upload_file_pt1" @click="openFileInput">選擇檔案</button>
+          <input type="file" id="fileInput" ref="fileInput" style="display: none" @change="handleFileSelect" multiple />
+        </div>
+        <div class="d-flex selected_file col">
+          <div class="icon" v-for="(file, index) in selectedFiles" :key="index">
+            <p>{{ file.name }}</p>
+            <div>
+              <img src="@/assets/view.png" v-if="isViewPhotoButtonVisible" @click="openPhotoModal">
+              <img class="close_icon" src="@/assets/trash.png" @click="deleteFile(index)">
+            </div>
           </div>
-
-</div><div class="col button_wrap">
-  <button class="back_btn" @click="goBack">回上一頁</button>
-  <button class="send_btn" @click="submit">新增</button>
-</div>
-</div>
+          <div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="photoModalLabel">瀏覽</h5>
+                  <div class="close_icon">
+                    <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
+                  </div>
+                </div>
+                <div class="modal-body">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 下半部照片上傳 -->
+    <div class="info_wrap mt-5 col">
+      <div class="fixed_info">
+        <div>
+          <p>照片上傳</p>
+        </div>
+      </div>
+      <div class="content">
+        <button class="upload_file_pt2">選擇檔案</button>
+        <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
+          <!-- <swiper-slide class="custom-slide">
+          <img src="https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*" alt="">
+                <span >x</span>
+              </swiper-slide> -->
+          <swiper-slide class="custom-slide">
+            <img src="https://i0.wp.com/www.lowcostpetvaccinations.net/wp-content/uploads/2017/04/puppy-1207816_1920.jpg?fit=1920%2C1386&ssl=1" alt="">
+            <span>x</span>
+          </swiper-slide>
+          <swiper-slide class="custom-slide">
+            <img src="https://i0.wp.com/www.lowcostpetvaccinations.net/wp-content/uploads/2017/04/puppy-1207816_1920.jpg?fit=1920%2C1386&ssl=1" alt="">
+            <span>x</span>
+          </swiper-slide>
+          <swiper-slide class="custom-slide">
+            <img src="https://s.yimg.com/ny/api/res/1.2/EZEK5GzpMlq._h78wAHZCA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQyNw--/https://media.zenfs.com/en/pethelpful_915/9aa1987931d5905e8c42d7306b59ee14" alt="">
+            <span>x</span>
+          </swiper-slide>
+          <swiper-slide class="custom-slide">
+            <img src="https://i.pinimg.com/1200x/5f/4b/83/5f4b83282d834386a8ef3414a5cc3fb0.jpg" alt="">
+            <span>x</span>
+          </swiper-slide>
+        </swiper-container>
+        <div class="swiper_pagination">
+        </div>
+      </div>
+      <div class="col button_wrap">
+        <button class="back_btn" @click="goBack">回上一頁</button>
+        <button class="send_btn" @click="submit">送出</button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
- import {
+  import {
     register
   } from 'swiper/element/bundle';
   import {
@@ -158,88 +142,133 @@
   } from 'swiper/modules';
   register();
   import Navbar from "@/components/Navbar.vue";
-  // import {
-  //   onMounted,
-  //   ref
-  // } from "vue";
-  // import {
-  //   useRoute,
-  //   useRouter
-  // } from "vue-router";
+  import {
+    onMounted,
+    reactive,
+    ref
+  } from "vue";
+  import {
+    useRouter
+  } from "vue-router";
   export default {
-  components: {
-    Navbar,
-  },
-  data() {
-  return {
-    selectedFile1: null,
-    selectedFiles: [],
-    selectedPhotoIndex: -1,
-    isViewPhotoButtonVisible: false,
-  };
-},
-
-  methods: {
-    openPhotoModal() {
-    // Use the Bootstrap 5 modal method to show the modal
-    $('#photoModal').modal('show');
-  },
-    openFileInput() {
-      this.$refs.fileInput.click();
+    components: {
+      Navbar,
     },
-    handleFileSelect() {
-  const fileInput = this.$refs.fileInput;
-  if (fileInput.files.length > 0) {
-    this.selectedFiles = [...this.selectedFiles, ...fileInput.files];
-    this.isViewPhotoButtonVisible = true; // Show the button when a file is selected
-  }
-},
-
-
-deleteFile(index) {
-  this.selectedFiles.splice(index, 1);
-},
-
-  },
-  setup(){
-    
-return{
-  pagination: {
+    data() {
+      return {
+        selectedFile1: null,
+        selectedFiles: [],
+        selectedPhotoIndex: -1,
+        isViewPhotoButtonVisible: false,
+      };
+    },
+    methods: {
+      openPhotoModal() {
+        // Use the Bootstrap 5 modal method to show the modal
+        $('#photoModal').modal('show');
+      },
+      openFileInput() {
+        this.$refs.fileInput.click();
+      },
+      handleFileSelect() {
+        const fileInput = this.$refs.fileInput;
+        if (fileInput.files.length > 0) {
+          this.selectedFiles = [...this.selectedFiles, ...fileInput.files];
+          this.isViewPhotoButtonVisible = true; // Show the button when a file is selected
+        }
+      },
+      deleteFile(index) {
+        this.selectedFiles.splice(index, 1);
+      },
+    },
+    setup() {
+      const Applicant = ref('')
+      const ApplicationDate = ref('')
+      const formParams = reactive({
+        ShipmentNum: '',
+        ShipmentCompany: '',
+        GoodsNum: 1,
+        ReceivedDate: '',
+      })
+      onMounted(()=>{
+        getApplicationInfo();
+        ApplicationDate.value = getDate();
+      });
+      function getDate() {
+        const today = new Date();
+        var date = '';
+        date += (today.getFullYear() + '/');
+        date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
+        date += ((today.getDate()).toString().padStart(2, '0'));
+        return date;
+      }
+      async function getApplicationInfo() {
+        const axios = require('axios');
+        try {
+          const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
+          // console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('申請人名稱:', data.resultList.Applicant);
+            if (data.resultList.Applicant) {
+              Applicant.value = data.resultList.Applicant;
+            }
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      async function submit() {
+        console.log(formParams);
+      }
+      function goBack() {
+        window.history.back();
+      }
+      return {
+        Applicant,
+        formParams,
+        pagination: {
           clickable: true,
         },
         modules: [Pagination],
-}
-  },
- 
-}
+        submit,
+        goBack,
+      }
+    },
+  }
 </script>
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
   span {
     @include red_star
   }
-  
   .modal-dialog {
     width: 80% !important;
     max-width: unset
   }
-  .selected_file{
-    flex-direction:column;
-    .icon{
+  .selected_file {
+    flex-direction: column;
+    .icon {
       margin: 0 10px;
-    gap: 5px;
-    display: flex;
-    align-items: center;
-    img{
-      cursor:pointer;
-    margin:0 5px
+      gap: 5px;
+      display: flex;
+      align-items: center;
+      img {
+        cursor: pointer;
+        margin: 0 5px
+      }
+      .close_icon {
+        scale: 1.5
+      }
     }
-  .close_icon{
-    scale:1.5
   }
-    }
-  }
-  .upload_file_pt1,.upload_file_pt2{
+  .upload_file_pt1,
+  .upload_file_pt2 {
     width: 100px;
     text-align: center;
     font-weight: 700;
@@ -251,15 +280,14 @@ return{
     align-items: center;
     border-radius: 10px;
     color: white;
-    &:hover{
-      background:#586d8b
+    &:hover {
+      background: #586d8b
     }
   }
-      .modal {
+  .modal {
     .modal-body {
-      padding: 20px
-;
-    margin: auto;
+      padding: 20px;
+      margin: auto;
     }
     .modal-content {
       margin: auto;
@@ -278,17 +306,17 @@ return{
         font-weight: 700;
       }
       background: #528091;
-    color: white;
-    display: flex;
-    justify-content: center;
-    padding: 0 16px 16px;
+      color: white;
+      display: flex;
+      justify-content: center;
+      padding: 0 16px 16px;
       .close_icon {
-        height:40px;
+        height: 40px;
         cursor: pointer;
       }
-      .modal-title{
+      .modal-title {
         margin: auto;
-    padding-top: 16px;
+        padding-top: 16px;
       }
     }
   }
@@ -337,7 +365,6 @@ return{
       .info_wrap {
         margin: auto;
         width: 800px;
-    
         .fixed_info {
           @include fixed_info;
           p {
@@ -412,7 +439,6 @@ return{
               text-align: end;
             }
           }
-         
           .date-selector {
             width: 200px;
             input {
@@ -480,8 +506,7 @@ return{
           justify-content: flex-start;
         }
       }
-    }
-    // .modal {
+    } // .modal {
     //   .dropdown-toggle {
     //     width: 100%
     //   }
@@ -604,7 +629,7 @@ return{
         @include dropdown_btn;
         height: 35px;
       }
-      .readonly_box{
+      .readonly_box {
         width: 100px !important;
       }
       .swiper_section {
@@ -725,7 +750,6 @@ return{
               text-align: end;
             }
           }
-         
         }
         .button_wrap {
           display: flex;
@@ -799,7 +823,7 @@ return{
       .fixed_info {
         @include fixed_info;
         background: #528091 !important;
-        border-radius: 0!important;
+        border-radius: 0 !important;
         border: 1px solid black;
         padding: 0 10px;
         div {
@@ -906,25 +930,24 @@ return{
       .readonly_box {
         @include readonly_box;
       }
-      .selected_file{
+      .selected_file {
         margin-top: 10px;
-    color: white;
-    align-items: flex-start;
-    font-weight: 700;
-    flex-direction: column;
-    .icon{
-      margin: 0 10px;
-    gap: 5px;
-    display: flex;
-    align-items:flex-start;
-   
-    img{
-      margin: 0 5px;
-    }
-   }
+        color: white;
+        align-items: flex-start;
+        font-weight: 700;
+        flex-direction: column;
+        .icon {
+          margin: 0 10px;
+          gap: 5px;
+          display: flex;
+          align-items: flex-start;
+          img {
+            margin: 0 5px;
+          }
+        }
       }
-      .number-input-box{
-        width:100%
+      .number-input-box {
+        width: 100%
       }
       input {
         @include dropdown_btn;
@@ -1110,7 +1133,7 @@ return{
       .fixed_info {
         @include fixed_info;
         background: #528091 !important;
-        border-radius: 0!important;
+        border-radius: 0 !important;
         border: 1px solid black;
         padding: 0 10px;
         div {
