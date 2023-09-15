@@ -622,6 +622,8 @@ return{
           }
          
         }
+    
+        
         .button_wrap {
           display: flex;
           margin-top: 30px;
@@ -677,6 +679,15 @@ return{
       }
       .info_wrap:nth-child(3) {
         margin-top: 5%;
+      }
+      .info_wrap:nth-child(2){
+        .content{
+    padding: 20px 39px 20px 0;
+.content.input-group .input-group-prepend {
+ 
+    width: 158px;
+}
+}
       }
     }
     .modal {
