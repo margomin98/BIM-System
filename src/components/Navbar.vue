@@ -52,7 +52,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <router-link to="/authority">權限管理</router-link>
               <router-link to="/system_parameter">參數管理</router-link>
-              <router-link to="">系統日志管理</router-link>
+              <router-link to="">系統日誌管理</router-link>
             </div>
           </li>
         </ul>

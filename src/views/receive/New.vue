@@ -202,9 +202,6 @@
           case 1:
             fileInput2.value.click();
             break;
-        
-          default:
-            break;
         }
       }
       // 處理中間物流文件
@@ -432,6 +429,7 @@
           console.error(error);
         }
       }
+      // 上半部表單
       function sendUpperForm() {
         return new Promise((resolve, reject) => {
           // 在这里发送上半部分表单数据的请求
@@ -459,6 +457,7 @@
             });
         });
       }
+      // 中、下上傳檔案部分
       function sendFileForm(AR_ID , type , fileData, index) {
         return new Promise((resolve, reject) => {
           const form = new FormData();

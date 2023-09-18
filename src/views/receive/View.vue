@@ -4,6 +4,7 @@
     <div class="title col">
       <h1>檢視收貨單</h1>
     </div>
+    <!-- 收貨資訊 -->
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
@@ -74,6 +75,8 @@
           </div>
           <!-- doc/docx download hidden Link -->
           <a href="" style="display: none;" id="download-link"></a>
+          <!-- Modal Trigger -->
+          <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#documentModal"></button>
           <!-- Exist Document Modal -->
           <div class="modal fade" id="documentModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 800px !important">
@@ -93,7 +96,7 @@
         </div>
       </div>
     </div>
-    <!-- 照片上傳 -->
+    <!-- 照片部分 -->
     <div class="info_wrap mt-5 col">
       <div class="fixed_info">
         <div>
@@ -217,15 +220,19 @@
           default:
             previewParams.title = file.FileName;
             previewParams.src = file.FileLink;
-            const modal = document.querySelector('#documentModal');
+            const modal = document.querySelector('#openModal');
             modal.click();
             break;
         }
+      }
+      function goBack() {
+        window.history.back();
       }
       return {
         details,
         previewParams,
         handlePreview,
+        goBack,
         pagination: {
           clickable: true,
         },
