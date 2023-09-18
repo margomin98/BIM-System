@@ -446,7 +446,7 @@
             .then(response => {
               const data = response.data;
               if (data.state === 'success') {
-                const AR_ID = response.data.resultList;
+                const AR_ID = response.data.resultList.AR_ID;
                 console.log('建立上半部表單成功AR_ID(response):' , AR_ID);
                 resolve(AR_ID);
               }

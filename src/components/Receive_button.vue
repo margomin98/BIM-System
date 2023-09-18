@@ -14,7 +14,7 @@
     props: ['params'],
     setup(props) {
       const router = useRouter();
-      const search_id = props.params.data.AssetsId;
+      const search_id = props.params.data.AR_ID;
       function viewDetails() {
         if (search_id !== '') {
           router.push({
