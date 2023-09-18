@@ -70,10 +70,12 @@
           <div class="icon" v-for="(file, index) in fileParams.viewDoc" :key="index">
             <p>{{ file.name }}</p>
             <div>
-              <img src="@/assets/view.png" v-if="file.type === 'pic' || file.type === 'pdf'" @click="handlePreview(file)">
+              <img src="@/assets/view.png" @click="handlePreview(file)">
               <img class="close_icon" src="@/assets/trash.png" @click="deleteFile(index)">
             </div>
           </div>
+          <!-- doc/docx download hidden Link -->
+          <a :href="previewParams.download" style="display: none;" id="download-link"></a>
           <!-- Modal Trigger -->
           <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#photoModal"></button>
           <!-- Photo Modal -->
@@ -81,13 +83,13 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 800px !important">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="photoModalLabel">{{ modalParams.title }}</h5>
+                  <h5 class="modal-title" id="photoModalLabel">{{ previewParams.title }}</h5>
                   <div class="close_icon">
                     <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
                   </div>
                 </div>
                 <div class="modal-body">
-                  <img :src="modalParams.src" class="w-75">
+                  <img :src="previewParams.src" class="w-75">
                 </div>
               </div>
             </div>
@@ -174,9 +176,10 @@
         newPic: [],
         viewPic: [],
       })
-      const modalParams = reactive({
+      const previewParams = reactive({
         title: '',
         src: '',
+        download: '',
       })
       // 控制按鈕
       const fileInput1 = ref();
@@ -248,12 +251,17 @@
             previewUrl.push({
               name: files[i].name,
               link: URL.createObjectURL(files[i]),
-              type: 'pdf',
+              type: fileExtension,
             });
           }
           // .doc/.docx
           else if(fileExtension === 'doc' || fileExtension == 'docx') {
-
+            imgArray.push(files[i]);
+            previewUrl.push({
+              name: files[i].name,
+              link: URL.createObjectURL(files[i]),
+              type: fileExtension,
+            });
           }
           // 圖片
           else {
@@ -303,13 +311,16 @@
             window.open(file.link)
             break;
           case 'pic':
-            modalParams.title = file.name ;
-            modalParams.src = file.link;
+            previewParams.title = file.name ;
+            previewParams.src = file.link;
             const modal = document.querySelector('#openModal');
             modal.click();
             break;
-        
-          default:
+          default: //doc & docx
+            previewParams.download = file.link;
+            const downloadElement = document.getElementById('download-link');
+            downloadElement.download = file.name;
+            downloadElement.click();
             break;
         }
       }
@@ -325,7 +336,7 @@
         Applicant,
         formParams,
         fileParams,
-        modalParams,
+        previewParams,
         fileInput1,
         fileInput2,
         pagination: {
