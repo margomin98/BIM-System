@@ -82,24 +82,23 @@
       </ag-grid-vue>
     </div>
   </div>
+  <!-- Modal -->
   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">警示</h5>
-        <div class="close_icon">
-                    <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
-                  </div>
-      </div>
-      <div class="modal-body">
-      <p>即將開始進行盤點作業，按下確認後即無法編輯盤點計畫內容。</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn confirm" data-bs-dismiss="modal">確認</button>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">警示</h5>
+          <div class="close_icon"><p type="button" data-bs-dismiss="modal" aria-label="Close">x</p></div>
+        </div>
+        <div class="modal-body">
+        <p>即將開始進行盤點作業，按下確認後即無法編輯盤點計畫內容。</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn confirm" data-bs-dismiss="modal" @click="routerProcess">確認</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -112,9 +111,10 @@
     ref
   } from "vue";
   import Inventory_button from "@/components/Inventory_button";
-  import Delete from "@/components/Delete_button";
+  import Delete from "@/components/Inventory_data_delete_button";
   import Navbar from "@/components/Navbar.vue";
   import { PlanType , PlanStatus , PlanDateCategory} from "@/assets/js/dropdown.js"
+import { useRouter } from "vue-router";
   export default {
     components: {
       Navbar,
@@ -123,7 +123,9 @@
       Delete
     },
     setup() {
+      const router = useRouter();
       const details = ref({});
+      const search_id = ref('');
       const DropdownArray = reactive({
         PlanType: PlanType,
         PlanStatus: PlanStatus,
@@ -141,6 +143,11 @@
             suppressMovable: true,
             field: "",
             cellRenderer: "Inventory_button",
+            cellRendererParams: {
+              updateSearchId: (id)=>{
+                search_id.value = id;
+              }
+            },
             width: 340,
             resizable: true,
           },
@@ -277,16 +284,26 @@
       const selectDateCategory = (item) => {
         searchParams.DateCategory = item;
       };
+      function routerProcess() {
+        router.push({
+          name: 'Inventory_Process',
+          query: {
+            search_id: search_id.value,
+          }
+        });
+      }
       function clear() {
         for (const key in searchParams) {
           searchParams[key] = '';
         }
         submit();
       }
+
       return {
         details,
         searchParams,
         DropdownArray,
+        search_id,
         columnDefs,
         rowData,
         rowHeight: 35,
@@ -295,6 +312,7 @@
         selectType,
         selectStatus,
         selectDateCategory,
+        routerProcess,
         clear,
       };
     },

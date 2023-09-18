@@ -329,6 +329,27 @@
         getDetails();
       });
       // 帶入資料
+      async function deleteData() {
+        const form = new FormData();
+        form.append('PlanId', IP_ID);
+        const axios = require('axios');
+        const response = await axios.post(`http://192.168.0.177:7008/StocktakingMng/DeletePlan`, form);
+        try {
+          const data = response.data;
+          if (data.state === 'success') {
+            let msg = data.messages + '\n';
+            msg += '單號:' + data.resultList.IP_Id;
+            alert(msg);
+            router.push({
+              name: 'Inventory_Datagrid'
+            });
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
       async function getDetails() {
         const axios = require('axios');
         try {
@@ -369,6 +390,7 @@
         rowData1,
         rowData2,
         rowHeight: 35,
+        deleteData,
         onGridReady2,
         goBack,
       };
