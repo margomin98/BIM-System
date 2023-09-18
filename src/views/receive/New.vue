@@ -404,6 +404,7 @@
         try {
           // 先建立表單並回傳AR_ID
           const AR_ID = await sendUpperForm();
+          console.log('AR_ID(resolve):' , AR_ID);
           // 再依照AR_ID將 中間部分物流文件 & 下半部照片 單次檔案上傳
           const filePromises = [];
           for (let i = 0; i < fileParams.newDoc.length; i++) {
@@ -414,18 +415,19 @@
             filePromises.push(sendFileForm(AR_ID, 'File', fileParams.newPic[i], i));
           }
           // 等待所有檔案上傳完成
-          await Promise.all(filePromises);
-          console.log('Promises完成後情況:' , filePromises);
-          const allSuccess = filePromises.every(result => result === 'success')
-          if(allSuccess) {
+          await Promise.all(filePromises)
+          .then(result =>{
+            const allSuccess = result.every(result => result === 'success')
+            if(allSuccess) {
             alert('新增收貨單成功\n單號為:' + AR_ID);
               router.push({
                 name: 'Receive_Datagrid'
               });
-          }
-          else {
-            alert('新增收貨單失敗');
-          }
+            }
+            else {
+              alert('新增收貨單失敗')
+            }
+          })
         } catch (error) {
           console.error(error);
         }
@@ -445,7 +447,7 @@
               const data = response.data;
               if (data.state === 'success') {
                 const AR_ID = response.data.resultList;
-                console.log('建立上半部表單成功AR_ID:' , AR_ID);
+                console.log('建立上半部表單成功AR_ID(response):' , AR_ID);
                 resolve(AR_ID);
               }
               else {
