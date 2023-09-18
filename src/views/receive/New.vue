@@ -70,12 +70,12 @@
           <div class="icon" v-for="(file, index) in fileParams.viewDoc" :key="index">
             <p>{{ file.name }}</p>
             <div>
-              <img src="@/assets/view.png" @click="handlePreview(file)">
-              <img class="close_icon" src="@/assets/trash.png" @click="deleteFile(index)">
+              <img src="@/assets/view.png" @click="handleDocPreview(file)">
+              <img class="close_icon" src="@/assets/trash.png" @click="deleteFile('document',index)">
             </div>
           </div>
           <!-- doc/docx download hidden Link -->
-          <a :href="previewParams.download" style="display: none;" id="download-link"></a>
+          <a href="" style="display: none;" id="download-link"></a>
           <!-- Modal Trigger -->
           <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#photoModal"></button>
           <!-- Photo Modal -->
@@ -107,26 +107,10 @@
       <div class="content">
         <button class="upload_file_pt2" @click="openFileInput(1)">選擇檔案</button>
         <input type="file" id="fileInput2" ref="fileInput2" style="display: none" @change="handlePictureFile($event)" multiple />
-        <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
-          <!-- <swiper-slide class="custom-slide">
-          <img src="https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*" alt="">
-                <span >x</span>
-              </swiper-slide> -->
-          <swiper-slide class="custom-slide">
-            <img src="https://i0.wp.com/www.lowcostpetvaccinations.net/wp-content/uploads/2017/04/puppy-1207816_1920.jpg?fit=1920%2C1386&ssl=1" alt="">
-            <span>x</span>
-          </swiper-slide>
-          <swiper-slide class="custom-slide">
-            <img src="https://i0.wp.com/www.lowcostpetvaccinations.net/wp-content/uploads/2017/04/puppy-1207816_1920.jpg?fit=1920%2C1386&ssl=1" alt="">
-            <span>x</span>
-          </swiper-slide>
-          <swiper-slide class="custom-slide">
-            <img src="https://s.yimg.com/ny/api/res/1.2/EZEK5GzpMlq._h78wAHZCA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQyNw--/https://media.zenfs.com/en/pethelpful_915/9aa1987931d5905e8c42d7306b59ee14" alt="">
-            <span>x</span>
-          </swiper-slide>
-          <swiper-slide class="custom-slide">
-            <img src="https://i.pinimg.com/1200x/5f/4b/83/5f4b83282d834386a8ef3414a5cc3fb0.jpg" alt="">
-            <span>x</span>
+        <swiper-container class='swiper_section' :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
+          <swiper-slide v-for="(file , index) in fileParams.viewPic" :key="index" class="custom-slide">
+            <img :src="file.link" alt="">
+            <span @click="deleteFile('picture' , index)">x</span>
           </swiper-slide>
         </swiper-container>
         <div class="swiper_pagination">
@@ -179,7 +163,6 @@
       const previewParams = reactive({
         title: '',
         src: '',
-        download: '',
       })
       // 控制按鈕
       const fileInput1 = ref();
@@ -228,7 +211,8 @@
         console.log('DocumentFiles:',event.target.files);
         const files = event.target.files;
         const imageExtensions = ['jpg', 'jpeg', 'png', 'gif' , 'pdf' , 'doc' , 'docx'];
-        //檢查副檔名
+        const maxFileSize = 28 * 1024 * 1024; // 28MB
+        // 檢查副檔名 &檔案大小
         for (let i = 0; i < files.length; i++) {
           const fileName = files[i].name;
           const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
@@ -236,12 +220,16 @@
             alert(fileExtension + '不在允許的格式範圍內，請重新選取');
             return;
           }
+          if (files[i].size > maxFileSize) {
+            alert('檔案' + fileName + '大於28MB，請重新選取');
+            return;
+          }
         }
         // 處理檔案
         const imgArray = fileParams.newDoc;
         const previewUrl = fileParams.viewDoc;
         for (let i = 0; i < files.length; i++) {
-          // 依據檔案格式 分為 1.圖片(壓縮、可預覽) 2.pdf(可預覽) 3. doc/docx(都不行)
+          // 依據檔案格式 分為 1.圖片(壓縮、可預覽) 2.pdf(可預覽) 3. doc/docx(可下載)
           const fileName = files[i].name;
           const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
           const reader = new FileReader();
@@ -303,9 +291,63 @@
       // 處理下半部照片
       function handlePictureFile(event) {
         console.log('PictureFiles:',event.target.files);
+        const files = event.target.files;
+        const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        const maxFileSize = 28 * 1024 * 1024; // 28MB
+        //檢查副檔名
+        for (let i = 0; i < files.length; i++) {
+          const fileName = files[i].name;
+          const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
+          if (!imageExtensions.includes(fileExtension.toLowerCase())) {
+            alert(fileExtension + '不在允許的格式範圍內，請重新選取');
+            return;
+          }
+          if (files[i].size > maxFileSize) {
+            alert('檔案' + fileName + '大於28MB，請重新選取');
+            return;
+          }
+        }
+        // 處理檔案
+        const imgArray = fileParams.newPic;
+        const previewUrl = fileParams.viewPic;
+        for (let i = 0; i < files.length; i++) {
+          // 依據檔案格式 分為 1.圖片(壓縮、可預覽) 2.pdf(可預覽) 3. doc/docx(可下載)
+          const fileName = files[i].name;
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const img = new Image();
+            img.src = e.target.result;
+            img.onload = () => {
+              const canvas = document.createElement('canvas');
+              const maxWidth = 800; // 设置最大宽度
+              const scaleRatio = Math.min(maxWidth / img.width, 1);
+              canvas.width = img.width * scaleRatio;
+              canvas.height = img.height * scaleRatio;
+              const ctx = canvas.getContext('2d');
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+              canvas.toBlob((blob) => {
+                const compressedFile = new File([blob], fileName, {
+                  // type: files[i].type,
+                  lastModified: files[i].lastModified,
+                });
+                // 记录压缩前后的大小
+                const originalSize = Math.round(files[i].size / 1024); // 原始大小（KB）
+                const compressedSize = Math.round(compressedFile.size / 1024); // 壓縮後大小（KB）
+                console.log(`原始大小: ${originalSize} KB，壓縮後大小: ${compressedSize} KB`);
+                imgArray.push(compressedFile);
+                previewUrl.push({
+                  name: fileName,
+                  link: URL.createObjectURL(compressedFile),
+                  type: 'pic'
+                });
+              }, files[i].type, 0.8);
+            };
+          };
+          reader.readAsDataURL(files[i]);
+        }
       }
-      // 處理物流文件預覽 1.pdf ->開分頁瀏覽 2.pic ->Open Modal
-      function handlePreview(file) {
+      // 處理物流文件預覽 1.pdf ->開分頁瀏覽 2.pic ->Open Modal 3.doc/docx ->下載
+      function handleDocPreview(file) {
         switch (file.type) {
           case 'pdf':
             window.open(file.link)
@@ -317,17 +359,126 @@
             modal.click();
             break;
           default: //doc & docx
-            previewParams.download = file.link;
             const downloadElement = document.getElementById('download-link');
+            downloadElement.href = file.link;
             downloadElement.download = file.name;
             downloadElement.click();
             break;
         }
       }
+      // 處理物流文件刪除
+      function deleteFile(type ,index) {
+        switch (type) {
+          case 'document':
+            fileParams.newDoc.splice(index , 1);
+            fileParams.viewDoc.splice(index , 1);
+            break;
+          case 'picture':
+            fileParams.newPic.splice(index , 1);
+            fileParams.viewPic.splice(index , 1);
+            break;
+        }
+      }
       // 送出
       async function submit() {
-        // 檢查必填項目
-        console.log(formParams);
+        // 檢查必填項目、格式        
+        if (!formParams.ShipmentNum.trim() || !formParams.ShipmentCompany.trim() || formParams.GoodsNum < 1 || !formParams.ReceivedDate) {
+          alert('請輸入必填項目');
+          return
+        }
+        formParams.ShipmentNum = formParams.ShipmentNum.trim();
+        if (formParams.ShipmentNum && !/^[\s\S]{1,20}$/.test(formParams.ShipmentNum)) {
+          alert('物流單號不可輸入超過20字')
+          return
+        }
+        formParams.ShipmentCompany = formParams.ShipmentCompany.trim();
+        if (formParams.ShipmentCompany && !/^[\s\S]{1,20}$/.test(formParams.ShipmentCompany)) {
+          alert('貨運公司不可輸入超過20字')
+          return
+        }
+        console.log('上半部form',formParams);
+        console.log('中間物流文件' , fileParams.newDoc);
+        console.log('下半部照片上傳' , fileParams.newPic);
+
+        try {
+          // 先建立表單並回傳AR_ID
+          const AR_ID = await sendUpperForm();
+          // 再依照AR_ID將 中間部分物流文件 & 下半部照片 單次檔案上傳
+          const filePromises = [];
+          for (let i = 0; i < fileParams.newDoc.length; i++) {
+            filePromises.push(sendFileForm(AR_ID, 'Document', fileParams.newDoc[i], i));
+          }
+
+          for (let i = 0; i < fileParams.newPic.length; i++) {
+            filePromises.push(sendFileForm(AR_ID, 'File', fileParams.newPic[i], i));
+          }
+          // 等待所有檔案上傳完成
+          await Promise.all(filePromises);
+          const allSuccess = filePromises.every(result => result === 'success')
+          if(allSuccess) {
+            alert('新增收貨單成功\n單號為:' + AR_ID);
+              router.push({
+                name: 'Receive_Datagrid'
+              });
+          }
+          else {
+            alert('新增收貨單失敗');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      function sendUpperForm() {
+        return new Promise((resolve, reject) => {
+          // 在这里发送上半部分表单数据的请求
+          // 成功时，调用 resolve 并传递 AR_ID
+          // 失败时，调用 reject 并传递错误信息
+          const axios = require('axios');
+          const form = new FormData();
+          for (const key in formParams) {
+            form.append(key, formParams[key]);
+          }
+          axios.post('http://192.168.0.177:7008/ReceivingMng/CreateReceipt', form)
+            .then(response => {
+              const data = response.data;
+              if (data.state === 'success') {
+                const AR_ID = response.data.resultList;
+                console.log('建立上半部表單成功AR_ID:' , AR_ID);
+                resolve(AR_ID);
+              }
+              else {
+                reject(data.messages);
+              }
+            })
+            .catch(error => {
+              reject(error);
+            });
+        });
+      }
+      function sendFileForm(AR_ID , type , fileData, index) {
+        return new Promise((resolve, reject) => {
+          const form = new FormData();
+          form.append('AR_ID' , AR_ID);
+          form.append('num' , index);
+          form.append(type , fileData);
+          const axios = require('axios');
+          axios.post('http://192.168.0.177:7008/ReceivingMng/UploadFile', form)
+            .then((response) => {
+              const data = response.data;
+              if (data.state === 'success') {
+                // 文件表单提交成功，继续执行
+                resolve('success');
+              } else {
+                // 如果状态不是 "success"，调用 reject 并传递错误信息
+                console.error(type+'上傳失敗，'+response.data.messages);
+                reject(new Error('文件表单提交失败'));
+              }
+            })
+            .catch(error => {
+              // 如果提交失败，调用 reject 并传递错误信息
+              reject(error);
+            });
+        });
       }
       function goBack() {
         window.history.back();
@@ -346,7 +497,8 @@
         openFileInput,
         handleDocumentFile,
         handlePictureFile,
-        handlePreview,
+        handleDocPreview,
+        deleteFile,
         submit,
         goBack,
       }
