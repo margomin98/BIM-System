@@ -82,7 +82,7 @@ import { useRouter } from "vue-router";
           },
           {
             headerName: "收貨單號",
-            field: "make",
+            field: "AR_ID",
             unSortIcon: true,
             sortable: true,
             width: 180,
@@ -92,7 +92,7 @@ import { useRouter } from "vue-router";
           },
           {
             headerName: "物流單號",
-            field: "model",
+            field: "ShipmentNum",
             unSortIcon: true,
             sortable: true,
             width: 180,
@@ -102,7 +102,7 @@ import { useRouter } from "vue-router";
           },
           {
             headerName: "貨運公司",
-            field: "price",
+            field: "ShipmentCompany",
             unSortIcon: true,
             sortable: true,
             width: 150,
@@ -111,7 +111,7 @@ import { useRouter } from "vue-router";
           },
           {
             headerName: "到貨件數",
-            field: "make",
+            field: "GoodsNum",
             unSortIcon: true,
             sortable: true,
             width: 150,
@@ -119,7 +119,7 @@ import { useRouter } from "vue-router";
           },
           {
             headerName: "收件日期",
-            field: "model",
+            field: "ReceivedDate",
             unSortIcon: true,
             sortable: true,
             resizable: true,
@@ -128,7 +128,7 @@ import { useRouter } from "vue-router";
           },
           {
             headerName: "收件人員",
-            field: "price",
+            field: "Recipient",
             unSortIcon: true,
             sortable: true,
             width: 150,

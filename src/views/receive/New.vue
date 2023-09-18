@@ -146,6 +146,7 @@
       Navbar,
     },
     setup() {
+      const router = useRouter();
       const Applicant = ref('')
       // 上半部表單參數
       const formParams = reactive({
@@ -414,6 +415,7 @@
           }
           // 等待所有檔案上傳完成
           await Promise.all(filePromises);
+          console.log('Promises完成後情況:' , filePromises);
           const allSuccess = filePromises.every(result => result === 'success')
           if(allSuccess) {
             alert('新增收貨單成功\n單號為:' + AR_ID);
@@ -467,7 +469,8 @@
               const data = response.data;
               if (data.state === 'success') {
                 // 文件表单提交成功，继续执行
-                resolve('success');
+                console.log(`第${index+1}個${type}檔案上傳成功`);
+                resolve(data.state)
               } else {
                 // 如果状态不是 "success"，调用 reject 并传递错误信息
                 console.error(type+'上傳失敗，'+response.data.messages);
