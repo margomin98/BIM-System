@@ -13,26 +13,64 @@
             申請人員 : {{ Applicant }}
           </p>
         </div>
-        <div>
+        <!-- <div>
           <p>
             申請入庫日期 : {{ ApplicationDate }}
           </p>
-        </div>
+        </div> -->
       </div>
       <div class="content">
         <div class="row">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+          <div class="col-12">
             <div class="input-group mb-3 check_box_wrap">
               <div class="input-group-prepend check_box">
                 資產類型 :
               </div>
               <div class="d-flex align-items-center">
-                <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="false" v-model="isConsumableComputed"/>
+                <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="false" v-model="isConsumableComputed" />
                 <label class="form-check-label check_box" for='radio1'>資產</label>
-                <input type="radio" class='form-check-input check_box' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="true" v-model="isConsumableComputed"/>
+                <input type="radio" class='form-check-input check_box ' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="true" v-model="isConsumableComputed" />
+                <label class="form-check-label check_box" for='radio1' data-toggle="tooltip" data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
+                <input type="radio" class='form-check-input check_box' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="true" v-model="isConsumableComputed" />
                 <label class="form-check-label check_box" for='radio2'>耗材</label>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="row g-0">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                <span>*</span>申請入庫日期 :
+              </div>
+              <input id='date_wrap' type="date" class="form-control" aria-label="Default" placeholder="最多輸入10字" v-model="WarrantyDate">
+            </div>
+          </div>
+        </div>
+        <div class="col form_search_wrap">
+          <div class="input-group mb-4">
+            <div class="input-group-prepend">
+              <span>*</span>專案代碼 :
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="請輸入代碼" v-model="VendorName">
+            <button class="form_search_btn">搜尋</button>
+          </div>
+        </div>
+        <div class="col">
+          <div class="input-group mb-4">
+            <div class="input-group-prepend">
+              專案名稱 :
+            </div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入100字" v-model="VendorName" readonly>
+          </div>
+        </div>
+        <div class="col form_search_wrap">
+          <div class="input-group mb-4">
+            <div class="input-group-prepend">
+              物流單號 :
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="請輸入物流單號，最多20字" v-model="VendorName">
+            <button class="form_search_btn">檢視</button>
           </div>
         </div>
         <div class="row row_wrap g-0">
@@ -43,8 +81,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                    {{ EquipTypeName || '請選擇' }}
-                  </button>
+                              {{ EquipTypeName || '請選擇' }}
+                            </button>
                 <div class="dropdown-menu" aria-labelledby="typeDropdown">
                   <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
                 </div>
@@ -58,8 +96,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(EquipTypeName !== '') }">
-                    {{ EquipCategoryName || EquipCategoryInit }}
-                  </button>
+                              {{ EquipCategoryName || EquipCategoryInit }}
+                            </button>
                 <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                   <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
                 </div>
@@ -118,8 +156,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ Unit || '請選擇' }}
-                  </button>
+                              {{ Unit || '請選擇' }}
+                            </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in UnitArray" :key="index" class="dropdown-item" @click="selectUnit(`${item}`)">
                     {{ item }}</p>
@@ -135,7 +173,7 @@
                 <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包"><span>*</span>數量 :
               </div>
               <div class="input-group-prepend d-xl-none d-lg-none d-md-none d-block">
-               <span>*</span> 數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
+                <span>*</span> 數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
               </div>
               <input class="input-number" type="number" v-model="PackageNum" min="1">
             </div>
@@ -147,8 +185,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ PackageUnit || '請選擇' }}
-                  </button>
+                              {{ PackageUnit || '請選擇' }}
+                            </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in PackageUnitArray" :key="index" class="dropdown-item" @click="selectPackageUnit(`${item}`)">
                     {{ item }}</p>
@@ -191,6 +229,91 @@
               備註 :
             </div>
             <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="Memo"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="tab_section mt-5">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-selected="true">1</button>
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="tab1" role="tabpanel">
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend"><span>*</span>物品名稱：</div>
+                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">資產編號：</div>
+                <input type="text" class="form-control" placeholder="BFXXXXXXXX">
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">S/N：</div>
+                <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字">
+              </div>
+            </div>
+            <div class="col form_search_wrap">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span>*</span>專案代碼 :
+                </div>
+                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="請輸入代碼" v-model="VendorName">
+                <button class="form_search_btn">搜尋</button>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">專案名稱：</div>
+                <input type="text" class="form-control readonly_box" readonly>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">備註：</div>
+                <textarea class="col" rows="5" placeholder="最多輸入500字"></textarea>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">資產照片：</div>
+                <div class="mb-3 file_wrap">
+                  <button class="choose_btn">選擇檔案</button>
+                  <input type="file" accept="image/*" style="display: none;">
+                </div>
+                <div class="selected_file">
+                  <p class="title">已選擇的檔案:</p>
+                  <p class="file_upload_wrap" style="cursor: pointer;">
+                    <p>File 1</p>
+                    <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;">
+                  </p>
+                  <p class="file_upload_wrap" style="cursor: pointer;">
+                    <p>File 2</p>
+                    <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;">
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">已上傳檔案：</div>
+                    <div class="d-flex  flex-column">
+                      <p class="file_upload_wrap d-flex" style="cursor: pointer;">
+                        <p>Uploaded File 1</p>
+                        <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;">
+                      </p>
+                      <p class="file_upload_wrap d-flex" style="cursor: pointer;">
+                        <p>Uploaded File 2</p>
+                        <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;">
+                      </p>
+                    </div>
+                  </div>
+                </div> -->
           </div>
         </div>
       </div>
@@ -453,6 +576,9 @@
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
+  textarea {
+    padding: 5px 10px 30px;
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       h1 {
@@ -462,9 +588,15 @@
         font-weight: 600;
         @include title_color;
       }
+      .form_search_btn {
+        @include form_search_btn;
+      }
+      .readonly_box {
+        @include readonly_box;
+      }
       .info_wrap {
         margin: auto;
-        width: 700px;
+        width: 800px;
         .button_wrap {
           display: flex;
           justify-content: space-between;
@@ -498,7 +630,7 @@
         }
         .input-number {
           @include count_btn;
-          width: 200px;
+          width:58%;
         }
         .fixed_info {
           @include fixed_info;
@@ -510,7 +642,7 @@
         .content {
           @include content_bg;
           .input-group-prepend {
-            width: 120px;
+            width: 150px;
             white-space: nowrap;
           }
           .check_box_wrap {
@@ -518,8 +650,9 @@
             align-items: center;
             color: white;
             font-size: 20px;
-            .check_box {
-              margin-right: 5px;
+            div:nth-child(2) {
+              gap: 0 5px;
+              display: flex;
             }
           }
           .row_wrap {
@@ -529,9 +662,7 @@
             .flex {
               width: 130px
             }
-            .equipment_wrap {
-              width: 132px;
-            }
+           
           }
           .dropdown {
             width: 218px;
@@ -551,6 +682,121 @@
               color: black;
               justify-content: space-between;
               align-items: center;
+            }
+          }
+        }
+      }
+      .tab_section {
+        .nav-tabs {
+          button {
+            @include tab_section_num;
+            background: #5C7897;
+          }
+          .active {
+            @include tab_section_num;
+            background: #3E4E5F;
+          }
+        }
+        .tab-content {
+          background: #3E4E5F;
+          padding: 50px 30px;
+          .modal {
+            .modal-header {
+              background: #3D4E61;
+              color: white;
+              .close_icon {
+                color: white;
+                font-weight: 700;
+                margin-bottom: 0;
+              }
+            }
+          }
+          .dropdown {
+            width: 60%;
+            .dropdown-menu {
+              width: 100%;
+              max-height: 250px;
+              overflow-y: auto;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            button {
+              @include dropdown-btn;
+              width: 100%;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group {
+            flex-wrap: nowrap;
+            span {
+              @include red_star
+            }
+            .selected_file {
+              margin-left: 20px;
+              p.title {
+                font-weight: 700;
+                color: white;
+                margin-bottom: 5px;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  margin-bottom: 0;
+                  font-weight: 700;
+                  color: white;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
+            }
+            .input-number {
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              border-radius: 0;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 120px;
+              text-align: end;
+            }
+            .file_wrap {
+              display: flex;
+              flex-direction: column;
+              .choose_btn {
+                margin-bottom: 10px;
+                @include choose_file_btn;
+                &:hover {
+                  background: #3f608f;
+                }
+              }
+            }
+          }
+          .form_search_wrap {
+            .input-group {
+              .input-group-prepend {
+                width: 114px;
+              }
+              input {
+                margin-left: 15px !important
+              }
             }
           }
         }
@@ -566,9 +812,15 @@
         font-weight: 600;
         @include title_color;
       }
+      .form_search_btn {
+        @include form_search_btn;
+      }
+      .readonly_box {
+        @include readonly_box;
+      }
       .info_wrap {
         margin: auto;
-        width: 700px;
+        width: 800px;
         .button_wrap {
           display: flex;
           justify-content: space-between;
@@ -602,7 +854,7 @@
         }
         .input-number {
           @include count_btn;
-          width: 200px;
+          width: 58%;
         }
         .fixed_info {
           @include fixed_info;
@@ -614,7 +866,7 @@
         .content {
           @include content_bg;
           .input-group-prepend {
-            width: 120px;
+            width: 150px;
             white-space: nowrap;
           }
           .check_box_wrap {
@@ -622,8 +874,9 @@
             align-items: center;
             color: white;
             font-size: 20px;
-            .check_box {
-              margin-right: 5px;
+            div:nth-child(2) {
+              gap: 0 5px;
+              display: flex;
             }
           }
           .row_wrap {
@@ -633,9 +886,7 @@
             .flex {
               width: 130px
             }
-            .equipment_wrap {
-              width: 132px;
-            }
+        
           }
           .dropdown {
             width: 218px;
@@ -659,6 +910,121 @@
           }
         }
       }
+      .tab_section {
+        .nav-tabs {
+          button {
+            @include tab_section_num;
+            background: #5C7897;
+          }
+          .active {
+            @include tab_section_num;
+            background: #3E4E5F;
+          }
+        }
+        .tab-content {
+          background: #3E4E5F;
+          padding: 50px 30px;
+          .modal {
+            .modal-header {
+              background: #3D4E61;
+              color: white;
+              .close_icon {
+                color: white;
+                font-weight: 700;
+                margin-bottom: 0;
+              }
+            }
+          }
+          .dropdown {
+            width: 60%;
+            .dropdown-menu {
+              width: 100%;
+              max-height: 250px;
+              overflow-y: auto;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            button {
+              @include dropdown-btn;
+              width: 100%;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group {
+            flex-wrap: nowrap;
+            span {
+              @include red_star
+            }
+            .selected_file {
+              margin-left: 20px;
+              p.title {
+                font-weight: 700;
+                color: white;
+                margin-bottom: 5px;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  margin-bottom: 0;
+                  font-weight: 700;
+                  color: white;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
+            }
+            .input-number {
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              border-radius: 0;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 120px;
+              text-align: end;
+            }
+            .file_wrap {
+              display: flex;
+              flex-direction: column;
+              .choose_btn {
+                margin-bottom: 10px;
+                @include choose_file_btn;
+                &:hover {
+                  background: #3f608f;
+                }
+              }
+            }
+          }
+          .form_search_wrap {
+            .input-group {
+              .input-group-prepend {
+                width: 114px;
+              }
+              input {
+                margin-left: 15px !important
+              }
+            }
+          }
+        }
+      }
     }
   }
   @media only screen and (max-width: 767px) {
@@ -669,6 +1035,22 @@
         font-size: 50px;
         font-weight: 600;
         @include title_color;
+      }
+      .form_search_btn {
+        border: none;
+        color: white;
+        width: 60px;
+        height: 35px;
+        margin-top: 10px;
+        font-weight: 700;
+        padding: 0 10px;
+        background-color: #132238;
+        &:hover {
+          background-color: #43546d;
+        }
+      }
+      .readonly_box {
+        @include readonly_box;
       }
       .info_wrap {
         margin: auto;
@@ -719,21 +1101,19 @@
               font-size: 20px;
               margin-right: 10px;
               white-space: nowrap;
-           
               span {
                 @include red_star
               }
             }
           }
           .check_box_wrap {
-            gap: 5px;
             flex-direction: row;
             font-weight: 700;
             align-items: center;
             color: white;
             font-size: 20px;
-            .check {
-              margin-right: 5px;
+            .check_box {
+              margin-right: 10px;
             }
           }
           .info {
@@ -758,6 +1138,117 @@
               @include search_and_send_btn;
               &:hover {
                 background-color: #5D85BD;
+              }
+            }
+          }
+        }
+      }
+      .tab_section {
+        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+          margin-left: unset !important;
+        }
+        .nav-tabs {
+          button {
+            @include tab_section_num;
+            background: #5C7897;
+          }
+          .active {
+            @include tab_section_num;
+            background: #3E4E5F;
+          }
+        }
+        .tab-content {
+          background: #3E4E5F;
+          padding: 50px 30px;
+          .modal {
+            .modal-header {
+              background: #3D4E61;
+              color: white;
+              .close_icon {
+                color: white;
+                font-weight: 700;
+                margin-bottom: 0;
+              }
+            }
+          }
+          .dropdown {
+            margin-left: unset !important;
+            margin-top: 5px;
+            .dropdown-menu {
+              width: 100%;
+              max-height: 250px;
+              overflow-y: auto;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            button {
+              @include dropdown-btn;
+              width: 100%;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group {
+            flex-direction: column;
+            span {
+              @include red_star
+            }
+            .selected_file {
+              p.title {
+                font-weight: 700;
+                color: white;
+                margin-bottom: 5px;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  margin-bottom: 0;
+                  font-weight: 700;
+                  color: white;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
+            }
+            .input-number {
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              width: 100%;
+              border-radius: 0;
+              margin-left: unset !important;
+              margin-top: 5px;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 100%;
+            }
+            .file_wrap {
+              display: flex;
+              flex-direction: column;
+              .choose_btn {
+                margin-top: 5px;
+                margin-bottom: 10px;
+                @include choose_file_btn;
+                &:hover {
+                  background: #3f608f;
+                }
               }
             }
           }

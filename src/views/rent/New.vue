@@ -19,8 +19,8 @@
         <div class="row g-0">
           <div class="col d-flex wrap column_section">
             <label for="inputTitle1" class="form-label use">
-                    <p><span>*</span>用&ensp;&ensp;&ensp;&ensp;途</p>
-                  </label>
+                      <p><span>*</span>用&ensp;&ensp;&ensp;&ensp;途</p>
+                    </label>
             <div class="option">
               <div class="form-check" v-for="(option, index) in options" :key="index">
                 <input class="form-check-input" type="radio" :value="option" :id="'radio' + (index + 1)" v-model="myForm.Use">
@@ -32,8 +32,8 @@
         <div class="row g-0">
           <div class="col-xl-5 col-lg-5 col-md-5 col-12 d-flex wrap column_section">
             <label for="inputWithButton" class="form-label">
-                    <p><span>*</span>專案代碼</p>
-                  </label>
+                      <p><span>*</span>專案代碼</p>
+                    </label>
             <div class="input-group">
               <input type="text" class="form-control" id="project_id" placeholder="最多輸入10字" v-model="myForm.ProjectCode">
               <button class="btn code_search" type="button" @click="getProjectName">搜尋</button>
@@ -41,8 +41,8 @@
           </div>
           <div class="col d-flex wrap">
             <label for="inputWithTitle" class="form-label" id='project_name'>
-                    <p>專案名稱</p>
-                  </label>
+                      <p>專案名稱</p>
+                    </label>
             <div class="input-group" id='readonly_box'>
               <p class='readonly_box' readonly>{{ myForm.ProjectName }}</p>
             </div>
@@ -51,8 +51,8 @@
         <div class="row g-0">
           <div class="col d-flex wrap column_section" style='border:none'>
             <label for="inputTextarea" class="form-label">
-                    <p>&nbsp;&nbsp;說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
-                  </label>
+                      <p>&nbsp;&nbsp;說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
+                    </label>
             <textarea class="form-control" id="inputTextarea" placeholder='最多輸入100字' v-model="myForm.Description"></textarea>
           </div>
         </div>
@@ -68,8 +68,8 @@
             <p><span>*</span>設備總類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                      {{ myForm.EquipTypeName || '請選擇' }}
-                    </button>
+                        {{ myForm.EquipTypeName || '請選擇' }}
+                      </button>
               <div class="dropdown-menu" aria-labelledby="typeDropdown">
                 <p v-for="(item, index) in myForm.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
               </div>
@@ -79,8 +79,8 @@
             <p><span>*</span>設備分類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(myForm.EquipTypeName !== '') }">
-                      {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
-                    </button>
+                        {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
+                      </button>
               <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                 <p v-for="(item, index) in myForm.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
               </div>
@@ -102,8 +102,8 @@
         <div class="row g-0">
           <div class="col-12 d-flex wrap text_input">
             <label for="inputTextarea" class="form-label">
-                    <p>規格需求：</p>
-                  </label>
+                      <p>規格需求：</p>
+                    </label>
             <div>
             </div>
             <textarea class="form-control" id="inputTextarea" placeholder='最多輸入100字' v-model="myForm.RequiredSpec"></textarea>
@@ -150,7 +150,7 @@
     },
     setup() {
       const gridApi = ref(null);
-      const options = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨'];
+      const options = ['內部領用', '借測', '出貨', '退貨'];
       const myForm = reactive({
         ApplicationDate: '',
         Applicant: '',
@@ -174,8 +174,10 @@
           cellRenderer: "Delete",
           cellRendererParams: {
             deleteFromData: (id) => {
-              const deleteIndex = rowData.value.findIndex(item=>{item.id === id})
-              rowData.value.splice(deleteIndex , 1);
+              const deleteIndex = rowData.value.findIndex(item => {
+                item.id === id
+              })
+              rowData.value.splice(deleteIndex, 1);
             }
           },
           width: 100,
@@ -696,7 +698,7 @@
       }
       .info_wrap {
         margin: auto;
-     padding: 0 5%;
+        padding: 0 5%;
         .code_search {
           background: #48658C;
           color: white;

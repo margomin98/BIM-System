@@ -35,6 +35,27 @@
             </div>
           </div>
         </div>
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">專案代碼：</div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID" />
+          </div>
+        </div>
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">專案名稱：</div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID" />
+          </div>
+        </div>
+        <div class="col form_search_wrap">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              物流單號 :
+            </div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="VendorName" readonly>
+            <button class="form_search_btn">檢視</button>
+          </div>
+        </div>
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -150,6 +171,88 @@
           </div>
         </div>
       </div>
+      <div class="tab_section mt-5">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-selected="true">1</button>
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="tab1" role="tabpanel">
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">物品名稱：</div>
+                <input type="text" class="form-control readonly_box" readonly>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">資產編號：</div>
+                <input type="text" class="form-control readonly_box" readonly>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">S/N：</div>
+                <input type="text" class="form-control readonly_box" aria-label="Default" readonly>
+              </div>
+            </div>
+       <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">專案代碼：</div>
+                <input type="text" class="form-control readonly_box" readonly>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">專案名稱：</div>
+                <input type="text" class="form-control readonly_box" readonly>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">備註：</div>
+                <textarea class="col readonly_box" rows="5" readonly></textarea>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">資產照片：</div>
+                <div class="mb-3 file_wrap">
+                  <button class="choose_btn">選擇檔案</button>
+                  <input type="file" accept="image/*" style="display: none;">
+                </div>
+                <div class="selected_file">
+                  <p class="title">已選擇的檔案:</p>
+                  <p class="file_upload_wrap" style="cursor: pointer;">
+                    <p>File 1</p>
+                    <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;">
+                  </p>
+                  <p class="file_upload_wrap" style="cursor: pointer;">
+                    <p>File 2</p>
+                    <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;">
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">已上傳檔案：</div>
+                  <div class="d-flex  flex-column">
+                    <p class="file_upload_wrap d-flex" style="cursor: pointer;">
+                      <p>Uploaded File 1</p>
+                      <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;">
+                    </p>
+                    <p class="file_upload_wrap d-flex" style="cursor: pointer;">
+                      <p>Uploaded File 2</p>
+                      <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;">
+                    </p>
+                  </div>
+                </div>
+              </div> -->
+          </div>
+        </div>
+      </div>
       <div class='confirm_section'>
         <h2>
           交付確認
@@ -157,7 +260,7 @@
         <div class='final'>
           <div class="fixed_info">
             <div>
-              <p>交付日期: {{ deliveryDate }}</p>
+              <p>交付日期 : {{ deliveryDate }}</p>
             </div>
           </div>
           <div class="row auth g-0">
@@ -253,6 +356,8 @@
                 </div>
               </div>
             </div>
+            
+
           </div>
         </div>
       </div>
@@ -469,7 +574,9 @@ export default {
     .readonly_box {
       @include readonly_box;
     }
-
+    .form_search_btn {
+        @include form_search_btn;
+      }
     h1 {
       margin-top: 50px;
       text-align: center;
@@ -489,7 +596,6 @@ export default {
     .info_wrap {
       margin: auto;
       width: 800px;
-
       .fixed_info {
         @include fixed_info;
 
@@ -502,6 +608,16 @@ export default {
       .content {
         @include content_bg;
 
+        .form_search_wrap {
+            .input-group {
+              .input-group-prepend {
+                width: 114px;
+              }
+              input {
+                margin-left: 15px !important
+              }
+            }
+          }
         .dropdown {
           .dropdown-menu {
             width: 100%;
@@ -661,6 +777,122 @@ export default {
         }
       }
     }
+    
+    .tab_section {
+        .nav-tabs {
+          button {
+            @include tab_section_num;
+            background: #5C7897;
+          }
+          .active {
+            @include tab_section_num;
+            background: #3E4E5F;
+          }
+        }
+        .tab-content {
+          background: #3E4E5F;
+          padding: 50px 30px;
+          .modal {
+            .modal-header {
+              background: #3D4E61;
+              color: white;
+              .close_icon {
+                color: white;
+                font-weight: 700;
+                margin-bottom: 0;
+              }
+            }
+          }
+          .dropdown {
+            width: 60%;
+            .dropdown-menu {
+              width: 100%;
+              max-height: 250px;
+              overflow-y: auto;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            button {
+              @include dropdown-btn;
+              width: 100%;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group {
+            flex-wrap: nowrap;
+            span {
+              @include red_star
+            }
+            .selected_file {
+              margin-left: 20px;
+              p.title {
+                font-weight: 700;
+                color: white;
+                margin-bottom: 5px;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  margin-bottom: 0;
+                  font-weight: 700;
+                  color: white;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
+            }
+            .input-number {
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              border-radius: 0;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 120px;
+              text-align: end;
+            }
+            .file_wrap {
+              display: flex;
+              flex-direction: column;
+              .choose_btn {
+                margin-bottom: 10px;
+                @include choose_file_btn;
+                &:hover {
+                  background: #3f608f;
+                }
+              }
+            }
+          }
+          .form_search_wrap {
+            .input-group {
+              .input-group-prepend {
+                width: 114px;
+              }
+              input {
+                margin-left: 15px !important
+              }
+            }
+          }
+        }
+      }
   }
 }
 
@@ -669,7 +901,9 @@ export default {
     .readonly_box {
       @include readonly_box;
     }
-
+    .form_search_btn {
+        @include form_search_btn;
+      }
     h1 {
       margin-top: 50px;
       text-align: center;
@@ -689,7 +923,7 @@ export default {
     .info_wrap {
       margin: auto;
       width: 800px;
-
+  
       .fixed_info {
         @include fixed_info;
 
@@ -701,6 +935,17 @@ export default {
 
       .content {
         @include content_bg;
+
+        .form_search_wrap {
+            .input-group {
+              .input-group-prepend {
+                width: 114px;
+              }
+              input {
+                margin-left: 15px !important
+              }
+            }
+          }
 
         .dropdown {
           .dropdown-menu {
@@ -856,6 +1101,121 @@ export default {
         }
       }
     }
+      .tab_section {
+        .nav-tabs {
+          button {
+            @include tab_section_num;
+            background: #5C7897;
+          }
+          .active {
+            @include tab_section_num;
+            background: #3E4E5F;
+          }
+        }
+        .tab-content {
+          background: #3E4E5F;
+          padding: 50px 30px;
+          .modal {
+            .modal-header {
+              background: #3D4E61;
+              color: white;
+              .close_icon {
+                color: white;
+                font-weight: 700;
+                margin-bottom: 0;
+              }
+            }
+          }
+          .dropdown {
+            width: 60%;
+            .dropdown-menu {
+              width: 100%;
+              max-height: 250px;
+              overflow-y: auto;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            button {
+              @include dropdown-btn;
+              width: 100%;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group {
+            flex-wrap: nowrap;
+            span {
+              @include red_star
+            }
+            .selected_file {
+              margin-left: 20px;
+              p.title {
+                font-weight: 700;
+                color: white;
+                margin-bottom: 5px;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  margin-bottom: 0;
+                  font-weight: 700;
+                  color: white;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
+            }
+            .input-number {
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              border-radius: 0;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 120px;
+              text-align: end;
+            }
+            .file_wrap {
+              display: flex;
+              flex-direction: column;
+              .choose_btn {
+                margin-bottom: 10px;
+                @include choose_file_btn;
+                &:hover {
+                  background: #3f608f;
+                }
+              }
+            }
+          }
+          .form_search_wrap {
+            .input-group {
+              .input-group-prepend {
+                width: 114px;
+              }
+              input {
+                margin-left: 15px !important
+              }
+            }
+          }
+        }
+      }
   }
 }
 
@@ -863,7 +1223,19 @@ export default {
   .main_section {
     .readonly_box {
       @include readonly_box;
-    }
+    }      .form_search_btn {
+        border: none;
+        color: white;
+        width: 60px;
+        height: 35px;
+        margin-top: 10px;
+        font-weight: 700;
+        padding: 0 10px;
+        background-color: #132238;
+        &:hover {
+          background-color: #43546d;
+        }
+      }
 
     h1 {
       margin-top: 50px;
@@ -898,7 +1270,14 @@ export default {
 
       .content {
         @include content_bg;
-
+ .form_search_wrap {
+            .input-group {
+            
+              button {
+                margin-left: unset !important
+              }
+            }
+          }
         .dropdown {
           .dropdown-menu {
             width: 100%;
@@ -1058,6 +1437,116 @@ export default {
           }
         }
       }
-    }
+    } .tab_section {
+        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+          margin-left: unset !important;
+        }
+        .nav-tabs {
+          button {
+            @include tab_section_num;
+            background: #5C7897;
+          }
+          .active {
+            @include tab_section_num;
+            background: #3E4E5F;
+          }
+        }
+        .tab-content {
+          background: #3E4E5F;
+          padding: 50px 30px;
+          .modal {
+            .modal-header {
+              background: #3D4E61;
+              color: white;
+              .close_icon {
+                color: white;
+                font-weight: 700;
+                margin-bottom: 0;
+              }
+            }
+          }
+          .dropdown {
+            margin-left: unset !important;
+            margin-top: 5px;
+            .dropdown-menu {
+              width: 100%;
+              max-height: 250px;
+              overflow-y: auto;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            button {
+              @include dropdown-btn;
+              width: 100%;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group {
+            flex-direction: column;
+            span {
+              @include red_star
+            }
+            .selected_file {
+              p.title {
+                font-weight: 700;
+                color: white;
+                margin-bottom: 5px;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  margin-bottom: 0;
+                  font-weight: 700;
+                  color: white;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
+            }
+            .input-number {
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              width: 100%;
+              border-radius: 0;
+              margin-left: unset !important;
+              margin-top: 5px;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 100%;
+            }
+            .file_wrap {
+              display: flex;
+              flex-direction: column;
+              .choose_btn {
+                margin-top: 5px;
+                margin-bottom: 10px;
+                @include choose_file_btn;
+                &:hover {
+                  background: #3f608f;
+                }
+              }
+            }
+          }
+        }
+      }
   }
 }</style>
