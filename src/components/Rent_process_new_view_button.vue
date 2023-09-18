@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link :to="{name: 'Assets_View' , query:{search_id: id}}" target="_blank">
+    <router-link :to="{name: 'Assets_View' , query:{search_id: id}}" target="_blank" class="d-flex">
       <button type="button" class="btn btn-primary">
         檢視
       </button>
@@ -29,7 +29,8 @@ export default {
 button{
     @include datagrid_view_button;
     height: 25px;
-    color:black;
+    color:white;
+    
        &:hover {
       background: #1D7072;
       color: white

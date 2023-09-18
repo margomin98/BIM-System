@@ -152,7 +152,7 @@
                   </div>
                   <div class='col d-flex justify-content-center'>
                     <button class="btn submit_btn" type="button" @click="searchInventory">搜尋</button>
-                    <button class="btn submit_btn" style="margin-left: 0.5rem;" type="button" data-bs-dismiss="modal" @click="addList">加入</button>
+                    <button class="btn add_btn" style="margin-left: 0.5rem;" type="button" data-bs-dismiss="modal" @click="addList">加入</button>
                   </div>
                 </div>
               </div>
@@ -964,6 +964,24 @@
           &:hover {
             background-color: #5d85bd;
           }
+       
+        }
+           .add_btn {
+          margin-top: 20px;
+          background: #132238;
+          color: white;
+          font-weight: 700;
+          width: 80px;
+          font-size: 20px;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 0;
+    border-radius: 7px;
+          &:hover {
+            background-color: #426497;
+          }
         }
         .wrap1 {
           display: flex;
@@ -1266,6 +1284,23 @@
             background-color: #5d85bd;
           }
         }
+        .add_btn {
+          margin-top: 20px;
+          background: #132238;
+          color: white;
+          font-weight: 700;
+          width: 80px;
+          font-size: 20px;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 0;
+    border-radius: 7px;
+          &:hover {
+            background-color: #426497;
+          }
+        }
         .wrap1 {
           display: flex;
           justify-content: space-evenly;
@@ -1525,6 +1560,23 @@
           align-items: center;
           &:hover {
             background-color: #5d85bd;
+          }
+        }
+        .add_btn {
+          margin-top: 20px;
+          background: #132238;
+          color: white;
+          font-weight: 700;
+          width: 80px;
+          font-size: 20px;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 0;
+    border-radius: 7px;
+          &:hover {
+            background-color: #426497;
           }
         }
         .wrap1 {

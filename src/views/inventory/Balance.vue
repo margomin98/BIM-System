@@ -56,19 +56,19 @@
             <div class="input-group-prepend">盤點類型：</div>
             <div class="check_section d-flex">
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no1" name="radio" value="指定盤" v-model="details.PlanType" :disabled="details.PlanType !== '指定盤'"/>
+                <input type="radio" id="no1" name="radio" value="指定盤" v-model="details.PlanType" :disabled="details.PlanType !== '指定盤'" />
                 <label for="no1">指定盤</label>
               </div>
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no2" name="radio" value="月盤" v-model="details.PlanType" :disabled="details.PlanType !== '月盤'"/>
+                <input type="radio" id="no2" name="radio" value="月盤" v-model="details.PlanType" :disabled="details.PlanType !== '月盤'" />
                 <label for="no2">月盤</label>
               </div>
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no3" name="radio" value="季盤" v-model="details.PlanType" :disabled="details.PlanType !== '季盤'"/>
+                <input type="radio" id="no3" name="radio" value="季盤" v-model="details.PlanType" :disabled="details.PlanType !== '季盤'" />
                 <label for="no3">季盤</label>
               </div>
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no4" name="radio" value="年盤" v-model="details.PlanType" :disabled="details.PlanType !== '年盤'"/>
+                <input type="radio" id="no4" name="radio" value="年盤" v-model="details.PlanType" :disabled="details.PlanType !== '年盤'" />
                 <label for="no4">年盤</label>
               </div>
             </div>
@@ -102,8 +102,8 @@
       </div>
       <div class="content">
         <div style="width: 100%">
-          <ag-grid-vue style="width: 100%; height:810px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs1" :rowData="rowData1" :paginationPageSize="20" :pagination="true"
-          :suppressRowClickSelection="true" :rowSelection ="'multiple'" :alwaysShowHorizontalScroll="true" @grid-ready = "onGridReady">
+          <ag-grid-vue style="width: 100%; height:810px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs1" :rowData="rowData1" :paginationPageSize="20" :pagination="true" :suppressRowClickSelection="true"
+            :rowSelection="'multiple'" :alwaysShowHorizontalScroll="true" @grid-ready="onGridReady">
           </ag-grid-vue>
         </div>
       </div>
@@ -111,10 +111,10 @@
         <div class="col d-flex">
           <div class="input-group">
             <div class="input-group-prepend">認列人員：</div>
-            <input type="text" class="form-control text-center readonly_box" readonly v-model="validation.VerifyPerson"/>
+            <input type="text" class="form-control text-center readonly_box" readonly v-model="validation.VerifyPerson" />
             <span class="icon-container">
-              <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.isVerified" />
-            </span>
+                <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.isVerified" />
+              </span>
           </div>
           <button class="send_btn" data-bs-toggle="modal" data-bs-target="#auth_modal">驗證</button>
         </div>
@@ -130,13 +130,13 @@
                 <div class="col">
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">帳號：</div>
-                    <input type="text" class="form-control" v-model="validation.account"/>
+                    <input type="text" class="form-control" v-model="validation.account" />
                   </div>
                 </div>
                 <div class="col">
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">密碼：</div>
-                    <input type="password" class="form-control" v-model="validation.password"/>
+                    <input type="password" class="form-control" v-model="validation.password" />
                   </div>
                 </div>
               </div>
@@ -148,8 +148,8 @@
         </div>
       </div>
       <div class="col button_wrap">
-        <button class="send_btn" :class="{send_btn_disabled: !validation.isVerified}" @click = "submit" :disabled="!validation.isVerified">確定認列</button>
-        <button class="send_btn" :class="{send_btn_disabled: !validation.isVerified}" @click = "force" :disabled="!validation.isVerified">完成平帳</button>
+        <button class="send_btn" :class="{send_btn_disabled: !validation.isVerified}" @click="submit" :disabled="!validation.isVerified">確定認列</button>
+        <button class="send_btn" :class="{send_btn_disabled: !validation.isVerified}" @click="force" :disabled="!validation.isVerified">完成平帳</button>
       </div>
     </div>
     <div class="info_wrap col">
@@ -166,8 +166,8 @@
                 <p>設備總類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                      {{ searchParams.EquipTypeName || '請選擇' }}
-                    </button>
+                        {{ searchParams.EquipTypeName || '請選擇' }}
+                      </button>
                   <div class="dropdown-menu" aria-labelledby="typeDropdown">
                     <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
                   </div>
@@ -177,8 +177,8 @@
                 <p>設備分類</p>
                 <div class="dropdown">
                   <button style='overflow: hidden;text-overflow: ellipsis;white-space: nowrap' class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
-                      {{ searchParams.EquipCategoryName || EquipCategoryInit }}
-                    </button>
+                        {{ searchParams.EquipCategoryName || EquipCategoryInit }}
+                      </button>
                   <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                     <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
                   </div>
@@ -186,18 +186,18 @@
               </div>
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
                 <p>資產編號</p>
-                <input type="text" class="form-control text-center" placeholder="" v-model="searchParams.AssetsId"/>
+                <input type="text" class="form-control text-center" placeholder="" v-model="searchParams.AssetsId" />
               </div>
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
                 <p>物品名稱</p>
-                <input type="text" class="form-control text-center" placeholder="不可輸入超過20字" v-model="searchParams.AssetName"/>
+                <input type="text" class="form-control text-center" placeholder="不可輸入超過20字" v-model="searchParams.AssetName" />
               </div>
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
                 <p>儲位區域</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
-                      {{ searchParams.AreaName || '請選擇' }}
-                    </button>
+                        {{ searchParams.AreaName || '請選擇' }}
+                      </button>
                   <div class="dropdown-menu" aria-labelledby="areaDropdown">
                     <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item" @click="selectArea(`${item}`)">{{ item }}</p>
                   </div>
@@ -207,8 +207,8 @@
                 <p>儲位櫃位</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="searchParams.AreaName === ''">
-                      {{ searchParams.LayerName || LayerInit }}
-                    </button>
+                        {{ searchParams.LayerName || LayerInit }}
+                      </button>
                   <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                     <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(`${item}`)">{{ item }}</p>
                   </div>
@@ -222,8 +222,7 @@
           </div>
         </div>
         <div style="width: 100%">
-          <ag-grid-vue style="width: 100%; height:470px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs2" :rowData="rowData2" :paginationAutoPageSize="true" :pagination="true"
-            :alwaysShowHorizontalScroll="true">
+          <ag-grid-vue style="width: 100%; height:470px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs2" :rowData="rowData2" :paginationAutoPageSize="true" :pagination="true" :alwaysShowHorizontalScroll="true">
           </ag-grid-vue>
         </div>
       </div>
@@ -282,235 +281,233 @@
         isVerified: false,
         VerifyPerson: '未驗證',
       })
-      const columnDefs1 =  [
-          {
-            cellClass: 'grid_checkbox',
-            checkboxSelection: true,
-            headerName: "認列",
-            field: "",
-            unSortIcon: true,
-            width: 80,
-            checkboxSelection: function(params) {
-              // 根据 NotBalanced 的值决定是否禁用复选框
-              return params.data.NotBalanced;
-            },
-            showDisabledCheckboxes: true,
-            suppressMovable: true,
+      const columnDefs1 = [{
+          cellClass: 'grid_checkbox',
+          checkboxSelection: true,
+          headerName: "認列",
+          field: "",
+          unSortIcon: true,
+          width: 80,
+          checkboxSelection: function(params) {
+            // 根据 NotBalanced 的值决定是否禁用复选框
+            return params.data.NotBalanced;
           },
-          {
-            headerName: "項目",
-            valueGetter: function(params) {
-              // 通过 params.node 获取当前行的 RowNode
-              const rowNode = params.node;
-              // 返回 RowNode 的 id 属性作为该列的值
-              return parseFloat(rowNode.id)+1;
-            },
-            width: 75,
-            resizable: true,
-            suppressMovable: true
+          showDisabledCheckboxes: true,
+          suppressMovable: true,
+        },
+        {
+          headerName: "項目",
+          valueGetter: function(params) {
+            // 通过 params.node 获取当前行的 RowNode
+            const rowNode = params.node;
+            // 返回 RowNode 的 id 属性作为该列的值
+            return parseFloat(rowNode.id) + 1;
           },
-          {
-            headerName: "資產編號",
-            field: "AssetsId",
-            unSortIcon: true,
-            sortable: true,
-            width: 140,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "設備總類",
-            field: "EquipTypeName",
-            unSortIcon: true,
-            sortable: true,
-            width: 140,
-            suppressMovable: true
-          },
-          {
-            headerName: "設備分類",
-            field: "EquipCategoryName",
-            unSortIcon: true,
-            sortable: true,
-            width: 140,
-            suppressMovable: true
-          },
-          {
-            headerName: "物品名稱",
-            field: "AssetName",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "儲位區域",
-            field: "AreaName",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            suppressMovable: true
-          },
-          {
-            headerName: "儲位櫃位",
-            field: "LayerName",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            suppressMovable: true
-          },
-          {
-            headerName: "應盤",
-            field: "ReceivableNum",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            suppressMovable: true
-          },
-          {
-            headerName: "實盤",
-            field: "ActualNum",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            suppressMovable: true
-          },
-          {
-            headerName: "差異",
-            field: "Discrepancy",
-            unSortIcon: true,
-            sortable: true,
-            width: 100,
-            suppressMovable: true
-          },
-          {
-            headerName: "單位",
-            field: "Unit",
-            unSortIcon: true,
-            sortable: true,
-            width: 100,
-            suppressMovable: true
-          }, {
-            headerName: "認列人員",
-            field: "RecognizePerson",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            suppressMovable: true
-          }
+          width: 75,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "資產編號",
+          field: "AssetsId",
+          unSortIcon: true,
+          sortable: true,
+          width: 140,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "設備總類",
+          field: "EquipTypeName",
+          unSortIcon: true,
+          sortable: true,
+          width: 140,
+          suppressMovable: true
+        },
+        {
+          headerName: "設備分類",
+          field: "EquipCategoryName",
+          unSortIcon: true,
+          sortable: true,
+          width: 140,
+          suppressMovable: true
+        },
+        {
+          headerName: "物品名稱",
+          field: "AssetName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "儲位區域",
+          field: "AreaName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true
+        },
+        {
+          headerName: "儲位櫃位",
+          field: "LayerName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true
+        },
+        {
+          headerName: "應盤",
+          field: "ReceivableNum",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true
+        },
+        {
+          headerName: "實盤",
+          field: "ActualNum",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true
+        },
+        {
+          headerName: "差異",
+          field: "Discrepancy",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          suppressMovable: true
+        },
+        {
+          headerName: "單位",
+          field: "Unit",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          suppressMovable: true
+        }, {
+          headerName: "認列人員",
+          field: "RecognizePerson",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true
+        }
       ]
       const columnDefs2 = [{
-            headerName: "",
-            valueGetter: function(params) {
-              // 通过 params.node 获取当前行的 RowNode
-              const rowNode = params.node;
-              // 返回 RowNode 的 id 属性作为该列的值
-              return parseFloat(rowNode.id)+1;
-            },
-            width: 50,
-            resizable: true,
-            suppressMovable: true
+          headerName: "",
+          valueGetter: function(params) {
+            // 通过 params.node 获取当前行的 RowNode
+            const rowNode = params.node;
+            // 返回 RowNode 的 id 属性作为该列的值
+            return parseFloat(rowNode.id) + 1;
           },
-          {
-            headerName: "資產編號",
-            field: "AssetsId",
-            unSortIcon: true,
-            sortable: true,
-            width: 140,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "設備總類",
-            field: "EquipTypeName",
-            unSortIcon: true,
-            sortable: true,
-            width: 140,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "設備分類",
-            field: "EquipCategoryName",
-            unSortIcon: true,
-            sortable: true,
-            width: 140,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "物品名稱",
-            field: "AssetName",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "儲位區域",
-            field: "AreaName",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "儲位櫃位",
-            field: "LayerName",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "應盤數量",
-            field: "ReceivableNum",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "實盤數量",
-            field: "ActualNum",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "差異",
-            field: "Discrepancy",
-            unSortIcon: true,
-            sortable: true,
-            width: 100,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "單位",
-            field: "Unit",
-            unSortIcon: true,
-            sortable: true,
-            width: 100,
-            resizable: true,
-            suppressMovable: true
-          }, {
-            headerName: "認列人員",
-            field: "RecognizePerson",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            resizable: true,
-            suppressMovable: true
-          }
+          width: 50,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "資產編號",
+          field: "AssetsId",
+          unSortIcon: true,
+          sortable: true,
+          width: 140,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "設備總類",
+          field: "EquipTypeName",
+          unSortIcon: true,
+          sortable: true,
+          width: 140,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "設備分類",
+          field: "EquipCategoryName",
+          unSortIcon: true,
+          sortable: true,
+          width: 140,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "物品名稱",
+          field: "AssetName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "儲位區域",
+          field: "AreaName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "儲位櫃位",
+          field: "LayerName",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "應盤數量",
+          field: "ReceivableNum",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "實盤數量",
+          field: "ActualNum",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "差異",
+          field: "Discrepancy",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "單位",
+          field: "Unit",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          resizable: true,
+          suppressMovable: true
+        }, {
+          headerName: "認列人員",
+          field: "RecognizePerson",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        }
       ]
-
       const rowData1 = ref([]);
       const rowData2 = ref([]);
       onMounted(() => {
@@ -518,12 +515,12 @@
         getDatagrid();
       });
       async function submit() {
-        if(!validation.isVerified) {
+        if (!validation.isVerified) {
           alert('未驗證');
           return
         }
         const rows = grid.value.getSelectedRows();
-        if(rows.length === 0) {
+        if (rows.length === 0) {
           alert('請至少認列一項');
           return
         }
@@ -632,10 +629,10 @@
       // 下半部盤點範圍Datagrid
       async function getDatagrid() {
         const form = new FormData();
-        form.append( 'PlanId' , IP_ID)
-        for( const key in searchParams) {
-          if(searchParams[key]) {
-            form.append(key , searchParams[key]);
+        form.append('PlanId', IP_ID)
+        for (const key in searchParams) {
+          if (searchParams[key]) {
+            form.append(key, searchParams[key]);
           }
         }
         const axios = require('axios');
@@ -759,14 +756,13 @@
         grid.value = params.api
       }
       function clear() {
-        for( const key in searchParams) {
+        for (const key in searchParams) {
           searchParams[key] = '';
         }
         EquipCategoryInit.value = '請先選擇設備總類'
         LayerInit.value = '請先選擇區域'
         getDatagrid();
       }
-
       function goBack() {
         window.history.back();
       }
@@ -831,7 +827,7 @@
       }
       .info_wrap {
         margin: auto;
-        width: 800px;
+        padding: 0 20%;
         .fixed_info {
           @include fixed_info;
           p {
@@ -1514,7 +1510,6 @@
               background-color: #8eb2e3;
             }
           }
-
           button.send_btn_disabled {
             background: #878787;
             &:hover {

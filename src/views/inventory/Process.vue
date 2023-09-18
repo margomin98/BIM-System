@@ -124,7 +124,7 @@
     AgGridVue
   } from "ag-grid-vue3";
   import Navbar from "@/components/Navbar.vue";
-  import Inventory_prccess from "@/components/Inventory_prccess_button.vue"
+  import Inventory_process_button from "@/components/Inventory_process_button.vue"
   import Inventory_number from "@/components/Inventory_process_number_input.vue"
   import Inventory_view from "@/components/Inventory_view_button.vue"
   import {
@@ -140,7 +140,7 @@
     components: {
       Navbar,
       AgGridVue,
-      Inventory_prccess,
+      Inventory_process_button,
       Inventory_number,
       Inventory_view,
     },
@@ -193,7 +193,7 @@
             suppressMovable: true
           },
           {
-            cellRenderer: "Inventory_prccess",
+            cellRenderer: "Inventory_process_button",
             cellRendererParams: {
               // 審核
               update: (data)=>{
@@ -497,7 +497,7 @@
       }
       .info_wrap {
         margin: auto;
-        width: 800px;
+        padding: 0 20%;
         .fixed_info {
           @include fixed_info;
           p {

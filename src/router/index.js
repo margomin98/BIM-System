@@ -65,6 +65,7 @@ import Inventory_Edit from "../views/inventory/Edit";
 import Inventory_Process from "../views/inventory/Process";
 import Inventory_Balance from "../views/inventory/Balance";
 import Inventory_Balance_Result from "../views/inventory/Balance_result";
+import Inventory_Delete from "../views/inventory/Delete";
 //盤點管理
 
 //收貨管理
@@ -299,6 +300,12 @@ const routes = [
     name: "Inventory_Balance_Result",
     component: Inventory_Balance_Result,
     meta: {auth: true, request: 'IP_InventoryResult'},
+  },
+  {
+    path: "/inventory_delete",
+    name: "Inventory_Delete",
+    component: Inventory_Delete,
+    // meta: {auth: true, request: 'IP_InventoryResult'},
   },
   {
     path: "/receive_datagrid",
