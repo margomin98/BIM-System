@@ -2,17 +2,20 @@
   <div class='button_wrap'>
     <button class="" @click="view('View')">檢視</button>
     <button :class="{ disabled_btn: isDisabled.edit, btn2: !isDisabled.edit }" :disabled="isDisabled.edit" @click="view('Edit')">編輯</button>
-    <button :class="{ disabled_btn: isDisabled.process, btn3: !isDisabled.process }" :disabled="isDisabled.process" data-bs-toggle="modal" data-bs-target="#staticBackdrop">盤點</button>
+    <button v-if="disabledStatus === '待盤點'" :class="{ disabled_btn: isDisabled.process, btn3: !isDisabled.process }" :disabled="isDisabled.process" @click="emitView" data-bs-toggle="modal" data-bs-target="#staticBackdrop">盤點</button>
+    <button v-else :class="{ disabled_btn: isDisabled.process, btn3: !isDisabled.process }" :disabled="isDisabled.process" @click="view('Process')">盤點</button>
     <button :class="{ disabled_btn: isDisabled.balance, btn4: !isDisabled.balance }" :disabled="isDisabled.balance" @click="view('Balance')">平帳</button>
     <button class="" @click="view('Balance_Result')">結果</button>
   </div>
- 
 </template>
 
 <script>
   // import router from '@/router';
-  import { onMounted, ref } from 'vue';
-import {
+  import {
+    onMounted,
+    ref
+  } from 'vue';
+  import {
     useRouter
   } from 'vue-router';
   export default {
@@ -20,6 +23,7 @@ import {
     setup(props) {
       const router = useRouter();
       const search_id = props.params.data.PlanId;
+      const disabledStatus = props.params.data.PlanStatus;
       const isDisabled = ref({
         edit: false, //編輯
         process: false, //盤點
@@ -72,9 +76,8 @@ import {
         }
       }
       function checkButton() {
-        const disabledStatus = props.params.data.PlanStatus;
         console.log(disabledStatus);
-        if (disabledStatus  !== '待盤點') {
+        if (disabledStatus !== '待盤點') {
           isDisabled.value.edit = true;
         }
         if (disabledStatus !== '待盤點' && disabledStatus !== '盤點中') {
@@ -84,11 +87,16 @@ import {
           isDisabled.value.balance = true;
         }
       }
+      function emitView() {
+        props.params.updateSearchId(search_id);
+      }
       onMounted(() => {
         checkButton();
       });
       return {
         view,
+        emitView,
+        disabledStatus,
         isDisabled,
       };
     },
@@ -99,7 +107,7 @@ import {
   @import '@/assets/css/global.scss';
   .button_wrap {
     justify-content: center;
-    :nth-child(1) {
+     :nth-child(1) {
       @include datagrid_view_button;
       height: 25px;
       &:hover {
@@ -132,7 +140,7 @@ import {
         color: white
       }
     }
-    :nth-child(5) {
+     :nth-child(5) {
       @include datagrid_result_button;
       height: 25px;
       &:hover {
@@ -141,13 +149,13 @@ import {
       }
     }
     .disabled_btn {
-    @include disabled_btn;
-    height: 25px;
-    width: 50px;
-     :hover {
       @include disabled_btn;
+      height: 25px;
       width: 50px;
+       :hover {
+        @include disabled_btn;
+        width: 50px;
+      }
     }
-  }
   }
 </style>
