@@ -13,11 +13,11 @@
             申請人員 : {{ Applicant }}
           </p>
         </div>
-        <!-- <div>
+        <div>
           <p>
             申請入庫日期 : {{ ApplicationDate }}
           </p>
-        </div> -->
+        </div>
       </div>
       <div class="content">
         <div class="row">
@@ -27,11 +27,11 @@
                 資產類型 :
               </div>
               <div class="d-flex align-items-center">
-                <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="false" v-model="isConsumableComputed" />
+                <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="資產" v-model="isConsumableComputed" />
                 <label class="form-check-label check_box" for='radio1'>資產</label>
-                <input type="radio" class='form-check-input check_box ' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="true" v-model="isConsumableComputed" />
+                <input type="radio" class='form-check-input check_box ' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="存貨" v-model="isConsumableComputed" />
                 <label class="form-check-label check_box" for='radio1' data-toggle="tooltip" data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
-                <input type="radio" class='form-check-input check_box' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="true" v-model="isConsumableComputed" />
+                <input type="radio" class='form-check-input check_box' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="耗材" v-model="isConsumableComputed" />
                 <label class="form-check-label check_box" for='radio2'>耗材</label>
               </div>
             </div>
@@ -331,6 +331,7 @@
   import {
     computed,
     onMounted,
+    reactive,
     ref
   } from 'vue';
   export default {
@@ -341,6 +342,25 @@
       const Applicant = ref(''); //申請人 發API 帶入
       const ApplicationDate = ref(''); //申請日期 function帶入
       const IsConsumable = ref(false);
+      const formParams = reactive({
+        AssetType: '',
+        ProjectCode: '',
+        ShipmentNum: '',
+        EquipTypeName: '',
+        EquipCategoryName: '',
+        AssetName: '',
+        VendorName: '',
+        ProductSpec: '',
+        ProductType: '',
+        Count: 1,
+        Unit: '',
+        PackageNum: 1,
+        PackageUnit: '',
+        WarrantyDate: '',
+        WarrantyStartDate: '',
+        WarrantyEndDate: '',
+        Memo: '',
+      });
       const EquipTypeName = ref(''); //設備總類 *必填
       const EquipTypeArray = ref([]); //設備總類陣列 request拿到
       const EquipCategoryName = ref(''); //設備分類 *必填
@@ -541,6 +561,7 @@
         getDate,
         Applicant,
         ApplicationDate,
+        formParams,
         IsConsumable,
         EquipTypeName,
         EquipTypeArray,
