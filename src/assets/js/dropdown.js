@@ -1,4 +1,6 @@
 // 入庫管理
+export const UnitArray = ['個', '對', '箱', '包', '組', '台', '件']
+export const PackageUnitArray = ['個', '支', '枝', '隻', '根', '條', '顆']
 // 出庫管理
 // 資產管理
 export const HistoryAction = ['入庫', '歸還', '借測', '維修', '內部領用', '出貨', '報廢', '退貨' , '移出設備整合箱' , '加入設備整合箱'];

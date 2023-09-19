@@ -15,6 +15,7 @@
     setup(props) {
       const router = useRouter();
       const search_id = props.params.data.AR_ID;
+      const ShipmentNum = props.params.data.ShipmentNum;
       function viewDetails() {
         if (search_id !== '') {
           router.push({
@@ -40,7 +41,8 @@
           router.push({
             name: 'Store_New',
             query: {
-              search_id
+              search_id,
+              ShipmentNum,
             }
           });
         }
