@@ -126,7 +126,7 @@
         <input type="file" id="fileInput2" ref="fileInput2" style="display: none" @change="handlePictureFile($event)" multiple />
         <swiper-container class='swiper_section' :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
           <swiper-slide v-for="(file , index) in fileParams.viewPic" :key="index" class="custom-slide">
-            <img :src="file.link" alt="">
+            <img :src="file.FileLink" alt="">
             <span @click="deleteFile('picture' , index , file)">x</span>
           </swiper-slide>
         </swiper-container>
@@ -309,12 +309,16 @@
             form.append(key, formParams[key]);
           }
           if(fileParams.deleteDoc.length > 0) {
-            form.append('deleteDocument' , fileParams.deleteDoc)
+            for(const item of fileParams.deleteDoc) {
+              form.append('deleteDocument' , item)
+            }
           }
           if(fileParams.deletePic.length > 0) {
-            form.append('deleteDocument' , fileParams.deletePic)
+            for(const item of fileParams.deletePic) {
+              form.append('deleteFile' , item)
+            }
           }
-          console.log('上半部資料(含刪除):\n',msg);
+          console.log('上半部資料(含刪除):\n', msg);
           axios.post('http://192.168.0.177:7008/ReceivingMng/EditReceipt', form)
             .then(response => {
               const data = response.data;
@@ -553,7 +557,7 @@
           case 'picture':
             // 3.
             if(file.exist) {
-              fileParams.deleteFile.push(file.FileName);
+              fileParams.deletePic.push(file.FileName);
               console.log('已加入的deletePic:',fileParams.deletePic);
             }
             // 4.
