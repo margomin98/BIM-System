@@ -493,8 +493,8 @@
                 console.log(`原始大小: ${originalSize} KB，壓縮後大小: ${compressedSize} KB`);
                 imgArray.push(compressedFile);
                 previewUrl.push({
-                  name: fileName,
-                  link: URL.createObjectURL(compressedFile),
+                  FileName: fileName,
+                  FileLink: URL.createObjectURL(compressedFile),
                   type: 'pic'
                 });
               }, files[i].type, 0.8);
