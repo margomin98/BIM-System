@@ -257,8 +257,8 @@
         }
 
         try {
-          // 先建立表單並回傳AR_ID
-          const AR_ID = await sendUpperForm();
+          // 先編輯表單上半部內容
+          await sendUpperForm();
           // 再依照AR_ID將 中間部分物流文件 & 下半部照片 單次檔案上傳
           const filePromises = [];
           for (let i = 0; i < fileParams.newDoc.length; i++) {
