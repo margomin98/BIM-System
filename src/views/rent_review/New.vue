@@ -218,7 +218,7 @@
         VerifyPerson: '',
       })
       const details = ref({});
-      const options = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨'];
+      const options = ['內部領用', '借測', '出貨', '退貨'];
       const columnDefs1 = [{
           headerName: "項目",
           field: "id",

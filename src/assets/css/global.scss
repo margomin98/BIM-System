@@ -74,6 +74,19 @@
     margin: 0 5px;
 }
 
+@mixin form_search_btn{
+    border:none;
+    color:white;
+    width: 60px;
+  margin-left: 20px;
+    font-weight: 700;
+    padding: 0 10px;
+      background-color: #132238;
+      &:hover{
+        background-color: #899bb6;
+      }
+}
+
 //data grid css
 @mixin datagrid_view_button {
     border: none;

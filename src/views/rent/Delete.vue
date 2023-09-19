@@ -167,7 +167,7 @@
       const router = useRouter();
       const AO_ID = route.query.search_id;
       const details = ref({});
-      const options = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨'];
+      const options = ['內部領用', '借測', '出貨', '退貨'];
       async function getDetails() {
         const axios = require('axios');
         try {

@@ -229,7 +229,7 @@
       const totalNeed = ref(0); //總所需數量
       const totalSelect = ref(0); //總已備數量
       const details = ref({});
-      const options = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨'];
+      const options = ['內部領用', '借測', '出貨', '退貨'];
       const rowHeight = 35;
       const gridApi = ref(null);
       const DeliveryMemo = ref('');

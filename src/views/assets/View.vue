@@ -17,9 +17,11 @@
         <div>
           <p>物品名稱: {{ details.AssetName }}</p>
         </div>
+        <div>
+          <p>資產類型: {{ details.AssetName }}</p>
+        </div>
       </div>
       <div class="content">
-
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -28,6 +30,27 @@
               </div>
               <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Status">
             </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">專案代碼：</div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID" />
+          </div>
+        </div>
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">專案名稱：</div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID" />
+          </div>
+        </div>
+        <div class="col form_search_wrap">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              物流單號 :
+            </div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="VendorName" readonly>
+            <button class="form_search_btn">檢視</button>
           </div>
         </div>
         <div class="row">
@@ -44,8 +67,6 @@
             </div>
           </div>
         </div>
-       
-       
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">廠商：</div>
@@ -129,8 +150,8 @@
                 保管人員：
               </div>
               <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Custodian">
+            </div>
           </div>
-        </div>
         </div>
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -161,7 +182,7 @@
         </div>
       </div>
       <div class="content">
-        <h2 class="text-center" v-show="selectFiles.viewFile.length === 0">查無照片</h2>
+        <h2 class="no_content_text" v-show="selectFiles.viewFile.length === 0">查無照片</h2>
         <div v-show="selectFiles.viewFile.length !== 0">
           <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
             <swiper-slide v-for="(item , index) in selectFiles.viewFile" :key="index" class="custom-slide">
@@ -186,7 +207,7 @@
               <p>作業日期(起)</p>
               <div class="date-selector">
                 <div class="input-container">
-                  <input type="date" v-model="historyParams.StartDate" class="date-input"/>
+                  <input type="date" v-model="historyParams.StartDate" class="date-input" />
                 </div>
               </div>
             </div>
@@ -216,8 +237,7 @@
           <button class="empty_btn" @click="clear">清空</button>
         </div>
         <div class="info_wrap">
-          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;margin-bottom:50px" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true"
-            :pagination="true">
+          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;margin-bottom:50px" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true" :pagination="true">
           </ag-grid-vue>
         </div>
       </div>
@@ -367,13 +387,13 @@
               details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
               details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
             }
-            if(details.value.existFile) {
+            if (details.value.existFile) {
               details.value.existFile.forEach(item => {
                 selectFiles.viewFile.push({
                   FileName: item.FileName,
                   FileLink: item.FileLink,
                   FileType: 'exist',
-                }); 
+                });
               });
             }
             getEquipCategoryName();
@@ -495,7 +515,7 @@
       function handleFileChange(event) {
         const files = event.target.files;
         const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-        if(files.length + selectFiles.viewFile.length > 5) {
+        if (files.length + selectFiles.viewFile.length > 5) {
           alert('上傳至多5張圖片');
           return;
         }
@@ -547,7 +567,7 @@
           };
           reader.readAsDataURL(files[i]);
         }
-        console.log('newFile' , selectFiles.newFile);
+        console.log('newFile', selectFiles.newFile);
       }
       function deleteFileFunction(index) {
         const file = selectFiles.viewFile[index];
@@ -555,15 +575,15 @@
           // 已上傳檔案 ->從輪播陣列刪除 & 加到deleteFile
           case 'exist':
             selectFiles.deleteFile.push(file.FileName);
-            selectFiles.viewFile.splice(index,1);
-            console.log('deleteFile' , selectFiles.deleteFile);
+            selectFiles.viewFile.splice(index, 1);
+            console.log('deleteFile', selectFiles.deleteFile);
             break;
-          // 新上傳檔案 ->從輪播陣列刪除 & 從newFile移除
+            // 新上傳檔案 ->從輪播陣列刪除 & 從newFile移除
           case 'new':
             const newFileIndex = selectFiles.newFile.findIndex(item => item.id === file.id);
-            selectFiles.newFile.splice(newFileIndex,1);
-            selectFiles.viewFile.splice(index,1);
-            console.log('newFile' , selectFiles.newFile);
+            selectFiles.newFile.splice(newFileIndex, 1);
+            selectFiles.viewFile.splice(index, 1);
+            console.log('newFile', selectFiles.newFile);
             break;
         }
       }
@@ -606,11 +626,11 @@
           console.error('Error sending data to backend', error);
         }
       }
-      const selectAction = item =>{
+      const selectAction = item => {
         historyParams.Action = item;
       }
       function clear() {
-        for(const key in historyParams) {
+        for (const key in historyParams) {
           historyParams[key] = '';
         }
         searchHistory();
@@ -658,7 +678,11 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-
+  .no_content_text{
+    padding: 5px 0;
+    text-align: center;
+    font-weight: 700;
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .swiper_section {
@@ -674,6 +698,9 @@
       .readonly_box {
         @include readonly_box;
       }
+      .form_search_btn {
+        @include form_search_btn;
+      }
       h1 {
         margin-top: 50px;
         text-align: center;
@@ -681,7 +708,6 @@
         font-weight: 600;
         @include title_color;
       }
-    
       .info_wrap {
         margin: auto;
         width: 800px;
@@ -698,7 +724,16 @@
         }
         .content {
           @include content_bg;
-          
+          .form_search_wrap {
+            .input-group {
+              .input-group-prepend {
+                width: 114px;
+              }
+              input {
+                margin-left: 15px !important
+              }
+            }
+          }
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -728,9 +763,9 @@
             }
           }
         }
-        
-        .content:nth-child(1),.content:nth-child(2){
-          border-radius:0px 10px 10px 10px
+        .content:nth-child(1),
+        .content:nth-child(2) {
+          border-radius: 0px 10px 10px 10px
         }
         .button_wrap {
           display: flex;
@@ -784,7 +819,6 @@
           }
         }
       }
-    
       .log {
         .info_wrap {
           width: 100%;
@@ -837,6 +871,9 @@
           padding: 40px 0;
         }
       }
+      .form_search_btn {
+        @include form_search_btn;
+      }
       .readonly_box {
         @include readonly_box;
       }
@@ -847,10 +884,9 @@
         font-weight: 600;
         @include title_color;
       }
-    
       .info_wrap {
         margin: auto;
-       padding:0 5%;
+        padding: 0 5%;
         .fixed_info {
           @include fixed_info;
           border-radius: 0 10px 0 0;
@@ -864,7 +900,16 @@
         }
         .content {
           @include content_bg;
-          
+          .form_search_wrap {
+            .input-group {
+              .input-group-prepend {
+                width: 114px;
+              }
+              input {
+                margin-left: 15px !important
+              }
+            }
+          }
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -894,11 +939,10 @@
             }
           }
         }
-        
-        .content:nth-child(1),.content:nth-child(2){
-          border-radius:0px 10px 10px 10px
+        .content:nth-child(1),
+        .content:nth-child(2) {
+          border-radius: 0px 10px 10px 10px
         }
-    
         .button_wrap {
           display: flex;
           margin-top: 30px;
@@ -946,8 +990,8 @@
           }
         }
       }
-      .info_wrap:nth-child(4) .info_wrap{
-        padding:0;
+      .info_wrap:nth-child(4) .info_wrap {
+        padding: 0;
       }
       .log {
         .info_wrap {
@@ -998,6 +1042,20 @@
           padding: 40px;
         }
       }
+      .form_search_btn {
+        border: none;
+        color: white;
+        width: 60px;
+        height: 35px;
+        margin-top: 10px;
+        font-weight: 700;
+        padding: 0 10px;
+        margin-left: unset !important;
+        background-color: #132238;
+        &:hover {
+          background-color: #43546d;
+        }
+      }
       .readonly_box {
         @include readonly_box;
       }
@@ -1008,13 +1066,11 @@
         font-weight: 600;
         @include title_color;
       }
-
-      .photo{
-        margin:5% auto;
+      .photo {
+        margin: 5% auto;
       }
       .info_wrap {
         padding: 1% 5% 0;
- 
         .fixed_title {
           @include fixed_title;
         }
@@ -1023,7 +1079,7 @@
           flex-direction: column;
           height: unset;
           padding: 10px;
-          border-radius:0 10px 0 0;
+          border-radius: 0 10px 0 0;
           p {
             font-size: 20px;
             margin-bottom: 0;
@@ -1031,8 +1087,8 @@
         }
         .content {
           @include content_bg;
-          .row{
-            gap:10px 0;
+          .row {
+            gap: 10px 0;
           }
           .dropdown {
             .dropdown-menu {
@@ -1040,7 +1096,7 @@
             }
             button {
               @include dropdown-btn;
-              width:100%;
+              width: 100%;
               color: black;
               justify-content: space-between;
               align-items: center;
@@ -1048,7 +1104,6 @@
           }
           .input-group {
             flex-direction: column;
-
             .input-number {
               @include count_btn;
             }
@@ -1065,11 +1120,10 @@
               font-size: 20px;
             }
           }
-     
         }
-        
-        .content:nth-child(1),.content:nth-child(2){
-          border-radius:0px 10px 10px 10px
+        .content:nth-child(1),
+        .content:nth-child(2) {
+          border-radius: 0px 10px 10px 10px
         }
         .button_wrap {
           display: flex;
@@ -1080,7 +1134,6 @@
           gap: 20px;
           button.back_btn {
             @include back_to_previous_btn;
-            
             &:hover {
               background-color: #5d85bb;
             }
@@ -1099,8 +1152,8 @@
           }
         }
       }
-      .info_wrap:nth-child(4) .info_wrap{
-        padding:0;
+      .info_wrap:nth-child(4) .info_wrap {
+        padding: 0;
       }
       .log {
         .info_wrap {

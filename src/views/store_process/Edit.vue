@@ -33,6 +33,27 @@
             </div>
           </div>
         </div>
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">專案代碼：</div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID" />
+          </div>
+        </div>
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">專案名稱：</div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID" />
+          </div>
+        </div>
+        <div class="col form_search_wrap">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              物流單號 :
+            </div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="VendorName" readonly>
+            <button class="form_search_btn">檢視</button>
+          </div>
+        </div>
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -62,15 +83,13 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">規格：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default"
-              aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductSpec" />
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductSpec" />
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">型號：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default"
-              aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductType" />
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductType" />
           </div>
         </div>
         <div class="row">
@@ -165,8 +184,8 @@
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button v-for="tab in parseInt(tabNumber)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab" :aria-selected="tab === 0">
-                      {{ tab }}
-                    </button>
+                        {{ tab }}
+                      </button>
           </div>
         </nav>
         <div v-if="formData.length > 0" class="tab-content" id="nav-tabContent">
@@ -183,14 +202,35 @@
                 <input type="text" class="form-control" v-model="item.AssetsId" placeholder="BFXXXXXXXX" :class="{'readonly_box': details.Type === 1}" :disabled="details.Type === 1" />
               </div>
             </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">S/N：</div>
+                <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="item.SN" />
+              </div>
+            </div>
+            <div class="col form_search_wrap">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span>*</span>專案代碼 :
+                </div>
+                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="VendorName">
+                <button class="form_search_btn">搜尋</button>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">專案名稱：</div>
+                <input type="text" class="form-control readonly_box" aria-label="Default" v-model="item.SN" readonly/>
+              </div>
+            </div>
             <div class="row g-0">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend"><span>*</span>區域：</div>
+                  <div class="input-group-prepend"><span>*</span>儲位區域：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName(index)">
-                              {{ item.itemAreaName || '請選擇' }}
-                            </button>
+                                {{ item.itemAreaName || '請選擇' }}
+                              </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="(item, area_index) in item.AreaArray" :key="area_index" class="dropdown-item" @click="selectArea(index, `${item}`)">
                         {{ item }}</p>
@@ -200,11 +240,11 @@
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3 justify-content-end">
-                  <div class="input-group-prepend"><span>*</span> 櫃位：</div>
+                  <div class="input-group-prepend"><span>*</span>儲位櫃位：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="item.itemAreaName === null || item.itemAreaName === ''">
-                              {{ item.itemLayerName || item.LayerInit }}
-                            </button>
+                                {{ item.itemLayerName || item.LayerInit }}
+                              </button>
                     <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                       <p v-for="(item, layer_index) in item.LayerArray" :key="layer_index" class="dropdown-item" @click="selectLayer(index, `${item}`)">{{ item }}</p>
                     </div>
@@ -214,16 +254,10 @@
             </div>
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend">S/N：</div>
-                <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="item.SN" />
-              </div>
-            </div>
-            <div class="col">
-              <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   備註：
                 </div>
-                <input class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="item.itemMemo">
+                <textarea class="col" rows="5" placeholder="最多輸入500字" v-model="item.itemMemo"></textarea>\
               </div>
             </div>
             <div class="col">
@@ -236,12 +270,12 @@
                 </div>
                 <div class='selected_file'>
                   <!-- <p class='title'>已上傳的檔案:</p>
-                    <p class='file_upload_wrap' v-for="(file, img_index) in item.existFile" :key="img_index" style="cursor: pointer;">
-                      <p @click="showExistFileImage(index, img_index)" data-bs-toggle="modal" data-bs-target="#existFile_modal">
-                        {{ file.FileName }}
-                      </p>
-                      <img class='delete_icon' src="@/assets/trash.png" @click="deleteExistFile(index, img_index)" style="margin-left: 10px;">
-                    </p> -->
+                      <p class='file_upload_wrap' v-for="(file, img_index) in item.existFile" :key="img_index" style="cursor: pointer;">
+                        <p @click="showExistFileImage(index, img_index)" data-bs-toggle="modal" data-bs-target="#existFile_modal">
+                          {{ file.FileName }}
+                        </p>
+                        <img class='delete_icon' src="@/assets/trash.png" @click="deleteExistFile(index, img_index)" style="margin-left: 10px;">
+                      </p> -->
                   <p class='title'>已選擇的檔案:</p>
                   <p class='file_upload_wrap' v-for="(file, img_index) in item.newFile" :key="img_index" style="cursor: pointer;">
                     <p @click="showNewFileImage(index, img_index)" data-bs-toggle="modal" data-bs-target="#newFile_modal">{{ file.name }}
@@ -257,7 +291,7 @@
                   已上傳檔案：
                 </div>
                 <div class="d-flex  flex-column">
-                <p class='file_upload_wrap d-flex' v-for="(file, img_index) in item.existFile" :key="img_index" style="cursor: pointer;">
+                  <p class='file_upload_wrap d-flex' v-for="(file, img_index) in item.existFile" :key="img_index" style="cursor: pointer;">
                     <p @click="showExistFileImage(index, img_index)" data-bs-toggle="modal" data-bs-target="#existFile_modal">
                       {{ file.FileName }}
                     </p>
@@ -349,9 +383,9 @@
           const data = response.data;
           if (data.state === 'success') {
             // console.log('Details Get成功 資料如下\n', data.resultList);
-            if(data.resultList.Status !== '待入庫') {
-            window.history.back();
-            // router.push({name: 'Store_Process_Datagrid'});
+            if (data.resultList.Status !== '待入庫') {
+              window.history.back();
+              // router.push({name: 'Store_Process_Datagrid'});
             }
             details.value = data.resultList;
             console.log('Details Get成功 資料如下\n', details.value);
@@ -480,17 +514,17 @@
             alert('物品名稱必填');
             return
           }
-          if(form.SN) {
+          if (form.SN) {
             form.SN = form.SN.trim();
           }
-          if(form.SN && !/^[\s\S]{1,100}$/.test(form.SN.trim())) {
+          if (form.SN && !/^[\s\S]{1,100}$/.test(form.SN.trim())) {
             InputError = true;
             InputMessages += '頁籤 ' + (i + 1) + ' :　S/N不可輸入超過100字' + '\n';
           }
-          if(form.itemMemo) {
+          if (form.itemMemo) {
             form.itemMemo = form.itemMemo.trim();
           }
-          if(form.itemMemo && !/^[\s\S]{1,500}$/.test(form.itemMemo.trim())) {
+          if (form.itemMemo && !/^[\s\S]{1,500}$/.test(form.itemMemo.trim())) {
             InputError = true;
             InputMessages += '頁籤 ' + (i + 1) + ' :　備註不可輸入超過500字' + '\n';
           }
@@ -568,7 +602,7 @@
             InputMessages += '頁籤 ' + (i + 1) + ' :　物品名稱必填' + '\n';
           }
           //1. 資產編號必填、不全為空格、格式BF & 8位數
-          if(form.AssetsId) {
+          if (form.AssetsId) {
             form.AssetsId = form.AssetsId.trim();
           }
           if (!form.AssetsId || !pattern.test(form.AssetsId) || form.AssetsId === '') {
@@ -585,17 +619,17 @@
             InputMessages += '頁籤 ' + (i + 1) + ' :　櫃位必填' + '\n';
           }
           //3. S/N、備註不可超過100/500字
-          if(form.SN) {
+          if (form.SN) {
             form.SN = form.SN.trim();
           }
-          if(form.SN && !/^[\s\S]{1,100}$/.test(form.SN.trim())) {
+          if (form.SN && !/^[\s\S]{1,100}$/.test(form.SN.trim())) {
             InputError = true;
             InputMessages += '頁籤 ' + (i + 1) + ' :　S/N不可輸入超過100字' + '\n';
           }
-          if(form.itemMemo) {
+          if (form.itemMemo) {
             form.itemMemo = form.itemMemo.trim();
           }
-          if(form.itemMemo && !/^[\s\S]{1,500}$/.test(form.itemMemo.trim())) {
+          if (form.itemMemo && !/^[\s\S]{1,500}$/.test(form.itemMemo.trim())) {
             InputError = true;
             InputMessages += '頁籤 ' + (i + 1) + ' :　備註不可輸入超過500字' + '\n';
           }
@@ -605,7 +639,7 @@
           return;
         }
         //檢查資產編號是否有重複
-        if(details.value.Type === 0) {
+        if (details.value.Type === 0) {
           if (await checkAssetsIdRepeat()) {
             return;
           }
@@ -690,7 +724,7 @@
         const axios = require('axios');
         try {
           const response = await axios.post(`http://192.168.0.177:7008${baseUrl}`, formData);
-          if(response.data.state !== 'success') {
+          if (response.data.state !== 'success') {
             console.error(response.data.messages);
           }
           return response.data.state;
@@ -861,6 +895,9 @@
 </script>
 
 <style lang="scss" scoped>
+  textarea {
+    padding: 5px 10px 30px;
+  }
   @import "@/assets/css/global.scss";
   .nav {
     overflow-x: auto;
@@ -881,6 +918,9 @@
       .readonly_box {
         @include readonly_box;
       }
+      .form_search_btn {
+        @include form_search_btn;
+      }
       h1 {
         margin-top: 50px;
         text-align: center;
@@ -900,6 +940,16 @@
         }
         .content {
           @include content_bg;
+          .form_search_wrap {
+            .input-group {
+              .input-group-prepend {
+                width: 118px;
+              }
+              input {
+                margin-left: 18px !important
+              }
+            }
+          }
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -933,7 +983,6 @@
               text-align: end;
               white-space: nowrap;
             }
-
           }
         }
         .button_wrap {
@@ -995,6 +1044,16 @@
           .tab-content {
             background: #3E4E5F;
             padding: 50px 30px;
+            .form_search_wrap {
+              .input-group {
+                .input-group-prepend {
+                  width: 113px;
+                }
+                input {
+                  margin-left: 15px !important
+                }
+              }
+            }
             .modal {
               .modal-header {
                 background: #3D4E61;
@@ -1059,24 +1118,24 @@
                 }
               }
               .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
                   margin-bottom: 0;
-                  display: flex;
-                  img {
-                    width: 25px;
-                    height: 25px;
-                  }
-                  p {
-                    margin-bottom: 0;
+                  font-weight: 700;
+                  color: white;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
                     font-weight: 700;
                     color: white;
-                    &::before {
-                      margin-right: 10px;
-                      content: '·';
-                      font-weight: 700;
-                      color: white;
-                    }
                   }
                 }
+              }
               .input-number {
                 @include count_btn;
               }
@@ -1113,6 +1172,9 @@
       .readonly_box {
         @include readonly_box;
       }
+      .form_search_btn {
+        @include form_search_btn;
+      }
       h1 {
         margin-top: 50px;
         text-align: center;
@@ -1132,6 +1194,16 @@
         }
         .content {
           @include content_bg;
+          .form_search_wrap {
+            .input-group {
+              .input-group-prepend {
+                width: 120px;
+              }
+              input {
+                margin-left: 15px !important
+              }
+            }
+          }
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -1221,6 +1293,16 @@
           .tab-content {
             background: #3E4E5F;
             padding: 50px 30px;
+            .form_search_wrap {
+              .input-group {
+                .input-group-prepend {
+                  width: 113px;
+                }
+                input {
+                  margin-left: 15px !important
+                }
+              }
+            }
             .modal {
               .modal-header {
                 background: #3D4E61;
@@ -1319,6 +1401,20 @@
     .main_section {
       .readonly_box {
         @include readonly_box;
+      }
+      .form_search_btn {
+        border: none;
+        color: white;
+        width: 60px;
+        height: 35px;
+        margin-top: 10px;
+        font-weight: 700;
+        padding: 0 10px;
+        margin-left: unset !important;
+        background-color: #132238;
+        &:hover {
+          background-color: #43546d;
+        }
       }
       h1 {
         margin-top: 50px;

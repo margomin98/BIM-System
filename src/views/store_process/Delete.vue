@@ -38,6 +38,27 @@
             </div>
           </div>
         </div>
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">專案代碼：</div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID" />
+          </div>
+        </div>
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">專案名稱：</div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID" />
+          </div>
+        </div>
+        <div class="col form_search_wrap">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              物流單號 :
+            </div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="VendorName" readonly>
+            <button class="form_search_btn">檢視</button>
+          </div>
+        </div>
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -66,13 +87,13 @@
         </div>
         <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend">型號：</div>
+            <div class="input-group-prepend">規格：</div>
             <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductSpec" />
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend">規格：</div>
+            <div class="input-group-prepend">型號：</div>
             <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductType" />
           </div>
         </div>
@@ -133,13 +154,13 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">交付人員：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Applicant" />
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.DeliveryOperator" />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">交付日期：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ApplicationDate" />
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.DeliveryDate" />
             </div>
           </div>
         </div>
@@ -168,54 +189,66 @@
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button v-for="tab in parseInt(tabNumber)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab" :aria-selected="tab === 0">
-                {{ tab }}
-              </button>
+                  {{ tab }}
+                </button>
           </div>
         </nav>
         <div v-if="formData.length > 0" class="tab-content" id="nav-tabContent">
           <div v-for="(item, index) in formData" :key="index" :class="['tab-pane', 'fade', { 'show active': index === 0 }]" :id="'tab' + (index + 1)" role="tabpanel" aria-labelledby="tab1-tab">
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend"><span>*</span>物品名稱：</div>
+                <div class="input-group-prepend">物品名稱：</div>
                 <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.AssetName" readonly />
               </div>
             </div>
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend"><span>*</span>資產編號：</div>
-                <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.AssetsId" readonly />
+                <div class="input-group-prepend">資產編號：</div>
+                <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.AssetsId" readonly/>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">S/N：</div>
+                <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.SN" readonly/>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">專案代碼：</div>
+                <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.SN" readonly/>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">專案名稱：</div>
+                <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.SN" readonly/>
               </div>
             </div>
             <div class="row">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span>*</span>區域：
+                    儲位區域：
                   </div>
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.itemAreaName" placeholder="BFXXXXXXXX" readonly />
+                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.itemAreaName" readonly/>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span>*</span> 櫃位：
+                    儲位櫃位：
                   </div>
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.itemLayerName" placeholder="BFXXXXXXXX" readonly />
+                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.itemLayerName" readonly/>
                 </div>
               </div>
             </div>
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">S/N：</div>
-                <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.SN" readonly />
-              </div>
-            </div>
-            <div class="col">
+            <div class="col-">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   備註：
                 </div>
-                <input class="form-control readonly_box" aria-label="With textarea" v-model="item.itemMemo" readonly>
+                <textarea class="readonly_box col" rows="5" v-model="item.itemMemo" readonly></textarea>
               </div>
             </div>
             <div class="col">
@@ -223,12 +256,10 @@
               <div class="input-group mb-3">
                 <div class="input-group-prepend">資產照片：</div>
                 <div class='selected_file'>
-                  <p class='title'>已上傳的檔案:</p>
                   <p class='file_upload_wrap' v-for="(file, img_index) in item.existFile" :key="img_index" style="cursor: pointer;">
                     <p @click="showExistFileImage(index, img_index)" data-bs-toggle="modal" data-bs-target="#existFile_modal">
                       {{ file.FileName }}
                     </p>
-                    <img class='delete_icon' src="@/assets/trash.png" @click="deleteExistFile(index, img_index)" style="margin-left: 10px;">
                   </p>
                 </div>
               </div>
@@ -268,7 +299,6 @@
         <button class="back_btn" @click="goBack">回上一頁</button>
         <button class="delete_btn" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>
       </div>
-
       <div class="modal fade delete_modal" id="deleteModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-sm">
           <div class="modal-content">
@@ -317,7 +347,7 @@
           const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
           console.log(response);
           const data = response.data;
-          if(data.resultList.Status !== '申請入庫' && data.resultList.Status !== '申請歸還' && data.resultList.Status !== '可交付') {
+          if (data.resultList.Status !== '申請入庫' && data.resultList.Status !== '申請歸還' && data.resultList.Status !== '可交付') {
             window.history.back();
             // router.push({name: 'Store_Datagrid'});
           }
@@ -393,22 +423,21 @@
         existFileImageUrl.value = details.value.Tabs[existFileData.value].existFile[existFileImage.value].FileLink;
         existFileModalTitle.value = details.value.Tabs[existFileData.value].existFile[existFileImage.value].FileName;
       }
-
       async function deleteData() {
         const form = new FormData();
-        form.append('AI_ID' , AI_ID);
-
+        form.append('AI_ID', AI_ID);
         const axios = require('axios');
-        const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/ApplicationDelete',form);
+        const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/ApplicationDelete', form);
         try {
           const data = response.data;
-          if(data.state === 'success') {
+          if (data.state === 'success') {
             let msg = data.messages + '\n';
-            msg+= '單號:'+data.resultList.AI_ID;
+            msg += '單號:' + data.resultList.AI_ID;
             alert(msg);
-            router.push({name: 'Store_Datagrid'});
-          }
-          else if(data.state === 'error') {
+            router.push({
+              name: 'Store_Datagrid'
+            });
+          } else if (data.state === 'error') {
             alert(data.messages);
           }
         } catch (error) {
@@ -437,6 +466,9 @@
 </script>
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
+  textarea {
+    padding: 5px 10px 30px;
+  }
   .delete_modal {
     .modal-content {
       border: solid 1px black;
@@ -494,6 +526,9 @@
       .readonly_box {
         @include readonly_box;
       }
+      .form_search_btn {
+        @include form_search_btn;
+      }
       h1 {
         margin-top: 50px;
         text-align: center;
@@ -513,7 +548,17 @@
         }
         .content {
           @include content_bg;
-          .dropdown {
+          .form_search_wrap {
+            .input-group {
+              .input-group-prepend {
+                width: 118px;
+              }
+              input {
+                margin-left: 18px !important
+              }
+            }
+          }
+          .dro .dropdown {
             .dropdown-menu {
               width: 100%;
             }
@@ -672,6 +717,9 @@
       .readonly_box {
         @include readonly_box;
       }
+      .form_search_btn {
+        @include form_search_btn;
+      }
       h1 {
         margin-top: 50px;
         text-align: center;
@@ -691,6 +739,16 @@
         }
         .content {
           @include content_bg;
+          .form_search_wrap {
+            .input-group {
+              .input-group-prepend {
+                width: 118px;
+              }
+              input {
+                margin-left: 15px !important
+              }
+            }
+          }
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -849,6 +907,20 @@
       }
       .readonly_box {
         @include readonly_box;
+      }
+      .form_search_btn {
+        border: none;
+        color: white;
+        width: 60px;
+        height: 35px;
+        margin-top: 10px;
+        font-weight: 700;
+        padding: 0 10px;
+        margin-left: unset !important;
+        background-color: #132238;
+        &:hover {
+          background-color: #43546d;
+        }
       }
       h1 {
         margin-top: 50px;

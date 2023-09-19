@@ -20,6 +20,24 @@
         </div>
       </div>
       <div class="content">
+        <div class="col">
+          <div class="input-group mb-4">
+            <div class="input-group-prepend">
+              單號 :
+            </div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID">
+          </div>
+        </div>
+        <div class="row g-0">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                狀態 :
+              </div>
+              <input id='size_wrap' type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly placeholder="備料中" v-model="details.Status">
+            </div>
+          </div>
+        </div>
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4 check_box_wrap">
@@ -27,32 +45,40 @@
                 資產類型 :
               </div>
               <div class="d-flex align-items-center">
-                <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="false" v-model="isConsumableComputed" :disabled="details.Type === 1"/>
+                <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="false" v-model="isConsumableComputed" :disabled="details.Type === 1" />
                 <label class="form-check-label check_box" for='radio1'>資產</label>
-                <input type="radio" class='form-check-input check_box' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="true" v-model="isConsumableComputed" :disabled="details.Type === 1"/>
+                <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="true" v-model="isConsumableComputed" :disabled="details.Type === 1" />
+                <label class="form-check-label check_box" for='radio1' data-toggle="tooltip" data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
+                <input type="radio" class='form-check-input check_box' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="true" v-model="isConsumableComputed" :disabled="details.Type === 1" />
                 <label class="form-check-label check_box" for='radio2'>耗材</label>
               </div>
             </div>
           </div>
         </div>
+        <div class="col form_search_wrap">
+          <div class="input-group mb-4">
+            <div class="input-group-prepend">
+              <span>*</span>專案代碼 :
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="請輸入代碼" v-model="VendorName">
+            <button class="form_search_btn">搜尋</button>
+          </div>
+        </div>
         <div class="col">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              編號 :
+              專案名稱 :
             </div>
-            <input type="text" class="form-control readonly_box" aria-label="Default"
-              aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID">
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入100字" v-model="VendorName" readonly>
           </div>
         </div>
-        <div class="row g-0">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4">
-              <div class="input-group-prepend">
-                入庫單狀態 :
-              </div>
-              <input id='size_wrap' type="text" class="form-control readonly_box" aria-label="Default"
-                aria-describedby="inputGroup-sizing-default" readonly placeholder="備料中" v-model="details.Status">
+        <div class="col form_search_wrap">
+          <div class="input-group mb-4">
+            <div class="input-group-prepend">
+              物流單號 :
             </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="請輸入物流單號，最多20字" v-model="VendorName">
+            <button class="form_search_btn">驗證</button>
           </div>
         </div>
         <div v-if="details.AssetsId" class="col">
@@ -60,8 +86,7 @@
             <div class="input-group-prepend">
               資產編號 :
             </div>
-            <input type="text" class="form-control readonly_box" aria-label="Default"
-              aria-describedby="inputGroup-sizing-default" readonly v-model="details.AssetsId">
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AssetsId">
           </div>
         </div>
         <div class="row row_wrap g-0">
@@ -71,13 +96,11 @@
                 <span>*</span>設備總類 :
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                  {{ details.EquipTypeName || '請選擇' }}
-                </button>
+                <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
+                    {{ details.EquipTypeName || '請選擇' }}
+                  </button>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                  <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item"
-                    @click="selectType(`${item}`)">{{ item }}</p>
+                  <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
                 </div>
               </div>
             </div>
@@ -88,13 +111,11 @@
                 <span>*</span>設備分類 :
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(details.EquipTypeName !== '') }">
-                  {{ details.EquipCategoryName || EquipCategoryInit }}
-                </button>
+                <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(details.EquipTypeName !== '') }">
+                    {{ details.EquipCategoryName || EquipCategoryInit }}
+                  </button>
                 <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
-                  <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item"
-                    @click="selectCategory(`${item}`)">{{ item }}</p>
+                  <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
                 </div>
               </div>
             </div>
@@ -105,8 +126,7 @@
             <div class="input-group-prepend">
               <span>*</span>物品名稱 :
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-              placeholder="最多輸入20字" v-model="details.AssetName">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入20字" v-model="details.AssetName">
           </div>
         </div>
         <div class="col">
@@ -114,8 +134,7 @@
             <div class="input-group-prepend">
               廠商 :
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-              placeholder="最多輸入100字" v-model="details.VendorName">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入100字" v-model="details.VendorName">
           </div>
         </div>
         <div class="col">
@@ -123,8 +142,7 @@
             <div class="input-group-prepend">
               規格 :
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-              placeholder="最多輸入100字" v-model="details.ProductSpec">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入100字" v-model="details.ProductSpec">
           </div>
         </div>
         <div class="col">
@@ -132,8 +150,7 @@
             <div class="input-group-prepend">
               型號 :
             </div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-              placeholder="最多輸入100字" v-model="details.ProductType">
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入100字" v-model="details.ProductType">
           </div>
         </div>
         <div class="row g-0 row_wrap">
@@ -143,7 +160,7 @@
                 <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"> <span>*</span>包裝數量 :
               </div>
               <div class="number-input-box">
-                <input class="input-number" type="number" v-model="details.Count" min="1" :readonly="details.Type === 1" :class="{readonly_box: details.Type === 1}"/>
+                <input class="input-number" type="number" v-model="details.Count" min="1" :readonly="details.Type === 1" :class="{readonly_box: details.Type === 1}" />
               </div>
             </div>
           </div>
@@ -153,17 +170,16 @@
                 <span>*</span>包裝單位 :
               </div>
               <div v-if="details.Type === 0" class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false" :disabled="details.Type === 1" >
-                  {{ details.Unit || '請選擇' }}
-                </button>
+                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="details.Type === 1">
+                    {{ details.Unit || '請選擇' }}
+                  </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in UnitArray" :key="index" class="dropdown-item" @click="selectUnit(`${item}`)">
                     {{ item }}</p>
                 </div>
               </div>
               <div v-if="details.Type === 1" class="number-input-box">
-                <input class="input-number" type="text" v-model="details.Unit" min="1" :readonly="details.Type === 1" :class="{readonly_box: details.Type === 1}"/>
+                <input class="input-number" type="text" v-model="details.Unit" min="1" :readonly="details.Type === 1" :class="{readonly_box: details.Type === 1}" />
               </div>
             </div>
           </div>
@@ -185,13 +201,11 @@
                 <span>*</span>單位 :
               </div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
-                  {{ details.PackageUnit || '請選擇' }}
-                </button>
+                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ details.PackageUnit || '請選擇' }}
+                  </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                  <p v-for="(item, index) in PackageUnitArray" :key="index" class="dropdown-item"
-                    @click="selectPackageUnit(`${item}`)">
+                  <p v-for="(item, index) in PackageUnitArray" :key="index" class="dropdown-item" @click="selectPackageUnit(`${item}`)">
                     {{ item }}</p>
                 </div>
               </div>
@@ -204,8 +218,7 @@
               <div class="input-group-prepend">
                 保固期限 :
               </div>
-              <input id='size_wrap' type="text" class="form-control" aria-label="Default" placeholder="最多輸入10字"
-                aria-describedby="inputGroup-sizing-default" v-model="details.WarrantyDate">
+              <input id='size_wrap' type="text" class="form-control" aria-label="Default" placeholder="最多輸入10字" aria-describedby="inputGroup-sizing-default" v-model="details.WarrantyDate">
             </div>
           </div>
         </div>
@@ -215,8 +228,7 @@
               <div class="input-group-prepend">
                 保固開始日 :
               </div>
-              <input type="date" class="form-control text_input" aria-label="Default"
-                aria-describedby="inputGroup-sizing-default" v-model="details.WarrantyStartDate">
+              <input type="date" class="form-control text_input" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.WarrantyStartDate">
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -224,8 +236,7 @@
               <div class="input-group-prepend">
                 保固到期日 :
               </div>
-              <input type="date" class="form-control text_input" aria-label="Default"
-                aria-describedby="inputGroup-sizing-default" v-model="details.WarrantyEndDate">
+              <input type="date" class="form-control text_input" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.WarrantyEndDate">
             </div>
           </div>
         </div>
@@ -234,8 +245,92 @@
             <div class="input-group-prepend">
               備註 :
             </div>
-            <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入500字"
-              v-model="details.Memo"></textarea>
+            <textarea rows="5" class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="details.Memo"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="tab_section mt-5">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-selected="true">1</button>
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="tab1" role="tabpanel">
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend"><span>*</span>物品名稱：</div>
+                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend"><span>*</span>資產編號：</div>
+                <input type="text" class="form-control" placeholder="BFXXXXXXXX">
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">S/N：</div>
+                <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字">
+              </div>
+            </div>
+            <div class="col form_search_wrap">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span>*</span>專案代碼 :
+                </div>
+                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="請輸入代碼" v-model="VendorName">
+                <button class="form_search_btn">搜尋</button>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">專案名稱：</div>
+                <input type="text" class="form-control readonly_box" readonly>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">備註：</div>
+                <textarea class="col" rows="5" placeholder="最多輸入500字"></textarea>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">資產照片：</div>
+                <div class="mb-3 file_wrap">
+                  <button class="choose_btn">選擇檔案</button>
+                  <input type="file" accept="image/*" style="display: none;">
+                </div>
+                <div class="selected_file">
+                  <p class="title">已選擇的檔案:</p>
+                  <p class="file_upload_wrap" style="cursor: pointer;">
+                    <p>File 1</p>
+                    <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;">
+                  </p>
+                  <p class="file_upload_wrap" style="cursor: pointer;">
+                    <p>File 2</p>
+                    <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;">
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">已上傳檔案：</div>
+                <div class="d-flex  flex-column">
+                  <p class="file_upload_wrap d-flex" style="cursor: pointer;">
+                    <p>Uploaded File 1</p>
+                    <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;">
+                  </p>
+                  <p class="file_upload_wrap d-flex" style="cursor: pointer;">
+                    <p>Uploaded File 2</p>
+                    <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;">
+                  </p>
+                </div>
+              </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -248,148 +343,134 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue';
-import Navbar from '@/components/Navbar.vue';
-import {
-  useRoute,
-  useRouter
-} from 'vue-router';
-export default {
-  components: {
-    Navbar
-  },
-  setup() {
-    const route = useRoute();
-    const router = useRouter();
-    const AI_ID = route.query.search_id;
-    const EquipTypeArray = ref([]);
-    const EquipCategoryArray = ref([]);
-    const EquipCategoryInit = ref('請先選擇設備總類');
-    const UnitArray = (['個', '對', '箱', '包', '組', '台', '件']);
-    const PackageUnitArray = (['個', '支', '枝', '隻', '根', '條', '顆']);
-    const details = ref({});
-    async function submit() {
-      // 檢查所有required項目
-      // 耗材需額外檢查包裝數量、單位
-      if (details.value.IsConsumable) {
-        if (!details.value.PackageNum || !details.value.PackageUnit || details.value.PackageNum == 0) {
+  import {
+    ref,
+    onMounted,
+    computed
+  } from 'vue';
+  import Navbar from '@/components/Navbar.vue';
+  import {
+    useRoute,
+    useRouter
+  } from 'vue-router';
+  export default {
+    components: {
+      Navbar
+    },
+    setup() {
+      const route = useRoute();
+      const router = useRouter();
+      const AI_ID = route.query.search_id;
+      const EquipTypeArray = ref([]);
+      const EquipCategoryArray = ref([]);
+      const EquipCategoryInit = ref('請先選擇設備總類');
+      const UnitArray = (['個', '對', '箱', '包', '組', '台', '件']);
+      const PackageUnitArray = (['個', '支', '枝', '隻', '根', '條', '顆']);
+      const details = ref({});
+      async function submit() {
+        // 檢查所有required項目
+        // 耗材需額外檢查包裝數量、單位
+        if (details.value.IsConsumable) {
+          if (!details.value.PackageNum || !details.value.PackageUnit || details.value.PackageNum == 0) {
+            alert('請填寫所有必填項目');
+            return;
+          }
+        }
+        //歸還入庫 且為耗材 則不用檢查包裝單位
+        if (details.value.Type !== 1 || !details.value.IsConsumable) {
+          if (!details.value.Unit) {
+            alert('請填寫所有必填項目');
+            return;
+          }
+        }
+        if (!details.value.EquipCategoryName || !details.value.EquipTypeName || !details.value.AssetName || !details.value.Count || details.value.Count == 0) {
           alert('請填寫所有必填項目');
           return;
         }
-      }
-      //歸還入庫 且為耗材 則不用檢查包裝單位
-      if(details.value.Type !== 1 || !details.value.IsConsumable) {
-        if(!details.value.Unit) {
-          alert('請填寫所有必填項目');
-          return;
+        if (details.value.WarrantyDate && !/^.{1,10}$/.test(details.value.WarrantyDate)) {
+          alert('保固期限不可輸入超過10字');
+          return
         }
-      }
-      if (!details.value.EquipCategoryName || !details.value.EquipTypeName || !details.value.AssetName || !details.value.Count || details.value.Count == 0) {
-        alert('請填寫所有必填項目');
-        return;
-      }
-      if ( details.value.WarrantyDate &&!/^.{1,10}$/.test(details.value.WarrantyDate)) {
-        alert('保固期限不可輸入超過10字');
-        return
-      }
-      const formData = new FormData();
-      const formFields = {
-        'AI_ID': details.value.AI_ID,
-        'Status': details.value.Status,
-        'IsConsumable': details.value.IsConsumable,
-        'EquipTypeName': details.value.EquipTypeName,
-        'EquipCategoryName': details.value.EquipCategoryName,
-        'AssetName': details.value.AssetName,
-        'VendorName': details.value.VendorName,
-        'ProductSpec': details.value.ProductSpec,
-        'ProductType': details.value.ProductType,
-        'Count': details.value.Count,
-        'Unit': details.value.Unit,
-        'WarrantyDate': details.value.WarrantyDate,
-        'WarrantyStartDate': details.value.WarrantyStartDate,
-        'WarrantyEndDate': details.value.WarrantyEndDate,
-        'Memo': details.value.Memo,
-      };
-      //將表格資料append到 formData
-      for (const fieldName in formFields) {
-        formData.append(fieldName, formFields[fieldName]);
-        console.log(formData.get(`${fieldName}`));
-      }
-      //耗材額外將包裝數量、單位append到 formData
-      if (details.value.IsConsumable) {
-        formData.append('PackageNum', details.value.PackageNum);
-        formData.append('PackageUnit', details.value.PackageUnit);
-      }
-      //使用axios method:post傳送新品入庫表單
-      const axios = require('axios');
-      try {
-        const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/ApplicationEdit ', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-        console.log(response);
-        const data = response.data;
-        if (data.state === 'success') {
-          //新品表單編輯成功，跳轉至入庫管理頁面
-          let msg = data.messages;
-          msg+= '\n單號:'+data.resultList.AI_ID;
-          alert(msg);
-          router.push({ name: 'Store_Datagrid' });
-        } else if (data.state === 'error') {
-          //新品表單編輯失敗
-          alert(data.messages);
-        } else if (data.state === 'input_error') {
-          //新品表單格式錯誤
-          alert(data.messages);
-        } else {
-          throw new Error('Request was not successful');
+        const formData = new FormData();
+        const formFields = {
+          'AI_ID': details.value.AI_ID,
+          'Status': details.value.Status,
+          'IsConsumable': details.value.IsConsumable,
+          'EquipTypeName': details.value.EquipTypeName,
+          'EquipCategoryName': details.value.EquipCategoryName,
+          'AssetName': details.value.AssetName,
+          'VendorName': details.value.VendorName,
+          'ProductSpec': details.value.ProductSpec,
+          'ProductType': details.value.ProductType,
+          'Count': details.value.Count,
+          'Unit': details.value.Unit,
+          'WarrantyDate': details.value.WarrantyDate,
+          'WarrantyStartDate': details.value.WarrantyStartDate,
+          'WarrantyEndDate': details.value.WarrantyEndDate,
+          'Memo': details.value.Memo,
+        };
+        //將表格資料append到 formData
+        for (const fieldName in formFields) {
+          formData.append(fieldName, formFields[fieldName]);
+          console.log(formData.get(`${fieldName}`));
         }
-      } catch (error) {
-        console.error('Error sending data to backend', error);
-      }
-    }
-    async function getDetails() {
-      const axios = require('axios');
-      try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetApplicationInfo?ai_id=${AI_ID}`);
-        console.log(response);
-        const data = response.data;
-        if (data.state === 'success') {
-          // 檢查資料狀態是否可編輯
-          if(data.resultList.Status !== '申請入庫' && data.resultList.Status !== '申請歸還' && data.resultList.Status !== '可交付') {
-            window.history.back();
-            // router.push({name: 'Store_Datagrid'});
-          }
-          console.log('Details Get成功 資料如下\n', data.resultList);
-          details.value = data.resultList;
-          for (let key in details.value) {
-            if (details.value[key] === null) {
-              details.value[key] = '';
-            }
-          }
-          console.log('處理過後', details.value);
-          getEquipCategoryName();
-        } else if (data.state === 'error') {
-          alert(data.messages);
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
+        //耗材額外將包裝數量、單位append到 formData
+        if (details.value.IsConsumable) {
+          formData.append('PackageNum', details.value.PackageNum);
+          formData.append('PackageUnit', details.value.PackageUnit);
         }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    async function getEquipTypeName() {
-      if (EquipTypeArray.value.length == 0) {
+        //使用axios method:post傳送新品入庫表單
         const axios = require('axios');
         try {
-          const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetEquipType');
+          const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/ApplicationEdit ', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
-            console.log('總類Get成功 資料如下\n', data.resultList.EquipType);
-            EquipTypeArray.value = data.resultList.EquipType;
+            //新品表單編輯成功，跳轉至入庫管理頁面
+            let msg = data.messages;
+            msg += '\n單號:' + data.resultList.AI_ID;
+            alert(msg);
+            router.push({
+              name: 'Store_Datagrid'
+            });
+          } else if (data.state === 'error') {
+            //新品表單編輯失敗
+            alert(data.messages);
+          } else if (data.state === 'input_error') {
+            //新品表單格式錯誤
+            alert(data.messages);
+          } else {
+            throw new Error('Request was not successful');
+          }
+        } catch (error) {
+          console.error('Error sending data to backend', error);
+        }
+      }
+      async function getDetails() {
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetApplicationInfo?ai_id=${AI_ID}`);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            // 檢查資料狀態是否可編輯
+            if (data.resultList.Status !== '申請入庫' && data.resultList.Status !== '申請歸還' && data.resultList.Status !== '可交付') {
+              window.history.back();
+              // router.push({name: 'Store_Datagrid'});
+            }
+            console.log('Details Get成功 資料如下\n', data.resultList);
+            details.value = data.resultList;
+            for (let key in details.value) {
+              if (details.value[key] === null) {
+                details.value[key] = '';
+              }
+            }
+            console.log('處理過後', details.value);
+            getEquipCategoryName();
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -397,354 +478,580 @@ export default {
             router.push('/');
           }
         } catch (error) {
-          console.error('Error sending applicant info request to backend');
+          console.error(error);
         }
       }
-    }
-    async function getEquipCategoryName() {
-      const axios = require('axios');
-      try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${details.value.EquipTypeName}`);
-        console.log(response);
-        const data = response.data;
-        if (data.state === 'success') {
-          console.log('分類Get成功 資料如下\n', data.resultList.EquipCategory);
-          EquipCategoryArray.value = data.resultList.EquipCategory;
-        } else if (data.state === 'error') {
-          alert(data.messages);
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
+      async function getEquipTypeName() {
+        if (EquipTypeArray.value.length == 0) {
+          const axios = require('axios');
+          try {
+            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetEquipType');
+            console.log(response);
+            const data = response.data;
+            if (data.state === 'success') {
+              console.log('總類Get成功 資料如下\n', data.resultList.EquipType);
+              EquipTypeArray.value = data.resultList.EquipType;
+            } else if (data.state === 'error') {
+              alert(data.messages);
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            }
+          } catch (error) {
+            console.error('Error sending applicant info request to backend');
+          }
         }
-      } catch (error) {
-        console.error('Error sending EquipTypeName request to backend');
       }
+      async function getEquipCategoryName() {
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${details.value.EquipTypeName}`);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('分類Get成功 資料如下\n', data.resultList.EquipCategory);
+            EquipCategoryArray.value = data.resultList.EquipCategory;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error('Error sending EquipTypeName request to backend');
+        }
+      }
+      onMounted(() => {
+        //依ID帶入系統資料
+        getDetails();
+      });
+      const selectType = (item) => {
+        //選擇總類完後 嘗試取得分類
+        details.value.EquipTypeName = item;
+        details.value.EquipCategoryName = '';
+        getEquipCategoryName();
+        EquipCategoryInit.value = '請選擇';
+      };
+      const selectUnit = (item) => {
+        details.value.Unit = item;
+      };
+      const selectPackageUnit = (item) => {
+        details.value.PackageUnit = item;
+      };
+      const selectCategory = (item) => {
+        details.value.EquipCategoryName = item;
+      };
+      const isConsumableComputed = computed({
+        get() {
+          return details.value.IsConsumable;
+        },
+        set(value) {
+          details.value.IsConsumable = value === 'true';
+        }
+      });
+      const goBack = () => {
+        window.history.back();
+      };
+      return {
+        EquipTypeArray,
+        getEquipTypeName,
+        EquipCategoryArray,
+        EquipCategoryInit,
+        getEquipCategoryName,
+        UnitArray,
+        PackageUnitArray,
+        details,
+        selectType,
+        selectUnit,
+        selectPackageUnit,
+        selectCategory,
+        isConsumableComputed,
+        submit,
+        goBack,
+      };
     }
-    onMounted(() => {
-      //依ID帶入系統資料
-      getDetails();
-    });
-    const selectType = (item) => {
-      //選擇總類完後 嘗試取得分類
-      details.value.EquipTypeName = item;
-      details.value.EquipCategoryName = '';
-      getEquipCategoryName();
-      EquipCategoryInit.value = '請選擇';
-    };
-    const selectUnit = (item) => {
-      details.value.Unit = item;
-    };
-    const selectPackageUnit = (item) => {
-      details.value.PackageUnit = item;
-    };
-    const selectCategory = (item) => {
-      details.value.EquipCategoryName = item;
-    };
-    const isConsumableComputed = computed({
-      get() {
-        return details.value.IsConsumable;
-      },
-      set(value) {
-        details.value.IsConsumable = value === 'true';
-      }
-    });
-    const goBack = () => {
-      window.history.back();
-    };
-    return {
-      EquipTypeArray,
-      getEquipTypeName,
-      EquipCategoryArray,
-      EquipCategoryInit,
-      getEquipCategoryName,
-      UnitArray,
-      PackageUnitArray,
-      details,
-      selectType,
-      selectUnit,
-      selectPackageUnit,
-      selectCategory,
-      isConsumableComputed,
-      submit,
-      goBack,
-    };
-  }
-};
+  };
 </script>
 
 
 <style lang="scss" scoped>
-@import '@/assets/css/global.scss';
-
-@media only screen and (min-width: 1200px) {
-  .main_section {
-    .readonly_box {
-      @include readonly_box;
-    }
-
-    h1 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 55px;
-      font-weight: 600;
-      @include title_color;
-    }
-
-    .info_wrap {
-      margin: auto;
-      width: 750px;
-
-      .input-group-prepend {
-        color: white;
-        font-weight: 700;
-        font-size: 20px;
-        width: calc(100px + 6%);
-        text-align: end;
-        white-space: nowrap;
-
-        span {
-          @include red_star
-        }
+  @import '@/assets/css/global.scss';
+  textarea {
+    padding: 5px 10px 30px;
+  }
+  @media only screen and (min-width: 1200px) {
+    .main_section {
+      .readonly_box {
+        @include readonly_box;
       }
-
-      .input-number {
-        @include count_btn;
-        width: 220px;
+      .form_search_btn {
+        @include form_search_btn;
       }
-
-      .fixed_info {
-        @include fixed_info;
-
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
       }
-
-      .content {
-        @include content_bg;
-
+      .info_wrap {
+        margin: auto;
+        width: 750px;
         .input-group-prepend {
-          width: 125px;
-        }
-
-        .check_box_wrap {
-          font-weight: 700;
-          align-items: center;
           color: white;
+          font-weight: 700;
           font-size: 20px;
-
-          .check_box {
-            margin-right: 5px;
+          width: calc(100px + 6%);
+          text-align: end;
+          white-space: nowrap;
+          span {
+            @include red_star
           }
         }
-
-        .row_wrap {
-          .input-group {
-            flex-wrap: nowrap
-          }
-
-          .flex {
-            width: 125px
+        .input-number {
+          @include count_btn;
+          width: 220px;
+        }
+        .fixed_info {
+          @include fixed_info;
+          p {
+            font-size: 20px;
+            margin-bottom: 0;
           }
         }
-
-        .dropdown {
-          width: 218px;
-
-          .dropdown-menu {
-            width: 100%;
-            max-height: 250px;
-            overflow-y: auto;
-            p {
+        .content {
+          @include content_bg;
+          .input-group-prepend {
+            width: 125px;
+          }
+          .check_box_wrap {
+            font-weight: 700;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            div:nth-child(2) {
+              gap: 0 5px;
+              display: flex;
+            }
+          }
+          .row_wrap {
+            .input-group {
+              flex-wrap: nowrap
+            }
+            .flex {
+              width: 125px
+            }
+          }
+          .dropdown {
+            width: 218px;
+            .dropdown-menu {
+              width: 100%;
+              max-height: 250px;
+              overflow-y: auto;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            .dropdown-toggle {
+              width: 100%;
+              @include dropdown-btn;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+        }
+        .button_wrap {
+          display: flex;
+          justify-content: space-between;
+          margin: 30px auto 5%;
+          width: 220px;
+          button {
+            &:nth-child(1) {
+              @include back_to_previous_btn;
               &:hover {
-                cursor: pointer;
+                background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              @include search_and_send_btn;
+              &:hover {
+                background-color: #5D85BD;
               }
             }
           }
-
-          .dropdown-toggle {
-            width: 100%;
-            @include dropdown-btn;
-            color: black;
-            justify-content: space-between;
-            align-items: center;
-          }
         }
       }
-
-      .button_wrap {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px auto 5%;
-        width: 220px;
-
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-
-            &:hover {
-              background-color: #5d85bb;
+      .tab_section {
+        .nav-tabs {
+          button {
+            @include tab_section_num;
+            background: #5C7897;
+          }
+          .active {
+            @include tab_section_num;
+            background: #3E4E5F;
+          }
+        }
+        .tab-content {
+          background: #3E4E5F;
+          padding: 50px 30px;
+          .modal {
+            .modal-header {
+              background: #3D4E61;
+              color: white;
+              .close_icon {
+                color: white;
+                font-weight: 700;
+                margin-bottom: 0;
+              }
             }
           }
-
-          &:nth-child(2) {
-            @include search_and_send_btn;
-
-            &:hover {
-              background-color: #5D85BD;
+          .dropdown {
+            width: 60%;
+            .dropdown-menu {
+              width: 100%;
+              max-height: 250px;
+              overflow-y: auto;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            button {
+              @include dropdown-btn;
+              width: 100%;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group {
+            flex-wrap: nowrap;
+            span {
+              @include red_star
+            }
+            .selected_file {
+              margin-left: 20px;
+              p.title {
+                font-weight: 700;
+                color: white;
+                margin-bottom: 5px;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  margin-bottom: 0;
+                  font-weight: 700;
+                  color: white;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
+            }
+            .input-number {
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              border-radius: 0;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 120px;
+              text-align: end;
+            }
+            .file_wrap {
+              display: flex;
+              flex-direction: column;
+              .choose_btn {
+                margin-bottom: 10px;
+                @include choose_file_btn;
+                &:hover {
+                  background: #3f608f;
+                }
+              }
+            }
+          }
+          .form_search_wrap {
+            .input-group {
+              .input-group-prepend {
+                width: 114px;
+              }
+              input {
+                margin-left: 15px !important
+              }
             }
           }
         }
       }
     }
   }
-}
-
-@media only screen and (min-width: 768px) and (max-width: 1199px) {
-  .main_section {
-    .readonly_box {
-      @include readonly_box;
-    }
-
-    h1 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 55px;
-      font-weight: 600;
-      @include title_color;
-    }
-
-    .info_wrap {
-      margin: auto;
-      width: 750px;
-
-      .input-group-prepend {
-        color: white;
-        font-weight: 700;
-        font-size: 20px;
-        width: calc(100px + 6%);
-        text-align: end;
-        white-space: nowrap;
-
-        span {
-          @include red_star
-        }
+  @media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .main_section {
+      .readonly_box {
+        @include readonly_box;
       }
-
-      .input-number {
-        @include count_btn;
-        width: 220px;
+      .form_search_btn {
+        @include form_search_btn;
       }
-
-      .fixed_info {
-        @include fixed_info;
-
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
       }
-
-      .content {
-        @include content_bg;
-
+      .info_wrap {
+        margin: auto;
+        width: 750px;
         .input-group-prepend {
-          width: 125px;
-        }
-
-        .check_box_wrap {
-          font-weight: 700;
-          align-items: center;
           color: white;
+          font-weight: 700;
           font-size: 20px;
-
-          .check_box {
-            margin-right: 5px;
+          width: calc(100px + 6%);
+          text-align: end;
+          white-space: nowrap;
+          span {
+            @include red_star
           }
         }
-
-        .row_wrap {
-          .input-group {
-            flex-wrap: nowrap
-          }
-
-          .flex {
-            width: 125px
+        .input-number {
+          @include count_btn;
+          width: 220px;
+        }
+        .fixed_info {
+          @include fixed_info;
+          p {
+            font-size: 20px;
+            margin-bottom: 0;
           }
         }
-
-        .dropdown {
-          width: 218px;
-
-          .dropdown-menu {
-            width: 100%;
-            max-height: 250px;
-            overflow-y: auto;
-            p {
+        .content {
+          @include content_bg;
+          .input-group-prepend {
+            width: 125px;
+          }
+          .check_box_wrap {
+            font-weight: 700;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            div:nth-child(2) {
+              gap: 0 5px;
+              display: flex;
+            }
+          }
+          .row_wrap {
+            .input-group {
+              flex-wrap: nowrap
+            }
+            .flex {
+              width: 125px
+            }
+          }
+          .dropdown {
+            width: 218px;
+            .dropdown-menu {
+              width: 100%;
+              max-height: 250px;
+              overflow-y: auto;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            .dropdown-toggle {
+              width: 100%;
+              @include dropdown-btn;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+        }
+        .button_wrap {
+          display: flex;
+          justify-content: space-between;
+          margin: 30px auto 5%;
+          width: 220px;
+          button {
+            &:nth-child(1) {
+              @include back_to_previous_btn;
               &:hover {
-                cursor: pointer;
+                background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              @include search_and_send_btn;
+              &:hover {
+                background-color: #5D85BD;
               }
             }
           }
-
-          .dropdown-toggle {
-            width: 100%;
-            @include dropdown-btn;
-            color: black;
-            justify-content: space-between;
-            align-items: center;
-          }
         }
       }
-
-      .button_wrap {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px auto 5%;
-        width: 220px;
-
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-
-            &:hover {
-              background-color: #5d85bb;
+      .tab_section {
+        .nav-tabs {
+          button {
+            @include tab_section_num;
+            background: #5C7897;
+          }
+          .active {
+            @include tab_section_num;
+            background: #3E4E5F;
+          }
+        }
+        .tab-content {
+          background: #3E4E5F;
+          padding: 50px 30px;
+          .modal {
+            .modal-header {
+              background: #3D4E61;
+              color: white;
+              .close_icon {
+                color: white;
+                font-weight: 700;
+                margin-bottom: 0;
+              }
             }
           }
-
-          &:nth-child(2) {
-            @include search_and_send_btn;
-
-            &:hover {
-              background-color: #5D85BD;
+          .dropdown {
+            width: 60%;
+            .dropdown-menu {
+              width: 100%;
+              max-height: 250px;
+              overflow-y: auto;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            button {
+              @include dropdown-btn;
+              width: 100%;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group {
+            flex-wrap: nowrap;
+            span {
+              @include red_star
+            }
+            .selected_file {
+              margin-left: 20px;
+              p.title {
+                font-weight: 700;
+                color: white;
+                margin-bottom: 5px;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  margin-bottom: 0;
+                  font-weight: 700;
+                  color: white;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
+            }
+            .input-number {
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              border-radius: 0;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 120px;
+              text-align: end;
+            }
+            .file_wrap {
+              display: flex;
+              flex-direction: column;
+              .choose_btn {
+                margin-bottom: 10px;
+                @include choose_file_btn;
+                &:hover {
+                  background: #3f608f;
+                }
+              }
+            }
+          }
+          .form_search_wrap {
+            .input-group {
+              .input-group-prepend {
+                width: 114px;
+              }
+              input {
+                margin-left: 15px !important
+              }
             }
           }
         }
       }
     }
   }
-}
-
-@media only screen and (max-width: 767px) {
-  .main_section {
-    .readonly_box {
-      @include readonly_box;
-    }
-
-    h1 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 40px;
-      font-weight: 600;
-      @include title_color;
-    }
-
-    .info_wrap {
-      margin: auto;
-      padding: 0 5%;
-
-      .fixed_info {
+  @media only screen and (max-width: 767px) {
+    .main_section {
+      .readonly_box {
+        @include readonly_box;
+      }
+      .form_search_btn {
+        border: none;
+        color: white;
+        width: 60px;
+        height: 35px;
+        margin-top: 10px;
+        font-weight: 700;
+        padding: 0 10px;
+        background-color: #132238;
+        &:hover {
+          background-color: #43546d;
+        }
+      }
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 40px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        margin: auto;
+        padding: 0 5%;
+        .fixed_info {
           @include fixed_info;
           flex-direction: column;
           padding: 10px;
@@ -754,105 +1061,202 @@ export default {
             margin-bottom: 0;
           }
         }
-      .content {
-        @include content_bg;
-
-        .dropdown {
-          .dropdown-menu {
-            width: 100%;
-            max-height: 250px;
-            overflow-y: auto;
-            p {
-              &:hover {
-                cursor: pointer;
+        .content {
+          @include content_bg;
+          
+     
+          .dropdown {
+            .dropdown-menu {
+              width: 100%;
+              max-height: 250px;
+              overflow-y: auto;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            button {
+              @include dropdown-btn;
+              width: 100%;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+            margin-left: unset;
+            border-radius: 5px;
+          }
+          .input-group {
+            flex-direction: column;
+            .input-number {
+              width: 100%;
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              width: 100%;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              margin-right: 10px;
+              white-space: nowrap;
+              span {
+                @include red_star
               }
             }
           }
-
-          button {
-            @include dropdown-btn;
-            width: 100%;
-            color: black;
-            justify-content: space-between;
-            align-items: center;
-          }
-        }
-
-        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-          margin-left: unset;
-          border-radius: 5px;
-        }
-
-        .input-group {
-          flex-direction: column;
-
-          .input-number {
-            width: 100%;
-            @include count_btn;
-          }
-
-          .form-control {
-            height: 35px;
-            width: 100%;
-          }
-
-          .input-group-prepend {
-            color: white;
+          .check_box_wrap {
+            flex-direction: row;
             font-weight: 700;
+            align-items: center;
+            color: white;
             font-size: 20px;
-            margin-right: 10px;
-            white-space: nowrap;
-
+            .check_box {
+              margin-right: 10px;
+            }
+          }
+          .info {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+          }
+        }
+        .button_wrap {
+          display: flex;
+          justify-content: space-between;
+          margin: 30px auto 5%;
+          width: 220px;
+          button {
+            &:nth-child(1) {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              @include search_and_send_btn;
+              &:hover {
+                background-color: #5D85BD;
+              }
+            }
+          }
+        }
+      }
+      .tab_section {
+        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+          margin-left: unset !important;
+        }
+        .nav-tabs {
+          button {
+            @include tab_section_num;
+            background: #5C7897;
+          }
+          .active {
+            @include tab_section_num;
+            background: #3E4E5F;
+          }
+        }
+        .tab-content {
+          background: #3E4E5F;
+          padding: 50px 30px;
+          .modal {
+            .modal-header {
+              background: #3D4E61;
+              color: white;
+              .close_icon {
+                color: white;
+                font-weight: 700;
+                margin-bottom: 0;
+              }
+            }
+          }
+          .dropdown {
+            margin-left: unset !important;
+            margin-top: 5px;
+            .dropdown-menu {
+              width: 100%;
+              max-height: 250px;
+              overflow-y: auto;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            button {
+              @include dropdown-btn;
+              width: 100%;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group {
+            flex-direction: column;
             span {
               @include red_star
             }
-          }
-        }
-
-        .check_box_wrap {
-          gap: 5px;
-          flex-direction: row;
-          font-weight: 700;
-          align-items: center;
-          color: white;
-          font-size: 20px;
-
-          .check {
-            margin-right: 5px;
-          }
-        }
-        .info {
-          display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
-        }
-      }
-
-      .button_wrap {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px auto 5%;
-        width: 220px;
-
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-
-            &:hover {
-              background-color: #5d85bb;
+            .selected_file {
+              p.title {
+                font-weight: 700;
+                color: white;
+                margin-bottom: 5px;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  margin-bottom: 0;
+                  font-weight: 700;
+                  color: white;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
             }
-          }
-
-          &:nth-child(2) {
-            @include search_and_send_btn;
-
-            &:hover {
-              background-color: #5D85BD;
+            .input-number {
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              width: 100%;
+              border-radius: 0;
+              margin-left: unset !important;
+              margin-top: 5px;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 100%;
+            }
+            .file_wrap {
+              display: flex;
+              flex-direction: column;
+              .choose_btn {
+                margin-top: 5px;
+                margin-bottom: 10px;
+                @include choose_file_btn;
+                &:hover {
+                  background: #3f608f;
+                }
+              }
             }
           }
         }
       }
     }
   }
-}
 </style>

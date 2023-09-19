@@ -63,8 +63,8 @@
             <p><span>*</span>設備總類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                              {{ myForm.EquipTypeName || '請選擇' }}
-                            </button>
+                                {{ myForm.EquipTypeName || '請選擇' }}
+                              </button>
               <div class="dropdown-menu" aria-labelledby="typeDropdown">
                 <p v-for="(item, index) in myForm.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
               </div>
@@ -74,8 +74,8 @@
             <p><span>*</span>設備分類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(myForm.EquipTypeName !== '') }">
-                              {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
-                            </button>
+                                {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
+                              </button>
               <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                 <p v-for="(item, index) in myForm.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
               </div>
@@ -147,7 +147,7 @@
       const router = useRouter();
       const AO_ID = route.query.search_id;
       const gridApi = ref(null);
-      const options = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨'];
+      const options = ['內部領用', '借測', '出貨', '退貨'];
       const columnDefs = [{
           suppressMovable: true,
           field: "",
@@ -298,14 +298,14 @@
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
-            if(data.resultList.Status !== '已填報') {
-            window.history.back();
-            // router.push({name: 'Rent_Datagrid'});
+            if (data.resultList.Status !== '已填報') {
+              window.history.back();
+              // router.push({name: 'Rent_Datagrid'});
             }
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             rowData.value = data.resultList.ItemList;
-            increaseId.value = data.resultList.ItemList.length+1;
+            increaseId.value = data.resultList.ItemList.length + 1;
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -418,7 +418,6 @@
         // console.log(deleteIndex);
         rowData.value.splice(deleteIndex, 1);
       }
-
       function updateItemList(newValue) {
         const deleteIndex = rowData.value.findIndex(item => item.id === newValue.id);
         // console.log(deleteIndex);

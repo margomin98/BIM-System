@@ -29,11 +29,48 @@
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
+              <div class="input-group-prepend flex">資產類型：</div>
+              <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ details.Custodian || '請選擇' }}
+                      </button>
+                <div class="dropdown-menu">
+                  <p v-for="(item , index) in CustodianArray" :key="index" class="dropdown-item" @click="selectAccount(item)">{{ item }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">專案代碼：</div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.AI_ID" />
+            <button class="form_search_btn">搜索</button>
+          </div>
+        </div>
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">專案名稱：</div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID" />
+          </div>
+        </div>
+        <div class="col form_search_wrap">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              物流單號 :
+            </div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="VendorName" readonly>
+            <button class="form_search_btn">檢視</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
               <div class="input-group-prepend"><span>*</span>設備總類：</div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                      {{ details.EquipTypeName || '請選擇' }}
-                    </button>
+                        {{ details.EquipTypeName || '請選擇' }}
+                      </button>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
                   <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
                 </div>
@@ -45,8 +82,8 @@
               <div class="input-group-prepend"><span>*</span>設備分類：</div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(details.EquipTypeName !== '') }">
-                      {{ details.EquipCategoryName || EquipCategoryInit }}
-                    </button>
+                        {{ details.EquipCategoryName || EquipCategoryInit }}
+                      </button>
                 <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                   <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
                 </div>
@@ -106,8 +143,8 @@
               <div class="input-group-prepend">儲位區域：</div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName(index)">
-                    {{ details.AreaName || '請選擇' }}
-                  </button>
+                      {{ details.AreaName || '請選擇' }}
+                    </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in AreaArray" :key="index" class="dropdown-item" @click="selectArea(`${item}`)">{{ item }}</p>
                 </div>
@@ -119,8 +156,8 @@
               <div class="input-group-prepend">儲位櫃位：</div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="details.AreaName === null || details.AreaName === ''">
-                    {{ details.LayerName || LayerInit }}
-                  </button>
+                      {{ details.LayerName || LayerInit }}
+                    </button>
                 <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                   <p v-for="(item, index) in LayerArray" :key="index" class="dropdown-item" @click="selectLayer(`${item}`)">{{ item }}</p>
                 </div>
@@ -159,8 +196,8 @@
               <!-- <account-search @custodian = "setCustodian" :getCustodian="details.Custodian"></account-search> -->
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ details.Custodian || '請選擇' }}
-                    </button>
+                        {{ details.Custodian || '請選擇' }}
+                      </button>
                 <div class="dropdown-menu">
                   <p v-for="(item , index) in CustodianArray" :key="index" class="dropdown-item" @click="selectAccount(item)">{{ item }}</p>
                 </div>
@@ -197,7 +234,7 @@
         </div>
       </div>
       <div class="content">
-        <h2 v-show="selectFiles.viewFile.length === 0">查無照片</h2>
+        <h2 class="no_content_text" v-show="selectFiles.viewFile.length === 0">查無照片</h2>
         <div v-show="selectFiles.viewFile.length !== 0">
           <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
             <swiper-slide v-for="(item , index) in selectFiles.viewFile" :key="index" class="custom-slide">
@@ -244,8 +281,8 @@
               <p>作業行為</p>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{ historyParams.Action || "請選擇" }}
-                </button>
+                    {{ historyParams.Action || "請選擇" }}
+                  </button>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
                   <p v-for="(item , index) in ActionArray" :key="index" class="dropdown-item" @click="selectAction(item)">{{ item}}</p>
                 </div>
@@ -822,6 +859,11 @@
   span {
     @include red_star
   }
+  .no_content_text{
+    padding: 5px 0;
+    text-align: center;
+    font-weight: 700;
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .swiper_section {
@@ -852,6 +894,9 @@
       .readonly_box {
         @include readonly_box;
       }
+      .form_search_btn {
+        @include form_search_btn;
+      }
       h1 {
         margin-top: 50px;
         text-align: center;
@@ -861,7 +906,7 @@
       }
       .info_wrap {
         margin: auto;
-        width: 800px;
+        width: 850px;
         .fixed_info {
           @include fixed_info;
           border-radius: 0 10px 0 0;
@@ -875,6 +920,16 @@
         }
         .content {
           @include content_bg;
+          .form_search_wrap {
+            .input-group {
+              .input-group-prepend {
+                width: 114px;
+              }
+              input {
+                margin-left: 15px !important
+              }
+            }
+          }
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -910,6 +965,7 @@
               font-weight: 700;
               font-size: 20px;
               width: 120px;
+              white-space: nowrap;
               text-align: end;
             }
           }
@@ -961,7 +1017,7 @@
           }
         }
         .dropdown {
-          width: calc(100% - 35%);
+          width: calc(100% - 34%);
           height: 35px;
           @include dropdown_btn;
           .dropdown-toggle {
@@ -1050,6 +1106,9 @@
       }
       .readonly_box {
         @include readonly_box;
+      }
+      .form_search_btn {
+        @include form_search_btn;
       }
       h1 {
         margin-top: 50px;
@@ -1239,6 +1298,20 @@
       }
       .readonly_box {
         @include readonly_box;
+      }
+      .form_search_btn {
+        border: none;
+        color: white;
+        width: 60px;
+        height: 35px;
+        margin-top: 10px;
+        margin-left: unset !important;
+        font-weight: 700;
+        padding: 0 10px;
+        background-color: #132238;
+        &:hover {
+          background-color: #43546d;
+        }
       }
       h1 {
         margin-top: 50px;

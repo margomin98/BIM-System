@@ -28,6 +28,14 @@
             <input ref="inputElement" type="text" class="form-control" placeholder="請輸入資產編號" @keyup="getAssetsUnit" v-model="formParams.AssetsId">
           </div>
         </div>
+        <div class="col-12">
+          <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group-prepend">
+              資產狀態：
+            </div>
+            <input ref="inputElement" type="text" class="form-control readonly_box"  @keyup="getAssetsUnit" v-model="formParams.AssetsId" readonly>
+          </div>
+        </div>
         <div  v-show="wrongStatus" class="input-group">
           <div style="visibility: hidden;" class="input-group-prepend">
             <p >1</p>
@@ -35,7 +43,7 @@
           <span style="color:rgb(216, 13, 13); font-weight: 700; font-size: 20px;">{{ alertMsg }}</span>
           <input type="text" style="visibility: hidden;" class="form-control">
         </div>
-        <div class="row g-0">
+        <div class="row">
           <div class="col-xl-6 col-lg-12 col-md-12 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
@@ -50,6 +58,24 @@
                 單位：
               </div>
               <input type="text" class=" readonly_box" readonly v-model="formParams.Unit">
+            </div>
+          </div>
+        </div>
+        <div class="row ">
+          <div class="col-xl-6 col-lg-12 col-md-12 col-12">
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                申請人員：
+              </div>
+              <input class="readonly_box" type="number" v-model="formParams.Count" min="1" :readonly="!canEdit" :class="{readonly_box: !canEdit}" />
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-12 col-md-12 col-12">
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                申請入庫日期：
+              </div>
+              <input type="text" class="readonly_box" readonly v-model="formParams.Unit">
             </div>
           </div>
         </div>
@@ -262,7 +288,7 @@ import router from '@/router';
         font-weight: 500;
       }
       h1 {
-        margin-top: 180px;
+        margin-top: 100px;
         text-align: center;
         font-size: 55px;
         font-weight: 600;
@@ -270,7 +296,7 @@ import router from '@/router';
       }
       .info_wrap {
         margin: 30px auto 5%;
-        width: 700px;
+        width: 750px;
         .fixed_info {
           @include fixed_info;
           p {
@@ -299,7 +325,7 @@ import router from '@/router';
               font-weight: 700;
               font-size: 20px;
               text-align: end;
-              width: 140px;
+              width: 155px;
               span {
                 @include red_star
               }
@@ -341,7 +367,7 @@ import router from '@/router';
         @include readonly_box;
       }
       h1 {
-        margin-top: 180px;
+        margin-top: 100px;
         text-align: center;
         font-size: 55px;
         font-weight: 600;
@@ -422,6 +448,7 @@ import router from '@/router';
       .readonly_box {
         @include readonly_box;
         height: 35px;
+        text-align: center;
         margin-left: unset !important;
       }
       h1 {
