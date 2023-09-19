@@ -218,7 +218,7 @@
       }
       async function deleteData() {
         const form = new FormData();
-        form.append('PlanId', AR_ID);
+        form.append('AR_ID', AR_ID);
         const axios = require('axios');
         const response = await axios.post(`http://192.168.0.177:7008/ReceivingMng/DeleteReceipt`, form);
         try {

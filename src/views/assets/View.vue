@@ -202,8 +202,8 @@
               <p>作業行為</p>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ historyParams.Action || "請選擇" }}
-                              </button>
+                  {{ historyParams.Action || "請選擇" }}
+                </button>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
                   <p v-for="(item , index) in ActionArray" :key="index" class="dropdown-item" @click="selectAction(item)">{{ item}}</p>
                 </div>
@@ -233,6 +233,7 @@
     AgGridVue
   } from "ag-grid-vue3";
   import Storage_list_view_button from "@/components/Storage_list_view_button";
+  import { HistoryAction } from "@/assets/js/dropdown";
   import {
     register
   } from 'swiper/element/bundle';
@@ -282,7 +283,7 @@
         EndDate: '',
         Action: '',
       });
-      const ActionArray = ['入庫' , '歸還' , '借測' , '維修' , '內部領用' , '出貨' , '報廢' , '退貨'];
+      const ActionArray = HistoryAction;
       const columnDefs =[{
             suppressMovable: true,
             field: "",
@@ -363,8 +364,8 @@
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             if (details.value.WarrantyStartDate && details.value.WarrantyEndDate) {
-              details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/\//g, '-');
-              details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/\//g, '-');
+              details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
+              details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
             }
             if(details.value.existFile) {
               details.value.existFile.forEach(item => {

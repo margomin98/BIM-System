@@ -298,16 +298,23 @@
             AR_ID: AR_ID,
             ShipmentNum: details.value.ShipmentNum,
             ShipmentCompany: details.value.ShipmentCompany,
+            GoodsNum: details.value.GoodsNum,
             ReceivedDate: details.value.ReceivedDate,
-            deleteDocument: fileParams.deleteDoc,
-            deleteFile: fileParams.deletePic,
+            // deleteDocument: fileParams.deleteDoc,
+            // deleteFile: fileParams.deletePic,
           };
           let msg = ''
           for (const key in formParams) {
             msg+=`${key} : ${formParams[key]}\n`
             form.append(key, formParams[key]);
           }
-          console.log('上半部資料(含刪除):',msg);
+          if(fileParams.deleteDoc.length > 0) {
+            form.append('deleteDocument' , fileParams.deleteDoc)
+          }
+          if(fileParams.deletePic.length > 0) {
+            form.append('deleteDocument' , fileParams.deletePic)
+          }
+          console.log('上半部資料(含刪除):\n',msg);
           axios.post('http://192.168.0.177:7008/ReceivingMng/EditReceipt', form)
             .then(response => {
               const data = response.data;

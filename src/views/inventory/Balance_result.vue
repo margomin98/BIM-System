@@ -477,6 +477,8 @@
             // }
             console.log('上半部資料如下\n', data.resultList);
             details.value = data.resultList;
+            details.value.PlanStart = details.value.PlanStart.replace(/-/g, '/');
+            details.value.PlanEnd = details.value.PlanEnd.replace(/-/g, '/');
             rowData1.value = data.resultList.AssetList
           } else if (data.state === 'error') {
             alert(data.messages);

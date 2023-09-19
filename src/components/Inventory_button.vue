@@ -76,7 +76,7 @@
         }
       }
       function checkButton() {
-        console.log(disabledStatus);
+        // console.log(disabledStatus);
         if (disabledStatus !== '待盤點') {
           isDisabled.value.edit = true;
         }

@@ -15,7 +15,7 @@ export default {
     const linkName = ref('');
     const id = ref('');
     const data = props.params.data;
-    console.log('data:' ,data);
+    // console.log('data:' ,data);
     // 已被整合
     if(data.I_Source === 1) {
       id.value = data.B_Id;

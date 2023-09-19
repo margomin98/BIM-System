@@ -401,15 +401,6 @@
           suppressMovable: true
         },
         {
-          headerName: "選擇數量",
-          field: "selectNumber",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
           headerName: "單位",
           field: "OM_Unit",
           unSortIcon: true,

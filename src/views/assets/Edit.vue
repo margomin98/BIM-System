@@ -279,6 +279,7 @@
   import Storage_list_view_button from "@/components/Storage_list_view_button";
   import AccountSearch from "@/components/API/account_search";
   import Navbar from "@/components/Navbar.vue";
+  import { HistoryAction } from "@/assets/js/dropdown";
   import {
     onMounted,
     ref,
@@ -326,7 +327,7 @@
         EndDate: '',
         Action: '',
       });
-      const ActionArray = ['入庫', '歸還', '借測', '維修', '內部領用', '出貨', '報廢', '退貨'];
+      const ActionArray = HistoryAction;
       const columnDefs = [{
           suppressMovable: true,
           field: "",
@@ -758,11 +759,9 @@
             //尚未登入
             alert(data.messages);
             router.push('/');
-          } else {
-            throw new Error('Request was not successful');
           }
         } catch (error) {
-          console.error('Error sending data to backend', error);
+          console.error(error);
         }
       }
       const selectAction = item => {

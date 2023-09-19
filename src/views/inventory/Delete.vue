@@ -364,6 +364,8 @@
             // }
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
+            details.value.PlanStart = details.value.PlanStart.replace(/-/g, '/');
+            details.value.PlanEnd = details.value.PlanEnd.replace(/-/g, '/');
             grid.api2.setRowData(details.value.AssetList)
           } else if (data.state === 'error') {
             alert(data.messages);
