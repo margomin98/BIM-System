@@ -568,12 +568,14 @@
         // 檢查頁籤之間AssetsId有無重複
         let seen = [];
         for (let i=0 ; i< tabData.length ; i++) {
-          if(!seen[tabData[i].itemAssetsId]) {
-            seen[tabData[i].itemAssetsId] = true;
-          }
-          else {
-            InputError = true;
-            InputMessages = '頁籤內資產編號不可重複，請再次確認資產編號欄位'
+          if(tabData[i].itemAssetsId) {
+            if(!seen[tabData[i].itemAssetsId]) {
+              seen[tabData[i].itemAssetsId] = true;
+            }
+            else {
+              InputError = true;
+              InputMessages = '頁籤內資產編號不可重複，請再次確認資產編號欄位'
+            }
           }
         }
         if (InputError) {

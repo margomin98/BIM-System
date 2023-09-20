@@ -13,47 +13,54 @@
           <p>申請入庫日期: {{ details.ApplicationDate }}</p>
         </div>
         <div>
-          <p>資產類型:{{ details.IsConsumable ? '耗材' : '資產' }}</p>
+          <p>資產類型:{{ details.AssetType }}</p>
         </div>
       </div>
+      <!-- 上半部表單 -->
       <div class="content">
+        <!-- 單號 -->
         <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend">編號：</div>
+            <div class="input-group-prepend">單號：</div>
             <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID" />
           </div>
         </div>
+        <!-- 狀態 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 狀態：
               </div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Status">
+              <input type="text" class="form-control readonly_box" readonly v-model="details.Status">
             </div>
           </div>
         </div>
-        <div class="col">
+        <!-- 專案代碼 -->
+        <div v-show="details.AssetType === '存貨'" class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">專案代碼：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID" />
+            <input type="text" class="form-control readonly_box" readonly v-model="details.ProjectCode" />
           </div>
         </div>
-        <div class="col">
+        <!-- 專案名稱 -->
+        <div v-show="details.AssetType === '存貨'" class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">專案名稱：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID" />
+            <input type="text" class="form-control readonly_box" readonly v-model="details.ProjectName" />
           </div>
         </div>
+        <!-- 物流單號 -->
         <div class="col form_search_wrap">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               物流單號 :
             </div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="VendorName" readonly>
+            <input type="text" class="form-control readonly_box" v-model="details.ShipmentNum" readonly>
             <button class="form_search_btn">檢視</button>
           </div>
         </div>
+        <!-- 設備總類 & 設備分類-->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -68,30 +75,35 @@
             </div>
           </div>
         </div>
+        <!-- 物品名稱 -->
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">物品名稱：</div>
             <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AssetName" />
           </div>
         </div>
+        <!-- 廠商 -->
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">廠商：</div>
             <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.VendorName" />
           </div>
         </div>
+        <!-- 規格 -->
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">規格：</div>
             <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductSpec" />
           </div>
         </div>
+        <!-- 型號 -->
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">型號：</div>
             <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductType" />
           </div>
         </div>
+        <!-- 包裝數量 & 包裝單位 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -107,6 +119,7 @@
             </div>
           </div>
         </div>
+        <!-- 數量 & 單位 -->
         <div v-if="details.IsConsumable" class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -121,6 +134,7 @@
             </div>
           </div>
         </div>
+        <!-- 保固期限 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -131,6 +145,7 @@
             </div>
           </div>
         </div>
+        <!-- 保固 開始&結束 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -145,6 +160,7 @@
             </div>
           </div>
         </div>
+        <!-- 交付 人員&日期 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -159,6 +175,7 @@
             </div>
           </div>
         </div>
+        <!-- 入庫 人員&日期 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -173,6 +190,7 @@
             </div>
           </div>
         </div>
+        <!-- 備註 -->
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">備註：</div>
@@ -180,57 +198,65 @@
           </div>
         </div>
       </div>
+      <!-- 頁籤部分 -->
       <div class="tab_section mt-5">
         <nav>
+          <!-- 標頭 -->
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button v-for="tab in parseInt(tabNumber)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab" :aria-selected="tab === 0">
-                        {{ tab }}
-                      </button>
+              {{ tab }}
+            </button>
           </div>
         </nav>
         <div v-if="formData.length > 0" class="tab-content" id="nav-tabContent">
           <div v-for="(item, index) in formData" :key="index" :class="['tab-pane', 'fade', { 'show active': index === 0 }]" :id="'tab' + (index + 1)" role="tabpanel" aria-labelledby="tab1-tab">
+            <!-- 頁籤物品名稱 -->
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend"><span>*</span>物品名稱：</div>
-                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.AssetName" />
+                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.itemAssetName" />
               </div>
             </div>
+            <!-- 頁籤資產編號 -->
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend"><span>*</span>資產編號：</div>
-                <input type="text" class="form-control" v-model="item.AssetsId" placeholder="BFXXXXXXXX" :class="{'readonly_box': details.Type === 1}" :disabled="details.Type === 1" />
+                <input type="text" class="form-control" v-model="item.itemAssetsId" placeholder="BFXXXXXXXX" :class="{'readonly_box': details.Type === 1}" :disabled="details.Type === 1" />
               </div>
             </div>
+            <!-- 頁籤S/N -->
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">S/N：</div>
-                <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="item.SN" />
+                <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="item.itemSN" />
               </div>
             </div>
+            <!-- 頁籤專案代碼 -->
             <div class="col form_search_wrap">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span>*</span>專案代碼 :
                 </div>
-                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="VendorName">
+                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.itemProjectCode">
                 <button class="form_search_btn">搜尋</button>
               </div>
             </div>
+            <!-- 頁籤專案名稱 -->
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">專案名稱：</div>
-                <input type="text" class="form-control readonly_box" aria-label="Default" v-model="item.SN" readonly/>
+                <input type="text" class="form-control readonly_box" aria-label="Default" v-model="item.itemProjectName" readonly/>
               </div>
             </div>
+            <!-- 頁籤儲位 區域&櫃位 -->
             <div class="row g-0">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend"><span>*</span>儲位區域：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName(index)">
-                                {{ item.itemAreaName || '請選擇' }}
-                              </button>
+                      {{ item.itemAreaName || '請選擇' }}
+                    </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="(item, area_index) in item.AreaArray" :key="area_index" class="dropdown-item" @click="selectArea(index, `${item}`)">
                         {{ item }}</p>
@@ -243,8 +269,8 @@
                   <div class="input-group-prepend"><span>*</span>儲位櫃位：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="item.itemAreaName === null || item.itemAreaName === ''">
-                                {{ item.itemLayerName || item.LayerInit }}
-                              </button>
+                      {{ item.itemLayerName || item.LayerInit }}
+                    </button>
                     <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                       <p v-for="(item, layer_index) in item.LayerArray" :key="layer_index" class="dropdown-item" @click="selectLayer(index, `${item}`)">{{ item }}</p>
                     </div>
@@ -252,6 +278,7 @@
                 </div>
               </div>
             </div>
+            <!-- 頁籤備註 -->
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -260,22 +287,16 @@
                 <textarea class="col" rows="5" placeholder="最多輸入500字" v-model="item.itemMemo"></textarea>\
               </div>
             </div>
+            <!-- 頁籤資產照片 -->
             <div class="col">
-              <!-- 選擇檔案button -->
               <div class="input-group mb-3">
                 <div class="input-group-prepend">資產照片：</div>
                 <div class="mb-3 file_wrap">
+                  <!-- 選擇檔案button -->
                   <button class='choose_btn' @click="openFileExplorer(index)">選擇檔案</button>
                   <input type="file" accept="image/*" ref="fileInputs" style="display: none;" multiple @change="handleFileChange(index)" />
                 </div>
                 <div class='selected_file'>
-                  <!-- <p class='title'>已上傳的檔案:</p>
-                      <p class='file_upload_wrap' v-for="(file, img_index) in item.existFile" :key="img_index" style="cursor: pointer;">
-                        <p @click="showExistFileImage(index, img_index)" data-bs-toggle="modal" data-bs-target="#existFile_modal">
-                          {{ file.FileName }}
-                        </p>
-                        <img class='delete_icon' src="@/assets/trash.png" @click="deleteExistFile(index, img_index)" style="margin-left: 10px;">
-                      </p> -->
                   <p class='title'>已選擇的檔案:</p>
                   <p class='file_upload_wrap' v-for="(file, img_index) in item.newFile" :key="img_index" style="cursor: pointer;">
                     <p @click="showNewFileImage(index, img_index)" data-bs-toggle="modal" data-bs-target="#newFile_modal">{{ file.name }}
@@ -285,6 +306,7 @@
                 </div>
               </div>
             </div>
+            <!-- 頁籤已上傳檔案 -->
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -304,14 +326,14 @@
         </div>
         <!-- ExistFileModal -->
         <div class="modal fade" id="existFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-dialog modal-dialog-centered" style="max-width: 800px !important;">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">{{ existFileModalTitle }}</h5>
                 <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
               </div>
               <div v-if="formData" class="modal-body">
-                <img :src="existFileImageUrl" alt="Existed Image" class="img-fluid" />
+                <img :src="existFileImageUrl" alt="Existed Image" class="w-100" />
               </div>
             </div>
           </div>
@@ -379,7 +401,6 @@
         const axios = require('axios');
         try {
           const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
-          console.log(response);
           const data = response.data;
           if (data.state === 'success') {
             // console.log('Details Get成功 資料如下\n', data.resultList);
@@ -433,14 +454,16 @@
         for (let i = 0; i < tabNumber.value; i++) {
           const initArray = details.value.Tabs[i];
           formData.push({
-            AssetName: initArray.itemAssetName,
-            AssetsId: initArray.AssetsId,
+            itemAssetName: initArray.itemAssetName,
+            itemAssetsId: initArray.itemAssetsId,
             itemAreaName: initArray.itemAreaName,
+            itemProjectName: initArray.itemProjectName,
+            itemProjectCode: initArray.itemProjectCode,
             AreaArray: [],
             itemLayerName: initArray.itemLayerName,
             LayerArray: [],
             LayerInit: '請先選擇區域',
-            SN: initArray.SN,
+            itemSN: initArray.itemSN,
             itemMemo: initArray.itemMemo,
             existFile: initArray.existFile,
             deleteFile: [],
@@ -509,15 +532,15 @@
         //檢查暫存必填項目(物品名稱)
         for (let i = 0; i < tabNumber.value; i++) {
           const form = formData[i];
-          form.AssetName = form.AssetName.trim();
-          if (!form.AssetName) {
+          form.itemAssetName = form.itemAssetName.trim();
+          if (!form.itemAssetName) {
             alert('物品名稱必填');
             return
           }
-          if (form.SN) {
-            form.SN = form.SN.trim();
+          if (form.itemSN) {
+            form.itemSN = form.itemSN.trim();
           }
-          if (form.SN && !/^[\s\S]{1,100}$/.test(form.SN.trim())) {
+          if (form.itemSN && !/^[\s\S]{1,100}$/.test(form.itemSN.trim())) {
             InputError = true;
             InputMessages += '頁籤 ' + (i + 1) + ' :　S/N不可輸入超過100字' + '\n';
           }
@@ -533,10 +556,6 @@
           alert(InputMessages);
           return;
         }
-        // 暫存 送出前查詢
-        if (await queryFormData()) {
-          return;
-        }
         // 將陣列資料整理成N個FormData分N次傳送
         for (let i = 0; i < tabNumber.value; i++) {
           const myForm = formData[i];
@@ -544,20 +563,24 @@
           const formFields = {
             'AI_ID': AI_ID,
             'PadNum': i,
-            'AssetName': myForm.AssetName,
-            'AssetsId': myForm.AssetsId,
+            'itemAssetName': myForm.itemAssetName,
+            'itemAssetsId': myForm.itemAssetsId,
             'itemAreaName': myForm.itemAreaName,
             'itemLayerName': myForm.itemLayerName,
-            'SN': myForm.SN,
+            'itemSN': myForm.itemSN,
             'itemMemo': myForm.itemMemo,
           };
           for (const fieldName in formFields) {
-            if (formFields[fieldName] !== '' && formFields[fieldName] !== null) {
+            if (formFields[fieldName]) {
               form.append(fieldName, formFields[fieldName]);
               console.log(form.get(`${fieldName}`));
             }
           }
-          if (myForm.deleteFile.length > 0) {
+          // 存貨額外+itemProjectCode
+          if (details.value.AssetType === '存貨') {
+            form.append('itemProjectCode', myForm.itemProjectCode);
+          }
+          if (myForm.deleteFile) {
             for (let j = 0; j < myForm.deleteFile.length; j++) {
               form.append('deleteFile', myForm.deleteFile[j]);
             }
@@ -644,10 +667,6 @@
             return;
           }
         }
-        // 暫存 送出前查詢
-        if (await queryFormData()) {
-          return;
-        }
         // 將陣列資料整理成N個FormData分N次傳送
         for (let i = 0; i < tabNumber.value; i++) {
           const myForm = formData[i];
@@ -655,20 +674,24 @@
           const formFields = {
             'AI_ID': AI_ID,
             'PadNum': i,
-            'AssetName': myForm.AssetName,
-            'AssetsId': myForm.AssetsId,
+            'itemAssetName': myForm.itemAssetName,
+            'itemAssetsId': myForm.itemAssetsId,
             'itemAreaName': myForm.itemAreaName,
             'itemLayerName': myForm.itemLayerName,
-            'SN': myForm.SN,
+            'itemSN': myForm.itemSN,
             'itemMemo': myForm.itemMemo,
           };
           for (const fieldName in formFields) {
-            if (formFields[fieldName] !== '' && formFields[fieldName] !== null) {
+            if (formFields[fieldName]) {
               form.append(fieldName, formFields[fieldName]);
               console.log(form.get(`${fieldName}`));
             }
           }
-          if (myForm.deleteFile.length > 0) {
+          // 存貨額外+itemProjectCode
+          if (details.value.AssetType === '存貨') {
+            form.append('itemProjectCode', myForm.itemProjectCode);
+          }
+          if (myForm.deleteFile) {
             for (let j = 0; j < myForm.deleteFile.length; j++) {
               form.append('deleteFile', myForm.deleteFile[j]);
             }
@@ -699,25 +722,10 @@
             console.error(error);
           })
       }
-      async function queryFormData() {
-        const axios = require('axios');
-        const response = await axios.get(`http://192.168.0.177:7008/AssetsInMng/AssetsInAdd?ai_id=${AI_ID}`);
-        const data = response.data;
-        try {
-          if (data.state !== 'success') {
-            alert(data.messages);
-            return true;
-          }
-        } catch (error) {
-          console.error(error);
-        }
-        console.log(data.messages);
-        return false;
-      }
       async function sendFormData(formData, type) {
         var baseUrl = '';
         if (type === 'temp')
-          baseUrl = '/AssetsInMng/TempAssetsIn'
+          baseUrl = '/AssetsInMng/ItemEdit'
         else if (type === 'submit') {
           baseUrl = '/AssetsInMng/AssetsIn'
         }
@@ -831,7 +839,7 @@
         var myForm = [];
         for (let i = 0; i < tabNumber.value; i++) {
           const form = formData[i];
-          myForm.push(form.AssetsId);
+          myForm.push(form.itemAssetsId);
         }
         console.log(myForm);
         //1.

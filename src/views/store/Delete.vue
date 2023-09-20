@@ -208,7 +208,7 @@
             <!-- 頁籤物品名稱 -->
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend"><span>*</span>物品名稱：</div>
+                <div class="input-group-prepend">物品名稱：</div>
                 <input type="text" class="form-control readonly_box" v-model="tab.itemAssetName" readonly>
               </div>
             </div>
@@ -230,7 +230,7 @@
             <div v-show="details.AssetType === '存貨'" class="col form_search_wrap">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span>*</span>專案代碼 :
+                  專案代碼 :
                 </div>
                 <input type="text" class="form-control readonly_box" aria-label="Default" v-model="tab.itemProjectCode" readonly>
               </div>
