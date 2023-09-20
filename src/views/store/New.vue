@@ -45,7 +45,7 @@
               <span>*</span>專案代碼 :
             </div>
             <input type="text" class="form-control" placeholder="請輸入代碼" v-model="formParams.ProjectCode">
-            <button class="form_search_btn" @click="getProjectName">搜尋</button>
+            <button class="form_search_btn" @click="getProjectName('upperForm')">搜尋</button>
           </div>
         </div>
         <!-- 專案名稱 -->
@@ -282,22 +282,22 @@
                 <div class="input-group-prepend">
                   <span>*</span>專案代碼 :
                 </div>
-                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="請輸入代碼" v-model="tab.ProjectCode">
-                <button class="form_search_btn">搜尋</button>
+                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="請輸入代碼" v-model="tab.itemProjectCode">
+                <button class="form_search_btn" @click ="getProjectName('tab' , index)">搜尋</button>
               </div>
             </div>
             <!-- 頁籤專案名稱 -->
             <div v-show="formParams.AssetType === '存貨'" class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">專案名稱：</div>
-                <input type="text" class="form-control readonly_box" v-model="tab.ProjectName" readonly>
+                <input type="text" class="form-control readonly_box" v-model="tab.itemProjectName" readonly>
               </div>
             </div>
             <!-- 頁籤備註 -->
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">備註：</div>
-                <textarea class="col" rows="5" placeholder="最多輸入500字" v-model="tab.Memo"></textarea>
+                <textarea class="col" rows="5" placeholder="最多輸入500字" v-model="tab.itemMemo"></textarea>
               </div>
             </div>
             <!-- 頁籤上傳檔案部分 -->
@@ -437,15 +437,16 @@
       }
       // (重新)生成Tab頁籤資料
       function initFormDataArray() {
-        tabData.splice(0 , tabData.length);
+        tabData.splice(0 , tabData.length); //先清空再重新生成
         for (let i = 0; i < formParams.Count; i++) {
           // const initArray = details.value.Tabs[i];
           tabData.push({
+            PadNum: i,
             AssetName: formParams.AssetName,
             AssetsId: '',
             SN: '',
-            ProjectCode: formParams.ProjectCode,
-            ProjectName: ProjectName.value,
+            itemProjectCode: formParams.ProjectCode,
+            itemProjectName: ProjectName.value, //不需要傳
             itemMemo: '',
             // AssetName: initArray.itemAssetName,
             // AssetsId: initArray.AssetsId,
@@ -456,9 +457,8 @@
             // existFile: initArray.existFile,
             // deleteFile: [],
             newFile: [],
-            viewFile: [],
+            viewFile: [], //不需要傳
           });
-          console.log('tabData:',tabData);
           // if (initArray.itemLayerName) {
           //   getLayerName(i);
           // }
@@ -536,12 +536,12 @@
           //3. 存貨需額外檢查專案代碼
           if ( formParams.AssetType === '存貨') {
             // 未填寫
-            if(!form.ProjectCode) {
+            if(!form.itemProjectCode) {
               InputError = true;
               InputMessages += '頁籤 ' + (i + 1) + ' :　專案代碼必填' + '\n';
             }
             // 填寫 但不符合格式
-            if(form.ProjectCode && !/^[\s\S]{1,100}$/.test(form.ProjectCode)) {
+            if(form.itemProjectCode && !/^[\s\S]{1,100}$/.test(form.itemProjectCode)) {
               InputError = true;
               InputMessages += '頁籤 ' + (i + 1) + ' :　專案代碼不可輸入超過10字' + '\n';
             }
@@ -660,28 +660,29 @@
         try {
           // 先建立表單並回傳AR_ID
           const AI_ID = await sendUpperForm();
-          console.log('AI_ID(resolve):' , AI_ID);
+          console.log('建立上半部表單成功AI_ID(resolve):' , AI_ID);
           // 再依照AI_ID將 下半部頁籤 單次分別上傳
           const filePromises = [];
           for (let i = 0; i < tabData.length; i++) {
-            filePromises.push(sendFileForm(AI_ID, tabData[i], i));
+            filePromises.push(sendFileForm(AI_ID, tabData[i] , i));
           }
           // 等待所有檔案上傳完成
           await Promise.all(filePromises)
           .then(result =>{
             const allSuccess = result.every(result => result === 'success')
             if(allSuccess) {
-            alert('新增收貨單成功\n單號為:' + AI_ID);
+            alert('傳送新品入庫表單成功\n單號為:' + AI_ID);
               router.push({
-                name: 'Receive_Datagrid'
+                name: 'Store_Datagrid'
               });
             }
             else {
-              alert('新增收貨單失敗')
+              alert('傳送新品入庫表單失敗')
             }
           })
         } catch (error) {
           console.error(error);
+          alert(error);
         }
       }
       // 上半部表單
@@ -693,7 +694,10 @@
           const axios = require('axios');
           const form = new FormData();
           for (const key in formParams) {
-            form.append(key, formParams[key]);
+            // 不為null、undefined、空字串就append
+            if(formParams[key]) {
+              form.append(key, formParams[key]);
+            }
           }
           // 先剔除不需要key值
           form.delete('ShipmentNum')
@@ -711,7 +715,7 @@
               const data = response.data;
               if (data.state === 'success') {
                 const AI_ID = response.data.resultList.AI_ID;
-                console.log('建立上半部表單成功AI_ID(response):' , AI_ID);
+                // console.log('建立上半部表單成功AI_ID(response):' , AI_ID);
                 resolve(AI_ID);
               }
               else {
@@ -724,23 +728,39 @@
         });
       }
       // 中、下上傳檔案部分
-      function sendFileForm(AI_ID , type , fileData, index) {
+      function sendFileForm(AI_ID ,tabData ,index) {
         return new Promise((resolve, reject) => {
           const form = new FormData();
-          form.append('AR_ID' , AR_ID);
-          form.append('num' , index);
-          form.append(type , fileData);
+          form.append('AI_ID' , AI_ID);
+          for (const key in tabData) {
+            // 不為null、undefined、空字串就append
+            if(tabData[key]) {
+              form.append(key, tabData[key]);
+            }
+          }
+          // 先剔除不需要key值
+          form.delete('itemProjectName')
+          form.delete('viewFile')
+          // newFile等等額外判斷 先剔除
+          form.delete('newFile')
+          // 不是存貨->將ProjectCode、ProjectName從form移除
+          if(formParams.AssetType !== '存貨') {
+            form.delete('itemProjectCode')
+          }
+          for( let i=0 ; i < tabData.newFile.length ; i++) {
+            form.append('newFile' , tabData.newFile[i]);
+          }
           const axios = require('axios');
           axios.post('http://192.168.0.177:7008/ReceivingMng/UploadFile', form)
             .then((response) => {
               const data = response.data;
               if (data.state === 'success') {
                 // 文件表单提交成功，继续执行
-                console.log(`第${index+1}個${type}檔案上傳成功`);
+                console.log(`第${index+1}個頁籤上傳成功`);
                 resolve(data.state)
               } else {
                 // 如果状态不是 "success"，调用 reject 并传递错误信息
-                console.error(type+'上傳失敗，'+response.data.messages);
+                console.error(`第${index+1}個頁籤上傳失敗，`);
                 reject(new Error('文件表单提交失败'));
               }
             })
@@ -814,6 +834,8 @@
         }
       }
       async function getShipmentNum() {
+        // 物流單號有變動就將AR_ID清空 只有使用下拉選單才會傳AR_ID
+        formParams.AR_ID = '';
         formParams.ShipmentNum = formParams.ShipmentNum.trim();
         const form = new FormData();
         form.append('projectCode', formParams.ProjectCode);
@@ -834,21 +856,38 @@
           console.error(error);
         }
       }
-      async function getProjectName() {
-        if (!/^(?![ 　]{10}$)[\s\S]{1,10}$/.test(formParams.ProjectCode)) {
+      async function getProjectName(type , index) {
+        let code = ''
+        switch (type) {
+          case 'upperForm':
+            code = formParams.ProjectCode;
+            formParams.ProjectCode = formParams.ProjectCode.trim();
+            break;
+          case 'tab':
+            code = tabData[index].itemProjectCode;
+            tabData[index].itemProjectCode = tabData[index].itemProjectCode.trim();
+            break;
+        }
+        if (!/^(?![ 　]{10}$)[\s\S]{1,10}$/.test(code)) {
           alert('專案代碼格式錯誤');
           return;
         }
-        formParams.ProjectCode = formParams.ProjectCode.trim();
         const form = new FormData();
-        form.append('projectCode', formParams.ProjectCode);
+        form.append('projectCode', code);
         const axios = require('axios');
         const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchProjectName', form);
         try {
           const data = response.data;
           console.log(data);
           if (data.state === 'success') {
-            ProjectName.value = data.resultList;
+            switch (type) {
+              case 'upperForm':
+                ProjectName.value = data.resultList;
+                break;
+              case 'tab':
+                tabData[index].itemProjectName = data.resultList;
+                break;
+            }
           } else if (data.state === 'account_error') {
             alert(data.messages);
             router.push('/');
