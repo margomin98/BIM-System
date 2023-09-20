@@ -53,7 +53,7 @@
             <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.ShipmentNum" readonly>
             <button class="form_search_btn" @click="viewReceive">檢視</button>
             <!-- 隱藏跳轉按鈕 -->
-            <router-link :to="{name: 'Receive_View' , query:{ search_id : details.AR_ID}}" target="_blank" id="view-receive"></router-link>
+            <router-link :to="{name: 'Receive_View' , query:{ search_id : details.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
           </div>
         </div>
         <!-- 設備總類 -->
@@ -241,26 +241,10 @@
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">備註：</div>
-                <textarea class="col readonly_box" rows="5"  placeholder="最多輸入500字" v-model="tab.itemMemo" readonly></textarea>
+                <textarea class="col readonly_box" rows="5" v-model="tab.itemMemo" readonly></textarea>
               </div>
             </div>
             <!-- 頁籤上傳檔案部分 -->
-            <!-- <div class="col">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">資產照片：</div>
-                <div class="mb-3 file_wrap">
-                  <button class='choose_btn' @click="openFileExplorer(index)">選擇檔案</button>
-                  <input type="file" accept="image/*" ref="fileInputs" style="display: none;" multiple @change="handleFileChange(index , $event)" />
-                </div>
-                <div class="selected_file">
-                  <p class="title">已選擇的檔案:</p>
-                  <div v-for="(file , file_index) in tab.viewFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
-                    <p @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#newFile_modal">{{ file.FileName }}</p>
-                    <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;">
-                  </div>
-                </div>
-              </div>
-            </div> -->
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">已上傳檔案：</div>
@@ -332,9 +316,11 @@
           if (data.state === 'success') {
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
-            if (details.value.WarrantyStartDate && details.value.WarrantyEndDate) {
-              details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
-              details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
+            if (details.value.WarrantyStartDate) {
+              details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/\//g, '-');
+            }
+            if (details.value.WarrantyEndDate) {
+              details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/\//g, '-');
             }
             tabNumber.value = details.value.Tabs.length
           } else if (data.state === 'error') {

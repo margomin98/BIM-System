@@ -44,7 +44,7 @@
             <div class="input-group-prepend">
               <span>*</span>專案代碼 :
             </div>
-            <input type="text" class="form-control" placeholder="請輸入代碼" v-model="formParams.ProjectCode">
+            <input type="text" class="form-control" placeholder="最多輸入10字" v-model="formParams.ProjectCode">
             <button class="form_search_btn" @click="getProjectName('upperForm')">搜尋</button>
           </div>
         </div>
@@ -72,7 +72,7 @@
             </div>
             <button class="form_search_btn" @click="viewReceive">檢視</button>
             <!-- 隱藏跳轉按鈕 -->
-            <router-link :to="{name: 'Receive_View' , query:{ search_id : formParams.AR_ID}}" target="_blank" id="view-receive"></router-link>
+            <router-link :to="{name: 'Receive_View' , query:{ search_id : formParams.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
           </div>
         </div>
         <!-- 設備總類 &設備分類 -->
@@ -311,32 +311,17 @@
                 <div class="selected_file">
                   <p class="title">已選擇的檔案:</p>
                   <div v-for="(file , file_index) in tab.viewFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
-                    <p @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#newFile_modal">{{ file.FileName }}</p>
-                    <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;">
+                    <p @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
+                    <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index,file_index)">
                   </div>
                 </div>
               </div>
             </div>
-            <!-- <div class="col">
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">已上傳檔案：</div>
-                    <div class="d-flex  flex-column">
-                      <p class="file_upload_wrap d-flex" style="cursor: pointer;">
-                        <p>Uploaded File 1</p>
-                        <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;">
-                      </p>
-                      <p class="file_upload_wrap d-flex" style="cursor: pointer;">
-                        <p>Uploaded File 2</p>
-                        <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;">
-                      </p>
-                    </div>
-                  </div>
-                </div> -->
           </div>
         </div>
       </div>
       <!-- NewFileModal -->
-      <div class="modal fade" id="newFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" style="max-width: 800px !important;">
           <div class="modal-content">
             <div class="modal-header">
@@ -345,6 +330,26 @@
             </div>
             <div v-show="tabData" class="modal-body">
               <img :src="modalParams.src" alt="Uploaded Image" class="w-100" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 數量Modal Trigger Button -->
+      <button type="button" data-bs-toggle="modal" data-bs-target="#editCount_modal" style="display: none;" id="count-modal"></button>
+      <!-- 確認變更數量Modal -->
+      <div class="modal fade count-modal" id="editCount_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">警示</h5>
+              <div class="close_icon"><p type="button" data-bs-dismiss="modal" aria-label="Close">x</p></div>
+            </div>
+            <div class="modal-body">
+            <p>按下確認後將會清空頁籤內容。</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn confirm" data-bs-dismiss="modal" @click="formParams.Count = oldCount">取消</button>
+              <button type="button" class="btn confirm" data-bs-dismiss="modal" @click="initFormDataArray">確認</button>
             </div>
           </div>
         </div>
@@ -409,6 +414,8 @@
       // 下半部頁籤內容
       const tabData = reactive([]); // 頁籤資料
       const tabNumber = ref(1); //v-for不直接使用 formParams.Count(input改成空白會error)
+      const newCount = ref(1);
+      const oldCount = ref(1);
       const fileInputs = reactive([]);
       // Modal Params
       const modalParams = reactive({
@@ -437,9 +444,11 @@
       }
       // (重新)生成Tab頁籤資料
       function initFormDataArray() {
+        if(newCount.value) {
+          tabNumber.value = newCount.value
+        }
         tabData.splice(0 , tabData.length); //先清空再重新生成
         for (let i = 0; i < formParams.Count; i++) {
-          // const initArray = details.value.Tabs[i];
           tabData.push({
             PadNum: i,
             itemAssetName: formParams.AssetName,
@@ -448,20 +457,9 @@
             itemProjectCode: formParams.ProjectCode,
             itemProjectName: ProjectName.value, //不需要傳
             itemMemo: '',
-            // AssetName: initArray.itemAssetName,
-            // AssetsId: initArray.AssetsId,
-            // SN: initArray.SN,
-            // ProjectCode: '',
-            // ProjectName: '',
-            // itemMemo: initArray.itemMemo,
-            // existFile: initArray.existFile,
-            // deleteFile: [],
             newFile: [],
             viewFile: [], //不需要傳
           });
-          // if (initArray.itemLayerName) {
-          //   getLayerName(i);
-          // }
         }
       }
       function selectShipmentNum(item) {
@@ -514,7 +512,7 @@
             return false;
           }
         }
-        // 檢查下半部必填
+        // 檢查下半部必填、格式
         var InputMessages = '';
         var InputError = false;
         for (let i = 0; i < tabNumber.value; i++) {
@@ -561,6 +559,21 @@
               InputError = true;
               InputMessages += '頁籤 ' + (i + 1) + ' :　備註不可輸入超過500字' + '\n';
             }
+          }
+        }
+        if (InputError) {
+          alert(InputMessages);
+          return false;
+        }
+        // 檢查頁籤之間AssetsId有無重複
+        let seen = [];
+        for (let i=0 ; i< tabData.length ; i++) {
+          if(!seen[tabData[i].itemAssetsId]) {
+            seen[tabData[i].itemAssetsId] = true;
+          }
+          else {
+            InputError = true;
+            InputMessages = '頁籤內資產編號不可重複，請再次確認資產編號欄位'
           }
         }
         if (InputError) {
@@ -635,6 +648,10 @@
         modalParams.title = tabData[index].viewFile[file_index].FileName;
         modalParams.src = tabData[index].viewFile[file_index].FileLink;
         console.log('modalParams',modalParams);
+      }
+      function deleteFile(index , file_index) {
+        tabData[index].newFile.splice(file_index,1);
+        tabData[index].viewFile.splice(file_index,1);
       }
       // 關掉物流單號下拉式選單
       function handleBlur() {
@@ -902,8 +919,10 @@
       watch(()=>formParams.Count, (newValue , oldValue) => {
         // console.log(`包裝數量從${oldValue}變成${newValue}`);
         if(newValue) {
-          tabNumber.value = newValue;
-          initFormDataArray();
+          newCount.value = newValue;
+          oldCount.value = oldValue;
+          const button = document.getElementById('count-modal');
+          button.click();
         }
       });
       function goBack() {
@@ -911,11 +930,14 @@
       }
       return {
         getDate,
+        initFormDataArray,
         Applicant,
         ApplicationDate,
         formParams,
         arrayParams,
         EquipCategoryInit,
+        newCount,
+        oldCount,
         showOptions,
         ProjectName,
         tabData,
@@ -932,6 +954,7 @@
         handleBlur,
         viewImgFile,
         viewReceive,
+        deleteFile,
         submit,
         getEquipTypeName,
         getEquipCategoryName,
@@ -947,6 +970,54 @@
   @import '@/assets/css/global.scss';
   textarea {
     padding: 5px 10px 30px;
+  }
+  .count-modal {
+      .modal-body {
+        padding: 20px;
+        margin: auto;
+        p {
+          text-align: center;
+          font-weight: 800;
+        }
+      }
+      .modal-content {
+        margin: auto;
+      }
+      .modal-input-group-prepend {
+        width: auto;
+        font-weight: 700;
+        font-size: 20px;
+      }
+      .modal-footer {
+        padding: 0 12px 12px;
+        border: none;
+        justify-content: center;
+        .confirm {
+          color: white;
+          background-color: #132238;
+          &:hover {
+            background-color: #426497;
+          }
+        }
+      }
+      .modal-header {
+        h5 {
+          font-weight: 700;
+        }
+        background: #528091;
+        color: white;
+        display: flex;
+        justify-content: center;
+        padding: 0 16px 16px;
+        .close_icon {
+          height: 40px;
+          cursor: pointer;
+        }
+        .modal-title {
+          margin: auto;
+          padding-top: 16px;
+        }
+      }
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
