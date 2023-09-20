@@ -356,8 +356,8 @@
       }
       // 查看已上傳相片
       function viewImgFile(index , file_index) {
-        modalParams.title = details.value[index].existFile[file_index].FileName;
-        modalParams.src = details.value[index].existFile[file_index].FileLink;
+        modalParams.title = details.value.Tabs[index].existFile[file_index].FileName;
+        modalParams.src = details.value.Tabs[index].existFile[file_index].FileLink;
         console.log('modalParams',modalParams);
       }
       function goBack() {
