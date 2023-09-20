@@ -751,7 +751,7 @@
             form.append('newFile' , tabData.newFile[i]);
           }
           const axios = require('axios');
-          axios.post('http://192.168.0.177:7008/ReceivingMng/UploadFile', form)
+          axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form)
             .then((response) => {
               const data = response.data;
               if (data.state === 'success') {
