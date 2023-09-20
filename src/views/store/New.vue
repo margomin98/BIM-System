@@ -259,21 +259,21 @@
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend"><span>*</span>物品名稱：</div>
-                <input type="text" class="form-control" v-model="tab.AssetName">
+                <input type="text" class="form-control" v-model="tab.itemAssetName">
               </div>
             </div>
             <!-- 頁籤資產編號 -->
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">資產編號：</div>
-                <input type="text" class="form-control" placeholder="BFXXXXXXXX" v-model="tab.AssetsId">
+                <input type="text" class="form-control" placeholder="BFXXXXXXXX" v-model="tab.itemAssetsId">
               </div>
             </div>
             <!-- 頁籤S/N -->
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">S/N：</div>
-                <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="tab.SN">
+                <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="tab.itemSN">
               </div>
             </div>
             <!-- 頁籤專案代碼 -->
@@ -442,9 +442,9 @@
           // const initArray = details.value.Tabs[i];
           tabData.push({
             PadNum: i,
-            AssetName: formParams.AssetName,
-            AssetsId: '',
-            SN: '',
+            itemAssetName: formParams.AssetName,
+            itemAssetsId: '',
+            itemSN: '',
             itemProjectCode: formParams.ProjectCode,
             itemProjectName: ProjectName.value, //不需要傳
             itemMemo: '',
@@ -520,15 +520,15 @@
         for (let i = 0; i < tabNumber.value; i++) {
           const form = tabData[i];
           //1. 物品名稱必填
-          form.AssetName = form.AssetName.trim()
-          if (!form.AssetName) {
+          form.itemAssetName = form.itemAssetName.trim()
+          if (!form.itemAssetName) {
             InputError = true;
             InputMessages += '頁籤 ' + (i + 1) + ' :　物品名稱必填' + '\n';
           }
           //2. 資產編號若有value 格式為 BF+8位數
-          if (form.AssetsId) {
-            form.AssetsId = form.AssetsId.trim();
-            if (!BF_pattern.test(form.AssetsId)) {
+          if (form.itemAssetsId) {
+            form.itemAssetsId = form.itemAssetsId.trim();
+            if (!BF_pattern.test(form.itemAssetsId)) {
               InputError = true;
               InputMessages += '頁籤 ' + (i + 1) + ' :　資產編號不符合格式' + '\n';
             }
@@ -548,9 +548,9 @@
             
           }
           //4. S/N、備註不可超過100/500字
-          if (form.SN) {
-            form.SN = form.SN.trim();
-            if (!/^[\s\S]{1,100}$/.test(form.SN)) {
+          if (form.itemSN) {
+            form.itemSN = form.itemSN.trim();
+            if (!/^[\s\S]{1,100}$/.test(form.itemSN)) {
               InputError = true;
               InputMessages += '頁籤 ' + (i + 1) + ' :　S/N不可輸入超過100字' + '\n';
             }
