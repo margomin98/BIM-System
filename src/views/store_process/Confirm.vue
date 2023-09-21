@@ -873,23 +873,23 @@ export default {
                 color: white;
                 margin-bottom: 5px;
               }
-              .file_upload_wrap {
+            }
+            .file_upload_wrap {
+              margin-bottom: 0;
+              display: flex;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              p {
                 margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  margin-bottom: 0;
+                font-weight: 700;
+                color: white;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
                   font-weight: 700;
                   color: white;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
                 }
               }
             }
@@ -1196,23 +1196,23 @@ export default {
                 color: white;
                 margin-bottom: 5px;
               }
-              .file_upload_wrap {
+            }
+            .file_upload_wrap {
+              margin-bottom: 0;
+              display: flex;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              p {
                 margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  margin-bottom: 0;
+                font-weight: 700;
+                color: white;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
                   font-weight: 700;
                   color: white;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
                 }
               }
             }
@@ -1535,23 +1535,23 @@ export default {
                 color: white;
                 margin-bottom: 5px;
               }
-              .file_upload_wrap {
+            }
+            .file_upload_wrap {
+              margin-bottom: 0;
+              display: flex;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              p {
                 margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  margin-bottom: 0;
+                font-weight: 700;
+                color: white;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
                   font-weight: 700;
                   color: white;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
                 }
               }
             }

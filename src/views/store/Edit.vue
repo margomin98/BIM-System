@@ -48,12 +48,18 @@
                 <span>*</span>資產類型 :
               </div>
               <div class="d-flex align-items-center">
-                <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="資產" v-model="formParams.AssetType" />
-                <label class="form-check-label check_box" for='radio1'>資產</label>
-                <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="存貨" v-model="formParams.AssetType" />
-                <label class="form-check-label check_box" for='radio2' data-toggle="tooltip" data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
-                <input type="radio" class='form-check-input check_box' id="radio3" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="耗材" v-model="formParams.AssetType" />
-                <label class="form-check-label check_box" for='radio3'>耗材</label>
+                <div class="form-check d-flex align-items-center" style="">
+                  <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0; margin-right: 10px;" value="資產" v-model="formParams.AssetType" :disabled="details.Type === 1  && formParams.AssetType !== '資產'" />
+                  <label class="form-check-label check_box" for='radio1'>資產</label>
+                </div>
+                <div class="form-check d-flex align-items-center" style="">
+                  <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="存貨" v-model="formParams.AssetType" :disabled="details.Type === 1 && formParams.AssetType !== '存貨'" />
+                  <label class="form-check-label check_box" for='radio2' data-toggle="tooltip" data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
+                </div>
+                <div class="form-check d-flex align-items-center" style="">
+                  <input type="radio" class='form-check-input check_box' id="radio3" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0; margin-right: 10px;" value="耗材" v-model="formParams.AssetType" :disabled="details.Type === 1  && formParams.AssetType !== '耗材'" />
+                  <label class="form-check-label check_box" for='radio3'>耗材</label>
+                </div>
               </div>
             </div>
           </div>
@@ -286,7 +292,7 @@
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">資產編號：</div>
-                <input type="text" class="form-control" placeholder="BFXXXXXXXX" v-model="tab.itemAssetsId">
+                <input type="text" class="form-control" :class="{'readonly_box': details.Type === 1}" placeholder="BFXXXXXXXX" v-model="tab.itemAssetsId" :readonly="details.Type === 1">
               </div>
             </div>
             <!-- 頁籤S/N -->
@@ -686,9 +692,17 @@
           }
         }
         //圖片總數量不超過五張
-        if (tabData[index].newFile.length + files.length + tabData[index].existFile.length  > 5) {
-          alert('上傳至多5張圖片');
-          return;
+        if(tabData[index].existFile) {
+          if (tabData[index].newFile.length + files.length + tabData[index].existFile.length  > 5) {
+            alert('上傳至多5張圖片');
+            return;
+          }
+        }
+        else {
+          if (tabData[index].newFile.length + files.length > 5) {
+            alert('上傳至多5張圖片');
+            return;
+          }
         }
         console.log(event.target.files);
         // 压缩并处理图像

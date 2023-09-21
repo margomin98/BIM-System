@@ -7,288 +7,266 @@
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
-          <p>申請人員: {{ details.Applicant }}</p>
+          <p>
+            申請人員 : {{ details.Applicant }}
+          </p>
         </div>
         <div>
-          <p>申請入庫日期: {{ details.ApplicationDate }}</p>
+          <p>
+            申請入庫日期 : {{ details.ApplicationDate }}
+          </p>
         </div>
         <div>
-          <p>資產類型:{{ details.IsConsumable ? '耗材' : '資產' }}</p>
+          <p>
+            資產類型 : {{ details.AssetType}}
+          </p>
         </div>
       </div>
+      <!-- 上半部表單 -->
       <div class="content">
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">編號：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                狀態：
-              </div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Status">
+        <!-- 專案代碼 -->
+        <div v-show="details.AssetType === '存貨'" class="col">
+          <div class="input-group mb-4">
+            <div class="input-group-prepend">
+              專案代碼：
             </div>
+            <input type="text" class="form-control readonly_box" readonly v-model="details.ProjectCode">
           </div>
         </div>
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">專案代碼：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID" />
+        <!-- 專案名稱 -->
+        <div v-show="details.AssetType === '存貨'" class="col">
+          <div class="input-group mb-4">
+            <div class="input-group-prepend">
+              專案名稱：
+            </div>
+            <input type="text" class="form-control readonly_box" readonly v-model="details.ProjectName">
           </div>
         </div>
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">專案名稱：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID" />
-          </div>
-        </div>
+        <!-- 物流單號 -->
         <div class="col form_search_wrap">
-          <div class="input-group mb-3">
+          <div class="input-group mb-4">
             <div class="input-group-prepend">
               物流單號 :
             </div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="VendorName" readonly>
-            <button class="form_search_btn">檢視</button>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.ShipmentNum" readonly>
+            <button class="form_search_btn" @click="viewReceive">檢視</button>
+            <!-- 隱藏跳轉按鈕 -->
+            <router-link :to="{name: 'Receive_View' , query:{ search_id : details.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
           </div>
         </div>
+        <!-- 設備總類 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">設備總類：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.EquipTypeName" />
-            </div>
-          </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">設備分類：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.EquipCategoryName" />
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">物品名稱：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AssetName" />
-          </div>
-        </div>
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">廠商：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.VendorName" />
-          </div>
-        </div>
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">規格：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductSpec" />
-          </div>
-        </div>
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">型號：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductType" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend info"><img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"> 包裝數量：
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                設備總類：
               </div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Count" />
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.EquipTypeName">
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">包裝單位：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Unit" />
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                設備分類：
+              </div>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.EquipCategoryName">
             </div>
           </div>
         </div>
-        <div v-if="details.IsConsumable" class="row">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend info"><img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">數量：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.PackageNum" />
+        <!-- 物品名稱 -->
+        <div class="col">
+          <div class="input-group mb-4">
+            <div class="input-group-prepend">
+              物品名稱：
             </div>
-          </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">單位：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.PackageUnit" />
-            </div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AssetName">
           </div>
         </div>
+        <!-- 廠商 -->
+        <div class="col">
+          <div class="input-group mb-4">
+            <div class="input-group-prepend">
+              廠商：
+            </div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.VendorName">
+          </div>
+        </div>
+        <!-- 規格 -->
+        <div class="col">
+          <div class="input-group mb-4">
+            <div class="input-group-prepend">
+              規格：
+            </div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductSpec">
+          </div>
+        </div>
+        <!-- 型號 -->
+        <div class="col">
+          <div class="input-group mb-4">
+            <div class="input-group-prepend">
+              型號：
+            </div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductType">
+          </div>
+        </div>
+        <!-- 包裝數量 & 包裝單位-->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
+            <div class="input-group mb-4">
+              <div class="input-group-prepend info">
+                <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">包裝數量：
+              </div>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Count">
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                包裝單位：
+              </div>
+              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Unit">
+            </div>
+          </div>
+        </div>
+        <!-- 數量 & 單位  -->
+        <div v-show="details.AssetType === '耗材'" class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-4">
+              <div class="input-group-prepend info">
+                <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">數量：
+              </div>
+              <input type="text" class="form-control readonly_box" readonly v-model="details.PackageNum">
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                單位：
+              </div>
+              <input type="text" class="form-control readonly_box" readonly v-model="details.PackageUnit">
+            </div>
+          </div>
+        </div>
+        <!-- 保固期限 -->
+        <div class='row'>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 保固期限：
               </div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.WarrantyDate">
+              <input type="text" class="form-control readonly_box" readonly v-model="details.WarrantyDate">
             </div>
           </div>
         </div>
+        <!-- 保固 開始&到期 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">保固開始日：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.WarrantyStartDate" />
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                保固開始日：
+              </div>
+              <input type="text" class="form-control readonly_box" readonly v-model="details.WarrantyStartDate">
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">保固到期日：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.WarrantyEndDate" />
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                保固到期日：
+              </div>
+              <input type="text" class="form-control readonly_box" readonly v-model="details.WarrantyEndDate">
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">交付人員：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.DeliveryOperator" />
-            </div>
-          </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">交付日期：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.DeliveryDate" />
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">入庫人員：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AssetsInOperator" />
-            </div>
-          </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">入庫日期：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AssetsInDate" />
-            </div>
-          </div>
-        </div>
+        <!-- 備註 -->
         <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">備註：</div>
-            <textarea class="form-control readonly_box" style="height: 250px;" aria-label="With textarea" readonly v-model="details.Memo"></textarea>
+          <div class="input-group mb-4">
+            <div class="input-group-prepend">
+              備註：
+            </div>
+            <textarea style="height: 200px;" class="form-control readonly_box" aria-label="With textarea" readonly v-model="details.Memo"></textarea>
           </div>
         </div>
       </div>
+      <!-- 頁籤部分 -->
       <div class="tab_section mt-5">
+        <!-- tab頂端頁籤 -->
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button v-for="tab in parseInt(tabNumber)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab" :aria-selected="tab === 0">
-                  {{ tab }}
-                </button>
+            <button v-for="tab in parseInt(tabNumber)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab">{{ tab }}</button>
           </div>
         </nav>
-        <div v-if="formData.length > 0" class="tab-content" id="nav-tabContent">
-          <div v-for="(item, index) in formData" :key="index" :class="['tab-pane', 'fade', { 'show active': index === 0 }]" :id="'tab' + (index + 1)" role="tabpanel" aria-labelledby="tab1-tab">
+        <!-- tab內容 -->
+        <div class="tab-content" id="nav-tabContent">
+          <div v-for="(tab, index) in details.Tabs" :key="index" :class="['tab-pane', 'fade', { 'show active': index === 0 }]" :id="'tab' + (index + 1)" role="tabpanel">
+            <!-- 頁籤物品名稱 -->
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">物品名稱：</div>
-                <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.AssetName" readonly />
+                <input type="text" class="form-control readonly_box" v-model="tab.itemAssetName" readonly>
               </div>
             </div>
+            <!-- 頁籤資產編號 -->
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">資產編號：</div>
-                <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.AssetsId" readonly/>
+                <input type="text" class="form-control readonly_box" v-model="tab.itemAssetsId" readonly>
               </div>
             </div>
+            <!-- 頁籤S/N -->
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">S/N：</div>
-                <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.SN" readonly/>
+                <input type="text" class="form-control readonly_box" v-model="tab.itemSN" readonly>
               </div>
             </div>
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">專案代碼：</div>
-                <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.SN" readonly/>
-              </div>
-            </div>
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">專案名稱：</div>
-                <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.SN" readonly/>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    儲位區域：
-                  </div>
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.itemAreaName" readonly/>
-                </div>
-              </div>
-              <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    儲位櫃位：
-                  </div>
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.itemLayerName" readonly/>
-                </div>
-              </div>
-            </div>
-            <div class="col-">
+            <!-- 頁籤專案代碼 -->
+            <div v-show="details.AssetType === '存貨'" class="col form_search_wrap">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  備註：
+                  專案代碼 :
                 </div>
-                <textarea class="readonly_box col" rows="5" v-model="item.itemMemo" readonly></textarea>
+                <input type="text" class="form-control readonly_box" aria-label="Default" v-model="tab.itemProjectCode" readonly>
               </div>
             </div>
-            <div class="col">
-              <!-- 選擇檔案button -->
+            <!-- 頁籤專案名稱 -->
+            <div v-show="details.AssetType === '存貨'" class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend">資產照片：</div>
-                <div class='selected_file'>
-                  <p class='file_upload_wrap' v-for="(file, img_index) in item.existFile" :key="img_index" style="cursor: pointer;">
-                    <p @click="showExistFileImage(index, img_index)" data-bs-toggle="modal" data-bs-target="#existFile_modal">
-                      {{ file.FileName }}
-                    </p>
-                  </p>
+                <div class="input-group-prepend">專案名稱：</div>
+                <input type="text" class="form-control readonly_box" v-model="tab.itemProjectName" readonly>
+              </div>
+            </div>
+            <!-- 頁籤備註 -->
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">備註：</div>
+                <textarea class="col readonly_box" rows="5" v-model="tab.itemMemo" readonly></textarea>
+              </div>
+            </div>
+            <!-- 頁籤上傳檔案部分 -->
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">已上傳檔案：</div>
+                <div class="d-flex  flex-column">
+                  <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
+                    <p @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#existFile_modal">{{ file.FileName }}</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <!-- ExistFileModal -->
+        <!-- view Modal -->
         <div class="modal fade" id="existFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">{{ existFileModalTitle }}</h5>
-                <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
-              </div>
-              <div v-if="formData" class="modal-body">
-                <img :src="existFileImageUrl" alt="Existed Image" class="img-fluid" />
-              </div>
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 800px !important;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">{{ modalParams.title }}</h5>
+              <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
             </div>
+            <img :src="modalParams.src" alt="Uploaded Image" class="w-100" />
           </div>
         </div>
-        <!-- NewFileModal -->
-        <div class="modal fade" id="newFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">{{ newFileModalTitle }}</h5>
-                <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
-              </div>
-              <div v-if="formData" class="modal-body">
-                <img :src="newFileImageUrl" alt="Uploaded Image" class="img-fluid" />
-              </div>
-            </div>
-          </div>
-        </div>
+      </div>
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
@@ -298,143 +276,234 @@
 </template>
 
 <script>
-  import {
-    ref,
-    onMounted,
-    reactive
-  } from 'vue';
-  import Navbar from "@/components/Navbar.vue";
-  import {
-    useRoute
-  } from 'vue-router';
-  import router from '@/router';
-  export default {
-    components: {
-      Navbar,
-    },
-    setup() {
-      const route = useRoute();
-      const tabNumber = ref(0);
-      const AI_ID = route.query.search_id;
-      onMounted(() => {
-        getDetails();
-      });
-      //上半部表單部分
-      const details = ref({});
-      //依照單號取得資料並生成tab資料
-      async function getDetails() {
+import Navbar from "@/components/Navbar.vue";
+import { onMounted, ref , reactive} from "vue";
+import { useRoute, useRouter } from "vue-router";
+export default {
+  components: {
+    Navbar,
+  },
+  setup() {
+    const route = useRoute();
+    const router = useRouter();
+    const AI_ID = route.query.search_id;
+    const deliveryDate = ref('');
+    const details = ref({});
+    const tabNumber = ref(1);
+    // Modal Params
+    const modalParams = reactive({
+      title: '',
+      src: '',
+    })
+    const validation = ref({
+      user1: {
+        account: '',
+        password: '',
+        isValidate: false,
+        resultName: '',
+      },
+      user2: {
+        account: '',
+        password: '',
+        isValidate: false,
+        resultName: '',
+      },
+    });
+    // 帶入資料
+    async function getDetails() {
+      const axios = require('axios');
+      try {
+        const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
+        console.log(response);
+        const data = response.data;
+        if (data.state === 'success') {
+          console.log('Details Get成功 資料如下\n', data.resultList);
+          details.value = data.resultList;
+          if (details.value.WarrantyStartDate) {
+            details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/\//g, '-');
+          }
+          if (details.value.WarrantyEndDate) {
+            details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/\//g, '-');
+          }
+          tabNumber.value = details.value.Tabs.length
+        } else if (data.state === 'error') {
+          alert(data.messages);
+        } else if (data.state === 'account_error') {
+          alert(data.messages);
+          router.push('/');
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    // 查看收貨單
+    function viewReceive() {
+      if(details.value.AR_ID) {
+        const link = document.getElementById('view-receive');
+        link.click();
+      }
+    }
+    // 查看已上傳相片
+    function viewImgFile(index , file_index) {
+      modalParams.title = details.value.Tabs[index].existFile[file_index].FileName;
+      modalParams.src = details.value.Tabs[index].existFile[file_index].FileLink;
+      console.log('modalParams',modalParams);
+    }
+    //分別使用帳號密碼驗證、改變驗證狀態 user1為設備工程師 user2為倉管人員
+    async function validate(user) {
+      if (user === 1) {
         const axios = require('axios');
+        const formData = new FormData();
+        const formFields = {
+          'userName': validation.value.user1.account,
+          'userPassword': validation.value.user1.password,
+        };
+        //將表格資料append到 formData
+        for (const fieldName in formFields) {
+          formData.append(fieldName, formFields[fieldName]);
+          console.log(formData.get(`${fieldName}`));
+        }
+        const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidationForE_Operator', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
         try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
-          console.log(response);
           const data = response.data;
+          console.log(data);
           if (data.state === 'success') {
-            // console.log('Details Get成功 資料如下\n', data.resultList);
-            details.value = data.resultList;
-            console.log('Details Get成功 資料如下\n', details.value);
-            tabNumber.value = details.value.Count;
-            //生成tab資料
-            initFormDataArray();
-            if (details.value.WarrantyStartDate) {
-              details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
-            }
-            if (details.value.WarrantyEndDate) {
-              details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
-            }
-            if (details.value.AssetsInDate) {
-              details.value.AssetsInDate = details.value.AssetsInDate.replace(/-/g, '/');
-            }
-            if (details.value.DeliveryDate) {
-              details.value.DeliveryDate = details.value.DeliveryDate.replace(/-/g, '/');
-            }
-            if (details.value.ApplicationDate) {
-              details.value.ApplicationDate = details.value.ApplicationDate.replace(/-/g, '/');
-            }
-          } else if (data.state === 'error') {
+            validation.value.user1.isValidate = true;
+            validation.value.user1.resultName = validation.value.user1.account;
+          }
+          else if (data.state === 'error') {
             alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
+            validation.value.user1.isValidate = false;
           }
         } catch (error) {
           console.error(error);
         }
       }
-      //下半部表單部分
-      const formData = reactive([]);
-      const fileInputs = reactive([]);
-      const newFileData = ref(0);
-      const newFileImage = ref(0);
-      const newFileImageUrl = ref('');
-      const newFileModalTitle = ref('');
-      const existFileData = ref(0);
-      const existFileImage = ref(0);
-      const existFileImageUrl = ref('');
-      const existFileModalTitle = ref('');
-      //生成tab資料
-      function initFormDataArray() {
-        for (let i = 0; i < tabNumber.value; i++) {
-          const initArray = details.value.Tabs[i];
-          formData.push({
-            AssetName: initArray.itemAssetName,
-            AssetsId: initArray.AssetsId,
-            itemAreaName: initArray.itemAreaName,
-            AreaArray: [],
-            itemLayerName: initArray.itemLayerName,
-            LayerArray: [],
-            LayerInit: '請先選擇區域',
-            SN: initArray.SN,
-            itemMemo: initArray.itemMemo,
-            existFile: initArray.existFile,
-            deleteFile: [],
-            newFile: [],
-            previewUrl: [],
-          });
+      else if (user === 2) {
+        const axios = require('axios');
+        const formData = new FormData();
+        const formFields = {
+          'userName': validation.value.user2.account,
+          'userPassword': validation.value.user2.password,
+        };
+        //將表格資料append到 formData
+        for (const fieldName in formFields) {
+          formData.append(fieldName, formFields[fieldName]);
+          console.log(formData.get(`${fieldName}`));
+        }
+        const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidationForW_Operator', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        try {
+          const data = response.data;
+          console.log(data);
+          if (data.state === 'success') {
+            validation.value.user2.isValidate = true;
+            validation.value.user2.resultName = validation.value.user2.account;
+          }
+          else if (data.state === 'error') {
+            alert(data.messages);
+            validation.value.user2.isValidate = false;
+          }
+        } catch (error) {
+          console.error(error);
         }
       }
-      function showNewFileImage(index, img_index) {
-        newFileData.value = index;
-        newFileImage.value = img_index;
-        getNewFileUrl();
+    }
+    function validationStatus(user) {
+      if (user === 1) {
+        return validation.value.user1.isValidate ? validation.value.user1.resultName : '未驗證'
+      } else if (user === 2) {
+        return validation.value.user2.isValidate ? validation.value.user2.resultName : '未驗證'
       }
-      function showExistFileImage(index, img_index) {
-        existFileData.value = index;
-        existFileImage.value = img_index;
-        getExistFileUrl();
+    }
+    function canSubmit() {
+      return validation.value.user1.isValidate && validation.value.user2.isValidate;
+    }
+    async function submit() {
+      const axios = require('axios');
+      const formData = new FormData();
+      const formFields = {
+        'AI_ID': details.value.AI_ID,
+        'DeliveryOperator': validation.value.user1.resultName,
+        'AssetsInOperator': validation.value.user2.resultName,
+      };
+      //將表格資料append到 formData
+      for (const fieldName in formFields) {
+        formData.append(fieldName, formFields[fieldName]);
+        console.log(formData.get(`${fieldName}`));
       }
-      function getNewFileUrl() {
-        newFileImageUrl.value = formData[newFileData.value].previewUrl[newFileImage.value];
-        newFileModalTitle.value = formData[newFileData.value].newFile[newFileImage.value].name;
+      const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/Delivery', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      try {
+        const data = response.data;
+        console.log(data);
+        if (data.state === 'success') {
+          let msg = data.messages;
+          msg += '\n單號:' + data.resultList.AI_ID;
+          alert(msg);
+          router.push({ name: 'Store_Process_Datagrid' });
+        }
+        else if (data.state === 'error') {
+          alert(data.messages);
+          console.log('error state', response);
+        }
+      } catch (error) {
+        console.error(error);
       }
-      function getExistFileUrl() {
-        existFileImageUrl.value = details.value.Tabs[existFileData.value].existFile[existFileImage.value].FileLink;
-        existFileModalTitle.value = details.value.Tabs[existFileData.value].existFile[existFileImage.value].FileName;
-      }
-      function goBack() {
-        window.history.back();
-      }
-      return {
-        details,
-        tabNumber,
-        formData,
-        fileInputs,
-        newFileImageUrl,
-        newFileModalTitle,
-        existFileImageUrl,
-        existFileModalTitle,
-        showNewFileImage,
-        showExistFileImage,
-        goBack,
-      }
-    },
-  };
+    }
+
+    function getDate() {
+      const today = new Date();
+      var date = '';
+      date += (today.getFullYear() + '/');
+      date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
+      date += ((today.getDate()).toString().padStart(2, '0'));
+      return date;
+    }
+    onMounted(() => {
+      getDetails();
+      deliveryDate.value = getDate();
+    });
+    function goBack() {
+      window.history.back();
+    }
+    return {
+      tabNumber,
+      modalParams,
+      validation,
+      viewReceive,
+      viewImgFile,
+      validate,
+      validationStatus,
+      canSubmit,
+      submit,
+      goBack,
+      deliveryDate,
+      details,
+    }
+  },
+};
 </script>
 <style lang="scss" scoped>
+  textarea {
+    padding: 5px 10px 30px;
+  }
   @import "@/assets/css/global.scss";
   .nav {
     overflow-x: auto;
     overflow-y: hidden;
     flex-wrap: nowrap;
+    border: none;
   }
    ::-webkit-scrollbar {
     height: 6px;
@@ -443,9 +512,6 @@
     border-radius: 5px;
     background-color: rgb(176, 175, 175);
     border: 1px solid rgb(86, 85, 85);
-  }
-  textarea {
-    padding: 5px 10px 30px;
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
@@ -487,6 +553,11 @@
           .dropdown {
             .dropdown-menu {
               width: 100%;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
             }
             button {
               @include dropdown-btn;
@@ -573,6 +644,16 @@
           .tab-content {
             background: #3E4E5F;
             padding: 50px 30px;
+            .form_search_wrap {
+              .input-group {
+                .input-group-prepend {
+                  width: 113px;
+                }
+                input {
+                  margin-left: 15px !important
+                }
+              }
+            }
             .modal {
               .modal-header {
                 background: #3D4E61;
@@ -584,16 +665,37 @@
                 }
               }
             }
+            .dropdown {
+              width: 60%;
+              .dropdown-menu {
+                width: 100%;
+                max-height: 250px;
+                overflow-y: auto;
+                p {
+                  &:hover {
+                    cursor: pointer;
+                  }
+                }
+              }
+              button {
+                @include dropdown-btn;
+                width: 100%;
+                color: black;
+                justify-content: space-between;
+                align-items: center;
+              }
+            }
             .input-group {
+              flex-wrap: nowrap;
               span {
                 @include red_star
               }
               .selected_file {
-                margin-left: 10px;
+                margin-left: 20px;
                 p.title {
                   font-weight: 700;
                   color: white;
-                  margin-bottom: unset !important;
+                  margin-bottom: 5px;
                 }
                 .file_upload_wrap {
                   margin-bottom: 0;
@@ -612,6 +714,25 @@
                       font-weight: 700;
                       color: white;
                     }
+                  }
+                }
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  margin-bottom: 0;
+                  font-weight: 700;
+                  color: white;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
                   }
                 }
               }
@@ -637,12 +758,6 @@
                   @include choose_file_btn;
                   &:hover {
                     background: #3f608f;
-                  }
-                }
-                .upload_btn {
-                  @include upload_file_btn;
-                  &:hover {
-                    background: #2f507e;
                   }
                 }
               }
@@ -682,10 +797,10 @@
           .form_search_wrap {
             .input-group {
               .input-group-prepend {
-                width: 118px;
+                width: 120px;
               }
               input {
-                margin-left: 18px !important
+                margin-left: 15px !important
               }
             }
           }
@@ -778,6 +893,16 @@
           .tab-content {
             background: #3E4E5F;
             padding: 50px 30px;
+            .form_search_wrap {
+              .input-group {
+                .input-group-prepend {
+                  width: 113px;
+                }
+                input {
+                  margin-left: 15px !important
+                }
+              }
+            }
             .modal {
               .modal-header {
                 background: #3D4E61;
@@ -789,16 +914,37 @@
                 }
               }
             }
+            .dropdown {
+              width: 60%;
+              .dropdown-menu {
+                width: 100%;
+                max-height: 250px;
+                overflow-y: auto;
+                p {
+                  &:hover {
+                    cursor: pointer;
+                  }
+                }
+              }
+              button {
+                @include dropdown-btn;
+                width: 100%;
+                color: black;
+                justify-content: space-between;
+                align-items: center;
+              }
+            }
             .input-group {
+              flex-wrap: nowrap;
               span {
                 @include red_star
               }
               .selected_file {
-                margin-left: 10px;
+                margin-left: 20px;
                 p.title {
                   font-weight: 700;
                   color: white;
-                  margin-bottom: unset !important;
+                  margin-bottom: 5px;
                 }
                 .file_upload_wrap {
                   margin-bottom: 0;
@@ -842,12 +988,6 @@
                   @include choose_file_btn;
                   &:hover {
                     background: #3f608f;
-                  }
-                }
-                .upload_btn {
-                  @include upload_file_btn;
-                  &:hover {
-                    background: #2f507e;
                   }
                 }
               }
@@ -926,10 +1066,12 @@
               font-weight: 700;
               font-size: 20px;
               width: 100%;
-              display: flex;
-              flex-direction: row-reverse;
-              justify-content: flex-end;
             }
+          }
+          .info {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
           }
         }
         .button_wrap {
@@ -982,6 +1124,9 @@
           }
         }
         .tab_section {
+          .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+            margin-left: unset !important;
+          }
           .nav-tabs {
             button {
               @include tab_section_num;
@@ -1006,8 +1151,26 @@
                 }
               }
             }
-            .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+            .dropdown {
               margin-left: unset !important;
+              margin-top: 5px;
+              .dropdown-menu {
+                width: 100%;
+                max-height: 250px;
+                overflow-y: auto;
+                p {
+                  &:hover {
+                    cursor: pointer;
+                  }
+                }
+              }
+              button {
+                @include dropdown-btn;
+                width: 100%;
+                color: black;
+                justify-content: space-between;
+                align-items: center;
+              }
             }
             .input-group {
               flex-direction: column;
@@ -1018,6 +1181,7 @@
                 p.title {
                   font-weight: 700;
                   color: white;
+                  margin-bottom: 5px;
                 }
                 .file_upload_wrap {
                   margin-bottom: 0;
@@ -1044,8 +1208,8 @@
               }
               .form-control {
                 height: 35px;
-                border-radius: 0;
                 width: 100%;
+                border-radius: 0;
                 margin-left: unset !important;
                 margin-top: 5px;
               }
@@ -1059,16 +1223,11 @@
                 display: flex;
                 flex-direction: column;
                 .choose_btn {
+                  margin-top: 5px;
                   margin-bottom: 10px;
                   @include choose_file_btn;
                   &:hover {
                     background: #3f608f;
-                  }
-                }
-                .upload_btn {
-                  @include upload_file_btn;
-                  &:hover {
-                    background: #2f507e;
                   }
                 }
               }
