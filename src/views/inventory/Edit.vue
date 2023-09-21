@@ -20,7 +20,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend"><span>*</span>標題：</div>
-            <input type="text" class="form-control text-center" placeholder="不可輸入超過20字" v-model="details.PlanTitle" />
+            <input type="text" class="form-control text-center" placeholder="最多輸入20字" v-model="details.PlanTitle" />
           </div>
         </div>
         <div class="row organizer_wrap">
@@ -131,7 +131,7 @@
                     </div>
                     <div class='col'>
                       <p>物品名稱</p>
-                      <input type="text" class="form-control text-center" placeholder="不可輸入超過20字" v-model="searchParams.AssetName" />
+                      <input type="text" class="form-control text-center" placeholder="最多輸入20字" v-model="searchParams.AssetName" />
                     </div>
                     <div class='col'>
                       <p>儲位區域</p>

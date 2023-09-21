@@ -4,7 +4,9 @@
     <div class="title col">
       <h1>編輯資產</h1>
     </div>
+    <!-- 上半部表單 -->
     <div class="info_wrap col">
+      <!-- 表單標頭 -->
       <div class="fixed_title">
         <div>
           <h4>資產資訊</h4>
@@ -15,7 +17,9 @@
           <p>資產編號: {{ AssetsId }}</p>
         </div>
       </div>
+      <!-- 表單內容 -->
       <div class="content">
+        <!-- 狀態 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -26,43 +30,51 @@
             </div>
           </div>
         </div>
+        <!-- 資產類型 (耗材為readonly ，資產<->存貨 可互換 )-->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend flex">資產類型：</div>
-              <div class="dropdown">
+              <div class="input-group-prepend flex"><span v-if="details.AssetType !== '耗材'">*</span>資產類型：</div>
+              <div v-if="details.AssetType !== '耗材'" class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ details.Custodian || '請選擇' }}
-                      </button>
+                  {{ details.AssetType || '請選擇' }}
+                </button>
                 <div class="dropdown-menu">
-                  <p v-for="(item , index) in CustodianArray" :key="index" class="dropdown-item" @click="selectAccount(item)">{{ item }}</p>
+                  <p v-for="(item , index) in AssetTypeArray" :key="index" class="dropdown-item" @click="selectAssetType(item)">{{ item }}</p>
                 </div>
               </div>
+              <input v-else type="text" class="form-control readonly_box" readonly v-model="details.AssetType">
             </div>
           </div>
         </div>
-        <div class="col">
+        <!-- 專案代碼 -->
+        <div v-show="details.AssetType === '存貨'" class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend">專案代碼：</div>
-            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.AI_ID" />
-            <button class="form_search_btn">搜索</button>
+            <div class="input-group-prepend"><span>*</span>專案代碼：</div>
+            <input type="text" class="form-control" v-model="details.ProjectCode" />
+            <button class="form_search_btn" @click="getProjectName">搜尋</button>
           </div>
         </div>
-        <div class="col">
+        <!-- 專案名稱 -->
+        <div v-show="details.AssetType === '存貨'" class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">專案名稱：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID" />
+            <input type="text" class="form-control readonly_box" readonly v-model="details.ProjectName" />
           </div>
         </div>
+        <!-- 物流單號 -->
         <div class="col form_search_wrap">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               物流單號 :
             </div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="VendorName" readonly>
-            <button class="form_search_btn">檢視</button>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.ShipmentNum" readonly>
+            <button class="form_search_btn" @click="viewReceive">檢視</button>
+            <!-- 隱藏跳轉按鈕 -->
+            <router-link :to="{name: 'Receive_View' , query:{ search_id : details.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
           </div>
         </div>
+        <!-- 設備總類 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -91,18 +103,21 @@
             </div>
           </div>
         </div>
+        <!-- 物品名稱 -->
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend"><span>*</span>物品名稱：</div>
             <input type="text" class="form-control " placeholder="最多輸入20字" v-model="details.AssetName" />
           </div>
         </div>
+        <!-- 廠商 -->
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">廠商：</div>
             <input type="text" class="form-control " placeholder="最多輸入100字" v-model="details.VendorName" />
           </div>
         </div>
+        <!-- 規格 -->
         <div class="col">
           <div class="col">
             <div class="input-group mb-3">
@@ -123,6 +138,7 @@
             </div>
           </div>
         </div>
+        <!-- 總庫存數量 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -137,6 +153,7 @@
             </div>
           </div>
         </div>
+        <!-- 儲位 區域&櫃位 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -165,6 +182,7 @@
             </div>
           </div>
         </div>
+        <!-- 保固期限 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -175,6 +193,7 @@
             </div>
           </div>
         </div>
+        <!-- 保固 開始&到期 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -189,6 +208,7 @@
             </div>
           </div>
         </div>
+        <!-- 保管人員 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -196,8 +216,8 @@
               <!-- <account-search @custodian = "setCustodian" :getCustodian="details.Custodian"></account-search> -->
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ details.Custodian || '請選擇' }}
-                      </button>
+                  {{ details.Custodian || '請選擇' }}
+                </button>
                 <div class="dropdown-menu">
                   <p v-for="(item , index) in CustodianArray" :key="index" class="dropdown-item" @click="selectAccount(item)">{{ item }}</p>
                 </div>
@@ -205,6 +225,7 @@
             </div>
           </div>
         </div>
+        <!-- 入庫 人員&日期 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
@@ -219,6 +240,7 @@
             </div>
           </div>
         </div>
+        <!-- 備註 -->
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">備註：</div>
@@ -227,6 +249,7 @@
         </div>
       </div>
     </div>
+    <!-- 中間資產照片輪播 -->
     <div class="info_wrap col photo">
       <div class="fixed_title">
         <div>
@@ -252,6 +275,7 @@
         <button class="send_btn" @click="submit">送出</button>
       </div>
     </div>
+    <!-- 歷史紀錄 -->
     <div class="info_wrap col log">
       <div class="fixed_title">
         <div>
@@ -316,7 +340,7 @@
   import Storage_list_view_button from "@/components/Storage_list_view_button";
   import AccountSearch from "@/components/API/account_search";
   import Navbar from "@/components/Navbar.vue";
-  import { HistoryAction } from "@/assets/js/dropdown";
+  import { HistoryAction , TypeArray} from "@/assets/js/dropdown";
   import {
     onMounted,
     ref,
@@ -343,6 +367,7 @@
       const AssetsId = route.query.search_id;
       // 上半部表單
       const details = ref({});
+      const AssetTypeArray = TypeArray;
       const EquipTypeArray = ref([]); //設備總類陣列 request拿到
       const EquipCategoryArray = ref([]); //設備分類陣列 request拿到
       const EquipCategoryInit = ref('請先選擇設備總類');
@@ -659,6 +684,40 @@
           console.error(error);
         }
       }
+      // 搜尋專案名稱
+      async function getProjectName() {
+        details.value.ProjectCode = details.value.ProjectCode.trim();
+        let code = details.value.ProjectCode;
+        if (!/^[\s\S]{1,10}$/.test(code)) {
+          alert('專案代碼格式錯誤');
+          return;
+        }
+        const form = new FormData();
+        form.append('projectCode', code);
+        const axios = require('axios');
+        const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchProjectName', form);
+        try {
+          const data = response.data;
+          console.log(data);
+          if (data.state === 'success') {
+            details.value.ProjectName = data.resultList;
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          } else {
+            details.value.ProjectName = data.messages.toString()
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      // 檢視收貨單
+      function viewReceive() {
+        if(details.value.AR_ID) {
+          const link = document.getElementById('view-receive');
+          link.click();
+        }
+      }
       function selectType(item) {
         details.value.EquipTypeName = item;
         // console.log('選擇的總類:', EquipTypeName.value);
@@ -684,6 +743,14 @@
       }
       const selectAccount = (item) => {
         details.value.Custodian = item;
+      }
+      const selectAssetType = (item) => {
+        // 資產類型變更為"資產" 清空專案代碼、名稱
+        if(item === '資產') {
+          details.value.ProjectCode = '';
+          details.value.ProjectName = '';
+        }
+        details.value.AssetType = item;
       }
       // 輪播部分 function
       function openFileExplorer() {
@@ -816,6 +883,7 @@
       return {
         AssetsId,
         details,
+        AssetTypeArray,
         EquipTypeArray,
         EquipCategoryArray,
         EquipCategoryInit,
@@ -830,12 +898,15 @@
         submit,
         getEquipTypeName,
         getAreaName,
+        getProjectName,
+        viewReceive,
         selectType,
         selectCategory,
         selectArea,
         selectLayer,
         setCustodian,
         selectAccount,
+        selectAssetType,
         openFileExplorer,
         handleFileChange,
         deleteFileFunction,

@@ -31,9 +31,7 @@
         </div>
         <div class="row g-0">
           <div class="col-xl-5 col-lg-5 col-md-5 col-12 d-flex wrap column_section">
-            <label for="inputWithButton" class="form-label">
-                      <p><span>*</span>專案代碼</p>
-                    </label>
+            <label for="inputWithButton" class="form-label"><p><span>*</span>專案代碼</p></label>
             <div class="input-group">
               <input type="text" class="form-control" id="project_id" placeholder="最多輸入10字" v-model="myForm.ProjectCode">
               <button class="btn code_search" type="button" @click="getProjectName">搜尋</button>
@@ -136,6 +134,7 @@
   } from "ag-grid-vue3";
   import Delete from "@/components/Rent_New_Delete_button";
   import Navbar from '@/components/Navbar.vue';
+  import { UseOptions } from "@/assets/js/dropdown";
   import {
     onMounted,
     reactive,
@@ -150,7 +149,7 @@
     },
     setup() {
       const gridApi = ref(null);
-      const options = ['內部領用', '借測', '出貨', '退貨'];
+      const options = UseOptions;
       const myForm = reactive({
         ApplicationDate: '',
         Applicant: '',

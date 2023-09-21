@@ -185,6 +185,7 @@
   } from 'vue-router';
   import Storage_add from "@/components/Storage_add_button";
   import Navbar from "@/components/Navbar.vue";
+  import { UseOptions } from "@/assets/js/dropdown";
   import {
     computed,
     onMounted,
@@ -218,7 +219,7 @@
         VerifyPerson: '',
       })
       const details = ref({});
-      const options = ['內部領用', '借測', '出貨', '退貨'];
+      const options = UseOptions;
       const columnDefs1 = [{
           headerName: "項目",
           field: "id",

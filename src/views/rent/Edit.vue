@@ -131,6 +131,7 @@
   } from 'vue-router';
   import Delete from "@/components/Rent_Edit_Delete_button";
   import Navbar from '@/components/Navbar.vue';
+  import { UseOptions } from "@/assets/js/dropdown";
   import {
     onMounted,
     ref,
@@ -147,7 +148,7 @@
       const router = useRouter();
       const AO_ID = route.query.search_id;
       const gridApi = ref(null);
-      const options = ['內部領用', '借測', '出貨', '退貨'];
+      const options = UseOptions;
       const columnDefs = [{
           suppressMovable: true,
           field: "",

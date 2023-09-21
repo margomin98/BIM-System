@@ -21,13 +21,13 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend"><span>*</span>物流單號：</div>
-            <input type="text" class="form-control text-center" placeholder="不可輸入超過20字" v-model="details.ShipmentNum" />
+            <input type="text" class="form-control text-center" placeholder="最多輸入20字" v-model="details.ShipmentNum" />
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend"><span>*</span>貨運公司：</div>
-            <input type="text" class="form-control text-center" placeholder="不可輸入超過20字" v-model="details.ShipmentCompany" />
+            <input type="text" class="form-control text-center" placeholder="最多輸入20字" v-model="details.ShipmentCompany" />
           </div>
         </div>
         <div class="col">

@@ -15,7 +15,7 @@
           <div class="input-group ">
             <div class="search_section">
               <div class="input-wrapper">
-               <input placeholder="請掃描資產編號(完整檢索)" class="text-center" ref="myInput">
+               <input placeholder="請掃描資產編號" class="text-center" ref="myInput" v-model="AssetsId">
               </div>
           
             </div>
@@ -25,7 +25,7 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="send_btn" @click="submit">搜尋</button>
+        <button class="send_btn" @click="searchAssets">搜尋</button>
       </div>
     </div>
   </div>
@@ -34,87 +34,46 @@
 <script>
   import Navbar from "@/components/Navbar.vue";
   import router from "@/router";
+  import axios from "axios";
   import {
-    onMounted,
+onMounted,
     ref
   } from 'vue';
   export default {
     components: {
       Navbar
     },
-    mounted() {
-    this.$refs.myInput.focus();
-  }
-    // setup() {
-    //   const inputValue = ref(''); //帳號
-    //   const dropdownOptions = ref([]); //帳號搜尋結果(選項)
-    //   const filteredOptions = ref(dropdownOptions);
-    //   const selectedRole = ref(''); //權限
-    //   const roleArray = ['訪客', '系統管理員', '設備工程師', '倉管人員', '主管'] //權限選項
-    //   const showOptions = ref(false); //控制搜尋選單出現與否
-    //   onMounted(() => {
-    //     queryAccount();
-    //   });
-    //   async function queryAccount() {
-    //     const axios = require('axios');
-    //     const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchName?name=${inputValue.value}`);
-    //     try {
-    //       const data = response.data;
-    //       if (data.state === 'success') {
-    //         dropdownOptions.value = data.resultList;
-    //       }
-    //     } catch (error) {
-    //       console.error(error);
-    //     }
-    //   }
-    //   async function submit() {
-    //     const axios = require('axios');
-    //     const form = new FormData();
-    //     form.append('userName', inputValue.value);
-    //     form.append('role', selectedRole.value);
-    //     const response = await axios.post('http://192.168.0.177:7008/AuthorityMng/AccoutChangeRole', form);
-    //     try {
-    //       const data = response.data;
-    //       if (data.state === 'success') {
-    //         let msg = data.messages + '\n';
-    //         msg += `${inputValue.value}　變更為　${selectedRole.value}`
-    //         alert(msg);
-    //         router.push('/home');
-    //       }
-    //     } catch (error) {
-    //       console.error(error);
-    //     }
-    //   }
-    //   function selectAccount(item) {
-    //     inputValue.value = item;
-    //     showOptions.value = false;
-    //   }
-    //   function selectRole(item) {
-    //     selectedRole.value = item;
-    //   }
-    //   function handleBlur() {
-    //     setTimeout(() => {
-    //       showOptions.value = false;
-    //     }, 100);
-    //   }
-    //   function goBack() {
-    //     window.history.back();
-    //   }
-    //   return {
-    //     inputValue,
-    //     dropdownOptions,
-    //     filteredOptions,
-    //     selectedRole,
-    //     roleArray,
-    //     showOptions,
-    //     queryAccount,
-    //     submit,
-    //     selectAccount,
-    //     selectRole,
-    //     handleBlur,
-    //     goBack,
-    //   };
-    // }
+    setup() {
+      const myInput = ref(null);
+      const AssetsId = ref('')
+      onMounted(()=>{
+        myInput.value.focus();
+      });
+      async function searchAssets() {
+        axios.get(`http://192.168.0.177:7008/GetDBdata/GetAssetInfo?id=${AssetsId.value}`)
+        .then((response) => {
+          const data = response.data;
+          if(data.state === 'success') {
+            console.log('AssetsId: ',data.resultList.AssetsId);
+            router.push({name: 'Assets_View', query: {search_id: AssetsId.value}})
+          }
+          else {
+            alert('請輸入正確的資產編號');
+            AssetsId.value ='';
+            myInput.value.focus();
+
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+      }
+      return {
+        myInput,
+        AssetsId,
+        searchAssets,
+      }
+    },
   };
 </script>
 <style lang="scss" scoped>

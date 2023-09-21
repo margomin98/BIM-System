@@ -57,7 +57,9 @@
               物流單號 :
             </div>
             <input type="text" class="form-control readonly_box" v-model="details.ShipmentNum" readonly>
-            <button class="form_search_btn">檢視</button>
+            <button class="form_search_btn" @click="viewReceive">檢視</button>
+            <!-- 隱藏跳轉按鈕 -->
+            <router-link :to="{name: 'Receive_View' , query:{ search_id : details.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
           </div>
         </div>
         <!-- 設備總類 & 設備分類-->
@@ -238,7 +240,7 @@
                   <span>*</span>專案代碼 :
                 </div>
                 <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.itemProjectCode">
-                <button class="form_search_btn">搜尋</button>
+                <button class="form_search_btn" @click="getProjectName(index)">搜尋</button>
               </div>
             </div>
             <!-- 頁籤專案名稱 -->
@@ -524,32 +526,81 @@
       function selectLayer(index, item) {
         formData[index].itemLayerName = item;
       }
+      async function getProjectName(index) {
+        let code = ''
+        formData[index].itemProjectCode = formData[index].itemProjectCode.trim();
+        code = formData[index].itemProjectCode;
+        if (!/^(?![ 　]{10}$)[\s\S]{1,10}$/.test(code)) {
+          alert('專案代碼格式錯誤');
+          return;
+        }
+        const form = new FormData();
+        form.append('projectCode', code);
+        const axios = require('axios');
+        const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchProjectName', form);
+        try {
+          const data = response.data;
+          console.log(data);
+          if (data.state === 'success') {
+            formData[index].itemProjectName = data.resultList;
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          } else {
+            formData[index].itemProjectName = data.messages.toString()
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      // 暫存只檢查 1.物品名稱必填 2.存貨的專案代碼必填 3.其他子項目是否超過字數限制
       async function temp() {
         const formDataArray = [];
         let promises = [];
         var InputMessages = '';
         var InputError = false;
-        //檢查暫存必填項目(物品名稱)
         for (let i = 0; i < tabNumber.value; i++) {
           const form = formData[i];
-          form.itemAssetName = form.itemAssetName.trim();
+          //1. 檢查暫存必填項目(物品名稱)
+          form.itemAssetName = form.itemAssetName.trim()
           if (!form.itemAssetName) {
-            alert('物品名稱必填');
-            return
+            InputError = true;
+            InputMessages += '頁籤 ' + (i + 1) + ' :　物品名稱必填' + '\n';
+          }
+
+          //2. 資產類型為存貨-> 專案代碼必填
+          if (details.value.AssetType === '存貨') {
+            form.itemProjectCode = form.itemProjectCode.trim()
+            if (!form.itemProjectCode) {
+              InputError = true;
+              InputMessages += '頁籤 ' + (i + 1) + ' :　專案代碼必填' + '\n';
+            }
+          }
+
+          //3. 檢查字數限制
+          if (details.value.AssetType === '存貨') {
+            if (form.itemProjectCode) {
+              form.itemProjectCode = form.itemProjectCode.trim();
+              if (!/^[\s\S]{0,10}$/.test(form.itemProjectCode)) {
+                InputError = true;
+                InputMessages += '頁籤 ' + (i + 1) + ' :　專案代碼不可輸入超過10字' + '\n';
+              }
+            }
           }
           if (form.itemSN) {
             form.itemSN = form.itemSN.trim();
+            if (!/^[\s\S]{0,100}$/.test(form.itemSN)) {
+              InputError = true;
+              InputMessages += '頁籤 ' + (i + 1) + ' :　S/N不可輸入超過100字' + '\n';
+            }
           }
-          if (form.itemSN && !/^[\s\S]{1,100}$/.test(form.itemSN.trim())) {
-            InputError = true;
-            InputMessages += '頁籤 ' + (i + 1) + ' :　S/N不可輸入超過100字' + '\n';
-          }
+
           if (form.itemMemo) {
             form.itemMemo = form.itemMemo.trim();
-          }
-          if (form.itemMemo && !/^[\s\S]{1,500}$/.test(form.itemMemo.trim())) {
-            InputError = true;
-            InputMessages += '頁籤 ' + (i + 1) + ' :　備註不可輸入超過500字' + '\n';
+            if (!/^[\s\S]{0,500}$/.test(form.itemMemo)) {
+              InputError = true;
+              InputMessages += '頁籤 ' + (i + 1) + ' :　備註不可輸入超過500字' + '\n';
+            }
           }
         }
         if (InputError) {
@@ -618,21 +669,27 @@
         for (let i = 0; i < tabNumber.value; i++) {
           const form = formData[i];
           const pattern = /^(BF\d{8})$/;
-          //物品名稱必填
-          form.AssetName = form.AssetName.trim()
-          if (!form.AssetName) {
+          //1. 物品名稱必填
+          form.itemAssetName = form.itemAssetName.trim()
+          if (!form.itemAssetName) {
             InputError = true;
             InputMessages += '頁籤 ' + (i + 1) + ' :　物品名稱必填' + '\n';
           }
-          //1. 資產編號必填、不全為空格、格式BF & 8位數
-          if (form.AssetsId) {
-            form.AssetsId = form.AssetsId.trim();
-          }
-          if (!form.AssetsId || !pattern.test(form.AssetsId) || form.AssetsId === '') {
+          //2. 資產編號必填，格式: BF & 8位數
+          form.itemAssetsId = form.itemAssetsId.trim();
+          if (!pattern.test(form.itemAssetsId)) {
             InputError = true;
             InputMessages += '頁籤 ' + (i + 1) + ' :　資產編號不符合格式' + '\n';
           }
-          //2. 區域、櫃位必填
+          //3. 資產類型為存貨-> 專案代碼為必填 
+          if (details.value.AssetType === '存貨') {
+            form.itemProjectCode = form.itemProjectCode.trim();
+            if (!form.itemProjectCode) {
+              InputError = true;
+              InputMessages += '頁籤 ' + (i + 1) + ' :　專案代碼必填' + '\n';
+            }
+          }
+          //4. 區域、櫃位必填
           if (!form.itemAreaName) {
             InputError = true;
             InputMessages += '頁籤 ' + (i + 1) + ' :　區域必填' + '\n';
@@ -641,27 +698,34 @@
             InputError = true;
             InputMessages += '頁籤 ' + (i + 1) + ' :　櫃位必填' + '\n';
           }
-          //3. S/N、備註不可超過100/500字
-          if (form.SN) {
-            form.SN = form.SN.trim();
+          //5. 專案代碼、S/N、備註不可超過10/100/500字
+          if (form.itemSN) {
+            form.itemSN = form.itemSN.trim();
+            if (!/^[\s\S]{0,100}$/.test(form.itemSN)) {
+              InputError = true;
+              InputMessages += '頁籤 ' + (i + 1) + ' :　S/N不可輸入超過100字' + '\n';
+            }
           }
-          if (form.SN && !/^[\s\S]{1,100}$/.test(form.SN.trim())) {
-            InputError = true;
-            InputMessages += '頁籤 ' + (i + 1) + ' :　S/N不可輸入超過100字' + '\n';
+          if (form.itemProjectCode) {
+            form.itemProjectCode = form.itemProjectCode.trim();
+            if (!/^[\s\S]{0,10}$/.test(form.itemProjectCode)) {
+              InputError = true;
+              InputMessages += '頁籤 ' + (i + 1) + ' :　專案代碼不可輸入超過10字' + '\n';
+            }
           }
           if (form.itemMemo) {
             form.itemMemo = form.itemMemo.trim();
-          }
-          if (form.itemMemo && !/^[\s\S]{1,500}$/.test(form.itemMemo.trim())) {
-            InputError = true;
-            InputMessages += '頁籤 ' + (i + 1) + ' :　備註不可輸入超過500字' + '\n';
+            if (!/^[\s\S]{0,500}$/.test(form.itemMemo)) {
+              InputError = true;
+              InputMessages += '頁籤 ' + (i + 1) + ' :　備註不可輸入超過500字' + '\n';
+            }
           }
         }
         if (InputError) {
           alert(InputMessages);
           return;
         }
-        //檢查資產編號是否有重複
+        //若是新品入庫 檢查資產編號是否有重複
         if (details.value.Type === 0) {
           if (await checkAssetsIdRepeat()) {
             return;
@@ -722,6 +786,8 @@
             console.error(error);
           })
       }
+
+      // 分別送出表單
       async function sendFormData(formData, type) {
         var baseUrl = '';
         if (type === 'temp')
@@ -740,10 +806,12 @@
           console.error(error);
         }
       }
+      // 打開選擇檔案視窗
       function openFileExplorer(index) {
         console.log('fileInputs', fileInputs);
         fileInputs[index].click();
       }
+      // 處理選擇的檔案
       function handleFileChange(index) {
         const files = event.target.files;
         const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
@@ -831,10 +899,14 @@
         existFileImageUrl.value = details.value.Tabs[existFileData.value].existFile[existFileImage.value].FileLink;
         existFileModalTitle.value = details.value.Tabs[existFileData.value].existFile[existFileImage.value].FileName;
       }
-      function checkSpace(AssetsId) {
-        return !/^\s+$/.test(AssetsId);
+      // 查看收貨單
+      function viewReceive() {
+        if(details.value.AR_ID) {
+          const link = document.getElementById('view-receive');
+          link.click();
+        }
       }
-      //檢查 1. AssetsId之間是否重複 2. AseetsId比對資料庫是否重複
+      //檢查 1. itemAssetsId之間是否重複 2. itemAseetsId比對資料庫是否重複
       async function checkAssetsIdRepeat() {
         var myForm = [];
         for (let i = 0; i < tabNumber.value; i++) {
@@ -887,6 +959,7 @@
         getLayerName,
         selectArea,
         selectLayer,
+        getProjectName,
         temp,
         submit,
         openFileExplorer,
@@ -895,7 +968,7 @@
         showExistFileImage,
         deleteExistFile,
         deleteNewFile,
-        checkSpace,
+        viewReceive,
         goBack,
       }
     },

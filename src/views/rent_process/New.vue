@@ -210,6 +210,7 @@
   import Storage_number from "@/components/Storage_number_input"
   import Delete_button from "@/components/Rent_proccess_new_delete_button";
   import Navbar from "@/components/Navbar.vue";
+  import { UseOptions } from "@/assets/js/dropdown";
   import {
     onMounted,
     ref,
@@ -234,7 +235,7 @@
       const router = useRouter();
       const AO_ID = route.query.search_id;
       const details = ref({});
-      const options = ['內部領用', '借測', '出貨', '退貨'];
+      const options = UseOptions;
       const gridApi2 = ref(null);
       const gridApi3 = ref(null);
       const selectedNumberArray = ref([]); //紀錄不同項目已選數量array
