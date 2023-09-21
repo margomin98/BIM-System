@@ -213,7 +213,8 @@
             cellRenderer: "Inventory_number",
             cellRendererParams: {
               takeParams: (data , Actual) => {
-                let Discrepancy = (data.ReceivableNum-Actual).toString()
+                // 傳送 實盤-應盤數量
+                let Discrepancy = (Actual-data.ReceivableNum).toString()
                 if (!Actual) {
                   Discrepancy = '';
                 }

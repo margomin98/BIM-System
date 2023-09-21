@@ -177,6 +177,36 @@
             </div>
           </div>
         </div>
+        <!-- 交付 人員&日期 -->
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">交付人員：</div>
+              <input type="text" class="form-control readonly_box" readonly v-model="details.DeliveryOperator" />
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">交付日期：</div>
+              <input type="text" class="form-control readonly_box" readonly v-model="details.DeliveryDate" />
+            </div>
+          </div>
+        </div>
+        <!-- 入庫 人員&日期 -->
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">入庫人員：</div>
+              <input type="text" class="form-control readonly_box" readonly v-model="details.AssetsInOperator" />
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">入庫日期：</div>
+              <input type="text" class="form-control readonly_box" readonly v-model="details.AssetsInDate" />
+            </div>
+          </div>
+        </div>
         <!-- 備註 -->
         <div class="col">
           <div class="input-group mb-4">
@@ -320,10 +350,19 @@ export default {
           console.log('Details Get成功 資料如下\n', data.resultList);
           details.value = data.resultList;
           if (details.value.WarrantyStartDate) {
-            details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/\//g, '-');
+            details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
           }
           if (details.value.WarrantyEndDate) {
-            details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/\//g, '-');
+            details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
+          }
+          if (details.value.AssetsInDate) {
+            details.value.AssetsInDate = details.value.AssetsInDate.replace(/-/g, '/');
+          }
+          if (details.value.DeliveryDate) {
+            details.value.DeliveryDate = details.value.DeliveryDate.replace(/-/g, '/');
+          }
+          if (details.value.ApplicationDate) {
+            details.value.ApplicationDate = details.value.ApplicationDate.replace(/-/g, '/');
           }
           tabNumber.value = details.value.Tabs.length
         } else if (data.state === 'error') {
