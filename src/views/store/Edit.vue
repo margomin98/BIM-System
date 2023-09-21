@@ -379,7 +379,7 @@
             <p>按下確認後將會清空頁籤內容。</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn confirm" data-bs-dismiss="modal" @click="formParams.Count = oldCount">取消</button>
+              <button type="button" class="btn confirm" data-bs-dismiss="modal" @click="formParams.Count = Count.old">取消</button>
               <button type="button" class="btn confirm" data-bs-dismiss="modal" @click="initFormDataArray">確認</button>
             </div>
           </div>
@@ -450,7 +450,11 @@
       const tabData = reactive([]); // 頁籤資料
       const tabNumber = ref(1); //v-for不直接使用 formParams.Count(input改成空白會error)
       const newCount = ref(1);
-      const oldCount = ref(1);
+      const Count = reactive({ //變更包裝數量參數
+        new: 1,
+        old: 1,
+        original: 1, //送出時檢查是否有變更過
+      })
       const fileInputs = reactive([]);
       // Modal Params
       const modalParams = reactive({
@@ -477,6 +481,11 @@
             if (details.value.WarrantyEndDate) {
               details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/\//g, '-');
             }
+            // 設定original包裝數量 送出時檢查是否變更
+            Count.original = details.value.Count;
+            // 數量原本為1時 啟用監聽
+            startWatching.value = Count.original === 1 ;
+            console.log('原本數量:', Count.original);
             // 將資料帶入上半部表單formParams
             for( const key in details.value) {
               if(formParams.hasOwnProperty(key)) {
@@ -514,8 +523,8 @@
       }
       // (重新)生成Tab頁籤資料
       function initFormDataArray() {
-        if(newCount.value) {
-          tabNumber.value = newCount.value
+        if(Count.new) {
+          tabNumber.value = Count.new
         }
         tabData.splice(0 , tabData.length); //先清空再重新生成
         for (let i = 0; i < formParams.Count; i++) {
@@ -771,9 +780,12 @@
         }
         console.log('上半部form',formParams);
         console.log('下半部頁籤資料' , tabData);
-
+        // 檢查是否變更過包裝數量 ->先到後端刪除所有細項再重新上傳
+        if(Count.original !== formParams.Count) {
+          await deleteAllItem();
+        }
         try {
-          // 先建立表單並回傳AR_ID
+          // 先編輯上半部表單並回傳AR_ID
           const AI_ID = await sendUpperForm();
           console.log('編輯上半部表單成功AI_ID(resolve):' , AI_ID);
           // 再依照AI_ID將 下半部頁籤 單次分別上傳
@@ -786,7 +798,7 @@
           .then(result =>{
             const allSuccess = result.every(result => result === 'success')
             if(allSuccess) {
-            alert('傳送新品入庫表單成功\n單號為:' + AI_ID);
+            alert('編輯新品入庫表單成功\n單號為:' + AI_ID);
               router.push({
                 name: 'Store_Datagrid'
               });
@@ -886,6 +898,31 @@
             })
             .catch(error => {
               // 如果提交失败，调用 reject 并传递错误信息
+              reject(error);
+            });
+        });
+      }
+      // 刪除全部細項
+      function deleteAllItem() {
+        return new Promise((resolve, reject) => {
+          // 成功时，调用 resolve 并传递 AI_ID
+          // 失败时，调用 reject 并传递错误信息
+          const axios = require('axios');
+          const form = new FormData();
+          form.append('AI_ID', details.value.AI_ID);
+          axios.post('http://192.168.0.177:7008/AssetsInMng/ItemDeleteAll', form)
+            .then(response => {
+              const data = response.data;
+              if (data.state === 'success') {
+                const AI_ID = response.data.resultList.AI_ID;
+                console.log('刪除所有細項成功AI_ID(response):' , AI_ID);
+                resolve(AI_ID);
+              }
+              else {
+                reject(data.messages);
+              }
+            })
+            .catch(error => {
               reject(error);
             });
         });
@@ -1021,8 +1058,8 @@
         // console.log(`包裝數量從${oldValue}變成${newValue}`);
         if(startWatching.value) {
           if(newValue) {
-            newCount.value = newValue;
-            oldCount.value = oldValue;
+            Count.new = newValue;
+            Count.old = oldValue;
             const button = document.getElementById('count-modal');
             button.click();
           }
@@ -1039,8 +1076,7 @@
         formParams,
         arrayParams,
         EquipCategoryInit,
-        newCount,
-        oldCount,
+        Count,
         showOptions,
         ProjectName,
         tabData,

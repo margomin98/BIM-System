@@ -234,7 +234,7 @@
               </div>
             </div>
             <!-- 頁籤專案代碼 -->
-            <div class="col form_search_wrap">
+            <div v-show="details.AssetType === '存貨'" class="col form_search_wrap">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span>*</span>專案代碼 :
@@ -244,7 +244,7 @@
               </div>
             </div>
             <!-- 頁籤專案名稱 -->
-            <div class="col">
+            <div v-show="details.AssetType === '存貨'" class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">專案名稱：</div>
                 <input type="text" class="form-control readonly_box" aria-label="Default" v-model="item.itemProjectName" readonly/>
@@ -570,10 +570,14 @@
 
           //2. 資產類型為存貨-> 專案代碼必填
           if (details.value.AssetType === '存貨') {
-            form.itemProjectCode = form.itemProjectCode.trim()
-            if (!form.itemProjectCode) {
-              InputError = true;
-              InputMessages += '頁籤 ' + (i + 1) + ' :　專案代碼必填' + '\n';
+            // 防止為null的情況(帶入值有可能為null)
+            if(form.itemProjectCode) {
+              form.itemProjectCode = form.itemProjectCode.trim()
+              // 專案代碼未填
+              if (!form.itemProjectCode) {
+                InputError = true;
+                InputMessages += '頁籤 ' + (i + 1) + ' :　專案代碼必填' + '\n';
+              }
             }
           }
 
@@ -670,13 +674,18 @@
           const form = formData[i];
           const pattern = /^(BF\d{8})$/;
           //1. 物品名稱必填
-          form.itemAssetName = form.itemAssetName.trim()
+          if(form.itemAssetName) {
+            form.itemAssetName = form.itemAssetName.trim()
+          }
           if (!form.itemAssetName) {
             InputError = true;
             InputMessages += '頁籤 ' + (i + 1) + ' :　物品名稱必填' + '\n';
           }
           //2. 資產編號必填，格式: BF & 8位數
-          form.itemAssetsId = form.itemAssetsId.trim();
+          // 確定帶入值不為null
+          if(form.itemAssetsId) {
+            form.itemAssetsId = form.itemAssetsId.trim();
+          }
           if (!pattern.test(form.itemAssetsId)) {
             InputError = true;
             InputMessages += '頁籤 ' + (i + 1) + ' :　資產編號不符合格式' + '\n';

@@ -498,7 +498,7 @@
       async function submit() {
         console.log(details.value);
         // 檢查必填項目
-        if (!details.value.EquipCategoryName || !details.value.EquipTypeName || !details.value.AssetName) {
+        if (!details.value.EquipCategoryName || !details.value.EquipTypeName || !details.value.AssetName || !details.value.AssetType) {
           alert('請填寫所有必填項目');
           return;
         }
@@ -530,11 +530,24 @@
           alert('保固期限不可輸入超過500字');
           return
         }
+        // 存貨需額外檢查專案代碼
+        if(details.value.AssetType === '存貨') {
+          if(!details.value.ProjectCode) {
+            alert('請填寫所有必填項目');
+            return;
+          }
+          if(!/^.{1,10}$/.test(details.value.ProjectCode)) {
+            alert('專案代碼格式錯誤');
+            return
+          }
+        }
         const axios = require('axios');
         const formData = new FormData();
         const formFields = {
           'AssetsId': AssetsId,
+          'AssetType': details.value.AssetType,
           'EquipTypeName': details.value.EquipTypeName,
+          'ProjectCode': details.value.ProjectCode,
           'EquipCategoryName': details.value.EquipCategoryName,
           'AssetName': details.value.AssetName,
           'VendorName': details.value.VendorName,
@@ -549,9 +562,12 @@
           'Custodian': details.value.Custodian,
           'Memo': details.value.Memo,
         };
+        // if(details.value.AssetType === '存貨') {
+        //   formData.append('ProjectCode', details.value.ProjectCode);
+        // }
         //將表格資料append到 formData
         for (const fieldName in formFields) {
-          if (formFields[fieldName] !== '' && formFields[fieldName] !== null) {
+          if (formFields[fieldName]) {
             formData.append(fieldName, formFields[fieldName]);
             console.log(formData.get(`${fieldName}`));
           }

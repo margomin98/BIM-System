@@ -49,6 +49,7 @@ onMounted,
       onMounted(()=>{
         myInput.value.focus();
       });
+      // 搜尋資產
       async function searchAssets() {
         axios.get(`http://192.168.0.177:7008/GetDBdata/GetAssetInfo?id=${AssetsId.value}`)
         .then((response) => {
@@ -68,10 +69,14 @@ onMounted,
           console.error(error);
         })
       }
+      const goBack = () => {
+        window.history.back();
+      };
       return {
         myInput,
         AssetsId,
         searchAssets,
+        goBack,
       }
     },
   };

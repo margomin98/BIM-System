@@ -251,6 +251,7 @@
         EquipCategoryArray: [],
         EquipCategoryInit: '請先選擇設備總類',
         ProductName: '',
+        ProjectCode: '',
         Number: 1,
         RequiredSpec: '',
         id: 1,
@@ -614,6 +615,9 @@
             // router.push({name: 'Rent_Datagrid'});
             }
             console.log('getDetails 成功 資料如下\n', data.resultList);
+            // 設定搜尋參數的專案代碼
+            searchParams.ProjectCode = data.resultList.ProjectCode
+            // 設定datagrid、details
             details.value = data.resultList;
             rowData1.value = data.resultList.ItemList;
             rowData2.value = data.resultList.OM_List;
@@ -657,6 +661,7 @@
           form.append('EquipTypeName', searchParams.EquipTypeName);
           form.append('EquipCategoryName', searchParams.EquipCategoryName);
           form.append('ProductName', searchParams.ProductName);
+          form.append('ProjectCode', searchParams.ProjectCode);
           const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchInventory', form);
           const data = response.data;
           if (data.state === 'success') {

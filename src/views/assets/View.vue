@@ -18,155 +18,173 @@
           <p>物品名稱: {{ details.AssetName }}</p>
         </div>
         <div>
-          <p>資產類型: {{ details.AssetName }}</p>
+          <p>資產類型: {{ details.AssetType }}</p>
         </div>
       </div>
       <div class="content">
+        <!-- 狀態 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 狀態：
               </div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Status">
+              <input type="text" class="form-control readonly_box" readonly v-model="details.Status">
             </div>
           </div>
         </div>
-        <div class="col">
+        <!-- 專案代碼 -->
+        <div v-show="details.AssetType === '存貨'" class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">專案代碼：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID" />
+            <input type="text" class="form-control readonly_box" readonly v-model="details.ProjectCode" />
           </div>
         </div>
-        <div class="col">
+        <!-- 專案名稱 -->
+        <div v-show="details.AssetType === '存貨'" class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">專案名稱：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AI_ID" />
+            <input type="text" class="form-control readonly_box" readonly v-model="details.ProjectName" />
           </div>
         </div>
+        <!-- 物流單號 -->
         <div class="col form_search_wrap">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               物流單號 :
             </div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="VendorName" readonly>
-            <button class="form_search_btn">檢視</button>
+            <input type="text" class="form-control readonly_box" v-model="details.ShipmentNum" readonly>
+            <button class="form_search_btn" @click="viewReceive">檢視</button>
+            <!-- 隱藏跳轉按鈕 -->
+            <router-link :to="{name: 'Receive_View' , query:{ search_id : details.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
           </div>
         </div>
+        <!-- 設備 總類&分類 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">設備總類：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.EquipTypeName" />
+              <input type="text" class="form-control readonly_box" readonly v-model="details.EquipTypeName" />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">設備分類：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.EquipCategoryName" />
+              <input type="text" class="form-control readonly_box" readonly v-model="details.EquipCategoryName" />
             </div>
           </div>
         </div>
+        <!-- 廠商 -->
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">廠商：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.VendorName" />
+            <input type="text" class="form-control readonly_box" readonly v-model="details.VendorName" />
           </div>
         </div>
+        <!-- 型號 -->
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">型號：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductType" />
-          </div>
-          <div class="col">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">規格：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.ProductSpec" />
-            </div>
-          </div>
-          <div class="col">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">S/N：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.SN" />
-            </div>
+            <input type="text" class="form-control readonly_box" readonly v-model="details.ProductType" />
           </div>
         </div>
+        <!-- 規格 -->
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">規格：</div>
+            <input type="text" class="form-control readonly_box" readonly v-model="details.ProductSpec" />
+          </div>
+        </div>
+        <!-- S/N -->
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">S/N：</div>
+            <input type="text" class="form-control readonly_box" readonly v-model="details.SN" />
+          </div>
+        </div>
+        <!-- 總庫存數量 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">總庫存數量：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Number" />
+              <input type="text" class="form-control readonly_box" readonly v-model="details.Number" />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">單位：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Unit" />
+              <input type="text" class="form-control readonly_box" readonly v-model="details.Unit" />
             </div>
           </div>
         </div>
+        <!-- 儲位 區域&櫃位 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">儲位區域：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AreaName" />
+              <input type="text" class="form-control readonly_box" readonly v-model="details.AreaName" />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">儲位櫃位：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.LayerName" />
+              <input type="text" class="form-control readonly_box" readonly v-model="details.LayerName" />
             </div>
           </div>
         </div>
+        <!-- 保固期限 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 保固期限：
               </div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.WarrantyDate">
+              <input type="text" class="form-control readonly_box" readonly v-model="details.WarrantyDate">
             </div>
           </div>
         </div>
+        <!-- 保固 開始&結束 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">保固開始日：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.WarrantyStartDate" />
+              <input type="text" class="form-control readonly_box" readonly v-model="details.WarrantyStartDate" />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">保固到期日：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.WarrantyEndDate" />
+              <input type="text" class="form-control readonly_box" readonly v-model="details.WarrantyEndDate" />
             </div>
           </div>
         </div>
+        <!-- 保管人員 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 保管人員：
               </div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Custodian">
+              <input type="text" class="form-control readonly_box" readonly v-model="details.Custodian">
             </div>
           </div>
         </div>
+        <!-- 入庫 人員&日期 -->
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">入庫人員：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AssetsInOperator" />
+              <input type="text" class="form-control readonly_box" readonly v-model="details.AssetsInOperator" />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">入庫日期：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.InboundDate" />
+              <input type="text" class="form-control readonly_box" readonly v-model="details.InboundDate" />
             </div>
           </div>
         </div>
+        <!-- 備註 -->
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">備註：</div>
@@ -283,15 +301,7 @@
       const AssetsId = route.query.search_id;
       // 上半部表單
       const details = ref({});
-      const EquipTypeArray = ref([]); //設備總類陣列 request拿到
-      const EquipCategoryArray = ref([]); //設備分類陣列 request拿到
-      const EquipCategoryInit = ref('請先選擇設備總類');
-      const AreaArray = ref([]); //區域陣列
-      const LayerArray = ref([]); //櫃位陣列
-      const LayerInit = ref('請先選擇區域');
       // 中間照片
-      const fileInputs = ref();
-      const increseId = ref(0);
       const selectFiles = reactive({
         newFile: [],
         deleteFile: [],
@@ -408,185 +418,6 @@
           console.error(error);
         }
       }
-      async function getEquipTypeName() {
-        if (EquipTypeArray.value.length == 0) {
-          const axios = require('axios');
-          try {
-            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetEquipType');
-            console.log(response);
-            const data = response.data;
-            if (data.state === 'success') {
-              console.log('總類Get成功 資料如下\n', data.resultList.EquipType);
-              EquipTypeArray.value = data.resultList.EquipType;
-            } else if (data.state === 'error') {
-              alert(data.messages);
-            } else if (data.state === 'account_error') {
-              alert(data.messages);
-              router.push('/');
-            }
-          } catch (error) {
-            console.error('Error sending applicant info request to backend');
-          }
-        }
-      }
-      async function getEquipCategoryName() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${details.value.EquipTypeName}`);
-          console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('分類Get成功 資料如下\n', data.resultList.EquipCategory);
-            EquipCategoryArray.value = data.resultList.EquipCategory;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error('Error sending applicant info request to backend', error);
-        }
-      }
-      async function getAreaName() {
-        if (AreaArray.value.length == 0) {
-          const axios = require('axios');
-          try {
-            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetAreaName');
-            console.log(response);
-            const data = response.data;
-            if (data.state === 'success') {
-              console.log('Area Get成功 資料如下\n', data.resultList.AreaName);
-              AreaArray.value = data.resultList.AreaName;
-            } else if (data.state === 'error') {
-              alert(data.messages);
-            } else if (data.state === 'account_error') {
-              alert(data.messages);
-              router.push('/');
-            }
-          } catch (error) {
-            console.error('Error sending applicant info request to backend');
-          }
-        }
-      }
-      async function getLayerName() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetLayerName?id=${details.value.AreaName}`);
-          console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('Layer Get成功 資料如下\n', data.resultList.LayerName);
-            LayerArray.value = data.resultList.LayerName;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error('Error sending applicant info request to backend');
-        }
-      }
-      function selectType(item) {
-        details.value.EquipTypeName = item;
-        // console.log('選擇的總類:', EquipTypeName.value);
-        details.value.EquipCategoryName = '';
-        getEquipCategoryName();
-        EquipCategoryInit.value = '請選擇';
-      }
-      function selectCategory(item) {
-        details.value.EquipCategoryName = item;
-      }
-      const selectArea = (item) => {
-        details.value.AreaName = item;
-        details.value.LayerName = '';
-        //API function here
-        getLayerName();
-        LayerInit.value = '請選擇';
-      };
-      const selectLayer = (item) => {
-        details.value.LayerName = item;
-      };
-      // 輪播部分 function
-      function openFileExplorer() {
-        fileInputs.value.click();
-      }
-      function handleFileChange(event) {
-        const files = event.target.files;
-        const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-        if (files.length + selectFiles.viewFile.length > 5) {
-          alert('上傳至多5張圖片');
-          return;
-        }
-        //檢查檔名
-        for (let i = 0; i < files.length; i++) {
-          const fileName = files[i].name;
-          const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
-          if (!imageExtensions.includes(fileExtension.toLowerCase())) {
-            alert(fileExtension + '不在允許的格式範圍內，請重新選取');
-            return;
-          }
-        }
-        // const previewUrl = formData[index].previewUrl;
-        for (let i = 0; i < files.length; i++) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            const img = new Image();
-            img.src = e.target.result;
-            img.onload = () => {
-              const canvas = document.createElement('canvas');
-              const maxWidth = 800; // 设置最大宽度
-              const scaleRatio = Math.min(maxWidth / img.width, 1);
-              canvas.width = img.width * scaleRatio;
-              canvas.height = img.height * scaleRatio;
-              const ctx = canvas.getContext('2d');
-              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-              canvas.toBlob((blob) => {
-                const compressedFile = new File([blob], files[i].name, {
-                  type: files[i].type,
-                  lastModified: files[i].lastModified,
-                });
-                // 记录压缩前后的大小
-                const originalSize = Math.round(files[i].size / 1024); // 原始大小（KB）
-                const compressedSize = Math.round(compressedFile.size / 1024); // 壓縮後大小（KB）
-                console.log(`原始大小: ${originalSize} KB，壓縮後大小: ${compressedSize} KB`);
-                selectFiles.newFile.push({
-                  file: compressedFile,
-                  id: increseId.value,
-                });
-                selectFiles.viewFile.push({
-                  FileName: compressedFile.name,
-                  FileLink: URL.createObjectURL(compressedFile),
-                  FileType: 'new',
-                  id: increseId.value,
-                });
-                increseId.value++;
-              }, files[i].type, 0.8);
-            };
-          };
-          reader.readAsDataURL(files[i]);
-        }
-        console.log('newFile', selectFiles.newFile);
-      }
-      function deleteFileFunction(index) {
-        const file = selectFiles.viewFile[index];
-        switch (file.FileType) {
-          // 已上傳檔案 ->從輪播陣列刪除 & 加到deleteFile
-          case 'exist':
-            selectFiles.deleteFile.push(file.FileName);
-            selectFiles.viewFile.splice(index, 1);
-            console.log('deleteFile', selectFiles.deleteFile);
-            break;
-            // 新上傳檔案 ->從輪播陣列刪除 & 從newFile移除
-          case 'new':
-            const newFileIndex = selectFiles.newFile.findIndex(item => item.id === file.id);
-            selectFiles.newFile.splice(newFileIndex, 1);
-            selectFiles.viewFile.splice(index, 1);
-            console.log('newFile', selectFiles.newFile);
-            break;
-        }
-      }
       // 歷史紀錄部分function
       async function searchHistory() {
         const formData = new FormData();
@@ -635,34 +466,26 @@
         }
         searchHistory();
       }
+      // 檢視收貨單
+      function viewReceive() {
+        if(details.value.AR_ID) {
+          const link = document.getElementById('view-receive');
+          link.click();
+        }
+      }
       function goBack() {
         window.history.back();
       }
       return {
         AssetsId,
         details,
-        EquipTypeArray,
-        EquipCategoryArray,
-        EquipCategoryInit,
-        AreaArray,
-        LayerArray,
-        LayerInit,
-        fileInputs,
         selectFiles,
         historyParams,
         ActionArray,
-        getEquipTypeName,
-        getAreaName,
-        selectType,
-        selectCategory,
-        selectArea,
-        selectLayer,
-        openFileExplorer,
-        handleFileChange,
-        deleteFileFunction,
         searchHistory,
         selectAction,
         clear,
+        viewReceive,
         goBack,
         rowHeight: 35,
         pagination: {
