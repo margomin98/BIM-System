@@ -575,7 +575,7 @@
       }
       async function force() {
         const axios = require('axios');
-        const response = await axios.get(`http://192.168.0.177:7008/StocktakingMng/BalanceCompleted?id=${IP_ID}`);
+        const response = await axios.get(`http://192.168.0.177:7008/StocktakingMng/BalanceCompleted?PlanId=${IP_ID}`);
         try {
           const data = response.data;
           console.log(data);
