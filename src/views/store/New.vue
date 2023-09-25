@@ -367,6 +367,7 @@
   import { useRoute } from 'vue-router';
   import router from '@/router';
   import { UnitArray , PackageUnitArray} from '@/assets/js/dropdown'
+  import { getApplication , getEquipType , getEquipCategory , getProject } from '@/assets/js/common_api'
   import {
     onMounted,
     reactive,
@@ -790,67 +791,34 @@
         });
       }
       async function getApplicationInfo() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('申請人名稱:', data.resultList.Applicant);
-            if (data.resultList.Applicant) {
-              Applicant.value = data.resultList.Applicant;
-            }
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error('Error sending applicant info request to backend');
-        }
+        getApplication()
+          .then((data)=>{
+            Applicant.value = data;
+          })
+          .catch((error) =>{
+            console.error(error);
+          })
       }
       async function getEquipTypeName() {
         if (arrayParams.EquipTypeArray.length == 0) {
-          const axios = require('axios');
-          try {
-            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetEquipType');
-            console.log(response);
-            const data = response.data;
-            if (data.state === 'success') {
-              console.log('總類Get成功 資料如下\n', data.resultList.EquipType);
-              arrayParams.EquipTypeArray = data.resultList.EquipType;
-            } else if (data.state === 'error') {
-              alert(data.messages);
-            } else if (data.state === 'account_error') {
-              alert(data.messages);
-              router.push('/');
-            }
-          } catch (error) {
-            console.error('Error sending applicant info request to backend');
-          }
+          getEquipType()
+          .then((data)=>{
+            arrayParams.EquipTypeArray = data;
+          })
+          .catch((error) =>{
+            console.error(error);
+          })
         }
       }
       async function getEquipCategoryName() {
         formParams.EquipCategoryName = '';
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${formParams.EquipTypeName}`);
-          console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('分類Get成功 資料如下\n', data.resultList.EquipCategory);
-            arrayParams.EquipCategoryArray = data.resultList.EquipCategory;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push({
-              name: 'Store_Datagrid'
-            });
-          }
-        } catch (error) {
-          console.error('Error sending applicant info request to backend');
-        }
+        getEquipCategory(formParams.EquipTypeName)
+        .then((data)=>{
+            arrayParams.EquipCategoryArray = data;
+          })
+        .catch((error) =>{
+          console.error(error);
+        })
       }
       async function getShipmentNum() {
         // 物流單號有變動就將AR_ID清空 只有使用下拉選單才會傳AR_ID
@@ -891,31 +859,20 @@
           alert('專案代碼格式錯誤');
           return;
         }
-        const form = new FormData();
-        form.append('projectCode', code);
-        const axios = require('axios');
-        const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchProjectName', form);
-        try {
-          const data = response.data;
-          console.log(data);
-          if (data.state === 'success') {
-            switch (type) {
-              case 'upperForm':
-                ProjectName.value = data.resultList;
-                break;
-              case 'tab':
-                tabData[index].itemProjectName = data.resultList;
-                break;
-            }
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          } else {
-            ProjectName.value = data.messages.toString()
+        getProject(code)
+        .then((data)=>{
+          switch (type) {
+            case 'upperForm':
+              ProjectName.value = data;
+              break;
+            case 'tab':
+              tabData[index].itemProjectName = data;
+              break;
           }
-        } catch (error) {
+        })
+        .catch((error) =>{
           console.error(error);
-        }
+        })
       }
       // 監聽formParams.Count(包裝數量)的數值變動 -> 重新生成tab頁籤內容
       watch(()=>formParams.Count, (newValue , oldValue) => {

@@ -131,7 +131,8 @@ import { AgGridVue } from "ag-grid-vue3";
 import Storage_process_button from "@/components/Storage_process_button";
 import Delete from "@/components/Storage_process_delete_button";
 import Navbar from "@/components/Navbar.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
+import { StoreStatusArray } from "@/assets/js/dropdown";
 
 export default {
   components: {
@@ -146,6 +147,14 @@ export default {
       }
     },
   setup() {
+    const searchParams = reactive({
+      EquipTypeName: '',
+      EquipCategoryName: '',
+      Status: '',
+      EquipTypeName: '',
+      EquipTypeName: '',
+      EquipTypeName: '',
+    });
     const EquipTypeName = ref(''); //設備總類 *必填
     const EquipTypeArray = ref([]); //設備總類陣列 request拿到
     const EquipCategoryName = ref(''); //設備分類 *必填
@@ -154,7 +163,7 @@ export default {
     const AssetsId = ref(''); //資產編號
     const AssetName = ref(''); //物品名稱
     const Status = ref(''); //狀態
-    const StatusArray = ref(['申請入庫', '申請歸還', '可交付', '待入庫', '已入庫', '已歸還',])
+    const StatusArray = StoreStatusArray
     const AreaName = ref(""); //區域
     const AreaArray = ref([]); //區域陣列
     const LayerName = ref(""); //櫃位
@@ -169,13 +178,6 @@ export default {
     const handleRefresh = ref(message => {
       alert(message);
     });
-    const pagePosition = ref("bottom");
-    const pageOptions = ref([
-      { value: "bottom", text: "Bottom" },
-      { value: "top", text: "Top" },
-      { value: "both", text: "Both" }
-    ]);
-
 
 
     const columnDefs = [{
@@ -540,8 +542,6 @@ export default {
       total,
       pageSize,
       data,
-      pagePosition,
-      pageOptions,
       columnDefs,
       rowData,
       submit,
