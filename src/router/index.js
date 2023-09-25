@@ -371,12 +371,12 @@ const routes = [
     component: Repair_View,
     // meta: {auth: true, request: 'IP_Detail'},
   },
-  {
-    path: "/repair_process",
-    name: "Repair_Process",
-    component: Repair_Process,
-    // meta: {auth: true, request: 'IP_Detail'},
-  },
+  // {
+  //   path: "/repair_process",
+  //   name: "Repair_Process",
+  //   component: Repair_Process,
+  //   // meta: {auth: true, request: 'IP_Detail'},
+  // },
   // {
   //   path: "/repair_reveiw",
   //   name: "Repair_Review",
