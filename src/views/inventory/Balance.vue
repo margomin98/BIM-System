@@ -580,7 +580,9 @@
           const data = response.data;
           console.log(data);
           if (data.state === 'success') {
-            alert(data.messages);
+            let msg = data.messages;
+            msg += '\n單號:' + data.resultList.IP_Id;
+            alert(msg);
             router.push({
               name: 'Inventory_Datagrid'
             });
