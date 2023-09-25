@@ -437,7 +437,7 @@
               font-weight: 700;
               font-size: 20px;
               text-align: end;
-              width: 128px;
+              width: 115px;
               span {
                 @include red_star
               }
@@ -478,7 +478,7 @@
             width: 140px;
           }
           .input-group .form-control {
-            width: 59%;
+            width: 54%;
           }
         }
         .button_wrap {
@@ -616,7 +616,6 @@
           display: flex;
           justify-content: center;
           margin: 30px auto 5%;
-          width: 220px;
           button {
             &:nth-child(1) {
               @include back_to_previous_btn;
