@@ -146,7 +146,7 @@
               </div>
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
                 <p>物品名稱</p>
-                <input type="text" class="form-control text-center" placeholder="不可輸入超過20字" v-model="searchParams.AssetName" />
+                <input type="text" class="form-control text-center" placeholder="最多輸入20字" v-model="searchParams.AssetName" />
               </div>
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
                 <p>儲位區域</p>
@@ -477,6 +477,8 @@
             // }
             console.log('上半部資料如下\n', data.resultList);
             details.value = data.resultList;
+            details.value.PlanStart = details.value.PlanStart.replace(/-/g, '/');
+            details.value.PlanEnd = details.value.PlanEnd.replace(/-/g, '/');
             rowData1.value = data.resultList.AssetList
           } else if (data.state === 'error') {
             alert(data.messages);
@@ -490,6 +492,11 @@
       }
       // 下半部盤點範圍Datagrid
       async function getDatagrid() {
+        searchParams.AssetName = searchParams.AssetName.trim();
+        if (searchParams.AssetName && !/^[\s\S]{0,20}$/.test(searchParams.AssetName)) {
+          alert('物品名稱不可輸入超過20字')
+          return
+        }
         const form = new FormData();
         form.append('PlanId', IP_ID)
         for (const key in searchParams) {

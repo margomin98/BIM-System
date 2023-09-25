@@ -315,7 +315,7 @@ const routes = [
     path: "/inventory_delete",
     name: "Inventory_Delete",
     component: Inventory_Delete,
-    // meta: {auth: true, request: 'IP_InventoryResult'},
+    meta: {auth: true, request: 'IP_Delete'},
   },
   {
     path: "/receive_datagrid",

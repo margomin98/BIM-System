@@ -210,6 +210,7 @@
   import Storage_number from "@/components/Storage_number_input"
   import Delete_button from "@/components/Rent_proccess_new_delete_button";
   import Navbar from "@/components/Navbar.vue";
+  import { UseOptions } from "@/assets/js/dropdown";
   import {
     onMounted,
     ref,
@@ -234,7 +235,7 @@
       const router = useRouter();
       const AO_ID = route.query.search_id;
       const details = ref({});
-      const options = ['內部領用', '借測', '出貨', '退貨'];
+      const options = UseOptions;
       const gridApi2 = ref(null);
       const gridApi3 = ref(null);
       const selectedNumberArray = ref([]); //紀錄不同項目已選數量array
@@ -250,6 +251,7 @@
         EquipCategoryArray: [],
         EquipCategoryInit: '請先選擇設備總類',
         ProductName: '',
+        ProjectCode: '',
         Number: 1,
         RequiredSpec: '',
         id: 1,
@@ -613,6 +615,9 @@
             // router.push({name: 'Rent_Datagrid'});
             }
             console.log('getDetails 成功 資料如下\n', data.resultList);
+            // 設定搜尋參數的專案代碼
+            searchParams.ProjectCode = data.resultList.ProjectCode
+            // 設定datagrid、details
             details.value = data.resultList;
             rowData1.value = data.resultList.ItemList;
             rowData2.value = data.resultList.OM_List;
@@ -656,6 +661,7 @@
           form.append('EquipTypeName', searchParams.EquipTypeName);
           form.append('EquipCategoryName', searchParams.EquipCategoryName);
           form.append('ProductName', searchParams.ProductName);
+          form.append('ProjectCode', searchParams.ProjectCode);
           const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchInventory', form);
           const data = response.data;
           if (data.state === 'success') {

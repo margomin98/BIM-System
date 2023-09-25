@@ -153,6 +153,7 @@
   } from 'vue-router';
   import Storage_add from "@/components/Storage_add_button";
   import Navbar from "@/components/Navbar.vue";
+  import { UseOptions } from "@/assets/js/dropdown";
   import {
     onMounted,
     ref
@@ -175,7 +176,7 @@
       const totalNeed = ref(0);//總所需數量
       const totalSelect = ref(0);//總已備數量
       const details = ref({});
-      const options = ['內部領用', '借測', '出貨', '退貨'];
+      const options = UseOptions;
       const isVerified = ref(false);
       const verifyOption = ref(false);
       const columnDefs1 = [{

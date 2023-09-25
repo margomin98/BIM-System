@@ -20,7 +20,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend"><span>*</span>名稱：</div>
-            <input type="text" class="form-control text-center" v-model="formParams.IntegrationName" placeholder="不可輸入超過20字" />
+            <input type="text" class="form-control text-center" v-model="formParams.IntegrationName" placeholder="最多輸入20字" />
           </div>
         </div>
         <div class="row row_wrap">
@@ -158,7 +158,7 @@
                         </div>
                         <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
                           <p>物品名稱</p>
-                          <input type="text" class="form-control text-center" placeholder="不可輸入超過20字" v-model="searchParams.ProductName" />
+                          <input type="text" class="form-control text-center" placeholder="最多輸入20字" v-model="searchParams.ProductName" />
                         </div>
                       </div>
                       <div class='col d-flex justify-content-center'>
@@ -301,15 +301,6 @@
           headerName: "數量",
           field: "",
           cellRenderer: "Equipment_number",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "選擇數量",
-          field: "selectNumber",
           unSortIcon: true,
           sortable: true,
           width: 100,
@@ -534,10 +525,8 @@
           gridApi.value.setColumnDefs(column);
         }
         // 檢查物品名稱字數
-        if (searchParams.ProductName) {
-          searchParams.ProductName = searchParams.ProductName.trim();
-        }
-        if (searchParams.ProductName && !/^.{1,20}$/.test(searchParams.ProductName)) {
+        searchParams.ProductName = searchParams.ProductName.trim();
+        if (!/^.{0,20}$/.test(searchParams.ProductName)) {
           alert('物品名稱不可輸入超過20字')
           return
         }

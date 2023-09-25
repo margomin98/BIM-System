@@ -21,7 +21,7 @@
       </div>
       <div class="content">
         <div class="col-12">
-          <div class="input-group" :class="{'mb-4': !wrongStatus}">
+          <div class="input-group mb-4">
             <div class="input-group-prepend">
               <span>*</span>資產編號：
             </div>
@@ -33,15 +33,17 @@
             <div class="input-group-prepend">
               資產狀態：
             </div>
-            <input ref="inputElement" type="text" class="form-control readonly_box"  @keyup="getAssetsUnit" v-model="formParams.AssetsId" readonly>
+            <input ref="inputElement" type="text" class="form-control readonly_box"  @keyup="getAssetsUnit" v-model="formParams.Status" readonly>
           </div>
         </div>
-        <div  v-show="wrongStatus" class="input-group">
-          <div style="visibility: hidden;" class="input-group-prepend">
-            <p >1</p>
+        <div v-show="wrongStatus" class="col-12">
+          <div class="input-group">
+            <div style="visibility: hidden;" class="input-group-prepend">
+              <p >1</p>
+            </div>
+            <span style="color:rgb(216, 13, 13); font-weight: 700; font-size: 20px;">{{ alertMsg }}</span>
+            <input type="text" style="visibility: hidden;" class="form-control">
           </div>
-          <span style="color:rgb(216, 13, 13); font-weight: 700; font-size: 20px;">{{ alertMsg }}</span>
-          <input type="text" style="visibility: hidden;" class="form-control">
         </div>
         <div class="row">
           <div class="col-xl-6 col-lg-12 col-md-12 col-12">
@@ -58,24 +60,6 @@
                 單位：
               </div>
               <input type="text" class=" readonly_box" readonly v-model="formParams.Unit">
-            </div>
-          </div>
-        </div>
-        <div class="row ">
-          <div class="col-xl-6 col-lg-12 col-md-12 col-12">
-            <div class="input-group mb-4">
-              <div class="input-group-prepend">
-                申請人員：
-              </div>
-              <input class="readonly_box" type="number" v-model="formParams.Count" min="1" :readonly="!canEdit" :class="{readonly_box: !canEdit}" />
-            </div>
-          </div>
-          <div class="col-xl-6 col-lg-12 col-md-12 col-12">
-            <div class="input-group mb-4">
-              <div class="input-group-prepend">
-                申請入庫日期：
-              </div>
-              <input type="text" class="readonly_box" readonly v-model="formParams.Unit">
             </div>
           </div>
         </div>
@@ -119,6 +103,7 @@ import router from '@/router';
       const wrongStatus = ref(false);
       const alertMsg = ref('');
       const formParams = reactive({
+        Status: '',
         AssetsId: '',
         Count: 1,
         Unit: '',
@@ -142,7 +127,6 @@ import router from '@/router';
         const axios = require('axios');
         try {
           const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
-          console.log(response);
           const data = response.data;
           if (data.state === 'success') {
             console.log('申請人名稱:', data.resultList.Applicant);
@@ -162,12 +146,14 @@ import router from '@/router';
       async function getAssetsUnit() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetUnit?AssetsId=${formParams.AssetsId}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetAssetInfo?id=${formParams.AssetsId}`);
           const data = response.data;
           if (data.state === 'success') {
+            console.log('資產資料', data.resultList);
             formParams.Unit = data.resultList.Unit;
-            // 如為資產 1.資產數量為一，且不可更改 2.Status不對，不能提交
-            if(!data.resultList.IsConsumables) {
+            formParams.Status = data.resultList.Status;
+            // 如為非耗材 1.資產數量為一，且不可更改 2.Status不對，不能提交
+            if(data.resultList.AssetType !== '耗材') {
               // 1.
               canEdit.value =false;
               formParams.Count = 1;
@@ -207,6 +193,7 @@ import router from '@/router';
             canSubmit.value = false;
             wrongStatus.value = false;
             formParams.Unit = '';
+            formParams.Status = '';
           } else if (data.state === 'account_error') {
             formParams.Unit = '';
             alert(data.messages);
@@ -250,7 +237,7 @@ import router from '@/router';
             router.push('/');
           }
         } catch (error) {
-          console.error('Error sending applicant info request to backend');
+          console.error(error);
         }
       }
       const goBack = () => {

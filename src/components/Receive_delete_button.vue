@@ -1,6 +1,6 @@
 <template>
   <div class='button_wrap'>
-    <button class='btn' @click="viewDelete('刪除')">刪除</button>
+    <button class='btn' @click="viewDelete()">刪除</button>
   </div>
 </template>
 
@@ -11,12 +11,13 @@
   export default {
     setup(props) {
       const router = useRouter();
+      const search_id = props.params.data.AR_ID
       function viewDelete() {
         router.push({
           name: 'Receive_Delete',
-          // query: {
-          //   search_id
-          // }
+          query: {
+            search_id
+          }
         });
       }
       return {

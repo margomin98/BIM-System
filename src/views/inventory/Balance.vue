@@ -118,7 +118,7 @@
           </div>
           <button class="send_btn" data-bs-toggle="modal" data-bs-target="#auth_modal">驗證</button>
         </div>
-        <!-- Modal -->
+        <!--Validation Modal -->
         <div class="modal fade" id="auth_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content ">
@@ -149,7 +149,24 @@
       </div>
       <div class="col button_wrap">
         <button class="send_btn" :class="{send_btn_disabled: !validation.isVerified}" @click="submit" :disabled="!validation.isVerified">確定認列</button>
-        <button class="send_btn" :class="{send_btn_disabled: !validation.isVerified}" @click="force" :disabled="!validation.isVerified">完成平帳</button>
+        <button class="send_btn" data-bs-toggle="modal" data-bs-target="#force_modal">完成平帳</button>
+      </div>
+      <!--Force Warning Modal -->
+      <div class="modal force_modal fade" id="force_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">警示</h5>
+              <div class="close_icon"><p type="button" data-bs-dismiss="modal" aria-label="Close">x</p></div>
+            </div>
+            <div class="modal-body">
+            <p>請確認差異細項是否認列無誤，按下"確認"後將會立即結束本次盤點平帳作業，不可再做修正。</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn confirm" data-bs-dismiss="modal" @click="force">確認</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="info_wrap col">
@@ -166,8 +183,8 @@
                 <p>設備總類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                        {{ searchParams.EquipTypeName || '請選擇' }}
-                      </button>
+                    {{ searchParams.EquipTypeName || '請選擇' }}
+                  </button>
                   <div class="dropdown-menu" aria-labelledby="typeDropdown">
                     <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
                   </div>
@@ -177,8 +194,8 @@
                 <p>設備分類</p>
                 <div class="dropdown">
                   <button style='overflow: hidden;text-overflow: ellipsis;white-space: nowrap' class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
-                        {{ searchParams.EquipCategoryName || EquipCategoryInit }}
-                      </button>
+                    {{ searchParams.EquipCategoryName || EquipCategoryInit }}
+                  </button>
                   <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                     <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
                   </div>
@@ -190,7 +207,7 @@
               </div>
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
                 <p>物品名稱</p>
-                <input type="text" class="form-control text-center" placeholder="不可輸入超過20字" v-model="searchParams.AssetName" />
+                <input type="text" class="form-control text-center" placeholder="最多輸入20字" v-model="searchParams.AssetName" />
               </div>
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
                 <p>儲位區域</p>
@@ -558,12 +575,14 @@
       }
       async function force() {
         const axios = require('axios');
-        const response = await axios.get(`http://192.168.0.177:7008/StocktakingMng/BalanceCompleted?id=${IP_ID}`);
+        const response = await axios.get(`http://192.168.0.177:7008/StocktakingMng/BalanceCompleted?PlanId=${IP_ID}`);
         try {
           const data = response.data;
           console.log(data);
           if (data.state === 'success') {
-            alert(data.messages);
+            let msg = data.messages;
+            msg += '\n單號:' + data.resultList.IP_Id;
+            alert(msg);
             router.push({
               name: 'Inventory_Datagrid'
             });
@@ -628,6 +647,11 @@
       }
       // 下半部盤點範圍Datagrid
       async function getDatagrid() {
+        searchParams.AssetName = searchParams.AssetName.trim();
+        if (searchParams.AssetName && !/^[\s\S]{0,20}$/.test(searchParams.AssetName)) {
+          alert('物品名稱不可輸入超過20字')
+          return
+        }
         const form = new FormData();
         form.append('PlanId', IP_ID)
         for (const key in searchParams) {
@@ -799,6 +823,53 @@
   @import "@/assets/css/global.scss";
   span {
     @include red_star
+  }
+  .force_modal {
+    .modal-body {
+      padding: 20px;
+      margin: auto;
+      p{
+        text-align: center;
+    font-weight: 800;}
+    }
+    .modal-content {
+      margin: auto;
+    }
+    .modal-input-group-prepend {
+      width: auto;
+      font-weight: 700;
+      font-size: 20px;
+    }
+    .modal-footer {
+      padding: 0 12px 12px;
+      border: none;
+      justify-content: center;
+      .confirm{
+        color:white;
+        background-color: #132238;
+        &:hover{
+          background-color: #426497;
+        }
+      }
+    }
+    .modal-header {
+      h5 {
+        font-weight: 700;
+      }
+      background: #528091;
+      color: white;
+      display: flex;
+      justify-content: center;
+      padding: 0 16px 16px;
+      .close_icon {
+        height: 40px;
+        cursor: pointer;
+      }
+      .modal-title {
+        margin: auto;
+        padding-top: 16px;
+      }
+    }
   }
   .checkmark-icon {
     position: absolute;

@@ -317,13 +317,10 @@
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
-            // 檢查資料狀態是否可編輯
-            // if(data.resultList.Status !== '申請入庫' && data.resultList.Status !== '申請歸還' && data.resultList.Status !== '可交付') {
-            //   window.history.back();
-            //   // router.push({name: 'Store_Datagrid'});
-            // }
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
+            details.value.PlanStart = details.value.PlanStart.replace(/-/g, '/');
+            details.value.PlanEnd = details.value.PlanEnd.replace(/-/g, '/');
             grid.api2.setRowData(details.value.AssetList)
           } else if (data.state === 'error') {
             alert(data.messages);
