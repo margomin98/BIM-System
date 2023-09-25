@@ -133,9 +133,13 @@
           </div>
         </div>
       </div>
-      <h2 class="mt-5 mb-3">
-        維修資訊
-      </h2>
+      <div class="fixed_info mt-5">
+        <div>
+          <p>
+            維修資訊
+          </p>
+        </div>
+      </div>
       <div class="content">
         <!-- 維修廠商 -->
         <div class="col-12">
@@ -363,9 +367,6 @@
             }
           }
         }
-        .content:nth-child(4) {
-          border-radius: 10px
-        }
         .button_wrap {
           display: flex;
           justify-content: space-between;
@@ -500,7 +501,6 @@
           }
         }
         .content:nth-child(4) {
-          border-radius: 10px;
           .input-group-prepend {
             width: 160px;
           }
@@ -645,9 +645,6 @@
               }
             }
           }
-        }
-        .content:nth-child(4) {
-          border-radius: 10px
         }
         .button_wrap {
           display: flex;
