@@ -21,7 +21,7 @@
       </div>
       <div class="content">
         <div class="col-12">
-          <div class="input-group" :class="{'mb-4': !wrongStatus}">
+          <div class="input-group mb-4">
             <div class="input-group-prepend">
               <span>*</span>資產編號：
             </div>
@@ -36,12 +36,14 @@
             <input ref="inputElement" type="text" class="form-control readonly_box"  @keyup="getAssetsUnit" v-model="formParams.Status" readonly>
           </div>
         </div>
-        <div  v-show="wrongStatus" class="input-group">
-          <div style="visibility: hidden;" class="input-group-prepend">
-            <p >1</p>
+        <div v-show="wrongStatus" class="col-12">
+          <div class="input-group">
+            <div style="visibility: hidden;" class="input-group-prepend">
+              <p >1</p>
+            </div>
+            <span style="color:rgb(216, 13, 13); font-weight: 700; font-size: 20px;">{{ alertMsg }}</span>
+            <input type="text" style="visibility: hidden;" class="form-control">
           </div>
-          <span style="color:rgb(216, 13, 13); font-weight: 700; font-size: 20px;">{{ alertMsg }}</span>
-          <input type="text" style="visibility: hidden;" class="form-control">
         </div>
         <div class="row">
           <div class="col-xl-6 col-lg-12 col-md-12 col-12">
@@ -191,6 +193,7 @@ import router from '@/router';
             canSubmit.value = false;
             wrongStatus.value = false;
             formParams.Unit = '';
+            formParams.Status = '';
           } else if (data.state === 'account_error') {
             formParams.Unit = '';
             alert(data.messages);

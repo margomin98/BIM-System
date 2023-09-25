@@ -662,23 +662,23 @@
                   color: white;
                   margin-bottom: unset !important;
                 }
-                .file_upload_wrap {
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
                   margin-bottom: 0;
-                  display: flex;
-                  img {
-                    width: 25px;
-                    height: 25px;
-                  }
-                  p {
-                    margin-bottom: 0;
+                  font-weight: 700;
+                  color: white;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
                     font-weight: 700;
                     color: white;
-                    &::before {
-                      margin-right: 10px;
-                      content: '·';
-                      font-weight: 700;
-                      color: white;
-                    }
                   }
                 }
               }
@@ -853,23 +853,23 @@
                   color: white;
                   margin-bottom: unset !important;
                 }
-                .file_upload_wrap {
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
                   margin-bottom: 0;
-                  display: flex;
-                  img {
-                    width: 25px;
-                    height: 25px;
-                  }
-                  p {
-                    margin-bottom: 0;
+                  font-weight: 700;
+                  color: white;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
                     font-weight: 700;
                     color: white;
-                    &::before {
-                      margin-right: 10px;
-                      content: '·';
-                      font-weight: 700;
-                      color: white;
-                    }
                   }
                 }
               }
@@ -1056,23 +1056,23 @@
                   font-weight: 700;
                   color: white;
                 }
-                .file_upload_wrap {
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
                   margin-bottom: 0;
-                  display: flex;
-                  img {
-                    width: 25px;
-                    height: 25px;
-                  }
-                  p {
-                    margin-bottom: 0;
+                  font-weight: 700;
+                  color: white;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
                     font-weight: 700;
                     color: white;
-                    &::before {
-                      margin-right: 10px;
-                      content: '·';
-                      font-weight: 700;
-                      color: white;
-                    }
                   }
                 }
               }
