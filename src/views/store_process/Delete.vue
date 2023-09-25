@@ -273,15 +273,15 @@
             </div>
           </div>
         </div>
-        <!-- view Modal -->
+        <!-- ExistFile Modal -->
         <div class="modal fade" id="existFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" style="max-width: 800px !important;">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">{{ modalParams.title }}</h5>
+              <h5 class="modal-title">{{ existFileModalTitle }}</h5>
               <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
             </div>
-            <img :src="modalParams.src" alt="Uploaded Image" class="w-100" />
+            <img :src="existFileImageUrl" alt="Uploaded Image" class="w-100" />
           </div>
         </div>
       </div>
