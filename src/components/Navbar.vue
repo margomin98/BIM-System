@@ -5,8 +5,8 @@
         <img class='logo_img' src="@/assets/navbar/logo.png" alt="logo">
       </router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+                <span class="navbar-toggler-icon"></span>
+              </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item dropdown">
@@ -43,6 +43,15 @@
               <router-link to="/equipment_datagrid">設備集成管理</router-link>
               <router-link to="/inventory_datagrid">盤點管理</router-link>
               <router-link to="/assets_search">搜尋資產</router-link>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img src="../assets/navbar/manage.png" alt="總務管理"> 總務管理
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <router-link to="/repair_datagrid">維修管理</router-link>
+              <router-link to="">報廢管理</router-link>
             </div>
           </li>
           <li class="nav-item dropdown">
@@ -145,7 +154,6 @@
       .nav-link:hover {
         background: #213d5d;
         border-radius: 5px;
-        font-weight: 700;
       }
       nav {
         padding: 13px 19.749px 12px 20.5px;
@@ -242,8 +250,8 @@
           }
           .right_info {
             font-size: 18px;
-    font-weight: 800;
-    margin-top: 20px;
+            font-weight: 800;
+            margin-top: 20px;
             p {
               font-size: 18px;
               margin-bottom: 0;
