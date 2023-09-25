@@ -16,7 +16,7 @@
       const selectNumber = ref('');
       onMounted(() => {
         // 如果有盤點過，將初始值帶入
-        if(data.ActualNum)
+        if(data.ActualNum || data.ActualNum === 0)
           selectNumber.value = data.ActualNum;
       });
       function changeSelectNumber() {

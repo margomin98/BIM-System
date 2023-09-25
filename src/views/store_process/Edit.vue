@@ -311,9 +311,7 @@
             <!-- 頁籤已上傳檔案 -->
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  已上傳檔案：
-                </div>
+                <div class="input-group-prepend">已上傳檔案：</div>
                 <div class="d-flex  flex-column">
                   <p class='file_upload_wrap d-flex' v-for="(file, img_index) in item.existFile" :key="img_index" style="cursor: pointer;">
                     <p @click="showExistFileImage(index, img_index)" data-bs-toggle="modal" data-bs-target="#existFile_modal">

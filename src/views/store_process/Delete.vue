@@ -266,7 +266,7 @@
                 <div class="input-group-prepend">已上傳檔案：</div>
                 <div class="d-flex  flex-column">
                   <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
-                    <p @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#existFile_modal">{{ file.FileName }}</p>
+                    <p @click="showExistFileImage(index , file_index)" data-bs-toggle="modal" data-bs-target="#existFile_modal">{{ file.FileName }}</p>
                   </div>
                 </div>
               </div>
