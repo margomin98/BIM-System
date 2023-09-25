@@ -82,6 +82,16 @@ import System_Parameter_Edit from "../views/system/Parameter_edit";
 import Authority from "../views/system/Authority";
 //系統管理
 
+//维修管理
+import Repair_Datagrid from "../views/repair/Datagrid";
+import Repair_New from "../views/repair/New";
+import Repair_Edit from "../views/repair/Edit";
+import Repair_View from "../views/repair/View";
+import Repair_Process from "../views/repair/Process";
+// import Repair_Review from "../views/repair/Review";
+// import Repair_Deliver from "../views/repair/Deliver";
+//维修管理
+
 //權限不足
 import Authorized from "../views/Authorized";
 //權限不足
@@ -337,6 +347,48 @@ const routes = [
     component: Receive_Delete,
     // meta: {auth: true, request: 'IP_Detail'},
   },
+  {
+    path: "/repair_datagrid",
+    name: "Repair_Datagrid",
+    component: Repair_Datagrid,
+    // meta: {auth: true, request: 'IP_Detail'},
+  }, 
+  {
+    path: "/repair_new",
+    name: "Repair_New",
+    component: Repair_New,
+    // meta: {auth: true, request: 'IP_Detail'},
+  },
+  {
+    path: "/repair_edit",
+    name: "Repair_Edit",
+    component: Repair_Edit,
+    // meta: {auth: true, request: 'IP_Detail'},
+  },
+  {
+    path: "/repair_view",
+    name: "Repair_View",
+    component: Repair_View,
+    // meta: {auth: true, request: 'IP_Detail'},
+  },
+  {
+    path: "/repair_process",
+    name: "Repair_Process",
+    component: Repair_Process,
+    // meta: {auth: true, request: 'IP_Detail'},
+  },
+  // {
+  //   path: "/repair_reveiw",
+  //   name: "Repair_Review",
+  //   component: Repair_Review,
+  //   // meta: {auth: true, request: 'IP_Detail'},
+  // },
+  // {
+  //   path: "/repair_deliver",
+  //   name: "Repair_Deliver",
+  //   component: Repair_Deliver,
+  //   // meta: {auth: true, request: 'IP_Detail'},
+  // },
   {
     
     path: "/authority",
