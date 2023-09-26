@@ -51,7 +51,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <router-link to="/repair_datagrid">維修管理</router-link>
-              <router-link to="">報廢管理</router-link>
+              <router-link to="/scrap_datagrid">報廢管理</router-link>
             </div>
           </li>
           <li class="nav-item dropdown">
