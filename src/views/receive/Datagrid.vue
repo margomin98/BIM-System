@@ -9,7 +9,6 @@
         <router-link to="/receive_new">
           <button class="add_btn">新增收貨</button>
         </router-link>
-  
       </div>
     </div>
     <div class="container-fluid datagrid_section">
@@ -17,11 +16,11 @@
         <div class="row">
           <div class="col">
             <p>物流單號</p>
-            <input type="text" v-model="searchParams.ShipmentNum"/>
+            <input type="text" v-model="searchParams.ShipmentNum" />
           </div>
           <div class="col">
             <p>貨運公司</p>
-            <input type="text" v-model="searchParams.ShipmentCompany"/>
+            <input type="text" v-model="searchParams.ShipmentCompany" />
           </div>
           <div class="col">
             <p>收件日期(起)</p>
@@ -41,11 +40,10 @@
         <!-- <button class="export_btn">匯出</button> -->
       </div>
     </div>
-   <div style="width: 100%;margin-bottom:3%">
+    <div style="width: 100%;margin-bottom:3%">
       <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true" :alwaysShowHorizontalScroll="true">
       </ag-grid-vue>
     </div>
-
   </div>
 </template>
 
@@ -56,8 +54,14 @@
   import Receive_button from "@/components/Receive_button";
   import Delete from "@/components/Receive_delete_button";
   import Navbar from "@/components/Navbar.vue";
-import { onMounted, reactive, ref } from "vue";
-import { useRouter } from "vue-router";
+  import {
+    onMounted,
+    reactive,
+    ref
+  } from "vue";
+  import {
+    useRouter
+  } from "vue-router";
   export default {
     components: {
       Navbar,
@@ -74,75 +78,75 @@ import { useRouter } from "vue-router";
         EndDate: '',
       });
       const columnDefs = [{
-            suppressMovable: true,
-            field: "",
-            cellRenderer: "Receive_button",
-            width: 220,
-            resizable: true,
-          },
-          {
-            headerName: "收貨單號",
-            field: "AR_ID",
-            unSortIcon: true,
-            sortable: true,
-            width: 180,
-            resizable: true,
-            flex: 1,
-            suppressMovable: true
-          },
-          {
-            headerName: "物流單號",
-            field: "ShipmentNum",
-            unSortIcon: true,
-            sortable: true,
-            width: 180,
-            resizable: true,
-            flex: 1,
-            suppressMovable: true
-          },
-          {
-            headerName: "貨運公司",
-            field: "ShipmentCompany",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "到貨件數",
-            field: "GoodsNum",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            suppressMovable: true
-          },
-          {
-            headerName: "收件日期",
-            field: "ReceivedDate",
-            unSortIcon: true,
-            sortable: true,
-            resizable: true,
-            width: 150,
-            suppressMovable: true
-          },
-          {
-            headerName: "收件人員",
-            field: "Recipient",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            suppressMovable: true
-          },
-           {
-            suppressMovable: true,
-            width:100,
-            field: "",
-            cellRenderer: "Delete",
-          }
+          suppressMovable: true,
+          field: "",
+          cellRenderer: "Receive_button",
+          width: 220,
+          resizable: true,
+        },
+        {
+          headerName: "收貨單號",
+          field: "AR_ID",
+          unSortIcon: true,
+          sortable: true,
+          width: 180,
+          resizable: true,
+          flex: 1,
+          suppressMovable: true
+        },
+        {
+          headerName: "物流單號",
+          field: "ShipmentNum",
+          unSortIcon: true,
+          sortable: true,
+          width: 180,
+          resizable: true,
+          flex: 1,
+          suppressMovable: true
+        },
+        {
+          headerName: "貨運公司",
+          field: "ShipmentCompany",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "到貨件數",
+          field: "GoodsNum",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true
+        },
+        {
+          headerName: "收件日期",
+          field: "ReceivedDate",
+          unSortIcon: true,
+          sortable: true,
+          resizable: true,
+          width: 150,
+          suppressMovable: true
+        },
+        {
+          headerName: "收件人員",
+          field: "Recipient",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true
+        },
+        {
+          suppressMovable: true,
+          width: 100,
+          field: "",
+          cellRenderer: "Delete",
+        }
       ]
       const rowData = ref([]);
-      onMounted(()=>{
+      onMounted(() => {
         submit();
       });
       async function submit() {
@@ -175,8 +179,8 @@ import { useRouter } from "vue-router";
           console.error(error);
         }
       }
-      const clear = ()=>{
-        for(const key in searchParams) {
+      const clear = () => {
+        for (const key in searchParams) {
           searchParams[key] = '';
         }
         submit();
@@ -200,8 +204,8 @@ import { useRouter } from "vue-router";
     .main_section {
       padding: 0 10%;
       h1 {
-       margin-bottom: 20px;
-    margin-top: 30px;
+        margin-bottom: 20px;
+        margin-top: 30px;
         text-align: center;
         font-size: 55px;
         font-weight: 600;
@@ -211,8 +215,7 @@ import { useRouter } from "vue-router";
         margin-bottom: 25px;
         gap: 20px;
         .add_btn {
-          @include datagrid_button_no1;
-          // width: 100px;
+          @include datagrid_button_no1; // width: 100px;
           &:hover {
             background-color: #537ebc;
           }
@@ -229,15 +232,15 @@ import { useRouter } from "vue-router";
             background-color: #5d85bd;
           }
         }
-         .export_btn {
+        .export_btn {
           @include export_btn;
           &:hover {
             background-color: #274266;
           }
         }
       }
-      .datagrid_section {    
-         .content {
+      .datagrid_section {
+        .content {
           background: rgba(82, 136, 156, 0.8);
           border-radius: 10px;
           margin-bottom: 30px;
@@ -247,8 +250,6 @@ import { useRouter } from "vue-router";
           justify-content: center;
         }
         .row {
-        
-       
           p {
             @include datagrid_title;
           }
@@ -258,7 +259,7 @@ import { useRouter } from "vue-router";
             height: 35px;
           }
           button {
-            border:none;
+            border: none;
             padding: 0;
             width: 100%;
             font-size: 18px;
@@ -268,7 +269,7 @@ import { useRouter } from "vue-router";
             width: 200px;
             height: 35px;
             @include dropdown_btn;
-              .dropdown-toggle {
+            .dropdown-toggle {
               display: flex;
               justify-content: space-between;
               align-items: center;
@@ -309,13 +310,12 @@ import { useRouter } from "vue-router";
         margin-bottom: 25px;
         gap: 20px;
         .add_btn {
-          @include datagrid_button_no1;
-          // width:100px;
+          @include datagrid_button_no1; // width:100px;
           &:hover {
             background-color: #537ebc;
           }
         }
-           .export_btn {
+        .export_btn {
           @include export_btn;
           &:hover {
             background-color: #274266;
@@ -408,7 +408,7 @@ import { useRouter } from "vue-router";
             background-color: #537ebc;
           }
         }
-      .export_btn {
+        .export_btn {
           @include export_btn;
           font-size: 18px;
           width: 100%;
@@ -461,7 +461,7 @@ import { useRouter } from "vue-router";
             width: 100%;
             height: 35px;
             @include dropdown_btn;
-           .dropdown-toggle {
+            .dropdown-toggle {
               display: flex;
               justify-content: space-between;
               align-items: center;

@@ -74,18 +74,18 @@
         </div>
         <div class="d-flex selected_file col">
           <!-- 已上傳文件 -->
-          <h5>已上傳文件</h5>
+          <p class="text-start mb-0">已上傳文件</p>
           <div class="icon" v-for="(file, index) in details.existDocument" :key="index">
-            <p>{{ file.FileName }}</p>
+            <p class="uploded_file">{{ file.FileName }}</p>
             <div>
               <img src="@/assets/view.png" @click="handlePreview(file)">
               <img class="close_icon" src="@/assets/trash.png" @click="deleteFile('document',index , file)">
             </div>
           </div>
           <!-- 新上傳檔案 -->
-          <h5>已選擇檔案</h5>
+          <p class="text-start mb-0">已選擇檔案</p>
           <div class="icon" v-for="(file, index) in fileParams.viewDoc" :key="index">
-            <p>{{ file.FileName }}</p>
+            <p class="uploded_file">{{ file.FileName }}</p>
             <div>
               <img src="@/assets/view.png" @click="handlePreview(file)">
               <img class="close_icon" src="@/assets/trash.png" @click="deleteFile('document',index , file)">
@@ -604,6 +604,9 @@
   }
   .selected_file {
     flex-direction: column;
+    p.uploded_file::before{
+      content:'· ';
+    }
     .icon {
       margin: 0 10px;
       gap: 5px;

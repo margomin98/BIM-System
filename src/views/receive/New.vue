@@ -55,7 +55,7 @@
       </div>
     </div>
     <!-- 中間物流文件上傳 -->
-    <div class="info_wrap col">
+    <div class="info_wrap mt-5 col">
       <div class="fixed_info">
         <div>
           <p>物流文件上傳</p>
@@ -68,7 +68,7 @@
         </div>
         <div class="d-flex selected_file col">
           <div class="icon" v-for="(file, index) in fileParams.viewDoc" :key="index">
-            <p>{{ file.name }}</p>
+            <p  class="uploded_file">{{ file.name }}</p>
             <div>
               <img src="@/assets/view.png" @click="handleDocPreview(file)">
               <img class="close_icon" src="@/assets/trash.png" @click="deleteFile('document',index)">
@@ -520,6 +520,9 @@
   }
   .selected_file {
     flex-direction: column;
+    p.uploded_file::before{
+      content:'· ';
+    }
     .icon {
       margin: 0 10px;
       gap: 5px;
@@ -765,9 +768,7 @@
           }
         }
       }
-      .info_wrap:nth-child(3) {
-        margin-top: 3%;
-      }
+ 
       .row:nth-child(3) {
         .input-group {
           justify-content: flex-start;
@@ -1364,7 +1365,6 @@
           margin-left: unset !important;
           border-radius: 5px;
         }
-        margin-top: 3%;
         .count {
           .number-input-box {
             width: 100%;

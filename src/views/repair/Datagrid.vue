@@ -217,7 +217,7 @@
           sortable: true,
           width: 150,
           suppressMovable: true
-        }, ,
+        },
         {
           headerName: "審核人員",
           field: "PlanEnd",

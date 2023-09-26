@@ -123,12 +123,12 @@
                 <div class="input-with-icon">
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
                   <span class="icon-container">
-                                  <img src="@/assets/accept.png" class="checkmark-icon" />
-                              </span>
+                                      <img src="@/assets/accept.png" class="checkmark-icon" />
+                                  </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
-                              驗證
-                          </button>
+                                  驗證
+                              </button>
                 <!-- 驗證跳出Modal -->
                 <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
@@ -167,14 +167,14 @@
                   <div class="form-check">
                     <input class="form-check-input" type="radio" name="flexRadioDefault" id="pass">
                     <label class="form-check-label" for="pass">
-  通過
-    </label>
+      通過
+        </label>
                   </div>
                   <div class="form-check">
                     <input class="form-check-input" type="radio" name="flexRadioDefault" id="fail">
                     <label class="form-check-label" for="fail">
-    不通過
-    </label>
+        不通過
+        </label>
                   </div>
                 </div>
               </div>
@@ -355,6 +355,7 @@
             }
             .input-container {
               position: relative;
+              align-self: center;
             }
             .input-with-icon {
               position: relative;
@@ -540,6 +541,7 @@
             }
             .input-container {
               position: relative;
+              align-self: center;
             }
             .input-with-icon {
               position: relative;
@@ -734,6 +736,7 @@
             }
             .input-container {
               position: relative;
+              align-self: center;
             }
             .input-with-icon {
               position: relative;
