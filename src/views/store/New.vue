@@ -320,7 +320,7 @@
           </div>
         </div>
       </div>
-      <!-- NewFileModal -->
+      <!-- ViewFile Modal -->
       <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" style="max-width: 800px !important;">
           <div class="modal-content">

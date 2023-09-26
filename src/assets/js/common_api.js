@@ -1,4 +1,7 @@
 import axios from 'axios';
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
 // 申請人名稱 & Navbar 名稱
 export const getApplication = (async ()=> {
   try {
@@ -36,9 +39,9 @@ export const getEquipType = (async ()=> {
   }
 }) 
 // 設備分類
-export const getEquipCategory = (async (params) => {
+export const getEquipCategory = (async (EquipTypeName) => {
   try {
-    const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${params}`);
+    const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${EquipTypeName}`);
     const data = response.data;
     if (data.state === 'success') {
       console.log('設備分類options:\n', data.resultList.EquipCategory);
@@ -72,9 +75,9 @@ export const getArea = (async () => {
   }
 })
 // 儲位櫃位
-export const getLayer = (async (params)=> {
+export const getLayer = (async (AreaName)=> {
   try {
-    const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetLayerName?id=${params}`);
+    const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetLayerName?id=${AreaName}`);
     const data = response.data;
     if (data.state === 'success') {
       console.log('儲位櫃位options:\n', data.resultList.LayerName);
@@ -90,9 +93,9 @@ export const getLayer = (async (params)=> {
   }
 }) 
 // 專案名稱
-export const getProject = (async (params) => {
+export const getProject = (async (projectCode) => {
   const form = new FormData();
-  form.append('projectCode', params);
+  form.append('projectCode', projectCode);
   const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchProjectName', form);
   try {
     const data = response.data;
@@ -106,5 +109,24 @@ export const getProject = (async (params) => {
     }
   } catch (error) {
     console.error('專案名稱取得失敗:',error);
+  }
+})
+// 檢視單筆資產資訊
+export const getAssets = (async (AssetsId)=> {
+  try {
+    const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetAssetInfo?id=${AssetsId}`);
+    const data = response.data;
+    if (data.state === 'success') {
+      console.log('資產資料:\n', data.resultList);
+      return data.resultList;
+    } else if (data.state === 'error') {
+      // console.log(data.messages);
+      throw new Error('查無此產編')
+    } else if (data.state === 'account_error') {
+      alert(data.messages);
+      router.push('/');
+    }
+  } catch (error) {
+    // console.error(error);
   }
 })

@@ -118,6 +118,10 @@
         }
       }
       async function submit() {
+        if(!inputValue.value || selectedRole.value) {
+          alert('請輸入必填項目');
+          return
+        }
         const axios = require('axios');
         const form = new FormData();
         form.append('userName', inputValue.value);

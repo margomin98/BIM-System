@@ -7,7 +7,7 @@
     <div class="col">
       <div class="button_wrap d-flex">
         <router-link to="/repair_new">
-          <button class="add_btn">新增保修单</button>
+          <button class="add_btn">新增報修單</button>
         </router-link>
       </div>
     </div>
@@ -17,29 +17,29 @@
           <!-- 維修編號 -->
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>維修編號</p>
-            <input type="text" v-model="searchParams.PlanId" />
+            <input type="text" v-model="searchParams.RepairId" />
           </div>
           <!-- 狀態 -->
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>狀態</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{ searchParams.PlanType || "請選擇" }}
+                  {{ searchParams.Status || "請選擇" }}
                 </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p v-for="(item , index) in DropdownArray.PlanType" :key="index" class="dropdown-item" @click="selectType(item)">{{ item }}</p>
+                <p v-for="(item , index) in DropdownArray.Status" :key="index" class="dropdown-item" @click="selectStatus(item)">{{ item }}</p>
               </div>
             </div>
           </div>
           <!-- 資產編號 -->
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>資產編號</p>
-            <input type="text" v-model="searchParams.PlanId" />
+            <input type="text" v-model="searchParams.AssetsId" />
           </div>
           <!-- 物品名稱 -->
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>物品名稱</p>
-            <input type="text" v-model="searchParams.PlanId" />
+            <input type="text" v-model="searchParams.AssetName" />
           </div>
           <!-- 日期類型 -->
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
@@ -49,7 +49,7 @@
                   {{ searchParams.DateCategory || "請選擇" }}
                 </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p v-for="(item , index) in DropdownArray.PlanDateCategory" :key="index" class="dropdown-item" @click="selectDateCategory(item)">{{ item }}</p>
+                <p v-for="(item , index) in DropdownArray.DateCategory" :key="index" class="dropdown-item" @click="selectDateCategory(item)">{{ item }}</p>
               </div>
             </div>
           </div>
@@ -58,7 +58,7 @@
             <p>日期(起)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="searchParams.StartDate" class="date-input" />
+                <input type="date" v-model="searchParams.StartDate" class="date-input" :disabled="!searchParams.DateCategory" />
               </div>
             </div>
           </div>
@@ -67,7 +67,7 @@
             <p>日期(迄)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="searchParams.EndDate" class="date-input" />
+                <input type="date" v-model="searchParams.EndDate" class="date-input" :disabled="!searchParams.DateCategory" />
               </div>
             </div>
           </div>
@@ -80,72 +80,50 @@
         <button class="empty_btn" @click="clear">清空</button>
       </div>
     </div>
-    <div style="width: 100%;margin-bottom:3%">
-      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true" :alwaysShowHorizontalScroll="true">
-      </ag-grid-vue>
-    </div>
+    <ag-grid-vue style="height: 380px" class="ag-theme-alpine mb-5" :rowHeight="rowHeight" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true">
+    </ag-grid-vue>
   </div>
 </template>
 
 <script>
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
-  import {
-    onMounted,
-    reactive,
-    ref
-  } from "vue";
   import Repair_button from "@/components/Repair_button";
   import Delete from "@/components/Inventory_data_delete_button";
   import Navbar from "@/components/Navbar.vue";
-  import {
-    PlanType,
-    PlanStatus,
-    PlanDateCategory
-  } from "@/assets/js/dropdown.js"
-  import {
-    useRouter
-  } from "vue-router";
+  import { AgGridVue } from "ag-grid-vue3";
+  import { onMounted, reactive, ref } from "vue";
+  import { RepairStatus, RepairDateCategory } from "@/assets/js/dropdown.js"
+  import { useRouter } from "vue-router";
   export default {
     components: {
       Navbar,
       AgGridVue,
       Repair_button,
-      Delete
+      Delete,
     },
     setup() {
       const router = useRouter();
-      const details = ref({});
-      const search_id = ref('');
       const DropdownArray = reactive({
-        PlanType: PlanType,
-        PlanStatus: PlanStatus,
-        PlanDateCategory: PlanDateCategory,
+        Status: RepairStatus,
+        DateCategory: RepairDateCategory,
       })
       const searchParams = reactive({
-        PlanId: '',
-        PlanType: '',
-        PlanStatus: '',
+        RepairId: '',
+        Status: '',
+        AssetsId: '',
+        AssetName: '',
         DateCategory: '',
         StartDate: '',
         EndDate: '',
       });
       const columnDefs = [{
           suppressMovable: true,
-          field: "",
           cellRenderer: "Repair_button",
-          cellRendererParams: {
-            updateSearchId: (id) => {
-              search_id.value = id;
-            }
-          },
           width: 340,
           resizable: true,
         },
         {
           headerName: "維修編號",
-          field: "PlanId",
+          field: "RepairId",
           unSortIcon: true,
           sortable: true,
           width: 180,
@@ -154,7 +132,7 @@
         },
         {
           headerName: "狀態",
-          field: "PlanType",
+          field: "Status",
           unSortIcon: true,
           sortable: true,
           width: 120,
@@ -163,7 +141,7 @@
         },
         {
           headerName: "資產編號",
-          field: "PlanStatus",
+          field: "AssetsId",
           unSortIcon: true,
           sortable: true,
           width: 150,
@@ -171,7 +149,7 @@
         },
         {
           headerName: "物品名稱",
-          field: "PlanTitle",
+          field: "AssetName",
           unSortIcon: true,
           sortable: true,
           resizable: true,
@@ -180,7 +158,7 @@
         },
         {
           headerName: "申請日期",
-          field: "InventoryStaffName",
+          field: "ApplicationDate",
           unSortIcon: true,
           sortable: true,
           width: 150,
@@ -188,7 +166,7 @@
         },
         {
           headerName: "申請人員",
-          field: "ConvenerName",
+          field: "Applicant",
           unSortIcon: true,
           sortable: true,
           width: 120,
@@ -196,7 +174,7 @@
         },
         {
           headerName: "交付日期",
-          field: "PlanStart",
+          field: "DeliveryDate",
           unSortIcon: true,
           sortable: true,
           width: 150,
@@ -204,7 +182,7 @@
         },
         {
           headerName: "送修人員",
-          field: "PlanEnd",
+          field: "RepairPerson",
           unSortIcon: true,
           sortable: true,
           width: 120,
@@ -212,15 +190,15 @@
         },
         {
           headerName: "審核日期",
-          field: "EditTime",
+          field: "VerifyDate",
           unSortIcon: true,
           sortable: true,
           width: 150,
           suppressMovable: true
-        }, ,
+        },
         {
           headerName: "審核人員",
-          field: "PlanEnd",
+          field: "VerifyPerson",
           unSortIcon: true,
           sortable: true,
           width: 120,
@@ -228,7 +206,7 @@
         },
         {
           headerName: "送修日期",
-          field: "EditTime",
+          field: "RepairDate",
           unSortIcon: true,
           sortable: true,
           width: 150,
@@ -247,21 +225,13 @@
       });
       async function submit() {
         const formData = new FormData();
-        const formFields = {
-          'PlanId': searchParams.PlanId,
-          'PlanType': searchParams.PlanType,
-          'PlanStatus': searchParams.PlanStatus,
-          'DateCategory': searchParams.DateCategory,
-          'StartDate': searchParams.StartDate,
-          'EndDate': searchParams.EndDate,
-        };
         //將表格資料append到 formData
-        for (const fieldName in formFields) {
-          formData.append(fieldName, formFields[fieldName]);
+        for (const key in searchParams) {
+          formData.append(key, searchParams[key]);
         }
         const axios = require('axios');
         try {
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryPlans', formData);
+          const response = await axios.post('http://192.168.0.177:7008/RepairMng/RepairOrders', formData);
           const data = response.data;
           if (data.state === 'success') {
             //取得datagrid成功
@@ -283,23 +253,12 @@
           console.error(error);
         }
       }
-      const selectType = (item) => {
-        searchParams.PlanType = item;
-      };
       const selectStatus = (item) => {
-        searchParams.PlanStatus = item;
+        searchParams.Status = item;
       };
       const selectDateCategory = (item) => {
         searchParams.DateCategory = item;
       };
-      function routerProcess() {
-        router.push({
-          name: 'Inventory_Process',
-          query: {
-            search_id: search_id.value,
-          }
-        });
-      }
       function clear() {
         for (const key in searchParams) {
           searchParams[key] = '';
@@ -307,19 +266,16 @@
         submit();
       }
       return {
-        details,
         searchParams,
         DropdownArray,
-        search_id,
         columnDefs,
         rowData,
         rowHeight: 35,
         pageSize: 10,
         submit,
-        selectType,
+        selectStatus,
         selectStatus,
         selectDateCategory,
-        routerProcess,
         clear,
       };
     },
