@@ -76,6 +76,7 @@ import Receive_View from "../views/receive/View";
 import Receive_Delete from "../views/receive/Delete";
 //收貨管理
 
+
 //系統管理
 import System_Parameter from "../views/system/Parameter";
 import System_Parameter_Edit from "../views/system/Parameter_edit";
@@ -91,6 +92,15 @@ import Repair_Process from "../views/repair/Process";
 import Repair_Review from "../views/repair/Review";
 import Repair_Deliver from "../views/repair/Deliver";
 //维修管理
+
+//報廢管理
+import Scrap_Datagrid from "../views/scrap/Datagrid";
+import Scrap_New from "../views/scrap/New";
+import Scrap_Edit from "../views/scrap/Edit";
+import Scrap_View from "../views/scrap/View";
+import Scrap_Process from "../views/scrap/Process";
+import Scrap_Review from "../views/scrap/Review";
+//報廢管理
 
 //權限不足
 import Authorized from "../views/Authorized";
@@ -388,6 +398,42 @@ const routes = [
     name: "Repair_Deliver",
     component: Repair_Deliver,
     // meta: {auth: true, request: 'IP_Detail'},
+  }, 
+   {
+    path: "/scrap_datagrid",
+    name: "Scrap_Datagrid",
+    component: Scrap_Datagrid,
+    // meta: {auth: true, request: 'IP_Detail'},
+  },
+  {
+    path: "/scrap_new",
+    name: "Scrap_New",
+    component: Scrap_New,
+    // meta: {auth: true, request: 'IP_Detail'},
+  }, 
+  {
+    path: "/scrap_edit",
+    name: "Scrap_Edit",
+    component: Scrap_Edit,
+    // meta: {auth: true, request: 'IP_Detail'},
+  }, 
+  {
+    path: "/scrap_view",
+    name: "Scrap_View",
+    component: Scrap_View,
+    // meta: {auth: true, request: 'IP_Detail'},
+  }, 
+  {
+    path: "/scrap_process",
+    name: "Scrap_Process",
+    component: Scrap_Process,
+    // meta: {auth: true, request: 'IP_Detail'},
+  },
+  {
+    path: "/scrap_review",
+    name: "Scrap_Review",
+    component: Scrap_Review,
+    meta: {auth: true, request: 'IP_Detail'},
   },
   {
     
