@@ -405,12 +405,7 @@
   import router from '@/router';
   import { UnitArray , PackageUnitArray} from '@/assets/js/dropdown'
   import { getEquipType , getEquipCategory , getProject } from '@/assets/js/common_api'
-  import {
-    onMounted,
-    reactive,
-    ref,
-    watch,
-  } from 'vue';
+  import { onMounted, reactive, ref, watch } from 'vue';
   export default {
     components: {
       Navbar

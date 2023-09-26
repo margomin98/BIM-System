@@ -27,7 +27,7 @@
             <div class="input-group-prepend">
               <span>*</span>資產編號：
             </div>
-            <input ref="inputElement" type="text" class="form-control" placeholder="請掃描輸入產編" v-model="formParams.AssetsId" @input="getAssetsInfo">
+            <input ref="inputElement" type="text" class="form-control" placeholder="請掃描輸入產編" v-model="formParams.AssetsId" >
           </div>
         </div>
         <!-- 物品名稱 -->
@@ -39,6 +39,7 @@
             <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="Assets.Name">
           </div>
         </div>
+        <!-- Error Hint -->
         <div v-show="wrongStatus" class="col-12">
           <div class="input-group">
             <div style="visibility: hidden;" class="input-group-prepend">
@@ -54,7 +55,7 @@
             <div class="input-group-prepend">
               問題描述：
             </div>
-            <textarea style="height: 200px;" class="form-control" placeholder="最多輸入500字" v-model="formParams.Qusetion"></textarea>
+            <textarea style="height: 200px;" class="form-control" placeholder="最多輸入500字" v-model="formParams.Question"></textarea>
           </div>
         </div>
         <!-- 報修照片上傳 -->
@@ -98,11 +99,7 @@
 </template>
 
 <script>
-  import {
-    ref,
-    onMounted,
-    reactive
-  } from 'vue';
+  import { onMounted, reactive, ref, watch } from 'vue';
   import Navbar from '@/components/Navbar.vue';
   import { getDate , goBack } from '@/assets/js/common_fn.js'
   import { getApplication , getAssets } from '@/assets/js/common_api.js'
@@ -119,10 +116,9 @@
         Type: '',
         Status: '',
       });
-      const InputId = ref('');
       const formParams = reactive({
         AssetsId: '',
-        Qusetion: '',
+        Question: '',
         newFile: [],
         viewFile: [], //不需要傳
       });
@@ -147,44 +143,48 @@
             console.error(error);
           })
       }
-      async function getAssetsInfo() {
-        getAssets(formParams.AssetsId)
-          .then((data)=>{
-            Assets.Name = data.AssetName;
-            Assets.Type = data.AssetType;
-            Assets.Status = data.Status;
+      // async function getAssetsInfo() {
+      //   getAssets(formParams.AssetsId)
+      //     .then((data)=>{
+      //       Assets.Name = data.AssetName;
+      //       Assets.Type = data.AssetType;
+      //       Assets.Status = data.Status;
 
-            // 檢查資產類型
-            if(Assets.Type === '耗材') {
-              wrongStatus.value = true;
-              canSubmit.value = false;
-              alertMsg.value = '僅提供資產類型為非耗材的物品進行維修'
-            }
-            // 檢查資產狀態(只有非耗材才會有這個Status)
-            else if(Assets.Status === '已被設備整合') {
-              wrongStatus.value = true;
-              canSubmit.value = false;
-              alertMsg.value = '此資產已被設備整合，請先移出設備箱'
-            }
-            // 可報修
-            else {
-              wrongStatus.value = false;
-              canSubmit.value = true;
-              alertMsg.value = ''
-            }
-          })
-          .catch((error) =>{
-            wrongStatus.value = true;
-            canSubmit.value = false;
-            Assets.Name = '';
-            alertMsg.value = '請輸入正確的資產編號'
-          })
-      }
+      //       // 檢查資產類型
+      //       if(Assets.Type === '耗材') {
+      //         wrongStatus.value = true;
+      //         canSubmit.value = false;
+      //         alertMsg.value = '僅提供資產類型為非耗材的物品進行維修'
+      //       }
+      //       // 檢查資產狀態(只有非耗材才會有這個Status)
+      //       else if(Assets.Status === '已被設備整合') {
+      //         wrongStatus.value = true;
+      //         canSubmit.value = false;
+      //         alertMsg.value = '此資產已被設備整合，請先移出設備箱'
+      //       }
+      //       // 可報修
+      //       else {
+      //         wrongStatus.value = false;
+      //         canSubmit.value = true;
+      //         alertMsg.value = ''
+      //       }
+      //     })
+      //     .catch((error) =>{
+      //       wrongStatus.value = true;
+      //       canSubmit.value = false;
+      //       Assets.Name = '';
+      //       alertMsg.value = '請輸入正確的資產編號'
+      //     })
+      // }
       async function submit() {
         const pattern = /^(BF\d{8})$/;
         // 檢查必填項目、格式        
         if (!pattern.test(formParams.AssetsId)) {
           alert('資產編號格式錯誤');
+          return
+        }
+        if (!/^[\s\S]{0,500}$/.test(formParams.Question)) {
+          alert('問題描述不可超過500字');
           return
         }
         const form = new FormData();
@@ -280,23 +280,56 @@
       const deleteFile = ((index)=> {
         formParams.newFile.splice(index , 1);
         formParams.viewFile.splice(index , 1);
-      }) ;
+      });
       const viewImgFile = ((index)=>{
         modalParams.title = formParams.viewFile[index].FileName;
         modalParams.src = formParams.viewFile[index].FileLink;
       });
+      // 監聽formParams.AssetsId(資產編號)的數值變動 -> 搜尋
+      watch(()=>formParams.AssetsId, (newValue , oldValue) => {
+        getAssets(newValue)
+        .then((data)=>{
+            Assets.Name = data.AssetName;
+            Assets.Type = data.AssetType;
+            Assets.Status = data.Status;
+
+            // 檢查資產類型
+            if(Assets.Type === '耗材') {
+              wrongStatus.value = true;
+              canSubmit.value = false;
+              alertMsg.value = '僅提供資產類型為非耗材的物品進行維修'
+            }
+            // 檢查資產狀態(只有非耗材才會有這個Status)
+            else if(Assets.Status === '已被設備整合') {
+              wrongStatus.value = true;
+              canSubmit.value = false;
+              alertMsg.value = '此資產已被設備整合，請先移出設備箱'
+            }
+            // 可報修
+            else {
+              wrongStatus.value = false;
+              canSubmit.value = true;
+              alertMsg.value = ''
+            }
+          })
+          .catch((error) =>{
+            wrongStatus.value = true;
+            canSubmit.value = false;
+            Assets.Name = '';
+            alertMsg.value = '請輸入正確的資產編號'
+          })
+      },{immediate: false});
       return {
         Applicant,
         ApplicationDate,
         Assets,
-        InputId,
         formParams,
         modalParams,
         alertMsg,
         wrongStatus,
         canSubmit,
         fileInputs,
-        getAssetsInfo,
+        // getAssetsInfo,
         submit,
         openFileExplorer,
         handleFileChange,

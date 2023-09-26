@@ -318,9 +318,7 @@
                         <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user1.isValidate" />
                       </span>
                 </div>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
-                      驗證
-                    </button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">驗證</button>
                 <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content ">
@@ -332,13 +330,13 @@
                         <div class="col">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">帳號：</div>
-                            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="validation.user1.account" />
+                            <input type="text" class="form-control" v-model="validation.user1.account" />
                           </div>
                         </div>
                         <div class="col">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">密碼：</div>
-                            <input type="password" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="validation.user1.password" />
+                            <input type="password" class="form-control" v-model="validation.user1.password" />
                           </div>
                         </div>
                       </div>
@@ -356,12 +354,10 @@
                 <div class="input-with-icon">
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(2)" />
                   <span class="icon-container">
-                        <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user2.isValidate" />
-                      </span>
+                    <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user2.isValidate" />
+                  </span>
                 </div>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
-                      驗證
-                    </button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">驗證</button>
                 <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content ">
@@ -373,13 +369,13 @@
                         <div class="col">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">帳號：</div>
-                            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="validation.user2.account" />
+                            <input type="text" class="form-control" v-model="validation.user2.account" />
                           </div>
                         </div>
                         <div class="col">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">密碼：</div>
-                            <input type="password" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="validation.user2.password" />
+                            <input type="password" class="form-control" v-model="validation.user2.password" />
                           </div>
                         </div>
                       </div>

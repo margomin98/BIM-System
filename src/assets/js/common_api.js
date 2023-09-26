@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { useRouter } from 'vue-router';
-const router = useRouter();
+import router from '@/router';
 
 // 申請人名稱 & Navbar 名稱
 export const getApplication = (async ()=> {
