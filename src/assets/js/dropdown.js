@@ -2,6 +2,7 @@
 export const UnitArray = ['個', '對', '箱', '包', '組', '台', '件']
 export const PackageUnitArray = ['個', '支', '枝', '隻', '根', '條', '顆']
 export const StoreStatusArray = ['申請入庫', '申請歸還', '可交付', '待入庫', '已入庫', '已歸還']
+export const DateTypeArray = ['申請入庫日期' , '交付日期' , '入庫日期']
 // 出庫管理
 export const UseOptions = ['內部領用', '借測', '出貨', '退貨'];
 // 資產管理

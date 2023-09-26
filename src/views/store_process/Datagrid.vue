@@ -11,10 +11,10 @@
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-              {{ EquipTypeName || '請選擇' }}
+              {{ searchParams.EquipTypeName || '請選擇' }}
             </button>
             <div class="dropdown-menu" aria-labelledby="typeDropdown">
-              <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item"
+              <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item"
                 @click="selectType(`${item}`)">{{ item }}</p>
             </div>
           </div>
@@ -23,32 +23,32 @@
           <p>設備分類</p>
           <div class="dropdown">
             <button style='  overflow: hidden;text-overflow: ellipsis;white-space: nowrap' class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(EquipTypeName !== '') }">
-              {{ EquipCategoryName || EquipCategoryInit }}
+              aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
+              {{ searchParams.EquipCategoryName || EquipCategoryInit }}
             </button>
             <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-              <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item"
+              <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item"
                 @click="selectCategory(`${item}`)">{{ item }}</p>
             </div>
           </div>
         </div>
         <div class="col-xl-2 col-lg-2 col-md-6 col-12">
           <p>資產編號</p>
-          <input type="text" v-model="AssetsId" />
+          <input type="text" v-model="searchParams.AssetsId" />
         </div>
         <div class="col-xl-2 col-lg-2 col-md-6 col-12">
           <p>物品名稱</p>
-          <input type="text" v-model="AssetName" />
+          <input type="text" v-model="searchParams.AssetName" />
         </div>
         <div class="col-xl-2 col-lg-2 col-md-6 col-12">
           <p>狀態</p>
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
-              {{ Status || "請選擇" }}
+              {{ searchParams.Status || "請選擇" }}
             </button>
             <div class="dropdown-menu" aria-labelledby="statusDropdown">
-              <p v-for="(item, index) in StatusArray" :key="index" class="dropdown-item" @click="selectStatus(`${item}`)">
+              <p v-for="(item, index) in DropdownArray.Status" :key="index" class="dropdown-item" @click="selectStatus(`${item}`)">
                 {{ item }}</p>
             </div>
           </div>
@@ -58,10 +58,10 @@
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false" @click="getAreaName">
-              {{ AreaName || '請選擇' }}
+              {{ searchParams.AreaName || '請選擇' }}
             </button>
             <div class="dropdown-menu" aria-labelledby="areaDropdown">
-              <p v-for="(item, index) in AreaArray" :key="index" class="dropdown-item" @click="selectArea(`${item}`)">
+              <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item" @click="selectArea(`${item}`)">
                 {{ item }}</p>
             </div>
           </div>
@@ -70,12 +70,11 @@
           <p>櫃位</p>
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false" :disabled="AreaName === ''">
-              {{ LayerName || LayerInit }}
+              aria-haspopup="true" aria-expanded="false" :disabled="searchParams.AreaName === ''">
+              {{ searchParams.LayerName || LayerInit }}
             </button>
             <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
-              <p v-for="(item, index) in LayerArray" :key="index" class="dropdown-item" @click="selectLayer(`${item}`)">{{
-                item }}</p>
+              <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(`${item}`)">{{ item }}</p>
             </div>
           </div>
         </div>
@@ -84,12 +83,10 @@
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
-              {{ DateCategory || "請選擇" }}
+              {{ searchParams.DateCategory || "請選擇" }}
             </button>
             <div class="dropdown-menu" aria-labelledby="statusDropdown">
-              <p class="dropdown-item" @click="selectDateType('申請入庫日期')">申請入庫日期</p>
-              <p class="dropdown-item" @click="selectDateType('交付日期')">交付日期</p>
-              <p class="dropdown-item" @click="selectDateType('入庫日期')">入庫日期</p>
+              <p v-for="(item , index) in DropdownArray.DateType" :key="index" class="dropdown-item" @click="selectDateType(item)">{{ item}}</p>
             </div>
           </div>
         </div>
@@ -97,8 +94,7 @@
           <p>日期(起)</p>
           <div class="date-selector">
             <div class="input-container">
-              <input type="date" v-model="StartDate" class="date-input" @focus="showDatePicker = true"
-                @blur="showDatePicker = false" :disabled="DateCategory === ''" />
+              <input type="date" v-model="searchParams.StartDate" class="date-input" :disabled="searchParams.DateCategory === ''" />
             </div>
           </div>
         </div>
@@ -106,8 +102,7 @@
           <p>日期(迄)</p>
           <div class="date-selector">
             <div class="input-container">
-              <input type="date" v-model="EndDate" class="date-input" @focus="showEndDatePicker = true"
-                @blur="showEndDatePicker = false" :disabled="DateCategory === ''" />
+              <input type="date" v-model="searchParams.EndDate" class="date-input" :disabled="searchParams.DateCategory === ''" />
             </div>
           </div>
         </div>
@@ -132,7 +127,8 @@ import Storage_process_button from "@/components/Storage_process_button";
 import Delete from "@/components/Storage_process_delete_button";
 import Navbar from "@/components/Navbar.vue";
 import { onMounted, reactive, ref } from "vue";
-import { StoreStatusArray } from "@/assets/js/dropdown";
+import { StoreStatusArray , DateTypeArray } from "@/assets/js/dropdown";
+import { getEquipType , getEquipCategory , getArea , getLayer } from '@/assets/js/common_api'
 
 export default {
   components: {
@@ -151,34 +147,25 @@ export default {
       EquipTypeName: '',
       EquipCategoryName: '',
       Status: '',
-      EquipTypeName: '',
-      EquipTypeName: '',
-      EquipTypeName: '',
+      AssetsId: '',
+      AssetName: '',
+      AreaName: '',
+      LayerName: '',
+      DateCategory: '',
+      StartDate: '',
+      EndDate: '',
     });
-    const EquipTypeName = ref(''); //設備總類 *必填
-    const EquipTypeArray = ref([]); //設備總類陣列 request拿到
-    const EquipCategoryName = ref(''); //設備分類 *必填
-    const EquipCategoryArray = ref([]); //設備分類陣列 request拿到
+    const DropdownArray = reactive({
+        EquipType: [],
+        EquipCategory: [],
+        Status: StoreStatusArray,
+        Area: [],
+        Layer: [],
+        DateType: DateTypeArray,
+      })
     const EquipCategoryInit = ref('請先選擇設備總類');
-    const AssetsId = ref(''); //資產編號
-    const AssetName = ref(''); //物品名稱
-    const Status = ref(''); //狀態
-    const StatusArray = StoreStatusArray
-    const AreaName = ref(""); //區域
-    const AreaArray = ref([]); //區域陣列
-    const LayerName = ref(""); //櫃位
-    const LayerArray = ref([]); //櫃位陣列
     const LayerInit = ref('請先選擇區域');
-    const DateCategory = ref("");
-    const StartDate = ref(''); //申請入庫日期(起)
-    const EndDate = ref(''); //申請入庫日期(迄)
-    const total = ref(100);
     const pageSize = ref(10);
-    const data = ref([]);
-    const handleRefresh = ref(message => {
-      alert(message);
-    });
-
 
     const columnDefs = [{
       suppressMovable: true,
@@ -326,37 +313,18 @@ export default {
     const rowData = ref([]);
     async function submit() {
       const formData = new FormData();
-      const formFields = {
-        'EquipTypeName': EquipTypeName.value,
-        'EquipCategoryName': EquipCategoryName.value,
-        'AssetsId': AssetsId.value,
-        'AssetName': AssetName.value,
-        'Status': Status.value,
-        'AreaName': AreaName.value,
-        'LayerName': LayerName.value,
-        'DateCategory': DateCategory.value,
-        'StartDate': StartDate.value,
-        'EndDate': EndDate.value,
-      };
       //將表格資料append到 formData
-      for (const fieldName in formFields) {
-        formData.append(fieldName, formFields[fieldName]);
-        // console.log(formData.get(`${fieldName}`));
+      for (const key in searchParams) {
+        formData.append(key, searchParams[key]);
       }
       //使用axios method:post傳送新品入庫表單
       const axios = require('axios');
       try {
-        const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/Operating', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-        console.log(response);
+        const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/Operating', formData);
         const data = response.data;
         if (data.state === 'success') {
           //取得datagrid成功
-          console.log(data.messages);
-          console.log('datagrid', data.resultList);
+          console.log('datagrid:\n', data.resultList);
           rowData.value = data.resultList;
         } else if (data.state === 'error') {
           //取得datagrid失敗
@@ -379,169 +347,100 @@ export default {
     }
 
     async function getEquipTypeName() {
-      if (EquipTypeArray.value.length == 0) {
-        const axios = require('axios');
-        try {
-          const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetEquipType');
-          console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('總類Get成功 資料如下\n', data.resultList.EquipType);
-            EquipTypeArray.value = data.resultList.EquipType;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error('Error sending applicant info request to backend');
-        }
+      if (DropdownArray.EquipType.length == 0) {
+        getEquipType()
+        .then((data)=>{
+          DropdownArray.EquipType = data;
+        })
+        .catch((error) =>{
+          console.error(error);
+        })
       }
     }
     async function getEquipCategoryName() {
-      EquipCategoryName.value = '';
-      const axios = require('axios');
-      try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${EquipTypeName.value}`);
-        console.log(response);
-        const data = response.data;
-        if (data.state === 'success') {
-          console.log('分類Get成功 資料如下\n', data.resultList.EquipCategory);
-          EquipCategoryArray.value = data.resultList.EquipCategory;
-        } else if (data.state === 'error') {
-          alert(data.messages);
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
-        }
-      } catch (error) {
-        console.error('Error sending applicant info request to backend', error);
-      }
+      getEquipCategory(searchParams.EquipTypeName)
+        .then((data)=>{
+          DropdownArray.EquipCategory = data;
+        })
+        .catch((error) =>{
+          console.error(error);
+        })
     }
 
     async function getAreaName() {
-      if (AreaArray.value.length == 0) {
-        const axios = require('axios');
-        try {
-          const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetAreaName');
-          console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('Area Get成功 資料如下\n', data.resultList.AreaName);
-            AreaArray.value = data.resultList.AreaName;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error('Error sending applicant info request to backend');
-        }
+      if (DropdownArray.Area.length == 0) {
+        getArea()
+        .then((data)=>{
+          DropdownArray.Area = data;
+        })
+        .catch((error) =>{
+          console.error(error);
+        })
       }
     }
 
     async function getLayerName() {
-      const axios = require('axios');
-      try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetLayerName?id=${AreaName.value}`);
-        console.log(response);
-        const data = response.data;
-        if (data.state === 'success') {
-          console.log('Layer Get成功 資料如下\n', data.resultList.LayerName);
-          LayerArray.value = data.resultList.LayerName;
-        } else if (data.state === 'error') {
-          alert(data.messages);
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
-        }
-      } catch (error) {
-        console.error('Error sending applicant info request to backend');
-      }
+      getLayer(searchParams.AreaName)
+        .then((data)=>{
+          DropdownArray.Layer = data;
+        })
+        .catch((error) =>{
+          console.error(error);
+        })
     }
 
     function selectType(item) {
-      EquipTypeName.value = item;
-      console.log('選擇的總類:', EquipTypeName.value);
+      searchParams.EquipTypeName = item;
+      searchParams.EquipCategoryName = '';
       getEquipCategoryName();
       EquipCategoryInit.value = '請選擇';
     }
 
     function selectCategory(item) {
-      EquipCategoryName.value = item;
+      searchParams.EquipCategoryName = item;
     }
 
     const selectStatus = (item) => {
-      Status.value = item;
+      searchParams.Status = item;
     };
 
     const selectArea = (item) => {
-      AreaName.value = item;
-      LayerName.value = '';
-      //API function here
+      searchParams.AreaName = item;
+      searchParams.LayerName = '';
       getLayerName();
       LayerInit.value = '請選擇';
     };
 
     const selectLayer = (item) => {
-      LayerName.value = item;
+      searchParams.LayerName = item;
     };
 
     const selectDateType = (item) => {
-      DateCategory.value = item;
+      searchParams.DateCategory = item;
     };
 
     const clear = () => {
-      EquipTypeName.value = '';
+      for (const key in searchParams) {
+        searchParams[key] = '';
+      }
       EquipCategoryInit.value = '請先選擇設備總類';
-      EquipCategoryName.value = '';
-      AssetsId.value = '';
-      AssetName.value = '';
-      Status.value = '';
-      AreaName.value = '';
-      LayerName.value = '';
       LayerInit.value = '請先選擇區域';
-      DateCategory.value = '';
-      StartDate.value = '';
-      EndDate.value = '';
       submit();
-    };
-
- 
-    const frameworkComponents = {
-      agGridVue: AgGridVue
     };
 
     onMounted(() => {
       submit();
     });
     return {
-      EquipTypeName,
-      EquipTypeArray,
-      getEquipTypeName,
-      EquipCategoryName,
-      EquipCategoryArray,
+      searchParams,
+      DropdownArray,
       EquipCategoryInit,
-      getEquipCategoryName,
-      AssetsId,
-      AssetName,
-      Status,
-      StatusArray,
-      AreaName,
-      AreaArray,
-      getAreaName,
-      LayerName,
-      LayerArray,
       LayerInit,
+      getEquipTypeName,
+      getEquipCategoryName,
+      getAreaName,
       getLayerName,
-      DateCategory,
-      StartDate,
-      EndDate,
-      total,
       pageSize,
-      data,
       columnDefs,
       rowData,
       submit,
@@ -552,7 +451,6 @@ export default {
       selectLayer,
       selectDateType,
       clear,
-      frameworkComponents,
     };
   }
 };

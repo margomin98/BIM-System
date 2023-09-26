@@ -66,7 +66,7 @@
             <div class="search_section">
               <input @input="getShipmentNum" class="form-control" @focus="showOptions = true;" @blur="handleBlur" v-model="formParams.ShipmentNum" />
               <ul v-if="showOptions" class="options-list">
-                <li v-for="(option, index) in arrayParams.ShipmentNum" :key="index" @click="selectShipmentNum(option)">{{ option.ShipmentNum }}
+                <li v-for="(option, index) in DropdownArray.ShipmentNum" :key="index" @click="selectShipmentNum(option)">{{ option.ShipmentNum }}
                 </li>
               </ul>
             </div>
@@ -87,7 +87,7 @@
                   {{ formParams.EquipTypeName || '請選擇' }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="typeDropdown">
-                  <p v-for="(item, index) in arrayParams.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
+                  <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
                 </div>
               </div>
             </div>
@@ -102,7 +102,7 @@
                   {{ formParams.EquipCategoryName || EquipCategoryInit }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                  <p v-for="(item, index) in arrayParams.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
+                  <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
                 </div>
               </div>
             </div>
@@ -167,7 +167,7 @@
                   {{ formParams.Unit || '請選擇' }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                  <p v-for="(item, index) in arrayParams.UnitArray" :key="index" class="dropdown-item" @click="selectUnit(`${item}`)">
+                  <p v-for="(item, index) in DropdownArray.Unit" :key="index" class="dropdown-item" @click="selectUnit(`${item}`)">
                     {{ item }}</p>
                 </div>
               </div>
@@ -197,7 +197,7 @@
                   {{ formParams.PackageUnit || '請選擇' }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                  <p v-for="(item, index) in arrayParams.PackageUnitArray" :key="index" class="dropdown-item" @click="selectPackageUnit(`${item}`)">
+                  <p v-for="(item, index) in DropdownArray.PackageUnit" :key="index" class="dropdown-item" @click="selectPackageUnit(`${item}`)">
                     {{ item }}</p>
                 </div>
               </div>
@@ -402,12 +402,12 @@
         WarrantyEndDate: '',
         Memo: '',
       }); //上半部表單參數
-      const arrayParams = reactive({
+      const DropdownArray = reactive({
         ShipmentNum: [],
-        EquipTypeArray: [],
-        EquipCategoryArray: [],
-        UnitArray: UnitArray,
-        PackageUnitArray: PackageUnitArray,
+        EquipType: [],
+        EquipCategory: [],
+        Unit: UnitArray,
+        PackageUnit: PackageUnitArray,
       })
       const showOptions = ref(false);
       const EquipCategoryInit = ref('請先選擇設備總類');
@@ -800,10 +800,10 @@
           })
       }
       async function getEquipTypeName() {
-        if (arrayParams.EquipTypeArray.length == 0) {
+        if (DropdownArray.EquipType.length == 0) {
           getEquipType()
           .then((data)=>{
-            arrayParams.EquipTypeArray = data;
+            DropdownArray.EquipType = data;
           })
           .catch((error) =>{
             console.error(error);
@@ -814,7 +814,7 @@
         formParams.EquipCategoryName = '';
         getEquipCategory(formParams.EquipTypeName)
         .then((data)=>{
-            arrayParams.EquipCategoryArray = data;
+            DropdownArray.EquipCategory = data;
           })
         .catch((error) =>{
           console.error(error);
@@ -832,7 +832,7 @@
           const data = response.data;
           if (data.state === 'success') {
             console.log('物流單號查詢結果',data.resultList);
-            arrayParams.ShipmentNum = data.resultList;
+            DropdownArray.ShipmentNum = data.resultList;
           } else if (data.state === 'account_error') {
             alert(data.messages);
             router.push('/');
@@ -893,7 +893,7 @@
         Applicant,
         ApplicationDate,
         formParams,
-        arrayParams,
+        DropdownArray,
         EquipCategoryInit,
         newCount,
         oldCount,
