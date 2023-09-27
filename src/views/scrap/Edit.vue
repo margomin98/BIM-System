@@ -134,6 +134,7 @@
         Status: '',
       });
       const formParams = reactive({
+        ScrapId: ScrapId,
         AssetsId: '',
         Reason: '',
       });
@@ -184,18 +185,18 @@
           }
         }
 
-        axios.post('http://192.168.0.177:7008/ScrapMng/CreateOrder',form)
+        axios.post('http://192.168.0.177:7008/ScrapMng/ScrapEdit',form)
         .then((response)=>{
           const data = response.data;
           if(data.state === 'success') {
-            alert('新增報廢單成功\n單號為:' + data.resultList.S_ID);
+            alert(data.messages+'\n單號為:' + data.resultList.S_ID);
             router.push({ name: 'Scrap_Datagrid' });
           } else if (data.state === 'account_error') {
             alert(data.messages);
             router.push('/');
           }
           else {
-            alert('新增報廢單失敗')
+            alert(data.messages)
           }
         })
         .catch((error)=>{
@@ -242,6 +243,7 @@
         wrongStatus,
         canSubmit,
         formParams,
+        submit,
         goBack,
       }
     },
