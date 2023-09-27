@@ -101,6 +101,7 @@ import Scrap_Edit from "../views/scrap/Edit";
 import Scrap_View from "../views/scrap/View";
 import Scrap_Deliver from "../views/scrap/Deliver";
 import Scrap_Review from "../views/scrap/Review";
+import Scrap_Delete from "../views/scrap/Delete";
 //報廢管理
 
 //權限不足
@@ -441,6 +442,12 @@ const routes = [
     name: "Scrap_Review",
     component: Scrap_Review,
     meta: {auth: true, request: 'S_Verify'},
+  },
+  {
+    path: "/scrap_review",
+    name: "Scrap_Delete",
+    component: Scrap_Delete,
+    meta: {auth: true, request: 'S_Delete'},
   },
   {
     

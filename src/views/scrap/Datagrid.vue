@@ -97,7 +97,7 @@
     ref
   } from "vue";
   import Scrap_button from "@/components/Scrap_button";
-  import Delete from "@/components/Inventory_data_delete_button";
+  import Delete from "@/components/Scrap_delete_button";
   import Navbar from "@/components/Navbar.vue";
   import axios from "axios"
   import { ScrapStatus, ScrapDateCategory } from "@/assets/js/dropdown.js"
