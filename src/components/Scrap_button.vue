@@ -56,7 +56,7 @@
               break;
             case 'Verify':
               router.push({
-                name: 'Scrap_Verify',
+                name: 'Scrap_Review',
                 query: {
                   search_id
                 }

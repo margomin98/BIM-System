@@ -55,7 +55,7 @@
             <div class="input-group-prepend">
               報廢原因：
             </div>
-            <textarea style="height: 200px;" class="form-control" placeholder="最多輸入500字"></textarea>
+            <textarea style="height: 200px;" class="form-control" placeholder="最多輸入500字" v-model="formParams.Reason"></textarea>
           </div>
         </div>
       </div>

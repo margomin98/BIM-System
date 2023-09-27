@@ -205,7 +205,8 @@
         const form = new FormData();
         form.append('userName', validation.account)
         form.append('userPassword', validation.password)
-        axios.post('http://192.168.0.177:7008/Account/IdentityValidationForA_Operator' , form)
+        form.append('id', 'R_Verify')
+        axios.post('http://192.168.0.177:7008/Account/IdentityValidation' , form)
         .then((response)=>{
           const data = response.data;
           if(data.state === 'success') {

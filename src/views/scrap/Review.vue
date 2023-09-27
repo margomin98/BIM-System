@@ -246,7 +246,7 @@
           const data = response.data
           if(data.state === 'success') {
             alert(data.messages+'\n單號為:' + data.resultList.S_ID);
-            router.push({ name: 'Repair_Datagrid' });
+            router.push({ name: 'Scrap_Datagrid' });
           } else if( data.state === 'account_error') {
             alert(data.messages);
             router.push('/');

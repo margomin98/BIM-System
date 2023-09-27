@@ -6,6 +6,7 @@ export const DateTypeArray = ['申請入庫日期' , '交付日期' , '入庫日
 // 出庫管理
 export const UseOptions = ['內部領用', '借測', '出貨', '退貨'];
 // 資產管理
+export const AssetStastus = ['在庫', '內部領用', '借測', '維修', '出貨', '報廢', '退貨', '無庫存', '已被設備整合']
 export const HistoryAction = ['入庫', '歸還', '借測', '維修', '內部領用', '出貨', '報廢', '退貨' , '移出設備整合箱' , '加入設備整合箱'];
 export const TypeArray = ['資產' , '存貨'];
 // 設備集成管理
