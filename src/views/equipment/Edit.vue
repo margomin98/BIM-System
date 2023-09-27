@@ -52,34 +52,6 @@
             </div>
           </div>
         </div>
-        <div class="row row_wrap">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend flex">儲位區域：</div>
-              <div class="dropdown">
-                <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-               請選擇
-          </button>
-                <div class="dropdown-menu">
-                  <p>123</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend flex">儲位櫃位：</div>
-              <div class="dropdown">
-                <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-               請選擇
-          </button>
-                <div class="dropdown-menu">
-                  <p>123</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
