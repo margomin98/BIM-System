@@ -84,7 +84,7 @@
               <div class="input-group">
                 <div class="input-group-prepend">審核人員：</div>
                 <div class="input-with-icon">
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="validation.resultName"/>
+                  <input type="text" class="form-control readonly_box" readonly v-model="validation.resultName"/>
                   <span v-show="validation.isValidate" class="icon-container">
                     <img src="@/assets/accept.png" class="checkmark-icon" />
                   </span>

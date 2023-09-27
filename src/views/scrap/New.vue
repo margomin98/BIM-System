@@ -23,12 +23,11 @@
       <div class="content">
         <!-- 產編 -->
         <div class="col-12">
-          <div class="input-group" :class="{'mb-4': !wrongStatus}">
+          <div class="input-group mb-4">
             <div class="input-group-prepend">
               <span>*</span>產編：
             </div>
-            <input ref="inputElement" type="text" class="form-control" placeholder="請掃描輸入產編">
-            <button class="form_search_btn">搜尋</button>
+            <input ref="inputElement" type="text" class="form-control" placeholder="請掃描輸入產編" v-model="formParams.AssetsId">
           </div>
         </div>
         <!-- 物品名稱 -->
@@ -37,7 +36,17 @@
             <div class="input-group-prepend">
               物品名稱：
             </div>
-            <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+            <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="Assets.Name">
+          </div>
+        </div>
+        <!-- Error Hint -->
+        <div v-show="wrongStatus" class="col-12">
+          <div class="input-group">
+            <div style="visibility: hidden;" class="input-group-prepend">
+              <p >1</p>
+            </div>
+            <span style="color:rgb(216, 13, 13); font-weight: 700; font-size: 20px;">{{ alertMsg }}</span>
+            <input type="text" style="visibility: hidden;" class="form-control">
           </div>
         </div>
         <!-- 報廢原因 -->
@@ -59,16 +68,122 @@
 </template>
 
 <script>
-  import {
-    ref,
-    onMounted,
-    reactive
-  } from 'vue';
+  import { ref, onMounted, reactive, watch} from 'vue';
   import Navbar from '@/components/Navbar.vue';
   import router from '@/router';
+  import { getDate , goBack } from '@/assets/js/common_fn.js'
+  import { getApplication , getAssets } from '@/assets/js/common_api.js'
   export default {
     components: {
       Navbar
+    },
+    setup() {
+      const Applicant = ref('');
+      const ApplicationDate = ref('');
+      const Assets = reactive({
+        Name: '',
+        Type: '',
+        Status: '',
+      });
+      const formParams = reactive({
+        AssetsId: '',
+        Reason: '',
+      });
+      const alertMsg = ref('');
+      const wrongStatus = ref(false);
+      const canSubmit = ref(false);
+      onMounted(()=>{
+        getApplicationInfo()
+        ApplicationDate.value = getDate()
+      });
+      async function getApplicationInfo() {
+        getApplication()
+          .then((data)=>{
+            Applicant.value = data;
+          })
+          .catch((error) =>{
+            console.error(error);
+          })
+      }
+      async function submit() {
+        const pattern = /^(BF\d{8})$/;
+        // 檢查必填項目、格式        
+        if (!pattern.test(formParams.AssetsId)) {
+          alert('資產編號格式錯誤');
+          return
+        }
+        if (!/^[\s\S]{0,500}$/.test(formParams.Reason)) {
+          alert('報廢原因不可超過500字');
+          return
+        }
+        const form = new FormData();
+        for(const key in formParams) {
+          if(formParams[key]) {
+            form.append(key , formParams[key]);
+          }
+        }
+
+        axios.post('http://192.168.0.177:7008/ScrapMng/CreateOrder',form)
+        .then((response)=>{
+          const data = response.data;
+          if(data.state === 'success') {
+            alert('新增報廢單成功\n單號為:' + data.resultList.S_ID);
+            router.push({ name: 'Scrap_Datagrid' });
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+          else {
+            alert('新增報廢單失敗')
+          }
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
+      }
+      watch(()=>formParams.AssetsId, (newValue , oldValue) => {
+        getAssets(newValue)
+        .then((data)=>{
+            Assets.Name = data.AssetName;
+            Assets.Type = data.AssetType;
+            Assets.Status = data.Status;
+
+            // 檢查資產類型
+            if(Assets.Type === '耗材') {
+              wrongStatus.value = true;
+              canSubmit.value = false;
+              alertMsg.value = '僅提供資產類型為非耗材的物品進行報廢'
+            }
+            // 檢查資產狀態(只有非耗材才會有這個Status)
+            else if(Assets.Status === '已被設備整合') {
+              wrongStatus.value = true;
+              canSubmit.value = false;
+              alertMsg.value = '此資產已被設備整合，請先移出設備箱'
+            }
+            // 可報修
+            else {
+              wrongStatus.value = false;
+              canSubmit.value = true;
+              alertMsg.value = ''
+            }
+          })
+          .catch((error) =>{
+            wrongStatus.value = true;
+            canSubmit.value = false;
+            Assets.Name = '';
+            alertMsg.value = '請輸入正確的資產編號'
+          })
+      },{immediate: false});
+      return {
+        Applicant,
+        ApplicationDate,
+        Assets,
+        alertMsg,
+        wrongStatus,
+        canSubmit,
+        formParams,
+        goBack,
+      }
     },
   };
 </script>

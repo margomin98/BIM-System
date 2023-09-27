@@ -11,17 +11,17 @@
       <div class="fixed_info">
         <div>
           <p>
-            報廢編號: {{ Applicant }}
+            報廢編號: {{ details.ScrapId }}
           </p>
         </div>
         <div>
           <p>
-            申請人員: {{ Applicant }}
+            申請人員: {{ details.Applicant }}
           </p>
         </div>
         <div>
           <p>
-            申請日期: {{ ApplicationDate }}
+            申請日期: {{ details.ApplicationDate }}
           </p>
         </div>
       </div>
@@ -29,40 +29,40 @@
         <div class="row g-0">
           <!-- 報廢人員 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 報廢人員：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.ScrapPerson">
             </div>
           </div>
           <!-- 交付日期 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 交付日期：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.DeliveryDate">
             </div>
           </div>
         </div>
         <div class="row g-0">
           <!-- 審核人員 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 審核人員：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.VerifyPerson">
             </div>
           </div>
           <!-- 審核結果 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 審核結果：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.VerifyResult">
             </div>
           </div>
         </div>
@@ -72,16 +72,16 @@
             <div class="input-group-prepend">
               審核日期：
             </div>
-            <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+            <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.VerifyDate">
           </div>
         </div>
         <!-- 產編 -->
         <div class="col-12">
-          <div class="input-group" :class="{'mb-4': !wrongStatus}">
+          <div class="input-group mb-4">
             <div class="input-group-prepend">
               <span>*</span>產編：
             </div>
-            <input ref="inputElement" type="text" class="form-control" placeholder="請掃描輸入產編">
+            <input ref="inputElement" type="text" class="form-control" placeholder="請掃描輸入產編" v-model="formParams.AssetsId">
             <button class="form_search_btn">搜尋</button>
           </div>
         </div>
@@ -91,7 +91,7 @@
             <div class="input-group-prepend">
               物品名稱：
             </div>
-            <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+            <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="Assets.Name">
           </div>
         </div>
         <!-- 報廢原因 -->
@@ -100,10 +100,9 @@
             <div class="input-group-prepend">
               報廢原因：
             </div>
-            <textarea style="height: 200px;" class="form-control" placeholder="最多輸入500字"></textarea>
+            <textarea style="height: 200px;" class="form-control" placeholder="最多輸入500字" v-model="formParams.Reason"></textarea>
           </div>
         </div>
-     
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
@@ -114,16 +113,137 @@
 </template>
 
 <script>
-  import {
-    ref,
-    onMounted,
-    reactive
-  } from 'vue';
+  import { ref, onMounted, reactive, watch} from 'vue';
   import Navbar from '@/components/Navbar.vue';
   import router from '@/router';
+  import { goBack } from '@/assets/js/common_fn.js'
+  import { getApplication , getAssets } from '@/assets/js/common_api.js'
+  import axios from 'axios';
+  import { useRoute } from 'vue-router';
   export default {
     components: {
       Navbar
+    },
+    setup() {
+      const route = useRoute();
+      const ScrapId = route.query.search_id;
+      const details = ref({});
+      const Assets = reactive({
+        Name: '',
+        Type: '',
+        Status: '',
+      });
+      const formParams = reactive({
+        AssetsId: '',
+        Reason: '',
+      });
+      const alertMsg = ref('');
+      const wrongStatus = ref(false);
+      const canSubmit = ref(false);
+      onMounted(()=>{
+        getDetails()
+      });
+      async function getDetails() {
+        axios.get(`http://192.168.0.177:7008/GetDBdata/GetScrapInfo?s_id=${ScrapId}`)
+        .then((response)=>{
+          const data = response.data
+          if(data.state === 'success') {
+            details.value = data.resultList
+            for( const key in details.value) {
+              if(formParams.hasOwnProperty(key) && details.value[key]) {
+                formParams[key] = details.value[key]
+              }
+            }
+            
+          } else if (data.state === 'account_error') {
+            alert(data.messages)
+            router.push('/');
+          } else {
+            alert(data.messages)
+          }
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
+      }
+      async function submit() {
+        const pattern = /^(BF\d{8})$/;
+        // 檢查必填項目、格式        
+        if (!pattern.test(formParams.AssetsId)) {
+          alert('資產編號格式錯誤');
+          return
+        }
+        if (!/^[\s\S]{0,500}$/.test(formParams.Reason)) {
+          alert('報廢原因不可超過500字');
+          return
+        }
+        const form = new FormData();
+        for(const key in formParams) {
+          if(formParams[key]) {
+            form.append(key , formParams[key]);
+          }
+        }
+
+        axios.post('http://192.168.0.177:7008/ScrapMng/CreateOrder',form)
+        .then((response)=>{
+          const data = response.data;
+          if(data.state === 'success') {
+            alert('新增報廢單成功\n單號為:' + data.resultList.S_ID);
+            router.push({ name: 'Scrap_Datagrid' });
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+          else {
+            alert('新增報廢單失敗')
+          }
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
+      }
+      watch(()=>formParams.AssetsId, (newValue , oldValue) => {
+        getAssets(newValue)
+        .then((data)=>{
+            Assets.Name = data.AssetName;
+            Assets.Type = data.AssetType;
+            Assets.Status = data.Status;
+
+            // 檢查資產類型
+            if(Assets.Type === '耗材') {
+              wrongStatus.value = true;
+              canSubmit.value = false;
+              alertMsg.value = '僅提供資產類型為非耗材的物品進行報廢'
+            }
+            // 檢查資產狀態(只有非耗材才會有這個Status)
+            else if(Assets.Status === '已被設備整合') {
+              wrongStatus.value = true;
+              canSubmit.value = false;
+              alertMsg.value = '此資產已被設備整合，請先移出設備箱'
+            }
+            // 可報修
+            else {
+              wrongStatus.value = false;
+              canSubmit.value = true;
+              alertMsg.value = ''
+            }
+          })
+          .catch((error) =>{
+            wrongStatus.value = true;
+            canSubmit.value = false;
+            Assets.Name = '';
+            alertMsg.value = '請輸入正確的資產編號'
+          })
+      },{immediate: false});
+      return {
+        details,
+        Assets,
+        alertMsg,
+        wrongStatus,
+        canSubmit,
+        formParams,
+        goBack,
+      }
     },
   };
 </script>

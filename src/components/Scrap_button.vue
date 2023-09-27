@@ -2,8 +2,8 @@
   <div class='button_wrap'>
     <button class="" @click="view('View')">檢視</button>
     <button :class="{ disabled_btn: isDisabled.edit, btn2: !isDisabled.edit }" :disabled="isDisabled.edit" @click="view('Edit')">編輯</button>
-    <button v-if="disabledStatus === '待盤點'" :class="{ disabled_btn: isDisabled.process, btn3: !isDisabled.process }" :disabled="isDisabled.process" @click="emitView" data-bs-toggle="modal" data-bs-target="#staticBackdrop">交付</button>
-    <button v-else :class="{ disabled_btn: isDisabled.process, btn3: !isDisabled.process }" :disabled="isDisabled.process" @click="view('Process')">審核</button>
+    <button :class="{ disabled_btn: isDisabled.deliver, btn3: !isDisabled.deliver }" :disabled="isDisabled.deliver" @click="view('Deliver')">交付</button>
+    <button :class="{ disabled_btn: isDisabled.verify, btn4: !isDisabled.verify }" :disabled="isDisabled.verify" @click="view('Verify')">審核</button>
    </div>
 </template>
 
@@ -20,19 +20,19 @@
     props: ['params'],
     setup(props) {
       const router = useRouter();
-      const search_id = props.params.data.PlanId;
-      const disabledStatus = props.params.data.PlanStatus;
+      const search_id = props.params.data.ScrapId;
+      const disabledStatus = props.params.data.Status;
       const isDisabled = ref({
         edit: false, //編輯
-        process: false, //盤點
-        balance: false, //平帳
+        deliver: false, //盤點
+        verify: false, //平帳
       })
       function view(type) {
         if (search_id !== '') {
           switch (type) {
             case 'View':
               router.push({
-                name: 'Inventory_View',
+                name: 'Scrap_View',
                 query: {
                   search_id
                 }
@@ -40,31 +40,23 @@
               break;
             case 'Edit':
               router.push({
-                name: 'Inventory_Edit',
+                name: 'Scrap_Edit',
                 query: {
                   search_id
                 }
               });
               break;
-            case 'Process':
+            case 'Deliver':
               router.push({
-                name: 'Inventory_Process',
+                name: 'Scrap_Deliver',
                 query: {
                   search_id
                 }
               });
               break;
-            case 'Balance':
+            case 'Verify':
               router.push({
-                name: 'Inventory_Balance',
-                query: {
-                  search_id
-                }
-              });
-              break;
-            case 'Balance_Result':
-              router.push({
-                name: 'Inventory_Balance_Result',
+                name: 'Scrap_Verify',
                 query: {
                   search_id
                 }
@@ -75,25 +67,19 @@
       }
       function checkButton() {
         console.log(disabledStatus);
-        if (disabledStatus !== '待盤點') {
+        if (disabledStatus !== '待交付') {
+          isDisabled.value.deliver = true;
           isDisabled.value.edit = true;
         }
-        if (disabledStatus !== '待盤點' && disabledStatus !== '盤點中') {
-          isDisabled.value.process = true;
+        if (disabledStatus !== '待審核') {
+          isDisabled.value.verify = true;
         }
-        if (disabledStatus !== '待平帳') {
-          isDisabled.value.balance = true;
-        }
-      }
-      function emitView() {
-        props.params.updateSearchId(search_id);
       }
       onMounted(() => {
         checkButton();
       });
       return {
         view,
-        emitView,
         disabledStatus,
         isDisabled,
       };

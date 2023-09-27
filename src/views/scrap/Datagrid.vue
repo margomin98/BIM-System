@@ -7,7 +7,7 @@
     <div class="col">
       <div class="button_wrap d-flex">
         <router-link to="/scrap_new">
-          <button class="add_btn">新增報廢单</button>
+          <button class="add_btn">新增報廢單</button>
         </router-link>
       </div>
     </div>
@@ -17,29 +17,29 @@
           <!-- 報廢編號 -->
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>報廢編號</p>
-            <input type="text" v-model="searchParams.PlanId" />
+            <input type="text" v-model="searchParams.ScrapId" />
           </div>
           <!-- 狀態 -->
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>狀態</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{ searchParams.PlanType || "請選擇" }}
+                  {{ searchParams.Status || "請選擇" }}
                 </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p v-for="(item , index) in DropdownArray.PlanType" :key="index" class="dropdown-item" @click="selectType(item)">{{ item }}</p>
+                <p v-for="(item , index) in DropdownArray.Status" :key="index" class="dropdown-item" @click="selectStatus(item)">{{ item }}</p>
               </div>
             </div>
           </div>
           <!-- 資產編號 -->
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>資產編號</p>
-            <input type="text" v-model="searchParams.PlanId" />
+            <input type="text" v-model="searchParams.AssetsId" />
           </div>
           <!-- 物品名稱 -->
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>物品名稱</p>
-            <input type="text" v-model="searchParams.PlanId" />
+            <input type="text" v-model="searchParams.AssetName" />
           </div>
           <!-- 日期類型 -->
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
@@ -49,7 +49,7 @@
                   {{ searchParams.DateCategory || "請選擇" }}
                 </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p v-for="(item , index) in DropdownArray.PlanDateCategory" :key="index" class="dropdown-item" @click="selectDateCategory(item)">{{ item }}</p>
+                <p v-for="(item , index) in DropdownArray.DateCategory" :key="index" class="dropdown-item" @click="selectDateCategory(item)">{{ item }}</p>
               </div>
             </div>
           </div>
@@ -58,7 +58,7 @@
             <p>日期(起)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="searchParams.StartDate" class="date-input" />
+                <input type="date" v-model="searchParams.StartDate" class="date-input" :disabled="!searchParams.DateCategory"/>
               </div>
             </div>
           </div>
@@ -67,7 +67,7 @@
             <p>日期(迄)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="searchParams.EndDate" class="date-input" />
+                <input type="date" v-model="searchParams.EndDate" class="date-input" :disabled="!searchParams.DateCategory"/>
               </div>
             </div>
           </div>
@@ -99,11 +99,8 @@
   import Scrap_button from "@/components/Scrap_button";
   import Delete from "@/components/Inventory_data_delete_button";
   import Navbar from "@/components/Navbar.vue";
-  import {
-    PlanType,
-    PlanStatus,
-    PlanDateCategory
-  } from "@/assets/js/dropdown.js"
+  import axios from "axios"
+  import { ScrapStatus, ScrapDateCategory } from "@/assets/js/dropdown.js"
   import {
     useRouter
   } from "vue-router";
@@ -117,35 +114,28 @@
     setup() {
       const router = useRouter();
       const details = ref({});
-      const search_id = ref('');
       const DropdownArray = reactive({
-        PlanType: PlanType,
-        PlanStatus: PlanStatus,
-        PlanDateCategory: PlanDateCategory,
+        Status: ScrapStatus,
+        DateCategory: ScrapDateCategory,
       })
       const searchParams = reactive({
-        PlanId: '',
-        PlanType: '',
-        PlanStatus: '',
+        ScrapId: '',
+        Status: '',
+        AssetsId: '',
+        AssetName: '',
         DateCategory: '',
         StartDate: '',
         EndDate: '',
       });
       const columnDefs = [{
           suppressMovable: true,
-          field: "",
           cellRenderer: "Scrap_button",
-          cellRendererParams: {
-            updateSearchId: (id) => {
-              search_id.value = id;
-            }
-          },
           width: 340,
           resizable: true,
         },
         {
           headerName: "報廢編號",
-          field: "PlanId",
+          field: "ScrapId",
           unSortIcon: true,
           sortable: true,
           width: 180,
@@ -154,7 +144,7 @@
         },
         {
           headerName: "狀態",
-          field: "PlanType",
+          field: "Status",
           unSortIcon: true,
           sortable: true,
           width: 120,
@@ -163,7 +153,7 @@
         },
         {
           headerName: "資產編號",
-          field: "PlanStatus",
+          field: "AssetsId",
           unSortIcon: true,
           sortable: true,
           width: 150,
@@ -171,7 +161,7 @@
         },
         {
           headerName: "物品名稱",
-          field: "PlanTitle",
+          field: "AssetName",
           unSortIcon: true,
           sortable: true,
           resizable: true,
@@ -180,7 +170,7 @@
         },
         {
           headerName: "申請日期",
-          field: "InventoryStaffName",
+          field: "ApplicationDate",
           unSortIcon: true,
           sortable: true,
           width: 150,
@@ -188,7 +178,7 @@
         },
         {
           headerName: "申請人員",
-          field: "ConvenerName",
+          field: "Applicant",
           unSortIcon: true,
           sortable: true,
           width: 120,
@@ -196,7 +186,7 @@
         },
         {
           headerName: "交付日期",
-          field: "PlanStart",
+          field: "DeliveryDate",
           unSortIcon: true,
           sortable: true,
           width: 150,
@@ -204,7 +194,7 @@
         },
         {
           headerName: "報廢人員",
-          field: "PlanEnd",
+          field: "ScrapPerson",
           unSortIcon: true,
           sortable: true,
           width: 120,
@@ -212,7 +202,7 @@
         },
         {
           headerName: "審核日期",
-          field: "EditTime",
+          field: "VerifyDate",
           unSortIcon: true,
           sortable: true,
           width: 150,
@@ -220,7 +210,7 @@
         },
         {
           headerName: "審核人員",
-          field: "PlanEnd",
+          field: "VerifyPerson",
           unSortIcon: true,
           sortable: true,
           width: 120,
@@ -229,7 +219,6 @@
         {
           suppressMovable: true,
           width: 100,
-          field: "",
           cellRenderer: "Delete",
         }
       ]
@@ -238,22 +227,13 @@
         submit();
       });
       async function submit() {
-        const formData = new FormData();
-        const formFields = {
-          'PlanId': searchParams.PlanId,
-          'PlanType': searchParams.PlanType,
-          'PlanStatus': searchParams.PlanStatus,
-          'DateCategory': searchParams.DateCategory,
-          'StartDate': searchParams.StartDate,
-          'EndDate': searchParams.EndDate,
-        };
-        //將表格資料append到 formData
-        for (const fieldName in formFields) {
-          formData.append(fieldName, formFields[fieldName]);
+        //將表格資料append到 form
+        const form = new FormData();
+        for (const key in searchParams) {
+          form.append(key, searchParams[key]);
         }
-        const axios = require('axios');
-        try {
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryPlans', formData);
+        axios.post('http://192.168.0.177:7008/ScrapMng/ScrapOrders', form)
+        .then((response)=>{
           const data = response.data;
           if (data.state === 'success') {
             //取得datagrid成功
@@ -263,35 +243,24 @@
           } else if (data.state === 'error') {
             //取得datagrid失敗
             alert(data.messages);
-          } else if (data.state === 'input_error') {
-            //取得datagrid格式錯誤
-            alert(data.messages);
           } else if (data.state === 'account_error') {
             //尚未登入
             alert(data.messages);
             router.push('/');
           }
-        } catch (error) {
+        })
+        .catch((error)=>{
           console.error(error);
-        }
+        })
+
+
       }
-      const selectType = (item) => {
-        searchParams.PlanType = item;
-      };
       const selectStatus = (item) => {
-        searchParams.PlanStatus = item;
+        searchParams.Status = item;
       };
       const selectDateCategory = (item) => {
         searchParams.DateCategory = item;
       };
-      function routerProcess() {
-        router.push({
-          name: 'Inventory_Process',
-          query: {
-            search_id: search_id.value,
-          }
-        });
-      }
       function clear() {
         for (const key in searchParams) {
           searchParams[key] = '';
@@ -302,16 +271,13 @@
         details,
         searchParams,
         DropdownArray,
-        search_id,
         columnDefs,
         rowData,
         rowHeight: 35,
         pageSize: 10,
         submit,
-        selectType,
         selectStatus,
         selectDateCategory,
-        routerProcess,
         clear,
       };
     },

@@ -11,17 +11,17 @@
       <div class="fixed_info">
         <div>
           <p>
-            報廢編號: {{ Applicant }}
+            報廢編號: {{ details.ScrapId }}
           </p>
         </div>
         <div>
           <p>
-            申請人員: {{ Applicant }}
+            申請人員: {{ details.Applicant }}
           </p>
         </div>
         <div>
           <p>
-            申請日期: {{ ApplicationDate }}
+            申請日期: {{ details.ApplicationDate }}
           </p>
         </div>
       </div>
@@ -29,20 +29,20 @@
         <div class="row g-0">
           <!-- 產編 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 產編：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.AssetsId">
             </div>
           </div>
           <!-- 物品名稱 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 物品名稱：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.AssetName">
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@
             <div class="input-group-prepend">
               報廢原因：
             </div>
-            <textarea style="height: 200px;" class="form-control readonly_box" readonly></textarea>
+            <textarea style="height: 200px;" class="form-control readonly_box" readonly v-model="details.Reason"></textarea>
           </div>
         </div>
       </div>
@@ -73,14 +73,12 @@
               <div class="input-group">
                 <div class="input-group-prepend">交付人員：</div>
                 <div class="input-with-icon">
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
-                  <span class="icon-container">
-                                    <img src="@/assets/accept.png" class="checkmark-icon" />
-                                </span>
+                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(1)"/>
+                  <span v-show="validation.user1.isValidate" class="icon-container">
+                    <img src="@/assets/accept.png" class="checkmark-icon" />
+                  </span>
                 </div>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
-                                驗證
-                            </button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">驗證</button>
                 <!-- 驗證跳出Modal -->
                 <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
@@ -93,18 +91,18 @@
                         <div class="col">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">帳號：</div>
-                            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" />
+                            <input type="text" class="form-control" v-model="validation.user1.account" />
                           </div>
                         </div>
                         <div class="col">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">密碼：</div>
-                            <input type="password" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" />
+                            <input type="password" class="form-control" v-model="validation.user1.password" />
                           </div>
                         </div>
                       </div>
                       <div class="modal-footer m-auto">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">驗證</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="validate(1)">驗證</button>
                       </div>
                     </div>
                   </div>
@@ -114,40 +112,38 @@
             <!-- 送修人員 -->
             <div class="col-xl-6 col-lg-6 col-md-6 col-12 input-container">
               <div class="input-group">
-                <div class="input-group-prepend">送修人員：</div>
+                <div class="input-group-prepend">報廢人員：</div>
                 <div class="input-with-icon">
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
-                  <span class="icon-container">
-                                    <img src="@/assets/accept.png" class="checkmark-icon" />
-                                </span>
+                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(2)"/>
+                  <span v-show="validation.user2.isValidate" class="icon-container">
+                    <img src="@/assets/accept.png" class="checkmark-icon" />
+                  </span>
                 </div>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
-                                驗證
-                            </button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">驗證</button>
                 <!-- 驗證跳出Modal -->
                 <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content ">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel2">入庫人員驗證</h5>
+                        <h5 class="modal-title" id="staticBackdropLabel2">報廢人員驗證</h5>
                         <p class='m-0 close_icon' data-bs-dismiss="modal">X</p>
                       </div>
                       <div class="modal-body">
                         <div class="col">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">帳號：</div>
-                            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" />
+                            <input type="text" class="form-control" v-model="validation.user2.account" />
                           </div>
                         </div>
                         <div class="col">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">密碼：</div>
-                            <input type="password" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" />
+                            <input type="password" class="form-control" v-model="validation.user2.password" />
                           </div>
                         </div>
                       </div>
                       <div class="modal-footer m-auto">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">驗證</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="validate(2)">驗證</button>
                       </div>
                     </div>
                   </div>
@@ -159,23 +155,173 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="send_btn" :disabled="!canSubmit" :class="{send_btn_disabled: !canSubmit}" @click="submit">送出</button>
+        <button class="send_btn" :disabled="!canSubmit()" :class="{send_btn_disabled: !canSubmit()}" @click="submit">送出</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import {
-    ref,
-    onMounted,
-    reactive
-  } from 'vue';
+  import { ref, onMounted} from 'vue';
   import Navbar from '@/components/Navbar.vue';
   import router from '@/router';
+  import { goBack , getDate } from '@/assets/js/common_fn.js'
+  import axios from 'axios';
+  import { useRoute } from 'vue-router';
   export default {
     components: {
       Navbar
+    },
+    setup() {
+      const route = useRoute();
+      const ScrapId = route.query.search_id;
+      const details = ref({});
+      const deliveryDate = ref('');
+      const validation = ref({
+        user1: {
+          account: 'user_2',
+          password: 'Test_123',
+          isValidate: false,
+          resultName: '',
+        },
+        user2: {
+          account: 'user_1',
+          password: 'Test_123',
+          isValidate: false,
+          resultName: '',
+        },
+      });
+      onMounted(()=>{
+        getDetails()
+        deliveryDate.value = getDate();
+      });
+      async function getDetails() {
+        axios.get(`http://192.168.0.177:7008/GetDBdata/GetScrapInfo?s_id=${ScrapId}`)
+        .then((response)=>{
+          const data = response.data
+          if(data.state === 'success') {
+            details.value = data.resultList
+          } else if (data.state === 'account_error') {
+            alert(data.messages)
+            router.push('/');
+          } else {
+            alert(data.messages)
+          }
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
+      }
+      //分別使用帳號密碼驗證、改變驗證狀態 user1為交付人員 user2為報廢人員
+      async function validate(user) {
+        if (user === 1) {
+          const axios = require('axios');
+          const formData = new FormData();
+          const formFields = {
+            'userName': validation.value.user1.account,
+            'userPassword': validation.value.user1.password,
+            'id': 'S_ReceivedDelivery',
+          };
+          //將表格資料append到 formData
+          for (const fieldName in formFields) {
+            formData.append(fieldName, formFields[fieldName]);
+            console.log(formData.get(`${fieldName}`));
+          }
+          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+          try {
+            const data = response.data;
+            console.log(data);
+            if (data.state === 'success') {
+              validation.value.user1.isValidate = true;
+              validation.value.user1.resultName = validation.value.user1.account;
+            } else if (data.state === 'error') {
+              alert(data.messages);
+              validation.value.user1.isValidate = false;
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        } else if (user === 2) {
+          const axios = require('axios');
+          const formData = new FormData();
+          const formFields = {
+            'userName': validation.value.user2.account,
+            'userPassword': validation.value.user2.password,
+            'id': 'S_ScrapDelivery',
+
+          };
+          //將表格資料append到 formData
+          for (const fieldName in formFields) {
+            formData.append(fieldName, formFields[fieldName]);
+            console.log(formData.get(`${fieldName}`));
+          }
+          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+          try {
+            const data = response.data;
+            console.log(data);
+            if (data.state === 'success') {
+              validation.value.user2.isValidate = true;
+              validation.value.user2.resultName = validation.value.user2.account;
+            } else if (data.state === 'error') {
+              alert(data.messages);
+              validation.value.user2.isValidate = false;
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        }
+      }
+      function validationStatus(user) {
+        if (user === 1) {
+          return validation.value.user1.isValidate ? validation.value.user1.resultName : '未驗證'
+        } else if (user === 2) {
+          return validation.value.user2.isValidate ? validation.value.user2.resultName : '未驗證'
+        }
+      }
+      function canSubmit() {
+        return validation.value.user1.isValidate && validation.value.user2.isValidate;
+      }
+      async function submit() {
+        const requestData = {
+          ScrapId: ScrapId,
+          DeliveryOperator: validation.value.user1.resultName,
+          ScrapPerson: validation.value.user2.resultName,
+        }
+        axios.post('http://192.168.0.177:7008/ScrapMng/Delivery',requestData)
+        .then((response)=>{
+          const data = response.data
+          if(data.state === 'success') {
+            alert('傳送報廢交付表單成功\n單號為:' + data.resultList.S_ID);
+            router.push({ name: 'Scrap_Datagrid' });
+          } else if( data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          } else {
+            alert(data.messages);
+          }
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
+      }
+      return {
+        details,
+        deliveryDate,
+        validation,
+        validate,
+        validationStatus,
+        canSubmit,
+        submit,
+        goBack,
+      }
     },
   };
 </script>

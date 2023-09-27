@@ -99,7 +99,7 @@ import Scrap_Datagrid from "../views/scrap/Datagrid";
 import Scrap_New from "../views/scrap/New";
 import Scrap_Edit from "../views/scrap/Edit";
 import Scrap_View from "../views/scrap/View";
-import Scrap_Process from "../views/scrap/Process";
+import Scrap_Deliver from "../views/scrap/Deliver";
 import Scrap_Review from "../views/scrap/Review";
 //報廢管理
 
@@ -431,9 +431,9 @@ const routes = [
     meta: {auth: true, request: 'S_Detail'},
   }, 
   {
-    path: "/scrap_process",
-    name: "Scrap_Process",
-    component: Scrap_Process,
+    path: "/scrap_deliver",
+    name: "Scrap_Deliver",
+    component: Scrap_Deliver,
     meta: {auth: true, request: 'S_ScrapDelivery'},
   },
   {

@@ -17,3 +17,6 @@ export const PlanDateCategory = ['盤點開始日期' , '盤點結束日期' , '
 // 維修管理
 export const RepairStatus = ['待交付' , '待審核' , '待送修' , '已送修' , '審核不通過']
 export const RepairDateCategory = ['申請日期' , '交付日期' , '審核日期' , '送修日期']
+// 報廢管理
+export const ScrapStatus = ['待交付' , '待審核' , '已報廢' , '審核不通過']
+export const ScrapDateCategory = ['申請日期' , '交付日期' , '審核日期']
