@@ -217,10 +217,8 @@ reactive
         const axios = require('axios');
         try {
           const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/Applications', formData);
-          console.log(response);
           const data = response.data;
           if (data.state === 'success') {
-            console.log(data.messages);
             console.log('datagrid', data.resultList);
             rowData.value = data.resultList;
           } else if (data.state === 'error') {
