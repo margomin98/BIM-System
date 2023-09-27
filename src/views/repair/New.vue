@@ -101,6 +101,7 @@
 <script>
   import { onMounted, reactive, ref, watch } from 'vue';
   import Navbar from '@/components/Navbar.vue';
+  import router from '@/router';
   import { getDate , goBack } from '@/assets/js/common_fn.js'
   import { getApplication , getAssets } from '@/assets/js/common_api.js'
   import axios from 'axios'

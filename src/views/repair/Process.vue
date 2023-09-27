@@ -418,10 +418,10 @@
         });
       }
       // 中、下上傳檔案部分
-      function sendFileForm(ReapairId , fileData, index) {
+      function sendFileForm(RepairId , fileData, index) {
         return new Promise((resolve, reject) => {
           const form = new FormData();
-          form.append('ReapairId' , ReapairId);
+          form.append('RepairId' , RepairId);
           form.append('num' , index);
           form.append('Document' , fileData);
           const axios = require('axios');
