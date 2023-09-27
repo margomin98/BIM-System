@@ -306,7 +306,7 @@
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages + '\n';
-            msg += '單號:' + data.resultList.RepairId;
+            msg += '單號:' + data.resultList.R_Id;
             alert(msg);
             router.push({
               name: 'Repair_Datagrid'

@@ -228,11 +228,13 @@
             <div class="input-group-prepend">
               已上傳文件：
             </div>
-            <div v-for="(file, index) in details.existDocument" :key="index" class="file_upload_wrap" style="cursor: pointer;">
-                <p>{{ file.FileName}}</p>
-                <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
-                <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)">
+            <div class="selected_file">
+              <div v-for="(file, index) in details.existDocument" :key="index" class="file_upload_wrap" style="cursor: pointer;">
+                  <p>{{ file.FileName}}</p>
+                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
+                  <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)">
               </div>
+            </div>
           </div>
         </div>
       </div>
