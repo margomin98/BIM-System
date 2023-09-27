@@ -315,8 +315,8 @@
                 <div class="input-with-icon">
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(1)" />
                   <span class="icon-container">
-                        <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user1.isValidate" />
-                      </span>
+                          <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user1.isValidate" />
+                        </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">驗證</button>
                 <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
@@ -767,6 +767,7 @@
             }
             .input-container {
               position: relative;
+              align-self: center;
             }
             .input-with-icon {
               position: relative;
@@ -1055,6 +1056,7 @@
             }
             .input-container {
               position: relative;
+              align-self: center;
             }
             .input-with-icon {
               position: relative;
@@ -1357,6 +1359,7 @@
             }
             .input-container {
               position: relative;
+              align-self: center;
             }
             .input-with-icon {
               position: relative;

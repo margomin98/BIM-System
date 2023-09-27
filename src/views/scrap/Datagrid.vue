@@ -2,33 +2,74 @@
   <Navbar />
   <div class="main_section">
     <div class="title col">
-      <h1>收貨管理</h1>
+      <h1>報廢管理</h1>
     </div>
     <div class="col">
       <div class="button_wrap d-flex">
-        <router-link to="/receive_new">
-          <button class="add_btn">新增收貨</button>
+        <router-link to="/scrap_new">
+          <button class="add_btn">新增報廢单</button>
         </router-link>
       </div>
     </div>
     <div class="container-fluid datagrid_section">
       <div class="content">
         <div class="row">
-          <div class="col">
-            <p>物流單號</p>
-            <input type="text" v-model="searchParams.ShipmentNum" />
+          <!-- 報廢編號 -->
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+            <p>報廢編號</p>
+            <input type="text" v-model="searchParams.PlanId" />
           </div>
-          <div class="col">
-            <p>貨運公司</p>
-            <input type="text" v-model="searchParams.ShipmentCompany" />
+          <!-- 狀態 -->
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+            <p>狀態</p>
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{ searchParams.PlanType || "請選擇" }}
+                </button>
+              <div class="dropdown-menu" aria-labelledby="statusDropdown">
+                <p v-for="(item , index) in DropdownArray.PlanType" :key="index" class="dropdown-item" @click="selectType(item)">{{ item }}</p>
+              </div>
+            </div>
           </div>
-          <div class="col">
-            <p>收件日期(起)</p>
-            <input type="date" v-model="searchParams.StartDate" class="date-input" />
+          <!-- 資產編號 -->
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+            <p>資產編號</p>
+            <input type="text" v-model="searchParams.PlanId" />
           </div>
-          <div class="col">
-            <p>收件日期(迄)</p>
-            <input type="date" v-model="searchParams.EndDate" class="date-input" />
+          <!-- 物品名稱 -->
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+            <p>物品名稱</p>
+            <input type="text" v-model="searchParams.PlanId" />
+          </div>
+          <!-- 日期類型 -->
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+            <p>日期類型</p>
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{ searchParams.DateCategory || "請選擇" }}
+                </button>
+              <div class="dropdown-menu" aria-labelledby="statusDropdown">
+                <p v-for="(item , index) in DropdownArray.PlanDateCategory" :key="index" class="dropdown-item" @click="selectDateCategory(item)">{{ item }}</p>
+              </div>
+            </div>
+          </div>
+          <!-- 日期(起) -->
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12  flex-col">
+            <p>日期(起)</p>
+            <div class="date-selector">
+              <div class="input-container">
+                <input type="date" v-model="searchParams.StartDate" class="date-input" />
+              </div>
+            </div>
+          </div>
+          <!-- 日期(迄) -->
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12 flex-col">
+            <p>日期(迄)</p>
+            <div class="date-selector">
+              <div class="input-container">
+                <input type="date" v-model="searchParams.EndDate" class="date-input" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -37,7 +78,6 @@
       <div class="button_wrap d-flex">
         <button class="search_btn" @click="submit">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
-        <!-- <button class="export_btn">匯出</button> -->
       </div>
     </div>
     <div style="width: 100%;margin-bottom:3%">
@@ -51,14 +91,19 @@
   import {
     AgGridVue
   } from "ag-grid-vue3";
-  import Receive_button from "@/components/Receive_button";
-  import Delete from "@/components/Receive_delete_button";
-  import Navbar from "@/components/Navbar.vue";
   import {
     onMounted,
     reactive,
     ref
   } from "vue";
+  import Scrap_button from "@/components/Scrap_button";
+  import Delete from "@/components/Inventory_data_delete_button";
+  import Navbar from "@/components/Navbar.vue";
+  import {
+    PlanType,
+    PlanStatus,
+    PlanDateCategory
+  } from "@/assets/js/dropdown.js"
   import {
     useRouter
   } from "vue-router";
@@ -66,76 +111,119 @@
     components: {
       Navbar,
       AgGridVue,
-      Receive_button,
+      Scrap_button,
       Delete
     },
     setup() {
       const router = useRouter();
+      const details = ref({});
+      const search_id = ref('');
+      const DropdownArray = reactive({
+        PlanType: PlanType,
+        PlanStatus: PlanStatus,
+        PlanDateCategory: PlanDateCategory,
+      })
       const searchParams = reactive({
-        ShipmentNum: '',
-        ShipmentCompany: '',
+        PlanId: '',
+        PlanType: '',
+        PlanStatus: '',
+        DateCategory: '',
         StartDate: '',
         EndDate: '',
       });
       const columnDefs = [{
           suppressMovable: true,
           field: "",
-          cellRenderer: "Receive_button",
-          width: 220,
+          cellRenderer: "Scrap_button",
+          cellRendererParams: {
+            updateSearchId: (id) => {
+              search_id.value = id;
+            }
+          },
+          width: 340,
           resizable: true,
         },
         {
-          headerName: "收貨單號",
-          field: "AR_ID",
+          headerName: "報廢編號",
+          field: "PlanId",
           unSortIcon: true,
           sortable: true,
           width: 180,
           resizable: true,
-          flex: 1,
           suppressMovable: true
         },
         {
-          headerName: "物流單號",
-          field: "ShipmentNum",
+          headerName: "狀態",
+          field: "PlanType",
           unSortIcon: true,
           sortable: true,
+          width: 120,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "資產編號",
+          field: "PlanStatus",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          suppressMovable: true
+        },
+        {
+          headerName: "物品名稱",
+          field: "PlanTitle",
+          unSortIcon: true,
+          sortable: true,
+          resizable: true,
           width: 180,
-          resizable: true,
-          flex: 1,
           suppressMovable: true
         },
         {
-          headerName: "貨運公司",
-          field: "ShipmentCompany",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "到貨件數",
-          field: "GoodsNum",
+          headerName: "申請日期",
+          field: "InventoryStaffName",
           unSortIcon: true,
           sortable: true,
           width: 150,
           suppressMovable: true
         },
         {
-          headerName: "收件日期",
-          field: "ReceivedDate",
+          headerName: "申請人員",
+          field: "ConvenerName",
           unSortIcon: true,
           sortable: true,
-          resizable: true,
+          width: 120,
+          suppressMovable: true
+        },
+        {
+          headerName: "交付日期",
+          field: "PlanStart",
+          unSortIcon: true,
+          sortable: true,
           width: 150,
           suppressMovable: true
         },
         {
-          headerName: "收件人員",
-          field: "Recipient",
+          headerName: "報廢人員",
+          field: "PlanEnd",
+          unSortIcon: true,
+          sortable: true,
+          width: 120,
+          suppressMovable: true
+        },
+        {
+          headerName: "審核日期",
+          field: "EditTime",
           unSortIcon: true,
           sortable: true,
           width: 150,
+          suppressMovable: true
+        },
+        {
+          headerName: "審核人員",
+          field: "PlanEnd",
+          unSortIcon: true,
+          sortable: true,
+          width: 120,
           suppressMovable: true
         },
         {
@@ -151,18 +239,26 @@
       });
       async function submit() {
         const formData = new FormData();
+        const formFields = {
+          'PlanId': searchParams.PlanId,
+          'PlanType': searchParams.PlanType,
+          'PlanStatus': searchParams.PlanStatus,
+          'DateCategory': searchParams.DateCategory,
+          'StartDate': searchParams.StartDate,
+          'EndDate': searchParams.EndDate,
+        };
         //將表格資料append到 formData
-        for (const key in searchParams) {
-          formData.append(key, searchParams[key]);
+        for (const fieldName in formFields) {
+          formData.append(fieldName, formFields[fieldName]);
         }
         const axios = require('axios');
         try {
-          const response = await axios.post('http://192.168.0.177:7008/ReceivingMng/ReceivingNotes', formData);
+          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryPlans', formData);
           const data = response.data;
           if (data.state === 'success') {
             //取得datagrid成功
             // console.log(data.state);
-            console.log('datagrid:', data.resultList);
+            console.log('datagrid', data.resultList);
             rowData.value = data.resultList;
           } else if (data.state === 'error') {
             //取得datagrid失敗
@@ -179,19 +275,43 @@
           console.error(error);
         }
       }
-      const clear = () => {
+      const selectType = (item) => {
+        searchParams.PlanType = item;
+      };
+      const selectStatus = (item) => {
+        searchParams.PlanStatus = item;
+      };
+      const selectDateCategory = (item) => {
+        searchParams.DateCategory = item;
+      };
+      function routerProcess() {
+        router.push({
+          name: 'Inventory_Process',
+          query: {
+            search_id: search_id.value,
+          }
+        });
+      }
+      function clear() {
         for (const key in searchParams) {
           searchParams[key] = '';
         }
         submit();
       }
       return {
+        details,
         searchParams,
+        DropdownArray,
+        search_id,
         columnDefs,
         rowData,
         rowHeight: 35,
         pageSize: 10,
         submit,
+        selectType,
+        selectStatus,
+        selectDateCategory,
+        routerProcess,
         clear,
       };
     },
@@ -215,7 +335,8 @@
         margin-bottom: 25px;
         gap: 20px;
         .add_btn {
-          @include datagrid_button_no1; // width: 100px;
+          @include datagrid_button_no1;
+          width: 150px;
           &:hover {
             background-color: #537ebc;
           }
@@ -244,12 +365,19 @@
           background: rgba(82, 136, 156, 0.8);
           border-radius: 10px;
           margin-bottom: 30px;
-          height: 200px;
+          height: 250px;
           align-items: center;
           display: flex;
           justify-content: center;
         }
         .row {
+          display: grid;
+          grid-template-rows: 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+          gap: 40px 5px;
+          .col-xl-2 {
+            margin: 0 3px;
+          }
           p {
             @include datagrid_title;
           }
@@ -291,7 +419,55 @@
         background: var(--c-7, #1f4e5f);
       }
       .datagrid-header .datagrid-cell {
-        text-align: left importtant;
+        text-align: left !important;
+      }
+    }
+    .modal {
+      .modal-body {
+        padding: 20px;
+        margin: auto;
+        p {
+          text-align: center;
+          font-weight: 800;
+        }
+      }
+      .modal-content {
+        margin: auto;
+      }
+      .modal-input-group-prepend {
+        width: auto;
+        font-weight: 700;
+        font-size: 20px;
+      }
+      .modal-footer {
+        padding: 0 12px 12px;
+        border: none;
+        justify-content: center;
+        .confirm {
+          color: white;
+          background-color: #132238;
+          &:hover {
+            background-color: #426497;
+          }
+        }
+      }
+      .modal-header {
+        h5 {
+          font-weight: 700;
+        }
+        background: #528091;
+        color: white;
+        display: flex;
+        justify-content: center;
+        padding: 0 16px 16px;
+        .close_icon {
+          height: 40px;
+          cursor: pointer;
+        }
+        .modal-title {
+          margin: auto;
+          padding-top: 16px;
+        }
       }
     }
   }
@@ -310,7 +486,8 @@
         margin-bottom: 25px;
         gap: 20px;
         .add_btn {
-          @include datagrid_button_no1; // width:100px;
+          @include datagrid_button_no1;
+          width: 190px;
           &:hover {
             background-color: #537ebc;
           }
