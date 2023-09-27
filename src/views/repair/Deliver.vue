@@ -246,7 +246,7 @@
             formData.append(fieldName, formFields[fieldName]);
             console.log(formData.get(`${fieldName}`));
           }
-          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidationForW_Operator', formData, {
+          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidationForAll_Operator', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
@@ -307,7 +307,27 @@
         return validation.value.user1.isValidate && validation.value.user2.isValidate;
       }
       async function submit() {
-        alert('hi');
+        const requestData = {
+          RepairId: RepairId,
+          DeliveryOperator: validation.value.user1.resultName,
+          RepairPerson: validation.value.user2.resultName,
+        }
+        axios.post('http://192.168.0.177:7008/RepairMng/Delivery',requestData)
+        .then((response)=>{
+          const data = response.data
+          if(data.state === 'success') {
+            alert('傳送維修交付表單成功\n單號為:' + data.resultList.R_ID);
+            router.push({ name: 'Repair_Datagrid' });
+          } else if( data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          } else {
+            alert(data.messages);
+          }
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
       }
       return {
         details,

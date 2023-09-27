@@ -104,7 +104,8 @@ export const getProject = (async (projectCode) => {
       alert(data.messages);
       router.push('/');
     } else {
-      ProjectName.value = data.messages.toString()
+      // 查無此專案代碼
+      return data.messages.toString();
     }
   } catch (error) {
     console.error('專案名稱取得失敗:',error);

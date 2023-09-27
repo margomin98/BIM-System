@@ -26,8 +26,8 @@
             <p>用途</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          {{ Use || "請選擇" }}
-                        </button>
+                {{ Use || "請選擇" }}
+              </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item , index) in UseArray" :key="index" class="dropdown-item" @click="selectUse(item)">{{ item }}</p>
               </div>
@@ -37,8 +37,8 @@
             <p>狀態</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          {{ Status || "請選擇" }}
-                        </button>
+                {{ Status || "請選擇" }}
+              </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item , index) in StatusArray" :key="index" class="dropdown-item" @click="selectStatus(item)">{{ item }}</p>
               </div>
@@ -248,9 +248,6 @@
         EndDate.value = '';
         submit();
       };
-      const frameworkComponents = {
-        agGridVue: AgGridVue
-      };
       onMounted(() => {
         submit();
       });
@@ -270,7 +267,6 @@
         clear,
         columnDefs,
         rowData,
-        frameworkComponents,
       };
     }
   };

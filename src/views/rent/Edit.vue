@@ -122,21 +122,14 @@
 </template>
 
 <script>
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
-  import {
-    useRoute,
-    useRouter
-  } from 'vue-router';
+  import { AgGridVue } from "ag-grid-vue3";
+  import { useRoute, useRouter } from 'vue-router';
   import Delete from "@/components/Rent_Edit_Delete_button";
   import Navbar from '@/components/Navbar.vue';
   import { UseOptions } from "@/assets/js/dropdown";
-  import {
-    onMounted,
-    ref,
-    reactive,
-  } from 'vue';
+  import { onMounted, ref, reactive, } from 'vue';
+  import { getApplication , getEquipType , getEquipCategory , getProject} from "@/assets/js/common_api";
+  import { getDate , goBack } from "@/assets/js/common_fn";
   export default {
     components: {
       Navbar,
@@ -221,42 +214,29 @@
         deleteList: [],
         itemList: [],
       });
+      onMounted(() => {
+        getDetails();
+      });
       async function getEquipTypeName() {
         if (myForm.EquipTypeArray.length == 0) {
-          const axios = require('axios');
-          try {
-            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetEquipType');
-            const data = response.data;
-            if (data.state === 'success') {
-              myForm.EquipTypeArray = data.resultList.EquipType;
-            } else if (data.state === 'error') {
-              alert(data.messages);
-            } else if (data.state === 'account_error') {
-              alert(data.messages);
-              router.push('/');
-            }
-          } catch (error) {
-            console.error('Error sending applicant info request to backend');
-          }
+          getEquipType()
+          .then((data)=>{
+            myForm.EquipTypeArray = data;
+          })
+          .catch((error) =>{
+            console.error(error);
+          })
         }
       }
       async function getEquipCategoryName() {
         myForm.EquipCategoryName = '';
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${myForm.EquipTypeName}`);
-          const data = response.data;
-          if (data.state === 'success') {
-            myForm.EquipCategoryArray = data.resultList.EquipCategory;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error('Error sending applicant info request to backend', error);
-        }
+        getEquipCategory(myForm.EquipTypeName)
+        .then((data)=>{
+          myForm.EquipCategoryArray = data;
+          })
+        .catch((error) =>{
+          console.error(error);
+        })
       }
       async function getProjectName() {
         if (!/^(?![ 　]{10}$)[\s\S]{1,10}$/.test(details.value.ProjectCode)) {
@@ -264,24 +244,13 @@
           return;
         }
         details.value.ProjectCode = details.value.ProjectCode.trim()
-        const form = new FormData();
-        form.append('projectCode', details.value.ProjectCode);
-        const axios = require('axios');
-        const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchProjectName', form);
-        try {
-          const data = response.data;
-          console.log(data);
-          if (data.state === 'success') {
-            details.value.ProjectName = data.resultList;
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          } else {
-            details.value.ProjectName = data.messages.toString()
-          }
-        } catch (error) {
+        getProject(details.value.ProjectCode)
+        .then((data)=>{
+          details.value.ProjectName = data;
+        })
+        .catch((error) =>{
           console.error(error);
-        }
+        })
       }
       function selectType(item) {
         myForm.EquipTypeName = item;
@@ -426,12 +395,6 @@
         const deleteIndex2 = myForm.itemList.findIndex(item => item.id === newValue.id);
         myForm.itemList.splice(deleteIndex2, 1);
         console.log(myForm.itemList);
-      }
-      onMounted(() => {
-        getDetails();
-      });
-      function goBack() {
-        window.history.back();
       }
       return {
         options,

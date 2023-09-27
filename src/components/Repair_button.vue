@@ -84,19 +84,16 @@
         if (disabledStatus !== '待審核') {
           isDisabled.value.review = true;
         }
-        if (disabledStatus !== '待送修') {
+        if (disabledStatus !== '待送修' && disabledStatus !== '已送修') {
           isDisabled.value.process = true;
         }
       }
-      function emitView() {
-        props.params.updateSearchId(search_id);
-      }
+
       onMounted(() => {
         checkButton();
       });
       return {
         view,
-        emitView,
         disabledStatus,
         isDisabled,
       };
