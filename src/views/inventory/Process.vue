@@ -79,7 +79,7 @@
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
-          <p>盤點范圍</p>
+          <p>盤點範圍</p>
         </div>
       </div>
       <div class="content">

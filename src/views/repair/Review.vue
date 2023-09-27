@@ -235,7 +235,7 @@
         .then((response)=>{
           const data = response.data
           if(data.state === 'success') {
-            alert('傳送維修交付表單成功\n單號為:' + data.resultList.R_ID);
+            alert('維修單審核送出成功\n單號為:' + data.resultList.R_ID);
             router.push({ name: 'Repair_Datagrid' });
           } else if( data.state === 'account_error') {
             alert(data.messages);

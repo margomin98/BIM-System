@@ -129,7 +129,7 @@
     },
     setup(){
       const route = useRoute();
-      const RepairId = route.query.search_id;;
+      const RepairId = route.query.search_id;
       const details = ref({});
       const Assets = reactive({
         Name: '',

@@ -3,10 +3,15 @@
   <div class="main_section">
     <div class="title col">
       <h1>
-        送修作業
+        刪除項目
       </h1>
     </div>
     <div class="info_wrap col">
+      <div class="warn">
+        <h4>
+          確定刪除以下項目嗎？
+        </h4>
+      </div>
       <!-- 維修編號，申請人員，申請日期 -->
       <div class="fixed_info">
         <div>
@@ -129,20 +134,20 @@
       <div class="content">
         <!-- 維修廠商 -->
         <div class="col-12">
-          <div class="input-group mb-4">
+          <div class="input-group mb-4" >
             <div class="input-group-prepend">
-              <span>*</span> 維修廠商：
+              維修廠商：
             </div>
-            <input ref="inputElement" type="text" class="form-control" placeholder="最多輸入20字" v-model="formParams.RepairCompany">
+            <input  type="text" class="form-control readonly_box" readonly v-model="details.RepairCompany">
           </div>
         </div>
         <!-- 外部維修單號 -->
         <div class="col-12">
-          <div class="input-group mb-4">
+          <div class="input-group mb-4" >
             <div class="input-group-prepend">
-              <span>*</span> 外部維修單號：
+              外部維修單號：
             </div>
-            <input ref="inputElement" type="text" class="form-control" placeholder="最多輸入50字" v-model="formParams.ExternalRepairId">
+            <input  type="text" class="form-control readonly_box" readonly v-model="details.ExternalRepairId">
           </div>
         </div>
         <div class="row g-0">
@@ -152,7 +157,7 @@
               <div class="input-group-prepend">
                 廠商聯絡人：
               </div>
-              <input ref="inputElement" type="text" class="form-control" placeholder="最多輸入10字" v-model="formParams.ContactPerson">
+              <input  type="text" class="form-control readonly_box" readonly v-model="details.ContactPerson">
             </div>
           </div>
           <!-- 聯絡電話 -->
@@ -161,7 +166,7 @@
               <div class="input-group-prepend">
                 聯絡電話：
               </div>
-              <input ref="inputElement" type="text" class="form-control" placeholder="最多輸入20字" v-model="formParams.ContactPhone">
+              <input  type="text" class="form-control readonly_box" readonly v-model="details.ContactPhone">
             </div>
           </div>
         </div>
@@ -171,7 +176,7 @@
             <div class="input-group-prepend">
               送修日期：
             </div>
-            <input ref="inputElement" type="date" class="form-control" v-model="formParams.RepairDate">
+            <input  type="text" class="form-control readonly_box" readonly v-model="details.RepairDate">
           </div>
         </div>
         <!-- 備註 -->
@@ -180,65 +185,68 @@
             <div class="input-group-prepend">
               備註：
             </div>
-            <textarea style="height: 200px;" class="form-control" placeholder="最多輸入500字" v-model="formParams.Memo"></textarea>
+            <textarea style="height: 200px;" class="form-control readonly_box" readonly> {{ details.Memo }}</textarea>
           </div>
         </div>
-        <!-- 文件上傳 -->
+        <!-- 已文件上傳 -->
         <div class="col-12 repair_photo_section">
           <div class="input-group mt-3">
-            <div class="input-group-prepend">文件上傳：</div>
-            <div class="mb-3 file_wrap">
-              <button class="choose_btn" @click="openFileInput">選擇檔案</button>
-              <input type="file" ref="fileInput" style="display: none;" @change="handleDocumentFile($event)" multiple>
-            </div>
+            <div class="input-group-prepend">已文件上傳：</div>
             <div class="selected_file">
-              <p class="title">已選擇的檔案:</p>
-              <div v-for="(file, index) in formParams.viewDoc" :key="index" class="file_upload_wrap" style="cursor: pointer;">
-                <p>{{ file.FileName}}</p>
-                <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
-                <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)">
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- 瀏覽 -->
-        <!-- doc/docx download hidden Link -->
-        <a href="" style="display: none;" id="download-link"></a>
-        <!-- Modal Trigger -->
-        <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#documentModal"></button>
-        <!-- Exist Document Modal -->
-        <div class="modal fade" id="documentModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 800px !important">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="photoModalLabel"> {{ previewParams.title }}</h5>
-                <div class="close_icon">
-                  <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
+              <!-- v-for讀取已上傳物流文件 -->
+              <div class="file_upload_wrap" style="cursor: pointer;" v-for="(file , index) in details.existDocument" :key="index">
+                <div>
+                  <p>{{ file.FileName }}</p>
+                  <!-- 在handlePreview依據不同副檔名做不同處理 -->
+                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
                 </div>
               </div>
-              <div class="modal-body">
-                <img :src="previewParams.src" class="w-100">
+              <!-- doc/docx download hidden Link -->
+              <a href="" style="display: none;" id="download-link"></a>
+              <!-- Modal Trigger -->
+              <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#documentModal"></button>
+              <!-- Exist Document Modal -->
+              <div class="modal fade" id="documentModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 800px !important">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="photoModalLabel"> {{ previewParams.title }}</h5>
+                      <div class="close_icon">
+                        <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
+                      </div>
+                    </div>
+                    <div class="modal-body">
+                      <img :src="previewParams.src" class="w-75">
+                    </div>
+                  </div>
+                </div>
               </div>
+              <!-- <div class="file_upload_wrap" style="cursor: pointer;">
+                <p>File 1</p>
+                <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;">
+              </div> -->
             </div>
-          </div>
-        </div>
-        <!-- 已上傳文件 -->
-        <div class="col-12">
-          <div class="input-group d-flex">
-            <div class="input-group-prepend">
-              已上傳文件：
-            </div>
-            <div v-for="(file, index) in details.existDocument" :key="index" class="file_upload_wrap" style="cursor: pointer;">
-                <p>{{ file.FileName}}</p>
-                <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
-                <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)">
-              </div>
           </div>
         </div>
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="send_btn" @click="submit">送出</button>
+        <!-- Modal Trigger -->
+        <button class="delete_btn" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>
+      </div>
+      <!-- delete Modal -->
+      <div class="modal fade delete_modal" id="deleteModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-body">
+              確定刪除這筆項目嗎？
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">否</button>
+              <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" @click="deleteData">是</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -262,22 +270,9 @@
       const route = useRoute();
       const RepairId = route.query.search_id;
       const details = ref({});
-      const fileInput = ref(null);
       const previewParams = reactive({
         title: '',
         src: '',
-      })
-      const formParams = reactive({
-        RepairId: RepairId,
-        RepairCompany: '',
-        ExternalRepairId: '',
-        ContactPerson: '',
-        ContactPhone: '',
-        RepairDate: '',
-        Memo: '',
-        deleteDocument: [],
-        newDoc: [],
-        viewDoc: [],
       })
       onMounted(()=>{
         getDetails();
@@ -290,21 +285,6 @@
           if(data.state === 'success') {
             details.value = data.resultList;
             console.log('資料:\n', details.value );
-            if(details.value.RepairDate) {
-              details.value.RepairDate = details.value.RepairDate.replace(/\//g, '-');
-            }
-            // 若有已上傳的物流文件 則新增key值 exist: true
-            if (details.value.existDocument) {
-              details.value.existDocument.forEach(item => {
-                item.exist = true;
-              });
-            }
-            // 將值帶入formParams
-            for( const key in details.value) {
-              if(formParams.hasOwnProperty(key) && details.value[key]) {
-                formParams[key] = details.value[key]
-              }
-            }
           } else if (data.state === 'account_error') {
             alert(data.messages);
             router.push('/');
@@ -317,230 +297,28 @@
           console.error(error);
         })
       }
-      // 送出
-      async function submit() {
-        // 檢查必填項目、格式        
-        if (!formParams.RepairCompany.trim() || !formParams.ExternalRepairId.trim()) {
-          alert('請輸入必填項目');
-          return
-        }
-        formParams.RepairCompany = formParams.RepairCompany.trim();
-        if (!/^[\s\S]{0,20}$/.test(formParams.RepairCompany)) {
-          alert('維修廠商不可輸入超過20字')
-          return
-        }
-        formParams.ExternalRepairId = formParams.ExternalRepairId.trim();
-        if (!/^[\s\S]{0,50}$/.test(formParams.ExternalRepairId)) {
-          alert('外部維修單號不可輸入超過50字')
-          return
-        }
-        formParams.ContactPerson = formParams.ContactPerson.trim();
-        if (!/^[\s\S]{0,10}$/.test(formParams.ContactPerson)) {
-          alert('廠商聯絡人不可輸入超過10字')
-          return
-        }
-        formParams.ContactPhone = formParams.ContactPhone.trim();
-        if (!/^[\s\S]{0,20}$/.test(formParams.ContactPhone)) {
-          alert('連絡電話不可輸入超過20字')
-          return
-        }
-        formParams.Memo = formParams.Memo.trim();
-        if (!/^[\s\S]{0,500}$/.test(formParams.Memo)) {
-          alert('備註不可輸入超過500字')
-          return
-        }
+      async function deleteData() {
+        const form = new FormData();
+        form.append('RepairId', RepairId);
+        const axios = require('axios');
+        const response = await axios.post(`http://192.168.0.177:7008/RepairMng/DeleteReceipt`, form);
         try {
-          // 先編輯表單上半部內容
-          await sendUpperForm();
-          // 再依照R_ID將 文件 單次檔案上傳
-          const filePromises = [];
-          for (let i = 0; i < formParams.newDoc.length; i++) {
-            filePromises.push(sendFileForm(RepairId, formParams.newDoc[i], i));
+          const data = response.data;
+          if (data.state === 'success') {
+            let msg = data.messages + '\n';
+            msg += '單號:' + data.resultList.RepairId;
+            alert(msg);
+            router.push({
+              name: 'Repair_Datagrid'
+            });
+          } else if (data.state === 'error') {
+            alert(data.messages);
           }
-          // 等待所有檔案上傳完成
-          await Promise.all(filePromises)
-          .then(result =>{
-            const allSuccess = result.every(result => result === 'success')
-            if(allSuccess) {
-            alert('傳送維修資訊成功\n單號為:' + RepairId);
-              router.push({
-                name: 'Repair_Datagrid'
-              });
-            }
-            else {
-              alert('傳送維修資訊失敗')
-            }
-          })
         } catch (error) {
           console.error(error);
         }
       }
-      // 上半部表單
-      function sendUpperForm() {
-        return new Promise((resolve, reject) => {
-          // 在这里发送上半部分表单数据的请求
-          // 成功时，调用 resolve 并传递 R_ID
-          // 失败时，调用 reject 并传递错误信息
-          const axios = require('axios');
-          const form = new FormData();
-
-          let msg = ''
-          for (const key in formParams) {
-            if(formParams[key]){
-              msg+=`${key} : ${formParams[key]}\n`
-              form.append(key, formParams[key]);
-            }
-          }
-          form.delete('newDoc')
-          form.delete('viewDoc')
-          form.delete('deleteDocument')
-          if(formParams.deleteDocument.length > 0) {
-            for(const item of formParams.deleteDocument) {
-              form.append('deleteDocument' , item)
-            }
-          }
-          console.log('上半部資料(含刪除):\n', msg);
-          axios.post('http://192.168.0.177:7008/RepairMng/SendingForRepair', form)
-            .then(response => {
-              const data = response.data;
-              if (data.state === 'success') {
-                const R_ID = response.data.resultList.R_ID;
-                console.log('編輯上半部表單成功R_ID:' , R_ID);
-                resolve(R_ID);
-              }
-              else {
-                reject(data.messages);
-              }
-            })
-            .catch(error => {
-              reject(error);
-            });
-        });
-      }
-      // 中、下上傳檔案部分
-      function sendFileForm(ReapairId , fileData, index) {
-        return new Promise((resolve, reject) => {
-          const form = new FormData();
-          form.append('ReapairId' , ReapairId);
-          form.append('num' , index);
-          form.append('Document' , fileData);
-          const axios = require('axios');
-          axios.post('http://192.168.0.177:7008/RepairMng/UploadDoc', form)
-            .then((response) => {
-              const data = response.data;
-              if (data.state === 'success') {
-                // 文件表单提交成功，继续执行
-                console.log(`第${index+1}個檔案上傳成功`);
-                resolve(data.state)
-              } else {
-                // 如果状态不是 "success"，调用 reject 并传递错误信息
-                console.error(type+'上傳失敗，'+response.data.messages);
-                reject(new Error('文件表單提交失败'));
-              }
-            })
-            .catch(error => {
-              // 如果提交失败，调用 reject 并传递错误信息
-              reject(error);
-            });
-        });
-      }
-      // 刪除 分為 
-      // 1.已上傳文件 (從details刪除 並加入formParams.deleteDoc) 
-      // 2.新選擇檔案 (直接從formParams的newDoc viewDoc刪除)
-      function deleteFile(index , file) {
-        // 1.
-        if(file.exist) {
-          formParams.deleteDocument.push(file.FileName);
-          details.value.existDocument.splice(index,1);
-        }
-        // 2.
-        else {
-          formParams.newDoc.splice(index , 1);
-          formParams.viewDoc.splice(index , 1);
-        }
-      }
-      // 處理維修文件
-      function handleDocumentFile(event) {
-        console.log('DocumentFiles:',event.target.files);
-        const files = event.target.files;
-        const imageExtensions = ['jpg', 'jpeg', 'png', 'gif' , 'pdf' , 'doc' , 'docx'];
-        const maxFileSize = 28 * 1024 * 1024; // 28MB
-        // 檢查副檔名 &檔案大小
-        for (let i = 0; i < files.length; i++) {
-          const fileName = files[i].name;
-          const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
-          if (!imageExtensions.includes(fileExtension.toLowerCase())) {
-            alert(fileExtension + '不在允許的格式範圍內，請重新選取');
-            return;
-          }
-          if (files[i].size > maxFileSize) {
-            alert('檔案' + fileName + '大於28MB，請重新選取');
-            return;
-          }
-        }
-        // 處理檔案
-        const imgArray = formParams.newDoc;
-        const previewUrl = formParams.viewDoc;
-        for (let i = 0; i < files.length; i++) {
-          // 依據檔案格式 分為 1.圖片(壓縮、可預覽) 2.pdf(可預覽) 3. doc/docx(可下載)
-          const fileName = files[i].name;
-          const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
-          const reader = new FileReader();
-          // .pdf
-          if(fileExtension === 'pdf') {
-            imgArray.push(files[i]);
-            previewUrl.push({
-              FileName: files[i].name,
-              FileLink: URL.createObjectURL(files[i]),
-              type: fileExtension,
-            });
-          }
-          // .doc/.docx
-          else if(fileExtension === 'doc' || fileExtension == 'docx') {
-            imgArray.push(files[i]);
-            previewUrl.push({
-              FileName: files[i].name,
-              FileLink: URL.createObjectURL(files[i]),
-              type: fileExtension,
-            });
-          }
-          // 圖片
-          else {
-            reader.onload = (e) => {
-              const img = new Image();
-              img.src = e.target.result;
-              img.onload = () => {
-                const canvas = document.createElement('canvas');
-                const maxWidth = 800; // 设置最大宽度
-                const scaleRatio = Math.min(maxWidth / img.width, 1);
-                canvas.width = img.width * scaleRatio;
-                canvas.height = img.height * scaleRatio;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                canvas.toBlob((blob) => {
-                  const compressedFile = new File([blob], files[i].name, {
-                    // type: files[i].type,
-                    lastModified: files[i].lastModified,
-                  });
-                  // 记录压缩前后的大小
-                  const originalSize = Math.round(files[i].size / 1024); // 原始大小（KB）
-                  const compressedSize = Math.round(compressedFile.size / 1024); // 壓縮後大小（KB）
-                  // console.log(`原始大小: ${originalSize} KB，壓縮後大小: ${compressedSize} KB`);
-                  imgArray.push(compressedFile);
-                  previewUrl.push({
-                    FileName: files[i].name,
-                    FileLink: URL.createObjectURL(compressedFile),
-                    type: 'pic'
-                  });
-                }, files[i].type, 0.8);
-              };
-            };
-          }
-          reader.readAsDataURL(files[i]);
-        }
-        console.log('uploaded viewDoc:' , formParams.viewDoc);
-        console.log('uploaded newDoc:' , formParams.newDoc);
-      }
+      // 處理瀏覽文件
       function handlePreview(file) {
         // 先提取副檔名
         // 以"."為基準分割字串
@@ -570,20 +348,13 @@
             break;
         }
       }
-      function openFileInput() {
-        fileInput.value.click();
-      }
+      
       return {
         details,
-        fileInput,
         previewParams,
-        formParams,
         goBack,
-        submit,
-        deleteFile,
-        handleDocumentFile,
+        deleteData,
         handlePreview,
-        openFileInput,
         pagination: {
           clickable: true,
         },
@@ -596,45 +367,55 @@
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
-  span {
-    @include red_star
-  }
-  .form-check-input {
-    align-self: center
-  }
-  .modal {
-    .modal-body {
-      padding: 20px;
-      margin: auto;
-    }
-    .modal-content {
-      margin: auto;
-    }
-    .modal-input-group-prepend {
-      width: auto;
-      font-weight: 700;
-      font-size: 20px;
-    }
-    .modal-footer {
-      padding: 0 12px 12px;
-      border: none;
-    }
-    .modal-header {
-      h5 {
-        font-weight: 700;
-      }
-      background: #528091;
+  .warn {
+    text-align: center;
+    padding: 10px 0;
+    background: #9f0000;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    h4 {
       color: white;
-      display: flex;
-      justify-content: center;
-      padding: 0 16px 16px;
-      .close_icon {
-        height: 40px;
-        cursor: pointer;
+      margin-bottom: 0;
+      font-weight: 700;
+      &::before {
+        content: "\26A0";
       }
-      .modal-title {
+    }
+  }
+  .delete_modal {
+    .modal-content {
+      border: solid 1px black;
+      border-radius: 0;
+      .modal-body {
+        background: #E94B4B;
+        text-align: center;
+        font-weight: 700;
+        color: white;
+        border-bottom: solid 1px black;
+      }
+      .modal-footer {
         margin: auto;
-        padding-top: 16px;
+        gap: 10px;
+        button:nth-child(1) {
+          background-color: #7E7E7E;
+          border: none;
+          color: white;
+          width: 50px;
+          font-weight: 700;
+          &:hover {
+            background-color: #464242;
+          }
+        }
+        button:nth-child(2) {
+          background-color: #E94B4B;
+          border: none;
+          color: white;
+          width: 50px;
+          font-weight: 700;
+          &:hover {
+            background-color: #a70e0e;
+          }
+        }
       }
     }
   }
@@ -698,6 +479,9 @@
               font-size: 20px;
               text-align: end;
               width: 155px;
+              span {
+                @include red_star
+              }
             }
           }
           .selected_file {
@@ -707,41 +491,31 @@
               color: white;
               margin-bottom: 5px;
             }
-          }
-          .file_upload_wrap {
-            margin-bottom: 0;
-            display: flex;
-            img {
-              width: 25px;
-              height: 25px;
-            }
-            p {
-              margin-bottom: 0;
-              font-weight: 700;
-              color: white;
-              &::before {
-                margin-right: 10px;
-                content: '·';
+            .file_upload_wrap {
+              margin-bottom: 5px;
+              display: flex;
+              gap: 5px 0;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              p {
+                margin-bottom: 0;
                 font-weight: 700;
                 color: white;
-              }
-            }
-          }
-          .file_wrap {
-            display: flex;
-            flex-direction: column;
-            .choose_btn {
-              margin-bottom: 10px;
-              @include choose_file_btn;
-              &:hover {
-                background: #3f608f;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
+                  font-weight: 700;
+                  color: white;
+                }
               }
             }
           }
         }
         .button_wrap {
           display: flex;
-          justify-content: space-between;
+          justify-content: center;
           margin: 30px auto 5%;
           width: 220px;
           button {
@@ -749,6 +523,24 @@
               @include back_to_previous_btn;
               &:hover {
                 background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              background: var(--c-5, #E94B4B);
+              justify-content: center;
+              align-items: center;
+              display: inline-flex;
+              border-radius: 10px;
+              height: 40px;
+              width: 90px;
+              color: #FFF;
+              text-align: center;
+              font-size: 20px;
+              font-weight: 700;
+              border: none;
+              margin: 0 10px;
+              &:hover {
+                background-color: #a51e1e;
               }
             }
           }
@@ -831,6 +623,9 @@
               font-size: 20px;
               text-align: end;
               width: 115px;
+              span {
+                @include red_star
+              }
             }
           }
           .selected_file {
@@ -840,49 +635,39 @@
               color: white;
               margin-bottom: 5px;
             }
-          }
-          .file_upload_wrap {
-            margin-bottom: 0;
-            display: flex;
-            img {
-              width: 25px;
-              height: 25px;
-            }
-            p {
-              margin-bottom: 0;
-              font-weight: 700;
-              color: white;
-              &::before {
-                margin-right: 10px;
-                content: '·';
+            .file_upload_wrap {
+              margin-bottom: 5px;
+              display: flex;
+              gap: 5px 0;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              p {
+                margin-bottom: 0;
                 font-weight: 700;
                 color: white;
-              }
-            }
-          }
-          .file_wrap {
-            display: flex;
-            flex-direction: column;
-            .choose_btn {
-              margin-bottom: 10px;
-              @include choose_file_btn;
-              &:hover {
-                background: #3f608f;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
+                  font-weight: 700;
+                  color: white;
+                }
               }
             }
           }
         }
         .content:nth-child(4) {
           .input-group-prepend {
-            width: 160px;
+            width: 140px;
           }
           .input-group .form-control {
-            width: 50%;
+            width: 54%;
           }
         }
         .button_wrap {
           display: flex;
-          justify-content: space-between;
+          justify-content: center;
           margin: 30px auto 5%;
           width: 220px;
           button {
@@ -890,6 +675,24 @@
               @include back_to_previous_btn;
               &:hover {
                 background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              background: var(--c-5, #E94B4B);
+              justify-content: center;
+              align-items: center;
+              display: inline-flex;
+              border-radius: 10px;
+              height: 40px;
+              width: 90px;
+              color: #FFF;
+              text-align: center;
+              font-size: 20px;
+              font-weight: 700;
+              border: none;
+              margin: 0 10px;
+              &:hover {
+                background-color: #a51e1e;
               }
             }
           }
@@ -976,6 +779,9 @@
               font-size: 20px;
               width: 100px;
               white-space: nowrap;
+              span {
+                @include red_star
+              }
             }
           }
           .selected_file {
@@ -984,51 +790,55 @@
               color: white;
               margin-bottom: 5px;
             }
-          }
-          .file_upload_wrap {
-            margin-bottom: 0;
-            display: flex;
-            img {
-              width: 25px;
-              height: 25px;
-            }
-            p {
+            .file_upload_wrap {
               margin-bottom: 0;
-              font-weight: 700;
-              color: white;
-              &::before {
-                margin-right: 10px;
-                content: '·';
+              display: flex;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              p {
+                margin-bottom: 0;
                 font-weight: 700;
                 color: white;
-              }
-            }
-          }
-          .file_wrap {
-            display: flex;
-            flex-direction: column;
-            margin-left: unset !important;
-            .choose_btn {
-              margin-top: 5px;
-              margin-bottom: 10px;
-              @include choose_file_btn;
-              &:hover {
-                background: #3f608f;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
+                  font-weight: 700;
+                  color: white;
+                }
               }
             }
           }
         }
         .button_wrap {
           display: flex;
-          justify-content: space-between;
+          justify-content: center;
           margin: 30px auto 5%;
-          width: 190px;
           button {
             &:nth-child(1) {
               @include back_to_previous_btn;
               width: 100px;
               &:hover {
                 background-color: #5d85bb;
+              }
+            }
+            &:nth-child(2) {
+              background: var(--c-5, #E94B4B);
+              justify-content: center;
+              align-items: center;
+              display: inline-flex;
+              border-radius: 10px;
+              height: 40px;
+              width: 90px;
+              color: #FFF;
+              text-align: center;
+              font-size: 20px;
+              font-weight: 700;
+              border: none;
+              margin: 0 10px;
+              &:hover {
+                background-color: #a51e1e;
               }
             }
           }

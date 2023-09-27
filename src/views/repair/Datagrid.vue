@@ -87,7 +87,7 @@
 
 <script>
   import Repair_button from "@/components/Repair_button";
-  import Delete from "@/components/Inventory_data_delete_button";
+  import Delete from "@/components/Repair_delete_button";
   import Navbar from "@/components/Navbar.vue";
   import { AgGridVue } from "ag-grid-vue3";
   import { onMounted, reactive, ref } from "vue";

@@ -11,17 +11,17 @@
       <div class="fixed_info">
         <div>
           <p>
-            維修編號: {{ Applicant }}
+            維修編號: {{ details.RepairId }}
           </p>
         </div>
         <div>
           <p>
-            申請人員: {{ Applicant }}
+            申請人員: {{ details.Applicant }}
           </p>
         </div>
         <div>
           <p>
-            申請日期: {{ ApplicationDate }}
+            申請日期: {{ details.ApplicationDate }}
           </p>
         </div>
       </div>
@@ -29,40 +29,40 @@
         <div class="row g-0">
           <!-- 送修人員 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 送修人員：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input  type="text" class="form-control readonly_box" readonly v-model="details.RepairPerson">
             </div>
           </div>
           <!-- 交付日期 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 交付日期：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input  type="text" class="form-control readonly_box" readonly v-model="details.DeliveryDate">
             </div>
           </div>
         </div>
         <div class="row g-0">
           <!-- 審核人員 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 審核人員：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input  type="text" class="form-control readonly_box" readonly v-model="details.VerifyPerson">
             </div>
           </div>
           <!-- 審核結果 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 審核結果：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input  type="text" class="form-control readonly_box" readonly v-model="details.VerifyResult">
             </div>
           </div>
         </div>
@@ -72,26 +72,26 @@
             <div class="input-group-prepend">
               審核日期：
             </div>
-            <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+            <input  type="text" class="form-control readonly_box" readonly v-model="details.VerifyDate">
           </div>
         </div>
         <div class="row g-0">
           <!-- 資產編號 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 資產編號：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input  type="text" class="form-control readonly_box" readonly v-model="details.AssetsId">
             </div>
           </div>
           <!-- 物品名稱 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 物品名稱：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input  type="text" class="form-control readonly_box" readonly v-model="details.AssetName">
             </div>
           </div>
         </div>
@@ -101,7 +101,7 @@
             <div class="input-group-prepend">
               問題描述：
             </div>
-            <textarea style="height: 200px;" class="form-control readonly_box" readonly></textarea>
+            <textarea style="height: 200px;" class="form-control readonly_box" readonly>{{ details.Question }}</textarea>
           </div>
         </div>
         <!-- 報修照片 -->
@@ -113,21 +113,7 @@
             </div>
           </div>
           <swiper-container class="swiper_section" :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
-            <swiper-slide>
-              <img src="https://i.redd.it/64yjcednctpb1.jpg">
-            </swiper-slide>
-            <swiper-slide>
-              <img src="https://www.scotsman.com/webimg/b25lY21zOmRmYmExYzE4LTZhY2ItNDBkZS1iMTU1LWY4YTVlZWNmYTdkYzowOTcxZDZlOC00MDc1LTQzYzItOWEyOC00YjNlNzFiY2Y1YzI=.jpg?crop=3:2,smart&width=640&quality=65&enable=upscale">
-            </swiper-slide>
-            <swiper-slide>
-              <img src="https://i.redd.it/64yjcednctpb1.jpg">
-            </swiper-slide>
-            <swiper-slide>
-              <img src="https://www.scotsman.com/webimg/b25lY21zOmRmYmExYzE4LTZhY2ItNDBkZS1iMTU1LWY4YTVlZWNmYTdkYzowOTcxZDZlOC00MDc1LTQzYzItOWEyOC00YjNlNzFiY2Y1YzI=.jpg?crop=3:2,smart&width=640&quality=65&enable=upscale">
-            </swiper-slide>
-            <swiper-slide>
-              <img src="https://i.redd.it/64yjcednctpb1.jpg">
-            </swiper-slide>
+            <swiper-slide v-for="(item , index) in details.existFile" :key="index"> <img :src="item.FileLink"> </swiper-slide>
           </swiper-container>
           <div class="swiper_pagination">
           </div>
@@ -143,39 +129,39 @@
       <div class="content">
         <!-- 維修廠商 -->
         <div class="col-12">
-          <div class="input-group" :class="{'mb-4': !wrongStatus}">
+          <div class="input-group mb-4" >
             <div class="input-group-prepend">
               維修廠商：
             </div>
-            <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+            <input  type="text" class="form-control readonly_box" readonly v-model="details.RepairCompany">
           </div>
         </div>
         <!-- 外部維修單號 -->
         <div class="col-12">
-          <div class="input-group" :class="{'mb-4': !wrongStatus}">
+          <div class="input-group mb-4" >
             <div class="input-group-prepend">
               外部維修單號：
             </div>
-            <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+            <input  type="text" class="form-control readonly_box" readonly v-model="details.ExternalRepairId">
           </div>
         </div>
         <div class="row g-0">
           <!-- 廠商聯絡人 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 廠商聯絡人：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input  type="text" class="form-control readonly_box" readonly v-model="details.ContactPerson">
             </div>
           </div>
           <!-- 聯絡電話 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 聯絡電話：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input  type="text" class="form-control readonly_box" readonly v-model="details.ContactPhone">
             </div>
           </div>
         </div>
@@ -185,7 +171,7 @@
             <div class="input-group-prepend">
               送修日期：
             </div>
-            <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+            <input  type="text" class="form-control readonly_box" readonly v-model="details.RepairDate">
           </div>
         </div>
         <!-- 備註 -->
@@ -194,21 +180,46 @@
             <div class="input-group-prepend">
               備註：
             </div>
-            <textarea style="height: 200px;" class="form-control readonly_box" readonly></textarea>
+            <textarea style="height: 200px;" class="form-control readonly_box" readonly> {{ details.Memo }}</textarea>
           </div>
         </div>
-        <!-- 文件上傳 -->
+        <!-- 已文件上傳 -->
         <div class="col-12 repair_photo_section">
           <div class="input-group mt-3">
-            <div class="input-group-prepend">文件上傳：</div>
+            <div class="input-group-prepend">已文件上傳：</div>
             <div class="selected_file">
-              <div class="file_upload_wrap" style="cursor: pointer;">
+              <!-- v-for讀取已上傳物流文件 -->
+              <div class="file_upload_wrap" style="cursor: pointer;" v-for="(file , index) in details.existDocument" :key="index">
+                <div>
+                  <p>{{ file.FileName }}</p>
+                  <!-- 在handlePreview依據不同副檔名做不同處理 -->
+                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
+                </div>
+              </div>
+              <!-- doc/docx download hidden Link -->
+              <a href="" style="display: none;" id="download-link"></a>
+              <!-- Modal Trigger -->
+              <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#documentModal"></button>
+              <!-- Exist Document Modal -->
+              <div class="modal fade" id="documentModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 800px !important">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="photoModalLabel"> {{ previewParams.title }}</h5>
+                      <div class="close_icon">
+                        <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
+                      </div>
+                    </div>
+                    <div class="modal-body">
+                      <img :src="previewParams.src" class="w-75">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="file_upload_wrap" style="cursor: pointer;">
                 <p>File 1</p>
                 <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;">
-              </div>
-              <div class="file_upload_wrap" style="cursor: pointer;">
-                <p>File 2</p>
-                <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"> </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -221,26 +232,84 @@
 </template>
 
 <script>
-  import {
-    ref,
-    onMounted,
-    reactive
-  } from 'vue';
+  import { ref, onMounted, reactive } from 'vue';
+  import { useRoute } from 'vue-router'
+  import axios from 'axios';
   import Navbar from '@/components/Navbar.vue';
   import router from '@/router';
-  import {
-    register
-  } from 'swiper/element/bundle';
-  import {
-    Pagination
-  } from 'swiper/modules';
+  import { register } from 'swiper/element/bundle';
+  import { Pagination } from 'swiper/modules';
+  import { goBack } from '@/assets/js/common_fn.js'
   register();
   export default {
     components: {
       Navbar
     },
     setup() {
+      const route = useRoute();
+      const RepairId = route.query.search_id;
+      const details = ref({});
+      const previewParams = reactive({
+        title: '',
+        src: '',
+      })
+      onMounted(()=>{
+        getDetails();
+      });
+      // 取得單筆資料
+      async function getDetails() {
+        axios.get(`http://192.168.0.177:7008/GetDBdata/GetRepairInfo?r_id=${RepairId}`)
+        .then((response)=>{
+          const data = response.data;
+          if(data.state === 'success') {
+            details.value = data.resultList;
+            console.log('資料:\n', details.value );
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+          else {
+            alert(data.messages);
+          }
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
+      }
+      function handlePreview(file) {
+        // 先提取副檔名
+        // 以"."為基準分割字串
+        const part = file.FileName.split(".");
+        let extension = '';
+        // 如果part長度大於1表示xxxx.aaa => ['xxxx','aaa']
+        if(part.length > 1) {
+          extension = part[part.length -1];
+        }
+        // 1. pdf 2. word 3. picture
+        switch (extension) {
+          case 'pdf':
+            window.open(file.FileLink)
+            break;
+          case 'doc':
+          case 'docx':
+            const downloadElement = document.getElementById('download-link');
+            downloadElement.href = file.FileLink;
+            downloadElement.download = file.FileName;
+            downloadElement.click();
+            break;
+          default:
+            previewParams.title = file.FileName;
+            previewParams.src = file.FileLink;
+            const modal = document.querySelector('#openModal');
+            modal.click();
+            break;
+        }
+      }
       return {
+        details,
+        previewParams,
+        goBack,
+        handlePreview,
         pagination: {
           clickable: true,
         },
