@@ -73,6 +73,7 @@
   import router from '@/router';
   import { getDate , goBack } from '@/assets/js/common_fn.js'
   import { getApplication , getAssets } from '@/assets/js/common_api.js'
+  import axios from 'axios';
   export default {
     components: {
       Navbar
