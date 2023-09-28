@@ -189,13 +189,10 @@
             <div class="input-group-prepend">已上傳文件：</div>
             <div class="selected_file">
               <!-- v-for讀取已上傳物流文件 -->
-            
-                <div class="file_upload_wrap" style="cursor: pointer;" v-for="(file , index) in details.existDocument" :key="index">
-                <div>
-                  <p>{{ file.FileName }}</p>
-                  <!-- 在handlePreview依據不同副檔名做不同處理 -->
-                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
-                </div>
+              <div class="file_upload_wrap" style="cursor: pointer;" v-for="(file , index) in details.existDocument" :key="index">
+                <p>{{ file.FileName }}</p>
+                <!-- 在handlePreview依據不同副檔名做不同處理 -->
+                <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
               </div>
               <!-- doc/docx download hidden Link -->
               <a href="" style="display: none;" id="download-link"></a>

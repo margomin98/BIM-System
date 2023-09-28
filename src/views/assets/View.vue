@@ -406,8 +406,6 @@
                 });
               });
             }
-            getEquipCategoryName();
-            getLayerName();
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
