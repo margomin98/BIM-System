@@ -92,7 +92,7 @@
             <div class="search_section">
               <input @input="getShipmentNum" class="form-control" @focus="showOptions = true;" @blur="handleBlur" v-model="formParams.ShipmentNum" />
               <ul v-if="showOptions" class="options-list">
-                <li v-for="(option, index) in arrayParams.ShipmentNum" :key="index" @click="selectShipmentNum(option)">{{ option.ShipmentNum }}
+                <li v-for="(option, index) in DropdownArray.ShipmentNum" :key="index" @click="selectShipmentNum(option)">{{ option.ShipmentNum }}
                 </li>
               </ul>
             </div>
@@ -113,7 +113,7 @@
                   {{ formParams.EquipTypeName || '請選擇' }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="typeDropdown">
-                  <p v-for="(item, index) in arrayParams.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
+                  <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
                 </div>
               </div>
             </div>
@@ -128,7 +128,7 @@
                   {{ formParams.EquipCategoryName || EquipCategoryInit }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                  <p v-for="(item, index) in arrayParams.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
+                  <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
                 </div>
               </div>
             </div>
@@ -193,7 +193,7 @@
                   {{ formParams.Unit || '請選擇' }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                  <p v-for="(item, index) in arrayParams.UnitArray" :key="index" class="dropdown-item" @click="selectUnit(`${item}`)">
+                  <p v-for="(item, index) in DropdownArray.Unit" :key="index" class="dropdown-item" @click="selectUnit(`${item}`)">
                     {{ item }}</p>
                 </div>
               </div>
@@ -223,7 +223,7 @@
                   {{ formParams.PackageUnit || '請選擇' }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                  <p v-for="(item, index) in arrayParams.PackageUnitArray" :key="index" class="dropdown-item" @click="selectPackageUnit(`${item}`)">
+                  <p v-for="(item, index) in DropdownArray.PackageUnit" :key="index" class="dropdown-item" @click="selectPackageUnit(`${item}`)">
                     {{ item }}</p>
                 </div>
               </div>
@@ -404,12 +404,8 @@
   import { useRoute } from 'vue-router';
   import router from '@/router';
   import { UnitArray , PackageUnitArray} from '@/assets/js/dropdown'
-  import {
-    onMounted,
-    reactive,
-    ref,
-    watch,
-  } from 'vue';
+  import { getEquipType , getEquipCategory , getProject } from '@/assets/js/common_api'
+  import { onMounted, reactive, ref, watch } from 'vue';
   export default {
     components: {
       Navbar
@@ -417,8 +413,6 @@
     setup() {
       const route = useRoute();
       const AI_ID = route.query.search_id;
-      const Applicant = ref(''); //申請人 發API 帶入
-      const ApplicationDate = ref(''); //申請日期 function帶入
       const details = ref({});
       const formParams = reactive({
         AI_ID: '', //編輯才有
@@ -441,12 +435,12 @@
         WarrantyEndDate: '',
         Memo: '',
       }); //上半部表單參數
-      const arrayParams = reactive({
+      const DropdownArray = reactive({
         ShipmentNum: [],
-        EquipTypeArray: [],
-        EquipCategoryArray: [],
-        UnitArray: UnitArray,
-        PackageUnitArray: PackageUnitArray,
+        EquipType: [],
+        EquipCategory: [],
+        Unit: UnitArray,
+        PackageUnit: PackageUnitArray,
       })
       const showOptions = ref(false);
       const startWatching = ref(false); //拿完資料後 啟用監聽
@@ -455,7 +449,6 @@
       // 下半部頁籤內容
       const tabData = reactive([]); // 頁籤資料
       const tabNumber = ref(1); //v-for不直接使用 formParams.Count(input改成空白會error)
-      const newCount = ref(1);
       const Count = reactive({ //變更包裝數量參數
         new: 1,
         old: 1,
@@ -468,7 +461,6 @@
         src: '',
       })
       onMounted(() => {
-        getApplicationInfo(); // 申請人
         getShipmentNum(); //物流單號選單選項
         getDetails();
       });
@@ -941,66 +933,25 @@
             });
         });
       }
-      async function getApplicationInfo() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('申請人名稱:', data.resultList.Applicant);
-            if (data.resultList.Applicant) {
-              Applicant.value = data.resultList.Applicant;
-            }
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error('Error sending applicant info request to backend');
-        }
-      }
       async function getEquipTypeName() {
-        if (arrayParams.EquipTypeArray.length == 0) {
-          const axios = require('axios');
-          try {
-            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetEquipType');
-            console.log(response);
-            const data = response.data;
-            if (data.state === 'success') {
-              console.log('總類Get成功 資料如下\n', data.resultList.EquipType);
-              arrayParams.EquipTypeArray = data.resultList.EquipType;
-            } else if (data.state === 'error') {
-              alert(data.messages);
-            } else if (data.state === 'account_error') {
-              alert(data.messages);
-              router.push('/');
-            }
-          } catch (error) {
-            console.error('Error sending applicant info request to backend');
-          }
+        if (DropdownArray.EquipType.length == 0) {
+          getEquipType()
+          .then((data)=>{
+            DropdownArray.EquipType = data;
+          })
+          .catch((error) =>{
+            console.error(error);
+          })
         }
       }
       async function getEquipCategoryName() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${formParams.EquipTypeName}`);
-          const data = response.data;
-          if (data.state === 'success') {
-            // console.log('分類Get成功 資料如下\n', data.resultList.EquipCategory);
-            arrayParams.EquipCategoryArray = data.resultList.EquipCategory;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push({
-              name: 'Store_Datagrid'
-            });
-          }
-        } catch (error) {
-          console.error('Error sending applicant info request to backend');
-        }
+        getEquipCategory(formParams.EquipTypeName)
+        .then((data)=>{
+            DropdownArray.EquipCategory = data;
+          })
+        .catch((error) =>{
+          console.error(error);
+        })
       }
       async function getShipmentNum() {
         // 物流單號有變動就將AR_ID清空 只有使用下拉選單才會傳AR_ID
@@ -1014,7 +965,7 @@
           const data = response.data;
           if (data.state === 'success') {
             console.log('物流單號查詢結果',data.resultList);
-            arrayParams.ShipmentNum = data.resultList;
+            DropdownArray.ShipmentNum = data.resultList;
           } else if (data.state === 'account_error') {
             alert(data.messages);
             router.push('/');
@@ -1041,31 +992,20 @@
           alert('專案代碼格式錯誤');
           return;
         }
-        const form = new FormData();
-        form.append('projectCode', code);
-        const axios = require('axios');
-        const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchProjectName', form);
-        try {
-          const data = response.data;
-          console.log(data);
-          if (data.state === 'success') {
-            switch (type) {
-              case 'upperForm':
-                details.value.ProjectName = data.resultList;
-                break;
-              case 'tab':
-                tabData[index].itemProjectName = data.resultList;
-                break;
-            }
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          } else {
-            details.value.ProjectName = data.messages.toString()
+        getProject(code)
+        .then((data)=>{
+          switch (type) {
+            case 'upperForm':
+              ProjectName.value = data;
+              break;
+            case 'tab':
+              tabData[index].itemProjectName = data;
+              break;
           }
-        } catch (error) {
+        })
+        .catch((error) =>{
           console.error(error);
-        }
+        })
       }
       // 監聽formParams.Count(包裝數量)的數值變動 -> 重新生成tab頁籤內容
       watch(()=>formParams.Count, (newValue , oldValue) => {
@@ -1085,10 +1025,8 @@
       }
       return {
         details,
-        Applicant,
-        ApplicationDate,
         formParams,
-        arrayParams,
+        DropdownArray,
         EquipCategoryInit,
         Count,
         showOptions,

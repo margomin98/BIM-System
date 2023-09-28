@@ -40,7 +40,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <router-link to="/assets_datagrid">資產管理</router-link>
-              <router-link to="/equipment_datagrid">設備集成管理</router-link>
+              <router-link to="/equipment_datagrid">設備整合管理</router-link>
               <router-link to="/inventory_datagrid">盤點管理</router-link>
               <router-link to="/assets_search">搜尋資產</router-link>
             </div>

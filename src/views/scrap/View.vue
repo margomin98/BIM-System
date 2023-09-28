@@ -11,17 +11,17 @@
       <div class="fixed_info">
         <div>
           <p>
-            報廢編號: {{ Applicant }}
+            報廢編號: {{ details.ScrapId }}
           </p>
         </div>
         <div>
           <p>
-            申請人員: {{ Applicant }}
+            申請人員: {{ details.Applicant }}
           </p>
         </div>
         <div>
           <p>
-            申請日期: {{ ApplicationDate }}
+            申請日期: {{ details.ApplicationDate }}
           </p>
         </div>
       </div>
@@ -29,40 +29,40 @@
         <div class="row g-0">
           <!-- 報廢人員 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 報廢人員：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.ScrapPerson">
             </div>
           </div>
           <!-- 交付日期 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 交付日期：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.DeliveryDate">
             </div>
           </div>
         </div>
         <div class="row g-0">
           <!-- 審核人員 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 審核人員：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.VerifyPerson">
             </div>
           </div>
           <!-- 審核結果 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 審核結果：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.VerifyResult">
             </div>
           </div>
         </div>
@@ -72,16 +72,16 @@
             <div class="input-group-prepend">
               審核日期：
             </div>
-            <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+            <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.VerifyDate">
           </div>
         </div>
-        <!-- 資產編號 -->
+        <!-- 產編 -->
         <div class="col-12">
-          <div class="input-group" :class="{'mb-4': !wrongStatus}">
+          <div class="input-group mb-4">
             <div class="input-group-prepend">
-              資產編號：
+              產編：
             </div>
-            <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+            <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.AssetsId">
           </div>
         </div>
         <!-- 物品名稱 -->
@@ -90,7 +90,7 @@
             <div class="input-group-prepend">
               物品名稱：
             </div>
-            <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+            <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.AssetName">
           </div>
         </div>
         <!-- 報廢原因 -->
@@ -99,7 +99,7 @@
             <div class="input-group-prepend">
               報廢原因：
             </div>
-            <textarea style="height: 200px;" class="form-control readonly_box" readonly></textarea>
+            <textarea style="height: 200px;" class="form-control readonly_box" readonly v-model="details.Reason"></textarea>
           </div>
         </div>
      
@@ -112,16 +112,44 @@
 </template>
 
 <script>
-  import {
-    ref,
-    onMounted,
-    reactive
-  } from 'vue';
+  import { ref, onMounted} from 'vue';
   import Navbar from '@/components/Navbar.vue';
   import router from '@/router';
+  import { goBack } from '@/assets/js/common_fn.js'
+  import axios from 'axios';
+  import { useRoute } from 'vue-router';
   export default {
     components: {
       Navbar
+    },
+    setup() {
+      const route = useRoute();
+      const ScrapId = route.query.search_id;
+      const details = ref({});
+      onMounted(()=>{
+        getDetails()
+      });
+      async function getDetails() {
+        axios.get(`http://192.168.0.177:7008/GetDBdata/GetScrapInfo?s_id=${ScrapId}`)
+        .then((response)=>{
+          const data = response.data
+          if(data.state === 'success') {
+            details.value = data.resultList
+          } else if (data.state === 'account_error') {
+            alert(data.messages)
+            router.push('/');
+          } else {
+            alert(data.messages)
+          }
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
+      }
+      return {
+        details,
+        goBack,
+      }
     },
   };
 </script>

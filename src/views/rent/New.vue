@@ -66,8 +66,8 @@
             <p><span>*</span>設備總類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                        {{ myForm.EquipTypeName || '請選擇' }}
-                      </button>
+                {{ myForm.EquipTypeName || '請選擇' }}
+              </button>
               <div class="dropdown-menu" aria-labelledby="typeDropdown">
                 <p v-for="(item, index) in myForm.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
               </div>
@@ -77,8 +77,8 @@
             <p><span>*</span>設備分類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(myForm.EquipTypeName !== '') }">
-                        {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
-                      </button>
+                {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
+              </button>
               <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                 <p v-for="(item, index) in myForm.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
               </div>
@@ -100,8 +100,8 @@
         <div class="row g-0">
           <div class="col-12 d-flex wrap text_input">
             <label for="inputTextarea" class="form-label">
-                      <p>規格需求：</p>
-                    </label>
+              <p>規格需求：</p>
+            </label>
             <div>
             </div>
             <textarea class="form-control" id="inputTextarea" placeholder='最多輸入100字' v-model="myForm.RequiredSpec"></textarea>
@@ -129,18 +129,14 @@
 </template>
 
 <script>
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
+  import { AgGridVue } from "ag-grid-vue3";
   import Delete from "@/components/Rent_New_Delete_button";
   import Navbar from '@/components/Navbar.vue';
   import { UseOptions } from "@/assets/js/dropdown";
-  import {
-    onMounted,
-    reactive,
-    ref
-  } from 'vue';
+  import { onMounted, reactive, ref } from 'vue';
   import router from "@/router";
+  import { getApplication , getEquipType , getEquipCategory , getProject} from "@/assets/js/common_api";
+  import { getDate , goBack } from "@/assets/js/common_fn";
   export default {
     components: {
       Navbar,
@@ -233,71 +229,35 @@
         getApplicationInfo();
         myForm.ApplicationDate = getDate();
       });
-      function getDate() {
-        const today = new Date();
-        var date = '';
-        date += (today.getFullYear() + '/');
-        date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
-        date += ((today.getDate()).toString().padStart(2, '0'));
-        return date;
-      }
       async function getApplicationInfo() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
-          // console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('申請人名稱:', data.resultList.Applicant);
-            if (data.resultList.Applicant) {
-              myForm.Applicant = data.resultList.Applicant;
-            }
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error(error);
-        }
+        getApplication()
+          .then((data)=>{
+            myForm.Applicant = data;
+          })
+          .catch((error) =>{
+            console.error(error);
+          })
       }
       async function getEquipTypeName() {
         if (myForm.EquipTypeArray.length == 0) {
-          const axios = require('axios');
-          try {
-            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetEquipType');
-            const data = response.data;
-            if (data.state === 'success') {
-              myForm.EquipTypeArray = data.resultList.EquipType;
-            } else if (data.state === 'error') {
-              alert(data.messages);
-            } else if (data.state === 'account_error') {
-              alert(data.messages);
-              router.push('/');
-            }
-          } catch (error) {
-            console.error('Error sending applicant info request to backend');
-          }
+          getEquipType()
+          .then((data)=>{
+            myForm.EquipTypeArray = data;
+          })
+          .catch((error) =>{
+            console.error(error);
+          })
         }
       }
       async function getEquipCategoryName() {
         myForm.EquipCategoryName = '';
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${myForm.EquipTypeName}`);
-          const data = response.data;
-          if (data.state === 'success') {
-            myForm.EquipCategoryArray = data.resultList.EquipCategory;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error('Error sending applicant info request to backend', error);
-        }
+        getEquipCategory(myForm.EquipTypeName)
+        .then((data)=>{
+          myForm.EquipCategoryArray = data;
+          })
+        .catch((error) =>{
+          console.error(error);
+        })
       }
       async function getProjectName() {
         if (!/^(?![ 　]{10}$)[\s\S]{1,10}$/.test(myForm.ProjectCode)) {
@@ -305,24 +265,14 @@
           return;
         }
         myForm.ProjectCode = myForm.ProjectCode.trim();
-        const form = new FormData();
-        form.append('projectCode', myForm.ProjectCode);
-        const axios = require('axios');
-        const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchProjectName', form);
-        try {
-          const data = response.data;
-          console.log(data);
-          if (data.state === 'success') {
-            myForm.ProjectName = data.resultList;
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          } else {
-            myForm.ProjectName = data.messages.toString()
-          }
-        } catch (error) {
+        getProject(myForm.ProjectCode)
+        .then((data)=>{
+          myForm.ProjectName = data;
+        })
+        .catch((error) =>{
           console.error(error);
-        }
+        })
+
       }
       function selectType(item) {
         myForm.EquipTypeName = item;
@@ -419,9 +369,6 @@
         // 賦值 gridApi
         gridApi.value = params.api;
       };
-      function goBack() {
-        window.history.back();
-      }
       return {
         myForm,
         options,

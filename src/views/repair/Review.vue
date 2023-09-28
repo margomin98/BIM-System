@@ -11,58 +11,38 @@
       <div class="fixed_info">
         <div>
           <p>
-            維修編號: {{ Applicant }}
+            維修編號: {{ details.RepairId }}
           </p>
         </div>
         <div>
           <p>
-            申請人員: {{ Applicant }}
+            申請人員: {{ details.Applicant }}
           </p>
         </div>
         <div>
           <p>
-            申請日期: {{ ApplicationDate }}
+            申請日期: {{ details.ApplicationDate }}
           </p>
         </div>
       </div>
       <div class="content">
         <div class="row g-0">
-          <!-- 送修人員 -->
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
-              <div class="input-group-prepend">
-                送修人員：
-              </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
-            </div>
-          </div>
-          <!-- 交付日期 -->
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
-              <div class="input-group-prepend">
-                交付日期：
-              </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
-            </div>
-          </div>
-        </div>
-        <div class="row g-0">
           <!-- 資產編號 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 資產編號：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.AssetsId">
             </div>
           </div>
           <!-- 物品名稱 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 物品名稱：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.AssetName">
             </div>
           </div>
         </div>
@@ -72,33 +52,16 @@
             <div class="input-group-prepend">
               問題描述：
             </div>
-            <textarea style="height: 200px;" class="form-control readonly_box" readonly></textarea>
+            <textarea style="height: 200px;" class="form-control readonly_box" readonly>{{ details.Question }}</textarea>
           </div>
         </div>
         <!-- 報修照片 -->
         <div class="col-12 repair_photo_section">
           <div class="input-group mt-3">
-            <div class="input-group-prepend">報修照片：
-            </div>
-            <div>
-            </div>
+            <div class="input-group-prepend">報修照片：</div>
           </div>
-          <swiper-container class="swiper_section" :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
-            <swiper-slide>
-              <img src="https://i.redd.it/64yjcednctpb1.jpg">
-            </swiper-slide>
-            <swiper-slide>
-              <img src="https://www.scotsman.com/webimg/b25lY21zOmRmYmExYzE4LTZhY2ItNDBkZS1iMTU1LWY4YTVlZWNmYTdkYzowOTcxZDZlOC00MDc1LTQzYzItOWEyOC00YjNlNzFiY2Y1YzI=.jpg?crop=3:2,smart&width=640&quality=65&enable=upscale">
-            </swiper-slide>
-            <swiper-slide>
-              <img src="https://i.redd.it/64yjcednctpb1.jpg">
-            </swiper-slide>
-            <swiper-slide>
-              <img src="https://www.scotsman.com/webimg/b25lY21zOmRmYmExYzE4LTZhY2ItNDBkZS1iMTU1LWY4YTVlZWNmYTdkYzowOTcxZDZlOC00MDc1LTQzYzItOWEyOC00YjNlNzFiY2Y1YzI=.jpg?crop=3:2,smart&width=640&quality=65&enable=upscale">
-            </swiper-slide>
-            <swiper-slide>
-              <img src="https://i.redd.it/64yjcednctpb1.jpg">
-            </swiper-slide>
+          <swiper-container class="swiper_section" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
+            <swiper-slide v-for="(item , index) in details.existFile" :key="index"> <img :src="item.FileLink"> </swiper-slide>
           </swiper-container>
           <div class="swiper_pagination">
           </div>
@@ -112,7 +75,7 @@
           <!-- 審核日期 -->
           <div class="fixed_info">
             <div>
-              <p>審核日期 : {{ deliveryDate }}</p>
+              <p>審核日期 : {{ reviewDate }}</p>
             </div>
           </div>
           <div class="row auth g-0">
@@ -121,14 +84,12 @@
               <div class="input-group">
                 <div class="input-group-prepend">審核人員：</div>
                 <div class="input-with-icon">
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
-                  <span class="icon-container">
-                                      <img src="@/assets/accept.png" class="checkmark-icon" />
-                                  </span>
+                  <input type="text" class="form-control readonly_box" readonly v-model="validation.resultName"/>
+                  <span v-show="validation.isValidate" class="icon-container">
+                    <img src="@/assets/accept.png" class="checkmark-icon" />
+                  </span>
                 </div>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
-                                  驗證
-                              </button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">驗證</button>
                 <!-- 驗證跳出Modal -->
                 <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
@@ -141,18 +102,18 @@
                         <div class="col">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">帳號：</div>
-                            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" />
+                            <input type="text" class="form-control" v-model="validation.account" />
                           </div>
                         </div>
                         <div class="col">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">密碼：</div>
-                            <input type="password" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" />
+                            <input type="password" class="form-control" v-model="validation.password" />
                           </div>
                         </div>
                       </div>
                       <div class="modal-footer m-auto">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">驗證</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="validate">驗證</button>
                       </div>
                     </div>
                   </div>
@@ -165,16 +126,12 @@
                 <div class="input-group-prepend"><span>*</span>審核結果：</div>
                 <div class="review_result d-flex">
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="pass">
-                    <label class="form-check-label" for="pass">
-      通過
-        </label>
+                    <input class="form-check-input" type="radio" name="pass" id="pass" value="true" v-model="validation.result">
+                    <label class="form-check-label" for="pass">通過</label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="fail">
-                    <label class="form-check-label" for="fail">
-        不通過
-        </label>
+                    <input class="form-check-input" type="radio" name="fail" id="fail" value="false" v-model="validation.result">
+                    <label class="form-check-label" for="fail">不通過</label>
                   </div>
                 </div>
               </div>
@@ -191,12 +148,11 @@
 </template>
 
 <script>
-  import {
-    ref,
-    onMounted,
-    reactive
-  } from 'vue';
+  import { ref, onMounted, reactive } from 'vue';
+  import { useRoute } from 'vue-router'
+  import { getDate , goBack } from '@/assets/js/common_fn.js'
   import Navbar from '@/components/Navbar.vue';
+  import axios from 'axios';
   import router from '@/router';
   import {
     register
@@ -210,7 +166,97 @@
       Navbar
     },
     setup() {
+      const route = useRoute();
+      const RepairId = route.query.search_id;;
+      const details = ref({});
+      const reviewDate = ref('');
+      const canSubmit = ref(false);
+      const validation = reactive({
+        account: '',
+        password: '',
+        isValidate: false,
+        resultName: '未驗證', //審核人員
+        result: false, //審核結果
+      });
+      onMounted(()=>{
+        getDetails();
+        reviewDate.value = getDate();
+      });
+      // 取得單筆資料
+      async function getDetails() {
+        axios.get(`http://192.168.0.177:7008/GetDBdata/GetRepairInfo?r_id=${RepairId}`)
+        .then((response)=>{
+          const data = response.data;
+          if(data.state === 'success') {
+            details.value = data.resultList;
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+          else {
+            alert(data.messages);
+          }
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
+      }
+      async function validate() {
+        const form = new FormData();
+        form.append('userName', validation.account)
+        form.append('userPassword', validation.password)
+        form.append('id', 'R_Verify')
+        axios.post('http://192.168.0.177:7008/Account/IdentityValidation' , form)
+        .then((response)=>{
+          const data = response.data;
+          if(data.state === 'success') {
+            validation.isValidate = true;
+            validation.resultName = validation.account;
+            canSubmit.value = true;
+          }
+          else {
+            validation.isValidate = false;
+            validation.resultName = '未驗證';
+            canSubmit.value = false;
+            alert(data.messages)
+          }
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
+      }
+      async function submit() {
+        var requestData = {
+          RepairId: RepairId,
+          VerifyPerson: validation.resultName,
+          VerifyResult: '',
+        }
+        requestData.VerifyResult = validation.result === 'true';
+        axios.post('http://192.168.0.177:7008/RepairMng/Verify',requestData)
+        .then((response)=>{
+          const data = response.data
+          if(data.state === 'success') {
+            alert('維修單審核送出成功\n單號為:' + data.resultList.R_ID);
+            router.push({ name: 'Repair_Datagrid' });
+          } else if( data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          } else {
+            alert(data.messages);
+          }
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
+      }
       return {
+        details,
+        reviewDate,
+        validation,
+        canSubmit,
+        validate,
+        submit,
+        goBack,
         pagination: {
           clickable: true,
         },

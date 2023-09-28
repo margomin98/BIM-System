@@ -509,7 +509,7 @@
         }
       }
 
-      //分別使用帳號密碼驗證、改變驗證狀態 user1為設備工程師 user2為倉管人員
+      //分別使用帳號密碼驗證、改變驗證狀態 user1為領用人員 user2為交付人員
       async function validate(user) {
         if (user === 1) {
           const axios = require('axios');
@@ -517,13 +517,14 @@
           const formFields = {
             'userName': validation.value.user1.account,
             'userPassword': validation.value.user1.password,
+            'id': 'AOP_ReceivedDelivery',
           };
           //將表格資料append到 formData
           for (const fieldName in formFields) {
             formData.append(fieldName, formFields[fieldName]);
             console.log(formData.get(`${fieldName}`));
           }
-          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidationForE_Operator', formData, {
+          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
@@ -547,13 +548,14 @@
           const formFields = {
             'userName': validation.value.user2.account,
             'userPassword': validation.value.user2.password,
+            'id': 'AOP_OutboundDelivery',
           };
           //將表格資料append到 formData
           for (const fieldName in formFields) {
             formData.append(fieldName, formFields[fieldName]);
             console.log(formData.get(`${fieldName}`));
           }
-          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidationForW_Operator', formData, {
+          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },

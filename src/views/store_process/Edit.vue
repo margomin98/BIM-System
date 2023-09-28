@@ -363,16 +363,12 @@
 </template>
 
 <script>
-  import {
-    ref,
-    onMounted,
-    reactive
-  } from 'vue';
+  import { ref, onMounted, reactive } from 'vue';
   import Navbar from "@/components/Navbar.vue";
-  import {
-    useRoute
-  } from 'vue-router';
+  import { useRoute } from 'vue-router';
   import router from '@/router';
+  import { getArea , getLayer , getProject } from '@/assets/js/common_api';
+  import { getDate , goBack } from '@/assets/js/common_fn';
   export default {
     components: {
       Navbar,
@@ -477,52 +473,23 @@
       }
       async function getAreaName(index) {
         if (formData[index].AreaArray.length == 0) {
-          const axios = require('axios');
-          try {
-            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetAreaName');
-            // console.log(response);
-            const data = response.data;
-            if (data.state === 'success') {
-              // console.log('Area Get成功 資料如下\n', data.resultList.AreaName);
-              formData[index].AreaArray = data.resultList.AreaName;
-            } else if (data.state === 'error') {
-              alert(data.messages);
-            } else if (data.state === 'account_error') {
-              alert(data.messages);
-              router.push('/');
-            }
-          } catch (error) {
+          getArea()
+          .then((data)=>{
+            formData[index].AreaArray = data;
+          })
+          .catch((error) =>{
             console.error(error);
-          }
+          })
         }
       }
       async function getLayerName(index) {
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetLayerName?id=${formData[index].itemAreaName}`);
-          // console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            // console.log('Layer Get成功 資料如下\n', data.resultList.LayerName);
-            formData[index].LayerArray = data.resultList.LayerName;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
+        getLayer(formData[index].itemAreaName)
+        .then((data)=>{
+          formData[index].LayerArray = data;
+        })
+        .catch((error) =>{
           console.error(error);
-        }
-      }
-      function selectArea(index, item) {
-        formData[index].itemAreaName = item;
-        formData[index].itemLayerName = '';
-        getLayerName(index);
-        formData[index].LayerInit = '請選擇';
-      }
-      function selectLayer(index, item) {
-        formData[index].itemLayerName = item;
+        })
       }
       async function getProjectName(index) {
         let code = ''
@@ -532,24 +499,22 @@
           alert('專案代碼格式錯誤');
           return;
         }
-        const form = new FormData();
-        form.append('projectCode', code);
-        const axios = require('axios');
-        const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchProjectName', form);
-        try {
-          const data = response.data;
-          console.log(data);
-          if (data.state === 'success') {
-            formData[index].itemProjectName = data.resultList;
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          } else {
-            formData[index].itemProjectName = data.messages.toString()
-          }
-        } catch (error) {
+        getProject(code)
+        .then((data) =>{
+          formData[index].itemProjectName = data;
+        })
+        .catch((error) =>{
           console.error(error);
-        }
+        })
+      }
+      function selectArea(index, item) {
+        formData[index].itemAreaName = item;
+        formData[index].itemLayerName = '';
+        getLayerName(index);
+        formData[index].LayerInit = '請選擇';
+      }
+      function selectLayer(index, item) {
+        formData[index].itemLayerName = item;
       }
       // 暫存只檢查 1.物品名稱必填 2.存貨的專案代碼必填 3.其他子項目是否超過字數限制
       async function temp() {
@@ -947,9 +912,6 @@
           console.error(error);
         }
         return false;
-      }
-      function goBack() {
-        window.history.back();
       }
       return {
         today,

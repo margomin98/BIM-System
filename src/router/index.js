@@ -93,6 +93,7 @@ import Repair_View from "../views/repair/View";
 import Repair_Process from "../views/repair/Process";
 import Repair_Review from "../views/repair/Review";
 import Repair_Deliver from "../views/repair/Deliver";
+import Repair_Delete from "../views/repair/Delete"
 //维修管理
 
 //報廢管理
@@ -100,8 +101,9 @@ import Scrap_Datagrid from "../views/scrap/Datagrid";
 import Scrap_New from "../views/scrap/New";
 import Scrap_Edit from "../views/scrap/Edit";
 import Scrap_View from "../views/scrap/View";
-import Scrap_Process from "../views/scrap/Process";
+import Scrap_Deliver from "../views/scrap/Deliver";
 import Scrap_Review from "../views/scrap/Review";
+import Scrap_Delete from "../views/scrap/Delete";
 //報廢管理
 
 //權限不足
@@ -189,7 +191,7 @@ const routes = [
     path: "/store_process_confirm",
     name: "Store_Process_Confirm",
     component: Store_Process_Confirm,
-    meta: {auth: true, request: 'AIP_DeliveryProcess'},
+    meta: {auth: true, request: 'AIP_InboundDelivery'},
   },
   {
     path: "/store_process_edit",
@@ -339,109 +341,121 @@ const routes = [
     path: "/receive_datagrid",
     name: "Receive_Datagrid",
     component: Receive_Datagrid,
-    // meta: {auth: true, request: 'IP_Detail'},
+    meta: {auth: true, request: 'AR_Mgr'},
   }, 
   {
     path: "/receive_new",
     name: "Receive_New",
     component: Receive_New,
-    // meta: {auth: true, request: 'IP_Detail'},
+    meta: {auth: true, request: 'AR_Create'},
   },
   {
     path: "/receive_edit",
     name: "Receive_Edit",
     component: Receive_Edit,
-    // meta: {auth: true, request: 'IP_Detail'},
+    meta: {auth: true, request: 'AR_Edit'},
   },
   {
     path: "/receive_view",
     name: "Receive_View",
     component: Receive_View,
-    // meta: {auth: true, request: 'IP_Detail'},
+    meta: {auth: true, request: 'AR_Detail'},
   },
   {
     path: "/receive_delete",
     name: "Receive_Delete",
     component: Receive_Delete,
-    // meta: {auth: true, request: 'IP_Detail'},
+    meta: {auth: true, request: 'AR_Delete'},
   },
   {
     path: "/repair_datagrid",
     name: "Repair_Datagrid",
     component: Repair_Datagrid,
-    // meta: {auth: true, request: 'IP_Detail'},
+    meta: {auth: true, request: 'R_Detail'},
   }, 
   {
     path: "/repair_new",
     name: "Repair_New",
     component: Repair_New,
-    // meta: {auth: true, request: 'IP_Detail'},
+    meta: {auth: true, request: 'R_Create'},
   },
   {
     path: "/repair_edit",
     name: "Repair_Edit",
     component: Repair_Edit,
-    // meta: {auth: true, request: 'IP_Detail'},
+    meta: {auth: true, request: 'R_Edit'},
   },
   {
     path: "/repair_view",
     name: "Repair_View",
     component: Repair_View,
-    // meta: {auth: true, request: 'IP_Detail'},
+    meta: {auth: true, request: 'R_Detail'},
   },
   {
     path: "/repair_process",
     name: "Repair_Process",
     component: Repair_Process,
-    // meta: {auth: true, request: 'IP_Detail'},
+    meta: {auth: true, request: 'R_Repair'},
   },
   {
     path: "/repair_review",
     name: "Repair_Review",
     component: Repair_Review,
-    meta: {auth: true, request: 'IP_Detail'},
+    meta: {auth: true, request: 'R_Verify'},
   },
   {
     path: "/repair_deliver",
     name: "Repair_Deliver",
     component: Repair_Deliver,
-    // meta: {auth: true, request: 'IP_Detail'},
+    meta: {auth: true, request: 'R_RepairDelivery'},
   }, 
-   {
+  {
+    path: "/repair_delete",
+    name: "Repair_Delete",
+    component: Repair_Delete,
+    meta: {auth: true, request: 'R_Delete'},
+  }, 
+  {
     path: "/scrap_datagrid",
     name: "Scrap_Datagrid",
     component: Scrap_Datagrid,
-    // meta: {auth: true, request: 'IP_Detail'},
+    meta: {auth: true, request: 'S_Detail'},
   },
   {
     path: "/scrap_new",
     name: "Scrap_New",
     component: Scrap_New,
-    // meta: {auth: true, request: 'IP_Detail'},
+    meta: {auth: true, request: 'S_Create'},
   }, 
   {
     path: "/scrap_edit",
     name: "Scrap_Edit",
     component: Scrap_Edit,
-    // meta: {auth: true, request: 'IP_Detail'},
+    meta: {auth: true, request: 'S_Edit'},
   }, 
   {
     path: "/scrap_view",
     name: "Scrap_View",
     component: Scrap_View,
-    // meta: {auth: true, request: 'IP_Detail'},
+    meta: {auth: true, request: 'S_Detail'},
   }, 
   {
-    path: "/scrap_process",
-    name: "Scrap_Process",
-    component: Scrap_Process,
-    // meta: {auth: true, request: 'IP_Detail'},
+    path: "/scrap_deliver",
+    name: "Scrap_Deliver",
+    component: Scrap_Deliver,
+    meta: {auth: true, request: 'S_ScrapDelivery'},
   },
   {
     path: "/scrap_review",
     name: "Scrap_Review",
     component: Scrap_Review,
-    meta: {auth: true, request: 'IP_Detail'},
+    meta: {auth: true, request: 'S_Verify'},
+  },
+  {
+    path: "/scrap_review",
+    name: "Scrap_Delete",
+    component: Scrap_Delete,
+    meta: {auth: true, request: 'S_Delete'},
   },
   {
     
@@ -479,7 +493,7 @@ const routes = [
     path: "/rent_process_confirm",
     name: "Rent_Process_Confirm",
     component: Rent_Process_Confirm,
-    meta: {auth: true, request: 'AOP_DeliveryProcess'},
+    meta: {auth: true, request: 'AOP_OutboundDelivery'},
   },
   {
     path: "/rent_process_view",

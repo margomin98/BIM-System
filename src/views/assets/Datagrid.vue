@@ -87,6 +87,7 @@
   import Assets_return_button from "@/components/Assets_return_button";
   import Navbar from "@/components/Navbar.vue";
   import getEquipDatagrid from "@/components/API/getEquipDatagrid"
+  import { AssetStastus } from "@/assets/js/dropdown"
   import {
     nextTick,
     onMounted,
@@ -113,7 +114,7 @@
         StartDate: '',
         EndDate: '',
       });
-      const StatusArray = ref(['在庫', '內部領用', '借測', '維修', '出貨', '報廢', '退貨', '無庫存', ]);
+      const StatusArray = AssetStastus;
       const AreaArray = ref([]); //區域陣列
       const LayerArray = ref([]); //櫃位陣列
       const LayerInit = ref('請先選擇區域');

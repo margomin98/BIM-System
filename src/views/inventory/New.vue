@@ -152,6 +152,7 @@
                   </div>
                   <div class='col d-flex justify-content-center'>
                     <button class="btn submit_btn" type="button" @click="searchInventory">搜尋</button>
+                    <button class="btn submit_btn" style="margin-left: 0.5rem;" type="button" @click="clear">清空</button>
                     <button class="btn add_btn" style="margin-left: 0.5rem;" type="button" data-bs-dismiss="modal" @click="addList">加入</button>
                   </div>
                 </div>
@@ -189,20 +190,12 @@
 </template>
 
 <script>
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
+  import { AgGridVue } from "ag-grid-vue3";
   import List_view_button from "@/components/Rent_process_new_view_button";
   import Inventory_delete_button from "@/components/Inventory_delete_button";
   import Navbar from "@/components/Navbar.vue";
-  import {
-    onMounted,
-    ref,
-    reactive,
-  } from "vue";
-  import {
-    useRouter
-  } from "vue-router";
+  import { onMounted, ref, reactive, } from "vue";
+  import { useRouter } from "vue-router";
   export default {
     components: {
       Navbar,
@@ -651,6 +644,14 @@
       const selectStaff = (item) => {
         formParams.InventoryStaffName = item;
       }
+      const clear = ()=>{
+        for(const key in searchParams) {
+          searchParams[key] = '';
+        }
+        EquipCategoryInit.value = '請先選擇設備總類'
+        LayerInit.value = '請先選擇區域'
+        searchInventory()
+      }
       function addList() {
         // 取得選中的行
         const selectNodes = grid.api1.getSelectedNodes();
@@ -694,6 +695,7 @@
         selectArea,
         selectLayer,
         selectStaff,
+        clear,
         addList,
         onGridReady1,
         onGridReady2,

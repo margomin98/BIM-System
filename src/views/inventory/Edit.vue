@@ -158,6 +158,7 @@
                   </div>
                   <div class='col d-flex justify-content-center'>
                     <button class="btn submit_btn" type="button" @click="searchInventory">搜尋</button>
+                    <button class="btn submit_btn" style="margin-left: 0.5rem;" @click="clear">清空</button>
                     <button class="btn submit_btn" style="margin-left: 0.5rem;" type="button" data-bs-dismiss="modal" @click="addList">加入</button>
                   </div>
                 </div>
@@ -687,6 +688,14 @@
       const selectStaff = (item) => {
         details.value.InventoryStaffName = item;
       }
+      const clear = ()=>{
+        for(const key in searchParams) {
+          searchParams[key] = '';
+        }
+        EquipCategoryInit.value = '請先選擇設備總類'
+        LayerInit.value = '請先選擇區域'
+        searchInventory()
+      }
       function addList() {
         // 取得選中的行
         const selectNodes = grid.api1.getSelectedNodes();
@@ -699,6 +708,7 @@
         // console.log('selectedNodes:', selectNodes);
         // console.log('NodesData:', nodesData);
       }
+
       const onGridReady1 = (params) => {
         grid.api1 = params.api
       }
@@ -730,6 +740,7 @@
         selectArea,
         selectLayer,
         selectStaff,
+        clear,
         addList,
         onGridReady1,
         onGridReady2,

@@ -3,10 +3,15 @@
   <div class="main_section">
     <div class="title col">
       <h1>
-        編輯報廢
+        檢視報廢
       </h1>
     </div>
     <div class="info_wrap col">
+      <div class="warn">
+        <h4>
+          確定刪除以下項目嗎？
+        </h4>
+      </div>
       <!-- 報廢編號，申請人員，申請日期 -->
       <div class="fixed_info">
         <div>
@@ -26,32 +31,71 @@
         </div>
       </div>
       <div class="content">
+        <div class="row g-0">
+          <!-- 報廢人員 -->
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                報廢人員：
+              </div>
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.ScrapPerson">
+            </div>
+          </div>
+          <!-- 交付日期 -->
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                交付日期：
+              </div>
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.DeliveryDate">
+            </div>
+          </div>
+        </div>
+        <div class="row g-0">
+          <!-- 審核人員 -->
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                審核人員：
+              </div>
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.VerifyPerson">
+            </div>
+          </div>
+          <!-- 審核結果 -->
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                審核結果：
+              </div>
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.VerifyResult">
+            </div>
+          </div>
+        </div>
+        <!-- 審核日期 -->
+        <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+          <div class="input-group d-flex mb-4">
+            <div class="input-group-prepend">
+              審核日期：
+            </div>
+            <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.VerifyDate">
+          </div>
+        </div>
         <!-- 產編 -->
         <div class="col-12">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              <span>*</span>產編：
+              產編：
             </div>
-            <input ref="inputElement" type="text" class="form-control" placeholder="請掃描輸入產編" v-model="formParams.AssetsId">
+            <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.AssetsId">
           </div>
         </div>
         <!-- 物品名稱 -->
         <div class="col-12">
-          <div class="input-group" :class="{'mb-4': !wrongStatus}">
+          <div class="input-group mb-4">
             <div class="input-group-prepend">
               物品名稱：
             </div>
-            <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="Assets.Name">
-          </div>
-        </div>
-        <!-- Error Hint -->
-        <div v-show="wrongStatus" class="col-12">
-          <div class="input-group">
-            <div style="visibility: hidden;" class="input-group-prepend">
-              <p >1</p>
-            </div>
-            <span style="color:rgb(216, 13, 13); font-weight: 700; font-size: 20px;">{{ alertMsg }}</span>
-            <input type="text" style="visibility: hidden;" class="form-control">
+            <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.AssetName">
           </div>
         </div>
         <!-- 報廢原因 -->
@@ -60,24 +104,39 @@
             <div class="input-group-prepend">
               報廢原因：
             </div>
-            <textarea style="height: 200px;" class="form-control" placeholder="最多輸入500字" v-model="formParams.Reason"></textarea>
+            <textarea style="height: 200px;" class="form-control readonly_box" readonly v-model="details.Reason"></textarea>
           </div>
         </div>
+     
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="send_btn" :disabled="!canSubmit" :class="{send_btn_disabled: !canSubmit}" @click="submit">送出</button>
+        <!-- Modal Trigger -->
+        <button class="delete_btn" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>
+     </div>
+      <!-- delete Modal -->
+      <div class="modal fade delete_modal" id="deleteModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-body">
+              確定刪除這筆項目嗎？
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">否</button>
+              <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" @click="deleteData">是</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import { ref, onMounted, reactive, watch} from 'vue';
+  import { ref, onMounted} from 'vue';
   import Navbar from '@/components/Navbar.vue';
   import router from '@/router';
   import { goBack } from '@/assets/js/common_fn.js'
-  import { getApplication , getAssets } from '@/assets/js/common_api.js'
   import axios from 'axios';
   import { useRoute } from 'vue-router';
   export default {
@@ -88,19 +147,6 @@
       const route = useRoute();
       const ScrapId = route.query.search_id;
       const details = ref({});
-      const Assets = reactive({
-        Name: '',
-        Type: '',
-        Status: '',
-      });
-      const formParams = reactive({
-        ScrapId: ScrapId,
-        AssetsId: '',
-        Reason: '',
-      });
-      const alertMsg = ref('');
-      const wrongStatus = ref(false);
-      const canSubmit = ref(false);
       onMounted(()=>{
         getDetails()
       });
@@ -110,12 +156,6 @@
           const data = response.data
           if(data.state === 'success') {
             details.value = data.resultList
-            for( const key in details.value) {
-              if(formParams.hasOwnProperty(key) && details.value[key]) {
-                formParams[key] = details.value[key]
-              }
-            }
-            
           } else if (data.state === 'account_error') {
             alert(data.messages)
             router.push('/');
@@ -127,101 +167,31 @@
           console.error(error);
         })
       }
-      async function submit() {
-        const pattern = /^(BF\d{8})$/;
-        // 檢查必填項目、格式        
-        if (!pattern.test(formParams.AssetsId)) {
-          alert('資產編號格式錯誤');
-          return
-        }
-        if (!/^[\s\S]{0,500}$/.test(formParams.Reason)) {
-          alert('報廢原因不可超過500字');
-          return
-        }
+      async function deleteData() {
         const form = new FormData();
-        for(const key in formParams) {
-          if(formParams[key]) {
-            form.append(key , formParams[key]);
-          }
-        }
-
-        axios.post('http://192.168.0.177:7008/ScrapMng/ScrapEdit',form)
-        .then((response)=>{
+        form.append('ScrapId', ScrapId);
+        const axios = require('axios');
+        const response = await axios.post(`http://192.168.0.177:7008/ScrapMng/DeleteScrap`, form);
+        try {
           const data = response.data;
-          if(data.state === 'success') {
-            alert(data.messages+'\n單號為:' + data.resultList.S_ID);
-            router.push({ name: 'Scrap_Datagrid' });
-          } else if (data.state === 'account_error') {
+          if (data.state === 'success') {
+            let msg = data.messages + '\n';
+            msg += '單號:' + data.resultList.S_ID;
+            alert(msg);
+            router.push({
+              name: 'Scrap_Datagrid'
+            });
+          } else if (data.state === 'error') {
             alert(data.messages);
-            router.push('/');
           }
-          else {
-            alert(data.messages)
-          }
-        })
-        .catch((error)=>{
+        } catch (error) {
           console.error(error);
-        })
+        }
       }
-      watch(()=>formParams.AssetsId, (newValue , oldValue) => {
-        getAssets(newValue)
-        .then((data)=>{
-            Assets.Name = data.AssetName;
-            Assets.Type = data.AssetType;
-            Assets.Status = data.Status;
-
-            // 檢查資產類型
-            if(Assets.Type === '耗材') {
-              wrongStatus.value = true;
-              canSubmit.value = false;
-              alertMsg.value = '僅提供資產類型為非耗材的物品進行維修'
-            }
-            else {
-              // 檢查資產狀態(只有非耗材才會檢查)
-              const Status = Assets.Status
-              const Type = Assets.Type
-              wrongStatus.value = true;
-              canSubmit.value = false;
-              switch (Status) {
-                case '已被設備整合':
-                  alertMsg.value = `此${Type}已被設備整合，請先移出設備箱`
-                  break;
-                case '維修':
-                  alertMsg.value = `此${Type}已送修`
-                  break;
-                case '報廢':
-                  alertMsg.value = `此${Type}已${Status}`
-                  break;
-                case '出貨':
-                  alertMsg.value = `此${Type}已${Status}`
-                  break;
-                case '退貨':
-                  alertMsg.value = `此${Type}已${Status}`
-                  break;
-                default: // 可報修
-                  wrongStatus.value = false;
-                  canSubmit.value = true;
-                  alertMsg.value = ''
-                  break;
-              }
-            }
-          })
-          .catch((error) =>{
-            wrongStatus.value = true;
-            canSubmit.value = false;
-            Assets.Name = '';
-            alertMsg.value = '請輸入正確的資產編號'
-          })
-      },{immediate: false});
       return {
         details,
-        Assets,
-        alertMsg,
-        wrongStatus,
-        canSubmit,
-        formParams,
-        submit,
         goBack,
+        deleteData,
       }
     },
   };
@@ -230,15 +200,66 @@
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
+  .warn {
+    text-align: center;
+    padding: 10px 0;
+    background: #9f0000;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    h4 {
+      color: white;
+      margin-bottom: 0;
+      font-weight: 700;
+      &::before {
+        content: "\26A0";
+      }
+    }
+  }
+
+  .delete_modal {
+    .modal-content {
+      border: solid 1px black;
+      border-radius: 0;
+      .modal-body {
+        background: #E94B4B;
+        text-align: center;
+        font-weight: 700;
+        color: white;
+        border-bottom: solid 1px black;
+      }
+      .modal-footer {
+        margin: auto;
+        gap: 10px;
+        button:nth-child(1) {
+          background-color: #7E7E7E;
+          border: none;
+          color: white;
+          width: 50px;
+          font-weight: 700;
+          &:hover {
+            background-color: #464242;
+          }
+        }
+        button:nth-child(2) {
+          background-color: #E94B4B;
+          border: none;
+          color: white;
+          width: 50px;
+          font-weight: 700;
+          &:hover {
+            background-color: #a70e0e;
+          }
+        }
+      }
+    }
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .readonly_box {
         @include readonly_box;
         font-weight: 500;
       }
-      .form_search_btn {
-        @include form_search_btn;
-      }
+    
       h1 {
         margin-top: 100px;
         text-align: center;
@@ -322,7 +343,7 @@
         }
         .button_wrap {
           display: flex;
-          justify-content: space-between;
+          justify-content: center;
           margin: 30px auto 5%;
           width: 220px;
           button {
@@ -330,6 +351,24 @@
               @include back_to_previous_btn;
               &:hover {
                 background-color: #5d85bb;
+              }
+            }
+                        &:nth-child(2) {
+              background: var(--c-5, #E94B4B);
+              justify-content: center;
+              align-items: center;
+              display: inline-flex;
+              border-radius: 10px;
+              height: 40px;
+              width: 90px;
+              color: #FFF;
+              text-align: center;
+              font-size: 20px;
+              font-weight: 700;
+              border: none;
+              margin: 0 10px;
+              &:hover {
+                background-color: #a51e1e;
               }
             }
           }
@@ -354,9 +393,7 @@
       .readonly_box {
         @include readonly_box;
       }
-      .form_search_btn {
-        @include form_search_btn;
-      }
+     
       h1 {
         margin-top: 100px;
         text-align: center;
@@ -446,7 +483,7 @@
         }
         .button_wrap {
           display: flex;
-          justify-content: space-between;
+          justify-content: center;
           margin: 30px auto 5%;
           width: 220px;
           button {
@@ -454,6 +491,24 @@
               @include back_to_previous_btn;
               &:hover {
                 background-color: #5d85bb;
+              }
+            }
+                        &:nth-child(2) {
+              background: var(--c-5, #E94B4B);
+              justify-content: center;
+              align-items: center;
+              display: inline-flex;
+              border-radius: 10px;
+              height: 40px;
+              width: 90px;
+              color: #FFF;
+              text-align: center;
+              font-size: 20px;
+              font-weight: 700;
+              border: none;
+              margin: 0 10px;
+              &:hover {
+                background-color: #a51e1e;
               }
             }
           }
@@ -481,20 +536,7 @@
         text-align: center;
         margin-left: unset !important;
       }
-      .form_search_btn {
-        border: none;
-        color: white;
-        width: 60px;
-        height: 35px;
-        margin-left: unset !important;
-        margin-top: 10px;
-        font-weight: 700;
-        padding: 0 10px;
-        background-color: #132238;
-        &:hover {
-          background-color: #43546d;
-        }
-      }
+     
       h1 {
         margin-top: 80px;
         text-align: center;
@@ -587,7 +629,7 @@
         }
         .button_wrap {
           display: flex;
-          justify-content: space-between;
+          justify-content: center;
           margin: 30px auto 5%;
           width: 190px;
           button {
@@ -596,6 +638,24 @@
               width: 100px;
               &:hover {
                 background-color: #5d85bb;
+              }
+            }
+                        &:nth-child(2) {
+              background: var(--c-5, #E94B4B);
+              justify-content: center;
+              align-items: center;
+              display: inline-flex;
+              border-radius: 10px;
+              height: 40px;
+              width: 90px;
+              color: #FFF;
+              text-align: center;
+              font-size: 20px;
+              font-weight: 700;
+              border: none;
+              margin: 0 10px;
+              &:hover {
+                background-color: #a51e1e;
               }
             }
           }

@@ -11,17 +11,17 @@
       <div class="fixed_info">
         <div>
           <p>
-            報廢編號: {{ Applicant }}
+            報廢編號: {{ details.ScrapId }}
           </p>
         </div>
         <div>
           <p>
-            申請人員: {{ Applicant }}
+            申請人員: {{ details.Applicant }}
           </p>
         </div>
         <div>
           <p>
-            申請日期: {{ ApplicationDate }}
+            申請日期: {{ details.ApplicationDate }}
           </p>
         </div>
       </div>
@@ -29,40 +29,40 @@
         <div class="row g-0">
           <!-- 報廢人員 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 報廢人員：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.ScrapPerson">
             </div>
           </div>
           <!-- 交付日期 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 交付日期：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.DeliveryDate">
             </div>
           </div>
         </div>
         <div class="row g-0">
           <!-- 產編 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 產編：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.AssetsId">
             </div>
           </div>
           <!-- 物品名稱 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group" :class="{'mb-4': !wrongStatus}">
+            <div class="input-group mb-4">
               <div class="input-group-prepend">
                 物品名稱：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly>
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.AssetName">
             </div>
           </div>
         </div>
@@ -72,7 +72,7 @@
             <div class="input-group-prepend">
               報廢原因：
             </div>
-            <textarea style="height: 200px;" class="form-control readonly_box" readonly></textarea>
+            <textarea style="height: 200px;" class="form-control readonly_box" readonly v-model="details.Reason"></textarea>
           </div>
         </div>
       </div>
@@ -84,7 +84,7 @@
           <!-- 審核日期 -->
           <div class="fixed_info">
             <div>
-              <p>審核日期 : {{ deliveryDate }}</p>
+              <p>審核日期 : {{ reviewDate }}</p>
             </div>
           </div>
           <div class="row auth g-0">
@@ -93,14 +93,12 @@
               <div class="input-group">
                 <div class="input-group-prepend">審核人員：</div>
                 <div class="input-with-icon">
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
-                  <span class="icon-container">
-                                    <img src="@/assets/accept.png" class="checkmark-icon" />
-                                </span>
+                  <input type="text" class="form-control readonly_box" readonly v-model="validation.resultName"/>
+                  <span v-show="validation.isValidate" class="icon-container">
+                    <img src="@/assets/accept.png" class="checkmark-icon" />
+                  </span>
                 </div>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
-                                驗證
-                            </button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">驗證</button>
                 <!-- 驗證跳出Modal -->
                 <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
@@ -113,18 +111,18 @@
                         <div class="col">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">帳號：</div>
-                            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" />
+                            <input type="text" class="form-control" v-model="validation.account"/>
                           </div>
                         </div>
                         <div class="col">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">密碼：</div>
-                            <input type="password" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" />
+                            <input type="password" class="form-control" v-model="validation.password"/>
                           </div>
                         </div>
                       </div>
                       <div class="modal-footer m-auto">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">驗證</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="validate">驗證</button>
                       </div>
                     </div>
                   </div>
@@ -134,19 +132,15 @@
             <!-- 審核結果 -->
             <div class="col-xl-6 col-lg-6 col-md-6 col-12 input-container">
               <div class="input-group">
-                <div class="input-group-prepend">審核結果：</div>
+                <div class="input-group-prepend"><span>*</span>審核結果：</div>
                 <div class="review_result d-flex">
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="pass">
-                    <label class="form-check-label" for="pass">
-    通過
-      </label>
+                    <input class="form-check-input" type="radio" name="pass" id="pass" value="true" v-model="validation.result">
+                    <label class="form-check-label" for="pass">通過</label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="fail">
-                    <label class="form-check-label" for="fail">
-      不通過
-      </label>
+                    <input class="form-check-input" type="radio" name="fail" id="fail" value="false" v-model="validation.result">
+                    <label class="form-check-label" for="fail">不通過</label>
                   </div>
                 </div>
               </div>
@@ -163,12 +157,11 @@
 </template>
 
 <script>
-  import {
-    ref,
-    onMounted,
-    reactive
-  } from 'vue';
+  import { ref, onMounted, reactive } from 'vue';
+  import { useRoute } from 'vue-router'
+  import { getDate , goBack } from '@/assets/js/common_fn.js'
   import Navbar from '@/components/Navbar.vue';
+  import axios from 'axios';
   import router from '@/router';
   import {
     register
@@ -182,7 +175,97 @@
       Navbar
     },
     setup() {
+      const route = useRoute();
+      const ScrapId = route.query.search_id;
+      const details = ref({});
+      const reviewDate = ref('');
+      const canSubmit = ref(false);
+      const validation = reactive({
+        account: '',
+        password: '',
+        isValidate: false,
+        resultName: '未驗證', //審核人員
+        result: false, //審核結果
+      });
+      onMounted(()=>{
+        getDetails();
+        reviewDate.value = getDate();
+      });
+      // 取得單筆資料
+      async function getDetails() {
+        axios.get(`http://192.168.0.177:7008/GetDBdata/GetScrapInfo?s_id=${ScrapId}`)
+        .then((response)=>{
+          const data = response.data;
+          if(data.state === 'success') {
+            details.value = data.resultList;
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+          else {
+            alert(data.messages);
+          }
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
+      }
+      async function validate() {
+        const form = new FormData();
+        form.append('userName', validation.account)
+        form.append('userPassword', validation.password)
+        form.append('id', 'S_Verify')
+        axios.post('http://192.168.0.177:7008/Account/IdentityValidation' , form)
+        .then((response)=>{
+          const data = response.data;
+          if(data.state === 'success') {
+            validation.isValidate = true;
+            validation.resultName = validation.account;
+            canSubmit.value = true;
+          }
+          else {
+            validation.isValidate = false;
+            validation.resultName = '未驗證';
+            canSubmit.value = false;
+            alert(data.messages)
+          }
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
+      }
+      async function submit() {
+        var requestData = {
+          ScrapId: ScrapId,
+          VerifyPerson: validation.resultName,
+          VerifyResult: '',
+        }
+        requestData.VerifyResult = validation.result === 'true';
+        axios.post('http://192.168.0.177:7008/ScrapMng/Verify',requestData)
+        .then((response)=>{
+          const data = response.data
+          if(data.state === 'success') {
+            alert(data.messages+'\n單號為:' + data.resultList.S_ID);
+            router.push({ name: 'Scrap_Datagrid' });
+          } else if( data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          } else {
+            alert(data.messages);
+          }
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
+      }
       return {
+        details,
+        reviewDate,
+        validation,
+        canSubmit,
+        validate,
+        submit,
+        goBack,
         pagination: {
           clickable: true,
         },

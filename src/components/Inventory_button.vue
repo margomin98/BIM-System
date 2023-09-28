@@ -5,7 +5,7 @@
     <button v-if="disabledStatus === '待盤點'" :class="{ disabled_btn: isDisabled.process, btn3: !isDisabled.process }" :disabled="isDisabled.process" @click="emitView" data-bs-toggle="modal" data-bs-target="#staticBackdrop">盤點</button>
     <button v-else :class="{ disabled_btn: isDisabled.process, btn3: !isDisabled.process }" :disabled="isDisabled.process" @click="view('Process')">盤點</button>
     <button :class="{ disabled_btn: isDisabled.balance, btn4: !isDisabled.balance }" :disabled="isDisabled.balance" @click="view('Balance')">平帳</button>
-    <button class="" @click="view('Balance_Result')">結果</button>
+    <button :class="{ disabled_btn: isDisabled.balance_result, btn5: !isDisabled.balance_result }" :disabled="isDisabled.balance_result" class="" @click="view('Balance_Result')">結果</button>
   </div>
 </template>
 
@@ -28,6 +28,7 @@
         edit: false, //編輯
         process: false, //盤點
         balance: false, //平帳
+        balance_result: false, //結果
       })
       function view(type) {
         if (search_id !== '') {
@@ -86,6 +87,9 @@
         if (disabledStatus !== '待平帳') {
           isDisabled.value.balance = true;
         }
+        if (disabledStatus !== '已完成') {
+          isDisabled.value.balance_result = true;
+        }
       }
       function emitView() {
         props.params.updateSearchId(search_id);
@@ -140,7 +144,7 @@
         color: white
       }
     }
-     :nth-child(5) {
+    .btn5 {
       @include datagrid_result_button;
       height: 25px;
       &:hover {

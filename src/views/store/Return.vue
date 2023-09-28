@@ -25,7 +25,7 @@
             <div class="input-group-prepend">
               <span>*</span>資產編號：
             </div>
-            <input ref="inputElement" type="text" class="form-control" placeholder="請輸入資產編號" @keyup="getAssetsUnit" v-model="formParams.AssetsId">
+            <input ref="inputElement" type="text" class="form-control" placeholder="請輸入資產編號" v-model="formParams.AssetsId">
           </div>
         </div>
         <div class="col-12">
@@ -33,7 +33,7 @@
             <div class="input-group-prepend">
               資產狀態：
             </div>
-            <input ref="inputElement" type="text" class="form-control readonly_box"  @keyup="getAssetsUnit" v-model="formParams.Status" readonly>
+            <input ref="inputElement" type="text" class="form-control readonly_box" v-model="formParams.Status" readonly>
           </div>
         </div>
         <div v-show="wrongStatus" class="col-12">
@@ -84,7 +84,8 @@
   import {
     ref,
     onMounted,
-    reactive
+    reactive,
+    watch
   } from 'vue';
   import Navbar from '@/components/Navbar.vue';
 import router from '@/router';
@@ -140,13 +141,110 @@ import router from '@/router';
             router.push('/');
           }
         } catch (error) {
-          console.error('Error sending applicant info request to backend');
+          console.error(error);
         }
       }
       async function getAssetsUnit() {
+        // const axios = require('axios');
+        // try {
+        //   const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetAssetInfo?id=${formParams.AssetsId}`);
+        //   const data = response.data;
+        //   if (data.state === 'success') {
+        //     console.log('資產資料', data.resultList);
+        //     formParams.Unit = data.resultList.Unit;
+        //     formParams.Status = data.resultList.Status;
+        //     // 如為非耗材 1.資產數量為一，且不可更改 2.Status不對，不能提交
+        //     if(data.resultList.AssetType !== '耗材') {
+        //       // 1.
+        //       canEdit.value =false;
+        //       formParams.Count = 1;
+        //       // 2.
+        //       wrongStatus.value = true;
+        //       canSubmit.value = false;
+        //       switch (data.resultList.Status) {
+        //         case '在庫':
+        //           alertMsg.value = '此資產已在庫，無法重複歸還。'
+        //           break;
+        //         case '出貨':
+        //           alertMsg.value = '此資產已被出貨，無法進行歸還作業。'
+        //           break;
+        //         case '報廢':
+        //           alertMsg.value = '此資產已被報廢，無法進行歸還作業。'
+        //           break;
+        //         case '退貨':
+        //           alertMsg.value = '此資產已被退貨，無法進行歸還作業。'
+        //           break;
+        //         case '已被設備整合':
+        //           alertMsg.value = '此資產已被整合進設備整合箱，無法進行歸還作業。'
+        //           break;
+                
+        //         default:
+        //           canSubmit.value = true;
+        //           wrongStatus.value = false;
+        //           break;
+        //       }
+        //     }
+        //     //如為耗材
+        //     else {
+        //       canSubmit.value = true;
+        //     }
+        //   } else if (data.state === 'error') {
+        //     console.log(data.messages);
+        //     canEdit.value =true;
+        //     canSubmit.value = false;
+        //     wrongStatus.value = false;
+        //     formParams.Unit = '';
+        //     formParams.Status = '';
+        //   } else if (data.state === 'account_error') {
+        //     formParams.Unit = '';
+        //     alert(data.messages);
+        //     router.push('/');
+        //   }
+        // } catch (error) {
+        //   console.error(error);
+        // }
+      }
+      async function submit() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetAssetInfo?id=${formParams.AssetsId}`);
+          // 檢查必填 & 限制項目
+          if(!formParams.AssetsId || formParams.Count < 1) {
+            alert('請輸入必填項目')
+            return
+          }
+          if(formParams.Memo && !/^.{1,500}$/.test(formParams.Memo)) {
+            alert('備註不可輸入超過500字');
+            return
+          }
+          const requestData = {
+            AssetsId: formParams.AssetsId,
+            Count: formParams.Count,
+            Memo: formParams.Memo,
+          };
+          const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/OldAssetsIn', requestData);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            let msg = data.messages;
+            msg += '\n單號:' + data.resultList.AI_ID;
+            alert(msg);
+            router.push({
+              name: 'Store_Datagrid'
+            });
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      watch(()=>formParams.AssetsId, async (newValue , oldValue) => {
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetAssetInfo?id=${newValue}`);
           const data = response.data;
           if (data.state === 'success') {
             console.log('資產資料', data.resultList);
@@ -202,44 +300,7 @@ import router from '@/router';
         } catch (error) {
           console.error(error);
         }
-      }
-      async function submit() {
-        const axios = require('axios');
-        try {
-          // 檢查必填 & 限制項目
-          if(!formParams.AssetsId || formParams.Count < 1) {
-            alert('請輸入必填項目')
-            return
-          }
-          if(formParams.Memo && !/^.{1,500}$/.test(formParams.Memo)) {
-            alert('備註不可輸入超過500字');
-            return
-          }
-          const requestData = {
-            AssetsId: formParams.AssetsId,
-            Count: formParams.Count,
-            Memo: formParams.Memo,
-          };
-          const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/OldAssetsIn', requestData);
-          console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            let msg = data.messages;
-            msg += '\n單號:' + data.resultList.AI_ID;
-            alert(msg);
-            router.push({
-              name: 'Store_Datagrid'
-            });
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
+      },{immediate: false});
       const goBack = () => {
         window.history.back();
       };

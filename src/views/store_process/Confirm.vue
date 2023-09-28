@@ -318,9 +318,7 @@
                           <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user1.isValidate" />
                         </span>
                 </div>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
-                        驗證
-                      </button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">驗證</button>
                 <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content ">
@@ -332,13 +330,13 @@
                         <div class="col">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">帳號：</div>
-                            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="validation.user1.account" />
+                            <input type="text" class="form-control" v-model="validation.user1.account" />
                           </div>
                         </div>
                         <div class="col">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">密碼：</div>
-                            <input type="password" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="validation.user1.password" />
+                            <input type="password" class="form-control" v-model="validation.user1.password" />
                           </div>
                         </div>
                       </div>
@@ -356,12 +354,10 @@
                 <div class="input-with-icon">
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(2)" />
                   <span class="icon-container">
-                          <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user2.isValidate" />
-                        </span>
+                    <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user2.isValidate" />
+                  </span>
                 </div>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
-                        驗證
-                      </button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">驗證</button>
                 <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content ">
@@ -373,13 +369,13 @@
                         <div class="col">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">帳號：</div>
-                            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="validation.user2.account" />
+                            <input type="text" class="form-control" v-model="validation.user2.account" />
                           </div>
                         </div>
                         <div class="col">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">密碼：</div>
-                            <input type="password" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="validation.user2.password" />
+                            <input type="password" class="form-control" v-model="validation.user2.password" />
                           </div>
                         </div>
                       </div>
@@ -492,7 +488,7 @@
         modalParams.src = details.value.Tabs[index].existFile[file_index].FileLink;
         console.log('modalParams', modalParams);
       }
-      //分別使用帳號密碼驗證、改變驗證狀態 user1為設備工程師 user2為倉管人員
+      //分別使用帳號密碼驗證、改變驗證狀態 user1為交付人員 user2為入庫人員
       async function validate(user) {
         if (user === 1) {
           const axios = require('axios');
@@ -500,13 +496,14 @@
           const formFields = {
             'userName': validation.value.user1.account,
             'userPassword': validation.value.user1.password,
+            'id': 'AIP_ReceivedDelivery',
           };
           //將表格資料append到 formData
           for (const fieldName in formFields) {
             formData.append(fieldName, formFields[fieldName]);
             console.log(formData.get(`${fieldName}`));
           }
-          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidationForE_Operator', formData, {
+          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
@@ -530,13 +527,14 @@
           const formFields = {
             'userName': validation.value.user2.account,
             'userPassword': validation.value.user2.password,
+            'id': 'AIP_InboundDelivery',
           };
           //將表格資料append到 formData
           for (const fieldName in formFields) {
             formData.append(fieldName, formFields[fieldName]);
             console.log(formData.get(`${fieldName}`));
           }
-          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidationForW_Operator', formData, {
+          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },

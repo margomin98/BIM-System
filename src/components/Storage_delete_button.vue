@@ -6,13 +6,8 @@
 
 <script>
   // import router from '@/router';
-  import {
-    ref,
-    onMounted
-  } from 'vue';
-  import {
-    useRouter
-  } from 'vue-router';
+  import { ref, onMounted } from 'vue';
+  import { useRouter } from 'vue-router';
   export default {
     props: ['params'],
     setup(props) {
