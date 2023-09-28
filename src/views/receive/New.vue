@@ -221,12 +221,19 @@
             </div>
           </div>
         </div>
+        <div class="fixed_bottom_info">
+        <div>
+          <p>刪除此筆</p>
+        </div>
+      </div>
         <div class="col button_wrap">
           <button class="back_btn" @click="goBack">回上一頁</button>
           <button class="send_btn" @click="submit">新增</button>
         </div>
       </div>
+      
     </div>
+    
   </div>
 </template>
 
@@ -630,6 +637,21 @@
   .delete_icon {
     cursor: pointer;
     margin: 0 3px
+  }
+  .fixed_bottom_info{
+    p{
+      margin-bottom: 0;
+    }
+    display: flex;
+    cursor: pointer;
+    justify-content: space-around;
+    background: #E94B4B;
+    color: white;
+    font-size: 25px;
+    font-weight: 700;
+    align-items: center;
+    border-radius: 0 0 10px 10px;
+    height: 50px;
   }
   .selected_file {
     p {
