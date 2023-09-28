@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
+import Test from "../views/Test.vue";
+
 //入庫填報
 import Store_Datagrid from "../views/store/Datagrid.vue";
 import Store_New from "../views/store/New.vue";
@@ -111,6 +113,12 @@ import Authorized from "../views/Authorized";
 
 
 const routes = [
+  {
+    path: "/test",
+    name: "test",
+    component: Test,
+    // meta: {auth: false, request: ''},
+  },
   {
     path: "/",
     name: "login",

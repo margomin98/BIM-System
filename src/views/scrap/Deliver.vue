@@ -333,7 +333,7 @@
     .main_section {
       .readonly_box {
         @include readonly_box;
-        font-weight: 500;
+      
       }
       h1 {
         margin-top: 100px;
@@ -366,7 +366,6 @@
               @include count_btn;
             }
             .readonly_box {
-              text-align: center;
               height: 37px;
             }
             .form-control {
@@ -579,7 +578,7 @@
               font-weight: 700;
               font-size: 20px;
               text-align: end;
-              width: 150px;
+              width: 110px;
               span {
                 @include red_star
               }

@@ -14,6 +14,7 @@
 	body {
 		background-image: url('@/assets/body/bg.png');
 		padding-right: unset !important;
+		background-size: cover;
 	}
 	a {
 		color: white;

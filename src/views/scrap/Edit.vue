@@ -234,7 +234,6 @@
     .main_section {
       .readonly_box {
         @include readonly_box;
-        font-weight: 500;
       }
       .form_search_btn {
         @include form_search_btn;
@@ -263,7 +262,6 @@
               @include count_btn;
             }
             .readonly_box {
-              text-align: center;
               height: 37px;
             }
             .form-control {

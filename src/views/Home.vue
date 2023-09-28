@@ -1,7 +1,7 @@
 <template>
   <Navbar />
   <div class="chart">
-    <ag-charts-vue style="height: 650px" :options="options"></ag-charts-vue>
+    <ag-charts-vue  style="height: 650px" :options="options"></ag-charts-vue>
   </div>
 </template>
 
