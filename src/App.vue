@@ -104,24 +104,5 @@ background-color: #B4B4B4 !important;
 		cursor: pointer;
 		}
 	}
-	.modal{
-		 .modal-header{
-			.close_icon{
-    cursor: pointer;
-	display: flex;
-	    align-self: baseline;
-    margin-bottom: 0;
-}
-		.modal-title{
-    width: 100%;
-    word-break: break-word;
-	margin: 0 auto;
-    display: flex;
-    align-self: baseline;	
-}	
-		 } 
-	
-}	 input,textarea{
-background-color: white;
-		 }
+
 </style>
