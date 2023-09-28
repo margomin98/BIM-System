@@ -91,7 +91,7 @@
         </div>
         <!-- 物品名稱 -->
         <div class="col-12">
-          <div class="input-group" :class="{'mb-4': !wrongStatus}">
+          <div class="input-group mb-4">
             <div class="input-group-prepend">
               物品名稱：
             </div>
@@ -111,7 +111,23 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
+        <!-- Modal Trigger -->
+        <button class="delete_btn" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>
      </div>
+      <!-- delete Modal -->
+      <div class="modal fade delete_modal" id="deleteModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-body">
+              確定刪除這筆項目嗎？
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">否</button>
+              <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" @click="deleteData">是</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -151,9 +167,31 @@
           console.error(error);
         })
       }
+      async function deleteData() {
+        const form = new FormData();
+        form.append('ScrapId', ScrapId);
+        const axios = require('axios');
+        const response = await axios.post(`http://192.168.0.177:7008/ScrapMng/DeleteScrap`, form);
+        try {
+          const data = response.data;
+          if (data.state === 'success') {
+            let msg = data.messages + '\n';
+            msg += '單號:' + data.resultList.S_ID;
+            alert(msg);
+            router.push({
+              name: 'Scrap_Datagrid'
+            });
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
       return {
         details,
         goBack,
+        deleteData,
       }
     },
   };
@@ -174,6 +212,44 @@
       font-weight: 700;
       &::before {
         content: "\26A0";
+      }
+    }
+  }
+
+  .delete_modal {
+    .modal-content {
+      border: solid 1px black;
+      border-radius: 0;
+      .modal-body {
+        background: #E94B4B;
+        text-align: center;
+        font-weight: 700;
+        color: white;
+        border-bottom: solid 1px black;
+      }
+      .modal-footer {
+        margin: auto;
+        gap: 10px;
+        button:nth-child(1) {
+          background-color: #7E7E7E;
+          border: none;
+          color: white;
+          width: 50px;
+          font-weight: 700;
+          &:hover {
+            background-color: #464242;
+          }
+        }
+        button:nth-child(2) {
+          background-color: #E94B4B;
+          border: none;
+          color: white;
+          width: 50px;
+          font-weight: 700;
+          &:hover {
+            background-color: #a70e0e;
+          }
+        }
       }
     }
   }
@@ -275,6 +351,24 @@
               @include back_to_previous_btn;
               &:hover {
                 background-color: #5d85bb;
+              }
+            }
+                        &:nth-child(2) {
+              background: var(--c-5, #E94B4B);
+              justify-content: center;
+              align-items: center;
+              display: inline-flex;
+              border-radius: 10px;
+              height: 40px;
+              width: 90px;
+              color: #FFF;
+              text-align: center;
+              font-size: 20px;
+              font-weight: 700;
+              border: none;
+              margin: 0 10px;
+              &:hover {
+                background-color: #a51e1e;
               }
             }
           }
@@ -397,6 +491,24 @@
               @include back_to_previous_btn;
               &:hover {
                 background-color: #5d85bb;
+              }
+            }
+                        &:nth-child(2) {
+              background: var(--c-5, #E94B4B);
+              justify-content: center;
+              align-items: center;
+              display: inline-flex;
+              border-radius: 10px;
+              height: 40px;
+              width: 90px;
+              color: #FFF;
+              text-align: center;
+              font-size: 20px;
+              font-weight: 700;
+              border: none;
+              margin: 0 10px;
+              &:hover {
+                background-color: #a51e1e;
               }
             }
           }
@@ -526,6 +638,24 @@
               width: 100px;
               &:hover {
                 background-color: #5d85bb;
+              }
+            }
+                        &:nth-child(2) {
+              background: var(--c-5, #E94B4B);
+              justify-content: center;
+              align-items: center;
+              display: inline-flex;
+              border-radius: 10px;
+              height: 40px;
+              width: 90px;
+              color: #FFF;
+              text-align: center;
+              font-size: 20px;
+              font-weight: 700;
+              border: none;
+              margin: 0 10px;
+              &:hover {
+                background-color: #a51e1e;
               }
             }
           }
