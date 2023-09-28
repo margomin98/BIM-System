@@ -288,7 +288,6 @@
     .main_section {
       .readonly_box {
         @include readonly_box;
-        font-weight: 500;
       }
       .swiper_section {
         swiper-slide {
@@ -331,7 +330,6 @@
               @include count_btn;
             }
             .readonly_box {
-              text-align: center;
               height: 37px;
             }
             .form-control {
@@ -522,7 +520,7 @@
               font-weight: 700;
               font-size: 20px;
               text-align: end;
-              width: 128px;
+              width: 108px;
             }
           }
         }

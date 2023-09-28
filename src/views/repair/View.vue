@@ -183,13 +183,14 @@
             <textarea style="height: 200px;" class="form-control readonly_box" readonly> {{ details.Memo }}</textarea>
           </div>
         </div>
-        <!-- 已文件上傳 -->
+        <!-- 已上傳文件 -->
         <div class="col-12 repair_photo_section">
           <div class="input-group mt-3">
-            <div class="input-group-prepend">已文件上傳：</div>
+            <div class="input-group-prepend">已上傳文件：</div>
             <div class="selected_file">
               <!-- v-for讀取已上傳物流文件 -->
-              <div class="file_upload_wrap" style="cursor: pointer;" v-for="(file , index) in details.existDocument" :key="index">
+            
+                <div class="file_upload_wrap" style="cursor: pointer;" v-for="(file , index) in details.existDocument" :key="index">
                 <div>
                   <p>{{ file.FileName }}</p>
                   <!-- 在handlePreview依據不同副檔名做不同處理 -->
@@ -326,7 +327,6 @@
     .main_section {
       .readonly_box {
         @include readonly_box;
-        font-weight: 500;
       }
       .swiper_section {
         swiper-slide {
@@ -369,7 +369,6 @@
               @include count_btn;
             }
             .readonly_box {
-              text-align: center;
               height: 37px;
             }
             .form-control {
