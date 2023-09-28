@@ -9,22 +9,22 @@ import EasyUI from 'v3-easyui';
 import '../src/assets/css/bootstrap.css';
 import 'ag-grid-community/styles/ag-grid.css'; 
 import '../src/assets/css/ad-grid.css';
-import {
-  VDataTable,
-  VDataTableServer,
-  VDataTableVirtual
-} from "vuetify/labs/VDataTable";
-import "vuetify/styles";
-import { createVuetify } from "vuetify";
-import * as components from "vuetify/components";
-import * as directives from "vuetify/directives";
+// import {
+//   VDataTable,
+//   VDataTableServer,
+//   VDataTableVirtual
+// } from "vuetify/labs/VDataTable";
+// import "vuetify/styles";
+// import { createVuetify } from "vuetify";
+// import * as components from "vuetify/components";
+// import * as directives from "vuetify/directives";
 
-const vuetify = createVuetify({
-  components,
-  directives,
-  "v-data-table-server": VDataTableServer,
-  VDataTable,
-  VDataTableVirtual
-});
+// const vuetify = createVuetify({
+//   components,
+//   directives,
+//   "v-data-table-server": VDataTableServer,
+//   VDataTable,
+//   VDataTableVirtual
+// });
 
-createApp(App).use(EasyUI).use(store).use(router).use(vuetify).mount('#app');
+createApp(App).use(EasyUI).use(store).use(router).mount('#app');
