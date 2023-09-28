@@ -185,7 +185,7 @@
         password: '',
         isValidate: false,
         resultName: '未驗證', //審核人員
-        result: false, //審核結果
+        result: '', //審核結果
       });
       onMounted(()=>{
         getDetails();
@@ -235,6 +235,9 @@
         })
       }
       async function submit() {
+        if(!validation.result) {
+          alert('請輸入必填項目');
+        }
         var requestData = {
           ScrapId: ScrapId,
           VerifyPerson: validation.resultName,
