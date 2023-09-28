@@ -15,7 +15,7 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="typeDropdown">
               <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item"
-                @click="selectType(`${item}`)">{{ item }}</p>
+                @click="selectType(item)">{{ item.Name }}</p>
             </div>
           </div>
         </div>
@@ -28,7 +28,7 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="categoryDropdown">
               <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item"
-                @click="selectCategory(`${item}`)">{{ item }}</p>
+                @click="selectCategory(item)">{{ item.Name }}</p>
             </div>
           </div>
         </div>
@@ -48,7 +48,7 @@
               {{ searchParams.Status || "請選擇" }}
             </button>
             <div class="dropdown-menu" aria-labelledby="statusDropdown">
-              <p v-for="(item, index) in DropdownArray.Status" :key="index" class="dropdown-item" @click="selectStatus(`${item}`)">
+              <p v-for="(item, index) in DropdownArray.Status" :key="index" class="dropdown-item" @click="selectStatus(item)">
                 {{ item }}</p>
             </div>
           </div>
@@ -61,8 +61,7 @@
               {{ searchParams.AreaName || '請選擇' }}
             </button>
             <div class="dropdown-menu" aria-labelledby="areaDropdown">
-              <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item" @click="selectArea(`${item}`)">
-                {{ item }}</p>
+              <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item" @click="selectArea(item)">{{ item.Name }}</p>
             </div>
           </div>
         </div>
@@ -74,7 +73,7 @@
               {{ searchParams.LayerName || LayerInit }}
             </button>
             <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
-              <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(`${item}`)">{{ item }}</p>
+              <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(item)">{{ item.Name }}</p>
             </div>
           </div>
         </div>
@@ -145,12 +144,16 @@ export default {
   setup() {
     const searchParams = reactive({
       EquipTypeName: '',
+      EquipType_Id: '',
       EquipCategoryName: '',
+      EquipCategory_Id: '',
       Status: '',
       AssetsId: '',
       AssetName: '',
       AreaName: '',
+      Area_Id: '',
       LayerName: '',
+      Layer_Id: '',
       DateCategory: '',
       StartDate: '',
       EndDate: '',
@@ -358,7 +361,7 @@ export default {
       }
     }
     async function getEquipCategoryName() {
-      getEquipCategory(searchParams.EquipTypeName)
+      getEquipCategory(searchParams.EquipType_Id)
         .then((data)=>{
           DropdownArray.EquipCategory = data;
         })
@@ -380,7 +383,7 @@ export default {
     }
 
     async function getLayerName() {
-      getLayer(searchParams.AreaName)
+      getLayer(searchParams.Area_Id)
         .then((data)=>{
           DropdownArray.Layer = data;
         })
@@ -390,14 +393,17 @@ export default {
     }
 
     function selectType(item) {
-      searchParams.EquipTypeName = item;
+      searchParams.EquipTypeName = item.Name;
+      searchParams.EquipType_Id = item.Id;
       searchParams.EquipCategoryName = '';
+      searchParams.EquipCategory_Id = '';
       getEquipCategoryName();
       EquipCategoryInit.value = '請選擇';
     }
 
     function selectCategory(item) {
-      searchParams.EquipCategoryName = item;
+      searchParams.EquipCategoryName = item.Name;
+      searchParams.EquipCategory_Id = item.Id;
     }
 
     const selectStatus = (item) => {
@@ -405,14 +411,17 @@ export default {
     };
 
     const selectArea = (item) => {
-      searchParams.AreaName = item;
+      searchParams.AreaName = item.Name;
+      searchParams.Area_Id = item.Id;
       searchParams.LayerName = '';
+      searchParams.Layer_Id = '';
       getLayerName();
       LayerInit.value = '請選擇';
     };
 
     const selectLayer = (item) => {
-      searchParams.LayerName = item;
+      searchParams.LayerName = item.Name;
+      searchParams.Layer_Id = item.Id;
     };
 
     const selectDateType = (item) => {

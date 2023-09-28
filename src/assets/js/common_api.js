@@ -22,11 +22,11 @@ export const getApplication = (async ()=> {
 // 設備總類
 export const getEquipType = (async ()=> {
   try {
-    const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetEquipType');
+    const response = await axios.get('http://192.168.0.177:7008/GetParameter/EquipTypeParameter');
     const data = response.data;
     if (data.state === 'success') {
-      console.log('設備總類options:\n', data.resultList.EquipType);
-      return data.resultList.EquipType;
+      console.log('設備總類options:\n', data.resultList.TypeList);
+      return data.resultList.TypeList;
     } else if (data.state === 'error') {
       alert(data.messages);
     } else if (data.state === 'account_error') {
@@ -38,13 +38,13 @@ export const getEquipType = (async ()=> {
   }
 }) 
 // 設備分類
-export const getEquipCategory = (async (EquipTypeName) => {
+export const getEquipCategory = (async (EquipType_Id) => {
   try {
-    const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${EquipTypeName}`);
+    const response = await axios.get(`http://192.168.0.177:7008/GetParameter/EquipCategoryParameter?id=${EquipType_Id}`);
     const data = response.data;
     if (data.state === 'success') {
-      console.log('設備分類options:\n', data.resultList.EquipCategory);
-      return data.resultList.EquipCategory;
+      console.log('設備分類options:\n', data.resultList.CategoryList);
+      return data.resultList.CategoryList;
     } else if (data.state === 'error') {
       alert(data.messages);
     } else if (data.state === 'account_error') {
@@ -58,11 +58,11 @@ export const getEquipCategory = (async (EquipTypeName) => {
 // 儲位區域
 export const getArea = (async () => {
   try {
-    const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetAreaName');
+    const response = await axios.get('http://192.168.0.177:7008/GetParameter/AreaParameter');
     const data = response.data;
     if (data.state === 'success') {
-      console.log('儲位區域options:\n', data.resultList.AreaName);
-      return data.resultList.AreaName;
+      console.log('儲位區域options:\n', data.resultList.AreaList);
+      return data.resultList.AreaList;
     } else if (data.state === 'error') {
       alert(data.messages);
     } else if (data.state === 'account_error') {
@@ -74,13 +74,13 @@ export const getArea = (async () => {
   }
 })
 // 儲位櫃位
-export const getLayer = (async (AreaName)=> {
+export const getLayer = (async (Area_Id)=> {
   try {
-    const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetLayerName?id=${AreaName}`);
+    const response = await axios.get(`http://192.168.0.177:7008/GetParameter/LayerParameter?id=${Area_Id}`);
     const data = response.data;
     if (data.state === 'success') {
-      console.log('儲位櫃位options:\n', data.resultList.LayerName);
-      return data.resultList.LayerName;
+      console.log('儲位櫃位options:\n', data.resultList.LayerList);
+      return data.resultList.LayerList;
     } else if (data.state === 'error') {
       alert(data.messages);
     } else if (data.state === 'account_error') {

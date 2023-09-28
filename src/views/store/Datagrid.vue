@@ -24,7 +24,7 @@
                   {{ searchParams.EquipTypeName || '請選擇' }}
                 </button>
               <div class="dropdown-menu" aria-labelledby="typeDropdown">
-                <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
+                <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
               </div>
             </div>
           </div>
@@ -35,7 +35,7 @@
                   {{ searchParams.EquipCategoryName || EquipCategoryInit }}
                 </button>
               <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
+                <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
               </div>
             </div>
           </div>
@@ -115,7 +115,9 @@ reactive
     setup() {
       const searchParams = reactive({
         EquipTypeName: '', //設備總類
+        EquipType_Id: '',
         EquipCategoryName: '', //設備分類
+        EquipCategory_Id: '',
         AssetName: '', //物品名稱
         Status: '', //狀態
         StartDate: '', //申請入庫日期(起)
@@ -250,8 +252,7 @@ reactive
         }
       }
       async function getEquipCategoryName() {
-        searchParams.EquipCategoryName = '';
-        getEquipCategory(searchParams.EquipTypeName)
+        getEquipCategory(searchParams.EquipType_Id)
           .then((data)=>{
             DropdownArray.EquipCategory = data;
           })
@@ -260,12 +261,16 @@ reactive
           })
       }
       function selectType(item) {
-        searchParams.EquipTypeName = item;
+        searchParams.EquipTypeName = item.Name;
+        searchParams.EquipType_Id = item.Id;
+        searchParams.EquipCategoryName = '';
+        searchParams.EquipCategory_Id = '';
         getEquipCategoryName();
         EquipCategoryInit.value = '請選擇';
       }
       function selectCategory(item) {
-        searchParams.EquipCategoryName = item;
+        searchParams.EquipCategoryName = item.Name;
+        searchParams.EquipCategory_Id = item.Id;
       }
       const selectStatus = (item) => {
         searchParams.Status = item;

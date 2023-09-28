@@ -75,7 +75,7 @@
             <router-link :to="{name: 'Receive_View' , query:{ search_id : formParams.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
           </div>
         </div>
-        <!-- 設備總類 &設備分類 -->
+        <!-- 設備 總類&分類 -->
         <div class="row row_wrap g-0">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
@@ -87,7 +87,7 @@
                   {{ formParams.EquipTypeName || '請選擇' }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="typeDropdown">
-                  <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
+                  <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
                 </div>
               </div>
             </div>
@@ -102,7 +102,7 @@
                   {{ formParams.EquipCategoryName || EquipCategoryInit }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                  <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
+                  <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
                 </div>
               </div>
             </div>
@@ -387,7 +387,9 @@
         ProjectCode: '',
         AR_ID: '',
         EquipTypeName: '',
+        EquipType_Id: '',
         EquipCategoryName: '',
+        EquipCategory_Id: '',
         AssetName: '',
         VendorName: '',
         ProductSpec: '',
@@ -469,13 +471,16 @@
         showOptions.value = false;
       }
       function selectType(item) {
-        formParams.EquipTypeName = item;
-        // console.log('選擇的總類:', EquipTypeName.value);
+        formParams.EquipTypeName = item.Name;
+        formParams.EquipType_Id = item.Id;
+        formParams.EquipCategoryName = '';
+        formParams.EquipCategory_Id = '';
         getEquipCategoryName();
         EquipCategoryInit.value = '請選擇';
       }
       function selectCategory(item) {
-        formParams.EquipCategoryName = item;
+        formParams.EquipCategoryName = item.Name;
+        formParams.EquipCategory_Id = item.Id;
       }
       function selectUnit(item) {
         formParams.Unit = item;
@@ -811,8 +816,7 @@
         }
       }
       async function getEquipCategoryName() {
-        formParams.EquipCategoryName = '';
-        getEquipCategory(formParams.EquipTypeName)
+        getEquipCategory(formParams.EquipType_Id)
         .then((data)=>{
             DropdownArray.EquipCategory = data;
           })
