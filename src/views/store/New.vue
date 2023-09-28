@@ -389,7 +389,7 @@
         EquipTypeName: '',
         EquipType_Id: '',
         EquipCategoryName: '',
-        EquipCategory_Id: '',
+        Category_Id: '',
         AssetName: '',
         VendorName: '',
         ProductSpec: '',
@@ -474,13 +474,13 @@
         formParams.EquipTypeName = item.Name;
         formParams.EquipType_Id = item.Id;
         formParams.EquipCategoryName = '';
-        formParams.EquipCategory_Id = '';
+        formParams.Category_Id = '';
         getEquipCategoryName();
         EquipCategoryInit.value = '請選擇';
       }
       function selectCategory(item) {
         formParams.EquipCategoryName = item.Name;
-        formParams.EquipCategory_Id = item.Id;
+        formParams.Category_Id = item.Id;
       }
       function selectUnit(item) {
         formParams.Unit = item;
