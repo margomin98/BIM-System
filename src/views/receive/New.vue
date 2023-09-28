@@ -12,41 +12,28 @@
         </div>
       </div>
       <div class="content">
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend"><span>*</span>物流單號：</div>
-            <input type="text" class="form-control text-center" placeholder="最多輸入20字" v-model="formParams.ShipmentNum"/>
-          </div>
-        </div>
+        <!-- 貨運公司 -->
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend"><span>*</span>貨運公司：</div>
-            <input type="text" class="form-control text-center" placeholder="最多輸入20字" v-model="formParams.ShipmentCompany"/>
-          </div>
-        </div>
-        <div class="col">
-          <div class="input-group  mb-3">
-            <div class="input-group-prepend"><span>*</span>到貨件數：</div>
-            <div class="num_wrap d-flex ">
-              <div class="number-input-box">
-                <input class="input-number " type="number" min="1" v-model="formParams.GoodsNum"/>
-              </div>
-            </div>
+            <input type="text" class="form-control text-center" placeholder="最多輸入20字" v-model="formParams.ShipmentCompany" />
           </div>
         </div>
         <div class="row g-0">
+          <!-- 收件人員 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
             <div class="input-group mb-3">
               <div class="input-group-prepend">收件人員：</div>
-              <input type="text" class="form-control readonly_box" readonly  v-model="Applicant"/>
+              <input type="text" class="form-control readonly_box" readonly v-model="Applicant" />
             </div>
           </div>
+          <!-- 收件日期 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend"><span>*</span>收件日期：</div>
               <div class="date-selector">
                 <div class="input-container">
-                  <input type="date" class="date-input" v-model="formParams.ReceivedDate"/>
+                  <input type="date" class="date-input" v-model="formParams.ReceivedDate" />
                 </div>
               </div>
             </div>
@@ -54,24 +41,48 @@
         </div>
       </div>
     </div>
-    <!-- 中間物流文件上傳 -->
+    <!-- 中間填報物流細項 -->
     <div class="info_wrap mt-5 col">
       <div class="fixed_info">
         <div>
-          <p>物流文件上傳</p>
+          <p>填報物流細項</p>
         </div>
       </div>
-      <div class="content row g-0">
-        <div class="col-xl-2 col-lg-2 col-md-2 col-12">
-          <button class="upload_file_pt1" @click="openFileInput(0)">選擇檔案</button>
-          <input type="file" id="fileInput" ref="fileInput1" style="display: none" @change="handleDocumentFile($event)" multiple />
+      <div class="content">
+        <!-- 物流單號 -->
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend"><span>*</span>物流單號：</div>
+            <input type="text" class="form-control text-center" placeholder="最多輸入20字" v-model="formParams.ShipmentNum" />
+          </div>
         </div>
-        <div class="d-flex selected_file col">
-          <div class="icon" v-for="(file, index) in fileParams.viewDoc" :key="index">
-            <p  class="uploded_file">{{ file.name }}</p>
-            <div>
-              <img src="@/assets/view.png" @click="handleDocPreview(file)">
-              <img class="close_icon" src="@/assets/trash.png" @click="deleteFile('document',index)">
+        <!-- 到貨件數 -->
+        <div class="col">
+          <div class="input-group  mb-3">
+            <div class="input-group-prepend"><span>*</span>到貨件數：</div>
+            <div class="num_wrap d-flex ">
+              <div class="number-input-box">
+                <input class="input-number " type="number" min="1" v-model="formParams.GoodsNum" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 物流文件上傳 -->
+        <div class="col">
+          <div class="input-group  mb-3">
+            <div class="input-group-prepend">物流文件上傳：</div>
+            <button class="upload_file_pt1" @click="openFileInput(0)">選擇檔案</button>
+            <input type="file" id="fileInput" ref="fileInput1" style="display: none" @change="handleDocumentFile($event)" multiple />
+          </div>
+        </div>
+        <div class="selected_file col">
+          <div class="input-group">
+            <div class="file_upload_box">
+              <div v-for="(file, index) in fileParams.viewDoc" :key="index" class="file_upload_wrap">
+                <p>{{ file.name }}</p>
+                <img class="view_icon" src="@/assets/view.png" @click="handleDocPreview(file)">
+                <img class="delete_icon" src="@/assets/trash.png" @click="deleteFile('document',index)">
+              </div>
             </div>
           </div>
           <!-- doc/docx download hidden Link -->
@@ -84,9 +95,7 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="photoModalLabel">{{ previewParams.title }}</h5>
-                  <div class="close_icon">
-                    <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
-                  </div>
+                  <p data-bs-dismiss="modal" class='close_icon'>X</p>
                 </div>
                 <div class="modal-body">
                   <img :src="previewParams.src" class="w-75">
@@ -95,18 +104,14 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <!-- 下半部照片上傳 -->
-    <div class="info_wrap mt-5 col">
-      <div class="fixed_info">
-        <div>
-          <p>照片上傳</p>
+        <!-- 照片上傳 -->
+        <div class="col">
+          <div class="input-group  mt-3">
+            <div class="input-group-prepend">照片上傳：</div>
+            <button class="upload_file_pt2" @click="openFileInput(1)">選擇檔案</button>
+            <input type="file" id="fileInput" ref="fileInput2" style="display: none" @change="handlePictureFile($event)" multiple />
+          </div>
         </div>
-      </div>
-      <div class="content">
-        <button class="upload_file_pt2" @click="openFileInput(1)">選擇檔案</button>
-        <input type="file" id="fileInput2" ref="fileInput2" style="display: none" @change="handlePictureFile($event)" multiple />
         <swiper-container class='swiper_section' :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
           <swiper-slide v-for="(file , index) in fileParams.viewPic" :key="index" class="custom-slide">
             <img :src="file.link" alt="">
@@ -115,10 +120,111 @@
         </swiper-container>
         <div class="swiper_pagination">
         </div>
+        <button class="m-auto send_btn">新增</button>
       </div>
-      <div class="col button_wrap">
-        <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="send_btn" @click="submit">送出</button>
+    </div>
+    <!-- 下半部上傳細項 -->
+    <div class="info_wrap mt-5 col">
+      <div class="tab_section mt-5">
+        <!-- tab頂端頁籤 -->
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#tabs" type="button" role="tab" aria-controls="tab" aria-selected="true">1</button>
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="tabs" role="tabpanel" aria-labelledby="tab">
+            <h4 class="empty_text d-none">暫無有細項</h4>
+            <!-- 物流單號 -->
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">物流單號：</div>
+                <input type="text" class="form-control readonly_box" readonly v-model="formParams.ShipmentNum" />
+              </div>
+            </div>
+            <!-- 到貨件數 -->
+            <div class="col">
+              <div class="input-group  mb-3">
+                <div class="input-group-prepend">到貨件數：</div>
+                <div class="num_wrap d-flex ">
+                  <div class="number-input-box">
+                    <input class="input-number readonly_box" type="number" readonly v-model="formParams.GoodsNum" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 資產照片 -->
+            <div class="col">
+              <div class="input-group">
+                <div class="input-group-prepend">資產照片：</div>
+              </div>
+            </div>
+            <div class="selected_file col mb-3">
+              <div class="input-group">
+                <div class="file_upload_box">
+                  <p>xxxx.jpg</p>
+                  <!-- <div v-for="(file, index) in fileParams.viewDoc" :key="index" class="file_upload_wrap">
+                  <p>{{ file.name }}</p>
+                  <img class="view_icon" src="@/assets/view.png" @click="handleDocPreview(file)">
+                  <img class="delete_icon" src="@/assets/trash.png" @click="deleteFile('document',index)">
+                </div> -->
+                </div>
+              </div>
+              <!-- doc/docx download hidden Link -->
+              <a href="" style="display: none;" id="download-link"></a>
+              <!-- Modal Trigger -->
+              <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#photoModal"></button>
+              <!-- Photo Modal -->
+              <div class="modal fade" id="photoModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 800px !important">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="photoModalLabel">{{ previewParams.title }}</h5>
+                      <p data-bs-dismiss="modal" class='close_icon'>X</p>
+                    </div>
+                    <div class="modal-body">
+                      <img :src="previewParams.src" class="w-75">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 照片上傳 -->
+            <div class="col">
+              <div class="input-group">
+                <div class="input-group-prepend">照片上傳：</div>
+              </div>
+            </div>
+            <swiper-container class='swiper_section' :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
+              <swiper-slide class="custom-slide">
+                <!-- <img :src="file.link" alt="">
+              <span @click="deleteFile('picture' , index)">x</span> -->
+                <img src="https://img.freepik.com/free-photo/isolated-happy-smiling-dog-white-background-portrait-4_1562-693.jpg" alt="">
+              </swiper-slide>
+              <swiper-slide class="custom-slide">
+                <!-- <img :src="file.link" alt="">
+              <span @click="deleteFile('picture' , index)">x</span> -->
+                <img src="https://www.desertsun.com/gcdn/presto/2022/11/30/PPAS/eaa72eb4-968e-4586-ac3d-8546241734f9-IMG-5026.jpg?width=660&height=870&fit=crop&format=pjpg&auto=webp" alt="">
+              </swiper-slide>
+              <swiper-slide class="custom-slide">
+                <!-- <img :src="file.link" alt="">
+              <span @click="deleteFile('picture' , index)">x</span> -->
+                <img src="https://img.freepik.com/free-photo/isolated-happy-smiling-dog-white-background-portrait-4_1562-693.jpg" alt="">
+              </swiper-slide>
+              <swiper-slide class="custom-slide">
+                <!-- <img :src="file.link" alt="">
+              <span @click="deleteFile('picture' , index)">x</span> -->
+                <img src="https://img.freepik.com/free-photo/isolated-happy-smiling-dog-white-background-portrait-4_1562-693.jpg" alt="">
+              </swiper-slide>
+            </swiper-container>
+            <div class="swiper_pagination">
+            </div>
+          </div>
+        </div>
+        <div class="col button_wrap">
+          <button class="back_btn" @click="goBack">回上一頁</button>
+          <button class="send_btn" @click="submit">新增</button>
+        </div>
       </div>
     </div>
   </div>
@@ -168,7 +274,7 @@
       // 控制按鈕
       const fileInput1 = ref();
       const fileInput2 = ref();
-      onMounted(()=>{
+      onMounted(() => {
         getApplicationInfo();
       });
       // 收件人員資訊
@@ -194,7 +300,7 @@
         }
       }
       // 控制 "選擇檔案"按鈕
-      const openFileInput = (index)=> {
+      const openFileInput = (index) => {
         switch (index) {
           case 0:
             fileInput1.value.click();
@@ -206,9 +312,9 @@
       }
       // 處理中間物流文件
       function handleDocumentFile(event) {
-        console.log('DocumentFiles:',event.target.files);
+        console.log('DocumentFiles:', event.target.files);
         const files = event.target.files;
-        const imageExtensions = ['jpg', 'jpeg', 'png', 'gif' , 'pdf' , 'doc' , 'docx'];
+        const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx'];
         const maxFileSize = 28 * 1024 * 1024; // 28MB
         // 檢查副檔名 &檔案大小
         for (let i = 0; i < files.length; i++) {
@@ -232,7 +338,7 @@
           const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
           const reader = new FileReader();
           // .pdf
-          if(fileExtension === 'pdf') {
+          if (fileExtension === 'pdf') {
             imgArray.push(files[i]);
             previewUrl.push({
               name: files[i].name,
@@ -241,7 +347,7 @@
             });
           }
           // .doc/.docx
-          else if(fileExtension === 'doc' || fileExtension == 'docx') {
+          else if (fileExtension === 'doc' || fileExtension == 'docx') {
             imgArray.push(files[i]);
             previewUrl.push({
               name: files[i].name,
@@ -283,12 +389,12 @@
           }
           reader.readAsDataURL(files[i]);
         }
-        console.log('uploaded viewDoc:' , fileParams.viewDoc);
-        console.log('uploaded newDoc:' , fileParams.newDoc);
+        console.log('uploaded viewDoc:', fileParams.viewDoc);
+        console.log('uploaded newDoc:', fileParams.newDoc);
       }
       // 處理下半部照片
       function handlePictureFile(event) {
-        console.log('PictureFiles:',event.target.files);
+        console.log('PictureFiles:', event.target.files);
         const files = event.target.files;
         const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
         const maxFileSize = 28 * 1024 * 1024; // 28MB
@@ -351,7 +457,7 @@
             window.open(file.link)
             break;
           case 'pic':
-            previewParams.title = file.name ;
+            previewParams.title = file.name;
             previewParams.src = file.link;
             const modal = document.querySelector('#openModal');
             modal.click();
@@ -365,19 +471,19 @@
         }
       }
       // 處理物流文件刪除
-      function deleteFile(type ,index) {
+      function deleteFile(type, index) {
         switch (type) {
           case 'document':
-            fileParams.newDoc.splice(index , 1);
-            fileParams.viewDoc.splice(index , 1);
+            fileParams.newDoc.splice(index, 1);
+            fileParams.viewDoc.splice(index, 1);
             break;
           case 'picture':
-            fileParams.newPic.splice(index , 1);
-            fileParams.viewPic.splice(index , 1);
+            fileParams.newPic.splice(index, 1);
+            fileParams.viewPic.splice(index, 1);
             break;
         }
       }
-      // 送出
+      // 新增
       async function submit() {
         // 檢查必填項目、格式        
         if (!formParams.ShipmentNum.trim() || !formParams.ShipmentCompany.trim() || formParams.GoodsNum < 1 || !formParams.ReceivedDate) {
@@ -394,37 +500,34 @@
           alert('貨運公司不可輸入超過20字')
           return
         }
-        console.log('上半部form',formParams);
-        console.log('中間物流文件' , fileParams.newDoc);
-        console.log('下半部照片上傳' , fileParams.newPic);
-
+        console.log('上半部form', formParams);
+        console.log('中間物流文件', fileParams.newDoc);
+        console.log('下半部照片上傳', fileParams.newPic);
         try {
           // 先建立表單並回傳AR_ID
           const AR_ID = await sendUpperForm();
-          console.log('AR_ID(resolve):' , AR_ID);
+          console.log('AR_ID(resolve):', AR_ID);
           // 再依照AR_ID將 中間部分物流文件 & 下半部照片 單次檔案上傳
           const filePromises = [];
           for (let i = 0; i < fileParams.newDoc.length; i++) {
             filePromises.push(sendFileForm(AR_ID, 'Document', fileParams.newDoc[i], i));
           }
-
           for (let i = 0; i < fileParams.newPic.length; i++) {
             filePromises.push(sendFileForm(AR_ID, 'File', fileParams.newPic[i], i));
           }
           // 等待所有檔案上傳完成
           await Promise.all(filePromises)
-          .then(result =>{
-            const allSuccess = result.every(result => result === 'success')
-            if(allSuccess) {
-            alert('新增收貨單成功\n單號為:' + AR_ID);
-              router.push({
-                name: 'Receive_Datagrid'
-              });
-            }
-            else {
-              alert('新增收貨單失敗')
-            }
-          })
+            .then(result => {
+              const allSuccess = result.every(result => result === 'success')
+              if (allSuccess) {
+                alert('新增收貨單成功\n單號為:' + AR_ID);
+                router.push({
+                  name: 'Receive_Datagrid'
+                });
+              } else {
+                alert('新增收貨單失敗')
+              }
+            })
         } catch (error) {
           console.error(error);
         }
@@ -445,10 +548,9 @@
               const data = response.data;
               if (data.state === 'success') {
                 const AR_ID = response.data.resultList.AR_ID;
-                console.log('建立上半部表單成功AR_ID(response):' , AR_ID);
+                console.log('建立上半部表單成功AR_ID(response):', AR_ID);
                 resolve(AR_ID);
-              }
-              else {
+              } else {
                 reject(data.messages);
               }
             })
@@ -458,12 +560,12 @@
         });
       }
       // 中、下上傳檔案部分
-      function sendFileForm(AR_ID , type , fileData, index) {
+      function sendFileForm(AR_ID, type, fileData, index) {
         return new Promise((resolve, reject) => {
           const form = new FormData();
-          form.append('AR_ID' , AR_ID);
-          form.append('num' , index);
-          form.append(type , fileData);
+          form.append('AR_ID', AR_ID);
+          form.append('num', index);
+          form.append(type, fileData);
           const axios = require('axios');
           axios.post('http://192.168.0.177:7008/ReceivingMng/UploadFile', form)
             .then((response) => {
@@ -474,7 +576,7 @@
                 resolve(data.state)
               } else {
                 // 如果状态不是 "success"，调用 reject 并传递错误信息
-                console.error(type+'上傳失敗，'+response.data.messages);
+                console.error(type + '上傳失敗，' + response.data.messages);
                 reject(new Error('文件表单提交失败'));
               }
             })
@@ -514,26 +616,43 @@
   span {
     @include red_star
   }
+  .empty_text {
+    text-align: center;
+    color: white;
+    margin-bottom: 0;
+    font-weight: 700;
+  }
   .modal-dialog {
     width: 80% !important;
     max-width: unset
   }
+  .view_icon,
+  .delete_icon {
+    cursor: pointer;
+    margin: 0 3px
+  }
   .selected_file {
-    flex-direction: column;
-    p.uploded_file::before{
-      content:'· ';
-    }
-    .icon {
-      margin: 0 10px;
-      gap: 5px;
-      display: flex;
-      align-items: center;
-      img {
-        cursor: pointer;
-        margin: 0 5px
+    p {
+      margin-bottom: 0;
+      font-weight: 700;
+      color: white;
+      &::before {
+        margin-right: 10px;
+        content: '·';
+        font-weight: 700;
+        color: white;
       }
-      .close_icon {
-        scale: 1.5
+    }
+    .file_upload_box {
+      padding: 0 20px;
+      .file_upload_wrap {
+        margin-bottom: 0;
+        display: flex;
+        word-break: break-word;
+        img {
+          width: 25px;
+          height: 25px;
+        }
       }
     }
   }
@@ -579,15 +698,12 @@
       color: white;
       display: flex;
       justify-content: center;
-      padding: 0 16px 16px;
-      .close_icon {
-        height: 40px;
-        cursor: pointer;
-      }
-      .modal-title {
-        margin: auto;
-        padding-top: 16px;
-      }
+    }
+  }
+  button.send_btn {
+    @include search_and_send_btn;
+    &:hover {
+      background-color: #5e7aa2;
     }
   }
   @media only screen and (min-width: 1200px) {
@@ -666,14 +782,6 @@
         }
         .content {
           @include content_bg;
-          p {
-            text-align: center;
-            white-space: nowrap;
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: white;
-          }
           .dropdown {
             width: 55%;
             .dropdown-menu {
@@ -729,12 +837,6 @@
               background-color: #5d85bb;
             }
           }
-          button.send_btn {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
         }
         .dropdown {
           height: 35px;
@@ -768,128 +870,146 @@
           }
         }
       }
- 
       .row:nth-child(3) {
         .input-group {
           justify-content: flex-start;
         }
       }
-    } // .modal {
-    //   .dropdown-toggle {
-    //     width: 100%
-    //   }
-    //   padding: 0 5%;
-    //   .modal-content {
-    //     background: unset;
-    //     border: 0;
-    //     .modal-body {
-    //       padding: 0;
-    //     }
-    //   }
-    //   .fixed_info {
-    //     @include fixed_info;
-    //     background: #528091 !important;
-    //     border-radius: 0!important;
-    //     border: 1px solid black;
-    //     padding: 0 10px;
-    //     div {
-    //       flex-grow: 1;
-    //       text-align: center;
-    //     }
-    //     p {
-    //       font-size: 20px;
-    //       margin-bottom: 0;
-    //     }
-    //     button {
-    //       border: none;
-    //       background: none;
-    //       color: white;
-    //       font-weight: 700;
-    //       font-size: 22px;
-    //       align-self: start;
-    //     }
-    //   }
-    //   .list {
-    //     border-left: 1px solid black;
-    //     border-bottom: 1px solid black;
-    //     border-right: 1px solid black;
-    //   }
-    //   .second_content {
-    //     border-left: 1px solid black;
-    //     border-right: 1px solid black;
-    //     background: #D9D9D9;
-    //     padding: 20px;
-    //     p.content {
-    //       display: flex;
-    //       justify-content: center;
-    //       align-items: center;
-    //       color: black;
-    //       background: white;
-    //       height: 35px;
-    //       border-radius: 5px;
-    //     }
-    //     .submit_btn {
-    //       margin-top: 20px;
-    //       background: #48658C;
-    //       color: white;
-    //       font-weight: 700;
-    //       width: 80px;
-    //       font-size: 20px;
-    //       height: 30px;
-    //       display: flex;
-    //       justify-content: center;
-    //       align-items: center;
-    //       &:hover {
-    //         background-color: #5d85bd;
-    //       }
-    //     }
-    //     .wrap1 {
-    //       display: flex;
-    //       justify-content: space-evenly;
-    //       padding: 10px 80px;
-    //       .input-number {
-    //         @include count_btn;
-    //       }
-    //       .number-input-box {
-    //         color: black;
-    //         .input-number {
-    //           width: 100%;
-    //         }
-    //       }
-    //       .form-label {
-    //         white-space: nowrap;
-    //         font-weight: 800;
-    //         font-size: 18px;
-    //       } // .dropdown {
-    //       //   button {
-    //       //     background: white;
-    //       //     width: 100%;
-    //       //     border: none;
-    //       //     display: flex;
-    //       //     justify-content: space-between;
-    //       //     align-items: center;
-    //       //   }
-    //       //   .dropdown-menu {
-    //       //     width: 225px;
-    //       //     .dropdown-item {
-    //       //       text-align: left;
-    //       //     }
-    //       //   }
-    //       // }
-    //       div {
-    //         padding: 0 5px;
-    //         p {
-    //           color: black;
-    //           text-align: center;
-    //           white-space: nowrap;
-    //           font-size: 18px;
-    //           font-weight: 700;
-    //           margin-bottom: 5px;
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
+      .tab_section {
+        .nav-tabs {
+          button {
+            @include tab_section_num;
+            background: rgba(82, 136, 156, 0.8);
+          }
+          .active {
+            @include tab_section_num;
+            background: rgba(82, 136, 156, 0.8);
+          }
+        }
+        .tab-content {
+          background: rgba(82, 136, 156, 0.8);
+          padding: 50px 30px;
+          .form_search_wrap {
+            .input-group {
+              .input-group-prepend {
+                width: 113px;
+              }
+              input {
+                margin-left: 15px !important
+              }
+            }
+          }
+          .modal {
+            .modal-header {
+              background: #3D4E61;
+              color: white;
+              .close_icon {
+                color: white;
+                font-weight: 700;
+                margin-bottom: 0;
+              }
+            }
+          }
+          .dropdown {
+            width: 60%;
+            .dropdown-menu {
+              width: 100%;
+              max-height: 250px;
+              overflow-y: auto;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            button {
+              @include dropdown-btn;
+              width: 100%;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group {
+            flex-wrap: nowrap;
+            span {
+              @include red_star
+            }
+            .selected_file {
+              margin-left: 20px;
+              p.title {
+                font-weight: 700;
+                color: white;
+                margin-bottom: 5px;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  margin-bottom: 0;
+                  font-weight: 700;
+                  color: white;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
+            }
+            .file_upload_wrap {
+              margin-bottom: 0;
+              display: flex;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              p {
+                margin-bottom: 0;
+                font-weight: 700;
+                color: white;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
+                  font-weight: 700;
+                  color: white;
+                }
+              }
+            }
+            .input-number {
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              border-radius: 0;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 120px;
+              text-align: end;
+            }
+            .file_wrap {
+              display: flex;
+              flex-direction: column;
+              .choose_btn {
+                margin-bottom: 10px;
+                @include choose_file_btn;
+                &:hover {
+                  background: #3f608f;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
@@ -976,14 +1096,6 @@
               width: 210px
             }
           }
-          p {
-            text-align: center;
-            white-space: nowrap;
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: white;
-          }
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -1030,12 +1142,6 @@
             @include back_to_previous_btn;
             &:hover {
               background-color: #5d85bb;
-            }
-          }
-          button.send_btn {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5e7aa2;
             }
           }
         }
@@ -1192,6 +1298,140 @@
         }
       }
     }
+    .tab_section {
+        .nav-tabs {
+          button {
+            @include tab_section_num;
+            background: rgba(82, 136, 156, 0.8);
+          }
+          .active {
+            @include tab_section_num;
+            background: rgba(82, 136, 156, 0.8);
+          }
+        }
+        .tab-content {
+          background: rgba(82, 136, 156, 0.8);
+          padding: 50px 30px;
+          .form_search_wrap {
+            .input-group {
+              .input-group-prepend {
+                width: 113px;
+              }
+              input {
+                margin-left: 15px !important
+              }
+            }
+          }
+          .modal {
+            .modal-header {
+              background: #3D4E61;
+              color: white;
+              .close_icon {
+                color: white;
+                font-weight: 700;
+                margin-bottom: 0;
+              }
+            }
+          }
+          .dropdown {
+            width: 60%;
+            .dropdown-menu {
+              width: 100%;
+              max-height: 250px;
+              overflow-y: auto;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            button {
+              @include dropdown-btn;
+              width: 100%;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group {
+            flex-wrap: nowrap;
+            span {
+              @include red_star
+            }
+            .selected_file {
+              margin-left: 20px;
+              p.title {
+                font-weight: 700;
+                color: white;
+                margin-bottom: 5px;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  margin-bottom: 0;
+                  font-weight: 700;
+                  color: white;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
+            }
+            .file_upload_wrap {
+              margin-bottom: 0;
+              display: flex;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              p {
+                margin-bottom: 0;
+                font-weight: 700;
+                color: white;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
+                  font-weight: 700;
+                  color: white;
+                }
+              }
+            }
+            .input-number {
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              border-radius: 0;
+            }
+            .input-group-prepend {
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 120px;
+              text-align: end;
+            }
+            .file_wrap {
+              display: flex;
+              flex-direction: column;
+              .choose_btn {
+                margin-bottom: 10px;
+                @include choose_file_btn;
+                &:hover {
+                  background: #3f608f;
+                }
+              }
+            }
+          }
+        }
+      }
   }
   @media only screen and (max-width: 767px) {
     .main_section {
@@ -1339,13 +1579,6 @@
             padding: 5px;
             &:hover {
               background-color: #5d85bb;
-            }
-          }
-          button.send_btn {
-            @include search_and_send_btn;
-            padding: 5px;
-            &:hover {
-              background-color: #5e7aa2;
             }
           }
         }
@@ -1499,5 +1732,116 @@
         }
       }
     }
+    .tab_section {
+          .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+            margin-left: unset !important;
+          }
+          .nav-tabs {
+            button {
+              @include tab_section_num;
+              background: #5C7897;
+            }
+            .active {
+              @include tab_section_num;
+              background: rgba(82, 136, 156, 0.8);
+            }
+          }
+          .tab-content {
+            background: rgba(82, 136, 156, 0.8);
+            padding: 50px 30px;
+            .modal {
+              .modal-header {
+                background: #3D4E61;
+                color: white;
+                .close_icon {
+                  color: white;
+                  font-weight: 700;
+                  margin-bottom: 0;
+                }
+              }
+            }
+            .dropdown {
+              margin-left: unset !important;
+              margin-top: 5px;
+              .dropdown-menu {
+                width: 100%;
+                max-height: 250px;
+                overflow-y: auto;
+                p {
+                  &:hover {
+                    cursor: pointer;
+                  }
+                }
+              }
+              button {
+                @include dropdown-btn;
+                width: 100%;
+                color: black;
+                justify-content: space-between;
+                align-items: center;
+              }
+            }
+            .input-group {
+              flex-direction: column;
+              span {
+                @include red_star
+              }
+              .selected_file {
+                p.title {
+                  font-weight: 700;
+                  color: white;
+                  margin-bottom: 5px;
+                }
+                .file_upload_wrap {
+                  margin-bottom: 0;
+                  display: flex;
+                  img {
+                    width: 25px;
+                    height: 25px;
+                  }
+                  p {
+                    margin-bottom: 0;
+                    font-weight: 700;
+                    color: white;
+                    &::before {
+                      margin-right: 10px;
+                      content: '·';
+                      font-weight: 700;
+                      color: white;
+                    }
+                  }
+                }
+              }
+              .input-number {
+                @include count_btn;
+              }
+              .form-control {
+                height: 35px;
+                width: 100%;
+                border-radius: 0;
+                margin-left: unset !important;
+                margin-top: 5px;
+              }
+              .input-group-prepend {
+                color: white;
+                font-weight: 700;
+                font-size: 20px;
+                width: 100%;
+              }
+              .file_wrap {
+                display: flex;
+                flex-direction: column;
+                .choose_btn {
+                  margin-top: 5px;
+                  margin-bottom: 10px;
+                  @include choose_file_btn;
+                  &:hover {
+                    background: #3f608f;
+                  }
+                }
+              }
+            }
+          }
+        }
   }
 </style>
