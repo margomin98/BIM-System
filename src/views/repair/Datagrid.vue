@@ -145,6 +145,7 @@
           unSortIcon: true,
           sortable: true,
           width: 150,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -162,6 +163,7 @@
           unSortIcon: true,
           sortable: true,
           width: 150,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -170,6 +172,7 @@
           unSortIcon: true,
           sortable: true,
           width: 120,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -178,6 +181,7 @@
           unSortIcon: true,
           sortable: true,
           width: 150,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -186,6 +190,7 @@
           unSortIcon: true,
           sortable: true,
           width: 120,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -194,6 +199,7 @@
           unSortIcon: true,
           sortable: true,
           width: 150,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -202,6 +208,7 @@
           unSortIcon: true,
           sortable: true,
           width: 120,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -210,12 +217,12 @@
           unSortIcon: true,
           sortable: true,
           width: 150,
+          resizable: true,
           suppressMovable: true
         },
         {
           suppressMovable: true,
           width: 100,
-          field: "",
           cellRenderer: "Delete",
         }
       ]

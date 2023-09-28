@@ -1,7 +1,7 @@
 <template>
   <Navbar />
   <div class="chart">
-    <ag-charts-vue style="height: 650px" :options="options" ref="agCharts"></ag-charts-vue>
+    <ag-charts-vue style="height: 650px" :options="options"></ag-charts-vue>
   </div>
 </template>
 
@@ -16,26 +16,8 @@ export default {
     Navbar
   },
   setup() {
-    const agCharts = ref(null);
     const total = ref(0);
-    const rowData = ref([
-      {
-        "os": "在庫件數",
-        "share": 313
-      },
-      {
-        "os": "內部使用件數",
-        "share": 0
-      },
-      {
-        "os": "借測件數",
-        "share": 0
-      },
-      {
-        "os": "報修件數",
-        "share": 3
-      }
-    ]);
+    const rowData = ref([]);
     const options = ref({
       data: rowData.value,
       padding: {
@@ -65,7 +47,7 @@ export default {
       },
       series: [
         {
-          fills: ['#98CCD3', '#79A8A9', '#79A8A9', '#4B6F70'],
+          fills: ['#98CCD3', '#79A8A9', '#79A8A9', '#4B6F70', '#364E68'],
           strokes: ['white'],
           type: 'pie',
           calloutLabelKey: 'os',
@@ -107,7 +89,6 @@ export default {
     });
     onMounted(() => {
       getDetails();
-      console.log('ag api:', agCharts.value);
     });
 
     function getDetails() {
@@ -122,15 +103,19 @@ export default {
               total.value += item.share;
             })
           }
-          agCharts.value.options = options.value
+          const newOptions = { ...options.value};
+          newOptions.data = rowData.value
+          newOptions.series[0].innerLabels[0].text = total.value.toString()
+          options.value = newOptions;
         })
         .catch((error) => {
           console.error(error);
         })
     }
     return {
-      agCharts,
       options,
+      rowData,
+      total,
     };
   },
 }

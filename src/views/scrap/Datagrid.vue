@@ -130,7 +130,8 @@
       const columnDefs = [{
           suppressMovable: true,
           cellRenderer: "Scrap_button",
-          width: 340,
+          width: 275,
+          resizable: true,
           resizable: true,
         },
         {
@@ -157,6 +158,7 @@
           unSortIcon: true,
           sortable: true,
           width: 150,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -174,6 +176,7 @@
           unSortIcon: true,
           sortable: true,
           width: 150,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -182,6 +185,7 @@
           unSortIcon: true,
           sortable: true,
           width: 120,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -190,6 +194,7 @@
           unSortIcon: true,
           sortable: true,
           width: 150,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -198,6 +203,7 @@
           unSortIcon: true,
           sortable: true,
           width: 120,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -206,6 +212,7 @@
           unSortIcon: true,
           sortable: true,
           width: 150,
+          resizable: true,
           suppressMovable: true
         },
         {
@@ -214,6 +221,7 @@
           unSortIcon: true,
           sortable: true,
           width: 120,
+          resizable: true,
           suppressMovable: true
         },
         {

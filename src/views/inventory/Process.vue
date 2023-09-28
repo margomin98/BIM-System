@@ -94,7 +94,7 @@
               <div class="input-group ">
                 <div class="search_section">
                   <div class="input-wrapper">
-                    <input ref="myInput" placeholder="請掃描資產編號" class="text-center" v-model="InputAssetsId" @input="handleInput">
+                    <input ref="myInput" placeholder="請掃描資產編號" class="text-center" v-model="InputAssetsId">
                   </div>
                 </div>
               </div>
@@ -130,7 +130,8 @@
   import {
     onMounted,
     reactive,
-    ref
+    ref,
+    watch,
   } from "vue";
   import {
     useRoute,
@@ -362,9 +363,10 @@
             console.log('下半部datagrid 資料如下\n', data.resultList);
             rowData.value = data.resultList;
             // 若掃描 QR code
-            if(type === 'take') {
+            if(type === 'take' && data.resultList.length > 0) {
               // 若為非耗材
               if(!data.resultList[0].IsConsumables) {
+                // InputAssetsId.value = '';
                 inventoryParams.I_Id = data.resultList[0].I_Id ;
                 inventoryParams.ActualNum = '1' ;
                 inventoryParams.Discrepancy = '0';
@@ -431,25 +433,14 @@
           console.error(error);
         }
       }
+      watch(()=>InputAssetsId.value, (newValue , oldValue) => {
+        // 更新datagrid，如果是資產 call 盤點function
+        console.log('new:' + newValue +' old:' + oldValue);
+        if(newValue !== '') {
+          getDatagrid('take');
+        }
+      },{immediate: false});
       function handleInput() {
-        // 從空白開始掃描
-        if(InputAssetsId.value.length === 10) {
-          // 更新datagrid，如果是資產 call 盤點function
-          getDatagrid('take');
-        }
-        // 接續上一次結果掃描
-        else if(InputAssetsId.value.length === 20) {
-          // 先將前面的Input清除
-          InputAssetsId.value = InputAssetsId.value.slice(10);
-          // 更新datagrid，如果是資產 call 盤點function
-          getDatagrid('take');
-        }
-        else {
-          // 不是一次input 10個字元
-          if(InputAssetsId.value !== ''){
-            InputAssetsId.value = '';
-          }
-        }
       }
       const clear = ()=>{
         InputAssetsId.value = '';

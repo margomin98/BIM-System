@@ -118,7 +118,7 @@
         }
       }
       async function submit() {
-        if(!inputValue.value || selectedRole.value) {
+        if(!inputValue.value || !selectedRole.value) {
           alert('請輸入必填項目');
           return
         }

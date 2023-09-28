@@ -181,8 +181,8 @@
       const reviewDate = ref('');
       const canSubmit = ref(false);
       const validation = reactive({
-        account: 'user_3',
-        password: 'Test_123',
+        account: '',
+        password: '',
         isValidate: false,
         resultName: '未驗證', //審核人員
         result: false, //審核結果

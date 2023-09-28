@@ -26,55 +26,6 @@
         </div>
       </div>
       <div class="content">
-        <div class="row g-0">
-          <!-- 報廢人員 -->
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4">
-              <div class="input-group-prepend">
-                報廢人員：
-              </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.ScrapPerson">
-            </div>
-          </div>
-          <!-- 交付日期 -->
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4">
-              <div class="input-group-prepend">
-                交付日期：
-              </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.DeliveryDate">
-            </div>
-          </div>
-        </div>
-        <div class="row g-0">
-          <!-- 審核人員 -->
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4">
-              <div class="input-group-prepend">
-                審核人員：
-              </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.VerifyPerson">
-            </div>
-          </div>
-          <!-- 審核結果 -->
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4">
-              <div class="input-group-prepend">
-                審核結果：
-              </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.VerifyResult">
-            </div>
-          </div>
-        </div>
-        <!-- 審核日期 -->
-        <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-          <div class="input-group d-flex mb-4">
-            <div class="input-group-prepend">
-              審核日期：
-            </div>
-            <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.VerifyDate">
-          </div>
-        </div>
         <!-- 產編 -->
         <div class="col-12">
           <div class="input-group mb-4">
@@ -82,7 +33,6 @@
               <span>*</span>產編：
             </div>
             <input ref="inputElement" type="text" class="form-control" placeholder="請掃描輸入產編" v-model="formParams.AssetsId">
-            <button class="form_search_btn">搜尋</button>
           </div>
         </div>
         <!-- 物品名稱 -->
@@ -92,6 +42,16 @@
               物品名稱：
             </div>
             <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="Assets.Name">
+          </div>
+        </div>
+        <!-- Error Hint -->
+        <div v-show="wrongStatus" class="col-12">
+          <div class="input-group">
+            <div style="visibility: hidden;" class="input-group-prepend">
+              <p >1</p>
+            </div>
+            <span style="color:rgb(216, 13, 13); font-weight: 700; font-size: 20px;">{{ alertMsg }}</span>
+            <input type="text" style="visibility: hidden;" class="form-control">
           </div>
         </div>
         <!-- 報廢原因 -->
@@ -214,19 +174,36 @@
             if(Assets.Type === '耗材') {
               wrongStatus.value = true;
               canSubmit.value = false;
-              alertMsg.value = '僅提供資產類型為非耗材的物品進行報廢'
+              alertMsg.value = '僅提供資產類型為非耗材的物品進行維修'
             }
-            // 檢查資產狀態(只有非耗材才會有這個Status)
-            else if(Assets.Status === '已被設備整合') {
+            else {
+              // 檢查資產狀態(只有非耗材才會檢查)
+              const Status = Assets.Status
+              const Type = Assets.Type
               wrongStatus.value = true;
               canSubmit.value = false;
-              alertMsg.value = '此資產已被設備整合，請先移出設備箱'
-            }
-            // 可報修
-            else {
-              wrongStatus.value = false;
-              canSubmit.value = true;
-              alertMsg.value = ''
+              switch (Status) {
+                case '已被設備整合':
+                  alertMsg.value = `此${Type}已被設備整合，請先移出設備箱`
+                  break;
+                case '維修':
+                  alertMsg.value = `此${Type}已送修`
+                  break;
+                case '報廢':
+                  alertMsg.value = `此${Type}已${Status}`
+                  break;
+                case '出貨':
+                  alertMsg.value = `此${Type}已${Status}`
+                  break;
+                case '退貨':
+                  alertMsg.value = `此${Type}已${Status}`
+                  break;
+                default: // 可報修
+                  wrongStatus.value = false;
+                  canSubmit.value = true;
+                  alertMsg.value = ''
+                  break;
+              }
             }
           })
           .catch((error) =>{

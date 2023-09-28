@@ -153,19 +153,36 @@
             if(Assets.Type === '耗材') {
               wrongStatus.value = true;
               canSubmit.value = false;
-              alertMsg.value = '僅提供資產類型為非耗材的物品進行報廢'
+              alertMsg.value = '僅提供資產類型為非耗材的物品進行維修'
             }
-            // 檢查資產狀態(只有非耗材才會有這個Status)
-            else if(Assets.Status === '已被設備整合') {
+            else {
+              // 檢查資產狀態(只有非耗材才會檢查)
+              const Status = Assets.Status
+              const Type = Assets.Type
               wrongStatus.value = true;
               canSubmit.value = false;
-              alertMsg.value = '此資產已被設備整合，請先移出設備箱'
-            }
-            // 可報修
-            else {
-              wrongStatus.value = false;
-              canSubmit.value = true;
-              alertMsg.value = ''
+              switch (Status) {
+                case '已被設備整合':
+                  alertMsg.value = `此${Type}已被設備整合，請先移出設備箱`
+                  break;
+                case '維修':
+                  alertMsg.value = `此${Type}已送修`
+                  break;
+                case '報廢':
+                  alertMsg.value = `此${Type}已${Status}`
+                  break;
+                case '出貨':
+                  alertMsg.value = `此${Type}已${Status}`
+                  break;
+                case '退貨':
+                  alertMsg.value = `此${Type}已${Status}`
+                  break;
+                default: // 可報修
+                  wrongStatus.value = false;
+                  canSubmit.value = true;
+                  alertMsg.value = ''
+                  break;
+              }
             }
           })
           .catch((error) =>{
