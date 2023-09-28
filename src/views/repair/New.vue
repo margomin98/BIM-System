@@ -66,13 +66,24 @@
               <button class="choose_btn" @click="openFileExplorer()">選擇檔案</button>
               <input type="file" ref="fileInputs" accept="image/*" multiple style="display: none;" @change="handleFileChange($event)">
             </div>
-            <div class="selected_file">
-              <p class="title">已選擇的檔案:</p>
-              <div v-for="(item , index) in formParams.viewFile" :key="index" class="file_upload_wrap" style="cursor: pointer;">
-                <p @click="viewImgFile(index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ item.FileName }}</p>
+           
+          </div>
+        </div>
+        <!-- 已選擇的檔案 -->
+        <div class="col-12 selected_file">
+          <div class="input-group">
+            <div class="input-group-prepend">已選擇的檔案：</div>
+          </div>
+        </div>
+        <div class="col-12 selected_file">
+          <div class="input-group">
+            <div class="file_upload_box">
+            <div v-for="(item , index) in formParams.viewFile" :key="index" class="file_upload_wrap">
+                <p>{{ item.FileName }}</p>
+                <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="viewImgFile(index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
                 <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index)">
               </div>
-            </div>
+           </div>
           </div>
         </div>
         <!-- ViewFile Modal -->
@@ -81,7 +92,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">{{ modalParams.title }}</h5>
-                <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
+                <p data-bs-dismiss="modal" class='close_icon'>X</p>
               </div>
               <div class="modal-body">
                 <img :src="modalParams.src" alt="Uploaded Image" class="w-100" />
@@ -362,7 +373,9 @@
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
-
+.view_icon,.delete_icon{
+  cursor: pointer;
+}
   .modal {
     .modal-body {
       padding: 20px;
@@ -388,15 +401,8 @@
       color: white;
       display: flex;
       justify-content: center;
-      padding: 0 16px 16px;
-      .close_icon {
-        height: 40px;
-        cursor: pointer;
-      }
-      .modal-title {
-        margin: auto;
-        padding-top: 16px;
-      }
+   
+   
     }
   }
   @media only screen and (min-width: 1200px) {
@@ -447,16 +453,30 @@
                 @include red_star
               }
             }
-            .selected_file {
-              margin-left: 20px;
-              p.title {
-                font-weight: 700;
-                color: white;
-                margin-bottom: 5px;
+         
+            .file_wrap {
+              display: flex;
+              flex-direction: column;
+              .choose_btn {
+                margin-bottom: 10px;
+                @include choose_file_btn;
+                &:hover {
+                  background: #3f608f;
+                }
               }
-              .file_upload_wrap {
-                margin-bottom: 0;
-                display: flex;
+            }
+     
+        }
+        }
+           .selected_file {
+            .file_upload_box{
+              padding: 0 20px;
+              
+                 .file_upload_wrap {
+                  margin-bottom: 0;
+    display: flex;
+    word-break: break-word;
+
                 img {
                   width: 25px;
                   height: 25px;
@@ -472,21 +492,10 @@
                     color: white;
                   }
                 }
-              }
+              } 
             }
-            .file_wrap {
-              display: flex;
-              flex-direction: column;
-              .choose_btn {
-                margin-bottom: 10px;
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
-                }
-              }
+          
             }
-          }
-        }
         .button_wrap {
           display: flex;
           justify-content: space-between;
@@ -544,9 +553,6 @@
         .content {
           @include content_bg;
           .input-group {
-            width: 100%;
-            white-space: nowrap;
-            flex-wrap: nowrap;
             .input-number {
               width: 100%;
               @include count_btn;
@@ -570,17 +576,29 @@
               }
             }
           }
-          .repair_photo_section {
-            .selected_file {
-              margin-left: 20px;
-              p.title {
-                font-weight: 700;
-                color: white;
-                margin-bottom: 5px;
+          
+            .file_wrap {
+              display: flex;
+              flex-direction: column;
+              .choose_btn {
+                margin-bottom: 10px;
+                @include choose_file_btn;
+                &:hover {
+                  background: #3f608f;
+                }
               }
-              .file_upload_wrap {
-                margin-bottom: 0;
-                display: flex;
+            }
+          
+        }  
+        .selected_file {
+          .file_upload_box{
+              padding: 0 20px;
+              
+                 .file_upload_wrap {
+                  margin-bottom: 0;
+    display: flex;
+    word-break: break-word;
+
                 img {
                   width: 25px;
                   height: 25px;
@@ -596,21 +614,10 @@
                     color: white;
                   }
                 }
-              }
+              } 
             }
-            .file_wrap {
-              display: flex;
-              flex-direction: column;
-              .choose_btn {
-                margin-bottom: 10px;
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
-                }
-              }
+          
             }
-          }
-        }
         .button_wrap {
           display: flex;
           justify-content: space-between;
@@ -711,15 +718,27 @@
                 @include red_star
               }
             }
-            .selected_file {
-              p.title {
-                font-weight: 700;
-                color: white;
-                margin-bottom: 5px;
+            .file_wrap {
+              display: flex;
+              flex-direction: column;
+              .choose_btn {
+                margin-bottom: 10px;
+                @include choose_file_btn;
+                &:hover {
+                  background: #3f608f;
+                }
               }
-              .file_upload_wrap {
-                margin-bottom: 0;
-                display: flex;
+            }
+          }
+        }  .selected_file {
+          .file_upload_box{
+              padding: 0 20px;
+              
+                 .file_upload_wrap {
+                  margin-bottom: 0;
+    display: flex;
+    word-break: break-word;
+
                 img {
                   width: 25px;
                   height: 25px;
@@ -735,23 +754,10 @@
                     color: white;
                   }
                 }
-              }
+              } 
             }
-            .file_wrap {
-              display: flex;
-              flex-direction: column;
-              margin-left: unset !important;
-              .choose_btn {
-                margin-top: 5px;
-                margin-bottom: 10px;
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
-                }
-              }
+          
             }
-          }
-        }
         .button_wrap {
           display: flex;
           justify-content: space-between;
