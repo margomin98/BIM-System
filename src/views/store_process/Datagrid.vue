@@ -126,7 +126,7 @@ import Storage_process_button from "@/components/Storage_process_button";
 import Delete from "@/components/Storage_process_delete_button";
 import Navbar from "@/components/Navbar.vue";
 import { onMounted, reactive, ref } from "vue";
-import { StoreStatusArray , DateTypeArray } from "@/assets/js/dropdown";
+import { Store_StatusArray , Store_Process_DateTypeArray } from "@/assets/js/dropdown";
 import { getEquipType , getEquipCategory , getArea , getLayer } from '@/assets/js/common_api'
 
 export default {
@@ -146,7 +146,7 @@ export default {
       EquipTypeName: '',
       EquipType_Id: '',
       EquipCategoryName: '',
-      EquipCategory_Id: '',
+      Category_Id: '',
       Status: '',
       AssetsId: '',
       AssetName: '',
@@ -161,11 +161,11 @@ export default {
     const DropdownArray = reactive({
         EquipType: [],
         EquipCategory: [],
-        Status: StoreStatusArray,
+        Status: Store_StatusArray,
         Area: [],
         Layer: [],
-        DateType: DateTypeArray,
-      })
+        DateType: Store_Process_DateTypeArray,
+    })
     const EquipCategoryInit = ref('請先選擇設備總類');
     const LayerInit = ref('請先選擇區域');
     const pageSize = ref(10);
@@ -369,7 +369,6 @@ export default {
           console.error(error);
         })
     }
-
     async function getAreaName() {
       if (DropdownArray.Area.length == 0) {
         getArea()
@@ -381,7 +380,6 @@ export default {
         })
       }
     }
-
     async function getLayerName() {
       getLayer(searchParams.Area_Id)
         .then((data)=>{
@@ -396,21 +394,15 @@ export default {
       searchParams.EquipTypeName = item.Name;
       searchParams.EquipType_Id = item.Id;
       searchParams.EquipCategoryName = '';
-      searchParams.EquipCategory_Id = '';
+      searchParams.Category_Id = '';
       getEquipCategoryName();
       EquipCategoryInit.value = '請選擇';
     }
-
     function selectCategory(item) {
       searchParams.EquipCategoryName = item.Name;
-      searchParams.EquipCategory_Id = item.Id;
+      searchParams.Category_Id = item.Id;
     }
-
-    const selectStatus = (item) => {
-      searchParams.Status = item;
-    };
-
-    const selectArea = (item) => {
+    function selectArea(item) {
       searchParams.AreaName = item.Name;
       searchParams.Area_Id = item.Id;
       searchParams.LayerName = '';
@@ -418,12 +410,13 @@ export default {
       getLayerName();
       LayerInit.value = '請選擇';
     };
-
-    const selectLayer = (item) => {
+    function selectLayer(item) {
       searchParams.LayerName = item.Name;
       searchParams.Layer_Id = item.Id;
     };
-
+    const selectStatus = (item) => {
+      searchParams.Status = item;
+    };
     const selectDateType = (item) => {
       searchParams.DateCategory = item;
     };

@@ -785,8 +785,7 @@
                 resolve(data.state)
               } else {
                 // 如果状态不是 "success"，调用 reject 并传递错误信息
-                console.error(`第${index+1}個頁籤上傳失敗，`);
-                reject(new Error('文件表单提交失败'));
+                console.error(`第${index+1}個頁籤上傳失敗，${data.messages}`);
               }
             })
             .catch(error => {

@@ -9,18 +9,18 @@
         <div class="row">
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>單號</p>
-            <input type="text" v-model="AO_ID" />
+            <input type="text" v-model="searchParams.AO_ID" />
           </div>
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>專案名稱</p>
-            <input type="text" v-model="ProjectName" />
+            <input type="text" v-model="searchParams.ProjectName" />
           </div>
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>用途</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ Use || "請選擇" }}
-                          </button>
+                {{ searchParams.Use || "請選擇" }}
+              </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item , index) in UseArray" :key="index" class="dropdown-item" @click="selectUse(item)">{{ item }}</p>
               </div>
@@ -30,8 +30,8 @@
             <p>狀態</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ Status || "請選擇" }}
-                          </button>
+                {{ searchParams.Status || "請選擇" }}
+              </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item , index) in StatusArray" :key="index" class="dropdown-item" @click="selectStatus(item)">{{ item }}</p>
               </div>
@@ -41,8 +41,8 @@
             <p>日期類型</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ DateCategory || "請選擇" }}
-                          </button>
+                {{ searchParams.DateCategory || "請選擇" }}
+              </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item , index) in DateCategoryArray" :key="index" class="dropdown-item" @click="selectDateCategory(item)">{{ item }}</p>
               </div>
@@ -52,7 +52,7 @@
             <p>日期(起)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="StartDate" class="date-input" />
+                <input type="date" v-model="searchParams.StartDate" class="date-input" :disabled="!searchParams.DateCategory" />
               </div>
             </div>
           </div>
@@ -60,7 +60,7 @@
             <p>日期(迄)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="EndDate" class="date-input" />
+                <input type="date" v-model="searchParams.EndDate" class="date-input" :disabled="!searchParams.DateCategory" />
               </div>
             </div>
           </div>
@@ -84,7 +84,8 @@
 <script>
   import {
     ref,
-    onMounted
+    onMounted,
+reactive
   } from "vue";
   import {
     AgGridVue
@@ -93,6 +94,7 @@
   import Rent_process_delete_button from "@/components/Rent_process_delete_button ";
   import Navbar from "@/components/Navbar.vue";
   import router from "@/router";
+  import { Rent_UseOptions , Rent_StatusArray , Rent_Process_DataCategory } from "@/assets/js/dropdown";
   export default {
     components: {
       Navbar,
@@ -106,16 +108,18 @@
       }
     },
     setup() {
-      const AO_ID = ref('');
-      const ProjectName = ref('');
-      const Use = ref('');
-      const UseArray = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨']
-      const Status = ref(''); //狀態
-      const StatusArray = ref(['已填報', '待審核', '待交付', '可交付', '部分交付', '已交付', '審核不通過'])
-      const DateCategory = ref('');
-      const DateCategoryArray = ['申請日期', '出庫日期', '備料日期', '審核日期'];
-      const StartDate = ref(''); //申請出庫日期(起)
-      const EndDate = ref(''); //申請出庫日期(迄)
+      const searchParams = reactive({
+        AO_ID: '',
+        ProjectName: '',
+        Use: '',
+        Status: '',
+        DateCategory: '',
+        StartDate: '',
+        EndDate: '',
+      })
+      const UseArray = Rent_UseOptions;
+      const StatusArray = Rent_StatusArray;
+      const DateCategoryArray = Rent_Process_DataCategory;
       const pageSize = 10;
       const columnDefs = [{
           suppressMovable: true,
@@ -226,82 +230,53 @@
       const rowData = ref([]);
       async function submit() {
         const formData = new FormData();
-        const formFields = {
-          'AO_ID': AO_ID.value,
-          'ProjectName': ProjectName.value,
-          'Use': Use.value,
-          'Status': Status.value,
-          'DateCategory': DateCategory.value,
-          'StartDate': StartDate.value,
-          'EndDate': EndDate.value,
-        };
         //將表格資料append到 formData
-        for (const fieldName in formFields) {
-          formData.append(fieldName, formFields[fieldName]);
+        for (const key in searchParams) {
+          formData.append(key, searchParams[key]);
         }
         const axios = require('axios');
         try {
           const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/Operating', formData);
-          console.log(response);
           const data = response.data;
           if (data.state === 'success') {
             //取得datagrid成功
-            // console.log(data.state);
-            console.log('datagrid', data.resultList);
+            console.log('datagrid:', data.resultList);
             rowData.value = data.resultList;
-          } else if (data.state === 'error') {
-            //取得datagrid失敗
-            alert(data.messages);
-          } else if (data.state === 'input_error') {
-            //取得datagrid格式錯誤
-            alert(data.messages);
           } else if (data.state === 'account_error') {
             //尚未登入
             alert(data.messages);
             router.push('/');
           } else {
-            throw new Error('Request was not successful');
+            //取得datagrid失敗
+            alert(data.messages);
           }
         } catch (error) {
           console.error('Error sending data to backend', error);
         }
       }
       function selectUse(item) {
-        Use.value = item;
+        searchParams.Use = item;
       }
       const selectStatus = (item) => {
-        Status.value = item;
+        searchParams.Status = item;
       };
       const selectDateCategory = (item) => {
-        DateCategory.value = item;
+        searchParams.DateCategory = item;
       };
       const clear = () => {
-        AO_ID.value = '';
-        ProjectName.value = '';
-        Use.value = '';
-        Status.value = '';
-        DateCategory.value = '';
-        StartDate.value = '';
-        EndDate.value = '';
+        for(const key in searchParams ) {
+          searchParams[key] = '';
+        }
         submit();
-      };
-      const frameworkComponents = {
-        agGridVue: AgGridVue
       };
       onMounted(() => {
         submit();
       });
       return {
-        AO_ID,
-        ProjectName,
-        Use,
+        searchParams,
         UseArray,
-        Status,
         StatusArray,
-        DateCategory,
         DateCategoryArray,
-        StartDate,
-        EndDate,
         pageSize,
         selectUse,
         selectStatus,
@@ -310,7 +285,6 @@
         clear,
         columnDefs,
         rowData,
-        frameworkComponents,
       };
     }
   };

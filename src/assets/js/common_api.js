@@ -91,6 +91,18 @@ export const getLayer = (async (Area_Id)=> {
     console.error('櫃位取得失敗:',error);
   }
 }) 
+// 取得人員List
+export const getAcount = (async (name) => {
+  const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchName?name=${name}`);
+  try {
+    const data = response.data;
+    if (data.state === 'success') {
+      return data.resultList;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+})
 // 專案名稱
 export const getProject = (async (projectCode) => {
   const form = new FormData();

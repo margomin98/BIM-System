@@ -102,19 +102,13 @@
 </template>
 
 <script>
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
-  import {
-    onMounted,
-    reactive,
-    ref
-  } from "vue";
+  import { AgGridVue } from "ag-grid-vue3";
+  import { onMounted, reactive, ref } from "vue";
   import Inventory_button from "@/components/Inventory_button";
   import Delete from "@/components/Inventory_data_delete_button";
   import Navbar from "@/components/Navbar.vue";
   import { PlanType , PlanStatus , PlanDateCategory} from "@/assets/js/dropdown.js"
-import { useRouter } from "vue-router";
+  import { useRouter } from "vue-router";
   export default {
     components: {
       Navbar,

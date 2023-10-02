@@ -96,7 +96,7 @@ reactive
   } from "ag-grid-vue3";
   import Storage_return_button from "@/components/Storage_return_button";
   import Delete_button from "@/components/Storage_delete_button";
-  import { StoreStatusArray } from "@/assets/js/dropdown";
+  import { Store_StatusArray } from "@/assets/js/dropdown";
   import { getEquipType , getEquipCategory } from '@/assets/js/common_api'
   import Navbar from "@/components/Navbar.vue";
   import router from "@/router";
@@ -126,7 +126,7 @@ reactive
       const DropdownArray = reactive({
         EquipType: [],
         EquipCategory: [],
-        Status: StoreStatusArray,
+        Status: Store_StatusArray,
       })
       const EquipCategoryInit = ref('請先選擇設備總類');
       const pageSize = 10;

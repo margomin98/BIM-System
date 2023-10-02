@@ -98,7 +98,7 @@
   } from 'vue-router';
   import Delete from "@/components/Delete_button";
   import Navbar from '@/components/Navbar.vue';
-  import { UseOptions } from "@/assets/js/dropdown";
+  import { Rent_UseOptions } from "@/assets/js/dropdown";
   import {
     onMounted,
     ref
@@ -168,7 +168,7 @@
       const router = useRouter();
       const AO_ID = route.query.search_id;
       const details = ref({});
-      const options = UseOptions;
+      const options = Rent_UseOptions;
       async function getDetails() {
         const axios = require('axios');
         try {

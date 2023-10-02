@@ -63,10 +63,10 @@
             <p><span>*</span>設備總類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                                {{ myForm.EquipTypeName || '請選擇' }}
-                              </button>
+                {{ myForm.EquipTypeName || '請選擇' }}
+              </button>
               <div class="dropdown-menu" aria-labelledby="typeDropdown">
-                <p v-for="(item, index) in myForm.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
+                <p v-for="(item, index) in myForm.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
               </div>
             </div>
           </div>
@@ -74,10 +74,10 @@
             <p><span>*</span>設備分類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(myForm.EquipTypeName !== '') }">
-                                {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
-                              </button>
+                {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
+              </button>
               <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                <p v-for="(item, index) in myForm.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
+                <p v-for="(item, index) in myForm.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
               </div>
             </div>
           </div>
@@ -126,10 +126,10 @@
   import { useRoute, useRouter } from 'vue-router';
   import Delete from "@/components/Rent_Edit_Delete_button";
   import Navbar from '@/components/Navbar.vue';
-  import { UseOptions } from "@/assets/js/dropdown";
+  import { Rent_UseOptions } from "@/assets/js/dropdown";
   import { onMounted, ref, reactive, } from 'vue';
-  import { getApplication , getEquipType , getEquipCategory , getProject} from "@/assets/js/common_api";
-  import { getDate , goBack } from "@/assets/js/common_fn";
+  import { getEquipType , getEquipCategory , getProject} from "@/assets/js/common_api";
+  import { goBack } from "@/assets/js/common_fn";
   export default {
     components: {
       Navbar,
@@ -141,7 +141,7 @@
       const router = useRouter();
       const AO_ID = route.query.search_id;
       const gridApi = ref(null);
-      const options = UseOptions;
+      const options = Rent_UseOptions;
       const columnDefs = [{
           suppressMovable: true,
           field: "",
@@ -204,15 +204,17 @@
       const increaseId = ref(0);
       const myForm = reactive({
         EquipTypeName: '',
+        EquipType_Id: '',
         EquipTypeArray: [],
         EquipCategoryArray: [],
         EquipCategoryName: '',
+        Category_Id: '',
         EquipCategoryInit: '請先選擇設備總類',
         ProductName: '',
         Number: 1,
         RequiredSpec: '',
+        ItemList: [],
         deleteList: [],
-        itemList: [],
       });
       onMounted(() => {
         getDetails();
@@ -229,8 +231,7 @@
         }
       }
       async function getEquipCategoryName() {
-        myForm.EquipCategoryName = '';
-        getEquipCategory(myForm.EquipTypeName)
+        getEquipCategory(myForm.EquipType_Id)
         .then((data)=>{
           myForm.EquipCategoryArray = data;
           })
@@ -253,19 +254,21 @@
         })
       }
       function selectType(item) {
-        myForm.EquipTypeName = item;
-        // console.log('選擇的總類:', EquipTypeName.value);
+        myForm.EquipTypeName = item.Name;
+        myForm.EquipType_Id = item.Id;
+        myForm.EquipCategoryName = '';
+        myForm.Category_Id = '';
         getEquipCategoryName();
         myForm.EquipCategoryInit = '請選擇';
       }
       function selectCategory(item) {
-        myForm.EquipCategoryName = item;
+        myForm.EquipCategoryName = item.Name;
+        myForm.Category_Id = item.Id;
       }
       async function getDetails() {
         const axios = require('axios');
         try {
           const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
-          console.log(response);
           const data = response.data;
           if (data.state === 'success') {
             if (data.resultList.Status !== '已填報') {
@@ -308,7 +311,7 @@
           ProjectCode: details.value.ProjectCode,
           Description: details.value.Description,
           deleteList: myForm.deleteList,
-          ItemList: myForm.itemList,
+          ItemList: myForm.ItemList,
         };
         console.log(requestData);
         try {
@@ -349,17 +352,23 @@
           alert('規格需求不可輸入超過100字')
           return
         }
+        // 顯示datagrid
         rowData.value.push({
           EquipTypeName: myForm.EquipTypeName,
+          EquipType_Id: myForm.EquipType_Id,
           EquipCategoryName: myForm.EquipCategoryName,
+          Category_Id: myForm.Category_Id,
           ProductName: myForm.ProductName,
           Number: myForm.Number,
           RequiredSpec: myForm.RequiredSpec,
           id: increaseId.value,
         });
-        myForm.itemList.push({
+        // 提交ItemList
+        myForm.ItemList.push({
           EquipTypeName: myForm.EquipTypeName,
+          EquipType_Id: myForm.EquipType_Id,
           EquipCategoryName: myForm.EquipCategoryName,
+          Category_Id: myForm.Category_Id,
           ProductName: myForm.ProductName,
           Number: myForm.Number,
           RequiredSpec: myForm.RequiredSpec,
@@ -369,10 +378,12 @@
         setTimeout(() => {
           gridApi.value.setRowData(rowData.value);
         }, 0);
-        console.log(myForm.itemList);
+        console.log(myForm.ItemList);
         //清空子項目
         myForm.EquipTypeName = '';
+        myForm.EquipType_Id = '';
         myForm.EquipCategoryName = '';
+        myForm.Category_Id = '';
         myForm.EquipCategoryInit = '請先選擇設備總類';
         myForm.ProductName = '';
         myForm.Number = 1;
@@ -392,9 +403,9 @@
         const deleteIndex = rowData.value.findIndex(item => item.id === newValue.id);
         // console.log(deleteIndex);
         rowData.value.splice(deleteIndex, 1);
-        const deleteIndex2 = myForm.itemList.findIndex(item => item.id === newValue.id);
-        myForm.itemList.splice(deleteIndex2, 1);
-        console.log(myForm.itemList);
+        const deleteIndex2 = myForm.ItemList.findIndex(item => item.id === newValue.id);
+        myForm.ItemList.splice(deleteIndex2, 1);
+        console.log(myForm.ItemList);
       }
       return {
         options,

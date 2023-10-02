@@ -32,8 +32,7 @@
                     {{ details.AreaName || '請選擇' }}
                   </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                  <p v-for="(item, index) in AreaArray" :key="index" class="dropdown-item" @click="selectArea(`${item}`)">
-                    {{ item }}</p>
+                  <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item" @click="selectArea(item)">{{ item.Name }}</p>
                 </div>
               </div>
             </div>
@@ -46,7 +45,7 @@
                     {{ details.LayerName || LayerInit }}
                   </button>
                 <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
-                  <p v-for="(item, index) in LayerArray" :key="index" class="dropdown-item" @click="selectLayer(`${item}`)">{{ item }}</p>
+                  <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(item)">{{ item.Name }}</p>
                 </div>
               </div>
             </div>
@@ -61,7 +60,7 @@
                     {{ details.Custodian || '請選擇' }}
                   </button>
                 <div class="dropdown-menu">
-                  <p v-for="(item, index) in CustodianArray" :key="index" class="dropdown-item" @click="selectAccount(item)">{{ item }}</p>
+                  <p v-for="(item, index) in DropdownArray.Custodian" :key="index" class="dropdown-item" @click="selectAccount(item)">{{ item }}</p>
                 </div>
               </div>
             </div>
@@ -100,7 +99,7 @@
                       {{ searchParams.EquipTypeName || '請選擇' }}
                     </button>
                   <div class="dropdown-menu" aria-labelledby="typeDropdown">
-                    <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
+                    <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
                   </div>
                 </div>
               </div>
@@ -113,7 +112,7 @@
                       {{ searchParams.EquipCategoryName || EquipCategoryInit }}
                     </button>
                   <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                    <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
+                    <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
                   </div>
                 </div>
               </div>
@@ -141,7 +140,7 @@
                                 {{ searchParams.EquipTypeName || '請選擇' }}
                               </button>
                             <div class="dropdown-menu" aria-labelledby="typeDropdown">
-                              <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
+                              <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
                             </div>
                           </div>
                         </div>
@@ -152,7 +151,7 @@
                                 {{ searchParams.EquipCategoryName || EquipCategoryInit }}
                               </button>
                             <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                              <p v-for="(item, index) in EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
+                              <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
                             </div>
                           </div>
                         </div>
@@ -198,6 +197,8 @@
   import List_view_button from "@/components/Rent_process_new_view_button";
   import Equipment_add from "@/components/Equipment_add_button";
   import Equipment_number from "@/components/Equipment_number_input.vue";
+  import { getEquipType , getEquipCategory , getArea , getLayer , getApplication , getAcount } from '@/assets/js/common_api'
+  import { goBack } from "@/assets/js/common_fn";
   import ListItem from "@/components/Equipment/item.vue"
   import Navbar from "@/components/Navbar.vue";
   import {
@@ -223,23 +224,25 @@
       const router = useRouter();
       const details = ref({});
       const Integration = reactive({ //整合人員、日期
-        Integrator: '',
-        IntegrateDate: '',
         IntegrationId: route.query.search_id,
       })
       const searchParams = reactive({ //搜尋參數
         EquipTypeName: '',
+        EquipType_Id: '',
         EquipCategoryName: '',
+        Category_Id: '',
         ProductName: '',
         Action: '',
       })
-      const EquipTypeArray = ref([]); //設備總類陣列 request拿到
-      const EquipCategoryArray = ref([]); //設備分類陣列 request拿到
+      const DropdownArray = reactive({
+        EquipType: [],
+        EquipCategory: [],
+        Custodian: [],
+        Area: [],
+        Layer: [],
+      })
       const EquipCategoryInit = ref('請先選擇設備總類');
-      const AreaArray = ref([]); //區域陣列
-      const LayerArray = ref([]); //櫃位陣列
       const LayerInit = ref('請先選擇區域');
-      const CustodianArray = ref([]);
       const ChangeParams = reactive({
         id: '',
         index: -1,
@@ -250,7 +253,9 @@
         IntegrationId: '',
         IntegrationName: '',
         AreaName: '',
+        Area_Id: '',
         LayerName: '',
+        Layer_Id: '',
         Custodian: '',
         AssetList: [],
         DeleteList: [],
@@ -447,19 +452,9 @@
       ];
       const rowData = ref([]);
       onMounted(() => {
-        getApplicationInfo();
-        getAccount();
+        getAccountName();
         getDetails('initial');
-        Integration.IntegrateDate = getDate();
       });
-      function getDate() {
-        const today = new Date();
-        var date = '';
-        date += (today.getFullYear() + '/');
-        date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
-        date += ((today.getDate()).toString().padStart(2, '0'));
-        return date;
-      }
       async function getDetails(type) {
         const axios = require('axios');
         const baseUrl = 'http://192.168.0.177:7008'
@@ -485,6 +480,9 @@
                   item.exist = true;
                   item.error_msg = '';
                 });
+                if(details.value.AreaName) {
+                  getLayerName()
+                }
                 console.log('details' ,details.value.AssetList);
                 break;
               case 'edit':
@@ -508,125 +506,54 @@
           console.error(error);
         }
       }
-      async function getApplicationInfo() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
-          // console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('申請人名稱:', data.resultList.Applicant);
-            if (data.resultList.Applicant) {
-              Integration.Integrator = data.resultList.Applicant;
-            }
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
-      async function getAreaName() {
-        if (AreaArray.value.length == 0) {
-          const axios = require('axios');
-          try {
-            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetAreaName');
-            // console.log(response);
-            const data = response.data;
-            if (data.state === 'success') {
-              // console.log('Area Get成功 資料如下\n', data.resultList.AreaName);
-              AreaArray.value = data.resultList.AreaName;
-            } else if (data.state === 'error') {
-              alert(data.messages);
-            } else if (data.state === 'account_error') {
-              alert(data.messages);
-              router.push('/');
-            }
-          } catch (error) {
-            console.error('Error sending applicant info request to backend');
-          }
-        }
-      }
-      async function getLayerName() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetLayerName?id=${details.value.AreaName}`);
-          // console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            // console.log('Layer Get成功 資料如下\n', data.resultList.LayerName);
-            LayerArray.value = data.resultList.LayerName;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
-      async function getAccount() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchName?name=`);
-          // console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            // console.log('Account Get成功 資料如下\n', data.resultList);
-            CustodianArray.value = data.resultList;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
       async function getEquipTypeName() {
-        if (EquipTypeArray.value.length == 0) {
-          const axios = require('axios');
-          try {
-            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetEquipType');
-            // console.log(response);
-            const data = response.data;
-            if (data.state === 'success') {
-              // console.log('總類Get成功 資料如下\n', data.resultList.EquipType);
-              EquipTypeArray.value = data.resultList.EquipType;
-            } else if (data.state === 'error') {
-              alert(data.messages);
-            } else if (data.state === 'account_error') {
-              alert(data.messages);
-              router.push('/');
-            }
-          } catch (error) {
-            console.error('Error sending applicant info request to backend', error);
-          }
+        if (DropdownArray.EquipType.length == 0) {
+          getEquipType()
+          .then((data)=>{
+            DropdownArray.EquipType = data;
+          })
+          .catch((error) =>{
+            console.error(error);
+          })
         }
       }
       async function getEquipCategoryName() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${searchParams.EquipTypeName}`);
-          // console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            // console.log('分類Get成功 資料如下\n', data.resultList.EquipCategory);
-            EquipCategoryArray.value = data.resultList.EquipCategory;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error('Error sending applicant info request to backend', error);
+        getEquipCategory(searchParams.EquipType_Id)
+          .then((data)=>{
+            DropdownArray.EquipCategory = data;
+          })
+          .catch((error) =>{
+            console.error(error);
+          })
+      }
+      async function getAreaName() {
+        if (DropdownArray.Area.length == 0) {
+          getArea()
+          .then((data)=>{
+            DropdownArray.Area = data;
+          })
+          .catch((error) =>{
+            console.error(error);
+          })
         }
+      }
+      async function getLayerName() {
+        getLayer(details.value.Area_Id)
+          .then((data)=>{
+            DropdownArray.Layer = data;
+          })
+          .catch((error) =>{
+            console.error(error);
+          })
+      }
+      async function getAccountName() {
+        getAcount('')
+        .then((data)=>{
+          DropdownArray.Custodian = data;
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
       }
       async function searchInventory(action) {
         // 更新+按鈕的行為
@@ -647,8 +574,8 @@
         const axios = require('axios');
         try {
           const form = new FormData();
-          form.append('EquipTypeName', searchParams.EquipTypeName);
-          form.append('EquipCategoryName', searchParams.EquipCategoryName);
+          form.append('EquipType_Id', searchParams.EquipType_Id);
+          form.append('Category_Id', searchParams.Category_Id);
           form.append('ProductName', searchParams.ProductName);
           const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchInventory', form);
           const data = response.data;
@@ -664,11 +591,11 @@
               }
               else {
                 // DeleteList項目是否有在這次的檢索Datagrid中(符合searchParams)，無則返回
-                if(searchParams.EquipTypeName !== '') {
-                  if(searchParams.EquipTypeName !== listItem.EquipTypeName)
+                if(searchParams.EquipType_Id !== '') {
+                  if(searchParams.EquipType_Id !== listItem.EquipType_Id)
                     return
-                  if(searchParams.EquipCategoryName !== '') {
-                    if(searchParams.EquipCategoryName !== listItem.EquipCategoryName)
+                  if(searchParams.Category_Id !== '') {
+                    if(searchParams.Category_Id !== listItem.Category_Id)
                       return
                   }
                 }
@@ -786,24 +713,28 @@
         }
       }
       function selectType(item) {
-        searchParams.EquipTypeName = item;
-        // console.log('選擇的總類:', EquipTypeName.value);
-        searchParams.EquipCategoryName = '';
-        getEquipCategoryName();
-        EquipCategoryInit.value = '請選擇';
+      searchParams.EquipTypeName = item.Name;
+      searchParams.EquipType_Id = item.Id;
+      searchParams.EquipCategoryName = '';
+      searchParams.Category_Id = '';
+      getEquipCategoryName();
+      EquipCategoryInit.value = '請選擇';
       }
       function selectCategory(item) {
-        searchParams.EquipCategoryName = item;
+        searchParams.EquipCategoryName = item.Name;
+        searchParams.Category_Id = item.Id;
       }
-      const selectArea = (item) => {
-        details.value.AreaName = item;
+      function selectArea(item) {
+        details.value.AreaName = item.Name;
+        details.value.Area_Id = item.Id;
         details.value.LayerName = '';
-        //API function here
+        details.value.Layer_Id = '';
         getLayerName();
         LayerInit.value = '請選擇';
       };
-      const selectLayer = (item) => {
-        details.value.LayerName = item;
+      function selectLayer(item) {
+        details.value.LayerName = item.Name;
+        details.value.Layer_Id = item.Id;
       };
       const selectAccount = (item) => {
         details.value.Custodian = item;
@@ -840,20 +771,13 @@
         getEquipCategoryName();
         searchInventory('edit');
       }
-      function goBack() {
-        window.history.back();
-      }
       return {
         details,
         Integration,
         searchParams,
-        AreaArray,
-        LayerArray,
+        DropdownArray,
         LayerInit,
-        EquipTypeArray,
-        EquipCategoryArray,
         EquipCategoryInit,
-        CustodianArray,
         gridApi,
         formParams,
         columnDefs,
