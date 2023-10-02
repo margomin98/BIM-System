@@ -341,7 +341,7 @@
   import AccountSearch from "@/components/API/account_search";
   import Navbar from "@/components/Navbar.vue";
   import { HistoryAction , TypeArray} from "@/assets/js/dropdown";
-  import { getEquipType , getEquipCategory , getArea , getLayer , getProject , getAcount } from '@/assets/js/common_api'
+  import { getEquipType , getEquipCategory , getArea , getLayer , getProject , getAccount } from '@/assets/js/common_api'
   import { onMounted, ref, reactive } from "vue";
   import { useRoute, useRouter } from "vue-router";
   import { Pagination } from 'swiper/modules';
@@ -633,7 +633,7 @@
         })
       }
       async function getAccountName() {
-        getAcount('')
+        getAccount('')
         .then((data)=>{
           DropdownArray.Custodian = data;
         })

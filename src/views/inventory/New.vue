@@ -196,7 +196,7 @@
   import Navbar from "@/components/Navbar.vue";
   import { onMounted, ref, reactive, } from "vue";
   import { useRouter } from "vue-router";
-  import { getEquipType , getEquipCategory , getArea , getLayer , getApplication , getAcount } from '@/assets/js/common_api'
+  import { getEquipType , getEquipCategory , getArea , getLayer , getApplication , getAccount } from '@/assets/js/common_api'
   import { goBack } from "@/assets/js/common_fn";
   export default {
     components: {
@@ -519,7 +519,7 @@
       }
       // 取得盤點人員DropdownArray
       async function getAccountName() {
-        getAcount('')
+        getAccount('')
         .then((data)=>{
           DropdownArray.InventoryStaff = data;
         })

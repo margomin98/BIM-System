@@ -51,7 +51,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend"><span>*</span>物流單號：</div>
-            <input type="text" class="form-control " placeholder="最多輸入20字" v-model="formParams.ShipmentNum" />
+            <input type="text" class="form-control " placeholder="最多輸入20字" v-model="itemParams.ShipmentNum" />
           </div>
         </div>
         <!-- 到貨件數 -->
@@ -60,37 +60,36 @@
             <div class="input-group-prepend"><span>*</span>到貨件數：</div>
             <div class="num_wrap d-flex ">
               <div class="number-input-box">
-                <input class="input-number " type="number" min="1" v-model="formParams.GoodsNum" />
+                <input class="input-number " type="number" min="1" v-model="itemParams.GoodsNum" />
               </div>
             </div>
           </div>
         </div>
         <!-- 通知對象 -->
-
         <div class="col">
           <div class="input-group  mb-3">
-            <div class="input-group-prepend"><span>*</span>通知對象：</div>
+            <div class="input-group-prepend">通知對象：</div>
             <div class="multi_user_select">
-    <VueMultiselect
-      v-model="taggingSelected"
-      :options="taggingOptions"
-      :multiple="true"
-      :close-on-select="false" :show-labels="false" 
-      :taggable="false"
-      @tag="addTag"
-      placeholder="輸入名字尋找對象"
-      label="name"
-      track-by="code"
-    />
-    <!-- 這個變成true的話，可以直接新增新的一個資料   :taggable="true" -->
-  </div>
+              <!-- :taggable="true"可以直接新增新的一個資料，@tag="tagFn"  -->
+              <VueMultiselect
+                v-model="itemParams.InformedPersons"
+                :options="DropdownArray.InformedPersons"
+                :multiple="true"
+                :close-on-select="false" 
+                :show-labels="false" 
+                :taggable="false"
+                placeholder="輸入名字尋找對象"
+                label="name"
+                track-by="name"
+              />
+            </div>
           </div>
         </div>
         <!-- 備註 -->
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">備註：</div>
-            <textarea  class="form-control " style="height: 250px;" placeholder="最多輸入500字" />
+            <textarea  class="form-control " style="height: 250px;" placeholder="最多輸入500字" v-model="itemParams.Memo"></textarea>
           </div>
         </div>
         <!-- 物流文件上傳 -->
@@ -146,26 +145,28 @@
         </swiper-container>
         <div class="swiper_pagination">
         </div>
-        <button class="m-auto send_btn">新增</button>
+        <button class="m-auto send_btn" @click="insertTabs">新增</button>
       </div>
     </div>
     <!-- 下半部上傳細項 -->
     <div class="info_wrap mt-5 col">
-      <div class="tab_section mt-5">
+      <div v-show="Tabs.length > 0" class="tab_section mt-5">
         <!-- tab頂端頁籤 -->
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#tabs" type="button" role="tab" aria-controls="tab" aria-selected="true">1</button>
+            <!-- <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#tabs" type="button" role="tab" aria-controls="tab" aria-selected="true">1</button> -->
+            <button v-for="tab in parseInt(Tabs.length)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab">{{ tab }}</button>
           </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
-          <div class="tab-pane fade show active" id="tabs" role="tabpanel" aria-labelledby="tab">
+          <div v-for="(tab, index) in Tabs" :key="index" :class="['tab-pane', 'fade', { 'show active': index === 0 }]" :id="'tab' + (index + 1)" role="tabpanel">
+          <!-- <div class="tab-pane fade show active" id="tabs" role="tabpanel" aria-labelledby="tab"> -->
             <h4 class="empty_text d-none">暫無有細項</h4>
             <!-- 物流單號 -->
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">物流單號：</div>
-                <input type="text" class="form-control readonly_box" readonly v-model="formParams.ShipmentNum" />
+                <input type="text" class="form-control readonly_box" readonly v-model="tab.ShipmentNum" />
               </div>
             </div>
             <!-- 到貨件數 -->
@@ -174,7 +175,7 @@
                 <div class="input-group-prepend">到貨件數：</div>
                 <div class="num_wrap d-flex ">
                   <div class="number-input-box">
-                    <input class="input-number readonly_box" type="number" readonly v-model="formParams.GoodsNum" />
+                    <input class="input-number readonly_box" type="number" readonly v-model="tab.GoodsNum" />
                   </div>
                 </div>
               </div>
@@ -183,21 +184,19 @@
             <div class="col">
               <div class="input-group  mb-3">
                 <div class="input-group-prepend">通知對象：</div>
-                  <div class="selected_user_wrap">
-                  <span class="selected_user">陳工人</span>
-                  <span class="selected_user">張工人</span></div>
-                    <input class="input-number readonly_box" type="number" readonly />
-                  </div>
-            
-            
+                <div class="selected_user_wrap">
+                  <span v-for="person in tab.InformedPersons" class="selected_user">{{ person }}</span>
+                </div>
+                <!-- <input class="input-number readonly_box" type="number" readonly /> -->
+              </div>
             </div>
-                   <!-- 備註 -->
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">備註：</div>
-            <textarea  class="form-control readonly_box" style="height: 250px;" readonly />
-          </div>
-        </div>
+            <!-- 備註 -->
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">備註：</div>
+                <textarea  class="form-control readonly_box" style="height: 250px;" readonly v-model="tab.Memo"></textarea>
+              </div>
+            </div>
             <!-- 資產照片 -->
             <div class="col">
               <div class="input-group">
@@ -207,12 +206,11 @@
             <div class="selected_file col mb-3">
               <div class="input-group">
                 <div class="file_upload_box">
-                  <p>xxxx.jpg</p>
-                  <!-- <div v-for="(file, index) in fileParams.viewDoc" :key="index" class="file_upload_wrap">
-                  <p>{{ file.name }}</p>
-                  <img class="view_icon" src="@/assets/view.png" @click="handleDocPreview(file)">
-                  <img class="delete_icon" src="@/assets/trash.png" @click="deleteFile('document',index)">
-                </div> -->
+                  <div v-for="(file, index) in tab.viewDoc" :key="index" class="file_upload_wrap">
+                    <p>{{ file.name }}</p>
+                    <img class="view_icon" src="@/assets/view.png" @click="handleDocPreview(file)">
+                    <img class="delete_icon" src="@/assets/trash.png" @click="deleteFile('document',index)">
+                  </div>
                 </div>
               </div>
               <!-- doc/docx download hidden Link -->
@@ -241,106 +239,60 @@
               </div>
             </div>
             <swiper-container class='swiper_section' :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
-              <swiper-slide class="custom-slide">
-                <!-- <img :src="file.link" alt="">
-              <span @click="deleteFile('picture' , index)">x</span> -->
-                <img src="https://img.freepik.com/free-photo/isolated-happy-smiling-dog-white-background-portrait-4_1562-693.jpg" alt="">
-              </swiper-slide>
-              <swiper-slide class="custom-slide">
-                <!-- <img :src="file.link" alt="">
-              <span @click="deleteFile('picture' , index)">x</span> -->
-                <img src="https://www.desertsun.com/gcdn/presto/2022/11/30/PPAS/eaa72eb4-968e-4586-ac3d-8546241734f9-IMG-5026.jpg?width=660&height=870&fit=crop&format=pjpg&auto=webp" alt="">
-              </swiper-slide>
-              <swiper-slide class="custom-slide">
-                <!-- <img :src="file.link" alt="">
-              <span @click="deleteFile('picture' , index)">x</span> -->
-                <img src="https://img.freepik.com/free-photo/isolated-happy-smiling-dog-white-background-portrait-4_1562-693.jpg" alt="">
-              </swiper-slide>
-              <swiper-slide class="custom-slide">
-                <!-- <img :src="file.link" alt="">
-              <span @click="deleteFile('picture' , index)">x</span> -->
-                <img src="https://img.freepik.com/free-photo/isolated-happy-smiling-dog-white-background-portrait-4_1562-693.jpg" alt="">
+              <swiper-slide v-for="file in tab.viewPic" class="custom-slide">
+                <img :src="file.link" alt="">
               </swiper-slide>
             </swiper-container>
             <div class="swiper_pagination">
             </div>
+            <div class="fixed_bottom_info">
+              <div>
+                <p @click="deleteTabs(index)">刪除此筆</p>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="fixed_bottom_info">
-        <div>
-          <p>刪除此筆</p>
-        </div>
-      </div>
         <div class="col button_wrap">
           <button class="back_btn" @click="goBack">回上一頁</button>
-          <button class="send_btn" @click="submit">新增</button>
+          <button class="send_btn" @click="submit">送出</button>
         </div>
       </div>
-      
     </div>
-    
   </div>
 </template>
 
 <script>
 import VueMultiselect from 'vue-multiselect'
-  import {
-    register
-  } from 'swiper/element/bundle';
-  import {
-    Pagination
-  } from 'swiper/modules';
-  register();
-  import Navbar from "@/components/Navbar.vue";
-  import {
-    onMounted,
-    reactive,
-    ref
-  } from "vue";
-  import {
-    useRouter
-  } from "vue-router";
-  export default {
+import { register } from 'swiper/element/bundle';
+import { Pagination } from 'swiper/modules';
+import Navbar from "@/components/Navbar.vue";
+import { onMounted, reactive, ref } from "vue";
+import { useRouter } from "vue-router";
+import { getApplication , getAccount } from '@/assets/js/common_api'
+import { goBack } from "@/assets/js/common_fn"
+register();
+export default {
     components: {
       Navbar,
       VueMultiselect  
     },
-    data () {
-    return {
-      taggingOptions: [
-        { name: 'Tag 1', code: 'T1' },
-        { name: 'Tag 2', code: 'T2' },
-        { name: 'Tag 3', code: 'T3' },
-        { name: 'Tag 4', code: 'T4' },
-        { name: 'Tag 5', code: 'T5' },
-        { name: 'Tag 6', code: 'T6' },
-        { name: 'Tag 7', code: 'T7' },
-        { name: 'Tag 8', code: 'T8' },
-        { name: 'Tag 9', code: 'T9' }
-      ],
-      taggingSelected: []
-    }
-  }
-,
-methods: {
-  addTag(newTag) {
-      const tag = {
-        name: newTag,
-        code: newTag.substring(0, 2) + Math.floor(Math.random() * 10000000),
-      };
-      this.taggingOptions.push(tag);
-      this.taggingSelected.push(tag);
-    }
-  },
     setup() {
       const router = useRouter();
       const Applicant = ref('')
+      const DropdownArray = reactive({
+        InformedPersons: [],
+      })
       // 上半部表單參數
       const formParams = reactive({
-        ShipmentNum: '',
         ShipmentCompany: '',
-        GoodsNum: 1,
         ReceivedDate: '',
+      })
+      // 中間 填報細項&文件&檔案
+      const itemParams = reactive({
+        ShipmentNum: '',
+        GoodsNum: 1,
+        InformedPersons: [],
+        Memo: '',
       })
       const fileParams = reactive({
         newDoc: [],
@@ -352,34 +304,15 @@ methods: {
         title: '',
         src: '',
       })
+      // 下半部頁籤
+      const Tabs = ref([]);
       // 控制按鈕
       const fileInput1 = ref();
       const fileInput2 = ref();
       onMounted(() => {
         getApplicationInfo();
+        getAccountName();
       });
-      // 收件人員資訊
-      async function getApplicationInfo() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
-          // console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('申請人名稱:', data.resultList.Applicant);
-            if (data.resultList.Applicant) {
-              Applicant.value = data.resultList.Applicant;
-            }
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
       // 控制 "選擇檔案"按鈕
       const openFileInput = (index) => {
         switch (index) {
@@ -391,7 +324,7 @@ methods: {
             break;
         }
       }
-      // 處理中間物流文件
+      // 處理物流文件
       function handleDocumentFile(event) {
         console.log('DocumentFiles:', event.target.files);
         const files = event.target.files;
@@ -473,7 +406,7 @@ methods: {
         console.log('uploaded viewDoc:', fileParams.viewDoc);
         console.log('uploaded newDoc:', fileParams.newDoc);
       }
-      // 處理下半部照片
+      // 處理照片
       function handlePictureFile(event) {
         console.log('PictureFiles:', event.target.files);
         const files = event.target.files;
@@ -564,7 +497,72 @@ methods: {
             break;
         }
       }
-      // 新增
+      // 新增頁籤
+      function insertTabs() {
+        if(!checkValid()) {
+          return ;
+        }
+        // 將細項、文件、照片push至頁籤
+        Tabs.value.push({
+          ShipmentNum: itemParams.ShipmentNum,
+          GoodsNum: itemParams.GoodsNum,
+          InformedPersons: itemParams.InformedPersons,
+          Memo: itemParams.Memo,
+          newDoc: fileParams.newDoc,
+          viewDoc: fileParams.viewDoc,
+          newPic: fileParams.newDoc,
+          viewPic: fileParams.viewPic,
+        })
+        // 清空細項、文件、照片
+        itemParams.ShipmentNum = '';
+        itemParams.GoodsNum = 1;
+        itemParams.InformedPersons = [];
+        itemParams.Memo = '';
+        for( const key in fileParams) {
+          fileParams[key] = []
+        }
+      }
+      // 刪除頁籤
+      function deleteTabs(index) {
+        Tabs.value.splice(index , 1);
+      }
+      // 檢查細項必填function
+      function checkValid() {
+        if(!itemParams.ShipmentNum || !itemParams.GoodsNum) {
+          alert('請輸入必填細項');
+          return false;
+        }
+        if(!/^[\s\S]{0,500}$/.test(itemParams.Memo)) {
+          alert('備註不可輸入超過500字');
+          return false;
+        }
+        return true ;
+      }
+      // 通知對象dropdown
+      async function getAccountName() {
+        getAccount('')
+        .then((data)=>{
+          data.forEach((Name) => {
+            DropdownArray.InformedPersons.push({
+              name: Name,
+            })
+          });
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
+      }
+      // 收件人員資訊
+      async function getApplicationInfo() {
+        getApplication()
+          .then((data)=>{
+            Applicant.value = data;
+          })
+          .catch((error) =>{
+            console.error(error);
+          })
+      }
+      // 送出
       async function submit() {
         // 檢查必填項目、格式        
         if (!formParams.ShipmentNum.trim() || !formParams.ShipmentCompany.trim() || formParams.GoodsNum < 1 || !formParams.ReceivedDate) {
@@ -667,14 +665,14 @@ methods: {
             });
         });
       }
-      function goBack() {
-        window.history.back();
-      }
       return {
         Applicant,
+        DropdownArray,
         formParams,
+        itemParams,
         fileParams,
         previewParams,
+        Tabs,
         fileInput1,
         fileInput2,
         pagination: {
@@ -686,11 +684,13 @@ methods: {
         handlePictureFile,
         handleDocPreview,
         deleteFile,
+        insertTabs,
+        deleteTabs,
         submit,
         goBack,
       }
     },
-  }
+}
 </script>
 <style src="@/assets/css/vue-multiselect.css"></style>
 <style lang="scss" scoped>
@@ -702,11 +702,11 @@ methods: {
     gap:0 5px;
     display: flex;
     .selected_user{
-  background: #8B8989;
-  color:white !important;
-border-radius: 7px;
-padding: 5px;
-}
+      background: #8B8989;
+      color:white !important;
+    border-radius: 7px;
+    padding: 5px;
+    }
   }
 
   .empty_text {

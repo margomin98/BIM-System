@@ -368,12 +368,8 @@
   import router from '@/router';
   import { UnitArray , PackageUnitArray} from '@/assets/js/dropdown'
   import { getApplication , getEquipType , getEquipCategory , getProject } from '@/assets/js/common_api'
-  import {
-    onMounted,
-    reactive,
-    ref,
-    watch,
-  } from 'vue';
+  import { goBack } from "@/assets/js/common_fn"
+  import { onMounted, reactive, ref, watch, } from 'vue';
   export default {
     components: {
       Navbar
@@ -887,9 +883,6 @@
           button.click();
         }
       });
-      function goBack() {
-        window.history.back();
-      }
       return {
         getDate,
         initFormDataArray,
