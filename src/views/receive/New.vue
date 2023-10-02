@@ -16,7 +16,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend"><span>*</span>貨運公司：</div>
-            <input type="text" class="form-control text-center" placeholder="最多輸入20字" v-model="formParams.ShipmentCompany" />
+            <input type="text" class="form-control " placeholder="最多輸入20字" v-model="formParams.ShipmentCompany" />
           </div>
         </div>
         <div class="row g-0">
@@ -32,10 +32,8 @@
             <div class="input-group mb-3">
               <div class="input-group-prepend"><span>*</span>收件日期：</div>
               <div class="date-selector">
-                <div class="input-container">
                   <input type="date" class="date-input" v-model="formParams.ReceivedDate" />
                 </div>
-              </div>
             </div>
           </div>
         </div>
@@ -53,7 +51,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend"><span>*</span>物流單號：</div>
-            <input type="text" class="form-control text-center" placeholder="最多輸入20字" v-model="formParams.ShipmentNum" />
+            <input type="text" class="form-control " placeholder="最多輸入20字" v-model="formParams.ShipmentNum" />
           </div>
         </div>
         <!-- 到貨件數 -->
@@ -65,6 +63,34 @@
                 <input class="input-number " type="number" min="1" v-model="formParams.GoodsNum" />
               </div>
             </div>
+          </div>
+        </div>
+        <!-- 通知對象 -->
+
+        <div class="col">
+          <div class="input-group  mb-3">
+            <div class="input-group-prepend"><span>*</span>通知對象：</div>
+            <div class="multi_user_select">
+    <VueMultiselect
+      v-model="taggingSelected"
+      :options="taggingOptions"
+      :multiple="true"
+      :close-on-select="false" :show-labels="false" 
+      :taggable="false"
+      @tag="addTag"
+      placeholder="輸入名字尋找對象"
+      label="name"
+      track-by="code"
+    />
+    <!-- 這個變成true的話，可以直接新增新的一個資料   :taggable="true" -->
+  </div>
+          </div>
+        </div>
+        <!-- 備註 -->
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">備註：</div>
+            <textarea  class="form-control " style="height: 250px;" placeholder="最多輸入500字" />
           </div>
         </div>
         <!-- 物流文件上傳 -->
@@ -153,6 +179,25 @@
                 </div>
               </div>
             </div>
+            <!-- 通知對象 -->
+            <div class="col">
+              <div class="input-group  mb-3">
+                <div class="input-group-prepend">通知對象：</div>
+                  <div class="selected_user_wrap">
+                  <span class="selected_user">陳工人</span>
+                  <span class="selected_user">張工人</span></div>
+                    <input class="input-number readonly_box" type="number" readonly />
+                  </div>
+            
+            
+            </div>
+                   <!-- 備註 -->
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">備註：</div>
+            <textarea  class="form-control readonly_box" style="height: 250px;" readonly />
+          </div>
+        </div>
             <!-- 資產照片 -->
             <div class="col">
               <div class="input-group">
@@ -238,6 +283,7 @@
 </template>
 
 <script>
+import VueMultiselect from 'vue-multiselect'
   import {
     register
   } from 'swiper/element/bundle';
@@ -257,7 +303,35 @@
   export default {
     components: {
       Navbar,
+      VueMultiselect  
     },
+    data () {
+    return {
+      taggingOptions: [
+        { name: 'Tag 1', code: 'T1' },
+        { name: 'Tag 2', code: 'T2' },
+        { name: 'Tag 3', code: 'T3' },
+        { name: 'Tag 4', code: 'T4' },
+        { name: 'Tag 5', code: 'T5' },
+        { name: 'Tag 6', code: 'T6' },
+        { name: 'Tag 7', code: 'T7' },
+        { name: 'Tag 8', code: 'T8' },
+        { name: 'Tag 9', code: 'T9' }
+      ],
+      taggingSelected: []
+    }
+  }
+,
+methods: {
+  addTag(newTag) {
+      const tag = {
+        name: newTag,
+        code: newTag.substring(0, 2) + Math.floor(Math.random() * 10000000),
+      };
+      this.taggingOptions.push(tag);
+      this.taggingSelected.push(tag);
+    }
+  },
     setup() {
       const router = useRouter();
       const Applicant = ref('')
@@ -618,11 +692,23 @@
     },
   }
 </script>
+<style src="@/assets/css/vue-multiselect.css"></style>
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
   span {
     @include red_star
   }
+  .selected_user_wrap{
+    gap:0 5px;
+    display: flex;
+    .selected_user{
+  background: #8B8989;
+  color:white !important;
+border-radius: 7px;
+padding: 5px;
+}
+  }
+
   .empty_text {
     text-align: center;
     color: white;
@@ -728,12 +814,12 @@
       background-color: #5e7aa2;
     }
   }
+
   @media only screen and (min-width: 1200px) {
     .main_section {
-      input {
-        @include dropdown_btn;
-        height: 35px;
-      }
+ .multi_user_select{
+  width:80%
+ }
       .swiper_section {
         swiper-slide {
           align-self: baseline;
@@ -825,6 +911,7 @@
             flex-wrap: nowrap;
             .input-number {
               @include count_btn;
+              height:35px
             }
             .form-control {
               height: 35px;
@@ -840,9 +927,13 @@
             }
           }
           .date-selector {
-            width: 200px;
+            width: 220px;
             input {
-              width: 100%
+              width: 100%;
+    border: none;
+    height: 35px;
+    border-radius: 5px;
+    padding: 5px;
             }
           }
         }
@@ -1004,7 +1095,8 @@
               }
             }
             .input-number {
-              @include count_btn;
+           
+              @include count_btn;   height:35px;
             }
             .form-control {
               height: 35px;
@@ -1034,14 +1126,14 @@
     }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .main_section {
-      input {
-        @include dropdown_btn;
-        height: 35px;
-      }
+    .main_section{
+
       .readonly_box {
         width: 100px !important;
       }
+      .multi_user_select{
+  width:77%
+ }
       .swiper_section {
         swiper-slide {
           align-self: baseline;
@@ -1080,7 +1172,7 @@
       }
       .info_wrap {
         margin: auto;
-        width: 700px;
+        width: 800px;
         .fixed_info {
           @include fixed_info;
           p {
@@ -1138,6 +1230,7 @@
             flex-wrap: nowrap;
             .input-number {
               @include count_btn;
+              height:35px
             }
             .form-control {
               height: 35px;
@@ -1151,6 +1244,16 @@
               width: 170px;
               text-align: end;
             }
+            .date-selector {
+            width: 220px;
+            input {
+              width: 100%;
+    border: none;
+    height: 35px;
+    border-radius: 5px;
+    padding: 5px;
+            }
+          }
           }
         }
         .button_wrap {
@@ -1200,9 +1303,7 @@
           }
         }
       }
-      .info_wrap:nth-child(3) {
-        margin-top: 5%;
-      }
+  
     }
     .modal {
       .dropdown-toggle {
@@ -1459,6 +1560,7 @@
     .main_section {
       .readonly_box {
         @include readonly_box;
+        width: 100%;
       }
       .selected_file {
         margin-top: 10px;
@@ -1479,11 +1581,7 @@
       .number-input-box {
         width: 100%
       }
-      input {
-        @include dropdown_btn;
-        height: 35px;
-        width: 100%
-      }
+  
       .swiper_section swiper-slide {
         span {
           cursor: pointer;
@@ -1586,6 +1684,15 @@
               color: white;
               font-weight: 700;
               font-size: 20px;
+            }
+          }
+          .date-selector {
+            input {
+              width: 100%;
+    border: none;
+    height: 35px;
+    border-radius: 5px;
+    padding: 5px;
             }
           }
         }
