@@ -42,9 +42,7 @@
     <!-- 中間填報物流細項 -->
     <div class="info_wrap mt-5 col">
       <div class="fixed_info">
-        <div>
-          <p>填報物流細項</p>
-        </div>
+        <p><span>*</span>填報物流細項(請至少新增一項)</p>
       </div>
       <div class="content">
         <!-- 物流單號 -->
@@ -197,10 +195,10 @@
                 <textarea  class="form-control readonly_box" style="height: 250px;" readonly v-model="tab.Memo"></textarea>
               </div>
             </div>
-            <!-- 資產照片 -->
+            <!-- 物流文件 -->
             <div class="col">
               <div class="input-group">
-                <div class="input-group-prepend">資產照片：</div>
+                <div class="input-group-prepend">物流文件：</div>
               </div>
             </div>
             <div class="selected_file col mb-3">
@@ -232,10 +230,10 @@
                 </div>
               </div>
             </div>
-            <!-- 照片上傳 -->
+            <!-- 照片 -->
             <div class="col">
               <div class="input-group">
-                <div class="input-group-prepend">照片上傳：</div>
+                <div class="input-group-prepend">照片：</div>
               </div>
             </div>
             <swiper-container class='swiper_section' :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
@@ -252,10 +250,10 @@
             </div>
           </div>
         </div>
-        <div class="col button_wrap">
-          <button class="back_btn" @click="goBack">回上一頁</button>
-          <button class="send_btn" @click="submit">送出</button>
-        </div>
+      </div>
+      <div class="col button_wrap">
+        <button class="back_btn" @click="goBack">回上一頁</button>
+        <button class="send_btn" @click="submit">送出</button>
       </div>
     </div>
   </div>
@@ -270,6 +268,7 @@ import { onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { getApplication , getAccount } from '@/assets/js/common_api'
 import { goBack } from "@/assets/js/common_fn"
+import axios from 'axios';
 register();
 export default {
     components: {
@@ -499,18 +498,19 @@ export default {
       }
       // 新增頁籤
       function insertTabs() {
-        if(!checkValid()) {
+        if(!checkValid('item')) {
           return ;
         }
+        const InformedArray = itemParams.InformedPersons.map((x)=> x.name);
         // 將細項、文件、照片push至頁籤
         Tabs.value.push({
           ShipmentNum: itemParams.ShipmentNum,
           GoodsNum: itemParams.GoodsNum,
-          InformedPersons: itemParams.InformedPersons,
+          InformedPersons: InformedArray,
           Memo: itemParams.Memo,
           newDoc: fileParams.newDoc,
           viewDoc: fileParams.viewDoc,
-          newPic: fileParams.newDoc,
+          newPic: fileParams.newPic,
           viewPic: fileParams.viewPic,
         })
         // 清空細項、文件、照片
@@ -524,18 +524,50 @@ export default {
       }
       // 刪除頁籤
       function deleteTabs(index) {
+
         Tabs.value.splice(index , 1);
+        // 若刪除的為最後一筆 則將頁籤切換到現有的最後一筆
+        if( index == Tabs.value.length && index != 0) {
+          const tabs = document.querySelectorAll('.nav-link');
+          tabs[index-1].classList.add('active');
+          // 显示对应的标签页内容
+          const tabContents = document.querySelectorAll('.tab-pane');
+          tabContents[index-1].classList.add('show', 'active');
+        }
       }
       // 檢查細項必填function
-      function checkValid() {
-        if(!itemParams.ShipmentNum || !itemParams.GoodsNum) {
-          alert('請輸入必填細項');
-          return false;
+      function checkValid(type) {
+        switch (type) {
+          case 'submit':
+            if(!formParams.ShipmentCompany || !formParams.ReceivedDate) {
+            alert('請輸入必填項目');
+            return false;
+            }
+            if(!/^[\s\S]{0,20}$/.test(formParams.ShipmentCompany)) {
+              alert('貨運公司不可輸入超過20字');
+              return false;
+            }
+            if(Tabs.value.length === 0) {
+              alert('請至少新增一項');
+              return false;
+            }
+            break;
+          case 'item':
+            if(!itemParams.ShipmentNum || !itemParams.GoodsNum) {
+            alert('請輸入必填細項');
+            return false;
+            }
+            if(!/^[\s\S]{0,500}$/.test(itemParams.Memo)) {
+              alert('備註不可輸入超過500字');
+              return false;
+            }
+            if(!/^[\s\S]{0,20}$/.test(itemParams.ShipmentNum)) {
+              alert('物流單號不可輸入超過20字');
+              return false;
+            }
+            break;
         }
-        if(!/^[\s\S]{0,500}$/.test(itemParams.Memo)) {
-          alert('備註不可輸入超過500字');
-          return false;
-        }
+
         return true ;
       }
       // 通知對象dropdown
@@ -565,41 +597,33 @@ export default {
       // 送出
       async function submit() {
         // 檢查必填項目、格式        
-        if (!formParams.ShipmentNum.trim() || !formParams.ShipmentCompany.trim() || formParams.GoodsNum < 1 || !formParams.ReceivedDate) {
-          alert('請輸入必填項目');
-          return
+        if(!checkValid('submit')) {
+          return;
         }
-        formParams.ShipmentNum = formParams.ShipmentNum.trim();
-        if (formParams.ShipmentNum && !/^[\s\S]{1,20}$/.test(formParams.ShipmentNum)) {
-          alert('物流單號不可輸入超過20字')
-          return
-        }
-        formParams.ShipmentCompany = formParams.ShipmentCompany.trim();
-        if (formParams.ShipmentCompany && !/^[\s\S]{1,20}$/.test(formParams.ShipmentCompany)) {
-          alert('貨運公司不可輸入超過20字')
-          return
-        }
-        console.log('上半部form', formParams);
-        console.log('中間物流文件', fileParams.newDoc);
-        console.log('下半部照片上傳', fileParams.newPic);
+        console.log('下半部頁籤', Tabs.value);
         try {
-          // 先建立表單並回傳AR_ID
-          const AR_ID = await sendUpperForm();
-          console.log('AR_ID(resolve):', AR_ID);
-          // 再依照AR_ID將 中間部分物流文件 & 下半部照片 單次檔案上傳
+          // 先建立表單並回傳resultList
+          const resultList = await sendTextForm();
+          console.log('resultList:', resultList);
+          // 再依照resultList.AR_ID將 物流文件 & 照片 單次上傳
           const filePromises = [];
-          for (let i = 0; i < fileParams.newDoc.length; i++) {
-            filePromises.push(sendFileForm(AR_ID, 'Document', fileParams.newDoc[i], i));
-          }
-          for (let i = 0; i < fileParams.newPic.length; i++) {
-            filePromises.push(sendFileForm(AR_ID, 'File', fileParams.newPic[i], i));
+          for(let i = 0 ; i < Tabs.value.length ; i++) {
+            const Doc = Tabs.value[i].newDoc
+            const Pic = Tabs.value[i].newPic
+            // const AR_ID = resultList.Tabs[i]
+            for (let j = 0; j < Doc.length; j++) {
+              filePromises.push(sendFileForm(AR_ID, 'Document', Doc[j], j));
+            }
+            for (let j = 0; j < Pic.length; j++) {
+              filePromises.push(sendFileForm(AR_ID, 'File', Pic[j], j));
+            }
           }
           // 等待所有檔案上傳完成
           await Promise.all(filePromises)
             .then(result => {
               const allSuccess = result.every(result => result === 'success')
               if (allSuccess) {
-                alert('新增收貨單成功\n單號為:' + AR_ID);
+                alert('新增收貨單成功\n單號為:' + resultList.Show_AR_ID);
                 router.push({
                   name: 'Receive_Datagrid'
                 });
@@ -611,24 +635,33 @@ export default {
           console.error(error);
         }
       }
-      // 上半部表單
-      function sendUpperForm() {
+      // 共同、頁籤文字部分
+      function sendTextForm() {
         return new Promise((resolve, reject) => {
-          // 在这里发送上半部分表单数据的请求
-          // 成功时，调用 resolve 并传递 AR_ID
-          // 失败时，调用 reject 并传递错误信息
-          const axios = require('axios');
-          const form = new FormData();
-          for (const key in formParams) {
-            form.append(key, formParams[key]);
+          const itemList =  Tabs.value.map((item) =>{
+            return {
+              ShipmentNum: item.ShipmentNum,
+              GoodsNum: item.GoodsNum,
+              InformedPersons: item.InformedPersons,
+              Memo: item.Memo,
+            }
+          })
+          // 先傳送除了檔案以外的內容
+          const requestJson = {
+            CommonInfo: 
+            {
+              ShipmentCompany: formParams.ShipmentCompany,
+              ReceivedDate: formParams.ReceivedDate,
+            },
+            Tabs: itemList,
           }
-          axios.post('http://192.168.0.177:7008/ReceivingMng/CreateReceipt', form)
+          console.log('共同、頁籤文字部分', requestJson);
+          axios.post('http://192.168.0.177:7008/ReceivingMng/CreateReceipt', requestJson)
             .then(response => {
               const data = response.data;
               if (data.state === 'success') {
-                const AR_ID = response.data.resultList.AR_ID;
-                console.log('建立上半部表單成功AR_ID(response):', AR_ID);
-                resolve(AR_ID);
+                const resultList = response.data.resultList;
+                resolve(resultList);
               } else {
                 reject(data.messages);
               }
@@ -638,14 +671,13 @@ export default {
             });
         });
       }
-      // 中、下上傳檔案部分
+      // 頁籤檔案部分
       function sendFileForm(AR_ID, type, fileData, index) {
         return new Promise((resolve, reject) => {
           const form = new FormData();
           form.append('AR_ID', AR_ID);
           form.append('num', index);
           form.append(type, fileData);
-          const axios = require('axios');
           axios.post('http://192.168.0.177:7008/ReceivingMng/UploadFile', form)
             .then((response) => {
               const data = response.data;
@@ -655,8 +687,7 @@ export default {
                 resolve(data.state)
               } else {
                 // 如果状态不是 "success"，调用 reject 并传递错误信息
-                console.error(type + '上傳失敗，' + response.data.messages);
-                reject(new Error('文件表单提交失败'));
+                reject(new Error(`第${index+1}個${type}檔案上傳失敗` + response.data.messages));
               }
             })
             .catch(error => {
