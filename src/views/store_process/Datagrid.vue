@@ -7,6 +7,10 @@
     <div class="container-fluid datagrid_section">
       <div class="row">
         <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+            <p>物流單號</p>
+            <input type="text"  />
+          </div>
+        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
           <p>設備總類</p>
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown"
@@ -68,7 +72,7 @@
         <div class="col-xl-2 col-lg-2 col-md-6 col-12">
           <p>櫃位</p>
           <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown"
+            <button style='  overflow: hidden;text-overflow: ellipsis;white-space: nowrap' class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false" :disabled="searchParams.AreaName === ''">
               {{ searchParams.LayerName || LayerInit }}
             </button>
@@ -114,7 +118,7 @@
         <!-- <button class="export_btn">匯出</button> -->
       </div>
     </div>
-    <ag-grid-vue style="height: 380px" class="ag-theme-alpine" :rowHeight="rowHeight" :columnDefs="columnDefs" :rowData="rowData"
+    <ag-grid-vue style="height: 380px" class="mb-5 ag-theme-alpine" :rowHeight="rowHeight" :columnDefs="columnDefs" :rowData="rowData"
       :paginationPageSize="pageSize" :pagination="true">
     </ag-grid-vue>
   </div>
@@ -192,6 +196,15 @@ export default {
     {
       headerName: "編號",
       field: "AI_ID",
+      unSortIcon: true,
+      sortable: true,
+      width: 150,
+      resizable: true,
+      suppressMovable: true
+    },
+    {
+      headerName: "物流單號",
+      field: "",
       unSortIcon: true,
       sortable: true,
       width: 150,
@@ -504,10 +517,13 @@ export default {
 
     .datagrid_section {
       .row {
-        gap: 20px 50px;
-        padding: 40px calc(100% - 98%);
         @include datagrid_bg;
-justify-content: center;
+        display: grid;
+    grid-template-rows: 1fr 1fr  1fr;;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 5px 0;
+    align-items: center;
+    padding: 30px 20px;
         p {
           @include datagrid_title;
         }

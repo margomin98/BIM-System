@@ -32,8 +32,8 @@
             <div class="input-group mb-3">
               <div class="input-group-prepend"><span>*</span>收件日期：</div>
               <div class="date-selector">
-                  <input type="date" class="date-input" v-model="formParams.ReceivedDate" />
-                </div>
+                <input type="date" class="date-input" v-model="formParams.ReceivedDate" />
+              </div>
             </div>
           </div>
         </div>
@@ -273,7 +273,59 @@ register();
 export default {
     components: {
       Navbar,
-      VueMultiselect  
+      VueMultiselect
+    },
+    data() {
+      return {
+        taggingOptions: [{
+            name: 'Tag 1',
+            code: 'T1'
+          },
+          {
+            name: 'Tag 2',
+            code: 'T2'
+          },
+          {
+            name: 'Tag 3',
+            code: 'T3'
+          },
+          {
+            name: 'Tag 4',
+            code: 'T4'
+          },
+          {
+            name: 'Tag 5',
+            code: 'T5'
+          },
+          {
+            name: 'Tag 6',
+            code: 'T6'
+          },
+          {
+            name: 'Tag 7',
+            code: 'T7'
+          },
+          {
+            name: 'Tag 8',
+            code: 'T8'
+          },
+          {
+            name: 'Tag 9',
+            code: 'T9'
+          }
+        ],
+        taggingSelected: []
+      }
+    },
+    methods: {
+      addTag(newTag) {
+        const tag = {
+          name: newTag,
+          code: newTag.substring(0, 2) + Math.floor(Math.random() * 10000000),
+        };
+        this.taggingOptions.push(tag);
+        this.taggingSelected.push(tag);
+      }
     },
     setup() {
       const router = useRouter();
@@ -723,23 +775,24 @@ export default {
     },
 }
 </script>
-<style src="@/assets/css/vue-multiselect.css"></style>
+<style src="@/assets/css/vue-multiselect.css">
+
+</style>
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
   span {
     @include red_star
   }
-  .selected_user_wrap{
-    gap:0 5px;
+  .selected_user_wrap {
+    gap: 0 5px;
     display: flex;
-    .selected_user{
+    .selected_user {
       background: #8B8989;
-      color:white !important;
-    border-radius: 7px;
-    padding: 5px;
+      color: white !important;
+      border-radius: 7px;
+      padding: 5px;
     }
   }
-
   .empty_text {
     text-align: center;
     color: white;
@@ -755,8 +808,8 @@ export default {
     cursor: pointer;
     margin: 0 3px
   }
-  .fixed_bottom_info{
-    p{
+  .fixed_bottom_info {
+    p {
       margin-bottom: 0;
     }
     display: flex;
@@ -845,12 +898,11 @@ export default {
       background-color: #5e7aa2;
     }
   }
-
   @media only screen and (min-width: 1200px) {
     .main_section {
- .multi_user_select{
-  width:80%
- }
+      .multi_user_select {
+        width: 80%
+      }
       .swiper_section {
         swiper-slide {
           align-self: baseline;
@@ -942,7 +994,7 @@ export default {
             flex-wrap: nowrap;
             .input-number {
               @include count_btn;
-              height:35px
+              height: 35px
             }
             .form-control {
               height: 35px;
@@ -961,10 +1013,10 @@ export default {
             width: 220px;
             input {
               width: 100%;
-    border: none;
-    height: 35px;
-    border-radius: 5px;
-    padding: 5px;
+              border: none;
+              height: 35px;
+              border-radius: 5px;
+              padding: 5px;
             }
           }
         }
@@ -1126,8 +1178,8 @@ export default {
               }
             }
             .input-number {
-           
-              @include count_btn;   height:35px;
+              @include count_btn;
+              height: 35px;
             }
             .form-control {
               height: 35px;
@@ -1157,14 +1209,13 @@ export default {
     }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .main_section{
-
+    .main_section {
       .readonly_box {
         width: 100px !important;
       }
-      .multi_user_select{
-  width:77%
- }
+      .multi_user_select {
+        width: 77%
+      }
       .swiper_section {
         swiper-slide {
           align-self: baseline;
@@ -1261,7 +1312,7 @@ export default {
             flex-wrap: nowrap;
             .input-number {
               @include count_btn;
-              height:35px
+              height: 35px
             }
             .form-control {
               height: 35px;
@@ -1276,15 +1327,15 @@ export default {
               text-align: end;
             }
             .date-selector {
-            width: 220px;
-            input {
-              width: 100%;
-    border: none;
-    height: 35px;
-    border-radius: 5px;
-    padding: 5px;
+              width: 220px;
+              input {
+                width: 100%;
+                border: none;
+                height: 35px;
+                border-radius: 5px;
+                padding: 5px;
+              }
             }
-          }
           }
         }
         .button_wrap {
@@ -1334,7 +1385,6 @@ export default {
           }
         }
       }
-  
     }
     .modal {
       .dropdown-toggle {
@@ -1453,91 +1503,71 @@ export default {
       }
     }
     .tab_section {
-        .nav-tabs {
-          button {
-            @include tab_section_num;
-            background: rgba(82, 136, 156, 0.8);
-          }
-          .active {
-            @include tab_section_num;
-            background: rgba(82, 136, 156, 0.8);
+      .nav-tabs {
+        button {
+          @include tab_section_num;
+          background: rgba(82, 136, 156, 0.8);
+        }
+        .active {
+          @include tab_section_num;
+          background: rgba(82, 136, 156, 0.8);
+        }
+      }
+      .tab-content {
+        background: rgba(82, 136, 156, 0.8);
+        padding: 50px 30px;
+        .form_search_wrap {
+          .input-group {
+            .input-group-prepend {
+              width: 113px;
+            }
+            input {
+              margin-left: 15px !important
+            }
           }
         }
-        .tab-content {
-          background: rgba(82, 136, 156, 0.8);
-          padding: 50px 30px;
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 113px;
-              }
-              input {
-                margin-left: 15px !important
-              }
-            }
-          }
-          .modal {
-            .modal-header {
-              background: #3D4E61;
+        .modal {
+          .modal-header {
+            background: #3D4E61;
+            color: white;
+            .close_icon {
               color: white;
-              .close_icon {
-                color: white;
-                font-weight: 700;
-                margin-bottom: 0;
+              font-weight: 700;
+              margin-bottom: 0;
+            }
+          }
+        }
+        .dropdown {
+          width: 60%;
+          .dropdown-menu {
+            width: 100%;
+            max-height: 250px;
+            overflow-y: auto;
+            p {
+              &:hover {
+                cursor: pointer;
               }
             }
           }
-          .dropdown {
-            width: 60%;
-            .dropdown-menu {
-              width: 100%;
-              max-height: 250px;
-              overflow-y: auto;
-              p {
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-            }
-            button {
-              @include dropdown-btn;
-              width: 100%;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
+          button {
+            @include dropdown-btn;
+            width: 100%;
+            color: black;
+            justify-content: space-between;
+            align-items: center;
           }
-          .input-group {
-            flex-wrap: nowrap;
-            span {
-              @include red_star
-            }
-            .selected_file {
-              margin-left: 20px;
-              p.title {
-                font-weight: 700;
-                color: white;
-                margin-bottom: 5px;
-              }
-              .file_upload_wrap {
-                margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  margin-bottom: 0;
-                  font-weight: 700;
-                  color: white;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
-                }
-              }
+        }
+        .input-group {
+          flex-wrap: nowrap;
+          span {
+            @include red_star
+          }
+          .selected_file {
+            margin-left: 20px;
+            p.title {
+              font-weight: 700;
+              color: white;
+              margin-bottom: 5px;
             }
             .file_upload_wrap {
               margin-bottom: 0;
@@ -1558,34 +1588,54 @@ export default {
                 }
               }
             }
-            .input-number {
-              @include count_btn;
+          }
+          .file_upload_wrap {
+            margin-bottom: 0;
+            display: flex;
+            img {
+              width: 25px;
+              height: 25px;
             }
-            .form-control {
-              height: 35px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              color: white;
+            p {
+              margin-bottom: 0;
               font-weight: 700;
-              font-size: 20px;
-              width: 120px;
-              text-align: end;
+              color: white;
+              &::before {
+                margin-right: 10px;
+                content: '·';
+                font-weight: 700;
+                color: white;
+              }
             }
-            .file_wrap {
-              display: flex;
-              flex-direction: column;
-              .choose_btn {
-                margin-bottom: 10px;
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
-                }
+          }
+          .input-number {
+            @include count_btn;
+          }
+          .form-control {
+            height: 35px;
+            border-radius: 0;
+          }
+          .input-group-prepend {
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            width: 120px;
+            text-align: end;
+          }
+          .file_wrap {
+            display: flex;
+            flex-direction: column;
+            .choose_btn {
+              margin-bottom: 10px;
+              @include choose_file_btn;
+              &:hover {
+                background: #3f608f;
               }
             }
           }
         }
       }
+    }
   }
   @media only screen and (max-width: 767px) {
     .main_section {
@@ -1612,7 +1662,6 @@ export default {
       .number-input-box {
         width: 100%
       }
-  
       .swiper_section swiper-slide {
         span {
           cursor: pointer;
@@ -1720,10 +1769,10 @@ export default {
           .date-selector {
             input {
               width: 100%;
-    border: none;
-    height: 35px;
-    border-radius: 5px;
-    padding: 5px;
+              border: none;
+              height: 35px;
+              border-radius: 5px;
+              padding: 5px;
             }
           }
         }
@@ -1893,115 +1942,115 @@ export default {
       }
     }
     .tab_section {
-          .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-            margin-left: unset !important;
+      .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+        margin-left: unset !important;
+      }
+      .nav-tabs {
+        button {
+          @include tab_section_num;
+          background: #5C7897;
+        }
+        .active {
+          @include tab_section_num;
+          background: rgba(82, 136, 156, 0.8);
+        }
+      }
+      .tab-content {
+        background: rgba(82, 136, 156, 0.8);
+        padding: 50px 30px;
+        .modal {
+          .modal-header {
+            background: #3D4E61;
+            color: white;
+            .close_icon {
+              color: white;
+              font-weight: 700;
+              margin-bottom: 0;
+            }
           }
-          .nav-tabs {
-            button {
-              @include tab_section_num;
-              background: #5C7897;
-            }
-            .active {
-              @include tab_section_num;
-              background: rgba(82, 136, 156, 0.8);
+        }
+        .dropdown {
+          margin-left: unset !important;
+          margin-top: 5px;
+          .dropdown-menu {
+            width: 100%;
+            max-height: 250px;
+            overflow-y: auto;
+            p {
+              &:hover {
+                cursor: pointer;
+              }
             }
           }
-          .tab-content {
-            background: rgba(82, 136, 156, 0.8);
-            padding: 50px 30px;
-            .modal {
-              .modal-header {
-                background: #3D4E61;
-                color: white;
-                .close_icon {
-                  color: white;
-                  font-weight: 700;
-                  margin-bottom: 0;
-                }
-              }
+          button {
+            @include dropdown-btn;
+            width: 100%;
+            color: black;
+            justify-content: space-between;
+            align-items: center;
+          }
+        }
+        .input-group {
+          flex-direction: column;
+          span {
+            @include red_star
+          }
+          .selected_file {
+            p.title {
+              font-weight: 700;
+              color: white;
+              margin-bottom: 5px;
             }
-            .dropdown {
-              margin-left: unset !important;
-              margin-top: 5px;
-              .dropdown-menu {
-                width: 100%;
-                max-height: 250px;
-                overflow-y: auto;
-                p {
-                  &:hover {
-                    cursor: pointer;
-                  }
-                }
+            .file_upload_wrap {
+              margin-bottom: 0;
+              display: flex;
+              img {
+                width: 25px;
+                height: 25px;
               }
-              button {
-                @include dropdown-btn;
-                width: 100%;
-                color: black;
-                justify-content: space-between;
-                align-items: center;
-              }
-            }
-            .input-group {
-              flex-direction: column;
-              span {
-                @include red_star
-              }
-              .selected_file {
-                p.title {
-                  font-weight: 700;
-                  color: white;
-                  margin-bottom: 5px;
-                }
-                .file_upload_wrap {
-                  margin-bottom: 0;
-                  display: flex;
-                  img {
-                    width: 25px;
-                    height: 25px;
-                  }
-                  p {
-                    margin-bottom: 0;
-                    font-weight: 700;
-                    color: white;
-                    &::before {
-                      margin-right: 10px;
-                      content: '·';
-                      font-weight: 700;
-                      color: white;
-                    }
-                  }
-                }
-              }
-              .input-number {
-                @include count_btn;
-              }
-              .form-control {
-                height: 35px;
-                width: 100%;
-                border-radius: 0;
-                margin-left: unset !important;
-                margin-top: 5px;
-              }
-              .input-group-prepend {
-                color: white;
+              p {
+                margin-bottom: 0;
                 font-weight: 700;
-                font-size: 20px;
-                width: 100%;
-              }
-              .file_wrap {
-                display: flex;
-                flex-direction: column;
-                .choose_btn {
-                  margin-top: 5px;
-                  margin-bottom: 10px;
-                  @include choose_file_btn;
-                  &:hover {
-                    background: #3f608f;
-                  }
+                color: white;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
+                  font-weight: 700;
+                  color: white;
                 }
+              }
+            }
+          }
+          .input-number {
+            @include count_btn;
+          }
+          .form-control {
+            height: 35px;
+            width: 100%;
+            border-radius: 0;
+            margin-left: unset !important;
+            margin-top: 5px;
+          }
+          .input-group-prepend {
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            width: 100%;
+          }
+          .file_wrap {
+            display: flex;
+            flex-direction: column;
+            .choose_btn {
+              margin-top: 5px;
+              margin-bottom: 10px;
+              @include choose_file_btn;
+              &:hover {
+                background: #3f608f;
               }
             }
           }
         }
+      }
+    }
   }
 </style>

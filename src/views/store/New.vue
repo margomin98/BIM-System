@@ -27,7 +27,7 @@
               <div class="input-group-prepend check_box">
                 <span>*</span>資產類型 :
               </div>
-              <div class="d-flex align-items-center">
+              <div class="d-flex align-items-center radio_wrap">
                 <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="資產" v-model="formParams.AssetType" />
                 <label class="form-check-label check_box" for='radio1'>資產</label>
                 <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="存貨" v-model="formParams.AssetType" />
@@ -40,7 +40,7 @@
         </div>
         <!-- 專案代碼 -->
         <div v-show="formParams.AssetType === '存貨'" class="col form_search_wrap">
-          <div class="input-group mb-4">
+          <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span>*</span>專案代碼 :
             </div>
@@ -50,7 +50,7 @@
         </div>
         <!-- 專案名稱 -->
         <div v-show="formParams.AssetType === '存貨'" class="col">
-          <div class="input-group mb-4">
+          <div class="input-group mb-3">
             <div class="input-group-prepend">
               專案名稱 :
             </div>
@@ -59,7 +59,7 @@
         </div>
         <!-- 物流單號 -->
         <div class="col form_search_wrap">
-          <div class="input-group mb-4">
+          <div class="input-group mb-3">
             <div class="input-group-prepend">
               物流單號 :
             </div>
@@ -78,14 +78,14 @@
         <!-- 設備 總類&分類 -->
         <div class="row row_wrap g-0">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4">
+            <div class="input-group mb-3">
               <div class="input-group-prepend equipment_wrap">
                 <span>*</span>設備總類 :
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                  {{ formParams.EquipTypeName || '請選擇' }}
-                </button>
+                    {{ formParams.EquipTypeName || '請選擇' }}
+                  </button>
                 <div class="dropdown-menu" aria-labelledby="typeDropdown">
                   <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
                 </div>
@@ -93,14 +93,14 @@
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4">
+            <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span>*</span>設備分類 :
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(formParams.EquipTypeName !== '') }">
-                  {{ formParams.EquipCategoryName || EquipCategoryInit }}
-                </button>
+                    {{ formParams.EquipCategoryName || EquipCategoryInit }}
+                  </button>
                 <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                   <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
                 </div>
@@ -110,7 +110,7 @@
         </div>
         <!-- 物品名稱 -->
         <div class="col">
-          <div class="input-group mb-4">
+          <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span>*</span>物品名稱 :
             </div>
@@ -119,7 +119,7 @@
         </div>
         <!-- 廠商 -->
         <div class="col">
-          <div class="input-group mb-4">
+          <div class="input-group mb-3">
             <div class="input-group-prepend">
               廠商 :
             </div>
@@ -128,7 +128,7 @@
         </div>
         <!-- 規格 -->
         <div class="col">
-          <div class="input-group mb-4">
+          <div class="input-group mb-3">
             <div class="input-group-prepend">
               規格 :
             </div>
@@ -137,7 +137,7 @@
         </div>
         <!-- 型號 -->
         <div class="col">
-          <div class="input-group mb-4">
+          <div class="input-group mb-3">
             <div class="input-group-prepend">
               型號 :
             </div>
@@ -147,7 +147,7 @@
         <!-- 包裝數量 & 包裝單位 -->
         <div class="row g-0 row_wrap">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4" id='number'>
+            <div class="input-group mb-3" id='number'>
               <div class="input-group-prepend info  d-xl-block d-lg-block d-md-block d-none">
                 <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"><span>*</span>包裝數量 :
               </div>
@@ -158,14 +158,14 @@
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4" id='unit'>
+            <div class="input-group mb-3" id='unit'>
               <div class="input-group-prepend">
                 <span>*</span>包裝單位 :
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{ formParams.Unit || '請選擇' }}
-                </button>
+                    {{ formParams.Unit || '請選擇' }}
+                  </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in DropdownArray.Unit" :key="index" class="dropdown-item" @click="selectUnit(`${item}`)">
                     {{ item }}</p>
@@ -177,7 +177,7 @@
         <!-- 數量 & 單位 (only耗材) -->
         <div v-show="formParams.AssetType === '耗材'" class="row g-0 row_wrap">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4" id='number'>
+            <div class="input-group mb-3" id='number'>
               <div class="input-group-prepend d-xl-block d-lg-block d-md-block d-none">
                 <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包"><span>*</span>數量 :
               </div>
@@ -188,14 +188,14 @@
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4" id='unit'>
+            <div class="input-group mb-3" id='unit'>
               <div class="input-group-prepend">
                 <span>*</span>單位 :
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{ formParams.PackageUnit || '請選擇' }}
-                </button>
+                    {{ formParams.PackageUnit || '請選擇' }}
+                  </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in DropdownArray.PackageUnit" :key="index" class="dropdown-item" @click="selectPackageUnit(`${item}`)">
                     {{ item }}</p>
@@ -207,7 +207,7 @@
         <!-- 保固期限 -->
         <div class="row g-0">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4">
+            <div class="input-group mb-3">
               <div class="input-group-prepend">
                 保固期限 :
               </div>
@@ -218,7 +218,7 @@
         <!-- 保固開始 & 保固結束 -->
         <div class="row g-0">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4">
+            <div class="input-group mb-3">
               <div class="input-group-prepend ">
                 保固開始日 :
               </div>
@@ -226,7 +226,7 @@
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4">
+            <div class="input-group mb-3">
               <div class="input-group-prepend date_wrap">
                 保固到期日 :
               </div>
@@ -236,7 +236,7 @@
         </div>
         <!-- 備註 -->
         <div class="col">
-          <div class="input-group mb-4">
+          <div class="input-group mb-3">
             <div class="input-group-prepend">
               備註 :
             </div>
@@ -255,25 +255,22 @@
         <!-- tab內容 -->
         <div class="tab-content" id="nav-tabContent">
           <div v-for="(tab, index) in tabData" :key="index" :class="['tab-pane', 'fade', { 'show active': index === 0 }]" :id="'tab' + (index + 1)" role="tabpanel">
-            <!-- 頁籤物品名稱 -->
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend"><span>*</span>物品名稱：</div>
-                <input type="text" class="form-control" v-model="tab.itemAssetName">
-              </div>
-            </div>
-            <!-- 頁籤資產編號 -->
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">資產編號：</div>
-                <input type="text" class="form-control" placeholder="BFXXXXXXXX" v-model="tab.itemAssetsId">
-              </div>
-            </div>
-            <!-- 頁籤S/N -->
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">S/N：</div>
-                <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="tab.itemSN">
+            <!-- 頁籤專案類型 -->
+            <div class="row">
+              <div class="col-12">
+                <div class="input-group mb-3 check_box_wrap">
+                  <div class="input-group-prepend check_box">
+                    專案類型 :
+                  </div>
+                  <div class="d-flex align-items-center radio_wrap">
+                    <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="資產" />
+                    <label class="form-check-label check_box" for='radio1'>資產</label>
+                    <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="存貨" />
+                    <label class="form-check-label check_box" for='radio2' data-toggle="tooltip" data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
+                    <input type="radio" class='form-check-input check_box' id="radio3" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="耗材" />
+                    <label class="form-check-label check_box" for='radio3'>耗材</label>
+                  </div>
+                </div>
               </div>
             </div>
             <!-- 頁籤專案代碼 -->
@@ -283,7 +280,7 @@
                   <span>*</span>專案代碼 :
                 </div>
                 <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="請輸入代碼" v-model="tab.itemProjectCode">
-                <button class="form_search_btn" @click ="getProjectName('tab' , index)">搜尋</button>
+                <button class="form_search_btn" @click="getProjectName('tab' , index)">搜尋</button>
               </div>
             </div>
             <!-- 頁籤專案名稱 -->
@@ -293,17 +290,158 @@
                 <input type="text" class="form-control readonly_box" v-model="tab.itemProjectName" readonly>
               </div>
             </div>
+            <!-- 頁籤設備總類 & 頁籤設備分類 -->
+            <div class="row row_wrap g-0">
+              <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend equipment_wrap">
+                    <span>*</span>設備總類 :
+                  </div>
+                  <div class="dropdown">
+                    <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
+                    {{ formParams.EquipTypeName || '請選擇' }}
+                  </button>
+                    <div class="dropdown-menu" aria-labelledby="typeDropdown">
+                      <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                <div class="input-group mb-">
+                  <div class="input-group-prepend">
+                    <span>*</span>設備分類 :
+                  </div>
+                  <div class="dropdown">
+                    <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(formParams.EquipTypeName !== '') }">
+                    {{ formParams.EquipCategoryName || EquipCategoryInit }}
+                  </button>
+                    <div class="dropdown-menu" aria-labelledby="categoryDropdown">
+                      <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 頁籤物品名稱 -->
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend"><span>*</span>物品名稱 :</div>
+                <input type="text" class="form-control" v-model="tab.itemAssetName">
+              </div>
+            </div>
+            <!-- 頁籤資產編號 -->
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">資產編號 :</div>
+                <input type="text" class="form-control" placeholder="BFXXXXXXXX" v-model="tab.itemAssetsId">
+              </div>
+            </div>
+            <!-- 頁籤廠商 -->
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  廠商 :
+                </div>
+                <input type="text" class="form-control" placeholder="最多輸入100字" v-model="formParams.VendorName">
+              </div>
+            </div>
+            <!-- 頁籤規格 -->
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  規格 :
+                </div>
+                <input type="text" class="form-control" placeholder="最多輸入100字" v-model="formParams.ProductSpec">
+              </div>
+            </div>
+            <!--頁籤型號 -->
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  型號 :
+                </div>
+                <input type="text" class="form-control" placeholder="最多輸入100字" v-model="formParams.ProductType">
+              </div>
+            </div>
+            <!-- 頁籤S/N -->
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">S/N :</div>
+                <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="tab.itemSN">
+              </div>
+            </div>
+            <!-- 頁籤 包裝數量 & 包裝單位 -->
+            <div class="row g-0 row_wrap">
+              <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                <div class="input-group mb-3" id='number'>
+                  <div class="input-group-prepend info  d-xl-block d-lg-block d-md-block d-none">
+                    <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">包裝數量 :
+                  </div>
+                  <div class="input-group-prepend info  d-xl-none d-lg-none d-md-none d-block">
+                    <span>*</span>包裝數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
+                  </div>
+                  <input class="input-number" type="number" v-model="formParams.Count" min="1">
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                <div class="input-group mb-3" id='unit'>
+                  <div class="input-group-prepend">
+                    <span>*</span>單位 :
+                  </div>
+                  <div class="dropdown">
+                    <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ formParams.Unit || '請選擇' }}
+                  </button>
+                    <div class="dropdown-menu" aria-labelledby="areaDropdown">
+                      <p v-for="(item, index) in DropdownArray.Unit" :key="index" class="dropdown-item" @click="selectUnit(`${item}`)">
+                        {{ item }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 頁籤 數量 & 單位 (only耗材) -->
+            <div v-show="formParams.AssetType === '耗材'" class="row g-0 row_wrap">
+              <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                <div class="input-group mb-3" id='number'>
+                  <div class="input-group-prepend d-xl-block d-lg-block d-md-block d-none">
+                    <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包"><span>*</span>數量 :
+                  </div>
+                  <div class="input-group-prepend d-xl-none d-lg-none d-md-none d-block">
+                    <span>*</span> 數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
+                  </div>
+                  <input class="input-number" type="number" v-model="formParams.PackageNum" min="1">
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                <div class="input-group mb-3" id='unit'>
+                  <div class="input-group-prepend">
+                    <span>*</span>單位 :
+                  </div>
+                  <div class="dropdown">
+                    <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ formParams.PackageUnit || '請選擇' }}
+                  </button>
+                    <div class="dropdown-menu" aria-labelledby="areaDropdown">
+                      <p v-for="(item, index) in DropdownArray.PackageUnit" :key="index" class="dropdown-item" @click="selectPackageUnit(`${item}`)">
+                        {{ item }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <!-- 頁籤備註 -->
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend">備註：</div>
+                <div class="input-group-prepend">備註 :</div>
                 <textarea class="col" rows="5" placeholder="最多輸入500字" v-model="tab.itemMemo"></textarea>
               </div>
             </div>
             <!-- 頁籤上傳檔案部分 -->
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend">資產照片：</div>
+                <div class="input-group-prepend">資產照片 :</div>
                 <div class="mb-3 file_wrap">
                   <button class='choose_btn' @click="openFileExplorer(index)">選擇檔案</button>
                   <input type="file" accept="image/*" ref="fileInputs" style="display: none;" multiple @change="handleFileChange(index , $event)" />
@@ -342,10 +480,12 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="staticBackdropLabel">警示</h5>
-              <div class="close_icon"><p type="button" data-bs-dismiss="modal" aria-label="Close">x</p></div>
+              <div class="close_icon">
+                <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
+              </div>
             </div>
             <div class="modal-body">
-            <p>按下確認後將會清空頁籤內容。</p>
+              <p>按下確認後將會清空頁籤內容。</p>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn confirm" data-bs-dismiss="modal" @click="formParams.Count = oldCount">取消</button>
@@ -364,7 +504,9 @@
 
 <script>
   import Navbar from '@/components/Navbar.vue';
-  import { useRoute } from 'vue-router';
+  import {
+    useRoute
+  } from 'vue-router';
   import router from '@/router';
   import { UnitArray , PackageUnitArray} from '@/assets/js/dropdown'
   import { getApplication , getEquipType , getEquipCategory , getProject } from '@/assets/js/common_api'
@@ -426,7 +568,7 @@
         getShipmentNum(); //物流單號選單選項
         ApplicationDate.value = getDate();
         // 若從收貨管理點進來 自動帶入AR_ID & 物流單號
-        if(route.query.search_id && route.query.ShipmentNum) {
+        if (route.query.search_id && route.query.ShipmentNum) {
           formParams.AR_ID = route.query.search_id;
           formParams.ShipmentNum = route.query.ShipmentNum;
           formParams.AssetType = '存貨'
@@ -443,10 +585,10 @@
       }
       // (重新)生成Tab頁籤資料
       function initFormDataArray() {
-        if(newCount.value) {
+        if (newCount.value) {
           tabNumber.value = newCount.value
         }
-        tabData.splice(0 , tabData.length); //先清空再重新生成
+        tabData.splice(0, tabData.length); //先清空再重新生成
         for (let i = 0; i < formParams.Count; i++) {
           tabData.push({
             PadNum: i,
@@ -502,14 +644,14 @@
             alert('請填寫所有必填項目');
             return false;
           }
-          if(!/^[\s\S]{1,100}$/.test(formParams.ProjectCode)) {
+          if (!/^[\s\S]{1,100}$/.test(formParams.ProjectCode)) {
             alert('專案代碼不可超過10字');
             return false;
           }
         }
         // 耗材需額外檢查包裝數量、單位(上半部)
         if (formParams.AssetType === '耗材') {
-          if (!formParams.PackageNum || !formParams.PackageUnit ) {
+          if (!formParams.PackageNum || !formParams.PackageUnit) {
             alert('請填寫所有必填項目');
             return false;
           }
@@ -534,18 +676,17 @@
             }
           }
           //3. 存貨需額外檢查專案代碼
-          if ( formParams.AssetType === '存貨') {
+          if (formParams.AssetType === '存貨') {
             // 未填寫
-            if(!form.itemProjectCode) {
+            if (!form.itemProjectCode) {
               InputError = true;
               InputMessages += '頁籤 ' + (i + 1) + ' :　專案代碼必填' + '\n';
             }
             // 填寫 但不符合格式
-            if(form.itemProjectCode && !/^[\s\S]{1,100}$/.test(form.itemProjectCode)) {
+            if (form.itemProjectCode && !/^[\s\S]{1,100}$/.test(form.itemProjectCode)) {
               InputError = true;
               InputMessages += '頁籤 ' + (i + 1) + ' :　專案代碼不可輸入超過10字' + '\n';
             }
-            
           }
           //4. S/N、備註不可超過100/500字
           if (form.itemSN) {
@@ -569,12 +710,11 @@
         }
         // 檢查頁籤之間AssetsId有無重複
         let seen = [];
-        for (let i=0 ; i< tabData.length ; i++) {
-          if(tabData[i].itemAssetsId) {
-            if(!seen[tabData[i].itemAssetsId]) {
+        for (let i = 0; i < tabData.length; i++) {
+          if (tabData[i].itemAssetsId) {
+            if (!seen[tabData[i].itemAssetsId]) {
               seen[tabData[i].itemAssetsId] = true;
-            }
-            else {
+            } else {
               InputError = true;
               InputMessages = '頁籤內資產編號不可重複，請再次確認資產編號欄位'
             }
@@ -648,14 +788,14 @@
         }
         // console.log(formData[index].previewUrl);
       }
-      function viewImgFile(index , file_index) {
+      function viewImgFile(index, file_index) {
         modalParams.title = tabData[index].viewFile[file_index].FileName;
         modalParams.src = tabData[index].viewFile[file_index].FileLink;
-        console.log('modalParams',modalParams);
+        console.log('modalParams', modalParams);
       }
-      function deleteFile(index , file_index) {
-        tabData[index].newFile.splice(file_index,1);
-        tabData[index].viewFile.splice(file_index,1);
+      function deleteFile(index, file_index) {
+        tabData[index].newFile.splice(file_index, 1);
+        tabData[index].viewFile.splice(file_index, 1);
       }
       // 關掉物流單號下拉式選單
       function handleBlur() {
@@ -664,7 +804,7 @@
         }, 100);
       }
       function viewReceive() {
-        if(formParams.AR_ID) {
+        if (formParams.AR_ID) {
           const link = document.getElementById('view-receive');
           link.click();
         }
@@ -672,35 +812,33 @@
       // 送出
       async function submit() {
         // 檢查必填項目、格式
-        if(!checkRequireParams()) {
+        if (!checkRequireParams()) {
           return
         }
-        console.log('上半部form',formParams);
-        console.log('下半部頁籤資料' , tabData);
-
+        console.log('上半部form', formParams);
+        console.log('下半部頁籤資料', tabData);
         try {
           // 先建立表單並回傳AR_ID
           const AI_ID = await sendUpperForm();
-          console.log('建立上半部表單成功AI_ID(resolve):' , AI_ID);
+          console.log('建立上半部表單成功AI_ID(resolve):', AI_ID);
           // 再依照AI_ID將 下半部頁籤 單次分別上傳
           const filePromises = [];
           for (let i = 0; i < tabData.length; i++) {
-            filePromises.push(sendFileForm(AI_ID, tabData[i] , i));
+            filePromises.push(sendFileForm(AI_ID, tabData[i], i));
           }
           // 等待所有檔案上傳完成
           await Promise.all(filePromises)
-          .then(result =>{
-            const allSuccess = result.every(result => result === 'success')
-            if(allSuccess) {
-            alert('傳送新品入庫表單成功\n單號為:' + AI_ID);
-              router.push({
-                name: 'Store_Datagrid'
-              });
-            }
-            else {
-              alert('傳送新品入庫表單失敗')
-            }
-          })
+            .then(result => {
+              const allSuccess = result.every(result => result === 'success')
+              if (allSuccess) {
+                alert('傳送新品入庫表單成功\n單號為:' + AI_ID);
+                router.push({
+                  name: 'Store_Datagrid'
+                });
+              } else {
+                alert('傳送新品入庫表單失敗')
+              }
+            })
         } catch (error) {
           console.error(error);
           alert(error);
@@ -716,18 +854,18 @@
           const form = new FormData();
           for (const key in formParams) {
             // 不為null、undefined、空字串就append
-            if(formParams[key]) {
+            if (formParams[key]) {
               form.append(key, formParams[key]);
             }
           }
           // 先剔除不需要key值
           form.delete('ShipmentNum')
           // 不是存貨->將ProjectCode、ProjectName從form移除
-          if(formParams.AssetType !== '存貨') {
+          if (formParams.AssetType !== '存貨') {
             form.delete('ProjectCode')
           }
           // 不是耗材->將PackageNum、PackageUnit從form移除
-          if(formParams.AssetType !== '耗材') {
+          if (formParams.AssetType !== '耗材') {
             form.delete('PackageNum')
             form.delete('PackageUnit')
           }
@@ -738,8 +876,7 @@
                 const AI_ID = response.data.resultList.AI_ID;
                 // console.log('建立上半部表單成功AI_ID(response):' , AI_ID);
                 resolve(AI_ID);
-              }
-              else {
+              } else {
                 reject(data.messages);
               }
             })
@@ -749,13 +886,13 @@
         });
       }
       // 中、下上傳檔案部分
-      function sendFileForm(AI_ID ,tabData ,index) {
+      function sendFileForm(AI_ID, tabData, index) {
         return new Promise((resolve, reject) => {
           const form = new FormData();
-          form.append('AI_ID' , AI_ID);
+          form.append('AI_ID', AI_ID);
           for (const key in tabData) {
             // 不為null、undefined、空字串就append
-            if(tabData[key]) {
+            if (tabData[key]) {
               form.append(key, tabData[key]);
             }
           }
@@ -765,11 +902,11 @@
           // newFile等等額外判斷 先剔除
           form.delete('newFile')
           // 不是存貨->將ProjectCode、ProjectName從form移除
-          if(formParams.AssetType !== '存貨') {
+          if (formParams.AssetType !== '存貨') {
             form.delete('itemProjectCode')
           }
-          for( let i=0 ; i < tabData.newFile.length ; i++) {
-            form.append('newFile' , tabData.newFile[i]);
+          for (let i = 0; i < tabData.newFile.length; i++) {
+            form.append('newFile', tabData.newFile[i]);
           }
           const axios = require('axios');
           axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form)
@@ -792,22 +929,22 @@
       }
       async function getApplicationInfo() {
         getApplication()
-          .then((data)=>{
+          .then((data) => {
             Applicant.value = data;
           })
-          .catch((error) =>{
+          .catch((error) => {
             console.error(error);
           })
       }
       async function getEquipTypeName() {
         if (DropdownArray.EquipType.length == 0) {
           getEquipType()
-          .then((data)=>{
-            DropdownArray.EquipType = data;
-          })
-          .catch((error) =>{
-            console.error(error);
-          })
+            .then((data) => {
+              DropdownArray.EquipType = data;
+            })
+            .catch((error) => {
+              console.error(error);
+            })
         }
       }
       async function getEquipCategoryName() {
@@ -815,9 +952,9 @@
         .then((data)=>{
             DropdownArray.EquipCategory = data;
           })
-        .catch((error) =>{
-          console.error(error);
-        })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       async function getShipmentNum() {
         // 物流單號有變動就將AR_ID清空 只有使用下拉選單才會傳AR_ID
@@ -830,7 +967,7 @@
         try {
           const data = response.data;
           if (data.state === 'success') {
-            console.log('物流單號查詢結果',data.resultList);
+            console.log('物流單號查詢結果', data.resultList);
             DropdownArray.ShipmentNum = data.resultList;
           } else if (data.state === 'account_error') {
             alert(data.messages);
@@ -842,7 +979,7 @@
           console.error(error);
         }
       }
-      async function getProjectName(type , index) {
+      async function getProjectName(type, index) {
         let code = ''
         switch (type) {
           case 'upperForm':
@@ -859,24 +996,24 @@
           return;
         }
         getProject(code)
-        .then((data)=>{
-          switch (type) {
-            case 'upperForm':
-              ProjectName.value = data;
-              break;
-            case 'tab':
-              tabData[index].itemProjectName = data;
-              break;
-          }
-        })
-        .catch((error) =>{
-          console.error(error);
-        })
+          .then((data) => {
+            switch (type) {
+              case 'upperForm':
+                ProjectName.value = data;
+                break;
+              case 'tab':
+                tabData[index].itemProjectName = data;
+                break;
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       // 監聽formParams.Count(包裝數量)的數值變動 -> 重新生成tab頁籤內容
-      watch(()=>formParams.Count, (newValue , oldValue) => {
+      watch(() => formParams.Count, (newValue, oldValue) => {
         // console.log(`包裝數量從${oldValue}變成${newValue}`);
-        if(newValue) {
+        if (newValue) {
           newCount.value = newValue;
           oldCount.value = oldValue;
           const button = document.getElementById('count-modal');
@@ -927,52 +1064,52 @@
     padding: 5px 10px 30px;
   }
   .count-modal {
-      .modal-body {
-        padding: 20px;
-        margin: auto;
-        p {
-          text-align: center;
-          font-weight: 800;
-        }
+    .modal-body {
+      padding: 20px;
+      margin: auto;
+      p {
+        text-align: center;
+        font-weight: 800;
       }
-      .modal-content {
-        margin: auto;
-      }
-      .modal-input-group-prepend {
-        width: auto;
-        font-weight: 700;
-        font-size: 20px;
-      }
-      .modal-footer {
-        padding: 0 12px 12px;
-        border: none;
-        justify-content: center;
-        .confirm {
-          color: white;
-          background-color: #132238;
-          &:hover {
-            background-color: #426497;
-          }
-        }
-      }
-      .modal-header {
-        h5 {
-          font-weight: 700;
-        }
-        background: #528091;
+    }
+    .modal-content {
+      margin: auto;
+    }
+    .modal-input-group-prepend {
+      width: auto;
+      font-weight: 700;
+      font-size: 20px;
+    }
+    .modal-footer {
+      padding: 0 12px 12px;
+      border: none;
+      justify-content: center;
+      .confirm {
         color: white;
-        display: flex;
-        justify-content: center;
-        padding: 0 16px 16px;
-        .close_icon {
-          height: 40px;
-          cursor: pointer;
-        }
-        .modal-title {
-          margin: auto;
-          padding-top: 16px;
+        background-color: #132238;
+        &:hover {
+          background-color: #426497;
         }
       }
+    }
+    .modal-header {
+      h5 {
+        font-weight: 700;
+      }
+      background: #528091;
+      color: white;
+      display: flex;
+      justify-content: center;
+      padding: 0 16px 16px;
+      .close_icon {
+        height: 40px;
+        cursor: pointer;
+      }
+      .modal-title {
+        margin: auto;
+        padding-top: 16px;
+      }
+    }
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
@@ -1025,7 +1162,7 @@
         }
         .input-number {
           @include count_btn;
-          width:58%;
+          width: 58%;
         }
         .fixed_info {
           @include fixed_info;
@@ -1039,8 +1176,7 @@
           .search_section {
             position: relative;
             display: flex;
-            flex: 1 1 auto;
-            // width: 100%;
+            flex: 1 1 auto; // width: 100%;
             .options-list {
               position: absolute;
               z-index: 99;
@@ -1059,8 +1195,7 @@
             .options-list li {
               padding: 10px 10px 0;
               font-size: 18px;
-              cursor: pointer;
-              // &:hover {
+              cursor: pointer; // &:hover {
               //   // background: #7893b7;
               //   // color: white;
               //   font-weight: 700;
@@ -1103,7 +1238,6 @@
             .flex {
               width: 130px
             }
-           
           }
           .dropdown {
             width: 218px;
@@ -1141,6 +1275,37 @@
         .tab-content {
           background: #3E4E5F;
           padding: 50px 30px;
+
+          .check_box_wrap {
+            font-weight: 700;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            div:nth-child(2) {
+              gap: 0 5px;
+              display: flex;
+            }
+          }
+             .dropdown {
+            width: 240px;
+            .dropdown-menu {
+              width: 100%;
+              max-height: 250px;
+              overflow-y: auto;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+            .dropdown-toggle {
+              width: 100%;
+              @include dropdown-btn;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
           .modal {
             .modal-header {
               background: #3D4E61;
@@ -1152,26 +1317,8 @@
               }
             }
           }
-          .dropdown {
-            width: 60%;
-            .dropdown-menu {
-              width: 100%;
-              max-height: 250px;
-              overflow-y: auto;
-              p {
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-            }
-            button {
-              @include dropdown-btn;
-              width: 100%;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
+         
+       
           .input-group {
             flex-wrap: nowrap;
             span {
@@ -1309,8 +1456,7 @@
           .search_section {
             position: relative;
             display: flex;
-            flex: 1 1 auto;
-            // width: 100%;
+            flex: 1 1 auto; // width: 100%;
             .options-list {
               position: absolute;
               z-index: 99;
@@ -1329,8 +1475,7 @@
             .options-list li {
               padding: 10px 10px 0;
               font-size: 18px;
-              cursor: pointer;
-              // &:hover {
+              cursor: pointer; // &:hover {
               //   // background: #7893b7;
               //   // color: white;
               //   font-weight: 700;
@@ -1373,7 +1518,6 @@
             .flex {
               width: 130px
             }
-        
           }
           .dropdown {
             width: 218px;
@@ -1422,8 +1566,18 @@
               }
             }
           }
-          .dropdown {
-            width: 60%;
+          .check_box_wrap {
+            font-weight: 700;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            div:nth-child(2) {
+              gap: 0 5px;
+              display: flex;
+            }
+          }
+             .dropdown {
+            width: 240px;
             .dropdown-menu {
               width: 100%;
               max-height: 250px;
@@ -1434,9 +1588,9 @@
                 }
               }
             }
-            button {
-              @include dropdown-btn;
+            .dropdown-toggle {
               width: 100%;
+              @include dropdown-btn;
               color: black;
               justify-content: space-between;
               align-items: center;
@@ -1554,8 +1708,7 @@
           .search_section {
             position: relative;
             display: flex;
-            flex: 1 1 auto;
-            // width: 100%;
+            flex: 1 1 auto; // width: 100%;
             .options-list {
               position: absolute;
               z-index: 99;
@@ -1574,8 +1727,7 @@
             .options-list li {
               padding: 10px 10px 0;
               font-size: 18px;
-              cursor: pointer;
-              // &:hover {
+              cursor: pointer; // &:hover {
               //   // background: #7893b7;
               //   // color: white;
               //   font-weight: 700;
@@ -1648,6 +1800,7 @@
             .check_box {
               margin-right: 10px;
             }
+            
           }
           .info {
             display: flex;
@@ -1693,6 +1846,21 @@
         .tab-content {
           background: #3E4E5F;
           padding: 50px 30px;
+          .check_box_wrap {
+             flex-direction: row !important;
+    font-weight: 700;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+    .radio_wrap{
+              gap: 0 10px;
+padding-left: 10px;
+            }
+            .input-group-prepend {
+              width: auto !important;
+    align-self: self-start;
+            }
+          }
           .modal {
             .modal-header {
               background: #3D4E61;

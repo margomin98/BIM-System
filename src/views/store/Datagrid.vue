@@ -56,6 +56,10 @@
             </div>
           </div>
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+            <p>物流單號</p>
+            <input type="text"  />
+          </div>
+          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>申請入庫日期(起)</p>
             <div class="date-selector">
               <div class="input-container">
@@ -147,14 +151,33 @@ reactive
           suppressMovable: true
         },
         {
-          headerName: "編號",
-          field: "AI_ID",
+          headerName: "單號",
+          field: "",
           unSortIcon: true,
           sortable: true,
           width: 150,
           resizable: true,
           suppressMovable: true
         },
+        {
+          headerName: "物流單號",
+          field: "",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+        
+        // {
+        //   headerName: "編號",
+        //   field: "AI_ID",
+        //   unSortIcon: true,
+        //   sortable: true,
+        //   width: 150,
+        //   resizable: true,
+        //   suppressMovable: true
+        // },
         {
           headerName: "設備總類",
           field: "EquipTypeName",
@@ -358,7 +381,7 @@ reactive
         .row {
           display: grid;
           grid-template-rows: 1fr 1fr;
-          grid-template-columns: 1fr 1fr 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr 1fr ; 
           gap: 40px 5px;
           p {
             @include datagrid_title;
