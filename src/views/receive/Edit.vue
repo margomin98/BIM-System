@@ -293,7 +293,7 @@
 
         try {
           // 先編輯表單上半部內容
-          const Show_AR_ID = await sendUpperForm();
+          const ShipmentNum = await sendUpperForm();
           // 再依照AR_ID將 中間部分物流文件 & 下半部照片 單次檔案上傳
           const filePromises = [];
           for (let i = 0; i < fileParams.newDoc.length; i++) {
@@ -308,7 +308,7 @@
           .then(result =>{
             const allSuccess = result.every(result => result === 'success')
             if(allSuccess) {
-            alert('編輯收貨單成功\n單號為:' + Show_AR_ID);
+            alert('編輯收貨單成功\n單號為:' + ShipmentNum);
               router.push({
                 name: 'Receive_Datagrid'
               });
@@ -335,16 +335,20 @@
             ShipmentCompany: details.value.ShipmentCompany,
             GoodsNum: details.value.GoodsNum,
             ReceivedDate: details.value.ReceivedDate,
-            InformedPersons: details.value.InformedPersons,
+            // InformedPersons: details.value.InformedPersons,
             Memo: details.value.Memo,
           };
-          // 如果有值則處理InformedPersons資料格式，無值則會套用上面的null
-          if(details.value.InformedPersons) {
-            const InformedArray = details.value.InformedPersons.map((x)=> x.name);
-            formParams.InformedPersons = InformedArray
-          }
           for (const key in formParams) {
             form.append(key, formParams[key]);
+          }
+          // 如果有通知對象則處理資料格式，無值則append空陣列
+          if(details.value.InformedPersons) {
+            const InformedArray = details.value.InformedPersons.map((x)=> x.name);
+            InformedArray.forEach((item)=>{
+              form.append('InformedPersons', item);
+            })
+          } else {
+            form.append('InformedPersons',[]);
           }
           // 欲刪除文件
           if(fileParams.deleteDoc.length > 0) {
@@ -362,9 +366,9 @@
             .then(response => {
               const data = response.data;
               if (data.state === 'success') {
-                const Show_AR_ID = response.data.resultList.Show_AR_ID;
-                console.log('編輯上半部表單成功Show_AR_ID:' , Show_AR_ID);
-                resolve(Show_AR_ID);
+                const ShipmentNum = response.data.resultList.ShipmentNum;
+                console.log('編輯上半部表單成功Show_AR_ID:' , ShipmentNum);
+                resolve(ShipmentNum);
               }
               else {
                 reject(data.messages);
