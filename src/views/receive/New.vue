@@ -610,7 +610,7 @@ export default {
           for(let i = 0 ; i < Tabs.value.length ; i++) {
             const Doc = Tabs.value[i].newDoc
             const Pic = Tabs.value[i].newPic
-            // const AR_ID = resultList.Tabs[i]
+            const AR_ID = resultList.Tabs[i]
             for (let j = 0; j < Doc.length; j++) {
               filePromises.push(sendFileForm(AR_ID, 'Document', Doc[j], j));
             }
