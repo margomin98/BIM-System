@@ -32,8 +32,8 @@
             <div class="input-group mb-3">
               <div class="input-group-prepend"><span>*</span>收件日期：</div>
               <div class="date-selector">
-                  <input type="date" class="date-input" v-model="formParams.ReceivedDate" />
-                </div>
+                <input type="date" class="date-input" v-model="formParams.ReceivedDate" />
+              </div>
             </div>
           </div>
         </div>
@@ -66,31 +66,20 @@
           </div>
         </div>
         <!-- 通知對象 -->
-
         <div class="col">
           <div class="input-group  mb-3">
             <div class="input-group-prepend"><span>*</span>通知對象：</div>
             <div class="multi_user_select">
-    <VueMultiselect
-      v-model="taggingSelected"
-      :options="taggingOptions"
-      :multiple="true"
-      :close-on-select="false" :show-labels="false" 
-      :taggable="false"
-      @tag="addTag"
-      placeholder="輸入名字尋找對象"
-      label="name"
-      track-by="code"
-    />
-    <!-- 這個變成true的話，可以直接新增新的一個資料   :taggable="true" -->
-  </div>
+              <VueMultiselect v-model="taggingSelected" :options="taggingOptions" :multiple="true" :close-on-select="false" :show-labels="false" :taggable="false" @tag="addTag" placeholder="輸入名字尋找對象" label="name" track-by="code" />
+              <!-- 這個變成true的話，可以直接新增新的一個資料   :taggable="true" -->
+            </div>
           </div>
         </div>
         <!-- 備註 -->
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">備註：</div>
-            <textarea  class="form-control " style="height: 250px;" placeholder="最多輸入500字" />
+            <textarea class="form-control " style="height: 250px;" placeholder="最多輸入500字" />
           </div>
         </div>
         <!-- 物流文件上傳 -->
@@ -183,21 +172,19 @@
             <div class="col">
               <div class="input-group  mb-3">
                 <div class="input-group-prepend">通知對象：</div>
-                  <div class="selected_user_wrap">
+                <div class="selected_user_wrap">
                   <span class="selected_user">陳工人</span>
                   <span class="selected_user">張工人</span></div>
-                    <input class="input-number readonly_box" type="number" readonly />
-                  </div>
-            
-            
+                <input class="input-number readonly_box" type="number" readonly />
+              </div>
             </div>
-                   <!-- 備註 -->
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">備註：</div>
-            <textarea  class="form-control readonly_box" style="height: 250px;" readonly />
-          </div>
-        </div>
+            <!-- 備註 -->
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">備註：</div>
+                <textarea class="form-control readonly_box" style="height: 250px;" readonly />
+              </div>
+            </div>
             <!-- 資產照片 -->
             <div class="col">
               <div class="input-group">
@@ -209,10 +196,10 @@
                 <div class="file_upload_box">
                   <p>xxxx.jpg</p>
                   <!-- <div v-for="(file, index) in fileParams.viewDoc" :key="index" class="file_upload_wrap">
-                  <p>{{ file.name }}</p>
-                  <img class="view_icon" src="@/assets/view.png" @click="handleDocPreview(file)">
-                  <img class="delete_icon" src="@/assets/trash.png" @click="deleteFile('document',index)">
-                </div> -->
+                    <p>{{ file.name }}</p>
+                    <img class="view_icon" src="@/assets/view.png" @click="handleDocPreview(file)">
+                    <img class="delete_icon" src="@/assets/trash.png" @click="deleteFile('document',index)">
+                  </div> -->
                 </div>
               </div>
               <!-- doc/docx download hidden Link -->
@@ -243,22 +230,22 @@
             <swiper-container class='swiper_section' :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
               <swiper-slide class="custom-slide">
                 <!-- <img :src="file.link" alt="">
-              <span @click="deleteFile('picture' , index)">x</span> -->
+                <span @click="deleteFile('picture' , index)">x</span> -->
                 <img src="https://img.freepik.com/free-photo/isolated-happy-smiling-dog-white-background-portrait-4_1562-693.jpg" alt="">
               </swiper-slide>
               <swiper-slide class="custom-slide">
                 <!-- <img :src="file.link" alt="">
-              <span @click="deleteFile('picture' , index)">x</span> -->
+                <span @click="deleteFile('picture' , index)">x</span> -->
                 <img src="https://www.desertsun.com/gcdn/presto/2022/11/30/PPAS/eaa72eb4-968e-4586-ac3d-8546241734f9-IMG-5026.jpg?width=660&height=870&fit=crop&format=pjpg&auto=webp" alt="">
               </swiper-slide>
               <swiper-slide class="custom-slide">
                 <!-- <img :src="file.link" alt="">
-              <span @click="deleteFile('picture' , index)">x</span> -->
+                <span @click="deleteFile('picture' , index)">x</span> -->
                 <img src="https://img.freepik.com/free-photo/isolated-happy-smiling-dog-white-background-portrait-4_1562-693.jpg" alt="">
               </swiper-slide>
               <swiper-slide class="custom-slide">
                 <!-- <img :src="file.link" alt="">
-              <span @click="deleteFile('picture' , index)">x</span> -->
+                <span @click="deleteFile('picture' , index)">x</span> -->
                 <img src="https://img.freepik.com/free-photo/isolated-happy-smiling-dog-white-background-portrait-4_1562-693.jpg" alt="">
               </swiper-slide>
             </swiper-container>
@@ -267,23 +254,21 @@
           </div>
         </div>
         <div class="fixed_bottom_info">
-        <div>
-          <p>刪除此筆</p>
+          <div>
+            <p>刪除此筆</p>
+          </div>
         </div>
-      </div>
         <div class="col button_wrap">
           <button class="back_btn" @click="goBack">回上一頁</button>
           <button class="send_btn" @click="submit">新增</button>
         </div>
       </div>
-      
     </div>
-    
   </div>
 </template>
 
 <script>
-import VueMultiselect from 'vue-multiselect'
+  import VueMultiselect from 'vue-multiselect'
   import {
     register
   } from 'swiper/element/bundle';
@@ -303,35 +288,60 @@ import VueMultiselect from 'vue-multiselect'
   export default {
     components: {
       Navbar,
-      VueMultiselect  
+      VueMultiselect
     },
-    data () {
-    return {
-      taggingOptions: [
-        { name: 'Tag 1', code: 'T1' },
-        { name: 'Tag 2', code: 'T2' },
-        { name: 'Tag 3', code: 'T3' },
-        { name: 'Tag 4', code: 'T4' },
-        { name: 'Tag 5', code: 'T5' },
-        { name: 'Tag 6', code: 'T6' },
-        { name: 'Tag 7', code: 'T7' },
-        { name: 'Tag 8', code: 'T8' },
-        { name: 'Tag 9', code: 'T9' }
-      ],
-      taggingSelected: []
-    }
-  }
-,
-methods: {
-  addTag(newTag) {
-      const tag = {
-        name: newTag,
-        code: newTag.substring(0, 2) + Math.floor(Math.random() * 10000000),
-      };
-      this.taggingOptions.push(tag);
-      this.taggingSelected.push(tag);
-    }
-  },
+    data() {
+      return {
+        taggingOptions: [{
+            name: 'Tag 1',
+            code: 'T1'
+          },
+          {
+            name: 'Tag 2',
+            code: 'T2'
+          },
+          {
+            name: 'Tag 3',
+            code: 'T3'
+          },
+          {
+            name: 'Tag 4',
+            code: 'T4'
+          },
+          {
+            name: 'Tag 5',
+            code: 'T5'
+          },
+          {
+            name: 'Tag 6',
+            code: 'T6'
+          },
+          {
+            name: 'Tag 7',
+            code: 'T7'
+          },
+          {
+            name: 'Tag 8',
+            code: 'T8'
+          },
+          {
+            name: 'Tag 9',
+            code: 'T9'
+          }
+        ],
+        taggingSelected: []
+      }
+    },
+    methods: {
+      addTag(newTag) {
+        const tag = {
+          name: newTag,
+          code: newTag.substring(0, 2) + Math.floor(Math.random() * 10000000),
+        };
+        this.taggingOptions.push(tag);
+        this.taggingSelected.push(tag);
+      }
+    },
     setup() {
       const router = useRouter();
       const Applicant = ref('')
@@ -692,23 +702,24 @@ methods: {
     },
   }
 </script>
-<style src="@/assets/css/vue-multiselect.css"></style>
+<style src="@/assets/css/vue-multiselect.css">
+
+</style>
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
   span {
     @include red_star
   }
-  .selected_user_wrap{
-    gap:0 5px;
+  .selected_user_wrap {
+    gap: 0 5px;
     display: flex;
-    .selected_user{
-  background: #8B8989;
-  color:white !important;
-border-radius: 7px;
-padding: 5px;
-}
+    .selected_user {
+      background: #8B8989;
+      color: white !important;
+      border-radius: 7px;
+      padding: 5px;
+    }
   }
-
   .empty_text {
     text-align: center;
     color: white;
@@ -724,8 +735,8 @@ padding: 5px;
     cursor: pointer;
     margin: 0 3px
   }
-  .fixed_bottom_info{
-    p{
+  .fixed_bottom_info {
+    p {
       margin-bottom: 0;
     }
     display: flex;
@@ -814,12 +825,11 @@ padding: 5px;
       background-color: #5e7aa2;
     }
   }
-
   @media only screen and (min-width: 1200px) {
     .main_section {
- .multi_user_select{
-  width:80%
- }
+      .multi_user_select {
+        width: 80%
+      }
       .swiper_section {
         swiper-slide {
           align-self: baseline;
@@ -911,7 +921,7 @@ padding: 5px;
             flex-wrap: nowrap;
             .input-number {
               @include count_btn;
-              height:35px
+              height: 35px
             }
             .form-control {
               height: 35px;
@@ -930,10 +940,10 @@ padding: 5px;
             width: 220px;
             input {
               width: 100%;
-    border: none;
-    height: 35px;
-    border-radius: 5px;
-    padding: 5px;
+              border: none;
+              height: 35px;
+              border-radius: 5px;
+              padding: 5px;
             }
           }
         }
@@ -1095,8 +1105,8 @@ padding: 5px;
               }
             }
             .input-number {
-           
-              @include count_btn;   height:35px;
+              @include count_btn;
+              height: 35px;
             }
             .form-control {
               height: 35px;
@@ -1126,14 +1136,13 @@ padding: 5px;
     }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .main_section{
-
+    .main_section {
       .readonly_box {
         width: 100px !important;
       }
-      .multi_user_select{
-  width:77%
- }
+      .multi_user_select {
+        width: 77%
+      }
       .swiper_section {
         swiper-slide {
           align-self: baseline;
@@ -1230,7 +1239,7 @@ padding: 5px;
             flex-wrap: nowrap;
             .input-number {
               @include count_btn;
-              height:35px
+              height: 35px
             }
             .form-control {
               height: 35px;
@@ -1245,15 +1254,15 @@ padding: 5px;
               text-align: end;
             }
             .date-selector {
-            width: 220px;
-            input {
-              width: 100%;
-    border: none;
-    height: 35px;
-    border-radius: 5px;
-    padding: 5px;
+              width: 220px;
+              input {
+                width: 100%;
+                border: none;
+                height: 35px;
+                border-radius: 5px;
+                padding: 5px;
+              }
             }
-          }
           }
         }
         .button_wrap {
@@ -1303,7 +1312,6 @@ padding: 5px;
           }
         }
       }
-  
     }
     .modal {
       .dropdown-toggle {
@@ -1422,91 +1430,71 @@ padding: 5px;
       }
     }
     .tab_section {
-        .nav-tabs {
-          button {
-            @include tab_section_num;
-            background: rgba(82, 136, 156, 0.8);
-          }
-          .active {
-            @include tab_section_num;
-            background: rgba(82, 136, 156, 0.8);
+      .nav-tabs {
+        button {
+          @include tab_section_num;
+          background: rgba(82, 136, 156, 0.8);
+        }
+        .active {
+          @include tab_section_num;
+          background: rgba(82, 136, 156, 0.8);
+        }
+      }
+      .tab-content {
+        background: rgba(82, 136, 156, 0.8);
+        padding: 50px 30px;
+        .form_search_wrap {
+          .input-group {
+            .input-group-prepend {
+              width: 113px;
+            }
+            input {
+              margin-left: 15px !important
+            }
           }
         }
-        .tab-content {
-          background: rgba(82, 136, 156, 0.8);
-          padding: 50px 30px;
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 113px;
-              }
-              input {
-                margin-left: 15px !important
-              }
-            }
-          }
-          .modal {
-            .modal-header {
-              background: #3D4E61;
+        .modal {
+          .modal-header {
+            background: #3D4E61;
+            color: white;
+            .close_icon {
               color: white;
-              .close_icon {
-                color: white;
-                font-weight: 700;
-                margin-bottom: 0;
+              font-weight: 700;
+              margin-bottom: 0;
+            }
+          }
+        }
+        .dropdown {
+          width: 60%;
+          .dropdown-menu {
+            width: 100%;
+            max-height: 250px;
+            overflow-y: auto;
+            p {
+              &:hover {
+                cursor: pointer;
               }
             }
           }
-          .dropdown {
-            width: 60%;
-            .dropdown-menu {
-              width: 100%;
-              max-height: 250px;
-              overflow-y: auto;
-              p {
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-            }
-            button {
-              @include dropdown-btn;
-              width: 100%;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
+          button {
+            @include dropdown-btn;
+            width: 100%;
+            color: black;
+            justify-content: space-between;
+            align-items: center;
           }
-          .input-group {
-            flex-wrap: nowrap;
-            span {
-              @include red_star
-            }
-            .selected_file {
-              margin-left: 20px;
-              p.title {
-                font-weight: 700;
-                color: white;
-                margin-bottom: 5px;
-              }
-              .file_upload_wrap {
-                margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  margin-bottom: 0;
-                  font-weight: 700;
-                  color: white;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
-                }
-              }
+        }
+        .input-group {
+          flex-wrap: nowrap;
+          span {
+            @include red_star
+          }
+          .selected_file {
+            margin-left: 20px;
+            p.title {
+              font-weight: 700;
+              color: white;
+              margin-bottom: 5px;
             }
             .file_upload_wrap {
               margin-bottom: 0;
@@ -1527,34 +1515,54 @@ padding: 5px;
                 }
               }
             }
-            .input-number {
-              @include count_btn;
+          }
+          .file_upload_wrap {
+            margin-bottom: 0;
+            display: flex;
+            img {
+              width: 25px;
+              height: 25px;
             }
-            .form-control {
-              height: 35px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              color: white;
+            p {
+              margin-bottom: 0;
               font-weight: 700;
-              font-size: 20px;
-              width: 120px;
-              text-align: end;
+              color: white;
+              &::before {
+                margin-right: 10px;
+                content: '·';
+                font-weight: 700;
+                color: white;
+              }
             }
-            .file_wrap {
-              display: flex;
-              flex-direction: column;
-              .choose_btn {
-                margin-bottom: 10px;
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
-                }
+          }
+          .input-number {
+            @include count_btn;
+          }
+          .form-control {
+            height: 35px;
+            border-radius: 0;
+          }
+          .input-group-prepend {
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            width: 120px;
+            text-align: end;
+          }
+          .file_wrap {
+            display: flex;
+            flex-direction: column;
+            .choose_btn {
+              margin-bottom: 10px;
+              @include choose_file_btn;
+              &:hover {
+                background: #3f608f;
               }
             }
           }
         }
       }
+    }
   }
   @media only screen and (max-width: 767px) {
     .main_section {
@@ -1581,7 +1589,6 @@ padding: 5px;
       .number-input-box {
         width: 100%
       }
-  
       .swiper_section swiper-slide {
         span {
           cursor: pointer;
@@ -1689,10 +1696,10 @@ padding: 5px;
           .date-selector {
             input {
               width: 100%;
-    border: none;
-    height: 35px;
-    border-radius: 5px;
-    padding: 5px;
+              border: none;
+              height: 35px;
+              border-radius: 5px;
+              padding: 5px;
             }
           }
         }
@@ -1862,115 +1869,115 @@ padding: 5px;
       }
     }
     .tab_section {
-          .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-            margin-left: unset !important;
+      .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+        margin-left: unset !important;
+      }
+      .nav-tabs {
+        button {
+          @include tab_section_num;
+          background: #5C7897;
+        }
+        .active {
+          @include tab_section_num;
+          background: rgba(82, 136, 156, 0.8);
+        }
+      }
+      .tab-content {
+        background: rgba(82, 136, 156, 0.8);
+        padding: 50px 30px;
+        .modal {
+          .modal-header {
+            background: #3D4E61;
+            color: white;
+            .close_icon {
+              color: white;
+              font-weight: 700;
+              margin-bottom: 0;
+            }
           }
-          .nav-tabs {
-            button {
-              @include tab_section_num;
-              background: #5C7897;
-            }
-            .active {
-              @include tab_section_num;
-              background: rgba(82, 136, 156, 0.8);
+        }
+        .dropdown {
+          margin-left: unset !important;
+          margin-top: 5px;
+          .dropdown-menu {
+            width: 100%;
+            max-height: 250px;
+            overflow-y: auto;
+            p {
+              &:hover {
+                cursor: pointer;
+              }
             }
           }
-          .tab-content {
-            background: rgba(82, 136, 156, 0.8);
-            padding: 50px 30px;
-            .modal {
-              .modal-header {
-                background: #3D4E61;
-                color: white;
-                .close_icon {
-                  color: white;
-                  font-weight: 700;
-                  margin-bottom: 0;
-                }
-              }
+          button {
+            @include dropdown-btn;
+            width: 100%;
+            color: black;
+            justify-content: space-between;
+            align-items: center;
+          }
+        }
+        .input-group {
+          flex-direction: column;
+          span {
+            @include red_star
+          }
+          .selected_file {
+            p.title {
+              font-weight: 700;
+              color: white;
+              margin-bottom: 5px;
             }
-            .dropdown {
-              margin-left: unset !important;
-              margin-top: 5px;
-              .dropdown-menu {
-                width: 100%;
-                max-height: 250px;
-                overflow-y: auto;
-                p {
-                  &:hover {
-                    cursor: pointer;
-                  }
-                }
+            .file_upload_wrap {
+              margin-bottom: 0;
+              display: flex;
+              img {
+                width: 25px;
+                height: 25px;
               }
-              button {
-                @include dropdown-btn;
-                width: 100%;
-                color: black;
-                justify-content: space-between;
-                align-items: center;
-              }
-            }
-            .input-group {
-              flex-direction: column;
-              span {
-                @include red_star
-              }
-              .selected_file {
-                p.title {
-                  font-weight: 700;
-                  color: white;
-                  margin-bottom: 5px;
-                }
-                .file_upload_wrap {
-                  margin-bottom: 0;
-                  display: flex;
-                  img {
-                    width: 25px;
-                    height: 25px;
-                  }
-                  p {
-                    margin-bottom: 0;
-                    font-weight: 700;
-                    color: white;
-                    &::before {
-                      margin-right: 10px;
-                      content: '·';
-                      font-weight: 700;
-                      color: white;
-                    }
-                  }
-                }
-              }
-              .input-number {
-                @include count_btn;
-              }
-              .form-control {
-                height: 35px;
-                width: 100%;
-                border-radius: 0;
-                margin-left: unset !important;
-                margin-top: 5px;
-              }
-              .input-group-prepend {
-                color: white;
+              p {
+                margin-bottom: 0;
                 font-weight: 700;
-                font-size: 20px;
-                width: 100%;
-              }
-              .file_wrap {
-                display: flex;
-                flex-direction: column;
-                .choose_btn {
-                  margin-top: 5px;
-                  margin-bottom: 10px;
-                  @include choose_file_btn;
-                  &:hover {
-                    background: #3f608f;
-                  }
+                color: white;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
+                  font-weight: 700;
+                  color: white;
                 }
+              }
+            }
+          }
+          .input-number {
+            @include count_btn;
+          }
+          .form-control {
+            height: 35px;
+            width: 100%;
+            border-radius: 0;
+            margin-left: unset !important;
+            margin-top: 5px;
+          }
+          .input-group-prepend {
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            width: 100%;
+          }
+          .file_wrap {
+            display: flex;
+            flex-direction: column;
+            .choose_btn {
+              margin-top: 5px;
+              margin-bottom: 10px;
+              @include choose_file_btn;
+              &:hover {
+                background: #3f608f;
               }
             }
           }
         }
+      }
+    }
   }
 </style>

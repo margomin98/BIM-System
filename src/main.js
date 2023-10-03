@@ -26,5 +26,6 @@ import '../src/assets/css/ad-grid.css';
 //   VDataTable,
 //   VDataTableVirtual
 // });
+import VueColumnsResizableVuetify from 'vue-columns-resizable-vuetify';
 
-createApp(App).use(EasyUI).use(store).use(router).mount('#app');
+createApp(App).use(EasyUI).use(VueColumnsResizableVuetify).use(store).use(router).mount('#app');
