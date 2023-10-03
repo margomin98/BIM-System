@@ -89,6 +89,7 @@
   import Rent_button from "@/components/Rent_button";
   import Delete from "@/components/Rent_delete_button.vue";
   import Navbar from "@/components/Navbar.vue";
+  import { Rent_UseOptions , Rent_StatusArray } from "@/assets/js/dropdown";
   import router from "@/router";
   export default {
     components: {
@@ -106,9 +107,9 @@
       const AO_ID = ref('');
       const ProjectName = ref('');
       const Use = ref('');
-      const UseArray = ['內部領用', '借測', '維修', '出貨', '報廢', '退貨']
+      const UseArray = Rent_UseOptions
       const Status = ref(''); //狀態
-      const StatusArray = ref(['已填報', '待審核', '待交付', '可交付', '部分交付', '已交付' , '審核不通過' ])
+      const StatusArray = Rent_StatusArray
       const StartDate = ref(''); //申請出庫日期(起)
       const EndDate = ref(''); //申請出庫日期(迄)
       const pageSize = 10;

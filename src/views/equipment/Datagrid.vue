@@ -30,8 +30,7 @@
                 {{ searchParams.AreaName || '請選擇' }}
               </button>
               <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                <p v-for="(item, index) in AreaArray" :key="index" class="dropdown-item" @click="selectArea(`${item}`)">
-                  {{ item }}</p>
+                <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item" @click="selectArea(item)">{{ item.Name }}</p>
               </div>
             </div>
           </div>
@@ -42,7 +41,7 @@
                 {{ searchParams.LayerName || LayerInit }}
               </button>
               <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
-                <p v-for="(item, index) in LayerArray" :key="index" class="dropdown-item" @click="selectLayer(`${item}`)">{{ item }}</p>
+                <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(item)">{{ item.Name }}</p>
               </div>
             </div>
           </div>
@@ -50,10 +49,10 @@
             <p>日期類型</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ searchParams.DateCategory || "請選擇" }}
-                    </button>
+                {{ searchParams.DateCategory || "請選擇" }}
+              </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p v-for="(item , index) in DateCategoryArray" :key="index" class="dropdown-item" @click="selectDateCategory(item)">{{ item }}</p>
+                <p v-for="(item , index) in DropdownArray.DateCategory" :key="index" class="dropdown-item" @click="selectDateCategory(item)">{{ item }}</p>
               </div>
             </div>
           </div>
@@ -61,7 +60,7 @@
             <p>日期(起)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="searchParams.StartDate" class="date-input" />
+                <input type="date" v-model="searchParams.StartDate" class="date-input" :disabled="!searchParams.DateCategory"/>
               </div>
             </div>
           </div>
@@ -69,7 +68,7 @@
             <p>日期(迄)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="searchParams.EndDate" class="date-input" />
+                <input type="date" v-model="searchParams.EndDate" class="date-input" :disabled="!searchParams.DateCategory"/>
               </div>
             </div>
           </div>
@@ -92,18 +91,13 @@
 </template>
 
 <script>
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
-  import {
-    onMounted,
-    reactive,
-    ref
-  } from "vue";
+  import { AgGridVue } from "ag-grid-vue3";
+  import { onMounted, reactive, ref } from "vue";
   import Equipment_button from "@/components/Equipment_button";
   import Delete from "@/components/Equip_delete_button";
   import Navbar from "@/components/Navbar.vue";
   import {EquipmentDataCategory} from "@/assets/js/dropdown.js"
+  import { getArea , getLayer } from '@/assets/js/common_api'
   export default {
     components: {
       Navbar,
@@ -117,15 +111,19 @@
         IntegrationId: '',
         IntegrationName: '',
         AreaName: '',
+        Area_Id: '',
         LayerName: '',
+        Layer_Id: '',
         DateCategory: '',
         StartDate: '',
         EndDate: '',
       });
-      const AreaArray = ref([]); //區域陣列
-      const LayerArray = ref([]); //櫃位陣列
+      const DropdownArray = reactive({
+        Area: [],
+        Layer: [],
+        DateCategory: EquipmentDataCategory,
+      })
       const LayerInit = ref('請先選擇區域');
-      const DateCategoryArray = EquipmentDataCategory;
       const pageSize = ref(10);
       const columnDefs = [{
             suppressMovable: true,
@@ -211,18 +209,9 @@
       });
       async function submit() {
         const formData = new FormData();
-        const formFields = {
-          'IntegrationId': searchParams.IntegrationId,
-          'IntegrationName': searchParams.IntegrationName,
-          'AreaName': searchParams.AreaName,
-          'LayerName': searchParams.LayerName,
-          'DateCategory': searchParams.DateCategory,
-          'StartDate': searchParams.StartDate,
-          'EndDate': searchParams.EndDate,
-        };
         //將表格資料append到 formData
-        for (const fieldName in formFields) {
-          formData.append(fieldName, formFields[fieldName]);
+        for (const key in searchParams) {
+          formData.append(key, searchParams[key]);
         }
         const axios = require('axios');
         try {
@@ -249,55 +238,37 @@
         }
       }
       async function getAreaName() {
-        if (AreaArray.value.length == 0) {
-          const axios = require('axios');
-          try {
-            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetAreaName');
-            console.log(response);
-            const data = response.data;
-            if (data.state === 'success') {
-              console.log('Area Get成功 資料如下\n', data.resultList.AreaName);
-              AreaArray.value = data.resultList.AreaName;
-            } else if (data.state === 'error') {
-              alert(data.messages);
-            } else if (data.state === 'account_error') {
-              alert(data.messages);
-              router.push('/');
-            }
-          } catch (error) {
-            console.error('Error sending applicant info request to backend');
-          }
+        if (DropdownArray.Area.length == 0) {
+          getArea()
+          .then((data)=>{
+            DropdownArray.Area = data;
+          })
+          .catch((error) =>{
+            console.error(error);
+          })
         }
       }
       async function getLayerName() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetLayerName?id=${searchParams.AreaName}`);
-          console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('Layer Get成功 資料如下\n', data.resultList.LayerName);
-            LayerArray.value = data.resultList.LayerName;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error('Error sending applicant info request to backend');
-        }
+        getLayer(searchParams.Area_Id)
+          .then((data)=>{
+            DropdownArray.Layer = data;
+          })
+          .catch((error) =>{
+            console.error(error);
+          })
       }
       const selectArea = (item) => {
-        searchParams.AreaName = item;
-        searchParams.LayerName = '';
-        //API function here
-        getLayerName();
-        LayerInit.value = '請選擇';
-      };
-      const selectLayer = (item) => {
-        searchParams.LayerName = item;
-      };
+      searchParams.AreaName = item.Name;
+      searchParams.Area_Id = item.Id;
+      searchParams.LayerName = '';
+      searchParams.Layer_Id = '';
+      getLayerName();
+      LayerInit.value = '請選擇';
+    };
+    const selectLayer = (item) => {
+      searchParams.LayerName = item.Name;
+      searchParams.Layer_Id = item.Id;
+    };
       const selectDateCategory = (item) => {
         searchParams.DateCategory = item;
       };
@@ -311,10 +282,8 @@
       return {
         details,
         searchParams,
-        AreaArray,
-        LayerArray,
+        DropdownArray,
         LayerInit,
-        DateCategoryArray,
         pageSize,
         columnDefs,
         rowData,

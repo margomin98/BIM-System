@@ -257,13 +257,13 @@
             apiUrl += baseUrl + '/GetParameter/EquipTypeParameter'
             break;
           case 'EquipCategoryName':
-            apiUrl += baseUrl + '/GetParameter/EquipCategoryParameter?id=' + `${EquipTypeName.value}`
+            apiUrl += baseUrl + '/GetParameter/EquipCategoryParameter?id=' + `${EquipTypeId.value}`
             break;
           case 'AreaName':
             apiUrl += baseUrl + '/GetParameter/AreaParameter'
             break;
           case 'LayerName':
-            apiUrl += baseUrl + '/GetParameter/LayerParameter?id=' + `${AreaName.value}`
+            apiUrl += baseUrl + '/GetParameter/LayerParameter?id=' + `${AreaId.value}`
             break;
         }
         try {

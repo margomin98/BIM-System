@@ -19,7 +19,7 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="typeDropdown">
               <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item"
-                @click="selectType(`${item}`)">{{ item }}</p>
+                @click="selectType(item)">{{ item.Name }}</p>
             </div>
           </div>
         </div>
@@ -32,7 +32,7 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="categoryDropdown">
               <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item"
-                @click="selectCategory(`${item}`)">{{ item }}</p>
+                @click="selectCategory(item)">{{ item.Name }}</p>
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@
               {{ searchParams.Status || "請選擇" }}
             </button>
             <div class="dropdown-menu" aria-labelledby="statusDropdown">
-              <p v-for="(item, index) in DropdownArray.Status" :key="index" class="dropdown-item" @click="selectStatus(`${item}`)">
+              <p v-for="(item, index) in DropdownArray.Status" :key="index" class="dropdown-item" @click="selectStatus(item)">
                 {{ item }}</p>
             </div>
           </div>
@@ -65,8 +65,7 @@
               {{ searchParams.AreaName || '請選擇' }}
             </button>
             <div class="dropdown-menu" aria-labelledby="areaDropdown">
-              <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item" @click="selectArea(`${item}`)">
-                {{ item }}</p>
+              <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item" @click="selectArea(item)">{{ item.Name }}</p>
             </div>
           </div>
         </div>
@@ -78,7 +77,7 @@
               {{ searchParams.LayerName || LayerInit }}
             </button>
             <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
-              <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(`${item}`)">{{ item }}</p>
+              <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(item)">{{ item.Name }}</p>
             </div>
           </div>
         </div>
@@ -131,7 +130,7 @@ import Storage_process_button from "@/components/Storage_process_button";
 import Delete from "@/components/Storage_process_delete_button";
 import Navbar from "@/components/Navbar.vue";
 import { onMounted, reactive, ref } from "vue";
-import { StoreStatusArray , DateTypeArray } from "@/assets/js/dropdown";
+import { Store_StatusArray , Store_Process_DateTypeArray } from "@/assets/js/dropdown";
 import { getEquipType , getEquipCategory , getArea , getLayer } from '@/assets/js/common_api'
 
 export default {
@@ -149,12 +148,16 @@ export default {
   setup() {
     const searchParams = reactive({
       EquipTypeName: '',
+      EquipType_Id: '',
       EquipCategoryName: '',
+      Category_Id: '',
       Status: '',
       AssetsId: '',
       AssetName: '',
       AreaName: '',
+      Area_Id: '',
       LayerName: '',
+      Layer_Id: '',
       DateCategory: '',
       StartDate: '',
       EndDate: '',
@@ -162,11 +165,11 @@ export default {
     const DropdownArray = reactive({
         EquipType: [],
         EquipCategory: [],
-        Status: StoreStatusArray,
+        Status: Store_StatusArray,
         Area: [],
         Layer: [],
-        DateType: DateTypeArray,
-      })
+        DateType: Store_Process_DateTypeArray,
+    })
     const EquipCategoryInit = ref('請先選擇設備總類');
     const LayerInit = ref('請先選擇區域');
     const pageSize = ref(10);
@@ -371,7 +374,7 @@ export default {
       }
     }
     async function getEquipCategoryName() {
-      getEquipCategory(searchParams.EquipTypeName)
+      getEquipCategory(searchParams.EquipType_Id)
         .then((data)=>{
           DropdownArray.EquipCategory = data;
         })
@@ -379,7 +382,6 @@ export default {
           console.error(error);
         })
     }
-
     async function getAreaName() {
       if (DropdownArray.Area.length == 0) {
         getArea()
@@ -391,9 +393,8 @@ export default {
         })
       }
     }
-
     async function getLayerName() {
-      getLayer(searchParams.AreaName)
+      getLayer(searchParams.Area_Id)
         .then((data)=>{
           DropdownArray.Layer = data;
         })
@@ -403,31 +404,32 @@ export default {
     }
 
     function selectType(item) {
-      searchParams.EquipTypeName = item;
+      searchParams.EquipTypeName = item.Name;
+      searchParams.EquipType_Id = item.Id;
       searchParams.EquipCategoryName = '';
+      searchParams.Category_Id = '';
       getEquipCategoryName();
       EquipCategoryInit.value = '請選擇';
     }
-
     function selectCategory(item) {
-      searchParams.EquipCategoryName = item;
+      searchParams.EquipCategoryName = item.Name;
+      searchParams.Category_Id = item.Id;
     }
-
-    const selectStatus = (item) => {
-      searchParams.Status = item;
-    };
-
-    const selectArea = (item) => {
-      searchParams.AreaName = item;
+    function selectArea(item) {
+      searchParams.AreaName = item.Name;
+      searchParams.Area_Id = item.Id;
       searchParams.LayerName = '';
+      searchParams.Layer_Id = '';
       getLayerName();
       LayerInit.value = '請選擇';
     };
-
-    const selectLayer = (item) => {
-      searchParams.LayerName = item;
+    function selectLayer(item) {
+      searchParams.LayerName = item.Name;
+      searchParams.Layer_Id = item.Id;
     };
-
+    const selectStatus = (item) => {
+      searchParams.Status = item;
+    };
     const selectDateType = (item) => {
       searchParams.DateCategory = item;
     };

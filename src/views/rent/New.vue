@@ -69,7 +69,7 @@
                 {{ myForm.EquipTypeName || '請選擇' }}
               </button>
               <div class="dropdown-menu" aria-labelledby="typeDropdown">
-                <p v-for="(item, index) in myForm.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
+                <p v-for="(item, index) in myForm.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
               </div>
             </div>
           </div>
@@ -80,7 +80,7 @@
                 {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
               </button>
               <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                <p v-for="(item, index) in myForm.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
+                <p v-for="(item, index) in myForm.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
               </div>
             </div>
           </div>
@@ -132,7 +132,7 @@
   import { AgGridVue } from "ag-grid-vue3";
   import Delete from "@/components/Rent_New_Delete_button";
   import Navbar from '@/components/Navbar.vue';
-  import { UseOptions } from "@/assets/js/dropdown";
+  import { Rent_UseOptions } from "@/assets/js/dropdown";
   import { onMounted, reactive, ref } from 'vue';
   import router from "@/router";
   import { getApplication , getEquipType , getEquipCategory , getProject} from "@/assets/js/common_api";
@@ -145,7 +145,7 @@
     },
     setup() {
       const gridApi = ref(null);
-      const options = UseOptions;
+      const options = Rent_UseOptions;
       const myForm = reactive({
         ApplicationDate: '',
         Applicant: '',
@@ -154,9 +154,11 @@
         ProjectName: '請搜尋專案代碼',
         Description: '',
         EquipTypeName: '',
+        EquipType_Id: '',
         EquipTypeArray: [],
         EquipCategoryArray: [],
         EquipCategoryName: '',
+        Category_Id: '',
         EquipCategoryInit: '請先選擇設備總類',
         ProductName: '',
         Number: 1,
@@ -250,8 +252,7 @@
         }
       }
       async function getEquipCategoryName() {
-        myForm.EquipCategoryName = '';
-        getEquipCategory(myForm.EquipTypeName)
+        getEquipCategory(myForm.EquipType_Id)
         .then((data)=>{
           myForm.EquipCategoryArray = data;
           })
@@ -275,13 +276,16 @@
 
       }
       function selectType(item) {
-        myForm.EquipTypeName = item;
-        // console.log('選擇的總類:', EquipTypeName.value);
+        myForm.EquipTypeName = item.Name;
+        myForm.EquipType_Id = item.Id;
+        myForm.EquipCategoryName = '';
+        myForm.Category_Id = '';
         getEquipCategoryName();
         myForm.EquipCategoryInit = '請選擇';
       }
       function selectCategory(item) {
-        myForm.EquipCategoryName = item;
+        myForm.EquipCategoryName = item.Name;
+        myForm.Category_Id = item.Id;
       }
       async function submit() {
         if (!myForm.Use || !myForm.ProjectCode || rowData.value.length === 0) {
@@ -346,7 +350,9 @@
         }
         rowData.value.push({
           EquipTypeName: myForm.EquipTypeName,
+          EquipType_Id: myForm.EquipType_Id,
           EquipCategoryName: myForm.EquipCategoryName,
+          Category_Id: myForm.Category_Id,
           ProductName: myForm.ProductName,
           Number: myForm.Number,
           RequiredSpec: myForm.RequiredSpec,
@@ -359,7 +365,9 @@
         }, 0);
         //清空子項目
         myForm.EquipTypeName = '';
+        myForm.EquipType_Id = '';
         myForm.EquipCategoryName = '';
+        myForm.Category_Id = '';
         myForm.EquipCategoryInit = '請先選擇設備總類';
         myForm.ProductName = '';
         myForm.Number = 1;

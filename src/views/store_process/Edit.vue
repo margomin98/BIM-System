@@ -260,8 +260,7 @@
                       {{ item.itemAreaName || '請選擇' }}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                      <p v-for="(item, area_index) in item.AreaArray" :key="area_index" class="dropdown-item" @click="selectArea(index, `${item}`)">
-                        {{ item }}</p>
+                      <p v-for="(item, area_index) in item.AreaArray" :key="area_index" class="dropdown-item" @click="selectArea(index, item)">{{ item.Name }}</p>
                     </div>
                   </div>
                 </div>
@@ -270,11 +269,11 @@
                 <div class="input-group mb-3 justify-content-end">
                   <div class="input-group-prepend"><span>*</span>儲位櫃位：</div>
                   <div class="dropdown">
-                    <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="item.itemAreaName === null || item.itemAreaName === ''">
+                    <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!item.itemAreaName">
                       {{ item.itemLayerName || item.LayerInit }}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
-                      <p v-for="(item, layer_index) in item.LayerArray" :key="layer_index" class="dropdown-item" @click="selectLayer(index, `${item}`)">{{ item }}</p>
+                      <p v-for="(item, layer_index) in item.LayerArray" :key="layer_index" class="dropdown-item" @click="selectLayer(index, item)">{{ item.Name }}</p>
                     </div>
                   </div>
                 </div>
@@ -453,10 +452,12 @@
             itemAssetName: initArray.itemAssetName,
             itemAssetsId: initArray.itemAssetsId,
             itemAreaName: initArray.itemAreaName,
+            itemArea_Id: initArray.itemArea_Id,
             itemProjectName: initArray.itemProjectName,
             itemProjectCode: initArray.itemProjectCode,
             AreaArray: [],
             itemLayerName: initArray.itemLayerName,
+            itemLayer_Id: initArray.itemLayer_Id,
             LayerArray: [],
             LayerInit: '請先選擇區域',
             itemSN: initArray.itemSN,
@@ -483,7 +484,7 @@
         }
       }
       async function getLayerName(index) {
-        getLayer(formData[index].itemAreaName)
+        getLayer(formData[index].itemArea_Id)
         .then((data)=>{
           formData[index].LayerArray = data;
         })
@@ -508,13 +509,16 @@
         })
       }
       function selectArea(index, item) {
-        formData[index].itemAreaName = item;
+        formData[index].itemAreaName = item.Name;
+        formData[index].itemArea_Id = item.Id;
         formData[index].itemLayerName = '';
+        formData[index].itemLayer_Id = '';
         getLayerName(index);
         formData[index].LayerInit = '請選擇';
       }
       function selectLayer(index, item) {
-        formData[index].itemLayerName = item;
+        formData[index].itemLayerName = item.Name;
+        formData[index].itemLayer_Id = item.Id;
       }
       // 暫存只檢查 1.物品名稱必填 2.存貨的專案代碼必填 3.其他子項目是否超過字數限制
       async function temp() {
@@ -713,7 +717,9 @@
             'itemAssetName': myForm.itemAssetName,
             'itemAssetsId': myForm.itemAssetsId,
             'itemAreaName': myForm.itemAreaName,
+            'itemArea_Id': myForm.itemArea_Id,
             'itemLayerName': myForm.itemLayerName,
+            'itemLayer_Id': myForm.itemLayer_Id,
             'itemSN': myForm.itemSN,
             'itemMemo': myForm.itemMemo,
           };

@@ -17,10 +17,10 @@
                 <p>設備總類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                        {{ searchParams.EquipTypeName || '請選擇' }}
-                      </button>
+                      {{ searchParams.EquipTypeName || '請選擇' }}
+                    </button>
                   <div class="dropdown-menu" aria-labelledby="typeDropdown">
-                    <p v-for="(item, index) in searchParams.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(`${item}`)">{{ item }}</p>
+                    <p v-for="(item, index) in searchParams.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
                   </div>
                 </div>
               </div>
@@ -28,10 +28,10 @@
                 <p>設備分類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
-                        {{ searchParams.EquipCategoryName || searchParams.EquipCategoryInit }}
-                      </button>
+                      {{ searchParams.EquipCategoryName || searchParams.EquipCategoryInit }}
+                    </button>
                   <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                    <p v-for="(item, index) in searchParams.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(`${item}`)">{{ item }}</p>
+                    <p v-for="(item, index) in searchParams.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
                   </div>
                 </div>
               </div>
@@ -201,25 +201,18 @@
 </template>
 
 <script>
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
+  import { AgGridVue } from "ag-grid-vue3";
   import Storage_button from "@/components/Storage_button";
   import Rent_process_new_view_button from "@/components/Rent_process_new_view_button";
   import Storage_add from "@/components/Storage_add_button";
   import Storage_number from "@/components/Storage_number_input"
   import Delete_button from "@/components/Rent_proccess_new_delete_button";
   import Navbar from "@/components/Navbar.vue";
-  import { UseOptions } from "@/assets/js/dropdown";
-  import {
-    onMounted,
-    ref,
-    reactive,
-  } from "vue";
-  import {
-    useRoute,
-    useRouter
-  } from "vue-router";
+  import { Rent_UseOptions } from "@/assets/js/dropdown";
+  import { getApplication , getEquipType , getEquipCategory } from "@/assets/js/common_api";
+  import { getDate , goBack } from "@/assets/js/common_fn";
+  import { onMounted, ref, reactive } from "vue";
+  import { useRoute, useRouter } from "vue-router";
   export default {
     components: {
       Navbar,
@@ -235,7 +228,7 @@
       const router = useRouter();
       const AO_ID = route.query.search_id;
       const details = ref({});
-      const options = UseOptions;
+      const options = Rent_UseOptions;
       const gridApi2 = ref(null);
       const gridApi3 = ref(null);
       const selectedNumberArray = ref([]); //紀錄不同項目已選數量array
@@ -246,8 +239,10 @@
       const PrepareMemo = ref('');
       const searchParams = reactive({
         EquipTypeName: '',
+        EquipType_Id: '',
         EquipTypeArray: [],
         EquipCategoryName: '',
+        Category_Id: '',
         EquipCategoryArray: [],
         EquipCategoryInit: '請先選擇設備總類',
         ProductName: '',
@@ -263,17 +258,15 @@
           field: "",
           cellRenderer: "Storage_button",
           cellRendererParams: {
-            searchList: data => {
-              console.log(data);
-              searchParams.EquipTypeName = data.EquipTypeName;
+            searchList: (data) => {
+              for(const key in data) {
+                searchParams[key] = data[key];
+              }
               getEquipCategoryName();
-              searchParams.EquipCategoryName = data.EquipCategoryName;
-              searchParams.Number = data.Number;
-              searchParams.RequiredSpec = data.RequiredSpec;
-              searchParams.id = data.id;
-              searchParams.item_id = data.item_id;
+              // 額外處理data沒有的參數
               searchParams.selectedNumber = selectedNumberArray.value[data.id]
               searchInventory(searchParams.id, searchParams.item_id);
+              console.log('設定後搜尋參數:\n',searchParams);
             },
           },
           width: 115,
@@ -569,40 +562,24 @@
       });
       async function getEquipTypeName() {
         if (searchParams.EquipTypeArray.length == 0) {
-          const axios = require('axios');
-          try {
-            const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetEquipType');
-            const data = response.data;
-            if (data.state === 'success') {
-              searchParams.EquipTypeArray = data.resultList.EquipType;
-            } else if (data.state === 'error') {
-              alert(data.messages);
-            } else if (data.state === 'account_error') {
-              alert(data.messages);
-              router.push('/');
-            }
-          } catch (error) {
-            console.error('Error sending applicant info request to backend');
-          }
+          getEquipType()
+          .then((data)=>{
+            searchParams.EquipTypeArray = data;
+          })
+          .catch((error) =>{
+            console.error(error);
+          })
+
         }
       }
       async function getEquipCategoryName() {
-        searchParams.EquipCategoryName = '';
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetEquipCategory?id=${searchParams.EquipTypeName}`);
-          const data = response.data;
-          if (data.state === 'success') {
-            searchParams.EquipCategoryArray = data.resultList.EquipCategory;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error('Error sending applicant info request to backend', error);
-        }
+        getEquipCategory(searchParams.EquipType_Id)
+        .then((data)=>{
+          searchParams.EquipCategoryArray = data;
+          })
+        .catch((error) =>{
+          console.error(error);
+        })
       }
       async function getDetails() {
         const axios = require('axios');
@@ -648,18 +625,17 @@
         }
       }
       async function searchInventory(data_id, data_item_id) {
-        if (searchParams.ProductName) {
-          searchParams.ProductName = searchParams.ProductName.trim();
-        }
-        if (searchParams.ProductName && !/^.{1,20}$/.test(searchParams.ProductName)) {
+        // data_id : 哪一個項目(前端紀錄個項目已備數量)
+        // data_item_id : 項目的item_id(後端項目id)
+        if (!/^.{0,20}$/.test(searchParams.ProductName)) {
           alert('物品名稱不可輸入超過20字')
           return
         }
         const axios = require('axios');
         try {
           const form = new FormData();
-          form.append('EquipTypeName', searchParams.EquipTypeName);
-          form.append('EquipCategoryName', searchParams.EquipCategoryName);
+          form.append('EquipType_Id', searchParams.EquipType_Id);
+          form.append('Category_Id', searchParams.Category_Id);
           form.append('ProductName', searchParams.ProductName);
           form.append('ProjectCode', searchParams.ProjectCode);
           const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchInventory', form);
@@ -719,42 +695,25 @@
         }
       }
       function selectType(item) {
-        searchParams.EquipTypeName = item;
-        // console.log('選擇的總類:', EquipTypeName.value);
+        searchParams.EquipTypeName = item.Name;
+        searchParams.EquipType_Id = item.Id;
+        searchParams.EquipCategoryName = '';
+        searchParams.Category_Id = '';
         getEquipCategoryName();
         searchParams.EquipCategoryInit = '請選擇';
       }
       function selectCategory(item) {
-        searchParams.EquipCategoryName = item;
+        searchParams.EquipCategoryName = item.Name;
+        searchParams.Category_Id = item.Id;
       }
       async function getApplicationInfo() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
-          console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('備料人員名稱:', data.resultList.Applicant);
-            if (data.resultList.Applicant) {
-              PreparedPerson.value = data.resultList.Applicant;
-            }
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error('Error sending applicant info request to backend');
-        }
-      }
-      function getDate() {
-        const today = new Date();
-        var date = '';
-        date += (today.getFullYear() + '/');
-        date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
-        date += ((today.getDate()).toString().padStart(2, '0'));
-        return date;
+        getApplication()
+          .then((data)=>{
+            PreparedPerson.value = data;
+          })
+          .catch((error) =>{
+            console.error(error);
+          })
       }
       const onGridReady2 = (params) => {
         gridApi2.value = params.api;
@@ -762,9 +721,6 @@
       const onGridReady3 = (params) => {
         gridApi3.value = params.api;
       };
-      function goBack() {
-        window.history.back();
-      }
       return {
         details,
         options,

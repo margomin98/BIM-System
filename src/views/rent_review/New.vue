@@ -185,7 +185,7 @@
   } from 'vue-router';
   import Storage_add from "@/components/Storage_add_button";
   import Navbar from "@/components/Navbar.vue";
-  import { UseOptions } from "@/assets/js/dropdown";
+  import { Rent_UseOptions } from "@/assets/js/dropdown";
   import {
     computed,
     onMounted,
@@ -219,7 +219,7 @@
         VerifyPerson: '',
       })
       const details = ref({});
-      const options = UseOptions;
+      const options = Rent_UseOptions;
       const columnDefs1 = [{
           headerName: "項目",
           field: "id",
