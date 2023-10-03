@@ -15,7 +15,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">收貨單號：</div>
-            <input type="text" class="form-control text-center readonly_box" v-model="details.AR_ID" readonly/>
+            <input type="text" class="form-control text-center readonly_box" v-model="details.Show_AR_ID" readonly/>
           </div>
         </div>
         <div class="col">
@@ -54,8 +54,24 @@
             </div>
           </div>
         </div>
+        <!-- 通知對象 --> 
+        <div class="col">
+          <div class="input-group  mb-3">
+            <div class="input-group-prepend">通知對象：</div>
+            <div v-show="details.InformedPersons" class="selected_user_wrap">
+              <span v-for="person in details.InformedPersons" class="selected_user">{{ person }}</span>
+            </div>
+          </div>
+        </div>
+        <!-- 備註 -->
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">備註：</div>
+            <textarea  class="form-control readonly_box" style="height: 250px;" readonly v-model="details.Memo"></textarea>
+          </div>
+        </div>
       </div>
-    </div>
+  </div>
     <!-- 物流文件部分 -->
     <div class="info_wrap col">
       <div class="fixed_info">
@@ -134,23 +150,12 @@
 </template>
 
 <script>
-  import {
-    register
-  } from 'swiper/element/bundle';
-  import {
-    Pagination
-  } from 'swiper/modules';
+  import { register } from 'swiper/element/bundle';
+  import { Pagination } from 'swiper/modules';
   register();
   import Navbar from "@/components/Navbar.vue";
-  import {
-    onMounted,
-    ref,
-    reactive,
-  } from "vue";
-  import {
-    useRoute,
-    useRouter
-  } from "vue-router";
+  import { onMounted, ref, reactive, } from "vue";
+  import { useRoute, useRouter } from "vue-router";
   export default {
     components: {
       Navbar,
@@ -243,6 +248,16 @@
 </script>
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
+  .selected_user_wrap{
+    gap:0 5px;
+    display: flex;
+    .selected_user{
+      background: #8B8989;
+      color:white !important;
+    border-radius: 7px;
+    padding: 5px;
+    }
+  }
   span {
     @include red_star
   }

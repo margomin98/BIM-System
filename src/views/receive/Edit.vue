@@ -15,7 +15,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">收貨單號：</div>
-            <input type="text" class="form-control text-center readonly_box" v-model="details.AR_ID" readonly/>
+            <input type="text" class="form-control text-center readonly_box" v-model="details.Show_AR_ID" readonly/>
           </div>
         </div>
         <div class="col">
@@ -56,6 +56,32 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="input-group  mb-3">
+            <div class="input-group-prepend">通知對象：</div>
+            <div class="multi_user_select">
+              <!-- :taggable="true"可以直接新增新的一個資料，@tag="tagFn"  -->
+              <VueMultiselect
+                v-model="details.InformedPersons"
+                :options="DropdownArray.InformedPersons"
+                :multiple="true"
+                :close-on-select="false" 
+                :show-labels="false" 
+                :taggable="false"
+                placeholder="輸入名字尋找對象"
+                label="name"
+                track-by="name"
+              />
+            </div>
+          </div>
+        </div>
+        <!-- 備註 -->
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">備註：</div>
+            <textarea  class="form-control " style="height: 250px;" placeholder="最多輸入500字" v-model="details.Memo"></textarea>
           </div>
         </div>
       </div>
@@ -142,32 +168,28 @@
 </template>
 
 <script>
-  import {
-    register
-  } from 'swiper/element/bundle';
-  import {
-    Pagination
-  } from 'swiper/modules';
-  register();
+  import { register } from 'swiper/element/bundle';
+  import { Pagination } from 'swiper/modules';
   import Navbar from "@/components/Navbar.vue";
-  import {
-    onMounted,
-    ref,
-    reactive,
-  } from "vue";
-  import {
-    useRoute,
-    useRouter
-  } from "vue-router";
+  import { onMounted, ref, reactive, } from "vue";
+  import { useRoute, useRouter } from "vue-router";
+  import VueMultiselect from 'vue-multiselect'
+  import { getAccount } from '@/assets/js/common_api'
+  import { goBack } from "@/assets/js/common_fn"
+  register();
   export default {
     components: {
       Navbar,
+      VueMultiselect,
     },
     setup() {
       const route = useRoute();
       const router = useRouter();
       const AR_ID = route.query.search_id;
       const details = ref({});
+      const DropdownArray = reactive({
+        InformedPersons: [],
+      })
       const previewParams = reactive({
         title: '',
         src: '',
@@ -185,7 +207,22 @@
       const fileInput2 = ref();
       onMounted(() => {
         getDetails();
+        getAccountName();
       })
+      // 通知對象dropdown
+      async function getAccountName() {
+        getAccount('')
+        .then((data)=>{
+          data.forEach((Name) => {
+            DropdownArray.InformedPersons.push({
+              name: Name,
+            })
+          });
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
+      }
       // 取得已有資料
       async function getDetails() {
         const axios = require('axios');
@@ -258,7 +295,7 @@
 
         try {
           // 先編輯表單上半部內容
-          await sendUpperForm();
+          const Show_AR_ID = await sendUpperForm();
           // 再依照AR_ID將 中間部分物流文件 & 下半部照片 單次檔案上傳
           const filePromises = [];
           for (let i = 0; i < fileParams.newDoc.length; i++) {
@@ -273,13 +310,13 @@
           .then(result =>{
             const allSuccess = result.every(result => result === 'success')
             if(allSuccess) {
-            alert('編輯收貨單成功\n單號為:' + AR_ID);
+            alert('編輯收貨單成功\n單號為:' + Show_AR_ID);
               router.push({
                 name: 'Receive_Datagrid'
               });
             }
             else {
-              alert('新增收貨單失敗')
+              alert('編輯收貨單失敗')
             }
           })
         } catch (error) {
@@ -300,12 +337,10 @@
             ShipmentCompany: details.value.ShipmentCompany,
             GoodsNum: details.value.GoodsNum,
             ReceivedDate: details.value.ReceivedDate,
-            // deleteDocument: fileParams.deleteDoc,
-            // deleteFile: fileParams.deletePic,
+            InformedPersons: details.value.InformedPersons,
+            Memo: details.value.Memo,
           };
-          let msg = ''
           for (const key in formParams) {
-            msg+=`${key} : ${formParams[key]}\n`
             form.append(key, formParams[key]);
           }
           if(fileParams.deleteDoc.length > 0) {
@@ -318,14 +353,13 @@
               form.append('deleteFile' , item)
             }
           }
-          console.log('上半部資料(含刪除):\n', msg);
           axios.post('http://192.168.0.177:7008/ReceivingMng/EditReceipt', form)
             .then(response => {
               const data = response.data;
               if (data.state === 'success') {
-                const AR_ID = response.data.resultList.AR_ID;
-                console.log('編輯上半部表單成功AR_ID:' , AR_ID);
-                resolve(AR_ID);
+                const Show_AR_ID = response.data.resultList.Show_AR_ID;
+                console.log('編輯上半部表單成功Show_AR_ID:' , Show_AR_ID);
+                resolve(Show_AR_ID);
               }
               else {
                 reject(data.messages);
@@ -569,11 +603,9 @@
             break;
         }
       }
-      function goBack() {
-        window.history.back();
-      }
       return {
         details,
+        DropdownArray,
         previewParams,
         fileParams,
         fileInput1,
@@ -593,6 +625,7 @@
     },
   }
 </script>
+<style src="@/assets/css/vue-multiselect.css"></style>
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
   span {
@@ -676,6 +709,9 @@
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
+      .multi_user_select{
+        width:80%
+      }
       input {
         @include dropdown_btn;
         height: 35px;
@@ -864,6 +900,9 @@
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
+      .multi_user_select{
+        width:77%
+      }
       input {
         @include dropdown_btn;
         height: 35px;
