@@ -228,15 +228,13 @@
         const axios = require('axios');
         try {
           const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/ReceivingGetData?ar_id=${AR_ID}`);
-          console.log(response);
           const data = response.data;
           if (data.state === 'success') {
-            // if(data.resultList.Status !== '待入庫') {
-            // window.history.back();
-            // // router.push({name: 'Store_Process_Datagrid'});
-            // }
             details.value = data.resultList;
             console.log('單筆資料如下\n', details.value);
+            if(details.value.InformedPersons) {
+              details.value.InformedPersons = details.value.InformedPersons.map((name)=>({name}))
+            }
             if (details.value.ReceivedDate) {
               details.value.ReceivedDate = details.value.ReceivedDate.replace(/\//g, '-');
             }
@@ -340,14 +338,21 @@
             InformedPersons: details.value.InformedPersons,
             Memo: details.value.Memo,
           };
+          // 如果有值則處理InformedPersons資料格式，無值則會套用上面的null
+          if(details.value.InformedPersons) {
+            const InformedArray = details.value.InformedPersons.map((x)=> x.name);
+            formParams.InformedPersons = InformedArray
+          }
           for (const key in formParams) {
             form.append(key, formParams[key]);
           }
+          // 欲刪除文件
           if(fileParams.deleteDoc.length > 0) {
             for(const item of fileParams.deleteDoc) {
               form.append('deleteDocument' , item)
             }
           }
+          // 欲刪除檔案
           if(fileParams.deletePic.length > 0) {
             for(const item of fileParams.deletePic) {
               form.append('deleteFile' , item)
