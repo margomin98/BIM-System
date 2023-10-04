@@ -580,7 +580,7 @@ export default {
         Tabs.value.splice(index , 1);
         // 若刪除的為最後一筆 則將頁籤切換到現有的最後一筆
         if( index == Tabs.value.length && index != 0) {
-          const tabs = document.querySelectorAll('.nav-link');
+          const tabs = document.querySelectorAll('button.nav-link');
           tabs[index-1].classList.add('active');
           // 显示对应的标签页内容
           const tabContents = document.querySelectorAll('.tab-pane');
