@@ -20,8 +20,15 @@
         </div>
       </div>
       <div class="content">
+        <!-- 單號 --> 
+        <div class="col mb-3">
+          <div class="input-group">
+            <div class="input-group-prepend">單號 :</div>
+            <input type="text" class="form-control readonly_box" v-model="AI_ID" readonly>
+          </div>
+        </div>
         <!-- 物流單號 -->
-        <div class="col form_search_wrap">
+        <div class="col form_search_wrap mb-3">
           <div class="input-group">
             <div class="input-group-prepend">
               物流單號 :
@@ -36,6 +43,13 @@
             <button class="form_search_btn" @click="viewReceive">檢視</button>
             <!-- 隱藏跳轉按鈕 -->
             <router-link :to="{name: 'Receive_View' , query:{ search_id : AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
+          </div>
+        </div>
+        <!-- 備註 --> 
+        <div class="col mb-3">
+          <div class="input-group">
+            <div class="input-group-prepend">備註 :</div>
+            <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="Memo"></textarea>
           </div>
         </div>
       </div>
@@ -503,9 +517,10 @@
     setup() {
       const route = useRoute();
       const ShipmentNum = ref('')
-      const AR_ID = ref('')
       const deleteTab = ref([]);
+      const AR_ID = ref('')
       const AI_ID = route.query.search_id;
+      const Memo = ref('')
       const details = ref({});
       const itemParams = reactive({
         AssetType: '',
@@ -1001,6 +1016,7 @@
           form.append('AI_ID', AI_ID);
           form.append('AR_ID', AR_ID.value);
           form.append('tab_count', tabData.length);
+          form.append('Memo', Memo.value);
           // append欲刪除的已存在頁籤
           if(deleteTab.value) {
             deleteTab.value.forEach((itemId)=>{
@@ -1208,6 +1224,7 @@
         details,
         AI_ID,
         AR_ID,
+        Memo,
         ShipmentNum,
         itemParams,
         DropdownArray,

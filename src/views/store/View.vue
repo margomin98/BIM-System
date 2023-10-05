@@ -20,8 +20,15 @@
         </div>
       </div>
       <div class="content">
+        <!-- 單號 --> 
+        <div class="col mb-3">
+          <div class="input-group">
+            <div class="input-group-prepend">單號 :</div>
+            <input type="text" class="form-control readonly_box" v-model="AI_ID" readonly>
+          </div>
+        </div>
         <!-- 物流單號 -->
-        <div class="col form_search_wrap">
+        <div class="col form_search_wrap mb-3">
           <div class="input-group">
             <div class="input-group-prepend">
               物流單號 :
@@ -34,6 +41,13 @@
             <router-link :to="{name: 'Receive_View' , query:{ search_id : details.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
           </div>
         </div>
+        <!-- 備註 --> 
+        <div class="col mb-3">
+          <div class="input-group">
+            <div class="input-group-prepend">備註 :</div>
+            <textarea style="height: 200px;" class="form-control readonly_box" aria-label="With textarea" placeholder="最多輸入500字" v-model="details.Memo" disabled></textarea>
+          </div>
+        </div>
       </div>
     </div>
     <div class="info_wrap col">
@@ -42,7 +56,7 @@
         <!-- tab頂端頁籤 -->
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button v-for="tab in parseInt(details.Tabs.length)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab">{{ tab }}</button>
+            <button v-for="tab in parseInt(tabNumber)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab">{{ tab }}</button>
           </div>
         </nav>
         <!-- tab內容 -->
@@ -242,44 +256,8 @@
       const route = useRoute();
       const router = useRouter();
       const AI_ID = route.query.search_id;
-      const details = ref({
-        Applicant: '123',
-        ApplicationDate: '2023/09/12',
-        ShipmentNum: 'BX5689745123654',
-        AR_ID: 'AR23100004_01',
-        Tabs:[
-          {
-            itemId: 'A00015',
-            itemAssetsId: 'BF12345678',
-            itemAssetType: '資產',
-            itemAssetName: '機器人',
-            itemProjectCode: "0022",
-            itemProjectName: "新竹縣政府經緯航太外包服務",
-            itemVendorName: '廠商',
-            itemProductSpec: '規格',
-            itemProductType: '型號',
-            itemSN: '12345678asdwq9',
-            itemEquipTypeName: '電腦設備類',
-            itemEquipType_Id: 'T0001',
-            itemEquipCategoryName: '主機板',
-            itemCategory_Id: "C0002",
-            itemAreaName: "頂樓花圃",
-            itemArea_Id: "A0011",
-            itemLayerName: "花圃CCC",
-            itemLayer_Id: "L0099",
-            itemPackageNum: 1,
-            itemCount: 1,
-            itemPackageUnit: '台',
-            itemUnit: '顆',
-            existFile:[
-              {
-                FileName: 'a.jpg',
-                FileLink: 'test/path',
-              }
-            ],
-          },
-        ],
-      });
+      const details = ref({});
+      const tabNumber = ref(0);
       // Modal Params
       const modalParams = reactive({
         title: '',
@@ -290,22 +268,23 @@
       });
       // 帶入資料
       async function getDetails() {
-        // const axios = require('axios');
-        // try {
-        //   const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
-        //   const data = response.data;
-        //   if (data.state === 'success') {
-        //     console.log('Details Get成功 資料如下\n', data.resultList);
-        //     details.value = data.resultList;
-        //   } else if (data.state === 'error') {
-        //     alert(data.messages);
-        //   } else if (data.state === 'account_error') {
-        //     alert(data.messages);
-        //     router.push('/');
-        //   }
-        // } catch (error) {
-        //   console.error(error);
-        // }
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('Details Get成功 資料如下\n', data.resultList);
+            details.value = data.resultList;
+            tabNumber.value = details.value.Tabs.length
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
       }
       // 查看收貨單
       function viewReceive() {
@@ -324,6 +303,7 @@
         goBack,
         AI_ID,
         details,
+        tabNumber,
         modalParams,
         viewReceive,
         viewImgFile,

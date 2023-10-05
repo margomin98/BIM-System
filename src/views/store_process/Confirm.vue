@@ -55,7 +55,7 @@
         <!-- tab頂端頁籤 -->
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button v-for="tab in parseInt(details.Tabs.length)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab">{{ tab }}</button>
+            <button v-for="tab in parseInt(tabNumber)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab">{{ tab }}</button>
           </div>
         </nav>
         <!-- tab內容 -->
@@ -347,45 +347,7 @@
       const router = useRouter();
       const AI_ID = route.query.search_id;
       const deliveryDate = ref('');
-      const details = ref({
-        Applicant: '123',
-        ApplicationDate: '2023/09/12',
-        ShipmentNum: 'BX5689745123654',
-        AR_ID: 'AR23100004_01',
-        Tabs:[
-          {
-            itemId: 'A00015',
-            itemAssetsId: 'BF12345678',
-            itemAssetType: '資產',
-            itemAssetName: '機器人',
-            itemProjectCode: "0022",
-            itemProjectName: "新竹縣政府經緯航太外包服務",
-            itemVendorName: '廠商',
-            itemProductSpec: '規格',
-            itemProductType: '型號',
-            itemSN: '12345678asdwq9',
-            itemEquipTypeName: '電腦設備類',
-            itemEquipType_Id: 'T0001',
-            itemEquipCategoryName: '主機板',
-            itemCategory_Id: "C0002",
-            itemAreaName: "頂樓花圃",
-            itemArea_Id: "A0011",
-            itemLayerName: "花圃CCC",
-            itemLayer_Id: "L0099",
-            itemPackageNum: 1,
-            itemCount: 1,
-            itemPackageUnit: '台',
-            itemUnit: '顆',
-            itemMemo: '000',
-            existFile:[
-              {
-                FileName: 'a.jpg',
-                FileLink: 'test/path',
-              }
-            ],
-          },
-        ],
-      });
+      const details = ref({});
       const tabNumber = ref(1);
       // Modal Params
       const modalParams = reactive({
@@ -576,10 +538,11 @@
         return date;
       }
       onMounted(() => {
-        // getDetails();
+        getDetails();
         deliveryDate.value = getDate();
       });
       return {
+        AI_ID,
         tabNumber,
         modalParams,
         validation,

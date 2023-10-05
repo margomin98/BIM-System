@@ -8,7 +8,7 @@
       <div class="row">
         <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>物流單號</p>
-            <input type="text"  />
+            <input type="text" v-model="searchParams.ShipmentNum" />
           </div>
         <div class="col-xl-2 col-lg-2 col-md-6 col-12">
           <p>設備總類</p>
@@ -147,6 +147,7 @@ export default {
     },
   setup() {
     const searchParams = reactive({
+      ShipmentNum: '',
       EquipTypeName: '',
       EquipType_Id: '',
       EquipCategoryName: '',
@@ -204,7 +205,7 @@ export default {
     },
     {
       headerName: "物流單號",
-      field: "",
+      field: "ShipmentNum",
       unSortIcon: true,
       sortable: true,
       width: 150,

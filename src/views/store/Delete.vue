@@ -25,8 +25,15 @@
         </div>
       </div>
       <div class="content">
+        <!-- 單號 --> 
+        <div class="col mb-3">
+          <div class="input-group">
+            <div class="input-group-prepend">單號 :</div>
+            <input type="text" class="form-control readonly_box" v-model="AI_ID" readonly>
+          </div>
+        </div>
         <!-- 物流單號 -->
-        <div class="col form_search_wrap">
+        <div class="col form_search_wrap mb-3">
           <div class="input-group">
             <div class="input-group-prepend">
               物流單號 :
@@ -39,13 +46,20 @@
             <router-link :to="{name: 'Receive_View' , query:{ search_id : details.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
           </div>
         </div>
+        <!-- 備註 --> 
+        <div class="col mb-3">
+          <div class="input-group">
+            <div class="input-group-prepend">備註 :</div>
+            <textarea style="height: 200px;" class="form-control readonly_box" aria-label="With textarea" placeholder="最多輸入500字" v-model="details.Memo" disabled></textarea>
+          </div>
+        </div>
       </div>
       <!-- 頁籤部分 -->
       <div v-show="details.Tabs" class="tab_section mt-5">
         <!-- tab頂端頁籤 -->
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button v-for="tab in parseInt(details.Tabs.length)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab">{{ tab }}</button>
+            <button v-for="tab in parseInt(tabNumber)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab">{{ tab }}</button>
           </div>
         </nav>
         <!-- tab內容 -->
@@ -260,42 +274,15 @@
       const route = useRoute();
       const router = useRouter();
       const AI_ID = route.query.search_id;
-      const details = ref({
-          Applicant: '123',
-          ApplicationDate: '2023/09/12',
-          ShipmentNum: 'BX5689745123654',
-          AR_ID: 'AR23100004_01',
-          Tabs:[
-            {
-              itemId: 'A00015',
-              itemAssetType: '資產',
-              itemAssetName: '機器人',
-              itemProjectCode: "0022",
-              itemProjectName: "新竹縣政府經緯航太外包服務",
-              itemVendorName: '廠商',
-              itemEquipTypeName: '電腦設備類',
-              itemEquipType_Id: 'T0001',
-              itemEquipCategoryName: '主機板',
-              itemCategory_Id: "C0002",
-              itemPackageNum: 1,
-              itemPackageUnit: '台',
-              existFile:[
-                {
-                  FileName: 'a.jpg',
-                  FileLink: 'test/path',
-                }
-              ],
-            },
-          ],
-      });
-      const tabNumber = ref(1);
+      const details = ref({});
+      const tabNumber = ref(0);
       // Modal Params
       const modalParams = reactive({
         title: '',
         src: '',
       })
       onMounted(() => {
-        // getDetails();
+        getDetails();
       });
       // 帶入資料
       async function getDetails() {

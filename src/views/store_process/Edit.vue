@@ -409,96 +409,60 @@
       });
       //依照單號取得資料並生成tab資料
       async function getDetails() {
-        // const axios = require('axios');
-        // try {
-        //   const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
-        //   const data = response.data;
-        //   if (data.state === 'success') {
-        //     // console.log('Details Get成功 資料如下\n', data.resultList);
-        //     if (data.resultList.Status !== '待入庫') {
-        //       window.history.back();
-        //       // router.push({name: 'Store_Process_Datagrid'});
-        //     }
-        //     details.value = data.resultList;
-        //     console.log('Details Get成功 資料如下\n', details.value);
-        //     tabData.length = details.value.Count;
-        //     //生成tab資料
-        //     initFormDataArray();
-        //     if (details.value.WarrantyStartDate) {
-        //       details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
-        //     }
-        //     if (details.value.WarrantyEndDate) {
-        //       details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
-        //     }
-        //     if (details.value.AssetsInDate) {
-        //       details.value.AssetsInDate = details.value.AssetsInDate.replace(/-/g, '/');
-        //     }
-        //     if (details.value.DeliveryDate) {
-        //       details.value.DeliveryDate = details.value.DeliveryDate.replace(/-/g, '/');
-        //     }
-        //     if (details.value.ApplicationDate) {
-        //       details.value.ApplicationDate = details.value.ApplicationDate.replace(/-/g, '/');
-        //     }
-        //   } else if (data.state === 'error') {
-        //     alert(data.messages);
-        //   } else if (data.state === 'account_error') {
-        //     alert(data.messages);
-        //     router.push('/');
-        //   }
-        // } catch (error) {
-        //   console.error(error);
-        // }
-        const fakedata = {
-        Applicant: '123',
-        ApplicationDate: '2023/09/12',
-        ShipmentNum: 'BX5689745123654',
-        AR_ID: 'AR23100004_01',
-        Tabs:[
-          {
-            itemId: 'A00015',
-            itemAssetType: '資產',
-            itemAssetName: '機器人',
-            itemProjectCode: "0022",
-            itemProjectName: "新竹縣政府經緯航太外包服務",
-            itemVendorName: '廠商',
-            itemEquipTypeName: '電腦設備類',
-            itemEquipType_Id: 'T0001',
-            itemEquipCategoryName: '主機板',
-            itemCategory_Id: "C0002",
-            itemAreaName: "頂樓花圃",
-            itemArea_Id: "A0011",
-            itemLayerName: "花圃CCC",
-            itemLayer_Id: "L0099",
-            itemPackageNum: 1,
-            itemCount: 1,
-            itemPackageUnit: '台',
-            itemUnit: '顆',
-            existFile:[
-              {
-                FileName: 'a.jpg',
-                FileLink: 'test/path',
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
+          const data = response.data;
+          if (data.state === 'success') {
+            // console.log('Details Get成功 資料如下\n', data.resultList);
+            if (data.resultList.Status !== '待入庫') {
+              window.history.back();
+              // router.push({name: 'Store_Process_Datagrid'});
+            }
+            details.value = data.resultList;
+            console.log('Details Get成功 資料如下\n', details.value);
+            //生成tab資料
+            details.value.Tabs.forEach(tab => {
+              tabData.push({
+                ...tab, // 保留原始 tab 的所有屬性
+                LayerInit: '請先選擇區域',
+                deleteFile: [],
+                newFile: [],
+                viewFile:[],
+                // 如果需要，可以選擇性地添加其他屬性，或者不需要添加viewFile屬性
+              });
+              if(tab.itemAreaName) {
+                getLayerName(0);
               }
-            ],
-          },
-        ],
-      };
-      details.value = fakedata;
-      details.value.Tabs.forEach(tab => {
-          tabData.push({
-            ...tab, // 保留原始 tab 的所有屬性
-            LayerInit: '請先選擇區域',
-            deleteFile: [],
-            newFile: [],
-            viewFile:[],
-            // 如果需要，可以選擇性地添加其他屬性，或者不需要添加viewFile屬性
-          });
-          if(tab.itemAreaName) {
-            getLayerName(0);
+              if(tab.itemEquipTypeName) {
+                getEquipCategoryName(0);
+              }
+            });
+            if (details.value.WarrantyStartDate) {
+              details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
+            }
+            if (details.value.WarrantyEndDate) {
+              details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
+            }
+            if (details.value.AssetsInDate) {
+              details.value.AssetsInDate = details.value.AssetsInDate.replace(/-/g, '/');
+            }
+            if (details.value.DeliveryDate) {
+              details.value.DeliveryDate = details.value.DeliveryDate.replace(/-/g, '/');
+            }
+            if (details.value.ApplicationDate) {
+              details.value.ApplicationDate = details.value.ApplicationDate.replace(/-/g, '/');
+            }
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
           }
-          if(tab.itemEquipTypeName) {
-            getEquipCategoryName(0);
-          }
-        });
+        } catch (error) {
+          console.error(error);
+        }
+
       }
       async function getAreaName() {
         if (DropdownArray.Area.length == 0) {

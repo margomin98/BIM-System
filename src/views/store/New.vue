@@ -21,9 +21,9 @@
       </div>
       <div class="content">
         <!-- 物流單號 -->
-        <div class="col form_search_wrap">
+        <div class="col form_search_wrap mb-3">
           <div class="input-group">
-            <div class="input-group-prepend mb-3">
+            <div class="input-group-prepend">
               物流單號 :
             </div>
             <div class="search_section">
@@ -33,13 +33,14 @@
                 </li>
               </ul>
             </div>
-            <button class="form_search_btn " @click="viewReceive">檢視</button>
+            <button class="form_search_btn" @click="viewReceive">檢視</button>
             <!-- 隱藏跳轉按鈕 -->
             <router-link :to="{name: 'Receive_View' , query:{ search_id : AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
           </div>
         </div>
-        <div class="col">
-          <div class="input-group mb-3">
+        <!-- 備註 --> 
+        <div class="col mb-3">
+          <div class="input-group">
             <div class="input-group-prepend">備註 :</div>
             <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="Memo"></textarea>
           </div>
