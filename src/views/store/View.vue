@@ -161,7 +161,7 @@
                   <div class="input-group-prepend">
                     包裝單位 :
                   </div>
-                  <input type="text" class="form-control readonly_box" v-model="tab.itemProductType" readonly>
+                  <input type="text" class="input-number readonly_box" v-model="tab.itemPackageUnit" readonly>
                 </div>
               </div>
             </div>
@@ -243,32 +243,42 @@
       const router = useRouter();
       const AI_ID = route.query.search_id;
       const details = ref({
-          Applicant: '123',
-          ApplicationDate: '2023/09/12',
-          ShipmentNum: 'BX5689745123654',
-          AR_ID: 'AR23100004_01',
-          Tabs:[
-            {
-              itemId: 'A00015',
-              itemAssetType: '資產',
-              itemAssetName: '機器人',
-              itemProjectCode: "0022",
-              itemProjectName: "新竹縣政府經緯航太外包服務",
-              itemVendorName: '廠商',
-              itemEquipTypeName: '電腦設備類',
-              itemEquipType_Id: 'T0001',
-              itemEquipCategoryName: '主機板',
-              itemCategory_Id: "C0002",
-              itemPackageNum: 1,
-              itemPackageUnit: '台',
-              existFile:[
-                {
-                  FileName: 'a.jpg',
-                  FileLink: 'test/path',
-                }
-              ],
-            },
-          ],
+        Applicant: '123',
+        ApplicationDate: '2023/09/12',
+        ShipmentNum: 'BX5689745123654',
+        AR_ID: 'AR23100004_01',
+        Tabs:[
+          {
+            itemId: 'A00015',
+            itemAssetsId: 'BF12345678',
+            itemAssetType: '資產',
+            itemAssetName: '機器人',
+            itemProjectCode: "0022",
+            itemProjectName: "新竹縣政府經緯航太外包服務",
+            itemVendorName: '廠商',
+            itemProductSpec: '規格',
+            itemProductType: '型號',
+            itemSN: '12345678asdwq9',
+            itemEquipTypeName: '電腦設備類',
+            itemEquipType_Id: 'T0001',
+            itemEquipCategoryName: '主機板',
+            itemCategory_Id: "C0002",
+            itemAreaName: "頂樓花圃",
+            itemArea_Id: "A0011",
+            itemLayerName: "花圃CCC",
+            itemLayer_Id: "L0099",
+            itemPackageNum: 1,
+            itemCount: 1,
+            itemPackageUnit: '台',
+            itemUnit: '顆',
+            existFile:[
+              {
+                FileName: 'a.jpg',
+                FileLink: 'test/path',
+              }
+            ],
+          },
+        ],
       });
       // Modal Params
       const modalParams = reactive({

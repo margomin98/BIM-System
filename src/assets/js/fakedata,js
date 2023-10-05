@@ -1,0 +1,35 @@
+// 入庫管理假資料
+export const AI_fakedata = {
+  Applicant: '123',
+  ApplicationDate: '2023/09/12',
+  ShipmentNum: 'BX5689745123654',
+  AR_ID: 'AR23100004_01',
+  Tabs:[
+    {
+      itemId: 'A00015',
+      itemAssetType: '資產',
+      itemAssetName: '機器人',
+      itemProjectCode: "0022",
+      itemProjectName: "新竹縣政府經緯航太外包服務",
+      itemVendorName: '廠商',
+      itemEquipTypeName: '電腦設備類',
+      itemEquipType_Id: 'T0001',
+      itemEquipCategoryName: '主機板',
+      itemCategory_Id: "C0002",
+      itemAreaName: "頂樓花圃",
+      itemArea_Id: "A0011",
+      itemLayerName: "花圃CCC",
+      itemLayer_Id: "L0099",
+      itemPackageNum: 1,
+      itemCount: 1,
+      itemPackageUnit: '台',
+      itemUnit: '顆',
+      existFile:[
+        {
+          FileName: 'a.jpg',
+          FileLink: 'test/path',
+        }
+      ],
+    },
+  ]
+}

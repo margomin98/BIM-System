@@ -297,8 +297,8 @@
                   </div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                    {{ tab.itemEquipTypeName || '請選擇' }}
-                  </button>
+                      {{ tab.itemEquipTypeName || '請選擇' }}
+                    </button>
                     <div class="dropdown-menu" aria-labelledby="typeDropdown">
                       <p v-for="item in DropdownArray.EquipType" class="dropdown-item" @click="selectType('tab' , item , index)">{{ item.Name }}</p>
                     </div>
@@ -312,8 +312,8 @@
                   </div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!tab.itemEquipTypeName" >
-                    {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }}
-                  </button>
+                      {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }}
+                    </button>
                     <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                       <p v-for="item in tab.EquipCategoryArray" class="dropdown-item" @click="selectCategory('tab' , item , index)">{{ item.Name }}</p>
                     </div>
@@ -389,8 +389,8 @@
                   </div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ tab.itemPackageUnit || '請選擇' }}
-                  </button>
+                      {{ tab.itemPackageUnit || '請選擇' }}
+                    </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="item in DropdownArray.PackageUnit" class="dropdown-item" @click="selectPackageUnit('tab' , item , index)">{{ item }}</p>
                     </div>
@@ -419,7 +419,7 @@
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="tab.itemAssetType !== '耗材'">
                     {{ tab.itemUnit || '請選擇' }}
-                  </button>
+                    </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="item in DropdownArray.Unit" class="dropdown-item" @click="selectUnit('tab' , item , index)">{{ item }}</p>
                     </div>
@@ -707,7 +707,6 @@
         for (let i = 0; i < tabData.length; i++) {
           const form = tabData[i];
           // 設備分類必填
-          form.itemCategory_Id = form.itemCategory_Id.trim()
           if (!form.itemCategory_Id) {
             InputError = true;
             InputMessages += '頁籤 ' + (i + 1) + ' :　設備分類必填' + '\n';
@@ -1293,15 +1292,20 @@
     justify-content: center;
     align-items: center;
     display: inline-flex;
-    border-radius: 10px;
     height: 40px;
-    width: 90px;
     color: #FFF;
     text-align: center;
     font-size: 20px;
     font-weight: 700;
     border: none;
-    margin: 0 10px;
+    position: absolute;
+    bottom: -1%;
+    width: 100%;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    margin: 0;
+    border-radius: 0 0 10px 10px;
     &:hover {
       background-color: #a51e1e;
     }
@@ -1533,7 +1537,7 @@
         .tab-content {
           background: #3E4E5F;
           padding: 50px 30px;
-
+          position: relative;
           .check_box_wrap {
             font-weight: 700;
             align-items: center;
@@ -1816,6 +1820,7 @@
         .tab-content {
           background: #3E4E5F;
           padding: 50px 30px;
+          position: relative;
           .modal {
             .modal-header {
               background: #3D4E61;
@@ -2110,6 +2115,7 @@
         .tab-content {
           background: #3E4E5F;
           padding: 50px 30px;
+          position: relative;
           .check_box_wrap {
              flex-direction: row !important;
     font-weight: 700;
