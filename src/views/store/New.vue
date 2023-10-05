@@ -59,7 +59,7 @@
                 <label class="form-check-label check_box" for='radio1'>資產</label>
                 <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="存貨" v-model="itemParams.AssetType" @change="resetUnitCount('upperForm')" />
                 <label class="form-check-label check_box" for='radio2' data-toggle="tooltip" data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
-                <input type="radio" class='form-check-input check_box' id="radio3" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="耗材" v-model="itemParams.AssetType"/>
+                <input type="radio" class='form-check-input check_box' id="radio3" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="耗材" v-model="itemParams.AssetType" />
                 <label class="form-check-label check_box" for='radio3'>耗材</label>
               </div>
             </div>
@@ -93,8 +93,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                    {{ itemParams.EquipTypeName || '請選擇' }}
-                  </button>
+                        {{ itemParams.EquipTypeName || '請選擇' }}
+                      </button>
                 <div class="dropdown-menu" aria-labelledby="typeDropdown">
                   <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType('upperForm' , item)">{{ item.Name }}</p>
                 </div>
@@ -108,8 +108,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(itemParams.EquipTypeName !== '') }">
-                    {{ itemParams.EquipCategoryName || EquipCategoryInit }}
-                  </button>
+                        {{ itemParams.EquipCategoryName || EquipCategoryInit }}
+                      </button>
                 <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                   <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory('upperForm' , item)">{{ item.Name }}</p>
                 </div>
@@ -187,8 +187,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ itemParams.PackageUnit || '請選擇' }}
-                  </button>
+                        {{ itemParams.PackageUnit || '請選擇' }}
+                      </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in DropdownArray.PackageUnit" :key="index" class="dropdown-item" @click="selectPackageUnit('upperForm' , item)">
                     {{ item }}</p>
@@ -202,7 +202,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3" id='number'>
               <div class="input-group-prepend d-xl-block d-lg-block d-md-block d-none">
-                <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包"><span  v-show="itemParams.AssetType === '耗材'">*</span>數量 :
+                <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包"><span v-show="itemParams.AssetType === '耗材'">*</span>數量 :
               </div>
               <div class="input-group-prepend d-xl-none d-lg-none d-md-none d-block">
                 <span v-show="itemParams.AssetType === '耗材'">*</span> 數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
@@ -217,8 +217,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="itemParams.AssetType !== '耗材'">
-                    {{ itemParams.Unit || '請選擇' }}
-                  </button>
+                        {{ itemParams.Unit || '請選擇' }}
+                      </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in DropdownArray.Unit" :key="index" class="dropdown-item" @click="selectUnit('upperForm' , item)">
                     {{ item }}</p>
@@ -252,7 +252,7 @@
         <div class="tab-content" id="nav-tabContent">
           <div v-for="(tab, index) in tabData" :key="index" :class="['tab-pane', 'fade', { 'show active': index === 0 }]" :id="'tab' + (index + 1)" role="tabpanel">
             <!-- deleteButton -->
-            <button class="delete_btn" @click="deleteTab(index)">刪除</button>
+            <button class="delete_btn" @click="deleteTab(index)">刪除此筆</button>
             <!-- 頁籤資產類型 -->
             <div class="row">
               <div class="col-12">
@@ -261,11 +261,11 @@
                     <span>*</span>資產類型 :
                   </div>
                   <div class="d-flex align-items-center radio_wrap">
-                    <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="資產" v-model="tab.itemAssetType" @change="resetUnitCount('tab' , index)"/>
+                    <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="資產" v-model="tab.itemAssetType" @change="resetUnitCount('tab' , index)" />
                     <label class="form-check-label check_box" for='radio1'>資產</label>
-                    <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="存貨" v-model="tab.itemAssetType" @change="resetUnitCount('tab' , index)"/>
+                    <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="存貨" v-model="tab.itemAssetType" @change="resetUnitCount('tab' , index)" />
                     <label class="form-check-label check_box" for='radio2' data-toggle="tooltip" data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
-                    <input type="radio" class='form-check-input check_box' id="radio3" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="耗材" v-model="tab.itemAssetType"/>
+                    <input type="radio" class='form-check-input check_box' id="radio3" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="耗材" v-model="tab.itemAssetType" />
                     <label class="form-check-label check_box" for='radio3'>耗材</label>
                   </div>
                 </div>
@@ -297,8 +297,8 @@
                   </div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                    {{ tab.itemEquipTypeName || '請選擇' }}
-                  </button>
+                        {{ tab.itemEquipTypeName || '請選擇' }}
+                      </button>
                     <div class="dropdown-menu" aria-labelledby="typeDropdown">
                       <p v-for="item in DropdownArray.EquipType" class="dropdown-item" @click="selectType('tab' , item , index)">{{ item.Name }}</p>
                     </div>
@@ -311,9 +311,9 @@
                     <span>*</span>設備分類 :
                   </div>
                   <div class="dropdown">
-                    <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!tab.itemEquipTypeName" >
-                    {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }}
-                  </button>
+                    <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!tab.itemEquipTypeName">
+                        {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }}
+                      </button>
                     <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                       <p v-for="item in tab.EquipCategoryArray" class="dropdown-item" @click="selectCategory('tab' , item , index)">{{ item.Name }}</p>
                     </div>
@@ -389,8 +389,8 @@
                   </div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ tab.itemPackageUnit || '請選擇' }}
-                  </button>
+                        {{ tab.itemPackageUnit || '請選擇' }}
+                      </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="item in DropdownArray.PackageUnit" class="dropdown-item" @click="selectPackageUnit('tab' , item , index)">{{ item }}</p>
                     </div>
@@ -418,8 +418,8 @@
                   </div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="tab.itemAssetType !== '耗材'">
-                    {{ tab.itemUnit || '請選擇' }}
-                  </button>
+                        {{ tab.itemUnit || '請選擇' }}
+                      </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="item in DropdownArray.Unit" class="dropdown-item" @click="selectUnit('tab' , item , index)">{{ item }}</p>
                     </div>
@@ -478,12 +478,29 @@
 
 <script>
   import Navbar from '@/components/Navbar.vue';
-  import { useRoute } from 'vue-router';
+  import {
+    useRoute
+  } from 'vue-router';
   import router from '@/router';
-  import { UnitArray , PackageUnitArray} from '@/assets/js/dropdown'
-  import { getApplication , getEquipType , getEquipCategory , getProject } from '@/assets/js/common_api'
-  import { goBack , getDate} from "@/assets/js/common_fn"
-  import { onMounted, reactive, ref } from 'vue';
+  import {
+    UnitArray,
+    PackageUnitArray
+  } from '@/assets/js/dropdown'
+  import {
+    getApplication,
+    getEquipType,
+    getEquipCategory,
+    getProject
+  } from '@/assets/js/common_api'
+  import {
+    goBack,
+    getDate
+  } from "@/assets/js/common_fn"
+  import {
+    onMounted,
+    reactive,
+    ref
+  } from 'vue';
   export default {
     components: {
       Navbar
@@ -540,7 +557,7 @@
         getShipmentNum(); //物流單號選單選項
         ApplicationDate.value = getDate();
         // 若從收貨管理點進來 自動帶入AR_ID & 物流單號
-        if(route.query.search_id && route.query.ShipmentNum) {
+        if (route.query.search_id && route.query.ShipmentNum) {
           ShipmentNum.value = route.query.ShipmentNum;
           AR_ID.value = route.query.search_id;
         }
@@ -548,11 +565,11 @@
       // 生成Tab頁籤資料，生成後清空填寫欄位
       function insertTab() {
         // 檢查填寫欄位
-        if(!checkItemForm()) {
+        if (!checkItemForm()) {
           return;
         }
         // 生成頁籤
-        for(let i=0 ; i<itemParams.PackageNum; i++) {
+        for (let i = 0; i < itemParams.PackageNum; i++) {
           tabData.push({
             // PadNum: i,
             itemAssetType: itemParams.AssetType,
@@ -572,18 +589,18 @@
             itemSN: itemParams.SN,
             itemCount: itemParams.Count, //耗材就要傳
             itemUnit: itemParams.Unit, //耗材就要傳
-            itemPackageNum: 1, 
-            itemPackageUnit: itemParams.PackageUnit, 
+            itemPackageNum: 1,
+            itemPackageUnit: itemParams.PackageUnit,
             itemMemo: itemParams.Memo,
             newFile: [],
             viewFile: [], //不需要傳
           });
-          getEquipCategoryName('tab', tabData.length-1)
+          getEquipCategoryName('tab', tabData.length - 1)
         }
         // 清空填寫欄位
-        for(const key in itemParams) {
+        for (const key in itemParams) {
           const type = typeof itemParams[key]
-          if(type === 'string') {
+          if (type === 'string') {
             itemParams[key] = ''
           } else if (type === 'number') {
             itemParams[key] = 1;
@@ -592,15 +609,15 @@
         EquipCategoryInit.value = '請先選擇設備總類'
       }
       function deleteTab(index) {
-        tabData.splice(index , 1);
+        tabData.splice(index, 1);
         // 若刪除的為最後一筆 則將頁籤切換到現有的最後一筆
-        if( index == tabData.length && index != 0) {
+        if (index == tabData.length && index != 0) {
           const tabs = document.querySelectorAll('button.nav-link');
-          console.log('tabs:',tabs);
-          tabs[index-1].classList.add('active');
+          console.log('tabs:', tabs);
+          tabs[index - 1].classList.add('active');
           // 显示对应的标签页内容
           const tabContents = document.querySelectorAll('.tab-pane');
-          tabContents[index-1].classList.add('show', 'active');
+          tabContents[index - 1].classList.add('show', 'active');
         }
       }
       // 檢查填寫欄位 1.必填 2.字數限制
@@ -611,48 +628,48 @@
           }
         }
         // 1-1 一般欄位
-        if(!itemParams.AssetType || !itemParams.EquipType_Id || !itemParams.Category_Id || !itemParams.AssetName || !itemParams.PackageNum || !itemParams.PackageUnit) {
+        if (!itemParams.AssetType || !itemParams.EquipType_Id || !itemParams.Category_Id || !itemParams.AssetName || !itemParams.PackageNum || !itemParams.PackageUnit) {
           alert('請輸入必填項目');
           return false;
         }
         // 1-2 存貨->專案代碼必填
-        if(itemParams.AssetType === '存貨' && !itemParams.ProjectCode) {
+        if (itemParams.AssetType === '存貨' && !itemParams.ProjectCode) {
           alert('請輸入必填項目');
           return false;
         }
         // 1-3 耗材->數量、單位必填
-        if(itemParams.AssetType === '耗材') {
-          if(!itemParams.Count || !itemParams.Unit) {
+        if (itemParams.AssetType === '耗材') {
+          if (!itemParams.Count || !itemParams.Unit) {
             alert('請輸入必填項目');
             return false;
           }
         }
         // 2.
-        if(!/^[\s\S]{0,10}$/.test(itemParams.ProjectCode)) {
+        if (!/^[\s\S]{0,10}$/.test(itemParams.ProjectCode)) {
           alert('專案代碼不可輸入超過10字')
           return false;
         }
-        if(!/^[\s\S]{0,20}$/.test(itemParams.AssetName)) {
+        if (!/^[\s\S]{0,20}$/.test(itemParams.AssetName)) {
           alert('物品名稱不可輸入超過20字')
           return false;
         }
-        if(!/^[\s\S]{0,100}$/.test(itemParams.VendorName)) {
+        if (!/^[\s\S]{0,100}$/.test(itemParams.VendorName)) {
           alert('廠商不可輸入超過100字')
           return false;
         }
-        if(!/^[\s\S]{0,100}$/.test(itemParams.ProductSpec)) {
+        if (!/^[\s\S]{0,100}$/.test(itemParams.ProductSpec)) {
           alert('規格不可輸入超過100字')
           return false;
         }
-        if(!/^[\s\S]{0,100}$/.test(itemParams.ProductType)) {
+        if (!/^[\s\S]{0,100}$/.test(itemParams.ProductType)) {
           alert('型號不可輸入超過100字')
           return false;
         }
-        if(!/^[\s\S]{0,100}$/.test(itemParams.SN)) {
+        if (!/^[\s\S]{0,100}$/.test(itemParams.SN)) {
           alert('S/N不可輸入超過100字')
           return false;
         }
-        if(!/^[\s\S]{0,500}$/.test(itemParams.Memo)) {
+        if (!/^[\s\S]{0,500}$/.test(itemParams.Memo)) {
           alert('備註不可輸入超過500字')
           return false;
         }
@@ -661,14 +678,13 @@
       }
       // 檢查頁籤
       function checkRequireParams() {
-        if(tabData.length === 0) {
+        if (tabData.length === 0) {
           alert('請至少填寫一項資產資訊')
           return false;
         }
         // 檢查頁籤必填、格式
         // 必填只需檢查:設備分類、物品名稱、存貨的專案代碼、耗材的數量&單位
         const BF_pattern = /^(BF\d{8})$/;
-
         var InputMessages = '';
         var InputError = false;
         for (let i = 0; i < tabData.length; i++) {
@@ -692,11 +708,11 @@
           }
           // 耗材需額外檢查 數量、單位
           if (form.itemAssetType === '耗材') {
-            if(!form.itemCount) {
+            if (!form.itemCount) {
               InputError = true;
               InputMessages += '頁籤 ' + (i + 1) + ' :　數量必填' + '\n';
             }
-            if(!form.itemUnit) {
+            if (!form.itemUnit) {
               InputError = true;
               InputMessages += '頁籤 ' + (i + 1) + ' :　單位必填' + '\n';
             }
@@ -779,7 +795,7 @@
         // 格式、必填皆正確
         return true;
       }
-      function resetUnitCount(type , index) {
+      function resetUnitCount(type, index) {
         switch (type) {
           case 'upperForm':
             itemParams.Unit = '';
@@ -796,7 +812,7 @@
         AR_ID.value = item.AR_ID;
         showOptions.value = false;
       }
-      function selectType(type , item , index) {
+      function selectType(type, item, index) {
         switch (type) {
           case 'upperForm':
             itemParams.EquipTypeName = item.Name;
@@ -807,31 +823,29 @@
             EquipCategoryInit.value = '請選擇';
             break;
           case 'tab':
-            console.log('index:',tabData[index]);
+            console.log('index:', tabData[index]);
             tabData[index].itemEquipTypeName = item.Name;
             tabData[index].itemEquipType_Id = item.Id;
             tabData[index].itemEquipCategoryName = '';
             tabData[index].itemCategory_Id = '';
-            getEquipCategoryName('tab' , index);
-            tabData[index].EquipCategoryInit = '請選擇';            
+            getEquipCategoryName('tab', index);
+            tabData[index].EquipCategoryInit = '請選擇';
             break;
         }
-
       }
-      function selectCategory(type , item , index) {
+      function selectCategory(type, item, index) {
         switch (type) {
           case 'upperForm':
-            itemParams.EquipCategoryName = item.Name; 
+            itemParams.EquipCategoryName = item.Name;
             itemParams.Category_Id = item.Id;
             break;
           case 'tab':
-            tabData[index].itemEquipCategoryName = item.Name; 
+            tabData[index].itemEquipCategoryName = item.Name;
             tabData[index].itemCategory_Id = item.Id;
             break;
         }
-
       }
-      function selectUnit(type , item , index) {
+      function selectUnit(type, item, index) {
         switch (type) {
           case 'upperForm':
             itemParams.Unit = item;
@@ -842,7 +856,7 @@
             break;
         }
       }
-      function selectPackageUnit(type , item , index) {
+      function selectPackageUnit(type, item, index) {
         switch (type) {
           case 'upperForm':
             itemParams.PackageUnit = item;
@@ -1012,7 +1026,7 @@
           form.delete('itemProjectName')
           form.delete('viewFile')
           // 不是耗材的話 剔除itemCount、itemUnit
-          if(tabData.itemAssetType !== '耗材') {
+          if (tabData.itemAssetType !== '耗材') {
             form.delete('itemUnit')
             form.delete('itemCount')
           }
@@ -1060,7 +1074,7 @@
             })
         }
       }
-      async function getEquipCategoryName(type , index) {
+      async function getEquipCategoryName(type, index) {
         var params = ''
         switch (type) {
           case 'upperForm':
@@ -1071,7 +1085,7 @@
             break;
         }
         getEquipCategory(params)
-        .then((data)=>{
+          .then((data) => {
             switch (type) {
               case 'upperForm':
                 DropdownArray.EquipCategory = data;
@@ -1190,15 +1204,20 @@
     justify-content: center;
     align-items: center;
     display: inline-flex;
-    border-radius: 10px;
     height: 40px;
-    width: 90px;
     color: #FFF;
     text-align: center;
     font-size: 20px;
     font-weight: 700;
     border: none;
-    margin: 0 10px;
+    position: absolute;
+    bottom: -1%;
+    width: 100%;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    margin: 0;
+    border-radius: 0 0 10px 10px;
     &:hover {
       background-color: #a51e1e;
     }
@@ -1430,7 +1449,7 @@
         .tab-content {
           background: #3E4E5F;
           padding: 50px 30px;
-
+          position: relative;
           .check_box_wrap {
             font-weight: 700;
             align-items: center;
@@ -1441,7 +1460,7 @@
               display: flex;
             }
           }
-             .dropdown {
+          .dropdown {
             width: 240px;
             .dropdown-menu {
               width: 100%;
@@ -1472,8 +1491,6 @@
               }
             }
           }
-         
-       
           .input-group {
             flex-wrap: nowrap;
             span {
@@ -1605,7 +1622,7 @@
             font-size: 20px;
             margin-bottom: 0;
           }
-            span {
+          span {
             @include red_star
           }
         }
@@ -1713,6 +1730,7 @@
         .tab-content {
           background: #3E4E5F;
           padding: 50px 30px;
+          position: relative;
           .modal {
             .modal-header {
               background: #3D4E61;
@@ -1734,7 +1752,7 @@
               display: flex;
             }
           }
-             .dropdown {
+          .dropdown {
             width: 240px;
             .dropdown-menu {
               width: 100%;
@@ -1961,7 +1979,6 @@
             .check_box {
               margin-right: 10px;
             }
-            
           }
           .info {
             display: flex;
@@ -2007,19 +2024,20 @@
         .tab-content {
           background: #3E4E5F;
           padding: 50px 30px;
+          position: relative;
           .check_box_wrap {
-             flex-direction: row !important;
-    font-weight: 700;
-    align-items: center;
-    color: white;
-    font-size: 20px;
-    .radio_wrap{
+            flex-direction: row !important;
+            font-weight: 700;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            .radio_wrap {
               gap: 0 10px;
-padding-left: 10px;
+              padding-left: 10px;
             }
             .input-group-prepend {
               width: auto !important;
-    align-self: self-start;
+              align-self: self-start;
             }
           }
           .modal {
