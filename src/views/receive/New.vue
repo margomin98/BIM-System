@@ -69,17 +69,7 @@
             <div class="input-group-prepend">通知對象：</div>
             <div class="multi_user_select">
               <!-- :taggable="true"可以直接新增新的一個資料，@tag="tagFn"  -->
-              <VueMultiselect
-                v-model="itemParams.InformedPersons"
-                :options="DropdownArray.InformedPersons"
-                :multiple="true"
-                :close-on-select="false" 
-                :show-labels="false" 
-                :taggable="false"
-                placeholder="輸入名字尋找對象"
-                label="name"
-                track-by="name"
-              />
+              <VueMultiselect v-model="itemParams.InformedPersons" :options="DropdownArray.InformedPersons" :multiple="true" :close-on-select="false" :show-labels="false" :taggable="false" placeholder="輸入名字尋找對象" label="name" track-by="name" />
             </div>
           </div>
         </div>
@@ -87,7 +77,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">備註：</div>
-            <textarea  class="form-control " style="height: 250px;" placeholder="最多輸入500字" v-model="itemParams.Memo"></textarea>
+            <textarea class="form-control " style="height: 250px;" placeholder="最多輸入500字" v-model="itemParams.Memo"></textarea>
           </div>
         </div>
         <!-- 物流文件上傳 -->
@@ -129,7 +119,7 @@
         </div>
         <!-- 照片上傳 -->
         <div class="col">
-          <div class="input-group  mt-3">
+          <div class="input-group">
             <div class="input-group-prepend">照片上傳：</div>
             <button class="upload_file_pt2" @click="openFileInput(1)">選擇檔案</button>
             <input type="file" id="fileInput" ref="fileInput2" style="display: none" @change="handlePictureFile($event)" multiple />
@@ -158,7 +148,7 @@
         </nav>
         <div class="tab-content" id="nav-tabContent">
           <div v-for="(tab, index) in Tabs" :key="index" :class="['tab-pane', 'fade', { 'show active': index === 0 }]" :id="'tab' + (index + 1)" role="tabpanel">
-          <!-- <div class="tab-pane fade show active" id="tabs" role="tabpanel" aria-labelledby="tab"> -->
+            <!-- <div class="tab-pane fade show active" id="tabs" role="tabpanel" aria-labelledby="tab"> -->
             <h4 class="empty_text d-none">暫無有細項</h4>
             <!-- 物流單號 -->
             <div class="col">
@@ -192,7 +182,7 @@
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">備註：</div>
-                <textarea  class="form-control readonly_box" style="height: 250px;" readonly v-model="tab.Memo"></textarea>
+                <textarea class="form-control readonly_box" style="height: 250px;" readonly v-model="tab.Memo"></textarea>
               </div>
             </div>
             <!-- 物流文件 -->
@@ -260,17 +250,32 @@
 </template>
 
 <script>
-import VueMultiselect from 'vue-multiselect'
-import { register } from 'swiper/element/bundle';
-import { Pagination } from 'swiper/modules';
-import Navbar from "@/components/Navbar.vue";
-import { onMounted, reactive, ref } from "vue";
-import { useRouter } from "vue-router";
-import { getApplication , getAccount } from '@/assets/js/common_api'
-import { goBack } from "@/assets/js/common_fn"
-import axios from 'axios';
-register();
-export default {
+  import VueMultiselect from 'vue-multiselect'
+  import {
+    register
+  } from 'swiper/element/bundle';
+  import {
+    Pagination
+  } from 'swiper/modules';
+  import Navbar from "@/components/Navbar.vue";
+  import {
+    onMounted,
+    reactive,
+    ref
+  } from "vue";
+  import {
+    useRouter
+  } from "vue-router";
+  import {
+    getApplication,
+    getAccount
+  } from '@/assets/js/common_api'
+  import {
+    goBack
+  } from "@/assets/js/common_fn"
+  import axios from 'axios';
+  register();
+  export default {
     components: {
       Navbar,
       VueMultiselect
@@ -550,10 +555,10 @@ export default {
       }
       // 新增頁籤
       function insertTabs() {
-        if(!checkValid('item')) {
-          return ;
+        if (!checkValid('item')) {
+          return;
         }
-        const InformedArray = itemParams.InformedPersons.map((x)=> x.name);
+        const InformedArray = itemParams.InformedPersons.map((x) => x.name);
         // 將細項、文件、照片push至頁籤
         Tabs.value.push({
           ShipmentNum: itemParams.ShipmentNum,
@@ -570,86 +575,84 @@ export default {
         itemParams.GoodsNum = 1;
         itemParams.InformedPersons = [];
         itemParams.Memo = '';
-        for( const key in fileParams) {
+        for (const key in fileParams) {
           fileParams[key] = []
         }
       }
       // 刪除頁籤
       function deleteTabs(index) {
-
-        Tabs.value.splice(index , 1);
+        Tabs.value.splice(index, 1);
         // 若刪除的為最後一筆 則將頁籤切換到現有的最後一筆
-        if( index == Tabs.value.length && index != 0) {
+        if (index == Tabs.value.length && index != 0) {
           const tabs = document.querySelectorAll('button.nav-link');
-          tabs[index-1].classList.add('active');
+          tabs[index - 1].classList.add('active');
           // 显示对应的标签页内容
           const tabContents = document.querySelectorAll('.tab-pane');
-          tabContents[index-1].classList.add('show', 'active');
+          tabContents[index - 1].classList.add('show', 'active');
         }
       }
       // 檢查細項必填function
       function checkValid(type) {
         switch (type) {
           case 'submit':
-            if(!formParams.ShipmentCompany || !formParams.ReceivedDate) {
-            alert('請輸入必填項目');
-            return false;
+            if (!formParams.ShipmentCompany || !formParams.ReceivedDate) {
+              alert('請輸入必填項目');
+              return false;
             }
-            if(!/^[\s\S]{0,20}$/.test(formParams.ShipmentCompany)) {
+            if (!/^[\s\S]{0,20}$/.test(formParams.ShipmentCompany)) {
               alert('貨運公司不可輸入超過20字');
               return false;
             }
-            if(Tabs.value.length === 0) {
+            if (Tabs.value.length === 0) {
               alert('請至少新增一項');
               return false;
             }
             break;
           case 'item':
-            if(!itemParams.ShipmentNum || !itemParams.GoodsNum) {
-            alert('請輸入必填細項');
-            return false;
+            if (!itemParams.ShipmentNum || !itemParams.GoodsNum) {
+              alert('請輸入必填細項');
+              return false;
             }
-            if(!/^[\s\S]{0,500}$/.test(itemParams.Memo)) {
+            if (!/^[\s\S]{0,500}$/.test(itemParams.Memo)) {
               alert('備註不可輸入超過500字');
               return false;
             }
-            if(!/^[\s\S]{0,20}$/.test(itemParams.ShipmentNum)) {
+            if (!/^[\s\S]{0,20}$/.test(itemParams.ShipmentNum)) {
               alert('物流單號不可輸入超過20字');
               return false;
             }
             break;
         }
-
-        return true ;
+        return true;
       }
       // 通知對象dropdown
       async function getAccountName() {
         getAccount('')
-        .then((data)=>{
-          data.forEach((Name) => {
-            DropdownArray.InformedPersons.push({
-              name: Name,
-            })
-          });
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+          .then((data) => {
+            data.forEach((Name) => {
+              DropdownArray.InformedPersons.push({
+                name: Name,
+              })
+            });
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       // 收件人員資訊
       async function getApplicationInfo() {
         getApplication()
-          .then((data)=>{
+          .then((data) => {
             Applicant.value = data;
           })
-          .catch((error) =>{
+          .catch((error) => {
             console.error(error);
           })
       }
       // 送出
       async function submit() {
         // 檢查必填項目、格式        
-        if(!checkValid('submit')) {
+        if (!checkValid('submit')) {
           return;
         }
         console.log('下半部頁籤', Tabs.value);
@@ -659,7 +662,7 @@ export default {
           console.log('resultList:', resultList);
           // 再依照resultList.AR_ID將 物流文件 & 照片 單次上傳
           const filePromises = [];
-          for(let i = 0 ; i < Tabs.value.length ; i++) {
+          for (let i = 0; i < Tabs.value.length; i++) {
             const Doc = Tabs.value[i].newDoc
             const Pic = Tabs.value[i].newPic
             const AR_ID = resultList.Tabs[i]
@@ -690,7 +693,7 @@ export default {
       // 共同、頁籤文字部分
       function sendTextForm() {
         return new Promise((resolve, reject) => {
-          const itemList =  Tabs.value.map((item) =>{
+          const itemList = Tabs.value.map((item) => {
             return {
               ShipmentNum: item.ShipmentNum,
               GoodsNum: item.GoodsNum,
@@ -700,8 +703,7 @@ export default {
           })
           // 先傳送除了檔案以外的內容
           const requestJson = {
-            CommonInfo: 
-            {
+            CommonInfo: {
               ShipmentCompany: formParams.ShipmentCompany,
               ReceivedDate: formParams.ReceivedDate,
             },
@@ -773,7 +775,7 @@ export default {
         goBack,
       }
     },
-}
+  }
 </script>
 <style src="@/assets/css/vue-multiselect.css">
 
@@ -817,11 +819,16 @@ export default {
     justify-content: space-around;
     background: #E94B4B;
     color: white;
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 700;
     align-items: center;
     border-radius: 0 0 10px 10px;
     height: 50px;
+    position: absolute;
+    width: 100%;
+    height: 40px;
+    left: 0;
+    bottom: -2%;
   }
   .selected_file {
     p {
@@ -1085,6 +1092,7 @@ export default {
         .tab-content {
           background: rgba(82, 136, 156, 0.8);
           padding: 50px 30px;
+          position: relative;
           .form_search_wrap {
             .input-group {
               .input-group-prepend {
@@ -1516,6 +1524,7 @@ export default {
       .tab-content {
         background: rgba(82, 136, 156, 0.8);
         padding: 50px 30px;
+        position: relative;
         .form_search_wrap {
           .input-group {
             .input-group-prepend {
@@ -1957,6 +1966,7 @@ export default {
       }
       .tab-content {
         background: rgba(82, 136, 156, 0.8);
+        position: relative;
         padding: 50px 30px;
         .modal {
           .modal-header {

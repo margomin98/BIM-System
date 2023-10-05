@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
-import Test from "../views/Test.vue";
+import Test from "../views/test/Test.vue";
 
 //入庫填報
 import Store_Datagrid from "../views/store/Datagrid.vue";
