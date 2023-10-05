@@ -86,7 +86,7 @@
         },
         {
           headerName: "收貨單號",
-          field: "AR_ID",
+          field: "Show_AR_ID",
           unSortIcon: true,
           sortable: true,
           width: 180,

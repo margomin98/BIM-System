@@ -1,6 +1,6 @@
 // 入庫管理
-export const UnitArray = ['個', '對', '箱', '包', '組', '台', '件']
-export const PackageUnitArray = ['個', '支', '枝', '隻', '根', '條', '顆']
+export const UnitArray = ['個', '支', '枝', '隻', '根', '條', '顆']
+export const PackageUnitArray = ['個', '對', '箱', '包', '組', '台', '件']
 export const Store_StatusArray = ['申請入庫', '申請歸還', '可交付', '待入庫', '已入庫', '已歸還']
 export const Store_Process_DateTypeArray = ['申請入庫日期' , '交付日期' , '入庫日期']
 // 出庫管理

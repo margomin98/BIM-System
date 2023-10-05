@@ -317,7 +317,6 @@ export default {
     const route = useRoute();
     const router = useRouter();
     const AI_ID = route.query.search_id;
-    const deliveryDate = ref('');
     const details = ref({});
     const tabNumber = ref(1);
     // Modal Params
@@ -511,7 +510,6 @@ export default {
     }
     onMounted(() => {
       getDetails();
-      deliveryDate.value = getDate();
     });
     function goBack() {
       window.history.back();
@@ -527,7 +525,6 @@ export default {
       canSubmit,
       submit,
       goBack,
-      deliveryDate,
       details,
     }
   },

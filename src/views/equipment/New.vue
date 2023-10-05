@@ -197,7 +197,7 @@
   import Equipment_number from "@/components/Equipment_number_input.vue";
   import ListItem from "@/components/Equipment/item.vue"
   import Navbar from "@/components/Navbar.vue";
-  import { getEquipType , getEquipCategory , getArea , getLayer , getApplication , getAcount } from '@/assets/js/common_api'
+  import { getEquipType , getEquipCategory , getArea , getLayer , getApplication , getAccount } from '@/assets/js/common_api'
   import { getDate , goBack } from "@/assets/js/common_fn";
   import { onMounted, ref, reactive, } from "vue";
   import { useRouter } from "vue-router";
@@ -434,7 +434,7 @@
           })
       }
       async function getAccountName() {
-        getAcount('')
+        getAccount('')
         .then((data)=>{
           DropdownArray.Custodian = data;
         })

@@ -200,7 +200,7 @@
   import List_view_button from "@/components/Rent_process_new_view_button";
   import Inventory_delete_button from "@/components/Inventory_delete_button";
   import Navbar from "@/components/Navbar.vue";
-  import { getEquipType , getEquipCategory , getArea , getLayer , getAcount } from '@/assets/js/common_api'
+  import { getEquipType , getEquipCategory , getArea , getLayer , getAccount } from '@/assets/js/common_api'
   import { goBack } from "@/assets/js/common_fn";
   import { onMounted, ref, reactive, } from "vue";
   import { useRoute, useRouter } from "vue-router";
@@ -543,7 +543,7 @@
       }
       // 取得盤點人員DropdownArray
       async function getAccountName() {
-        getAcount('')
+        getAccount('')
         .then((data)=>{
           DropdownArray.InventoryStaff = data;
         })

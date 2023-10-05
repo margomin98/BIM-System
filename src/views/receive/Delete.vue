@@ -225,7 +225,7 @@
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages + '\n';
-            msg += '單號:' + data.resultList.AR_ID;
+            msg += '單號:' + data.resultList.ShipmentNum;
             alert(msg);
             router.push({
               name: 'Receive_Datagrid'

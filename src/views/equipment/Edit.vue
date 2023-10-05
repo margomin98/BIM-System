@@ -197,7 +197,7 @@
   import List_view_button from "@/components/Rent_process_new_view_button";
   import Equipment_add from "@/components/Equipment_add_button";
   import Equipment_number from "@/components/Equipment_number_input.vue";
-  import { getEquipType , getEquipCategory , getArea , getLayer , getApplication , getAcount } from '@/assets/js/common_api'
+  import { getEquipType , getEquipCategory , getArea , getLayer , getApplication , getAccount } from '@/assets/js/common_api'
   import { goBack } from "@/assets/js/common_fn";
   import ListItem from "@/components/Equipment/item.vue"
   import Navbar from "@/components/Navbar.vue";
@@ -547,7 +547,7 @@
           })
       }
       async function getAccountName() {
-        getAcount('')
+        getAccount('')
         .then((data)=>{
           DropdownArray.Custodian = data;
         })
