@@ -94,6 +94,7 @@
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">設備分類 :</div>
                   <input type="text" class="form-control readonly_box" v-model="tab.itemEquipCategoryName" readonly>
+                </div>
               </div>
             </div>
             <!-- 頁籤物品名稱 -->
@@ -113,9 +114,7 @@
             <!-- 頁籤廠商 -->
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  廠商 :
-                </div>
+                <div class="input-group-prepend">廠商 :</div>
                 <input type="text" class="form-control readonly_box" v-model="tab.itemVendorName" readonly>
               </div>
             </div>
@@ -154,7 +153,7 @@
                   <div class="input-group-prepend info  d-xl-none d-lg-none d-md-none d-block">
                     包裝數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
                   </div>
-                  <input class="input-number readonly_box" type="number" v-model="tab.itemPackageNum" min="1" disabled>
+                  <input type="text" class="input-number readonly_box" v-model="tab.itemPackageNum" readonly>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -176,7 +175,7 @@
                   <div class="input-group-prepend d-xl-none d-lg-none d-md-none d-block">
                      數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
                   </div>
-                  <input class="input-number" type="number" v-model="tab.itemCount" min="1" :disabled="tab.itemAssetType !== '耗材'" :class="{readonly_box: tab.itemAssetType !== '耗材'}">
+                  <input type="text" class="input-number readonly_box" v-model="tab.itemCount" readonly>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -184,14 +183,7 @@
                   <div class="input-group-prepend">
                     單位 :
                   </div>
-                  <div class="dropdown">
-                    <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="tab.itemAssetType !== '耗材'">
-                    {{ tab.itemUnit || '請選擇' }}
-                  </button>
-                    <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                      <p v-for="item in DropdownArray.Unit" class="dropdown-item" @click="selectUnit('tab' , item , index)">{{ item }}</p>
-                    </div>
-                  </div>
+                  <input type="text" class="input-number readonly_box" v-model="tab.itemUnit" readonly>
                 </div>
               </div>
             </div>
@@ -199,7 +191,7 @@
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">備註 :</div>
-                <textarea class="col" rows="5" placeholder="最多輸入500字" v-model="tab.itemMemo"></textarea>
+                <textarea class="col readonly_box" rows="5" v-model="tab.itemMemo" readonly></textarea>
               </div>
             </div>
             <!-- 頁籤上傳檔案部分 -->
@@ -214,7 +206,6 @@
               </div>
             </div>
           </div>
-        </div>
         </div>
       </div>
       <!-- ViewFile Modal -->
@@ -242,6 +233,7 @@
   import Navbar from '@/components/Navbar.vue';
   import { useRoute , useRouter } from 'vue-router';
   import { onMounted, reactive, ref } from 'vue';
+  import { goBack } from '@/assets/js/common_fn'
   export default {
     components: {
       Navbar
@@ -250,7 +242,34 @@
       const route = useRoute();
       const router = useRouter();
       const AI_ID = route.query.search_id;
-      const details = ref({});
+      const details = ref({
+          Applicant: '123',
+          ApplicationDate: '2023/09/12',
+          ShipmentNum: 'BX5689745123654',
+          AR_ID: 'AR23100004_01',
+          Tabs:[
+            {
+              itemId: 'A00015',
+              itemAssetType: '資產',
+              itemAssetName: '機器人',
+              itemProjectCode: "0022",
+              itemProjectName: "新竹縣政府經緯航太外包服務",
+              itemVendorName: '廠商',
+              itemEquipTypeName: '電腦設備類',
+              itemEquipType_Id: 'T0001',
+              itemEquipCategoryName: '主機板',
+              itemCategory_Id: "C0002",
+              itemPackageNum: 1,
+              itemPackageUnit: '台',
+              existFile:[
+                {
+                  FileName: 'a.jpg',
+                  FileLink: 'test/path',
+                }
+              ],
+            },
+          ],
+      });
       // Modal Params
       const modalParams = reactive({
         title: '',
@@ -261,22 +280,22 @@
       });
       // 帶入資料
       async function getDetails() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('Details Get成功 資料如下\n', data.resultList);
-            details.value = data.resultList;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error(error);
-        }
+        // const axios = require('axios');
+        // try {
+        //   const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
+        //   const data = response.data;
+        //   if (data.state === 'success') {
+        //     console.log('Details Get成功 資料如下\n', data.resultList);
+        //     details.value = data.resultList;
+        //   } else if (data.state === 'error') {
+        //     alert(data.messages);
+        //   } else if (data.state === 'account_error') {
+        //     alert(data.messages);
+        //     router.push('/');
+        //   }
+        // } catch (error) {
+        //   console.error(error);
+        // }
       }
       // 查看收貨單
       function viewReceive() {
@@ -290,10 +309,7 @@
         modalParams.title = details.value.Tabs[index].existFile[file_index].FileName;
         modalParams.src = details.value.Tabs[index].existFile[file_index].FileLink;
         console.log('modalParams',modalParams);
-      }
-      function goBack() {
-        window.history.back();
-      }
+      } 
       return {
         goBack,
         AI_ID,
@@ -353,6 +369,50 @@
         }
         .content {
           @include content_bg;
+          .search_section {
+            position: relative;
+            display: flex;
+            flex: 1 1 auto; // width: 100%;
+            .options-list {
+              position: absolute;
+              z-index: 99;
+              background-color: white;
+              border: 1px solid #ccc;
+              max-height: 200px;
+              overflow-y: auto;
+              list-style-type: none;
+              padding: 0;
+              margin: 0;
+              width: 100%;
+              top: 0;
+              top: 40px;
+              border-radius: 5px;
+            }
+            .options-list li {
+              padding: 10px 10px 0;
+              font-size: 18px;
+              cursor: pointer; // &:hover {
+              //   // background: #7893b7;
+              //   // color: white;
+              //   font-weight: 700;
+              // }
+            }
+            input {
+              height: 35px;
+              padding: 10px;
+              border-radius: 5px;
+              border: none;
+            }
+            .input-placeholder {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              color: gray;
+              font-size: 14px;
+              pointer-events: none;
+            }
+          }
           .input-group-prepend {
             width: 120px;
           }
@@ -550,6 +610,50 @@
           }
         }
         .content {
+          .search_section {
+            position: relative;
+            display: flex;
+            flex: 1 1 auto; // width: 100%;
+            .options-list {
+              position: absolute;
+              z-index: 99;
+              background-color: white;
+              border: 1px solid #ccc;
+              max-height: 200px;
+              overflow-y: auto;
+              list-style-type: none;
+              padding: 0;
+              margin: 0;
+              width: 100%;
+              top: 0;
+              top: 40px;
+              border-radius: 5px;
+            }
+            .options-list li {
+              padding: 10px 10px 0;
+              font-size: 18px;
+              cursor: pointer; // &:hover {
+              //   // background: #7893b7;
+              //   // color: white;
+              //   font-weight: 700;
+              // }
+            }
+            input {
+              height: 35px;
+              padding: 10px;
+              border-radius: 5px;
+              border: none;
+            }
+            .input-placeholder {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              color: gray;
+              font-size: 14px;
+              pointer-events: none;
+            }
+          }
           .form_search_wrap {
             .input-group {
               .input-group-prepend {
@@ -780,6 +884,50 @@
         }
         .content {
           @include content_bg;
+                    .search_section {
+            position: relative;
+            display: flex;
+            flex: 1 1 auto; // width: 100%;
+            .options-list {
+              position: absolute;
+              z-index: 99;
+              background-color: white;
+              border: 1px solid #ccc;
+              max-height: 200px;
+              overflow-y: auto;
+              list-style-type: none;
+              padding: 0;
+              margin: 0;
+              width: 100%;
+              top: 0;
+              top: 40px;
+              border-radius: 5px;
+            }
+            .options-list li {
+              padding: 10px 10px 0;
+              font-size: 18px;
+              cursor: pointer; // &:hover {
+              //   // background: #7893b7;
+              //   // color: white;
+              //   font-weight: 700;
+              // }
+            }
+            input {
+              height: 35px;
+              padding: 10px;
+              border-radius: 5px;
+              border: none;
+            }
+            .input-placeholder {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              color: gray;
+              font-size: 14px;
+              pointer-events: none;
+            }
+          }
           .dropdown {
             .dropdown-menu {
               width: 100%;

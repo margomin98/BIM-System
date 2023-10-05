@@ -252,7 +252,7 @@
         <div class="tab-content" id="nav-tabContent">
           <div v-for="(tab, index) in tabData" :key="index" :class="['tab-pane', 'fade', { 'show active': index === 0 }]" :id="'tab' + (index + 1)" role="tabpanel">
             <!-- deleteButton -->
-            <button class="delete_btn" @click="deleteTab(index)">刪除</button>
+            <button class="delete_btn" @click="deleteTabFn(index)">刪除</button>
             <!-- 頁籤資產類型 -->
             <div class="row">
               <div class="col-12">
@@ -504,8 +504,36 @@
       const route = useRoute();
       const ShipmentNum = ref('')
       const AR_ID = ref('')
+      const deleteTab = ref([]);
       const AI_ID = route.query.search_id;
-      const details = ref([]);
+      const details = ref({
+          Applicant: '123',
+          ApplicationDate: '2023/09/12',
+          ShipmentNum: 'BX5689745123654',
+          AR_ID: 'AR23100004_01',
+          Tabs:[
+            {
+              itemId: 'A00015',
+              itemAssetType: '資產',
+              itemAssetName: '機器人',
+              itemProjectCode: "0022",
+              itemProjectName: "新竹縣政府經緯航太外包服務",
+              itemVendorName: '廠商',
+              itemEquipTypeName: '電腦設備類',
+              itemEquipType_Id: 'T0001',
+              itemEquipCategoryName: '主機板',
+              itemCategory_Id: "C0002",
+              itemPackageNum: 1,
+              itemPackageUnit: '台',
+              existFile:[
+                {
+                  FileName: 'a.jpg',
+                  FileLink: 'test/path',
+                }
+              ],
+            },
+          ],
+      });
       const itemParams = reactive({
         AssetType: '',
         ProjectCode: '',
@@ -535,12 +563,8 @@
       })
       const showOptions = ref(false);
       const EquipCategoryInit = ref('請先選擇設備總類');
-      const ProjectName = ref(''); //專案名稱(搜尋結果)
       // 下半部頁籤內容
       const tabData = reactive([]); // 頁籤資料
-      const tabNumber = ref(1); //v-for不直接使用 itemParams.Count(input改成空白會error)
-      const newCount = ref(1);
-      const oldCount = ref(1);
       const fileInputs = reactive([]);
       // Modal Params
       const modalParams = reactive({
@@ -548,9 +572,8 @@
         src: '',
       })
       onMounted(() => {
-        getShipmentNum(); //物流單號選單選項
-        if(route.query.search_id && route.query.ShipmentNum) {
-        }
+        // getShipmentNum(); //物流單號選單選項
+        getDetails();
       });
       // 生成Tab頁籤資料，生成後清空填寫欄位
       function insertTab() {
@@ -598,7 +621,10 @@
         }
         EquipCategoryInit.value = '請先選擇設備總類'
       }
-      function deleteTab(index) {
+      function deleteTabFn(index) {
+        if(tabData[index].itemId) {
+          deleteTab.value.push(tabData[index].itemId);
+        }
         tabData.splice(index , 1);
         // 若刪除的為最後一筆 則將頁籤切換到現有的最後一筆
         if( index == tabData.length && index != 0) {
@@ -1001,9 +1027,14 @@
           // 在这里发送上半部分表单数据的请求
           const axios = require('axios');
           const form = new FormData();
+          form.append('AI_ID', AI_ID);
           form.append('AR_ID', AR_ID.value);
           form.append('tab_count', tabData.length);
-          axios.post('http://192.168.0.177:7008/AssetsInMng/NewAssetsIn', form)
+          // append欲刪除的已存在頁籤
+          deleteTab.value.forEach((itemId)=>{
+            form.append('deleteTab' , itemId);
+          })
+          axios.post('http://192.168.0.177:7008/AssetsInMng/ApplicationEdit', form)
             .then(response => {
               const data = response.data;
               if (data.state === 'success') {
@@ -1022,8 +1053,10 @@
       function sendFileForm(itemId, tabData, index) {
         return new Promise((resolve, reject) => {
           const form = new FormData();
-          // 先append itemId
-          form.append('itemId', itemId);
+          // 先append itemId(新增的頁籤，已存在頁籤不需要，下面for迴圈就會append進去了)
+          if(!tabData.itemId) {
+            form.append('itemId', itemId);
+          }
           for (const key in tabData) {
             // 不為null、undefined、空字串就append
             if (tabData[key]) {
@@ -1037,15 +1070,21 @@
           form.delete('itemEquipTypeName')
           form.delete('itemProjectName')
           form.delete('viewFile')
+          form.delete('existFile')
           // 不是耗材的話 剔除itemCount、itemUnit
           if(tabData.itemAssetType !== '耗材') {
             form.delete('itemUnit')
             form.delete('itemCount')
           }
-          // newFile等等額外append 先剔除
+          // newFile額外append 先剔除
           form.delete('newFile')
           for (let i = 0; i < tabData.newFile.length; i++) {
             form.append('newFile', tabData.newFile[i]);
+          }
+          // deleteFile額外append 先剔除
+          form.delete('deleteFile')
+          for (let i = 0; i < tabData.deleteFile.length; i++) {
+            form.append('deleteFile', tabData.deleteFile[i]);
           }
           const axios = require('axios');
           axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form)
@@ -1067,39 +1106,55 @@
         });
       }
       async function getDetails() {
-        axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`)
-        .then((response)=>{
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('Details Get成功 資料如下\n', data.resultList);
-            details.value = data.resultList;
-            // 將資料帶入上半部表單formParams
-            if(details.value.AR_ID) {
-              AR_ID.value = details.value.AR_ID
-            }
-            if(details.value.ShipmentNum) {
-              ShipmentNum.value = details.value.ShipmentNum
-            }
-            // 將頁籤資料帶入下半部tabData
-            const tabData = details.value.Tabs;
-            for(let i=0 ; i< tabData.length ; i++) {
-              tabData.push({
-                deleteFile: [],
-                newFile: [],
-                viewFile: [], //不需要傳
-              });
-              getEquipCategoryName('tab',i);
-            }
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+        // axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`)
+        // .then((response)=>{
+        //   const data = response.data;
+        //   if (data.state === 'success') {
+        //     console.log('Details Get成功 資料如下\n', data.resultList);
+        //     details.value = data.resultList;
+        //     // 將資料帶入上半部表單formParams
+        //     if(details.value.AR_ID) {
+        //       AR_ID.value = details.value.AR_ID
+        //     }
+        //     if(details.value.ShipmentNum) {
+        //       ShipmentNum.value = details.value.ShipmentNum
+        //     }
+        //     // 將頁籤資料帶入下半部tabData
+        //     const tabData = details.value.Tabs;
+        //     for(let i=0 ; i< tabData.length ; i++) {
+        //       tabData.push({
+        //         deleteFile: [],
+        //         newFile: [],
+        //         viewFile: [], //不需要傳
+        //       });
+        //       getEquipCategoryName('tab',i);
+        //     }
+        //   } else if (data.state === 'error') {
+        //     alert(data.messages);
+        //   } else if (data.state === 'account_error') {
+        //     alert(data.messages);
+        //     router.push('/');
+        //   }
+        // })
+        // .catch((error)=>{
+        //   console.error(error);
+        // })
+        if(details.value.AR_ID) {
+          AR_ID.value = details.value.AR_ID
+        }
+        if(details.value.ShipmentNum) {
+          ShipmentNum.value = details.value.ShipmentNum
+        }
+        details.value.Tabs.forEach(tab => {
+          tabData.push({
+            ...tab, // 保留原始 tab 的所有屬性
+            deleteFile: [],
+            newFile: [],
+            viewFile:[],
+            // 如果需要，可以選擇性地添加其他屬性，或者不需要添加viewFile屬性
+          });
+          getEquipCategoryName('tab',0);
+        });
       }
       async function getEquipTypeName() {
         if (DropdownArray.EquipType.length == 0) {
@@ -1199,16 +1254,12 @@
         itemParams,
         DropdownArray,
         EquipCategoryInit,
-        newCount,
-        oldCount,
         showOptions,
-        ProjectName,
         tabData,
-        tabNumber,
         fileInputs,
         modalParams,
         insertTab,
-        deleteTab,
+        deleteTabFn,
         resetUnitCount,
         selectShipmentNum,
         selectType,
