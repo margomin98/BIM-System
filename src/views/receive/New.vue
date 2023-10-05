@@ -1082,16 +1082,18 @@
         .nav-tabs {
           button {
             @include tab_section_num;
-            background: rgba(82, 136, 156, 0.8);
+            background: #5C7897;
           }
           .active {
             @include tab_section_num;
-            background: rgba(82, 136, 156, 0.8);
+            background: #3E4E5F;
           }
         }
         .tab-content {
-          background: rgba(82, 136, 156, 0.8);
-          padding: 50px 30px;
+          background: #3E4E5F;
+              background: #3E4E5F;
+        position: relative;
+        padding: 50px 30px;border-radius: 0 10px 0 0;
           position: relative;
           .form_search_wrap {
             .input-group {
@@ -1512,18 +1514,20 @@
     }
     .tab_section {
       .nav-tabs {
-        button {
-          @include tab_section_num;
-          background: rgba(82, 136, 156, 0.8);
+          button {
+            @include tab_section_num;
+            background: #5C7897;
+          }
+          .active {
+            @include tab_section_num;
+            background: #3E4E5F;
+          }
         }
-        .active {
-          @include tab_section_num;
-          background: rgba(82, 136, 156, 0.8);
-        }
-      }
-      .tab-content {
-        background: rgba(82, 136, 156, 0.8);
-        padding: 50px 30px;
+        .tab-content {
+          background: #3E4E5F;
+            background: #3E4E5F;
+        position: relative;
+        padding: 50px 30px;border-radius: 0 10px 0 0;
         position: relative;
         .form_search_wrap {
           .input-group {
@@ -1955,19 +1959,21 @@
         margin-left: unset !important;
       }
       .nav-tabs {
-        button {
-          @include tab_section_num;
-          background: #5C7897;
+          button {
+            @include tab_section_num;
+            background: #5C7897;
+          }
+          .active {
+            @include tab_section_num;
+            background: #3E4E5F;
+          }
         }
-        .active {
-          @include tab_section_num;
-          background: rgba(82, 136, 156, 0.8);
-        }
-      }
-      .tab-content {
-        background: rgba(82, 136, 156, 0.8);
+        .tab-content {
+          background: #3E4E5F;
         position: relative;
-        padding: 50px 30px;
+            background: #3E4E5F;
+        position: relative;
+        padding: 50px 30px;border-radius: 0 10px 0 0;
         .modal {
           .modal-header {
             background: #3D4E61;
