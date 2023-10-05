@@ -10,6 +10,12 @@
         currentPageReportTemplate="{first} to {last} of {totalRecords}"
     >
     <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+    <Column field="name" header="Name" sortable>
+      <template #body="slotProps">
+        <!-- Add the custom component here -->
+        <test />
+      </template>
+    </Column>
       <Column field="code" header="Code" sortable ></Column>
       <Column field="name" header="Name" sortable ></Column>
       <Column field="category" header="Category" sortable ></Column>
@@ -25,6 +31,7 @@ import { ref } from 'vue';
 import Navbar from "@/components/Navbar.vue";
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import test from "@/components/test";
 // import Paginator from 'primevue/paginator';
 
 export default {
@@ -33,6 +40,7 @@ export default {
     DataTable,
     Column,
     Navbar,
+    test
     // Paginator,
   },
   setup() {
@@ -129,7 +137,16 @@ export default {
 }
 </script>
 
-<style src="@/assets/css/theme.css"></style>
-<style lang="scss" scoped>
 
+<style lang="scss" scoped>
+.p-paginator {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    flex-wrap: wrap;
+}
+.p-datatable-thead{
+  height:30px
+}
 </style>
+<style src="@/assets/css/theme.css"></style>
