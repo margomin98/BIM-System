@@ -57,7 +57,7 @@
           </div>
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>物流單號</p>
-            <input type="text"  />
+            <input type="text"  v-model="searchParams.ShipmentNum"/>
           </div>
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>申請入庫日期(起)</p>
@@ -124,6 +124,7 @@ reactive
         EquipCategory_Id: '',
         AssetName: '', //物品名稱
         Status: '', //狀態
+        ShipmentNum: '',
         StartDate: '', //申請入庫日期(起)
         EndDate: '', //申請入庫日期(迄)
       });
@@ -152,7 +153,7 @@ reactive
         },
         {
           headerName: "單號",
-          field: "",
+          field: "AI_ID",
           unSortIcon: true,
           sortable: true,
           width: 150,
@@ -161,7 +162,7 @@ reactive
         },
         {
           headerName: "物流單號",
-          field: "",
+          field: "ShipmentNum",
           unSortIcon: true,
           sortable: true,
           width: 150,

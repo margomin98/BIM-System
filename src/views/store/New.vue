@@ -23,7 +23,7 @@
         <!-- 物流單號 -->
         <div class="col form_search_wrap">
           <div class="input-group">
-            <div class="input-group-prepend">
+            <div class="input-group-prepend mb-3">
               物流單號 :
             </div>
             <div class="search_section">
@@ -33,9 +33,15 @@
                 </li>
               </ul>
             </div>
-            <button class="form_search_btn" @click="viewReceive">檢視</button>
+            <button class="form_search_btn " @click="viewReceive">檢視</button>
             <!-- 隱藏跳轉按鈕 -->
             <router-link :to="{name: 'Receive_View' , query:{ search_id : AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
+          </div>
+        </div>
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">備註 :</div>
+            <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="Memo"></textarea>
           </div>
         </div>
       </div>
@@ -511,6 +517,7 @@
       const ApplicationDate = ref(''); //申請日期 function帶入
       const ShipmentNum = ref('')
       const AR_ID = ref('')
+      const Memo = ref('')
       const itemParams = reactive({
         AssetType: '',
         ProjectCode: '',
@@ -943,7 +950,7 @@
         }, 100);
       }
       function viewReceive() {
-        if (AR_ID) {
+        if (AR_ID.value) {
           const link = document.getElementById('view-receive');
           link.click();
         }
@@ -991,6 +998,7 @@
           const form = new FormData();
           form.append('AR_ID', AR_ID.value);
           form.append('tab_count', tabData.length);
+          form.append('Memo', Memo.value);
           axios.post('http://192.168.0.177:7008/AssetsInMng/NewAssetsIn', form)
             .then(response => {
               const data = response.data;
@@ -1155,6 +1163,7 @@
       }
       return {
         ShipmentNum,
+        Memo,
         AR_ID,
         Applicant,
         ApplicationDate,

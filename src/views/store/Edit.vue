@@ -506,34 +506,7 @@
       const AR_ID = ref('')
       const deleteTab = ref([]);
       const AI_ID = route.query.search_id;
-      const details = ref({
-          Applicant: '123',
-          ApplicationDate: '2023/09/12',
-          ShipmentNum: 'BX5689745123654',
-          AR_ID: 'AR23100004_01',
-          Tabs:[
-            {
-              itemId: 'A00015',
-              itemAssetType: '資產',
-              itemAssetName: '機器人',
-              itemProjectCode: "0022",
-              itemProjectName: "新竹縣政府經緯航太外包服務",
-              itemVendorName: '廠商',
-              itemEquipTypeName: '電腦設備類',
-              itemEquipType_Id: 'T0001',
-              itemEquipCategoryName: '主機板',
-              itemCategory_Id: "C0002",
-              itemPackageNum: 1,
-              itemPackageUnit: '台',
-              existFile:[
-                {
-                  FileName: 'a.jpg',
-                  FileLink: 'test/path',
-                }
-              ],
-            },
-          ],
-      });
+      const details = ref({});
       const itemParams = reactive({
         AssetType: '',
         ProjectCode: '',
@@ -572,7 +545,7 @@
         src: '',
       })
       onMounted(() => {
-        // getShipmentNum(); //物流單號選單選項
+        getShipmentNum(); //物流單號選單選項
         getDetails();
       });
       // 生成Tab頁籤資料，生成後清空填寫欄位
@@ -712,7 +685,6 @@
             InputMessages += '頁籤 ' + (i + 1) + ' :　設備分類必填' + '\n';
           }
           // 物品名稱必填
-          form.itemAssetName = form.itemAssetName.trim()
           if (!form.itemAssetName) {
             InputError = true;
             InputMessages += '頁籤 ' + (i + 1) + ' :　物品名稱必填' + '\n';
@@ -1007,12 +979,12 @@
             .then(result => {
               const allSuccess = result.every(result => result === 'success')
               if (allSuccess) {
-                alert('傳送新品入庫表單成功\n單號為:' + resultList.AI_ID);
+                alert('編輯新品入庫表單成功\n單號為:' + resultList.AI_ID);
                 router.push({
                   name: 'Store_Datagrid'
                 });
               } else {
-                alert('傳送新品入庫表單失敗')
+                alert('編輯新品入庫表單失敗')
               }
             })
         } catch (error) {
@@ -1030,9 +1002,11 @@
           form.append('AR_ID', AR_ID.value);
           form.append('tab_count', tabData.length);
           // append欲刪除的已存在頁籤
-          deleteTab.value.forEach((itemId)=>{
-            form.append('deleteTab' , itemId);
-          })
+          if(deleteTab.value) {
+            deleteTab.value.forEach((itemId)=>{
+              form.append('deleteTab' , itemId);
+            })
+          }
           axios.post('http://192.168.0.177:7008/AssetsInMng/ApplicationEdit', form)
             .then(response => {
               const data = response.data;
@@ -1105,55 +1079,40 @@
         });
       }
       async function getDetails() {
-        // axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`)
-        // .then((response)=>{
-        //   const data = response.data;
-        //   if (data.state === 'success') {
-        //     console.log('Details Get成功 資料如下\n', data.resultList);
-        //     details.value = data.resultList;
-        //     // 將資料帶入上半部表單formParams
-        //     if(details.value.AR_ID) {
-        //       AR_ID.value = details.value.AR_ID
-        //     }
-        //     if(details.value.ShipmentNum) {
-        //       ShipmentNum.value = details.value.ShipmentNum
-        //     }
-        //     // 將頁籤資料帶入下半部tabData
-        //     const tabData = details.value.Tabs;
-        //     for(let i=0 ; i< tabData.length ; i++) {
-        //       tabData.push({
-        //         deleteFile: [],
-        //         newFile: [],
-        //         viewFile: [], //不需要傳
-        //       });
-        //       getEquipCategoryName('tab',i);
-        //     }
-        //   } else if (data.state === 'error') {
-        //     alert(data.messages);
-        //   } else if (data.state === 'account_error') {
-        //     alert(data.messages);
-        //     router.push('/');
-        //   }
-        // })
-        // .catch((error)=>{
-        //   console.error(error);
-        // })
-        if(details.value.AR_ID) {
-          AR_ID.value = details.value.AR_ID
-        }
-        if(details.value.ShipmentNum) {
-          ShipmentNum.value = details.value.ShipmentNum
-        }
-        details.value.Tabs.forEach(tab => {
-          tabData.push({
-            ...tab, // 保留原始 tab 的所有屬性
-            deleteFile: [],
-            newFile: [],
-            viewFile:[],
-            // 如果需要，可以選擇性地添加其他屬性，或者不需要添加viewFile屬性
-          });
-          getEquipCategoryName('tab',0);
-        });
+        axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`)
+        .then((response)=>{
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('Details Get成功 資料如下\n', data.resultList);
+            details.value = data.resultList;
+            // 將資料帶入上半部表單formParams
+            if(details.value.AR_ID) {
+              AR_ID.value = details.value.AR_ID
+            }
+            if(details.value.ShipmentNum) {
+              ShipmentNum.value = details.value.ShipmentNum
+            }
+            // 將頁籤資料帶入下半部tabData
+            details.value.Tabs.forEach(tab => {
+              tabData.push({
+                ...tab, // 保留原始 tab 的所有屬性
+                deleteFile: [],
+                newFile: [],
+                viewFile:[],
+                // 如果需要，可以選擇性地添加其他屬性，或者不需要添加viewFile屬性
+              });
+              getEquipCategoryName('tab',0);
+            });
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
       }
       async function getEquipTypeName() {
         if (DropdownArray.EquipType.length == 0) {
