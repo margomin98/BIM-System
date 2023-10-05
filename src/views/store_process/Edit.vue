@@ -438,15 +438,6 @@
                 getEquipCategoryName(0);
               }
             });
-            if (details.value.WarrantyStartDate) {
-              details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
-            }
-            if (details.value.WarrantyEndDate) {
-              details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
-            }
-            if (details.value.AssetsInDate) {
-              details.value.AssetsInDate = details.value.AssetsInDate.replace(/-/g, '/');
-            }
             if (details.value.DeliveryDate) {
               details.value.DeliveryDate = details.value.DeliveryDate.replace(/-/g, '/');
             }
@@ -643,11 +634,15 @@
               // 全部暫存成功後，打api轉狀態
               const form = new FormData();
               form.append('AI_ID', AI_ID);
-              axios.post('',form)
+              axios.post('http://192.168.0.177:7008/AssetsInMng/AssetsIn',form)
               .then((response)=>{
                 const data =  response.data
                 if(data.state === 'success') {
                   // 成功
+                  alert('入庫成功\n單號為:' + AI_ID);
+                  router.push({
+                    name: 'Store_Process_Datagrid'
+                  });
                 } else if (data.state === 'account_error') {
                   alert(data.messages);
                   router.push('/');

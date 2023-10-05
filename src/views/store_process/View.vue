@@ -366,12 +366,14 @@ export default {
         if (data.state === 'success') {
           console.log('Details Get成功 資料如下\n', data.resultList);
           details.value = data.resultList;
-          if (details.value.WarrantyStartDate) {
-            details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
-          }
-          if (details.value.WarrantyEndDate) {
-            details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
-          }
+          details.value.Tabs.forEach(tab => {
+            if (tab.itemWarrantyStartDate) {
+              tab.itemWarrantyStartDate = tab.itemWarrantyStartDate.replace(/-/g, '/');
+            }
+            if (tab.itemWarrantyEndDate) {
+              tab.itemWarrantyEndDate = tab.itemWarrantyEndDate.replace(/-/g, '/');
+            }
+          });
           if (details.value.AssetsInDate) {
             details.value.AssetsInDate = details.value.AssetsInDate.replace(/-/g, '/');
           }
@@ -406,6 +408,7 @@ export default {
       console.log('modalParams',modalParams);
     }
     return {
+      AI_ID,
       details,
       tabNumber,
       modalParams,

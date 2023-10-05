@@ -54,51 +54,13 @@
             <router-link :to="{name: 'Receive_View' , query:{ search_id : details.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
           </div>
         </div>
-        <!-- 交付 人員&日期 -->
-        <div class="row">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                交付人員：
-              </div>
-              <input type="text" class="form-control readonly_box" readonly v-model="details.DeliveryOperator">
-            </div>
-          </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                交付日期：
-              </div>
-              <input type="text" class="form-control readonly_box" readonly v-model="details.DeliveryDate">
-            </div>
-          </div>
-        </div>
-        <!-- 入庫 人員&日期 -->
-        <div class="row">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                入庫人員：
-              </div>
-              <input type="text" class="form-control readonly_box" readonly v-model="details.AssetsInOperator">
-            </div>
-          </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                入庫日期：
-              </div>
-              <input type="text" class="form-control readonly_box" readonly v-model="details.AssetsInDate">
-            </div>
-          </div>
-        </div>
       </div>
       <!-- 頁籤部分 -->
       <div v-show="details.Tabs" class="tab_section mt-5">
         <!-- tab頂端頁籤 -->
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button v-for="tab in parseInt(details.Tabs.length)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab">{{ tab }}</button>
+            <button v-for="tab in parseInt(tabNumber)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab">{{ tab }}</button>
           </div>
         </nav>
         <!-- tab內容 -->
@@ -317,48 +279,10 @@
         src: '',
       })
       onMounted(() => {
-        // getDetails();
+        getDetails();
       });
       //上半部表單部分
-      const details = ref({
-        Applicant: '123',
-        ApplicationDate: '2023/09/12',
-        ShipmentNum: 'BX5689745123654',
-        AR_ID: 'AR23100004_01',
-        Tabs:[
-          {
-            itemId: 'A00015',
-            itemAssetsId: 'BF12345678',
-            itemAssetType: '資產',
-            itemAssetName: '機器人',
-            itemProjectCode: "0022",
-            itemProjectName: "新竹縣政府經緯航太外包服務",
-            itemVendorName: '廠商',
-            itemProductSpec: '規格',
-            itemProductType: '型號',
-            itemSN: '12345678asdwq9',
-            itemEquipTypeName: '電腦設備類',
-            itemEquipType_Id: 'T0001',
-            itemEquipCategoryName: '主機板',
-            itemCategory_Id: "C0002",
-            itemAreaName: "頂樓花圃",
-            itemArea_Id: "A0011",
-            itemLayerName: "花圃CCC",
-            itemLayer_Id: "L0099",
-            itemPackageNum: 1,
-            itemCount: 1,
-            itemPackageUnit: '台',
-            itemUnit: '顆',
-            itemMemo: '000',
-            existFile:[
-              {
-                FileName: 'a.jpg',
-                FileLink: 'test/path',
-              }
-            ],
-          },
-        ],
-    });
+      const details = ref({});
       //依照單號取得資料並生成tab資料
       async function getDetails() {
         const axios = require('axios');
@@ -366,22 +290,27 @@
           const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
           console.log(response);
           const data = response.data;
-          if (data.resultList.Status !== '申請入庫' && data.resultList.Status !== '申請歸還' && data.resultList.Status !== '可交付') {
-            window.history.back();
-            // router.push({name: 'Store_Datagrid'});
-          }
-          console.log(data.resultList.Status);
           if (data.state === 'success') {
-            // console.log('Details Get成功 資料如下\n', data.resultList);
+            console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
-            console.log('Details Get成功 資料如下\n', details.value);
-            tabNumber.value = details.value.Count;
-            //生成tab資料
-            initFormDataArray();
-            if (details.value.WarrantyStartDate && details.value.WarrantyEndDate) {
-              details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
-              details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
+            details.value.Tabs.forEach(tab => {
+              if (tab.itemWarrantyStartDate) {
+                tab.itemWarrantyStartDate = tab.itemWarrantyStartDate.replace(/-/g, '/');
+              }
+              if (tab.itemWarrantyEndDate) {
+                tab.itemWarrantyEndDate = tab.itemWarrantyEndDate.replace(/-/g, '/');
+              }
+            });
+            if (details.value.AssetsInDate) {
+              details.value.AssetsInDate = details.value.AssetsInDate.replace(/-/g, '/');
             }
+            if (details.value.DeliveryDate) {
+              details.value.DeliveryDate = details.value.DeliveryDate.replace(/-/g, '/');
+            }
+            if (details.value.ApplicationDate) {
+              details.value.ApplicationDate = details.value.ApplicationDate.replace(/-/g, '/');
+            }
+            tabNumber.value = details.value.Tabs.length
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -427,6 +356,7 @@
         }
       }
       return {
+        AI_ID,
         details,
         tabNumber,
         modalParams,

@@ -1070,10 +1070,12 @@
           for (let i = 0; i < tabData.newFile.length; i++) {
             form.append('newFile', tabData.newFile[i]);
           }
-          // deleteFile額外append 先剔除
-          form.delete('deleteFile')
-          for (let i = 0; i < tabData.deleteFile.length; i++) {
-            form.append('deleteFile', tabData.deleteFile[i]);
+          // deleteFile額外append 先剔除(已存在的頁籤才會有)
+          if(tabData.deleteFile) {
+            form.delete('deleteFile')
+            for (let i = 0; i < tabData.deleteFile.length; i++) {
+              form.append('deleteFile', tabData.deleteFile[i]);
+            }
           }
           const axios = require('axios');
           axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form)
