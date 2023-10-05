@@ -17,16 +17,33 @@
           </p>
         </div>
       </div>
+      <!-- 上半部表單 -->
       <div class="content">
+        <!-- 單號 -->
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">單號：</div>
+            <input type="text" class="form-control readonly_box" v-model="AI_ID" readonly />
+          </div>
+        </div>
+        <!-- 狀態 -->
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                狀態：
+              </div>
+              <input type="text" class="form-control readonly_box" readonly v-model="details.Status">
+            </div>
+          </div>
+        </div>
         <!-- 物流單號 -->
         <div class="col form_search_wrap">
-          <div class="input-group">
+          <div class="input-group mb-3">
             <div class="input-group-prepend">
               物流單號 :
             </div>
-            <div class="search_section">
-              <input type="text" class="form-control readonly_box" v-model="details.ShipmentNum" readonly/>
-            </div>
+            <input type="text" class="form-control readonly_box" v-model="details.ShipmentNum" readonly>
             <button class="form_search_btn" @click="viewReceive">檢視</button>
             <!-- 隱藏跳轉按鈕 -->
             <router-link :to="{name: 'Receive_View' , query:{ search_id : details.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>

@@ -45,6 +45,44 @@
             <router-link :to="{name: 'Receive_View' , query:{ search_id : details.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
           </div>
         </div>
+        <!-- 交付 人員&日期 -->
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                交付人員：
+              </div>
+              <input type="text" class="form-control readonly_box" readonly v-model="details.DeliveryOperator">
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                交付日期：
+              </div>
+              <input type="text" class="form-control readonly_box" readonly v-model="details.DeliveryDate">
+            </div>
+          </div>
+        </div>
+        <!-- 入庫 人員&日期 -->
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                入庫人員：
+              </div>
+              <input type="text" class="form-control readonly_box" readonly v-model="AssetsInOperator">
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                入庫日期：
+              </div>
+              <input type="text" class="form-control readonly_box" readonly v-model="AssetsInDate">
+            </div>
+          </div>
+        </div>
       </div>
       <!-- 頁籤部分 -->
       <div class="tab_section mt-5">
@@ -337,7 +375,7 @@
   import router from '@/router';
   import axios from 'axios';
   import { UnitArray , PackageUnitArray} from '@/assets/js/dropdown'
-  import { getEquipType , getEquipCategory , getArea , getLayer , getProject } from '@/assets/js/common_api';
+  import { getApplication , getEquipType , getEquipCategory , getArea , getLayer , getProject } from '@/assets/js/common_api';
   import { getDate , goBack } from '@/assets/js/common_fn';
   export default {
     components: {
@@ -352,9 +390,8 @@
         Unit: UnitArray,
         PackageUnit: PackageUnitArray,
       })
-      onMounted(() => {
-        getDetails();
-      });
+      const AssetsInDate = ref('');
+      const AssetsInOperator =ref('');
       //上半部表單部分
       const details = ref({});
       //下半部頁籤部分
@@ -365,6 +402,11 @@
         title: '',
         src: '',
       })
+      onMounted(() => {
+        getApplicationInfo(); // 申請人
+        getDetails();
+        AssetsInDate.value = getDate();
+      });
       //依照單號取得資料並生成tab資料
       async function getDetails() {
         // const axios = require('axios');
@@ -516,6 +558,15 @@
         .catch((error) =>{
           console.error(error);
         })
+      }
+      async function getApplicationInfo() {
+        getApplication()
+          .then((data) => {
+            AssetsInOperator.value = data;
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       // 暫存
       async function temp() {
@@ -1001,11 +1052,12 @@
       return {
         details,
         AI_ID,
+        AssetsInDate,
+        AssetsInOperator,
         DropdownArray,
         tabData,
         fileInputs,
         modalParams,
-        getDate,
         getAreaName,
         getEquipTypeName,
         selectType,

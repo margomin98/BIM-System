@@ -1292,15 +1292,20 @@
     justify-content: center;
     align-items: center;
     display: inline-flex;
-    border-radius: 10px;
     height: 40px;
-    width: 90px;
     color: #FFF;
     text-align: center;
     font-size: 20px;
     font-weight: 700;
     border: none;
-    margin: 0 10px;
+    position: absolute;
+    bottom: -1%;
+    width: 100%;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    margin: 0;
+    border-radius: 0 0 10px 10px;
     &:hover {
       background-color: #a51e1e;
     }
@@ -1532,7 +1537,7 @@
         .tab-content {
           background: #3E4E5F;
           padding: 50px 30px;
-
+          position: relative;
           .check_box_wrap {
             font-weight: 700;
             align-items: center;
@@ -1815,6 +1820,7 @@
         .tab-content {
           background: #3E4E5F;
           padding: 50px 30px;
+          position: relative;
           .modal {
             .modal-header {
               background: #3D4E61;
@@ -2109,6 +2115,7 @@
         .tab-content {
           background: #3E4E5F;
           padding: 50px 30px;
+          position: relative;
           .check_box_wrap {
              flex-direction: row !important;
     font-weight: 700;
