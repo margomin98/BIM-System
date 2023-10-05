@@ -250,15 +250,8 @@
 
 <script>
   import Navbar from '@/components/Navbar.vue'
-  import {
-    useRoute,
-    useRouter
-  } from 'vue-router';
-  import {
-    onMounted,
-    ref,
-    reactive,
-  } from 'vue';
+  import { useRoute, useRouter } from 'vue-router';
+  import { onMounted, ref, reactive, } from 'vue';
   export default {
     components: {
       Navbar
@@ -481,7 +474,7 @@
         }
         .content {
           @include content_bg;
-                    .search_section {
+          .search_section {
             position: relative;
             display: flex;
             flex: 1 1 auto; // width: 100%;
