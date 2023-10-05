@@ -222,7 +222,7 @@
         <!-- tab頂端頁籤 -->
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button v-for="tab in parseInt(tabNumber)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab">{{ tab }}</button>
+            <button v-for="tab in parseInt(details.Tabs.length)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab">{{ tab }}</button>
           </div>
         </nav>
         <!-- tab內容 -->
@@ -340,39 +340,68 @@ export default {
     });
     // 帶入資料
     async function getDetails() {
-      const axios = require('axios');
-      try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
-        console.log(response);
-        const data = response.data;
-        if (data.state === 'success') {
-          console.log('Details Get成功 資料如下\n', data.resultList);
-          details.value = data.resultList;
-          if (details.value.WarrantyStartDate) {
-            details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
-          }
-          if (details.value.WarrantyEndDate) {
-            details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
-          }
-          if (details.value.AssetsInDate) {
-            details.value.AssetsInDate = details.value.AssetsInDate.replace(/-/g, '/');
-          }
-          if (details.value.DeliveryDate) {
-            details.value.DeliveryDate = details.value.DeliveryDate.replace(/-/g, '/');
-          }
-          if (details.value.ApplicationDate) {
-            details.value.ApplicationDate = details.value.ApplicationDate.replace(/-/g, '/');
-          }
-          tabNumber.value = details.value.Tabs.length
-        } else if (data.state === 'error') {
-          alert(data.messages);
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
-        }
-      } catch (error) {
-        console.error(error);
-      }
+      // const axios = require('axios');
+      // try {
+      //   const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
+      //   console.log(response);
+      //   const data = response.data;
+      //   if (data.state === 'success') {
+      //     console.log('Details Get成功 資料如下\n', data.resultList);
+      //     details.value = data.resultList;
+      //     if (details.value.WarrantyStartDate) {
+      //       details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
+      //     }
+      //     if (details.value.WarrantyEndDate) {
+      //       details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
+      //     }
+      //     if (details.value.AssetsInDate) {
+      //       details.value.AssetsInDate = details.value.AssetsInDate.replace(/-/g, '/');
+      //     }
+      //     if (details.value.DeliveryDate) {
+      //       details.value.DeliveryDate = details.value.DeliveryDate.replace(/-/g, '/');
+      //     }
+      //     if (details.value.ApplicationDate) {
+      //       details.value.ApplicationDate = details.value.ApplicationDate.replace(/-/g, '/');
+      //     }
+      //     tabNumber.value = details.value.Tabs.length
+      //   } else if (data.state === 'error') {
+      //     alert(data.messages);
+      //   } else if (data.state === 'account_error') {
+      //     alert(data.messages);
+      //     router.push('/');
+      //   }
+      // } catch (error) {
+      //   console.error(error);
+      // }
+      const fakedata = {
+        Applicant: '123',
+        ApplicationDate: '2023/09/12',
+        ShipmentNum: 'BX5689745123654',
+        AR_ID: 'AR23100004_01',
+        Tabs:[
+          {
+            itemId: 'A00015',
+            itemAssetType: '資產',
+            itemAssetName: '機器人',
+            itemProjectCode: "0022",
+            itemProjectName: "新竹縣政府經緯航太外包服務",
+            itemVendorName: '廠商',
+            itemEquipTypeName: '電腦設備類',
+            itemEquipType_Id: 'T0001',
+            itemEquipCategoryName: '主機板',
+            itemCategory_Id: "C0002",
+            itemPackageNum: 1,
+            itemPackageUnit: '台',
+            existFile:[
+              {
+                FileName: 'a.jpg',
+                FileLink: 'test/path',
+              }
+            ],
+          },
+        ],
+      };
+      details.value = fakedata;
     }
     // 查看收貨單
     function viewReceive() {

@@ -51,13 +51,13 @@
         <nav>
           <!-- 標頭 -->
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button v-for="tab in parseInt(tabNumber)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab" :aria-selected="tab === 0">
+            <button v-for="tab in parseInt(formData.length)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab" :aria-selected="tab === 0">
                 {{ tab }}
               </button>
           </div>
         </nav>
         <div v-if="formData.length > 0" class="tab-content" id="nav-tabContent">
-          <div v-for="(item, index) in formData" :key="index" :class="['tab-pane', 'fade', { 'show active': index === 0 }]" :id="'tab' + (index + 1)" role="tabpanel" aria-labelledby="tab1-tab">
+          <div v-for="(tab, index) in formData" :key="index" :class="['tab-pane', 'fade', { 'show active': index === 0 }]" :id="'tab' + (index + 1)" role="tabpanel" aria-labelledby="tab1-tab">
             <!-- 頁籤專案類型 -->
             <div class="row">
               <div class="col-12">
@@ -82,7 +82,7 @@
                 <div class="input-group-prepend">
                   <span>*</span>專案代碼 :
                 </div>
-                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.itemProjectCode">
+                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="tab.itemProjectCode">
                 <button class="form_search_btn" @click="getProjectName(index)">搜尋</button>
               </div>
             </div>
@@ -90,7 +90,7 @@
             <div v-show="details.AssetType === '存貨'" class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">專案名稱：</div>
-                <input type="text" class="form-control readonly_box" aria-label="Default" v-model="item.itemProjectName" readonly/>
+                <input type="text" class="form-control readonly_box" aria-label="Default" v-model="tab.itemProjectName" readonly/>
               </div>
             </div>
             <!-- 頁籤 設備總類 & 設備分類-->
@@ -113,27 +113,29 @@
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend"><span>*</span>儲位區域：</div>
-                  <div class="dropdown">
+                  <!-- <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName(index)">
-                        {{ item.itemAreaName || '請選擇' }}
+                        {{ tab.itemAreaName || '請選擇' }}
                       </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                      <p v-for="(item, area_index) in item.AreaArray" :key="area_index" class="dropdown-item" @click="selectArea(index, item)">{{ item.Name }}</p>
+                      <p v-for="(item, area_index) in DropdownArray.Area" :key="area_index" class="dropdown-item" @click="selectArea(index, item)">{{ item.Name }}</p>
                     </div>
-                  </div>
+                  </div> -->
+                  <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" />
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3 justify-content-end">
                   <div class="input-group-prepend"><span>*</span>儲位櫃位：</div>
-                  <div class="dropdown">
-                    <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!item.itemAreaName">
-                        {{ item.itemLayerName || item.LayerInit }}
+                  <!-- <div class="dropdown">
+                    <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!tab.itemAreaName">
+                        {{ tab.itemLayerName || item.LayerInit }}
                       </button>
                     <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                       <p v-for="(item, layer_index) in item.LayerArray" :key="layer_index" class="dropdown-item" @click="selectLayer(index, item)">{{ item.Name }}</p>
                     </div>
-                  </div>
+                  </div> -->
+                  <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" />
                 </div>
               </div>
             </div>
@@ -141,14 +143,14 @@
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend"><span>*</span>物品名稱：</div>
-                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="item.itemAssetName" />
+                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="tab.itemAssetName" />
               </div>
             </div>
             <!-- 頁籤資產編號 -->
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend"><span>*</span>資產編號：</div>
-                <input type="text" class="form-control" v-model="item.itemAssetsId" placeholder="BFXXXXXXXX" :class="{'readonly_box': details.Type === 1}" :disabled="details.Type === 1" />
+                <input type="text" class="form-control" v-model="tab.itemAssetsId" placeholder="BFXXXXXXXX" :class="{'readonly_box': details.Type === 1}" :disabled="details.Type === 1" />
               </div>
             </div>
             <!-- 頁籤廠商 -->
@@ -176,7 +178,7 @@
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">S/N：</div>
-                <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="item.itemSN" />
+                <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="tab.itemSN" />
               </div>
             </div>
             <!-- 頁籤 包裝數量 & 包裝單位 -->
@@ -216,7 +218,7 @@
                 <div class="input-group-prepend">
                   備註：
                 </div>
-                <textarea class="col" rows="5" placeholder="最多輸入500字" v-model="item.itemMemo"></textarea>
+                <textarea class="col" rows="5" placeholder="最多輸入500字" v-model="tab.itemMemo"></textarea>
               </div>
             </div>
             <!-- 頁籤保固期限 -->
@@ -256,7 +258,7 @@
                 </div>
                 <div class='selected_file'>
                   <p class='title'>已選擇的檔案:</p>
-                  <p class='file_upload_wrap' v-for="(file, img_index) in item.newFile" :key="img_index" style="cursor: pointer;">
+                  <p class='file_upload_wrap' v-for="(file, img_index) in tab.newFile" :key="img_index" style="cursor: pointer;">
                     <p @click="showNewFileImage(index, img_index)" data-bs-toggle="modal" data-bs-target="#newFile_modal">{{ file.name }}
                     </p>
                     <img class='delete_icon' src="@/assets/trash.png" @click="deleteNewFile(index, img_index)" style="margin-left: 10px;">
@@ -269,7 +271,7 @@
               <div class="input-group mb-3">
                 <div class="input-group-prepend">已上傳檔案：</div>
                 <div class="d-flex  flex-column">
-                  <p class='file_upload_wrap d-flex' v-for="(file, img_index) in item.existFile" :key="img_index" style="cursor: pointer;">
+                  <p class='file_upload_wrap d-flex' v-for="(file, img_index) in tab.existFile" :key="img_index" style="cursor: pointer;">
                     <p @click="showExistFileImage(index, img_index)" data-bs-toggle="modal" data-bs-target="#existFile_modal">
                       {{ file.FileName }}
                     </p>
@@ -333,64 +335,101 @@
       const route = useRoute();
       const tabNumber = ref(0);
       const AI_ID = route.query.search_id;
+      const DropdownArray = reactive({
+        EquipType: [],
+        Area: [],
+      })
       var today = ref('');
       onMounted(() => {
         getDetails();
         today.value = getDate();
       });
       //上半部表單部分
-      function getDate() {
-        const today = new Date();
-        var date = '';
-        date += (today.getFullYear() + '/');
-        date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
-        date += ((today.getDate()).toString().padStart(2, '0'));
-        return date;
-      }
       const details = ref({});
       //依照單號取得資料並生成tab資料
       async function getDetails() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
-          const data = response.data;
-          if (data.state === 'success') {
-            // console.log('Details Get成功 資料如下\n', data.resultList);
-            if (data.resultList.Status !== '待入庫') {
-              window.history.back();
-              // router.push({name: 'Store_Process_Datagrid'});
-            }
-            details.value = data.resultList;
-            console.log('Details Get成功 資料如下\n', details.value);
-            tabNumber.value = details.value.Count;
-            //生成tab資料
-            initFormDataArray();
-            if (details.value.WarrantyStartDate) {
-              details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
-            }
-            if (details.value.WarrantyEndDate) {
-              details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
-            }
-            if (details.value.AssetsInDate) {
-              details.value.AssetsInDate = details.value.AssetsInDate.replace(/-/g, '/');
-            }
-            if (details.value.DeliveryDate) {
-              details.value.DeliveryDate = details.value.DeliveryDate.replace(/-/g, '/');
-            }
-            if (details.value.ApplicationDate) {
-              details.value.ApplicationDate = details.value.ApplicationDate.replace(/-/g, '/');
-            }
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error(error);
-        }
+        // const axios = require('axios');
+        // try {
+        //   const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
+        //   const data = response.data;
+        //   if (data.state === 'success') {
+        //     // console.log('Details Get成功 資料如下\n', data.resultList);
+        //     if (data.resultList.Status !== '待入庫') {
+        //       window.history.back();
+        //       // router.push({name: 'Store_Process_Datagrid'});
+        //     }
+        //     details.value = data.resultList;
+        //     console.log('Details Get成功 資料如下\n', details.value);
+        //     tabNumber.value = details.value.Count;
+        //     //生成tab資料
+        //     initFormDataArray();
+        //     if (details.value.WarrantyStartDate) {
+        //       details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
+        //     }
+        //     if (details.value.WarrantyEndDate) {
+        //       details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
+        //     }
+        //     if (details.value.AssetsInDate) {
+        //       details.value.AssetsInDate = details.value.AssetsInDate.replace(/-/g, '/');
+        //     }
+        //     if (details.value.DeliveryDate) {
+        //       details.value.DeliveryDate = details.value.DeliveryDate.replace(/-/g, '/');
+        //     }
+        //     if (details.value.ApplicationDate) {
+        //       details.value.ApplicationDate = details.value.ApplicationDate.replace(/-/g, '/');
+        //     }
+        //   } else if (data.state === 'error') {
+        //     alert(data.messages);
+        //   } else if (data.state === 'account_error') {
+        //     alert(data.messages);
+        //     router.push('/');
+        //   }
+        // } catch (error) {
+        //   console.error(error);
+        // }
+        const fakedata = {
+        Applicant: '123',
+        ApplicationDate: '2023/09/12',
+        ShipmentNum: 'BX5689745123654',
+        AR_ID: 'AR23100004_01',
+        Tabs:[
+          {
+            itemId: 'A00015',
+            itemAssetType: '資產',
+            itemAssetName: '機器人',
+            itemProjectCode: "0022",
+            itemProjectName: "新竹縣政府經緯航太外包服務",
+            itemVendorName: '廠商',
+            itemEquipTypeName: '電腦設備類',
+            itemEquipType_Id: 'T0001',
+            itemEquipCategoryName: '主機板',
+            itemCategory_Id: "C0002",
+            itemAreaName: '123',
+            itemLayerName: '145',
+            itemPackageNum: 1,
+            itemPackageUnit: '台',
+            existFile:[
+              {
+                FileName: 'a.jpg',
+                FileLink: 'test/path',
+              }
+            ],
+          },
+        ],
+      };
+      details.value = fakedata;
+      details.value.Tabs.forEach(tab => {
+          formData.push({
+            ...tab, // 保留原始 tab 的所有屬性
+            deleteFile: [],
+            newFile: [],
+            viewFile:[],
+            // 如果需要，可以選擇性地添加其他屬性，或者不需要添加viewFile屬性
+          });
+          // getEquipCategoryName('tab',0);
+        });
       }
-      //下半部表單部分
+      //下半部頁籤部分
       const formData = reactive([]);
       const fileInputs = reactive([]);
       const newFileData = ref(0);
@@ -430,10 +469,10 @@
         }
       }
       async function getAreaName(index) {
-        if (formData[index].AreaArray.length == 0) {
+        if (DropdownArray.Area.length == 0) {
           getArea()
           .then((data)=>{
-            formData[index].AreaArray = data;
+            DropdownArray.Area = data;
           })
           .catch((error) =>{
             console.error(error);
@@ -880,6 +919,7 @@
         today,
         details,
         tabNumber,
+        DropdownArray,
         formData,
         fileInputs,
         newFileImageUrl,
