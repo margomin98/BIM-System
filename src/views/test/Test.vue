@@ -194,33 +194,27 @@ export default {
     const LayerInit = ref('請先選擇區域');
     const rowData = ref([]);
     const totalRecords = ref(1000);
+    const currentPage = ref(0);
     const rows = ref(10);
     const selectedProduct = ref();
     onMounted(() => {
       const event = {
-        page: 0,
+        rows: 10,
+        page: currentPage.value,
         sortField: 'AssetsId',
         sortOrder: -1,
       }
       submit(event);
     });
-    function onPage(event) {
-      // console.log(event);
-      console.log('rows:', rows.value);
-      console.log('page:', event.page+1);
-      console.log('sort:', event.sortField);
-      console.log('order:', event.sortOrder);
-      console.log('-----------------------------');
-    }
     function add() {
       totalRecords.value++;
     }
     function exportCSV() {
       // 提取列标题
-      const headers = Object.keys(data.value[0]);
+      const headers = Object.keys(rowData.value[0]);
 
       // 将列标题添加到CSV数据的开头
-      const csvData = [headers].concat(data.value.map(item => headers.map(header => item[header])));
+      const csvData = [headers].concat(rowData.value.map(item => headers.map(header => item[header])));
       // 将数据转换为CSV字符串
       const csvContent = csvData.map(row => row.join(',')).join('\n');
 
@@ -242,15 +236,19 @@ export default {
 
       const formData = new FormData();
       // 將切頁資訊append到 formData
-      const order = event.order === 1 ? 'asc' : 'desc'
-      console.log('rows:', rows.value);
-      console.log('page:', event.page+1);
+      // console.log(event);
+      const order = event.sortOrder === 1 ? 'asc' : 'desc'
+      if(event.page || event.page === 0) {
+        currentPage.value = (event.page+1);
+      }
+      console.log('rows:', event.rows);
+      console.log('page:', currentPage.value);
       console.log('sort:', event.sortField);
       console.log('order:', order);
       console.log('-----------------------------');
-      formData.append('rows',rows.value);
-      formData.append('page',event.page+1);
-      formData.append('sort',event.sort);
+      formData.append('rows',event.rows);
+      formData.append('page',currentPage.value);
+      formData.append('sort',event.sortField);
       formData.append('order',order);
       // 將表格資料append到 formData
       for (const key in searchParams) {
@@ -363,7 +361,6 @@ export default {
       selectedProduct,
       totalRecords,
       rows,
-      onPage,
       add,
       exportCSV,
       submit,
