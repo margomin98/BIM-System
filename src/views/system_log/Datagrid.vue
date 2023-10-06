@@ -7,6 +7,7 @@
     <div class="container-fluid datagrid_section">
       <div class="content">
         <div class="row">
+        <!-- 執行動作 -->
           <div class="col">
             <p>執行動作</p>
             <div class="dropdown">
@@ -18,14 +19,17 @@
               </div>
             </div>
           </div>
+          <!-- 標題 -->
           <div class="col">
             <p>標題</p>
             <input type="text"  />
           </div>
+          <!-- 日期（起） -->
           <div class="col">
             <p>日期(起)</p>
             <input type="date"  class="date-input" />
           </div>
+          <!-- 日期(迄) -->
           <div class="col">
             <p>日期(迄)</p>
             <input type="date" class="date-input" />
@@ -51,8 +55,7 @@
   import {
     AgGridVue
   } from "ag-grid-vue3";
-  import Receive_button from "@/components/Receive_button";
-  import Delete from "@/components/Receive_delete_button";
+  import System_log_button from "@/components/System_log_view_button";
   import Navbar from "@/components/Navbar.vue";
   import {
     onMounted,
@@ -66,8 +69,7 @@
     components: {
       Navbar,
       AgGridVue,
-      Receive_button,
-      Delete
+      System_log_button
     },
     setup() {
       const router = useRouter();
@@ -80,70 +82,63 @@
       const columnDefs = [{
           suppressMovable: true,
           field: "",
-          cellRenderer: "Receive_button",
-          width: 220,
-          resizable: true,
-        },
-        {
-          headerName: "收貨單號",
-          field: "Show_AR_ID",
-          unSortIcon: true,
-          sortable: true,
-          width: 180,
-          resizable: true,
-          flex: 1,
-          suppressMovable: true
-        },
-        {
-          headerName: "物流單號",
-          field: "ShipmentNum",
-          unSortIcon: true,
-          sortable: true,
-          width: 180,
-          resizable: true,
-          flex: 1,
-          suppressMovable: true
-        },
-        {
-          headerName: "貨運公司",
-          field: "ShipmentCompany",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "到貨件數",
-          field: "GoodsNum",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true
-        },
-        {
-          headerName: "收件日期",
-          field: "ReceivedDate",
-          unSortIcon: true,
-          sortable: true,
-          resizable: true,
-          width: 150,
-          suppressMovable: true
-        },
-        {
-          headerName: "收件人員",
-          field: "Recipient",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true
-        },
-        {
-          suppressMovable: true,
+          cellRenderer: "System_log_button",
           width: 100,
+          resizable: true,
+        },
+        {
+          headerName: "使用者賬號",
           field: "",
-          cellRenderer: "Delete",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "執行動作",
+          field: "",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "Controller",
+          field: "",
+          unSortIcon: true,
+          sortable: true,
+          width: 170,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "Action",
+          field: "",
+          unSortIcon: true,
+          sortable: true,
+          width: 180,
+          suppressMovable: true
+        },
+        {
+          headerName: "訊息",
+          field: "",
+          unSortIcon: true,
+          sortable: true,
+          resizable: true,
+          width: 150,
+          suppressMovable: true
+        },
+        {
+          headerName: "執行時間",
+          field: "",
+          unSortIcon: true,
+          sortable: true,
+          width: 200,
+          suppressMovable: true
         }
+        
       ]
       const rowData = ref([]);
       onMounted(() => {
