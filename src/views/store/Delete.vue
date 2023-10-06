@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="content">
-        <!-- 單號 --> 
+        <!-- 單號 -->
         <div class="col mb-3">
           <div class="input-group">
             <div class="input-group-prepend">單號 :</div>
@@ -46,7 +46,7 @@
             <router-link :to="{name: 'Receive_View' , query:{ search_id : details.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
           </div>
         </div>
-        <!-- 備註 --> 
+        <!-- 備註 -->
         <div class="col mb-3">
           <div class="input-group">
             <div class="input-group-prepend">備註 :</div>
@@ -73,11 +73,11 @@
                     資產類型 :
                   </div>
                   <div class="d-flex align-items-center radio_wrap">
-                    <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="資產" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='資產'"/>
+                    <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="資產" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='資產'" />
                     <label class="form-check-label check_box" for='radio1'>資產</label>
-                    <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="存貨" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='存貨'"/>
+                    <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="存貨" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='存貨'" />
                     <label class="form-check-label check_box" for='radio2' data-toggle="tooltip" data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
-                    <input type="radio" class='form-check-input check_box' id="radio3" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="耗材" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='耗材'"/>
+                    <input type="radio" class='form-check-input check_box' id="radio3" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="耗材" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='耗材'" />
                     <label class="form-check-label check_box" for='radio3'>耗材</label>
                   </div>
                 </div>
@@ -95,7 +95,7 @@
             <!-- 頁籤專案名稱 -->
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend">專案名稱：</div>
+                <div class="input-group-prepend">專案名稱 :</div>
                 <input type="text" class="form-control readonly_box" v-model="tab.itemProjectName" readonly>
               </div>
             </div>
@@ -190,7 +190,7 @@
                     <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">數量 :
                   </div>
                   <div class="input-group-prepend d-xl-none d-lg-none d-md-none d-block">
-                     數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
+                    數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
                   </div>
                   <input type="text" class="input-number readonly_box" v-model="tab.itemCount" readonly>
                 </div>
@@ -212,13 +212,11 @@
               </div>
             </div>
             <!-- 頁籤上傳檔案部分 -->
-            <div class="col">
-              <div class="input-group mb-3">
+            <div class="col selected_file">
+              <div class="input-group">
                 <div class="input-group-prepend">已上傳檔案 :</div>
-                <div class="selected_file">
-                  <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
-                    <p @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
-                  </div>
+                <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
+                  <p @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
                 </div>
               </div>
             </div>
@@ -264,8 +262,15 @@
 
 <script>
   import Navbar from '@/components/Navbar.vue'
-  import { useRoute, useRouter } from 'vue-router';
-  import { onMounted, ref, reactive, } from 'vue';
+  import {
+    useRoute,
+    useRouter
+  } from 'vue-router';
+  import {
+    onMounted,
+    ref,
+    reactive,
+  } from 'vue';
   export default {
     components: {
       Navbar
@@ -335,16 +340,16 @@
       }
       // 查看收貨單
       function viewReceive() {
-        if(details.value.AR_ID) {
+        if (details.value.AR_ID) {
           const link = document.getElementById('view-receive');
           link.click();
         }
       }
       // 查看已上傳相片
-      function viewImgFile(index , file_index) {
+      function viewImgFile(index, file_index) {
         modalParams.title = details.value.Tabs[index].existFile[file_index].FileName;
         modalParams.src = details.value.Tabs[index].existFile[file_index].FileLink;
-        console.log('modalParams',modalParams);
+        console.log('modalParams', modalParams);
       }
       function goBack() {
         window.history.back();
@@ -364,9 +369,23 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '@/assets/css/global.scss'; 
+  @import '@/assets/css/global.scss';
   textarea {
     padding: 5px 10px 30px;
+  }
+  .nav {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    border: none;
+  }
+   ::-webkit-scrollbar {
+    height: 6px;
+  }
+   ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: rgb(176, 175, 175);
+    border: 1px solid rgb(86, 85, 85);
   }
   .delete_modal {
     .modal-content {
@@ -424,7 +443,8 @@
       }
       .readonly_box {
         @include readonly_box;
-      }    .form_search_btn {
+      }
+      .form_search_btn {
         @include form_search_btn;
       }
       h1 {
@@ -449,8 +469,7 @@
           }
         }
         .input-number {
-          @include count_btn;
-          width: 200px;
+          width: 60%;
         }
         .fixed_info {
           @include fixed_info;
@@ -505,27 +524,8 @@
               pointer-events: none;
             }
           }
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 112px;
-              }
-              input {
-                margin-left: 15px !important
-              }
-            }
-          }
           .input-group-prepend {
             width: 120px;
-          }
-          .check_box_wrap {
-            font-weight: 700;
-            align-items: center;
-            color: white;
-            font-size: 20px;
-            .check_box {
-              margin-right: 5px;
-            }
           }
           .row_wrap {
             .input-group {
@@ -586,7 +586,7 @@
           }
         }
       }
-       .tab_section {
+      .tab_section {
         .nav-tabs {
           button {
             @include tab_section_num;
@@ -600,6 +600,41 @@
         .tab-content {
           background: #3E4E5F;
           padding: 50px 30px;
+          border-radius: 0 0 10px 10px;
+          .selected_file {
+            .input-group {
+              flex-direction: column;
+            }
+            .file_upload_wrap {
+              margin-bottom: 0;
+              display: flex;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              p {
+                font-weight: 700;
+                margin-bottom: 5px;
+                color: white;
+                word-break: break-word;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
+                  font-weight: 700;
+                  color: white;
+                }
+              }
+            }
+          }
+          .check_box_wrap {
+            font-weight: 700;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            div:nth-child(2) {
+              gap: 0 5px;
+            }
+          }
           .modal {
             .modal-header {
               background: #3D4E61;
@@ -636,33 +671,6 @@
             span {
               @include red_star
             }
-            .selected_file {
-              margin-left: 20px;
-              p.title {
-                font-weight: 700;
-                color: white;
-                margin-bottom: 5px;
-              }
-              .file_upload_wrap {
-                margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  margin-bottom: 0;
-                  font-weight: 700;
-                  color: white;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
-                }
-              }
-            }
             .input-number {
               @include count_btn;
             }
@@ -689,16 +697,6 @@
               }
             }
           }
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 112px;
-              }
-              input {
-                margin-left: 15px !important
-              }
-            }
-          }
         }
       }
     }
@@ -722,7 +720,8 @@
       }
       .readonly_box {
         @include readonly_box;
-      }   .form_search_btn {
+      }
+      .form_search_btn {
         @include form_search_btn;
       }
       h1 {
@@ -743,7 +742,7 @@
           }
         }
         .content {
-                    .search_section {
+          .search_section {
             position: relative;
             display: flex;
             flex: 1 1 auto; // width: 100%;
@@ -785,25 +784,6 @@
               color: gray;
               font-size: 14px;
               pointer-events: none;
-            }
-          }
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 112px;
-              }
-              input {
-                margin-left: 15px !important
-              }
-            }
-          }
-          .check_box_wrap {
-            font-weight: 700;
-            align-items: center;
-            color: white;
-            font-size: 20px;
-            .check_box {
-              margin-right: 5px;
             }
           }
           .row_wrap {
@@ -890,7 +870,8 @@
         #number {
           flex-wrap: nowrap
         }
-      } .tab_section {
+      }
+      .tab_section {
         .nav-tabs {
           button {
             @include tab_section_num;
@@ -903,7 +884,43 @@
         }
         .tab-content {
           background: #3E4E5F;
+          border-radius: 0 0 10px 10px;
+          .selected_file {
+            .input-group {
+              flex-direction: column;
+            }
+            .file_upload_wrap {
+              margin-bottom: 0;
+              display: flex;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              p {
+                font-weight: 700;
+                margin-bottom: 5px;
+                color: white;
+                word-break: break-word;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
+                  font-weight: 700;
+                  color: white;
+                }
+              }
+            }
+          }
           padding: 50px 30px;
+          .check_box_wrap {
+            font-weight: 700;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            div:nth-child(2) {
+              gap: 0 5px;
+              display: flex;
+            }
+          }
           .modal {
             .modal-header {
               background: #3D4E61;
@@ -940,33 +957,6 @@
             span {
               @include red_star
             }
-            .selected_file {
-              margin-left: 20px;
-              p.title {
-                font-weight: 700;
-                color: white;
-                margin-bottom: 5px;
-              }
-              .file_upload_wrap {
-                margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  margin-bottom: 0;
-                  font-weight: 700;
-                  color: white;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
-                }
-              }
-            }
             .input-number {
               @include count_btn;
             }
@@ -990,16 +980,6 @@
                 &:hover {
                   background: #3f608f;
                 }
-              }
-            }
-          }
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 114px;
-              }
-              input {
-                margin-left: 15px !important
               }
             }
           }
@@ -1036,7 +1016,8 @@
         &:hover {
           background-color: #43546d;
         }
-      }      .readonly_box {
+      }
+      .readonly_box {
         @include readonly_box;
       }
       h1 {
@@ -1066,7 +1047,7 @@
         }
         .content {
           @include content_bg;
-                    .search_section {
+          .search_section {
             position: relative;
             display: flex;
             flex: 1 1 auto; // width: 100%;
@@ -1152,16 +1133,6 @@
               }
             }
           }
-          .check_box_wrap {
-            flex-direction: row;
-            font-weight: 700;
-            align-items: center;
-            color: white;
-            font-size: 20px;
-            .check_box {
-              margin-right: 5px;
-            }
-          }
           .info {
             display: flex;
             flex-direction: row-reverse;
@@ -1199,7 +1170,8 @@
             }
           }
         }
-      }.tab_section {
+      }
+      .tab_section {
         .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
           margin-left: unset !important;
         }
@@ -1215,7 +1187,47 @@
         }
         .tab-content {
           background: #3E4E5F;
+          border-radius: 0 0 10px 10px;
+          .selected_file {
+            .input-group {
+              flex-direction: column;
+            }
+            .file_upload_wrap {
+              margin-bottom: 0;
+              display: flex;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              p {
+                font-weight: 700;
+                margin-bottom: 5px;
+                color: white;
+                word-break: break-word;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
+                  font-weight: 700;
+                  color: white;
+                }
+              }
+            }
+          }
           padding: 50px 30px;
+          .check_box_wrap {
+            flex-direction: column;
+            font-weight: 700;
+            color: white;
+            font-size: 20px;
+            .radio_wrap {
+              gap: 0 10px;
+              padding-left: 10px;
+            }
+            .input-group-prepend {
+              width: auto !important;
+              align-self: self-start;
+            }
+          }
           .modal {
             .modal-header {
               background: #3D4E61;
@@ -1252,32 +1264,6 @@
             flex-direction: column;
             span {
               @include red_star
-            }
-            .selected_file {
-              p.title {
-                font-weight: 700;
-                color: white;
-                margin-bottom: 5px;
-              }
-              .file_upload_wrap {
-                margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  margin-bottom: 0;
-                  font-weight: 700;
-                  color: white;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
-                }
-              }
             }
             .input-number {
               @include count_btn;

@@ -27,7 +27,7 @@
               </div>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 submit_section'>
                 <p>新增設備總類</p>
-                <div class='d-flex'>
+                <div class='d-flex  search_wrap'>
                   <input class="form-control" aria-label="With textarea" placeholder='最多輸入10字' v-model="newParams.EquipType">
                   <button type="button" @click="insertNewType('EquipTypeName')">新增</button>
                 </div>
@@ -842,7 +842,8 @@
         @include title_color;
       }
       .info_wrap {
-        padding: 1% 20% 0;
+        margin: auto;
+    width: 950px;
         .button_wrap {
           display: flex;
           margin-top: 30px;
@@ -1335,12 +1336,15 @@
               padding: 20px;
               border-top-right-radius: 5px;
               border-bottom-right-radius: 5px;
+              .search_wrap{
+                flex-direction: column;
+              }
               button {
                 @include datagrid_edit_button;
                 height: 35px;
-                margin-left: 10px;
                 width: 90px;
                 font-size: 18px;
+                margin:10px auto 0;
                 &:hover {
                   background: #3B6162;
                   color: white;
@@ -1351,10 +1355,7 @@
                 font-weight: 800;
                 font-size: 20px;
               }
-              .form-control {
-                height: 35px;
-                width: 400px;
-              }
+            
             }
             .modal {
               .modal-header {

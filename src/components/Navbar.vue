@@ -265,7 +265,8 @@
           border-radius: 0px 0px 5px 5px;
           background: #2D4864;
           box-shadow: 4px 2px 4px 0px rgba(0, 0, 0, 0.25);
-          margin-top: 15px;
+          margin-top: 30px;
+          left: -15%;
           a {
             padding: 2px 10px;
             text-decoration: none;

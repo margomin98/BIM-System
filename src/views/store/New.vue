@@ -38,7 +38,7 @@
             <router-link :to="{name: 'Receive_View' , query:{ search_id : AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
           </div>
         </div>
-        <!-- 備註 --> 
+        <!-- 備註 -->
         <div class="col mb-3">
           <div class="input-group">
             <div class="input-group-prepend">備註 :</div>
@@ -100,8 +100,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                        {{ itemParams.EquipTypeName || '請選擇' }}
-                      </button>
+                          {{ itemParams.EquipTypeName || '請選擇' }}
+                        </button>
                 <div class="dropdown-menu" aria-labelledby="typeDropdown">
                   <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType('upperForm' , item)">{{ item.Name }}</p>
                 </div>
@@ -115,8 +115,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(itemParams.EquipTypeName !== '') }">
-                        {{ itemParams.EquipCategoryName || EquipCategoryInit }}
-                      </button>
+                          {{ itemParams.EquipCategoryName || EquipCategoryInit }}
+                        </button>
                 <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                   <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory('upperForm' , item)">{{ item.Name }}</p>
                 </div>
@@ -194,8 +194,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ itemParams.PackageUnit || '請選擇' }}
-                      </button>
+                          {{ itemParams.PackageUnit || '請選擇' }}
+                        </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in DropdownArray.PackageUnit" :key="index" class="dropdown-item" @click="selectPackageUnit('upperForm' , item)">
                     {{ item }}</p>
@@ -225,8 +225,8 @@
               </div>
               <div v-if="itemParams.AssetType === '耗材'" class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="itemParams.AssetType !== '耗材'">
-                        {{ itemParams.Unit || '請選擇' }}
-                      </button>
+                          {{ itemParams.Unit || '請選擇' }}
+                        </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in DropdownArray.Unit" :key="index" class="dropdown-item" @click="selectUnit('upperForm' , item)">
                     {{ item }}</p>
@@ -306,8 +306,8 @@
                   </div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                        {{ tab.itemEquipTypeName || '請選擇' }}
-                      </button>
+                          {{ tab.itemEquipTypeName || '請選擇' }}
+                        </button>
                     <div class="dropdown-menu" aria-labelledby="typeDropdown">
                       <p v-for="item in DropdownArray.EquipType" class="dropdown-item" @click="selectType('tab' , item , index)">{{ item.Name }}</p>
                     </div>
@@ -321,8 +321,8 @@
                   </div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!tab.itemEquipTypeName">
-                        {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }}
-                      </button>
+                          {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }}
+                        </button>
                     <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                       <p v-for="item in tab.EquipCategoryArray" class="dropdown-item" @click="selectCategory('tab' , item , index)">{{ item.Name }}</p>
                     </div>
@@ -398,8 +398,8 @@
                   </div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ tab.itemPackageUnit || '請選擇' }}
-                      </button>
+                          {{ tab.itemPackageUnit || '請選擇' }}
+                        </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="item in DropdownArray.PackageUnit" class="dropdown-item" @click="selectPackageUnit('tab' , item , index)">{{ item }}</p>
                     </div>
@@ -428,8 +428,8 @@
                   </div>
                   <div v-if="tab.itemAssetType === '耗材'" class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="tab.itemAssetType !== '耗材'">
-                        {{ tab.itemUnit || '請選擇' }}
-                      </button>
+                          {{ tab.itemUnit || '請選擇' }}
+                        </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="item in DropdownArray.Unit" class="dropdown-item" @click="selectUnit('tab' , item , index)">{{ item }}</p>
                     </div>
@@ -453,12 +453,14 @@
                   <button class='choose_btn' @click="openFileExplorer(index)">選擇檔案</button>
                   <input type="file" accept="image/*" ref="fileInputs" style="display: none;" multiple @change="handleFileChange(index , $event)" />
                 </div>
-                <div class="selected_file">
-                  <p class="title">已選擇的檔案:</p>
-                  <div v-for="(file , file_index) in tab.viewFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
-                    <p @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
-                    <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index,file_index)">
-                  </div>
+              </div>
+            </div>
+            <div class="col selected_file">
+              <div class="input-group">
+                <div class="input-group-prepend">已選擇檔案 :</div>
+                <div v-for="(file , file_index) in tab.viewFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
+                  <p @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
+                  <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index,file_index)">
                 </div>
               </div>
             </div>
@@ -1213,6 +1215,20 @@
   textarea {
     padding: 5px 10px 30px;
   }
+  .nav {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    border: none;
+  }
+   ::-webkit-scrollbar {
+    height: 6px;
+  }
+   ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: rgb(176, 175, 175);
+    border: 1px solid rgb(86, 85, 85);
+  }
   .delete_btn {
     background: var(--c-5, #E94B4B);
     justify-content: center;
@@ -1231,7 +1247,7 @@
     left: 0;
     right: 0;
     margin: 0;
-    border-radius: 0 0 10px 10px;
+    border-radius: 10px;
     &:hover {
       background-color: #a51e1e;
     }
@@ -1347,7 +1363,7 @@
         }
         .input-number {
           @include count_btn;
-          width: 58%;
+          width: 57%;
         }
         .fixed_info {
           @include fixed_info;
@@ -1464,6 +1480,35 @@
           background: #3E4E5F;
           padding: 50px 30px;
           position: relative;
+          border-radius: 0 10px 0 0;
+          .selected_file {
+            .input-group {
+              flex-direction: column;
+            }
+            .file_upload_wrap {
+              margin-bottom: 0;
+              display: flex;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              p {
+                font-weight: 700;
+                margin-bottom: 5px;
+                color: white;
+                word-break: break-word;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
+                  font-weight: 700;
+                  color: white;
+                }
+              }
+            }
+          }
+          .input-number {
+            width: 65%;
+          }
           .check_box_wrap {
             font-weight: 700;
             align-items: center;
@@ -1510,33 +1555,6 @@
             span {
               @include red_star
             }
-            .selected_file {
-              margin-left: 20px;
-              p.title {
-                font-weight: 700;
-                color: white;
-                margin-bottom: 5px;
-              }
-              .file_upload_wrap {
-                margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  margin-bottom: 0;
-                  font-weight: 700;
-                  color: white;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
-                }
-              }
-            }
             .input-number {
               @include count_btn;
             }
@@ -1563,16 +1581,6 @@
               }
             }
           }
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 114px;
-              }
-              input {
-                margin-left: 15px !important
-              }
-            }
-          }
         }
       }
     }
@@ -1594,7 +1602,7 @@
       }
       .info_wrap {
         margin: auto;
-        width: 800px;
+        width: 750px;
         .button_wrap {
           display: flex;
           justify-content: space-between;
@@ -1628,7 +1636,7 @@
         }
         .input-number {
           @include count_btn;
-          width: 58%;
+          width: 60%;
         }
         .fixed_info {
           @include fixed_info;
@@ -1687,7 +1695,7 @@
             }
           }
           .input-group-prepend {
-            width: 150px;
+            width: 130px;
             white-space: nowrap;
           }
           .check_box_wrap {
@@ -1731,6 +1739,31 @@
         }
       }
       .tab_section {
+        .selected_file {
+          .input-group {
+            flex-direction: column;
+          }
+          .file_upload_wrap {
+            margin-bottom: 0;
+            display: flex;
+            img {
+              width: 25px;
+              height: 25px;
+            }
+            p {
+              font-weight: 700;
+              margin-bottom: 5px;
+              color: white;
+              word-break: break-word;
+              &::before {
+                margin-right: 10px;
+                content: '·';
+                font-weight: 700;
+                color: white;
+              }
+            }
+          }
+        }
         .nav-tabs {
           button {
             @include tab_section_num;
@@ -1745,16 +1778,9 @@
           background: #3E4E5F;
           padding: 50px 30px;
           position: relative;
-          .modal {
-            .modal-header {
-              background: #3D4E61;
-              color: white;
-              .close_icon {
-                color: white;
-                font-weight: 700;
-                margin-bottom: 0;
-              }
-            }
+          border-radius: 0 10px 0 0;
+          .input-number {
+            width: 65%;
           }
           .check_box_wrap {
             font-weight: 700;
@@ -1786,37 +1812,21 @@
               align-items: center;
             }
           }
+          .modal {
+            .modal-header {
+              background: #3D4E61;
+              color: white;
+              .close_icon {
+                color: white;
+                font-weight: 700;
+                margin-bottom: 0;
+              }
+            }
+          }
           .input-group {
             flex-wrap: nowrap;
             span {
               @include red_star
-            }
-            .selected_file {
-              margin-left: 20px;
-              p.title {
-                font-weight: 700;
-                color: white;
-                margin-bottom: 5px;
-              }
-              .file_upload_wrap {
-                margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  margin-bottom: 0;
-                  font-weight: 700;
-                  color: white;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
-                }
-              }
             }
             .input-number {
               @include count_btn;
@@ -1841,16 +1851,6 @@
                 &:hover {
                   background: #3f608f;
                 }
-              }
-            }
-          }
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 114px;
-              }
-              input {
-                margin-left: 15px !important
               }
             }
           }
@@ -1898,6 +1898,15 @@
         }
         .content {
           @include content_bg;
+          .check_box_wrap {
+            flex-direction: row;
+            font-weight: 700;
+            color: white;
+            font-size: 20px;
+            .check_box {
+              margin-right: 10px;
+            }
+          }
           .search_section {
             position: relative;
             display: flex;
@@ -1984,16 +1993,7 @@
               }
             }
           }
-          .check_box_wrap {
-            flex-direction: row;
-            font-weight: 700;
-            align-items: center;
-            color: white;
-            font-size: 20px;
-            .check_box {
-              margin-right: 10px;
-            }
-          }
+    
           .info {
             display: flex;
             flex-direction: row-reverse;
@@ -2039,12 +2039,38 @@
           background: #3E4E5F;
           padding: 50px 30px;
           position: relative;
+          border-radius: 0 10px 0 0;
+          .selected_file {
+            .input-group {
+              flex-direction: column;
+            }
+            .file_upload_wrap {
+              margin-bottom: 0;
+              display: flex;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              p {
+                font-weight: 700;
+                margin-bottom: 5px;
+                color: white;
+                word-break: break-word;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
+                  font-weight: 700;
+                  color: white;
+                }
+              }
+            }
+          }
           .check_box_wrap {
-            flex-direction: row !important;
+            flex-direction: column;
             font-weight: 700;
-            align-items: center;
             color: white;
             font-size: 20px;
+
             .radio_wrap {
               gap: 0 10px;
               padding-left: 10px;
@@ -2090,32 +2116,6 @@
             flex-direction: column;
             span {
               @include red_star
-            }
-            .selected_file {
-              p.title {
-                font-weight: 700;
-                color: white;
-                margin-bottom: 5px;
-              }
-              .file_upload_wrap {
-                margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  margin-bottom: 0;
-                  font-weight: 700;
-                  color: white;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
-                }
-              }
             }
             .input-number {
               @include count_btn;

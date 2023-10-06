@@ -6,9 +6,9 @@
     </div>
     <div class="info_wrap col">
       <div class="fixed_info">
-        <div>
+        <!-- <div>
           <p>變更權限</p>
-        </div>
+        </div> -->
         <div>
           <p>目前權限: {{ roleSearchResult }}</p>
         </div>

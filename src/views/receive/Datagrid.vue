@@ -438,6 +438,8 @@
       }
       .datagrid_section {
         .row {
+          display: flex;
+    flex-direction: column;
           gap: 10px 0;
           padding: 30px;
           @include datagrid_bg;

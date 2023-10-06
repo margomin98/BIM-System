@@ -617,7 +617,9 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-  
+  textarea{
+    padding:5px 0 0 5px !important
+  }
   .delete_modal {
     .modal-content {
       border: solid 1px black;

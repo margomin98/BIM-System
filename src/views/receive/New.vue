@@ -92,7 +92,7 @@
           <div class="input-group">
             <div class="file_upload_box">
               <div v-for="(file, index) in fileParams.viewDoc" :key="index" class="file_upload_wrap">
-                <p>{{ file.name }}</p>
+                <p class='file_name'>{{ file.name }}</p>
                 <img class="view_icon" src="@/assets/view.png" @click="handleDocPreview(file)">
                 <img class="delete_icon" src="@/assets/trash.png" @click="deleteFile('document',index)">
               </div>
@@ -108,10 +108,10 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="photoModalLabel">{{ previewParams.title }}</h5>
-                  <span data-bs-dismiss="modal" class='close_icon' style="color: white;">X</span>
+                  <p data-bs-dismiss="modal" class='close_icon'>X</p>
                 </div>
                 <div class="modal-body">
-                  <img :src="previewParams.src" class="w-100">
+                  <img class="w-100" :src="previewParams.src">
                 </div>
               </div>
             </div>
@@ -195,8 +195,27 @@
               <div class="input-group">
                 <div class="file_upload_box">
                   <div v-for="(file, index) in tab.viewDoc" :key="index" class="file_upload_wrap">
-                    <p>{{ file.name }}</p>
+                    <p class="file_name">{{ file.name }}</p>
                     <img class="view_icon" src="@/assets/view.png" @click="handleDocPreview(file)">
+                    <img class="delete_icon" src="@/assets/trash.png" @click="deleteFile('document',index)">
+                  </div>
+                </div>
+              </div>
+              <!-- doc/docx download hidden Link -->
+              <a href="" style="display: none;" id="download-link"></a>
+              <!-- Modal Trigger -->
+              <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#photoModal"></button>
+              <!-- Photo Modal -->
+              <div class="modal fade" id="photoModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 800px !important">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="photoModalLabel">{{ previewParams.title }}</h5>
+                      <p data-bs-dismiss="modal" class='close_icon'>X</p>
+                    </div>
+                    <div class="modal-body">
+                      <img :src="previewParams.src">
+                    </div>
                   </div>
                 </div>
               </div>
@@ -214,9 +233,9 @@
             </swiper-container>
             <div class="swiper_pagination">
             </div>
-            <div @click="deleteTabs(index)" class="fixed_bottom_info">
+            <div class="fixed_bottom_info">
               <div>
-                <p >刪除此筆</p>
+                <p @click="deleteTabs(index)">刪除此筆</p>
               </div>
             </div>
           </div>
@@ -229,6 +248,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
   import VueMultiselect from 'vue-multiselect'
@@ -766,6 +786,20 @@
   span {
     @include red_star
   }
+  .nav {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    border: none;
+  }
+  ::-webkit-scrollbar {
+    height: 6px;
+  }
+   ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: rgb(176, 175, 175);
+    border: 1px solid rgb(86, 85, 85);
+  }
   .selected_user_wrap {
     gap: 0 5px;
     display: flex;
@@ -813,18 +847,12 @@
   }
   .selected_file {
     p {
-      margin-bottom: 0;
+      margin-bottom: 5px;
       font-weight: 700;
       color: white;
-      &::before {
-        margin-right: 10px;
-        content: '·';
-        font-weight: 700;
-        color: white;
-      }
     }
     .file_upload_box {
-      padding: 0 20px;
+      padding: 0 20px 5px;
       .file_upload_wrap {
         margin-bottom: 0;
         display: flex;
@@ -879,6 +907,12 @@
       display: flex;
       justify-content: center;
     }
+  }
+  .file_name::before {
+    margin-right: 10px;
+    content: '·';
+    font-weight: 700;
+    color: white;
   }
   button.send_btn {
     @include search_and_send_btn;
@@ -1072,20 +1106,11 @@
         }
         .tab-content {
           background: #3E4E5F;
-              background: #3E4E5F;
-        position: relative;
-        padding: 50px 30px;border-radius: 0 10px 0 0;
+          background: #3E4E5F;
           position: relative;
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 113px;
-              }
-              input {
-                margin-left: 15px !important
-              }
-            }
-          }
+          padding: 50px 30px;
+          border-radius: 0 10px 0 0;
+          position: relative;
           .modal {
             .modal-header {
               background: #3D4E61;
@@ -1122,32 +1147,10 @@
             span {
               @include red_star
             }
-            .selected_file {
-              margin-left: 20px;
-              p.title {
-                font-weight: 700;
-                color: white;
-                margin-bottom: 5px;
-              }
-              .file_upload_wrap {
-                margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  margin-bottom: 0;
-                  font-weight: 700;
-                  color: white;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
-                }
-              }
+            p.title {
+              font-weight: 700;
+              color: white;
+              margin-bottom: 5px;
             }
             .file_upload_wrap {
               margin-bottom: 0;
@@ -1156,16 +1159,16 @@
                 width: 25px;
                 height: 25px;
               }
+              .file_name::before {
+                margin-right: 10px;
+                content: '·';
+                font-weight: 700;
+                color: white;
+              }
               p {
                 margin-bottom: 0;
                 font-weight: 700;
                 color: white;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
               }
             }
             .input-number {
@@ -1245,7 +1248,7 @@
       }
       .info_wrap {
         margin: auto;
-        width: 800px;
+        padding: 0 5%;
         .fixed_info {
           @include fixed_info;
           p {
@@ -1314,7 +1317,7 @@
               color: white;
               font-weight: 700;
               font-size: 20px;
-              width: 170px;
+              width: 145px;
               text-align: end;
             }
             .date-selector {
@@ -1383,7 +1386,6 @@
       }
       padding: 0 5%;
       .modal-content {
-        background: unset;
         border: 0;
         .modal-body {
           padding: 0;
@@ -1495,31 +1497,22 @@
     }
     .tab_section {
       .nav-tabs {
-          button {
-            @include tab_section_num;
-            background: #5C7897;
-          }
-          .active {
-            @include tab_section_num;
-            background: #3E4E5F;
-          }
+        button {
+          @include tab_section_num;
+          background: #5C7897;
         }
-        .tab-content {
+        .active {
+          @include tab_section_num;
           background: #3E4E5F;
-            background: #3E4E5F;
-        position: relative;
-        padding: 50px 30px;border-radius: 0 10px 0 0;
-        position: relative;
-        .form_search_wrap {
-          .input-group {
-            .input-group-prepend {
-              width: 113px;
-            }
-            input {
-              margin-left: 15px !important
-            }
-          }
         }
+      }
+      .tab-content {
+        background: #3E4E5F;
+        background: #3E4E5F;
+        position: relative;
+        padding: 50px 30px;
+        border-radius: 0 10px 0 0;
+        position: relative;
         .modal {
           .modal-header {
             background: #3D4E61;
@@ -1827,7 +1820,6 @@
     .modal {
       padding: 0 5%;
       .modal-content {
-        background-color: unset;
         border: 0;
         .modal-body {
           padding: 0;
@@ -1940,21 +1932,22 @@
         margin-left: unset !important;
       }
       .nav-tabs {
-          button {
-            @include tab_section_num;
-            background: #5C7897;
-          }
-          .active {
-            @include tab_section_num;
-            background: #3E4E5F;
-          }
+        button {
+          @include tab_section_num;
+          background: #5C7897;
         }
-        .tab-content {
+        .active {
+          @include tab_section_num;
           background: #3E4E5F;
+        }
+      }
+      .tab-content {
+        background: #3E4E5F;
         position: relative;
-            background: #3E4E5F;
+        background: #3E4E5F;
         position: relative;
-        padding: 50px 30px;border-radius: 0 10px 0 0;
+        padding: 50px 30px;
+        border-radius: 0 10px 0 0;
         .modal {
           .modal-header {
             background: #3D4E61;

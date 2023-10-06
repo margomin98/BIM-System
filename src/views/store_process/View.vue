@@ -22,7 +22,7 @@
         <!-- 單號 -->
         <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend">單號：</div>
+            <div class="input-group-prepend">單號 :</div>
             <input type="text" class="form-control readonly_box" v-model="AI_ID" readonly />
           </div>
         </div>
@@ -31,7 +31,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                狀態：
+                狀態 :
               </div>
               <input type="text" class="form-control readonly_box" readonly v-model="details.Status">
             </div>
@@ -54,7 +54,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                交付人員：
+                交付人員 :
               </div>
               <input type="text" class="form-control readonly_box" readonly v-model="details.DeliveryOperator">
             </div>
@@ -62,7 +62,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                交付日期：
+                交付日期 :
               </div>
               <input type="text" class="form-control readonly_box" readonly v-model="details.DeliveryDate">
             </div>
@@ -73,7 +73,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                入庫人員：
+                入庫人員 :
               </div>
               <input type="text" class="form-control readonly_box" readonly v-model="details.AssetsInOperator">
             </div>
@@ -81,7 +81,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                入庫日期：
+                入庫日期 :
               </div>
               <input type="text" class="form-control readonly_box" readonly v-model="details.AssetsInDate">
             </div>
@@ -101,17 +101,17 @@
           <div v-for="(tab, index) in details.Tabs" :key="index" :class="['tab-pane', 'fade', { 'show active': index === 0 }]" :id="'tab' + (index + 1)" role="tabpanel">
             <!-- 頁籤資產類型 -->
             <div class="row">
-              <div class="col-12">
+              <div class="col">
                 <div class="input-group mb-3 check_box_wrap">
                   <div class="input-group-prepend check_box">
                     資產類型 :
                   </div>
                   <div class="d-flex align-items-center radio_wrap">
-                    <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="資產" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='資產'"/>
+                    <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="資產" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='資產'" />
                     <label class="form-check-label check_box" for='radio1'>資產</label>
-                    <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="存貨" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='存貨'"/>
+                    <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="存貨" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='存貨'" />
                     <label class="form-check-label check_box" for='radio2' data-toggle="tooltip" data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
-                    <input type="radio" class='form-check-input check_box' id="radio3" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="耗材" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='耗材'"/>
+                    <input type="radio" class='form-check-input check_box' id="radio3" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="耗材" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='耗材'" />
                     <label class="form-check-label check_box" for='radio3'>耗材</label>
                   </div>
                 </div>
@@ -120,21 +120,19 @@
             <!-- 頁籤專案代碼 -->
             <div class="col form_search_wrap">
               <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  專案代碼 :
-                </div>
+                <div class="input-group-prepend">專案代碼 :</div>
                 <input type="text" class="form-control readonly_box" v-model="tab.itemProjectCode" readonly>
               </div>
             </div>
             <!-- 頁籤專案名稱 -->
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend">專案名稱：</div>
+                <div class="input-group-prepend">專案名稱 :</div>
                 <input type="text" class="form-control readonly_box" v-model="tab.itemProjectName" readonly>
               </div>
             </div>
             <!-- 頁籤設備 總類&分類 -->
-            <div class="row row_wrap g-0">
+            <div class="row g-0 row_wrap">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend equipment_wrap">設備總類 :</div>
@@ -149,7 +147,7 @@
               </div>
             </div>
             <!-- 頁籤儲位 區域&櫃位 -->
-            <div class="row row_wrap g-0">
+            <div class="row g-0 row_wrap">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend equipment_wrap">儲位區域 :</div>
@@ -239,7 +237,7 @@
                     <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">數量 :
                   </div>
                   <div class="input-group-prepend d-xl-none d-lg-none d-md-none d-block">
-                     數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
+                    數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
                   </div>
                   <input type="text" class="input-number readonly_box" v-model="tab.itemCount" readonly>
                 </div>
@@ -254,27 +252,27 @@
               </div>
             </div>
             <!-- 頁籤保固期限 -->
-            <div class="row">
+            <div class="row g-0">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    保固期限：
+                    保固期限 :
                   </div>
                   <input type="text" class="form-control readonly_box" v-model="tab.itemWarranty" readonly>
                 </div>
               </div>
             </div>
             <!-- 頁籤 保固 開始&結束 -->
-            <div class="row">
+            <div class="row g-0">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">保固開始日：</div>
+                  <div class="input-group-prepend">保固開始日 :</div>
                   <input type="text" class="form-control readonly_box" v-model="tab.itemWarrantyStartDate" readonly/>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">保固到期日：</div>
+                  <div class="input-group-prepend">保固到期日 :</div>
                   <input type="text" class="form-control readonly_box" v-model="tab.itemWarrantyEndDate" readonly/>
                 </div>
               </div>
@@ -287,13 +285,11 @@
               </div>
             </div>
             <!-- 頁籤上傳檔案部分 -->
-            <div class="col">
-              <div class="input-group mb-3">
+            <div class="col selected_file">
+              <div class="input-group">
                 <div class="input-group-prepend">已上傳檔案 :</div>
-                <div class="selected_file">
-                  <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
-                    <p @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
-                  </div>
+                <div v-for="(file , file_index) in tab.existFile" :key="fprepile_index" class="file_upload_wrap" style="cursor: pointer;">
+                  <p @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
                 </div>
               </div>
             </div>
@@ -301,16 +297,16 @@
         </div>
         <!-- view Modal -->
         <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 800px !important;">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">{{ modalParams.title }}</h5>
-              <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
+          <div class="modal-dialog modal-dialog-centered" style="max-width: 800px !important;">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">{{ modalParams.title }}</h5>
+                <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
+              </div>
+              <img :src="modalParams.src" alt="Uploaded Image" class="w-100" />
             </div>
-            <img :src="modalParams.src" alt="Uploaded Image" class="w-100" />
           </div>
         </div>
-      </div>
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
@@ -320,105 +316,114 @@
 </template>
 
 <script>
-import Navbar from "@/components/Navbar.vue";
-import { onMounted, ref , reactive} from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { goBack } from "@/assets/js/common_fn";
-export default {
-  components: {
-    Navbar,
-  },
-  setup() {
-    const route = useRoute();
-    const router = useRouter();
-    const AI_ID = route.query.search_id;
-    const details = ref({});
-    const tabNumber = ref(0);
-    // Modal Params
-    const modalParams = reactive({
-      title: '',
-      src: '',
-    })
-    const validation = ref({
-      user1: {
-        account: '',
-        password: '',
-        isValidate: false,
-        resultName: '',
-      },
-      user2: {
-        account: '',
-        password: '',
-        isValidate: false,
-        resultName: '',
-      },
-    });
-    onMounted(() => {
-      getDetails();
-    });
-    // 帶入資料
-    async function getDetails() {
-      const axios = require('axios');
-      try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
-        console.log(response);
-        const data = response.data;
-        if (data.state === 'success') {
-          console.log('Details Get成功 資料如下\n', data.resultList);
-          details.value = data.resultList;
-          details.value.Tabs.forEach(tab => {
-            if (tab.itemWarrantyStartDate) {
-              tab.itemWarrantyStartDate = tab.itemWarrantyStartDate.replace(/-/g, '/');
+  import Navbar from "@/components/Navbar.vue";
+  import {
+    onMounted,
+    ref,
+    reactive
+  } from "vue";
+  import {
+    useRoute,
+    useRouter
+  } from "vue-router";
+  import {
+    goBack
+  } from "@/assets/js/common_fn";
+  export default {
+    components: {
+      Navbar,
+    },
+    setup() {
+      const route = useRoute();
+      const router = useRouter();
+      const AI_ID = route.query.search_id;
+      const details = ref({});
+      const tabNumber = ref(0);
+      // Modal Params
+      const modalParams = reactive({
+        title: '',
+        src: '',
+      })
+      const validation = ref({
+        user1: {
+          account: '',
+          password: '',
+          isValidate: false,
+          resultName: '',
+        },
+        user2: {
+          account: '',
+          password: '',
+          isValidate: false,
+          resultName: '',
+        },
+      });
+      onMounted(() => {
+        getDetails();
+      });
+      // 帶入資料
+      async function getDetails() {
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('Details Get成功 資料如下\n', data.resultList);
+            details.value = data.resultList;
+            details.value.Tabs.forEach(tab => {
+              if (tab.itemWarrantyStartDate) {
+                tab.itemWarrantyStartDate = tab.itemWarrantyStartDate.replace(/-/g, '/');
+              }
+              if (tab.itemWarrantyEndDate) {
+                tab.itemWarrantyEndDate = tab.itemWarrantyEndDate.replace(/-/g, '/');
+              }
+            });
+            if (details.value.AssetsInDate) {
+              details.value.AssetsInDate = details.value.AssetsInDate.replace(/-/g, '/');
             }
-            if (tab.itemWarrantyEndDate) {
-              tab.itemWarrantyEndDate = tab.itemWarrantyEndDate.replace(/-/g, '/');
+            if (details.value.DeliveryDate) {
+              details.value.DeliveryDate = details.value.DeliveryDate.replace(/-/g, '/');
             }
-          });
-          if (details.value.AssetsInDate) {
-            details.value.AssetsInDate = details.value.AssetsInDate.replace(/-/g, '/');
+            if (details.value.ApplicationDate) {
+              details.value.ApplicationDate = details.value.ApplicationDate.replace(/-/g, '/');
+            }
+            tabNumber.value = details.value.Tabs.length
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
           }
-          if (details.value.DeliveryDate) {
-            details.value.DeliveryDate = details.value.DeliveryDate.replace(/-/g, '/');
-          }
-          if (details.value.ApplicationDate) {
-            details.value.ApplicationDate = details.value.ApplicationDate.replace(/-/g, '/');
-          }
-          tabNumber.value = details.value.Tabs.length
-        } else if (data.state === 'error') {
-          alert(data.messages);
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
+        } catch (error) {
+          console.error(error);
         }
-      } catch (error) {
-        console.error(error);
       }
-    }
-    // 查看收貨單
-    function viewReceive() {
-      if(details.value.AR_ID) {
-        const link = document.getElementById('view-receive');
-        link.click();
+      // 查看收貨單
+      function viewReceive() {
+        if (details.value.AR_ID) {
+          const link = document.getElementById('view-receive');
+          link.click();
+        }
       }
-    }
-    // 查看已上傳相片
-    function viewImgFile(index , file_index) {
-      modalParams.title = details.value.Tabs[index].existFile[file_index].FileName;
-      modalParams.src = details.value.Tabs[index].existFile[file_index].FileLink;
-      console.log('modalParams',modalParams);
-    }
-    return {
-      AI_ID,
-      details,
-      tabNumber,
-      modalParams,
-      validation,
-      viewReceive,
-      viewImgFile,
-      goBack,
-    }
-  },
-};
+      // 查看已上傳相片
+      function viewImgFile(index, file_index) {
+        modalParams.title = details.value.Tabs[index].existFile[file_index].FileName;
+        modalParams.src = details.value.Tabs[index].existFile[file_index].FileLink;
+        console.log('modalParams', modalParams);
+      }
+      return {
+        AI_ID,
+        details,
+        tabNumber,
+        modalParams,
+        validation,
+        viewReceive,
+        viewImgFile,
+        goBack,
+      }
+    },
+  };
 </script>
 <style lang="scss" scoped>
   textarea {
@@ -439,6 +444,16 @@ export default {
     background-color: rgb(176, 175, 175);
     border: 1px solid rgb(86, 85, 85);
   }
+  .check_box_wrap {
+    .radio_wrap {
+      margin-left: unset !important;
+    }
+    .check_box {
+      font-weight: 700;
+      color: white;
+      font-size: 18px;
+    }
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .readonly_box {
@@ -455,7 +470,7 @@ export default {
         @include title_color;
       }
       .info_wrap {
-        width: 800px;
+        width: 850px;
         margin: auto;
         .fixed_info {
           @include fixed_info;
@@ -508,16 +523,6 @@ export default {
               color: gray;
               font-size: 14px;
               pointer-events: none;
-            }
-          }
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 118px;
-              }
-              input {
-                margin-left: 18px !important
-              }
             }
           }
           .dropdown {
@@ -614,15 +619,40 @@ export default {
           .tab-content {
             background: #3E4E5F;
             padding: 50px 30px;
-            .form_search_wrap {
+            border-radius: 0 10px 10px 10px;
+            .selected_file {
               .input-group {
-                .input-group-prepend {
-                  width: 113px;
+                flex-direction: column;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
                 }
-                input {
-                  margin-left: 15px !important
+                p {
+                  font-weight: 700;
+                  margin-bottom: 5px;
+                  color: white;
+                  word-break: break-word;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
                 }
               }
+            }
+            .check_box {
+              margin-right: 10px;
+            }
+            .input-group-prepend {
+              width: 135px;
+            }
+            .readonly_box {
+              width: 63%;
             }
             .modal {
               .modal-header {
@@ -660,52 +690,6 @@ export default {
               span {
                 @include red_star
               }
-              .selected_file {
-                margin-left: 20px;
-                p.title {
-                  font-weight: 700;
-                  color: white;
-                  margin-bottom: 5px;
-                }
-                .file_upload_wrap {
-                  margin-bottom: 0;
-                  display: flex;
-                  img {
-                    width: 25px;
-                    height: 25px;
-                  }
-                  p {
-                    margin-bottom: 0;
-                    font-weight: 700;
-                    color: white;
-                    &::before {
-                      margin-right: 10px;
-                      content: '·';
-                      font-weight: 700;
-                      color: white;
-                    }
-                  }
-                }
-              }
-              .file_upload_wrap {
-                margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  margin-bottom: 0;
-                  font-weight: 700;
-                  color: white;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
-                }
-              }
               .input-number {
                 @include count_btn;
               }
@@ -717,7 +701,6 @@ export default {
                 color: white;
                 font-weight: 700;
                 font-size: 20px;
-                width: 120px;
                 text-align: end;
               }
               .file_wrap {
@@ -753,7 +736,7 @@ export default {
         @include title_color;
       }
       .info_wrap {
-        padding: 0 5%;
+        width: 750px;
         margin: auto;
         .fixed_info {
           @include fixed_info;
@@ -808,19 +791,14 @@ export default {
               pointer-events: none;
             }
           }
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 120px;
-              }
-              input {
-                margin-left: 15px !important
-              }
-            }
-          }
           .dropdown {
             .dropdown-menu {
               width: 100%;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
             }
             button {
               @include dropdown-btn;
@@ -907,15 +885,40 @@ export default {
           .tab-content {
             background: #3E4E5F;
             padding: 50px 30px;
-            .form_search_wrap {
+            border-radius: 0 10px 10px 10px;
+            .selected_file {
               .input-group {
-                .input-group-prepend {
-                  width: 113px;
+                flex-direction: column;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
                 }
-                input {
-                  margin-left: 15px !important
+                p {
+                  font-weight: 700;
+                  margin-bottom: 5px;
+                  color: white;
+                  word-break: break-word;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
                 }
               }
+            }
+            .check_box {
+              margin-right: 10px;
+            }
+            .input-group-prepend {
+              width: 115px;
+            }
+            .readonly_box {
+              width: 63%;
             }
             .modal {
               .modal-header {
@@ -953,33 +956,6 @@ export default {
               span {
                 @include red_star
               }
-              .selected_file {
-                margin-left: 20px;
-                p.title {
-                  font-weight: 700;
-                  color: white;
-                  margin-bottom: 5px;
-                }
-                .file_upload_wrap {
-                  margin-bottom: 0;
-                  display: flex;
-                  img {
-                    width: 25px;
-                    height: 25px;
-                  }
-                  p {
-                    margin-bottom: 0;
-                    font-weight: 700;
-                    color: white;
-                    &::before {
-                      margin-right: 10px;
-                      content: '·';
-                      font-weight: 700;
-                      color: white;
-                    }
-                  }
-                }
-              }
               .input-number {
                 @include count_btn;
               }
@@ -991,7 +967,6 @@ export default {
                 color: white;
                 font-weight: 700;
                 font-size: 20px;
-                width: 120px;
                 text-align: end;
               }
               .file_wrap {
@@ -1182,6 +1157,11 @@ export default {
           }
         }
         .tab_section {
+          .check_box_wrap {
+            .check_box {
+              margin-right: 5px;
+            }
+          }
           .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
             margin-left: unset !important;
           }
@@ -1198,6 +1178,32 @@ export default {
           .tab-content {
             background: #3E4E5F;
             padding: 50px 30px;
+            border-radius: 0 10px 10px 10px;
+            .selected_file {
+              .input-group {
+                flex-direction: column;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  font-weight: 700;
+                  margin-bottom: 5px;
+                  color: white;
+                  word-break: break-word;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
+            }
             .modal {
               .modal-header {
                 background: #3D4E61;
@@ -1234,32 +1240,6 @@ export default {
               flex-direction: column;
               span {
                 @include red_star
-              }
-              .selected_file {
-                p.title {
-                  font-weight: 700;
-                  color: white;
-                  margin-bottom: 5px;
-                }
-                .file_upload_wrap {
-                  margin-bottom: 0;
-                  display: flex;
-                  img {
-                    width: 25px;
-                    height: 25px;
-                  }
-                  p {
-                    margin-bottom: 0;
-                    font-weight: 700;
-                    color: white;
-                    &::before {
-                      margin-right: 10px;
-                      content: '·';
-                      font-weight: 700;
-                      color: white;
-                    }
-                  }
-                }
               }
               .input-number {
                 @include count_btn;

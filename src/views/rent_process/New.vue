@@ -17,8 +17,8 @@
                 <p>設備總類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                      {{ searchParams.EquipTypeName || '請選擇' }}
-                    </button>
+                        {{ searchParams.EquipTypeName || '請選擇' }}
+                      </button>
                   <div class="dropdown-menu" aria-labelledby="typeDropdown">
                     <p v-for="(item, index) in searchParams.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
                   </div>
@@ -28,8 +28,8 @@
                 <p>設備分類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
-                      {{ searchParams.EquipCategoryName || searchParams.EquipCategoryInit }}
-                    </button>
+                        {{ searchParams.EquipCategoryName || searchParams.EquipCategoryInit }}
+                      </button>
                   <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                     <p v-for="(item, index) in searchParams.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
                   </div>
@@ -201,18 +201,36 @@
 </template>
 
 <script>
-  import { AgGridVue } from "ag-grid-vue3";
+  import {
+    AgGridVue
+  } from "ag-grid-vue3";
   import Storage_button from "@/components/Storage_button";
   import Rent_process_new_view_button from "@/components/Rent_process_new_view_button";
   import Storage_add from "@/components/Storage_add_button";
   import Storage_number from "@/components/Storage_number_input"
   import Delete_button from "@/components/Rent_proccess_new_delete_button";
   import Navbar from "@/components/Navbar.vue";
-  import { Rent_UseOptions } from "@/assets/js/dropdown";
-  import { getApplication , getEquipType , getEquipCategory } from "@/assets/js/common_api";
-  import { getDate , goBack } from "@/assets/js/common_fn";
-  import { onMounted, ref, reactive } from "vue";
-  import { useRoute, useRouter } from "vue-router";
+  import {
+    Rent_UseOptions
+  } from "@/assets/js/dropdown";
+  import {
+    getApplication,
+    getEquipType,
+    getEquipCategory
+  } from "@/assets/js/common_api";
+  import {
+    getDate,
+    goBack
+  } from "@/assets/js/common_fn";
+  import {
+    onMounted,
+    ref,
+    reactive
+  } from "vue";
+  import {
+    useRoute,
+    useRouter
+  } from "vue-router";
   export default {
     components: {
       Navbar,
@@ -267,7 +285,7 @@
               // 額外處理data沒有的參數
               searchParams.selectedNumber = selectedNumberArray.value[data.id]
               searchInventory(searchParams.id, searchParams.item_id);
-              console.log('設定後搜尋參數:\n',searchParams);
+              console.log('設定後搜尋參數:\n', searchParams);
             },
           },
           width: 115,
@@ -432,10 +450,8 @@
           suppressMovable: true,
           resizable: true,
         },
-       
       ]
-      const columnDefs3 = [
-        {
+      const columnDefs3 = [{
           headerName: "",
           field: "",
           cellRenderer: "Rent_process_new_view_button",
@@ -444,7 +460,7 @@
           resizable: true,
         },
         {
-        headerName: "選擇",
+          headerName: "選擇",
           suppressMovable: true,
           field: "",
           cellRenderer: "Storage_add",
@@ -564,23 +580,22 @@
       async function getEquipTypeName() {
         if (searchParams.EquipTypeArray.length == 0) {
           getEquipType()
-          .then((data)=>{
-            searchParams.EquipTypeArray = data;
-          })
-          .catch((error) =>{
-            console.error(error);
-          })
-
+            .then((data) => {
+              searchParams.EquipTypeArray = data;
+            })
+            .catch((error) => {
+              console.error(error);
+            })
         }
       }
       async function getEquipCategoryName() {
         getEquipCategory(searchParams.EquipType_Id)
-        .then((data)=>{
-          searchParams.EquipCategoryArray = data;
+          .then((data) => {
+            searchParams.EquipCategoryArray = data;
           })
-        .catch((error) =>{
-          console.error(error);
-        })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       async function getDetails() {
         const axios = require('axios');
@@ -588,9 +603,9 @@
           const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
           const data = response.data;
           if (data.state === 'success') {
-            if(data.resultList.Status !== '已填報') {
-            window.history.back();
-            // router.push({name: 'Rent_Datagrid'});
+            if (data.resultList.Status !== '已填報') {
+              window.history.back();
+              // router.push({name: 'Rent_Datagrid'});
             }
             console.log('getDetails 成功 資料如下\n', data.resultList);
             // 設定搜尋參數的專案代碼
@@ -661,7 +676,7 @@
         }
       }
       async function submit() {
-        if(details.value.PrepareMemo) {
+        if (details.value.PrepareMemo) {
           details.value.PrepareMemo = details.value.PrepareMemo.trim();
         }
         if (details.value.PrepareMemo && !/^[\s\S]{1,100}$/.test(details.value.PrepareMemo)) {
@@ -709,10 +724,10 @@
       }
       async function getApplicationInfo() {
         getApplication()
-          .then((data)=>{
+          .then((data) => {
             PreparedPerson.value = data;
           })
-          .catch((error) =>{
+          .catch((error) => {
             console.error(error);
           })
       }
@@ -1446,6 +1461,9 @@
   }
   @media only screen and (max-width: 767px) {
     .modal {
+      .modal-dialog {
+        padding: 0 5%;
+      }
       .modal-content {
         background-color: unset;
         border: 0;

@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="content">
-        <!-- 單號 --> 
+        <!-- 單號 -->
         <div class="col mb-3">
           <div class="input-group">
             <div class="input-group-prepend">單號 :</div>
@@ -41,7 +41,7 @@
             <router-link :to="{name: 'Receive_View' , query:{ search_id : details.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
           </div>
         </div>
-        <!-- 備註 --> 
+        <!-- 備註 -->
         <div class="col mb-3">
           <div class="input-group">
             <div class="input-group-prepend">備註 :</div>
@@ -70,11 +70,11 @@
                     資產類型 :
                   </div>
                   <div class="d-flex align-items-center radio_wrap">
-                    <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="資產" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='資產'"/>
+                    <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="資產" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='資產'" />
                     <label class="form-check-label check_box" for='radio1'>資產</label>
-                    <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="存貨" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='存貨'"/>
+                    <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="存貨" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='存貨'" />
                     <label class="form-check-label check_box" for='radio2' data-toggle="tooltip" data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
-                    <input type="radio" class='form-check-input check_box' id="radio3" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="耗材" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='耗材'"/>
+                    <input type="radio" class='form-check-input check_box' id="radio3" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="耗材" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='耗材'" />
                     <label class="form-check-label check_box" for='radio3'>耗材</label>
                   </div>
                 </div>
@@ -92,7 +92,7 @@
             <!-- 頁籤專案名稱 -->
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend">專案名稱：</div>
+                <div class="input-group-prepend">專案名稱 :</div>
                 <input type="text" class="form-control readonly_box" v-model="tab.itemProjectName" readonly>
               </div>
             </div>
@@ -187,7 +187,7 @@
                     <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">數量 :
                   </div>
                   <div class="input-group-prepend d-xl-none d-lg-none d-md-none d-block">
-                     數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
+                    數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
                   </div>
                   <input type="text" class="input-number readonly_box" v-model="tab.itemCount" readonly>
                 </div>
@@ -245,9 +245,18 @@
 
 <script>
   import Navbar from '@/components/Navbar.vue';
-  import { useRoute , useRouter } from 'vue-router';
-  import { onMounted, reactive, ref } from 'vue';
-  import { goBack } from '@/assets/js/common_fn'
+  import {
+    useRoute,
+    useRouter
+  } from 'vue-router';
+  import {
+    onMounted,
+    reactive,
+    ref
+  } from 'vue';
+  import {
+    goBack
+  } from '@/assets/js/common_fn'
   export default {
     components: {
       Navbar
@@ -288,17 +297,17 @@
       }
       // 查看收貨單
       function viewReceive() {
-        if(details.value.AR_ID) {
+        if (details.value.AR_ID) {
           const link = document.getElementById('view-receive');
           link.click();
         }
       }
       // 查看已上傳相片
-      function viewImgFile(index , file_index) {
+      function viewImgFile(index, file_index) {
         modalParams.title = details.value.Tabs[index].existFile[file_index].FileName;
         modalParams.src = details.value.Tabs[index].existFile[file_index].FileLink;
-        console.log('modalParams',modalParams);
-      } 
+        console.log('modalParams', modalParams);
+      }
       return {
         goBack,
         AI_ID,
@@ -317,6 +326,30 @@
   textarea {
     padding: 5px 10px 30px;
   }
+  .nav {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    border: none;
+  }
+   ::-webkit-scrollbar {
+    height: 6px;
+  }
+   ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: rgb(176, 175, 175);
+    border: 1px solid rgb(86, 85, 85);
+  }
+  .check_box_wrap {
+    .radio_wrap {
+      margin-left: unset !important;
+    }
+    .check_box {
+      font-weight: 700;
+      color: white;
+      font-size: 18px;
+    }
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .form_search_btn {
@@ -334,7 +367,7 @@
       }
       .info_wrap {
         margin: auto;
-        width: 700px;
+        width: 850px;
         .input-group-prepend {
           color: white;
           font-weight: 700;
@@ -348,7 +381,7 @@
         }
         .input-number {
           @include count_btn;
-          width: 200px;
+          width: 65%;
         }
         .fixed_info {
           @include fixed_info;
@@ -406,16 +439,6 @@
           .input-group-prepend {
             width: 120px;
           }
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 114px;
-              }
-              input {
-                margin-left: 15px !important
-              }
-            }
-          }
           .row_wrap {
             .input-group {
               flex-wrap: nowrap
@@ -471,6 +494,10 @@
         .tab-content {
           background: #3E4E5F;
           padding: 50px 30px;
+          border-radius: 0 0 10px 10px;
+          .check_box {
+            margin-right: 10px;
+          }
           .modal {
             .modal-header {
               background: #3D4E61;
@@ -560,16 +587,6 @@
               }
             }
           }
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 114px;
-              }
-              input {
-                margin-left: 15px !important
-              }
-            }
-          }
         }
       }
     }
@@ -644,17 +661,6 @@
               pointer-events: none;
             }
           }
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 114px;
-              }
-              input {
-                margin-left: 15px !important
-              }
-            }
-          }
-      
           .row_wrap {
             .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
               margin-left: 6px;
@@ -736,6 +742,10 @@
         .tab-content {
           background: #3E4E5F;
           padding: 50px 30px;
+          border-radius: 0 0 10px 10px;
+          .check_box {
+            margin-right: 10px;
+          }
           .modal {
             .modal-header {
               background: #3D4E61;
@@ -874,7 +884,7 @@
         }
         .content {
           @include content_bg;
-                    .search_section {
+          .search_section {
             position: relative;
             display: flex;
             flex: 1 1 auto; // width: 100%;
@@ -960,7 +970,6 @@
               }
             }
           }
-       
           .info {
             display: flex;
             flex-direction: row-reverse;
@@ -998,6 +1007,10 @@
         .tab-content {
           background: #3E4E5F;
           padding: 50px 30px;
+          border-radius: 0 0 10px 10px;
+          .check_box {
+            margin-right: 10px;
+          }
           .modal {
             .modal-header {
               background: #3D4E61;
