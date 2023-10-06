@@ -562,6 +562,20 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
+  .nav {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    border: none;
+  }
+   ::-webkit-scrollbar {
+    height: 6px;
+  }
+   ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: rgb(176, 175, 175);
+    border: 1px solid rgb(86, 85, 85);
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .readonly_box {
@@ -665,6 +679,7 @@
           .input-group {
             .input-number {
               @include count_btn;
+              
             }
             .form-control {
               height: 35px;
@@ -795,7 +810,17 @@
         }
         .tab-content {
           background: #3E4E5F;
-          padding: 50px 30px;
+          padding: 50px 30px; border-radius:0 0 10px 10px;
+            .check_box_wrap {
+            font-weight: 700;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            div:nth-child(2) {
+              gap: 0 5px;
+              display: flex;
+            }
+          }
           .modal {
             .modal-header {
               background: #3D4E61;
@@ -831,6 +856,9 @@
             flex-wrap: nowrap;
             span {
               @include red_star
+            }
+            .input-number{
+              width: 65%;
             }
             .selected_file {
               margin-left: 20px;
@@ -923,7 +951,7 @@
       }
       .info_wrap {
         margin: auto;
-        width: 800px;
+        width: 750px;
         .fixed_info {
           @include fixed_info;
           p {
@@ -1052,10 +1080,14 @@
               flex-wrap: nowrap;
             }
             button {
+             
               @include auth_btn;
               &:hover {
                 background: #5a6d87;
               }
+            }
+            button:nth-child(3){
+              margin-right: 10px;
             }
             .form-control {
               height: 35px;
@@ -1129,6 +1161,17 @@
         .tab-content {
           background: #3E4E5F;
           padding: 50px 30px;
+border-radius: 0  0 10px 10px;
+.check_box_wrap {
+            font-weight: 700;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            div:nth-child(2) {
+              gap: 0 5px;
+              display: flex;
+            }
+          }
           .modal {
             .modal-header {
               background: #3D4E61;
@@ -1165,7 +1208,9 @@
             span {
               @include red_star
             }
-            .selected_file {
+            .input-number{
+              width: 65%;
+            }            .selected_file {
               margin-left: 20px;
               p.title {
                 font-weight: 700;
@@ -1479,6 +1524,22 @@
         .tab-content {
           background: #3E4E5F;
           padding: 50px 30px;
+border-radius:0 0 10px 10px;
+.check_box_wrap {
+            flex-direction: column;
+            font-weight: 700;
+            color: white;
+            font-size: 20px;
+
+            .radio_wrap {
+              gap: 0 10px;
+              padding-left: 10px;
+            }
+            .input-group-prepend {
+              width: auto !important;
+              align-self: self-start;
+            }
+          }
           .modal {
             .modal-header {
               background: #3D4E61;
