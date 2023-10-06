@@ -458,9 +458,11 @@
                 </div>
                 <div class="selected_file">
                   <p class="title">已選擇的檔案:</p>
-                  <div v-for="(file , file_index) in tab.viewFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
-                    <p @click="viewImgFile('new',index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
-                    <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('new',index,file_index)">
+                  <div v-for="(file , file_index) in tab.viewFile" :key="file_index" class="file_upload_wrap" >
+                  
+                    <p>{{ file.FileName }}</p>
+                    <img  class="view_icon" src="@/assets/view.png" style="margin:0 5px;cursor: pointer" @click="viewImgFile('new',index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+                    <img  class="delete_icon" src="@/assets/trash.png" style="cursor: pointer" @click="deleteFileFunction('new',index,file_index)">
                   </div>
                 </div>
               </div>
@@ -481,14 +483,14 @@
       </div>
       <!-- ViewFile Modal -->
       <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 800px !important;">
+        <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">{{ modalParams.title }}</h5>
-              <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
+              <p data-bs-dismiss="modal" class='close_icon'>X</p>
             </div>
             <div v-show="tabData" class="modal-body">
-              <img :src="modalParams.src" alt="Uploaded Image" class="w-100" />
+              <img :src="modalParams.src" alt="Uploaded Image" />
             </div>
           </div>
         </div>
@@ -1344,6 +1346,35 @@
         margin: auto;
         padding-top: 16px;
       }
+    }
+  }
+ 
+  .modal {
+    .modal-body {
+      text-align: center;
+      padding: 20px;
+      margin: auto;
+    }
+    .modal-content {
+      margin: auto;
+    }
+    .modal-input-group-prepend {
+      width: auto;
+      font-weight: 700;
+      font-size: 20px;
+    }
+    .modal-footer {
+      padding: 0 12px 12px;
+      border: none;
+    }
+    .modal-header {
+      h5 {
+        font-weight: 700;
+      }
+      background: #528091;
+      color: white;
+      display: flex;
+      justify-content: center;
     }
   }
   @media only screen and (min-width: 1200px) {
