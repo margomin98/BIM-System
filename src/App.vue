@@ -7,10 +7,7 @@
 </script>
 
 <style lang="scss">
-	.container-fluid {
-		padding-left: 0 !important;
-		padding-right: 0 !important;
-	}
+	
 	body {
 		background-image: url('@/assets/body/bg.png');
 		padding-right: unset !important;
@@ -122,4 +119,10 @@ background-color: #B4B4B4 !important;
 		 } 
 	
 }	
+@media only screen and (min-width: 1200px) {
+.container-fluid {
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+	}
+}
 </style>
