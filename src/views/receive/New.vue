@@ -92,7 +92,7 @@
           <div class="input-group">
             <div class="file_upload_box">
               <div v-for="(file, index) in fileParams.viewDoc" :key="index" class="file_upload_wrap">
-                <p>{{ file.name }}</p>
+                <p class='file_name'>{{ file.name }}</p>
                 <img class="view_icon" src="@/assets/view.png" @click="handleDocPreview(file)">
                 <img class="delete_icon" src="@/assets/trash.png" @click="deleteFile('document',index)">
               </div>
@@ -111,7 +111,7 @@
                   <p data-bs-dismiss="modal" class='close_icon'>X</p>
                 </div>
                 <div class="modal-body">
-                  <img :src="previewParams.src" class="w-75">
+                  <img class="w-100" :src="previewParams.src" >
                 </div>
               </div>
             </div>
@@ -195,7 +195,7 @@
               <div class="input-group">
                 <div class="file_upload_box">
                   <div v-for="(file, index) in tab.viewDoc" :key="index" class="file_upload_wrap">
-                    <p>{{ file.name }}</p>
+                    <p class="file_name">{{ file.name }}</p>
                     <img class="view_icon" src="@/assets/view.png" @click="handleDocPreview(file)">
                     <img class="delete_icon" src="@/assets/trash.png" @click="deleteFile('document',index)">
                   </div>
@@ -214,7 +214,7 @@
                       <p data-bs-dismiss="modal" class='close_icon'>X</p>
                     </div>
                     <div class="modal-body">
-                      <img :src="previewParams.src" class="w-75">
+                      <img  class="w-100" :src="previewParams.src" >
                     </div>
                   </div>
                 </div>
@@ -832,18 +832,13 @@
   }
   .selected_file {
     p {
-      margin-bottom: 0;
+      margin-bottom: 5px;
       font-weight: 700;
       color: white;
-      &::before {
-        margin-right: 10px;
-        content: '·';
-        font-weight: 700;
-        color: white;
-      }
+   
     }
     .file_upload_box {
-      padding: 0 20px;
+      padding: 0 20px 5px;
       .file_upload_wrap {
         margin-bottom: 0;
         display: flex;
@@ -899,6 +894,12 @@
       justify-content: center;
     }
   }
+  .file_name::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
   button.send_btn {
     @include search_and_send_btn;
     &:hover {
@@ -997,6 +998,7 @@
               align-items: center;
             }
           }
+      
           .input-group {
             flex-wrap: nowrap;
             .input-number {
@@ -1095,16 +1097,7 @@
         position: relative;
         padding: 50px 30px;border-radius: 0 10px 0 0;
           position: relative;
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 113px;
-              }
-              input {
-                margin-left: 15px !important
-              }
-            }
-          }
+      
           .modal {
             .modal-header {
               background: #3D4E61;
@@ -1141,8 +1134,6 @@
             span {
               @include red_star
             }
-            .selected_file {
-              margin-left: 20px;
               p.title {
                 font-weight: 700;
                 color: white;
@@ -1155,38 +1146,22 @@
                   width: 25px;
                   height: 25px;
                 }
-                p {
-                  margin-bottom: 0;
-                  font-weight: 700;
-                  color: white;
-                  &::before {
+                .file_name::before {
                     margin-right: 10px;
                     content: '·';
                     font-weight: 700;
                     color: white;
                   }
-                }
-              }
-            }
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-              img {
-                width: 25px;
-                height: 25px;
-              }
-              p {
-                margin-bottom: 0;
-                font-weight: 700;
-                color: white;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
+                p {
+                  margin-bottom: 0;
                   font-weight: 700;
                   color: white;
+                 
+                  
                 }
               }
-            }
+            
+         
             .input-number {
               @include count_btn;
               height: 35px;
@@ -1264,7 +1239,7 @@
       }
       .info_wrap {
         margin: auto;
-        width: 800px;
+    padding: 0 5%;
         .fixed_info {
           @include fixed_info;
           p {
@@ -1333,7 +1308,7 @@
               color: white;
               font-weight: 700;
               font-size: 20px;
-              width: 170px;
+              width: 145px;
               text-align: end;
             }
             .date-selector {
@@ -1402,7 +1377,7 @@
       }
       padding: 0 5%;
       .modal-content {
-        background: unset;
+        
         border: 0;
         .modal-body {
           padding: 0;
@@ -1529,16 +1504,7 @@
         position: relative;
         padding: 50px 30px;border-radius: 0 10px 0 0;
         position: relative;
-        .form_search_wrap {
-          .input-group {
-            .input-group-prepend {
-              width: 113px;
-            }
-            input {
-              margin-left: 15px !important
-            }
-          }
-        }
+      
         .modal {
           .modal-header {
             background: #3D4E61;
@@ -1846,7 +1812,6 @@
     .modal {
       padding: 0 5%;
       .modal-content {
-        background-color: unset;
         border: 0;
         .modal-body {
           padding: 0;
