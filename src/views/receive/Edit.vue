@@ -103,7 +103,7 @@
           <p class="text-start mb-0 uploaded_file">已上傳文件</p>
           <div class="icon" v-for="(file, index) in details.existDocument" :key="index">
             <p class="uploded_file_name">{{ file.FileName }}</p>
-            <div>
+            <div class="icon_wrap">
               <img src="@/assets/view.png" @click="handlePreview(file)">
               <img class="close_icon" src="@/assets/trash.png" @click="deleteFile('document',index , file)">
             </div>
@@ -112,7 +112,7 @@
           <p class="text-start mb-0 uploaded_file">已選擇檔案</p>
           <div class="icon" v-for="(file, index) in fileParams.viewDoc" :key="index">
             <p class="uploded_file_name">{{ file.FileName }}</p>
-            <div>
+            <div class="icon_wrap">
               <img src="@/assets/view.png" @click="handlePreview(file)">
               <img class="close_icon" src="@/assets/trash.png" @click="deleteFile('document',index , file)">
             </div>
@@ -123,7 +123,7 @@
           <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#photoModal"></button>
           <!-- Photo Modal -->
           <div class="modal fade" id="photoModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 800px !important">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="photoModalLabel">{{ previewParams.title }}</h5>
@@ -640,20 +640,28 @@
   span {
     @include red_star
   }
-  .modal-dialog {
-    width: 80% !important;
-    max-width: unset
-  }
+
   .selected_file {
     flex-direction: column;
+    .uploaded_file{
+      font-weight: 700;
+    color: white;
+    }
     p.uploded_file_name::before{
-      content:'· ';
+      margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
     }
     .icon {
       margin: 0 10px;
-      gap: 5px;
-      display: flex;
-      align-items: center;
+    gap: 5px;
+    display: flex;
+    width: 100%;
+      .icon_wrap{
+        display: flex;
+    align-items: self-start;
+  }
       img {
         cursor: pointer;
         margin: 0 5px
@@ -681,6 +689,7 @@
     }
   }
   .modal {
+   
     .modal-body {
       padding: 20px;
       margin: auto;
@@ -796,12 +805,11 @@
         .content {
           @include content_bg;
           p.uploded_file_name {
-            text-align: center;
-            white-space: nowrap;
-            font-size: 20px;
+display: flex;
             font-weight: 700;
             margin-bottom: 5px;
             color: white;
+            word-break: break-word;
           }
           .dropdown {
             width: 55%;
@@ -841,7 +849,7 @@
           .date-selector {
             width: 200px;
             input {
-              width: 100%
+              width: 109%
             }
           }
         }
@@ -910,7 +918,7 @@
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
       .multi_user_select{
-        width:77%
+        width:80%
       }
       input {
         @include dropdown_btn;
@@ -957,7 +965,7 @@
       }
       .info_wrap {
         margin: auto;
-        width: 700px;
+        width: 650px;
         .fixed_info {
           @include fixed_info;
           p {
@@ -996,12 +1004,11 @@
             }
           }
           p.uploded_file_name {
-            text-align: center;
-            white-space: nowrap;
-            font-size: 20px;
+   display: flex;
             font-weight: 700;
             margin-bottom: 5px;
             color: white;
+            word-break: break-word;
           }
           .dropdown {
             .dropdown-menu {
@@ -1023,6 +1030,7 @@
             flex-wrap: nowrap;
             .input-number {
               @include count_btn;
+              width:80%
             }
             .form-control {
               height: 35px;
@@ -1033,9 +1041,12 @@
               color: white;
               font-weight: 700;
               font-size: 20px;
-              width: 170px;
+              width: 120px;
               text-align: end;
             }
+      .date-input{
+        width: 103%;
+      }
           }
         }
         .button_wrap {
@@ -1095,122 +1106,9 @@
         margin-top: 5%;
       }
     }
-    .modal {
-      .dropdown-toggle {
-        width: 100%
+    .modal-dialog{
+        padding:0 10%
       }
-      padding: 0 5%;
-      .modal-content {
-        background: unset;
-        border: 0;
-        .modal-body {
-          padding: 0;
-        }
-      }
-      .fixed_info {
-        @include fixed_info;
-        background: #528091 !important;
-        border-radius: 0!important;
-        border: 1px solid black;
-        padding: 0 10px;
-        div {
-          flex-grow: 1;
-          text-align: center;
-        }
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-        button {
-          border: none;
-          background: none;
-          color: white;
-          font-weight: 700;
-          font-size: 22px;
-          align-self: start;
-        }
-      }
-      .list {
-        border-left: 1px solid black;
-        border-bottom: 1px solid black;
-        border-right: 1px solid black;
-      }
-      .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        background: #D9D9D9;
-        padding: 20px;
-        p.content {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          color: black;
-          background: white;
-          height: 35px;
-          border-radius: 5px;
-        }
-        .submit_btn {
-          margin-top: 20px;
-          background: #48658C;
-          color: white;
-          font-weight: 700;
-          width: 80px;
-          font-size: 20px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-        .wrap1 {
-          display: flex;
-          justify-content: space-evenly;
-          padding: 20px;
-          .input-number {
-            @include count_btn;
-          }
-          .number-input-box {
-            color: black;
-            .input-number {
-              width: 100%;
-            }
-          }
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
-          } // .dropdown {
-          //   button {
-          //     background: white;
-          //     width: 100%;
-          //     border: none;
-          //     display: flex;
-          //     justify-content: space-between;
-          //     align-items: center;
-          //   }
-          //   .dropdown-menu {
-          //     width: 225px;
-          //     .dropdown-item {
-          //       text-align: left;
-          //     }
-          //   }
-          // }
-          div {
-            padding: 0 5px;
-            p {
-              color: black;
-              text-align: center;
-              white-space: nowrap;
-              font-size: 18px;
-              font-weight: 700;
-              margin-bottom: 5px;
-            }
-          }
-        }
-      }
-    }
   }
   @media only screen and (max-width: 767px) {
     .main_section {
@@ -1310,6 +1208,13 @@
         }
         .content {
           @include content_bg;
+          p.uploded_file_name {
+display: flex;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: white;
+            word-break: break-word;
+          }
           .row {
             gap: 10px 0;
           }
@@ -1408,116 +1313,8 @@
         }
       }
     }
-    .modal {
-      padding: 0 5%;
-      .modal-content {
-        background-color: unset;
-        border: 0;
-        .modal-body {
-          padding: 0;
-        }
+    .modal-dialog{
+        padding:0 10%
       }
-      .fixed_info {
-        @include fixed_info;
-        background: #528091 !important;
-        border-radius: 0!important;
-        border: 1px solid black;
-        padding: 0 10px;
-        div {
-          flex-grow: 1;
-          text-align: center;
-        }
-        p {
-          font-size: 18px;
-          margin-bottom: 0;
-        }
-        button {
-          border: none;
-          background: none;
-          color: white;
-          font-weight: 700;
-          font-size: 22px;
-          position: absolute;
-          right: 3%;
-        }
-      }
-      .list {
-        border-left: 1px solid black;
-        border-bottom: 1px solid black;
-        border-right: 1px solid black;
-      }
-      .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        background: #D9D9D9;
-        padding: 20px;
-        .submit_btn {
-          margin-top: 20px;
-          background: #48658C;
-          color: white;
-          font-weight: 700;
-          width: 80px;
-          font-size: 20px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-        .wrap1 {
-          p.content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: black;
-            background: white;
-            height: 35px;
-            border-radius: 5px;
-          }
-          .input-number {
-            @include count_btn;
-          }
-          .number-input-box {
-            color: black;
-            .input-number {
-              width: 100%;
-            }
-          }
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
-          }
-          .dropdown {
-            button {
-              background: white;
-              width: 100%;
-              border: none;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            }
-            .dropdown-menu {
-              width: 100%;
-              .dropdown-item {
-                text-align: left;
-              }
-            }
-          }
-          div {
-            margin: 10px 0;
-            p {
-              padding: 5px;
-              white-space: nowrap;
-              font-size: 18px;
-              font-weight: 700;
-              margin-bottom: 5px;
-            }
-          }
-        }
-      }
-    }
   }
 </style>
