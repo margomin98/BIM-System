@@ -178,7 +178,7 @@
                   <div class="input-group-prepend">
                     包裝單位 :
                   </div>
-                  <input type="text" class="form-control readonly_box" v-model="tab.itemProductType" readonly>
+                  <input type="text" class="input-number readonly_box" v-model="tab.itemPackageUnit" readonly>
                 </div>
               </div>
             </div>

@@ -211,7 +211,6 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="photoModalLabel">{{ previewParams.title }}</h5>
-                      <p data-bs-dismiss="modal" class='close_icon'>X</p>
                     </div>
                     <div class="modal-body">
                       <img :src="previewParams.src" class="w-75">
