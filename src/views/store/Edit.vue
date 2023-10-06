@@ -300,7 +300,7 @@
             <!-- 頁籤專案名稱 -->
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend">專案名稱：</div>
+                <div class="input-group-prepend">專案名稱 :</div>
                 <input type="text" class="form-control readonly_box" v-model="tab.itemProjectName" readonly>
               </div>
             </div>
@@ -454,14 +454,18 @@
             </div>
             <!-- 頁籤上傳檔案部分 -->
             <div class="col">
-              <div class="input-group mb-3">
+              <div class="input-group">
                 <div class="input-group-prepend">資產照片 :</div>
                 <div class="mb-3 file_wrap">
                   <button class='choose_btn' @click="openFileExplorer(index)">選擇檔案</button>
                   <input type="file" accept="image/*" ref="fileInputs" style="display: none;" multiple @change="handleFileChange(index , $event)" />
                 </div>
-                <div class="selected_file">
-                  <p class="title">已選擇的檔案:</p>
+            
+              </div>
+            </div>
+            <div class="selected_file col">
+              <div class="input-group">
+              <div class="input-group-prepend">已選擇檔案 :</div>
                   <div v-for="(file , file_index) in tab.viewFile" :key="file_index" class="file_upload_wrap" >
                   
                     <p>{{ file.FileName }}</p>
@@ -469,10 +473,9 @@
                     <img  class="delete_icon" src="@/assets/trash.png" style="cursor: pointer" @click="deleteFileFunction('new',index,file_index)">
                   </div>
                 </div>
-              </div>
-            </div>
+                </div>
             <div class="col">
-              <div class="input-group mb-3">
+              <div class="input-group my-3">
                 <div class="input-group-prepend">已上傳檔案 :</div>
                 <div class="selected_file">
                   <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
@@ -1273,6 +1276,20 @@
   textarea {
     padding: 5px 10px 30px;
   }
+  .nav {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    border: none;
+  }
+  ::-webkit-scrollbar {
+    height: 6px;
+  }
+   ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: rgb(176, 175, 175);
+    border: 1px solid rgb(86, 85, 85);
+  }
   .delete_btn {
     background: var(--c-5, #E94B4B);
     justify-content: center;
@@ -1539,6 +1556,35 @@
         }
       }
       .tab_section {
+        .selected_file {
+          .input-group{
+            
+flex-direction: column; 
+          }        
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  font-weight: 700;
+            margin-bottom: 5px;
+            color: white;
+            word-break: break-word;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
+            }
+        .input-number {
+          width: 65%;
+        }
         .nav-tabs {
           button {
             @include tab_section_num;
@@ -1551,7 +1597,7 @@
         }
         .tab-content {
           background: #3E4E5F;
-          padding: 50px 30px;
+          padding:20px;
           position: relative;
           .check_box_wrap {
             font-weight: 700;
@@ -1601,33 +1647,7 @@
             span {
               @include red_star
             }
-            .selected_file {
-              margin-left: 20px;
-              p.title {
-                font-weight: 700;
-                color: white;
-                margin-bottom: 5px;
-              }
-              .file_upload_wrap {
-                margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  margin-bottom: 0;
-                  font-weight: 700;
-                  color: white;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
-                }
-              }
-            }
+          
             .input-number {
               @include count_btn;
             }
@@ -1639,7 +1659,7 @@
               color: white;
               font-weight: 700;
               font-size: 20px;
-              width: 120px;
+              width: 130px;
               text-align: end;
             }
             .file_wrap {
@@ -1654,16 +1674,7 @@
               }
             }
           }
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 114px;
-              }
-              input {
-                margin-left: 15px !important
-              }
-            }
-          }
+        
         }
       }
     }
@@ -1685,7 +1696,7 @@
       }
       .info_wrap {
         margin: auto;
-        width: 800px;
+        width: 750px;
         .button_wrap {
           display: flex;
           justify-content: space-between;
@@ -1778,7 +1789,7 @@
             }
           }
           .input-group-prepend {
-            width: 150px;
+            width: 130px;
             white-space: nowrap;
           }
           .check_box_wrap {
@@ -1822,6 +1833,9 @@
         }
       }
       .tab_section {
+        .input-number {
+          width: 65%;
+        }
         .nav-tabs {
           button {
             @include tab_section_num;
@@ -1834,8 +1848,34 @@
         }
         .tab-content {
           background: #3E4E5F;
-          padding: 50px 30px;
+          padding: 20px 20px 20px 8px;
           position: relative;
+          .selected_file {
+              .input-group{
+            
+            flex-direction: column; 
+                      }   
+                      .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  font-weight: 700;
+            margin-bottom: 5px;
+            color: white;
+            word-break: break-word;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
+            }
           .modal {
             .modal-header {
               background: #3D4E61;
@@ -1882,33 +1922,7 @@
             span {
               @include red_star
             }
-            .selected_file {
-              margin-left: 20px;
-              p.title {
-                font-weight: 700;
-                color: white;
-                margin-bottom: 5px;
-              }
-              .file_upload_wrap {
-                margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  margin-bottom: 0;
-                  font-weight: 700;
-                  color: white;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
-                }
-              }
-            }
+            
             .input-number {
               @include count_btn;
             }
@@ -1935,16 +1949,7 @@
               }
             }
           }
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 114px;
-              }
-              input {
-                margin-left: 15px !important
-              }
-            }
-          }
+        
         }
       }
     }
@@ -1989,6 +1994,16 @@
         }
         .content {
           @include content_bg;
+          .check_box_wrap {
+            flex-direction: column;
+            font-weight: 700;
+            color: white;
+            font-size: 20px;
+            .check_box {
+              margin-right: 10px;
+            }
+            
+          }
           .search_section {
             position: relative;
             display: flex;
@@ -2075,17 +2090,7 @@
               }
             }
           }
-          .check_box_wrap {
-            flex-direction: row;
-            font-weight: 700;
-            align-items: center;
-            color: white;
-            font-size: 20px;
-            .check_box {
-              margin-right: 10px;
-            }
-            
-          }
+      
           .info {
             display: flex;
             flex-direction: row-reverse;
@@ -2129,12 +2134,36 @@
         }
         .tab-content {
           background: #3E4E5F;
-          padding: 50px 30px;
-          position: relative;
+          padding: 20px;
+          position: relative; .selected_file {
+              .input-group{
+            
+            flex-direction: column; 
+                      }   
+                      .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  font-weight: 700;
+            margin-bottom: 5px;
+            color: white;
+            word-break: break-word;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
+            }
           .check_box_wrap {
-             flex-direction: row !important;
+            flex-direction: column;
     font-weight: 700;
-    align-items: center;
     color: white;
     font-size: 20px;
     .radio_wrap{
@@ -2183,32 +2212,7 @@ padding-left: 10px;
             span {
               @include red_star
             }
-            .selected_file {
-              p.title {
-                font-weight: 700;
-                color: white;
-                margin-bottom: 5px;
-              }
-              .file_upload_wrap {
-                margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  margin-bottom: 0;
-                  font-weight: 700;
-                  color: white;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
-                }
-              }
-            }
+           
             .input-number {
               @include count_btn;
             }
