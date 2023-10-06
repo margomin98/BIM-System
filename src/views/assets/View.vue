@@ -34,14 +34,14 @@
           </div>
         </div>
         <!-- 專案代碼 -->
-        <div v-show="details.AssetType === '存貨'" class="col">
+        <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">專案代碼：</div>
             <input type="text" class="form-control readonly_box" readonly v-model="details.ProjectCode" />
           </div>
         </div>
         <!-- 專案名稱 -->
-        <div v-show="details.AssetType === '存貨'" class="col">
+        <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">專案名稱：</div>
             <input type="text" class="form-control readonly_box" readonly v-model="details.ProjectName" />

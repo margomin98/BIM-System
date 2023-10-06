@@ -48,15 +48,15 @@
           </div>
         </div>
         <!-- 專案代碼 -->
-        <div v-show="details.AssetType === '存貨'" class="col">
+        <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend"><span>*</span>專案代碼：</div>
+            <div class="input-group-prepend"><span v-show="details.AssetType === '存貨'">*</span>專案代碼：</div>
             <input type="text" class="form-control" v-model="details.ProjectCode" />
             <button class="form_search_btn" @click="getProjectName">搜尋</button>
           </div>
         </div>
         <!-- 專案名稱 -->
-        <div v-show="details.AssetType === '存貨'" class="col">
+        <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">專案名稱：</div>
             <input type="text" class="form-control readonly_box" readonly v-model="details.ProjectName" />
@@ -530,8 +530,8 @@
             alert('請填寫所有必填項目');
             return;
           }
-          if(!/^.{1,10}$/.test(details.value.ProjectCode)) {
-            alert('專案代碼格式錯誤');
+          if(!/^.{0,10}$/.test(details.value.ProjectCode)) {
+            alert('專案代碼不可輸入超過10字');
             return
           }
         }

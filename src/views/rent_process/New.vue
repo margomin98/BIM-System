@@ -259,6 +259,7 @@
           cellRenderer: "Storage_button",
           cellRendererParams: {
             searchList: (data) => {
+              console.log('data:',data);
               for(const key in data) {
                 searchParams[key] = data[key];
               }

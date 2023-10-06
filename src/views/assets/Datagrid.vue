@@ -105,8 +105,8 @@
   import Assets_return_button from "@/components/Assets_return_button";
   import Navbar from "@/components/Navbar.vue";
   import getEquipDatagrid from "@/components/API/getEquipDatagrid"
-  import { Asset_StastusArraay } from "@/assets/js/dropdown"
   import { onMounted, reactive, ref } from "vue";
+  import { Asset_StastusArraay } from "@/assets/js/dropdown"
   import { getEquipType , getEquipCategory , getArea , getLayer } from '@/assets/js/common_api'
   export default {
     components: {
@@ -116,7 +116,6 @@
       getEquipDatagrid,
     },
     setup() {
-      const details = ref({});
       const searchParams = reactive({
         EquipTypeName: '',
         EquipType_Id: '',
@@ -330,12 +329,6 @@
         searchParams.LayerName = item.Name;
         searchParams.Layer_Id = item.Id;
       };
-      const setTypeParams = (data)=> {
-        searchParams.EquipTypeName = data;
-      }
-      const setCategoryParams = (data)=> {
-        searchParams.EquipCategoryName = data;
-      }
       function clear() {
         for (const key in searchParams) {
           searchParams[key] = '';
@@ -345,7 +338,6 @@
         submit();
       }
       return {
-        details,
         searchParams,
         DropdownArray,
         EquipCategoryInit,
@@ -362,8 +354,6 @@
         selectStatus,
         selectArea,
         selectLayer,
-        setTypeParams,
-        setCategoryParams,
         clear,
       };
     },

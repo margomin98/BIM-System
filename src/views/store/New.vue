@@ -215,7 +215,7 @@
                 <span v-show="itemParams.AssetType === '耗材'">*</span> 數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
               </div>
               <input v-if="itemParams.AssetType === '耗材'" class="input-number" type="number" v-model="itemParams.Count" min="1">
-              <input v-else class="input-number readonly_box" type="number" v-model="itemParams.PackageNum" min="1" readonly>
+              <input v-else class="input-number readonly_box" type="number" v-model="itemParams.Count" min="1" readonly>
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
