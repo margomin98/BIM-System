@@ -73,18 +73,18 @@
       <button class="delete_btn" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>
     </div>
     <div class="modal fade delete_modal" id="deleteModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-          <div class="modal-content">
-            <div class="modal-body">
-              確定刪除這筆項目嗎？
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">否</button>
-              <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" @click="deleteData">是</button>
-            </div>
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-body">
+            確定刪除這筆項目嗎？
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">否</button>
+            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" @click="deleteData">是</button>
           </div>
         </div>
       </div>
+    </div>
   </div>
 </template>
 
@@ -98,7 +98,9 @@
   } from 'vue-router';
   import Delete from "@/components/Delete_button";
   import Navbar from '@/components/Navbar.vue';
-  import { Rent_UseOptions } from "@/assets/js/dropdown";
+  import {
+    Rent_UseOptions
+  } from "@/assets/js/dropdown";
   import {
     onMounted,
     ref
@@ -176,9 +178,9 @@
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
-            if(data.resultList.Status !== '已填報') {
-            window.history.back();
-            // router.push({name: 'Rent_Datagrid'});
+            if (data.resultList.Status !== '已填報') {
+              window.history.back();
+              // router.push({name: 'Rent_Datagrid'});
             }
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
@@ -239,6 +241,9 @@
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
+  textarea {
+    padding: 5px 10px 0
+  }
   .delete_modal {
     .modal-content {
       border: solid 1px black;
@@ -447,23 +452,23 @@
             background-color: #5d85bb;
           }
           &:nth-child(2) {
-              background: var(--c-5, #E94B4B);
-              justify-content: center;
-              align-items: center;
-              display: inline-flex;
-              border-radius: 10px;
-              height: 40px;
-              width: 90px;
-              color: #FFF;
-              text-align: center;
-              font-size: 20px;
-              font-weight: 700;
-              border: none;
-              margin: 0 10px;
-              &:hover {
-                background-color: #a51e1e;
-              }
+            background: var(--c-5, #E94B4B);
+            justify-content: center;
+            align-items: center;
+            display: inline-flex;
+            border-radius: 10px;
+            height: 40px;
+            width: 90px;
+            color: #FFF;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            border: none;
+            margin: 0 10px;
+            &:hover {
+              background-color: #a51e1e;
             }
+          }
         }
       }
     }
@@ -631,23 +636,23 @@
             background-color: #5d85bb;
           }
           &:nth-child(2) {
-              background: var(--c-5, #E94B4B);
-              justify-content: center;
-              align-items: center;
-              display: inline-flex;
-              border-radius: 10px;
-              height: 40px;
-              width: 90px;
-              color: #FFF;
-              text-align: center;
-              font-size: 20px;
-              font-weight: 700;
-              border: none;
-              margin: 0 10px;
-              &:hover {
-                background-color: #a51e1e;
-              }
+            background: var(--c-5, #E94B4B);
+            justify-content: center;
+            align-items: center;
+            display: inline-flex;
+            border-radius: 10px;
+            height: 40px;
+            width: 90px;
+            color: #FFF;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            border: none;
+            margin: 0 10px;
+            &:hover {
+              background-color: #a51e1e;
             }
+          }
         }
       }
     }
@@ -820,23 +825,23 @@
             background-color: #5d85bb;
           }
           &:nth-child(2) {
-              background: var(--c-5, #E94B4B);
-              justify-content: center;
-              align-items: center;
-              display: inline-flex;
-              border-radius: 10px;
-              height: 40px;
-              width: 90px;
-              color: #FFF;
-              text-align: center;
-              font-size: 20px;
-              font-weight: 700;
-              border: none;
-              margin: 0 10px;
-              &:hover {
-                background-color: #a51e1e;
-              }
+            background: var(--c-5, #E94B4B);
+            justify-content: center;
+            align-items: center;
+            display: inline-flex;
+            border-radius: 10px;
+            height: 40px;
+            width: 90px;
+            color: #FFF;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            border: none;
+            margin: 0 10px;
+            &:hover {
+              background-color: #a51e1e;
             }
+          }
         }
       }
     }
