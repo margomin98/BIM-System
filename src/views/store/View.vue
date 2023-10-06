@@ -160,7 +160,7 @@
             <!-- 頁籤 包裝數量 & 包裝單位 -->
             <div class="row g-0 row_wrap">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                <div class="input-group mb-3" id='number'>
+                <div class="input-group mb-3 " id='number'>
                   <div class="input-group-prepend info  d-xl-block d-lg-block d-md-block d-none">
                     <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">包裝數量 :
                   </div>
@@ -171,8 +171,8 @@
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                <div class="input-group mb-3" id='unit'>
-                  <div class="input-group-prepend">
+                <div class="input-group mb-3 justify-content-end" id='unit'>
+                  <div class="input-group-prepend ">
                     包裝單位 :
                   </div>
                   <input type="text" class="input-number readonly_box" v-model="tab.itemPackageUnit" readonly>
@@ -193,7 +193,7 @@
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                <div class="input-group mb-3" id='unit'>
+                <div class="input-group mb-3 justify-content-end" id='unit'>
                   <div class="input-group-prepend">
                     單位 :
                   </div>

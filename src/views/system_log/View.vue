@@ -1,0 +1,1081 @@
+<template>
+  <Navbar />
+  <div class="main_section">
+    <div class="title col">
+      <h1>檢視收貨單</h1>
+    </div>
+    <!-- 收貨資訊 -->
+    <div class="info_wrap col">
+      <div class="fixed_info">
+        <div>
+          <p>收貨資訊</p>
+        </div>
+      </div>
+      <div class="content">
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">收貨單號：</div>
+            <input type="text" class="form-control text-center readonly_box" v-model="details.Show_AR_ID" readonly/>
+          </div>
+        </div>
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">物流單號：</div>
+            <input type="text" class="form-control text-center readonly_box" v-model="details.ShipmentNum" readonly />
+          </div>
+        </div>
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">貨運公司：</div>
+            <input type="text" class="form-control text-center readonly_box" v-model="details.ShipmentCompany" readonly/>
+          </div>
+        </div>
+        <div class="col">
+          <div class="input-group  mb-3">
+            <div class="input-group-prepend">到貨件數：</div>
+            <div class="num_wrap d-flex ">
+              <div class="number-input-box">
+                <input class="input-number readonly_box" type="number" v-model="details.GoodsNum" readonly/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row g-0">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">收件人員：</div>
+              <input type="text" class="form-control readonly_box" v-model="details.Recipient" readonly />
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">收件日期：</div>
+              <input type="text" class="form-control readonly_box" v-model="details.ReceivedDate" readonly />
+            </div>
+          </div>
+        </div>
+        <!-- 通知對象 --> 
+        <div class="col">
+          <div class="input-group  mb-3">
+            <div class="input-group-prepend">通知對象：</div>
+            <div v-show="details.InformedPersons" class="selected_user_wrap">
+              <span v-for="person in details.InformedPersons" class="selected_user">{{ person }}</span>
+            </div>
+          </div>
+        </div>
+        <!-- 備註 -->
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">備註：</div>
+            <textarea  class="form-control readonly_box" style="height: 250px;" readonly v-model="details.Memo"></textarea>
+          </div>
+        </div>
+      </div>
+  </div>
+    <!-- 物流文件部分 -->
+    <div class="info_wrap col">
+      <div class="fixed_info">
+        <div>
+          <p>已上傳物流文件</p>
+        </div>
+      </div>
+      <div class="content row g-0">
+        <div class="d-flex selected_file col">
+          <!-- v-for讀取已上傳物流文件 -->
+          <div v-for="(file , index) in details.existDocument" :key="index" class="icon">
+            <p>{{ file.FileName }}</p>
+            <div>
+              <!-- 在handlePreview依據不同副檔名做不同處理 -->
+              <img src="@/assets/view.png" @click="handlePreview(file)">
+            </div>
+          </div>
+          <!-- doc/docx download hidden Link -->
+          <a href="" style="display: none;" id="download-link"></a>
+          <!-- Modal Trigger -->
+          <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#documentModal"></button>
+          <!-- Exist Document Modal -->
+          <div class="modal fade" id="documentModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 800px !important">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="photoModalLabel"> {{ previewParams.title }}</h5>
+                  <div class="close_icon">
+                    <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
+                  </div>
+                </div>
+                <div class="modal-body">
+                  <img :src="previewParams.src" class="w-75">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 照片部分 -->
+    <div class="info_wrap mt-5 col">
+      <div class="fixed_info">
+        <div>
+          <p>已上傳照片</p>
+        </div>
+      </div>
+      <div class="content">
+        <swiper-container class='swiper_section' :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
+          <swiper-slide v-for="(file , index) in details.existFile" :key="index" class="custom-slide">
+            <img :src="file.FileLink" alt="">
+          </swiper-slide>
+        </swiper-container>
+        <div class="swiper_pagination">
+        </div>
+        <!-- <div class="modal fade" id="photo1" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="photoModalLabel">瀏覽</h5>
+                <div class="close_icon">
+                  <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
+                </div>
+              </div>
+              <div class="modal-body">
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+      <div class="col button_wrap">
+        <button class="back_btn" @click="goBack">回上一頁</button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import { register } from 'swiper/element/bundle';
+  import { Pagination } from 'swiper/modules';
+  register();
+  import Navbar from "@/components/Navbar.vue";
+  import { onMounted, ref, reactive, } from "vue";
+  import { useRoute, useRouter } from "vue-router";
+  export default {
+    components: {
+      Navbar,
+    },
+    setup() {
+      const route = useRoute();
+      const router = useRouter();
+      const AR_ID = route.query.search_id;
+      const details = ref({});
+      const previewParams = reactive({
+        title: '',
+        src: '',
+      })
+      onMounted(()=>{
+        getDetails();
+      })
+      async function getDetails() {
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/ReceivingGetData?ar_id=${AR_ID}`);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            // if(data.resultList.Status !== '待入庫') {
+            // window.history.back();
+            // // router.push({name: 'Store_Process_Datagrid'});
+            // }
+            details.value = data.resultList;
+            console.log('單筆資料如下\n', details.value);
+            if (details.value.WarrantyStartDate) {
+              details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
+            }
+            if (details.value.WarrantyEndDate) {
+              details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
+            }
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      function handlePreview(file) {
+        // 先提取副檔名
+        // 以"."為基準分割字串
+        const part = file.FileName.split(".");
+        let extension = '';
+        // 如果part長度大於1表示xxxx.aaa => ['xxxx','aaa']
+        if(part.length > 1) {
+          extension = part[part.length -1];
+        }
+        // 1. pdf 2. word 3. picture
+        switch (extension) {
+          case 'pdf':
+            window.open(file.FileLink)
+            break;
+          case 'doc':
+          case 'docx':
+            const downloadElement = document.getElementById('download-link');
+            downloadElement.href = file.FileLink;
+            downloadElement.download = file.FileName;
+            downloadElement.click();
+            break;
+          default:
+            previewParams.title = file.FileName;
+            previewParams.src = file.FileLink;
+            const modal = document.querySelector('#openModal');
+            modal.click();
+            break;
+        }
+      }
+      function goBack() {
+        window.history.back();
+      }
+      return {
+        details,
+        previewParams,
+        handlePreview,
+        goBack,
+        pagination: {
+          clickable: true,
+        },
+        modules: [Pagination],
+      }
+    },
+  }
+</script>
+<style lang="scss" scoped>
+  @import "@/assets/css/global.scss";
+  .selected_user_wrap{
+    gap:0 5px;
+    display: flex;
+    .selected_user{
+      background: #8B8989;
+      color:white !important;
+    border-radius: 7px;
+    padding: 5px;
+    }
+  }
+  span {
+    @include red_star
+  }
+  .modal-dialog {
+    width: 80% !important;
+    max-width: unset
+  }
+  .selected_file {
+    flex-direction: column;
+    .icon {
+      margin: 0 10px;
+      gap: 5px;
+      display: flex;
+      ;
+      img {
+        cursor: pointer;
+        margin: 0 5px
+      }
+      .close_icon {
+        scale: 1.5
+      }
+    }
+  }
+  .modal {
+    .modal-body {
+      padding: 20px;
+      margin: auto;
+    }
+    .modal-content {
+      margin: auto;
+    }
+    .modal-input-group-prepend {
+      width: auto;
+      font-weight: 700;
+      font-size: 20px;
+    }
+    .modal-footer {
+      padding: 0 12px 12px;
+      border: none;
+    }
+    .modal-header {
+      h5 {
+        font-weight: 700;
+      }
+      background: #528091;
+      color: white;
+      display: flex;
+      justify-content: center;
+      padding: 0 16px 16px;
+      .close_icon {
+        height: 40px;
+        cursor: pointer;
+      }
+      .modal-title {
+        margin: auto;
+        padding-top: 16px;
+      }
+    }
+  }
+  @media only screen and (min-width: 1200px) {
+    .main_section {
+      input {
+        @include dropdown_btn;
+        height: 35px;
+      }
+      .swiper_section {
+        swiper-slide {
+          align-self: baseline;
+        }
+        swiper-slide img {
+          width: 100%;
+          height: auto;
+          padding: 40px 0;
+        }
+      }
+      .readonly_box {
+        @include readonly_box;
+      }
+      h1 {
+        margin-top: 80px;
+        margin-bottom: 40px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        margin: auto;
+        width: 800px;
+        .fixed_info {
+          @include fixed_info;
+          p {
+            font-size: 20px;
+            margin-bottom: 0;
+          }
+        }
+        .fixed_title {
+          @include fixed_title;
+        }
+        .add_btn {
+          display: inline-flex;
+          padding: 10px 25px;
+          justify-content: center;
+          align-items: center;
+          border-radius: 9px;
+          background: #314F7A;
+          height: 50px;
+          width: 174px;
+          color: #FFF;
+          text-align: center;
+          font-size: 20px;
+          font-weight: 700;
+          border: none;
+          margin-bottom: 20px;
+          &:hover {
+            background-color: #456ca7
+          }
+        }
+        .content {
+          @include content_bg;
+          p {
+            text-align: center;
+            white-space: nowrap;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: white;
+          }
+          .dropdown {
+            width: 55%;
+            .dropdown-menu {
+              width: 100%;
+              p {
+                text-align: left;
+                padding: 0 10px
+              }
+            }
+            button {
+              @include dropdown-btn;
+              width: 100%;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group {
+            flex-wrap: nowrap;
+            .input-number {
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              border-radius: 0;
+            }
+            .input-group-prepend {
+              white-space: nowrap;
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 135px;
+              text-align: end;
+            }
+          }
+          .date-selector {
+            width: 200px;
+            input {
+              width: 100%
+            }
+          }
+        }
+        .button_wrap {
+          display: flex;
+          margin-top: 30px;
+          justify-content: center;
+          padding: 0 28%;
+          margin-bottom: 5%;
+          gap: 20px;
+          button.back_btn {
+            @include back_to_previous_btn;
+            &:hover {
+              background-color: #5d85bb;
+            }
+          }
+          button.send_btn {
+            @include search_and_send_btn;
+            &:hover {
+              background-color: #5e7aa2;
+            }
+          }
+        }
+        .dropdown {
+          height: 35px;
+          @include dropdown_btn;
+          .dropdown-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: none;
+          }
+          .dropdown-menu {
+            width: 100%;
+            transform: translate3d(-1px, 35px, 0px) !important;
+            p {
+              padding-top: 5px;
+              text-align: left;
+              font-size: 18px;
+              color: black;
+              font-weight: normal;
+            }
+          }
+        }
+        .item_wrap {
+          height: 350px;
+          overflow: auto;
+          .item {
+            background-color: #526F8E;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+          }
+        }
+      }
+      .info_wrap:nth-child(3) {
+        margin-top: 3%;
+      }
+      .row:nth-child(3) {
+        .input-group {
+          justify-content: flex-start;
+        }
+      }
+    }
+  }
+  @media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .main_section {
+      input {
+        @include dropdown_btn;
+        height: 35px;
+      }
+      .readonly_box {
+        width: 150px !important;
+      }
+      .swiper_section {
+        swiper-slide {
+          align-self: baseline;
+        }
+        swiper-slide img {
+          width: 100%;
+          height: auto;
+          padding: 40px 0;
+        }
+      }
+      .readonly_box {
+        @include readonly_box;
+      }
+      h1 {
+        margin-top: 80px;
+        margin-bottom: 40px;
+        text-align: center;
+        font-size: 55px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        margin: auto;
+        width: 700px;
+        .fixed_info {
+          @include fixed_info;
+          p {
+            font-size: 20px;
+            margin-bottom: 0;
+          }
+        }
+        .fixed_title {
+          @include fixed_title;
+        }
+        .add_btn {
+          display: inline-flex;
+          padding: 10px 25px;
+          justify-content: center;
+          align-items: center;
+          border-radius: 9px;
+          background: #314F7A;
+          height: 50px;
+          width: 174px;
+          color: #FFF;
+          text-align: center;
+          font-size: 20px;
+          font-weight: 700;
+          border: none;
+          margin-bottom: 20px;
+          &:hover {
+            background-color: #456ca7
+          }
+        }
+        .content {
+          @include content_bg;
+          .organizer_wrap {
+            --bs-gutter-x: unset;
+            .flex:nth-child(1) {
+              width: 210px
+            }
+          }
+          p {
+            text-align: center;
+            white-space: nowrap;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: white;
+          }
+          .dropdown {
+            .dropdown-menu {
+              width: 100%;
+              p {
+                text-align: left;
+                padding: 0 10px
+              }
+            }
+            button {
+              @include dropdown-btn;
+              width: 100%;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group {
+            flex-wrap: nowrap;
+            .input-number {
+              @include count_btn;
+            }
+            .form-control {
+              height: 35px;
+              width: 55%;
+            }
+            .input-group-prepend {
+              white-space: nowrap;
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+              width: 170px;
+              text-align: end;
+            }
+          }
+        }
+        .button_wrap {
+          display: flex;
+          margin-top: 30px;
+          justify-content: center;
+          padding: 0 28%;
+          margin-bottom: 5%;
+          gap: 20px;
+          button.back_btn {
+            @include back_to_previous_btn;
+            &:hover {
+              background-color: #5d85bb;
+            }
+          }
+          button.send_btn {
+            @include search_and_send_btn;
+            &:hover {
+              background-color: #5e7aa2;
+            }
+          }
+        }
+        .dropdown {
+          width: calc(100% - 10%);
+          height: 35px;
+          @include dropdown_btn;
+          .dropdown-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: none;
+          }
+          .dropdown-menu {
+            width: 100%;
+            transform: translate3d(-1px, 35px, 0px) !important;
+            p {
+              padding-top: 5px;
+              text-align: left;
+              font-size: 18px;
+              color: black;
+              font-weight: normal;
+            }
+          }
+        }
+        .item_wrap {
+          height: 350px;
+          overflow: auto;
+          .item {
+            background-color: #526F8E;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+          }
+        }
+      }
+      .info_wrap:nth-child(3) {
+        margin-top: 5%;
+      }
+      .info_wrap:nth-child(2) {
+        .content {
+          padding: 20px 39px 20px 0;
+          .content.input-group .input-group-prepend {
+            width: 158px;
+          }
+        }
+      }
+    }
+    .modal {
+      .dropdown-toggle {
+        width: 100%
+      }
+      padding: 0 5%;
+      .modal-content {
+        background: unset;
+        border: 0;
+        .modal-body {
+          padding: 0;
+        }
+      }
+      .fixed_info {
+        @include fixed_info;
+        background: #528091 !important;
+        border-radius: 0!important;
+        border: 1px solid black;
+        padding: 0 10px;
+        div {
+          flex-grow: 1;
+          text-align: center;
+        }
+        p {
+          font-size: 20px;
+          margin-bottom: 0;
+        }
+        button {
+          border: none;
+          background: none;
+          color: white;
+          font-weight: 700;
+          font-size: 22px;
+          align-self: start;
+        }
+      }
+      .list {
+        border-left: 1px solid black;
+        border-bottom: 1px solid black;
+        border-right: 1px solid black;
+      }
+      .second_content {
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        background: #D9D9D9;
+        padding: 20px;
+        p.content {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: black;
+          background: white;
+          height: 35px;
+          border-radius: 5px;
+        }
+        .submit_btn {
+          margin-top: 20px;
+          background: #48658C;
+          color: white;
+          font-weight: 700;
+          width: 80px;
+          font-size: 20px;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          &:hover {
+            background-color: #5d85bd;
+          }
+        }
+        .wrap1 {
+          display: flex;
+          justify-content: space-evenly;
+          padding: 20px;
+          .input-number {
+            @include count_btn;
+          }
+          .number-input-box {
+            color: black;
+            .input-number {
+              width: 100%;
+            }
+          }
+          .form-label {
+            white-space: nowrap;
+            font-weight: 800;
+            font-size: 18px;
+          } // .dropdown {
+          //   button {
+          //     background: white;
+          //     width: 100%;
+          //     border: none;
+          //     display: flex;
+          //     justify-content: space-between;
+          //     align-items: center;
+          //   }
+          //   .dropdown-menu {
+          //     width: 225px;
+          //     .dropdown-item {
+          //       text-align: left;
+          //     }
+          //   }
+          // }
+          div {
+            padding: 0 5px;
+            p {
+              color: black;
+              text-align: center;
+              white-space: nowrap;
+              font-size: 18px;
+              font-weight: 700;
+              margin-bottom: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 767px) {
+    .main_section {
+      .readonly_box {
+        @include readonly_box;
+      }
+      .selected_file {
+        margin-top: 10px;
+        color: white;
+        align-items: flex-start;
+        font-weight: 700;
+        flex-direction: column;
+        .icon {
+          margin: 0 10px;
+          gap: 5px;
+          display: flex;
+          align-items: flex-start;
+          img {
+            margin: 0 5px;
+          }
+        }
+      }
+      .number-input-box {
+        width: 100%
+      }
+      input {
+        @include dropdown_btn;
+        height: 35px;
+        width: 100%
+      }
+      .swiper_section swiper-slide {
+        img {
+          width: 100%;
+          height: auto;
+          padding: 40px;
+        }
+      }
+      .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+        margin-left: 0 !important;
+        border-radius: 5px;
+      }
+      h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 40px;
+        font-weight: 600;
+        @include title_color;
+      }
+      .info_wrap {
+        padding: 1% 5% 0;
+        .fixed_title {
+          @include fixed_title;
+        }
+        .fixed_info {
+          @include fixed_info;
+          flex-direction: column;
+          height: unset;
+          padding: 10px;
+          p {
+            font-size: 20px;
+            margin-bottom: 0;
+          }
+        }
+        .add_btn {
+          display: inline-flex;
+          padding: 10px;
+          justify-content: center;
+          align-items: center;
+          border-radius: 9px;
+          background: #314F7A;
+          height: 50px;
+          width: 150px;
+          color: #FFF;
+          text-align: center;
+          font-size: 18px;
+          font-weight: 700;
+          border: none;
+          margin-bottom: 15px;
+          &:hover {
+            background-color: #456ca7
+          }
+        }
+        .content {
+          @include content_bg;
+          .row {
+            gap: 10px 0;
+          }
+          .dropdown {
+            margin-left: unset !important;
+            .dropdown-menu {
+              width: 100%;
+            }
+            button {
+              @include dropdown-btn;
+              width: 100%;
+              color: black;
+              justify-content: space-between;
+              align-items: center;
+            }
+          }
+          .input-group {
+            flex-direction: column;
+            .input-number {
+              @include count_btn;
+              width: 100%;
+            }
+            .form-control {
+              width: 100%;
+              height: 35px;
+              border-radius: 0;
+              margin-left: unset !important;
+            }
+            .input-group-prepend {
+              margin-bottom: 5px;
+              color: white;
+              font-weight: 700;
+              font-size: 20px;
+            }
+          }
+        }
+        .button_wrap {
+          display: flex;
+          margin-top: 30px;
+          justify-content: center;
+          padding: 0 20%;
+          margin-bottom: 5%;
+          gap: 20px;
+          button.back_btn {
+            @include back_to_previous_btn;
+            padding: 5px;
+            &:hover {
+              background-color: #5d85bb;
+            }
+          }
+          button.send_btn {
+            @include search_and_send_btn;
+            padding: 5px;
+            &:hover {
+              background-color: #5e7aa2;
+            }
+          }
+        }
+        .item_wrap {
+          height: 350px;
+          overflow: auto;
+          .item {
+            background-color: #526F8E;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+          }
+        }
+      }
+      .info_wrap:nth-child(3) {
+        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+          margin-left: unset !important;
+          border-radius: 5px;
+        }
+        margin-top: 3%;
+        .count {
+          .number-input-box {
+            width: 100%;
+            margin-left: unset !important;
+          }
+          .btn_section {
+            margin-left: 10px;
+            .delete_btn {
+              display: flex;
+              align-items: center;
+              @include delete_button;
+              height: 100%;
+              padding: 5px;
+              width: 80px;
+              font-size: 18px;
+              &:hover {
+                background: #FF7272
+              }
+            }
+          }
+        }
+      }
+    }
+    .modal {
+      padding: 0 5%;
+      .modal-content {
+        background-color: unset;
+        border: 0;
+        .modal-body {
+          padding: 0;
+        }
+      }
+      .fixed_info {
+        @include fixed_info;
+        background: #528091 !important;
+        border-radius: 0!important;
+        border: 1px solid black;
+        padding: 0 10px;
+        div {
+          flex-grow: 1;
+          text-align: center;
+        }
+        p {
+          font-size: 18px;
+          margin-bottom: 0;
+        }
+        button {
+          border: none;
+          background: none;
+          color: white;
+          font-weight: 700;
+          font-size: 22px;
+          position: absolute;
+          right: 3%;
+        }
+      }
+      .list {
+        border-left: 1px solid black;
+        border-bottom: 1px solid black;
+        border-right: 1px solid black;
+      }
+      .second_content {
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        background: #D9D9D9;
+        padding: 20px;
+        .submit_btn {
+          margin-top: 20px;
+          background: #48658C;
+          color: white;
+          font-weight: 700;
+          width: 80px;
+          font-size: 20px;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          &:hover {
+            background-color: #5d85bd;
+          }
+        }
+        .wrap1 {
+          p.content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: black;
+            background: white;
+            height: 35px;
+            border-radius: 5px;
+          }
+          .input-number {
+            @include count_btn;
+          }
+          .number-input-box {
+            color: black;
+            .input-number {
+              width: 100%;
+            }
+          }
+          .form-label {
+            white-space: nowrap;
+            font-weight: 800;
+            font-size: 18px;
+          }
+          .dropdown {
+            button {
+              background: white;
+              width: 100%;
+              border: none;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            }
+            .dropdown-menu {
+              width: 100%;
+              .dropdown-item {
+                text-align: left;
+              }
+            }
+          }
+          div {
+            margin: 10px 0;
+            p {
+              padding: 5px;
+              white-space: nowrap;
+              font-size: 18px;
+              font-weight: 700;
+              margin-bottom: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+</style>

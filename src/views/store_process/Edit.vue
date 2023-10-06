@@ -90,8 +90,8 @@
           <!-- 標頭 -->
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button v-for="tab in parseInt(tabData.length)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab" :aria-selected="tab === 0">
-              {{ tab }}
-            </button>
+                {{ tab }}
+              </button>
           </div>
         </nav>
         <div v-if="tabData.length > 0" class="tab-content" id="nav-tabContent">
@@ -101,7 +101,7 @@
               <div class="col-12">
                 <div class="input-group mb-3 check_box_wrap">
                   <div class="input-group-prepend check_box">
-                    專案類型 :
+                    專案類型：
                   </div>
                   <div class="d-flex align-items-center radio_wrap">
                     <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="資產" v-model="tab.itemAssetType" @change="resetUnitCount(index)" />
@@ -118,7 +118,7 @@
             <div class="col form_search_wrap">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span v-show="tab.itemAssetType === '存貨'">*</span>專案代碼 :
+                  <span v-show="tab.itemAssetType === '存貨'">*</span>專案代碼：
                 </div>
                 <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="tab.itemProjectCode">
                 <button class="form_search_btn" @click="getProjectName(index)">搜尋</button>
@@ -132,14 +132,14 @@
               </div>
             </div>
             <!-- 頁籤 設備總類 & 設備分類-->
-            <div class="row">
+            <div class="row g-0">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend"><span>*</span>設備總類：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                      {{ tab.itemEquipTypeName || '請選擇' }}
-                    </button>
+                        {{ tab.itemEquipTypeName || '請選擇' }}
+                      </button>
                     <div class="dropdown-menu" aria-labelledby="typeDropdown">
                       <p v-for="item in DropdownArray.EquipType" class="dropdown-item" @click="selectType(item , index)">{{ item.Name }}</p>
                     </div>
@@ -147,12 +147,12 @@
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                <div class="input-group mb-3">
+                <div class="input-group mb-3 justify-content-end">
                   <div class="input-group-prepend"><span>*</span>設備分類：</div>
                   <div class="dropdown">
-                    <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!tab.itemEquipTypeName" >
-                      {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }}
-                    </button>
+                    <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!tab.itemEquipTypeName">
+                        {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }}
+                      </button>
                     <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                       <p v-for="item in tab.EquipCategoryArray" class="dropdown-item" @click="selectCategory(item , index)">{{ item.Name }}</p>
                     </div>
@@ -167,8 +167,8 @@
                   <div class="input-group-prepend"><span>*</span>儲位區域：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName(index)">
-                        {{ tab.itemAreaName || '請選擇' }}
-                      </button>
+                          {{ tab.itemAreaName || '請選擇' }}
+                        </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="(item, area_index) in DropdownArray.Area" :key="area_index" class="dropdown-item" @click="selectArea(index, item)">{{ item.Name }}</p>
                     </div>
@@ -180,8 +180,8 @@
                   <div class="input-group-prepend"><span>*</span>儲位櫃位：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!tab.itemAreaName">
-                        {{ tab.itemLayerName || tab.LayerInit }}
-                      </button>
+                          {{ tab.itemLayerName || tab.LayerInit }}
+                        </button>
                     <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                       <p v-for="(item, layer_index) in tab.LayerArray" :key="layer_index" class="dropdown-item" @click="selectLayer(index, item)">{{ item.Name }}</p>
                     </div>
@@ -208,21 +208,21 @@
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">廠商：</div>
-                <input type="text" class="form-control " aria-label="Default" placeholder="最多輸入100字" v-model="tab.itemVendorName"  />
+                <input type="text" class="form-control " aria-label="Default" placeholder="最多輸入100字" v-model="tab.itemVendorName" />
               </div>
             </div>
             <!-- 頁籤規格 -->
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">規格：</div>
-                <input type="text" class="form-control " aria-label="Default" placeholder="最多輸入100字" v-model="tab.itemProductSpec"  />
+                <input type="text" class="form-control " aria-label="Default" placeholder="最多輸入100字" v-model="tab.itemProductSpec" />
               </div>
             </div>
             <!-- 頁籤型號 -->
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">型號：</div>
-                <input type="text" class="form-control " aria-label="Default" placeholder="最多輸入100字" v-model="tab.itemProductType"  />
+                <input type="text" class="form-control " aria-label="Default" placeholder="最多輸入100字" v-model="tab.itemProductType" />
               </div>
             </div>
             <!-- 頁籤S/N -->
@@ -233,7 +233,7 @@
               </div>
             </div>
             <!-- 頁籤 包裝數量 & 包裝單位 -->
-            <div class="row">
+            <div class="row g-0">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend info"><img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"> 包裝數量：
@@ -242,12 +242,12 @@
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                <div class="input-group mb-3">
+                <div class="input-group mb-3 justify-content-end">
                   <div class="input-group-prepend"><span>*</span>包裝單位：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ tab.itemPackageUnit || '請選擇' }}
-                    </button>
+                        {{ tab.itemPackageUnit || '請選擇' }}
+                      </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="item in DropdownArray.PackageUnit" class="dropdown-item" @click="selectPackageUnit(item , index)">{{ item }}</p>
                     </div>
@@ -256,7 +256,7 @@
               </div>
             </div>
             <!-- 頁籤 數量 & 單位 -->
-            <div class="row">
+            <div class="row g-0">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend info"><img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
@@ -267,12 +267,12 @@
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                <div class="input-group mb-3">
+                <div class="input-group mb-3 justify-content-end">
                   <div class="input-group-prepend"><span v-show="tab.itemAssetType === '耗材'">*</span>單位：</div>
                   <div v-if="tab.itemAssetType === '耗材'" class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="tab.itemAssetType !== '耗材'">
-                        {{ tab.itemUnit || '請選擇' }}
-                      </button>
+                          {{ tab.itemUnit || '請選擇' }}
+                        </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="item in DropdownArray.Unit" class="dropdown-item" @click="selectUnit(item , index)">{{ item }}</p>
                     </div>
@@ -324,43 +324,43 @@
                   <button class='choose_btn' @click="openFileExplorer(index)">選擇檔案</button>
                   <input type="file" accept="image/*" ref="fileInputs" style="display: none;" multiple @change="handleFileChange(index , $event)" />
                 </div>
-                <div class="selected_file">
-                  <p class="title">已選擇的檔案:</p>
-                  <div v-for="(file , file_index) in tab.viewFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
-                    <p @click="viewImgFile('new',index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
-                    <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('new',index,file_index)">
-                  </div>
+              </div>
+            </div>
+            <div class="selected_file col">
+              <div class="input-group">
+                <div class="input-group-prepend">已選擇檔案 :</div>
+                <div v-for="(file , file_index) in tab.viewFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
+                  <p @click="viewImgFile('new',index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
+                  <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('new',index,file_index)">
                 </div>
               </div>
             </div>
             <!-- 頁籤已上傳檔案 -->
-            <div class="col">
-              <div class="input-group mb-3">
+            <div class="col selected_file">
+              <div class="input-group mt-3">
                 <div class="input-group-prepend">已上傳檔案 :</div>
-                <div class="selected_file">
-                  <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
-                    <p @click="viewImgFile('exist',index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
-                    <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('exist',index,file_index)">
-                  </div>
+                <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
+                  <p @click="viewImgFile('exist',index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
+                  <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('exist',index,file_index)">
                 </div>
               </div>
             </div>
           </div>
         </div>
-      <!-- ViewFile Modal -->
-      <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 800px !important;">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">{{ modalParams.title }}</h5>
-              <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
-            </div>
-            <div v-show="tabData" class="modal-body">
-              <img :src="modalParams.src" alt="Uploaded Image" class="w-100" />
+        <!-- ViewFile Modal -->
+        <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" style="max-width: 800px !important;">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">{{ modalParams.title }}</h5>
+                <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
+              </div>
+              <div v-show="tabData" class="modal-body">
+                <img :src="modalParams.src" alt="Uploaded Image" class="w-100" />
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
@@ -372,14 +372,33 @@
 </template>
 
 <script>
-  import { ref, onMounted, reactive } from 'vue';
+  import {
+    ref,
+    onMounted,
+    reactive
+  } from 'vue';
   import Navbar from "@/components/Navbar.vue";
-  import { useRoute } from 'vue-router';
+  import {
+    useRoute
+  } from 'vue-router';
   import router from '@/router';
   import axios from 'axios';
-  import { UnitArray , PackageUnitArray} from '@/assets/js/dropdown'
-  import { getApplication , getEquipType , getEquipCategory , getArea , getLayer , getProject } from '@/assets/js/common_api';
-  import { getDate , goBack } from '@/assets/js/common_fn';
+  import {
+    UnitArray,
+    PackageUnitArray
+  } from '@/assets/js/dropdown'
+  import {
+    getApplication,
+    getEquipType,
+    getEquipCategory,
+    getArea,
+    getLayer,
+    getProject
+  } from '@/assets/js/common_api';
+  import {
+    getDate,
+    goBack
+  } from '@/assets/js/common_fn';
   export default {
     components: {
       Navbar,
@@ -394,7 +413,7 @@
         PackageUnit: PackageUnitArray,
       })
       const AssetsInDate = ref('');
-      const AssetsInOperator =ref('');
+      const AssetsInOperator = ref('');
       //上半部表單部分
       const details = ref({});
       //下半部頁籤部分
@@ -431,13 +450,13 @@
                 LayerInit: '請先選擇區域',
                 deleteFile: [],
                 newFile: [],
-                viewFile:[],
+                viewFile: [],
                 // 如果需要，可以選擇性地添加其他屬性，或者不需要添加viewFile屬性
               });
-              if(tab.itemAreaName) {
+              if (tab.itemAreaName) {
                 getLayerName(0);
               }
-              if(tab.itemEquipTypeName) {
+              if (tab.itemEquipTypeName) {
                 getEquipCategoryName(0);
               }
             });
@@ -456,27 +475,26 @@
         } catch (error) {
           console.error(error);
         }
-
       }
       async function getAreaName() {
         if (DropdownArray.Area.length == 0) {
           getArea()
-          .then((data)=>{
-            DropdownArray.Area = data;
-          })
-          .catch((error) =>{
-            console.error(error);
-          })
+            .then((data) => {
+              DropdownArray.Area = data;
+            })
+            .catch((error) => {
+              console.error(error);
+            })
         }
       }
       async function getLayerName(index) {
         getLayer(tabData[index].itemArea_Id)
-        .then((data)=>{
-          tabData[index].LayerArray = data;
-        })
-        .catch((error) =>{
-          console.error(error);
-        })
+          .then((data) => {
+            tabData[index].LayerArray = data;
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       async function getEquipTypeName() {
         if (DropdownArray.EquipType.length == 0) {
@@ -492,7 +510,7 @@
       async function getEquipCategoryName(index) {
         var params = tabData[index].itemEquipType_Id
         getEquipCategory(params)
-        .then((data)=>{
+          .then((data) => {
             tabData[index].EquipCategoryArray = data;
           })
           .catch((error) => {
@@ -501,7 +519,7 @@
       }
       async function getProjectName(index) {
         let code = ''
-        if(tabData[index].itemProjectCode) {
+        if (tabData[index].itemProjectCode) {
           tabData[index].itemProjectCode = tabData[index].itemProjectCode.trim();
         }
         code = tabData[index].itemProjectCode;
@@ -510,12 +528,12 @@
           return;
         }
         getProject(code)
-        .then((data) =>{
-          tabData[index].itemProjectName = data;
-        })
-        .catch((error) =>{
-          console.error(error);
-        })
+          .then((data) => {
+            tabData[index].itemProjectName = data;
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       async function getApplicationInfo() {
         getApplication()
@@ -539,7 +557,6 @@
             InputError = true;
             InputMessages += '頁籤 ' + (i + 1) + ' :　物品名稱必填' + '\n';
           }
-
           //3. 檢查字數限制
           // 專案代碼不可超過10字
           if (!/^[\s\S]{0,10}$/.test(form.itemProjectCode)) {
@@ -617,7 +634,7 @@
       }
       // 送出
       async function submit() {
-        if(!checkRequireParams()) {
+        if (!checkRequireParams()) {
           return;
         }
         //若是新品入庫 檢查資產編號是否有重複
@@ -637,25 +654,25 @@
               // 全部暫存成功後，打api轉狀態
               const form = new FormData();
               form.append('AI_ID', AI_ID);
-              axios.post('http://192.168.0.177:7008/AssetsInMng/AssetsIn',form)
-              .then((response)=>{
-                const data =  response.data
-                if(data.state === 'success') {
-                  // 成功
-                  alert('入庫成功\n單號為:' + AI_ID);
-                  router.push({
-                    name: 'Store_Process_Datagrid'
-                  });
-                } else if (data.state === 'account_error') {
-                  alert(data.messages);
-                  router.push('/');
-                } else {
-                  alert(data.messages);
-                }
-              })
-              .catch((error)=>{
-                console.error(error);
-              })
+              axios.post('http://192.168.0.177:7008/AssetsInMng/AssetsIn', form)
+                .then((response) => {
+                  const data = response.data
+                  if (data.state === 'success') {
+                    // 成功
+                    alert('入庫成功\n單號為:' + AI_ID);
+                    router.push({
+                      name: 'Store_Process_Datagrid'
+                    });
+                  } else if (data.state === 'account_error') {
+                    alert(data.messages);
+                    router.push('/');
+                  } else {
+                    alert(data.messages);
+                  }
+                })
+                .catch((error) => {
+                  console.error(error);
+                })
             } else {
               alert('表單送出失敗');
             }
@@ -685,7 +702,7 @@
           form.delete('viewFile')
           form.delete('existFile')
           // 不是耗材的話 剔除itemCount、itemUnit
-          if(tabData.itemAssetType !== '耗材') {
+          if (tabData.itemAssetType !== '耗材') {
             form.delete('itemUnit')
             form.delete('itemCount')
           }
@@ -758,7 +775,6 @@
         // 檢查頁籤必填、格式
         // 必填只需檢查:設備分類、物品名稱、資產編號格式、儲位區域&櫃位、存貨的專案代碼、耗材的數量&單位
         const BF_pattern = /^(BF\d{8})$/;
-
         var InputMessages = '';
         var InputError = false;
         for (let i = 0; i < tabData.length; i++) {
@@ -776,9 +792,9 @@
           }
           // 資產編號必填
           if (!BF_pattern.test(form.itemAssetsId)) {
-              InputError = true;
-              InputMessages += '頁籤 ' + (i + 1) + ' :　資產編號不符合格式' + '\n';
-            }
+            InputError = true;
+            InputMessages += '頁籤 ' + (i + 1) + ' :　資產編號不符合格式' + '\n';
+          }
           // 儲位區域必填
           if (!form.itemArea_Id) {
             InputError = true;
@@ -796,11 +812,11 @@
           }
           // 耗材需額外檢查 數量、單位
           if (form.itemAssetType === '耗材') {
-            if(!form.itemCount) {
+            if (!form.itemCount) {
               InputError = true;
               InputMessages += '頁籤 ' + (i + 1) + ' :　數量必填' + '\n';
             }
-            if(!form.itemUnit) {
+            if (!form.itemUnit) {
               InputError = true;
               InputMessages += '頁籤 ' + (i + 1) + ' :　單位必填' + '\n';
             }
@@ -880,16 +896,16 @@
         // 格式、必填皆正確
         return true;
       }
-      function selectType(item , index) {
+      function selectType(item, index) {
         tabData[index].itemEquipTypeName = item.Name;
         tabData[index].itemEquipType_Id = item.Id;
         tabData[index].itemEquipCategoryName = '';
         tabData[index].itemCategory_Id = '';
         getEquipCategoryName(index);
-        tabData[index].EquipCategoryInit = '請選擇';            
+        tabData[index].EquipCategoryInit = '請選擇';
       }
-      function selectCategory(item , index) {
-        tabData[index].itemEquipCategoryName = item.Name; 
+      function selectCategory(item, index) {
+        tabData[index].itemEquipCategoryName = item.Name;
         tabData[index].itemCategory_Id = item.Id;
       }
       function selectArea(index, item) {
@@ -904,10 +920,10 @@
         tabData[index].itemLayerName = item.Name;
         tabData[index].itemLayer_Id = item.Id;
       }
-      function selectUnit(item , index) {
+      function selectUnit(item, index) {
         tabData[index].itemUnit = item;
       }
-      function selectPackageUnit(item , index) {
+      function selectPackageUnit(item, index) {
         tabData[index].itemPackageUnit = item;
       }
       function resetUnitCount(index) {
@@ -977,13 +993,13 @@
       }
       // 查看收貨單
       function viewReceive() {
-        if(details.value.AR_ID) {
+        if (details.value.AR_ID) {
           const link = document.getElementById('view-receive');
           link.click();
         }
       }
       // 瀏覽檔案
-      function viewImgFile(type ,index , file_index) {
+      function viewImgFile(type, index, file_index) {
         switch (type) {
           case 'new':
             modalParams.title = tabData[index].viewFile[file_index].FileName;
@@ -996,18 +1012,18 @@
         }
       }
       // 刪除檔案
-      function deleteFileFunction(type ,index , file_index) {
+      function deleteFileFunction(type, index, file_index) {
         // 1.尚未上傳->從tab資料的new、view裡面刪掉
         // 2.已上傳->從tab資料的existFile裡面刪掉 、 將檔案名稱加入tab資料的deleteFile
         switch (type) {
           case 'new':
-            tabData[index].newFile.splice(file_index,1);
-            tabData[index].viewFile.splice(file_index,1);
+            tabData[index].newFile.splice(file_index, 1);
+            tabData[index].viewFile.splice(file_index, 1);
             break;
           case 'exist':
             const fileName = tabData[index].existFile[file_index].FileName
             tabData[index].deleteFile.push(fileName)
-            tabData[index].existFile.splice(file_index,1);
+            tabData[index].existFile.splice(file_index, 1);
             break;
         }
       }
@@ -1089,16 +1105,6 @@
         }
         .content {
           @include content_bg;
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 118px;
-              }
-              input {
-                margin-left: 18px !important
-              }
-            }
-          }
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -1153,7 +1159,6 @@
                 background-color: #5e7aa2;
               }
             }
-          
             &:nth-child(3) {
               @include search_and_send_btn;
               &:hover {
@@ -1176,14 +1181,59 @@
           .tab-content {
             background: #3E4E5F;
             padding: 50px 30px;
-            .form_search_wrap {
+            border-radius: 0 0 10px 10px;
+            .selected_file {
               .input-group {
-                .input-group-prepend {
-                  width: 113px;
+                flex-direction: column;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
                 }
-                input {
-                  margin-left: 15px !important
+                p {
+                  font-weight: 700;
+                  margin-bottom: 5px;
+                  color: white;
+                  word-break: break-word;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
                 }
+              }
+            }
+            .file_upload_wrap {
+              margin-bottom: 0;
+              display: flex;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              p {
+                font-weight: 700;
+                margin-bottom: 5px;
+                color: white;
+                word-break: break-word;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
+                  font-weight: 700;
+                  color: white;
+                }
+              }
+            }
+            .check_box_wrap {
+              font-weight: 700;
+              align-items: center;
+              color: white;
+              font-size: 20px;
+              div:nth-child(2) {
+                gap: 0 5px;
               }
             }
             .modal {
@@ -1219,35 +1269,11 @@
             }
             .input-group {
               flex-wrap: nowrap;
+              .input-number {
+                width: 60%;
+              }
               span {
                 @include red_star
-              }
-              .selected_file {
-                margin-left: 20px;
-                p.title {
-                  font-weight: 700;
-                  color: white;
-                  margin-bottom: 5px;
-                }
-                .file_upload_wrap {
-                  margin-bottom: 0;
-                  display: flex;
-                  img {
-                    width: 25px;
-                    height: 25px;
-                  }
-                  p {
-                    margin-bottom: 0;
-                    font-weight: 700;
-                    color: white;
-                    &::before {
-                      margin-right: 10px;
-                      content: '·';
-                      font-weight: 700;
-                      color: white;
-                    }
-                  }
-                }
               }
               .file_upload_wrap {
                 margin-bottom: 0;
@@ -1279,8 +1305,9 @@
                 color: white;
                 font-weight: 700;
                 font-size: 20px;
-                width: 120px;
+                width: 126px;
                 text-align: end;
+                white-space: nowrap;
               }
               .file_wrap {
                 display: flex;
@@ -1315,7 +1342,7 @@
         @include title_color;
       }
       .info_wrap {
-        padding: 0 5%;
+        width: 700px;
         margin: auto;
         .fixed_info {
           @include fixed_info;
@@ -1326,19 +1353,14 @@
         }
         .content {
           @include content_bg;
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 120px;
-              }
-              input {
-                margin-left: 15px !important
-              }
-            }
-          }
           .dropdown {
             .dropdown-menu {
               width: 100%;
+              p {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
             }
             button {
               @include dropdown-btn;
@@ -1385,7 +1407,6 @@
                 background-color: #5e7aa2;
               }
             }
-        
             &:nth-child(3) {
               @include search_and_send_btn;
               &:hover {
@@ -1407,15 +1428,40 @@
           }
           .tab-content {
             background: #3E4E5F;
-            padding: 50px 30px;
-            .form_search_wrap {
+            padding: 25px;
+            border-radius: 0 0 10px 10px;
+            .selected_file {
               .input-group {
-                .input-group-prepend {
-                  width: 113px;
+                flex-direction: column;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
                 }
-                input {
-                  margin-left: 15px !important
+                p {
+                  font-weight: 700;
+                  margin-bottom: 5px;
+                  color: white;
+                  word-break: break-word;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
                 }
+              }
+            }
+            .check_box_wrap {
+              font-weight: 700;
+              align-items: center;
+              color: white;
+              font-size: 20px;
+              div:nth-child(2) {
+                gap: 0 5px;
               }
             }
             .modal {
@@ -1451,33 +1497,28 @@
             }
             .input-group {
               flex-wrap: nowrap;
+              .input-number {
+                width: 60%;
+              }
               span {
                 @include red_star
               }
-              .selected_file {
-                margin-left: 20px;
-                p.title {
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  margin-bottom: 0;
                   font-weight: 700;
                   color: white;
-                  margin-bottom: 5px;
-                }
-                .file_upload_wrap {
-                  margin-bottom: 0;
-                  display: flex;
-                  img {
-                    width: 25px;
-                    height: 25px;
-                  }
-                  p {
-                    margin-bottom: 0;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
                     font-weight: 700;
                     color: white;
-                    &::before {
-                      margin-right: 10px;
-                      content: '·';
-                      font-weight: 700;
-                      color: white;
-                    }
                   }
                 }
               }
@@ -1492,8 +1533,9 @@
                 color: white;
                 font-weight: 700;
                 font-size: 20px;
-                width: 120px;
+                width: 126px;
                 text-align: end;
+                white-space: nowrap;
               }
               .file_wrap {
                 display: flex;
@@ -1610,8 +1652,6 @@
                 background-color: #5e7aa2;
               }
             }
-         
-          
             &:nth-child(3) {
               @include search_and_send_btn;
               padding: 10px;
@@ -1638,6 +1678,39 @@
           .tab-content {
             background: #3E4E5F;
             padding: 50px 30px;
+            .selected_file {
+              .input-group {
+                flex-direction: column;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  font-weight: 700;
+                  margin-bottom: 5px;
+                  color: white;
+                  word-break: break-word;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
+            }
+            .check_box_wrap {
+              font-weight: 700;
+              color: white;
+              div:nth-child(2) {
+                gap: 0 5px;
+                display: flex;
+              }
+            }
             .modal {
               .modal-header {
                 background: #3D4E61;
@@ -1674,32 +1747,6 @@
               flex-direction: column;
               span {
                 @include red_star
-              }
-              .selected_file {
-                p.title {
-                  font-weight: 700;
-                  color: white;
-                  margin-bottom: 5px;
-                }
-                .file_upload_wrap {
-                  margin-bottom: 0;
-                  display: flex;
-                  img {
-                    width: 25px;
-                    height: 25px;
-                  }
-                  p {
-                    margin-bottom: 0;
-                    font-weight: 700;
-                    color: white;
-                    &::before {
-                      margin-right: 10px;
-                      content: '·';
-                      font-weight: 700;
-                      color: white;
-                    }
-                  }
-                }
               }
               .input-number {
                 @include count_btn;

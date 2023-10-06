@@ -106,6 +106,10 @@ import Scrap_Review from "../views/scrap/Review";
 import Scrap_Delete from "../views/scrap/Delete";
 //報廢管理
 
+//系統日誌
+import System_Log_Datagrid from "../views/system_log/Datagrid"
+import System_Log_View from "../views/system_log/View"
+//系統日誌
 //權限不足
 import Authorized from "../views/Authorized";
 //權限不足
@@ -532,6 +536,18 @@ const routes = [
   //   meta: {auth: true, request: 'AOV_Verify'},
   //   // 這頁沒使用到
   // },
+  {
+    path: "/system_log_datagrid",
+    name: "System_Log_Datagrid",
+    component: System_Log_Datagrid,
+    // meta: {auth: true, request: 'AR_Mgr'},
+  },
+  {
+    path: "/system_log_view",
+    name: "System_Log_View",
+    component: System_Log_View,
+    // meta: {auth: true, request: 'AR_Mgr'},
+  }, 
 ];
 
 const router = createRouter({
