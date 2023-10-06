@@ -63,17 +63,7 @@
             <div class="input-group-prepend">通知對象：</div>
             <div class="multi_user_select">
               <!-- :taggable="true"可以直接新增新的一個資料，@tag="tagFn"  -->
-              <VueMultiselect
-                v-model="details.InformedPersons"
-                :options="DropdownArray.InformedPersons"
-                :multiple="true"
-                :close-on-select="false" 
-                :show-labels="false" 
-                :taggable="false"
-                placeholder="輸入名字尋找對象"
-                label="name"
-                track-by="name"
-              />
+              <VueMultiselect v-model="details.InformedPersons" :options="DropdownArray.InformedPersons" :multiple="true" :close-on-select="false" :show-labels="false" :taggable="false" placeholder="輸入名字尋找對象" label="name" track-by="name" />
             </div>
           </div>
         </div>
@@ -81,7 +71,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">備註：</div>
-            <textarea  class="form-control " style="height: 250px;" placeholder="最多輸入500字" v-model="details.Memo"></textarea>
+            <textarea class="form-control " style="height: 250px;" placeholder="最多輸入500字" v-model="details.Memo"></textarea>
           </div>
         </div>
       </div>
@@ -168,14 +158,29 @@
 </template>
 
 <script>
-  import { register } from 'swiper/element/bundle';
-  import { Pagination } from 'swiper/modules';
+  import {
+    register
+  } from 'swiper/element/bundle';
+  import {
+    Pagination
+  } from 'swiper/modules';
   import Navbar from "@/components/Navbar.vue";
-  import { onMounted, ref, reactive, } from "vue";
-  import { useRoute, useRouter } from "vue-router";
+  import {
+    onMounted,
+    ref,
+    reactive,
+  } from "vue";
+  import {
+    useRoute,
+    useRouter
+  } from "vue-router";
   import VueMultiselect from 'vue-multiselect'
-  import { getAccount } from '@/assets/js/common_api'
-  import { goBack } from "@/assets/js/common_fn"
+  import {
+    getAccount
+  } from '@/assets/js/common_api'
+  import {
+    goBack
+  } from "@/assets/js/common_fn"
   register();
   export default {
     components: {
@@ -212,16 +217,16 @@
       // 通知對象dropdown
       async function getAccountName() {
         getAccount('')
-        .then((data)=>{
-          data.forEach((Name) => {
-            DropdownArray.InformedPersons.push({
-              name: Name,
-            })
-          });
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+          .then((data) => {
+            data.forEach((Name) => {
+              DropdownArray.InformedPersons.push({
+                name: Name,
+              })
+            });
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       // 取得已有資料
       async function getDetails() {
@@ -232,8 +237,10 @@
           if (data.state === 'success') {
             details.value = data.resultList;
             console.log('單筆資料如下\n', details.value);
-            if(details.value.InformedPersons) {
-              details.value.InformedPersons = details.value.InformedPersons.map((name)=>({name}))
+            if (details.value.InformedPersons) {
+              details.value.InformedPersons = details.value.InformedPersons.map((name) => ({
+                name
+              }))
             }
             if (details.value.ReceivedDate) {
               details.value.ReceivedDate = details.value.ReceivedDate.replace(/\//g, '-');
@@ -290,7 +297,6 @@
           alert('貨運公司不可輸入超過20字')
           return
         }
-
         try {
           // 先編輯表單上半部內容
           const ShipmentNum = await sendUpperForm();
@@ -299,24 +305,22 @@
           for (let i = 0; i < fileParams.newDoc.length; i++) {
             filePromises.push(sendFileForm(AR_ID, 'Document', fileParams.newDoc[i], i));
           }
-
           for (let i = 0; i < fileParams.newPic.length; i++) {
             filePromises.push(sendFileForm(AR_ID, 'File', fileParams.newPic[i], i));
           }
           // 等待所有檔案上傳完成
           await Promise.all(filePromises)
-          .then(result =>{
-            const allSuccess = result.every(result => result === 'success')
-            if(allSuccess) {
-            alert('編輯收貨單成功\n單號為:' + ShipmentNum);
-              router.push({
-                name: 'Receive_Datagrid'
-              });
-            }
-            else {
-              alert('編輯收貨單失敗')
-            }
-          })
+            .then(result => {
+              const allSuccess = result.every(result => result === 'success')
+              if (allSuccess) {
+                alert('編輯收貨單成功\n單號為:' + ShipmentNum);
+                router.push({
+                  name: 'Receive_Datagrid'
+                });
+              } else {
+                alert('編輯收貨單失敗')
+              }
+            })
         } catch (error) {
           console.error(error);
         }
@@ -342,24 +346,24 @@
             form.append(key, formParams[key]);
           }
           // 如果有通知對象則處理資料格式，無值則append空陣列
-          if(details.value.InformedPersons) {
-            const InformedArray = details.value.InformedPersons.map((x)=> x.name);
-            InformedArray.forEach((item)=>{
+          if (details.value.InformedPersons) {
+            const InformedArray = details.value.InformedPersons.map((x) => x.name);
+            InformedArray.forEach((item) => {
               form.append('InformedPersons', item);
             })
           } else {
-            form.append('InformedPersons',[]);
+            form.append('InformedPersons', []);
           }
           // 欲刪除文件
-          if(fileParams.deleteDoc.length > 0) {
-            for(const item of fileParams.deleteDoc) {
-              form.append('deleteDocument' , item)
+          if (fileParams.deleteDoc.length > 0) {
+            for (const item of fileParams.deleteDoc) {
+              form.append('deleteDocument', item)
             }
           }
           // 欲刪除檔案
-          if(fileParams.deletePic.length > 0) {
-            for(const item of fileParams.deletePic) {
-              form.append('deleteFile' , item)
+          if (fileParams.deletePic.length > 0) {
+            for (const item of fileParams.deletePic) {
+              form.append('deleteFile', item)
             }
           }
           axios.post('http://192.168.0.177:7008/ReceivingMng/EditReceipt', form)
@@ -367,10 +371,9 @@
               const data = response.data;
               if (data.state === 'success') {
                 const ShipmentNum = response.data.resultList.ShipmentNum;
-                console.log('編輯上半部表單成功Show_AR_ID:' , ShipmentNum);
+                console.log('編輯上半部表單成功Show_AR_ID:', ShipmentNum);
                 resolve(ShipmentNum);
-              }
-              else {
+              } else {
                 reject(data.messages);
               }
             })
@@ -380,12 +383,12 @@
         });
       }
       // 中、下上傳檔案部分
-      function sendFileForm(AR_ID , type , fileData, index) {
+      function sendFileForm(AR_ID, type, fileData, index) {
         return new Promise((resolve, reject) => {
           const form = new FormData();
-          form.append('AR_ID' , AR_ID);
-          form.append('num' , index);
-          form.append(type , fileData);
+          form.append('AR_ID', AR_ID);
+          form.append('num', index);
+          form.append(type, fileData);
           const axios = require('axios');
           axios.post('http://192.168.0.177:7008/ReceivingMng/UploadFile', form)
             .then((response) => {
@@ -396,7 +399,7 @@
                 resolve(data.state)
               } else {
                 // 如果状态不是 "success"，调用 reject 并传递错误信息
-                console.error(type+'上傳失敗，'+response.data.messages);
+                console.error(type + '上傳失敗，' + response.data.messages);
                 reject(new Error('文件表单提交失败'));
               }
             })
@@ -408,9 +411,9 @@
       }
       // 處理中間物流文件
       function handleDocumentFile(event) {
-        console.log('DocumentFiles:',event.target.files);
+        console.log('DocumentFiles:', event.target.files);
         const files = event.target.files;
-        const imageExtensions = ['jpg', 'jpeg', 'png', 'gif' , 'pdf' , 'doc' , 'docx'];
+        const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx'];
         const maxFileSize = 28 * 1024 * 1024; // 28MB
         // 檢查副檔名 &檔案大小
         for (let i = 0; i < files.length; i++) {
@@ -434,7 +437,7 @@
           const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
           const reader = new FileReader();
           // .pdf
-          if(fileExtension === 'pdf') {
+          if (fileExtension === 'pdf') {
             imgArray.push(files[i]);
             previewUrl.push({
               FileName: files[i].name,
@@ -443,7 +446,7 @@
             });
           }
           // .doc/.docx
-          else if(fileExtension === 'doc' || fileExtension == 'docx') {
+          else if (fileExtension === 'doc' || fileExtension == 'docx') {
             imgArray.push(files[i]);
             previewUrl.push({
               FileName: files[i].name,
@@ -485,12 +488,12 @@
           }
           reader.readAsDataURL(files[i]);
         }
-        console.log('uploaded viewDoc:' , fileParams.viewDoc);
-        console.log('uploaded newDoc:' , fileParams.newDoc);
+        console.log('uploaded viewDoc:', fileParams.viewDoc);
+        console.log('uploaded newDoc:', fileParams.newDoc);
       }
       // 處理下半部照片
       function handlePictureFile(event) {
-        console.log('PictureFiles:',event.target.files);
+        console.log('PictureFiles:', event.target.files);
         const files = event.target.files;
         const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
         const maxFileSize = 28 * 1024 * 1024; // 28MB
@@ -581,34 +584,34 @@
       // 2.新選擇檔案 (直接從fileParams的newDoc viewDoc刪除)
       // 3.已上傳照片 (從輪播刪掉 並加入fileParams.deletePic)
       // 4.新選擇照片 (從輪播刪掉 從fileParams.newPic刪除)
-      function deleteFile(type ,index , file) {
+      function deleteFile(type, index, file) {
         switch (type) {
           case 'document':
             // 1.
-            if(file.exist) {
+            if (file.exist) {
               fileParams.deleteDoc.push(file.FileName);
-              details.value.existDocument.splice(index,1);
-              console.log('已加入的deleteDoc:',fileParams.deleteDoc);
+              details.value.existDocument.splice(index, 1);
+              console.log('已加入的deleteDoc:', fileParams.deleteDoc);
             }
             // 2.
             else {
-              fileParams.newDoc.splice(index , 1);
-              fileParams.viewDoc.splice(index , 1);
-              console.log('剩餘newDoc:',fileParams.newDoc);
+              fileParams.newDoc.splice(index, 1);
+              fileParams.viewDoc.splice(index, 1);
+              console.log('剩餘newDoc:', fileParams.newDoc);
             }
             break;
           case 'picture':
             // 3.
-            if(file.exist) {
+            if (file.exist) {
               fileParams.deletePic.push(file.FileName);
-              console.log('已加入的deletePic:',fileParams.deletePic);
+              console.log('已加入的deletePic:', fileParams.deletePic);
             }
             // 4.
             else {
-              fileParams.newPic.splice(index , 1);
-              console.log('剩餘newPic:',fileParams.newPic);
+              fileParams.newPic.splice(index, 1);
+              console.log('剩餘newPic:', fileParams.newPic);
             }
-            fileParams.viewPic.splice(index , 1);
+            fileParams.viewPic.splice(index, 1);
             break;
         }
       }
@@ -634,34 +637,41 @@
     },
   }
 </script>
-<style src="@/assets/css/vue-multiselect.css"></style>
+<style src="@/assets/css/vue-multiselect.css">
+
+</style>
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
   span {
     @include red_star
   }
-
+  .nav {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    border: none;
+  }
   .selected_file {
     flex-direction: column;
-    .uploaded_file{
+    .uploaded_file {
       font-weight: 700;
-    color: white;
+      color: white;
     }
-    p.uploded_file_name::before{
+    p.uploded_file_name::before {
       margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
+      content: '·';
+      font-weight: 700;
+      color: white;
     }
     .icon {
       margin: 0 10px;
-    gap: 5px;
-    display: flex;
-    width: 100%;
-      .icon_wrap{
+      gap: 5px;
+      display: flex;
+      width: 100%;
+      .icon_wrap {
         display: flex;
-    align-items: self-start;
-  }
+        align-items: self-start;
+      }
       img {
         cursor: pointer;
         margin: 0 5px
@@ -689,7 +699,6 @@
     }
   }
   .modal {
-   
     .modal-body {
       padding: 20px;
       margin: auto;
@@ -727,8 +736,8 @@
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
-      .multi_user_select{
-        width:80%
+      .multi_user_select {
+        width: 80%
       }
       input {
         @include dropdown_btn;
@@ -805,7 +814,7 @@
         .content {
           @include content_bg;
           p.uploded_file_name {
-display: flex;
+            display: flex;
             font-weight: 700;
             margin-bottom: 5px;
             color: white;
@@ -917,8 +926,8 @@ display: flex;
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
-      .multi_user_select{
-        width:80%
+      .multi_user_select {
+        width: 80%
       }
       input {
         @include dropdown_btn;
@@ -1004,7 +1013,7 @@ display: flex;
             }
           }
           p.uploded_file_name {
-   display: flex;
+            display: flex;
             font-weight: 700;
             margin-bottom: 5px;
             color: white;
@@ -1030,7 +1039,7 @@ display: flex;
             flex-wrap: nowrap;
             .input-number {
               @include count_btn;
-              width:80%
+              width: 80%
             }
             .form-control {
               height: 35px;
@@ -1044,9 +1053,9 @@ display: flex;
               width: 120px;
               text-align: end;
             }
-      .date-input{
-        width: 103%;
-      }
+            .date-input {
+              width: 103%;
+            }
           }
         }
         .button_wrap {
@@ -1106,9 +1115,9 @@ display: flex;
         margin-top: 5%;
       }
     }
-    .modal-dialog{
-        padding:0 10%
-      }
+    .modal-dialog {
+      padding: 0 10%
+    }
   }
   @media only screen and (max-width: 767px) {
     .main_section {
@@ -1209,7 +1218,7 @@ display: flex;
         .content {
           @include content_bg;
           p.uploded_file_name {
-display: flex;
+            display: flex;
             font-weight: 700;
             margin-bottom: 5px;
             color: white;
@@ -1313,8 +1322,8 @@ display: flex;
         }
       }
     }
-    .modal-dialog{
-        padding:0 10%
-      }
+    .modal-dialog {
+      padding: 0 10%
+    }
   }
 </style>
