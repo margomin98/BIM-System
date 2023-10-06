@@ -111,7 +111,7 @@
                   <p data-bs-dismiss="modal" class='close_icon'>X</p>
                 </div>
                 <div class="modal-body">
-                  <img class="w-100" :src="previewParams.src" >
+                  <img class="w-100" :src="previewParams.src">
                 </div>
               </div>
             </div>
@@ -214,7 +214,7 @@
                       <p data-bs-dismiss="modal" class='close_icon'>X</p>
                     </div>
                     <div class="modal-body">
-                      <img :src="previewParams.src" >
+                      <img :src="previewParams.src">
                     </div>
                   </div>
                 </div>
@@ -786,6 +786,20 @@
   span {
     @include red_star
   }
+  .nav {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    border: none;
+  }
+  ::-webkit-scrollbar {
+    height: 6px;
+  }
+   ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: rgb(176, 175, 175);
+    border: 1px solid rgb(86, 85, 85);
+  }
   .selected_user_wrap {
     gap: 0 5px;
     display: flex;
@@ -836,7 +850,6 @@
       margin-bottom: 5px;
       font-weight: 700;
       color: white;
-   
     }
     .file_upload_box {
       padding: 0 20px 5px;
@@ -896,11 +909,11 @@
     }
   }
   .file_name::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
+    margin-right: 10px;
+    content: '·';
+    font-weight: 700;
+    color: white;
+  }
   button.send_btn {
     @include search_and_send_btn;
     &:hover {
@@ -999,7 +1012,6 @@
               align-items: center;
             }
           }
-      
           .input-group {
             flex-wrap: nowrap;
             .input-number {
@@ -1094,11 +1106,11 @@
         }
         .tab-content {
           background: #3E4E5F;
-              background: #3E4E5F;
-        position: relative;
-        padding: 50px 30px;border-radius: 0 10px 0 0;
+          background: #3E4E5F;
           position: relative;
-      
+          padding: 50px 30px;
+          border-radius: 0 10px 0 0;
+          position: relative;
           .modal {
             .modal-header {
               background: #3D4E61;
@@ -1135,34 +1147,30 @@
             span {
               @include red_star
             }
-              p.title {
+            p.title {
+              font-weight: 700;
+              color: white;
+              margin-bottom: 5px;
+            }
+            .file_upload_wrap {
+              margin-bottom: 0;
+              display: flex;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              .file_name::before {
+                margin-right: 10px;
+                content: '·';
                 font-weight: 700;
                 color: white;
-                margin-bottom: 5px;
               }
-              .file_upload_wrap {
+              p {
                 margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                .file_name::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
-                p {
-                  margin-bottom: 0;
-                  font-weight: 700;
-                  color: white;
-                 
-                  
-                }
+                font-weight: 700;
+                color: white;
               }
-            
-         
+            }
             .input-number {
               @include count_btn;
               height: 35px;
@@ -1240,7 +1248,7 @@
       }
       .info_wrap {
         margin: auto;
-    padding: 0 5%;
+        padding: 0 5%;
         .fixed_info {
           @include fixed_info;
           p {
@@ -1378,7 +1386,6 @@
       }
       padding: 0 5%;
       .modal-content {
-        
         border: 0;
         .modal-body {
           padding: 0;
@@ -1490,22 +1497,22 @@
     }
     .tab_section {
       .nav-tabs {
-          button {
-            @include tab_section_num;
-            background: #5C7897;
-          }
-          .active {
-            @include tab_section_num;
-            background: #3E4E5F;
-          }
+        button {
+          @include tab_section_num;
+          background: #5C7897;
         }
-        .tab-content {
+        .active {
+          @include tab_section_num;
           background: #3E4E5F;
-            background: #3E4E5F;
+        }
+      }
+      .tab-content {
+        background: #3E4E5F;
+        background: #3E4E5F;
         position: relative;
-        padding: 50px 30px;border-radius: 0 10px 0 0;
+        padding: 50px 30px;
+        border-radius: 0 10px 0 0;
         position: relative;
-      
         .modal {
           .modal-header {
             background: #3D4E61;
@@ -1925,21 +1932,22 @@
         margin-left: unset !important;
       }
       .nav-tabs {
-          button {
-            @include tab_section_num;
-            background: #5C7897;
-          }
-          .active {
-            @include tab_section_num;
-            background: #3E4E5F;
-          }
+        button {
+          @include tab_section_num;
+          background: #5C7897;
         }
-        .tab-content {
+        .active {
+          @include tab_section_num;
           background: #3E4E5F;
+        }
+      }
+      .tab-content {
+        background: #3E4E5F;
         position: relative;
-            background: #3E4E5F;
+        background: #3E4E5F;
         position: relative;
-        padding: 50px 30px;border-radius: 0 10px 0 0;
+        padding: 50px 30px;
+        border-radius: 0 10px 0 0;
         .modal {
           .modal-header {
             background: #3D4E61;
