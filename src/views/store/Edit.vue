@@ -1113,6 +1113,9 @@
             if(details.value.ShipmentNum) {
               ShipmentNum.value = details.value.ShipmentNum
             }
+            if(details.value.Memo) {
+              Memo.value = details.value.Memo
+            }
             // 將頁籤資料帶入下半部tabData
             details.value.Tabs.forEach(tab => {
               tabData.push({

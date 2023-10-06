@@ -108,10 +108,10 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="photoModalLabel">{{ previewParams.title }}</h5>
-                  <p data-bs-dismiss="modal" class='close_icon'>X</p>
+                  <span data-bs-dismiss="modal" class='close_icon' style="color: white;">X</span>
                 </div>
                 <div class="modal-body">
-                  <img :src="previewParams.src" class="w-75">
+                  <img :src="previewParams.src" class="w-100">
                 </div>
               </div>
             </div>
@@ -197,24 +197,6 @@
                   <div v-for="(file, index) in tab.viewDoc" :key="index" class="file_upload_wrap">
                     <p>{{ file.name }}</p>
                     <img class="view_icon" src="@/assets/view.png" @click="handleDocPreview(file)">
-                    <img class="delete_icon" src="@/assets/trash.png" @click="deleteFile('document',index)">
-                  </div>
-                </div>
-              </div>
-              <!-- doc/docx download hidden Link -->
-              <a href="" style="display: none;" id="download-link"></a>
-              <!-- Modal Trigger -->
-              <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#photoModal"></button>
-              <!-- Photo Modal -->
-              <div class="modal fade" id="photoModal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 800px !important">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="photoModalLabel">{{ previewParams.title }}</h5>
-                    </div>
-                    <div class="modal-body">
-                      <img :src="previewParams.src" class="w-75">
-                    </div>
                   </div>
                 </div>
               </div>
@@ -232,9 +214,9 @@
             </swiper-container>
             <div class="swiper_pagination">
             </div>
-            <div class="fixed_bottom_info">
+            <div @click="deleteTabs(index)" class="fixed_bottom_info">
               <div>
-                <p @click="deleteTabs(index)">刪除此筆</p>
+                <p >刪除此筆</p>
               </div>
             </div>
           </div>
