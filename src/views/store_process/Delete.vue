@@ -74,11 +74,11 @@
                     資產類型 :
                   </div>
                   <div class="d-flex align-items-center radio_wrap">
-                    <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="資產" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='資產'"/>
+                    <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="資產" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='資產'" />
                     <label class="form-check-label check_box" for='radio1'>資產</label>
-                    <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="存貨" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='存貨'"/>
+                    <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="存貨" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='存貨'" />
                     <label class="form-check-label check_box" for='radio2' data-toggle="tooltip" data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
-                    <input type="radio" class='form-check-input check_box' id="radio3" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="耗材" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='耗材'"/>
+                    <input type="radio" class='form-check-input check_box' id="radio3" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="耗材" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='耗材'" />
                     <label class="form-check-label check_box" for='radio3'>耗材</label>
                   </div>
                 </div>
@@ -96,7 +96,7 @@
             <!-- 頁籤專案名稱 -->
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend">專案名稱：</div>
+                <div class="input-group-prepend">專案名稱 :</div>
                 <input type="text" class="form-control readonly_box" v-model="tab.itemProjectName" readonly>
               </div>
             </div>
@@ -191,7 +191,7 @@
                     <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">數量 :
                   </div>
                   <div class="input-group-prepend d-xl-none d-lg-none d-md-none d-block">
-                     數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
+                    數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
                   </div>
                   <input type="text" class="input-number readonly_box" v-model="tab.itemCount" readonly>
                 </div>
@@ -213,13 +213,11 @@
               </div>
             </div>
             <!-- 頁籤上傳檔案部分 -->
-            <div class="col">
-              <div class="input-group mb-3">
+            <div class="col selected_file">
+              <div class="input-group">
                 <div class="input-group-prepend">已上傳檔案 :</div>
-                <div class="selected_file">
-                  <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
-                    <p @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
-                  </div>
+                <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
+                  <p @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
                 </div>
               </div>
             </div>
@@ -227,16 +225,16 @@
         </div>
         <!-- view Modal -->
         <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 800px !important;">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">{{ modalParams.title }}</h5>
-              <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
+          <div class="modal-dialog modal-dialog-centered" style="max-width: 800px !important;">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">{{ modalParams.title }}</h5>
+                <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
+              </div>
+              <img :src="modalParams.src" alt="Uploaded Image" class="w-100" />
             </div>
-            <img :src="modalParams.src" alt="Uploaded Image" class="w-100" />
           </div>
         </div>
-      </div>
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
@@ -260,11 +258,19 @@
 </template>
 
 <script>
-  import { ref, onMounted, reactive } from 'vue';
+  import {
+    ref,
+    onMounted,
+    reactive
+  } from 'vue';
   import Navbar from "@/components/Navbar.vue";
-  import { useRoute } from 'vue-router';
+  import {
+    useRoute
+  } from 'vue-router';
   import router from '@/router';
-  import { goBack } from "@/assets/js/common_fn";
+  import {
+    goBack
+  } from "@/assets/js/common_fn";
   export default {
     components: {
       Navbar,
@@ -349,8 +355,8 @@
         console.log('modalParams', modalParams);
       }
       // 查看收貨單
-      function viewReceive() {  
-        if(details.value.AR_ID) {
+      function viewReceive() {
+        if (details.value.AR_ID) {
           const link = document.getElementById('view-receive');
           link.click();
         }
@@ -372,6 +378,20 @@
   @import "@/assets/css/global.scss";
   textarea {
     padding: 5px 10px 30px;
+  }
+  .nav {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    border: none;
+  }
+   ::-webkit-scrollbar {
+    height: 6px;
+  }
+   ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: rgb(176, 175, 175);
+    border: 1px solid rgb(86, 85, 85);
   }
   .delete_modal {
     .modal-content {
@@ -496,28 +516,6 @@
               pointer-events: none;
             }
           }
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 118px;
-              }
-              input {
-                margin-left: 18px !important
-              }
-            }
-          }
-          .dro .dropdown {
-            .dropdown-menu {
-              width: 100%;
-            }
-            button {
-              @include dropdown-btn;
-              width: 187px;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
           .input-group {
             .input-number {
               @include count_btn;
@@ -581,6 +579,44 @@
           .tab-content {
             background: #3E4E5F;
             padding: 50px 30px;
+            border-radius: 0 0 10px 10px;
+            .input-number {
+              width: 64%
+            }
+            .selected_file {
+              .input-group {
+                flex-direction: column;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  font-weight: 700;
+                  margin-bottom: 5px;
+                  color: white;
+                  word-break: break-word;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
+            }
+            .check_box_wrap {
+              font-weight: 700;
+              align-items: center;
+              color: white;
+              font-size: 20px;
+              div:nth-child(2) {
+                gap: 0 5px;
+              }
+            }
             .modal {
               .modal-header {
                 background: #3D4E61;
@@ -595,16 +631,6 @@
             .input-group {
               span {
                 @include red_star
-              }
-              .selected_file {
-                margin-left: 10px;
-                display: flex;
-                align-items: center;
-                p.title {
-                  font-weight: 700;
-                  color: white;
-                  margin-bottom: unset !important;
-                }
               }
               .file_upload_wrap {
                 margin-bottom: 0;
@@ -676,7 +702,7 @@
         @include title_color;
       }
       .info_wrap {
-        padding: 0 5%;
+        width: 750px;
         margin: auto;
         .fixed_info {
           @include fixed_info;
@@ -729,28 +755,6 @@
               color: gray;
               font-size: 14px;
               pointer-events: none;
-            }
-          }
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 118px;
-              }
-              input {
-                margin-left: 15px !important
-              }
-            }
-          }
-          .dropdown {
-            .dropdown-menu {
-              width: 100%;
-            }
-            button {
-              @include dropdown-btn;
-              width: 187px;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
             }
           }
           .input-group {
@@ -816,6 +820,45 @@
           .tab-content {
             background: #3E4E5F;
             padding: 50px 30px;
+            border-radius: 0 0 10px 10px;
+            .input-number {
+              width: 62%
+            }
+            .selected_file {
+              .input-group {
+                flex-direction: column;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  font-weight: 700;
+                  margin-bottom: 5px;
+                  color: white;
+                  word-break: break-word;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
+            }
+            .check_box_wrap {
+              font-weight: 700;
+              align-items: center;
+              color: white;
+              font-size: 20px;
+              div:nth-child(2) {
+                gap: 0 5px;
+                display: flex;
+              }
+            }
             .modal {
               .modal-header {
                 background: #3D4E61;
@@ -830,16 +873,6 @@
             .input-group {
               span {
                 @include red_star
-              }
-              .selected_file {
-                margin-left: 10px;
-                display: flex;
-                align-items: center;
-                p.title {
-                  font-weight: 700;
-                  color: white;
-                  margin-bottom: unset !important;
-                }
               }
               .file_upload_wrap {
                 margin-bottom: 0;
@@ -984,18 +1017,6 @@
             flex-direction: row-reverse;
             justify-content: flex-end;
           }
-          .dropdown {
-            .dropdown-menu {
-              width: 100%;
-            }
-            button {
-              @include dropdown-btn;
-              width: 187px;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
           .input-group {
             flex-direction: column;
             .input-number {
@@ -1063,6 +1084,48 @@
           .tab-content {
             background: #3E4E5F;
             padding: 50px 30px;
+            border-radius: 0 0 10px 10px;
+            .selected_file {
+              .input-group {
+                flex-direction: column;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  font-weight: 700;
+                  margin-bottom: 5px;
+                  color: white;
+                  word-break: break-word;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
+            }
+            .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+              margin-left: unset;
+            }
+            .check_box_wrap {
+              flex-direction: column;
+              font-weight: 700;
+              color: white;
+              font-size: 20px;
+              .radio_wrap {
+                gap: 0 10px;
+              }
+              .input-group-prepend {
+                width: auto !important;
+                align-self: self-start;
+              }
+            }
             .modal {
               .modal-header {
                 background: #3D4E61;
@@ -1074,19 +1137,10 @@
                 }
               }
             }
-            .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-              margin-left: unset !important;
-            }
             .input-group {
               flex-direction: column;
               span {
                 @include red_star
-              }
-              .selected_file {
-                p.title {
-                  font-weight: 700;
-                  color: white;
-                }
               }
               .file_upload_wrap {
                 margin-bottom: 0;
