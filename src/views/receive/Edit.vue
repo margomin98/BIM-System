@@ -98,20 +98,20 @@
           <button class="upload_file_pt1" @click="openFileInput(0)">選擇檔案</button>
           <input type="file" id="fileInput" ref="fileInput1" style="display: none" @change="handleDocumentFile($event)" multiple />
         </div>
-        <div class="d-flex selected_file col">
+        <div class="d-flex selected_file col-12 mt-2">
           <!-- 已上傳文件 -->
-          <p class="text-start mb-0">已上傳文件</p>
+          <p class="text-start mb-0 uploaded_file">已上傳文件</p>
           <div class="icon" v-for="(file, index) in details.existDocument" :key="index">
-            <p class="uploded_file">{{ file.FileName }}</p>
+            <p class="uploded_file_name">{{ file.FileName }}</p>
             <div>
               <img src="@/assets/view.png" @click="handlePreview(file)">
               <img class="close_icon" src="@/assets/trash.png" @click="deleteFile('document',index , file)">
             </div>
           </div>
           <!-- 新上傳檔案 -->
-          <p class="text-start mb-0">已選擇檔案</p>
+          <p class="text-start mb-0 uploaded_file">已選擇檔案</p>
           <div class="icon" v-for="(file, index) in fileParams.viewDoc" :key="index">
-            <p class="uploded_file">{{ file.FileName }}</p>
+            <p class="uploded_file_name">{{ file.FileName }}</p>
             <div>
               <img src="@/assets/view.png" @click="handlePreview(file)">
               <img class="close_icon" src="@/assets/trash.png" @click="deleteFile('document',index , file)">
@@ -646,7 +646,7 @@
   }
   .selected_file {
     flex-direction: column;
-    p.uploded_file::before{
+    p.uploded_file_name::before{
       content:'· ';
     }
     .icon {
@@ -795,7 +795,7 @@
         }
         .content {
           @include content_bg;
-          p {
+          p.uploded_file_name {
             text-align: center;
             white-space: nowrap;
             font-size: 20px;
@@ -995,7 +995,7 @@
               width: 210px
             }
           }
-          p {
+          p.uploded_file_name {
             text-align: center;
             white-space: nowrap;
             font-size: 20px;
