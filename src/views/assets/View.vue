@@ -961,12 +961,14 @@
           }
           button.empty_btn {
             @include empty_btn;
+            padding: 10px;
             &:hover {
               background-color: #244f86;
             }
           }
           button.search_btn {
             @include search_and_send_btn;
+            padding: 10px;
             &:hover {
               background-color: #5e7aa2;
             }
