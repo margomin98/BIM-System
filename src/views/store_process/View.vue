@@ -41,8 +41,8 @@
         <div class="col form_search_wrap">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-                物流單號 :
-              </div>
+              物流單號 :
+            </div>
             <input type="text" class="form-control readonly_box" v-model="details.ShipmentNum" readonly>
             <button class="form_search_btn" @click="viewReceive">檢視</button>
             <!-- 隱藏跳轉按鈕 -->
@@ -285,13 +285,11 @@
               </div>
             </div>
             <!-- 頁籤上傳檔案部分 -->
-            <div class="col">
-              <div class="input-group mb-3">
+            <div class="col selected_file">
+              <div class="input-group">
                 <div class="input-group-prepend">已上傳檔案 :</div>
-                <div class="selected_file">
-                  <div v-for="(file , file_index) in tab.existFile" :key="fprepile_index" class="file_upload_wrap" style="cursor: pointer;">
-                    <p @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
-                  </div>
+                <div v-for="(file , file_index) in tab.existFile" :key="fprepile_index" class="file_upload_wrap" style="cursor: pointer;">
+                  <p @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
                 </div>
               </div>
             </div>
@@ -527,7 +525,6 @@
               pointer-events: none;
             }
           }
-    
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -609,7 +606,6 @@
           }
         }
         .tab_section {
-      
           .nav-tabs {
             button {
               @include tab_section_num;
@@ -624,16 +620,40 @@
             background: #3E4E5F;
             padding: 50px 30px;
             border-radius: 0 10px 10px 10px;
-            .check_box{
-              margin-right:10px;
-            }
-                .input-group-prepend {
-                  width: 135px;
+            .selected_file {
+              .input-group {
+                flex-direction: column;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
                 }
-            .readonly_box{
-              width:63%;
+                p {
+                  font-weight: 700;
+                  margin-bottom: 5px;
+                  color: white;
+                  word-break: break-word;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
             }
-          
+            .check_box {
+              margin-right: 10px;
+            }
+            .input-group-prepend {
+              width: 135px;
+            }
+            .readonly_box {
+              width: 63%;
+            }
             .modal {
               .modal-header {
                 background: #3D4E61;
@@ -670,34 +690,6 @@
               span {
                 @include red_star
               }
-              .selected_file {
-                margin-left: 20px;
-                p.title {
-                  font-weight: 700;
-                  color: white;
-                  margin-bottom: 5px;
-                }
-                .file_upload_wrap {
-                  margin-bottom: 0;
-                  display: flex;
-                  img {
-                    width: 25px;
-                    height: 25px;
-                  }
-                  p {
-                    margin-bottom: 0;
-                    font-weight: 700;
-                    color: white;
-                    &::before {
-                      margin-right: 10px;
-                      content: '·';
-                      font-weight: 700;
-                      color: white;
-                    }
-                  }
-                }
-              }
-          
               .input-number {
                 @include count_btn;
               }
@@ -744,7 +736,7 @@
         @include title_color;
       }
       .info_wrap {
-        width:750px;
+        width: 750px;
         margin: auto;
         .fixed_info {
           @include fixed_info;
@@ -799,7 +791,6 @@
               pointer-events: none;
             }
           }
-    
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -881,7 +872,6 @@
           }
         }
         .tab_section {
-      
           .nav-tabs {
             button {
               @include tab_section_num;
@@ -896,16 +886,40 @@
             background: #3E4E5F;
             padding: 50px 30px;
             border-radius: 0 10px 10px 10px;
-            .check_box{
-              margin-right:10px;
-            }
-                .input-group-prepend {
-                  width: 115px;
+            .selected_file {
+              .input-group {
+                flex-direction: column;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
                 }
-            .readonly_box{
-              width:63%;
+                p {
+                  font-weight: 700;
+                  margin-bottom: 5px;
+                  color: white;
+                  word-break: break-word;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
             }
-          
+            .check_box {
+              margin-right: 10px;
+            }
+            .input-group-prepend {
+              width: 115px;
+            }
+            .readonly_box {
+              width: 63%;
+            }
             .modal {
               .modal-header {
                 background: #3D4E61;
@@ -942,34 +956,6 @@
               span {
                 @include red_star
               }
-              .selected_file {
-                margin-left: 20px;
-                p.title {
-                  font-weight: 700;
-                  color: white;
-                  margin-bottom: 5px;
-                }
-                .file_upload_wrap {
-                  margin-bottom: 0;
-                  display: flex;
-                  img {
-                    width: 25px;
-                    height: 25px;
-                  }
-                  p {
-                    margin-bottom: 0;
-                    font-weight: 700;
-                    color: white;
-                    &::before {
-                      margin-right: 10px;
-                      content: '·';
-                      font-weight: 700;
-                      color: white;
-                    }
-                  }
-                }
-              }
-            
               .input-number {
                 @include count_btn;
               }
@@ -1171,11 +1157,11 @@
           }
         }
         .tab_section {
-        .check_box_wrap{
-          .check_box{
-            margin-right: 5px;
+          .check_box_wrap {
+            .check_box {
+              margin-right: 5px;
+            }
           }
-        }
           .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
             margin-left: unset !important;
           }
@@ -1192,7 +1178,32 @@
           .tab-content {
             background: #3E4E5F;
             padding: 50px 30px;
-border-radius: 0 10px 10px 10px;
+            border-radius: 0 10px 10px 10px;
+            .selected_file {
+              .input-group {
+                flex-direction: column;
+              }
+              .file_upload_wrap {
+                margin-bottom: 0;
+                display: flex;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  font-weight: 700;
+                  margin-bottom: 5px;
+                  color: white;
+                  word-break: break-word;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
+              }
+            }
             .modal {
               .modal-header {
                 background: #3D4E61;
@@ -1229,32 +1240,6 @@ border-radius: 0 10px 10px 10px;
               flex-direction: column;
               span {
                 @include red_star
-              }
-              .selected_file {
-                p.title {
-                  font-weight: 700;
-                  color: white;
-                  margin-bottom: 5px;
-                }
-                .file_upload_wrap {
-                  margin-bottom: 0;
-                  display: flex;
-                  img {
-                    width: 25px;
-                    height: 25px;
-                  }
-                  p {
-                    margin-bottom: 0;
-                    font-weight: 700;
-                    color: white;
-                    &::before {
-                      margin-right: 10px;
-                      content: '·';
-                      font-weight: 700;
-                      color: white;
-                    }
-                  }
-                }
               }
               .input-number {
                 @include count_btn;
