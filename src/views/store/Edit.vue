@@ -985,7 +985,7 @@
         }, 100);
       }
       function viewReceive() {
-        if (AR_ID) {
+        if (AR_ID.value) {
           const link = document.getElementById('view-receive');
           link.click();
         }

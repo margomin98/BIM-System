@@ -98,9 +98,11 @@
     </div>
       <div class="datagrid_section mb-3">
       <DataTable 
+        style="height: 400px;"
         v-model:selection="selectedProduct" 
         lazy 
         :size="'small'"
+        :loading="loading"
         :value="rowData" 
         :sort-field="'AssetsId'"
         :sort-order="-1"
@@ -108,9 +110,10 @@
         columnResizeMode="fit"
         showGridlines 
         scrollable 
-        scrollHeight="435px" 
+        scrollHeight="470px" 
         @page="submit($event)" 
         @sort="submit($event)"
+        table-style="min-height: 470px;"
         paginator 
         :rows="10" 
         :row-style="({ AssetsId }) => AssetsId === 'BF00000005' ? 'background-color: firebrick; color:white;': 'height:30px; padding: 0;' "
@@ -190,6 +193,7 @@ export default {
       Area: [],
       Layer: [],
     });
+    const loading = ref(false);
     const EquipCategoryInit = ref('請先選擇設備總類');
     const LayerInit = ref('請先選擇區域');
     const rowData = ref([]);
@@ -219,7 +223,7 @@ export default {
       const csvContent = csvData.map(row => row.join(',')).join('\n');
 
       // 创建一个Blob对象，将CSV字符串包装在其中
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+       const blob = new Blob([new Uint8Array([0xEF, 0xBB, 0xBF]), csvContent], { type: 'text/csv;charset=utf-8;' });
 
       // 创建一个链接元素用于下载
       const link = document.createElement('a');
@@ -233,7 +237,7 @@ export default {
       document.body.removeChild(link);
     }
     async function submit(event) {
-
+      loading.value = true;
       const formData = new FormData();
       // 將切頁資訊append到 formData
       // console.log(event);
@@ -241,11 +245,11 @@ export default {
       if(event.page || event.page === 0) {
         currentPage.value = (event.page+1);
       }
-      console.log('rows:', event.rows);
-      console.log('page:', currentPage.value);
-      console.log('sort:', event.sortField);
-      console.log('order:', order);
-      console.log('-----------------------------');
+      // console.log('rows:', event.rows);
+      // console.log('page:', currentPage.value);
+      // console.log('sort:', event.sortField);
+      // console.log('order:', order);
+      // console.log('-----------------------------');
       formData.append('rows',event.rows);
       formData.append('page',currentPage.value);
       formData.append('sort',event.sortField);
@@ -260,7 +264,8 @@ export default {
         if (data.state === 'success') {
           //取得datagrid成功
           console.log('資產datagrid:', data.resultList);
-          rowData.value = data.resultList;
+          totalRecords.value = data.resultList.total;
+          rowData.value = data.resultList.rows;
         } else if (data.state === 'account_error') {
           //尚未登入
           alert(data.messages);
@@ -271,6 +276,7 @@ export default {
       } catch (error) {
         console.error(error);
       }
+      loading.value = false;
     }
     async function getEquipTypeName() {
     if (DropdownArray.EquipType.length == 0) {
@@ -355,6 +361,7 @@ export default {
     return {
       searchParams,
       DropdownArray,
+      loading,
       EquipCategoryInit,
       LayerInit,
       rowData,
