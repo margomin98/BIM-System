@@ -214,7 +214,7 @@
                       <p data-bs-dismiss="modal" class='close_icon'>X</p>
                     </div>
                     <div class="modal-body">
-                      <img  class="w-100" :src="previewParams.src" >
+                      <img :src="previewParams.src" >
                     </div>
                   </div>
                 </div>
@@ -248,6 +248,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
   import VueMultiselect from 'vue-multiselect'

@@ -214,7 +214,8 @@
               <div class="input-group-prepend d-xl-none d-lg-none d-md-none d-block">
                 <span v-show="itemParams.AssetType === '耗材'">*</span> 數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
               </div>
-              <input class="input-number" type="number" v-model="itemParams.Count" min="1" :disabled="itemParams.AssetType !== '耗材'" :class="{readonly_box: itemParams.AssetType !== '耗材'}">
+              <input v-if="itemParams.AssetType === '耗材'" class="input-number" type="number" v-model="itemParams.Count" min="1">
+              <input v-else class="input-number readonly_box" type="number" v-model="itemParams.PackageNum" min="1" readonly>
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -222,7 +223,7 @@
               <div class="input-group-prepend">
                 <span v-show="itemParams.AssetType === '耗材'">*</span>單位 :
               </div>
-              <div class="dropdown">
+              <div v-if="itemParams.AssetType === '耗材'" class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="itemParams.AssetType !== '耗材'">
                         {{ itemParams.Unit || '請選擇' }}
                       </button>
@@ -231,6 +232,7 @@
                     {{ item }}</p>
                 </div>
               </div>
+              <input v-else class="input-number readonly_box" type="text" v-model="itemParams.PackageUnit" min="1" readonly>
             </div>
           </div>
         </div>
@@ -386,7 +388,7 @@
                   <div class="input-group-prepend info  d-xl-none d-lg-none d-md-none d-block">
                     <span>*</span>包裝數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
                   </div>
-                  <input class="input-number readonly_box" type="number" v-model="tab.itemPackageNum" min="1" disabled>
+                  <input class="input-number readonly_box" type="number" v-model="tab.itemPackageNum" min="1" readonly>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -415,7 +417,8 @@
                   <div class="input-group-prepend d-xl-none d-lg-none d-md-none d-block">
                     <span v-show="tab.itemAssetType === '耗材'">*</span> 數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
                   </div>
-                  <input class="input-number" type="number" v-model="tab.itemCount" min="1" :disabled="tab.itemAssetType !== '耗材'" :class="{readonly_box: tab.itemAssetType !== '耗材'}">
+                  <input v-if="tab.itemAssetType === '耗材'" class="input-number" type="number" v-model="tab.itemCount" min="1">
+                  <input v-else class="input-number readonly_box" type="number" v-model="tab.itemPackageNum" min="1" readonly>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -423,7 +426,7 @@
                   <div class="input-group-prepend">
                     <span v-show="tab.itemAssetType === '耗材'">*</span>單位 :
                   </div>
-                  <div class="dropdown">
+                  <div v-if="tab.itemAssetType === '耗材'" class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="tab.itemAssetType !== '耗材'">
                         {{ tab.itemUnit || '請選擇' }}
                       </button>
@@ -431,6 +434,7 @@
                       <p v-for="item in DropdownArray.Unit" class="dropdown-item" @click="selectUnit('tab' , item , index)">{{ item }}</p>
                     </div>
                   </div>
+                  <input v-else class="input-number readonly_box" type="text" v-model="tab.itemPackageUnit" min="1" readonly>
                 </div>
               </div>
             </div>

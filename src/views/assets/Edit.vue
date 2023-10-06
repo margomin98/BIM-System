@@ -496,31 +496,31 @@
           alert('請填寫所有必填項目');
           return;
         }
-        if (!/^.{1,20}$/.test(details.value.AssetName)) {
+        if (!/^[\s\S]{1,20}$/.test(details.value.AssetName)) {
           alert('物品名稱不可輸入超過20字');
           return
         }
-        if (!/^.{0,100}$/.test(details.value.VendorName)) {
+        if (!/^[\s\S]{0,100}$/.test(details.value.VendorName)) {
           alert('廠商不可輸入超過100字');
           return
         }
-        if (!/^.{0,100}$/.test(details.value.ProductSpec)) {
+        if (!/^[\s\S]{0,100}$/.test(details.value.ProductSpec)) {
           alert('規格不可輸入超過100字');
           return
         }
-        if (!/^.{0,100}$/.test(details.value.ProductType)) {
+        if (!/^[\s\S]{0,100}$/.test(details.value.ProductType)) {
           alert('型號不可輸入超過100字');
           return
         }
-        if (!/^.{0,100}$/.test(details.value.SN)) {
+        if (!/^[\s\S]{0,100}$/.test(details.value.SN)) {
           alert('SN不可輸入超過100字');
           return
         }
-        if (!/^.{0,10}$/.test(details.value.WarrantyDate)) {
+        if (!/^[\s\S]{0,10}$/.test(details.value.WarrantyDate)) {
           alert('保固期限不可輸入超過10字');
           return
         }
-        if (!/^.{0,500}$/.test(details.value.Memo)) {
+        if (!/^[\s\S]{0,500}$/.test(details.value.Memo)) {
           alert('備註不可輸入超過500字');
           return
         }
