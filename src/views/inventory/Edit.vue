@@ -1138,7 +1138,6 @@ width:700px;
           }
         }
         .dropdown {
-          width: calc(100% - 10%);
           height: 35px;
           @include dropdown_btn;
           .dropdown-toggle {
@@ -1250,9 +1249,10 @@ width:700px;
           }
         }
         .wrap1 {
-          display: flex;
-          justify-content: space-evenly;
-          padding: 20px;
+          display: grid;
+          grid-template-rows: 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 40px 5px;
           .input-number {
             @include count_btn;
           }
