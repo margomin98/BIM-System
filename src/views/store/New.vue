@@ -1213,6 +1213,20 @@
   textarea {
     padding: 5px 10px 30px;
   }
+  .nav {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    border: none;
+  }
+   ::-webkit-scrollbar {
+    height: 6px;
+  }
+   ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: rgb(176, 175, 175);
+    border: 1px solid rgb(86, 85, 85);
+  }
   .delete_btn {
     background: var(--c-5, #E94B4B);
     justify-content: center;
@@ -1230,8 +1244,8 @@
     z-index: 2;
     left: 0;
     right: 0;
-    margin: 0;
-    border-radius: 0 0 10px 10px;
+    margin: 0;  border-radius:10px;
+  
     &:hover {
       background-color: #a51e1e;
     }
@@ -1347,7 +1361,7 @@
         }
         .input-number {
           @include count_btn;
-          width: 58%;
+          width:57%;
         }
         .fixed_info {
           @include fixed_info;
@@ -1464,6 +1478,10 @@
           background: #3E4E5F;
           padding: 50px 30px;
           position: relative;
+          border-radius: 0 10px 0 0;
+          .input-number {
+          width: 65%;
+        }
           .check_box_wrap {
             font-weight: 700;
             align-items: center;
@@ -1563,16 +1581,7 @@
               }
             }
           }
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 114px;
-              }
-              input {
-                margin-left: 15px !important
-              }
-            }
-          }
+        
         }
       }
     }
@@ -1594,7 +1603,7 @@
       }
       .info_wrap {
         margin: auto;
-        width: 800px;
+        width:750px;
         .button_wrap {
           display: flex;
           justify-content: space-between;
@@ -1628,7 +1637,7 @@
         }
         .input-number {
           @include count_btn;
-          width: 58%;
+          width:60%;
         }
         .fixed_info {
           @include fixed_info;
@@ -1687,7 +1696,7 @@
             }
           }
           .input-group-prepend {
-            width: 150px;
+            width: 130px;
             white-space: nowrap;
           }
           .check_box_wrap {
@@ -1745,17 +1754,10 @@
           background: #3E4E5F;
           padding: 50px 30px;
           position: relative;
-          .modal {
-            .modal-header {
-              background: #3D4E61;
-              color: white;
-              .close_icon {
-                color: white;
-                font-weight: 700;
-                margin-bottom: 0;
-              }
-            }
-          }
+          border-radius: 0 10px 0 0;
+          .input-number {
+          width: 65%;
+        }
           .check_box_wrap {
             font-weight: 700;
             align-items: center;
@@ -1784,6 +1786,17 @@
               color: black;
               justify-content: space-between;
               align-items: center;
+            }
+          }
+          .modal {
+            .modal-header {
+              background: #3D4E61;
+              color: white;
+              .close_icon {
+                color: white;
+                font-weight: 700;
+                margin-bottom: 0;
+              }
             }
           }
           .input-group {
@@ -1844,16 +1857,7 @@
               }
             }
           }
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 114px;
-              }
-              input {
-                margin-left: 15px !important
-              }
-            }
-          }
+        
         }
       }
     }
@@ -2039,6 +2043,7 @@
           background: #3E4E5F;
           padding: 50px 30px;
           position: relative;
+          border-radius: 0 10px 0 0;
           .check_box_wrap {
             flex-direction: row !important;
             font-weight: 700;
