@@ -514,6 +514,7 @@
     reactive,
     ref
   } from 'vue';
+  import axios from 'axios';
   export default {
     components: {
       Navbar
@@ -809,6 +810,23 @@
         // 格式、必填皆正確
         return true;
       }
+      // 檢查頁籤專案代碼
+      async function checkProjectCode(projectCodeList) {
+        return new Promise((resolve, reject) => {
+          axios.post('http://192.168.0.177:7008/GetDBdata/CheckProjectCode', projectCodeList)
+            .then(response => {
+              const data = response.data;
+              if (data.state === 'success') {
+                resolve('success');
+              } else {
+                resolve(data.messages.toString());
+              }
+            })
+            .catch(error => {
+              reject(error);
+            });
+        });
+      }
       function resetUnitCount(type, index) {
         switch (type) {
           case 'upperForm':
@@ -967,6 +985,29 @@
         // 檢查必填項目、格式
         if (!checkRequireParams()) {
           return
+        }
+        // 檢查頁籤專案代碼是否有效
+        let projectCodeList = [];
+        tabData.forEach((item,index)=>{
+          if(item.itemProjectCode) {
+            projectCodeList.push({
+              PadNum: index,
+              projectCode: item.itemProjectCode,
+            })
+          }
+        })
+        if(projectCodeList.length !== 0) {
+          console.log('projectCodeList:', projectCodeList);
+          try {
+            const messages =  await checkProjectCode(projectCodeList);
+            if(messages !== 'success') {
+              alert(messages);
+              throw new Error(messages);
+            }
+          } catch (error) {
+            console.error(error);
+            return
+          }
         }
         console.log('頁籤資料', tabData);
         try {

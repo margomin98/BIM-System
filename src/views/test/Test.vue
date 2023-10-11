@@ -101,6 +101,7 @@
         ref = 'dt'
         v-model:selection="selectedProduct" 
         lazy 
+        :first= "first"
         :size="'small'"
         :loading="loading"
         :value="rowData" 
@@ -130,13 +131,13 @@
           </div>
         </template> -->
         <!-- <Column selectionMode="multiple" headerStyle="width: 3rem"></Column> -->
-        <Column header="" frozen style="max-width: 175px;">
+        <Column header="" frozen style="min-width: 175px;">
           <template #body="slotProps">
             <!-- Add the custom component here -->
             <test :params = "slotProps" :msg="'hi'" @msg="handlemsg"/>
           </template>
         </Column>
-        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'max-width': item.width}" :frozen="item.field === 'AssetsId'"></Column>
+        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'width': item.width}" :frozen="item.field === 'AssetsId'"></Column>
       </DataTable>
       </div>
 
@@ -184,13 +185,14 @@ export default {
       Area: [],
       Layer: [],
     });
-    const loading = ref(false);
     const EquipCategoryInit = ref('請先選擇設備總類');
     const LayerInit = ref('請先選擇區域');
     const rowData = ref([]);
+    const loading = ref(false);
     const totalRecords = ref(1000);
     const currentPage = ref(0);
     const rows = ref(10);
+    const first = ref(0);
     const selectAll = ref(false);
     const selectedProduct = ref();
     const datagridfield = [
@@ -243,6 +245,7 @@ export default {
     const dt = ref();
     onMounted(() => {
       const event = {
+        first: 0 ,
         rows: 10,
         page: currentPage.value,
         sortField: 'AssetsId',
@@ -269,6 +272,7 @@ export default {
       }
     }
     async function submit(event) {
+      console.log('first:',first.value);
       loading.value = true;
       const formData = new FormData();
       // 將切頁資訊append到 formData
@@ -388,7 +392,14 @@ export default {
       }
       EquipCategoryInit.value = '請先選擇設備總類'
       LayerInit.value = '請先選擇區域';
-      submit();
+      currentPage.value = currentPage.value === 0 ? currentPage.value: currentPage.value-1;
+      const event = {
+        rows: rows.value,
+        page: currentPage.value,
+        sortField: 'AssetsId',
+        sortOrder: -1,
+      }
+      submit(event);
     }
     function handlemsg(data) {
       alert(data)
@@ -405,6 +416,7 @@ export default {
       selectedProduct,
       totalRecords,
       rows,
+      first,
       datagridfield,
       add,
       exportCSV,
