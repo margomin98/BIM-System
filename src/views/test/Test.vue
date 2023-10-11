@@ -99,7 +99,6 @@
       <div class="datagrid_section mb-3">
       <DataTable 
         ref = 'dt'
-        style="height: 400px;"
         v-model:selection="selectedProduct" 
         lazy 
         :size="'small'"
@@ -116,7 +115,7 @@
         @sort="submit($event)"
         :selectAll="selectAll"
         @select-all-change="onSelectAllChange"
-        table-style="min-height: 470px;"
+        table-style="min-height: 490px;"
         paginator 
         :rows="10" 
         :row-style="({ AssetsId }) => AssetsId === 'BF00000005' ? 'background-color: firebrick; color:white;': null "
@@ -124,20 +123,20 @@
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         :rowsPerPageOptions="[10, 20, 30]"
         currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
-        <template #header>
+        <!-- <template #header>
           <div>
             <button class="btn btn-primary" label="Export" @click="exportCSV()" style="margin-right: 1rem;">exportCSV</button>
             <button @click="add" type="button" class="btn btn-primary">increase totalRecords</button>
           </div>
-        </template>
+        </template> -->
         <!-- <Column selectionMode="multiple" headerStyle="width: 3rem"></Column> -->
-        <Column header="" frozen>
+        <Column header="" frozen style="max-width: 175px;">
           <template #body="slotProps">
             <!-- Add the custom component here -->
             <test :params = "slotProps" :msg="'hi'" @msg="handlemsg"/>
           </template>
         </Column>
-        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}" :frozen="item.field === 'AssetsId'"></Column>
+        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'max-width': item.width}" :frozen="item.field === 'AssetsId'"></Column>
       </DataTable>
       </div>
 
@@ -161,7 +160,6 @@ export default {
     Column,
     Navbar,
     test,
-    // Paginator,
   },
   setup() {
     const searchParams = reactive({
@@ -426,20 +424,10 @@ export default {
 }
 </script>
 
-<style src="@/assets/css/theme.css"></style>
-
 <style lang="scss" scoped>
-  @import "@/assets/css/global.scss";
-.p-paginator {
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  flex-wrap: wrap;
-}
+@import "@/assets/css/global.scss";
+@import "@/assets/css/theme.css";
 
-ul {
-  padding-left: 0 !important;
-}
   @media only screen and (min-width: 1200px) {
     .main_section {
       padding: 0 10%;
