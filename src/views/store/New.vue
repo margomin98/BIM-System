@@ -1247,7 +1247,7 @@
     left: 0;
     right: 0;
     margin: 0;
-    border-radius: 10px;
+    border-radius: 0 0 10px 10px;
     &:hover {
       background-color: #a51e1e;
     }
@@ -1602,7 +1602,7 @@
       }
       .info_wrap {
         margin: auto;
-        width: 750px;
+        width: 700px;
         .button_wrap {
           display: flex;
           justify-content: space-between;
@@ -1636,7 +1636,7 @@
         }
         .input-number {
           @include count_btn;
-          width: 60%;
+          width: 62%;
         }
         .fixed_info {
           @include fixed_info;
@@ -1650,6 +1650,7 @@
         }
         .content {
           @include content_bg;
+          padding: 12px;
           .search_section {
             position: relative;
             display: flex;
@@ -1695,7 +1696,7 @@
             }
           }
           .input-group-prepend {
-            width: 130px;
+            width: 116.5px;
             white-space: nowrap;
           }
           .check_box_wrap {
