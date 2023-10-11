@@ -383,7 +383,7 @@
         gap: 20px;
         .add_btn {
           @include datagrid_button_no1;
-          width: 195px;
+          width: 170px;
           &:hover {
             background-color: #537ebc;
           }
@@ -487,7 +487,7 @@
         gap: 20px;
         .add_btn {
           @include datagrid_button_no1;
-          width:190px;
+          width:170px;
           &:hover {
             background-color: #537ebc;
           }

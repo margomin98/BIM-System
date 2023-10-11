@@ -524,7 +524,7 @@ export default {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 5px 0;
     align-items: center;
-    padding: 30px 20px;
+    padding: 30px 20px 30px 100px;
         p {
           @include datagrid_title;
         }
@@ -631,7 +631,7 @@ export default {
         gap: 10px 0;
         padding: 30px;
         @include datagrid_bg;
-
+       
         p {
           @include datagrid_title;
         }

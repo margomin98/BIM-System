@@ -33,7 +33,7 @@
               <div class="input-group-prepend">
                 送修人員：
               </div>
-              <input  type="text" class="form-control readonly_box" readonly v-model="details.RepairPerson">
+              <input type="text" class="form-control readonly_box" readonly v-model="details.RepairPerson">
             </div>
           </div>
           <!-- 交付日期 -->
@@ -42,7 +42,7 @@
               <div class="input-group-prepend">
                 交付日期：
               </div>
-              <input  type="text" class="form-control readonly_box" readonly v-model="details.DeliveryDate">
+              <input type="text" class="form-control readonly_box" readonly v-model="details.DeliveryDate">
             </div>
           </div>
         </div>
@@ -53,7 +53,7 @@
               <div class="input-group-prepend">
                 審核人員：
               </div>
-              <input  type="text" class="form-control readonly_box" readonly v-model="details.VerifyPerson">
+              <input type="text" class="form-control readonly_box" readonly v-model="details.VerifyPerson">
             </div>
           </div>
           <!-- 審核結果 -->
@@ -62,7 +62,7 @@
               <div class="input-group-prepend">
                 審核結果：
               </div>
-              <input  type="text" class="form-control readonly_box" readonly v-model="details.VerifyResult">
+              <input type="text" class="form-control readonly_box" readonly v-model="details.VerifyResult">
             </div>
           </div>
         </div>
@@ -72,7 +72,7 @@
             <div class="input-group-prepend">
               審核日期：
             </div>
-            <input  type="text" class="form-control readonly_box" readonly v-model="details.VerifyDate">
+            <input type="text" class="form-control readonly_box" readonly v-model="details.VerifyDate">
           </div>
         </div>
         <div class="row g-0">
@@ -82,7 +82,7 @@
               <div class="input-group-prepend">
                 資產編號：
               </div>
-              <input  type="text" class="form-control readonly_box" readonly v-model="details.AssetsId">
+              <input type="text" class="form-control readonly_box" readonly v-model="details.AssetsId">
             </div>
           </div>
           <!-- 物品名稱 -->
@@ -91,7 +91,7 @@
               <div class="input-group-prepend">
                 物品名稱：
               </div>
-              <input  type="text" class="form-control readonly_box" readonly v-model="details.AssetName">
+              <input type="text" class="form-control readonly_box" readonly v-model="details.AssetName">
             </div>
           </div>
         </div>
@@ -129,20 +129,20 @@
       <div class="content">
         <!-- 維修廠商 -->
         <div class="col-12">
-          <div class="input-group mb-4" >
+          <div class="input-group mb-4">
             <div class="input-group-prepend">
               維修廠商：
             </div>
-            <input  type="text" class="form-control readonly_box" readonly v-model="details.RepairCompany">
+            <input type="text" class="form-control readonly_box" readonly v-model="details.RepairCompany">
           </div>
         </div>
         <!-- 外部維修單號 -->
         <div class="col-12">
-          <div class="input-group mb-4" >
+          <div class="input-group mb-4">
             <div class="input-group-prepend">
               外部維修單號：
             </div>
-            <input  type="text" class="form-control readonly_box" readonly v-model="details.ExternalRepairId">
+            <input type="text" class="form-control readonly_box" readonly v-model="details.ExternalRepairId">
           </div>
         </div>
         <div class="row g-0">
@@ -152,7 +152,7 @@
               <div class="input-group-prepend">
                 廠商聯絡人：
               </div>
-              <input  type="text" class="form-control readonly_box" readonly v-model="details.ContactPerson">
+              <input type="text" class="form-control readonly_box" readonly v-model="details.ContactPerson">
             </div>
           </div>
           <!-- 聯絡電話 -->
@@ -161,7 +161,7 @@
               <div class="input-group-prepend">
                 聯絡電話：
               </div>
-              <input  type="text" class="form-control readonly_box" readonly v-model="details.ContactPhone">
+              <input type="text" class="form-control readonly_box" readonly v-model="details.ContactPhone">
             </div>
           </div>
         </div>
@@ -171,7 +171,7 @@
             <div class="input-group-prepend">
               送修日期：
             </div>
-            <input  type="text" class="form-control readonly_box" readonly v-model="details.RepairDate">
+            <input type="text" class="form-control readonly_box" readonly v-model="details.RepairDate">
           </div>
         </div>
         <!-- 備註 -->
@@ -215,9 +215,9 @@
                 </div>
               </div>
               <!-- <div class="file_upload_wrap" style="cursor: pointer;">
-                <p>File 1</p>
-                <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;">
-              </div> -->
+                  <p>File 1</p>
+                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;">
+                </div> -->
             </div>
           </div>
         </div>
@@ -230,14 +230,26 @@
 </template>
 
 <script>
-  import { ref, onMounted, reactive } from 'vue';
-  import { useRoute } from 'vue-router'
+  import {
+    ref,
+    onMounted,
+    reactive
+  } from 'vue';
+  import {
+    useRoute
+  } from 'vue-router'
   import axios from 'axios';
   import Navbar from '@/components/Navbar.vue';
   import router from '@/router';
-  import { register } from 'swiper/element/bundle';
-  import { Pagination } from 'swiper/modules';
-  import { goBack } from '@/assets/js/common_fn.js'
+  import {
+    register
+  } from 'swiper/element/bundle';
+  import {
+    Pagination
+  } from 'swiper/modules';
+  import {
+    goBack
+  } from '@/assets/js/common_fn.js'
   register();
   export default {
     components: {
@@ -251,28 +263,27 @@
         title: '',
         src: '',
       })
-      onMounted(()=>{
+      onMounted(() => {
         getDetails();
       });
       // 取得單筆資料
       async function getDetails() {
         axios.get(`http://192.168.0.177:7008/GetDBdata/GetRepairInfo?r_id=${RepairId}`)
-        .then((response)=>{
-          const data = response.data;
-          if(data.state === 'success') {
-            details.value = data.resultList;
-            console.log('資料:\n', details.value );
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-          else {
-            alert(data.messages);
-          }
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+          .then((response) => {
+            const data = response.data;
+            if (data.state === 'success') {
+              details.value = data.resultList;
+              console.log('資料:\n', details.value);
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            } else {
+              alert(data.messages);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       function handlePreview(file) {
         // 先提取副檔名
@@ -280,8 +291,8 @@
         const part = file.FileName.split(".");
         let extension = '';
         // 如果part長度大於1表示xxxx.aaa => ['xxxx','aaa']
-        if(part.length > 1) {
-          extension = part[part.length -1];
+        if (part.length > 1) {
+          extension = part[part.length - 1];
         }
         // 1. pdf 2. word 3. picture
         switch (extension) {
@@ -402,6 +413,7 @@
                 margin-bottom: 0;
                 font-weight: 700;
                 color: white;
+                word-break: break-word;
                 &::before {
                   margin-right: 10px;
                   content: '·';
@@ -509,6 +521,15 @@
               }
             }
           }
+          .repair_photo_section {
+            .input-group {
+              flex-direction: column;
+              white-space: unset;
+              .input-group-prepend {
+                white-space: nowrap
+              }
+            }
+          }
           .selected_file {
             margin-left: 20px;
             p.title {
@@ -528,6 +549,7 @@
                 margin-bottom: 0;
                 font-weight: 700;
                 color: white;
+                word-break: break-word;
                 &::before {
                   margin-right: 10px;
                   content: '·';
@@ -664,6 +686,7 @@
                 margin-bottom: 0;
                 font-weight: 700;
                 color: white;
+                word-break: break-word;
                 &::before {
                   margin-right: 10px;
                   content: '·';

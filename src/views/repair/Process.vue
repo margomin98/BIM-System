@@ -33,7 +33,7 @@
               <div class="input-group-prepend">
                 送修人員：
               </div>
-              <input  type="text" class="form-control readonly_box" readonly v-model="details.RepairPerson">
+              <input type="text" class="form-control readonly_box" readonly v-model="details.RepairPerson">
             </div>
           </div>
           <!-- 交付日期 -->
@@ -42,7 +42,7 @@
               <div class="input-group-prepend">
                 交付日期：
               </div>
-              <input  type="text" class="form-control readonly_box" readonly v-model="details.DeliveryDate">
+              <input type="text" class="form-control readonly_box" readonly v-model="details.DeliveryDate">
             </div>
           </div>
         </div>
@@ -53,7 +53,7 @@
               <div class="input-group-prepend">
                 審核人員：
               </div>
-              <input  type="text" class="form-control readonly_box" readonly v-model="details.VerifyPerson">
+              <input type="text" class="form-control readonly_box" readonly v-model="details.VerifyPerson">
             </div>
           </div>
           <!-- 審核結果 -->
@@ -62,7 +62,7 @@
               <div class="input-group-prepend">
                 審核結果：
               </div>
-              <input  type="text" class="form-control readonly_box" readonly v-model="details.VerifyResult">
+              <input type="text" class="form-control readonly_box" readonly v-model="details.VerifyResult">
             </div>
           </div>
         </div>
@@ -72,7 +72,7 @@
             <div class="input-group-prepend">
               審核日期：
             </div>
-            <input  type="text" class="form-control readonly_box" readonly v-model="details.VerifyDate">
+            <input type="text" class="form-control readonly_box" readonly v-model="details.VerifyDate">
           </div>
         </div>
         <div class="row g-0">
@@ -82,7 +82,7 @@
               <div class="input-group-prepend">
                 資產編號：
               </div>
-              <input  type="text" class="form-control readonly_box" readonly v-model="details.AssetsId">
+              <input type="text" class="form-control readonly_box" readonly v-model="details.AssetsId">
             </div>
           </div>
           <!-- 物品名稱 -->
@@ -91,7 +91,7 @@
               <div class="input-group-prepend">
                 物品名稱：
               </div>
-              <input  type="text" class="form-control readonly_box" readonly v-model="details.AssetName">
+              <input type="text" class="form-control readonly_box" readonly v-model="details.AssetName">
             </div>
           </div>
         </div>
@@ -191,70 +191,84 @@
               <button class="choose_btn" @click="openFileInput">選擇檔案</button>
               <input type="file" ref="fileInput" style="display: none;" @change="handleDocumentFile($event)" multiple>
             </div>
-            <div class="selected_file">
-              <p class="title">已選擇的檔案:</p>
-              <div v-for="(file, index) in formParams.viewDoc" :key="index" class="file_upload_wrap" style="cursor: pointer;">
-                <p>{{ file.FileName}}</p>
-                <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
-                <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)">
-              </div>
-            </div>
           </div>
         </div>
-        <!-- 瀏覽 -->
-        <!-- doc/docx download hidden Link -->
-        <a href="" style="display: none;" id="download-link"></a>
-        <!-- Modal Trigger -->
-        <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#documentModal"></button>
-        <!-- Exist Document Modal -->
-        <div class="modal fade" id="documentModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 800px !important">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="photoModalLabel"> {{ previewParams.title }}</h5>
-                <div class="close_icon">
-                  <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
-                </div>
-              </div>
-              <div class="modal-body">
-                <img :src="previewParams.src" class="w-100">
-              </div>
-            </div>
+        <div class="selected_file col">
+          <div class="input-group">
+            <div class="input-group-prepend mb-3">已選擇檔案：</div>
+           <div v-for="(file, index) in formParams.viewDoc" :key="index" class="file_upload_wrap" style="cursor: pointer;">
+              <p>{{ file.FileName}}</p>
+              <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
+              <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)">
           </div>
         </div>
-        <!-- 已上傳文件 -->
-        <div class="col-12">
-          <div class="input-group d-flex">
-            <div class="input-group-prepend">
-              已上傳文件：
-            </div>
-            <div class="selected_file">
-              <div v-for="(file, index) in details.existDocument" :key="index" class="file_upload_wrap" style="cursor: pointer;">
-                  <p>{{ file.FileName}}</p>
-                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
-                  <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)">
+      </div>
+      <!-- 瀏覽 -->
+      <!-- doc/docx download hidden Link -->
+      <a href="" style="display: none;" id="download-link"></a>
+      <!-- Modal Trigger -->
+      <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#documentModal"></button>
+      <!-- Exist Document Modal -->
+      <div class="modal fade" id="documentModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 800px !important">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="photoModalLabel"> {{ previewParams.title }}</h5>
+              <div class="close_icon">
+                <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
               </div>
+            </div>
+            <div class="modal-body">
+              <img :src="previewParams.src" class="w-100">
             </div>
           </div>
         </div>
       </div>
-      <div class="col button_wrap">
-        <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="send_btn" @click="submit">送出</button>
+      <!-- 已上傳文件 -->
+      <div class="col-12">
+        <div class="input-group d-flex">
+          <div class="input-group-prepend">
+            已上傳文件：
+          </div>
+          <div class="selected_file">
+            <div v-for="(file, index) in details.existDocument" :key="index" class="file_upload_wrap" style="cursor: pointer;">
+              <p>{{ file.FileName}}</p>
+              <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
+              <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    <div class="col button_wrap">
+      <button class="back_btn" @click="goBack">回上一頁</button>
+      <button class="send_btn" @click="submit">送出</button>
+    </div>
+  </div>
   </div>
 </template>
 
 <script>
-  import { ref, onMounted, reactive } from 'vue';
-  import { useRoute } from 'vue-router'
+  import {
+    ref,
+    onMounted,
+    reactive
+  } from 'vue';
+  import {
+    useRoute
+  } from 'vue-router'
   import axios from 'axios';
   import Navbar from '@/components/Navbar.vue';
   import router from '@/router';
-  import { register } from 'swiper/element/bundle';
-  import { Pagination } from 'swiper/modules';
-  import { goBack } from '@/assets/js/common_fn.js'
+  import {
+    register
+  } from 'swiper/element/bundle';
+  import {
+    Pagination
+  } from 'swiper/modules';
+  import {
+    goBack
+  } from '@/assets/js/common_fn.js'
   register();
   export default {
     components: {
@@ -281,43 +295,42 @@
         newDoc: [],
         viewDoc: [],
       })
-      onMounted(()=>{
+      onMounted(() => {
         getDetails();
       });
       // 取得單筆資料
       async function getDetails() {
         axios.get(`http://192.168.0.177:7008/GetDBdata/GetRepairInfo?r_id=${RepairId}`)
-        .then((response)=>{
-          const data = response.data;
-          if(data.state === 'success') {
-            details.value = data.resultList;
-            console.log('資料:\n', details.value );
-            if(details.value.RepairDate) {
-              details.value.RepairDate = details.value.RepairDate.replace(/\//g, '-');
-            }
-            // 若有已上傳的物流文件 則新增key值 exist: true
-            if (details.value.existDocument) {
-              details.value.existDocument.forEach(item => {
-                item.exist = true;
-              });
-            }
-            // 將值帶入formParams
-            for( const key in details.value) {
-              if(formParams.hasOwnProperty(key) && details.value[key]) {
-                formParams[key] = details.value[key]
+          .then((response) => {
+            const data = response.data;
+            if (data.state === 'success') {
+              details.value = data.resultList;
+              console.log('資料:\n', details.value);
+              if (details.value.RepairDate) {
+                details.value.RepairDate = details.value.RepairDate.replace(/\//g, '-');
               }
+              // 若有已上傳的物流文件 則新增key值 exist: true
+              if (details.value.existDocument) {
+                details.value.existDocument.forEach(item => {
+                  item.exist = true;
+                });
+              }
+              // 將值帶入formParams
+              for (const key in details.value) {
+                if (formParams.hasOwnProperty(key) && details.value[key]) {
+                  formParams[key] = details.value[key]
+                }
+              }
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            } else {
+              alert(data.messages);
             }
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-          else {
-            alert(data.messages);
-          }
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       // 送出
       async function submit() {
@@ -361,18 +374,17 @@
           }
           // 等待所有檔案上傳完成
           await Promise.all(filePromises)
-          .then(result =>{
-            const allSuccess = result.every(result => result === 'success')
-            if(allSuccess) {
-            alert('傳送維修資訊成功\n單號為:' + RepairId);
-              router.push({
-                name: 'Repair_Datagrid'
-              });
-            }
-            else {
-              alert('傳送維修資訊失敗')
-            }
-          })
+            .then(result => {
+              const allSuccess = result.every(result => result === 'success')
+              if (allSuccess) {
+                alert('傳送維修資訊成功\n單號為:' + RepairId);
+                router.push({
+                  name: 'Repair_Datagrid'
+                });
+              } else {
+                alert('傳送維修資訊失敗')
+              }
+            })
         } catch (error) {
           console.error(error);
         }
@@ -385,20 +397,19 @@
           // 失败时，调用 reject 并传递错误信息
           const axios = require('axios');
           const form = new FormData();
-
           let msg = ''
           for (const key in formParams) {
-            if(formParams[key]){
-              msg+=`${key} : ${formParams[key]}\n`
+            if (formParams[key]) {
+              msg += `${key} : ${formParams[key]}\n`
               form.append(key, formParams[key]);
             }
           }
           form.delete('newDoc')
           form.delete('viewDoc')
           form.delete('deleteDocument')
-          if(formParams.deleteDocument.length > 0) {
-            for(const item of formParams.deleteDocument) {
-              form.append('deleteDocument' , item)
+          if (formParams.deleteDocument.length > 0) {
+            for (const item of formParams.deleteDocument) {
+              form.append('deleteDocument', item)
             }
           }
           console.log('上半部資料(含刪除):\n', msg);
@@ -407,10 +418,9 @@
               const data = response.data;
               if (data.state === 'success') {
                 const R_ID = response.data.resultList.R_ID;
-                console.log('編輯上半部表單成功R_ID:' , R_ID);
+                console.log('編輯上半部表單成功R_ID:', R_ID);
                 resolve(R_ID);
-              }
-              else {
+              } else {
                 reject(data.messages);
               }
             })
@@ -420,12 +430,12 @@
         });
       }
       // 中、下上傳檔案部分
-      function sendFileForm(RepairId , fileData, index) {
+      function sendFileForm(RepairId, fileData, index) {
         return new Promise((resolve, reject) => {
           const form = new FormData();
-          form.append('RepairId' , RepairId);
-          form.append('num' , index);
-          form.append('Document' , fileData);
+          form.append('RepairId', RepairId);
+          form.append('num', index);
+          form.append('Document', fileData);
           const axios = require('axios');
           axios.post('http://192.168.0.177:7008/RepairMng/UploadDoc', form)
             .then((response) => {
@@ -436,7 +446,7 @@
                 resolve(data.state)
               } else {
                 // 如果状态不是 "success"，调用 reject 并传递错误信息
-                console.error(type+'上傳失敗，'+response.data.messages);
+                console.error(type + '上傳失敗，' + response.data.messages);
                 reject(new Error('文件表單提交失败'));
               }
             })
@@ -449,23 +459,23 @@
       // 刪除 分為 
       // 1.已上傳文件 (從details刪除 並加入formParams.deleteDoc) 
       // 2.新選擇檔案 (直接從formParams的newDoc viewDoc刪除)
-      function deleteFile(index , file) {
+      function deleteFile(index, file) {
         // 1.
-        if(file.exist) {
+        if (file.exist) {
           formParams.deleteDocument.push(file.FileName);
-          details.value.existDocument.splice(index,1);
+          details.value.existDocument.splice(index, 1);
         }
         // 2.
         else {
-          formParams.newDoc.splice(index , 1);
-          formParams.viewDoc.splice(index , 1);
+          formParams.newDoc.splice(index, 1);
+          formParams.viewDoc.splice(index, 1);
         }
       }
       // 處理維修文件
       function handleDocumentFile(event) {
-        console.log('DocumentFiles:',event.target.files);
+        console.log('DocumentFiles:', event.target.files);
         const files = event.target.files;
-        const imageExtensions = ['jpg', 'jpeg', 'png', 'gif' , 'pdf' , 'doc' , 'docx'];
+        const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx'];
         const maxFileSize = 28 * 1024 * 1024; // 28MB
         // 檢查副檔名 &檔案大小
         for (let i = 0; i < files.length; i++) {
@@ -489,7 +499,7 @@
           const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
           const reader = new FileReader();
           // .pdf
-          if(fileExtension === 'pdf') {
+          if (fileExtension === 'pdf') {
             imgArray.push(files[i]);
             previewUrl.push({
               FileName: files[i].name,
@@ -498,7 +508,7 @@
             });
           }
           // .doc/.docx
-          else if(fileExtension === 'doc' || fileExtension == 'docx') {
+          else if (fileExtension === 'doc' || fileExtension == 'docx') {
             imgArray.push(files[i]);
             previewUrl.push({
               FileName: files[i].name,
@@ -540,8 +550,8 @@
           }
           reader.readAsDataURL(files[i]);
         }
-        console.log('uploaded viewDoc:' , formParams.viewDoc);
-        console.log('uploaded newDoc:' , formParams.newDoc);
+        console.log('uploaded viewDoc:', formParams.viewDoc);
+        console.log('uploaded newDoc:', formParams.newDoc);
       }
       function handlePreview(file) {
         // 先提取副檔名
@@ -549,8 +559,8 @@
         const part = file.FileName.split(".");
         let extension = '';
         // 如果part長度大於1表示xxxx.aaa => ['xxxx','aaa']
-        if(part.length > 1) {
-          extension = part[part.length -1];
+        if (part.length > 1) {
+          extension = part[part.length - 1];
         }
         // 1. pdf 2. word 3. picture
         switch (extension) {
@@ -700,33 +710,33 @@
               width: 155px;
             }
           }
+          
           .selected_file {
-            margin-left: 20px;
-            p.title {
-              font-weight: 700;
-              color: white;
-              margin-bottom: 5px;
+            .input-group {
+              flex-direction: column;
             }
-          }
-          .file_upload_wrap {
-            margin-bottom: 0;
-            display: flex;
-            img {
-              width: 25px;
-              height: 25px;
-            }
-            p {
+            .file_upload_wrap {
               margin-bottom: 0;
-              font-weight: 700;
-              color: white;
-              &::before {
-                margin-right: 10px;
-                content: '·';
+              display: flex;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              p {
                 font-weight: 700;
+                margin-bottom: 3%;
                 color: white;
+                word-break: break-word;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
+                  font-weight: 700;
+                  color: white;
+                }
               }
             }
           }
+       
           .file_wrap {
             display: flex;
             flex-direction: column;
@@ -811,7 +821,7 @@
           @include content_bg;
           .input-group {
             width: 100%;
-            white-space: nowrap;
+
             flex-wrap: nowrap;
             .input-number {
               width: 100%;
@@ -834,32 +844,31 @@
             }
           }
           .selected_file {
-            margin-left: 20px;
-            p.title {
-              font-weight: 700;
-              color: white;
-              margin-bottom: 5px;
+            .input-group {
+              flex-direction: column;
             }
-          }
-          .file_upload_wrap {
-            margin-bottom: 0;
-            display: flex;
-            img {
-              width: 25px;
-              height: 25px;
-            }
-            p {
+            .file_upload_wrap {
               margin-bottom: 0;
-              font-weight: 700;
-              color: white;
-              &::before {
-                margin-right: 10px;
-                content: '·';
+              display: flex;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              p {
                 font-weight: 700;
+                margin-bottom: 3%;
                 color: white;
+                word-break: break-word;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
+                  font-weight: 700;
+                  color: white;
+                }
               }
             }
           }
+       
           .file_wrap {
             display: flex;
             flex-direction: column;
@@ -979,10 +988,28 @@
             }
           }
           .selected_file {
-            p.title {
-              font-weight: 700;
-              color: white;
-              margin-bottom: 5px;
+            .input-group {
+              flex-direction: column;
+            }
+            .file_upload_wrap {
+              margin-bottom: 0;
+              display: flex;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              p {
+                font-weight: 700;
+                margin-bottom: 3%;
+                color: white;
+                word-break: break-word;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
+                  font-weight: 700;
+                  color: white;
+                }
+              }
             }
           }
           .file_upload_wrap {

@@ -721,6 +721,7 @@
             .file_wrap {
               display: flex;
               flex-direction: column;
+              margin-left: unset !important;
               .choose_btn {
                 margin-bottom: 10px;
                 @include choose_file_btn;

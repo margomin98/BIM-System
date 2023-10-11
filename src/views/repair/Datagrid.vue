@@ -458,7 +458,7 @@
         gap: 20px;
         .add_btn {
           @include datagrid_button_no1;
-          width: 190px;
+          width: 150px;
           &:hover {
             background-color: #537ebc;
           }

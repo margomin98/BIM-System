@@ -133,7 +133,7 @@
                     </div>
                     <div class='second_content'>
                       <div class='wrap1'>
-                        <div class='col-xl-3 col-lg-3 col-md-3 col-12' style='padding-left:0'>
+                        <div class='col-xl-3 col-lg-3 col-md-3 col-12' >
                           <p>設備總類</p>
                           <div class="dropdown">
                             <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">

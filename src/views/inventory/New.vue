@@ -885,6 +885,7 @@
         border-bottom: 1px solid black;
         border-right: 1px solid black;
       }
+   
       .second_content {
         border-left: 1px solid black;
         border-right: 1px solid black;
@@ -1123,7 +1124,6 @@
           }
         }
         .dropdown {
-          width: calc(100% - 10%);
           height: 35px;
           @include dropdown_btn;
           .dropdown-toggle {
@@ -1204,6 +1204,7 @@
         border-bottom: 1px solid black;
         border-right: 1px solid black;
       }
+    
       .second_content {
         border-left: 1px solid black;
         border-right: 1px solid black;
@@ -1251,9 +1252,10 @@
           }
         }
         .wrap1 {
-          display: flex;
-          justify-content: space-evenly;
-          padding: 20px;
+          display: grid;
+          grid-template-rows: 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 40px 5px;
           .input-number {
             @include count_btn;
           }

@@ -37,7 +37,7 @@
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>櫃位</p>
             <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="searchParams.AreaName === ''">
+              <button class="btn dropdown-toggle" style='  overflow: hidden;text-overflow: ellipsis;white-space: nowrap'  type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="searchParams.AreaName === ''">
                 {{ searchParams.LayerName || LayerInit }}
               </button>
               <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
@@ -83,7 +83,7 @@
       </div>
     </div>
    <div style="width: 100%">
-          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true" :pagination="true" :alwaysShowHorizontalScroll="true">
+          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine mb-5" :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true" :pagination="true" :alwaysShowHorizontalScroll="true">
     </ag-grid-vue>
     </div>
 
