@@ -98,6 +98,7 @@
     </div>
       <div class="datagrid_section mb-3">
       <DataTable 
+        ref = 'dt'
         style="height: 400px;"
         v-model:selection="selectedProduct" 
         lazy 
@@ -110,13 +111,15 @@
         columnResizeMode="fit"
         showGridlines 
         scrollable 
-        scrollHeight="470px" 
+        scrollHeight="490px" 
         @page="submit($event)" 
         @sort="submit($event)"
+        :selectAll="selectAll"
+        @select-all-change="onSelectAllChange"
         table-style="min-height: 470px;"
         paginator 
         :rows="10" 
-        :row-style="({ AssetsId }) => AssetsId === 'BF00000005' ? 'background-color: firebrick; color:white;': 'height:30px; padding: 0;' "
+        :row-style="({ AssetsId }) => AssetsId === 'BF00000005' ? 'background-color: firebrick; color:white;': null "
         :totalRecords="totalRecords"
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         :rowsPerPageOptions="[10, 20, 30]"
@@ -127,24 +130,15 @@
             <button @click="add" type="button" class="btn btn-primary">increase totalRecords</button>
           </div>
         </template>
-        <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-        <Column header="">
+        <!-- <Column selectionMode="multiple" headerStyle="width: 3rem"></Column> -->
+        <Column header="" frozen>
           <template #body="slotProps">
             <!-- Add the custom component here -->
             <test :params = "slotProps" :msg="'hi'" @msg="handlemsg"/>
           </template>
         </Column>
-        <Column field="AssetsId" header="資產編號" sortable ></Column>
-        <Column field="AssetName" header="物品名稱" sortable></Column>
-        <Column field="EquipTypeName" header="設備總類" sortable></Column>
-        <Column field="EquipCategoryName" header="設備分類" sortable></Column>
-        <Column field="AreaName" header="區域" sortable></Column>
-        <Column field="LayerName" header="櫃位" sortable></Column>
-        <Column field="Status" header="狀態" sortable></Column>
-        <Column field="InboundDate" header="入庫日期" sortable></Column>
-        <Column field="AssetsInOperator" header="入庫人員" sortable></Column>
+        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}" :frozen="item.field === 'AssetsId'"></Column>
       </DataTable>
-      <!-- <Paginator :rows="rows" :totalRecords="120" :rowsPerPageOptions="[10, 20, 30]"></Paginator> -->
       </div>
 
   </div>
@@ -159,7 +153,6 @@ import test from "@/components/test";
 import axios from 'axios';
 import { Asset_StastusArraay } from "@/assets/js/dropdown"
 import { getEquipType , getEquipCategory , getArea , getLayer } from '@/assets/js/common_api'
-// import Paginator from 'primevue/paginator';
 
 export default {
   name: 'App',
@@ -200,7 +193,56 @@ export default {
     const totalRecords = ref(1000);
     const currentPage = ref(0);
     const rows = ref(10);
+    const selectAll = ref(false);
     const selectedProduct = ref();
+    const datagridfield = [
+      {
+        field: 'AssetsId',
+        header: '資產編號',
+        width: '150px',
+      },
+      {
+        field: 'AssetName',
+        header: '物品名稱',
+        width: '350px',
+      },
+      {
+        field: 'EquipTypeName',
+        header: '設備總類',
+        width: '150px',
+      },
+      {
+        field: 'EquipCategoryName',
+        header: '設備分類',
+        width: '150px',
+      },
+      {
+        field: 'AreaName',
+        header: '區域',
+        width: '130px',
+      },
+      {
+        field: 'LayerName',
+        header: '櫃位',
+        width: '130px',
+      },
+      {
+        field: 'Status',
+        header: '狀態',
+        width: '110px',
+      },
+      {
+        field: 'InboundDate',
+        header: '入庫日期',
+        width: '150px',
+      },
+      {
+        field: 'AssetsInOperator',
+        header: '入庫人員',
+        width: '150px',
+      },
+    ];
+    const dt = ref();
     onMounted(() => {
       const event = {
         rows: 10,
@@ -209,32 +251,24 @@ export default {
         sortOrder: -1,
       }
       submit(event);
+      
     });
     function add() {
-      totalRecords.value++;
+      // totalRecords.value++;
+      selectAll.value = !selectAll.value
+
     }
     function exportCSV() {
-      // 提取列标题
-      const headers = Object.keys(rowData.value[0]);
-
-      // 将列标题添加到CSV数据的开头
-      const csvData = [headers].concat(rowData.value.map(item => headers.map(header => item[header])));
-      // 将数据转换为CSV字符串
-      const csvContent = csvData.map(row => row.join(',')).join('\n');
-
-      // 创建一个Blob对象，将CSV字符串包装在其中
-       const blob = new Blob([new Uint8Array([0xEF, 0xBB, 0xBF]), csvContent], { type: 'text/csv;charset=utf-8;' });
-
-      // 创建一个链接元素用于下载
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'data.csv'; // 设置下载文件的名称
-
-      // 模拟点击链接来下载CSV文件
-      link.style.display = 'none';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      dt.value.exportCSV();
+    }
+    const onSelectAllChange = (event) => {
+      console.log('selectAll event:',event);
+      selectAll.value = event.checked;
+      if(selectAll.value) {
+        selectedProduct.value = rowData.value
+      } else {
+        selectedProduct.value = [];
+      }
     }
     async function submit(event) {
       loading.value = true;
@@ -266,6 +300,9 @@ export default {
           console.log('資產datagrid:', data.resultList);
           totalRecords.value = data.resultList.total;
           rowData.value = data.resultList.rows;
+          if(selectAll.value) {
+            selectedProduct.value = data.resultList.rows;
+          }
         } else if (data.state === 'account_error') {
           //尚未登入
           alert(data.messages);
@@ -359,17 +396,21 @@ export default {
       alert(data)
     }
     return {
+      dt,
       searchParams,
       DropdownArray,
       loading,
       EquipCategoryInit,
       LayerInit,
       rowData,
+      selectAll,
       selectedProduct,
       totalRecords,
       rows,
+      datagridfield,
       add,
       exportCSV,
+      onSelectAllChange,
       submit,
       getEquipTypeName,
       getAreaName,
@@ -396,8 +437,7 @@ export default {
   flex-wrap: wrap;
 }
 
-.p-dropdown-item {
-  color: red !important;
+ul {
   padding-left: 0 !important;
 }
   @media only screen and (min-width: 1200px) {
