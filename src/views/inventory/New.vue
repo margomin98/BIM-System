@@ -592,7 +592,7 @@
         searchParams.Layer_Id = item.Id;
       };
       const selectStaff = (item) => {
-        searchParams.InventoryStaffName = item;
+        formParams.InventoryStaffName = item;
       }
       const clear = ()=>{
         for(const key in searchParams) {

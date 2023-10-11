@@ -277,7 +277,8 @@
           cellRenderer: "Storage_button",
           cellRendererParams: {
             searchList: (data) => {
-              for (const key in data) {
+              console.log('data:',data);
+              for(const key in data) {
                 searchParams[key] = data[key];
               }
               getEquipCategoryName();

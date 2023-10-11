@@ -222,7 +222,7 @@
                 <span v-show="itemParams.AssetType === '耗材'">*</span> 數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
               </div>
               <input v-if="itemParams.AssetType === '耗材'" class="input-number" type="number" v-model="itemParams.Count" min="1">
-              <input v-else class="input-number readonly_box" type="number" v-model="itemParams.PackageNum" min="1" readonly>
+              <input v-else class="input-number readonly_box" type="number" v-model="itemParams.Count" min="1" readonly>
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -819,6 +819,23 @@
         // 格式、必填皆正確
         return true;
       }
+      // 檢查頁籤專案代碼
+      async function checkProjectCode(projectCodeList) {
+        return new Promise((resolve, reject) => {
+          axios.post('http://192.168.0.177:7008/GetDBdata/CheckProjectCode', projectCodeList)
+            .then(response => {
+              const data = response.data;
+              if (data.state === 'success') {
+                resolve('success');
+              } else {
+                resolve(data.messages.toString());
+              }
+            })
+            .catch(error => {
+              reject(error);
+            });
+        });
+      }
       function resetUnitCount(type, index) {
         switch (type) {
           case 'upperForm':
@@ -985,7 +1002,7 @@
         }, 100);
       }
       function viewReceive() {
-        if (AR_ID) {
+        if (AR_ID.value) {
           const link = document.getElementById('view-receive');
           link.click();
         }
@@ -995,6 +1012,29 @@
         // 檢查必填項目、格式
         if (!checkRequireParams()) {
           return
+        }
+        // 檢查頁籤專案代碼是否有效
+        let projectCodeList = [];
+        tabData.forEach((item,index)=>{
+          if(item.itemProjectCode) {
+            projectCodeList.push({
+              PadNum: index,
+              projectCode: item.itemProjectCode,
+            })
+          }
+        })
+        if(projectCodeList.length !== 0) {
+          console.log('projectCodeList:', projectCodeList);
+          try {
+            const messages =  await checkProjectCode(projectCodeList);
+            if(messages !== 'success') {
+              alert(messages);
+              throw new Error(messages);
+            }
+          } catch (error) {
+            console.error(error);
+            return
+          }
         }
         console.log('頁籤資料', tabData);
         try {

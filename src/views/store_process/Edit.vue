@@ -548,7 +548,7 @@
       async function temp() {
         var InputMessages = '';
         var InputError = false;
-        // 只檢查 1.物品名稱必填 2.其他子項目是否超過字數限制(不額外寫function)
+        // 只檢查 1.物品名稱必填 2.其他子項目是否超過字數限制(不額外寫function) 3.有填的專案代碼是否有效
         for (let i = 0; i < tabData.length; i++) {
           const form = tabData[i];
           //1. 檢查暫存必填項目(物品名稱)
@@ -557,7 +557,7 @@
             InputError = true;
             InputMessages += '頁籤 ' + (i + 1) + ' :　物品名稱必填' + '\n';
           }
-          //3. 檢查字數限制
+          //2. 檢查字數限制
           // 專案代碼不可超過10字
           if (!/^[\s\S]{0,10}$/.test(form.itemProjectCode)) {
             InputError = true;
@@ -614,6 +614,29 @@
           alert(InputMessages);
           return;
         }
+        // 3.檢查頁籤專案代碼是否有效
+        let projectCodeList = [];
+        tabData.forEach((item,index)=>{
+          if(item.itemProjectCode) {
+            projectCodeList.push({
+              PadNum: index,
+              projectCode: item.itemProjectCode,
+            })
+          }
+        })
+        if(projectCodeList.length !== 0) {
+          console.log('projectCodeList:', projectCodeList);
+          try {
+            const messages =  await checkProjectCode(projectCodeList);
+            if(messages !== 'success') {
+              alert(messages);
+              throw new Error(messages);
+            }
+          } catch (error) {
+            console.error(error);
+            return
+          }
+        }
         const filePromises = [];
         for (let i = 0; i < tabData.length; i++) {
           filePromises.push(sendFileForm(tabData[i], i));
@@ -641,6 +664,29 @@
         if (details.value.Type === 0) {
           if (await checkAssetsIdRepeat()) {
             return;
+          }
+        }
+        // 檢查頁籤專案代碼是否有效
+        let projectCodeList = [];
+        tabData.forEach((item,index)=>{
+          if(item.itemProjectCode) {
+            projectCodeList.push({
+              PadNum: index,
+              projectCode: item.itemProjectCode,
+            })
+          }
+        })
+        if(projectCodeList.length !== 0) {
+          console.log('projectCodeList:', projectCodeList);
+          try {
+            const messages =  await checkProjectCode(projectCodeList);
+            if(messages !== 'success') {
+              alert(messages);
+              throw new Error(messages);
+            }
+          } catch (error) {
+            console.error(error);
+            return
           }
         }
         const filePromises = [];
@@ -895,6 +941,23 @@
         }
         // 格式、必填皆正確
         return true;
+      }
+      // 檢查頁籤專案代碼
+      async function checkProjectCode(projectCodeList) {
+        return new Promise((resolve, reject) => {
+          axios.post('http://192.168.0.177:7008/GetDBdata/CheckProjectCode', projectCodeList)
+            .then(response => {
+              const data = response.data;
+              if (data.state === 'success') {
+                resolve('success');
+              } else {
+                resolve(data.messages.toString());
+              }
+            })
+            .catch(error => {
+              reject(error);
+            });
+        });
       }
       function selectType(item, index) {
         tabData[index].itemEquipTypeName = item.Name;

@@ -103,6 +103,8 @@
 
 <script>
   import { AgGridVue } from "ag-grid-vue3";
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   import { onMounted, reactive, ref } from "vue";
   import Inventory_button from "@/components/Inventory_button";
   import Delete from "@/components/Inventory_data_delete_button";
@@ -113,6 +115,8 @@
     components: {
       Navbar,
       AgGridVue,
+      DataTable,
+      Column,
       Inventory_button,
       Delete
     },
@@ -228,22 +232,22 @@
           }
       ]
       const rowData = ref([]);
+      const datatableParams = reactive({
+        loading: false,
+        totalRecords: 0,
+        currentPage: 0,
+        rows: 10,
+      })
+      const datatableField =  
       onMounted(()=>{
         submit();
       });
       async function submit() {
         const formData = new FormData();
-        const formFields = {
-          'PlanId': searchParams.PlanId,
-          'PlanType': searchParams.PlanType,
-          'PlanStatus': searchParams.PlanStatus,
-          'DateCategory': searchParams.DateCategory,
-          'StartDate': searchParams.StartDate,
-          'EndDate': searchParams.EndDate,
-        };
+
         //將表格資料append到 formData
-        for (const fieldName in formFields) {
-          formData.append(fieldName, formFields[fieldName]);
+        for (const key in searchParams) {
+          formData.append(key, searchParams[key]);
         }
         const axios = require('axios');
         try {
@@ -315,6 +319,7 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
+  @import "@/assets/css/theme.css";
   .modal {
     .modal-body {
       padding: 20px;
