@@ -456,7 +456,7 @@ const routes = [
     meta: {auth: true, request: 'S_Verify'},
   },
   {
-    path: "/scrap_review",
+    path: "/scrap_delete",
     name: "Scrap_Delete",
     component: Scrap_Delete,
     meta: {auth: true, request: 'S_Delete'},
