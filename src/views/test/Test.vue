@@ -296,14 +296,14 @@ export default {
       // console.log('sort:', datagridSetting.sortField);
       // console.log('order:', order);
       // console.log('-----------------------------');
-      formData.append('rows',event.rows);
-      formData.append('page',datagridSetting.currentPage);
-      formData.append('sort',event.sortField);
-      formData.append('order',order);
       // 將表格資料append到 formData
       for (const key in searchParams) {
         formData.append(key, searchParams[key]);
       }
+      formData.append('rows',event.rows);
+      formData.append('page',datagridSetting.currentPage);
+      formData.append('sort',event.sortField);
+      formData.append('order',order);
       try {
         const response = await axios.post('http://192.168.0.177:7008/InventoryMng/Assets', formData);
         const data = response.data;
