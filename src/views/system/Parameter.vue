@@ -385,20 +385,20 @@
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
-            switch (type) {
-              case 'EquipTypeName':
-                getDataGrid('EquipTypeName')
-                break;
-              case 'EquipCategoryName':
-                getDataGrid('EquipCategoryName')
-                break;
-              case 'AreaName':
-                getDataGrid('AreaName')
-                break;
-              case 'LayerName':
-                getDataGrid('LayerName')
-                break;
-            }
+            // switch (type) {
+            //   case 'EquipTypeName':
+            //     getDataGrid('EquipTypeName')
+            //     break;
+            //   case 'EquipCategoryName':
+            //     getDataGrid('EquipCategoryName')
+            //     break;
+            //   case 'AreaName':
+            //     getDataGrid('AreaName')
+            //     break;
+            //   case 'LayerName':
+            //     getDataGrid('LayerName')
+            //     break;
+            // }
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
