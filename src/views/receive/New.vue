@@ -87,14 +87,13 @@
             <button class="upload_file_pt1" @click="openFileInput(0)">選擇檔案</button>
             <input type="file" id="fileInput" ref="fileInput1" style="display: none" @change="handleDocumentFile($event)" multiple />
           </div>
-        </div>
-        <div class="selected_file col">
+          <div class="selected_file col">
           <div class="input-group">
             <div class="file_upload_box">
               <div v-for="(file, index) in fileParams.viewDoc" :key="index" class="file_upload_wrap">
-                <p class='file_name'>{{ file.name }}</p>
+                <p class='file_name'>{{ file.name }}
                 <img class="view_icon" src="@/assets/view.png" @click="handleDocPreview(file)">
-                <img class="delete_icon" src="@/assets/trash.png" @click="deleteFile('document',index)">
+                <img class="delete_icon" src="@/assets/trash.png" @click="deleteFile('document',index)"></p>
               </div>
             </div>
           </div>
@@ -117,6 +116,8 @@
             </div>
           </div>
         </div>
+        </div>
+        
         <!-- 照片上傳 -->
         <div class="col">
           <div class="input-group">
@@ -852,7 +853,6 @@
       color: white;
     }
     .file_upload_box {
-      padding: 0 20px 5px;
       .file_upload_wrap {
         margin-bottom: 0;
         display: flex;
@@ -995,6 +995,10 @@
         }
         .content {
           @include content_bg;
+          .selected_file{
+            margin-left: 150px;
+    margin-bottom: 3%;
+          }
           .dropdown {
             width: 55%;
             .dropdown-menu {
@@ -1249,6 +1253,10 @@
       .info_wrap {
         margin: auto;
         padding: 0 5%;
+        .selected_file{
+          margin-left: 150px;
+    margin-bottom: 3%;
+        }
         .fixed_info {
           @include fixed_info;
           p {
@@ -1556,6 +1564,7 @@
               color: white;
               margin-bottom: 5px;
             }
+        
             .file_upload_wrap {
               margin-bottom: 0;
               display: flex;
@@ -1991,6 +2000,9 @@
               color: white;
               margin-bottom: 5px;
             }
+           .file_upload_box{
+            padding:0 0 5px;
+           }
             .file_upload_wrap {
               margin-bottom: 0;
               display: flex;

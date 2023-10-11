@@ -91,7 +91,6 @@
           sortable: true,
           width: 180,
           resizable: true,
-          flex: 1,
           suppressMovable: true
         },
         {
@@ -101,7 +100,6 @@
           sortable: true,
           width: 180,
           resizable: true,
-          flex: 1,
           suppressMovable: true
         },
         {
