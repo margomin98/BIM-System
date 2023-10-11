@@ -318,7 +318,7 @@
             </div>
             <!-- 頁籤選擇檔案 -->
             <div class="col">
-              <div class="input-group mb-3">
+              <div class="input-group">
                 <div class="input-group-prepend">資產照片 :</div>
                 <div class="mb-3 file_wrap">
                   <button class='choose_btn' @click="openFileExplorer(index)">選擇檔案</button>
