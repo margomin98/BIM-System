@@ -82,12 +82,12 @@
             <!-- 交付人員 -->
             <div class="col-xl-6 col-lg-6 col-md-6 col-12 input-container">
               <div class="input-group">
-                <div class="input-group-prepend">交付人員：</div>
+                <div class="input-group-prepend process_member">交付人員：</div>
                 <div class="input-with-icon">
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(1)"/>
+                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(1)" />
                   <span v-show="validation.user1.isValidate" class="icon-container">
-                    <img src="@/assets/accept.png" class="checkmark-icon" />
-                  </span>
+                      <img src="@/assets/accept.png" class="checkmark-icon" />
+                    </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">驗證</button>
                 <!-- 交付人員驗證Modal -->
@@ -102,13 +102,13 @@
                         <div class="col">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">帳號：</div>
-                            <input type="text" class="form-control" v-model="validation.user1.account"/>
+                            <input type="text" class="form-control" v-model="validation.user1.account" />
                           </div>
                         </div>
                         <div class="col">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">密碼：</div>
-                            <input type="password" class="form-control" v-model="validation.user1.password"/>
+                            <input type="password" class="form-control" v-model="validation.user1.password" />
                           </div>
                         </div>
                       </div>
@@ -123,12 +123,12 @@
             <!-- 送修人員 -->
             <div class="col-xl-6 col-lg-6 col-md-6 col-12 input-container">
               <div class="input-group">
-                <div class="input-group-prepend">送修人員：</div>
+                <div class="input-group-prepend deliver_member">送修人員：</div>
                 <div class="input-with-icon">
-                  <input type="text" class="form-control readonly_box" readonly :value="validationStatus(2)"/>
+                  <input type="text" class="form-control readonly_box" readonly :value="validationStatus(2)" />
                   <span v-show="validation.user2.isValidate" class="icon-container">
-                    <img src="@/assets/accept.png" class="checkmark-icon" />
-                  </span>
+                      <img src="@/assets/accept.png" class="checkmark-icon" />
+                    </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">驗證</button>
                 <!-- 送修人員驗證Modal -->
@@ -143,13 +143,13 @@
                         <div class="col">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">帳號：</div>
-                            <input type="text" class="form-control" v-model="validation.user2.account"/>
+                            <input type="text" class="form-control" v-model="validation.user2.account" />
                           </div>
                         </div>
                         <div class="col">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">密碼：</div>
-                            <input type="password" class="form-control" v-model="validation.user2.password"/>
+                            <input type="password" class="form-control" v-model="validation.user2.password" />
                           </div>
                         </div>
                       </div>
@@ -173,9 +173,18 @@
 </template>
 
 <script>
-  import { ref, onMounted, reactive } from 'vue';
-  import { useRoute } from 'vue-router'
-  import { getDate , goBack } from '@/assets/js/common_fn.js'
+  import {
+    ref,
+    onMounted,
+    reactive
+  } from 'vue';
+  import {
+    useRoute
+  } from 'vue-router'
+  import {
+    getDate,
+    goBack
+  } from '@/assets/js/common_fn.js'
   import Navbar from '@/components/Navbar.vue';
   import axios from 'axios';
   import router from '@/router';
@@ -209,28 +218,27 @@
           resultName: '',
         },
       });
-      onMounted(()=>{
+      onMounted(() => {
         getDetails();
         deliveryDate.value = getDate();
       });
       // 取得單筆資料
       async function getDetails() {
         axios.get(`http://192.168.0.177:7008/GetDBdata/GetRepairInfo?r_id=${RepairId}`)
-        .then((response)=>{
-          const data = response.data;
-          if(data.state === 'success') {
-            details.value = data.resultList;
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-          else {
-            alert(data.messages);
-          }
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+          .then((response) => {
+            const data = response.data;
+            if (data.state === 'success') {
+              details.value = data.resultList;
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            } else {
+              alert(data.messages);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       //分別使用帳號密碼驗證、改變驗證狀態 user1為交付人員 user2為送修人員
       async function validate(user) {
@@ -314,22 +322,24 @@
           DeliveryOperator: validation.value.user1.resultName,
           RepairPerson: validation.value.user2.resultName,
         }
-        axios.post('http://192.168.0.177:7008/RepairMng/Delivery',requestData)
-        .then((response)=>{
-          const data = response.data
-          if(data.state === 'success') {
-            alert('傳送維修交付表單成功\n單號為:' + data.resultList.R_ID);
-            router.push({ name: 'Repair_Datagrid' });
-          } else if( data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          } else {
-            alert(data.messages);
-          }
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+        axios.post('http://192.168.0.177:7008/RepairMng/Delivery', requestData)
+          .then((response) => {
+            const data = response.data
+            if (data.state === 'success') {
+              alert('傳送維修交付表單成功\n單號為:' + data.resultList.R_ID);
+              router.push({
+                name: 'Repair_Datagrid'
+              });
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            } else {
+              alert(data.messages);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       return {
         details,
@@ -644,6 +654,9 @@
               span {
                 position: absolute;
               }
+            }
+            .deliver_member {
+              margin-left: 10px;
             }
             .input-container {
               position: relative;
