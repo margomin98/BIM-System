@@ -97,7 +97,8 @@ export const getAccount = (async (name) => {
   try {
     const data = response.data;
     if (data.state === 'success') {
-      return data.resultList;
+      const filteredRoles = data.resultList.filter(role => role !== 'admin' && role !== 'guest');
+      return filteredRoles;
     }
   } catch (error) {
     console.error(error);

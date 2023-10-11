@@ -101,26 +101,26 @@
         ref = 'dt'
         v-model:selection="selectedProduct" 
         lazy 
-        :first= "first"
+        :first= "datagridSetting.first"
         :size="'small'"
-        :loading="loading"
+        :loading="datagridSetting.loading"
         :value="rowData" 
-        :sort-field="'AssetsId'"
-        :sort-order="-1"
+        :sort-field="datagridSetting.sortField"
+        :sort-order="datagridSetting.sortOrder"
         resizableColumns 
         columnResizeMode="fit"
         showGridlines 
         scrollable 
         scrollHeight="490px" 
         @page="submit($event)" 
-        @sort="submit($event)"
-        :selectAll="selectAll"
+        @sort="submit($event , 'sort')"
+        :selectAll="datagridSetting.selectAll"
         @select-all-change="onSelectAllChange"
         table-style="min-height: 490px;"
         paginator 
         :rows="10" 
         :row-style="({ AssetsId }) => AssetsId === 'BF00000005' ? 'background-color: firebrick; color:white;': null "
-        :totalRecords="totalRecords"
+        :totalRecords="datagridSetting.totalRecords"
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         :rowsPerPageOptions="[10, 20, 30]"
         currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
@@ -188,13 +188,17 @@ export default {
     const EquipCategoryInit = ref('請先選擇設備總類');
     const LayerInit = ref('請先選擇區域');
     const rowData = ref([]);
-    const loading = ref(false);
-    const totalRecords = ref(1000);
-    const currentPage = ref(0);
-    const rows = ref(10);
-    const first = ref(0);
-    const selectAll = ref(false);
     const selectedProduct = ref();
+    const datagridSetting = reactive({
+      totalRecords: 0,
+      currentPage: 0,
+      rows: 10,
+      first: 0,
+      sortOrder: -1,
+      sortField: 'AssetsId',
+      loading: false,
+      selectAll: false, //不一定要
+    })
     const datagridfield = [
       {
         field: 'AssetsId',
@@ -247,7 +251,7 @@ export default {
       const event = {
         first: 0 ,
         rows: 10,
-        page: currentPage.value,
+        page: datagridSetting.currentPage,
         sortField: 'AssetsId',
         sortOrder: -1,
       }
@@ -255,8 +259,8 @@ export default {
       
     });
     function add() {
-      // totalRecords.value++;
-      selectAll.value = !selectAll.value
+      // datagridSetting.totalRecords++;
+      datagridSetting.selectAll = !datagridSetting.selectAll
 
     }
     function exportCSV() {
@@ -264,30 +268,36 @@ export default {
     }
     const onSelectAllChange = (event) => {
       console.log('selectAll event:',event);
-      selectAll.value = event.checked;
-      if(selectAll.value) {
+      datagridSetting.selectAll = event.checked;
+      if(datagridSetting.selectAll) {
         selectedProduct.value = rowData.value
       } else {
         selectedProduct.value = [];
       }
     }
-    async function submit(event) {
-      console.log('first:',first.value);
-      loading.value = true;
+    async function submit(event , type) {
+      datagridSetting.loading = true;
       const formData = new FormData();
       // 將切頁資訊append到 formData
-      // console.log(event);
-      const order = event.sortOrder === 1 ? 'asc' : 'desc'
-      if(event.page || event.page === 0) {
-        currentPage.value = (event.page+1);
+      console.log(event);
+      if(type === 'sort')  {
+        datagridSetting.currentPage = 1;
+        datagridSetting.sortField = event.sortField;
       }
+      datagridSetting.sortOrder = event.sortOrder;
+      const order = datagridSetting.sortOrder === 1 ? 'asc' : 'desc'
+      if(event.page || event.page === 0) {
+        datagridSetting.currentPage = (event.page+1);
+      }
+      datagridSetting.first = event.first;
+      // console.log('first:', event.first);
       // console.log('rows:', event.rows);
-      // console.log('page:', currentPage.value);
-      // console.log('sort:', event.sortField);
+      // console.log('page:', datagridSetting.currentPage);
+      // console.log('sort:', datagridSetting.sortField);
       // console.log('order:', order);
       // console.log('-----------------------------');
       formData.append('rows',event.rows);
-      formData.append('page',currentPage.value);
+      formData.append('page',datagridSetting.currentPage);
       formData.append('sort',event.sortField);
       formData.append('order',order);
       // 將表格資料append到 formData
@@ -299,10 +309,10 @@ export default {
         const data = response.data;
         if (data.state === 'success') {
           //取得datagrid成功
-          console.log('資產datagrid:', data.resultList);
-          totalRecords.value = data.resultList.total;
+          // console.log('資產datagrid:', data.resultList);
+          datagridSetting.totalRecords = data.resultList.total;
           rowData.value = data.resultList.rows;
-          if(selectAll.value) {
+          if(selectedProduct.selectAll) {
             selectedProduct.value = data.resultList.rows;
           }
         } else if (data.state === 'account_error') {
@@ -315,7 +325,7 @@ export default {
       } catch (error) {
         console.error(error);
       }
-      loading.value = false;
+      datagridSetting.loading = false;
     }
     async function getEquipTypeName() {
     if (DropdownArray.EquipType.length == 0) {
@@ -392,14 +402,14 @@ export default {
       }
       EquipCategoryInit.value = '請先選擇設備總類'
       LayerInit.value = '請先選擇區域';
-      currentPage.value = currentPage.value === 0 ? currentPage.value: currentPage.value-1;
       const event = {
-        rows: rows.value,
-        page: currentPage.value,
-        sortField: 'AssetsId',
-        sortOrder: -1,
+        rows: datagridSetting.rows,
+        page: 0,
+        sortField: datagridSetting.sortField,
+        sortOrder: datagridSetting.sortOrder,
       }
       submit(event);
+      datagridSetting.first = 0;
     }
     function handlemsg(data) {
       alert(data)
@@ -408,15 +418,11 @@ export default {
       dt,
       searchParams,
       DropdownArray,
-      loading,
       EquipCategoryInit,
       LayerInit,
       rowData,
-      selectAll,
       selectedProduct,
-      totalRecords,
-      rows,
-      first,
+      datagridSetting,
       datagridfield,
       add,
       exportCSV,

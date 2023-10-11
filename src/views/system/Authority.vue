@@ -80,7 +80,8 @@
             const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchName?name=${inputValue.value}`);
             const data = response.data;
             if (data.state === 'success') {
-              resolve(data.resultList);
+              const filteredRoles = data.resultList.filter(role => role !== 'admin' && role !== 'guest');
+              resolve(filteredRoles);
             } else {
               reject(new Error('Search account failed.'));
             }
