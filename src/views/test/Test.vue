@@ -11,8 +11,8 @@
             <p>設備總類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                    {{ searchParams.EquipTypeName || '請選擇' }}
-                  </button>
+                      {{ searchParams.EquipTypeName || '請選擇' }}
+                    </button>
               <div class="dropdown-menu" aria-labelledby="areaDropdown">
                 <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(item)"> {{ item.Name }}</p>
               </div>
@@ -22,8 +22,8 @@
             <p>設備分類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!searchParams.EquipTypeName">
-                    {{ searchParams.EquipCategoryName || EquipCategoryInit }}
-                  </button>
+                      {{ searchParams.EquipCategoryName || EquipCategoryInit }}
+                    </button>
               <div class="dropdown-menu" aria-labelledby="areaDropdown">
                 <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(item)"> {{ item.Name }}</p>
               </div>
@@ -41,8 +41,8 @@
             <p>狀態</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ searchParams.Status || '請選擇' }}
-                    </button>
+                        {{ searchParams.Status || '請選擇' }}
+                      </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item, index) in DropdownArray.Status" :key="index" class="dropdown-item" @click="selectStatus(item)">{{ item }}</p>
               </div>
@@ -52,8 +52,8 @@
             <p>區域</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
-                    {{ searchParams.AreaName || '請選擇' }}
-                  </button>
+                      {{ searchParams.AreaName || '請選擇' }}
+                    </button>
               <div class="dropdown-menu" aria-labelledby="areaDropdown">
                 <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item" @click="selectArea(item)">{{ item.Name }}</p>
               </div>
@@ -63,8 +63,8 @@
             <p>櫃位</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!searchParams.AreaName">
-                    {{ searchParams.LayerName || LayerInit }}
-                  </button>
+                      {{ searchParams.LayerName || LayerInit }}
+                    </button>
               <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                 <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(item)">{{ item.Name }}</p>
               </div>
@@ -98,17 +98,17 @@
     </div>
     <div class="datagrid_section mb-3">
       <DataTable ref='dt' v-model:selection="selectedProduct" lazy :first="datagridSetting.first" :size="'small'" :loading="datagridSetting.loading" :value="rowData" :sort-field="datagridSetting.sortField" :sort-order="datagridSetting.sortOrder" resizableColumns
-        columnResizeMode="fit" scrollable scrollHeight="490px" @page="submit($event , 'page')" @sort="submit($event , 'sort')" :selectAll="datagridSetting.selectAll" @select-all-change="onSelectAllChange" table-style="min-height: 490px;" paginator :rows="10"
-        :row-style="({ AssetsId }) => AssetsId === 'BF00000005' ? 'background-color: firebrick; color:white;': null " :totalRecords="datagridSetting.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        columnResizeMode="fit" scrollable scrollHeight="490px" @page="submit($event , 'page')" @sort="submit($event , 'sort')" :selectAll="datagridSetting.selectAll" @select-all-change="onSelectAllChange" table-style="min-height: 490px;min-width: 50rem" paginator
+        :rows="10" :row-style="({ AssetsId }) => AssetsId === 'BF00000005' ? 'background-color: firebrick; color:white;': null " :totalRecords="datagridSetting.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <!-- <template #header>
-              <div>
-                <button class="btn btn-primary" label="Export" @click="exportCSV()" style="margin-right: 1rem;">exportCSV</button>
-                <button @click="add" type="button" class="btn btn-primary">increase totalRecords</button>
-              </div>
+                <div>
+                  <button class="btn btn-primary" label="Export" @click="exportCSV()" style="margin-right: 1rem;">exportCSV</button>
+                  <button @click="add" type="button" class="btn btn-primary">increase totalRecords</button>
+                </div>
 </template>-->
-        <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-        <Column style="min-width: 200px;">
+        <Column selectionMode="multiple" headerStyle="width: 3rem" ></Column>
+        <Column style="min-width: 50px;">
 <template #body="slotProps">
   <!-- Add the custom component here -->
   <test :params="slotProps" :msg="'hi'" @msg="handlemsg" />
