@@ -165,7 +165,6 @@
           width: 150,
           resizable: true,
           suppressMovable: true,
-          flex: 1,
         },
         {
           headerName: "設備總類",

@@ -153,7 +153,6 @@
             unSortIcon: true,
             sortable: true,
             width: 150,
-            flex: 1,
             resizable: true,
             suppressMovable: true
           },
@@ -171,7 +170,7 @@
             field: "Applicant",
             unSortIcon: true,
             sortable: true,
-            width: 120,
+            width: 150,
             resizable: true,
             suppressMovable: true
           },

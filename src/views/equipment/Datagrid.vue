@@ -153,7 +153,6 @@
         {
           headerName: "整合箱名稱",
           field: "IntegrationName",
-          flex: 1,
           unSortIcon: true,
           sortable: true,
           width: 150,
