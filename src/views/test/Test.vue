@@ -312,7 +312,7 @@ export default {
           // console.log('資產datagrid:', data.resultList);
           datagridSetting.totalRecords = data.resultList.total;
           rowData.value = data.resultList.rows;
-          if(selectedProduct.selectAll) {
+          if(datagridSetting.selectAll) {
             selectedProduct.value = data.resultList.rows;
           }
         } else if (data.state === 'account_error') {

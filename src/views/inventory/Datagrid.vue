@@ -83,7 +83,6 @@
     </div> -->
     <div>
       <DataTable 
-        ref = 'dt'
         lazy 
         :first= "datagridSetting.first"
         :size="'small'"

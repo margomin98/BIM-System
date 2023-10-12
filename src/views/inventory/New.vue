@@ -162,9 +162,43 @@
                   <p>目前資產庫存</p>
                 </div>
               </div>
-              <ag-grid-vue style="height: 450px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :paginationPageSize="20" :pagination="true"
+              <!-- <ag-grid-vue style="height: 450px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :paginationPageSize="20" :pagination="true"
               :suppressRowClickSelection="true" :rowSelection="'multiple'" @grid-ready="onGridReady1">
-              </ag-grid-vue>
+              </ag-grid-vue> -->
+              <DataTable 
+              v-model:selection="selectedProduct" 
+              lazy 
+              :first= "datagrid1.first"
+              :size="'small'"
+              :loading="datagrid1.loading"
+              :value="rowData1" 
+              :sort-field="datagrid1.sortField"
+              :sort-order="datagrid1.sortOrder"
+              resizableColumns 
+              columnResizeMode="spend"
+              showGridlines 
+              scrollable 
+              scrollHeight="510px" 
+              @page="submit($event , 'page')" 
+              @sort="submit($event , 'sort')"
+              :selectAll="datagrid1.selectAll"
+              @select-all-change="onSelectAllChange"
+              table-style="min-height: 510px;"
+              paginator 
+              :rows="10" 
+              :totalRecords="datagrid1.totalRecords"
+              paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+              :rowsPerPageOptions="[10, 20, 30]"
+              currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+              <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+              <Column style="max-width: 60px;">
+                <template #body="slotProps">
+                  <!-- Add the custom component here -->
+                  <List_view_button :params = "slotProps" />
+                </template>
+              </Column>
+              <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}" :frozen="item.field === 'AssetsId'"></Column>
+            </DataTable>
             </div>
           </div>
         </div>
@@ -195,11 +229,15 @@
   import Inventory_delete_button from "@/components/Inventory_delete_button";
   import Navbar from "@/components/Navbar.vue";
   import { onMounted, ref, reactive, } from "vue";
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   import { useRouter } from "vue-router";
   import { getEquipType , getEquipCategory , getArea , getLayer , getApplication , getAccount } from '@/assets/js/common_api'
   import { goBack } from "@/assets/js/common_fn";
   export default {
     components: {
+      DataTable,
+      Column,
       Navbar,
       AgGridVue,
       List_view_button,
@@ -240,6 +278,7 @@
         LayerName: '',
         Layer_Id: '',
       })
+
       // 搜尋資產 datagrid
       const columnDefs1 = [{
           headerCheckboxSelection: true, //可以全選
@@ -324,6 +363,47 @@
           suppressMovable: true
         },
       ]
+      const datagrid1 = reactive({
+        totalRecords: 0,
+        first: 0,
+        rows: 10,
+        currentPage: 1,
+        sortField: 'PlanId',
+        sortOrder: -1,
+        loading: false,
+      })      
+      const datagrid1field = [
+        {
+          field: 'AssetStatus',
+          header: '資產狀態',
+          width: '150px',
+        },
+        {
+          field: 'AssetsId',
+          header: '資產編號',
+          width: '150px',
+        },
+        {
+          field: 'EquipTypeName',
+          header: '設備總類',
+          width: '150px',
+        },
+        {
+          field: 'EquipCategoryName',
+          header: '設備分類',
+          width: '150px',
+        },
+        {
+          field: 'AreaName',
+          header: '儲位區域',
+          width: '150px',
+        },
+        {
+          field: 'LayerName',
+          header: '儲位櫃位',
+          width: '150px',
+        },
+      ];
       // 盤點範圍項目 datagrid
       const columnDefs2 = [{
           cellRenderer: "Inventory_delete_button",
@@ -471,10 +551,7 @@
       // 搜尋function
       async function searchInventory() {
         // 檢查物品名稱字數
-        if (searchParams.AssetName) {
-          searchParams.AssetName = searchParams.AssetName.trim();
-        }
-        if (searchParams.AssetName && !/^.{1,20}$/.test(searchParams.AssetName)) {
+        if (!/^.{0,20}$/.test(searchParams.AssetName)) {
           alert('物品名稱不可輸入超過20字')
           return
         }
@@ -628,6 +705,8 @@
         LayerInit,
         formParams,
         searchParams,
+        datagrid1,
+        datagrid1field,
         columnDefs1,
         columnDefs2,
         rowData1,
