@@ -73,15 +73,15 @@
     </div>
     <div class="col justify-content-center d-flex">
       <div class="button_wrap d-flex">
-        <button class="search_btn" @click="submit">檢索</button>
+        <button class="search_btn" @click="submit('' , 'search')">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
       </div>
     </div>
-   <div style="width: 100%;margin-bottom:3%">
+   <!-- <div style="width: 100%;margin-bottom:3%">
       <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true" :alwaysShowHorizontalScroll="true">
       </ag-grid-vue>
-    </div>
-    <div v-show="0">
+    </div> -->
+    <div>
       <DataTable 
         ref = 'dt'
         lazy 
@@ -92,14 +92,12 @@
         :sort-field="datagridSetting.sortField"
         :sort-order="datagridSetting.sortOrder"
         resizableColumns 
-        columnResizeMode="fit"
+        columnResizeMode="expand"
         showGridlines 
         scrollable 
         scrollHeight="490px" 
         @page="submit($event , 'page')" 
         @sort="submit($event , 'sort')"
-        :selectAll="datagridSetting.selectAll"
-        @select-all-change="onSelectAllChange"
         table-style="min-height: 490px;"
         paginator 
         :rows="10" 
@@ -109,11 +107,15 @@
         currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <Column style="min-width: 200px;">
           <template #body="slotProps">
-            <!-- Add the custom component here -->
-            <Inventory_button :params = "slotProps" :msg="'hi'" @msg="handlemsg"/>
+            <Inventory_button :params = "slotProps" @updateSearchId="updateSearchId" />
           </template>
         </Column>
-        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}" :frozen="item.field === 'AssetsId'"></Column>
+        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+        <Column>
+          <template #body="slotProps">
+            <Delete :params = "slotProps"/>
+          </template>
+        </Column>
       </DataTable>
     </div>
   </div>
@@ -146,6 +148,7 @@
   import Navbar from "@/components/Navbar.vue";
   import { PlanType , PlanStatus , PlanDateCategory} from "@/assets/js/dropdown.js"
   import { useRouter } from "vue-router";
+  import axios from "axios";
   export default {
     components: {
       Navbar,
@@ -272,7 +275,7 @@
         first: 0,
         rows: 10,
         currentPage: 1,
-        sortField: 'AssetsId',
+        sortField: 'PlanId',
         sortOrder: -1,
         loading: false,
       })
@@ -298,11 +301,6 @@
           width: '150px',
         },
         {
-          field: 'AreaName',
-          header: '區域',
-          width: '130px',
-        },
-        {
           field: 'InventoryStaffName',
           header: '盤點人員',
           width: '150px',
@@ -324,38 +322,58 @@
         },
       ];
       onMounted(()=>{
-        submit();
+        submit('' , 'search');
       });
-      async function submit() {
+      async function submit(event , type) {
+        datagridSetting.loading = true;
         const formData = new FormData();
-
-        //將表格資料append到 formData
+        // console.log(event);
+        // type為sort或page =>更新datagrid參數，search則回到第一頁
+        switch (type) {
+          case 'sort':
+            datagridSetting.currentPage = 1;
+            datagridSetting.sortField = event.sortField;
+            datagridSetting.sortOrder = event.sortOrder;
+            datagridSetting.first = event.first;
+            break;
+          case 'page':
+            datagridSetting.currentPage = (event.page+1);
+            datagridSetting.rows = event.rows;
+            datagridSetting.first = event.first;
+            break
+          case 'search':
+            datagridSetting.currentPage = 1;
+            datagridSetting.first = 0;
+            break
+        }
+        const order = datagridSetting.sortOrder === 1 ? 'asc' : 'desc'
+        // 將表格資料append到 formData
         for (const key in searchParams) {
           formData.append(key, searchParams[key]);
         }
-        const axios = require('axios');
+        formData.append('rows',datagridSetting.rows);
+        formData.append('page',datagridSetting.currentPage);
+        formData.append('sort',datagridSetting.sortField);
+        formData.append('order',order);
         try {
           const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryPlans', formData);
           const data = response.data;
           if (data.state === 'success') {
             //取得datagrid成功
-            // console.log(data.state);
-            console.log('datagrid', data.resultList);
+            console.log('datagrid:',data.resultList);
+            datagridSetting.totalRecords = data.resultList.total;
             rowData.value = data.resultList;
-          } else if (data.state === 'error') {
-            //取得datagrid失敗
-            alert(data.messages);
-          } else if (data.state === 'input_error') {
-            //取得datagrid格式錯誤
-            alert(data.messages);
           } else if (data.state === 'account_error') {
             //尚未登入
             alert(data.messages);
             router.push('/');
+          } else {
+            alert(data.messages);
           }
         } catch (error) {
           console.error(error);
         }
+        datagridSetting.loading = false;
       }
       const selectType = (item) => {
         searchParams.PlanType = item;
@@ -366,6 +384,9 @@
       const selectDateCategory = (item) => {
         searchParams.DateCategory = item;
       };
+      const updateSearchId = (id) => {
+        search_id.value = id;
+      }
       function routerProcess() {
         router.push({
           name: 'Inventory_Process',
@@ -378,7 +399,7 @@
         for (const key in searchParams) {
           searchParams[key] = '';
         }
-        submit();
+        submit('' , 'search');
       }
 
       return {
@@ -396,6 +417,7 @@
         selectType,
         selectStatus,
         selectDateCategory,
+        updateSearchId,
         routerProcess,
         clear,
       };

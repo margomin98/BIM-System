@@ -1,5 +1,5 @@
 <template>
-  <div class='button_wrap'>
+  <div class='button_div'>
     <button class="" @click="view('View')">檢視</button>
     <button :class="{ disabled_btn: isDisabled.edit, btn2: !isDisabled.edit }" :disabled="isDisabled.edit" @click="view('Edit')">編輯</button>
     <button v-if="disabledStatus === '待盤點'" :class="{ disabled_btn: isDisabled.process, btn3: !isDisabled.process }" :disabled="isDisabled.process" @click="emitView" data-bs-toggle="modal" data-bs-target="#staticBackdrop">盤點</button>
@@ -92,8 +92,8 @@
         }
       }
       function emitView() {
-        props.params.updateSearchId(search_id);
-        // emit('updateSearchId' , search_id)
+        // props.params.updateSearchId(search_id);
+        emit('updateSearchId' , search_id)
       }
       onMounted(() => {
         checkButton();
@@ -110,7 +110,7 @@
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
-  .button_wrap {
+  .button_div {
     justify-content: center;
      :nth-child(1) {
       @include datagrid_view_button;

@@ -111,12 +111,12 @@
         columnResizeMode="fit"
         showGridlines 
         scrollable 
-        scrollHeight="490px" 
+        scrollHeight="510px" 
         @page="submit($event , 'page')" 
         @sort="submit($event , 'sort')"
         :selectAll="datagridSetting.selectAll"
         @select-all-change="onSelectAllChange"
-        table-style="min-height: 490px;"
+        table-style="min-height: 510px;"
         paginator 
         :rows="10" 
         :row-style="({ AssetsId }) => AssetsId === 'BF00000005' ? 'background-color: firebrick; color:white;': null "
@@ -290,12 +290,12 @@ export default {
           break
       }
       const order = datagridSetting.sortOrder === 1 ? 'asc' : 'desc'
-      console.log('first:', datagridSetting.first);
-      console.log('rows:', datagridSetting.rows);
-      console.log('page:', datagridSetting.currentPage);
-      console.log('sort:', datagridSetting.sortField);
-      console.log('order:', order);
-      console.log('-----------------------------');
+      // console.log('first:', datagridSetting.first);
+      // console.log('rows:', datagridSetting.rows);
+      // console.log('page:', datagridSetting.currentPage);
+      // console.log('sort:', datagridSetting.sortField);
+      // console.log('order:', order);
+      // console.log('-----------------------------');
       // 將表格資料append到 formData
       for (const key in searchParams) {
         formData.append(key, searchParams[key]);
