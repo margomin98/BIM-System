@@ -113,8 +113,8 @@
             <div class="input-group-prepend">認列人員：</div>
             <input type="text" class="form-control text-center readonly_box" readonly v-model="validation.VerifyPerson" />
             <span class="icon-container">
-                <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.isVerified" />
-              </span>
+                    <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.isVerified" />
+                  </span>
           </div>
           <button class="send_btn" data-bs-toggle="modal" data-bs-target="#auth_modal">驗證</button>
         </div>
@@ -157,10 +157,12 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">警示</h5>
-              <div class="close_icon"><p type="button" data-bs-dismiss="modal" aria-label="Close">x</p></div>
+              <div class="close_icon">
+                <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
+              </div>
             </div>
             <div class="modal-body">
-            <p>請確認差異細項是否認列無誤，按下"確認"後將會立即結束本次盤點平帳作業，不可再做修正。</p>
+              <p>請確認差異細項是否認列無誤，按下"確認"後將會立即結束本次盤點平帳作業，不可再做修正。</p>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn confirm" data-bs-dismiss="modal" @click="force">確認</button>
@@ -183,8 +185,8 @@
                 <p>設備總類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                    {{ searchParams.EquipTypeName || '請選擇' }}
-                  </button>
+                        {{ searchParams.EquipTypeName || '請選擇' }}
+                      </button>
                   <div class="dropdown-menu" aria-labelledby="typeDropdown">
                     <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
                   </div>
@@ -193,9 +195,9 @@
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
                 <p>設備分類</p>
                 <div class="dropdown">
-                  <button style='overflow: hidden;text-overflow: ellipsis;white-space: nowrap' class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
-                    {{ searchParams.EquipCategoryName || EquipCategoryInit }}
-                  </button>
+                  <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
+                        {{ searchParams.EquipCategoryName || EquipCategoryInit }}
+                      </button>
                   <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                     <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
                   </div>
@@ -213,8 +215,8 @@
                 <p>儲位區域</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
-                        {{ searchParams.AreaName || '請選擇' }}
-                      </button>
+                            {{ searchParams.AreaName || '請選擇' }}
+                          </button>
                   <div class="dropdown-menu" aria-labelledby="areaDropdown">
                     <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item" @click="selectArea(item)">{{ item.Name }}</p>
                   </div>
@@ -224,8 +226,8 @@
                 <p>儲位櫃位</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="searchParams.AreaName === ''">
-                        {{ searchParams.LayerName || LayerInit }}
-                      </button>
+                            {{ searchParams.LayerName || LayerInit }}
+                          </button>
                   <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                     <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(item)">{{ item.Name }}</p>
                   </div>
@@ -251,12 +253,28 @@
 </template>
 
 <script>
-  import { AgGridVue } from "ag-grid-vue3";
+  import {
+    AgGridVue
+  } from "ag-grid-vue3";
   import Navbar from "@/components/Navbar.vue";
-  import { onMounted, reactive, ref } from "vue";
-  import { useRoute, useRouter } from "vue-router";
-  import { getEquipType , getEquipCategory , getArea , getLayer } from '@/assets/js/common_api'
-  import { goBack } from "@/assets/js/common_fn";
+  import {
+    onMounted,
+    reactive,
+    ref
+  } from "vue";
+  import {
+    useRoute,
+    useRouter
+  } from "vue-router";
+  import {
+    getEquipType,
+    getEquipCategory,
+    getArea,
+    getLayer
+  } from '@/assets/js/common_api'
+  import {
+    goBack
+  } from "@/assets/js/common_fn";
   export default {
     components: {
       Navbar,
@@ -676,50 +694,50 @@
       async function getEquipTypeName() {
         if (DropdownArray.EquipType.length == 0) {
           getEquipType()
-          .then((data)=>{
-            DropdownArray.EquipType = data;
-          })
-          .catch((error) =>{
-            console.error(error);
-          })
+            .then((data) => {
+              DropdownArray.EquipType = data;
+            })
+            .catch((error) => {
+              console.error(error);
+            })
         }
       }
       async function getEquipCategoryName() {
         getEquipCategory(searchParams.EquipType_Id)
-          .then((data)=>{
+          .then((data) => {
             DropdownArray.EquipCategory = data;
           })
-          .catch((error) =>{
+          .catch((error) => {
             console.error(error);
           })
       }
       async function getAreaName() {
         if (DropdownArray.Area.length == 0) {
           getArea()
-          .then((data)=>{
-            DropdownArray.Area = data;
-          })
-          .catch((error) =>{
-            console.error(error);
-          })
+            .then((data) => {
+              DropdownArray.Area = data;
+            })
+            .catch((error) => {
+              console.error(error);
+            })
         }
       }
       async function getLayerName() {
         getLayer(searchParams.Area_Id)
-          .then((data)=>{
+          .then((data) => {
             DropdownArray.Layer = data;
           })
-          .catch((error) =>{
+          .catch((error) => {
             console.error(error);
           })
       }
       function selectType(item) {
-      searchParams.EquipTypeName = item.Name;
-      searchParams.EquipType_Id = item.Id;
-      searchParams.EquipCategoryName = '';
-      searchParams.Category_Id = '';
-      getEquipCategoryName();
-      EquipCategoryInit.value = '請選擇';
+        searchParams.EquipTypeName = item.Name;
+        searchParams.EquipType_Id = item.Id;
+        searchParams.EquipCategoryName = '';
+        searchParams.Category_Id = '';
+        getEquipCategoryName();
+        EquipCategoryInit.value = '請選擇';
       }
       function selectCategory(item) {
         searchParams.EquipCategoryName = item.Name;
@@ -786,9 +804,10 @@
     .modal-body {
       padding: 20px;
       margin: auto;
-      p{
+      p {
         text-align: center;
-    font-weight: 800;}
+        font-weight: 800;
+      }
     }
     .modal-content {
       margin: auto;
@@ -802,10 +821,10 @@
       padding: 0 12px 12px;
       border: none;
       justify-content: center;
-      .confirm{
-        color:white;
+      .confirm {
+        color: white;
         background-color: #132238;
-        &:hover{
+        &:hover {
           background-color: #426497;
         }
       }
@@ -968,6 +987,9 @@
             justify-content: space-between;
             align-items: center;
             border: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
           .dropdown-menu {
             width: 100%;
@@ -1261,6 +1283,9 @@
             justify-content: space-between;
             align-items: center;
             border: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
           .dropdown-menu {
             width: 100%;
@@ -1633,6 +1658,7 @@
           p {
             color: black;
             font-weight: 700;
+            margin-bottom: 5px;
           }
           .dropdown {
             width: 100%
