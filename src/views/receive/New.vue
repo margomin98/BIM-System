@@ -195,8 +195,8 @@
               <div class="input-group">
                 <div class="file_upload_box">
                   <div v-for="(file, index) in tab.viewDoc" :key="index" class="file_upload_wrap">
-                    <p class="file_name">{{ file.name }}</p>
-                    <img class="view_icon" src="@/assets/view.png" @click="handleDocPreview(file)">
+                    <p class="file_name">{{ file.name }}
+                    <img class="view_icon" src="@/assets/view.png" @click="handleDocPreview(file)"></p>
                     <!-- <img class="delete_icon" src="@/assets/trash.png" @click="deleteFile('document',index)"> -->
                   </div>
                 </div>   
