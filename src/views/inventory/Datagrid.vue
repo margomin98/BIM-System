@@ -81,6 +81,41 @@
       <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true" :alwaysShowHorizontalScroll="true">
       </ag-grid-vue>
     </div>
+    <div v-show="0">
+      <DataTable 
+        ref = 'dt'
+        lazy 
+        :first= "datagridSetting.first"
+        :size="'small'"
+        :loading="datagridSetting.loading"
+        :value="rowData" 
+        :sort-field="datagridSetting.sortField"
+        :sort-order="datagridSetting.sortOrder"
+        resizableColumns 
+        columnResizeMode="fit"
+        showGridlines 
+        scrollable 
+        scrollHeight="490px" 
+        @page="submit($event , 'page')" 
+        @sort="submit($event , 'sort')"
+        :selectAll="datagridSetting.selectAll"
+        @select-all-change="onSelectAllChange"
+        table-style="min-height: 490px;"
+        paginator 
+        :rows="10" 
+        :totalRecords="datagridSetting.totalRecords"
+        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        :rowsPerPageOptions="[10, 20, 30]"
+        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+        <Column style="min-width: 200px;">
+          <template #body="slotProps">
+            <!-- Add the custom component here -->
+            <Inventory_button :params = "slotProps" :msg="'hi'" @msg="handlemsg"/>
+          </template>
+        </Column>
+        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}" :frozen="item.field === 'AssetsId'"></Column>
+      </DataTable>
+    </div>
   </div>
   <!-- Modal -->
   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -232,13 +267,62 @@
           }
       ]
       const rowData = ref([]);
-      const datatableParams = reactive({
-        loading: false,
+      const datagridSetting = reactive({
         totalRecords: 0,
-        currentPage: 0,
+        first: 0,
         rows: 10,
+        currentPage: 1,
+        sortField: 'AssetsId',
+        sortOrder: -1,
+        loading: false,
       })
-      const datatableField =  
+      const datagridfield = [
+        {
+          field: 'PlanId',
+          header: '計畫編號',
+          width: '150px',
+        },
+        {
+          field: 'PlanType',
+          header: '盤點類型',
+          width: '150px',
+        },
+        {
+          field: 'PlanStatus',
+          header: '盤點狀態',
+          width: '150px',
+        },
+        {
+          field: 'PlanTitle',
+          header: '標題',
+          width: '150px',
+        },
+        {
+          field: 'AreaName',
+          header: '區域',
+          width: '130px',
+        },
+        {
+          field: 'InventoryStaffName',
+          header: '盤點人員',
+          width: '150px',
+        },
+        {
+          field: 'ConvenerName',
+          header: '召集人員',
+          width: '110px',
+        },
+        {
+          field: 'PlanStart',
+          header: '盤點開始日期',
+          width: '180px',
+        },
+        {
+          field: 'PlanEnd',
+          header: '盤點結束日期',
+          width: '180px',
+        },
+      ];
       onMounted(()=>{
         submit();
       });
@@ -301,6 +385,8 @@
         details,
         searchParams,
         DropdownArray,
+        datagridSetting,
+        datagridfield,
         search_id,
         columnDefs,
         rowData,

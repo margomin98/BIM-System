@@ -20,7 +20,7 @@
   } from 'vue-router';
   export default {
     props: ['params'],
-    setup(props) {
+    setup(props, {emit}) {
       const router = useRouter();
       const search_id = props.params.data.PlanId;
       const disabledStatus = props.params.data.PlanStatus;
@@ -93,6 +93,7 @@
       }
       function emitView() {
         props.params.updateSearchId(search_id);
+        // emit('updateSearchId' , search_id)
       }
       onMounted(() => {
         checkButton();
