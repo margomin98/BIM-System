@@ -72,11 +72,10 @@
         <div class="d-flex selected_file col">
           <!-- v-for讀取已上傳物流文件 -->
           <div v-for="(file , index) in details.existDocument" :key="index" class="icon">
-            <p>{{ file.FileName }}</p>
-            <div>
+            <p>{{ file.FileName }}
               <!-- 在handlePreview依據不同副檔名做不同處理 -->
               <img src="@/assets/view.png" @click="handlePreview(file)">
-            </div>
+            </p>
           </div>
           <!-- doc/docx download hidden Link -->
           <a href="" style="display: none;" id="download-link"></a>
@@ -307,6 +306,12 @@
         scale: 1.5
       }
     }
+    p::before {
+                margin-right: 10px;
+                content: '·';
+                font-weight: 700;
+                color: white;
+              }
   }
   .modal {
     .modal-body {
@@ -464,12 +469,10 @@
         .content {
           @include content_bg;
           p {
-            text-align: center;
-            white-space: nowrap;
             font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: white;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: white;
           }
           .dropdown {
             width: 55%;
@@ -673,12 +676,10 @@
             }
           }
           p {
-            text-align: center;
-            white-space: nowrap;
             font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: white;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: white;
           }
           .dropdown {
             .dropdown-menu {

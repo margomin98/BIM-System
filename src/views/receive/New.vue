@@ -82,13 +82,13 @@
         </div>
         <!-- 物流文件上傳 -->
         <div class="col">
-          <div class="input-group  mb-3">
+          <div class="input-group">
             <div class="input-group-prepend">物流文件上傳：</div>
             <button class="upload_file_pt1" @click="openFileInput(0)">選擇檔案</button>
             <input type="file" id="fileInput" ref="fileInput1" style="display: none" @change="handleDocumentFile($event)" multiple />
           </div>
-          <div class="selected_file col">
-          <div class="input-group">
+          <div class="selected_file col ">
+          <div class="input-group pt-2">
             <div class="file_upload_box">
               <div v-for="(file, index) in fileParams.viewDoc" :key="index" class="file_upload_wrap">
                 <p class='file_name'>{{ file.name }}
@@ -190,18 +190,19 @@
             <div class="col">
               <div class="input-group">
                 <div class="input-group-prepend">物流文件：</div>
-              </div>
-            </div>
+          
             <div class="selected_file col mb-3">
               <div class="input-group">
                 <div class="file_upload_box">
                   <div v-for="(file, index) in tab.viewDoc" :key="index" class="file_upload_wrap">
-                    <p class="file_name">{{ file.name }}</p>
-                    <img class="view_icon" src="@/assets/view.png" @click="handleDocPreview(file)">
-                    <img class="delete_icon" src="@/assets/trash.png" @click="deleteFile('document',index)">
+                    <p class="file_name">{{ file.name }}
+                    <img class="view_icon" src="@/assets/view.png" @click="handleDocPreview(file)"></p>
+                    <!-- <img class="delete_icon" src="@/assets/trash.png" @click="deleteFile('document',index)"> -->
                   </div>
-                </div>
+                </div>   
+            </div>
               </div>
+               </div>
               <!-- doc/docx download hidden Link -->
               <a href="" style="display: none;" id="download-link"></a>
               <!-- Modal Trigger -->
@@ -996,7 +997,7 @@
         .content {
           @include content_bg;
           .selected_file{
-            margin-left: 150px;
+            margin-left: calc(100px + 65px);
     margin-bottom: 3%;
           }
           .dropdown {
