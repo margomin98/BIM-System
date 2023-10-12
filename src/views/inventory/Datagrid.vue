@@ -361,7 +361,7 @@
             //取得datagrid成功
             console.log('datagrid:',data.resultList);
             datagridSetting.totalRecords = data.resultList.total;
-            rowData.value = data.resultList;
+            rowData.value = data.resultList.rows;
           } else if (data.state === 'account_error') {
             //尚未登入
             alert(data.messages);

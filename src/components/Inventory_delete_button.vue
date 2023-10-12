@@ -1,5 +1,5 @@
 <template>
-  <div class='button_wrap'>
+  <div class='button_div'>
     <button  @click="DeleteFn" >刪除</button>
   </div>
 </template>
@@ -14,10 +14,11 @@
   } from 'vue-router';
   export default {
     props: ['params'],
-    setup(props) {
+    setup(props, {emit}) {
       const data = props.params.data;
       function DeleteFn() {
-        props.params.deleteFromAssetList(data);
+        // props.params.deleteFromAssetList(data);
+        emit('delete', props.params.data)
       }
       return {
         DeleteFn,
@@ -28,7 +29,7 @@
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
-.button_wrap{
+.button_div{
    display:flex;
   align-items:center;
 
