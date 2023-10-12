@@ -89,7 +89,7 @@
     </div>
     <div class="col justify-content-center d-flex">
       <div class="button_wrap d-flex">
-        <button class="search_btn" @click="submit">檢索</button>
+        <button class="search_btn" @click="submit('' , 'search')">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
       </div>
     </div>
@@ -101,26 +101,26 @@
         ref = 'dt'
         v-model:selection="selectedProduct" 
         lazy 
-        :first= "first"
+        :first= "datagridSetting.first"
         :size="'small'"
-        :loading="loading"
+        :loading="datagridSetting.loading"
         :value="rowData" 
-        :sort-field="'AssetsId'"
-        :sort-order="-1"
+        :sort-field="datagridSetting.sortField"
+        :sort-order="datagridSetting.sortOrder"
         resizableColumns 
         columnResizeMode="fit"
         showGridlines 
         scrollable 
         scrollHeight="490px" 
-        @page="submit($event)" 
-        @sort="submit($event)"
-        :selectAll="selectAll"
+        @page="submit($event , 'page')" 
+        @sort="submit($event , 'sort')"
+        :selectAll="datagridSetting.selectAll"
         @select-all-change="onSelectAllChange"
         table-style="min-height: 490px;"
         paginator 
         :rows="10" 
         :row-style="({ AssetsId }) => AssetsId === 'BF00000005' ? 'background-color: firebrick; color:white;': null "
-        :totalRecords="totalRecords"
+        :totalRecords="datagridSetting.totalRecords"
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         :rowsPerPageOptions="[10, 20, 30]"
         currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
@@ -130,14 +130,14 @@
             <button @click="add" type="button" class="btn btn-primary">increase totalRecords</button>
           </div>
         </template> -->
-        <!-- <Column selectionMode="multiple" headerStyle="width: 3rem"></Column> -->
-        <Column header="" frozen style="min-width: 175px;">
+        <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+        <Column style="min-width: 200px;">
           <template #body="slotProps">
             <!-- Add the custom component here -->
             <test :params = "slotProps" :msg="'hi'" @msg="handlemsg"/>
           </template>
         </Column>
-        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'width': item.width}" :frozen="item.field === 'AssetsId'"></Column>
+        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}" :frozen="item.field === 'AssetsId'"></Column>
       </DataTable>
       </div>
 
@@ -188,13 +188,17 @@ export default {
     const EquipCategoryInit = ref('請先選擇設備總類');
     const LayerInit = ref('請先選擇區域');
     const rowData = ref([]);
-    const loading = ref(false);
-    const totalRecords = ref(1000);
-    const currentPage = ref(0);
-    const rows = ref(10);
-    const first = ref(0);
-    const selectAll = ref(false);
     const selectedProduct = ref();
+    const datagridSetting = reactive({
+      totalRecords: 0,
+      first: 0,
+      rows: 10,
+      currentPage: 1,
+      sortField: 'AssetsId',
+      sortOrder: -1,
+      loading: false,
+      selectAll: false, //不一定要
+    })
     const datagridfield = [
       {
         field: 'AssetsId',
@@ -209,12 +213,12 @@ export default {
       {
         field: 'EquipTypeName',
         header: '設備總類',
-        width: '150px',
+        width: '350px',
       },
       {
         field: 'EquipCategoryName',
         header: '設備分類',
-        width: '150px',
+        width: '350px',
       },
       {
         field: 'AreaName',
@@ -244,65 +248,71 @@ export default {
     ];
     const dt = ref();
     onMounted(() => {
-      const event = {
-        first: 0 ,
-        rows: 10,
-        page: currentPage.value,
-        sortField: 'AssetsId',
-        sortOrder: -1,
-      }
-      submit(event);
-      
+      submit('' , 'search');
     });
     function add() {
-      // totalRecords.value++;
-      selectAll.value = !selectAll.value
-
+      // datagridSetting.totalRecords++;
+      datagridSetting.selectAll = !datagridSetting.selectAll
     }
     function exportCSV() {
       dt.value.exportCSV();
     }
     const onSelectAllChange = (event) => {
       console.log('selectAll event:',event);
-      selectAll.value = event.checked;
-      if(selectAll.value) {
+      datagridSetting.selectAll = event.checked;
+      if(datagridSetting.selectAll) {
         selectedProduct.value = rowData.value
       } else {
         selectedProduct.value = [];
       }
     }
-    async function submit(event) {
-      console.log('first:',first.value);
-      loading.value = true;
+    async function submit(event , type) {
+      datagridSetting.loading = true;
       const formData = new FormData();
       // 將切頁資訊append到 formData
       // console.log(event);
-      const order = event.sortOrder === 1 ? 'asc' : 'desc'
-      if(event.page || event.page === 0) {
-        currentPage.value = (event.page+1);
+      // type為sort或page =>更新datagrid參數，submit則回到第一頁
+      switch (type) {
+        case 'sort':
+          datagridSetting.currentPage = 1;
+          datagridSetting.sortField = event.sortField;
+          datagridSetting.sortOrder = event.sortOrder;
+          datagridSetting.first = event.first;
+          break;
+        case 'page':
+          datagridSetting.currentPage = (event.page+1);
+          datagridSetting.rows = event.rows;
+          datagridSetting.first = event.first;
+          break
+        case 'search':
+          datagridSetting.currentPage = 1;
+          datagridSetting.first = 0;
+          break
       }
-      // console.log('rows:', event.rows);
-      // console.log('page:', currentPage.value);
-      // console.log('sort:', event.sortField);
-      // console.log('order:', order);
-      // console.log('-----------------------------');
-      formData.append('rows',event.rows);
-      formData.append('page',currentPage.value);
-      formData.append('sort',event.sortField);
-      formData.append('order',order);
+      const order = datagridSetting.sortOrder === 1 ? 'asc' : 'desc'
+      console.log('first:', datagridSetting.first);
+      console.log('rows:', datagridSetting.rows);
+      console.log('page:', datagridSetting.currentPage);
+      console.log('sort:', datagridSetting.sortField);
+      console.log('order:', order);
+      console.log('-----------------------------');
       // 將表格資料append到 formData
       for (const key in searchParams) {
         formData.append(key, searchParams[key]);
       }
+      formData.append('rows',datagridSetting.rows);
+      formData.append('page',datagridSetting.currentPage);
+      formData.append('sort',datagridSetting.sortField);
+      formData.append('order',order);
       try {
         const response = await axios.post('http://192.168.0.177:7008/InventoryMng/Assets', formData);
         const data = response.data;
         if (data.state === 'success') {
           //取得datagrid成功
-          console.log('資產datagrid:', data.resultList);
-          totalRecords.value = data.resultList.total;
+          // console.log('資產datagrid:', data.resultList);
+          datagridSetting.totalRecords = data.resultList.total;
           rowData.value = data.resultList.rows;
-          if(selectAll.value) {
+          if(selectedProduct.selectAll) {
             selectedProduct.value = data.resultList.rows;
           }
         } else if (data.state === 'account_error') {
@@ -315,7 +325,7 @@ export default {
       } catch (error) {
         console.error(error);
       }
-      loading.value = false;
+      datagridSetting.loading = false;
     }
     async function getEquipTypeName() {
     if (DropdownArray.EquipType.length == 0) {
@@ -392,14 +402,7 @@ export default {
       }
       EquipCategoryInit.value = '請先選擇設備總類'
       LayerInit.value = '請先選擇區域';
-      currentPage.value = currentPage.value === 0 ? currentPage.value: currentPage.value-1;
-      const event = {
-        rows: rows.value,
-        page: currentPage.value,
-        sortField: 'AssetsId',
-        sortOrder: -1,
-      }
-      submit(event);
+      submit('' , 'search')
     }
     function handlemsg(data) {
       alert(data)
@@ -408,15 +411,11 @@ export default {
       dt,
       searchParams,
       DropdownArray,
-      loading,
       EquipCategoryInit,
       LayerInit,
       rowData,
-      selectAll,
       selectedProduct,
-      totalRecords,
-      rows,
-      first,
+      datagridSetting,
       datagridfield,
       add,
       exportCSV,
