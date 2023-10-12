@@ -171,7 +171,7 @@ const routes = [
     path: "/store_return",
     name: "Store_Return",
     component: Store_Return,
-    meta: {auth: true, request: 'AI_Create'},
+    meta: {auth: false, request: ''},
   },
   {
     path: "/store_delete",
