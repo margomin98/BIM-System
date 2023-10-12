@@ -13,7 +13,7 @@
           </div>
           <div class='second_content'>
             <div class='wrap1'>
-              <div class='col-xl-3 col-lg-3 col-md-3 col-12' style='padding-left:0'>
+              <div class='col-xl-3 col-lg-12 col-md-12 col-12' style='padding-left:0'>
                 <p>設備總類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
@@ -24,7 +24,7 @@
                   </div>
                 </div>
               </div>
-              <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
+              <div class='col-xl-3 col-lg-12 col-md-12 col-12'>
                 <p>設備分類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
@@ -35,13 +35,13 @@
                   </div>
                 </div>
               </div>
-              <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
+              <div class='col-xl-3 col-lg-12 col-md-12 col-12'>
                 <p>物品名稱</p>
                 <div class="number-input-box">
                   <input class="input-number" type="text" placeholder="最多輸入20字" v-model="searchParams.ProductName" />
                 </div>
               </div>
-              <div class="col-xl-3 col-lg-3 col-md-3 col-12">
+              <div class="col-xl-3 col-lg-12 col-md-12 col-12">
                 <p>已選/所需 數量 <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"></p>
                 <div class="number-input-box">
                   <p class="input-number readonly_box" readonly>{{ searchParams.selectedNumber }} / {{ searchParams.Number }}</p>
@@ -1224,7 +1224,7 @@
           .dropdown {
             button {
               background: white;
-              width: 150px;
+              width: 100%;
               border: none;
               display: flex;
               justify-content: space-between;
@@ -1240,7 +1240,6 @@
           div {
             padding: 0 5px;
             p {
-              width: 150px;
               text-align: center;
               white-space: nowrap;
               font-size: 18px;
@@ -1248,6 +1247,16 @@
               margin-bottom: 5px;
             }
           }
+        }
+        .wrap1{
+          display: grid; 
+  grid-auto-flow: column; 
+  grid-template-columns: 1fr 1fr; 
+  grid-template-rows: 1fr 1fr; 
+  gap: 10px 10px; 
+  grid-template-areas: 
+    ". ."
+    ". ."; 
         }
       }
     }
