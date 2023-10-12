@@ -21,7 +21,7 @@
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>設備分類</p>
             <div class="dropdown">
-              <button style='  overflow: hidden;text-overflow: ellipsis;white-space: nowrap' class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!searchParams.EquipTypeName">
+              <button  class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!searchParams.EquipTypeName">
                 {{ searchParams.EquipCategoryName || EquipCategoryInit }}
               </button>
               <div class="dropdown-menu" aria-labelledby="areaDropdown">
@@ -536,7 +536,9 @@
               display: flex;
               justify-content: space-between;
               align-items: center;
-              border: none;
+              border: none; overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             }
             .dropdown-menu {
               width: 100%;

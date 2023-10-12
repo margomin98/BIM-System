@@ -9,7 +9,6 @@
         <router-link :to="{name:'Equipment_New'}">
           <button class="add_btn">新增整合箱</button>
         </router-link>
-  
       </div>
     </div>
     <div class="container-fluid datagrid_section">
@@ -17,18 +16,18 @@
         <div class="row">
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>整合箱產編</p>
-            <input type="text" v-model="searchParams.IntegrationId"/>
+            <input type="text" v-model="searchParams.IntegrationId" />
           </div>
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>整合箱名稱</p>
-            <input type="text" v-model="searchParams.IntegrationName"/>
+            <input type="text" v-model="searchParams.IntegrationName" />
           </div>
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>區域</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
-                {{ searchParams.AreaName || '請選擇' }}
-              </button>
+                  {{ searchParams.AreaName || '請選擇' }}
+                </button>
               <div class="dropdown-menu" aria-labelledby="areaDropdown">
                 <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item" @click="selectArea(item)">{{ item.Name }}</p>
               </div>
@@ -37,9 +36,9 @@
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>櫃位</p>
             <div class="dropdown">
-              <button class="btn dropdown-toggle" style='  overflow: hidden;text-overflow: ellipsis;white-space: nowrap'  type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="searchParams.AreaName === ''">
-                {{ searchParams.LayerName || LayerInit }}
-              </button>
+              <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="searchParams.AreaName === ''">
+                  {{ searchParams.LayerName || LayerInit }}
+                </button>
               <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                 <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(item)">{{ item.Name }}</p>
               </div>
@@ -49,8 +48,8 @@
             <p>日期類型</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ searchParams.DateCategory || "請選擇" }}
-              </button>
+                  {{ searchParams.DateCategory || "請選擇" }}
+                </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item , index) in DropdownArray.DateCategory" :key="index" class="dropdown-item" @click="selectDateCategory(item)">{{ item }}</p>
               </div>
@@ -60,7 +59,7 @@
             <p>日期(起)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="searchParams.StartDate" class="date-input" :disabled="!searchParams.DateCategory"/>
+                <input type="date" v-model="searchParams.StartDate" class="date-input" :disabled="!searchParams.DateCategory" />
               </div>
             </div>
           </div>
@@ -68,7 +67,7 @@
             <p>日期(迄)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="searchParams.EndDate" class="date-input" :disabled="!searchParams.DateCategory"/>
+                <input type="date" v-model="searchParams.EndDate" class="date-input" :disabled="!searchParams.DateCategory" />
               </div>
             </div>
           </div>
@@ -82,22 +81,32 @@
         <!-- <button class="export_btn">匯出</button> -->
       </div>
     </div>
-   <div style="width: 100%">
-          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine mb-5" :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true" :pagination="true" :alwaysShowHorizontalScroll="true">
-    </ag-grid-vue>
+    <div style="width: 100%">
+      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine mb-5" :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true" :pagination="true" :alwaysShowHorizontalScroll="true">
+      </ag-grid-vue>
     </div>
-
   </div>
 </template>
 
 <script>
-  import { AgGridVue } from "ag-grid-vue3";
-  import { onMounted, reactive, ref } from "vue";
+  import {
+    AgGridVue
+  } from "ag-grid-vue3";
+  import {
+    onMounted,
+    reactive,
+    ref
+  } from "vue";
   import Equipment_button from "@/components/Equipment_button";
   import Delete from "@/components/Equip_delete_button";
   import Navbar from "@/components/Navbar.vue";
-  import {EquipmentDataCategory} from "@/assets/js/dropdown.js"
-  import { getArea , getLayer } from '@/assets/js/common_api'
+  import {
+    EquipmentDataCategory
+  } from "@/assets/js/dropdown.js"
+  import {
+    getArea,
+    getLayer
+  } from '@/assets/js/common_api'
   export default {
     components: {
       Navbar,
@@ -126,85 +135,85 @@
       const LayerInit = ref('請先選擇區域');
       const pageSize = ref(10);
       const columnDefs = [{
-            suppressMovable: true,
-            field: "",
-            cellRenderer: "Equipment_button",
-            width: 185,
-            resizable: true,
-          },
-          {
-            headerName: "整合箱產編",
-            field: "IntegrationId",
-            unSortIcon: true,
-            sortable: true,
-            width: 180,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "整合箱名稱",
-            field: "IntegrationName",
-            flex: 1,
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "區域",
-            field: "AreaName",
-            unSortIcon: true,
-            sortable: true,
-            width: 100,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "櫃位",
-            field: "LayerName",
-            unSortIcon: true,
-            sortable: true,
-            width: 100,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "最後更換日期",
-            field: "EditTime",
-            unSortIcon: true,
-            sortable: true,
-            width: 180,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "整合日期",
-            field: "IntegrateDate",
-            unSortIcon: true,
-            sortable: true,
-            width: 160,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "整合人員",
-            field: "Integrator",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            suppressMovable: true,
-            width: 100,
-            field: "",
-            cellRenderer: "Delete",
-          },
-        ];
+          suppressMovable: true,
+          field: "",
+          cellRenderer: "Equipment_button",
+          width: 185,
+          resizable: true,
+        },
+        {
+          headerName: "整合箱產編",
+          field: "IntegrationId",
+          unSortIcon: true,
+          sortable: true,
+          width: 180,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "整合箱名稱",
+          field: "IntegrationName",
+          flex: 1,
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "區域",
+          field: "AreaName",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "櫃位",
+          field: "LayerName",
+          unSortIcon: true,
+          sortable: true,
+          width: 100,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "最後更換日期",
+          field: "EditTime",
+          unSortIcon: true,
+          sortable: true,
+          width: 180,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "整合日期",
+          field: "IntegrateDate",
+          unSortIcon: true,
+          sortable: true,
+          width: 160,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          headerName: "整合人員",
+          field: "Integrator",
+          unSortIcon: true,
+          sortable: true,
+          width: 150,
+          resizable: true,
+          suppressMovable: true
+        },
+        {
+          suppressMovable: true,
+          width: 100,
+          field: "",
+          cellRenderer: "Delete",
+        },
+      ];
       const rowData = ref([]);
-      onMounted(()=>{
+      onMounted(() => {
         submit();
       });
       async function submit() {
@@ -240,35 +249,35 @@
       async function getAreaName() {
         if (DropdownArray.Area.length == 0) {
           getArea()
-          .then((data)=>{
-            DropdownArray.Area = data;
-          })
-          .catch((error) =>{
-            console.error(error);
-          })
+            .then((data) => {
+              DropdownArray.Area = data;
+            })
+            .catch((error) => {
+              console.error(error);
+            })
         }
       }
       async function getLayerName() {
         getLayer(searchParams.Area_Id)
-          .then((data)=>{
+          .then((data) => {
             DropdownArray.Layer = data;
           })
-          .catch((error) =>{
+          .catch((error) => {
             console.error(error);
           })
       }
       const selectArea = (item) => {
-      searchParams.AreaName = item.Name;
-      searchParams.Area_Id = item.Id;
-      searchParams.LayerName = '';
-      searchParams.Layer_Id = '';
-      getLayerName();
-      LayerInit.value = '請選擇';
-    };
-    const selectLayer = (item) => {
-      searchParams.LayerName = item.Name;
-      searchParams.Layer_Id = item.Id;
-    };
+        searchParams.AreaName = item.Name;
+        searchParams.Area_Id = item.Id;
+        searchParams.LayerName = '';
+        searchParams.Layer_Id = '';
+        getLayerName();
+        LayerInit.value = '請選擇';
+      };
+      const selectLayer = (item) => {
+        searchParams.LayerName = item.Name;
+        searchParams.Layer_Id = item.Id;
+      };
       const selectDateCategory = (item) => {
         searchParams.DateCategory = item;
       };
@@ -305,8 +314,8 @@
     .main_section {
       padding: 0 10%;
       h1 {
-       margin-bottom: 20px;
-    margin-top: 30px;
+        margin-bottom: 20px;
+        margin-top: 30px;
         text-align: center;
         font-size: 55px;
         font-weight: 600;
@@ -334,15 +343,15 @@
             background-color: #5d85bd;
           }
         }
-         .export_btn {
+        .export_btn {
           @include export_btn;
           &:hover {
             background-color: #274266;
           }
         }
       }
-      .datagrid_section {    
-         .content {
+      .datagrid_section {
+        .content {
           background: rgba(82, 136, 156, 0.8);
           border-radius: 10px;
           margin-bottom: 30px;
@@ -356,8 +365,8 @@
           grid-template-rows: 1fr 1fr;
           grid-template-columns: 1fr 1fr 1fr 1fr;
           gap: 40px 5px;
-           .col-xl-2{
-            margin:0 3px;
+          .col-xl-2 {
+            margin: 0 3px;
           }
           p {
             @include datagrid_title;
@@ -368,7 +377,7 @@
             height: 35px;
           }
           button {
-            border:none;
+            border: none;
             padding: 0;
             width: 100%;
             font-size: 18px;
@@ -378,11 +387,14 @@
             width: 200px;
             height: 35px;
             @include dropdown_btn;
-              .dropdown-toggle {
+            .dropdown-toggle {
               display: flex;
               justify-content: space-between;
               align-items: center;
               border: none;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
             .dropdown-menu {
               width: 100%;
@@ -425,12 +437,12 @@
         gap: 20px;
         .add_btn {
           @include datagrid_button_no1;
-          width:150px;
+          width: 150px;
           &:hover {
             background-color: #537ebc;
           }
         }
-           .export_btn {
+        .export_btn {
           @include export_btn;
           &:hover {
             background-color: #274266;
@@ -478,6 +490,9 @@
               justify-content: space-between;
               align-items: center;
               border: none;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
             .dropdown-menu {
               width: 100%;
@@ -528,7 +543,7 @@
             background-color: #537ebc;
           }
         }
-      .export_btn {
+        .export_btn {
           @include export_btn;
           font-size: 18px;
           width: 100%;
@@ -581,7 +596,7 @@
             width: 100%;
             height: 35px;
             @include dropdown_btn;
-           .dropdown-toggle {
+            .dropdown-toggle {
               display: flex;
               justify-content: space-between;
               align-items: center;
