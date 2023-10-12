@@ -88,24 +88,22 @@
           <button class="upload_file_pt1" @click="openFileInput(0)">選擇檔案</button>
           <input type="file" id="fileInput" ref="fileInput1" style="display: none" @change="handleDocumentFile($event)" multiple />
         </div>
-        <div class="d-flex selected_file col-12 mt-2">
+        <div class="d-flex selected_file col-12">
           <!-- 已上傳文件 -->
-          <p class="text-start mb-0 uploaded_file">已上傳文件</p>
+          <p class="text-start mt-3 mb-2 uploaded_file">已上傳文件</p>
           <div class="icon" v-for="(file, index) in details.existDocument" :key="index">
-            <p class="uploded_file_name">{{ file.FileName }}</p>
-            <div class="icon_wrap">
+            <p class="uploded_file_name">{{ file.FileName }}
               <img src="@/assets/view.png" @click="handlePreview(file)">
               <img class="close_icon" src="@/assets/trash.png" @click="deleteFile('document',index , file)">
-            </div>
+            </p>
           </div>
           <!-- 新上傳檔案 -->
           <p class="text-start mb-0 uploaded_file">已選擇檔案</p>
           <div class="icon" v-for="(file, index) in fileParams.viewDoc" :key="index">
-            <p class="uploded_file_name">{{ file.FileName }}</p>
-            <div class="icon_wrap">
+            <p class="uploded_file_name">{{ file.FileName }}
               <img src="@/assets/view.png" @click="handlePreview(file)">
               <img class="close_icon" src="@/assets/trash.png" @click="deleteFile('document',index , file)">
-            </div>
+            </p>
           </div>
           <!-- doc/docx download hidden Link -->
           <a href="" style="display: none;" id="download-link"></a>
@@ -814,7 +812,6 @@
         .content {
           @include content_bg;
           p.uploded_file_name {
-            display: flex;
             font-weight: 700;
             margin-bottom: 5px;
             color: white;
@@ -1013,7 +1010,6 @@
             }
           }
           p.uploded_file_name {
-            display: flex;
             font-weight: 700;
             margin-bottom: 5px;
             color: white;
@@ -1218,7 +1214,6 @@
         .content {
           @include content_bg;
           p.uploded_file_name {
-            display: flex;
             font-weight: 700;
             margin-bottom: 5px;
             color: white;
