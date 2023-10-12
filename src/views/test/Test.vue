@@ -11,8 +11,8 @@
             <p>設備總類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                {{ searchParams.EquipTypeName || '請選擇' }}
-              </button>
+                    {{ searchParams.EquipTypeName || '請選擇' }}
+                  </button>
               <div class="dropdown-menu" aria-labelledby="areaDropdown">
                 <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(item)"> {{ item.Name }}</p>
               </div>
@@ -22,8 +22,8 @@
             <p>設備分類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!searchParams.EquipTypeName">
-                {{ searchParams.EquipCategoryName || EquipCategoryInit }}
-              </button>
+                    {{ searchParams.EquipCategoryName || EquipCategoryInit }}
+                  </button>
               <div class="dropdown-menu" aria-labelledby="areaDropdown">
                 <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(item)"> {{ item.Name }}</p>
               </div>
@@ -41,8 +41,8 @@
             <p>狀態</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{ searchParams.Status || '請選擇' }}
-                </button>
+                      {{ searchParams.Status || '請選擇' }}
+                    </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item, index) in DropdownArray.Status" :key="index" class="dropdown-item" @click="selectStatus(item)">{{ item }}</p>
               </div>
@@ -52,8 +52,8 @@
             <p>區域</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
-                {{ searchParams.AreaName || '請選擇' }}
-              </button>
+                    {{ searchParams.AreaName || '請選擇' }}
+                  </button>
               <div class="dropdown-menu" aria-labelledby="areaDropdown">
                 <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item" @click="selectArea(item)">{{ item.Name }}</p>
               </div>
@@ -63,8 +63,8 @@
             <p>櫃位</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!searchParams.AreaName">
-                {{ searchParams.LayerName || LayerInit }}
-              </button>
+                    {{ searchParams.LayerName || LayerInit }}
+                  </button>
               <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                 <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(item)">{{ item.Name }}</p>
               </div>
@@ -96,46 +96,23 @@
     <div>
       <span v-for="item in selectedProduct" style="margin-right: 1rem;">{{ item.AssetsId }}</span>
     </div>
-      <div class="datagrid_section mb-3">
-      <DataTable 
-        ref = 'dt'
-        v-model:selection="selectedProduct" 
-        lazy 
-        :first= "datagridSetting.first"
-        :size="'small'"
-        :loading="datagridSetting.loading"
-        :value="rowData" 
-        :sort-field="datagridSetting.sortField"
-        :sort-order="datagridSetting.sortOrder"
-        resizableColumns 
-        columnResizeMode="fit"
-        showGridlines 
-        scrollable 
-        scrollHeight="490px" 
-        @page="submit($event , 'page')" 
-        @sort="submit($event , 'sort')"
-        :selectAll="datagridSetting.selectAll"
-        @select-all-change="onSelectAllChange"
-        table-style="min-height: 490px;"
-        paginator 
-        :rows="10" 
-        :row-style="({ AssetsId }) => AssetsId === 'BF00000005' ? 'background-color: firebrick; color:white;': null "
-        :totalRecords="datagridSetting.totalRecords"
-        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-        :rowsPerPageOptions="[10, 20, 30]"
-        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+    <div class="datagrid_section mb-3">
+      <DataTable ref='dt' v-model:selection="selectedProduct" lazy :first="datagridSetting.first" :size="'small'" :loading="datagridSetting.loading" :value="rowData" :sort-field="datagridSetting.sortField" :sort-order="datagridSetting.sortOrder" resizableColumns
+        columnResizeMode="fit" scrollable scrollHeight="490px" @page="submit($event , 'page')" @sort="submit($event , 'sort')" :selectAll="datagridSetting.selectAll" @select-all-change="onSelectAllChange" table-style="min-height: 490px;" paginator :rows="10"
+        :row-style="({ AssetsId }) => AssetsId === 'BF00000005' ? 'background-color: firebrick; color:white;': null " :totalRecords="datagridSetting.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <!-- <template #header>
-          <div>
-            <button class="btn btn-primary" label="Export" @click="exportCSV()" style="margin-right: 1rem;">exportCSV</button>
-            <button @click="add" type="button" class="btn btn-primary">increase totalRecords</button>
-          </div>
-        </template> -->
+              <div>
+                <button class="btn btn-primary" label="Export" @click="exportCSV()" style="margin-right: 1rem;">exportCSV</button>
+                <button @click="add" type="button" class="btn btn-primary">increase totalRecords</button>
+              </div>
+</template>-->
         <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
         <Column style="min-width: 200px;">
-          <template #body="slotProps">
-            <!-- Add the custom component here -->
-            <test :params = "slotProps" :msg="'hi'" @msg="handlemsg"/>
-          </template>
+<template #body="slotProps">
+  <!-- Add the custom component here -->
+  <test :params="slotProps" :msg="'hi'" @msg="handlemsg" />
+</template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}" :frozen="item.field === 'AssetsId'"></Column>
       </DataTable>
@@ -145,25 +122,35 @@
 </template>
 
 <script>
-import { ref , reactive , onMounted } from 'vue';
-import Navbar from "@/components/Navbar.vue";
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
-import test from "@/components/test";
-import axios from 'axios';
-import { Asset_StastusArraay } from "@/assets/js/dropdown"
-import { getEquipType , getEquipCategory , getArea , getLayer } from '@/assets/js/common_api'
-
-export default {
-  name: 'App',
-  components: {
-    DataTable,
-    Column,
-    Navbar,
-    test,
-  },
-  setup() {
-    const searchParams = reactive({
+  import {
+    ref,
+    reactive,
+    onMounted
+  } from 'vue';
+  import Navbar from "@/components/Navbar.vue";
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
+  import test from "@/components/test";
+  import axios from 'axios';
+  import {
+    Asset_StastusArraay
+  } from "@/assets/js/dropdown"
+  import {
+    getEquipType,
+    getEquipCategory,
+    getArea,
+    getLayer
+  } from '@/assets/js/common_api'
+  export default {
+    name: 'App',
+    components: {
+      DataTable,
+      Column,
+      Navbar,
+      test,
+    },
+    setup() {
+      const searchParams = reactive({
         EquipTypeName: '',
         EquipType_Id: '',
         EquipCategoryName: '',
@@ -178,267 +165,264 @@ export default {
         StartDate: '',
         EndDate: '',
       });
-    const DropdownArray = reactive({
-      Status: Asset_StastusArraay,
-      EquipType: [],
-      EquipCategory: [],
-      Area: [],
-      Layer: [],
-    });
-    const EquipCategoryInit = ref('請先選擇設備總類');
-    const LayerInit = ref('請先選擇區域');
-    const rowData = ref([]);
-    const selectedProduct = ref();
-    const datagridSetting = reactive({
-      totalRecords: 0,
-      first: 0,
-      rows: 10,
-      currentPage: 1,
-      sortField: 'AssetsId',
-      sortOrder: -1,
-      loading: false,
-      selectAll: false, //不一定要
-    })
-    const datagridfield = [
-      {
-        field: 'AssetsId',
-        header: '資產編號',
-        width: '150px',
-      },
-      {
-        field: 'AssetName',
-        header: '物品名稱',
-        width: '350px',
-      },
-      {
-        field: 'EquipTypeName',
-        header: '設備總類',
-        width: '350px',
-      },
-      {
-        field: 'EquipCategoryName',
-        header: '設備分類',
-        width: '350px',
-      },
-      {
-        field: 'AreaName',
-        header: '區域',
-        width: '130px',
-      },
-      {
-        field: 'LayerName',
-        header: '櫃位',
-        width: '130px',
-      },
-      {
-        field: 'Status',
-        header: '狀態',
-        width: '110px',
-      },
-      {
-        field: 'InboundDate',
-        header: '入庫日期',
-        width: '150px',
-      },
-      {
-        field: 'AssetsInOperator',
-        header: '入庫人員',
-        width: '150px',
-      },
-    ];
-    const dt = ref();
-    onMounted(() => {
-      submit('' , 'search');
-    });
-    function add() {
-      // datagridSetting.totalRecords++;
-      datagridSetting.selectAll = !datagridSetting.selectAll
-    }
-    function exportCSV() {
-      dt.value.exportCSV();
-    }
-    const onSelectAllChange = (event) => {
-      console.log('selectAll event:',event);
-      datagridSetting.selectAll = event.checked;
-      if(datagridSetting.selectAll) {
-        selectedProduct.value = rowData.value
-      } else {
-        selectedProduct.value = [];
+      const DropdownArray = reactive({
+        Status: Asset_StastusArraay,
+        EquipType: [],
+        EquipCategory: [],
+        Area: [],
+        Layer: [],
+      });
+      const EquipCategoryInit = ref('請先選擇設備總類');
+      const LayerInit = ref('請先選擇區域');
+      const rowData = ref([]);
+      const selectedProduct = ref();
+      const datagridSetting = reactive({
+        totalRecords: 0,
+        first: 0,
+        rows: 10,
+        currentPage: 1,
+        sortField: 'AssetsId',
+        sortOrder: -1,
+        loading: false,
+        selectAll: false, //不一定要
+      })
+      const datagridfield = [{
+          field: 'AssetsId',
+          header: '資產編號',
+          width: '150px',
+        },
+        {
+          field: 'AssetName',
+          header: '物品名稱',
+          width: '350px',
+        },
+        {
+          field: 'EquipTypeName',
+          header: '設備總類',
+          width: '350px',
+        },
+        {
+          field: 'EquipCategoryName',
+          header: '設備分類',
+          width: '350px',
+        },
+        {
+          field: 'AreaName',
+          header: '區域',
+          width: '130px',
+        },
+        {
+          field: 'LayerName',
+          header: '櫃位',
+          width: '130px',
+        },
+        {
+          field: 'Status',
+          header: '狀態',
+          width: '110px',
+        },
+        {
+          field: 'InboundDate',
+          header: '入庫日期',
+          width: '150px',
+        },
+        {
+          field: 'AssetsInOperator',
+          header: '入庫人員',
+          width: '150px',
+        },
+      ];
+      const dt = ref();
+      onMounted(() => {
+        submit('', 'search');
+      });
+      function add() {
+        // datagridSetting.totalRecords++;
+        datagridSetting.selectAll = !datagridSetting.selectAll
       }
-    }
-    async function submit(event , type) {
-      datagridSetting.loading = true;
-      const formData = new FormData();
-      // 將切頁資訊append到 formData
-      // console.log(event);
-      // type為sort或page =>更新datagrid參數，submit則回到第一頁
-      switch (type) {
-        case 'sort':
-          datagridSetting.currentPage = 1;
-          datagridSetting.sortField = event.sortField;
-          datagridSetting.sortOrder = event.sortOrder;
-          datagridSetting.first = event.first;
-          break;
-        case 'page':
-          datagridSetting.currentPage = (event.page+1);
-          datagridSetting.rows = event.rows;
-          datagridSetting.first = event.first;
-          break
-        case 'search':
-          datagridSetting.currentPage = 1;
-          datagridSetting.first = 0;
-          break
+      function exportCSV() {
+        dt.value.exportCSV();
       }
-      const order = datagridSetting.sortOrder === 1 ? 'asc' : 'desc'
-      console.log('first:', datagridSetting.first);
-      console.log('rows:', datagridSetting.rows);
-      console.log('page:', datagridSetting.currentPage);
-      console.log('sort:', datagridSetting.sortField);
-      console.log('order:', order);
-      console.log('-----------------------------');
-      // 將表格資料append到 formData
-      for (const key in searchParams) {
-        formData.append(key, searchParams[key]);
-      }
-      formData.append('rows',datagridSetting.rows);
-      formData.append('page',datagridSetting.currentPage);
-      formData.append('sort',datagridSetting.sortField);
-      formData.append('order',order);
-      try {
-        const response = await axios.post('http://192.168.0.177:7008/InventoryMng/Assets', formData);
-        const data = response.data;
-        if (data.state === 'success') {
-          //取得datagrid成功
-          // console.log('資產datagrid:', data.resultList);
-          datagridSetting.totalRecords = data.resultList.total;
-          rowData.value = data.resultList.rows;
-          if(selectedProduct.selectAll) {
-            selectedProduct.value = data.resultList.rows;
-          }
-        } else if (data.state === 'account_error') {
-          //尚未登入
-          alert(data.messages);
-          router.push('/');
+      const onSelectAllChange = (event) => {
+        console.log('selectAll event:', event);
+        datagridSetting.selectAll = event.checked;
+        if (datagridSetting.selectAll) {
+          selectedProduct.value = rowData.value
         } else {
-          alert(data.messages);
+          selectedProduct.value = [];
         }
-      } catch (error) {
-        console.error(error);
       }
-      datagridSetting.loading = false;
-    }
-    async function getEquipTypeName() {
-    if (DropdownArray.EquipType.length == 0) {
-      getEquipType()
-      .then((data)=>{
-        DropdownArray.EquipType = data;
-      })
-      .catch((error) =>{
-        console.error(error);
-      })
-    }
-    }
-    async function getEquipCategoryName() {
-      getEquipCategory(searchParams.EquipType_Id)
-        .then((data)=>{
-          DropdownArray.EquipCategory = data;
-        })
-        .catch((error) =>{
+      async function submit(event, type) {
+        datagridSetting.loading = true;
+        const formData = new FormData();
+        // 將切頁資訊append到 formData
+        // console.log(event);
+        // type為sort或page =>更新datagrid參數，submit則回到第一頁
+        switch (type) {
+          case 'sort':
+            datagridSetting.currentPage = 1;
+            datagridSetting.sortField = event.sortField;
+            datagridSetting.sortOrder = event.sortOrder;
+            datagridSetting.first = event.first;
+            break;
+          case 'page':
+            datagridSetting.currentPage = (event.page + 1);
+            datagridSetting.rows = event.rows;
+            datagridSetting.first = event.first;
+            break
+          case 'search':
+            datagridSetting.currentPage = 1;
+            datagridSetting.first = 0;
+            break
+        }
+        const order = datagridSetting.sortOrder === 1 ? 'asc' : 'desc'
+        console.log('first:', datagridSetting.first);
+        console.log('rows:', datagridSetting.rows);
+        console.log('page:', datagridSetting.currentPage);
+        console.log('sort:', datagridSetting.sortField);
+        console.log('order:', order);
+        console.log('-----------------------------');
+        // 將表格資料append到 formData
+        for (const key in searchParams) {
+          formData.append(key, searchParams[key]);
+        }
+        formData.append('rows', datagridSetting.rows);
+        formData.append('page', datagridSetting.currentPage);
+        formData.append('sort', datagridSetting.sortField);
+        formData.append('order', order);
+        try {
+          const response = await axios.post('http://192.168.0.177:7008/InventoryMng/Assets', formData);
+          const data = response.data;
+          if (data.state === 'success') {
+            //取得datagrid成功
+            // console.log('資產datagrid:', data.resultList);
+            datagridSetting.totalRecords = data.resultList.total;
+            rowData.value = data.resultList.rows;
+            if (selectedProduct.selectAll) {
+              selectedProduct.value = data.resultList.rows;
+            }
+          } else if (data.state === 'account_error') {
+            //尚未登入
+            alert(data.messages);
+            router.push('/');
+          } else {
+            alert(data.messages);
+          }
+        } catch (error) {
           console.error(error);
-        })
-    }
-    async function getAreaName() {
-      if (DropdownArray.Area == 0) {
-        getArea()
-        .then((data)=>{
-          DropdownArray.Area = data;
-        })
-        .catch((error) =>{
-          console.error(error);
-        })
+        }
+        datagridSetting.loading = false;
       }
-    }
-    async function getLayerName() {
-      getLayer(searchParams.Area_Id)
-      .then((data)=>{
-        DropdownArray.Layer = data;
-      })
-      .catch((error) =>{
-        console.error(error);
-      })
-    }
-    function selectType(item) {
-    searchParams.EquipTypeName = item.Name;
-    searchParams.EquipType_Id = item.Id;
-    searchParams.EquipCategoryName = '';
-    searchParams.Category_Id = '';
-    getEquipCategoryName();
-    EquipCategoryInit.value = '請選擇';
-    }
-
-    function selectCategory(item) {
-      searchParams.EquipCategoryName = item.Name;
-      searchParams.Category_Id = item.Id;
-    }
-    const selectStatus = (item) => {
-      searchParams.Status = item;
-    };
-    const selectArea = (item) => {
-      searchParams.AreaName = item.Name;
-      searchParams.Area_Id = item.Id;
-      searchParams.LayerName = '';
-      searchParams.Layer_Id = '';
-      //API function here
-      getLayerName();
-      LayerInit.value = '請選擇';
-    };
-    const selectLayer = (item) => {
-      searchParams.LayerName = item.Name;
-      searchParams.Layer_Id = item.Id;
-    };
-    function clear() {
-      for (const key in searchParams) {
-        searchParams[key] = '';
+      async function getEquipTypeName() {
+        if (DropdownArray.EquipType.length == 0) {
+          getEquipType()
+            .then((data) => {
+              DropdownArray.EquipType = data;
+            })
+            .catch((error) => {
+              console.error(error);
+            })
+        }
       }
-      EquipCategoryInit.value = '請先選擇設備總類'
-      LayerInit.value = '請先選擇區域';
-      submit('' , 'search')
-    }
-    function handlemsg(data) {
-      alert(data)
-    }
-    return {
-      dt,
-      searchParams,
-      DropdownArray,
-      EquipCategoryInit,
-      LayerInit,
-      rowData,
-      selectedProduct,
-      datagridSetting,
-      datagridfield,
-      add,
-      exportCSV,
-      onSelectAllChange,
-      submit,
-      getEquipTypeName,
-      getAreaName,
-      selectType,
-      selectCategory,
-      selectStatus,
-      selectArea,
-      selectLayer,
-      clear,
-      handlemsg,
-    }
-  },
-}
+      async function getEquipCategoryName() {
+        getEquipCategory(searchParams.EquipType_Id)
+          .then((data) => {
+            DropdownArray.EquipCategory = data;
+          })
+          .catch((error) => {
+            console.error(error);
+          })
+      }
+      async function getAreaName() {
+        if (DropdownArray.Area == 0) {
+          getArea()
+            .then((data) => {
+              DropdownArray.Area = data;
+            })
+            .catch((error) => {
+              console.error(error);
+            })
+        }
+      }
+      async function getLayerName() {
+        getLayer(searchParams.Area_Id)
+          .then((data) => {
+            DropdownArray.Layer = data;
+          })
+          .catch((error) => {
+            console.error(error);
+          })
+      }
+      function selectType(item) {
+        searchParams.EquipTypeName = item.Name;
+        searchParams.EquipType_Id = item.Id;
+        searchParams.EquipCategoryName = '';
+        searchParams.Category_Id = '';
+        getEquipCategoryName();
+        EquipCategoryInit.value = '請選擇';
+      }
+      function selectCategory(item) {
+        searchParams.EquipCategoryName = item.Name;
+        searchParams.Category_Id = item.Id;
+      }
+      const selectStatus = (item) => {
+        searchParams.Status = item;
+      };
+      const selectArea = (item) => {
+        searchParams.AreaName = item.Name;
+        searchParams.Area_Id = item.Id;
+        searchParams.LayerName = '';
+        searchParams.Layer_Id = '';
+        //API function here
+        getLayerName();
+        LayerInit.value = '請選擇';
+      };
+      const selectLayer = (item) => {
+        searchParams.LayerName = item.Name;
+        searchParams.Layer_Id = item.Id;
+      };
+      function clear() {
+        for (const key in searchParams) {
+          searchParams[key] = '';
+        }
+        EquipCategoryInit.value = '請先選擇設備總類'
+        LayerInit.value = '請先選擇區域';
+        submit('', 'search')
+      }
+      function handlemsg(data) {
+        alert(data)
+      }
+      return {
+        dt,
+        searchParams,
+        DropdownArray,
+        EquipCategoryInit,
+        LayerInit,
+        rowData,
+        selectedProduct,
+        datagridSetting,
+        datagridfield,
+        add,
+        exportCSV,
+        onSelectAllChange,
+        submit,
+        getEquipTypeName,
+        getAreaName,
+        selectType,
+        selectCategory,
+        selectStatus,
+        selectArea,
+        selectLayer,
+        clear,
+        handlemsg,
+      }
+    },
+  }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/global.scss";
-@import "@/assets/css/theme.css";
-
+  @import "@/assets/css/global.scss";
+  @import "@/assets/css/theme.css";
   @media only screen and (min-width: 1200px) {
     .main_section {
       padding: 0 10%;
@@ -517,8 +501,8 @@ export default {
               align-items: center;
               border: none;
               overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
             .dropdown-menu {
               width: 100%;
@@ -614,6 +598,9 @@ export default {
               justify-content: space-between;
               align-items: center;
               border: none;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
             .dropdown-menu {
               width: 100%;
