@@ -162,9 +162,6 @@
                   <p>目前資產庫存</p>
                 </div>
               </div>
-              <!-- <ag-grid-vue style="height: 450px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :paginationPageSize="20" :pagination="true"
-              :suppressRowClickSelection="true" :rowSelection="'multiple'" @grid-ready="onGridReady1">
-              </ag-grid-vue> -->
               <DataTable 
               lazy 
               :first= "datagrid1.first"
@@ -210,9 +207,6 @@
       </div>
       <div class="content">
         <div style="width: 100%">
-          <!-- <ag-grid-vue style="width: 100%; height:810px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs2" :rowData="rowData2" :paginationPageSize="20" :pagination="true"
-          @grid-ready="onGridReady2" :alwaysShowHorizontalScroll="true">
-          </ag-grid-vue> -->
           <DataTable 
             lazy 
             :first= "datagrid2.first"
@@ -252,7 +246,6 @@
 </template>
 
 <script>
-  import { AgGridVue } from "ag-grid-vue3";
   import List_view_button from "@/components/Rent_process_new_view_button";
   import Inventory_delete_button from "@/components/Inventory_delete_button";
   import Navbar from "@/components/Navbar.vue";
@@ -268,7 +261,6 @@ import axios from "axios";
       DataTable,
       Column,
       Navbar,
-      AgGridVue,
       List_view_button,
       Inventory_delete_button,
     },
@@ -654,17 +646,16 @@ import axios from "axios";
               data.resultList.forEach(id => {
                 formParams.AssetList.push(id);
               });
+              // 全選情況下，扣掉排除List
+              formParams.AssetList = formParams.AssetList.filter(id=> !unselectList.value.includes(id));
+              console.log('排除後:', formParams.AssetList);
               getRangeOfPlan('', 'search');
             }
           })
           .catch((error)=>{
             console.error(error);
           })
-          // 全選情況下，扣掉排除List
-          const addList = formParams.AssetList.filter(id=> !unselectList.value.includes(id));
-          addList.forEach(id=>{
-            formParams.AssetList.push(id);
-          })
+          
           // 清空排除List、selectedList
           datagrid1.selectAll = false;
           datagrid1.selectedList = [];
@@ -699,12 +690,6 @@ import axios from "axios";
           unselectList.value.push(event.data.AssetsId);
         }
       }
-      const onGridReady1 = (params) => {
-        grid.api1 = params.api
-      }
-      const onGridReady2 = (params) => {
-        grid.api2 = params.api
-      }
       return {
         grid,
         ConvenerName,
@@ -735,8 +720,6 @@ import axios from "axios";
         addList,
         onSelectAll,
         onRowUnselect,
-        onGridReady1,
-        onGridReady2,
         goBack,
       };
     },

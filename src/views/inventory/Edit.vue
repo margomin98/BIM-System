@@ -168,9 +168,40 @@
                   <p>目前資產庫存</p>
                 </div>
               </div>
-              <ag-grid-vue style="height: 450px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :paginationPageSize="10" :pagination="true"
-              :suppressRowClickSelection="true" :rowSelection="'multiple'" @grid-ready="onGridReady1">
-              </ag-grid-vue>
+              <DataTable 
+              lazy 
+              :first= "datagrid1.first"
+              :size="'small'"
+              :loading="datagrid1.loading"
+              :value="rowData1" 
+              :sort-field="datagrid1.sortField"
+              :sort-order="datagrid1.sortOrder"
+              resizableColumns 
+              columnResizeMode="spend"
+              showGridlines 
+              scrollable 
+              scrollHeight="510px" 
+              @page="searchInventory($event , 'page')" 
+              @sort="searchInventory($event , 'sort')"
+              v-model:selection="datagrid1.selectedList" 
+              :selectAll="datagrid1.selectAll"
+              @select-all-change="onSelectAll"
+              @row-unselect="onRowUnselect"
+              table-style="min-height: 510px;"
+              paginator 
+              :rows="10" 
+              :totalRecords="datagrid1.totalRecords"
+              paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+              currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+              <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+              <Column style="max-width: 60px;">
+                <template #body="slotProps">
+                  <!-- Add the custom component here -->
+                  <List_view_button :params = "slotProps" />
+                </template>
+              </Column>
+              <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+              </DataTable>
             </div>
           </div>
         </div>
@@ -182,9 +213,34 @@
       </div>
       <div class="content">
         <div style="width: 100%">
-          <ag-grid-vue style="width: 100%; height:810px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs2" :rowData="rowData2" :paginationPageSize="20" :pagination="true"
-          @grid-ready="onGridReady2" :alwaysShowHorizontalScroll="true">
-          </ag-grid-vue>
+          <DataTable 
+            lazy 
+            :first= "datagrid2.first"
+            :size="'small'"
+            :loading="datagrid2.loading"
+            :value="rowData2" 
+            :sort-field="datagrid2.sortField"
+            :sort-order="datagrid2.sortOrder"
+            resizableColumns 
+            columnResizeMode="spend"
+            showGridlines 
+            scrollable 
+            scrollHeight="820px" 
+            @page="getRangeOfPlan($event , 'page')" 
+            @sort="getRangeOfPlan($event , 'sort')"
+            table-style="min-height: 820px;"
+            paginator 
+            :rows="20" 
+            :totalRecords="datagrid2.totalRecords"
+            paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+            currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+            <Column style="max-width: 60px;">
+              <template #body="slotProps">
+                <Inventory_delete_button :params = "slotProps" @delete = "deleteFromAssetList" />
+              </template>
+            </Column>
+            <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+          </DataTable>
         </div>
       </div>
       <div class="col button_wrap">
@@ -196,9 +252,10 @@
 </template>
 
 <script>
-  import { AgGridVue } from "ag-grid-vue3";
   import List_view_button from "@/components/Rent_process_new_view_button";
   import Inventory_delete_button from "@/components/Inventory_delete_button";
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   import Navbar from "@/components/Navbar.vue";
   import { getEquipType , getEquipCategory , getArea , getLayer , getAccount } from '@/assets/js/common_api'
   import { goBack } from "@/assets/js/common_fn";
