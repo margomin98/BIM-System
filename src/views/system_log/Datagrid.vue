@@ -7,27 +7,27 @@
     <div class="container-fluid datagrid_section">
       <div class="content">
         <div class="row">
-        <!-- 執行動作 -->
+          <!-- 執行動作 -->
           <div class="col">
             <p>執行動作</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{  "請選擇" }}
-                </button>
+                    {{  "請選擇" }}
+                  </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p   class="dropdown-item">{{ item }}</p>
+                <p class="dropdown-item">{{ item }}</p>
               </div>
             </div>
           </div>
           <!-- 標題 -->
           <div class="col">
             <p>標題</p>
-            <input type="text"  />
+            <input type="text" />
           </div>
           <!-- 日期（起） -->
           <div class="col">
             <p>日期(起)</p>
-            <input type="date"  class="date-input" />
+            <input type="date" class="date-input" />
           </div>
           <!-- 日期(迄) -->
           <div class="col">
@@ -138,7 +138,6 @@
           width: 200,
           suppressMovable: true
         }
-        
       ]
       const rowData = ref([]);
       onMounted(() => {
@@ -209,12 +208,6 @@
       .button_wrap {
         margin-bottom: 25px;
         gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1; // width: 100px;
-          &:hover {
-            background-color: #537ebc;
-          }
-        }
         .search_btn {
           @include search_and_send_btn;
           &:hover {
@@ -226,13 +219,12 @@
           &:hover {
             background-color: #5d85bd;
           }
-        }
-        .export_btn {
-          @include export_btn;
-          &:hover {
-            background-color: #274266;
-          }
-        }
+        } // .export_btn {
+        //   @include export_btn;
+        //   &:hover {
+        //     background-color: #274266;
+        //   }
+        // }
       }
       .datagrid_section {
         .content {
@@ -303,19 +295,12 @@
       }
       .button_wrap {
         margin-bottom: 25px;
-        gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1; // width:100px;
-          &:hover {
-            background-color: #537ebc;
-          }
-        }
-        .export_btn {
-          @include export_btn;
-          &:hover {
-            background-color: #274266;
-          }
-        }
+        gap: 20px; // .export_btn {
+        //   @include export_btn;
+        //   &:hover {
+        //     background-color: #274266;
+        //   }
+        // }
         .search_btn {
           @include search_and_send_btn;
           &:hover {
@@ -393,39 +378,23 @@
       .button_wrap {
         margin-bottom: 25px;
         justify-content: center;
-        gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
-          &:hover {
-            background-color: #537ebc;
-          }
-        }
-        .export_btn {
-          @include export_btn;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
-          &:hover {
-            background-color: #274266;
-          }
-        }
+        gap: 20px; // .export_btn {
+        //   @include export_btn;
+        //   font-size: 18px;
+        //   width: 100%;
+        //   height: auto;
+        //   &:hover {
+        //     background-color: #274266;
+        //   }
+        // }
         .search_btn {
           @include search_and_send_btn;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
           &:hover {
             background-color: #5e7aa2;
           }
         }
         .empty_btn {
           @include empty_btn;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
           &:hover {
             background-color: #5d85bd;
           }
@@ -434,7 +403,7 @@
       .datagrid_section {
         .row {
           display: flex;
-    flex-direction: column;
+          flex-direction: column;
           gap: 10px 0;
           padding: 30px;
           @include datagrid_bg;

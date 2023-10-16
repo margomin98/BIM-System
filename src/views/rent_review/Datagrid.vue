@@ -19,8 +19,8 @@
             <p>用途</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ Use || "請選擇" }}
-                          </button>
+                              {{ Use || "請選擇" }}
+                            </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item , index) in UseArray" :key="index" class="dropdown-item" @click="selectUse(item)">{{ item }}</p>
               </div>
@@ -30,8 +30,8 @@
             <p>狀態</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ Status || "請選擇" }}
-                          </button>
+                              {{ Status || "請選擇" }}
+                            </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item , index) in StatusArray" :key="index" class="dropdown-item" @click="selectStatus(item)">{{ item }}</p>
               </div>
@@ -41,8 +41,8 @@
             <p>日期類型</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ DateCategory || "請選擇" }}
-                          </button>
+                              {{ DateCategory || "請選擇" }}
+                            </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item , index) in DateCategoryArray" :key="index" class="dropdown-item" @click="selectDateCategory(item)">{{ item }}</p>
               </div>
@@ -74,8 +74,7 @@
       </div>
     </div>
     <div style="width: 100%">
-      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="35" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true"
-        :alwaysShowHorizontalScroll="true">
+      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="35" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true" :alwaysShowHorizontalScroll="true">
       </ag-grid-vue>
     </div>
   </div>
@@ -103,9 +102,9 @@
       const AO_ID = ref('');
       const ProjectName = ref('');
       const Use = ref('');
-      const UseArray = [ '出貨', '報廢', '退貨'] //'內部領用', '借測', '維修', 不用審核
+      const UseArray = ['出貨', '報廢', '退貨'] //'內部領用', '借測', '維修', 不用審核
       const Status = ref(''); //狀態
-      const StatusArray = ref(['待審核' , '審核通過', '審核不通過'])
+      const StatusArray = ref(['待審核', '審核通過', '審核不通過'])
       const DateCategory = ref('');
       const DateCategoryArray = ['申請日期', '審核日期'];
       const StartDate = ref(''); //日期(起)
@@ -308,13 +307,6 @@
       .button_wrap {
         margin-bottom: 25px;
         gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          width: 195px;
-          &:hover {
-            background-color: #537ebc;
-          }
-        }
         .search_btn {
           @include search_and_send_btn;
           &:hover {
@@ -326,13 +318,12 @@
           &:hover {
             background-color: #5d85bd;
           }
-        }
-        .export_btn {
-          @include export_btn;
-          &:hover {
-            background-color: #274266;
-          }
-        }
+        } // .export_btn {
+        //   @include export_btn;
+        //   &:hover {
+        //     background-color: #274266;
+        //   }
+        // }
       }
       .datagrid_section {
         .content {
@@ -415,20 +406,12 @@
       }
       .button_wrap {
         margin-bottom: 25px;
-        gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          width: 190px;
-          &:hover {
-            background-color: #537ebc;
-          }
-        }
-        .export_btn {
-          @include export_btn;
-          &:hover {
-            background-color: #274266;
-          }
-        }
+        gap: 20px; // .export_btn {
+        //   @include export_btn;
+        //   &:hover {
+        //     background-color: #274266;
+        //   }
+        // }
         .search_btn {
           @include search_and_send_btn;
           &:hover {
@@ -506,39 +489,23 @@
       .button_wrap {
         margin-bottom: 25px;
         justify-content: center;
-        gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
-          &:hover {
-            background-color: #537ebc;
-          }
-        }
-        .export_btn {
-          @include export_btn;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
-          &:hover {
-            background-color: #274266;
-          }
-        }
+        gap: 20px; // .export_btn {
+        //   @include export_btn;
+        //   font-size: 18px;
+        //   width: 100%;
+        //   height: auto;
+        //   &:hover {
+        //     background-color: #274266;
+        //   }
+        // }
         .search_btn {
           @include search_and_send_btn;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
           &:hover {
             background-color: #5e7aa2;
           }
         }
         .empty_btn {
           @include empty_btn;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
           &:hover {
             background-color: #5d85bd;
           }

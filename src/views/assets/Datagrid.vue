@@ -11,8 +11,8 @@
             <p>設備總類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                {{ searchParams.EquipTypeName || '請選擇' }}
-              </button>
+                  {{ searchParams.EquipTypeName || '請選擇' }}
+                </button>
               <div class="dropdown-menu" aria-labelledby="areaDropdown">
                 <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(item)"> {{ item.Name }}</p>
               </div>
@@ -21,9 +21,9 @@
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>設備分類</p>
             <div class="dropdown">
-              <button  class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!searchParams.EquipTypeName">
-                {{ searchParams.EquipCategoryName || EquipCategoryInit }}
-              </button>
+              <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!searchParams.EquipTypeName">
+                  {{ searchParams.EquipCategoryName || EquipCategoryInit }}
+                </button>
               <div class="dropdown-menu" aria-labelledby="areaDropdown">
                 <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(item)"> {{ item.Name }}</p>
               </div>
@@ -41,8 +41,8 @@
             <p>狀態</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{ searchParams.Status || '請選擇' }}
-                </button>
+                    {{ searchParams.Status || '請選擇' }}
+                  </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item, index) in DropdownArray.Status" :key="index" class="dropdown-item" @click="selectStatus(item)">{{ item }}</p>
               </div>
@@ -52,8 +52,8 @@
             <p>區域</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
-                {{ searchParams.AreaName || '請選擇' }}
-              </button>
+                  {{ searchParams.AreaName || '請選擇' }}
+                </button>
               <div class="dropdown-menu" aria-labelledby="areaDropdown">
                 <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item" @click="selectArea(item)">{{ item.Name }}</p>
               </div>
@@ -63,8 +63,8 @@
             <p>櫃位</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!searchParams.AreaName">
-                {{ searchParams.LayerName || LayerInit }}
-              </button>
+                  {{ searchParams.LayerName || LayerInit }}
+                </button>
               <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                 <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(item)">{{ item.Name }}</p>
               </div>
@@ -101,13 +101,26 @@
 </template>
 
 <script>
-  import { AgGridVue } from "ag-grid-vue3";
+  import {
+    AgGridVue
+  } from "ag-grid-vue3";
   import Assets_return_button from "@/components/Assets_return_button";
   import Navbar from "@/components/Navbar.vue";
   import getEquipDatagrid from "@/components/API/getEquipDatagrid"
-  import { onMounted, reactive, ref } from "vue";
-  import { Asset_StastusArraay } from "@/assets/js/dropdown"
-  import { getEquipType , getEquipCategory , getArea , getLayer } from '@/assets/js/common_api'
+  import {
+    onMounted,
+    reactive,
+    ref
+  } from "vue";
+  import {
+    Asset_StastusArraay
+  } from "@/assets/js/dropdown"
+  import {
+    getEquipType,
+    getEquipCategory,
+    getArea,
+    getLayer
+  } from '@/assets/js/common_api'
   export default {
     components: {
       Navbar,
@@ -260,54 +273,53 @@
         }
       }
       async function getEquipTypeName() {
-      if (DropdownArray.EquipType.length == 0) {
-        getEquipType()
-        .then((data)=>{
-          DropdownArray.EquipType = data;
-        })
-        .catch((error) =>{
-          console.error(error);
-        })
-      }
+        if (DropdownArray.EquipType.length == 0) {
+          getEquipType()
+            .then((data) => {
+              DropdownArray.EquipType = data;
+            })
+            .catch((error) => {
+              console.error(error);
+            })
+        }
       }
       async function getEquipCategoryName() {
         getEquipCategory(searchParams.EquipType_Id)
-          .then((data)=>{
+          .then((data) => {
             DropdownArray.EquipCategory = data;
           })
-          .catch((error) =>{
+          .catch((error) => {
             console.error(error);
           })
       }
       async function getAreaName() {
         if (DropdownArray.Area == 0) {
           getArea()
-          .then((data)=>{
-            DropdownArray.Area = data;
-          })
-          .catch((error) =>{
-            console.error(error);
-          })
+            .then((data) => {
+              DropdownArray.Area = data;
+            })
+            .catch((error) => {
+              console.error(error);
+            })
         }
       }
       async function getLayerName() {
         getLayer(searchParams.Area_Id)
-        .then((data)=>{
-          DropdownArray.Layer = data;
-        })
-        .catch((error) =>{
-          console.error(error);
-        })
+          .then((data) => {
+            DropdownArray.Layer = data;
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       function selectType(item) {
-      searchParams.EquipTypeName = item.Name;
-      searchParams.EquipType_Id = item.Id;
-      searchParams.EquipCategoryName = '';
-      searchParams.Category_Id = '';
-      getEquipCategoryName();
-      EquipCategoryInit.value = '請選擇';
+        searchParams.EquipTypeName = item.Name;
+        searchParams.EquipType_Id = item.Id;
+        searchParams.EquipCategoryName = '';
+        searchParams.Category_Id = '';
+        getEquipCategoryName();
+        EquipCategoryInit.value = '請選擇';
       }
-
       function selectCategory(item) {
         searchParams.EquipCategoryName = item.Name;
         searchParams.Category_Id = item.Id;
@@ -374,13 +386,6 @@
       .button_wrap {
         margin-bottom: 25px;
         gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          width: 195px;
-          &:hover {
-            background-color: #537ebc;
-          }
-        }
         .search_btn {
           @include search_and_send_btn;
           &:hover {
@@ -391,12 +396,6 @@
           @include empty_btn;
           &:hover {
             background-color: #5d85bd;
-          }
-        }
-        .export_btn {
-          @include export_btn;
-          &:hover {
-            background-color: #274266;
           }
         }
       }
@@ -439,8 +438,8 @@
               align-items: center;
               border: none;
               overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
             .dropdown-menu {
               width: 100%;
@@ -481,19 +480,6 @@
       .button_wrap {
         margin-bottom: 25px;
         gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          width: 190px;
-          &:hover {
-            background-color: #537ebc;
-          }
-        }
-        .export_btn {
-          @include export_btn;
-          &:hover {
-            background-color: #274266;
-          }
-        }
         .search_btn {
           @include search_and_send_btn;
           &:hover {
@@ -535,9 +521,10 @@
               display: flex;
               justify-content: space-between;
               align-items: center;
-              border: none; overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+              border: none;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
             .dropdown-menu {
               width: 100%;
@@ -574,38 +561,14 @@
         margin-bottom: 25px;
         justify-content: center;
         gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
-          &:hover {
-            background-color: #537ebc;
-          }
-        }
-        .export_btn {
-          @include export_btn;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
-          &:hover {
-            background-color: #274266;
-          }
-        }
         .search_btn {
           @include search_and_send_btn;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
           &:hover {
             background-color: #5e7aa2;
           }
         }
         .empty_btn {
           @include empty_btn;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
           &:hover {
             background-color: #5d85bd;
           }

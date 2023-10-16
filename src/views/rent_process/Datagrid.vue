@@ -19,8 +19,8 @@
             <p>用途</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ searchParams.Use || "請選擇" }}
-              </button>
+                  {{ searchParams.Use || "請選擇" }}
+                </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item , index) in UseArray" :key="index" class="dropdown-item" @click="selectUse(item)">{{ item }}</p>
               </div>
@@ -30,8 +30,8 @@
             <p>狀態</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ searchParams.Status || "請選擇" }}
-              </button>
+                  {{ searchParams.Status || "請選擇" }}
+                </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item , index) in StatusArray" :key="index" class="dropdown-item" @click="selectStatus(item)">{{ item }}</p>
               </div>
@@ -41,8 +41,8 @@
             <p>日期類型</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ searchParams.DateCategory || "請選擇" }}
-              </button>
+                  {{ searchParams.DateCategory || "請選擇" }}
+                </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item , index) in DateCategoryArray" :key="index" class="dropdown-item" @click="selectDateCategory(item)">{{ item }}</p>
               </div>
@@ -85,7 +85,7 @@
   import {
     ref,
     onMounted,
-reactive
+    reactive
   } from "vue";
   import {
     AgGridVue
@@ -94,7 +94,11 @@ reactive
   import Rent_process_delete_button from "@/components/Rent_process_delete_button ";
   import Navbar from "@/components/Navbar.vue";
   import router from "@/router";
-  import { Rent_UseOptions , Rent_StatusArray , Rent_Process_DataCategory } from "@/assets/js/dropdown";
+  import {
+    Rent_UseOptions,
+    Rent_StatusArray,
+    Rent_Process_DataCategory
+  } from "@/assets/js/dropdown";
   export default {
     components: {
       Navbar,
@@ -264,7 +268,7 @@ reactive
         searchParams.DateCategory = item;
       };
       const clear = () => {
-        for(const key in searchParams ) {
+        for (const key in searchParams) {
           searchParams[key] = '';
         }
         submit();
@@ -306,13 +310,6 @@ reactive
       .button_wrap {
         margin-bottom: 25px;
         gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          width: 195px;
-          &:hover {
-            background-color: #537ebc;
-          }
-        }
         .search_btn {
           @include search_and_send_btn;
           &:hover {
@@ -324,13 +321,12 @@ reactive
           &:hover {
             background-color: #5d85bd;
           }
-        }
-        .export_btn {
-          @include export_btn;
-          &:hover {
-            background-color: #274266;
-          }
-        }
+        } // .export_btn {
+        //   @include export_btn;
+        //   &:hover {
+        //     background-color: #274266;
+        //   }
+        // }
       }
       .datagrid_section {
         .content {
@@ -413,20 +409,12 @@ reactive
       }
       .button_wrap {
         margin-bottom: 25px;
-        gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          width: 190px;
-          &:hover {
-            background-color: #537ebc;
-          }
-        }
-        .export_btn {
-          @include export_btn;
-          &:hover {
-            background-color: #274266;
-          }
-        }
+        gap: 20px; // .export_btn {
+        //   @include export_btn;
+        //   &:hover {
+        //     background-color: #274266;
+        //   }
+        // }
         .search_btn {
           @include search_and_send_btn;
           &:hover {
@@ -504,39 +492,23 @@ reactive
       .button_wrap {
         margin-bottom: 25px;
         justify-content: center;
-        gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
-          &:hover {
-            background-color: #537ebc;
-          }
-        }
-        .export_btn {
-          @include export_btn;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
-          &:hover {
-            background-color: #274266;
-          }
-        }
+        gap: 20px; // .export_btn {
+        //   @include export_btn;
+        //   font-size: 18px;
+        //   width: 100%;
+        //   height: auto;
+        //   &:hover {
+        //     background-color: #274266;
+        //   }
+        // }
         .search_btn {
           @include search_and_send_btn;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
           &:hover {
             background-color: #5e7aa2;
           }
         }
         .empty_btn {
           @include empty_btn;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
           &:hover {
             background-color: #5d85bd;
           }
