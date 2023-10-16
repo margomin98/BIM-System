@@ -7,7 +7,6 @@
 </script>
 
 <style lang="scss">
-	
 	body {
 		background-image: url('@/assets/body/bg.png');
 		padding-right: unset !important;
@@ -17,18 +16,30 @@
 		color: white;
 		text-decoration: none;
 	}
-	.content .dropdown-menu{
+	.main_section .dropdown-menu {
+		padding: 0;
 		background: white !important;
 	}
+	.dropdown-item {
+		font-size: 18px!important;
+		margin-bottom: 0!important;
+		&:hover {
+			color: white !important;
+			background-color: #2D4864 !important;
+		}
+		:active {
+			color: white !important;
+		}
+	}
 	::-webkit-scrollbar {
-    height: 6px;
-	width: 8px;
-  }
-   ::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background-color: rgb(176, 175, 175);
-    border: 1px solid rgb(86, 85, 85);
-  }
+		height: 6px;
+		width: 8px;
+	}
+	 ::-webkit-scrollbar-thumb {
+		border-radius: 5px;
+		background-color: rgb(176, 175, 175);
+		border: 1px solid rgb(86, 85, 85);
+	}
 	.ag-body .ag-cell {
 		border: 0;
 	}
@@ -69,23 +80,22 @@
 			display: flex;
 		}
 	}
-
-	.grid_checkbox{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .ag-selection-checkbox{
-  margin-right: 0 !important;
-  }
-}
-.gold-header{
-	.ag-header-cell-text{
-		cursor: pointer;
-		background: #98CCD3;
-    padding: 5px;
-    border-radius: 7px;
+	.grid_checkbox {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		.ag-selection-checkbox {
+			margin-right: 0 !important;
+		}
 	}
-}
+	.gold-header {
+		.ag-header-cell-text {
+			cursor: pointer;
+			background: #98CCD3;
+			padding: 5px;
+			border-radius: 7px;
+		}
+	}
 	.ag-paging-panel {
 		background: #1F4E5F;
 		font-weight: 700;
@@ -106,35 +116,34 @@
 		// pointer-events: none;
 		user-select: none;
 		overflow: hidden;
-		&:focus{
+		&:focus {
 			outline: none !important;
-background-color: #B4B4B4 !important;
-        box-shadow: unset!important;
-		cursor: pointer;
+			background-color: #B4B4B4 !important;
+			box-shadow: unset!important;
+			cursor: pointer;
 		}
 	}
-	.modal{
-		 .modal-header{
-			.close_icon{
-    cursor: pointer;
-	display: flex;
-	    align-self: baseline;
-    margin-bottom: 0;
-}
-		.modal-title{
-    width: 100%;
-    word-break: break-word;
-	margin: 0 auto;
-    display: flex;
-    align-self: baseline;	
-}	
-		 } 
-	
-}	
-@media only screen and (min-width: 1200px) {
-.container-fluid {
-		padding-left: 0 !important;
-		padding-right: 0 !important;
+	.modal {
+		.modal-header {
+			.close_icon {
+				cursor: pointer;
+				display: flex;
+				align-self: baseline;
+				margin-bottom: 0;
+			}
+			.modal-title {
+				width: 100%;
+				word-break: break-word;
+				margin: 0 auto;
+				display: flex;
+				align-self: baseline;
+			}
+		}
 	}
-}
+	@media only screen and (min-width: 1200px) {
+		.container-fluid {
+			padding-left: 0 !important;
+			padding-right: 0 !important;
+		}
+	}
 </style>
