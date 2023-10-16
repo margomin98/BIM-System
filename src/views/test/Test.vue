@@ -109,11 +109,11 @@
           </div>
         </template>-->
         <Column selectionMode="multiple" headerStyle="width: 3rem" ></Column>
-        <Column style="min-width: 50px;">
-          <template #body="slotProps">
-            <!-- Add the custom component here -->
-            <test :params="slotProps" :msg="'hi'" @msg="handlemsg" />
-          </template>
+        <Column style="width:100vw">
+<template #body="slotProps">
+  <!-- Add the custom component here -->
+  <test :params="slotProps" :msg="'hi'" @msg="handlemsg" />
+</template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
       </DataTable>
@@ -221,7 +221,7 @@
         {
           field: 'Status',
           header: '狀態',
-          width: '110px',
+          width: '130px',
         },
         {
           field: 'InboundDate',
