@@ -618,7 +618,7 @@
           .tab-content {
             background: #3E4E5F;
             padding: 50px 30px;
-            border-radius: 0 10px 10px 10px;
+            border-radius: 0 0 10px 10px;
             .selected_file {
               .input-group {
                 flex-direction: column;
@@ -884,7 +884,7 @@
           .tab-content {
             background: #3E4E5F;
             padding: 50px 30px;
-            border-radius: 0 10px 10px 10px;
+            border-radius: 0 0 10px 10px;
             .selected_file {
               .input-group {
                 flex-direction: column;
@@ -1177,7 +1177,7 @@
           .tab-content {
             background: #3E4E5F;
             padding: 50px 30px;
-            border-radius: 0 10px 10px 10px;
+            border-radius: 0 0 10px 10px;
             .selected_file {
               .input-group {
                 flex-direction: column;
