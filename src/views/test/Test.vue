@@ -108,7 +108,7 @@
                 </div>
 </template>-->
         <Column selectionMode="multiple" headerStyle="width: 3rem" ></Column>
-        <Column style="min-width: 50px;">
+        <Column style="width:100vw">
 <template #body="slotProps">
   <!-- Add the custom component here -->
   <test :params="slotProps" :msg="'hi'" @msg="handlemsg" />
@@ -219,7 +219,7 @@
         {
           field: 'Status',
           header: '狀態',
-          width: '110px',
+          width: '130px',
         },
         {
           field: 'InboundDate',
