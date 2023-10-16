@@ -110,6 +110,12 @@
                 {{ calculateIndex(slotProps) }}
               </template>
             </Column>
+            <Column style="min-width: 60px;">
+              <template #body="slotProps">
+                <!-- Add the custom component here -->
+                <List_view_button :params = "slotProps" />
+              </template>
+            </Column>
             <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
           </DataTable>
         </div>
@@ -123,7 +129,6 @@
 
 <script>
   import List_view_button from "@/components/Rent_process_new_view_button";
-  import Inventory_delete_button from "@/components/Inventory_delete_button";
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
   import Navbar from "@/components/Navbar.vue";
@@ -144,7 +149,6 @@
       Column,
       Navbar,
       List_view_button,
-      Inventory_delete_button,
     },
     setup() {
       const route = useRoute();

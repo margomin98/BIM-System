@@ -228,9 +228,15 @@
             :totalRecords="datagrid2.totalRecords"
             paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
             currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
-            <Column style="max-width: 60px;">
+            <Column style="min-width: 60px;">
               <template #body="slotProps">
                 <Inventory_delete_button :params = "slotProps" @delete = "deleteFromAssetList" />
+              </template>
+            </Column>
+            <Column style="min-width: 60px;">
+              <template #body="slotProps">
+                <!-- Add the custom component here -->
+                <List_view_button :params = "slotProps" />
               </template>
             </Column>
             <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>

@@ -115,13 +115,19 @@
                 {{ calculateIndex(slotProps) }}
               </template>
             </Column>
+            <Column style="min-width: 60px;">
+              <template #body="slotProps">
+                <!-- Add the custom component here -->
+                <List_view_button :params = "slotProps" />
+              </template>
+            </Column>
             <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
           </DataTable>
         </div>
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
-  <button class="delete_btn" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>
+        <button class="delete_btn" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>
       </div>
       <div class="modal fade delete_modal" id="deleteModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-lg modal-dialog-centered justify-content-center">
@@ -142,7 +148,6 @@
 
 <script>
   import List_view_button from "@/components/Rent_process_new_view_button";
-  import Inventory_delete_button from "@/components/Inventory_delete_button";
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
   import Navbar from "@/components/Navbar.vue";
@@ -169,7 +174,6 @@
       Column,
       Navbar,
       List_view_button,
-      Inventory_delete_button,
     },
     setup() {
       const route = useRoute();

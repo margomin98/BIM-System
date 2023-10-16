@@ -12,11 +12,14 @@
   import {
     useRouter
   } from 'vue-router';
+  import {
+    Inventory_Delete_Status,
+  } from '@/assets/js/enter_status'
   export default {
     props: ['params'],
     setup(props) {
       const router = useRouter();
-      const disabledStatus = props.params.data.PlanStatus;
+      const Status = props.params.data.PlanStatus;
       const search_id = props.params.data.PlanId;
       const isDisabled = ref(false);
       onMounted(() => {
@@ -31,8 +34,7 @@
         });
       }
       function checkButton() {
-        console.log(disabledStatus);
-        if (disabledStatus !== '待盤點') {
+        if (!Inventory_Delete_Status.includes(Status)) {
           isDisabled.value = true;
         }
       }

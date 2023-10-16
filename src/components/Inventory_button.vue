@@ -2,7 +2,7 @@
   <div class='button_div'>
     <button class="" @click="view('View')">檢視</button>
     <button :class="{ disabled_btn: isDisabled.edit, btn2: !isDisabled.edit }" :disabled="isDisabled.edit" @click="view('Edit')">編輯</button>
-    <button v-if="disabledStatus === '待盤點'" :class="{ disabled_btn: isDisabled.process, btn3: !isDisabled.process }" :disabled="isDisabled.process" @click="emitView" data-bs-toggle="modal" data-bs-target="#staticBackdrop">盤點</button>
+    <button v-if="Status === '待盤點'" :class="{ disabled_btn: isDisabled.process, btn3: !isDisabled.process }" :disabled="isDisabled.process" @click="emitView" data-bs-toggle="modal" data-bs-target="#staticBackdrop">盤點</button>
     <button v-else :class="{ disabled_btn: isDisabled.process, btn3: !isDisabled.process }" :disabled="isDisabled.process" @click="view('Process')">盤點</button>
     <button :class="{ disabled_btn: isDisabled.balance, btn4: !isDisabled.balance }" :disabled="isDisabled.balance" @click="view('Balance')">平帳</button>
     <button :class="{ disabled_btn: isDisabled.balance_result, btn5: !isDisabled.balance_result }" :disabled="isDisabled.balance_result" class="" @click="view('Balance_Result')">結果</button>
@@ -18,12 +18,18 @@
   import {
     useRouter
   } from 'vue-router';
+  import {
+    Inventory_Edit_Status,
+    Inventory_Process_Status,
+    Inventory_Balance_Status,
+    Inventory_BalanceResult_Status,
+  } from '@/assets/js/enter_status'
   export default {
     props: ['params'],
     setup(props, {emit}) {
       const router = useRouter();
       const search_id = props.params.data.PlanId;
-      const disabledStatus = props.params.data.PlanStatus;
+      const Status = props.params.data.PlanStatus;
       const isDisabled = ref({
         edit: false, //編輯
         process: false, //盤點
@@ -77,17 +83,17 @@
         }
       }
       function checkButton() {
-        // console.log(disabledStatus);
-        if (disabledStatus !== '待盤點') {
+        // console.log(Status);
+        if (!Inventory_Edit_Status.includes(Status)) {
           isDisabled.value.edit = true;
         }
-        if (disabledStatus !== '待盤點' && disabledStatus !== '盤點中') {
+        if (!Inventory_Process_Status.includes(Status)) {
           isDisabled.value.process = true;
         }
-        if (disabledStatus !== '待平帳') {
+        if (!Inventory_Balance_Status.includes(Status)) {
           isDisabled.value.balance = true;
         }
-        if (disabledStatus !== '已完成') {
+        if (!Inventory_BalanceResult_Status.includes(Status)) {
           isDisabled.value.balance_result = true;
         }
       }
@@ -101,7 +107,7 @@
       return {
         view,
         emitView,
-        disabledStatus,
+        Status,
         isDisabled,
       };
     },
