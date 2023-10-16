@@ -127,19 +127,19 @@
         <div class="swiper_pagination">
         </div>
         <!-- <div class="modal fade" id="photo1" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="photoModalLabel">瀏覽</h5>
-                  <div class="close_icon">
-                    <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="photoModalLabel">瀏覽</h5>
+                    <div class="close_icon">
+                      <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
+                    </div>
+                  </div>
+                  <div class="modal-body">
                   </div>
                 </div>
-                <div class="modal-body">
-                </div>
               </div>
-            </div>
-          </div> -->
+            </div> -->
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
@@ -952,7 +952,7 @@
           margin-left: unset !important;
           border-radius: 5px;
         }
-        margin-top: 3%;
+        margin-top: 11%;
         .count {
           .number-input-box {
             width: 100%;

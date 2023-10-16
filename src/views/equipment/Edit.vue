@@ -1472,9 +1472,9 @@
           display: flex;
           margin-top: 30px;
           justify-content: center;
-          padding: 0 20%;
+          padding: 0 15%;
           margin-bottom: 5%;
-          gap: 20px;
+          gap: 10px;
           button.back_btn {
             @include back_to_previous_btn;
             &:hover {

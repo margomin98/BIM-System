@@ -138,7 +138,7 @@
     </div>
     <!-- 下半部上傳細項 -->
     <div class="info_wrap mt-5 col">
-      <div v-show="Tabs.length > 0" class="tab_section mt-5">
+      <div v-show="Tabs.length > 0" class="tab_section">
         <!-- tab頂端頁籤 -->
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">

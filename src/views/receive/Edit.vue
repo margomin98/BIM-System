@@ -1295,7 +1295,7 @@
           margin-left: unset !important;
           border-radius: 5px;
         }
-        margin-top: 3%;
+        margin-top: 11%;
         .count {
           .number-input-box {
             width: 100%;
