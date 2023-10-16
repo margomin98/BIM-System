@@ -381,9 +381,9 @@
           requestData[keyname] = formParams[keyname]
         }
         console.log('requestData:', requestData);
-        const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/CreatePlan', requestData);
-        const data = response.data;
         try {
+          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/CreatePlan', requestData);
+          const data = response.data;
           console.log(data);
           if (data.state === 'success') {
             let msg = data.messages;
@@ -608,7 +608,9 @@
       function deleteFromAssetList(data) {
         rowData2.value = rowData2.value.filter(item=> item.AssetsId !== data.AssetsId);
         formParams.AssetList = formParams.AssetList.filter(AssetsId=> AssetsId !== data.AssetsId);
-        // getRangeOfPlan('', 'search');
+        if(formParams.AssetList.length !== 0) {
+          getRangeOfPlan('', 'search');
+        }
       }
       const clear = ()=>{
         for(const key in searchParams) {

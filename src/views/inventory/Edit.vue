@@ -314,6 +314,7 @@
         Layer_Id: '',
       })
       const formParams = reactive({
+        PlanId: '',
         PlanTitle: '',
         InventoryStaffName: '',
         PlanStart: '',
@@ -436,9 +437,9 @@
           requestData[keyname] = formParams[keyname]
         }
         console.log('requestData:', requestData);
-        const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/EditPlan', requestData);
-        const data = response.data;
         try {
+          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/EditPlan', requestData);
+          const data = response.data;
           console.log(data);
           if (data.state === 'success') {
             let msg = data.messages;
@@ -706,7 +707,9 @@
       function deleteFromAssetList(data) {
         rowData2.value = rowData2.value.filter(item=> item.AssetsId !== data.AssetsId);
         formParams.AssetList = formParams.AssetList.filter(AssetsId=> AssetsId !== data.AssetsId);
-        // getRangeOfPlan('', 'search');
+        if(formParams.AssetList.length !== 0) {
+          getRangeOfPlan('', 'search');
+        }
       }
       function onSelectAll(event) {
         datagrid1.selectAll = event.checked;
