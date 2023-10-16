@@ -2641,10 +2641,8 @@
  
 
   .p-datatable .p-datatable-thead > tr > th {
-    text-align: left;
-    padding: 1rem 1rem;
-    border:1px solid #babfc7;
-    border-width: 1px !important;
+    /* border:1px solid #babfc7;
+    border-width: 1px !important; */
     font-weight: 700;
     color: white;
     background: #1f4e5f;
@@ -2767,12 +2765,13 @@
     color: #495057;
   }
   .p-datatable .p-column-resizer-helper {
-    background: #6366F1;
+    background:#1f4e5f
+    ;
   }
- .p-datatable-wrapper{
+ /* .p-datatable-wrapper{
   border-left: 1px solid #babfc7;
   border-right: 1px solid #babfc7;
- } 
+ }  */
   .p-datatable.p-datatable-scrollable > .p-datatable-wrapper > .p-datatable-table > .p-datatable-thead,
 .p-datatable.p-datatable-scrollable > .p-datatable-wrapper > .p-datatable-table > .p-datatable-tfoot, .p-datatable.p-datatable-scrollable > .p-datatable-wrapper > .p-virtualscroller > .p-datatable-table > .p-datatable-thead,
 .p-datatable.p-datatable-scrollable > .p-datatable-wrapper > .p-virtualscroller > .p-datatable-table > .p-datatable-tfoot {
