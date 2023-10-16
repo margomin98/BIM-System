@@ -7,7 +7,7 @@ import { onMounted, ref } from 'vue';
 
 export default {
   props: ['params'],
-  setup(props){
+  setup(props,{emit}){
     const display = ref(false)
     onMounted(()=>{ 
       display.value = props.params.data.IsConsumables
@@ -15,8 +15,8 @@ export default {
     
     // const linkName = ref('');
     function updateActual() {
-      props.params.update(props.params.data)
-      // console.log(display.value);
+      // props.params.update(props.params.data)
+      emit('update', props.params.data)
     }
     return {
       updateActual,

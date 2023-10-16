@@ -285,7 +285,6 @@
         datagrid2.loading = false;
       }
       function calculateIndex(slotProps) {
-        // 计算当前行的序号
         return String(datagrid2.first + slotProps.index + 1).padStart(2, '0');
       }
       return {

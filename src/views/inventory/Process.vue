@@ -100,15 +100,61 @@
               </div>
             </div>
             <div class="col button">
-              <button class="search_btn" @click="getDatagrid">搜索</button>
+              <button class="search_btn" @click="getDatagrid('','search');">搜索</button>
               <button class="empty_btn" @click="clear">清空</button>
             </div>
           </div>
         </div>
         <div style="width: 100%">
-          <ag-grid-vue style="width: 100%; height:810px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true"
-            :rowSelection= "'single'" :alwaysShowHorizontalScroll="true">
-          </ag-grid-vue>
+          <DataTable 
+            lazy 
+            :first= "datagrid1.first"
+            :size="'small'"
+            :loading="datagrid1.loading"
+            :value="rowData" 
+            :sort-field="datagrid1.sortField"
+            :sort-order="datagrid1.sortOrder"
+            resizableColumns 
+            columnResizeMode="expand"
+            showGridlines 
+            scrollable 
+            scrollHeight="820px" 
+            @page="getDatagrid($event , 'page')" 
+            @sort="getDatagrid($event , 'sort')"
+            table-style="min-height: 820px;"
+            paginator 
+            :rows="20" 
+            :totalRecords="datagrid1.totalRecords"
+            paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+            currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+            <Column style="min-width: 50px;" header="項目">
+              <template #body="slotProps">
+                {{ calculateIndex(slotProps) }}
+              </template>
+            </Column>
+            <Column field="Status" header="狀態" sortable style="min-width:120px"></Column>
+            <Column style="min-width: 60px;">
+              <template #body="slotProps">
+                <!-- Add the custom component here -->
+                <List_view_button :params = "slotProps" />
+              </template>
+            </Column>
+            <Column field="ReceivableNum" header="應盤" style="min-width:80px"></Column>
+            <Column style="min-width: 60px;">
+              <template #body="slotProps">
+                <!-- Add the custom component here -->
+                <Inventory_process_button :params = "slotProps" @update="update"/>
+              </template>
+            </Column>
+            <Column header="實盤" style="min-width: 60px;">
+              <template #body="slotProps">
+                <!-- Add the custom component here -->
+                <Inventory_number :params = "slotProps" @takeParams="takeParams"/>
+              </template>
+            </Column>
+            <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+          </DataTable>
+
         </div>
       </div>
       <div class="col button_wrap">
@@ -124,9 +170,11 @@
     AgGridVue
   } from "ag-grid-vue3";
   import Navbar from "@/components/Navbar.vue";
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   import Inventory_process_button from "@/components/Inventory_process_button.vue"
   import Inventory_number from "@/components/Inventory_process_number_input.vue"
-  import Inventory_view from "@/components/Inventory_view_button.vue"
+  import List_view_button from "@/components/Inventory_view_button.vue"
   import {
     onMounted,
     reactive,
@@ -137,13 +185,23 @@
     useRoute,
     useRouter
   } from "vue-router";
+  import {
+    goBack,
+    canEnterPage,
+  } from "@/assets/js/common_fn";
+  import {
+    Inventory_Edit_Status
+  } from '@/assets/js/enter_status'
+  import axios from "axios";
   export default {
     components: {
       Navbar,
       AgGridVue,
+      DataTable,
+      Column,
       Inventory_process_button,
       Inventory_number,
-      Inventory_view,
+      List_view_button,
     },
     setup() {
       const details = ref({}); // 上半部帶入資料
@@ -157,141 +215,52 @@
       });
       const myInput = ref(null);
       const IP_ID = route.query.search_id;
-      const columnDefs =  [{
-            headerName: "",
-            valueGetter: function(params) {
-              // 通过 params.node 获取当前行的 RowNode
-              const rowNode = params.node;
-              // 返回 RowNode 的 id 属性作为该列的值
-              return parseFloat(rowNode.id)+1;
-            },
-            width: 50,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "狀態",
-            field: "Status",
-            unSortIcon: true,
-            sortable: true,
-            width: 100,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "檢視",
-            cellRenderer: "Inventory_view",
-            width: 100,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "應盤",
-            field: "ReceivableNum",
-            width: 80,
-            resizable: true,
-            cellStyle: {'text-align': 'center',},
-            suppressMovable: true
-          },
-          {
-            cellRenderer: "Inventory_process_button",
-            cellRendererParams: {
-              // 審核
-              update: (data)=>{
-                inventoryParams.I_Id = data.I_Id;
-                inventoryParams.ActualNum = data.ReceivableNum.toString();
-                inventoryParams.Discrepancy = '0';
-                takeInventory();
-              }
-            },
-            width: 80,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "實盤",
-            field: "ActualNum",
-            cellRenderer: "Inventory_number",
-            cellRendererParams: {
-              takeParams: (data , Actual) => {
-                // 傳送 實盤-應盤數量
-                let Discrepancy = (Actual-data.ReceivableNum).toString()
-                if (!Actual) {
-                  Discrepancy = '';
-                }
-                inventoryParams.I_Id = data.I_Id;
-                inventoryParams.ActualNum = Actual;
-                inventoryParams.Discrepancy = Discrepancy;
-                takeInventory();
-              }
-            },
-            width: 80,
-            resizable: true,
-            cellStyle: {
-              textAlign: "center"
-            },
-            suppressMovable: true
-          },
-          {
-            headerName: "差異",
-            field: "Discrepancy",
-            width: 80,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "單位",
-            field: "Unit",
-            width: 80,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "物品名稱",
-            field: "AssetName",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "資產狀態",
-            field: "AssetStatus",
-            unSortIcon: true,
-            sortable: true,
-            width: 140,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "資產編號",
-            field: "AssetsId",
-            unSortIcon: true,
-            sortable: true,
-            width: 140,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "儲位區域",
-            field: "AreaName",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "儲位櫃位",
-            field: "LayerName",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            resizable: true,
-            suppressMovable: true
-          },
-        ]
+      const datagrid1 = reactive({
+        totalRecords: 0,
+        first: 0,
+        rows: 20,
+        currentPage: 1,
+        sortField: 'Status',
+        sortOrder: -1,
+        loading: false,
+      })   
+      const datagrid1field = [
+        {
+          field: 'Discrepancy',
+          header: '差異',
+          width: '80px',
+        },
+        {
+          field: 'Unit',
+          header: '單位',
+          width: '80px',
+        },
+        {
+          field: 'AssetName',
+          header: '物品名稱',
+          width: '150px',
+        },
+        {
+          field: 'AssetStatus',
+          header: '資產狀態',
+          width: '150px',
+        },
+        {
+          field: 'AssetsId',
+          header: '資產編號',
+          width: '150px',
+        },
+        {
+          field: 'AreaName',
+          header: '儲位區域',
+          width: '150px',
+        },
+        {
+          field: 'LayerName',
+          header: '儲位櫃位',
+          width: '150px',
+        },
+      ];
       const rowData = ref([]);
       onMounted(() => {
         confirmItem();
@@ -309,7 +278,7 @@
             console.log(data.messages);
             // 確認成功才拿資料
             getDetails();
-            getDatagrid();
+            getDatagrid('','search');
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -349,31 +318,56 @@
       }
       // 下半部分盤點範圍datagrid資料
       // 3.
-      async function getDatagrid(type) {
-        const axios = require('axios');
+      async function getDatagrid(event , type) {
         const form = new FormData();
-        if(InputAssetsId.value) {
+        if(InputAssetsId.value.length === 10 || InputAssetsId.value.length === 0) {
           form.append('Input_AssetsId' , InputAssetsId.value)
+        } else {
+          return
         }
         form.append('PlanId' , IP_ID)
+        switch (type) {
+          case 'sort':
+            datagrid1.currentPage = 1;
+            datagrid1.sortField = event.sortField;
+            datagrid1.sortOrder = event.sortOrder;
+            datagrid1.first = event.first;
+            break;
+          case 'page':
+            datagrid1.currentPage = (event.page+1);
+            datagrid1.rows = event.rows;
+            datagrid1.first = event.first;
+            break
+          case 'take':
+          case 'search':
+            datagrid1.currentPage = 1;
+            datagrid1.first = 0;
+            break
+        }
+        const order = datagrid1.sortOrder === 1 ? 'asc' : 'desc'
+        form.append('rows',datagrid1.rows);
+        form.append('page',datagrid1.currentPage);
+        form.append('sort',datagrid1.sortField);
+        form.append('order',order);
         try {
           const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/PlanItems' , form);
           const data = response.data;
+
           if (data.state === 'success') {
             console.log('下半部datagrid 資料如下\n', data.resultList);
-            rowData.value = data.resultList;
+            rowData.value = data.resultList.rows;
+            datagrid1.totalRecords = data.resultList.total;
             // 若掃描 QR code
-            if(type === 'take' && data.resultList.length > 0) {
+            if(type === 'take' && data.resultList.rows.length > 0) {
               // 若為非耗材
-              if(!data.resultList[0].IsConsumables) {
+              if(!data.resultList.rows[0].IsConsumables) {
                 // InputAssetsId.value = '';
-                inventoryParams.I_Id = data.resultList[0].I_Id ;
+                inventoryParams.I_Id = data.resultList.rows[0].I_Id ;
                 inventoryParams.ActualNum = '1' ;
                 inventoryParams.Discrepancy = '0';
                 takeInventory();
               }
             }
-            // grid.api2.setRowData(details.value.AssetList)
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -386,7 +380,6 @@
       }
       // 單項盤點
       async function takeInventory() {
-        const axios = require('axios');
         let requestData = {};
         for (const keyname in inventoryParams) {
           if(inventoryParams[keyname] !== '')
@@ -398,7 +391,7 @@
         try {
           console.log(data);
           if (data.state === 'success') {
-            getDatagrid();
+            getDatagrid('','search');
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -436,31 +429,51 @@
       watch(()=>InputAssetsId.value, (newValue , oldValue) => {
         // 更新datagrid，如果是資產 call 盤點function
         console.log('new:' + newValue +' old:' + oldValue);
+        if(newValue.length === 20) {
+          InputAssetsId.value = newValue.slice(10)
+        }
         if(newValue !== '') {
-          getDatagrid('take');
+          getDatagrid('','take');
         }
       },{immediate: false});
-      function handleInput() {
-      }
       const clear = ()=>{
         InputAssetsId.value = '';
-        getDatagrid();
+        getDatagrid('','search');
       }
-      function goBack() {
-        window.history.back();
+      function update(data) {
+        inventoryParams.I_Id = data.I_Id;
+        inventoryParams.ActualNum = data.ReceivableNum.toString();
+        inventoryParams.Discrepancy = '0';
+        takeInventory();
+      }
+      function takeParams(data , Actual) {
+        // 傳送 實盤-應盤數量
+        let Discrepancy = (Actual-data.ReceivableNum).toString()
+        if (!Actual) {
+          Discrepancy = '';
+        }
+        inventoryParams.I_Id = data.I_Id;
+        inventoryParams.ActualNum = Actual;
+        inventoryParams.Discrepancy = Discrepancy;
+        takeInventory();
+      }
+      function calculateIndex(slotProps) {
+        return String(datagrid1.first + slotProps.index + 1).padStart(2, '0');
       }
       return {
+        inventoryParams,
         details,
         InputAssetsId,
         myInput,
-        columnDefs,
+        datagrid1,
+        datagrid1field,
         rowData,
-        pageSize: 20,
-        rowHeight: 35,
         getDatagrid,
         submit,
-        handleInput,
         clear,
+        update,
+        takeParams,
+        calculateIndex,
         goBack,
       };
     },

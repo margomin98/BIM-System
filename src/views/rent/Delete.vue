@@ -197,14 +197,14 @@
       }
       async function deleteData() {
         const form = new FormData();
-        form.append('ao_id', AO_ID);
+        form.append('AO_ID', AO_ID);
         const axios = require('axios');
         const response = await axios.post(`http://192.168.0.177:7008/AssetsOutMng/ApplicationDelete`, form);
         try {
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages + '\n';
-            msg += '單號:' + data.resultList.ao_id;
+            msg += '單號:' + data.resultList.AO_ID;
             alert(msg);
             router.push({
               name: 'Rent_Datagrid'
