@@ -88,36 +88,35 @@
             <input type="file" id="fileInput" ref="fileInput1" style="display: none" @change="handleDocumentFile($event)" multiple />
           </div>
           <div class="selected_file col ">
-          <div class="input-group pt-2">
-            <div class="file_upload_box">
-              <div v-for="(file, index) in fileParams.viewDoc" :key="index" class="file_upload_wrap">
-                <p class='file_name'>{{ file.name }}
-                <img class="view_icon" src="@/assets/view.png" @click="handleDocPreview(file)">
-                <img class="delete_icon" src="@/assets/trash.png" @click="deleteFile('document',index)"></p>
+            <div class="input-group pt-2">
+              <div class="file_upload_box">
+                <div v-for="(file, index) in fileParams.viewDoc" :key="index" class="file_upload_wrap">
+                  <p class='file_name'>{{ file.name }}
+                    <img class="view_icon" src="@/assets/view.png" @click="handleDocPreview(file)">
+                    <img class="delete_icon" src="@/assets/trash.png" @click="deleteFile('document',index)"></p>
+                </div>
               </div>
             </div>
-          </div>
-          <!-- doc/docx download hidden Link -->
-          <a href="" style="display: none;" id="download-link"></a>
-          <!-- Modal Trigger -->
-          <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#photoModal"></button>
-          <!-- Photo Modal -->
-          <div class="modal fade" id="photoModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 800px !important">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="photoModalLabel">{{ previewParams.title }}</h5>
-                  <p data-bs-dismiss="modal" class='close_icon'>X</p>
-                </div>
-                <div class="modal-body">
-                  <img class="w-100" :src="previewParams.src">
+            <!-- doc/docx download hidden Link -->
+            <a href="" style="display: none;" id="download-link"></a>
+            <!-- Modal Trigger -->
+            <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#photoModal"></button>
+            <!-- Photo Modal -->
+            <div class="modal fade" id="photoModal" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 800px !important">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="photoModalLabel">{{ previewParams.title }}</h5>
+                    <p data-bs-dismiss="modal" class='close_icon'>X</p>
+                  </div>
+                  <div class="modal-body">
+                    <img class="w-100" :src="previewParams.src">
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        </div>
-        
         <!-- 照片上傳 -->
         <div class="col">
           <div class="input-group">
@@ -126,7 +125,7 @@
             <input type="file" id="fileInput" ref="fileInput2" style="display: none" @change="handlePictureFile($event)" multiple />
           </div>
         </div>
-        <swiper-container class='swiper_section' :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
+        <swiper-container :autoHeight="true" class='swiper_section' :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
           <swiper-slide v-for="(file , index) in fileParams.viewPic" :key="index" class="custom-slide">
             <img :src="file.link" alt="">
             <span @click="deleteFile('picture' , index)">x</span>
@@ -139,7 +138,7 @@
     </div>
     <!-- 下半部上傳細項 -->
     <div class="info_wrap mt-5 col">
-      <div v-show="Tabs.length > 0" class="tab_section mt-5">
+      <div v-show="Tabs.length > 0" class="tab_section">
         <!-- tab頂端頁籤 -->
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -190,19 +189,18 @@
             <div class="col">
               <div class="input-group">
                 <div class="input-group-prepend">物流文件：</div>
-          
-            <div class="selected_file col mb-3">
-              <div class="input-group">
-                <div class="file_upload_box">
-                  <div v-for="(file, index) in tab.viewDoc" :key="index" class="file_upload_wrap">
-                    <p class="file_name">{{ file.name }}
-                    <img class="view_icon" src="@/assets/view.png" @click="handleDocPreview(file)"></p>
-                    <!-- <img class="delete_icon" src="@/assets/trash.png" @click="deleteFile('document',index)"> -->
+                <div class="selected_file col mb-3">
+                  <div class="input-group">
+                    <div class="file_upload_box">
+                      <div v-for="(file, index) in tab.viewDoc" :key="index" class="file_upload_wrap">
+                        <p class="file_name">{{ file.name }}
+                          <img class="view_icon" src="@/assets/view.png" @click="handleDocPreview(file)"></p>
+                        <!-- <img class="delete_icon" src="@/assets/trash.png" @click="deleteFile('document',index)"> -->
+                      </div>
+                    </div>
                   </div>
-                </div>   
-            </div>
+                </div>
               </div>
-               </div>
               <!-- doc/docx download hidden Link -->
               <a href="" style="display: none;" id="download-link"></a>
               <!-- Modal Trigger -->
@@ -228,7 +226,7 @@
                 <div class="input-group-prepend">照片：</div>
               </div>
             </div>
-            <swiper-container class='swiper_section' :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
+            <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
               <swiper-slide v-for="file in tab.viewPic" class="custom-slide">
                 <img :src="file.link" alt="">
               </swiper-slide>
@@ -794,14 +792,6 @@
     flex-wrap: nowrap;
     border: none;
   }
-  ::-webkit-scrollbar {
-    height: 6px;
-  }
-   ::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background-color: rgb(176, 175, 175);
-    border: 1px solid rgb(86, 85, 85);
-  }
   .selected_user_wrap {
     gap: 0 5px;
     display: flex;
@@ -921,6 +911,10 @@
       background-color: #5e7aa2;
     }
   }
+  .custom-slide {
+    display: flex;
+    align-self: center;
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .multi_user_select {
@@ -928,7 +922,6 @@
       }
       .swiper_section {
         swiper-slide {
-          align-self: baseline;
           span {
             cursor: pointer;
             position: absolute;
@@ -996,9 +989,9 @@
         }
         .content {
           @include content_bg;
-          .selected_file{
+          .selected_file {
             margin-left: calc(100px + 65px);
-    margin-bottom: 3%;
+            margin-bottom: 3%;
           }
           .dropdown {
             width: 55%;
@@ -1217,7 +1210,6 @@
       }
       .swiper_section {
         swiper-slide {
-          align-self: baseline;
           span {
             cursor: pointer;
             position: absolute;
@@ -1254,9 +1246,9 @@
       .info_wrap {
         margin: auto;
         padding: 0 5%;
-        .selected_file{
+        .selected_file {
           margin-left: 150px;
-    margin-bottom: 3%;
+          margin-bottom: 3%;
         }
         .fixed_info {
           @include fixed_info;
@@ -1565,7 +1557,6 @@
               color: white;
               margin-bottom: 5px;
             }
-        
             .file_upload_wrap {
               margin-bottom: 0;
               display: flex;
@@ -1678,7 +1669,7 @@
         img {
           width: 100%;
           height: auto;
-          padding: 40px;
+          padding: 40px
         }
       }
       .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
@@ -1777,7 +1768,7 @@
           display: flex;
           margin-top: 30px;
           justify-content: center;
-          padding: 0 20%;
+          padding: 0 15%;
           margin-bottom: 5%;
           gap: 20px;
           button.back_btn {
@@ -2001,9 +1992,9 @@
               color: white;
               margin-bottom: 5px;
             }
-           .file_upload_box{
-            padding:0 0 5px;
-           }
+            .file_upload_box {
+              padding: 0 0 5px;
+            }
             .file_upload_wrap {
               margin-bottom: 0;
               display: flex;

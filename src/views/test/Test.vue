@@ -97,34 +97,11 @@
     <div>
       <span v-for="item in selectedProduct" style="margin-right: 1rem;">{{ item.AssetsId }}</span>
     </div>
-      <div class="datagrid_section mb-3">
-      <DataTable 
-        ref = 'dt'
-        v-model:selection="selectedProduct" 
-        lazy 
-        :first= "datagridSetting.first"
-        :size="'small'"
-        :loading="datagridSetting.loading"
-        :value="rowData" 
-        :sort-field="datagridSetting.sortField"
-        :sort-order="datagridSetting.sortOrder"
-        resizableColumns 
-        columnResizeMode="expand"
-        showGridlines 
-        scrollable 
-        scrollHeight="510px" 
-        @page="submit($event , 'page')" 
-        @sort="submit($event , 'sort')"
-        :selectAll="datagridSetting.selectAll"
-        @select-all-change="onSelectAllChange"
-        table-style="min-height: 510px;"
-        paginator 
-        :rows="10" 
-        :row-style="({ AssetsId }) => AssetsId === 'BF00000005' ? 'background-color: firebrick; color:white;': null "
-        :totalRecords="datagridSetting.totalRecords"
-        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-        :rowsPerPageOptions="[10, 20, 30]"
-        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+    <div class="datagrid_section mb-3">
+      <DataTable ref='dt' v-model:selection="selectedProduct" lazy :first="datagridSetting.first" :size="'small'" :loading="datagridSetting.loading" :value="rowData" :sort-field="datagridSetting.sortField" :sort-order="datagridSetting.sortOrder" resizableColumns
+        columnResizeMode="expand" scrollable scrollHeight="490px" @page="submit($event , 'page')" @sort="submit($event , 'sort')" :selectAll="datagridSetting.selectAll" @select-all-change="onSelectAllChange" table-style="min-width: 50rem" paginator
+        :rows="10" :row-style="({ AssetsId }) => AssetsId === 'BF00000005' ? 'background-color: firebrick; color:white;': null " :totalRecords="datagridSetting.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <!-- <template #header>
           <div>
             <button class="btn btn-primary" label="Export" @click="exportCSV()" style="margin-right: 1rem;">exportCSV</button>
@@ -552,7 +529,7 @@
         background: var(--c-7, #1f4e5f);
       }
       .datagrid-header .datagrid-cell {
-        text-align: left importtant;
+        text-align: left !important;
       }
     }
   }
@@ -645,7 +622,7 @@
         background: var(--c-7, #1f4e5f);
       }
       .datagrid-header .datagrid-cell {
-        text-align: left importtant;
+        text-align: left !important;
       }
     }
   }
@@ -748,7 +725,7 @@
         background: var(--c-7, #1f4e5f);
       }
       .datagrid-header .datagrid-cell {
-        text-align: left importtant;
+        text-align: left !important;
       }
     }
   }

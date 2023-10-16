@@ -24,8 +24,8 @@
             <p>狀態</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{ searchParams.Status || "請選擇" }}
-                </button>
+                    {{ searchParams.Status || "請選擇" }}
+                  </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item , index) in DropdownArray.Status" :key="index" class="dropdown-item" @click="selectStatus(item)">{{ item }}</p>
               </div>
@@ -46,8 +46,8 @@
             <p>日期類型</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{ searchParams.DateCategory || "請選擇" }}
-                </button>
+                    {{ searchParams.DateCategory || "請選擇" }}
+                  </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item , index) in DropdownArray.DateCategory" :key="index" class="dropdown-item" @click="selectDateCategory(item)">{{ item }}</p>
               </div>
@@ -58,7 +58,7 @@
             <p>日期(起)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="searchParams.StartDate" class="date-input" :disabled="!searchParams.DateCategory"/>
+                <input type="date" v-model="searchParams.StartDate" class="date-input" :disabled="!searchParams.DateCategory" />
               </div>
             </div>
           </div>
@@ -67,7 +67,7 @@
             <p>日期(迄)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="searchParams.EndDate" class="date-input" :disabled="!searchParams.DateCategory"/>
+                <input type="date" v-model="searchParams.EndDate" class="date-input" :disabled="!searchParams.DateCategory" />
               </div>
             </div>
           </div>
@@ -100,7 +100,10 @@
   import Delete from "@/components/Scrap_delete_button";
   import Navbar from "@/components/Navbar.vue";
   import axios from "axios"
-  import { ScrapStatus, ScrapDateCategory } from "@/assets/js/dropdown.js"
+  import {
+    ScrapStatus,
+    ScrapDateCategory
+  } from "@/assets/js/dropdown.js"
   import {
     useRouter
   } from "vue-router";
@@ -241,27 +244,25 @@
           form.append(key, searchParams[key]);
         }
         axios.post('http://192.168.0.177:7008/ScrapMng/ScrapOrders', form)
-        .then((response)=>{
-          const data = response.data;
-          if (data.state === 'success') {
-            //取得datagrid成功
-            // console.log(data.state);
-            console.log('datagrid', data.resultList);
-            rowData.value = data.resultList;
-          } else if (data.state === 'error') {
-            //取得datagrid失敗
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            //尚未登入
-            alert(data.messages);
-            router.push('/');
-          }
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
-
-
+          .then((response) => {
+            const data = response.data;
+            if (data.state === 'success') {
+              //取得datagrid成功
+              // console.log(data.state);
+              console.log('datagrid', data.resultList);
+              rowData.value = data.resultList;
+            } else if (data.state === 'error') {
+              //取得datagrid失敗
+              alert(data.messages);
+            } else if (data.state === 'account_error') {
+              //尚未登入
+              alert(data.messages);
+              router.push('/');
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       const selectStatus = (item) => {
         searchParams.Status = item;
@@ -326,13 +327,12 @@
           &:hover {
             background-color: #5d85bd;
           }
-        }
-        .export_btn {
-          @include export_btn;
-          &:hover {
-            background-color: #274266;
-          }
-        }
+        } // .export_btn {
+        //   @include export_btn;
+        //   &:hover {
+        //     background-color: #274266;
+        //   }
+        // }
       }
       .datagrid_section {
         .content {
@@ -465,13 +465,12 @@
           &:hover {
             background-color: #537ebc;
           }
-        }
-        .export_btn {
-          @include export_btn;
-          &:hover {
-            background-color: #274266;
-          }
-        }
+        } // .export_btn {
+        //   @include export_btn;
+        //   &:hover {
+        //     background-color: #274266;
+        //   }
+        // }
         .search_btn {
           @include search_and_send_btn;
           &:hover {
@@ -558,30 +557,23 @@
           &:hover {
             background-color: #537ebc;
           }
-        }
-        .export_btn {
-          @include export_btn;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
-          &:hover {
-            background-color: #274266;
-          }
-        }
+        } // .export_btn {
+        //   @include export_btn;
+        //   font-size: 18px;
+        //   width: 100%;
+        //   height: auto;
+        //   &:hover {
+        //     background-color: #274266;
+        //   }
+        // }
         .search_btn {
           @include search_and_send_btn;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
           &:hover {
             background-color: #5e7aa2;
           }
         }
         .empty_btn {
           @include empty_btn;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
           &:hover {
             background-color: #5d85bd;
           }

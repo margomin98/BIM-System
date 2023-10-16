@@ -442,14 +442,7 @@
     flex-wrap: nowrap;
     border: none;
   }
-   ::-webkit-scrollbar {
-    height: 6px;
-  }
-   ::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background-color: rgb(176, 175, 175);
-    border: 1px solid rgb(86, 85, 85);
-  }
+ 
   .check_box_wrap {
     .radio_wrap {
       margin-left: unset !important;
@@ -625,7 +618,7 @@
           .tab-content {
             background: #3E4E5F;
             padding: 50px 30px;
-            border-radius: 0 10px 10px 10px;
+            border-radius: 0 0 10px 10px;
             .selected_file {
               .input-group {
                 flex-direction: column;
@@ -891,7 +884,7 @@
           .tab-content {
             background: #3E4E5F;
             padding: 50px 30px;
-            border-radius: 0 10px 10px 10px;
+            border-radius: 0 0 10px 10px;
             .selected_file {
               .input-group {
                 flex-direction: column;
@@ -1184,7 +1177,7 @@
           .tab-content {
             background: #3E4E5F;
             padding: 50px 30px;
-            border-radius: 0 10px 10px 10px;
+            border-radius: 0 0 10px 10px;
             .selected_file {
               .input-group {
                 flex-direction: column;

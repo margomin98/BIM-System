@@ -1337,14 +1337,7 @@
     flex-wrap: nowrap;
     border: none;
   }
-   ::-webkit-scrollbar {
-    height: 6px;
-  }
-   ::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background-color: rgb(176, 175, 175);
-    border: 1px solid rgb(86, 85, 85);
-  }
+ 
   .delete_btn {
     background: var(--c-5, #E94B4B);
     justify-content: center;
@@ -2030,6 +2023,9 @@
         padding: 0 5%;
         .fixed_info {
           @include fixed_info;
+          flex-direction: column;
+          padding: 10px;
+          height:unset;
           p {
             font-size: 20px;
             margin-bottom: 0;
@@ -2145,7 +2141,7 @@
           display: flex;
           justify-content: space-between;
           margin: 30px auto 5%;
-          width: 220px;
+          width: 210px;
           button {
             &:nth-child(1) {
               @include back_to_previous_btn;

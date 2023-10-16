@@ -2639,7 +2639,11 @@
     font-weight: 700;
   }
  
-
+ /* .p-datatable-tbody tr{
+    display: inline-flex;
+    height: 48px;
+    
+  } */
   .p-datatable .p-datatable-thead > tr > th {
     /* border:1px solid #babfc7;
     border-width: 1px !important; */
@@ -2750,7 +2754,7 @@
     color: black;
   }
     .p-datatable tr{
-    background-color: white !important;
+    /* background-color: white !important; */
     color: black !important;
    
   }

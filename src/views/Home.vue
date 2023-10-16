@@ -28,14 +28,14 @@
         padding: {
           top: 50,
           right: 20,
-          bottom: 20,
+          bottom: 40,
           left: 20,
         },
         background: {
           fill: '#73a1b282',
         },
         legend: {
-          spacing: 60,
+          spacing: 40,
           item: {
             toggleSeriesVisible: false,
             paddingX: 30,
@@ -70,7 +70,7 @@
           sectorLabelKey: 'share',
           title: {
             text: '倉庫即時數據',
-            fontSize: 40,
+            fontSize: 50,
             spacing: 60,
             color: '#132238',
           },
@@ -133,5 +133,10 @@
     color: #333;
     font-size: 16px;
     /* Add any other styles you want */
+  }
+  @media only screen and (max-width: 767px) {
+  .chart{
+    margin-bottom: 5%;
+  }
   }
 </style>

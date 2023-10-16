@@ -567,18 +567,12 @@
         }
         .search_btn {
           @include search_and_send_btn;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
           &:hover {
             background-color: #5e7aa2;
           }
         }
         .empty_btn {
           @include empty_btn;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
           &:hover {
             background-color: #5d85bd;
           }

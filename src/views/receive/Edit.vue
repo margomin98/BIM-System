@@ -138,7 +138,7 @@
       <div class="content">
         <button class="upload_file_pt2" @click="openFileInput(1)">選擇檔案</button>
         <input type="file" id="fileInput2" ref="fileInput2" style="display: none" @change="handlePictureFile($event)" multiple />
-        <swiper-container class='swiper_section' :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
+        <swiper-container :autoHeight="true" class='swiper_section' :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
           <swiper-slide v-for="(file , index) in fileParams.viewPic" :key="index" class="custom-slide">
             <img :src="file.FileLink" alt="">
             <span @click="deleteFile('picture' , index , file)">x</span>
@@ -732,6 +732,10 @@
       }
     }
   }
+  .custom-slide {
+    display: flex;
+    align-self: center;
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .multi_user_select {
@@ -743,7 +747,6 @@
       }
       .swiper_section {
         swiper-slide {
-          align-self: baseline;
           span {
             cursor: pointer;
             position: absolute;
@@ -935,7 +938,6 @@
       }
       .swiper_section {
         swiper-slide {
-          align-self: baseline;
           span {
             cursor: pointer;
             position: absolute;
@@ -1293,7 +1295,7 @@
           margin-left: unset !important;
           border-radius: 5px;
         }
-        margin-top: 3%;
+        margin-top: 11%;
         .count {
           .number-input-box {
             width: 100%;

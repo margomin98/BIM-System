@@ -222,9 +222,9 @@
                 </div>
               </div>
               <!-- <div class="file_upload_wrap" style="cursor: pointer;">
-                  <p>File 1</p>
-                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;">
-                </div> -->
+                    <p>File 1</p>
+                    <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;">
+                  </div> -->
             </div>
           </div>
         </div>
@@ -429,15 +429,16 @@
       }
     }
   }
+  .custom-slide {
+    display: flex;
+    align-self: center;
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .readonly_box {
         @include readonly_box;
       }
       .swiper_section {
-        swiper-slide {
-          align-self: baseline;
-        }
         swiper-slide img {
           width: 100%;
           height: auto;
@@ -579,9 +580,6 @@
         @include readonly_box;
       }
       .swiper_section {
-        swiper-slide {
-          align-self: baseline;
-        }
         swiper-slide img {
           width: 100%;
           height: auto;

@@ -230,12 +230,12 @@
             background-color: #5d85bd;
           }
         }
-        .export_btn {
-          @include export_btn;
-          &:hover {
-            background-color: #274266;
-          }
-        }
+        // .export_btn {
+        //   @include export_btn;
+        //   &:hover {
+        //     background-color: #274266;
+        //   }
+        // }
       }
       .datagrid_section {
         .content {
@@ -294,12 +294,12 @@
             background-color: #537ebc;
           }
         }
-        .export_btn {
-          @include export_btn;
-          &:hover {
-            background-color: #274266;
-          }
-        }
+        // .export_btn {
+        //   @include export_btn;
+        //   &:hover {
+        //     background-color: #274266;
+        //   }
+        // }
         .search_btn {
           @include search_and_send_btn;
           &:hover {
@@ -368,29 +368,23 @@
             background-color: #537ebc;
           }
         }
-        .export_btn {
-          @include export_btn;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
-          &:hover {
-            background-color: #274266;
-          }
-        }
+        // .export_btn {
+        //   @include export_btn;
+        //   font-size: 18px;
+        //   width: 100%;
+        //   height: auto;
+        //   &:hover {
+        //     background-color: #274266;
+        //   }
+        // }
         .search_btn {
           @include search_and_send_btn;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
           &:hover {
             background-color: #5e7aa2;
           }
         }
         .empty_btn {
           @include empty_btn;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
           &:hover {
             background-color: #5d85bd;
           }
