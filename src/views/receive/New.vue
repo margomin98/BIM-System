@@ -794,14 +794,7 @@
     flex-wrap: nowrap;
     border: none;
   }
-  ::-webkit-scrollbar {
-    height: 6px;
-  }
-   ::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background-color: rgb(176, 175, 175);
-    border: 1px solid rgb(86, 85, 85);
-  }
+
   .selected_user_wrap {
     gap: 0 5px;
     display: flex;
