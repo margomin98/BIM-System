@@ -1411,6 +1411,8 @@
           font-size: 22px;
           position: absolute;
           right: 3%;
+          top: 1%;
+    padding: 0;
         }
       }
       .list {

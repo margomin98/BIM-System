@@ -56,19 +56,19 @@
             <div class="input-group-prepend">盤點類型：</div>
             <div class="check_section d-flex">
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no1" name="radio" value="指定盤" v-model="details.PlanType" :disabled="details.PlanType !== '指定盤'"/>
+                <input type="radio" id="no1" name="radio" value="指定盤" v-model="details.PlanType" :disabled="details.PlanType !== '指定盤'" />
                 <label for="no1">指定盤</label>
               </div>
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no2" name="radio" value="月盤" v-model="details.PlanType" :disabled="details.PlanType !== '月盤'"/>
+                <input type="radio" id="no2" name="radio" value="月盤" v-model="details.PlanType" :disabled="details.PlanType !== '月盤'" />
                 <label for="no2">月盤</label>
               </div>
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no3" name="radio" value="季盤" v-model="details.PlanType" :disabled="details.PlanType !== '季盤'"/>
+                <input type="radio" id="no3" name="radio" value="季盤" v-model="details.PlanType" :disabled="details.PlanType !== '季盤'" />
                 <label for="no3">季盤</label>
               </div>
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no4" name="radio" value="年盤" v-model="details.PlanType" :disabled="details.PlanType !== '年盤'"/>
+                <input type="radio" id="no4" name="radio" value="年盤" v-model="details.PlanType" :disabled="details.PlanType !== '年盤'" />
                 <label for="no4">年盤</label>
               </div>
             </div>
@@ -84,8 +84,8 @@
       </div>
       <div class="content">
         <div style="width: 100%">
-          <ag-grid-vue style="width: 100%; height:810px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs2" :rowData="rowData2" :paginationPageSize="20" :pagination="true"
-          @grid-ready="onGridReady2" :alwaysShowHorizontalScroll="true">
+          <ag-grid-vue style="width: 100%; height:810px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs2" :rowData="rowData2" :paginationPageSize="20" :pagination="true" @grid-ready="onGridReady2"
+            :alwaysShowHorizontalScroll="true">
           </ag-grid-vue>
         </div>
       </div>
@@ -220,14 +220,13 @@
         },
       ]
       // 盤點範圍項目 datagrid
-      const columnDefs2 = [
-        {
+      const columnDefs2 = [{
           // headerName: "項目",
           valueGetter: function(params) {
             // 通过 params.node 获取当前行的 RowNode
             const rowNode = params.node;
             // 返回 RowNode 的 id 属性作为该列的值
-            return parseFloat(rowNode.id)+1;
+            return parseFloat(rowNode.id) + 1;
           },
           width: 50,
           resizable: true,
@@ -398,23 +397,6 @@
             margin-bottom: 5px;
             color: white;
           }
-          .dropdown {
-            width: 55%;
-            .dropdown-menu {
-              width: 100%;
-              p {
-                text-align: left;
-                padding: 0 10px
-              }
-            }
-            button {
-              @include dropdown-btn;
-              width: 100%;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
           .input-group {
             justify-content: right;
             flex-wrap: nowrap;
@@ -463,27 +445,6 @@
             @include back_to_previous_btn;
             &:hover {
               background-color: #5d85bb;
-            }
-          }
-         
-        }
-        .dropdown {
-          width: calc(100% - 10%);
-          height: 35px;
-          @include dropdown_btn;
-          .dropdown-toggle {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: none;
-          }
-          .dropdown-menu {
-            width: 100%;
-            transform: translate3d(-1px, 35px, 0px) !important;
-            p {
-              font-size: 18px;
-              color: black;
-              font-weight: normal;
             }
           }
         }
@@ -543,23 +504,6 @@
             margin-bottom: 5px;
             color: white;
           }
-          .dropdown {
-            width: 55%;
-            .dropdown-menu {
-              width: 100%;
-              p {
-                text-align: left;
-                padding: 0 10px
-              }
-            }
-            button {
-              @include dropdown-btn;
-              width: 100%;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
           .input-group {
             justify-content: right;
             flex-wrap: nowrap;
@@ -610,27 +554,6 @@
               background-color: #5d85bb;
             }
           }
-         
-        }
-        .dropdown {
-          width: calc(100% - 10%);
-          height: 35px;
-          @include dropdown_btn;
-          .dropdown-toggle {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: none;
-          }
-          .dropdown-menu {
-            width: 100%;
-            transform: translate3d(-1px, 35px, 0px) !important;
-            p {
-              font-size: 18px;
-              color: black;
-              font-weight: normal;
-            }
-          }
         }
         .item_wrap {
           height: 350px;
@@ -657,10 +580,6 @@
         @include dropdown_btn;
         height: 35px;
         width: 100%
-      }
-      .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-        margin-left: 0 !important;
-        border-radius: 5px;
       }
       h1 {
         margin-top: 50px;
@@ -707,19 +626,6 @@
           @include content_bg;
           .row {
             gap: 10px 0;
-          }
-          .dropdown {
-            margin-left: unset !important;
-            .dropdown-menu {
-              width: 100%;
-            }
-            button {
-              @include dropdown-btn;
-              width: 100%;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
           }
           .input-group {
             flex-direction: column;
@@ -768,10 +674,6 @@
         }
       }
       .info_wrap:nth-child(3) {
-        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-          margin-left: unset !important;
-          border-radius: 5px;
-        }
         margin-top: 3%;
         .count {
           .number-input-box {

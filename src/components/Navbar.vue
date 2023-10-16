@@ -5,8 +5,8 @@
         <img class='logo_img' src="@/assets/navbar/logo.png" alt="logo">
       </router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item dropdown">
@@ -139,6 +139,19 @@
 </script>
 
 <style lang="scss" scoped>
+  .dropdown-menu {
+    animation: fadeIn 0.5s;
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translate3d(0, -2%, 0);
+      }
+      to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+    }
+  }
   @media only screen and (min-width: 1200px) {
     .navbar-nav .nav-link.active,
     .navbar-nav .nav-link.show {
@@ -219,11 +232,6 @@
       width: 100%;
       display: flex;
       align-items: center;
-      .nav-link:hover {
-        background: #213d5d;
-        border-radius: 5px;
-        font-weight: 700;
-      }
       nav {
         background: linear-gradient(151deg, #0E2135 1.56%, #4A74A1 42.39%, #FFF 96.44%);
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -265,14 +273,15 @@
           border-radius: 0px 0px 5px 5px;
           background: #2D4864;
           box-shadow: 4px 2px 4px 0px rgba(0, 0, 0, 0.25);
-          margin-top: 30px;
+          margin-top: 15px;
           left: -15%;
           a {
             padding: 2px 10px;
             text-decoration: none;
-            justify-content: center;
+            justify-content: left;
             align-items: start;
             display: flex;
+            margin: 5px 0;
             &:hover {
               background: white;
               color: black;

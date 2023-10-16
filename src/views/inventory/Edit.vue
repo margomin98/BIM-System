@@ -29,8 +29,8 @@
               <div class="input-group-prepend flex"><span>*</span>盤點人員：</div>
               <div class="dropdown">
                 <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    {{ details.InventoryStaffName || '請選擇' }}
-                  </button>
+                        {{ details.InventoryStaffName || '請選擇' }}
+                      </button>
                 <div class="dropdown-menu">
                   <p v-for="(item , index) in DropdownArray.InventoryStaff" :key="index" @click="selectStaff(item)">{{ item }}</p>
                 </div>
@@ -111,8 +111,8 @@
                       <p>設備總類</p>
                       <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                            {{ searchParams.EquipTypeName || '請選擇' }}
-                          </button>
+                                {{ searchParams.EquipTypeName || '請選擇' }}
+                              </button>
                         <div class="dropdown-menu" aria-labelledby="typeDropdown">
                           <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
                         </div>
@@ -121,9 +121,9 @@
                     <div class='col'>
                       <p>設備分類</p>
                       <div class="dropdown">
-                        <button style='overflow: hidden;text-overflow: ellipsis;white-space: nowrap' class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
-                            {{ searchParams.EquipCategoryName || EquipCategoryInit }}
-                          </button>
+                        <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
+                                {{ searchParams.EquipCategoryName || EquipCategoryInit }}
+                              </button>
                         <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                           <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
                         </div>
@@ -137,8 +137,8 @@
                       <p>儲位區域</p>
                       <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
-                            {{ searchParams.AreaName || '請選擇' }}
-                          </button>
+                                {{ searchParams.AreaName || '請選擇' }}
+                              </button>
                         <div class="dropdown-menu" aria-labelledby="areaDropdown">
                           <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item" @click="selectArea(item)">{{ item.Name }}</p>
                         </div>
@@ -148,8 +148,8 @@
                       <p>儲位櫃位</p>
                       <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="searchParams.AreaName === ''">
-                            {{ searchParams.LayerName || LayerInit }}
-                          </button>
+                                {{ searchParams.LayerName || LayerInit }}
+                              </button>
                         <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                           <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(item)">{{ item.Name }}</p>
                         </div>
@@ -257,10 +257,25 @@
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
   import Navbar from "@/components/Navbar.vue";
-  import { getEquipType , getEquipCategory , getArea , getLayer , getAccount } from '@/assets/js/common_api'
-  import { goBack } from "@/assets/js/common_fn";
-  import { onMounted, ref, reactive, } from "vue";
-  import { useRoute, useRouter } from "vue-router";
+  import {
+    getEquipType,
+    getEquipCategory,
+    getArea,
+    getLayer,
+    getAccount
+  } from '@/assets/js/common_api'
+  import {
+    goBack
+  } from "@/assets/js/common_fn";
+  import {
+    onMounted,
+    ref,
+    reactive,
+  } from "vue";
+  import {
+    useRoute,
+    useRouter
+  } from "vue-router";
   export default {
     components: {
       Navbar,
@@ -385,10 +400,10 @@
       const columnDefs2 = [{
           cellRenderer: "Inventory_delete_button",
           cellRendererParams: {
-            deleteFromAssetList: (data)=>{
+            deleteFromAssetList: (data) => {
               // alert(data.AssetsId);
               const deleteIndex = details.value.AssetList.findIndex((item) => item.AssetsId === data.AssetsId);
-              details.value.AssetList.splice(deleteIndex , 1);
+              details.value.AssetList.splice(deleteIndex, 1);
               grid.api2.setRowData(details.value.AssetList);
             }
           },
@@ -404,7 +419,7 @@
             // 通过 params.node 获取当前行的 RowNode
             const rowNode = params.node;
             // 返回 RowNode 的 id 属性作为该列的值
-            return parseFloat(rowNode.id)+1;
+            return parseFloat(rowNode.id) + 1;
           },
           unSortIcon: true,
           sortable: true,
@@ -491,35 +506,35 @@
       });
       // 帶入資料
       async function getDetails() {
-      const axios = require('axios');
-      try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetInventoryPlanInfo?id=${IP_ID}`);
-        console.log(response);
-        const data = response.data;
-        if (data.state === 'success') {
-          // 檢查資料狀態是否可編輯
-          // if(data.resultList.Status !== '申請入庫' && data.resultList.Status !== '申請歸還' && data.resultList.Status !== '可交付') {
-          //   window.history.back();
-          //   // router.push({name: 'Store_Datagrid'});
-          // }
-          console.log('Details Get成功 資料如下\n', data.resultList);
-          details.value = data.resultList;
-          grid.api2.setRowData(details.value.AssetList)
-        } else if (data.state === 'error') {
-          alert(data.messages);
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
+        const axios = require('axios');
+        try {
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetInventoryPlanInfo?id=${IP_ID}`);
+          console.log(response);
+          const data = response.data;
+          if (data.state === 'success') {
+            // 檢查資料狀態是否可編輯
+            // if(data.resultList.Status !== '申請入庫' && data.resultList.Status !== '申請歸還' && data.resultList.Status !== '可交付') {
+            //   window.history.back();
+            //   // router.push({name: 'Store_Datagrid'});
+            // }
+            console.log('Details Get成功 資料如下\n', data.resultList);
+            details.value = data.resultList;
+            grid.api2.setRowData(details.value.AssetList)
+          } else if (data.state === 'error') {
+            alert(data.messages);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+          }
+        } catch (error) {
+          console.error(error);
         }
-      } catch (error) {
-        console.error(error);
       }
-    }
       // 送出新增計畫單
       async function submit() {
         // console.log(details.value);
         // 檢查必填項目
-        if (!details.value.PlanTitle || !details.value.InventoryStaffName || !details.value.PlanStart|| !details.value.PlanEnd || !details.value.PlanType|| details.value.AssetList.length === 0) {
+        if (!details.value.PlanTitle || !details.value.InventoryStaffName || !details.value.PlanStart || !details.value.PlanEnd || !details.value.PlanType || details.value.AssetList.length === 0) {
           alert('請填寫所有必填項目');
           return;
         }
@@ -534,9 +549,9 @@
           requestData[keyname] = details.value[keyname]
         }
         // 將AssetList需要參數 額外重新處理
-        const finalList = details.value.AssetList.map((item)=> item.AssetsId);
+        const finalList = details.value.AssetList.map((item) => item.AssetsId);
         requestData.AssetList = finalList;
-        console.log('requestData:' , requestData);
+        console.log('requestData:', requestData);
         const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/EditPlan', requestData);
         const data = response.data;
         try {
@@ -600,60 +615,60 @@
       // 取得盤點人員DropdownArray
       async function getAccountName() {
         getAccount('')
-        .then((data)=>{
-          DropdownArray.InventoryStaff = data;
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+          .then((data) => {
+            DropdownArray.InventoryStaff = data;
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       async function getEquipTypeName() {
         if (DropdownArray.EquipType.length == 0) {
           getEquipType()
-          .then((data)=>{
-            DropdownArray.EquipType = data;
-          })
-          .catch((error) =>{
-            console.error(error);
-          })
+            .then((data) => {
+              DropdownArray.EquipType = data;
+            })
+            .catch((error) => {
+              console.error(error);
+            })
         }
       }
       async function getEquipCategoryName() {
         getEquipCategory(searchParams.EquipType_Id)
-          .then((data)=>{
+          .then((data) => {
             DropdownArray.EquipCategory = data;
           })
-          .catch((error) =>{
+          .catch((error) => {
             console.error(error);
           })
       }
       async function getAreaName() {
         if (DropdownArray.Area.length == 0) {
           getArea()
-          .then((data)=>{
-            DropdownArray.Area = data;
-          })
-          .catch((error) =>{
-            console.error(error);
-          })
+            .then((data) => {
+              DropdownArray.Area = data;
+            })
+            .catch((error) => {
+              console.error(error);
+            })
         }
       }
       async function getLayerName() {
         getLayer(searchParams.Area_Id)
-          .then((data)=>{
+          .then((data) => {
             DropdownArray.Layer = data;
           })
-          .catch((error) =>{
+          .catch((error) => {
             console.error(error);
           })
       }
       function selectType(item) {
-      searchParams.EquipTypeName = item.Name;
-      searchParams.EquipType_Id = item.Id;
-      searchParams.EquipCategoryName = '';
-      searchParams.Category_Id = '';
-      getEquipCategoryName();
-      EquipCategoryInit.value = '請選擇';
+        searchParams.EquipTypeName = item.Name;
+        searchParams.EquipType_Id = item.Id;
+        searchParams.EquipCategoryName = '';
+        searchParams.Category_Id = '';
+        getEquipCategoryName();
+        EquipCategoryInit.value = '請選擇';
       }
       function selectCategory(item) {
         searchParams.EquipCategoryName = item.Name;
@@ -674,8 +689,8 @@
       const selectStaff = (item) => {
         details.value.InventoryStaffName = item;
       }
-      const clear = ()=>{
-        for(const key in searchParams) {
+      const clear = () => {
+        for (const key in searchParams) {
           searchParams[key] = '';
         }
         EquipCategoryInit.value = '請先選擇設備總類'
@@ -686,15 +701,14 @@
         // 取得選中的行
         const selectNodes = grid.api1.getSelectedNodes();
         // 將其中的資料加入details.value.AssetList
-        const nodesData = selectNodes.map((node)=> node.data);
+        const nodesData = selectNodes.map((node) => node.data);
         nodesData.forEach((item) => {
-          details.value.AssetList.splice(0 , 0 , item);
+          details.value.AssetList.splice(0, 0, item);
         });
         grid.api2.setRowData(details.value.AssetList);
         // console.log('selectedNodes:', selectNodes);
         // console.log('NodesData:', nodesData);
       }
-
       const onGridReady1 = (params) => {
         grid.api1 = params.api
       }
@@ -738,10 +752,6 @@
   span {
     @include red_star
   }
-  .modal-dialog {
-    width: 80% !important;
-    max-width: unset
-  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       input {
@@ -750,7 +760,6 @@
       }
       .readonly_box {
         @include readonly_box;
-        
       }
       h1 {
         margin-top: 80px;
@@ -855,10 +864,10 @@
               }
             }
           }
-          .date-selector{
-            width:200px;
-            input{
-              width:100%
+          .date-selector {
+            width: 200px;
+            input {
+              width: 100%
             }
           }
         }
@@ -890,6 +899,9 @@
             justify-content: space-between;
             align-items: center;
             border: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
           .dropdown-menu {
             width: 100%;
@@ -925,7 +937,6 @@
       .row:nth-child(3) {
         .input-group {
           justify-content: flex-start;
-   
         }
       }
     }
@@ -1054,7 +1065,6 @@
       }
       .readonly_box {
         @include readonly_box;
-        
       }
       h1 {
         margin-top: 80px;
@@ -1066,7 +1076,7 @@
       }
       .info_wrap {
         margin: auto;
-width:700px;
+        width: 700px;
         .fixed_info {
           @include fixed_info;
           p {
@@ -1098,12 +1108,12 @@ width:700px;
         }
         .content {
           @include content_bg;
-.organizer_wrap{
-  --bs-gutter-x:unset;
-.flex:nth-child(1){
-  width:210px
-}
-}
+          .organizer_wrap {
+            --bs-gutter-x: unset;
+            .flex:nth-child(1) {
+              width: 210px
+            }
+          }
           p {
             text-align: center;
             white-space: nowrap;
@@ -1113,7 +1123,6 @@ width:700px;
             color: white;
           }
           .dropdown {
-    
             .dropdown-menu {
               width: 100%;
               p {
@@ -1129,7 +1138,6 @@ width:700px;
               align-items: center;
             }
           }
-
           .input-group {
             flex-wrap: nowrap;
             .input-number {
@@ -1164,9 +1172,7 @@ width:700px;
                 font-weight: 600;
               }
             }
-          }
-     
-          // .date-selector{
+          } // .date-selector{
           //   width:220px;
           //   input{
           //     width:100%
@@ -1201,6 +1207,9 @@ width:700px;
             justify-content: space-between;
             align-items: center;
             border: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
           .dropdown-menu {
             width: 100%;
@@ -1233,13 +1242,13 @@ width:700px;
       .info_wrap:nth-child(3) {
         margin-top: 3%;
       }
-   
     }
     .modal {
       .dropdown-toggle {
         width: 100%
       }
       padding: 0 5%;
+      padding-left: 5% !important;
       .modal-content {
         background: unset;
         border: 0;
@@ -1351,14 +1360,12 @@ width:700px;
           }
         }
       }
-    }  
-     
+    }
   }
   @media only screen and (max-width: 767px) {
     .main_section {
       .readonly_box {
         @include readonly_box;
-        
       }
       input {
         @include dropdown_btn;
@@ -1512,6 +1519,7 @@ width:700px;
     }
     .modal {
       padding: 0 5%;
+      padding-left: 5% !important;
       .modal-content {
         background-color: unset;
         border: 0;
@@ -1541,6 +1549,8 @@ width:700px;
           font-size: 22px;
           position: absolute;
           right: 3%;
+          padding: 0;
+          top: 0%;
         }
       }
       .list {
@@ -1609,9 +1619,9 @@ width:700px;
             }
           }
           div {
-            margin: 10px 0;
+            margin: 0 0 10px;
             p {
-              padding: 5px;
+              padding: 5px 5px 0;
               white-space: nowrap;
               font-size: 18px;
               font-weight: 700;

@@ -21,8 +21,8 @@
             <p>設備總類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                  {{ searchParams.EquipTypeName || '請選擇' }}
-                </button>
+                    {{ searchParams.EquipTypeName || '請選擇' }}
+                  </button>
               <div class="dropdown-menu" aria-labelledby="typeDropdown">
                 <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
               </div>
@@ -31,9 +31,9 @@
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>設備分類</p>
             <div class="dropdown">
-              <button style='  overflow: hidden;text-overflow: ellipsis;white-space: nowrap' class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: (!searchParams.EquipTypeName) }">
-                  {{ searchParams.EquipCategoryName || EquipCategoryInit }}
-                </button>
+              <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: (!searchParams.EquipTypeName) }">
+                    {{ searchParams.EquipCategoryName || EquipCategoryInit }}
+                  </button>
               <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                 <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
               </div>
@@ -47,8 +47,8 @@
             <p>狀態</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{ searchParams.Status || "請選擇" }}
-                </button>
+                    {{ searchParams.Status || "請選擇" }}
+                  </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item, index) in DropdownArray.Status" :key="index" class="dropdown-item" @click="selectStatus(`${item}`)">
                   {{ item }}</p>
@@ -57,7 +57,7 @@
           </div>
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>物流單號</p>
-            <input type="text"  v-model="searchParams.ShipmentNum"/>
+            <input type="text" v-model="searchParams.ShipmentNum" />
           </div>
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>申請入庫日期(起)</p>
@@ -93,15 +93,20 @@
   import {
     ref,
     onMounted,
-reactive
+    reactive
   } from "vue";
   import {
     AgGridVue
   } from "ag-grid-vue3";
   import Storage_return_button from "@/components/Storage_return_button";
   import Delete_button from "@/components/Storage_delete_button";
-  import { Store_StatusArray } from "@/assets/js/dropdown";
-  import { getEquipType , getEquipCategory } from '@/assets/js/common_api'
+  import {
+    Store_StatusArray
+  } from "@/assets/js/dropdown";
+  import {
+    getEquipType,
+    getEquipCategory
+  } from '@/assets/js/common_api'
   import Navbar from "@/components/Navbar.vue";
   import router from "@/router";
   export default {
@@ -169,7 +174,6 @@ reactive
           resizable: true,
           suppressMovable: true
         },
-        
         // {
         //   headerName: "編號",
         //   field: "AI_ID",
@@ -235,7 +239,7 @@ reactive
         const formData = new FormData();
         //將表格資料append到 formData
         for (const key in searchParams) {
-          if(searchParams[key]) {
+          if (searchParams[key]) {
             formData.append(key, searchParams[key]);
           }
         }
@@ -267,20 +271,20 @@ reactive
       async function getEquipTypeName() {
         if (DropdownArray.EquipType.length == 0) {
           getEquipType()
-          .then((data)=>{
-            DropdownArray.EquipType = data;
-          })
-          .catch((error) =>{
-            console.error(error);
-          })
+            .then((data) => {
+              DropdownArray.EquipType = data;
+            })
+            .catch((error) => {
+              console.error(error);
+            })
         }
       }
       async function getEquipCategoryName() {
         getEquipCategory(searchParams.EquipType_Id)
-          .then((data)=>{
+          .then((data) => {
             DropdownArray.EquipCategory = data;
           })
-          .catch((error) =>{
+          .catch((error) => {
             console.error(error);
           })
       }
@@ -300,7 +304,7 @@ reactive
         searchParams.Status = item;
       };
       const clear = () => {
-        for(const key in searchParams) {
+        for (const key in searchParams) {
           searchParams[key] = '';
         }
         EquipCategoryInit.value = '請先選擇設備總類';
@@ -382,7 +386,7 @@ reactive
         .row {
           display: grid;
           grid-template-rows: 1fr 1fr;
-          grid-template-columns: 1fr 1fr 1fr 1fr ; 
+          grid-template-columns: 1fr 1fr 1fr 1fr;
           gap: 40px 5px;
           p {
             @include datagrid_title;
@@ -407,6 +411,9 @@ reactive
               display: flex;
               justify-content: space-between;
               align-items: center;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
             .dropdown-menu {
               width: 100%;
@@ -501,6 +508,9 @@ reactive
               justify-content: space-between;
               align-items: center;
               border: none;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
             .dropdown-menu {
               width: 100%;
