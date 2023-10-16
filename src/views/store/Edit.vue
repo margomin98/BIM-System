@@ -524,8 +524,12 @@
     getProject
   } from '@/assets/js/common_api'
   import {
-    goBack
+    goBack,
+    canEnterPage,
   } from "@/assets/js/common_fn"
+  import {
+    Store_Edit_Status
+  } from '@/assets/js/enter_status'
   import {
     onMounted,
     reactive,
@@ -1159,6 +1163,7 @@
           .then((response) => {
             const data = response.data;
             if (data.state === 'success') {
+              canEnterPage(data.resultList.Status, Store_Edit_Status);
               console.log('Details Get成功 資料如下\n', data.resultList);
               details.value = data.resultList;
               // 將資料帶入上半部表單formParams

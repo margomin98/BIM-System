@@ -108,7 +108,7 @@
         :sort-field="datagridSetting.sortField"
         :sort-order="datagridSetting.sortOrder"
         resizableColumns 
-        columnResizeMode="fit"
+        columnResizeMode="expand"
         showGridlines 
         scrollable 
         scrollHeight="510px" 
@@ -132,12 +132,12 @@
         </template>-->
         <Column selectionMode="multiple" headerStyle="width: 3rem" ></Column>
         <Column style="min-width: 50px;">
-<template #body="slotProps">
-  <!-- Add the custom component here -->
-  <test :params="slotProps" :msg="'hi'" @msg="handlemsg" />
-</template>
+          <template #body="slotProps">
+            <!-- Add the custom component here -->
+            <test :params="slotProps" :msg="'hi'" @msg="handlemsg" />
+          </template>
         </Column>
-        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}" :frozen="item.field === 'AssetsId'"></Column>
+        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
       </DataTable>
       </div>
 
@@ -290,12 +290,12 @@
             break
         }
         const order = datagridSetting.sortOrder === 1 ? 'asc' : 'desc'
-        console.log('first:', datagridSetting.first);
-        console.log('rows:', datagridSetting.rows);
-        console.log('page:', datagridSetting.currentPage);
-        console.log('sort:', datagridSetting.sortField);
-        console.log('order:', order);
-        console.log('-----------------------------');
+        // console.log('first:', datagridSetting.first);
+        // console.log('rows:', datagridSetting.rows);
+        // console.log('page:', datagridSetting.currentPage);
+        // console.log('sort:', datagridSetting.sortField);
+        // console.log('order:', order);
+        // console.log('-----------------------------');
         // 將表格資料append到 formData
         for (const key in searchParams) {
           formData.append(key, searchParams[key]);
@@ -366,6 +366,15 @@
           .catch((error) => {
             console.error(error);
           })
+      }
+      function onSelectAllChange(event) {
+        console.log(event);
+        datagridSetting.selectAll = event.checked;
+        if(datagridSetting.selectAll) {
+          selectedProduct.value = rowData.value
+        } else {
+          selectedProduct.value = []
+        }
       }
       function selectType(item) {
         searchParams.EquipTypeName = item.Name;

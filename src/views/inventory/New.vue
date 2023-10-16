@@ -171,7 +171,7 @@
               :sort-field="datagrid1.sortField"
               :sort-order="datagrid1.sortOrder"
               resizableColumns 
-              columnResizeMode="spend"
+              columnResizeMode="expand"
               showGridlines 
               scrollable 
               scrollHeight="510px" 
@@ -188,7 +188,7 @@
               paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
               currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
               <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-              <Column style="max-width: 60px;">
+              <Column style="min-width: 60px;">
                 <template #body="slotProps">
                   <!-- Add the custom component here -->
                   <List_view_button :params = "slotProps" />
@@ -216,7 +216,7 @@
             :sort-field="datagrid2.sortField"
             :sort-order="datagrid2.sortOrder"
             resizableColumns 
-            columnResizeMode="spend"
+            columnResizeMode="expand"
             showGridlines 
             scrollable 
             scrollHeight="820px" 
@@ -266,10 +266,6 @@
     },
     setup() {
       const router = useRouter();
-      const grid = reactive({
-        api1: null,
-        api2: null,
-      })
       const ConvenerName = ref('');
       const DropdownArray = reactive({
         EquipType: [],
@@ -615,7 +611,7 @@
       function deleteFromAssetList(data) {
         rowData2.value = rowData2.value.filter(item=> item.AssetsId !== data.AssetsId);
         formParams.AssetList = formParams.AssetList.filter(AssetsId=> AssetsId !== data.AssetsId);
-        getRangeOfPlan('', 'search');
+        // getRangeOfPlan('', 'search');
       }
       const clear = ()=>{
         for(const key in searchParams) {
@@ -648,18 +644,16 @@
               });
               // 全選情況下，扣掉排除List
               formParams.AssetList = formParams.AssetList.filter(id=> !unselectList.value.includes(id));
-              console.log('排除後:', formParams.AssetList);
               getRangeOfPlan('', 'search');
+              // 清空排除List、selectedList
+              datagrid1.selectAll = false;
+              datagrid1.selectedList = [];
+              unselectList.value = [];
             }
           })
           .catch((error)=>{
             console.error(error);
           })
-          
-          // 清空排除List、selectedList
-          datagrid1.selectAll = false;
-          datagrid1.selectedList = [];
-          unselectList.value = [];
         } else {
           // 非全選情況下，加入selectedList
           datagrid1.selectedList.forEach(item=>{
@@ -691,7 +685,6 @@
         }
       }
       return {
-        grid,
         ConvenerName,
         DropdownArray,
         EquipCategoryInit,
