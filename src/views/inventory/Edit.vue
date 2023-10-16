@@ -435,9 +435,6 @@
         for (const keyname in formParams) {
           requestData[keyname] = formParams[keyname]
         }
-        // 將AssetList需要參數 額外重新處理
-        const finalList = formParams.AssetList.map((item) => item.AssetsId);
-        requestData.AssetList = finalList;
         console.log('requestData:', requestData);
         const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/EditPlan', requestData);
         const data = response.data;
