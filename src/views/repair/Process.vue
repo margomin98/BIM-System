@@ -196,55 +196,55 @@
         <div class="selected_file col">
           <div class="input-group">
             <div class="input-group-prepend mb-3">已選擇檔案：</div>
-           <div v-for="(file, index) in formParams.viewDoc" :key="index" class="file_upload_wrap" style="cursor: pointer;">
+            <div v-for="(file, index) in formParams.viewDoc" :key="index" class="file_upload_wrap" style="cursor: pointer;">
               <p>{{ file.FileName}}</p>
               <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
               <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)">
+            </div>
           </div>
         </div>
-      </div>
-      <!-- 瀏覽 -->
-      <!-- doc/docx download hidden Link -->
-      <a href="" style="display: none;" id="download-link"></a>
-      <!-- Modal Trigger -->
-      <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#documentModal"></button>
-      <!-- Exist Document Modal -->
-      <div class="modal fade" id="documentModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 800px !important">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="photoModalLabel"> {{ previewParams.title }}</h5>
-              <div class="close_icon">
-                <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
+        <!-- 瀏覽 -->
+        <!-- doc/docx download hidden Link -->
+        <a href="" style="display: none;" id="download-link"></a>
+        <!-- Modal Trigger -->
+        <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#documentModal"></button>
+        <!-- Exist Document Modal -->
+        <div class="modal fade" id="documentModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 800px !important">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="photoModalLabel"> {{ previewParams.title }}</h5>
+                <div class="close_icon">
+                  <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
+                </div>
+              </div>
+              <div class="modal-body">
+                <img :src="previewParams.src" class="w-100">
               </div>
             </div>
-            <div class="modal-body">
-              <img :src="previewParams.src" class="w-100">
+          </div>
+        </div>
+        <!-- 已上傳文件 -->
+        <div class="col-12">
+          <div class="input-group d-flex">
+            <div class="input-group-prepend">
+              已上傳文件：
+            </div>
+            <div class="selected_file">
+              <div v-for="(file, index) in details.existDocument" :key="index" class="file_upload_wrap" style="cursor: pointer;">
+                <p>{{ file.FileName}}</p>
+                <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
+                <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)">
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- 已上傳文件 -->
-      <div class="col-12">
-        <div class="input-group d-flex">
-          <div class="input-group-prepend">
-            已上傳文件：
-          </div>
-          <div class="selected_file">
-            <div v-for="(file, index) in details.existDocument" :key="index" class="file_upload_wrap" style="cursor: pointer;">
-              <p>{{ file.FileName}}</p>
-              <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
-              <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)">
-            </div>
-          </div>
-        </div>
+      <div class="col button_wrap">
+        <button class="back_btn" @click="goBack">回上一頁</button>
+        <button class="send_btn" @click="submit">送出</button>
       </div>
     </div>
-    <div class="col button_wrap">
-      <button class="back_btn" @click="goBack">回上一頁</button>
-      <button class="send_btn" @click="submit">送出</button>
-    </div>
-  </div>
   </div>
 </template>
 
@@ -650,15 +650,16 @@
       }
     }
   }
+  .custom-slide {
+    display: flex;
+    align-self: center;
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .readonly_box {
         @include readonly_box;
       }
       .swiper_section {
-        swiper-slide {
-          align-self: baseline;
-        }
         swiper-slide img {
           width: 100%;
           height: auto;
@@ -710,7 +711,6 @@
               width: 155px;
             }
           }
-          
           .selected_file {
             .input-group {
               flex-direction: column;
@@ -736,7 +736,6 @@
               }
             }
           }
-       
           .file_wrap {
             display: flex;
             flex-direction: column;
@@ -784,9 +783,6 @@
         @include readonly_box;
       }
       .swiper_section {
-        swiper-slide {
-          align-self: baseline;
-        }
         swiper-slide img {
           width: 100%;
           height: auto;
@@ -821,7 +817,6 @@
           @include content_bg;
           .input-group {
             width: 100%;
-
             flex-wrap: nowrap;
             .input-number {
               width: 100%;
@@ -868,7 +863,6 @@
               }
             }
           }
-       
           .file_wrap {
             display: flex;
             flex-direction: column;

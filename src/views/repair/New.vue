@@ -27,7 +27,7 @@
             <div class="input-group-prepend">
               <span>*</span>資產編號：
             </div>
-            <input ref="inputElement" type="text" class="form-control" placeholder="請掃描輸入產編" v-model="formParams.AssetsId" >
+            <input ref="inputElement" type="text" class="form-control" placeholder="請掃描輸入產編" v-model="formParams.AssetsId">
           </div>
         </div>
         <!-- 物品名稱 -->
@@ -43,7 +43,7 @@
         <div v-show="wrongStatus" class="col-12">
           <div class="input-group">
             <div style="visibility: hidden;" class="input-group-prepend">
-              <p >1</p>
+              <p>1</p>
             </div>
             <span style="color:rgb(216, 13, 13); font-weight: 700; font-size: 20px;">{{ alertMsg }}</span>
             <input type="text" style="visibility: hidden;" class="form-control">
@@ -66,7 +66,6 @@
               <button class="choose_btn" @click="openFileExplorer()">選擇檔案</button>
               <input type="file" ref="fileInputs" accept="image/*" multiple style="display: none;" @change="handleFileChange($event)">
             </div>
-           
           </div>
         </div>
         <!-- 已選擇的檔案 -->
@@ -78,12 +77,12 @@
         <div class="col-12 selected_file">
           <div class="input-group">
             <div class="file_upload_box">
-            <div v-for="(item , index) in formParams.viewFile" :key="index" class="file_upload_wrap">
+              <div v-for="(item , index) in formParams.viewFile" :key="index" class="file_upload_wrap">
                 <p>{{ item.FileName }}</p>
                 <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="viewImgFile(index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
                 <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index)">
               </div>
-           </div>
+            </div>
           </div>
         </div>
         <!-- ViewFile Modal -->
@@ -110,17 +109,28 @@
 </template>
 
 <script>
-  import { onMounted, reactive, ref, watch } from 'vue';
+  import {
+    onMounted,
+    reactive,
+    ref,
+    watch
+  } from 'vue';
   import Navbar from '@/components/Navbar.vue';
   import router from '@/router';
-  import { getDate , goBack } from '@/assets/js/common_fn.js'
-  import { getApplication , getAssets } from '@/assets/js/common_api.js'
+  import {
+    getDate,
+    goBack
+  } from '@/assets/js/common_fn.js'
+  import {
+    getApplication,
+    getAssets
+  } from '@/assets/js/common_api.js'
   import axios from 'axios'
   export default {
     components: {
       Navbar
     },
-    setup(){
+    setup() {
       const Applicant = ref('');
       const ApplicationDate = ref('');
       const Assets = reactive({
@@ -142,16 +152,16 @@
       const wrongStatus = ref(false);
       const canSubmit = ref(false);
       const fileInputs = ref(null);
-      onMounted(()=>{
+      onMounted(() => {
         getApplicationInfo()
         ApplicationDate.value = getDate()
       });
       async function getApplicationInfo() {
         getApplication()
-          .then((data)=>{
+          .then((data) => {
             Applicant.value = data;
           })
-          .catch((error) =>{
+          .catch((error) => {
             console.error(error);
           })
       }
@@ -161,7 +171,6 @@
       //       Assets.Name = data.AssetName;
       //       Assets.Type = data.AssetType;
       //       Assets.Status = data.Status;
-
       //       // 檢查資產類型
       //       if(Assets.Type === '耗材') {
       //         wrongStatus.value = true;
@@ -200,41 +209,41 @@
           return
         }
         const form = new FormData();
-        for(const key in formParams) {
-          if(formParams[key]) {
-            form.append(key , formParams[key]);
+        for (const key in formParams) {
+          if (formParams[key]) {
+            form.append(key, formParams[key]);
           }
         }
         // 移除viewFile
         form.delete('viewFile');
         // newFile額外append
         form.delete('newFile');
-        for(let i=0 ; i < formParams.newFile.length ; i++) {
+        for (let i = 0; i < formParams.newFile.length; i++) {
           form.append('newFile', formParams.newFile[i]);
         }
-
-        axios.post('http://192.168.0.177:7008/RepairMng/CreateOrder',form)
-        .then((response)=>{
-          const data = response.data;
-          if(data.state === 'success') {
-            alert('新增報修單成功\n單號為:' + data.resultList.R_ID);
-            router.push({ name: 'Repair_Datagrid' });
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-          else {
-            alert('新增報修單失敗')
-          }
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+        axios.post('http://192.168.0.177:7008/RepairMng/CreateOrder', form)
+          .then((response) => {
+            const data = response.data;
+            if (data.state === 'success') {
+              alert('新增報修單成功\n單號為:' + data.resultList.R_ID);
+              router.push({
+                name: 'Repair_Datagrid'
+              });
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            } else {
+              alert('新增報修單失敗')
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
-      const openFileExplorer = (()=>{
+      const openFileExplorer = (() => {
         fileInputs.value.click();
       });
-      const handleFileChange = ((event)=> {
+      const handleFileChange = ((event) => {
         const files = event.target.files;
         const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
         //檢查檔名
@@ -289,29 +298,27 @@
         }
         // console.log(formData[index].previewUrl);
       });
-      const deleteFile = ((index)=> {
-        formParams.newFile.splice(index , 1);
-        formParams.viewFile.splice(index , 1);
+      const deleteFile = ((index) => {
+        formParams.newFile.splice(index, 1);
+        formParams.viewFile.splice(index, 1);
       });
-      const viewImgFile = ((index)=>{
+      const viewImgFile = ((index) => {
         modalParams.title = formParams.viewFile[index].FileName;
         modalParams.src = formParams.viewFile[index].FileLink;
       });
       // 監聽formParams.AssetsId(資產編號)的數值變動 -> 搜尋
-      watch(()=>formParams.AssetsId, (newValue , oldValue) => {
+      watch(() => formParams.AssetsId, (newValue, oldValue) => {
         getAssets(newValue)
-        .then((data)=>{
+          .then((data) => {
             Assets.Name = data.AssetName;
             Assets.Type = data.AssetType;
             Assets.Status = data.Status;
-
             // 檢查資產類型
-            if(Assets.Type === '耗材') {
+            if (Assets.Type === '耗材') {
               wrongStatus.value = true;
               canSubmit.value = false;
               alertMsg.value = '僅提供資產類型為非耗材的物品進行維修'
-            }
-            else {
+            } else {
               // 檢查資產狀態(只有非耗材才會檢查)
               const Status = Assets.Status
               const Type = Assets.Type
@@ -341,13 +348,15 @@
               }
             }
           })
-          .catch((error) =>{
+          .catch((error) => {
             wrongStatus.value = true;
             canSubmit.value = false;
             Assets.Name = '';
             alertMsg.value = '請輸入正確的資產編號'
           })
-      },{immediate: false});
+      }, {
+        immediate: false
+      });
       return {
         Applicant,
         ApplicationDate,
@@ -373,9 +382,10 @@
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
-.view_icon,.delete_icon{
-  cursor: pointer;
-}
+  .view_icon,
+  .delete_icon {
+    cursor: pointer;
+  }
   .modal {
     .modal-body {
       padding: 20px;
@@ -401,8 +411,6 @@
       color: white;
       display: flex;
       justify-content: center;
-   
-   
     }
   }
   @media only screen and (min-width: 1200px) {
@@ -453,7 +461,6 @@
                 @include red_star
               }
             }
-         
             .file_wrap {
               display: flex;
               flex-direction: column;
@@ -465,37 +472,33 @@
                 }
               }
             }
-     
+          }
         }
-        }
-           .selected_file {
-            .file_upload_box{
-              padding: 0 20px;
-              
-                 .file_upload_wrap {
-                  margin-bottom: 0;
-    display: flex;
-    word-break: break-word;
-
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  margin-bottom: 0;
+        .selected_file {
+          .file_upload_box {
+            padding: 0 20px;
+            .file_upload_wrap {
+              margin-bottom: 0;
+              display: flex;
+              word-break: break-word;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              p {
+                margin-bottom: 0;
+                font-weight: 700;
+                color: white;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
                   font-weight: 700;
                   color: white;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
                 }
-              } 
+              }
             }
-          
-            }
+          }
+        }
         .button_wrap {
           display: flex;
           justify-content: space-between;
@@ -576,48 +579,43 @@
               }
             }
           }
-          
-            .file_wrap {
+          .file_wrap {
+            display: flex;
+            flex-direction: column;
+            .choose_btn {
+              margin-bottom: 10px;
+              @include choose_file_btn;
+              &:hover {
+                background: #3f608f;
+              }
+            }
+          }
+        }
+        .selected_file {
+          .file_upload_box {
+            padding: 0 20px;
+            .file_upload_wrap {
+              margin-bottom: 0;
               display: flex;
-              flex-direction: column;
-              .choose_btn {
-                margin-bottom: 10px;
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
+              word-break: break-word;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              p {
+                margin-bottom: 0;
+                font-weight: 700;
+                color: white;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
+                  font-weight: 700;
+                  color: white;
                 }
               }
             }
-          
-        }  
-        .selected_file {
-          .file_upload_box{
-              padding: 0 20px;
-              
-                 .file_upload_wrap {
-                  margin-bottom: 0;
-    display: flex;
-    word-break: break-word;
-
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  margin-bottom: 0;
-                  font-weight: 700;
-                  color: white;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
-                }
-              } 
-            }
-          
-            }
+          }
+        }
         .button_wrap {
           display: flex;
           justify-content: space-between;
@@ -731,34 +729,31 @@
               }
             }
           }
-        }  .selected_file {
-          .file_upload_box{
-              padding: 0 20px;
-              
-                 .file_upload_wrap {
-                  margin-bottom: 0;
-    display: flex;
-    word-break: break-word;
-
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  margin-bottom: 0;
+        }
+        .selected_file {
+          .file_upload_box {
+            .file_upload_wrap {
+              margin-bottom: 0;
+              display: flex;
+              word-break: break-word;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              p {
+                margin-bottom: 0;
+                font-weight: 700;
+                color: white;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
                   font-weight: 700;
                   color: white;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
                 }
-              } 
+              }
             }
-          
-            }
+          }
+        }
         .button_wrap {
           display: flex;
           justify-content: space-between;
