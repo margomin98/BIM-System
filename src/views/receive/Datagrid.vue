@@ -263,26 +263,7 @@
             font-size: 18px;
             height: 100%;
           }
-          .dropdown {
-            width: 200px;
-            height: 35px;
-            @include dropdown_btn;
-            .dropdown-toggle {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              border: none;
-            }
-            .dropdown-menu {
-              width: 100%;
-              transform: translate3d(-1px, 35px, 0px) !important;
-              p {
-                font-size: 18px;
-                color: black;
-                font-weight: normal;
-              }
-            }
-          }
+        
         }
       }
       .datagrid-header-row {
@@ -352,26 +333,7 @@
             height: 100%;
             text-align: left;
           }
-          .dropdown {
-            width: 100%;
-            height: 35px;
-            @include dropdown_btn;
-            .dropdown-toggle {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              border: none;
-            }
-            .dropdown-menu {
-              width: 100%;
-              transform: translate3d(-1px, 35px, 0px) !important;
-              p {
-                font-size: 18px;
-                color: black;
-                font-weight: normal;
-              }
-            }
-          }
+         
         }
       }
       .datagrid-header-row {
@@ -457,26 +419,7 @@
             height: 100%;
             text-align: left;
           }
-          .dropdown {
-            width: 100%;
-            height: 35px;
-            @include dropdown_btn;
-            .dropdown-toggle {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              border: none;
-            }
-            .dropdown-menu {
-              width: 100%;
-              transform: translate3d(-1px, 35px, 0px) !important;
-              p {
-                font-size: 18px;
-                color: black;
-                font-weight: normal;
-              }
-            }
-          }
+         
         }
       }
       .datagrid-header-row {

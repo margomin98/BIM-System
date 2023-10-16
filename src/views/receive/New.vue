@@ -1330,7 +1330,7 @@
               text-align: end;
             }
             .date-selector {
-              width: 220px;
+              width: 80%;
               input {
                 width: 100%;
                 border: none;

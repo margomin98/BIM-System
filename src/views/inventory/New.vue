@@ -23,8 +23,8 @@
               <div class="input-group-prepend flex"><span>*</span>盤點人員：</div>
               <div class="dropdown">
                 <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    {{ formParams.InventoryStaffName || '請選擇' }}
-                  </button>
+                        {{ formParams.InventoryStaffName || '請選擇' }}
+                      </button>
                 <div class="dropdown-menu">
                   <p v-for="(item , index) in DropdownArray.InventoryStaff" :key="index" @click="selectStaff(item)">{{ item }}</p>
                 </div>
@@ -105,8 +105,8 @@
                       <p>設備總類</p>
                       <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                            {{ searchParams.EquipTypeName || '請選擇' }}
-                          </button>
+                                {{ searchParams.EquipTypeName || '請選擇' }}
+                              </button>
                         <div class="dropdown-menu" aria-labelledby="typeDropdown">
                           <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
                         </div>
@@ -115,9 +115,9 @@
                     <div class='col'>
                       <p>設備分類</p>
                       <div class="dropdown">
-                        <button style='overflow: hidden;text-overflow: ellipsis;white-space: nowrap' class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
-                            {{ searchParams.EquipCategoryName || EquipCategoryInit }}
-                          </button>
+                        <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
+                                {{ searchParams.EquipCategoryName || EquipCategoryInit }}
+                              </button>
                         <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                           <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
                         </div>
@@ -131,8 +131,8 @@
                       <p>儲位區域</p>
                       <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
-                            {{ searchParams.AreaName || '請選擇' }}
-                          </button>
+                                {{ searchParams.AreaName || '請選擇' }}
+                              </button>
                         <div class="dropdown-menu" aria-labelledby="areaDropdown">
                           <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item" @click="selectArea(item)">{{ item.Name }}</p>
                         </div>
@@ -142,8 +142,8 @@
                       <p>儲位櫃位</p>
                       <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="searchParams.AreaName === ''">
-                            {{ searchParams.LayerName || LayerInit }}
-                          </button>
+                                {{ searchParams.LayerName || LayerInit }}
+                              </button>
                         <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                           <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(item)">{{ item.Name }}</p>
                         </div>
@@ -162,8 +162,7 @@
                   <p>目前資產庫存</p>
                 </div>
               </div>
-              <ag-grid-vue style="height: 450px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :paginationPageSize="20" :pagination="true"
-              :suppressRowClickSelection="true" :rowSelection="'multiple'" @grid-ready="onGridReady1">
+              <ag-grid-vue style="height: 450px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :paginationPageSize="20" :pagination="true" :suppressRowClickSelection="true" :rowSelection="'multiple'" @grid-ready="onGridReady1">
               </ag-grid-vue>
             </div>
           </div>
@@ -176,8 +175,8 @@
       </div>
       <div class="content">
         <div style="width: 100%">
-          <ag-grid-vue style="width: 100%; height:810px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs2" :rowData="rowData2" :paginationPageSize="20" :pagination="true"
-          @grid-ready="onGridReady2" :alwaysShowHorizontalScroll="true">
+          <ag-grid-vue style="width: 100%; height:810px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs2" :rowData="rowData2" :paginationPageSize="20" :pagination="true" @grid-ready="onGridReady2"
+            :alwaysShowHorizontalScroll="true">
           </ag-grid-vue>
         </div>
       </div>
@@ -190,14 +189,31 @@
 </template>
 
 <script>
-  import { AgGridVue } from "ag-grid-vue3";
+  import {
+    AgGridVue
+  } from "ag-grid-vue3";
   import List_view_button from "@/components/Rent_process_new_view_button";
   import Inventory_delete_button from "@/components/Inventory_delete_button";
   import Navbar from "@/components/Navbar.vue";
-  import { onMounted, ref, reactive, } from "vue";
-  import { useRouter } from "vue-router";
-  import { getEquipType , getEquipCategory , getArea , getLayer , getApplication , getAccount } from '@/assets/js/common_api'
-  import { goBack } from "@/assets/js/common_fn";
+  import {
+    onMounted,
+    ref,
+    reactive,
+  } from "vue";
+  import {
+    useRouter
+  } from "vue-router";
+  import {
+    getEquipType,
+    getEquipCategory,
+    getArea,
+    getLayer,
+    getApplication,
+    getAccount
+  } from '@/assets/js/common_api'
+  import {
+    goBack
+  } from "@/assets/js/common_fn";
   export default {
     components: {
       Navbar,
@@ -303,7 +319,6 @@
           width: 150,
           resizable: true,
           suppressMovable: true,
-          flex: 1,
         },
         {
           headerName: "儲位區域",
@@ -328,10 +343,10 @@
       const columnDefs2 = [{
           cellRenderer: "Inventory_delete_button",
           cellRendererParams: {
-            deleteFromAssetList: (data)=>{
+            deleteFromAssetList: (data) => {
               // alert(data.AssetsId);
               const deleteIndex = formParams.AssetList.findIndex((item) => item.AssetsId === data.AssetsId);
-              formParams.AssetList.splice(deleteIndex , 1);
+              formParams.AssetList.splice(deleteIndex, 1);
               grid.api2.setRowData(formParams.AssetList);
             }
           },
@@ -347,7 +362,7 @@
             // 通过 params.node 获取当前行的 RowNode
             const rowNode = params.node;
             // 返回 RowNode 的 id 属性作为该列的值
-            return parseFloat(rowNode.id)+1;
+            return parseFloat(rowNode.id) + 1;
           },
           unSortIcon: true,
           sortable: true,
@@ -429,7 +444,7 @@
       async function submit() {
         // console.log(details.value);
         // 檢查必填項目
-        if (!formParams.PlanTitle || !formParams.InventoryStaffName || !formParams.PlanStart|| !formParams.PlanEnd || !formParams.PlanType|| formParams.AssetList.length === 0) {
+        if (!formParams.PlanTitle || !formParams.InventoryStaffName || !formParams.PlanStart || !formParams.PlanEnd || !formParams.PlanType || formParams.AssetList.length === 0) {
           alert('請填寫所有必填項目');
           return;
         }
@@ -444,9 +459,9 @@
           requestData[keyname] = formParams[keyname]
         }
         // 將AssetList需要參數 額外重新處理
-        const finalList = formParams.AssetList.map((item)=> item.AssetsId);
+        const finalList = formParams.AssetList.map((item) => item.AssetsId);
         requestData.AssetList = finalList;
-        console.log('requestData:' , requestData);
+        console.log('requestData:', requestData);
         const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/CreatePlan', requestData);
         const data = response.data;
         try {
@@ -510,70 +525,70 @@
       // 取得召集人員名稱
       async function getApplicationInfo() {
         getApplication()
-          .then((data)=>{
+          .then((data) => {
             ConvenerName.value = data;
           })
-          .catch((error) =>{
+          .catch((error) => {
             console.error(error);
           })
       }
       // 取得盤點人員DropdownArray
       async function getAccountName() {
         getAccount('')
-        .then((data)=>{
-          DropdownArray.InventoryStaff = data;
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+          .then((data) => {
+            DropdownArray.InventoryStaff = data;
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       async function getEquipTypeName() {
         if (DropdownArray.EquipType.length == 0) {
           getEquipType()
-          .then((data)=>{
-            DropdownArray.EquipType = data;
-          })
-          .catch((error) =>{
-            console.error(error);
-          })
+            .then((data) => {
+              DropdownArray.EquipType = data;
+            })
+            .catch((error) => {
+              console.error(error);
+            })
         }
       }
       async function getEquipCategoryName() {
         getEquipCategory(searchParams.EquipType_Id)
-          .then((data)=>{
+          .then((data) => {
             DropdownArray.EquipCategory = data;
           })
-          .catch((error) =>{
+          .catch((error) => {
             console.error(error);
           })
       }
       async function getAreaName() {
         if (DropdownArray.Area.length == 0) {
           getArea()
-          .then((data)=>{
-            DropdownArray.Area = data;
-          })
-          .catch((error) =>{
-            console.error(error);
-          })
+            .then((data) => {
+              DropdownArray.Area = data;
+            })
+            .catch((error) => {
+              console.error(error);
+            })
         }
       }
       async function getLayerName() {
         getLayer(searchParams.Area_Id)
-          .then((data)=>{
+          .then((data) => {
             DropdownArray.Layer = data;
           })
-          .catch((error) =>{
+          .catch((error) => {
             console.error(error);
           })
       }
       function selectType(item) {
-      searchParams.EquipTypeName = item.Name;
-      searchParams.EquipType_Id = item.Id;
-      searchParams.EquipCategoryName = '';
-      searchParams.Category_Id = '';
-      getEquipCategoryName();
-      EquipCategoryInit.value = '請選擇';
+        searchParams.EquipTypeName = item.Name;
+        searchParams.EquipType_Id = item.Id;
+        searchParams.EquipCategoryName = '';
+        searchParams.Category_Id = '';
+        getEquipCategoryName();
+        EquipCategoryInit.value = '請選擇';
       }
       function selectCategory(item) {
         searchParams.EquipCategoryName = item.Name;
@@ -594,8 +609,8 @@
       const selectStaff = (item) => {
         formParams.InventoryStaffName = item;
       }
-      const clear = ()=>{
-        for(const key in searchParams) {
+      const clear = () => {
+        for (const key in searchParams) {
           searchParams[key] = '';
         }
         EquipCategoryInit.value = '請先選擇設備總類'
@@ -606,9 +621,9 @@
         // 取得選中的行
         const selectNodes = grid.api1.getSelectedNodes();
         // 將其中的資料加入formParams
-        const nodesData = selectNodes.map((node)=> node.data);
+        const nodesData = selectNodes.map((node) => node.data);
         nodesData.forEach((item) => {
-          formParams.AssetList.splice(0 , 0 , item);
+          formParams.AssetList.splice(0, 0, item);
         });
         grid.api2.setRowData(formParams.AssetList);
         // console.log('selectedNodes:', selectNodes);
@@ -655,10 +670,6 @@
   @import "@/assets/css/global.scss";
   span {
     @include red_star
-  }
-  .modal-dialog {
-    width: 80% !important;
-    max-width: unset
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
@@ -744,14 +755,14 @@
             }
             .form-control {
               height: 35px;
-              border-radius: 0;
+              border-radius: 5px;
             }
             .input-group-prepend {
               white-space: nowrap;
               color: white;
               font-weight: 700;
               font-size: 20px;
-              width: 162px;
+              width: 157px;
               text-align: end;
             }
           }
@@ -760,6 +771,7 @@
             .form-check {
               gap: 5px;
               padding: 0;
+              margin: 0;
               input {
                 width: 15px;
                 padding: 0;
@@ -807,6 +819,9 @@
             justify-content: space-between;
             align-items: center;
             border: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
           .dropdown-menu {
             width: 100%;
@@ -885,7 +900,6 @@
         border-bottom: 1px solid black;
         border-right: 1px solid black;
       }
-   
       .second_content {
         border-left: 1px solid black;
         border-right: 1px solid black;
@@ -914,9 +928,8 @@
           &:hover {
             background-color: #5d85bd;
           }
-       
         }
-           .add_btn {
+        .add_btn {
           margin-top: 20px;
           background: #132238;
           color: white;
@@ -928,7 +941,7 @@
           justify-content: center;
           align-items: center;
           padding: 0;
-    border-radius: 7px;
+          border-radius: 7px;
           &:hover {
             background-color: #426497;
           }
@@ -1034,9 +1047,6 @@
           @include content_bg;
           .organizer_wrap {
             --bs-gutter-x: unset;
-            .flex:nth-child(1) {
-              width: 210px
-            }
           }
           p {
             text-align: center;
@@ -1084,6 +1094,7 @@
             gap: 10px;
             .form-check {
               gap: 5px;
+              margin: 0;
               padding: 0;
               input {
                 width: 15px;
@@ -1131,6 +1142,9 @@
             justify-content: space-between;
             align-items: center;
             border: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
           .dropdown-menu {
             width: 100%;
@@ -1169,6 +1183,7 @@
         width: 100%
       }
       padding: 0 5%;
+      padding-left: 5% !important;
       .modal-content {
         background: unset;
         border: 0;
@@ -1204,7 +1219,6 @@
         border-bottom: 1px solid black;
         border-right: 1px solid black;
       }
-    
       .second_content {
         border-left: 1px solid black;
         border-right: 1px solid black;
@@ -1246,7 +1260,7 @@
           justify-content: center;
           align-items: center;
           padding: 0;
-    border-radius: 7px;
+          border-radius: 7px;
           &:hover {
             background-color: #426497;
           }
@@ -1382,7 +1396,7 @@
             .form-control {
               width: 100%;
               height: 35px;
-              border-radius: 0;
+              border-radius: 5px;
               margin-left: unset !important;
             }
             .input-group-prepend {
@@ -1457,6 +1471,7 @@
     }
     .modal {
       padding: 0 5%;
+      padding-left: 5% !important;
       .modal-content {
         background-color: unset;
         border: 0;
@@ -1485,7 +1500,9 @@
           font-weight: 700;
           font-size: 22px;
           position: absolute;
-          right: 3%;
+          right: 2.5%;
+          top: 0%;
+          padding: 0;
         }
       }
       .list {
@@ -1525,7 +1542,7 @@
           justify-content: center;
           align-items: center;
           padding: 0;
-    border-radius: 7px;
+          border-radius: 7px;
           &:hover {
             background-color: #426497;
           }
@@ -1571,9 +1588,9 @@
             }
           }
           div {
-            margin: 10px 0;
+            margin: 0 0 10px;
             p {
-              padding: 5px;
+              padding: 5px 5px 0;
               white-space: nowrap;
               font-size: 18px;
               font-weight: 700;
