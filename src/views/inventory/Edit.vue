@@ -264,7 +264,6 @@
   export default {
     components: {
       Navbar,
-      AgGridVue,
       List_view_button,
       Inventory_delete_button,
     },
