@@ -83,6 +83,7 @@
     </div> -->
     <div>
       <DataTable 
+      :key="datagridSetting.key"
         lazy 
         :first= "datagridSetting.first"
         :size="'small'"
@@ -270,6 +271,7 @@
       ]
       const rowData = ref([]);
       const datagridSetting = reactive({
+        key: 1,
         totalRecords: 0,
         first: 0,
         rows: 10,
@@ -362,6 +364,7 @@
             console.log('datagrid:',data.resultList);
             datagridSetting.totalRecords = data.resultList.total;
             rowData.value = data.resultList.rows;
+            datagridSetting.key ++;
           } else if (data.state === 'account_error') {
             //尚未登入
             alert(data.messages);

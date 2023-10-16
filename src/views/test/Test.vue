@@ -91,6 +91,7 @@
       <div class="button_wrap d-flex">
         <button class="search_btn" @click="submit('' , 'search')">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
+        <router-link to="/home" style="display: none;"><button ref="home"></button></router-link>
       </div>
     </div>
     <div>
@@ -173,6 +174,7 @@
       test,
     },
     setup() {
+      const home = ref(null);
       const searchParams = reactive({
         EquipTypeName: '',
         EquipType_Id: '',
@@ -413,9 +415,11 @@
         submit('', 'search')
       }
       function handlemsg(data) {
-        alert(data)
+        home.value.click();
+        // alert(data)
       }
       return {
+        home,
         dt,
         searchParams,
         DropdownArray,

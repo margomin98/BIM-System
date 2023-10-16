@@ -107,6 +107,7 @@
         </div>
         <div style="width: 100%">
           <DataTable 
+            :key="datakey"
             lazy 
             :first= "datagrid1.first"
             :size="'small'"
@@ -143,7 +144,7 @@
             <Column style="min-width: 60px;">
               <template #body="slotProps">
                 <!-- Add the custom component here -->
-                <Inventory_process_button :params = "slotProps" @update="update"/>
+                <Inventory_process_button :params = "slotProps" @update="update" v-show="slotProps.data.IsConsumables"/>
               </template>
             </Column>
             <Column header="實盤" style="min-width: 60px;">
@@ -154,7 +155,6 @@
             </Column>
             <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
           </DataTable>
-
         </div>
       </div>
       <div class="col button_wrap">
@@ -166,9 +166,6 @@
 </template>
 
 <script>
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
   import Navbar from "@/components/Navbar.vue";
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
@@ -196,7 +193,6 @@
   export default {
     components: {
       Navbar,
-      AgGridVue,
       DataTable,
       Column,
       Inventory_process_button,
@@ -204,6 +200,7 @@
       List_view_button,
     },
     setup() {
+      const datakey = ref(1);
       const details = ref({}); // 上半部帶入資料
       const route = useRoute();
       const router = useRouter();
@@ -221,7 +218,7 @@
         rows: 20,
         currentPage: 1,
         sortField: 'Status',
-        sortOrder: -1,
+        sortOrder: 1,
         loading: false,
       })   
       const datagrid1field = [
@@ -357,6 +354,7 @@
             console.log('下半部datagrid 資料如下\n', data.resultList);
             rowData.value = data.resultList.rows;
             datagrid1.totalRecords = data.resultList.total;
+            datakey.value ++;
             // 若掃描 QR code
             if(type === 'take' && data.resultList.rows.length > 0) {
               // 若為非耗材
@@ -392,6 +390,7 @@
           console.log(data);
           if (data.state === 'success') {
             getDatagrid('','search');
+            datakey.value ++;
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -461,8 +460,9 @@
         return String(datagrid1.first + slotProps.index + 1).padStart(2, '0');
       }
       return {
-        inventoryParams,
+        datakey,
         details,
+        inventoryParams,
         InputAssetsId,
         myInput,
         datagrid1,

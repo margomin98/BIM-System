@@ -102,9 +102,39 @@
       </div>
       <div class="content">
         <div style="width: 100%">
-          <ag-grid-vue style="width: 100%; height:810px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs1" :rowData="rowData1" :paginationPageSize="20" :pagination="true" :suppressRowClickSelection="true"
-            :rowSelection="'multiple'" :alwaysShowHorizontalScroll="true" @grid-ready="onGridReady">
-          </ag-grid-vue>
+          <DataTable 
+            :key="datakey"
+            :first= "datagrid1.first"
+            :size="'small'"
+            :value="rowData1" 
+            :sort-field="datagrid1.sortField"
+            :sort-order="datagrid1.sortOrder"
+            resizableColumns 
+            columnResizeMode="expand"
+            showGridlines 
+            scrollable 
+            scrollHeight="820px" 
+            @page="getDatagrid($event , 'page')" 
+            @sort="getDatagrid($event , 'sort')"
+            paginator 
+            :rows="20" 
+            :row-style="({ NotBalanced }) => NotBalanced ? 'background-color: firebrick; color:white;': null "
+            :totalRecords="datagrid1.totalRecords"
+            paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+            currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+            <Column style="min-width: 50px;" header="項目">
+              <template #body="slotProps">
+                {{ calculateIndex(slotProps) }}
+              </template>
+            </Column>
+            <Column style="min-width: 60px;">
+              <template #body="slotProps">
+                <!-- Add the custom component here -->
+                <List_view_button :params = "slotProps" />
+              </template>
+            </Column>
+            <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+          </DataTable>
         </div>
       </div>
       <div class="bottom_fixed">
@@ -113,8 +143,8 @@
             <div class="input-group-prepend">認列人員：</div>
             <input type="text" class="form-control text-center readonly_box" readonly v-model="validation.VerifyPerson" />
             <span class="icon-container">
-                    <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.isVerified" />
-                  </span>
+              <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.isVerified" />
+            </span>
           </div>
           <button class="send_btn" data-bs-toggle="modal" data-bs-target="#auth_modal">驗證</button>
         </div>
@@ -256,7 +286,10 @@
   import {
     AgGridVue
   } from "ag-grid-vue3";
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   import Navbar from "@/components/Navbar.vue";
+  import List_view_button from "@/components/Inventory_view_button.vue"
   import {
     onMounted,
     reactive,
@@ -278,7 +311,10 @@
   export default {
     components: {
       Navbar,
+      DataTable,
+      Column,
       AgGridVue,
+      List_view_button,
     },
     setup() {
       const route = useRoute();
@@ -540,6 +576,72 @@
           suppressMovable: true
         }
       ]
+      const datagrid1 = reactive({
+        totalRecords: 0,
+        first: 0,
+        rows: 20,
+        currentPage: 1,
+        sortField: 'Status',
+        sortOrder: 1,
+        loading: false,
+      })   
+      const datagrid1field = [
+        {
+          field: 'AssetsId',
+          header: '資產編號',
+          width: '150px',
+        },
+        {
+          field: 'EquipTypeName',
+          header: '設備總類',
+          width: '150px',
+        },
+        {
+          field: 'EquipCategoryName',
+          header: '設備分類',
+          width: '150px',
+        },
+        {
+          field: 'AssetName',
+          header: '物品名稱',
+          width: '150px',
+        },
+        {
+          field: 'AreaName',
+          header: '儲位區域',
+          width: '150px',
+        },
+        {
+          field: 'LayerName',
+          header: '儲位櫃位',
+          width: '150px',
+        },
+        {
+          field: 'ReceivableNum',
+          header: '應盤',
+          width: '80px',
+        },
+        {
+          field: 'ActualNum',
+          header: '實盤',
+          width: '80px',
+        },
+        {
+          field: 'Discrepancy',
+          header: '差異',
+          width: '80px',
+        },
+        {
+          field: 'Unit',
+          header: '單位',
+          width: '80px',
+        },
+        {
+          field: 'RecognizePerson',
+          header: '認列人員',
+          width: '150px',
+        },
+      ];
       const rowData1 = ref([]);
       const rowData2 = ref([]);
       onMounted(() => {
@@ -766,6 +868,9 @@
         LayerInit.value = '請先選擇區域'
         getDatagrid();
       }
+      function calculateIndex(slotProps) {
+        return String(datagrid1.first + slotProps.index + 1).padStart(2, '0');
+      }
       return {
         details,
         DropdownArray,
@@ -775,6 +880,8 @@
         validation,
         columnDefs1,
         columnDefs2,
+        datagrid1,
+        datagrid1field,
         rowData1,
         rowData2,
         rowHeight: 35,
@@ -791,6 +898,7 @@
         onGridReady,
         clear,
         goBack,
+        calculateIndex,
       };
     },
   }

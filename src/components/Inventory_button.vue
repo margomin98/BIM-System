@@ -37,6 +37,7 @@
         balance_result: false, //結果
       })
       function view(type) {
+      const search_id = props.params.data.PlanId;
         if (search_id !== '') {
           switch (type) {
             case 'View':
