@@ -178,7 +178,7 @@
           </div>
         </div>
         <div style="width: 100%">
-          <ag-grid-vue style="width: 100%; height:470px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table2' class="ag-theme-alpine" :columnDefs="columnDefs2" :rowData="rowData2" :paginationAutoPageSize="true" :pagination="true" :alwaysShowHorizontalScroll="true">
+          <ag-grid-vue style="width: 100%; height:470px; background-color: #b13e3e;" :rowHeight="rowHeight" id='grid_table2' class="ag-theme-alpine" :columnDefs="columnDefs2" :rowData="rowData2" :paginationAutoPageSize="true" :pagination="true" :alwaysShowHorizontalScroll="true">
           </ag-grid-vue>
         </div>
       </div>

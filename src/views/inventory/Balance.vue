@@ -103,7 +103,6 @@
       <div class="content">
         <div style="width: 100%">
           <DataTable 
-            :key="datakey"
             :first= "datagrid1.first"
             :size="'small'"
             :value="rowData1" 
@@ -116,6 +115,7 @@
             scrollHeight="820px" 
             @page="getDatagrid($event , 'page')" 
             @sort="getDatagrid($event , 'sort')"
+            v-model:selection="datagrid1.selectedList" 
             paginator 
             :rows="20" 
             :row-style="({ NotBalanced }) => NotBalanced ? 'background-color: firebrick; color:white;': null "
@@ -124,13 +124,18 @@
             currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
             <Column style="min-width: 50px;" header="項目">
               <template #body="slotProps">
-                {{ calculateIndex(slotProps) }}
+                {{ calculateIndex(1,slotProps) }}
               </template>
             </Column>
             <Column style="min-width: 60px;">
               <template #body="slotProps">
                 <!-- Add the custom component here -->
                 <List_view_button :params = "slotProps" />
+              </template>
+            </Column>
+            <Column header="認列">
+              <template #body="slotProps">
+                <input class="p-checkbox p-component" type="checkbox" :disabled="!slotProps.data.NotBalanced" v-model="slotProps.data.selected" @change="updateList($event,slotProps)" />
               </template>
             </Column>
             <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
@@ -226,8 +231,8 @@
                 <p>設備分類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
-                        {{ searchParams.EquipCategoryName || EquipCategoryInit }}
-                      </button>
+                    {{ searchParams.EquipCategoryName || EquipCategoryInit }}
+                  </button>
                   <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                     <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
                   </div>
@@ -245,8 +250,8 @@
                 <p>儲位區域</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
-                            {{ searchParams.AreaName || '請選擇' }}
-                          </button>
+                    {{ searchParams.AreaName || '請選擇' }}
+                  </button>
                   <div class="dropdown-menu" aria-labelledby="areaDropdown">
                     <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item" @click="selectArea(item)">{{ item.Name }}</p>
                   </div>
@@ -256,8 +261,8 @@
                 <p>儲位櫃位</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="searchParams.AreaName === ''">
-                            {{ searchParams.LayerName || LayerInit }}
-                          </button>
+                    {{ searchParams.LayerName || LayerInit }}
+                  </button>
                   <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                     <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(item)">{{ item.Name }}</p>
                   </div>
@@ -270,9 +275,45 @@
             </div>
           </div>
         </div>
-        <div style="width: 100%">
-          <ag-grid-vue style="width: 100%; height:470px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs2" :rowData="rowData2" :paginationAutoPageSize="true" :pagination="true" :alwaysShowHorizontalScroll="true">
-          </ag-grid-vue>
+        <div style="height: 530px;">
+          <DataTable 
+            lazy 
+            :first= "datagrid2.first"
+            :size="'small'"
+            :loading="datagrid2.loading"
+            :value="rowData2" 
+            :sort-field="datagrid2.sortField"
+            :sort-order="datagrid2.sortOrder"
+            resizableColumns 
+            columnResizeMode="expand"
+            showGridlines 
+            scrollable 
+            scrollHeight="490px" 
+            @page="getDatagrid($event , 'page')" 
+            @sort="getDatagrid($event , 'sort')"
+            paginator 
+            :rows="datagrid2.rows" 
+            :totalRecords="datagrid2.totalRecords"
+            paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+            :rowsPerPageOptions="[10, 20, 30]"
+            currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+            <Column style="min-width: 50px;" header="項目">
+              <template #body="slotProps">
+                {{ calculateIndex(2,slotProps) }}
+              </template>
+            </Column>
+            <Column style="min-width: 60px;">
+              <template #body="slotProps">
+                <List_view_button :params = "slotProps" />
+              </template>
+            </Column>
+            <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+            <Column>
+              <template #body="slotProps">
+                <Delete :params = "slotProps"/>
+              </template>
+            </Column>
+          </DataTable>
         </div>
       </div>
       <div class="col button_wrap">
@@ -283,9 +324,6 @@
 </template>
 
 <script>
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
   import Navbar from "@/components/Navbar.vue";
@@ -308,12 +346,12 @@
   import {
     goBack
   } from "@/assets/js/common_fn";
+import axios from 'axios';
   export default {
     components: {
       Navbar,
       DataTable,
       Column,
-      AgGridVue,
       List_view_button,
     },
     setup() {
@@ -341,7 +379,6 @@
         LayerName: '',
         Layer_Id: '',
       });
-      const grid = ref(null);
       const validation = reactive({
         account: 'user_3',
         password: 'Test_123',
@@ -584,6 +621,16 @@
         sortField: 'Status',
         sortOrder: 1,
         loading: false,
+        selectedList: [],
+      })   
+      const datagrid2 = reactive({
+        totalRecords: 0,
+        first: 0,
+        rows: 10,
+        currentPage: 1,
+        sortField: 'AssetsId',
+        sortOrder: 1,
+        loading: false,
       })   
       const datagrid1field = [
         {
@@ -763,7 +810,7 @@
         }
       }
       // 下半部盤點範圍Datagrid
-      async function getDatagrid() {
+      async function getDatagrid(event , type) {
         searchParams.AssetName = searchParams.AssetName.trim();
         if (searchParams.AssetName && !/^[\s\S]{0,20}$/.test(searchParams.AssetName)) {
           alert('物品名稱不可輸入超過20字')
@@ -776,13 +823,36 @@
             form.append(key, searchParams[key]);
           }
         }
-        const axios = require('axios');
+        switch (type) {
+          case 'sort':
+            datagrid2.currentPage = 1;
+            datagrid2.sortField = event.sortField;
+            datagrid2.sortOrder = event.sortOrder;
+            datagrid2.first = event.first;
+            break;
+          case 'page':
+            datagrid2.currentPage = (event.page+1);
+            datagrid2.rows = event.rows;
+            datagrid2.first = event.first;
+            break
+          case 'take':
+          case 'search':
+            datagrid2.currentPage = 1;
+            datagrid2.first = 0;
+            break
+        }
+        const order = datagrid2.sortOrder === 1 ? 'asc' : 'desc'
+        form.append('rows',datagrid2.rows);
+        form.append('page',datagrid2.currentPage);
+        form.append('sort',datagrid2.sortField);
+        form.append('order',order);
         try {
           const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryResult', form);
           const data = response.data;
           if (data.state === 'success') {
             console.log('下半部datagrid\n', data.resultList);
-            rowData2.value = data.resultList;
+            rowData2.value = data.resultList.rows;
+            datagrid2.totalRecords = data.resultList.total;
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -868,8 +938,22 @@
         LayerInit.value = '請先選擇區域'
         getDatagrid();
       }
-      function calculateIndex(slotProps) {
-        return String(datagrid1.first + slotProps.index + 1).padStart(2, '0');
+      function updateList(event,slotProps) {
+        if(event.target.checked) {
+          datagrid1.selectedList.push(slotProps.data);
+        } else {
+          datagrid1.selectedList = datagrid1.selectedList.filter((item)=>item.AssetsId !== slotProps.data.AssetsId)
+        }
+      }
+      function calculateIndex(number,slotProps) {
+        switch (number) {
+          case 1:
+            return String(slotProps.index + 1).padStart(2, '0');
+            break;
+          case 2:
+            return String(datagrid2.first + slotProps.index + 1).padStart(2, '0');
+            break;
+        }
       }
       return {
         details,
@@ -878,10 +962,9 @@
         LayerInit,
         searchParams,
         validation,
-        columnDefs1,
-        columnDefs2,
         datagrid1,
         datagrid1field,
+        datagrid2,
         rowData1,
         rowData2,
         rowHeight: 35,
@@ -898,6 +981,7 @@
         onGridReady,
         clear,
         goBack,
+        updateList,
         calculateIndex,
       };
     },

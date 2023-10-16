@@ -181,7 +181,6 @@
               :selectAll="datagrid1.selectAll"
               @select-all-change="onSelectAll"
               @row-unselect="onRowUnselect"
-              table-style="min-height: 510px;"
               paginator 
               :rows="10" 
               :totalRecords="datagrid1.totalRecords"

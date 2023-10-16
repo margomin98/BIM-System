@@ -81,9 +81,9 @@
       <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true" :alwaysShowHorizontalScroll="true">
       </ag-grid-vue>
     </div> -->
-    <div>
+    <div style="height: 530px;">
       <DataTable 
-      :key="datagridSetting.key"
+        :key="datagridSetting.key"
         lazy 
         :first= "datagridSetting.first"
         :size="'small'"
@@ -98,9 +98,8 @@
         scrollHeight="490px" 
         @page="submit($event , 'page')" 
         @sort="submit($event , 'sort')"
-        table-style="min-height: 490px;"
         paginator 
-        :rows="10" 
+        :rows="datagridSetting.rows" 
         :totalRecords="datagridSetting.totalRecords"
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         :rowsPerPageOptions="[10, 20, 30]"
