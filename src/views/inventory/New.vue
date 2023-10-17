@@ -23,8 +23,8 @@
               <div class="input-group-prepend flex"><span>*</span>盤點人員：</div>
               <div class="dropdown">
                 <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ formParams.InventoryStaffName || '請選擇' }}
-                      </button>
+                  {{ formParams.InventoryStaffName || '請選擇' }}
+                </button>
                 <div class="dropdown-menu">
                   <p v-for="(item , index) in DropdownArray.InventoryStaff" :key="index" @click="selectStaff(item)">{{ item }}</p>
                 </div>
@@ -105,8 +105,8 @@
                       <p>設備總類</p>
                       <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                                {{ searchParams.EquipTypeName || '請選擇' }}
-                              </button>
+                          {{ searchParams.EquipTypeName || '請選擇' }}
+                        </button>
                         <div class="dropdown-menu" aria-labelledby="typeDropdown">
                           <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
                         </div>
@@ -116,8 +116,8 @@
                       <p>設備分類</p>
                       <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
-                                {{ searchParams.EquipCategoryName || EquipCategoryInit }}
-                              </button>
+                          {{ searchParams.EquipCategoryName || EquipCategoryInit }}
+                        </button>
                         <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                           <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
                         </div>
@@ -131,8 +131,8 @@
                       <p>儲位區域</p>
                       <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
-                                {{ searchParams.AreaName || '請選擇' }}
-                              </button>
+                          {{ searchParams.AreaName || '請選擇' }}
+                        </button>
                         <div class="dropdown-menu" aria-labelledby="areaDropdown">
                           <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item" @click="selectArea(item)">{{ item.Name }}</p>
                         </div>
@@ -142,8 +142,8 @@
                       <p>儲位櫃位</p>
                       <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="searchParams.AreaName === ''">
-                                {{ searchParams.LayerName || LayerInit }}
-                              </button>
+                          {{ searchParams.LayerName || LayerInit }}
+                        </button>
                         <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                           <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(item)">{{ item.Name }}</p>
                         </div>
@@ -205,7 +205,10 @@
         </div>
       </div>
       <div class="content">
-        <div style="width: 100%">
+        <div v-if="rowData2.length ===0">
+          <h2 class="no_content_text">尚未選取盤點項目</h2>
+        </div>
+        <div v-else style="height: 100%;">
           <DataTable 
             lazy 
             :first= "datagrid2.first"
@@ -221,7 +224,6 @@
             scrollHeight="820px" 
             @page="getRangeOfPlan($event , 'page')" 
             @sort="getRangeOfPlan($event , 'sort')"
-            table-style="min-height: 820px;"
             paginator 
             :rows="20" 
             :totalRecords="datagrid2.totalRecords"
@@ -726,6 +728,11 @@
   @import "@/assets/css/global.scss";
   span {
     @include red_star
+  }
+  .no_content_text{
+    padding: 5px 0;
+    text-align: center;
+    font-weight: 700;
   }
   @media only screen and (min-width: 1200px) {
     .main_section {

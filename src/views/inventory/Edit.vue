@@ -212,7 +212,10 @@
         </div>
       </div>
       <div class="content">
-        <div style="width: 100%">
+        <div v-if="rowData2.length ===0">
+          <h2 class="no_content_text">尚未選取盤點項目</h2>
+        </div>
+        <div v-else style="height;: 100%">
           <DataTable 
             lazy 
             :first= "datagrid2.first"
@@ -228,7 +231,6 @@
             scrollHeight="820px" 
             @page="getRangeOfPlan($event , 'page')" 
             @sort="getRangeOfPlan($event , 'sort')"
-            table-style="min-height: 820px;"
             paginator 
             :rows="20" 
             :totalRecords="datagrid2.totalRecords"
@@ -404,7 +406,7 @@
           const data = response.data;
           if (data.state === 'success') {
             // 檢查資料狀態是否可編輯
-            // canEnterPage(data.resultList.Status, Inventory_Edit_Status);
+            canEnterPage(data.resultList.PlanStatus, Inventory_Edit_Status);
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             for(const key in details.value) {
@@ -774,6 +776,11 @@
   @import "@/assets/css/global.scss";
   span {
     @include red_star
+  }
+  .no_content_text{
+    padding: 5px 0;
+    text-align: center;
+    font-weight: 700;
   }
   @media only screen and (min-width: 1200px) {
     .main_section {

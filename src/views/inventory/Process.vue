@@ -105,7 +105,7 @@
             </div>
           </div>
         </div>
-        <div style="width: 100%">
+        <div style="height;: 100%">
           <DataTable 
             :key="datakey"
             lazy 
@@ -122,7 +122,6 @@
             scrollHeight="820px" 
             @page="getDatagrid($event , 'page')" 
             @sort="getDatagrid($event , 'sort')"
-            table-style="min-height: 820px;"
             paginator 
             :rows="20" 
             :totalRecords="datagrid1.totalRecords"
@@ -187,7 +186,7 @@
     canEnterPage,
   } from "@/assets/js/common_fn";
   import {
-    Inventory_Edit_Status
+    Inventory_Process_Status
   } from '@/assets/js/enter_status'
   import axios from "axios";
   export default {
@@ -277,7 +276,9 @@
             getDetails();
             getDatagrid('','search');
           } else if (data.state === 'error') {
-            alert(data.messages);
+            // 狀態不為待盤點
+            console.error(data.messages);
+            window.history.back();
           } else if (data.state === 'account_error') {
             alert(data.messages);
             router.push('/');
@@ -294,10 +295,7 @@
           const data = response.data;
           if (data.state === 'success') {
             // 檢查資料狀態是否可編盤點
-            // if(data.resultList.Status !== '申請入庫' && data.resultList.Status !== '申請歸還' && data.resultList.Status !== '可交付') {
-            //   window.history.back();
-            //   // router.push({name: 'Store_Datagrid'});
-            // }
+            canEnterPage(data.resultList.PlanStatus, Inventory_Process_Status);
             console.log('上半部data 資料如下\n', data.resultList);
             details.value = data.resultList;
             details.value.PlanStart = details.value.PlanStart.replace(/-/g, '/');

@@ -118,7 +118,7 @@
             v-model:selection="datagrid1.selectedList" 
             paginator 
             :rows="20" 
-            :row-style="({ NotBalanced }) => NotBalanced ? 'background-color: firebrick; color:white;': null "
+            :row-style="({ NotBalanced }) => NotBalanced ? 'background-color: #933b3b; color:white; font-weight: 700;font-size: 18px;': null "
             :totalRecords="datagrid1.totalRecords"
             paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
             currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
@@ -270,12 +270,12 @@
               </div>
             </div>
             <div class="col-xl-3 col-lg-3 col-md-3 col-12 button">
-              <button class="search_btn" @click="getDatagrid">搜索</button>
+              <button class="search_btn" @click="getDatagrid('','search')">搜索</button>
               <button class="empty_btn" @click="clear">清空</button>
             </div>
           </div>
         </div>
-        <div style="height: 530px;">
+        <div style="height: 100%;">
           <DataTable 
             lazy 
             :first= "datagrid2.first"
@@ -308,11 +308,6 @@
               </template>
             </Column>
             <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
-            <Column>
-              <template #body="slotProps">
-                <Delete :params = "slotProps"/>
-              </template>
-            </Column>
           </DataTable>
         </div>
       </div>
@@ -344,9 +339,13 @@
     getLayer
   } from '@/assets/js/common_api'
   import {
-    goBack
+    goBack,
+    canEnterPage,
   } from "@/assets/js/common_fn";
-import axios from 'axios';
+  import {
+    Inventory_Balance_Status
+  } from '@/assets/js/enter_status'
+  import axios from 'axios';
   export default {
     components: {
       Navbar,
@@ -386,233 +385,6 @@ import axios from 'axios';
         isVerified: false,
         VerifyPerson: '未驗證',
       })
-      const columnDefs1 = [{
-          cellClass: 'grid_checkbox',
-          checkboxSelection: true,
-          headerName: "認列",
-          field: "",
-          unSortIcon: true,
-          width: 80,
-          checkboxSelection: function(params) {
-            // 根据 NotBalanced 的值决定是否禁用复选框
-            return params.data.NotBalanced;
-          },
-          showDisabledCheckboxes: true,
-          suppressMovable: true,
-        },
-        {
-          headerName: "項目",
-          valueGetter: function(params) {
-            // 通过 params.node 获取当前行的 RowNode
-            const rowNode = params.node;
-            // 返回 RowNode 的 id 属性作为该列的值
-            return parseFloat(rowNode.id) + 1;
-          },
-          width: 75,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "資產編號",
-          field: "AssetsId",
-          unSortIcon: true,
-          sortable: true,
-          width: 140,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "設備總類",
-          field: "EquipTypeName",
-          unSortIcon: true,
-          sortable: true,
-          width: 140,
-          suppressMovable: true
-        },
-        {
-          headerName: "設備分類",
-          field: "EquipCategoryName",
-          unSortIcon: true,
-          sortable: true,
-          width: 140,
-          suppressMovable: true
-        },
-        {
-          headerName: "物品名稱",
-          field: "AssetName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "儲位區域",
-          field: "AreaName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true
-        },
-        {
-          headerName: "儲位櫃位",
-          field: "LayerName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true
-        },
-        {
-          headerName: "應盤",
-          field: "ReceivableNum",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true
-        },
-        {
-          headerName: "實盤",
-          field: "ActualNum",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true
-        },
-        {
-          headerName: "差異",
-          field: "Discrepancy",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true
-        },
-        {
-          headerName: "單位",
-          field: "Unit",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true
-        }, {
-          headerName: "認列人員",
-          field: "RecognizePerson",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true
-        }
-      ]
-      const columnDefs2 = [{
-          headerName: "",
-          valueGetter: function(params) {
-            // 通过 params.node 获取当前行的 RowNode
-            const rowNode = params.node;
-            // 返回 RowNode 的 id 属性作为该列的值
-            return parseFloat(rowNode.id) + 1;
-          },
-          width: 50,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "資產編號",
-          field: "AssetsId",
-          unSortIcon: true,
-          sortable: true,
-          width: 140,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "設備總類",
-          field: "EquipTypeName",
-          unSortIcon: true,
-          sortable: true,
-          width: 140,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "設備分類",
-          field: "EquipCategoryName",
-          unSortIcon: true,
-          sortable: true,
-          width: 140,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "物品名稱",
-          field: "AssetName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "儲位區域",
-          field: "AreaName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "儲位櫃位",
-          field: "LayerName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "應盤數量",
-          field: "ReceivableNum",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "實盤數量",
-          field: "ActualNum",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "差異",
-          field: "Discrepancy",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "單位",
-          field: "Unit",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          resizable: true,
-          suppressMovable: true
-        }, {
-          headerName: "認列人員",
-          field: "RecognizePerson",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        }
-      ]
       const datagrid1 = reactive({
         totalRecords: 0,
         first: 0,
@@ -693,33 +465,31 @@ import axios from 'axios';
       const rowData2 = ref([]);
       onMounted(() => {
         getDetails();
-        getDatagrid();
+        getDatagrid('','search');
       });
       async function submit() {
         if (!validation.isVerified) {
           alert('未驗證');
           return
         }
-        const rows = grid.value.getSelectedRows();
-        if (rows.length === 0) {
+        
+        if (datagrid1.selectedList.length === 0) {
           alert('請至少認列一項');
           return
         }
-        const AssetList = rows.map(item => ({
+        const AssetList = datagrid1.selectedList.map(item => ({
           I_id: item.I_Id,
           Discrepancy: item.Discrepancy,
         }));
-        console.log(AssetList);
         const requestData = {
           PlanId: IP_ID,
           RecognizePerson: validation.VerifyPerson,
           AssetList: AssetList,
         }
-        const axios = require('axios');
-        const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/BalanceAsset', requestData);
-        const data = response.data;
+        console.log('requestData:',requestData);
         try {
-          console.log(data);
+          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/BalanceAsset', requestData);
+          const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages;
             // msg += '\n單號:' + data.resultList.IP_Id;
@@ -791,11 +561,8 @@ import axios from 'axios';
           const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetInventoryResult?id=${IP_ID}`);
           const data = response.data;
           if (data.state === 'success') {
-            // 檢查資料狀態是否可編輯
-            // if(data.resultList.Status !== '申請入庫' && data.resultList.Status !== '申請歸還' && data.resultList.Status !== '可交付') {
-            //   window.history.back();
-            //   // router.push({name: 'Store_Datagrid'});
-            // }
+            // 檢查資料狀態是否可平帳
+            canEnterPage(data.resultList.PlanStatus, Inventory_Balance_Status);
             console.log('上半部資料如下\n', data.resultList);
             details.value = data.resultList;
             rowData1.value = data.resultList.AssetList
