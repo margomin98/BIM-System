@@ -60,7 +60,7 @@
           <div class="input-group mt-3">
             <div class="input-group-prepend">報修照片：</div>
           </div>
-          <swiper-container class="swiper_section" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
+          <swiper-container class="swiper_section" :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
             <swiper-slide v-for="(item , index) in details.existFile" :key="index"> <img :src="item.FileLink"> </swiper-slide>
           </swiper-container>
           <div class="swiper_pagination">
@@ -86,8 +86,8 @@
                 <div class="input-with-icon">
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(1)" />
                   <span v-show="validation.user1.isValidate" class="icon-container">
-                      <img src="@/assets/accept.png" class="checkmark-icon" />
-                    </span>
+                        <img src="@/assets/accept.png" class="checkmark-icon" />
+                      </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">驗證</button>
                 <!-- 交付人員驗證Modal -->
@@ -127,8 +127,8 @@
                 <div class="input-with-icon">
                   <input type="text" class="form-control readonly_box" readonly :value="validationStatus(2)" />
                   <span v-show="validation.user2.isValidate" class="icon-container">
-                      <img src="@/assets/accept.png" class="checkmark-icon" />
-                    </span>
+                        <img src="@/assets/accept.png" class="checkmark-icon" />
+                      </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">驗證</button>
                 <!-- 送修人員驗證Modal -->
@@ -362,15 +362,16 @@
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
+  .custom-slide {
+    display: flex;
+    align-self: center;
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .readonly_box {
         @include readonly_box;
       }
       .swiper_section {
-        swiper-slide {
-          align-self: baseline;
-        }
         swiper-slide img {
           width: 100%;
           height: auto;
@@ -535,9 +536,6 @@
         @include readonly_box;
       }
       .swiper_section {
-        swiper-slide {
-          align-self: baseline;
-        }
         swiper-slide img {
           width: 100%;
           height: auto;

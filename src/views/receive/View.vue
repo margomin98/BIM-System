@@ -54,7 +54,7 @@
             </div>
           </div>
         </div>
-        <!-- 通知對象 --> 
+        <!-- 通知對象 -->
         <div class="col">
           <div class="input-group  mb-3">
             <div class="input-group-prepend">通知對象：</div>
@@ -67,11 +67,11 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">備註：</div>
-            <textarea  class="form-control readonly_box" style="height: 250px;" readonly v-model="details.Memo"></textarea>
+            <textarea class="form-control readonly_box" style="height: 250px;" readonly v-model="details.Memo"></textarea>
           </div>
         </div>
       </div>
-  </div>
+    </div>
     <!-- 物流文件部分 -->
     <div class="info_wrap col">
       <div class="fixed_info">
@@ -119,7 +119,7 @@
         </div>
       </div>
       <div class="content">
-        <swiper-container class='swiper_section' :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
+        <swiper-container :autoHeight="true" class='swiper_section' :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
           <swiper-slide v-for="(file , index) in details.existFile" :key="index" class="custom-slide">
             <img :src="file.FileLink" alt="">
           </swiper-slide>
@@ -127,19 +127,19 @@
         <div class="swiper_pagination">
         </div>
         <!-- <div class="modal fade" id="photo1" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="photoModalLabel">瀏覽</h5>
-                <div class="close_icon">
-                  <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="photoModalLabel">瀏覽</h5>
+                    <div class="close_icon">
+                      <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
+                    </div>
+                  </div>
+                  <div class="modal-body">
+                  </div>
                 </div>
               </div>
-              <div class="modal-body">
-              </div>
-            </div>
-          </div>
-        </div> -->
+            </div> -->
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
@@ -149,12 +149,23 @@
 </template>
 
 <script>
-  import { register } from 'swiper/element/bundle';
-  import { Pagination } from 'swiper/modules';
+  import {
+    register
+  } from 'swiper/element/bundle';
+  import {
+    Pagination
+  } from 'swiper/modules';
   register();
   import Navbar from "@/components/Navbar.vue";
-  import { onMounted, ref, reactive, } from "vue";
-  import { useRoute, useRouter } from "vue-router";
+  import {
+    onMounted,
+    ref,
+    reactive,
+  } from "vue";
+  import {
+    useRoute,
+    useRouter
+  } from "vue-router";
   export default {
     components: {
       Navbar,
@@ -168,7 +179,7 @@
         title: '',
         src: '',
       })
-      onMounted(()=>{
+      onMounted(() => {
         getDetails();
       })
       async function getDetails() {
@@ -206,8 +217,8 @@
         const part = file.FileName.split(".");
         let extension = '';
         // 如果part長度大於1表示xxxx.aaa => ['xxxx','aaa']
-        if(part.length > 1) {
-          extension = part[part.length -1];
+        if (part.length > 1) {
+          extension = part[part.length - 1];
         }
         // 1. pdf 2. word 3. picture
         switch (extension) {
@@ -247,14 +258,14 @@
 </script>
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-  .selected_user_wrap{
-    gap:0 5px;
+  .selected_user_wrap {
+    gap: 0 5px;
     display: flex;
-    .selected_user{
+    .selected_user {
       background: #8B8989;
-      color:white !important;
-    border-radius: 7px;
-    padding: 5px;
+      color: white !important;
+      border-radius: 7px;
+      padding: 5px;
     }
   }
   span {
@@ -280,11 +291,11 @@
       }
     }
     p::before {
-                margin-right: 10px;
-                content: '·';
-                font-weight: 700;
-                color: white;
-              }
+      margin-right: 10px;
+      content: '·';
+      font-weight: 700;
+      color: white;
+    }
   }
   .modal {
     .modal-body {
@@ -322,7 +333,10 @@
       }
     }
   }
- 
+  .custom-slide {
+    display: flex;
+    align-self: center;
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       input {
@@ -330,9 +344,6 @@
         height: 35px;
       }
       .swiper_section {
-        swiper-slide {
-          align-self: baseline;
-        }
         swiper-slide img {
           width: 100%;
           height: auto;
@@ -386,9 +397,9 @@
           @include content_bg;
           p {
             font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 5px;
-    color: white;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: white;
           }
           .dropdown {
             width: 55%;
@@ -504,9 +515,6 @@
         width: 150px !important;
       }
       .swiper_section {
-        swiper-slide {
-          align-self: baseline;
-        }
         swiper-slide img {
           width: 100%;
           height: auto;
@@ -944,7 +952,7 @@
           margin-left: unset !important;
           border-radius: 5px;
         }
-        margin-top: 3%;
+        margin-top: 11%;
         .count {
           .number-input-box {
             width: 100%;

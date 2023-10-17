@@ -60,7 +60,7 @@
           <div class="input-group mt-3">
             <div class="input-group-prepend">報修照片：</div>
           </div>
-          <swiper-container class="swiper_section" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
+          <swiper-container class="swiper_section" :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
             <swiper-slide v-for="(item , index) in details.existFile" :key="index"> <img :src="item.FileLink"> </swiper-slide>
           </swiper-container>
           <div class="swiper_pagination">
@@ -84,10 +84,10 @@
               <div class="input-group">
                 <div class="input-group-prepend">審核人員：</div>
                 <div class="input-with-icon">
-                  <input type="text" class="form-control readonly_box" readonly v-model="validation.resultName"/>
+                  <input type="text" class="form-control readonly_box" readonly v-model="validation.resultName" />
                   <span v-show="validation.isValidate" class="icon-container">
-                    <img src="@/assets/accept.png" class="checkmark-icon" />
-                  </span>
+                      <img src="@/assets/accept.png" class="checkmark-icon" />
+                    </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">驗證</button>
                 <!-- 驗證跳出Modal -->
@@ -148,9 +148,18 @@
 </template>
 
 <script>
-  import { ref, onMounted, reactive } from 'vue';
-  import { useRoute } from 'vue-router'
-  import { getDate , goBack } from '@/assets/js/common_fn.js'
+  import {
+    ref,
+    onMounted,
+    reactive
+  } from 'vue';
+  import {
+    useRoute
+  } from 'vue-router'
+  import {
+    getDate,
+    goBack
+  } from '@/assets/js/common_fn.js'
   import Navbar from '@/components/Navbar.vue';
   import axios from 'axios';
   import router from '@/router';
@@ -178,55 +187,53 @@
         resultName: '未驗證', //審核人員
         result: '', //審核結果
       });
-      onMounted(()=>{
+      onMounted(() => {
         getDetails();
         reviewDate.value = getDate();
       });
       // 取得單筆資料
       async function getDetails() {
         axios.get(`http://192.168.0.177:7008/GetDBdata/GetRepairInfo?r_id=${RepairId}`)
-        .then((response)=>{
-          const data = response.data;
-          if(data.state === 'success') {
-            details.value = data.resultList;
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-          else {
-            alert(data.messages);
-          }
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+          .then((response) => {
+            const data = response.data;
+            if (data.state === 'success') {
+              details.value = data.resultList;
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            } else {
+              alert(data.messages);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       async function validate() {
         const form = new FormData();
         form.append('userName', validation.account)
         form.append('userPassword', validation.password)
         form.append('id', 'R_Verify')
-        axios.post('http://192.168.0.177:7008/Account/IdentityValidation' , form)
-        .then((response)=>{
-          const data = response.data;
-          if(data.state === 'success') {
-            validation.isValidate = true;
-            validation.resultName = validation.account;
-            canSubmit.value = true;
-          }
-          else {
-            validation.isValidate = false;
-            validation.resultName = '未驗證';
-            canSubmit.value = false;
-            alert(data.messages)
-          }
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+        axios.post('http://192.168.0.177:7008/Account/IdentityValidation', form)
+          .then((response) => {
+            const data = response.data;
+            if (data.state === 'success') {
+              validation.isValidate = true;
+              validation.resultName = validation.account;
+              canSubmit.value = true;
+            } else {
+              validation.isValidate = false;
+              validation.resultName = '未驗證';
+              canSubmit.value = false;
+              alert(data.messages)
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       async function submit() {
-        if(!validation.result) {
+        if (!validation.result) {
           alert('請輸入必填項目');
         }
         var requestData = {
@@ -235,22 +242,24 @@
           VerifyResult: '',
         }
         requestData.VerifyResult = validation.result === 'true';
-        axios.post('http://192.168.0.177:7008/RepairMng/Verify',requestData)
-        .then((response)=>{
-          const data = response.data
-          if(data.state === 'success') {
-            alert('維修單審核送出成功\n單號為:' + data.resultList.R_ID);
-            router.push({ name: 'Repair_Datagrid' });
-          } else if( data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          } else {
-            alert(data.messages);
-          }
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+        axios.post('http://192.168.0.177:7008/RepairMng/Verify', requestData)
+          .then((response) => {
+            const data = response.data
+            if (data.state === 'success') {
+              alert('維修單審核送出成功\n單號為:' + data.resultList.R_ID);
+              router.push({
+                name: 'Repair_Datagrid'
+              });
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            } else {
+              alert(data.messages);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       return {
         details,
@@ -278,15 +287,16 @@
   .form-check-input {
     align-self: center
   }
+  .custom-slide {
+    display: flex;
+    align-self: center;
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .readonly_box {
         @include readonly_box;
       }
       .swiper_section {
-        swiper-slide {
-          align-self: baseline;
-        }
         swiper-slide img {
           width: 100%;
           height: auto;
@@ -465,9 +475,6 @@
         @include readonly_box;
       }
       .swiper_section {
-        swiper-slide {
-          align-self: baseline;
-        }
         swiper-slide img {
           width: 100%;
           height: auto;

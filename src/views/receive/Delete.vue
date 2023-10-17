@@ -108,7 +108,7 @@
         </div>
       </div>
       <div class="content">
-        <swiper-container class='swiper_section' :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
+        <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
           <swiper-slide v-for="(file , index) in details.existFile" :key="index" class="custom-slide">
             <img :src="file.FileLink" alt="">
           </swiper-slide>
@@ -116,19 +116,19 @@
         <div class="swiper_pagination">
         </div>
         <!-- <div class="modal fade" id="photo1" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="photoModalLabel">瀏覽</h5>
-                <div class="close_icon">
-                  <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="photoModalLabel">瀏覽</h5>
+                  <div class="close_icon">
+                    <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
+                  </div>
+                </div>
+                <div class="modal-body">
                 </div>
               </div>
-              <div class="modal-body">
-              </div>
             </div>
-          </div>
-        </div> -->
+          </div> -->
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
@@ -307,11 +307,11 @@
       }
     }
     p::before {
-                margin-right: 10px;
-                content: '·';
-                font-weight: 700;
-                color: white;
-              }
+      margin-right: 10px;
+      content: '·';
+      font-weight: 700;
+      color: white;
+    }
   }
   .modal {
     .modal-body {
@@ -392,6 +392,10 @@
       }
     }
   }
+  .custom-slide {
+    display: flex;
+    align-self: center;
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       input {
@@ -414,9 +418,6 @@
         }
       }
       .swiper_section {
-        swiper-slide {
-          align-self: baseline;
-        }
         swiper-slide img {
           width: 100%;
           height: auto;
@@ -470,9 +471,9 @@
           @include content_bg;
           p {
             font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 5px;
-    color: white;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: white;
           }
           .dropdown {
             width: 55%;
@@ -615,9 +616,6 @@
         width: 150px !important;
       }
       .swiper_section {
-        swiper-slide {
-          align-self: baseline;
-        }
         swiper-slide img {
           width: 100%;
           height: auto;
@@ -677,9 +675,9 @@
           }
           p {
             font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 5px;
-    color: white;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: white;
           }
           .dropdown {
             .dropdown-menu {

@@ -98,8 +98,8 @@
     </div>
     <div class="datagrid_section mb-3">
       <DataTable ref='dt' v-model:selection="selectedProduct" lazy :first="datagridSetting.first" :size="'small'" :loading="datagridSetting.loading" :value="rowData" :sort-field="datagridSetting.sortField" :sort-order="datagridSetting.sortOrder" resizableColumns
-        columnResizeMode="fit" scrollable scrollHeight="490px" @page="submit($event , 'page')" @sort="submit($event , 'sort')" :selectAll="datagridSetting.selectAll" @select-all-change="onSelectAllChange" table-style="min-height: 490px;min-width: 50rem" paginator
-        :rows="10" :row-style="({ AssetsId }) => AssetsId === 'BF00000005' ? 'background-color: firebrick; color:white;': null " :totalRecords="datagridSetting.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        columnResizeMode="expand" scrollable scrollHeight="490px" @page="submit($event , 'page')" @sort="submit($event , 'sort')" :selectAll="datagridSetting.selectAll" @select-all-change="onSelectAllChange" table-style="min-width: 50rem" paginator
+        :rows="10" :row-style="({ AssetsId }) => AssetsId === 'BF00000005' ? 'background-color: #933b3b; color:white;font-weight: 700;font-size: 18px;': null " :totalRecords="datagridSetting.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <!-- <template #header>
                 <div>
@@ -108,7 +108,7 @@
                 </div>
 </template>-->
         <Column selectionMode="multiple" headerStyle="width: 3rem" ></Column>
-        <Column style="min-width: 50px;">
+        <Column style="width:100vw">
 <template #body="slotProps">
   <!-- Add the custom component here -->
   <test :params="slotProps" :msg="'hi'" @msg="handlemsg" />
@@ -219,7 +219,7 @@
         {
           field: 'Status',
           header: '狀態',
-          width: '110px',
+          width: '130px',
         },
         {
           field: 'InboundDate',
@@ -525,7 +525,7 @@
         background: var(--c-7, #1f4e5f);
       }
       .datagrid-header .datagrid-cell {
-        text-align: left importtant;
+        text-align: left !important;
       }
     }
   }
@@ -618,7 +618,7 @@
         background: var(--c-7, #1f4e5f);
       }
       .datagrid-header .datagrid-cell {
-        text-align: left importtant;
+        text-align: left !important;
       }
     }
   }
@@ -721,7 +721,7 @@
         background: var(--c-7, #1f4e5f);
       }
       .datagrid-header .datagrid-cell {
-        text-align: left importtant;
+        text-align: left !important;
       }
     }
   }

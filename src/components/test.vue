@@ -45,7 +45,8 @@ export default {
 @import '@/assets/css/global.scss';
 
 .button_div {
-  justify-content: center;
+display: flex;
+align-items: center;
   :nth-child(1) {
     @include datagrid_view_button;
     height: 25px;
