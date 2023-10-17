@@ -17,3 +17,29 @@ export const canEnterPage = ((Status , Condition)=>{
     window.history.back();
   }
 })
+// 更新datagrid切頁資訊(rows、page、order、sort)
+export const UpdatePageParameter= (( datagrid,event, type , form)=>{
+  switch (type) {
+    case 'sort':
+      datagrid.currentPage = 1;
+      datagrid.sortField = event.sortField;
+      datagrid.sortOrder = event.sortOrder;
+      datagrid.first = event.first;
+      break;
+    case 'page':
+      datagrid.currentPage = (event.page+1);
+      datagrid.rows = event.rows;
+      datagrid.first = event.first;
+      break
+    case 'take':
+    case 'search':
+      datagrid.currentPage = 1;
+      datagrid.first = 0;
+      break
+  }
+  const order = datagrid.sortOrder === 1 ? 'asc' : 'desc'
+  form.append('rows',datagrid.rows);
+  form.append('page',datagrid.currentPage);
+  form.append('sort',datagrid.sortField);
+  form.append('order',order);
+})

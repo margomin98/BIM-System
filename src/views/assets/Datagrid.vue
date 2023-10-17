@@ -89,21 +89,50 @@
     </div>
     <div class="col justify-content-center d-flex">
       <div class="button_wrap d-flex">
-        <button class="search_btn" @click="submit">檢索</button>
+        <button class="search_btn" @click="submit('','search')">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
       </div>
     </div>
     <div style="width: 100%">
-      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;margin-bottom:50px" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true">
-      </ag-grid-vue>
+      <DataTable 
+        lazy 
+        :first= "datagrid.first"
+        :size="'small'"
+        :loading="datagrid.loading"
+        :value="rowData" 
+        :sort-field="datagrid.sortField"
+        :sort-order="datagrid.sortOrder"
+        resizableColumns 
+        columnResizeMode="expand"
+        showGridlines 
+        scrollable 
+        scrollHeight="510px" 
+        @page="submit($event , 'page')" 
+        @sort="submit($event , 'sort')"
+        v-model:selection="datagrid.selectedList" 
+        :selectAll="datagrid.selectAll"
+        @select-all-change="onSelectAll"
+        @row-unselect="onRowUnselect"
+        paginator 
+        :rows="10" 
+        :totalRecords="datagrid.totalRecords"
+        paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+        <Column style="min-width: 60px;">
+          <template #body="slotProps">
+            <!-- Add the custom component here -->
+            <Assets_return_button :params = "slotProps" />
+          </template>
+        </Column>
+        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+      </DataTable>
     </div>
   </div>
 </template>
 
 <script>
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   import Assets_return_button from "@/components/Assets_return_button";
   import Navbar from "@/components/Navbar.vue";
   import getEquipDatagrid from "@/components/API/getEquipDatagrid"
@@ -121,10 +150,12 @@
     getArea,
     getLayer
   } from '@/assets/js/common_api'
+import axios from 'axios';
   export default {
     components: {
       Navbar,
-      AgGridVue,
+      DataTable,
+      Column,
       Assets_return_button,
       getEquipDatagrid,
     },
@@ -154,113 +185,66 @@
       const EquipCategoryInit = ref('請先選擇設備總類');
       const LayerInit = ref('請先選擇區域');
       const pageSize = ref(10);
-      const columnDefs = [{
-          suppressMovable: true,
-          field: "",
-          cellRenderer: "Assets_return_button",
-          width: 150,
-          resizable: true,
-        },
-        {
-          headerName: "資產編號",
-          field: "AssetsId",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "物品名稱",
-          field: "AssetName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true,
-        },
-        {
-          headerName: "設備總類",
-          field: "EquipTypeName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "設備分類",
-          field: "EquipCategoryName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "區域",
-          field: "AreaName",
-          unSortIcon: true,
-          sortable: true,
-          width: 130,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "櫃位",
-          field: "LayerName",
-          unSortIcon: true,
-          sortable: true,
-          width: 130,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "狀態",
-          field: "Status",
-          unSortIcon: true,
-          sortable: true,
-          width: 110,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "入庫日期",
-          field: "InboundDate",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "入庫人員",
-          field: "AssetsInOperator",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        }
-      ];
+      const datagrid = reactive({
+        totalRecords: 0,
+        first: 0,
+        rows: 10,
+        currentPage: 1,
+        sortField: 'AssetsId',
+        sortOrder: -1,
+        loading: false,
+      })  
+      const datagridfield = [
+      { field: "AssetsId", width: '150px', header: "資產編號" },
+      { field: "AssetName", width: '150px', header: "物品名稱" },
+      { field: "EquipTypeName", width: '150px', header: "設備總類" },
+      { field: "EquipCategoryName", width: '150px', header: "設備分類" },
+      { field: "AreaName", width: '150px', header: "區域" },
+      { field: "LayerName", width: '150px', header: "櫃位" },
+      { field: "Status", width: '150px', header: "狀態" },
+      { field: "InboundDate", width: '150px', header: "入庫日期" },
+      { field: "AssetsInOperator", width: '150px', header: "入庫人員" },
+      ]
       const rowData = ref([]);
       onMounted(() => {
-        submit();
+        submit('','search');
       });
-      async function submit() {
-        const formData = new FormData();
-        //將表格資料append到 formData
+      async function submit(event, type) {
+        const form = new FormData();
+        //將表格資料append到 form
         for (const key in searchParams) {
-          formData.append(key, searchParams[key]);
+          form.append(key, searchParams[key]);
         }
-        const axios = require('axios');
+        switch (type) {
+          case 'sort':
+            datagrid.currentPage = 1;
+            datagrid.sortField = event.sortField;
+            datagrid.sortOrder = event.sortOrder;
+            datagrid.first = event.first;
+            break;
+          case 'page':
+            datagrid.currentPage = (event.page+1);
+            datagrid.rows = event.rows;
+            datagrid.first = event.first;
+            break
+          case 'search':
+            datagrid.currentPage = 1;
+            datagrid.first = 0;
+            break
+        }
+        const order = datagrid.sortOrder === 1 ? 'asc' : 'desc'
+        form.append('rows',datagrid.rows);
+        form.append('page',datagrid.currentPage);
+        form.append('sort',datagrid.sortField);
+        form.append('order',order);
         try {
-          const response = await axios.post('http://192.168.0.177:7008/InventoryMng/Assets', formData);
+          const response = await axios.post('http://192.168.0.177:7008/InventoryMng/Assets', form);
           const data = response.data;
           if (data.state === 'success') {
             //取得datagrid成功
             console.log('datagrid', data.resultList);
-            rowData.value = data.resultList;
+            rowData.value = data.resultList.rows;
+            datagrid.totalRecords = data.resultList.total;
           } else if (data.state === 'account_error') {
             //尚未登入
             alert(data.messages);
@@ -346,7 +330,7 @@
         }
         EquipCategoryInit.value = '請先選擇設備總類'
         LayerInit.value = '請先選擇區域';
-        submit();
+        submit('','search');
       }
       return {
         searchParams,
@@ -354,9 +338,9 @@
         EquipCategoryInit,
         LayerInit,
         pageSize,
-        columnDefs,
+        datagrid,
+        datagridfield,
         rowData,
-        rowHeight: 35,
         submit,
         getEquipTypeName,
         getAreaName,

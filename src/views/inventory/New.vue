@@ -261,7 +261,7 @@
   import Column from 'primevue/column';
   import { useRouter } from "vue-router";
   import { getEquipType , getEquipCategory , getArea , getLayer , getApplication , getAccount } from '@/assets/js/common_api'
-  import { goBack } from "@/assets/js/common_fn";
+  import { UpdatePageParameter, goBack } from "@/assets/js/common_fn";
   import axios from "axios";
   export default {
     components: {
@@ -430,28 +430,7 @@
             form.append('AssetList', item)
           }
         }
-        switch (type) {
-          case 'sort':
-            datagrid1.currentPage = 1;
-            datagrid1.sortField = event.sortField;
-            datagrid1.sortOrder = event.sortOrder;
-            datagrid1.first = event.first;
-            break;
-          case 'page':
-            datagrid1.currentPage = (event.page+1);
-            datagrid1.rows = event.rows;
-            datagrid1.first = event.first;
-            break
-          case 'search':
-            datagrid1.currentPage = 1;
-            datagrid1.first = 0;
-            break
-        }
-        const order = datagrid1.sortOrder === 1 ? 'asc' : 'desc'
-        form.append('rows',datagrid1.rows);
-        form.append('page',datagrid1.currentPage);
-        form.append('sort',datagrid1.sortField);
-        form.append('order',order);
+        UpdatePageParameter( datagrid1 , event , type , form)
         const axios = require('axios');
         try {
           const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/SearchInventory', form);
