@@ -110,10 +110,10 @@
         </template>-->
         <Column selectionMode="multiple" headerStyle="width: 3rem" ></Column>
         <Column style="width:100vw">
-<template #body="slotProps">
-  <!-- Add the custom component here -->
-  <test :params="slotProps" :msg="'hi'" @msg="handlemsg" />
-</template>
+          <template #body="slotProps">
+            <!-- Add the custom component here -->
+            <test :params="slotProps" :msg="'hi'" @msg="handlemsg" v-show="slotProps.data.AssetsId"/>
+          </template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
       </DataTable>

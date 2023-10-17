@@ -276,9 +276,7 @@
             getDetails();
             getDatagrid('','search');
           } else if (data.state === 'error') {
-            // 狀態不為待盤點
-            console.error(data.messages);
-            window.history.back();
+            alert(data.messages);
           } else if (data.state === 'account_error') {
             alert(data.messages);
             router.push('/');
