@@ -76,10 +76,11 @@
   import { ref, onMounted, reactive, watch} from 'vue';
   import Navbar from '@/components/Navbar.vue';
   import router from '@/router';
-  import { goBack } from '@/assets/js/common_fn.js'
-  import { getApplication , getAssets } from '@/assets/js/common_api.js'
+  import { canEnterPage, goBack } from '@/assets/js/common_fn.js'
+  import { getAssets } from '@/assets/js/common_api.js'
   import axios from 'axios';
   import { useRoute } from 'vue-router';
+import { Scrap_Edit_Status } from '@/assets/js/enter_status';
   export default {
     components: {
       Navbar
@@ -109,6 +110,7 @@
         .then((response)=>{
           const data = response.data
           if(data.state === 'success') {
+            canEnterPage(data.resultList.Status , Scrap_Edit_Status)
             details.value = data.resultList
             for( const key in details.value) {
               if(formParams.hasOwnProperty(key) && details.value[key]) {

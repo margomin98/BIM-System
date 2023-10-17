@@ -136,9 +136,10 @@
   import { ref, onMounted} from 'vue';
   import Navbar from '@/components/Navbar.vue';
   import router from '@/router';
-  import { goBack } from '@/assets/js/common_fn.js'
+  import { canEnterPage, goBack } from '@/assets/js/common_fn.js'
   import axios from 'axios';
   import { useRoute } from 'vue-router';
+import { Scrap_Delete_Status } from '@/assets/js/enter_status';
   export default {
     components: {
       Navbar
@@ -155,6 +156,7 @@
         .then((response)=>{
           const data = response.data
           if(data.state === 'success') {
+            canEnterPage(data.resultList.Status , Scrap_Delete_Status)
             details.value = data.resultList
           } else if (data.state === 'account_error') {
             alert(data.messages)

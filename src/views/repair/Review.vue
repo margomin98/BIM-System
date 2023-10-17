@@ -158,7 +158,8 @@
   } from 'vue-router'
   import {
     getDate,
-    goBack
+    goBack,
+    canEnterPage,
   } from '@/assets/js/common_fn.js'
   import Navbar from '@/components/Navbar.vue';
   import axios from 'axios';
@@ -169,6 +170,7 @@
   import {
     Pagination
   } from 'swiper/modules';
+  import { Repair_Review_Status } from '@/assets/js/enter_status';
   register();
   export default {
     components: {
@@ -197,6 +199,7 @@
           .then((response) => {
             const data = response.data;
             if (data.state === 'success') {
+              canEnterPage(data.resultList , Repair_Review_Status)
               details.value = data.resultList;
             } else if (data.state === 'account_error') {
               alert(data.messages);

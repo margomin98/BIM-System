@@ -219,6 +219,7 @@
     getEquipCategory
   } from "@/assets/js/common_api";
   import {
+canEnterPage,
     getDate,
     goBack
   } from "@/assets/js/common_fn";
@@ -231,6 +232,7 @@
     useRoute,
     useRouter
   } from "vue-router";
+import { RentProcess_New_Status } from "@/assets/js/enter_status";
   export default {
     components: {
       Navbar,
@@ -603,10 +605,7 @@
           const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
           const data = response.data;
           if (data.state === 'success') {
-            if (data.resultList.Status !== '已填報') {
-              window.history.back();
-              // router.push({name: 'Rent_Datagrid'});
-            }
+            canEnterPage(data.resultList.Status , RentProcess_New_Status)
             console.log('getDetails 成功 資料如下\n', data.resultList);
             // 設定搜尋參數的專案代碼
             searchParams.ProjectCode = data.resultList.ProjectCode

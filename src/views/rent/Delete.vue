@@ -105,6 +105,8 @@
     onMounted,
     ref
   } from 'vue';
+  import { canEnterPage } from "@/assets/js/common_fn";
+  import { Rent_Delete_Status } from "@/assets/js/enter_status";
   export default {
     components: {
       Navbar,
@@ -178,10 +180,7 @@
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
-            if (data.resultList.Status !== '已填報') {
-              window.history.back();
-              // router.push({name: 'Rent_Datagrid'});
-            }
+            canEnterPage(data.resultList.Status , Rent_Delete_Status)
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             rowData.value = data.resultList.ItemList;

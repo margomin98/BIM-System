@@ -129,7 +129,8 @@
   import { Rent_UseOptions } from "@/assets/js/dropdown";
   import { onMounted, ref, reactive, } from 'vue';
   import { getEquipType , getEquipCategory , getProject} from "@/assets/js/common_api";
-  import { goBack } from "@/assets/js/common_fn";
+  import { Rent_Edit_Status } from "@/assets/js/enter_status";
+  import { goBack , canEnterPage } from "@/assets/js/common_fn";
   export default {
     components: {
       Navbar,
@@ -271,10 +272,7 @@
           const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
           const data = response.data;
           if (data.state === 'success') {
-            if (data.resultList.Status !== '已填報') {
-              window.history.back();
-              // router.push({name: 'Rent_Datagrid'});
-            }
+            canEnterPage(data.resultList.Status, Rent_Edit_Status)
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             rowData.value = data.resultList.ItemList;

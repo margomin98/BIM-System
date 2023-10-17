@@ -131,11 +131,13 @@
   import router from '@/router';
   import axios from 'axios';
   import {
-    goBack
+    goBack,
+    canEnterPage,
   } from '@/assets/js/common_fn.js'
   import {
     getAssets
   } from '@/assets/js/common_api.js'
+  import { Repair_Edit_Status } from '@/assets/js/enter_status';
   export default {
     components: {
       Navbar,
@@ -175,6 +177,7 @@
           .then((response) => {
             const data = response.data;
             if (data.state === 'success') {
+              canEnterPage(data.resultList.Status , Repair_Edit_Status)
               details.value = data.resultList;
               // 將資料帶入formParams
               for (const key in details.value) {

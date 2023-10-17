@@ -182,6 +182,7 @@
     useRoute
   } from 'vue-router'
   import {
+canEnterPage,
     getDate,
     goBack
   } from '@/assets/js/common_fn.js'
@@ -194,6 +195,7 @@
   import {
     Pagination
   } from 'swiper/modules';
+import { Repair_Deliver_Status } from '@/assets/js/enter_status';
   register();
   export default {
     components: {
@@ -228,6 +230,7 @@
           .then((response) => {
             const data = response.data;
             if (data.state === 'success') {
+              canEnterPage(data.resultList.Status , Repair_Deliver_Status)
               details.value = data.resultList;
             } else if (data.state === 'account_error') {
               alert(data.messages);

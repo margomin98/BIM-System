@@ -271,8 +271,10 @@
     Pagination
   } from 'swiper/modules';
   import {
+canEnterPage,
     goBack
   } from '@/assets/js/common_fn.js'
+import { Repair_Delete_Status } from '@/assets/js/enter_status';
   register();
   export default {
     components: {
@@ -295,6 +297,7 @@
           .then((response) => {
             const data = response.data;
             if (data.state === 'success') {
+              canEnterPage(data.resultList.Status , Repair_Delete_Status)
               details.value = data.resultList;
               console.log('資料:\n', details.value);
             } else if (data.state === 'account_error') {
