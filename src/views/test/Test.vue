@@ -99,7 +99,7 @@
     <div class="datagrid_section mb-3">
       <DataTable ref='dt' v-model:selection="selectedProduct" lazy :first="datagridSetting.first" :size="'small'" :loading="datagridSetting.loading" :value="rowData" :sort-field="datagridSetting.sortField" :sort-order="datagridSetting.sortOrder" resizableColumns
         columnResizeMode="expand" scrollable scrollHeight="490px" @page="submit($event , 'page')" @sort="submit($event , 'sort')" :selectAll="datagridSetting.selectAll" @select-all-change="onSelectAllChange" table-style="min-width: 50rem" paginator
-        :rows="10" :row-style="({ AssetsId }) => AssetsId === 'BF00000005' ? 'background-color: firebrick; color:white;': null " :totalRecords="datagridSetting.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        :rows="10" :row-style="({ AssetsId }) => AssetsId === 'BF00000005' ? 'background-color: #933b3b; color:white;font-weight: 700;font-size: 18px;': null " :totalRecords="datagridSetting.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <!-- <template #header>
                 <div>
