@@ -668,6 +668,7 @@
   .p-checkbox {
     width: 22px;
     height: 22px;
+    vertical-align: middle !important;
   }
   .p-checkbox .p-checkbox-box {
     border: 2px solid #ced4da;
@@ -2651,7 +2652,7 @@
     color: white;
     background: #1f4e5f;
     transition: box-shadow 0.2s;
-    height: 48px;
+    height: 43px;
   }
   .p-datatable .p-datatable-tfoot > tr > td {
     text-align: left;
@@ -2661,6 +2662,7 @@
     font-weight: 700;
     color: #343a40;
     background: #f8f9fa;
+    
   }
   .p-datatable .p-sortable-column .p-sortable-column-icon {
     color: white;
@@ -2756,8 +2758,8 @@
     .p-datatable tr{
     /* background-color: white !important; */
     /* color: black !important; */
-    /* display:inline-block;
-    height:43px; */
+   /* display:inline-block;
+   height:43px; */
   }
   .p-datatable .p-datatable-tbody > tr.p-datatable-dragpoint-top > td {
     box-shadow: inset 0 2px 0 0 #EEF2FF;
@@ -2864,7 +2866,7 @@
     padding: 0.5rem 0.5rem;
   }
   .p-datatable.p-datatable-sm .p-datatable-tbody > tr > td {
-    padding: 0.5rem 0.5rem;
+    padding: 5px 10px;
   }
   .p-datatable.p-datatable-sm .p-datatable-tfoot > tr > td {
     padding: 0.5rem 0.5rem;
@@ -2879,7 +2881,7 @@
     padding: 1.25rem 1.25rem;
   }
   .p-datatable.p-datatable-lg .p-datatable-tbody > tr > td {
-    padding: 1.25rem 1.25rem;
+    padding: 5px 10px;
   }
   .p-datatable.p-datatable-lg .p-datatable-tfoot > tr > td {
     padding: 1.25rem 1.25rem;
@@ -3435,7 +3437,8 @@
     border-width: 0;
     padding:0 10px;
     font-weight: 700;
-    align-items: unset;
+    height: 43px;
+    align-content: center;
   }
   .p-paginator .p-paginator-first,
 .p-paginator .p-paginator-prev,
