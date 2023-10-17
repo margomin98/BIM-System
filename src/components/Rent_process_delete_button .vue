@@ -13,6 +13,7 @@
   import {
     useRouter
   } from 'vue-router';
+  import { RentProcess_Delete_Status } from '@/assets/js/enter_status';
   export default {
     props: ['params'],
     setup(props) {
@@ -35,10 +36,8 @@
       }
       function checkButton() {
         const disabledStatus = props.params.data.Status;
-        if (disabledStatus !== '已填報') {
+        if(!RentProcess_Delete_Status.includes(disabledStatus)) {
           isDisabled.value = true;
-        } else {
-          isDisabled.value = false;
         }
       }
       return {

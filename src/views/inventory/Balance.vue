@@ -118,7 +118,7 @@
             v-model:selection="datagrid1.selectedList" 
             paginator 
             :rows="20" 
-            :row-style="({ NotBalanced }) => NotBalanced ? 'background-color: #933b3b; color:white; font-weight: 700;font-size: 18px;': null "
+            :row-style="({ NotBalanced }) => NotBalanced ? 'background-color: #FFE1E1;': null "
             :totalRecords="datagrid1.totalRecords"
             paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
             currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
@@ -411,6 +411,11 @@
           width: '150px',
         },
         {
+          field: 'RecognizePerson',
+          header: '認列人員',
+          width: '150px',
+        },
+        {
           field: 'EquipTypeName',
           header: '設備總類',
           width: '150px',
@@ -454,11 +459,6 @@
           field: 'Unit',
           header: '單位',
           width: '80px',
-        },
-        {
-          field: 'RecognizePerson',
-          header: '認列人員',
-          width: '150px',
         },
       ];
       const rowData1 = ref([]);

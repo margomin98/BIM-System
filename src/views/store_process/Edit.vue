@@ -397,8 +397,12 @@
   } from '@/assets/js/common_api';
   import {
     getDate,
-    goBack
-  } from '@/assets/js/common_fn';
+    goBack,
+    canEnterPage,
+  } from "@/assets/js/common_fn"
+  import {
+    StoreProcess_Edit_Status
+  } from '@/assets/js/enter_status'
   export default {
     components: {
       Navbar,
@@ -436,6 +440,7 @@
           const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
           const data = response.data;
           if (data.state === 'success') {
+            canEnterPage(data.resultList.Status, StoreProcess_Edit_Status);
             // console.log('Details Get成功 資料如下\n', data.resultList);
             if (data.resultList.Status !== '待入庫') {
               window.history.back();

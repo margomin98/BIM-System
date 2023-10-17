@@ -9,6 +9,7 @@
 // import router from '@/router';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { Store_Edit_Status } from '@/assets/js/enter_status';
 
 
 export default {
@@ -37,13 +38,9 @@ export default {
 
     function checkButton() {
       const disabledStatus = props.params.data.Status;
-      if(disabledStatus === '待入庫' || disabledStatus === '已入庫' || disabledStatus === '已歸還') {
+      if(!Store_Edit_Status.includes(disabledStatus)) {
         isDisabled.value = true;
       }
-      else {
-        isDisabled.value = false;
-      }
-
     }
     return { 
       viewDetails,

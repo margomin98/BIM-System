@@ -101,7 +101,7 @@
   import Delete from "@/components/Equip_delete_button";
   import Navbar from "@/components/Navbar.vue";
   import {
-    EquipmentDataCategory
+    Equipment_DateCategory
   } from "@/assets/js/dropdown.js"
   import {
     getArea,
@@ -130,7 +130,7 @@
       const DropdownArray = reactive({
         Area: [],
         Layer: [],
-        DateCategory: EquipmentDataCategory,
+        DateCategory: Equipment_DateCategory,
       })
       const LayerInit = ref('請先選擇區域');
       const pageSize = ref(10);

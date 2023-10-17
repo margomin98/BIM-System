@@ -98,8 +98,8 @@
     ref
   } from "vue";
   import {
-    RepairStatus,
-    RepairDateCategory
+    Repair_StatusArray,
+    Repair_DateCategory
   } from "@/assets/js/dropdown.js"
   import {
     useRouter
@@ -114,8 +114,8 @@
     setup() {
       const router = useRouter();
       const DropdownArray = reactive({
-        Status: RepairStatus,
-        DateCategory: RepairDateCategory,
+        Status: Repair_StatusArray,
+        DateCategory: Repair_DateCategory,
       })
       const searchParams = reactive({
         RepairId: '',

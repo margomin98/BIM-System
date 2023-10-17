@@ -16,6 +16,11 @@
   import {
     useRouter
   } from 'vue-router';
+  import { 
+    Scrap_Edit_Status ,
+    Scrap_Deliver_Status, 
+    Scrap_Review_Status, 
+  } from '@/assets/js/enter_status';
   export default {
     props: ['params'],
     setup(props) {
@@ -23,9 +28,9 @@
       const search_id = props.params.data.ScrapId;
       const disabledStatus = props.params.data.Status;
       const isDisabled = ref({
-        edit: false, //編輯
-        deliver: false, //盤點
-        verify: false, //平帳
+        edit: false, // 編輯
+        deliver: false, // 交付
+        verify: false, // 審核
       })
       function view(type) {
         if (search_id !== '') {
@@ -66,12 +71,14 @@
         }
       }
       function checkButton() {
-        console.log(disabledStatus);
-        if (disabledStatus !== '待交付') {
-          isDisabled.value.deliver = true;
+
+        if (!Scrap_Edit_Status.includes(disabledStatus)) {
           isDisabled.value.edit = true;
         }
-        if (disabledStatus !== '待審核') {
+        if (!Scrap_Deliver_Status.includes(disabledStatus)) {
+          isDisabled.value.deliver = true;
+        }
+        if (!Scrap_Review_Status.includes(disabledStatus)) {
           isDisabled.value.verify = true;
         }
       }

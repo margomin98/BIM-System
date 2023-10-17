@@ -97,7 +97,7 @@
   import {
     Rent_UseOptions,
     Rent_StatusArray,
-    Rent_Process_DataCategory
+    Rent_Process_DateCategory
   } from "@/assets/js/dropdown";
   export default {
     components: {
@@ -123,7 +123,7 @@
       })
       const UseArray = Rent_UseOptions;
       const StatusArray = Rent_StatusArray;
-      const DateCategoryArray = Rent_Process_DataCategory;
+      const DateCategoryArray = Rent_Process_DateCategory;
       const pageSize = 10;
       const columnDefs = [{
           suppressMovable: true,

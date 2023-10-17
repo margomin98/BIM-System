@@ -20,7 +20,7 @@
             <div class='row g-0'>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 grid'>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData1" @rowDragEnd="onRowDragEnd('EquipTypeName' ,$event)"
+                  <ag-grid-vue style="width: 100%" class="ag-theme-alpine" :rowDragManaged="true" :suppressMoveWhenRowDragging="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData1" @rowDragEnd="onRowDragEnd('EquipTypeName' ,$event)"
                     @grid-ready="dataApi1">
                   </ag-grid-vue>
                 </div>
@@ -50,7 +50,7 @@
                   </div>
                 </div>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData2" @rowDragEnd="onRowDragEnd('EquipCategoryName' ,$event)" 
+                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :suppressMoveWhenRowDragging="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData2" @rowDragEnd="onRowDragEnd('EquipCategoryName' ,$event)" 
                     @grid-ready="dataApi2">
                   </ag-grid-vue>
                 </div>
@@ -69,7 +69,7 @@
             <div class='row g-0'>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 grid'>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData3" @rowDragEnd="onRowDragEnd('AreaName' ,$event)" 
+                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :suppressMoveWhenRowDragging="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData3" @rowDragEnd="onRowDragEnd('AreaName' ,$event)" 
                     @grid-ready="dataApi3">
                   </ag-grid-vue>
                 </div>
@@ -99,7 +99,7 @@
                   </div>
                 </div>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData4" @rowDragEnd="onRowDragEnd('LayerName' ,$event)" 
+                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :suppressMoveWhenRowDragging="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData4" @rowDragEnd="onRowDragEnd('LayerName' ,$event)" 
                     @grid-ready="dataApi4">
                   </ag-grid-vue>
                 </div>

@@ -337,7 +337,8 @@
   import Navbar from "@/components/Navbar.vue";
   import { onMounted, ref, reactive } from "vue";
   import { useRoute, useRouter } from "vue-router";
-  import { goBack } from "@/assets/js/common_fn";
+  import { goBack , canEnterPage } from "@/assets/js/common_fn";
+  import { StoreProcess_Confirm_Status } from '@/assets/js/enter_status'
   export default {
     components: {
       Navbar,
@@ -373,9 +374,10 @@
         const axios = require('axios');
         try {
           const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
-          console.log(response);
           const data = response.data;
           if (data.state === 'success') {
+            // 檢查是否為可交付
+            canEnterPage(data.resultList.Status, StoreProcess_Confirm_Status);
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             if (details.value.WarrantyStartDate) {

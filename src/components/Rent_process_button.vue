@@ -10,18 +10,24 @@
 <script>
   import {
     onMounted,
-    ref
+    ref,
+    reactive,
   } from 'vue';
   import {
     useRouter
   } from "vue-router";
+  import { 
+    RentProcess_New_Status, 
+    RentProcess_NotifyConfirm_Status ,
+    RentProcess_Confirm_Status, 
+  } from '@/assets/js/enter_status';
   export default {
     props: ["params", "refresh"],
     setup(props) {
       const router = useRouter();
       const search_id = props.params.data.AO_ID;
       const deliveryNotify = ref('通知交付');
-      const isDisabled = ref({
+      const isDisabled = reactive({
         deliveryNotify: false, //通知交付
         delivery: false, //交付
         new: false, //備料
@@ -77,20 +83,14 @@
       }
       function checkButton() {
         const disabledStatus = props.params.data.Status;
-        if (disabledStatus === '待交付' || disabledStatus === '可交付') {
-          isDisabled.value.deliveryNotify = false;
-        } else {
-          isDisabled.value.deliveryNotify = true;
+        if (!RentProcess_New_Status.includes(disabledStatus)) {
+          isDisabled.new = true;
         }
-        if (disabledStatus === '可交付') {
-          isDisabled.value.delivery = false;
-        } else {
-          isDisabled.value.delivery = true;
+        if (!RentProcess_NotifyConfirm_Status.includes(disabledStatus)) {
+          isDisabled.deliveryNotify = true;
         }
-        if (disabledStatus === '已填報') {
-          isDisabled.value.new = false;
-        } else {
-          isDisabled.value.new = true;
+        if (!RentProcess_Confirm_Status.includes(disabledStatus)) {
+          isDisabled.delivery = true;
         }
       }
       onMounted(() => {

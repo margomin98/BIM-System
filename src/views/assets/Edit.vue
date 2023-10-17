@@ -340,7 +340,7 @@
   import Storage_list_view_button from "@/components/Storage_list_view_button";
   import AccountSearch from "@/components/API/account_search";
   import Navbar from "@/components/Navbar.vue";
-  import { HistoryAction , TypeArray} from "@/assets/js/dropdown";
+  import { HistoryAction , Asset_TypeArray} from "@/assets/js/dropdown";
   import { getEquipType , getEquipCategory , getArea , getLayer , getProject , getAccount } from '@/assets/js/common_api'
   import { onMounted, ref, reactive } from "vue";
   import { useRoute, useRouter } from "vue-router";
@@ -360,7 +360,7 @@
       // 上半部表單
       const details = ref({});
       const DropdownArray = reactive({
-        AssetType: TypeArray,
+        AssetType: Asset_TypeArray,
         EquipType: [],
         EquipCategory: [],
         Custodian: [],

@@ -9,6 +9,7 @@
 // import router from '@/router';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { Rent_Edit_Status } from '@/assets/js/enter_status';
 
 
 export default {
@@ -37,8 +38,7 @@ export default {
 
     function checkButton() {
       const disabledStatus = props.params.data.Status;
-      console.log(disabledStatus);
-      if(disabledStatus !== '已填報') {
+      if(!Rent_Edit_Status.includes(disabledStatus)) {
         isDisabled.value = true;
       }
     }
