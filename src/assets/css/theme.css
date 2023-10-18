@@ -2710,7 +2710,10 @@
   }
   .p-datatable .p-datatable-tbody > tr > td {
     text-align: left;
-    border:1px solid #babfc7  !important;
+    border-left: unset !important;
+    border-right: 1px solid #babfc7 !important;
+    border-bottom: 1px solid #babfc7 !important;
+    border-top: 1px solid #babfc7 !important;
     padding: 1rem 1rem;
   }
   .p-datatable .p-datatable-tbody > tr > td .p-row-toggler,
@@ -2816,9 +2819,9 @@
   .p-datatable.p-datatable-gridlines .p-datatable-tbody > tr > td:last-child {
     border-width: 1px 1px 0 1px;
   }
-  .p-datatable.p-datatable-gridlines .p-datatable-tbody > tr:last-child > td {
+  /* .p-datatable.p-datatable-gridlines .p-datatable-tbody > tr:last-child > td {
     border-width: 1px 0 1px 1px !important;
-  }
+  } */
   .p-datatable.p-datatable-gridlines .p-datatable-tbody > tr:last-child > td:last-child {
     border-width: 1px;
   }

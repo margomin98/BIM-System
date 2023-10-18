@@ -38,9 +38,12 @@
 	}
 	::-webkit-scrollbar {
 		height: 6px;
+		border: 1px solid rgb(219, 218, 218);
+		border-radius: 5px;
 		width: 8px;
 	}
 	 ::-webkit-scrollbar-thumb {
+		display: block;
 		border-radius: 5px;
 		background-color: rgb(176, 175, 175);
 		border: 1px solid rgb(86, 85, 85);
@@ -144,6 +147,9 @@
 				align-self: baseline;
 			}
 		}
+	}
+	.p-datatable-wrapper {
+		border: 1px solid black
 	}
 	@media only screen and (min-width: 1200px) {
 		.container-fluid {
