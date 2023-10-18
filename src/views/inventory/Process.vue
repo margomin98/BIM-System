@@ -158,7 +158,21 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="send_btn" @click="submit">盤點完成</button>
+        <button class="send_btn" data-bs-toggle="modal" data-bs-target="#confirmModal">盤點完成</button>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-body">
+          即將結束盤點作業，按下確認後即無法變更盤點內容
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="submit">確認</button>
+        </div>
       </div>
     </div>
   </div>
@@ -455,7 +469,46 @@
   span {
     @include red_star
   }
+  #confirmModal {
+    .modal-content {
+      border-radius: 0;
+      border: 1px solid black;
+      .modal-body {
+        background: #528091;
+        color: white;
+        font-weight: 700;
+        text-align: center;
+        padding: 20px 10px;
+        border-bottom: 1px solid black;
+      }
+      .modal-footer {
+        padding: 10px;
+        gap: 5px;
+        background: white;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        border-radius: 0;
+        button:nth-child(1) {
+          font-weight: 700;
+          border: none;
+          &:hover {
+            background: #636260
+          }
+        }
+        button:nth-child(2) {
+          background: #132238;
+          font-weight: 700;
+          border: none;
+          &:hover {
+            background: #426497
+          }
+        }
+      }
+    }
+  }
   @media only screen and (min-width: 1200px) {
+    
     .main_section {
       input {
         @include dropdown_btn;

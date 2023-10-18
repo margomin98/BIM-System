@@ -130,7 +130,7 @@
             </Column>
             <Column header="認列">
               <template #body="slotProps">
-                <input class="p-checkbox p-component" type="checkbox" :disabled="!slotProps.data.NotBalanced" v-model="slotProps.data.selected" @change="updateList($event,slotProps)" />
+                <input class="p-checkbox p-component" type="checkbox" :disabled="!slotProps.data.NotBalanced" :checked="!slotProps.data.NotBalanced" @change="updateList($event,slotProps)" />
               </template>
             </Column>
             <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
@@ -179,7 +179,7 @@
       </div>
       <div class="col button_wrap">
         <button class="send_btn" :class="{send_btn_disabled: !validation.isVerified}" @click="submit" :disabled="!validation.isVerified">確定認列</button>
-        <button class="send_btn" data-bs-toggle="modal" data-bs-target="#force_modal">完成平帳</button>
+        <button class="send_btn" :class="{send_btn_disabled: !validation.isVerified}" :disabled="!validation.isVerified" data-bs-toggle="modal" data-bs-target="#force_modal">完成平帳</button>
       </div>
       <!--Force Warning Modal -->
       <div class="modal force_modal fade" id="force_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -376,8 +376,8 @@ UpdatePageParameter,
         Layer_Id: '',
       });
       const validation = reactive({
-        account: 'user_3',
-        password: 'Test_123',
+        account: '',
+        password: '',
         VerifyOption: false,
         isVerified: false,
         VerifyPerson: '未驗證',

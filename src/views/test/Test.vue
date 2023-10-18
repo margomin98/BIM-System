@@ -286,7 +286,9 @@
         try {
           const response = await axios.post('http://192.168.0.177:7008/InventoryMng/Assets', formData);
           const data = response.data;
-          console.log('res type:', response.headers['content-type']);
+          console.log('response content-type:', response.headers['content-type']);
+          console.log('response header:', response.headers);
+          console.log('response :', response);
           if (data.state === 'success') {
             //取得datagrid成功
             // console.log('資產datagrid:', data.resultList);

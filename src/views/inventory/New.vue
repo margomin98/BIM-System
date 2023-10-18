@@ -253,7 +253,7 @@
 </template>
 
 <script>
-  import List_view_button from "@/components/Rent_process_new_view_button";
+  import List_view_button from "@/components/Inventory_view_button";
   import Inventory_delete_button from "@/components/Inventory_delete_button";
   import Navbar from "@/components/Navbar.vue";
   import { onMounted, ref, reactive, } from "vue";

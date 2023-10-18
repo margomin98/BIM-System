@@ -91,6 +91,7 @@
       <div class="button_wrap d-flex">
         <button class="search_btn" @click="submit('','search')">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
+        <button class="export_btn" @click="exportExcel">匯出</button>
       </div>
     </div>
     <div style="height: 450px">
@@ -110,10 +111,6 @@
         scrollHeight="420px" 
         @page="submit($event , 'page')" 
         @sort="submit($event , 'sort')"
-        v-model:selection="datagrid.selectedList" 
-        :selectAll="datagrid.selectAll"
-        @select-all-change="onSelectAll"
-        @row-unselect="onRowUnselect"
         paginator 
         :rows="datagrid.rows" 
         :totalRecords="datagrid.totalRecords"
@@ -271,6 +268,34 @@
             console.error(error);
           })
       }
+      async function exportExcel() {
+        const form = new FormData();
+        //將表格資料append到 form
+        for (const key in searchParams) {
+          form.append(key, searchParams[key]);
+        }
+        axios.post('http://192.168.0.177:7008/InventoryMng/ExportExcel',form, {responseType: 'blob', })
+        .then((response)=>{
+          const data = response.data
+          const header = response.headers
+          console.log('content-disposition:',header['content-disposition']);
+          console.log('content-type:',header['content-type']);
+          if(header['content-type'].includes('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')) {
+            const url = window.URL.createObjectURL(data) ;
+            const a = document.createElement('a');
+            const fileNameMatch = /filename=([^;]*)/.exec(response.headers['content-disposition']);
+            console.log('filename', fileNameMatch[1]);
+            a.href = url;
+            a.download = `${fileNameMatch[1]}`;
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+          }
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
+      }
       function selectType(item) {
         searchParams.EquipTypeName = item.Name;
         searchParams.EquipType_Id = item.Id;
@@ -317,6 +342,7 @@
         datagridfield,
         rowData,
         submit,
+        exportExcel,
         getEquipTypeName,
         getAreaName,
         selectType,
@@ -332,6 +358,12 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
+  .export_btn {
+    @include export_btn;
+    &:hover {
+      background-color: #5e7aa2;
+    }
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       padding: 0 10%;

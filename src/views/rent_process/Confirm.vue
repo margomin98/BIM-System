@@ -276,6 +276,7 @@
   } from 'vue-router';
   import Storage_add from "@/components/Storage_add_button";
   import Navbar from "@/components/Navbar.vue";
+  import {canEnterPage ,goBack , getDate ,createDatagrid , UpdatePageParameter } from "@/assets/js/common_fn"
   import { Rent_UseOptions } from "@/assets/js/dropdown";
   import {
     onMounted,
@@ -631,17 +632,6 @@ import { RentProcess_Confirm_Status } from "@/assets/js/enter_status";
       // const selectedNodes = gridApi.value.getSelectedNodes();
       // const selectedData = selectedNodes.map(node => node.data);
       // console.log('Selected Row Data:', selectedData);
-      function getDate() {
-        const today = new Date();
-        var date = '';
-        date += (today.getFullYear() + '/');
-        date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
-        date += ((today.getDate()).toString().padStart(2, '0'));
-        return date;
-      }
-      function goBack() {
-        window.history.back();
-      }
       return {
         rowHeight,
         totalNeed,
