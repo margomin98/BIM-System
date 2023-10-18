@@ -261,7 +261,7 @@
   import Column from 'primevue/column';
   import { useRouter } from "vue-router";
   import { getEquipType , getEquipCategory , getArea , getLayer , getApplication , getAccount } from '@/assets/js/common_api'
-  import { UpdatePageParameter, goBack } from "@/assets/js/common_fn";
+  import { UpdatePageParameter, createDatagrid, goBack } from "@/assets/js/common_fn";
   import axios from "axios";
   export default {
     components: {
@@ -304,17 +304,7 @@
       })
 
       // 搜尋資產 datagrid
-      const datagrid1 = reactive({
-        totalRecords: 0,
-        first: 0,
-        rows: 10,
-        currentPage: 1,
-        sortField: 'AssetsId',
-        sortOrder: -1,
-        loading: false,
-        selectAll: false,
-        selectedList: [],
-      })      
+      const datagrid1 = createDatagrid();
       const datagrid1field = [
         {
           field: 'AssetStatus',
@@ -354,18 +344,11 @@
       ];
       const unselectList = ref([]);
       // 盤點範圍項目 datagrid
-      const datagrid2 = reactive({
-        totalRecords: 0,
-        first: 0,
-        rows: 20,
-        currentPage: 1,
-        sortField: 'AssetsId',
-        sortOrder: -1,
-        loading: false,
-      })      
+      const datagrid2 = createDatagrid();
       const rowData1 = ref([]);
       const rowData2 = ref([]);
       onMounted(() => {
+        datagrid2.rows = 20;
         getAccountName();
         getApplicationInfo();
       });
@@ -465,28 +448,7 @@
             form.append('AssetList', item)
           }
         }
-        switch (type) {
-          case 'sort':
-            datagrid2.currentPage = 1;
-            datagrid2.sortField = event.sortField;
-            datagrid2.sortOrder = event.sortOrder;
-            datagrid2.first = event.first;
-            break;
-          case 'page':
-            datagrid2.currentPage = (event.page+1);
-            datagrid2.rows = event.rows;
-            datagrid2.first = event.first;
-            break
-          case 'search':
-            datagrid2.currentPage = 1;
-            datagrid2.first = 0;
-            break
-        }
-        const order = datagrid2.sortOrder === 1 ? 'asc' : 'desc'
-        form.append('rows',datagrid2.rows);
-        form.append('page',datagrid2.currentPage);
-        form.append('sort',datagrid2.sortField);
-        form.append('order',order);
+        UpdatePageParameter(datagrid2,event,type,form)
         axios.post('http://192.168.0.177:7008/StocktakingMng/RangeOfPlan',form)
         .then((response)=>{
           const data = response.data

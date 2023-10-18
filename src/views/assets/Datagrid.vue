@@ -94,7 +94,8 @@
       </div>
     </div>
     <div style="width: 100%">
-      <DataTable 
+      <DataTable
+        :key="datagrid.key"
         lazy 
         :first= "datagrid.first"
         :size="'small'"
@@ -121,7 +122,7 @@
         <Column style="min-width: 60px;">
           <template #body="slotProps">
             <!-- Add the custom component here -->
-            <Assets_return_button :params = "slotProps" />
+            <Assets_return_button :params = "slotProps" v-if="slotProps.data.AssetName"/>
           </template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
@@ -150,7 +151,8 @@
     getArea,
     getLayer
   } from '@/assets/js/common_api'
-import axios from 'axios';
+  import axios from 'axios';
+  import { UpdatePageParameter, createDatagrid } from '@/assets/js/common_fn';
   export default {
     components: {
       Navbar,
@@ -185,15 +187,7 @@ import axios from 'axios';
       const EquipCategoryInit = ref('請先選擇設備總類');
       const LayerInit = ref('請先選擇區域');
       const pageSize = ref(10);
-      const datagrid = reactive({
-        totalRecords: 0,
-        first: 0,
-        rows: 10,
-        currentPage: 1,
-        sortField: 'AssetsId',
-        sortOrder: -1,
-        loading: false,
-      })  
+      const datagrid = createDatagrid();
       const datagridfield = [
       { field: "AssetsId", width: '150px', header: "資產編號" },
       { field: "AssetName", width: '150px', header: "物品名稱" },
@@ -215,28 +209,7 @@ import axios from 'axios';
         for (const key in searchParams) {
           form.append(key, searchParams[key]);
         }
-        switch (type) {
-          case 'sort':
-            datagrid.currentPage = 1;
-            datagrid.sortField = event.sortField;
-            datagrid.sortOrder = event.sortOrder;
-            datagrid.first = event.first;
-            break;
-          case 'page':
-            datagrid.currentPage = (event.page+1);
-            datagrid.rows = event.rows;
-            datagrid.first = event.first;
-            break
-          case 'search':
-            datagrid.currentPage = 1;
-            datagrid.first = 0;
-            break
-        }
-        const order = datagrid.sortOrder === 1 ? 'asc' : 'desc'
-        form.append('rows',datagrid.rows);
-        form.append('page',datagrid.currentPage);
-        form.append('sort',datagrid.sortField);
-        form.append('order',order);
+        UpdatePageParameter( datagrid , event , type , form)
         try {
           const response = await axios.post('http://192.168.0.177:7008/InventoryMng/Assets', form);
           const data = response.data;
@@ -245,6 +218,7 @@ import axios from 'axios';
             console.log('datagrid', data.resultList);
             rowData.value = data.resultList.rows;
             datagrid.totalRecords = data.resultList.total;
+            datagrid.key++;
           } else if (data.state === 'account_error') {
             //尚未登入
             alert(data.messages);

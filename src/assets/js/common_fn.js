@@ -1,3 +1,4 @@
+import { reactive } from "vue";
 // 取得今日日期
 export const getDate = (()=>{
   const today = new Date();
@@ -42,4 +43,19 @@ export const UpdatePageParameter= (( datagrid,event, type , form)=>{
   form.append('page',datagrid.currentPage);
   form.append('sort',datagrid.sortField);
   form.append('order',order);
+})
+// 創建datagrid切頁參數
+export const createDatagrid=(()=>{
+  return reactive({
+    key: 0,
+    totalRecords: 0,
+    first: 0,
+    rows: 10,
+    currentPage: 1,
+    sortField: 'AssetsId',
+    sortOrder: -1,
+    loading: false,
+    selectAll: false,
+    selectedList: [],
+  })
 })

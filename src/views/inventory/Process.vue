@@ -132,14 +132,14 @@
                 {{ calculateIndex(slotProps) }}
               </template>
             </Column>
-            <Column field="Status" header="狀態" sortable style="min-width:120px"></Column>
+            <Column field="Status" header="狀態" sortable style="min-width:80px"></Column>
             <Column style="min-width: 60px;">
               <template #body="slotProps">
                 <!-- Add the custom component here -->
                 <List_view_button :params = "slotProps" />
               </template>
             </Column>
-            <Column field="ReceivableNum" header="應盤" style="min-width:80px"></Column>
+            <Column field="ReceivableNum" header="應盤" style="min-width:60px"></Column>
             <Column style="min-width: 60px;">
               <template #body="slotProps">
                 <!-- Add the custom component here -->
@@ -184,6 +184,8 @@
   import {
     goBack,
     canEnterPage,
+    createDatagrid,
+    UpdatePageParameter,
   } from "@/assets/js/common_fn";
   import {
     Inventory_Process_Status
@@ -211,15 +213,7 @@
       });
       const myInput = ref(null);
       const IP_ID = route.query.search_id;
-      const datagrid1 = reactive({
-        totalRecords: 0,
-        first: 0,
-        rows: 20,
-        currentPage: 1,
-        sortField: 'Status',
-        sortOrder: 1,
-        loading: false,
-      })   
+      const datagrid1 = createDatagrid();
       const datagrid1field = [
         {
           field: 'Discrepancy',
@@ -259,6 +253,9 @@
       ];
       const rowData = ref([]);
       onMounted(() => {
+        datagrid1.rows = 20
+        datagrid1.sortOrder = 1
+        datagrid1.sortField = 'Status'
         confirmItem();
         myInput.value.focus()
       });
@@ -319,29 +316,7 @@
           return
         }
         form.append('PlanId' , IP_ID)
-        switch (type) {
-          case 'sort':
-            datagrid1.currentPage = 1;
-            datagrid1.sortField = event.sortField;
-            datagrid1.sortOrder = event.sortOrder;
-            datagrid1.first = event.first;
-            break;
-          case 'page':
-            datagrid1.currentPage = (event.page+1);
-            datagrid1.rows = event.rows;
-            datagrid1.first = event.first;
-            break
-          case 'take':
-          case 'search':
-            datagrid1.currentPage = 1;
-            datagrid1.first = 0;
-            break
-        }
-        const order = datagrid1.sortOrder === 1 ? 'asc' : 'desc'
-        form.append('rows',datagrid1.rows);
-        form.append('page',datagrid1.currentPage);
-        form.append('sort',datagrid1.sortField);
-        form.append('order',order);
+        UpdatePageParameter(datagrid1,event,type,form)
         try {
           const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/PlanItems' , form);
           const data = response.data;

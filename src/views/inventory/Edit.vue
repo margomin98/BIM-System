@@ -274,6 +274,8 @@
   import {
     goBack,
     canEnterPage,
+    createDatagrid,
+    UpdatePageParameter,
   } from "@/assets/js/common_fn";
   import {
     Inventory_Edit_Status
@@ -332,17 +334,7 @@
       const EquipCategoryInit = ref('請先選擇設備總類');
       const LayerInit = ref('請先選擇區域');
       // 搜尋資產 datagrid
-      const datagrid1 = reactive({
-        totalRecords: 0,
-        first: 0,
-        rows: 10,
-        currentPage: 1,
-        sortField: 'AssetsId',
-        sortOrder: -1,
-        loading: false,
-        selectAll: false,
-        selectedList: [],
-      })   
+      const datagrid1 = createDatagrid()
       const datagrid1field = [
         {
           field: 'AssetStatus',
@@ -382,18 +374,11 @@
       ];
       const unselectList = ref([]);
       // 盤點範圍項目 datagrid
-      const datagrid2 = reactive({
-        totalRecords: 0,
-        first: 0,
-        rows: 20,
-        currentPage: 1,
-        sortField: 'AssetsId',
-        sortOrder: -1,
-        loading: false,
-      })  
+      const datagrid2 = createDatagrid()
       const rowData1 = ref([]);
       const rowData2 = ref([]);
       onMounted(() => {
+        datagrid2.rows = 20;
         getAccountName();
         getDetails();
       });
@@ -486,28 +471,7 @@
             form.append('AssetList', item)
           }
         }
-        switch (type) {
-          case 'sort':
-            datagrid1.currentPage = 1;
-            datagrid1.sortField = event.sortField;
-            datagrid1.sortOrder = event.sortOrder;
-            datagrid1.first = event.first;
-            break;
-          case 'page':
-            datagrid1.currentPage = (event.page+1);
-            datagrid1.rows = event.rows;
-            datagrid1.first = event.first;
-            break
-          case 'search':
-            datagrid1.currentPage = 1;
-            datagrid1.first = 0;
-            break
-        }
-        const order = datagrid1.sortOrder === 1 ? 'asc' : 'desc'
-        form.append('rows',datagrid1.rows);
-        form.append('page',datagrid1.currentPage);
-        form.append('sort',datagrid1.sortField);
-        form.append('order',order);
+        UpdatePageParameter(datagrid1,event,type,form)
         const axios = require('axios');
         try {
           const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/SearchInventory', form);
@@ -542,28 +506,7 @@
             form.append('AssetList', item)
           }
         }
-        switch (type) {
-          case 'sort':
-            datagrid2.currentPage = 1;
-            datagrid2.sortField = event.sortField;
-            datagrid2.sortOrder = event.sortOrder;
-            datagrid2.first = event.first;
-            break;
-          case 'page':
-            datagrid2.currentPage = (event.page+1);
-            datagrid2.rows = event.rows;
-            datagrid2.first = event.first;
-            break
-          case 'search':
-            datagrid2.currentPage = 1;
-            datagrid2.first = 0;
-            break
-        }
-        const order = datagrid2.sortOrder === 1 ? 'asc' : 'desc'
-        form.append('rows',datagrid2.rows);
-        form.append('page',datagrid2.currentPage);
-        form.append('sort',datagrid2.sortField);
-        form.append('order',order);
+        UpdatePageParameter(datagrid2,event,type,form)
         axios.post('http://192.168.0.177:7008/StocktakingMng/RangeOfPlan',form)
         .then((response)=>{
           const data = response.data

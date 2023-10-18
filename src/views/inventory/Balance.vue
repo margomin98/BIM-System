@@ -341,6 +341,8 @@
   import {
     goBack,
     canEnterPage,
+createDatagrid,
+UpdatePageParameter,
   } from "@/assets/js/common_fn";
   import {
     Inventory_Balance_Status
@@ -385,25 +387,8 @@
         isVerified: false,
         VerifyPerson: '未驗證',
       })
-      const datagrid1 = reactive({
-        totalRecords: 0,
-        first: 0,
-        rows: 20,
-        currentPage: 1,
-        sortField: 'Status',
-        sortOrder: 1,
-        loading: false,
-        selectedList: [],
-      })   
-      const datagrid2 = reactive({
-        totalRecords: 0,
-        first: 0,
-        rows: 10,
-        currentPage: 1,
-        sortField: 'AssetsId',
-        sortOrder: 1,
-        loading: false,
-      })   
+      const datagrid1 = createDatagrid()
+      const datagrid2 = createDatagrid()
       const datagrid1field = [
         {
           field: 'AssetsId',
@@ -464,6 +449,8 @@
       const rowData1 = ref([]);
       const rowData2 = ref([]);
       onMounted(() => {
+        datagrid1.rows = 20
+        datagrid1.sortField = 'RecognizePerson'
         getDetails();
         getDatagrid('','search');
       });
@@ -590,29 +577,7 @@
             form.append(key, searchParams[key]);
           }
         }
-        switch (type) {
-          case 'sort':
-            datagrid2.currentPage = 1;
-            datagrid2.sortField = event.sortField;
-            datagrid2.sortOrder = event.sortOrder;
-            datagrid2.first = event.first;
-            break;
-          case 'page':
-            datagrid2.currentPage = (event.page+1);
-            datagrid2.rows = event.rows;
-            datagrid2.first = event.first;
-            break
-          case 'take':
-          case 'search':
-            datagrid2.currentPage = 1;
-            datagrid2.first = 0;
-            break
-        }
-        const order = datagrid2.sortOrder === 1 ? 'asc' : 'desc'
-        form.append('rows',datagrid2.rows);
-        form.append('page',datagrid2.currentPage);
-        form.append('sort',datagrid2.sortField);
-        form.append('order',order);
+        UpdatePageParameter(datagrid2,event,type,form)
         try {
           const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryResult', form);
           const data = response.data;

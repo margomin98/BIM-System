@@ -81,7 +81,7 @@
       <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true" :alwaysShowHorizontalScroll="true">
       </ag-grid-vue>
     </div> -->
-    <div style="height: 530px;">
+    <div style="height: 100%;">
       <DataTable 
         :key="datagridSetting.key"
         lazy 
@@ -95,7 +95,7 @@
         columnResizeMode="expand"
         showGridlines 
         scrollable 
-        scrollHeight="490px" 
+        scrollHeight="420px" 
         @page="submit($event , 'page')" 
         @sort="submit($event , 'sort')"
         paginator 
@@ -146,6 +146,7 @@
   import Delete from "@/components/Inventory_data_delete_button";
   import Navbar from "@/components/Navbar.vue";
   import { PlanType , PlanStatus , PlanDateCategory} from "@/assets/js/dropdown.js"
+  import { UpdatePageParameter, createDatagrid } from "@/assets/js/common_fn";
   import { useRouter } from "vue-router";
   import axios from "axios";
   export default {
@@ -269,16 +270,7 @@
           }
       ]
       const rowData = ref([]);
-      const datagridSetting = reactive({
-        key: 1,
-        totalRecords: 0,
-        first: 0,
-        rows: 10,
-        currentPage: 1,
-        sortField: 'PlanId',
-        sortOrder: -1,
-        loading: false,
-      })
+      const datagridSetting = createDatagrid()
       const datagridfield = [
         {
           field: 'PlanId',
@@ -322,39 +314,18 @@
         },
       ];
       onMounted(()=>{
+        datagridSetting.sortField = 'PlanId';
         submit('' , 'search');
       });
       async function submit(event , type) {
         datagridSetting.loading = true;
         const formData = new FormData();
         // console.log(event);
-        // type為sort或page =>更新datagrid參數，search則回到第一頁
-        switch (type) {
-          case 'sort':
-            datagridSetting.currentPage = 1;
-            datagridSetting.sortField = event.sortField;
-            datagridSetting.sortOrder = event.sortOrder;
-            datagridSetting.first = event.first;
-            break;
-          case 'page':
-            datagridSetting.currentPage = (event.page+1);
-            datagridSetting.rows = event.rows;
-            datagridSetting.first = event.first;
-            break
-          case 'search':
-            datagridSetting.currentPage = 1;
-            datagridSetting.first = 0;
-            break
-        }
-        const order = datagridSetting.sortOrder === 1 ? 'asc' : 'desc'
         // 將表格資料append到 formData
         for (const key in searchParams) {
           formData.append(key, searchParams[key]);
         }
-        formData.append('rows',datagridSetting.rows);
-        formData.append('page',datagridSetting.currentPage);
-        formData.append('sort',datagridSetting.sortField);
-        formData.append('order',order);
+        UpdatePageParameter(datagridSetting,event,type,formData);
         try {
           const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryPlans', formData);
           const data = response.data;

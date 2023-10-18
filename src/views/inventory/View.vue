@@ -86,12 +86,12 @@
         <div style="width: 100%">
           <DataTable 
             lazy 
-            :first= "datagrid2.first"
+            :first= "datagrid.first"
             :size="'small'"
-            :loading="datagrid2.loading"
+            :loading="datagrid.loading"
             :value="rowData2" 
-            :sort-field="datagrid2.sortField"
-            :sort-order="datagrid2.sortOrder"
+            :sort-field="datagrid.sortField"
+            :sort-order="datagrid.sortOrder"
             resizableColumns 
             columnResizeMode="expand"
             showGridlines 
@@ -99,10 +99,9 @@
             scrollHeight="820px" 
             @page="getRangeOfPlan($event , 'page')" 
             @sort="getRangeOfPlan($event , 'sort')"
-            table-style="min-height: 820px;"
             paginator 
             :rows="20" 
-            :totalRecords="datagrid2.totalRecords"
+            :totalRecords="datagrid.totalRecords"
             paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
             currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
             <Column style="min-width: 50px;" header="項目">
@@ -116,7 +115,7 @@
                 <List_view_button :params = "slotProps" />
               </template>
             </Column>
-            <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+            <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
           </DataTable>
         </div>
       </div>
@@ -142,7 +141,7 @@
     useRouter
   } from "vue-router";
   import axios from "axios";
-  import { goBack } from "@/assets/js/common_fn";
+  import { UpdatePageParameter, createDatagrid, goBack } from "@/assets/js/common_fn";
   export default {
     components: {
       DataTable,
@@ -163,7 +162,7 @@
         LayerName: '',
       })
       // 盤點範圍項目 datagrid
-      const datagrid1field = [
+      const datagridfield = [
         {
           field: 'AssetStatus',
           header: '資產狀態',
@@ -200,17 +199,10 @@
           width: '150px',
         },
       ];
-      const datagrid2 = reactive({
-        totalRecords: 0,
-        first: 0,
-        rows: 20,
-        currentPage: 1,
-        sortField: 'AssetsId',
-        sortOrder: -1,
-        loading: false,
-      })  
+      const datagrid = createDatagrid()
       const rowData2 = ref([]);
       onMounted(() => {
+        datagrid.rows = 20;
         getDetails();
       });
       // 帶入資料
@@ -237,7 +229,7 @@
       }
       // 取得盤點範圍datagrid
       async function getRangeOfPlan(event , type) {
-        datagrid2.loading = true;
+        datagrid.loading = true;
         const form = new FormData();
         // 將已有的項目AssetsId加入form
         if (details.value.AssetList.length !== 0) {
@@ -245,34 +237,13 @@
             form.append('AssetList', item)
           }
         }
-        switch (type) {
-          case 'sort':
-            datagrid2.currentPage = 1;
-            datagrid2.sortField = event.sortField;
-            datagrid2.sortOrder = event.sortOrder;
-            datagrid2.first = event.first;
-            break;
-          case 'page':
-            datagrid2.currentPage = (event.page+1);
-            datagrid2.rows = event.rows;
-            datagrid2.first = event.first;
-            break
-          case 'search':
-            datagrid2.currentPage = 1;
-            datagrid2.first = 0;
-            break
-        }
-        const order = datagrid2.sortOrder === 1 ? 'asc' : 'desc'
-        form.append('rows',datagrid2.rows);
-        form.append('page',datagrid2.currentPage);
-        form.append('sort',datagrid2.sortField);
-        form.append('order',order);
+        UpdatePageParameter(datagrid,event,type,form)
         axios.post('http://192.168.0.177:7008/StocktakingMng/RangeOfPlan',form)
         .then((response)=>{
           const data = response.data
           if(data.state === 'success') {
             console.log('盤點範圍:',data.resultList.rows);
-            datagrid2.totalRecords =  data.resultList.total
+            datagrid.totalRecords =  data.resultList.total
             rowData2.value =  data.resultList.rows
           } else {
             // state為error
@@ -282,16 +253,16 @@
         .catch((error)=>{
           console.error(error);
         })
-        datagrid2.loading = false;
+        datagrid.loading = false;
       }
       function calculateIndex(slotProps) {
-        return String(datagrid2.first + slotProps.index + 1).padStart(2, '0');
+        return String(datagrid.first + slotProps.index + 1).padStart(2, '0');
       }
       return {
         details,
         searchParams,
-        datagrid1field,
-        datagrid2,
+        datagridfield,
+        datagrid,
         rowData2,
         getRangeOfPlan,
         calculateIndex,
