@@ -103,23 +103,18 @@
       <div class="content">
         <div style="width: 100%">
           <DataTable 
-            :first= "datagrid1.first"
             :size="'small'"
             :value="rowData1" 
-            :sort-field="datagrid1.sortField"
-            :sort-order="datagrid1.sortOrder"
             resizableColumns 
             columnResizeMode="expand"
             showGridlines 
             scrollable 
             scrollHeight="820px" 
-            @page="getDatagrid($event , 'page')" 
-            @sort="getDatagrid($event , 'sort')"
             v-model:selection="datagrid1.selectedList" 
             paginator 
-            :rows="20" 
+            :rows="20"
+            @page="updatePage($event)"
             :row-style="({ NotBalanced }) => NotBalanced ? 'background-color: #FFE1E1;': null "
-            :totalRecords="datagrid1.totalRecords"
             paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
             currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
             <Column style="min-width: 50px;" header="項目">
@@ -659,9 +654,11 @@ UpdatePageParameter,
         searchParams.LayerName = item.Name;
         searchParams.Layer_Id = item.Id;
       };
-      const onGridReady = (params) => {
-        grid.value = params.api
+      function updatePage(event) {
+        // console.log('event',event);
+        datagrid1.first = event.first
       }
+
       function clear() {
         for (const key in searchParams) {
           searchParams[key] = '';
@@ -680,7 +677,7 @@ UpdatePageParameter,
       function calculateIndex(number,slotProps) {
         switch (number) {
           case 1:
-            return String(slotProps.index + 1).padStart(2, '0');
+            return String(datagrid1.first + slotProps.index + 1).padStart(2, '0');
             break;
           case 2:
             return String(datagrid2.first + slotProps.index + 1).padStart(2, '0');
@@ -710,7 +707,7 @@ UpdatePageParameter,
         selectCategory,
         selectArea,
         selectLayer,
-        onGridReady,
+        updatePage,
         clear,
         goBack,
         updateList,
