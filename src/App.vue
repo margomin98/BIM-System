@@ -7,6 +7,11 @@
 </script>
 
 <style lang="scss">
+.ag-chart-no-data-overlay{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 	body {
 		background-image: url('@/assets/body/bg.png');
 		padding-right: unset !important;

@@ -1,7 +1,7 @@
 <template>
   <Navbar />
   <div class="chart">
-    <ag-charts-vue style="height: 650px" :options="options"></ag-charts-vue>
+    <ag-charts-vue style="height: 650px" class="chart-container" :options="options"></ag-charts-vue>
   </div>
 </template>
 
@@ -24,12 +24,18 @@
       const total = ref(0);
       const rowData = ref([]);
       const options = ref({
+        height: 650,
         data: rowData.value,
         padding: {
           top: 50,
           right: 20,
           bottom: 40,
           left: 20,
+        },
+        overlays: {
+          noData: {
+            renderer: () => '<p class="no_data" style="font-size:30px;font-weight:700;">無數據</p>'
+          },
         },
         background: {
           fill: '#73a1b282',
@@ -40,7 +46,7 @@
             toggleSeriesVisible: false,
             paddingX: 30,
             label: {
-              fontWeight: 'bold',
+              fontWeight: '700',
               fontSize: 20,
             },
             marker: {
@@ -58,20 +64,33 @@
           innerRadiusRatio: 0.50,
           innerLabels: [{
               text: total.value.toString(),
-              fontSize: 30,
+              fontSize: 35,
+              color: '#132238',
               fontWeight: 'bold',
             },
             {
               text: '件數',
-              fontSize: 25,
+              color: '#132238',
+              fontSize: 20,
               fontWeight: 'bold',
             },
           ],
+          calloutLabel: {
+            offset: 5,
+            fontSize: 18,
+            fontWeight: '600',
+            color: '#132238'
+          },
+          calloutLine: {
+            strokeWidth: 2,
+            colors: ['#ffffff']
+          },
           sectorLabelKey: 'share',
           title: {
             text: '倉庫即時數據',
-            fontSize: 50,
-            spacing: 60,
+            fontSize: 45,
+            spacing: 75,
+            fontWeight: 'bold',
             color: '#132238',
           },
           sectorLabel: {
@@ -81,8 +100,8 @@
           },
           highlightStyle: {
             item: {
-              fill: '#18191a',
-              stroke: 'whtie',
+              fill: '#283441',
+              stroke: 'grey',
               strokeWidth: 1,
             },
           },
@@ -124,8 +143,12 @@
 
 <style lang="scss" scoped>
   .chart {
-    margin-top: 5%;
+    margin-top: 6%;
     padding: 0 5%;
+  }
+  .chart-container {
+    width: 100%;
+    height: 100%;
   }
   .donut-label {
     /* Your custom styles for the donut chart labels */
@@ -135,8 +158,8 @@
     /* Add any other styles you want */
   }
   @media only screen and (max-width: 767px) {
-  .chart{
-    margin-bottom: 5%;
-  }
+    .chart {
+      margin-bottom: 5%;
+    }
   }
 </style>
