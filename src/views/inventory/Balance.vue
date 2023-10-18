@@ -111,7 +111,9 @@
             scrollable 
             scrollHeight="820px" 
             v-model:selection="datagrid1.selectedList" 
-            paginator 
+            sort-field="NotBalanced"
+            sort-order="-1"
+            paginator
             :rows="20"
             @page="updatePage($event)"
             :row-style="({ NotBalanced }) => NotBalanced ? 'background-color: #FFE1E1;': null "
