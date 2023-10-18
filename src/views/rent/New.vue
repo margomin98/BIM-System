@@ -39,8 +39,8 @@
           </div>
           <div class="col d-flex wrap">
             <label for="inputWithTitle" class="form-label" id='project_name'>
-                      <p>專案名稱</p>
-                    </label>
+              <p>專案名稱</p>
+            </label>
             <div class="input-group" id='readonly_box'>
               <p class='readonly_box' readonly>{{ myForm.ProjectName }}</p>
             </div>
@@ -49,8 +49,8 @@
         <div class="row g-0">
           <div class="col d-flex wrap column_section" style='border:none'>
             <label for="inputTextarea" class="form-label">
-                      <p>&nbsp;&nbsp;說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
-                    </label>
+              <p>&nbsp;&nbsp;說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
+            </label>
             <textarea class="form-control" id="inputTextarea" placeholder='最多輸入100字' v-model="myForm.Description"></textarea>
           </div>
         </div>
@@ -116,9 +116,27 @@
           <p><span>*</span>資產出庫項目(請至少新增一項)</p>
         </div>
       </div>
-      <div class='third_content'>
-        <ag-grid-vue style="width: 100%; height:300px; background-color: #402a2a;" id='grid_table' class="ag-theme-alpine" @grid-ready="onGridReady" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="5" :pagination="true">
-        </ag-grid-vue>
+      <div class='third_content' >
+        <DataTable 
+        :size="'small'"
+        :value="rowData" 
+        resizableColumns 
+        columnResizeMode="expand"
+        showGridlines 
+        scrollable 
+        scrollHeight="420px" 
+        paginator 
+        :rows="10" 
+        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        :rowsPerPageOptions="[10, 20, 30]"
+        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+        <Column style="min-width:80px;">
+          <template #body="slotProps">
+            <Delete :params = "slotProps" @deleteFromData="deleteFromData" />
+          </template>
+        </Column>
+        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+        </DataTable>
       </div>
     </div>
     <div class="col button_wrap">
@@ -129,7 +147,8 @@
 </template>
 
 <script>
-  import { AgGridVue } from "ag-grid-vue3";
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   import Delete from "@/components/Rent_New_Delete_button";
   import Navbar from '@/components/Navbar.vue';
   import { Rent_UseOptions } from "@/assets/js/dropdown";
@@ -140,11 +159,11 @@
   export default {
     components: {
       Navbar,
-      AgGridVue,
-      Delete
+      Column,
+      DataTable,
+      Delete,
     },
     setup() {
-      const gridApi = ref(null);
       const options = Rent_UseOptions;
       const myForm = reactive({
         ApplicationDate: '',
@@ -165,67 +184,13 @@
         RequiredSpec: '',
       });
       const increaseId = ref(0); //新增細項時的ID
-      const columnDefs = [{
-          suppressMovable: true,
-          field: "",
-          cellRenderer: "Delete",
-          cellRendererParams: {
-            deleteFromData: (id) => {
-              const deleteIndex = rowData.value.findIndex(item => {
-                item.id === id
-              })
-              rowData.value.splice(deleteIndex, 1);
-            }
-          },
-          width: 100,
-          resizable: true,
-        },
-        {
-          headerName: "設備總類",
-          field: "EquipTypeName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "設備分類",
-          field: "EquipCategoryName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "物品名稱",
-          field: "ProductName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true
-        },
-        {
-          headerName: "數量",
-          field: "Number",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "規格需求",
-          field: "RequiredSpec",
-          unSortIcon: true,
-          sortable: true,
-          flex: 1,
-          suppressMovable: true,
-          resizable: true
-        }
-      ];
+      const datagridfield = [
+        {field: 'EquipTypeName', header: '設備總類',width: '150px'},
+        {field: 'EquipCategoryName', header: '設備分類',width: '150px'},
+        {field: 'ProductName', header: '物品名稱',width: '150px'},
+        {field: 'Number', header: '數量',width: '100px'},
+        {field: 'RequiredSpec', header: '規格需求',width: '250px'},
+      ]
       const rowData = ref([]);
       onMounted(() => {
         getApplicationInfo();
@@ -309,7 +274,7 @@
           Description: myForm.Description,
           ItemList: rowData.value,
         };
-        console.log(requestData);
+        console.log('requestData:',requestData);
         try {
           const axios = require('axios');
           const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/NewAssetsOut', requestData);
@@ -359,10 +324,6 @@
           id: increaseId.value,
         });
         increaseId.value++;
-        console.log(gridApi.value.setRowData);
-        setTimeout(() => {
-          gridApi.value.setRowData(rowData.value);
-        }, 0);
         //清空子項目
         myForm.EquipTypeName = '';
         myForm.EquipType_Id = '';
@@ -373,14 +334,13 @@
         myForm.Number = 1;
         myForm.RequiredSpec = '';
       }
-      const onGridReady = (params) => {
-        // 賦值 gridApi
-        gridApi.value = params.api;
-      };
+      function deleteFromData(data) {
+        rowData.value = rowData.value.filter(item=> item.id !== data.id);
+      }
       return {
         myForm,
         options,
-        columnDefs,
+        datagridfield,
         rowData,
         getEquipTypeName,
         selectType,
@@ -388,7 +348,7 @@
         getProjectName,
         submit,
         insertItemList,
-        onGridReady,
+        deleteFromData,
         goBack,
       };
     },

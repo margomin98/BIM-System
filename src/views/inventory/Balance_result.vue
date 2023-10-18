@@ -131,11 +131,6 @@
                 <List_view_button :params = "slotProps" />
               </template>
             </Column>
-            <Column header="認列">
-              <template #body="slotProps">
-                <input class="p-checkbox p-component" type="checkbox" :disabled="!slotProps.data.NotBalanced" v-model="slotProps.data.selected" @change="updateList($event,slotProps)" />
-              </template>
-            </Column>
             <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
           </DataTable>
         </div>

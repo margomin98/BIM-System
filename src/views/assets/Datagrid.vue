@@ -93,7 +93,7 @@
         <button class="empty_btn" @click="clear">清空</button>
       </div>
     </div>
-    <div style="width: 100%">
+    <div style="height: 450px">
       <DataTable
         :key="datagrid.key"
         lazy 
@@ -107,7 +107,7 @@
         columnResizeMode="expand"
         showGridlines 
         scrollable 
-        scrollHeight="510px" 
+        scrollHeight="420px" 
         @page="submit($event , 'page')" 
         @sort="submit($event , 'sort')"
         v-model:selection="datagrid.selectedList" 
@@ -115,9 +115,10 @@
         @select-all-change="onSelectAll"
         @row-unselect="onRowUnselect"
         paginator 
-        :rows="10" 
+        :rows="datagrid.rows" 
         :totalRecords="datagrid.totalRecords"
-        paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        :rowsPerPageOptions="[10, 20, 30]"
         currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <Column style="min-width: 60px;">
           <template #body="slotProps">

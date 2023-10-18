@@ -64,8 +64,26 @@
         </div>
       </div>
       <div class='third_content'>
-        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true">
-        </ag-grid-vue>
+        <DataTable 
+        :size="'small'"
+        :value="rowData" 
+        resizableColumns 
+        columnResizeMode="expand"
+        showGridlines 
+        scrollable 
+        scrollHeight="420px" 
+        paginator 
+        @page="updatePage"
+        :rows="20" 
+        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+        <Column style="min-width:50px;" header="項目">
+          <template #body="slotProps">
+            {{ calculateIndex(slotProps) }}
+          </template>
+        </Column>
+        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+        </DataTable>
       </div>
     </div>
     <div class="col button_wrap">
@@ -90,14 +108,12 @@
 
 <script>
   import {
-    AgGridVue
-  } from "ag-grid-vue3";
-  import {
     useRoute,
     useRouter
   } from 'vue-router';
-  import Delete from "@/components/Delete_button";
   import Navbar from '@/components/Navbar.vue';
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   import {
     Rent_UseOptions
   } from "@/assets/js/dropdown";
@@ -105,67 +121,22 @@
     onMounted,
     ref
   } from 'vue';
-  import { canEnterPage } from "@/assets/js/common_fn";
+  import { goBack ,canEnterPage , createDatagrid } from "@/assets/js/common_fn";
   import { Rent_Delete_Status } from "@/assets/js/enter_status";
   export default {
     components: {
       Navbar,
-      AgGridVue,
-      Delete
+      Column,
+      DataTable,
     },
     setup() {
-      const columnDefs = [{
-          suppressMovable: true,
-          headerName: "項目",
-          field: "id",
-          width: 100,
-          resizable: true,
-        },
-        {
-          headerName: "設備總類",
-          field: "EquipTypeName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "設備分類",
-          field: "EquipCategoryName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "物品名稱",
-          field: "ProductName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true
-        },
-        {
-          headerName: "數量",
-          field: "Number",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "規格需求",
-          field: "RequiredSpec",
-          unSortIcon: true,
-          sortable: true,
-          flex: 1,
-          suppressMovable: true,
-          resizable: true
-        }
+      const datagrid = createDatagrid();
+      const datagridfield = [
+        {field: 'EquipTypeName', header: '設備總類',width: '150px'},
+        {field: 'EquipCategoryName', header: '設備分類',width: '150px'},
+        {field: 'ProductName', header: '物品名稱',width: '150px'},
+        {field: 'Number', header: '數量',width: '100px'},
+        {field: 'RequiredSpec', header: '規格需求',width: '250px'},
       ]
       const rowData = ref([]);
       const route = useRoute();
@@ -218,15 +189,20 @@
       onMounted(() => {
         getDetails();
       });
-      function goBack() {
-        window.history.back();
+      function updatePage(event) {
+        datagrid.first = event.first;
+      }
+      function calculateIndex(slotProps) {
+        return String(datagrid.first + slotProps.index + 1).padStart(2, '0');
       }
       return {
-        columnDefs,
+        datagridfield,
         rowData,
         details,
         options,
         deleteData,
+        updatePage,
+        calculateIndex,
         goBack,
       };
     },

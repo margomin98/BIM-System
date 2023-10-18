@@ -29,9 +29,8 @@ export default {
 button{
     @include datagrid_view_button;
     height: 25px;
-    color:white;
-    
-       &:hover {
+    color: black;
+    &:hover {
       background: #1D7072;
       color: white
     }

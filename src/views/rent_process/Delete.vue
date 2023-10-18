@@ -64,8 +64,21 @@
         </div>
       </div>
       <div class="second_content">
-        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :paginationAutoPageSize="true">
-        </ag-grid-vue>
+        <DataTable 
+        :size="'small'"
+        :value="rowData1" 
+        resizableColumns 
+        columnResizeMode="expand"
+        showGridlines 
+        scrollable
+        scroll-height="420px">
+        <Column style="min-width:50px;" header="項目">
+          <template #body="slotProps">
+            {{ calculateIndex(slotProps) }}
+          </template>
+        </Column>
+        <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+        </DataTable>
       </div>
       <div class="fixed_info">
         <div>
@@ -73,8 +86,26 @@
         </div>
       </div>
       <div class="third_content">
-        <ag-grid-vue :suppressRowClickSelection="true" style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs2" :rowData="rowData2" rowSelection='multiple' :paginationAutoPageSize="true" @grid-ready="onGridReady">
-        </ag-grid-vue>
+        <DataTable 
+        :size="'small'"
+        :value="rowData2" 
+        resizableColumns 
+        columnResizeMode="expand"
+        showGridlines 
+        scrollable
+        scroll-height="600px">
+        <Column header="交付確認">
+          <template style="min-width:50px; " #body="slotProps">
+            <input type="checkbox" class="p-checkbox p-component" :checked="slotProps.data.OM_IsExecute" disabled>
+          </template>
+        </Column>
+        <Column>
+          <template #body="slotProps">
+            <AssetsView :params="slotProps"/>
+          </template>
+        </Column>
+        <Column v-for="item in datagrid2field" :field="item.field" :header="item.header" :sortable="item.sortable" :style="{'min-width': item.width}"></Column>
+        </DataTable>
       </div>
       <div class="fixed_info_count">
         <div>
@@ -84,7 +115,7 @@
           <p>已備數量: {{ totalSelect }}個</p>
         </div>
       </div>
-      <div class="fourth_content">
+      <!-- <div class="fourth_content">
         <div class="fixed_info">
           <div>
             <p>備料簽章</p>
@@ -180,7 +211,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="col button_wrap">
       <button class="back_btn" @click="goBack">回上一頁</button>
@@ -203,26 +234,29 @@
 </template>
 
 <script>
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   import {
     useRoute,
     useRouter
   } from 'vue-router';
   import Storage_add from "@/components/Storage_add_button";
+  import AssetsView from '@/components/Rent_process_new_view_button'
   import Navbar from "@/components/Navbar.vue";
   import { Rent_UseOptions } from "@/assets/js/dropdown";
   import {
     onMounted,
     ref
   } from "vue";
-import { canEnterPage } from "@/assets/js/common_fn";
-import { RentProcess_Delete_Status } from "@/assets/js/enter_status";
+  import {goBack} from "@/assets/js/common_fn"
+  import { canEnterPage } from "@/assets/js/common_fn";
+  import { RentProcess_Delete_Status } from "@/assets/js/enter_status";
   export default {
     components: {
       Navbar,
-      AgGridVue,
+      Column,
+      DataTable,
+      AssetsView,
       Storage_add,
     },
     setup() {
@@ -233,176 +267,27 @@ import { RentProcess_Delete_Status } from "@/assets/js/enter_status";
       const totalSelect = ref(0); //總已備數量
       const details = ref({});
       const options = Rent_UseOptions;
-      const rowHeight = 35;
-      const gridApi = ref(null);
-      const DeliveryMemo = ref('');
-      const validation = ref({
-        user1: {
-          account: 'user_1',
-          password: 'Test_123',
-          isValidate: false,
-          resultName: '',
-        },
-        user2: {
-          account: 'user_2',
-          password: 'Test_123',
-          isValidate: false,
-          resultName: '',
-        },
-      });
-      const columnDefs1 = [{
-          headerName: "項目",
-          field: "id",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "設備總類",
-          field: "EquipTypeName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "設備分類",
-          field: "EquipCategoryName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "物品名稱",
-          field: "ProductName",
-          unSortIcon: true,
-          sortable: true,
-          width: 140,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "數量",
-          field: "Number",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "規格需求",
-          field: "RequiredSpec",
-          unSortIcon: true,
-          sortable: true,
-          flex: 1,
-          suppressMovable: true,
-          resizable: true,
-        },
-      ];
-      const columnDefs2 = [{
-          headerName: "",
-          field: "OM_IsExecute",
-          width: 55,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "項目",
-          field: "OM_List_id",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "資產編號",
-          field: "AssetsId",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "資產名稱",
-          field: "AssetName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "儲位區域",
-          field: "AreaName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "儲位櫃位",
-          field: "LayerName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "廠商",
-          field: "VendorName",
-          unSortIcon: true,
-          sortable: true,
-          width: 250,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "型號",
-          field: "ProductType",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "規格",
-          field: "ProductSpec",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "數量",
-          field: "OM_Number",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "單位",
-          field: "OM_Unit",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-          resizable: true,
-        },
-      ];
+      // 資產出庫項目
+      const datagrid1field = [
+        { field: "EquipTypeName", width: '150px', header: "設備總類" },
+        { field: "EquipCategoryName", width: '150px', header: "設備分類" },
+        { field: "ProductName", width: '150px', header: "物品名稱" },
+        { field: "Number", width: '100px', header: "數量" },
+        { field: "RequiredSpec", width: '250px', header: "規格需求" },
+      ]
+      // 資產出庫細項
+      const datagrid2field = [
+        { field: "OM_List_id", width: '50px', header: "需求項目", sortable:false, },
+        { field: "OM_Number", width: '30px', header: "數量", sortable:false, },
+        { field: "OM_Unit", width: '30px', header: "單位", sortable:false, },
+        { field: "AssetsId", width: '150px', header: "資產編號", sortable:true, },
+        { field: "AssetName", width: '150px', header: "物品名稱", sortable:true, },
+        { field: "AreaName", width: '150px', header: "儲位區域", sortable:true, },
+        { field: "LayerName", width: '150px', header: "儲位櫃位", sortable:true, },
+        { field: "VendorName", width: '150px', header: "廠商", sortable:true, },
+        { field: "ProductType", width: '150px', header: "型號", sortable:true, },
+        { field: "ProductSpec", width: '150px', header: "規格", sortable:true, },
+      ]
       const rowData1 = ref([]);
       const rowData2 = ref([]);
       onMounted(() => {
@@ -437,134 +322,6 @@ import { RentProcess_Delete_Status } from "@/assets/js/enter_status";
           console.error(error);
         }
       }
-
-      //分別使用帳號密碼驗證、改變驗證狀態 user1為設備工程師 user2為倉管人員
-      async function validate(user) {
-        if (user === 1) {
-          const axios = require('axios');
-          const formData = new FormData();
-          const formFields = {
-            'userName': validation.value.user1.account,
-            'userPassword': validation.value.user1.password,
-          };
-          //將表格資料append到 formData
-          for (const fieldName in formFields) {
-            formData.append(fieldName, formFields[fieldName]);
-            console.log(formData.get(`${fieldName}`));
-          }
-          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidationForE_Operator', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
-          try {
-            const data = response.data;
-            console.log(data);
-            if (data.state === 'success') {
-              validation.value.user1.isValidate = true;
-              validation.value.user1.resultName = validation.value.user1.account;
-            } else if (data.state === 'error') {
-              alert(data.messages);
-              validation.value.user1.isValidate = false;
-            }
-          } catch (error) {
-            console.error(error);
-          }
-        } else if (user === 2) {
-          const axios = require('axios');
-          const formData = new FormData();
-          const formFields = {
-            'userName': validation.value.user2.account,
-            'userPassword': validation.value.user2.password,
-          };
-          //將表格資料append到 formData
-          for (const fieldName in formFields) {
-            formData.append(fieldName, formFields[fieldName]);
-            console.log(formData.get(`${fieldName}`));
-          }
-          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidationForW_Operator', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
-          try {
-            const data = response.data;
-            console.log(data);
-            if (data.state === 'success') {
-              validation.value.user2.isValidate = true;
-              validation.value.user2.resultName = validation.value.user2.account;
-            } else if (data.state === 'error') {
-              alert(data.messages);
-              validation.value.user2.isValidate = false;
-            }
-          } catch (error) {
-            console.error(error);
-          }
-        }
-      }
-      function validationStatus(user) {
-        if (user === 1) {
-          return validation.value.user1.isValidate ? validation.value.user1.resultName : '未驗證'
-        } else if (user === 2) {
-          return validation.value.user2.isValidate ? validation.value.user2.resultName : '未驗證'
-        }
-      }
-      function canSubmit() {
-        return validation.value.user1.isValidate && validation.value.user2.isValidate;
-      }
-      async function submit() {
-        DeliveryMemo.value.trim();
-        if (DeliveryMemo.value && !/^.{1,100}$/.test(DeliveryMemo.value)) {
-          alert('交付備註不可輸入超過100字')
-          return
-        }
-        let OM_List = [];
-        rowData2.value.forEach( item=> {
-          OM_List.push({
-            OM_id: item.AssetsId,
-            OM_IsExecute: item.OM_IsExecute,
-          });
-        });
-        console.log('OM_List', OM_List);
-        const axios = require('axios');
-        const formData = new FormData();
-        const formFields = {
-          'AO_ID': details.value.AO_ID,
-          'Recipient': validation.value.user1.resultName,
-          'DeliveryOperator': validation.value.user2.resultName,
-          'DeliveryMemo': DeliveryMemo.value,
-          'OM_List': OM_List,
-        };
-        //將表格資料append到 formData
-        for (const fieldName in formFields) {
-          formData.append(fieldName, formFields[fieldName]);
-          console.log(formData.get(`${fieldName}`));
-        }
-        const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/Delivery', formData);
-        try {
-          const data = response.data;
-          console.log(data);
-          if (data.state === 'success') {
-            let msg = data.messages;
-            msg += '\n單號:' + data.resultList.AO_ID;
-            alert(msg);
-            router.push({
-              name: 'Store_Process_Datagrid'
-            });
-          } else if (data.state === 'error') {
-            alert(data.messages);
-            console.log('error state', response);
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
-      const onGridReady = (params) => {
-        gridApi.value = params.api;
-      };
-      // const selectedNodes = gridApi.value.getSelectedNodes();
-      // const selectedData = selectedNodes.map(node => node.data);
-      // console.log('Selected Row Data:', selectedData);
       async function deleteData() {
         const form = new FormData();
         form.append('AO_ID', AO_ID);
@@ -586,27 +343,20 @@ import { RentProcess_Delete_Status } from "@/assets/js/enter_status";
           console.error(error);
         }
       }
-      function goBack() {
-        window.history.back();
+      function calculateIndex(slotProps) {
+        return String(slotProps.index + 1).padStart(2, '0');
       }
       return {
-        rowHeight,
+        datagrid1field,
+        datagrid2field,
         totalNeed,
         totalSelect,
         details,
         options,
-        columnDefs1,
-        columnDefs2,
         rowData1,
         rowData2,
-        validation,
-        DeliveryMemo,
-        validate,
-        validationStatus,
-        canSubmit,
-        submit,
-        onGridReady,
         deleteData,
+        calculateIndex,
         goBack,
       };
     },
