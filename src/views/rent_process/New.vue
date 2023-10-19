@@ -17,8 +17,8 @@
                 <p>設備總類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                        {{ searchParams.EquipTypeName || '請選擇' }}
-                      </button>
+                          {{ searchParams.EquipTypeName || '請選擇' }}
+                        </button>
                   <div class="dropdown-menu" aria-labelledby="typeDropdown">
                     <p v-for="(item, index) in searchParams.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
                   </div>
@@ -28,8 +28,8 @@
                 <p>設備分類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
-                        {{ searchParams.EquipCategoryName || searchParams.EquipCategoryInit }}
-                      </button>
+                          {{ searchParams.EquipCategoryName || searchParams.EquipCategoryInit }}
+                        </button>
                   <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                     <p v-for="(item, index) in searchParams.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
                   </div>
@@ -124,40 +124,33 @@
           </div>
         </div>
       </form>
-      <div class="fixed_info">
-        <div>
-          <p>資產出庫項目</p>
-        </div>
-      </div>
       <div class="second_content">
-        <DataTable 
-        :size="'small'"
-        :value="rowData1" 
-        resizableColumns 
-        columnResizeMode="expand"
-        showGridlines 
-        scrollable
-        scroll-height="600px">
-        <Column>
-          <template style="min-width:115px;" #body="slotProps">
-            <Storage_button :params="slotProps" @searchList="searchList" />
-          </template>
+        <div class="fixed_info">
+          <div>
+            <p>資產出庫項目</p>
+          </div>
+        </div>
+        <DataTable :size="'small'" :value="rowData1" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="600px">
+          <Column>
+            <template style="min-width:115px;" #body="slotProps">
+              <Storage_button :params="slotProps" @searchList="searchList" />
+</template>
         </Column>
         <Column style="min-width:50px;" header="項目">
-          <template #body="slotProps">
-            {{ calculateIndex(slotProps) }}
-          </template>
+<template #body="slotProps">
+   {{ calculateIndex(slotProps) }}
+</template>
         </Column>
         <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
         </DataTable>
       </div>
-      <!-- <modal-overlay v-if="modalVisible" @close="closeModal" /> -->
+    
+      <div class="third_content">  <!-- <modal-overlay v-if="modalVisible" @close="closeModal" /> -->
       <div class="fixed_info">
         <div>
           <p>資產出庫細項</p>
         </div>
       </div>
-      <div class="third_content">
         <DataTable 
         :size="'small'"
         :value="rowData2" 
@@ -167,14 +160,14 @@
         scrollable
         scroll-height="600px">
         <Column>
-          <template style="min-width:50px;" #body="slotProps">
-            <Delete :params="slotProps" @deleteMaterial="deleteMaterial" />
-          </template>
+<template style="min-width:50px;" #body="slotProps">
+  <Delete :params="slotProps" @deleteMaterial="deleteMaterial" />
+</template>
         </Column>
         <Column>
-          <template #body="slotProps">
-            <AssetsView :params="slotProps"/>
-          </template>
+<template #body="slotProps">
+  <AssetsView :params="slotProps" />
+</template>
         </Column>
         <Column v-for="item in datagrid2field" :field="item.field" :header="item.header" :sortable="item.sortable" :style="{'min-width': item.width}"></Column>
         </DataTable>
@@ -273,7 +266,9 @@
     useRoute,
     useRouter
   } from "vue-router";
-import { RentProcess_New_Status } from "@/assets/js/enter_status";
+  import {
+    RentProcess_New_Status
+  } from "@/assets/js/enter_status";
   export default {
     components: {
       Navbar,
@@ -318,25 +313,93 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
         selectedNumber: 0,
       });
       // 資產出庫項目
-      const datagrid1field = [
-        { field: "EquipTypeName", width: '150px', header: "設備總類" },
-        { field: "EquipCategoryName", width: '150px', header: "設備分類" },
-        { field: "ProductName", width: '150px', header: "物品名稱" },
-        { field: "Number", width: '100px', header: "數量" },
-        { field: "RequiredSpec", width: '250px', header: "規格需求" },
+      const datagrid1field = [{
+          field: "EquipTypeName",
+          width: '150px',
+          header: "設備總類"
+        },
+        {
+          field: "EquipCategoryName",
+          width: '150px',
+          header: "設備分類"
+        },
+        {
+          field: "ProductName",
+          width: '150px',
+          header: "物品名稱"
+        },
+        {
+          field: "Number",
+          width: '100px',
+          header: "數量"
+        },
+        {
+          field: "RequiredSpec",
+          width: '250px',
+          header: "規格需求"
+        },
       ]
       // 資產出庫細項
-      const datagrid2field = [
-        { field: "OM_List_id", width: '50px', header: "需求項目", sortable:false, },
-        { field: "OM_Number", width: '30px', header: "數量", sortable:false, },
-        { field: "OM_Unit", width: '30px', header: "單位", sortable:false, },
-        { field: "AssetsId", width: '150px', header: "資產編號", sortable:true, },
-        { field: "AssetName", width: '150px', header: "物品名稱", sortable:true, },
-        { field: "AreaName", width: '150px', header: "儲位區域", sortable:true, },
-        { field: "LayerName", width: '150px', header: "儲位櫃位", sortable:true, },
-        { field: "VendorName", width: '150px', header: "廠商", sortable:true, },
-        { field: "ProductType", width: '150px', header: "型號", sortable:true, },
-        { field: "ProductSpec", width: '150px', header: "規格", sortable:true, },
+      const datagrid2field = [{
+          field: "OM_List_id",
+          width: '50px',
+          header: "需求項目",
+          sortable: false,
+        },
+        {
+          field: "OM_Number",
+          width: '30px',
+          header: "數量",
+          sortable: false,
+        },
+        {
+          field: "OM_Unit",
+          width: '30px',
+          header: "單位",
+          sortable: false,
+        },
+        {
+          field: "AssetsId",
+          width: '150px',
+          header: "資產編號",
+          sortable: true,
+        },
+        {
+          field: "AssetName",
+          width: '150px',
+          header: "物品名稱",
+          sortable: true,
+        },
+        {
+          field: "AreaName",
+          width: '150px',
+          header: "儲位區域",
+          sortable: true,
+        },
+        {
+          field: "LayerName",
+          width: '150px',
+          header: "儲位櫃位",
+          sortable: true,
+        },
+        {
+          field: "VendorName",
+          width: '150px',
+          header: "廠商",
+          sortable: true,
+        },
+        {
+          field: "ProductType",
+          width: '150px',
+          header: "型號",
+          sortable: true,
+        },
+        {
+          field: "ProductSpec",
+          width: '150px',
+          header: "規格",
+          sortable: true,
+        },
       ]
       // 檢索datagrid
       const columnDefs3 = [{
@@ -491,7 +554,7 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
           const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
           const data = response.data;
           if (data.state === 'success') {
-            canEnterPage(data.resultList.Status , RentProcess_New_Status)
+            canEnterPage(data.resultList.Status, RentProcess_New_Status)
             console.log('getDetails 成功 資料如下\n', data.resultList);
             // 設定搜尋參數的專案代碼
             searchParams.ProjectCode = data.resultList.ProjectCode
@@ -620,9 +683,9 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
         return String(slotProps.index + 1).padStart(2, '0');
       }
       // 點選搜尋庫存，預帶入參數
-      function searchList (data) {
-        console.log('data:',data);
-        for(const key in data) {
+      function searchList(data) {
+        console.log('data:', data);
+        for (const key in data) {
           searchParams[key] = data[key];
         }
         searchParams.ProductName = '';
@@ -632,7 +695,7 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
         searchInventory(searchParams.id, searchParams.item_id);
         console.log('設定後搜尋參數:\n', searchParams);
       }
-      function deleteMaterial (data) {
+      function deleteMaterial(data) {
         selectedNumberArray.value[data.id] -= data.selectNumber
         searchParams.selectedNumber = selectedNumberArray.value[data.id]
         getDetails()
@@ -765,82 +828,6 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
         border-bottom: 1px solid black;
         border-right: 1px solid black;
       }
-      .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        background: #D9D9D9;
-        .submit_btn {
-          margin-bottom: 20px;
-          background: #48658C;
-          color: white;
-          font-weight: 700;
-          width: 100px;
-          font-size: 18px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-        .wrap1,
-        .wrap2 {
-          display: flex;
-          justify-content: space-evenly;
-          padding: 10px 80px;
-          .input-number {
-            @include count_btn;
-          }
-          .number-input-box {
-            color: black;
-            .input-number {
-              width: 100%;
-            }
-          }
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
-          }
-          .dropdown {
-            button {
-              background: white;
-              width: 100%;
-              border: none;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            }
-            .dropdown-menu {
-              width: 225px;
-              max-height: 250px;
-              overflow-y: auto;
-              p {
-                font-size: 18px;
-                color: black;
-                font-weight: normal;
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-              .dropdown-item {
-                text-align: left;
-              }
-            }
-          }
-          div {
-            padding: 0 5px;
-            p {
-              text-align: center;
-              white-space: nowrap;
-              font-size: 18px;
-              font-weight: 700;
-              margin-bottom: 5px;
-            }
-          }
-        }
-      }
     }
     .main_section {
       .readonly_box {
@@ -878,12 +865,82 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
           border-left: black 1px solid;
         }
         .second_content {
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          border-top: 1px solid black;
-          background: #d9d9d9;
+          .submit_btn {
+            margin-bottom: 20px;
+            background: #48658C;
+            color: white;
+            font-weight: 700;
+            width: 100px;
+            font-size: 18px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &:hover {
+              background-color: #5d85bd;
+            }
+          }
+          .wrap1,
+          .wrap2 {
+            display: flex;
+            justify-content: space-evenly;
+            padding: 10px 80px;
+            .input-number {
+              @include count_btn;
+            }
+            .number-input-box {
+              color: black;
+              .input-number {
+                width: 100%;
+              }
+            }
+            .form-label {
+              white-space: nowrap;
+              font-weight: 800;
+              font-size: 18px;
+            }
+            .dropdown {
+              button {
+                background: white;
+                width: 100%;
+                border: none;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              }
+              .dropdown-menu {
+                width: 225px;
+                max-height: 250px;
+                overflow-y: auto;
+                p {
+                  font-size: 18px;
+                  color: black;
+                  font-weight: normal;
+                  &:hover {
+                    cursor: pointer;
+                  }
+                }
+                .dropdown-item {
+                  text-align: left;
+                }
+              }
+            }
+            div {
+              padding: 0 5px;
+              p {
+                text-align: center;
+                white-space: nowrap;
+                font-size: 18px;
+                font-weight: 700;
+                margin-bottom: 5px;
+              }
+            }
+          }
         }
         .third_content {
+          .fixed_info {
+            border-top: unset
+          }
           .list {
             border-top: 1px solid black;
             border-left: 1px solid black;
@@ -1088,82 +1145,6 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
         border-bottom: 1px solid black;
         border-right: 1px solid black;
       }
-      .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        background: #D9D9D9;
-        .submit_btn {
-          margin-bottom: 20px;
-          background: #48658C;
-          color: white;
-          font-weight: 700;
-          width: 100px;
-          font-size: 18px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-        .wrap1,
-        .wrap2 {
-          display: flex;
-          justify-content: space-evenly;
-          padding: 10px 80px;
-          .input-number {
-            @include count_btn;
-          }
-          .number-input-box {
-            color: black;
-            .input-number {
-              width: 100%;
-            }
-          }
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
-          }
-          .dropdown {
-            button {
-              background: white;
-              width: 100%;
-              border: none;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            }
-            .dropdown-menu {
-              width: 150px;
-              .dropdown-item {
-                text-align: left;
-              }
-            }
-          }
-          div {
-            padding: 0 5px;
-            p {
-              text-align: center;
-              white-space: nowrap;
-              font-size: 18px;
-              font-weight: 700;
-              margin-bottom: 5px;
-            }
-          }
-        }
-        .wrap1{
-          display: grid; 
-  grid-auto-flow: column; 
-  grid-template-columns: 1fr 1fr; 
-  grid-template-rows: 1fr 1fr; 
-  gap: 10px 10px; 
-  grid-template-areas: 
-    ". ."
-    ". ."; 
-        }
-      }
     }
     .main_section {
       .readonly_box {
@@ -1201,12 +1182,80 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
           border-left: black 1px solid;
         }
         .second_content {
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          border-top: 1px solid black;
-          background: #d9d9d9;
+          .submit_btn {
+            margin-bottom: 20px;
+            background: #48658C;
+            color: white;
+            font-weight: 700;
+            width: 100px;
+            font-size: 18px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &:hover {
+              background-color: #5d85bd;
+            }
+          }
+          .wrap1,
+          .wrap2 {
+            display: flex;
+            justify-content: space-evenly;
+            padding: 10px 80px;
+            .input-number {
+              @include count_btn;
+            }
+            .number-input-box {
+              color: black;
+              .input-number {
+                width: 100%;
+              }
+            }
+            .form-label {
+              white-space: nowrap;
+              font-weight: 800;
+              font-size: 18px;
+            }
+            .dropdown {
+              button {
+                background: white;
+                width: 100%;
+                border: none;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              }
+              .dropdown-menu {
+                width: 150px;
+                .dropdown-item {
+                  text-align: left;
+                }
+              }
+            }
+            div {
+              padding: 0 5px;
+              p {
+                text-align: center;
+                white-space: nowrap;
+                font-size: 18px;
+                font-weight: 700;
+                margin-bottom: 5px;
+              }
+            }
+          }
+          .wrap1 {
+            display: grid;
+            grid-auto-flow: column;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 10px 10px;
+            grid-template-areas: ". ." ". .";
+          }
         }
         .third_content {
+          .fixed_info {
+            border-top: unset
+          }
           .list {
             border-top: 1px solid black;
             border-left: 1px solid black;
@@ -1414,82 +1463,6 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
         border-bottom: 1px solid black;
         border-right: 1px solid black;
       }
-      .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        background: #D9D9D9;
-        .submit_btn {
-          margin-bottom: 20px;
-          background: #48658C;
-          color: white;
-          font-weight: 700;
-          width: 100px;
-          font-size: 18px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-        .wrap1 {
-          justify-content: space-evenly;
-          padding: 20px 20px 0;
-          .input-number {
-            @include count_btn;
-          }
-          .number-input-box {
-            color: black;
-            .input-number {
-              width: 100%;
-            }
-          }
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
-          }
-          .dropdown {
-            button {
-              background: white;
-              width: 100%;
-              border: none;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            }
-            .dropdown-menu {
-              width: 225px;
-              .dropdown-item {
-                text-align: left;
-              }
-            }
-          }
-          div {
-            margin: 10px 0;
-            p {
-              white-space: nowrap;
-              font-size: 18px;
-              font-weight: 700;
-              margin-bottom: 5px;
-            }
-          }
-        }
-        .wrap2 {
-          flex-direction: column;
-          padding: 0 20px;
-          margin-bottom: 20px;
-          p {
-            margin-bottom: 0;
-          }
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
-          }
-        }
-      }
     }
     .main_section {
       .readonly_box {
@@ -1528,12 +1501,82 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
           }
         }
         .second_content {
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          border-top: 1px solid black;
-          background: #d9d9d9;
+          .submit_btn {
+            margin-bottom: 20px;
+            background: #48658C;
+            color: white;
+            font-weight: 700;
+            width: 100px;
+            font-size: 18px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &:hover {
+              background-color: #5d85bd;
+            }
+          }
+          .wrap1 {
+            justify-content: space-evenly;
+            padding: 20px 20px 0;
+            .input-number {
+              @include count_btn;
+            }
+            .number-input-box {
+              color: black;
+              .input-number {
+                width: 100%;
+              }
+            }
+            .form-label {
+              white-space: nowrap;
+              font-weight: 800;
+              font-size: 18px;
+            }
+            .dropdown {
+              button {
+                background: white;
+                width: 100%;
+                border: none;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              }
+              .dropdown-menu {
+                width: 225px;
+                .dropdown-item {
+                  text-align: left;
+                }
+              }
+            }
+            div {
+              margin: 10px 0;
+              p {
+                white-space: nowrap;
+                font-size: 18px;
+                font-weight: 700;
+                margin-bottom: 5px;
+              }
+            }
+          }
+          .wrap2 {
+            flex-direction: column;
+            padding: 0 20px;
+            margin-bottom: 20px;
+            p {
+              margin-bottom: 0;
+            }
+            .form-label {
+              white-space: nowrap;
+              font-weight: 800;
+              font-size: 18px;
+            }
+          }
         }
         .third_content {
+          .fixed_info {
+            border-top: unset
+          }
           .list {
             border: 1px solid black;
             button {

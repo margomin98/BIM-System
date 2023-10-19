@@ -130,7 +130,7 @@
                 <List_view_button :params = "slotProps" />
               </template>
             </Column>
-            <Column header="認列">
+            <Column header="認列" class="datatable_checkbox">
               <template #body="slotProps">
                 <input class="p-checkbox p-component" type="checkbox" :disabled="!slotProps.data.NotBalanced" :checked="!slotProps.data.NotBalanced" @change="updateList($event,slotProps)" />
               </template>
@@ -299,12 +299,12 @@
                 {{ calculateIndex(2,slotProps) }}
               </template>
             </Column>
-            <Column style="min-width: 60px;" class="datatable_checkbox">
+            <Column style="min-width: 60px;">
               <template #body="slotProps">
                 <List_view_button :params = "slotProps" />
               </template>
             </Column>
-            <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+            <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}" ></Column>
           </DataTable>
         </div>
       </div>

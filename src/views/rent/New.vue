@@ -111,12 +111,12 @@
           <button class="btn submit_btn" type="button" @click="insertItemList">新增</button>
         </div>
       </div>
-      <div class="fixed_info">
+     
+      <div class='third_content' > <div class="fixed_info">
         <div>
           <p><span>*</span>資產出庫項目(請至少新增一項)</p>
         </div>
       </div>
-      <div class='third_content' >
         <DataTable 
         :size="'small'"
         :value="rowData" 
@@ -371,6 +371,7 @@
     display: flex;
     align-items: center;
   }
+
   @media only screen and (min-width: 1200px) {
     .main_section {
       h1 {
@@ -497,7 +498,7 @@
           }
         }
         .third_content {
-          border: 1px solid black;
+     
           .list {
             border: 1px solid black;
             button {
@@ -727,7 +728,6 @@
           }
         }
         .third_content {
-          border: 1px solid black;
           .list {
             border: 1px solid black;
             button {
@@ -962,7 +962,6 @@
           }
         }
         .third_content {
-          border: 1px solid black;
           .list {
             border: 1px solid black;
             button {

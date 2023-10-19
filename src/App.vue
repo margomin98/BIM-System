@@ -154,6 +154,8 @@
 	}
 	.datatable_checkbox{
 		text-align: center;
+    display: flex;
+    justify-content: center;
 	}
 	@media only screen and (min-width: 1200px) {
 		.container-fluid {
