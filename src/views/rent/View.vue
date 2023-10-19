@@ -95,7 +95,7 @@
   import Navbar from '@/components/Navbar.vue';
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
-  import { Rent_UseOptions } from "@/assets/js/dropdown";
+  import { Rent_UseArray } from "@/assets/js/dropdown";
   import { goBack, createDatagrid } from "@/assets/js/common_fn";
   import {
     onMounted,
@@ -121,7 +121,7 @@
       const router = useRouter();
       const AO_ID = route.query.search_id;
       const details = ref({});
-      const options = Rent_UseOptions;
+      const options = Rent_UseArray;
       onMounted(() => {
         getDetails();
       });

@@ -1,5 +1,5 @@
 <template>
-  <div class='button_wrap'>
+  <div>
     <button class='btn1' @click="routeTo('檢視')">檢視</button>
     <button @click="changeStatus" :class="{ disabled_btn2: isDisabled.deliveryNotify, btn2: !isDisabled.deliveryNotify }" :disabled="isDisabled.deliveryNotify">{{ deliveryNotify}}</button>
     <button @click="routeTo('交付')" :class="{ disabled_btn3: isDisabled.delivery, btn3: !isDisabled.delivery }" :disabled="isDisabled.delivery">交付</button>

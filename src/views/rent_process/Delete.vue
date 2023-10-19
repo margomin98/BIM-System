@@ -243,7 +243,7 @@
   import Storage_add from "@/components/Storage_add_button";
   import AssetsView from '@/components/Rent_process_new_view_button'
   import Navbar from "@/components/Navbar.vue";
-  import { Rent_UseOptions } from "@/assets/js/dropdown";
+  import { Rent_UseArray } from "@/assets/js/dropdown";
   import {
     onMounted,
     ref
@@ -266,7 +266,7 @@
       const totalNeed = ref(0); //總所需數量
       const totalSelect = ref(0); //總已備數量
       const details = ref({});
-      const options = Rent_UseOptions;
+      const options = Rent_UseArray;
       // 資產出庫項目
       const datagrid1field = [
         { field: "EquipTypeName", width: '150px', header: "設備總類" },

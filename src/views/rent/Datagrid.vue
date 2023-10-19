@@ -16,17 +16,17 @@
         <div class="row">
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>單號</p>
-            <input type="text" v-model="AO_ID" />
+            <input type="text" v-model="searchParams.AO_ID" />
           </div>
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>專案名稱</p>
-            <input type="text" v-model="ProjectName" />
+            <input type="text" v-model="searchParams.ProjectName" />
           </div>
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>用途</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ Use || "請選擇" }}
+                {{ searchParams.Use || "請選擇" }}
               </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item , index) in UseArray" :key="index" class="dropdown-item" @click="selectUse(item)">{{ item }}</p>
@@ -37,7 +37,7 @@
             <p>狀態</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ Status || "請選擇" }}
+                {{ searchParams.Status || "請選擇" }}
               </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item , index) in StatusArray" :key="index" class="dropdown-item" @click="selectStatus(item)">{{ item }}</p>
@@ -48,7 +48,7 @@
             <p>申請出庫日期(起)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="StartDate" class="date-input" />
+                <input type="date" v-model="searchParams.StartDate" class="date-input" />
               </div>
             </div>
           </div>
@@ -56,7 +56,7 @@
             <p>申請出庫日期(迄)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="EndDate" class="date-input" />
+                <input type="date" v-model="searchParams.EndDate" class="date-input" />
               </div>
             </div>
           </div>
@@ -65,208 +65,133 @@
     </div>
     <div class="col justify-content-center d-flex">
       <div class="button_wrap d-flex">
-        <button class="search_btn" @click="submit">檢索</button>
+        <button class="search_btn" @click="submit('','search')">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
         <!-- <button class="export_btn">匯出</button> -->
       </div>
     </div>
-    <div style="width: 100%">
-      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;margin-bottom:50px" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize"
-        :pagination="true">
-      </ag-grid-vue>
+    <div class="dg-height">
+      <DataTable
+        lazy
+        :key="datagrid.key"
+        :first= "datagrid.first"
+        :size="'small'"
+        :loading="datagrid.loading"
+        :value="rowData" 
+        :sort-field="datagrid.sortField"
+        :sort-order="datagrid.sortOrder"
+        resizableColumns 
+        columnResizeMode="expand"
+        showGridlines 
+        scrollable 
+        scrollHeight="420px" 
+        @page="submit($event , 'page')" 
+        @sort="submit($event , 'sort')"
+        paginator 
+        :rows="datagrid.rows" 
+        :totalRecords="datagrid.totalRecords"
+        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        :rowsPerPageOptions="[10, 20, 30]"
+        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+        <Column style="min-width: 60px;">
+          <template #body="slotProps">
+            <Rent_button :params = "slotProps"/>
+          </template>
+        </Column>
+        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+        <Column style="min-width: 60px;">
+          <template #body="slotProps">
+            <Delete :params = "slotProps"/>
+          </template>
+        </Column>
+      </DataTable>
     </div>
   </div>
 </template>
 
 <script>
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   import {
     ref,
-    onMounted
+    reactive,
+    onMounted,
   } from "vue";
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
   import Rent_button from "@/components/Rent_button";
   import Delete from "@/components/Rent_delete_button.vue";
   import Navbar from "@/components/Navbar.vue";
-  import { Rent_UseOptions , Rent_StatusArray } from "@/assets/js/dropdown";
-  import router from "@/router";
+  import { Rent_UseArray , Rent_StatusArray } from "@/assets/js/dropdown";
+  import { UpdatePageParameter, createDatagrid } from '@/assets/js/common_fn';
+  import { getMngDatagrid } from '@/assets/js/common_api';
   export default {
     components: {
       Navbar,
-      AgGridVue,
+      DataTable,
+      Column,
       Rent_button,
       Delete,
     },
-    data() {
-      return {
-        rowHeight: 35,
-      }
-    },
     setup() {
-      const AO_ID = ref('');
-      const ProjectName = ref('');
-      const Use = ref('');
-      const UseArray = Rent_UseOptions
-      const Status = ref(''); //狀態
+      const searchParams = reactive({
+        AO_ID: '', 
+        ProjectName: '',
+        Use: '', 
+        Status: '',
+        StartDate: '', 
+        EndDate: '',
+      });
+      const UseArray = Rent_UseArray
       const StatusArray = Rent_StatusArray
-      const StartDate = ref(''); //申請出庫日期(起)
-      const EndDate = ref(''); //申請出庫日期(迄)
-      const pageSize = 10;
-      const columnDefs = [{
-            suppressMovable: true,
-            field: "",
-            cellRenderer: "Rent_button",
-            width: 150,
-            resizable: true,
-          },
-          {
-            headerName: "狀態",
-            field: "Status",
-            unSortIcon: true,
-            sortable: true,
-            width: 130,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "單號",
-            field: "AO_ID",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            suppressMovable: true,
-            resizable: true,
-          },
-          {
-            headerName: "專案名稱",
-            field: "ProjectName",
-            unSortIcon: true,
-            sortable: true,
-            width: 170,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "說明",
-            field: "Description",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "用途",
-            field: "Use",
-            unSortIcon: true,
-            sortable: true,
-            width: 130,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "申請人員",
-            field: "Applicant",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "申請出庫日期",
-            field: "ApplicationDate",
-            unSortIcon: true,
-            sortable: true,
-            width: 170,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            field: "",
-            resizable: true,
-            width: 100,
-            cellRenderer: "Delete",
-          }
-      ];
+      const datagrid = createDatagrid();
+      const datagridfield = [
+        { header: "狀態", field: "Status", width: '130px' },
+        { header: "單號", field: "AO_ID", width: '150px' },
+        { header: "專案名稱", field: "ProjectName", width: '170px' },
+        { header: "用途", field: "Use", width: '130px' },
+        { header: "說明", field: "Description", width: '150px' },
+        { header: "申請人員", field: "Applicant", width: '150px' },
+        { header: "申請出庫日期", field: "ApplicationDate", width: '170px' },
+      ]
       const rowData = ref([
       ]);
-      async function submit() {
-        const formData = new FormData();
-        const formFields = {
-          'AO_ID': AO_ID.value,
-          'ProjectName': ProjectName.value,
-          'Use': Use.value,
-          'Status': Status.value,
-          'StartDate': StartDate.value,
-          'EndDate': EndDate.value,
-        };
-        //將表格資料append到 formData
-        for (const fieldName in formFields) {
-          formData.append(fieldName, formFields[fieldName]);
-        }
-        const axios = require('axios');
-        try {
-          const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/Applications', formData);
-          console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            //取得datagrid成功
-            // console.log(data.state);
-            console.log('datagrid', data.resultList);
-            rowData.value = data.resultList;
-          } else if (data.state === 'error') {
-            //取得datagrid失敗
-            alert(data.messages);
-          } else if (data.state === 'input_error') {
-            //取得datagrid格式錯誤
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            //尚未登入
-            alert(data.messages);
-            router.push('/');
-          } else {
-            throw new Error('Request was not successful');
+      onMounted(() => {
+        datagrid.sortField = 'AO_ID'
+        submit('','search');
+      });
+      async function submit(event,type) {
+        const form = new FormData();
+        //將表格資料append到 form
+        for (const key in searchParams) {
+          if (searchParams[key]) {
+            form.append(key, searchParams[key]);
           }
-        } catch (error) {
-          console.error('Error sending data to backend', error);
         }
+        UpdatePageParameter(datagrid,event,type,form)
+        getMngDatagrid('/AssetsOutMng/Applications',rowData,datagrid,form);
       }
       function selectUse(item) {
-        Use.value = item;
+        searchParams.Use = item;
       }
       const selectStatus = (item) => {
-        Status.value = item;
+        searchParams.Status = item;
       };
       const clear = () => {
-        AO_ID.value = '';
-        ProjectName.value = '';
-        Use.value = '';
-        Status.value = '';
-        StartDate.value = '';
-        EndDate.value = '';
-        submit();
+        for (const key in searchParams) {
+          searchParams[key] = '';
+        }
+        submit('','search');
       };
-      onMounted(() => {
-        submit();
-      });
       return {
-        AO_ID,
-        ProjectName,
-        Use,
+        searchParams,
         UseArray,
-        Status,
         StatusArray,
-        StartDate,
-        EndDate,
-        pageSize,
+        datagrid,
+        datagridfield,
+        rowData,
         selectUse,
         selectStatus,
         submit,
         clear,
-        columnDefs,
-        rowData,
       };
     }
   };
@@ -274,6 +199,9 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
+  .dg-height {
+    @include datagrid-height;
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       padding: 0 10%;

@@ -1,5 +1,5 @@
 <template>
-  <div class='button_wrap'>
+  <div class='button_div'>
     <button :class="{ disabled_btn: isDisabled, btn: !isDisabled}" @click="viewDelete()" :disabled="isDisabled">刪除</button>
   </div>
 </template>
@@ -50,7 +50,7 @@
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
-.button_wrap{
+.button_div{
    display:flex;
   align-items:center;
 

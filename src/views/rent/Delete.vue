@@ -115,7 +115,7 @@
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
   import {
-    Rent_UseOptions
+    Rent_UseArray
   } from "@/assets/js/dropdown";
   import {
     onMounted,
@@ -143,7 +143,7 @@
       const router = useRouter();
       const AO_ID = route.query.search_id;
       const details = ref({});
-      const options = Rent_UseOptions;
+      const options = Rent_UseArray;
       async function getDetails() {
         const axios = require('axios');
         try {

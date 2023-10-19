@@ -205,7 +205,7 @@
   } from 'vue-router';
   import AssetsView from "@/components/Rent_process_new_view_button.vue"
   import Navbar from "@/components/Navbar.vue";
-  import { Rent_UseOptions } from "@/assets/js/dropdown";
+  import { Rent_UseArray } from "@/assets/js/dropdown";
   import {
     onMounted,
     reactive,
@@ -243,7 +243,7 @@
         VerifyPerson: '',
       })
       const details = ref({});
-      const options = Rent_UseOptions;
+      const options = Rent_UseArray;
       const datagrid1field = [
         { header: "項目", field: "id", width: '50px' },
         { header: "設備總類", field: "EquipTypeName", width: '150px' },

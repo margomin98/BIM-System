@@ -1,5 +1,5 @@
 <template>
-  <div class='button_wrap'>
+  <div class='button_div'>
     <button @click="viewDetails()">檢視</button>
     <button :class="{ disabled: isDisabled, btn_verify: !isDisabled}" @click="viewEdit()" :disabled="isDisabled">審核</button>
   </div>
@@ -37,7 +37,6 @@ export default {
     }
     function checkButton() {
       const disabledStatus = props.params.data.Status;
-      console.log(disabledStatus);
       if(disabledStatus !== '待審核') {
         isDisabled.value = true;
       }
@@ -54,7 +53,7 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/css/global.scss';
 
-.button_wrap {
+.button_div {
   justify-content: center;
 
   :nth-child(1) {

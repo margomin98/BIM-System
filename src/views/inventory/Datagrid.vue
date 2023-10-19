@@ -77,20 +77,16 @@
         <button class="empty_btn" @click="clear">清空</button>
       </div>
     </div>
-   <!-- <div style="width: 100%;margin-bottom:3%">
-      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true" :alwaysShowHorizontalScroll="true">
-      </ag-grid-vue>
-    </div> -->
     <div  style="height: 450px">
       <DataTable 
-        :key="datagridSetting.key"
+        :key="datagrid.key"
         lazy 
-        :first= "datagridSetting.first"
+        :first= "datagrid.first"
         :size="'small'"
-        :loading="datagridSetting.loading"
+        :loading="datagrid.loading"
         :value="rowData" 
-        :sort-field="datagridSetting.sortField"
-        :sort-order="datagridSetting.sortOrder"
+        :sort-field="datagrid.sortField"
+        :sort-order="datagrid.sortOrder"
         resizableColumns 
         columnResizeMode="expand"
         showGridlines 
@@ -99,8 +95,8 @@
         @page="submit($event , 'page')" 
         @sort="submit($event , 'sort')"
         paginator 
-        :rows="datagridSetting.rows" 
-        :totalRecords="datagridSetting.totalRecords"
+        :rows="datagrid.rows" 
+        :totalRecords="datagrid.totalRecords"
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         :rowsPerPageOptions="[10, 20, 30]"
         currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
@@ -138,7 +134,6 @@
 </template>
 
 <script>
-  import { AgGridVue } from "ag-grid-vue3";
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
   import { onMounted, reactive, ref } from "vue";
@@ -149,18 +144,16 @@
   import { UpdatePageParameter, createDatagrid } from "@/assets/js/common_fn";
   import { useRouter } from "vue-router";
   import axios from "axios";
+import { getMngDatagrid } from '@/assets/js/common_api';
   export default {
     components: {
       Navbar,
-      AgGridVue,
       DataTable,
       Column,
       Inventory_button,
       Delete
     },
     setup() {
-      const router = useRouter();
-      const details = ref({});
       const search_id = ref('');
       const DropdownArray = reactive({
         PlanType: PlanType,
@@ -175,102 +168,8 @@
         StartDate: '',
         EndDate: '',
       });
-      const columnDefs = [{
-            suppressMovable: true,
-            field: "",
-            cellRenderer: "Inventory_button",
-            cellRendererParams: {
-              updateSearchId: (id)=>{
-                search_id.value = id;
-              }
-            },
-            width: 340,
-            resizable: true,
-          },
-          {
-            headerName: "計畫編號",
-            field: "PlanId",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "盤點類型",
-            field: "PlanType",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            resizable: true,
-            suppressMovable: true
-          },
-          {
-            headerName: "盤點狀態",
-            field: "PlanStatus",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            suppressMovable: true
-          },
-          {
-            headerName: "標題",
-            field: "PlanTitle",
-            unSortIcon: true,
-            sortable: true,
-            resizable: true,
-            width: 150,
-            suppressMovable: true
-          },
-          {
-            headerName: "盤點人員",
-            field: "InventoryStaffName",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            suppressMovable: true
-          },
-          {
-            headerName: "召集人員",
-            field: "ConvenerName",
-            unSortIcon: true,
-            sortable: true,
-            width: 150,
-            suppressMovable: true
-          },
-          {
-            headerName: "盤點開始日期",
-            field: "PlanStart",
-            unSortIcon: true,
-            sortable: true,
-            width: 180,
-            suppressMovable: true
-          },
-          {
-            headerName: "盤點結束日期",
-            field: "PlanEnd",
-            unSortIcon: true,
-            sortable: true,
-            width: 180,
-            suppressMovable: true
-          },
-          {
-            headerName: "最近編輯時間",
-            field: "EditTime",
-            unSortIcon: true,
-            sortable: true,
-            width: 180,
-            suppressMovable: true
-          },
-           {
-            suppressMovable: true,
-            width: 100,
-            field: "",
-            cellRenderer: "Delete",
-          }
-      ]
       const rowData = ref([]);
-      const datagridSetting = createDatagrid()
+      const datagrid = createDatagrid()
       const datagridfield = [
         {
           field: 'PlanId',
@@ -314,38 +213,18 @@
         },
       ];
       onMounted(()=>{
-        datagridSetting.sortField = 'PlanId';
+        datagrid.sortField = 'PlanId';
         submit('' , 'search');
       });
       async function submit(event , type) {
-        datagridSetting.loading = true;
-        const formData = new FormData();
+        const form = new FormData();
         // console.log(event);
-        // 將表格資料append到 formData
+        // 將表格資料append到 form
         for (const key in searchParams) {
-          formData.append(key, searchParams[key]);
+          form.append(key, searchParams[key]);
         }
-        UpdatePageParameter(datagridSetting,event,type,formData);
-        try {
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryPlans', formData);
-          const data = response.data;
-          if (data.state === 'success') {
-            //取得datagrid成功
-            console.log('datagrid:',data.resultList);
-            datagridSetting.totalRecords = data.resultList.total;
-            rowData.value = data.resultList.rows;
-            datagridSetting.key ++;
-          } else if (data.state === 'account_error') {
-            //尚未登入
-            alert(data.messages);
-            router.push('/');
-          } else {
-            alert(data.messages);
-          }
-        } catch (error) {
-          console.error(error);
-        }
-        datagridSetting.loading = false;
+        UpdatePageParameter(datagrid,event,type,form);
+        getMngDatagrid('/StocktakingMng/InventoryPlans',rowData,datagrid,form);
       }
       const selectType = (item) => {
         searchParams.PlanType = item;
@@ -375,13 +254,11 @@
       }
 
       return {
-        details,
         searchParams,
         DropdownArray,
-        datagridSetting,
+        datagrid,
         datagridfield,
         search_id,
-        columnDefs,
         rowData,
         rowHeight: 35,
         pageSize: 10,

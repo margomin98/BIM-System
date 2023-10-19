@@ -244,7 +244,7 @@
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
   import {
-    Rent_UseOptions
+    Rent_UseArray
   } from "@/assets/js/dropdown";
   import {
     getApplication,
@@ -285,7 +285,7 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
       const router = useRouter();
       const AO_ID = route.query.search_id;
       const details = ref({});
-      const options = Rent_UseOptions;
+      const options = Rent_UseArray;
       const gridApi2 = ref(null);
       const gridApi3 = ref(null);
       const selectedNumberArray = ref([]); //紀錄不同項目已選數量array

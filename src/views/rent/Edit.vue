@@ -145,7 +145,7 @@
   import Column from 'primevue/column';
   import Delete from "@/components/Rent_Edit_Delete_button";
   import Navbar from '@/components/Navbar.vue';
-  import { Rent_UseOptions } from "@/assets/js/dropdown";
+  import { Rent_UseArray } from "@/assets/js/dropdown";
   import { onMounted, ref, reactive, } from 'vue';
   import { getEquipType , getEquipCategory , getProject} from "@/assets/js/common_api";
   import { Rent_Edit_Status } from "@/assets/js/enter_status";
@@ -161,7 +161,7 @@
       const route = useRoute();
       const router = useRouter();
       const AO_ID = route.query.search_id;
-      const options = Rent_UseOptions;
+      const options = Rent_UseArray;
       const datagridfield = [
         {field: 'EquipTypeName', header: '設備總類',width: '150px'},
         {field: 'EquipCategoryName', header: '設備分類',width: '150px'},

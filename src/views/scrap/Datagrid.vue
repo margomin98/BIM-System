@@ -76,21 +76,54 @@
     </div>
     <div class="col justify-content-center d-flex">
       <div class="button_wrap d-flex">
-        <button class="search_btn" @click="submit">檢索</button>
+        <button class="search_btn" @click="submit('','search')">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
       </div>
     </div>
     <div style="width: 100%;margin-bottom:3%">
-      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true" :alwaysShowHorizontalScroll="true">
-      </ag-grid-vue>
+      <div class="dg-height">
+        <DataTable
+          lazy
+          :key="datagrid.key"
+          :first= "datagrid.first"
+          :size="'small'"
+          :loading="datagrid.loading"
+          :value="rowData" 
+          :sort-field="datagrid.sortField"
+          :sort-order="datagrid.sortOrder"
+          resizableColumns 
+          columnResizeMode="expand"
+          showGridlines 
+          scrollable 
+          scrollHeight="420px" 
+          @page="submit($event , 'page')" 
+          @sort="submit($event , 'sort')"
+          paginator 
+          :rows="datagrid.rows" 
+          :totalRecords="datagrid.totalRecords"
+          paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+          :rowsPerPageOptions="[10, 20, 30]"
+          currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+          <Column style="min-width: 60px;">
+            <template #body="slotProps">
+              <Storage_return_button :params = "slotProps"/>
+            </template>
+          </Column>
+          <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+          <Column style="min-width: 60px;">
+            <template #body="slotProps">
+              <Delete :params = "slotProps"/>
+            </template>
+          </Column>
+        </DataTable>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   import {
     onMounted,
     reactive,
@@ -99,28 +132,21 @@
   import Scrap_button from "@/components/Scrap_button";
   import Delete from "@/components/Scrap_delete_button";
   import Navbar from "@/components/Navbar.vue";
-  import axios from "axios"
   import {
     Scrap_StatusArray,
     Scrap_DateCategory
   } from "@/assets/js/dropdown.js"
-  import {
-    useRouter
-  } from "vue-router";
+  import { getMngDatagrid, } from '@/assets/js/common_api'
+  import { UpdatePageParameter, createDatagrid } from '@/assets/js/common_fn';
   export default {
     components: {
       Navbar,
-      AgGridVue,
+      DataTable,
+      Column,
       Scrap_button,
       Delete
     },
     setup() {
-      const router = useRouter();
-      const details = ref({});
-      const DropdownArray = reactive({
-        Status: Scrap_StatusArray,
-        DateCategory: Scrap_DateCategory,
-      })
       const searchParams = reactive({
         ScrapId: '',
         Status: '',
@@ -130,139 +156,38 @@
         StartDate: '',
         EndDate: '',
       });
-      const columnDefs = [{
-          suppressMovable: true,
-          cellRenderer: "Scrap_button",
-          width: 275,
-          resizable: true,
-          resizable: true,
-        },
-        {
-          headerName: "報廢編號",
-          field: "ScrapId",
-          unSortIcon: true,
-          sortable: true,
-          width: 180,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "狀態",
-          field: "Status",
-          unSortIcon: true,
-          sortable: true,
-          width: 120,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "資產編號",
-          field: "AssetsId",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "物品名稱",
-          field: "AssetName",
-          unSortIcon: true,
-          sortable: true,
-          resizable: true,
-          width: 180,
-          suppressMovable: true
-        },
-        {
-          headerName: "申請日期",
-          field: "ApplicationDate",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "申請人員",
-          field: "Applicant",
-          unSortIcon: true,
-          sortable: true,
-          width: 120,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "交付日期",
-          field: "DeliveryDate",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "報廢人員",
-          field: "ScrapPerson",
-          unSortIcon: true,
-          sortable: true,
-          width: 120,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "審核日期",
-          field: "VerifyDate",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "審核人員",
-          field: "VerifyPerson",
-          unSortIcon: true,
-          sortable: true,
-          width: 120,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          suppressMovable: true,
-          width: 100,
-          cellRenderer: "Delete",
-        }
+      const DropdownArray = reactive({
+        Status: Scrap_StatusArray,
+        DateCategory: Scrap_DateCategory,
+      })
+      const datagrid = createDatagrid();
+      const datagridfield = [
+        { header: "報廢編號", field: "ScrapId", width: '180px' },
+        { header: "狀態", field: "Status", width: '120px' },
+        { header: "資產編號", field: "AssetsId", width: '150px' },
+        { header: "物品名稱", field: "AssetName", width: '180px' },
+        { header: "申請日期", field: "ApplicationDate", width: '150px' },
+        { header: "申請人員", field: "Applicant", width: '120px' },
+        { header: "交付日期", field: "DeliveryDate", width: '150px' },
+        { header: "報廢人員", field: "ScrapPerson", width: '120px' },
+        { header: "審核日期", field: "VerifyDate", width: '150px' },
+        { header: "審核人員", field: "VerifyPerson", width: '120px' },
       ]
       const rowData = ref([]);
       onMounted(() => {
-        submit();
+        datagrid.sortField = 'ScrapId'
+        submit('','search');
       });
-      async function submit() {
-        //將表格資料append到 form
+      async function submit(event,type) {
         const form = new FormData();
+        //將表格資料append到 form
         for (const key in searchParams) {
-          form.append(key, searchParams[key]);
+          if (searchParams[key]) {
+            form.append(key, searchParams[key]);
+          }
         }
-        axios.post('http://192.168.0.177:7008/ScrapMng/ScrapOrders', form)
-          .then((response) => {
-            const data = response.data;
-            if (data.state === 'success') {
-              //取得datagrid成功
-              // console.log(data.state);
-              console.log('datagrid', data.resultList);
-              rowData.value = data.resultList;
-            } else if (data.state === 'error') {
-              //取得datagrid失敗
-              alert(data.messages);
-            } else if (data.state === 'account_error') {
-              //尚未登入
-              alert(data.messages);
-              router.push('/');
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-          })
+        UpdatePageParameter(datagrid,event,type,form)
+        getMngDatagrid('/ScrapMng/ScrapOrders',rowData,datagrid,form);
       }
       const selectStatus = (item) => {
         searchParams.Status = item;
@@ -274,16 +199,14 @@
         for (const key in searchParams) {
           searchParams[key] = '';
         }
-        submit();
+        submit('','search');
       }
       return {
-        details,
         searchParams,
         DropdownArray,
-        columnDefs,
+        datagrid,
+        datagridfield,
         rowData,
-        rowHeight: 35,
-        pageSize: 10,
         submit,
         selectStatus,
         selectDateCategory,
@@ -295,6 +218,9 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
+  .dg-height {
+    @include datagrid-height;
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       padding: 0 10%;

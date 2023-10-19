@@ -94,10 +94,10 @@
         <button class="export_btn" @click="exportExcel">匯出</button>
       </div>
     </div>
-    <div style="height: 450px">
+    <div class="dg-height">
       <DataTable
-        :key="datagrid.key"
         lazy 
+        :key="datagrid.key"
         :first= "datagrid.first"
         :size="'small'"
         :loading="datagrid.loading"
@@ -119,7 +119,6 @@
         currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <Column style="min-width: 60px;">
           <template #body="slotProps">
-            <!-- Add the custom component here -->
             <Assets_return_button :params = "slotProps" v-if="slotProps.data.AssetName"/>
           </template>
         </Column>
@@ -134,7 +133,6 @@
   import Column from 'primevue/column';
   import Assets_return_button from "@/components/Assets_return_button";
   import Navbar from "@/components/Navbar.vue";
-  import getEquipDatagrid from "@/components/API/getEquipDatagrid"
   import {
     onMounted,
     reactive,
@@ -144,20 +142,20 @@
     Asset_StastusArraay
   } from "@/assets/js/dropdown"
   import {
+    getMngDatagrid,
     getEquipType,
     getEquipCategory,
     getArea,
-    getLayer
+    getLayer,
   } from '@/assets/js/common_api'
   import axios from 'axios';
-  import { UpdatePageParameter, createDatagrid } from '@/assets/js/common_fn';
+  import { UpdatePageParameter, createDatagrid , } from '@/assets/js/common_fn';
   export default {
     components: {
       Navbar,
       DataTable,
       Column,
       Assets_return_button,
-      getEquipDatagrid,
     },
     setup() {
       const searchParams = reactive({
@@ -184,7 +182,6 @@
       });
       const EquipCategoryInit = ref('請先選擇設備總類');
       const LayerInit = ref('請先選擇區域');
-      const pageSize = ref(10);
       const datagrid = createDatagrid();
       const datagridfield = [
       { field: "AssetsId", width: '150px', header: "資產編號" },
@@ -199,6 +196,7 @@
       ]
       const rowData = ref([]);
       onMounted(() => {
+        datagrid.sortField = 'AssetsId'
         submit('','search');
       });
       async function submit(event, type) {
@@ -208,11 +206,10 @@
           form.append(key, searchParams[key]);
         }
         UpdatePageParameter( datagrid , event , type , form)
-        try {
-          const response = await axios.post('http://192.168.0.177:7008/InventoryMng/Assets', form);
+        axios.post('http://192.168.0.177:7008/InventoryMng/Assets', form)
+        .then((response)=>{
           const data = response.data;
           if (data.state === 'success') {
-            //取得datagrid成功
             console.log('datagrid', data.resultList);
             rowData.value = data.resultList.rows;
             datagrid.totalRecords = data.resultList.total;
@@ -222,11 +219,13 @@
             alert(data.messages);
             router.push('/');
           } else {
+            //取得datagrid失敗
             alert(data.messages);
           }
-        } catch (error) {
+        })
+        .catch((error)=>{
           console.error(error);
-        }
+        })
       }
       async function getEquipTypeName() {
         if (DropdownArray.EquipType.length == 0) {
@@ -337,7 +336,6 @@
         DropdownArray,
         EquipCategoryInit,
         LayerInit,
-        pageSize,
         datagrid,
         datagridfield,
         rowData,
@@ -363,6 +361,9 @@
     &:hover {
       background-color: #5e7aa2;
     }
+  }
+  .dg-height {
+    @include datagrid-height;
   }
   @media only screen and (min-width: 1200px) {
     .main_section {

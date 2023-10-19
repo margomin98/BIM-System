@@ -151,7 +151,7 @@
   import Column from 'primevue/column';
   import Delete from "@/components/Rent_New_Delete_button";
   import Navbar from '@/components/Navbar.vue';
-  import { Rent_UseOptions } from "@/assets/js/dropdown";
+  import { Rent_UseArray } from "@/assets/js/dropdown";
   import { onMounted, reactive, ref } from 'vue';
   import router from "@/router";
   import { getApplication , getEquipType , getEquipCategory , getProject} from "@/assets/js/common_api";
@@ -164,7 +164,7 @@
       Delete,
     },
     setup() {
-      const options = Rent_UseOptions;
+      const options = Rent_UseArray;
       const myForm = reactive({
         ApplicationDate: '',
         Applicant: '',

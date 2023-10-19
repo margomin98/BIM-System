@@ -80,18 +80,51 @@
         <button class="empty_btn" @click="clear">清空</button>
       </div>
     </div>
-    <ag-grid-vue style="height: 380px" class="ag-theme-alpine mb-5" :rowHeight="rowHeight" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true">
-    </ag-grid-vue>
+    <div class="dg-height">
+      <DataTable
+        lazy
+        :key="datagrid.key"
+        :first= "datagrid.first"
+        :size="'small'"
+        :loading="datagrid.loading"
+        :value="rowData" 
+        :sort-field="datagrid.sortField"
+        :sort-order="datagrid.sortOrder"
+        resizableColumns 
+        columnResizeMode="expand"
+        showGridlines 
+        scrollable 
+        scrollHeight="420px" 
+        @page="submit($event , 'page')" 
+        @sort="submit($event , 'sort')"
+        paginator 
+        :rows="datagrid.rows" 
+        :totalRecords="datagrid.totalRecords"
+        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        :rowsPerPageOptions="[10, 20, 30]"
+        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+        <Column style="min-width: 60px;">
+          <template #body="slotProps">
+            <Repair_button :params = "slotProps"/>
+          </template>
+        </Column>
+        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+        <Column style="min-width: 60px;">
+          <template #body="slotProps">
+            <Delete :params = "slotProps"/>
+          </template>
+        </Column>
+      </DataTable>
+    </div>
   </div>
 </template>
 
 <script>
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   import Repair_button from "@/components/Repair_button";
   import Delete from "@/components/Repair_delete_button";
   import Navbar from "@/components/Navbar.vue";
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
   import {
     onMounted,
     reactive,
@@ -101,22 +134,17 @@
     Repair_StatusArray,
     Repair_DateCategory
   } from "@/assets/js/dropdown.js"
-  import {
-    useRouter
-  } from "vue-router";
+  import { getMngDatagrid } from '@/assets/js/common_api'
+  import { UpdatePageParameter, createDatagrid } from '@/assets/js/common_fn';
   export default {
     components: {
       Navbar,
-      AgGridVue,
+      DataTable,
+      Column,
       Repair_button,
       Delete,
     },
     setup() {
-      const router = useRouter();
-      const DropdownArray = reactive({
-        Status: Repair_StatusArray,
-        DateCategory: Repair_DateCategory,
-      })
       const searchParams = reactive({
         RepairId: '',
         Status: '',
@@ -126,150 +154,39 @@
         StartDate: '',
         EndDate: '',
       });
-      const columnDefs = [{
-          suppressMovable: true,
-          cellRenderer: "Repair_button",
-          width: 340,
-          resizable: true,
-        },
-        {
-          headerName: "維修編號",
-          field: "RepairId",
-          unSortIcon: true,
-          sortable: true,
-          width: 180,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "狀態",
-          field: "Status",
-          unSortIcon: true,
-          sortable: true,
-          width: 120,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "資產編號",
-          field: "AssetsId",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "物品名稱",
-          field: "AssetName",
-          unSortIcon: true,
-          sortable: true,
-          resizable: true,
-          width: 180,
-          suppressMovable: true
-        },
-        {
-          headerName: "申請日期",
-          field: "ApplicationDate",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "申請人員",
-          field: "Applicant",
-          unSortIcon: true,
-          sortable: true,
-          width: 120,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "交付日期",
-          field: "DeliveryDate",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "送修人員",
-          field: "RepairPerson",
-          unSortIcon: true,
-          sortable: true,
-          width: 120,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "審核日期",
-          field: "VerifyDate",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "審核人員",
-          field: "VerifyPerson",
-          unSortIcon: true,
-          sortable: true,
-          width: 120,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "送修日期",
-          field: "RepairDate",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          suppressMovable: true,
-          width: 100,
-          cellRenderer: "Delete",
-        }
+      const DropdownArray = reactive({
+        Status: Repair_StatusArray,
+        DateCategory: Repair_DateCategory,
+      })
+      const datagrid = createDatagrid();
+      const datagridfield = [
+        { header: "維修編號", field: "RepairId", width: '180px' },
+        { header: "狀態", field: "Status", width: '120px' },
+        { header: "資產編號", field: "AssetsId", width: '150px' },
+        { header: "物品名稱", field: "AssetName", width: '180px' },
+        { header: "申請日期", field: "ApplicationDate", width: '150px' },
+        { header: "申請人員", field: "Applicant", width: '120px' },
+        { header: "交付日期", field: "DeliveryDate", width: '150px' },
+        { header: "送修人員", field: "RepairPerson", width: '120px' },
+        { header: "審核日期", field: "VerifyDate", width: '150px' },
+        { header: "審核人員", field: "VerifyPerson", width: '120px' },
+        { header: "送修日期", field: "RepairDate", width: '150px' },
       ]
       const rowData = ref([]);
       onMounted(() => {
-        submit();
+        datagrid.sortField = 'RepairId'
+        submit('','search');
       });
-      async function submit() {
-        const formData = new FormData();
-        //將表格資料append到 formData
+      async function submit(event,type) {
+        const form = new FormData();
+        //將表格資料append到 form
         for (const key in searchParams) {
-          formData.append(key, searchParams[key]);
-        }
-        const axios = require('axios');
-        try {
-          const response = await axios.post('http://192.168.0.177:7008/RepairMng/RepairOrders', formData);
-          const data = response.data;
-          if (data.state === 'success') {
-            //取得datagrid成功
-            // console.log(data.state);
-            console.log('datagrid', data.resultList);
-            rowData.value = data.resultList;
-          } else if (data.state === 'error') {
-            //取得datagrid失敗
-            alert(data.messages);
-          } else if (data.state === 'input_error') {
-            //取得datagrid格式錯誤
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            //尚未登入
-            alert(data.messages);
-            router.push('/');
+          if (searchParams[key]) {
+            form.append(key, searchParams[key]);
           }
-        } catch (error) {
-          console.error(error);
         }
+        UpdatePageParameter(datagrid,event,type,form)
+        getMngDatagrid('/RepairMng/RepairOrders',rowData,datagrid,form);
       }
       const selectStatus = (item) => {
         searchParams.Status = item;
@@ -281,15 +198,14 @@
         for (const key in searchParams) {
           searchParams[key] = '';
         }
-        submit();
+        submit('','search');
       }
       return {
         searchParams,
         DropdownArray,
-        columnDefs,
+        datagrid,
+        datagridfield,
         rowData,
-        rowHeight: 35,
-        pageSize: 10,
         submit,
         selectStatus,
         selectStatus,
@@ -302,6 +218,9 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
+  .dg-height {
+    @include datagrid-height;
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       padding: 0 10%;

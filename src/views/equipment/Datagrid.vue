@@ -76,46 +76,79 @@
     </div>
     <div class="col justify-content-center d-flex">
       <div class="button_wrap d-flex">
-        <button class="search_btn" @click="submit">檢索</button>
+        <button class="search_btn" @click="submit('','search')">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
         <!-- <button class="export_btn">匯出</button> -->
       </div>
     </div>
-    <div style="width: 100%">
-      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine mb-5" :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true" :pagination="true" :alwaysShowHorizontalScroll="true">
-      </ag-grid-vue>
+    <div class="dg-height">
+      <DataTable
+        lazy
+        :key="datagrid.key"
+        :first= "datagrid.first"
+        :size="'small'"
+        :loading="datagrid.loading"
+        :value="rowData" 
+        :sort-field="datagrid.sortField"
+        :sort-order="datagrid.sortOrder"
+        resizableColumns 
+        columnResizeMode="expand"
+        showGridlines 
+        scrollable 
+        scrollHeight="420px" 
+        @page="submit($event , 'page')" 
+        @sort="submit($event , 'sort')"
+        paginator 
+        :rows="datagrid.rows" 
+        :totalRecords="datagrid.totalRecords"
+        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        :rowsPerPageOptions="[10, 20, 30]"
+        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+        <Column style="min-width: 60px;">
+          <template #body="slotProps">
+            <Equipment_button :params = "slotProps"/>
+          </template>
+        </Column>
+        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+        <Column style="min-width: 60px;">
+          <template #body="slotProps">
+            <Delete :params = "slotProps"/>
+          </template>
+        </Column>
+      </DataTable>
     </div>
   </div>
 </template>
 
 <script>
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   import {
     onMounted,
     reactive,
     ref
   } from "vue";
   import Equipment_button from "@/components/Equipment_button";
-  import Delete from "@/components/Equip_delete_button";
+  import Delete from "@/components/Equipment_delete_button";
   import Navbar from "@/components/Navbar.vue";
   import {
     Equipment_DateCategory
   } from "@/assets/js/dropdown.js"
   import {
     getArea,
-    getLayer
+    getLayer,
+    getMngDatagrid,
   } from '@/assets/js/common_api'
+  import { UpdatePageParameter, createDatagrid } from '@/assets/js/common_fn';
   export default {
     components: {
       Navbar,
-      AgGridVue,
+      DataTable,
+      Column,
       Equipment_button,
       Delete
     },
     setup() {
-      const details = ref({});
       const searchParams = reactive({
         IntegrationId: '',
         IntegrationName: '',
@@ -126,124 +159,38 @@
         DateCategory: '',
         StartDate: '',
         EndDate: '',
-      });
+      }); 
       const DropdownArray = reactive({
         Area: [],
         Layer: [],
         DateCategory: Equipment_DateCategory,
       })
       const LayerInit = ref('請先選擇區域');
-      const pageSize = ref(10);
-      const columnDefs = [{
-          suppressMovable: true,
-          field: "",
-          cellRenderer: "Equipment_button",
-          width: 185,
-          resizable: true,
-        },
-        {
-          headerName: "整合箱產編",
-          field: "IntegrationId",
-          unSortIcon: true,
-          sortable: true,
-          width: 180,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "整合箱名稱",
-          field: "IntegrationName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "區域",
-          field: "AreaName",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "櫃位",
-          field: "LayerName",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "最後更換日期",
-          field: "EditTime",
-          unSortIcon: true,
-          sortable: true,
-          width: 180,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "整合日期",
-          field: "IntegrateDate",
-          unSortIcon: true,
-          sortable: true,
-          width: 160,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "整合人員",
-          field: "Integrator",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          suppressMovable: true,
-          width: 100,
-          field: "",
-          cellRenderer: "Delete",
-        },
-      ];
+      const datagrid = createDatagrid();
+      const datagridfield = [
+        { header: "整合箱產編", field: "IntegrationId", width: '180px' },
+        { header: "整合箱名稱", field: "IntegrationName", width: '150px' },
+        { header: "區域", field: "AreaName", width: '100px' },
+        { header: "櫃位", field: "LayerName", width: '100px' },
+        { header: "最後更換日期", field: "EditTime", width: '180px' },
+        { header: "整合日期", field: "IntegrateDate", width: '160px' },
+        { header: "整合人員", field: "Integrator", width: '150px' },
+      ]
       const rowData = ref([]);
       onMounted(() => {
-        submit();
+        datagrid.sortField = 'IntegrationId'
+        submit('','search');
       });
-      async function submit() {
-        const formData = new FormData();
-        //將表格資料append到 formData
+      async function submit(event,type) {
+        const form = new FormData();
+        //將表格資料append到 form
         for (const key in searchParams) {
-          formData.append(key, searchParams[key]);
-        }
-        const axios = require('axios');
-        try {
-          const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/IntegrationBoxes', formData);
-          const data = response.data;
-          if (data.state === 'success') {
-            //取得datagrid成功
-            // console.log(data.state);
-            console.log('datagrid', data.resultList);
-            rowData.value = data.resultList;
-          } else if (data.state === 'error') {
-            //取得datagrid失敗
-            alert(data.messages);
-          } else if (data.state === 'input_error') {
-            //取得datagrid格式錯誤
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            //尚未登入
-            alert(data.messages);
-            router.push('/');
+          if (searchParams[key]) {
+            form.append(key, searchParams[key]);
           }
-        } catch (error) {
-          console.error(error);
         }
+        UpdatePageParameter(datagrid,event,type,form)
+        getMngDatagrid('/IntegrationMng/IntegrationBoxes',rowData,datagrid,form);
       }
       async function getAreaName() {
         if (DropdownArray.Area.length == 0) {
@@ -285,17 +232,15 @@
           searchParams[key] = '';
         }
         LayerInit.value = '請先選擇區域';
-        submit();
+        submit('','search');
       }
       return {
-        details,
         searchParams,
         DropdownArray,
         LayerInit,
-        pageSize,
-        columnDefs,
+        datagrid,
+        datagridfield,
         rowData,
-        rowHeight: 35,
         submit,
         getAreaName,
         selectArea,
@@ -309,6 +254,9 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
+  .dg-height {
+    @include datagrid-height;
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       padding: 0 10%;

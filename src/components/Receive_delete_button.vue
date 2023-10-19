@@ -1,5 +1,5 @@
 <template>
-  <div class='button_wrap'>
+  <div class='button_div'>
     <button class='btn' @click="viewDelete()">刪除</button>
   </div>
 </template>
@@ -9,6 +9,7 @@
     useRouter
   } from 'vue-router';
   export default {
+    props: ['params'],
     setup(props) {
       const router = useRouter();
       const search_id = props.params.data.AR_ID
@@ -30,7 +31,7 @@
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
-.button_wrap{
+.button_div{
    display:flex;
   align-items:center;
 

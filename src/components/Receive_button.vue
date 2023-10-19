@@ -1,5 +1,5 @@
 <template>
-  <div class='button_wrap'>
+  <div class='button_div'>
     <button @click="viewDetails()">檢視</button>
     <button class="btn_edit" @click="viewEdit()">編輯</button>
     <button class="btn_store" @click="viewStore()">入庫</button>
@@ -58,7 +58,7 @@
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
-  .button_wrap {
+  .button_div {
     justify-content: center;
      :nth-child(1) {
       @include datagrid_view_button;

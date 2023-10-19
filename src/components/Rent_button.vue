@@ -1,5 +1,5 @@
 <template>
-  <div class='button_wrap'>
+  <div class='button_div'>
     <button @click="viewDetails()">檢視</button>
     <button :class="{ disabled: isDisabled, btn_edit: !isDisabled}" @click="viewEdit()" :disabled="isDisabled">編輯</button>
   </div>
@@ -54,7 +54,7 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/css/global.scss';
 
-.button_wrap {
+.button_div {
   justify-content: center;
 
   :nth-child(1) {
