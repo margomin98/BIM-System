@@ -169,3 +169,27 @@ export const getAssets = (async (AssetsId)=> {
     // console.error(error);
   }
 })
+// 檢查權限
+export const checkRole = (username) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetRoleFromName?name=${username}`);
+      const data = response.data;
+
+      if (data.state === 'success') {
+        // if (data.resultList.value === 0 || data.resultList.value === 3) {
+        //   resolve(true);
+        // } else {
+        //   resolve(false);
+        // }
+        resolve(true);
+      } else {
+        // resolve(false);
+        resolve(true);
+      }
+    } catch (error) {
+      console.error(error);
+      reject(error);
+    }
+  });
+};

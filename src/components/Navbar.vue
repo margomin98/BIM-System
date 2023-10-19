@@ -86,19 +86,18 @@
   } from 'vue';
   export default {
     name: 'Navbar',
-    setup() {
+    setup(props,{emit}) {
       const userName = ref('');
       //登出function 沒有回傳值，正確直接回登入頁面
       async function logout() {
         const axios = require('axios');
         try {
           const response = await axios.post('http://192.168.0.177:7008/Account/LogOff');
-          console.log(response);
           if (response.status === 200) {
-            //接收成功，跳轉至首頁
+            //登出成功，跳轉至首頁
             router.push('/');
           } else {
-            throw new Error('Request was not successful');
+            throw new Error(response.data.messages);
           }
         } catch (error) {
           console.error('Error sending data to backend', error);
@@ -115,13 +114,13 @@
             //接收成功，顯示使用者名稱
             // console.log(data.messages);
             userName.value = data.resultList.Applicant;
-          } else if (data.state === 'error') {
-            alert(data.messages);
+            emit('username',data.resultList.Applicant);
           } else if (data.state === 'account_error') {
             alert(data.messages);
             router.push('/');
           } else {
-            throw new Error('Request was not successful');
+            alert(data.messages);
+            throw new Error(data.messages);
           }
         } catch (error) {
           console.error('Error sending data to backend', error);

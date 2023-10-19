@@ -99,7 +99,7 @@
         currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <Column style="min-width: 60px;">
           <template #body="slotProps">
-            <Rent_process_button :params = "slotProps"/>
+            <Rent_process_button :params = "slotProps" @updategrid="submit('','');"/>
           </template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>

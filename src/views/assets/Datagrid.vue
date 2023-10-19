@@ -122,7 +122,7 @@
         currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <Column style="min-width: 60px;">
           <template #body="slotProps">
-            <Assets_return_button :params = "slotProps" v-if="slotProps.data.AssetName"/>
+            <Assets_return_button :params = "slotProps"/>
           </template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
@@ -151,8 +151,8 @@
     getArea,
     getLayer,
   } from '@/assets/js/common_api'
-  import axios from 'axios';
   import { UpdatePageParameter, createDatagrid , } from '@/assets/js/common_fn';
+  import axios from 'axios';
   export default {
     components: {
       Navbar,
@@ -187,15 +187,15 @@
       const LayerInit = ref('請先選擇區域');
       const datagrid = createDatagrid();
       const datagridfield = [
-      { field: "AssetsId", width: '150px', header: "資產編號" },
-      { field: "AssetName", width: '150px', header: "物品名稱" },
-      { field: "EquipTypeName", width: '150px', header: "設備總類" },
-      { field: "EquipCategoryName", width: '150px', header: "設備分類" },
-      { field: "AreaName", width: '150px', header: "區域" },
-      { field: "LayerName", width: '150px', header: "櫃位" },
-      { field: "Status", width: '150px', header: "狀態" },
-      { field: "InboundDate", width: '150px', header: "入庫日期" },
-      { field: "AssetsInOperator", width: '150px', header: "入庫人員" },
+        { field: "AssetsId", width: '150px', header: "資產編號" },
+        { field: "AssetName", width: '150px', header: "物品名稱" },
+        { field: "EquipTypeName", width: '150px', header: "設備總類" },
+        { field: "EquipCategoryName", width: '150px', header: "設備分類" },
+        { field: "AreaName", width: '150px', header: "區域" },
+        { field: "LayerName", width: '150px', header: "櫃位" },
+        { field: "Status", width: '150px', header: "狀態" },
+        { field: "InboundDate", width: '150px', header: "入庫日期" },
+        { field: "AssetsInOperator", width: '150px', header: "入庫人員" },
       ]
       const rowData = ref([]);
       const inputfile = ref(null);

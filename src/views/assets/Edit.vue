@@ -289,7 +289,7 @@
               <p>作業日期(起)</p>
               <div class="date-selector">
                 <div class="input-container">
-                  <input type="date" v-model="historyParams.StartDate" class="date-input" />
+                  <input type="date" v-model="searchParams.StartDate" class="date-input" />
                 </div>
               </div>
             </div>
@@ -297,7 +297,7 @@
               <p>作業日期(迄)</p>
               <div class="date-selector">
                 <div class="input-container">
-                  <input type="date" v-model="historyParams.EndDate" class="date-input" />
+                  <input type="date" v-model="searchParams.EndDate" class="date-input" />
                 </div>
               </div>
             </div>
@@ -305,7 +305,7 @@
               <p>作業行為</p>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ historyParams.Action || "請選擇" }}
+                    {{ searchParams.Action || "請選擇" }}
                   </button>
                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
                   <p v-for="(item , index) in ActionArray" :key="index" class="dropdown-item" @click="selectAction(item)">{{ item}}</p>
@@ -315,12 +315,39 @@
           </div>
         </div>
         <div class="col button_wrap">
-          <button class="search_btn" @click="searchHistory">檢索</button>
+          <button class="search_btn" @click="searchHistory('','search')">檢索</button>
           <button class="empty_btn" @click="clear">清空</button>
         </div>
         <div class="info_wrap">
-          <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;margin-bottom:50px" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationAutoPageSize="true" :pagination="true">
-          </ag-grid-vue>
+          <DataTable
+            lazy
+            :key="datagrid.key"
+            :first= "datagrid.first"
+            :size="'small'"
+            :loading="datagrid.loading"
+            :value="rowData" 
+            :sort-field="datagrid.sortField"
+            :sort-order="datagrid.sortOrder"
+            resizableColumns 
+            columnResizeMode="expand"
+            showGridlines 
+            scrollable 
+            scrollHeight="420px" 
+            @page="searchHistory($event , 'page')" 
+            @sort="searchHistory($event , 'sort')"
+            paginator 
+            :rows="datagrid.rows" 
+            :totalRecords="datagrid.totalRecords"
+            paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+            :rowsPerPageOptions="[10, 20, 30]"
+            currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+            <Column style="min-width: 60px;">
+              <template #body="slotProps">
+                <Storage_list_view_button :params = "slotProps"/>
+              </template>
+            </Column>
+            <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+          </DataTable>
         </div>
       </div>
       <div class="col button_wrap">
@@ -331,27 +358,27 @@
 </template>
 
 <script>
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
-  import {
-    register
-  } from 'swiper/element/bundle';
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   import Storage_list_view_button from "@/components/Storage_list_view_button";
-  import AccountSearch from "@/components/API/account_search";
   import Navbar from "@/components/Navbar.vue";
   import { HistoryAction , Asset_TypeArray} from "@/assets/js/dropdown";
-  import { getEquipType , getEquipCategory , getArea , getLayer , getProject , getAccount } from '@/assets/js/common_api'
+  import { getEquipType , getEquipCategory , getArea , getLayer , getProject , getAccount , getMngDatagrid } from '@/assets/js/common_api'
+  import { UpdatePageParameter, createDatagrid , goBack } from '@/assets/js/common_fn';
   import { onMounted, ref, reactive } from "vue";
   import { useRoute, useRouter } from "vue-router";
   import { Pagination } from 'swiper/modules';
+  import {
+    register
+  } from 'swiper/element/bundle';
+import axios from 'axios';
   register();
   export default {
     components: {
       Navbar,
-      AgGridVue,
+      DataTable,
+      Column,
       Storage_list_view_button,
-      AccountSearch,
     },
     setup() {
       const route = useRoute();
@@ -378,81 +405,29 @@
         viewFile: [],
       })
       //  下半部歷史紀錄
-      const historyParams = reactive({
+      const searchParams = reactive({
+        AssetsId: AssetsId,
         StartDate: '',
         EndDate: '',
         Action: '',
       });
       const ActionArray = HistoryAction;
-      const columnDefs = [{
-          suppressMovable: true,
-          field: "",
-          cellRenderer: "Storage_list_view_button",
-          width: 100,
-        },
-        {
-          headerName: "作業日期",
-          field: "ExecutionDate",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true
-        },
-        {
-          headerName: "作業行為",
-          field: "Action",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true
-        },
-        {
-          headerName: "單號",
-          field: "FormID",
-          unSortIcon: true,
-          sortable: true,
-          width: 300,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "數量",
-          field: "IH_Number",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true
-        },
-        {
-          headerName: "單位",
-          field: "IH_Unit",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true
-        },
-        {
-          headerName: "申請人員",
-          field: "ApplyPerson",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true
-        },
-        {
-          headerName: "承辦人員",
-          field: "ExecutionPerson",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true
-        }
-      ];
+      const datagrid = createDatagrid();
+      const datagridfield = [
+        { field: "ExecutionDate", width: '150px', header: "作業日期" },
+        { field: "Action", width: '150px', header: "作業行為" },
+        { field: "FormID", width: '200px', header: "單號" },
+        { field: "IH_Number", width: '100px', header: "數量" },
+        { field: "IH_Unit", width: '100px', header: "單位" },
+        { field: "ApplyPerson", width: '150px', header: "申請人員" },
+        { field: "ExecutionPerson", width: '150px', header: "承辦人員" }
+      ]
       const rowData = ref([]);
       onMounted(() => {
+        datagrid.sortField = 'ExecutionDate'
         getDetails();
         getAccountName();
-        searchHistory();
+        searchHistory('','search');
       });
       // 上半部表單部分 & 送出
       async function getDetails() {
@@ -781,53 +756,47 @@
         }
       }
       // 歷史紀錄部分function
-      async function searchHistory() {
-        const formData = new FormData();
-        const formFields = {
-          'AssetsId': AssetsId,
-          'Action': historyParams.Action,
-          'StartDate': historyParams.StartDate,
-          'EndDate': historyParams.EndDate,
-        };
-        //將表格資料append到 formData
-        for (const fieldName in formFields) {
-          formData.append(fieldName, formFields[fieldName]);
+      async function searchHistory(event, type) {
+        const form = new FormData();
+        //將表格資料append到 form
+        for (const key in searchParams) {
+          form.append(key, searchParams[key]);
         }
-        const axios = require('axios');
-        try {
-          const response = await axios.post('http://192.168.0.177:7008/InventoryMng/AssetsHistory', formData);
-          const data = response.data;
-          if (data.state === 'success') {
-            //取得datagrid成功
-            // console.log(data.state);
-            console.log('datagrid', data.resultList);
-            rowData.value = data.resultList;
-          } else if (data.state === 'error') {
-            //取得datagrid失敗
-            alert(data.messages);
-          } else if (data.state === 'input_error') {
-            //取得datagrid格式錯誤
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            //尚未登入
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error(error);
-        }
+        UpdatePageParameter( datagrid , event , type , form)
+        getMngDatagrid('/InventoryMng/AssetsHistory',rowData,datagrid,form)
+        // datagrid.loading = true;
+        // const baseUrl = 'http://192.168.0.177:7008'
+        // let apiurl = baseUrl + '/InventoryMng/AssetsHistory'
+        // axios.post(`${apiurl}`, form)
+        // .then((response)=>{
+        //   const data = response.data;
+        //   if (data.state === 'success') {
+        //     console.log('datagrid', data.resultList);
+        //     rowData.value = data.resultList;
+        //     datagrid.totalRecords = data.resultList.total;
+        //     datagrid.key++;
+        //   } else if (data.state === 'account_error') {
+        //     //尚未登入
+        //     alert(data.messages);
+        //     router.push('/');
+        //   } else {
+        //     //取得datagrid失敗
+        //     alert(data.messages);
+        //   }
+        // })
+        // .catch((error)=>{
+        //   console.error(error);
+        // })
+        // datagrid.loading = false;
       }
       const selectAction = item => {
-        historyParams.Action = item;
+        searchParams.Action = item;
       }
       function clear() {
-        for (const key in historyParams) {
-          historyParams[key] = '';
+        for (const key in searchParams) {
+          searchParams[key] = '';
         }
-        searchHistory();
-      }
-      function goBack() {
-        window.history.back();
+        searchHistory('','search');
       }
       return {
         AssetsId,
@@ -837,8 +806,11 @@
         LayerInit,
         fileInputs,
         selectFiles,
-        historyParams,
+        searchParams,
         ActionArray,
+        datagrid,
+        datagridfield,
+        rowData,
         submit,
         getEquipTypeName,
         getAreaName,
@@ -858,13 +830,10 @@
         selectAction,
         clear,
         goBack,
-        rowHeight: 35,
         pagination: {
           clickable: true,
         },
         modules: [Pagination],
-        columnDefs,
-        rowData,
       }
     },
   }

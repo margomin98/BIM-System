@@ -1,5 +1,5 @@
 <template>
-  <Navbar />
+  <Navbar @username="setUsername" />
   <div class="main_section">
     <div class="title col">
       <h1>編輯收貨單</h1>
@@ -174,7 +174,8 @@
   } from "vue-router";
   import VueMultiselect from 'vue-multiselect'
   import {
-    getAccount
+    getAccount,
+    checkRole,
   } from '@/assets/js/common_api'
   import {
     goBack
@@ -205,6 +206,7 @@
         newPic: [],
         viewPic: [],
       })
+      const checkname = ref(''); //檢查編輯者是否為同一人
       // 控制按鈕
       const fileInput1 = ref();
       const fileInput2 = ref();
@@ -234,29 +236,42 @@
           const data = response.data;
           if (data.state === 'success') {
             details.value = data.resultList;
-            console.log('單筆資料如下\n', details.value);
-            if (details.value.InformedPersons) {
-              details.value.InformedPersons = details.value.InformedPersons.map((name) => ({
-                name
-              }))
-            }
-            if (details.value.ReceivedDate) {
-              details.value.ReceivedDate = details.value.ReceivedDate.replace(/\//g, '-');
-            }
-            // 若有已上傳的物流文件 則新增key值 exist: true
-            if (details.value.existDocument) {
-              details.value.existDocument.forEach(item => {
-                item.exist = true;
-              });
-            }
-            // 若有已上傳的相片 則新增key值 exist: true
-            if (details.value.existFile) {
-              details.value.existFile.forEach(item => {
-                item.exist = true;
-              });
-              // 處理完後將existFile加入fileParams.viewPic
-              fileParams.viewPic = details.value.existFile
-            }
+            // 檢查username是否為 admin || 採購主管
+            checkRole(checkname.value)
+            .then(result=>{
+              console.log(('flag result:',result));
+              if(!result) {
+                if(checkname.value !== details.value.Recipient) {
+                  goBack();
+                }
+              }
+              console.log('單筆資料如下\n', details.value);
+              if (details.value.InformedPersons) {
+                details.value.InformedPersons = details.value.InformedPersons.map((name) => ({
+                  name
+                }))
+              }
+              if (details.value.ReceivedDate) {
+                details.value.ReceivedDate = details.value.ReceivedDate.replace(/\//g, '-');
+              }
+              // 若有已上傳的物流文件 則新增key值 exist: true
+              if (details.value.existDocument) {
+                details.value.existDocument.forEach(item => {
+                  item.exist = true;
+                });
+              }
+              // 若有已上傳的相片 則新增key值 exist: true
+              if (details.value.existFile) {
+                details.value.existFile.forEach(item => {
+                  item.exist = true;
+                });
+                // 處理完後將existFile加入fileParams.viewPic
+                fileParams.viewPic = details.value.existFile
+              }
+            })
+            .catch(error=>{
+              console.error(error);
+            })
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -613,6 +628,10 @@
             break;
         }
       }
+      function setUsername(name) {
+        console.log('username:',name);
+        checkname.value = name;
+      }
       return {
         details,
         DropdownArray,
@@ -626,6 +645,7 @@
         handlePictureFile,
         handlePreview,
         deleteFile,
+        setUsername,
         goBack,
         pagination: {
           clickable: true,

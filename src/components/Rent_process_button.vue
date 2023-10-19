@@ -2,7 +2,8 @@
   <div class="button_div">
     <button class="btn1" @click="routeTo('檢視')">檢視</button>
     <button @click="routeTo('備料')" :class="{ disabled_btn2: isDisabled.new, btn2: !isDisabled.new }" :disabled="isDisabled.new">備料</button>
-    <button @click="changeStatus" :class="{ disabled_btn3: isDisabled.deliveryNotify, btn3: !isDisabled.deliveryNotify }" :disabled="isDisabled.deliveryNotify">{{ deliveryNotify}}</button>
+    <button v-if="deliveryNotify" @click="changeStatus" :class="{ disabled_btn3: isDisabled.deliveryNotify, btn3: !isDisabled.deliveryNotify }" :disabled="isDisabled.deliveryNotify">通知交付</button>
+    <button v-else @click="changeStatus" :class="{ disabled_btn3: isDisabled.deliveryNotify, btn3: !isDisabled.deliveryNotify }" :disabled="isDisabled.deliveryNotify">暫停交付</button>
     <button @click="routeTo('交付')" :class="{ disabled_btn4: isDisabled.delivery, btn4: !isDisabled.delivery }" :disabled="isDisabled.delivery">交付</button>
   </div>
 </template>
@@ -23,10 +24,10 @@
   } from '@/assets/js/enter_status';
   export default {
     props: ["params", "refresh"],
-    setup(props) {
+    setup(props,{emit}) {
       const router = useRouter();
       const search_id = props.params.data.AO_ID;
-      const deliveryNotify = ref('通知交付');
+      const deliveryNotify = ref(true);
       const isDisabled = reactive({
         deliveryNotify: false, //通知交付
         delivery: false, //交付
@@ -62,15 +63,12 @@
       }
       async function changeStatus() {
         const axios = require("axios");
-        const response = await axios.get(
-          `http://192.168.0.177:7008/AssetsOutMng/DeliveryNotification?ao_id=${search_id}`
-        );
+        const response = await axios.get(`http://192.168.0.177:7008/AssetsOutMng/DeliveryNotification?ao_id=${search_id}`);
         try {
           const data = response.data;
-          console.log(data);
           if (data.state === "success") {
-            console.log(props.params);
-            props.params.refresh();
+            deliveryNotify.value = props.params.data.Status === '可交付';
+            emit('updategrid');
           } else if (data.state === "error") {
             alert(data.message);
           } else if (data.state === "account_error") {
@@ -94,7 +92,7 @@
         }
       }
       onMounted(() => {
-        deliveryNotify.value = props.params.data.Status !== '可交付' ? '通知交付' : '暫停交付';
+        deliveryNotify.value = props.params.data.Status === '可交付';
         checkButton();
       });
       return {

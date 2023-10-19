@@ -1,7 +1,8 @@
 <template>
   <div>
     <button class='btn1' @click="routeTo('檢視')">檢視</button>
-    <button @click="changeStatus" :class="{ disabled_btn2: isDisabled.deliveryNotify, btn2: !isDisabled.deliveryNotify }" :disabled="isDisabled.deliveryNotify">{{ deliveryNotify}}</button>
+    <button v-if="deliveryNotify" @click="changeStatus" :class="{ disabled_btn2: isDisabled.deliveryNotify, btn2: !isDisabled.deliveryNotify }" :disabled="isDisabled.deliveryNotify">通知交付</button>
+    <button v-else @click="changeStatus" :class="{ disabled_btn2: isDisabled.deliveryNotify, btn2: !isDisabled.deliveryNotify }" :disabled="isDisabled.deliveryNotify">暫停交付</button>
     <button @click="routeTo('交付')" :class="{ disabled_btn3: isDisabled.delivery, btn3: !isDisabled.delivery }" :disabled="isDisabled.delivery">交付</button>
     <button @click="routeTo('入庫')" :class="{ disabled_btn4: isDisabled.edit, btn4: !isDisabled.edit }" :disabled="isDisabled.edit">入庫</button>
   </div>
@@ -21,11 +22,11 @@
     StoreProcess_Edit_Status, 
   } from '@/assets/js/enter_status';
   export default {
-    props: ['params', 'refresh'],
-    setup(props) {
+    props: ['params'],
+    setup(props,{emit}) {
       const router = useRouter();
       const search_id = props.params.data.AI_ID;
-      const deliveryNotify = ref('通知交付');
+      const deliveryNotify = ref(true);
       const isDisabled = ref({
         deliveryNotify: false, //通知交付
         delivery: false, //交付
@@ -66,7 +67,8 @@
           const response = await axios.get(`http://192.168.0.177:7008/AssetsInMng/DeliveryNotification?id=${search_id}`);
           const data = response.data;
           if (data.state === 'success') {
-            props.params.refresh();
+            deliveryNotify.value = props.params.data.Status === '可交付';
+            emit('updategrid');
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -90,7 +92,7 @@
         }
       }
       onMounted(() => {
-        deliveryNotify.value = props.params.data.Status !== '可交付' ? '通知交付' : '暫停交付';
+        deliveryNotify.value = props.params.data.Status === '可交付';
         checkButton();
       });
       return {

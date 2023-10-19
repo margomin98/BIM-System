@@ -1,6 +1,6 @@
 <template>
     <router-link :to="{name: linkName , query:{search_id: id}}" target="_blank">
-      <button type="button" class="btn btn-primary">
+      <button type="button" class="btn btn-primary" @click="update">
         檢視
       </button>
     </router-link>
@@ -13,26 +13,31 @@ export default {
   props: ['params'],
   setup(props){
     const linkName = ref('');
+    const id = ref(props.params.data.FormID);
     // console.log(props.params.data.FormID);
-    switch (props.params.data.Type) {
-      case 0:
-        linkName.value = 'Store_Process_View';
-        break;
-      case 1:
-        linkName.value = 'Rent_Process_View';
-        break;
-      case 2:
-        linkName.value = 'Inventory_View';
-        break;
-      case 3:
-        linkName.value = 'Equipment_View';
-        break;
-      default:
-        break;
+    function update() {
+      id.value = props.params.data.FormID;
+      switch (props.params.data.Type) {
+        case 0:
+          linkName.value = 'Store_Process_View';
+          break;
+        case 1:
+          linkName.value = 'Rent_Process_View';
+          break;
+        case 2:
+          linkName.value = 'Inventory_View';
+          break;
+        case 3:
+          linkName.value = 'Equipment_View';
+          break;
+        default:
+          break;
+      }
     }
     return {
+      update,
       linkName,
-      id: props.params.data.FormID,
+      id,
     }
   },
 }
