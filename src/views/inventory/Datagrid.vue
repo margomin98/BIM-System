@@ -81,7 +81,7 @@
       <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true" :alwaysShowHorizontalScroll="true">
       </ag-grid-vue>
     </div> -->
-    <div  style="height: 450px">
+    <div  style="height: 450px" class="mb-5">
       <DataTable 
         :key="datagridSetting.key"
         lazy 

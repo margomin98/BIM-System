@@ -130,7 +130,7 @@
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         :rowsPerPageOptions="[10, 20, 30]"
         currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
-        <Column style="min-width:80px;">
+        <Column style="min-width:80px;" class="datatable_checkbox">
           <template #body="slotProps">
             <Delete :params = "slotProps" @deleteFromData="deleteFromData" />
           </template>
@@ -463,7 +463,7 @@
                 align-items: center;
               }
               .dropdown-menu {
-                width: 180px;
+                width: 100%;
                 max-height: 250px;
                 overflow-y: auto;
                 p {
@@ -693,7 +693,7 @@
                 align-items: center;
               }
               .dropdown-menu {
-                width: 180px;
+                width:100%;
                 max-height: 250px;
                 overflow-y: auto;
                 p {
@@ -924,7 +924,7 @@
                 align-items: center;
               }
               .dropdown-menu {
-                width: 180px;
+                width: 100%;
                 .dropdown-item {
                   text-align: left;
                 }

@@ -94,7 +94,7 @@
         showGridlines 
         scrollable
         scroll-height="600px">
-        <Column header="交付確認">
+        <Column header="交付確認" class="datatable_checkbox">
           <template style="min-width:50px; " #body="slotProps">
             <input type="checkbox" class="p-checkbox p-component" :checked="slotProps.data.OM_IsExecute" disabled>
           </template>

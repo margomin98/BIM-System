@@ -486,7 +486,7 @@ createDatagrid,
           justify-content: center;
           padding: 0 28%;
           margin-bottom: 5%;
-          gap: 20px;
+          gap: 10px;
           button.back_btn {
             @include back_to_previous_btn;
             &:hover {
@@ -663,7 +663,7 @@ createDatagrid,
           justify-content: center;
           padding: 0 28%;
           margin-bottom: 5%;
-          gap: 20px;
+          gap: 10px;
           button.back_btn {
             @include back_to_previous_btn;
             &:hover {

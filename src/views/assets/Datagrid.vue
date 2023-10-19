@@ -94,7 +94,7 @@
         <button class="export_btn" @click="exportExcel">匯出</button>
       </div>
     </div>
-    <div style="height: 450px">
+    <div style="height: 450px" class="mb-5">
       <DataTable
         :key="datagrid.key"
         lazy 

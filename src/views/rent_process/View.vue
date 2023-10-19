@@ -53,35 +53,30 @@
           </div>
         </div>
       </form>
-      <div class="fixed_info">
+     
+      <div class="second_content">
+       <div class="fixed_info">
         <div>
           <p>資產出庫項目</p>
         </div>
       </div>
-      <div class="second_content">
-        <DataTable 
-        :size="'small'"
-        :value="rowData1" 
-        resizableColumns 
-        columnResizeMode="expand"
-        showGridlines 
-        scrollable
-        scroll-height="420px">
-        <Column style="min-width:50px;" header="項目">
-          <template #body="slotProps">
-            {{ calculateIndex(slotProps) }}
-          </template>
+        <DataTable :size="'small'" :value="rowData1" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="420px">
+          <Column style="min-width:50px;" header="項目">
+            <template #body="slotProps">
+                {{ calculateIndex(slotProps) }}
+</template>
         </Column>
         <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
         </DataTable>
       </div>
-      <div class="fixed_info">
+    
+      <div class="third_content">
+          <div class="fixed_info">
         <div>
           <p>資產出庫細項</p>
         </div>
       </div>
-      <div class="third_content">
-        <DataTable 
+        <DataTable
         :size="'small'"
         :value="rowData2" 
         resizableColumns 
@@ -89,15 +84,15 @@
         showGridlines 
         scrollable
         scroll-height="600px">
-        <Column header="交付確認">
-          <template style="min-width:50px; " #body="slotProps">
-            <input type="checkbox" class="p-checkbox p-component" :checked="slotProps.data.OM_IsExecute" disabled>
-          </template>
+        <Column header="交付確認" class="datatable_checkbox">
+<template style="min-width:50px; " #body="slotProps">
+  <input type="checkbox" class="p-checkbox p-component" :checked="slotProps.data.OM_IsExecute" disabled>
+</template>
         </Column>
         <Column>
-          <template #body="slotProps">
-            <AssetsView :params="slotProps"/>
-          </template>
+<template #body="slotProps">
+  <AssetsView :params="slotProps" />
+</template>
         </Column>
         <Column v-for="item in datagrid2field" :field="item.field" :header="item.header" :sortable="item.sortable" :style="{'min-width': item.width}"></Column>
         </DataTable>
@@ -223,12 +218,16 @@
     useRouter
   } from 'vue-router';
   import Navbar from "@/components/Navbar.vue";
-  import { Rent_UseOptions } from "@/assets/js/dropdown";
+  import {
+    Rent_UseOptions
+  } from "@/assets/js/dropdown";
   import {
     onMounted,
     ref
   } from "vue";
-  import {goBack} from "@/assets/js/common_fn"
+  import {
+    goBack
+  } from "@/assets/js/common_fn"
   export default {
     components: {
       Navbar,
@@ -245,25 +244,93 @@
       const details = ref({});
       const options = Rent_UseOptions;
       // 資產出庫項目
-      const datagrid1field = [
-        { field: "EquipTypeName", width: '150px', header: "設備總類" },
-        { field: "EquipCategoryName", width: '150px', header: "設備分類" },
-        { field: "ProductName", width: '150px', header: "物品名稱" },
-        { field: "Number", width: '100px', header: "數量" },
-        { field: "RequiredSpec", width: '250px', header: "規格需求" },
+      const datagrid1field = [{
+          field: "EquipTypeName",
+          width: '150px',
+          header: "設備總類"
+        },
+        {
+          field: "EquipCategoryName",
+          width: '150px',
+          header: "設備分類"
+        },
+        {
+          field: "ProductName",
+          width: '150px',
+          header: "物品名稱"
+        },
+        {
+          field: "Number",
+          width: '100px',
+          header: "數量"
+        },
+        {
+          field: "RequiredSpec",
+          width: '250px',
+          header: "規格需求"
+        },
       ]
       // 資產出庫細項
-      const datagrid2field = [
-        { field: "OM_List_id", width: '50px', header: "需求項目", sortable:false, },
-        { field: "OM_Number", width: '30px', header: "數量", sortable:false, },
-        { field: "OM_Unit", width: '30px', header: "單位", sortable:false, },
-        { field: "AssetsId", width: '150px', header: "資產編號", sortable:true, },
-        { field: "AssetName", width: '150px', header: "物品名稱", sortable:true, },
-        { field: "AreaName", width: '150px', header: "儲位區域", sortable:true, },
-        { field: "LayerName", width: '150px', header: "儲位櫃位", sortable:true, },
-        { field: "VendorName", width: '150px', header: "廠商", sortable:true, },
-        { field: "ProductType", width: '150px', header: "型號", sortable:true, },
-        { field: "ProductSpec", width: '150px', header: "規格", sortable:true, },
+      const datagrid2field = [{
+          field: "OM_List_id",
+          width: '50px',
+          header: "需求項目",
+          sortable: false,
+        },
+        {
+          field: "OM_Number",
+          width: '30px',
+          header: "數量",
+          sortable: false,
+        },
+        {
+          field: "OM_Unit",
+          width: '30px',
+          header: "單位",
+          sortable: false,
+        },
+        {
+          field: "AssetsId",
+          width: '150px',
+          header: "資產編號",
+          sortable: true,
+        },
+        {
+          field: "AssetName",
+          width: '150px',
+          header: "物品名稱",
+          sortable: true,
+        },
+        {
+          field: "AreaName",
+          width: '150px',
+          header: "儲位區域",
+          sortable: true,
+        },
+        {
+          field: "LayerName",
+          width: '150px',
+          header: "儲位櫃位",
+          sortable: true,
+        },
+        {
+          field: "VendorName",
+          width: '150px',
+          header: "廠商",
+          sortable: true,
+        },
+        {
+          field: "ProductType",
+          width: '150px',
+          header: "型號",
+          sortable: true,
+        },
+        {
+          field: "ProductSpec",
+          width: '150px',
+          header: "規格",
+          sortable: true,
+        },
       ]
       const rowData1 = ref([]);
       const rowData2 = ref([]);
@@ -320,6 +387,7 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
+
   .readonly_box {
     @include readonly_box;
     width: 100%;
@@ -329,8 +397,9 @@
     align-items: center;
   }
   textarea.readonly_box {
-  resize: vertical; /* or 'none' if you don't want any resizing */
-}
+    resize: vertical;
+    /* or 'none' if you don't want any resizing */
+  }
   .input-group {
     height: 100%;
   }
@@ -342,6 +411,11 @@
   }
   span {
     @include red_star;
+  }
+  .third_content{
+    .fixed_info{
+      border-top: none !important;
+    }
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
@@ -375,12 +449,6 @@
           padding: 0 0 0 10px;
           background-color: #B4B4B4;
           border-left: black 1px solid;
-        }
-        .second_content {
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          border-top: 1px solid black;
-          background: #d9d9d9;
         }
         .third_content {
           .list {
@@ -685,12 +753,6 @@
           padding: 0 0 0 10px;
           background-color: #B4B4B4;
           border-left: black 1px solid;
-        }
-        .second_content {
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          border-top: 1px solid black;
-          background: #d9d9d9;
         }
         .third_content {
           .list {
@@ -1003,12 +1065,6 @@
             margin-bottom: 0;
           }
         }
-        .second_content {
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          border-top: 1px solid black;
-          background: #d9d9d9;
-        }
         .third_content {
           .list {
             border: 1px solid black;
@@ -1096,7 +1152,7 @@
             justify-content: center;
             align-items: center;
             gap: 5px;
-  padding: 5px;
+            padding: 5px;
           }
           .form-check {
             margin-left: 10px;
@@ -1110,7 +1166,7 @@
             border-top: 1px solid black;
             align-items: center;
             flex-direction: column;
-             .option {
+            .option {
               display: flex;
             }
           }
