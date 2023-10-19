@@ -90,8 +90,8 @@
           <!-- 標頭 -->
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button v-for="tab in parseInt(tabData.length)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab" :aria-selected="tab === 0">
-                {{ tab }}
-              </button>
+                  {{ tab }}
+                </button>
           </div>
         </nav>
         <div v-if="tabData.length > 0" class="tab-content" id="nav-tabContent">
@@ -138,8 +138,8 @@
                   <div class="input-group-prepend"><span>*</span>設備總類：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                        {{ tab.itemEquipTypeName || '請選擇' }}
-                      </button>
+                          {{ tab.itemEquipTypeName || '請選擇' }}
+                        </button>
                     <div class="dropdown-menu" aria-labelledby="typeDropdown">
                       <p v-for="item in DropdownArray.EquipType" class="dropdown-item" @click="selectType(item , index)">{{ item.Name }}</p>
                     </div>
@@ -151,8 +151,8 @@
                   <div class="input-group-prepend"><span>*</span>設備分類：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!tab.itemEquipTypeName">
-                        {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }}
-                      </button>
+                          {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }}
+                        </button>
                     <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                       <p v-for="item in tab.EquipCategoryArray" class="dropdown-item" @click="selectCategory(item , index)">{{ item.Name }}</p>
                     </div>
@@ -167,8 +167,8 @@
                   <div class="input-group-prepend"><span>*</span>儲位區域：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName(index)">
-                          {{ tab.itemAreaName || '請選擇' }}
-                        </button>
+                            {{ tab.itemAreaName || '請選擇' }}
+                          </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="(item, area_index) in DropdownArray.Area" :key="area_index" class="dropdown-item" @click="selectArea(index, item)">{{ item.Name }}</p>
                     </div>
@@ -180,8 +180,8 @@
                   <div class="input-group-prepend"><span>*</span>儲位櫃位：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!tab.itemAreaName">
-                          {{ tab.itemLayerName || tab.LayerInit }}
-                        </button>
+                            {{ tab.itemLayerName || tab.LayerInit }}
+                          </button>
                     <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                       <p v-for="(item, layer_index) in tab.LayerArray" :key="layer_index" class="dropdown-item" @click="selectLayer(index, item)">{{ item.Name }}</p>
                     </div>
@@ -246,8 +246,8 @@
                   <div class="input-group-prepend"><span>*</span>包裝單位：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ tab.itemPackageUnit || '請選擇' }}
-                      </button>
+                          {{ tab.itemPackageUnit || '請選擇' }}
+                        </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="item in DropdownArray.PackageUnit" class="dropdown-item" @click="selectPackageUnit(item , index)">{{ item }}</p>
                     </div>
@@ -271,8 +271,8 @@
                   <div class="input-group-prepend"><span v-show="tab.itemAssetType === '耗材'">*</span>單位：</div>
                   <div v-if="tab.itemAssetType === '耗材'" class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="tab.itemAssetType !== '耗材'">
-                          {{ tab.itemUnit || '請選擇' }}
-                        </button>
+                            {{ tab.itemUnit || '請選擇' }}
+                          </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="item in DropdownArray.Unit" class="dropdown-item" @click="selectUnit(item , index)">{{ item }}</p>
                     </div>
@@ -622,19 +622,19 @@
         }
         // 3.檢查頁籤專案代碼是否有效
         let projectCodeList = [];
-        tabData.forEach((item,index)=>{
-          if(item.itemProjectCode) {
+        tabData.forEach((item, index) => {
+          if (item.itemProjectCode) {
             projectCodeList.push({
               PadNum: index,
               projectCode: item.itemProjectCode,
             })
           }
         })
-        if(projectCodeList.length !== 0) {
+        if (projectCodeList.length !== 0) {
           console.log('projectCodeList:', projectCodeList);
           try {
-            const messages =  await checkProjectCode(projectCodeList);
-            if(messages !== 'success') {
+            const messages = await checkProjectCode(projectCodeList);
+            if (messages !== 'success') {
               alert(messages);
               throw new Error(messages);
             }
@@ -674,19 +674,19 @@
         }
         // 檢查頁籤專案代碼是否有效
         let projectCodeList = [];
-        tabData.forEach((item,index)=>{
-          if(item.itemProjectCode) {
+        tabData.forEach((item, index) => {
+          if (item.itemProjectCode) {
             projectCodeList.push({
               PadNum: index,
               projectCode: item.itemProjectCode,
             })
           }
         })
-        if(projectCodeList.length !== 0) {
+        if (projectCodeList.length !== 0) {
           console.log('projectCodeList:', projectCodeList);
           try {
-            const messages =  await checkProjectCode(projectCodeList);
-            if(messages !== 'success') {
+            const messages = await checkProjectCode(projectCodeList);
+            if (messages !== 'success') {
               alert(messages);
               throw new Error(messages);
             }
@@ -1140,24 +1140,6 @@
     padding: 5px 10px 30px;
   }
   @import "@/assets/css/global.scss";
-  .nav {
-    overflow-x: auto;
-    overflow-y: hidden;
-    flex-wrap: nowrap;
-    border: none;
-  }
-  ::-webkit-scrollbar {
-		height: 6px;
-		border: 1px solid rgb(219, 218, 218);
-		border-radius: 5px;
-		width: 8px;
-	}
-	 ::-webkit-scrollbar-thumb {
-		display: block;
-		border-radius: 5px;
-		background-color: rgb(176, 175, 175);
-		border: 1px solid rgb(86, 85, 85);
-	}
   @media only screen and (min-width: 1200px) {
     .main_section {
       .readonly_box {
@@ -1248,6 +1230,24 @@
           }
         }
         .tab_section {
+          .nav {
+            overflow-x: auto;
+            overflow-y: hidden;
+            flex-wrap: nowrap;
+            border: none;
+          }
+           ::-webkit-scrollbar {
+            height: 6px;
+            border: 1px solid rgb(219, 218, 218);
+            border-radius: 5px;
+            width: 8px;
+          }
+           ::-webkit-scrollbar-thumb {
+            display: block;
+            border-radius: 5px;
+            background-color: rgb(176, 175, 175);
+            border: 1px solid rgb(86, 85, 85);
+          }
           .nav-tabs {
             button {
               @include tab_section_num;
@@ -1496,6 +1496,24 @@
           }
         }
         .tab_section {
+          .nav {
+            overflow-x: auto;
+            overflow-y: hidden;
+            flex-wrap: nowrap;
+            border: none;
+          }
+           ::-webkit-scrollbar {
+            height: 6px;
+            border: 1px solid rgb(219, 218, 218);
+            border-radius: 5px;
+            width: 8px;
+          }
+           ::-webkit-scrollbar-thumb {
+            display: block;
+            border-radius: 5px;
+            background-color: rgb(176, 175, 175);
+            border: 1px solid rgb(86, 85, 85);
+          }
           .nav-tabs {
             button {
               @include tab_section_num;
@@ -1742,6 +1760,24 @@
           }
         }
         .tab_section {
+          .nav {
+            overflow-x: auto;
+            overflow-y: hidden;
+            flex-wrap: nowrap;
+            border: none;
+          }
+           ::-webkit-scrollbar {
+            height: 6px;
+            border: 1px solid rgb(219, 218, 218);
+            border-radius: 5px;
+            width: 8px;
+          }
+           ::-webkit-scrollbar-thumb {
+            display: block;
+            border-radius: 5px;
+            background-color: rgb(176, 175, 175);
+            border: 1px solid rgb(86, 85, 85);
+          }
           .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
             margin-left: unset !important;
           }

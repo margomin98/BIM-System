@@ -89,7 +89,7 @@
           title: {
             text: '倉庫即時數據',
             fontSize: 45,
-            spacing: 75,
+            spacing: 30,
             fontWeight: 'bold',
             color: '#132238',
           },

@@ -69,11 +69,11 @@
                     資產類型 :
                   </div>
                   <div class="d-flex align-items-center radio_wrap">
-                    <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="資產" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='資產'"/>
+                    <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="資產" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='資產'" />
                     <label class="form-check-label check_box" for='radio1'>資產</label>
-                    <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="存貨" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='存貨'"/>
+                    <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="存貨" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='存貨'" />
                     <label class="form-check-label check_box" for='radio2' data-toggle="tooltip" data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
-                    <input type="radio" class='form-check-input check_box' id="radio3" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="耗材" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='耗材'"/>
+                    <input type="radio" class='form-check-input check_box' id="radio3" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="耗材" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='耗材'" />
                     <label class="form-check-label check_box" for='radio3'>耗材</label>
                   </div>
                 </div>
@@ -186,7 +186,7 @@
                     <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">數量 :
                   </div>
                   <div class="input-group-prepend d-xl-none d-lg-none d-md-none d-block">
-                     數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
+                    數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
                   </div>
                   <input type="text" class="input-number readonly_box" v-model="tab.itemCount" readonly>
                 </div>
@@ -222,16 +222,16 @@
         </div>
         <!-- view Modal -->
         <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 800px !important;">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">{{ modalParams.title }}</h5>
-              <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
+          <div class="modal-dialog modal-dialog-centered" style="max-width: 800px !important;">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">{{ modalParams.title }}</h5>
+                <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
+              </div>
+              <img :src="modalParams.src" alt="Uploaded Image" class="w-100" />
             </div>
-            <img :src="modalParams.src" alt="Uploaded Image" class="w-100" />
           </div>
         </div>
-      </div>
       </div>
       <div class='confirm_section'>
         <h2>
@@ -250,8 +250,8 @@
                 <div class="input-with-icon">
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(1)" />
                   <span class="icon-container">
-                          <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user1.isValidate" />
-                        </span>
+                            <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user1.isValidate" />
+                          </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">驗證</button>
                 <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
@@ -289,8 +289,8 @@
                 <div class="input-with-icon">
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(2)" />
                   <span class="icon-container">
-                    <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user2.isValidate" />
-                  </span>
+                      <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user2.isValidate" />
+                    </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">驗證</button>
                 <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
@@ -335,10 +335,18 @@
 
 <script>
   import Navbar from "@/components/Navbar.vue";
-  import { onMounted, ref, reactive } from "vue";
-  import { useRoute, useRouter } from "vue-router";
-  import { goBack , canEnterPage } from "@/assets/js/common_fn";
-  import { StoreProcess_Confirm_Status } from '@/assets/js/enter_status'
+  import {
+    onMounted,
+    ref,
+    reactive
+  } from "vue";
+  import {
+    useRoute,
+    useRouter
+  } from "vue-router";
+  import {
+    goBack
+  } from "@/assets/js/common_fn";
   export default {
     components: {
       Navbar,
@@ -564,24 +572,6 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-  .nav {
-    overflow-x: auto;
-    overflow-y: hidden;
-    flex-wrap: nowrap;
-    border: none;
-  }
-  ::-webkit-scrollbar {
-		height: 6px;
-		border: 1px solid rgb(219, 218, 218);
-		border-radius: 5px;
-		width: 8px;
-	}
-	 ::-webkit-scrollbar-thumb {
-		display: block;
-		border-radius: 5px;
-		background-color: rgb(176, 175, 175);
-		border: 1px solid rgb(86, 85, 85);
-	}
   @media only screen and (min-width: 1200px) {
     .main_section {
       .readonly_box {
@@ -685,7 +675,6 @@
           .input-group {
             .input-number {
               @include count_btn;
-              
             }
             .form-control {
               height: 35px;
@@ -804,6 +793,24 @@
         }
       }
       .tab_section {
+        .nav {
+          overflow-x: auto;
+          overflow-y: hidden;
+          flex-wrap: nowrap;
+          border: none;
+        }
+         ::-webkit-scrollbar {
+          height: 6px;
+          border: 1px solid rgb(219, 218, 218);
+          border-radius: 5px;
+          width: 8px;
+        }
+         ::-webkit-scrollbar-thumb {
+          display: block;
+          border-radius: 5px;
+          background-color: rgb(176, 175, 175);
+          border: 1px solid rgb(86, 85, 85);
+        }
         .nav-tabs {
           button {
             @include tab_section_num;
@@ -816,8 +823,9 @@
         }
         .tab-content {
           background: #3E4E5F;
-          padding: 50px 30px; border-radius:0 0 10px 10px;
-            .check_box_wrap {
+          padding: 50px 30px;
+          border-radius: 0 0 10px 10px;
+          .check_box_wrap {
             font-weight: 700;
             align-items: center;
             color: white;
@@ -863,7 +871,7 @@
             span {
               @include red_star
             }
-            .input-number{
+            .input-number {
               width: 65%;
             }
             .selected_file {
@@ -1086,13 +1094,12 @@
               flex-wrap: nowrap;
             }
             button {
-             
               @include auth_btn;
               &:hover {
                 background: #5a6d87;
               }
             }
-            button:nth-child(3){
+            button:nth-child(3) {
               margin-right: 10px;
             }
             .form-control {
@@ -1154,6 +1161,24 @@
         }
       }
       .tab_section {
+        .nav {
+          overflow-x: auto;
+          overflow-y: hidden;
+          flex-wrap: nowrap;
+          border: none;
+        }
+         ::-webkit-scrollbar {
+          height: 6px;
+          border: 1px solid rgb(219, 218, 218);
+          border-radius: 5px;
+          width: 8px;
+        }
+         ::-webkit-scrollbar-thumb {
+          display: block;
+          border-radius: 5px;
+          background-color: rgb(176, 175, 175);
+          border: 1px solid rgb(86, 85, 85);
+        }
         .nav-tabs {
           button {
             @include tab_section_num;
@@ -1167,8 +1192,8 @@
         .tab-content {
           background: #3E4E5F;
           padding: 50px 30px;
-border-radius: 0  0 10px 10px;
-.check_box_wrap {
+          border-radius: 0 0 10px 10px;
+          .check_box_wrap {
             font-weight: 700;
             align-items: center;
             color: white;
@@ -1214,9 +1239,10 @@ border-radius: 0  0 10px 10px;
             span {
               @include red_star
             }
-            .input-number{
+            .input-number {
               width: 65%;
-            }            .selected_file {
+            }
+            .selected_file {
               margin-left: 20px;
               p.title {
                 font-weight: 700;
@@ -1514,6 +1540,24 @@ border-radius: 0  0 10px 10px;
         }
       }
       .tab_section {
+        .nav {
+          overflow-x: auto;
+          overflow-y: hidden;
+          flex-wrap: nowrap;
+          border: none;
+        }
+         ::-webkit-scrollbar {
+          height: 6px;
+          border: 1px solid rgb(219, 218, 218);
+          border-radius: 5px;
+          width: 8px;
+        }
+         ::-webkit-scrollbar-thumb {
+          display: block;
+          border-radius: 5px;
+          background-color: rgb(176, 175, 175);
+          border: 1px solid rgb(86, 85, 85);
+        }
         .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
           margin-left: unset !important;
         }
@@ -1530,13 +1574,12 @@ border-radius: 0  0 10px 10px;
         .tab-content {
           background: #3E4E5F;
           padding: 50px 30px;
-border-radius:0 0 10px 10px;
-.check_box_wrap {
+          border-radius: 0 0 10px 10px;
+          .check_box_wrap {
             flex-direction: column;
             font-weight: 700;
             color: white;
             font-size: 20px;
-
             .radio_wrap {
               gap: 0 10px;
               padding-left: 10px;
