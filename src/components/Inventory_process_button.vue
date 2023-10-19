@@ -1,5 +1,5 @@
 <template>
-  <button v-show="display" type="button" class="btn btn-primary" @click="updateActual">➜</button>
+  <button type="button" class="btn btn-primary" @click="updateActual">➜</button>
 </template>
 
 <script>
@@ -7,20 +7,14 @@ import { onMounted, ref } from 'vue';
 
 export default {
   props: ['params'],
-  setup(props){
-    const display = ref(false)
-    onMounted(()=>{ 
-      display.value = props.params.data.IsConsumables
-    });
-    
+  setup(props,{emit}){
     // const linkName = ref('');
     function updateActual() {
-      props.params.update(props.params.data)
-      // console.log(display.value);
+      // props.params.update(props.params.data)
+      emit('update', props.params.data)
     }
     return {
       updateActual,
-      display,
     }
   },
 }

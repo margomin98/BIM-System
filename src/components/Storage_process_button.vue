@@ -15,6 +15,11 @@
   import {
     useRouter
   } from 'vue-router';
+  import { 
+    StoreProcess_NotifyConfirm_Status ,
+    StoreProcess_Confirm_Status, 
+    StoreProcess_Edit_Status, 
+  } from '@/assets/js/enter_status';
   export default {
     props: ['params', 'refresh'],
     setup(props) {
@@ -57,11 +62,10 @@
       //改變狀態 通知交付or暫停交付
       async function changeStatus() {
         const axios = require('axios');
-        const response = await axios.get(`http://192.168.0.177:7008/AssetsInMng/DeliveryNotification?id=${search_id}`);
         try {
+          const response = await axios.get(`http://192.168.0.177:7008/AssetsInMng/DeliveryNotification?id=${search_id}`);
           const data = response.data;
           if (data.state === 'success') {
-            console.log(data.messages);
             props.params.refresh();
           } else if (data.state === 'error') {
             alert(data.messages);
@@ -75,19 +79,13 @@
       }
       function checkButton() {
         const disabledStatus = props.params.data.Status;
-        if (disabledStatus === '申請入庫' || disabledStatus === '申請歸還' || disabledStatus === '可交付') {
-          isDisabled.value.deliveryNotify = false;
-        } else {
+        if(!StoreProcess_NotifyConfirm_Status.includes(disabledStatus)) {
           isDisabled.value.deliveryNotify = true;
         }
-        if (disabledStatus === '可交付') {
-          isDisabled.value.delivery = false;
-        } else {
+        if(!StoreProcess_Confirm_Status.includes(disabledStatus)) {
           isDisabled.value.delivery = true;
         }
-        if (disabledStatus === '待入庫') {
-          isDisabled.value.edit = false;
-        } else {
+        if(!StoreProcess_Edit_Status.includes(disabledStatus)) {
           isDisabled.value.edit = true;
         }
       }

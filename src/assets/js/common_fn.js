@@ -1,3 +1,4 @@
+import { reactive } from "vue";
 // 取得今日日期
 export const getDate = (()=>{
   const today = new Date();
@@ -11,3 +12,50 @@ export const getDate = (()=>{
 export const goBack = (()=> {
   window.history.back();
 });
+// 檢查狀態是否可進入頁面(編輯、交付、刪除等需要鎖定狀態的頁面)
+export const canEnterPage = ((Status , Condition)=>{
+  if(!Condition.includes(Status)) {
+    window.history.back();
+  }
+})
+// 更新datagrid切頁資訊(rows、page、order、sort)
+export const UpdatePageParameter= (( datagrid,event, type , form)=>{
+  switch (type) {
+    case 'sort':
+      datagrid.currentPage = 1;
+      datagrid.sortField = event.sortField;
+      datagrid.sortOrder = event.sortOrder;
+      datagrid.first = event.first;
+      break;
+    case 'page':
+      datagrid.currentPage = (event.page+1);
+      datagrid.rows = event.rows;
+      datagrid.first = event.first;
+      break
+    case 'take':
+    case 'search':
+      datagrid.currentPage = 1;
+      datagrid.first = 0;
+      break
+  }
+  const order = datagrid.sortOrder === 1 ? 'asc' : 'desc'
+  form.append('rows',datagrid.rows);
+  form.append('page',datagrid.currentPage);
+  form.append('sort',datagrid.sortField);
+  form.append('order',order);
+})
+// 創建datagrid切頁參數
+export const createDatagrid=(()=>{
+  return reactive({
+    key: 0,
+    totalRecords: 0,
+    first: 0,
+    rows: 10,
+    currentPage: 1,
+    sortField: 'AssetsId',
+    sortOrder: -1,
+    loading: false,
+    selectAll: false,
+    selectedList: [],
+  })
+})

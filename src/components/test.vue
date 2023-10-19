@@ -14,19 +14,20 @@ export default {
   props: ['params','msg'],
   setup(props , {emit}) {
     const router = useRouter();
-    const search_id = props.params.data.AssetsId;
     function emitParams() {
       // emit('msg' , '傳送參數:'+search_id)
       // console.log(props.msg);
-      emit('msg' , 'konichiwa, '+props.params.data.AssetsInOperator)
+      emit('msg' , 'konichiwa, '+props.params.data.AssetsId)
     }
     function viewDetails() {
+    const search_id = props.params.data.AssetsId;
       if (search_id !== '') {
         router.push({ name: 'Assets_View', query: { search_id } });
       }
     }
 
     function viewEdit() {
+    const search_id = props.params.data.AssetsId;
       if (search_id !== '') {
         router.push({ name: 'Assets_Edit', query: { search_id } });
       }

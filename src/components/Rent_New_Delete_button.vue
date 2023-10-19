@@ -1,21 +1,16 @@
 <template>
-  <div class='button_wrap'>
-    <button class='btn' @click="deleteRow('刪除')">刪除</button>
+  <div class='button_div'>
+    <button class='btn' @click="deleteRow()">刪除</button>
   </div>
 </template>
 
 <script>
 export default {
   props: ['params'],
-  setup(props) {
-    function deleteRow(s) {
-
-      // const index = props.params.data.index;
-      const rowNode = props.params.node;
-      console.log(props.params.api.setRowData);
-      console.log(props.params.api.applyTransaction);
-      props.params.api.applyTransaction({remove: [rowNode.data]});
-      props.params.deleteFromData(props.params.data.id);
+  setup(props,{emit}) {
+    function deleteRow() {
+      console.log(props.params.data);
+      emit('deleteFromData',props.params.data);
     }
     return {
       deleteRow
@@ -28,13 +23,13 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/css/global.scss';
 
-.button_wrap {
+.button_div {
   display: flex;
   align-items: center;
 
   .btn {
     @include delete_button;
-
+    height: 25px;
     &:hover {
       background: #FF7272
     }

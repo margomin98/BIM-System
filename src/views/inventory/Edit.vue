@@ -20,7 +20,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend"><span>*</span>標題：</div>
-            <input type="text" class="form-control text-center" placeholder="最多輸入20字" v-model="details.PlanTitle" />
+            <input type="text" class="form-control text-center" placeholder="最多輸入20字" v-model="formParams.PlanTitle" />
           </div>
         </div>
         <div class="row organizer_wrap">
@@ -29,7 +29,7 @@
               <div class="input-group-prepend flex"><span>*</span>盤點人員：</div>
               <div class="dropdown">
                 <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ details.InventoryStaffName || '請選擇' }}
+                        {{ formParams.InventoryStaffName || '請選擇' }}
                       </button>
                 <div class="dropdown-menu">
                   <p v-for="(item , index) in DropdownArray.InventoryStaff" :key="index" @click="selectStaff(item)">{{ item }}</p>
@@ -50,7 +50,7 @@
               <div class="input-group-prepend"><span>*</span>盤點開始日期：</div>
               <div class="date-selector">
                 <div class="input-container">
-                  <input type="date" class="date-input" v-model="details.PlanStart" />
+                  <input type="date" class="date-input" v-model="formParams.PlanStart" />
                 </div>
               </div>
             </div>
@@ -60,7 +60,7 @@
               <div class="input-group-prepend"><span>*</span>盤點結束日期：</div>
               <div class="date-selector">
                 <div class="input-container">
-                  <input type="date" class="date-input" v-model="details.PlanEnd" />
+                  <input type="date" class="date-input" v-model="formParams.PlanEnd" />
                 </div>
               </div>
             </div>
@@ -71,19 +71,19 @@
             <div class="input-group-prepend"><span>*</span>盤點類型：</div>
             <div class="check_section d-flex">
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no1" name="radio" value="指定盤" v-model="details.PlanType" />
+                <input type="radio" id="no1" name="radio" value="指定盤" v-model="formParams.PlanType" />
                 <label for="no1">指定盤</label>
               </div>
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no2" name="radio" value="月盤" v-model="details.PlanType" />
+                <input type="radio" id="no2" name="radio" value="月盤" v-model="formParams.PlanType" />
                 <label for="no2">月盤</label>
               </div>
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no3" name="radio" value="季盤" v-model="details.PlanType" />
+                <input type="radio" id="no3" name="radio" value="季盤" v-model="formParams.PlanType" />
                 <label for="no3">季盤</label>
               </div>
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no4" name="radio" value="年盤" v-model="details.PlanType" />
+                <input type="radio" id="no4" name="radio" value="年盤" v-model="formParams.PlanType" />
                 <label for="no4">年盤</label>
               </div>
             </div>
@@ -168,8 +168,39 @@
                   <p>目前資產庫存</p>
                 </div>
               </div>
-              <ag-grid-vue style="height: 450px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :paginationPageSize="10" :pagination="true" :suppressRowClickSelection="true" :rowSelection="'multiple'" @grid-ready="onGridReady1">
-              </ag-grid-vue>
+              <DataTable 
+              lazy 
+              :first= "datagrid1.first"
+              :size="'small'"
+              :loading="datagrid1.loading"
+              :value="rowData1" 
+              :sort-field="datagrid1.sortField"
+              :sort-order="datagrid1.sortOrder"
+              resizableColumns 
+              columnResizeMode="expand"
+              showGridlines 
+              scrollable 
+              scrollHeight="510px" 
+              @page="searchInventory($event , 'page')" 
+              @sort="searchInventory($event , 'sort')"
+              v-model:selection="datagrid1.selectedList" 
+              :selectAll="datagrid1.selectAll"
+              @select-all-change="onSelectAll"
+              @row-unselect="onRowUnselect"
+              paginator 
+              :rows="10" 
+              :totalRecords="datagrid1.totalRecords"
+              paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+              currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+              <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+              <Column style="min-width: 60px;">
+                <template #body="slotProps">
+                  <!-- Add the custom component here -->
+                  <List_view_button :params = "slotProps" />
+                </template>
+              </Column>
+              <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+              </DataTable>
             </div>
           </div>
         </div>
@@ -180,10 +211,43 @@
         </div>
       </div>
       <div class="content">
-        <div style="width: 100%">
-          <ag-grid-vue style="width: 100%; height:810px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs2" :rowData="rowData2" :paginationPageSize="20" :pagination="true" @grid-ready="onGridReady2"
-            :alwaysShowHorizontalScroll="true">
-          </ag-grid-vue>
+        <div v-if="rowData2.length ===0">
+          <h2 class="no_content_text">尚未選取盤點項目</h2>
+        </div>
+        <div v-else style="height;: 100%">
+          <DataTable 
+            lazy 
+            :first= "datagrid2.first"
+            :size="'small'"
+            :loading="datagrid2.loading"
+            :value="rowData2" 
+            :sort-field="datagrid2.sortField"
+            :sort-order="datagrid2.sortOrder"
+            resizableColumns 
+            columnResizeMode="expand"
+            showGridlines 
+            scrollable 
+            scrollHeight="820px" 
+            @page="getRangeOfPlan($event , 'page')" 
+            @sort="getRangeOfPlan($event , 'sort')"
+            paginator 
+            :rows="20" 
+            :totalRecords="datagrid2.totalRecords"
+            paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+            currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+            <Column style="min-width: 60px;">
+              <template #body="slotProps">
+                <Inventory_delete_button :params = "slotProps" @delete = "deleteFromAssetList" />
+              </template>
+            </Column>
+            <Column style="min-width: 60px;">
+              <template #body="slotProps">
+                <!-- Add the custom component here -->
+                <List_view_button :params = "slotProps" />
+              </template>
+            </Column>
+            <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+          </DataTable>
         </div>
       </div>
       <div class="col button_wrap">
@@ -195,11 +259,10 @@
 </template>
 
 <script>
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
-  import List_view_button from "@/components/Rent_process_new_view_button";
+  import List_view_button from "@/components/Inventory_view_button";
   import Inventory_delete_button from "@/components/Inventory_delete_button";
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   import Navbar from "@/components/Navbar.vue";
   import {
     getEquipType,
@@ -209,8 +272,14 @@
     getAccount
   } from '@/assets/js/common_api'
   import {
-    goBack
+    goBack,
+    canEnterPage,
+    createDatagrid,
+    UpdatePageParameter,
   } from "@/assets/js/common_fn";
+  import {
+    Inventory_Edit_Status
+  } from '@/assets/js/enter_status'
   import {
     onMounted,
     ref,
@@ -220,10 +289,12 @@
     useRoute,
     useRouter
   } from "vue-router";
+  import axios from "axios";
   export default {
     components: {
+      DataTable,
+      Column,
       Navbar,
-      AgGridVue,
       List_view_button,
       Inventory_delete_button,
     },
@@ -232,10 +303,6 @@
       const router = useRouter();
       const details = ref('');
       const IP_ID = route.query.search_id;
-      const grid = reactive({
-        api1: null,
-        api2: null,
-      })
       const ConvenerName = ref('');
       const DropdownArray = reactive({
         EquipType: [],
@@ -255,197 +322,63 @@
         LayerName: '',
         Layer_Id: '',
       })
+      const formParams = reactive({
+        PlanId: '',
+        PlanTitle: '',
+        InventoryStaffName: '',
+        PlanStart: '',
+        PlanEnd: '',
+        PlanType: '',
+        AssetList: [],
+      })
       const EquipCategoryInit = ref('請先選擇設備總類');
       const LayerInit = ref('請先選擇區域');
       // 搜尋資產 datagrid
-      const columnDefs1 = [{
-          headerCheckboxSelection: true, //可以全選
-          cellClass: 'grid_checkbox',
-          checkboxSelection: true,
-          headerName: "",
-          field: "",
-          unSortIcon: true,
-          width: 50,
-          resizable: true,
-          suppressMovable: true
+      const datagrid1 = createDatagrid()
+      const datagrid1field = [
+        {
+          field: 'AssetStatus',
+          header: '資產狀態',
+          width: '150px',
         },
         {
-          suppressMovable: true,
-          field: "檢視",
-          cellRenderer: "List_view_button",
-          resizable: true,
-          width: 100,
+          field: 'AssetsId',
+          header: '資產編號',
+          width: '150px',
         },
         {
-          headerName: "資產狀態",
-          field: "AssetStatus",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
+          field: 'AssetName',
+          header: '物品名稱',
+          width: '150px',
         },
         {
-          headerName: "資產編號",
-          field: "AssetsId",
-          unSortIcon: true,
-          sortable: true,
-          width: 140,
-          resizable: true,
-          suppressMovable: true
+          field: 'EquipTypeName',
+          header: '設備總類',
+          width: '150px',
         },
         {
-          headerName: "設備總類",
-          field: "EquipTypeName",
-          unSortIcon: true,
-          sortable: true,
-          width: 140,
-          resizable: true,
-          suppressMovable: true
+          field: 'EquipCategoryName',
+          header: '設備分類',
+          width: '150px',
         },
         {
-          headerName: "設備分類",
-          field: "EquipCategoryName",
-          unSortIcon: true,
-          sortable: true,
-          width: 140,
-          resizable: true,
-          suppressMovable: true
+          field: 'AreaName',
+          header: '儲位區域',
+          width: '150px',
         },
         {
-          headerName: "物品名稱",
-          field: "AssetName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true,
-          flex: 1,
+          field: 'LayerName',
+          header: '儲位櫃位',
+          width: '150px',
         },
-        {
-          headerName: "儲位區域",
-          field: "AreaName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "儲位櫃位",
-          field: "LayerName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-      ]
+      ];
+      const unselectList = ref([]);
       // 盤點範圍項目 datagrid
-      const columnDefs2 = [{
-          cellRenderer: "Inventory_delete_button",
-          cellRendererParams: {
-            deleteFromAssetList: (data) => {
-              // alert(data.AssetsId);
-              const deleteIndex = details.value.AssetList.findIndex((item) => item.AssetsId === data.AssetsId);
-              details.value.AssetList.splice(deleteIndex, 1);
-              grid.api2.setRowData(details.value.AssetList);
-            }
-          },
-          headerName: "",
-          unSortIcon: true,
-          resizable: true,
-          width: 100,
-          suppressMovable: true
-        },
-        {
-          headerName: "項目",
-          valueGetter: function(params) {
-            // 通过 params.node 获取当前行的 RowNode
-            const rowNode = params.node;
-            // 返回 RowNode 的 id 属性作为该列的值
-            return parseFloat(rowNode.id) + 1;
-          },
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          suppressMovable: true,
-          field: "檢視",
-          cellRenderer: "List_view_button",
-          resizable: true,
-          width: 100,
-        },
-        {
-          headerName: "資產狀態",
-          field: "AssetStatus",
-          unSortIcon: true,
-          sortable: true,
-          width: 140,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "資產編號",
-          field: "AssetsId",
-          unSortIcon: true,
-          sortable: true,
-          width: 140,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "設備總類",
-          field: "EquipTypeName",
-          unSortIcon: true,
-          sortable: true,
-          width: 140,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "設備分類",
-          field: "EquipCategoryName",
-          unSortIcon: true,
-          sortable: true,
-          width: 140,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "物品名稱",
-          field: "AssetName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "儲位區域",
-          field: "AreaName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "儲位櫃位",
-          field: "LayerName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        }
-      ]
+      const datagrid2 = createDatagrid()
       const rowData1 = ref([]);
       const rowData2 = ref([]);
       onMounted(() => {
+        datagrid2.rows = 20;
         getAccountName();
         getDetails();
       });
@@ -454,17 +387,19 @@
         const axios = require('axios');
         try {
           const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetInventoryPlanInfo?id=${IP_ID}`);
-          console.log(response);
           const data = response.data;
           if (data.state === 'success') {
             // 檢查資料狀態是否可編輯
-            // if(data.resultList.Status !== '申請入庫' && data.resultList.Status !== '申請歸還' && data.resultList.Status !== '可交付') {
-            //   window.history.back();
-            //   // router.push({name: 'Store_Datagrid'});
-            // }
+            canEnterPage(data.resultList.PlanStatus, Inventory_Edit_Status);
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
-            grid.api2.setRowData(details.value.AssetList)
+            for(const key in details.value) {
+              if(formParams.hasOwnProperty(key)){
+                formParams[key] = details.value[key]
+              }
+            }
+            // formParams.AssetList = data.resultList.AssetList;
+            getRangeOfPlan('','search');
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -475,31 +410,28 @@
           console.error(error);
         }
       }
-      // 送出新增計畫單
+      // 送出編輯計畫單
       async function submit() {
         // console.log(details.value);
         // 檢查必填項目
-        if (!details.value.PlanTitle || !details.value.InventoryStaffName || !details.value.PlanStart || !details.value.PlanEnd || !details.value.PlanType || details.value.AssetList.length === 0) {
+        if (!formParams.PlanTitle || !formParams.InventoryStaffName || !formParams.PlanStart || !formParams.PlanEnd || !formParams.PlanType || formParams.AssetList.length === 0) {
           alert('請填寫所有必填項目');
           return;
         }
-        if (!/^.{1,20}$/.test(details.value.PlanTitle)) {
+        if (!/^.{1,20}$/.test(formParams.PlanTitle)) {
           alert('標題不可輸入超過20字');
           return
         }
         // 送出
         const axios = require('axios');
         let requestData = {};
-        for (const keyname in details.value) {
-          requestData[keyname] = details.value[keyname]
+        for (const keyname in formParams) {
+          requestData[keyname] = formParams[keyname]
         }
-        // 將AssetList需要參數 額外重新處理
-        const finalList = details.value.AssetList.map((item) => item.AssetsId);
-        requestData.AssetList = finalList;
         console.log('requestData:', requestData);
-        const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/EditPlan', requestData);
-        const data = response.data;
         try {
+          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/EditPlan', requestData);
+          const data = response.data;
           console.log(data);
           if (data.state === 'success') {
             let msg = data.messages;
@@ -519,34 +451,40 @@
         }
       }
       // 搜尋function
-      async function searchInventory() {
+      async function searchInventory(event , type) {
         // 檢查物品名稱字數
-        if (searchParams.AssetName) {
-          searchParams.AssetName = searchParams.AssetName.trim();
-        }
-        if (searchParams.AssetName && !/^.{1,20}$/.test(searchParams.AssetName)) {
+        if (!/^.{0,20}$/.test(searchParams.AssetName)) {
           alert('物品名稱不可輸入超過20字')
           return
         }
+        datagrid1.loading = true;
         const form = new FormData();
         // 將搜尋參數加入form
         for (const key in searchParams) {
-          if (searchParams[key] !== '') {
+          if (searchParams[key]) {
             form.append(key, searchParams[key])
           }
         }
-        // 將已有的項目AssetsId加入form (給後端做額外篩選)
-        if (details.value.AssetList.length !== 0) {
-          for (const item of details.value.AssetList) {
-            form.append('AssetList', item.AssetsId)
+        // 將已有的項目AssetsId加入form (給後端做篩選)
+        if (formParams.AssetList.length !== 0) {
+          for (const item of formParams.AssetList) {
+            form.append('AssetList', item)
           }
         }
+        UpdatePageParameter(datagrid1,event,type,form)
         const axios = require('axios');
         try {
           const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/SearchInventory', form);
           const data = response.data;
           if (data.state === 'success') {
-            rowData1.value = data.resultList
+            console.log('搜尋結果',data.resultList);
+            rowData1.value = data.resultList.rows
+            datagrid1.totalRecords = data.resultList.total
+            if(datagrid1.selectAll) {
+              datagrid1.selectedList = rowData1.value
+              // 然後unselect 排除List的項目
+              datagrid1.selectedList = datagrid1.selectedList.filter(item=> !unselectList.value.includes(item.AssetsId));
+            }
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -556,6 +494,35 @@
         } catch (error) {
           console.error(error);
         }
+        datagrid1.loading = false;
+      }
+      // 取得盤點範圍datagrid
+      async function getRangeOfPlan(event , type) {
+        datagrid2.loading = true;
+        const form = new FormData();
+        // 將已有的項目AssetsId加入form
+        if (formParams.AssetList.length !== 0) {
+          for (const item of formParams.AssetList) {
+            form.append('AssetList', item)
+          }
+        }
+        UpdatePageParameter(datagrid2,event,type,form)
+        axios.post('http://192.168.0.177:7008/StocktakingMng/RangeOfPlan',form)
+        .then((response)=>{
+          const data = response.data
+          if(data.state === 'success') {
+            console.log('盤點範圍:',data.resultList.rows);
+            datagrid2.totalRecords =  data.resultList.total
+            rowData2.value =  data.resultList.rows
+          } else {
+            // state為error
+            alert(data.messages);
+          }
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
+        datagrid2.loading = false;
       }
       // 取得盤點人員DropdownArray
       async function getAccountName() {
@@ -632,7 +599,7 @@
         searchParams.Layer_Id = item.Id;
       };
       const selectStaff = (item) => {
-        details.value.InventoryStaffName = item;
+        formParams.InventoryStaffName = item;
       }
       const clear = () => {
         for (const key in searchParams) {
@@ -643,38 +610,92 @@
         searchInventory()
       }
       function addList() {
-        // 取得選中的行
-        const selectNodes = grid.api1.getSelectedNodes();
-        // 將其中的資料加入details.value.AssetList
-        const nodesData = selectNodes.map((node) => node.data);
-        nodesData.forEach((item) => {
-          details.value.AssetList.splice(0, 0, item);
-        });
-        grid.api2.setRowData(details.value.AssetList);
-        // console.log('selectedNodes:', selectNodes);
-        // console.log('NodesData:', nodesData);
+        if(datagrid1.selectAll) {
+          const form = new FormData();
+          for(const key in searchParams) {
+            form.append(key, searchParams[key]);
+          }
+          // 排除已有細項
+          if (formParams.AssetList.length !== 0) {
+            for (const item of formParams.AssetList) {
+              form.append('AssetList', item)
+            }
+          }
+          axios.post('http://192.168.0.177:7008/StocktakingMng/SelectAllGrid',form)
+          .then((response)=>{
+            const data = response.data
+            if(data.state === 'success') {
+              // 將符合情況的AssetsId List放入formParams.AssetList
+              console.log('allgrid:',data.resultList);
+              data.resultList.forEach(id => {
+                formParams.AssetList.push(id);
+              });
+              // 全選情況下，扣掉排除List
+              formParams.AssetList = formParams.AssetList.filter(id=> !unselectList.value.includes(id));
+              getRangeOfPlan('', 'search');
+              // 清空排除List、selectedList
+              datagrid1.selectAll = false;
+              datagrid1.selectedList = [];
+              unselectList.value = [];
+            }
+          })
+          .catch((error)=>{
+            console.error(error);
+          })
+        } else {
+          // 非全選情況下，加入selectedList
+          datagrid1.selectedList.forEach(item=>{
+            formParams.AssetList.push(item.AssetsId);
+            rowData2.value.push(item);
+          })
+          // 加入後清空selectedList
+          datagrid1.selectedList = [];
+          getRangeOfPlan('', 'search');
+        }
+        // 取得切頁的formParams.AssetList
       }
-      const onGridReady1 = (params) => {
-        grid.api1 = params.api
+      function deleteFromAssetList(data) {
+        rowData2.value = rowData2.value.filter(item=> item.AssetsId !== data.AssetsId);
+        formParams.AssetList = formParams.AssetList.filter(AssetsId=> AssetsId !== data.AssetsId);
+        if(formParams.AssetList.length !== 0) {
+          getRangeOfPlan('', 'search');
+        }
       }
-      const onGridReady2 = (params) => {
-        grid.api2 = params.api
+      function onSelectAll(event) {
+        datagrid1.selectAll = event.checked;
+        if(datagrid1.selectAll) {
+          // 全選的情況selectedList僅用來顯示
+          datagrid1.selectedList = rowData1.value
+        } else {
+          // 清空selectedList與排除List
+          datagrid1.selectedList = [];
+          unselectList.value = [];
+        }
+      }
+      function onRowUnselect(event) {
+        if(datagrid1.selectAll) {
+          // console.log('unselect:', event.data.AssetsId);
+          //加入排除List
+          unselectList.value.push(event.data.AssetsId);
+        }
       }
       return {
         details,
-        grid,
+        formParams,
         ConvenerName,
         DropdownArray,
         EquipCategoryInit,
         LayerInit,
         searchParams,
-        columnDefs1,
-        columnDefs2,
+        datagrid1,
+        datagrid1field,
+        unselectList,
+        datagrid2,
         rowData1,
         rowData2,
-        rowHeight: 35,
         submit,
         searchInventory,
+        getRangeOfPlan,
         getEquipTypeName,
         getAreaName,
         selectType,
@@ -684,8 +705,9 @@
         selectStaff,
         clear,
         addList,
-        onGridReady1,
-        onGridReady2,
+        deleteFromAssetList,
+        onSelectAll,
+        onRowUnselect,
         goBack,
       };
     },
@@ -696,6 +718,11 @@
   @import "@/assets/css/global.scss";
   span {
     @include red_star
+  }
+  .no_content_text{
+    padding: 5px 0;
+    text-align: center;
+    font-weight: 700;
   }
   @media only screen and (min-width: 1200px) {
     .main_section {

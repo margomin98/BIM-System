@@ -1,21 +1,18 @@
 <template>
-  <div class='button_wrap'>
+  <div class='button_div'>
     <button class='btn' @click="Delete()">刪除</button>
   </div>
 </template>
 
 <script>
   export default {
-    setup(props) {
+    props: ['params'],
+    setup(props, {emit}) {
       function Delete() {
-        // API將物品還回去之後，將物品從資料中刪除
+        // API將物品還回去之後，扣除已備料數量
 
         //API here
         AddToInventory();
-        props.params.deleteMaterial(props.params.data)
-        //之後刪掉
-        // const rowNode = props.params.node;
-        // props.params.api.applyTransaction({remove: [rowNode.data]});
       }
       async function AddToInventory() {
         const axios = require('axios');
@@ -29,7 +26,8 @@
           const data = response.data;
           if (data.state === 'success') {
             console.log('刪除暫存結果:' +data);
-            props.params.deleteMaterial(props.params.data)
+            // props.params.deleteMaterial(props.params.data)
+            emit('deleteMaterial',props.params.data);
           }
           else {
             alert(data.messages);
@@ -48,7 +46,7 @@
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
-.button_wrap{
+.button_div{
    display:flex;
   align-items:center;
 

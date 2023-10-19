@@ -9,13 +9,17 @@
 <script>
 export default {
   props: ['params'],
-  setup(props) {
+  setup(props,{emit}) {
     function searchByRow() {
 
       // const rowNode = props.params.node;
       // props.params.api.applyTransaction({remove: [rowNode.data]});
       // console.log(props.params);
-      props.params.searchList(props.params.data);
+
+      // ag-grid api
+      // props.params.searchList(props.params.data);
+
+      emit('searchList',props.params.data) 
     }
     return {
       searchByRow,

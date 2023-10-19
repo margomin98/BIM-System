@@ -130,8 +130,26 @@
         </div>
       </div>
       <div class="second_content">
-        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :paginationAutoPageSize="true">
-        </ag-grid-vue>
+        <DataTable 
+        :size="'small'"
+        :value="rowData1" 
+        resizableColumns 
+        columnResizeMode="expand"
+        showGridlines 
+        scrollable
+        scroll-height="600px">
+        <Column>
+          <template style="min-width:115px;" #body="slotProps">
+            <Storage_button :params="slotProps" @searchList="searchList" />
+          </template>
+        </Column>
+        <Column style="min-width:50px;" header="項目">
+          <template #body="slotProps">
+            {{ calculateIndex(slotProps) }}
+          </template>
+        </Column>
+        <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+        </DataTable>
       </div>
       <!-- <modal-overlay v-if="modalVisible" @close="closeModal" /> -->
       <div class="fixed_info">
@@ -140,8 +158,26 @@
         </div>
       </div>
       <div class="third_content">
-        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs2" :rowData="rowData2" :paginationAutoPageSize="true" @grid-ready="onGridReady2">
-        </ag-grid-vue>
+        <DataTable 
+        :size="'small'"
+        :value="rowData2" 
+        resizableColumns 
+        columnResizeMode="expand"
+        showGridlines 
+        scrollable
+        scroll-height="600px">
+        <Column>
+          <template style="min-width:50px;" #body="slotProps">
+            <Delete :params="slotProps" @deleteMaterial="deleteMaterial" />
+          </template>
+        </Column>
+        <Column>
+          <template #body="slotProps">
+            <AssetsView :params="slotProps"/>
+          </template>
+        </Column>
+        <Column v-for="item in datagrid2field" :field="item.field" :header="item.header" :sortable="item.sortable" :style="{'min-width': item.width}"></Column>
+        </DataTable>
       </div>
       <div class="fixed_info_count">
         <div>
@@ -204,12 +240,15 @@
   import {
     AgGridVue
   } from "ag-grid-vue3";
+  import AssetsView from '@/components/Rent_process_new_view_button'
   import Storage_button from "@/components/Storage_button";
   import Rent_process_new_view_button from "@/components/Rent_process_new_view_button";
   import Storage_add from "@/components/Storage_add_button";
   import Storage_number from "@/components/Storage_number_input"
-  import Delete_button from "@/components/Rent_proccess_new_delete_button";
+  import Delete from "@/components/Rent_proccess_new_delete_button";
   import Navbar from "@/components/Navbar.vue";
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   import {
     Rent_UseOptions
   } from "@/assets/js/dropdown";
@@ -219,8 +258,11 @@
     getEquipCategory
   } from "@/assets/js/common_api";
   import {
+    canEnterPage,
     getDate,
-    goBack
+    goBack,
+    createDatagrid,
+    UpdatePageParameter,
   } from "@/assets/js/common_fn";
   import {
     onMounted,
@@ -231,15 +273,19 @@
     useRoute,
     useRouter
   } from "vue-router";
+import { RentProcess_New_Status } from "@/assets/js/enter_status";
   export default {
     components: {
       Navbar,
       AgGridVue,
+      Column,
+      DataTable,
       Storage_button,
-      Delete_button,
+      Delete,
       Rent_process_new_view_button,
       Storage_add,
       Storage_number,
+      AssetsView,
     },
     setup() {
       const route = useRoute();
@@ -271,186 +317,28 @@
         item_id: '',
         selectedNumber: 0,
       });
-      const columnDefs1 = [{
-          suppressMovable: true,
-          field: "",
-          cellRenderer: "Storage_button",
-          cellRendererParams: {
-            searchList: (data) => {
-              console.log('data:',data);
-              for(const key in data) {
-                searchParams[key] = data[key];
-              }
-              getEquipCategoryName();
-              // 額外處理data沒有的參數
-              searchParams.selectedNumber = selectedNumberArray.value[data.id]
-              searchInventory(searchParams.id, searchParams.item_id);
-              console.log('設定後搜尋參數:\n', searchParams);
-            },
-          },
-          width: 115,
-          resizable: true,
-        },
-        {
-          suppressMovable: true,
-          headerName: "項目",
-          field: "id",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          resizable: true,
-        },
-        {
-          headerName: "設備總類",
-          field: "EquipTypeName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "設備分類",
-          field: "EquipCategoryName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "物品名稱",
-          field: "ProductName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true
-        },
-        {
-          headerName: "數量",
-          field: "Number",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "規格需求",
-          field: "RequiredSpec",
-          unSortIcon: true,
-          sortable: true,
-          flex: 1,
-          suppressMovable: true,
-          resizable: true
-        }
+      // 資產出庫項目
+      const datagrid1field = [
+        { field: "EquipTypeName", width: '150px', header: "設備總類" },
+        { field: "EquipCategoryName", width: '150px', header: "設備分類" },
+        { field: "ProductName", width: '150px', header: "物品名稱" },
+        { field: "Number", width: '100px', header: "數量" },
+        { field: "RequiredSpec", width: '250px', header: "規格需求" },
       ]
-      const columnDefs2 = [{
-          suppressMovable: true,
-          field: "",
-          cellRenderer: "Delete_button",
-          cellRendererParams: {
-            deleteMaterial: (data) => {
-              selectedNumberArray.value[data.id] -= data.selectNumber
-              searchParams.selectedNumber = selectedNumberArray.value[data.id]
-              getDetails()
-            },
-          },
-          width: 100,
-          resizable: true,
-        },
-        {
-          suppressMovable: true,
-          headerName: "項目",
-          field: "OM_List_id",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          resizable: true,
-        },
-        {
-          headerName: "數量",
-          field: "OM_Number",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "單位",
-          field: "OM_Unit",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "資產編號",
-          field: "AssetsId",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "物品名稱",
-          field: "AssetName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "儲位區域",
-          field: "AreaName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "儲位櫃位",
-          field: "LayerName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "廠商",
-          field: "VendorName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "型號",
-          field: "ProductType",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "規格",
-          field: "ProductSpec",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true,
-        },
+      // 資產出庫細項
+      const datagrid2field = [
+        { field: "OM_List_id", width: '50px', header: "需求項目", sortable:false, },
+        { field: "OM_Number", width: '30px', header: "數量", sortable:false, },
+        { field: "OM_Unit", width: '30px', header: "單位", sortable:false, },
+        { field: "AssetsId", width: '150px', header: "資產編號", sortable:true, },
+        { field: "AssetName", width: '150px', header: "物品名稱", sortable:true, },
+        { field: "AreaName", width: '150px', header: "儲位區域", sortable:true, },
+        { field: "LayerName", width: '150px', header: "儲位櫃位", sortable:true, },
+        { field: "VendorName", width: '150px', header: "廠商", sortable:true, },
+        { field: "ProductType", width: '150px', header: "型號", sortable:true, },
+        { field: "ProductSpec", width: '150px', header: "規格", sortable:true, },
       ]
+      // 檢索datagrid
       const columnDefs3 = [{
           headerName: "",
           field: "",
@@ -603,10 +491,7 @@
           const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
           const data = response.data;
           if (data.state === 'success') {
-            if (data.resultList.Status !== '已填報') {
-              window.history.back();
-              // router.push({name: 'Rent_Datagrid'});
-            }
+            canEnterPage(data.resultList.Status , RentProcess_New_Status)
             console.log('getDetails 成功 資料如下\n', data.resultList);
             // 設定搜尋參數的專案代碼
             searchParams.ProjectCode = data.resultList.ProjectCode
@@ -731,9 +616,27 @@
             console.error(error);
           })
       }
-      const onGridReady2 = (params) => {
-        gridApi2.value = params.api;
-      };
+      function calculateIndex(slotProps) {
+        return String(slotProps.index + 1).padStart(2, '0');
+      }
+      // 點選搜尋庫存，預帶入參數
+      function searchList (data) {
+        console.log('data:',data);
+        for(const key in data) {
+          searchParams[key] = data[key];
+        }
+        searchParams.ProductName = '';
+        getEquipCategoryName();
+        // 額外處理data沒有的參數
+        searchParams.selectedNumber = selectedNumberArray.value[data.id]
+        searchInventory(searchParams.id, searchParams.item_id);
+        console.log('設定後搜尋參數:\n', searchParams);
+      }
+      function deleteMaterial (data) {
+        selectedNumberArray.value[data.id] -= data.selectNumber
+        searchParams.selectedNumber = selectedNumberArray.value[data.id]
+        getDetails()
+      }
       const onGridReady3 = (params) => {
         gridApi3.value = params.api;
       };
@@ -741,8 +644,8 @@
         details,
         options,
         searchParams,
-        columnDefs1,
-        columnDefs2,
+        datagrid1field,
+        datagrid2field,
         columnDefs3,
         rowData1,
         rowData2,
@@ -758,7 +661,9 @@
         searchInventory,
         submit,
         getDate,
-        onGridReady2,
+        searchList,
+        deleteMaterial,
+        calculateIndex,
         onGridReady3,
         goBack,
       };

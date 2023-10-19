@@ -271,6 +271,13 @@
     ref,
     reactive,
   } from 'vue';
+  import {
+    goBack,
+    canEnterPage,
+  } from "@/assets/js/common_fn"
+  import {
+    Store_Delete_Status
+  } from '@/assets/js/enter_status'
   export default {
     components: {
       Navbar
@@ -294,9 +301,9 @@
         const axios = require('axios');
         try {
           const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
-          console.log(response);
           const data = response.data;
           if (data.state === 'success') {
+            canEnterPage(data.resultList.Status, Store_Delete_Status);
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             if (details.value.WarrantyStartDate) {
@@ -351,9 +358,7 @@
         modalParams.src = details.value.Tabs[index].existFile[file_index].FileLink;
         console.log('modalParams', modalParams);
       }
-      function goBack() {
-        window.history.back();
-      }
+
       return {
         goBack,
         AI_ID,

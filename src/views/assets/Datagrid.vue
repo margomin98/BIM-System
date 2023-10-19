@@ -89,21 +89,49 @@
     </div>
     <div class="col justify-content-center d-flex">
       <div class="button_wrap d-flex">
-        <button class="search_btn" @click="submit">檢索</button>
+        <button class="search_btn" @click="submit('','search')">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
+        <button class="export_btn" @click="exportExcel">匯出</button>
       </div>
     </div>
-    <div style="width: 100%">
-      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;margin-bottom:50px" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true">
-      </ag-grid-vue>
+    <div style="height: 450px">
+      <DataTable
+        :key="datagrid.key"
+        lazy 
+        :first= "datagrid.first"
+        :size="'small'"
+        :loading="datagrid.loading"
+        :value="rowData" 
+        :sort-field="datagrid.sortField"
+        :sort-order="datagrid.sortOrder"
+        resizableColumns 
+        columnResizeMode="expand"
+        showGridlines 
+        scrollable 
+        scrollHeight="420px" 
+        @page="submit($event , 'page')" 
+        @sort="submit($event , 'sort')"
+        paginator 
+        :rows="datagrid.rows" 
+        :totalRecords="datagrid.totalRecords"
+        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        :rowsPerPageOptions="[10, 20, 30]"
+        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+        <Column style="min-width: 60px;">
+          <template #body="slotProps">
+            <!-- Add the custom component here -->
+            <Assets_return_button :params = "slotProps" v-if="slotProps.data.AssetName"/>
+          </template>
+        </Column>
+        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+      </DataTable>
     </div>
   </div>
 </template>
 
 <script>
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   import Assets_return_button from "@/components/Assets_return_button";
   import Navbar from "@/components/Navbar.vue";
   import getEquipDatagrid from "@/components/API/getEquipDatagrid"
@@ -121,10 +149,13 @@
     getArea,
     getLayer
   } from '@/assets/js/common_api'
+  import axios from 'axios';
+  import { UpdatePageParameter, createDatagrid } from '@/assets/js/common_fn';
   export default {
     components: {
       Navbar,
-      AgGridVue,
+      DataTable,
+      Column,
       Assets_return_button,
       getEquipDatagrid,
     },
@@ -154,113 +185,38 @@
       const EquipCategoryInit = ref('請先選擇設備總類');
       const LayerInit = ref('請先選擇區域');
       const pageSize = ref(10);
-      const columnDefs = [{
-          suppressMovable: true,
-          field: "",
-          cellRenderer: "Assets_return_button",
-          width: 150,
-          resizable: true,
-        },
-        {
-          headerName: "資產編號",
-          field: "AssetsId",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "物品名稱",
-          field: "AssetName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true,
-        },
-        {
-          headerName: "設備總類",
-          field: "EquipTypeName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "設備分類",
-          field: "EquipCategoryName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "區域",
-          field: "AreaName",
-          unSortIcon: true,
-          sortable: true,
-          width: 130,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "櫃位",
-          field: "LayerName",
-          unSortIcon: true,
-          sortable: true,
-          width: 130,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "狀態",
-          field: "Status",
-          unSortIcon: true,
-          sortable: true,
-          width: 110,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "入庫日期",
-          field: "InboundDate",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "入庫人員",
-          field: "AssetsInOperator",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        }
-      ];
+      const datagrid = createDatagrid();
+      const datagridfield = [
+      { field: "AssetsId", width: '150px', header: "資產編號" },
+      { field: "AssetName", width: '150px', header: "物品名稱" },
+      { field: "EquipTypeName", width: '150px', header: "設備總類" },
+      { field: "EquipCategoryName", width: '150px', header: "設備分類" },
+      { field: "AreaName", width: '150px', header: "區域" },
+      { field: "LayerName", width: '150px', header: "櫃位" },
+      { field: "Status", width: '150px', header: "狀態" },
+      { field: "InboundDate", width: '150px', header: "入庫日期" },
+      { field: "AssetsInOperator", width: '150px', header: "入庫人員" },
+      ]
       const rowData = ref([]);
       onMounted(() => {
-        submit();
+        submit('','search');
       });
-      async function submit() {
-        const formData = new FormData();
-        //將表格資料append到 formData
+      async function submit(event, type) {
+        const form = new FormData();
+        //將表格資料append到 form
         for (const key in searchParams) {
-          formData.append(key, searchParams[key]);
+          form.append(key, searchParams[key]);
         }
-        const axios = require('axios');
+        UpdatePageParameter( datagrid , event , type , form)
         try {
-          const response = await axios.post('http://192.168.0.177:7008/InventoryMng/Assets', formData);
+          const response = await axios.post('http://192.168.0.177:7008/InventoryMng/Assets', form);
           const data = response.data;
           if (data.state === 'success') {
             //取得datagrid成功
             console.log('datagrid', data.resultList);
-            rowData.value = data.resultList;
+            rowData.value = data.resultList.rows;
+            datagrid.totalRecords = data.resultList.total;
+            datagrid.key++;
           } else if (data.state === 'account_error') {
             //尚未登入
             alert(data.messages);
@@ -312,6 +268,34 @@
             console.error(error);
           })
       }
+      async function exportExcel() {
+        const form = new FormData();
+        //將表格資料append到 form
+        for (const key in searchParams) {
+          form.append(key, searchParams[key]);
+        }
+        axios.post('http://192.168.0.177:7008/InventoryMng/ExportExcel',form, {responseType: 'blob', })
+        .then((response)=>{
+          const data = response.data
+          const header = response.headers
+          console.log('content-disposition:',header['content-disposition']);
+          console.log('content-type:',header['content-type']);
+          if(header['content-type'].includes('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')) {
+            const url = window.URL.createObjectURL(data) ;
+            const a = document.createElement('a');
+            const fileNameMatch = /filename=([^;]*)/.exec(response.headers['content-disposition']);
+            console.log('filename', fileNameMatch[1]);
+            a.href = url;
+            a.download = `${fileNameMatch[1]}`;
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+          }
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
+      }
       function selectType(item) {
         searchParams.EquipTypeName = item.Name;
         searchParams.EquipType_Id = item.Id;
@@ -346,7 +330,7 @@
         }
         EquipCategoryInit.value = '請先選擇設備總類'
         LayerInit.value = '請先選擇區域';
-        submit();
+        submit('','search');
       }
       return {
         searchParams,
@@ -354,10 +338,11 @@
         EquipCategoryInit,
         LayerInit,
         pageSize,
-        columnDefs,
+        datagrid,
+        datagridfield,
         rowData,
-        rowHeight: 35,
         submit,
+        exportExcel,
         getEquipTypeName,
         getAreaName,
         selectType,
@@ -373,6 +358,12 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
+  .export_btn {
+    @include export_btn;
+    &:hover {
+      background-color: #5e7aa2;
+    }
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       padding: 0 10%;

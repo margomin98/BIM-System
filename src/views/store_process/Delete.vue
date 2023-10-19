@@ -269,8 +269,12 @@
   } from 'vue-router';
   import router from '@/router';
   import {
-    goBack
+    goBack,
+    canEnterPage,
   } from "@/assets/js/common_fn";
+  import {
+    StoreProcess_Delete_Status
+  } from '@/assets/js/enter_status'
   export default {
     components: {
       Navbar,
@@ -297,6 +301,7 @@
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
+            canEnterPage(data.resultList.Status, StoreProcess_Delete_Status);
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             details.value.Tabs.forEach(tab => {

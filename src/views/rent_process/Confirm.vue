@@ -276,11 +276,13 @@
   } from 'vue-router';
   import Storage_add from "@/components/Storage_add_button";
   import Navbar from "@/components/Navbar.vue";
+  import {canEnterPage ,goBack , getDate ,createDatagrid , UpdatePageParameter } from "@/assets/js/common_fn"
   import { Rent_UseOptions } from "@/assets/js/dropdown";
   import {
     onMounted,
     ref
   } from "vue";
+import { RentProcess_Confirm_Status } from "@/assets/js/enter_status";
   export default {
     components: {
       Navbar,
@@ -479,13 +481,9 @@
         const axios = require('axios');
         try {
           const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
-          console.log(response);
           const data = response.data;
           if (data.state === 'success') {
-            if(data.resultList.Status !== '可交付') {
-            window.history.back();
-            // router.push({name: 'Rent_Datagrid'});
-            }
+            canEnterPage(data.resultList.Status, RentProcess_Confirm_Status)
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             rowData1.value = data.resultList.ItemList;
@@ -634,17 +632,6 @@
       // const selectedNodes = gridApi.value.getSelectedNodes();
       // const selectedData = selectedNodes.map(node => node.data);
       // console.log('Selected Row Data:', selectedData);
-      function getDate() {
-        const today = new Date();
-        var date = '';
-        date += (today.getFullYear() + '/');
-        date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
-        date += ((today.getDate()).toString().padStart(2, '0'));
-        return date;
-      }
-      function goBack() {
-        window.history.back();
-      }
       return {
         rowHeight,
         totalNeed,

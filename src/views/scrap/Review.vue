@@ -159,7 +159,7 @@
 <script>
   import { ref, onMounted, reactive } from 'vue';
   import { useRoute } from 'vue-router'
-  import { getDate , goBack } from '@/assets/js/common_fn.js'
+  import { canEnterPage, getDate , goBack } from '@/assets/js/common_fn.js'
   import Navbar from '@/components/Navbar.vue';
   import axios from 'axios';
   import router from '@/router';
@@ -169,6 +169,7 @@
   import {
     Pagination
   } from 'swiper/modules';
+import { Scrap_Delete_Status, Scrap_Review_Status } from '@/assets/js/enter_status';
   register();
   export default {
     components: {
@@ -197,6 +198,7 @@
         .then((response)=>{
           const data = response.data;
           if(data.state === 'success') {
+            canEnterPage(data.resultList.Status , Scrap_Review_Status)
             details.value = data.resultList;
           } else if (data.state === 'account_error') {
             alert(data.messages);

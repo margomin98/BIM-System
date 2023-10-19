@@ -164,14 +164,14 @@ const routes = [
     path: "/store_view",
     name: "Store_View",
     component: Store_View,
-    props: true, // 允许接收参数
+    props: true,
     meta: {auth: true, request: 'AI_Detail'},
   },
   {
     path: "/store_return",
     name: "Store_Return",
     component: Store_Return,
-    meta: {auth: true, request: 'AI_Create'},
+    meta: {auth: false, request: ''},//歸還入庫不綁權限
   },
   {
     path: "/store_delete",

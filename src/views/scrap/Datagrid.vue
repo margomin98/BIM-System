@@ -101,8 +101,8 @@
   import Navbar from "@/components/Navbar.vue";
   import axios from "axios"
   import {
-    ScrapStatus,
-    ScrapDateCategory
+    Scrap_StatusArray,
+    Scrap_DateCategory
   } from "@/assets/js/dropdown.js"
   import {
     useRouter
@@ -118,8 +118,8 @@
       const router = useRouter();
       const details = ref({});
       const DropdownArray = reactive({
-        Status: ScrapStatus,
-        DateCategory: ScrapDateCategory,
+        Status: Scrap_StatusArray,
+        DateCategory: Scrap_DateCategory,
       })
       const searchParams = reactive({
         ScrapId: '',

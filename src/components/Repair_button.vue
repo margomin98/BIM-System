@@ -17,6 +17,12 @@
   import {
     useRouter
   } from 'vue-router';
+  import { 
+    Repair_Edit_Status ,
+    Repair_Deliver_Status, 
+    Repair_Review_Status, 
+    Repair_Process_Status, 
+  } from '@/assets/js/enter_status';
   export default {
     props: ['params'],
     setup(props) {
@@ -77,14 +83,16 @@
       }
       function checkButton() {
         // console.log(disabledStatus);
-        if (disabledStatus !== '待交付') {
+        if (!Repair_Edit_Status.includes(disabledStatus)) {
           isDisabled.value.edit = true;
+        }
+        if (!Repair_Deliver_Status.includes(disabledStatus)) {
           isDisabled.value.deliver = true;
         }
-        if (disabledStatus !== '待審核') {
+        if (!Repair_Review_Status.includes(disabledStatus)) {
           isDisabled.value.review = true;
         }
-        if (disabledStatus !== '待送修' && disabledStatus !== '已送修') {
+        if (!Repair_Process_Status.includes(disabledStatus)) {
           isDisabled.value.process = true;
         }
       }

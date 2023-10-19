@@ -1,5 +1,5 @@
 <template>
-  <div class='button_wrap'>
+  <div class='button_div'>
     <button :class="{ disabled_btn: isDisabled, btn: !isDisabled}" @click="viewDelete()" :disabled="isDisabled">刪除</button>
   </div>
 </template>
@@ -13,6 +13,7 @@
   import {
     useRouter
   } from 'vue-router';
+  import { RentProcess_Delete_Status } from '@/assets/js/enter_status';
   export default {
     props: ['params'],
     setup(props) {
@@ -35,10 +36,8 @@
       }
       function checkButton() {
         const disabledStatus = props.params.data.Status;
-        if (disabledStatus !== '已填報') {
+        if(!RentProcess_Delete_Status.includes(disabledStatus)) {
           isDisabled.value = true;
-        } else {
-          isDisabled.value = false;
         }
       }
       return {
@@ -51,8 +50,8 @@
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
-.button_wrap{
-   display:flex;
+.button_div{
+  display:flex;
   align-items:center;
 
 .btn{

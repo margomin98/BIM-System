@@ -1,9 +1,7 @@
 <template>
-    <router-link :to="{name: linkName , query:{search_id: id}}" target="_blank">
-      <button type="button" class="btn btn-primary">
-        檢視
-      </button>
-    </router-link>
+  <router-link :to="{name: linkName , query:{search_id: id}}" target="_blank">
+    <button type="button" class="btn btn-primary" @click="view">檢視</button>
+  </router-link>
 </template>
 
 <script>
@@ -14,20 +12,22 @@ export default {
   setup(props){
     const linkName = ref('');
     const id = ref('');
-    const data = props.params.data;
     // console.log('data:' ,data);
-    // 已被整合
-    if(data.I_Source === 1) {
-      id.value = data.B_Id;
-      linkName.value = 'Equipment_View';
-    }
-    else {
-      id.value = data.AssetsId;
+    function view() {
+      // 已被整合
+      if(props.params.data.I_Source === 1) {
+        id.value = props.params.data.B_Id;
+        linkName.value = 'Equipment_View';
+      }
+      else {
+      id.value = props.params.data.AssetsId;
       linkName.value = 'Assets_View';
-    }
+      }
+  }
     return {
       linkName,
       id,
+      view,
     }
   },
 }

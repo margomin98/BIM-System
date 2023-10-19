@@ -7,6 +7,7 @@
 <script>
   import { useRouter } from 'vue-router';
   import { ref, onMounted } from 'vue';
+  import { Scrap_Delete_Status } from '@/assets/js/enter_status';
   export default {
     setup(props) {
       const router = useRouter();
@@ -25,7 +26,7 @@
       }
       function checkButton() {
         const disabledStatus = props.params.data.Status;
-        if (disabledStatus !== '待交付') {
+        if(!Scrap_Delete_Status.includes(disabledStatus)) {
           isDisabled.value = true;
         }
       }

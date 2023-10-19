@@ -110,8 +110,26 @@
         </div>
       </div>
       <div class='third_content'>
-        <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' @grid-ready="onGridReady" class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="10" :pagination="true">
-        </ag-grid-vue>
+        <DataTable 
+        :size="'small'"
+        :value="rowData" 
+        resizableColumns 
+        columnResizeMode="expand"
+        showGridlines 
+        scrollable 
+        scrollHeight="420px" 
+        paginator 
+        :rows="10" 
+        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        :rowsPerPageOptions="[10, 20, 30]"
+        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+        <Column style="min-width:80px;">
+          <template #body="slotProps">
+            <Delete :params = "slotProps" @updateDeleteList="updateDeleteList" @updateItemList="updateItemList" />
+          </template>
+        </Column>
+        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+        </DataTable>
       </div>
     </div>
     <div class="col button_wrap">
@@ -122,82 +140,34 @@
 </template>
 
 <script>
-  import { AgGridVue } from "ag-grid-vue3";
   import { useRoute, useRouter } from 'vue-router';
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   import Delete from "@/components/Rent_Edit_Delete_button";
   import Navbar from '@/components/Navbar.vue';
   import { Rent_UseOptions } from "@/assets/js/dropdown";
   import { onMounted, ref, reactive, } from 'vue';
   import { getEquipType , getEquipCategory , getProject} from "@/assets/js/common_api";
-  import { goBack } from "@/assets/js/common_fn";
+  import { Rent_Edit_Status } from "@/assets/js/enter_status";
+  import { goBack , canEnterPage } from "@/assets/js/common_fn";
   export default {
     components: {
       Navbar,
-      AgGridVue,
+      Column,
+      DataTable,
       Delete,
     },
     setup() {
       const route = useRoute();
       const router = useRouter();
       const AO_ID = route.query.search_id;
-      const gridApi = ref(null);
       const options = Rent_UseOptions;
-      const columnDefs = [{
-          suppressMovable: true,
-          field: "",
-          cellRenderer: "Delete",
-          cellRendererParams: {
-            insertDeleteList: updateDeleteList,
-            removeItemList: updateItemList,
-          },
-          width: 100,
-          resizable: true,
-        },
-        {
-          headerName: "設備總類",
-          field: "EquipTypeName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "設備分類",
-          field: "EquipCategoryName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "物品名稱",
-          field: "ProductName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true
-        },
-        {
-          headerName: "數量",
-          field: "Number",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "規格需求",
-          field: "RequiredSpec",
-          unSortIcon: true,
-          sortable: true,
-          flex: 1,
-          suppressMovable: true,
-          resizable: true
-        }
+      const datagridfield = [
+        {field: 'EquipTypeName', header: '設備總類',width: '150px'},
+        {field: 'EquipCategoryName', header: '設備分類',width: '150px'},
+        {field: 'ProductName', header: '物品名稱',width: '150px'},
+        {field: 'Number', header: '數量',width: '100px'},
+        {field: 'RequiredSpec', header: '規格需求',width: '250px'},
       ]
       const rowData = ref([]);
       const details = ref({});
@@ -271,10 +241,7 @@
           const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
           const data = response.data;
           if (data.state === 'success') {
-            if (data.resultList.Status !== '已填報') {
-              window.history.back();
-              // router.push({name: 'Rent_Datagrid'});
-            }
+            canEnterPage(data.resultList.Status, Rent_Edit_Status)
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             rowData.value = data.resultList.ItemList;
@@ -375,9 +342,6 @@
           id: increaseId.value,
         });
         increaseId.value++;
-        setTimeout(() => {
-          gridApi.value.setRowData(rowData.value);
-        }, 0);
         console.log(myForm.ItemList);
         //清空子項目
         myForm.EquipTypeName = '';
@@ -389,10 +353,6 @@
         myForm.Number = 1;
         myForm.RequiredSpec = '';
       }
-      const onGridReady = (params) => {
-        // 賦值 gridApi
-        gridApi.value = params.api;
-      };
       function updateDeleteList(newValue) {
         myForm.deleteList.push(newValue.item_id);
         const deleteIndex = rowData.value.findIndex(item => item.id === newValue.id)
@@ -409,7 +369,7 @@
       }
       return {
         options,
-        columnDefs,
+        datagridfield,
         rowData,
         details,
         myForm,
@@ -419,8 +379,8 @@
         getProjectName,
         submit,
         insertItemList,
-        onGridReady,
         updateDeleteList,
+        updateItemList,
         goBack,
       };
     },

@@ -91,6 +91,7 @@
       <div class="button_wrap d-flex">
         <button class="search_btn" @click="submit('' , 'search')">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
+        <router-link to="/home" style="display: none;"><button ref="home"></button></router-link>
       </div>
     </div>
     <div>
@@ -102,19 +103,19 @@
         :rows="10" :row-style="({ AssetsId }) => AssetsId === 'BF00000005' ? 'background-color: #933b3b; color:white;font-weight: 700;font-size: 18px;': null " :totalRecords="datagridSetting.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <!-- <template #header>
-                <div>
-                  <button class="btn btn-primary" label="Export" @click="exportCSV()" style="margin-right: 1rem;">exportCSV</button>
-                  <button @click="add" type="button" class="btn btn-primary">increase totalRecords</button>
-                </div>
-</template>-->
+          <div>
+            <button class="btn btn-primary" label="Export" @click="exportCSV()" style="margin-right: 1rem;">exportCSV</button>
+            <button @click="add" type="button" class="btn btn-primary">increase totalRecords</button>
+          </div>
+        </template>-->
         <Column selectionMode="multiple" headerStyle="width: 3rem" ></Column>
         <Column style="width:100vw">
-<template #body="slotProps">
-  <!-- Add the custom component here -->
-  <test :params="slotProps" :msg="'hi'" @msg="handlemsg" />
-</template>
+          <template #body="slotProps">
+            <!-- Add the custom component here -->
+            <test :params="slotProps" :msg="'hi'" @msg="handlemsg" v-show="slotProps.data.AssetsId"/>
+          </template>
         </Column>
-        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}" :frozen="item.field === 'AssetsId'"></Column>
+        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
       </DataTable>
       </div>
 
@@ -150,6 +151,7 @@
       test,
     },
     setup() {
+      const home = ref(null);
       const searchParams = reactive({
         EquipTypeName: '',
         EquipType_Id: '',
@@ -243,15 +245,6 @@
       function exportCSV() {
         dt.value.exportCSV();
       }
-      const onSelectAllChange = (event) => {
-        console.log('selectAll event:', event);
-        datagridSetting.selectAll = event.checked;
-        if (datagridSetting.selectAll) {
-          selectedProduct.value = rowData.value
-        } else {
-          selectedProduct.value = [];
-        }
-      }
       async function submit(event, type) {
         datagridSetting.loading = true;
         const formData = new FormData();
@@ -276,12 +269,12 @@
             break
         }
         const order = datagridSetting.sortOrder === 1 ? 'asc' : 'desc'
-        console.log('first:', datagridSetting.first);
-        console.log('rows:', datagridSetting.rows);
-        console.log('page:', datagridSetting.currentPage);
-        console.log('sort:', datagridSetting.sortField);
-        console.log('order:', order);
-        console.log('-----------------------------');
+        // console.log('first:', datagridSetting.first);
+        // console.log('rows:', datagridSetting.rows);
+        // console.log('page:', datagridSetting.currentPage);
+        // console.log('sort:', datagridSetting.sortField);
+        // console.log('order:', order);
+        // console.log('-----------------------------');
         // 將表格資料append到 formData
         for (const key in searchParams) {
           formData.append(key, searchParams[key]);
@@ -293,6 +286,9 @@
         try {
           const response = await axios.post('http://192.168.0.177:7008/InventoryMng/Assets', formData);
           const data = response.data;
+          console.log('response content-type:', response.headers['content-type']);
+          console.log('response header:', response.headers);
+          console.log('response :', response);
           if (data.state === 'success') {
             //取得datagrid成功
             // console.log('資產datagrid:', data.resultList);
@@ -353,6 +349,15 @@
             console.error(error);
           })
       }
+      function onSelectAllChange(event) {
+        console.log(event);
+        datagridSetting.selectAll = event.checked;
+        if(datagridSetting.selectAll) {
+          selectedProduct.value = rowData.value
+        } else {
+          selectedProduct.value = []
+        }
+      }
       function selectType(item) {
         searchParams.EquipTypeName = item.Name;
         searchParams.EquipType_Id = item.Id;
@@ -390,9 +395,11 @@
         submit('', 'search')
       }
       function handlemsg(data) {
-        alert(data)
+        home.value.click();
+        // alert(data)
       }
       return {
+        home,
         dt,
         searchParams,
         DropdownArray,

@@ -11,7 +11,7 @@
   } from 'vue';
   export default {
     props: ['params'],
-    setup(props) {
+    setup(props, {emit}) {
       const data = props.params.data
       const selectNumber = ref('');
       onMounted(() => {
@@ -20,11 +20,11 @@
           selectNumber.value = data.ActualNum;
       });
       function changeSelectNumber() {
-        
           const check = parseFloat(selectNumber.value);
           // 檢查輸入值，正常則進盤點function
           if(selectNumber.value === '') {
-            props.params.takeParams(data , selectNumber.value);
+            // props.params.takeParams(data , selectNumber.value);
+            emit('takeParams',data , selectNumber.value)
           }
           else {
             if(Number.isNaN(check)) {
@@ -32,7 +32,8 @@
               selectNumber.value = ''
             }
             else {
-              props.params.takeParams(data , selectNumber.value);
+              // props.params.takeParams(data , selectNumber.value);
+              emit('takeParams',data , selectNumber.value)
             }
           }
         }

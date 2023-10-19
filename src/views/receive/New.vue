@@ -281,58 +281,6 @@
       Navbar,
       VueMultiselect
     },
-    data() {
-      return {
-        taggingOptions: [{
-            name: 'Tag 1',
-            code: 'T1'
-          },
-          {
-            name: 'Tag 2',
-            code: 'T2'
-          },
-          {
-            name: 'Tag 3',
-            code: 'T3'
-          },
-          {
-            name: 'Tag 4',
-            code: 'T4'
-          },
-          {
-            name: 'Tag 5',
-            code: 'T5'
-          },
-          {
-            name: 'Tag 6',
-            code: 'T6'
-          },
-          {
-            name: 'Tag 7',
-            code: 'T7'
-          },
-          {
-            name: 'Tag 8',
-            code: 'T8'
-          },
-          {
-            name: 'Tag 9',
-            code: 'T9'
-          }
-        ],
-        taggingSelected: []
-      }
-    },
-    methods: {
-      addTag(newTag) {
-        const tag = {
-          name: newTag,
-          code: newTag.substring(0, 2) + Math.floor(Math.random() * 10000000),
-        };
-        this.taggingOptions.push(tag);
-        this.taggingSelected.push(tag);
-      }
-    },
     setup() {
       const router = useRouter();
       const Applicant = ref('')

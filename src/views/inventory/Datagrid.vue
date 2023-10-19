@@ -73,13 +73,49 @@
     </div>
     <div class="col justify-content-center d-flex">
       <div class="button_wrap d-flex">
-        <button class="search_btn" @click="submit">檢索</button>
+        <button class="search_btn" @click="submit('' , 'search')">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
       </div>
     </div>
-   <div style="width: 100%;margin-bottom:3%">
+   <!-- <div style="width: 100%;margin-bottom:3%">
       <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true" :alwaysShowHorizontalScroll="true">
       </ag-grid-vue>
+    </div> -->
+    <div  style="height: 450px">
+      <DataTable 
+        :key="datagridSetting.key"
+        lazy 
+        :first= "datagridSetting.first"
+        :size="'small'"
+        :loading="datagridSetting.loading"
+        :value="rowData" 
+        :sort-field="datagridSetting.sortField"
+        :sort-order="datagridSetting.sortOrder"
+        resizableColumns 
+        columnResizeMode="expand"
+        showGridlines 
+        scrollable 
+        scrollHeight="420px" 
+        @page="submit($event , 'page')" 
+        @sort="submit($event , 'sort')"
+        paginator 
+        :rows="datagridSetting.rows" 
+        :totalRecords="datagridSetting.totalRecords"
+        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        :rowsPerPageOptions="[10, 20, 30]"
+        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+        <Column style="min-width: 200px;">
+          <template #body="slotProps">
+            <Inventory_button :params = "slotProps" @updateSearchId="updateSearchId" />
+          </template>
+        </Column>
+        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+        <Column>
+          <template #body="slotProps">
+            <Delete :params = "slotProps"/>
+          </template>
+        </Column>
+      </DataTable>
     </div>
   </div>
   <!-- Modal -->
@@ -110,7 +146,9 @@
   import Delete from "@/components/Inventory_data_delete_button";
   import Navbar from "@/components/Navbar.vue";
   import { PlanType , PlanStatus , PlanDateCategory} from "@/assets/js/dropdown.js"
+  import { UpdatePageParameter, createDatagrid } from "@/assets/js/common_fn";
   import { useRouter } from "vue-router";
+  import axios from "axios";
   export default {
     components: {
       Navbar,
@@ -232,46 +270,82 @@
           }
       ]
       const rowData = ref([]);
-      const datatableParams = reactive({
-        loading: false,
-        totalRecords: 0,
-        currentPage: 0,
-        rows: 10,
-      })
-      const datatableField =  
+      const datagridSetting = createDatagrid()
+      const datagridfield = [
+        {
+          field: 'PlanId',
+          header: '計畫編號',
+          width: '150px',
+        },
+        {
+          field: 'PlanType',
+          header: '盤點類型',
+          width: '150px',
+        },
+        {
+          field: 'PlanStatus',
+          header: '盤點狀態',
+          width: '150px',
+        },
+        {
+          field: 'PlanTitle',
+          header: '標題',
+          width: '150px',
+        },
+        {
+          field: 'InventoryStaffName',
+          header: '盤點人員',
+          width: '150px',
+        },
+        {
+          field: 'ConvenerName',
+          header: '召集人員',
+          width: '110px',
+        },
+        {
+          field: 'PlanStart',
+          header: '盤點開始日期',
+          width: '180px',
+        },
+        {
+          field: 'PlanEnd',
+          header: '盤點結束日期',
+          width: '180px',
+        },
+      ];
       onMounted(()=>{
-        submit();
+        datagridSetting.sortField = 'PlanId';
+        submit('' , 'search');
       });
-      async function submit() {
+      async function submit(event , type) {
+        datagridSetting.loading = true;
         const formData = new FormData();
-
-        //將表格資料append到 formData
+        // console.log(event);
+        // 將表格資料append到 formData
         for (const key in searchParams) {
           formData.append(key, searchParams[key]);
         }
-        const axios = require('axios');
+        UpdatePageParameter(datagridSetting,event,type,formData);
         try {
           const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryPlans', formData);
           const data = response.data;
           if (data.state === 'success') {
             //取得datagrid成功
-            // console.log(data.state);
-            console.log('datagrid', data.resultList);
-            rowData.value = data.resultList;
-          } else if (data.state === 'error') {
-            //取得datagrid失敗
-            alert(data.messages);
-          } else if (data.state === 'input_error') {
-            //取得datagrid格式錯誤
-            alert(data.messages);
+            console.log('datagrid:',data.resultList);
+            datagridSetting.totalRecords = data.resultList.total;
+            rowData.value = data.resultList.rows;
+            datagridSetting.key ++;
           } else if (data.state === 'account_error') {
             //尚未登入
             alert(data.messages);
             router.push('/');
+          } else {
+            alert(data.messages);
           }
         } catch (error) {
           console.error(error);
         }
+        datagridSetting.loading = false;
       }
       const selectType = (item) => {
         searchParams.PlanType = item;
@@ -282,6 +356,9 @@
       const selectDateCategory = (item) => {
         searchParams.DateCategory = item;
       };
+      const updateSearchId = (id) => {
+        search_id.value = id;
+      }
       function routerProcess() {
         router.push({
           name: 'Inventory_Process',
@@ -294,13 +371,15 @@
         for (const key in searchParams) {
           searchParams[key] = '';
         }
-        submit();
+        submit('' , 'search');
       }
 
       return {
         details,
         searchParams,
         DropdownArray,
+        datagridSetting,
+        datagridfield,
         search_id,
         columnDefs,
         rowData,
@@ -310,6 +389,7 @@
         selectType,
         selectStatus,
         selectDateCategory,
+        updateSearchId,
         routerProcess,
         clear,
       };

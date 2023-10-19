@@ -267,8 +267,10 @@
     Pagination
   } from 'swiper/modules';
   import {
-    goBack
+    goBack,
+    canEnterPage,
   } from '@/assets/js/common_fn.js'
+  import { Repair_Process_Status } from '@/assets/js/enter_status';
   register();
   export default {
     components: {
@@ -304,6 +306,7 @@
           .then((response) => {
             const data = response.data;
             if (data.state === 'success') {
+              canEnterPage(data.resultList.Status , Repair_Process_Status)
               details.value = data.resultList;
               console.log('資料:\n', details.value);
               if (details.value.RepairDate) {
