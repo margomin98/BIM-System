@@ -97,7 +97,7 @@
       <!-- input file  -->
       <input type="file" ref="inputfile" style="display: none;" @change="importExcel" accept=".xlsx, .csv">
     </div>
-    <div class="dg-height">
+    <div class="dg-height mb-5">
       <DataTable
         lazy 
         :key="datagrid.key"

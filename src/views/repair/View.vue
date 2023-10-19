@@ -189,10 +189,10 @@
             <div class="input-group-prepend">已上傳文件：</div>
             <div class="selected_file">
               <!-- v-for讀取已上傳物流文件 -->
-              <div class="file_upload_wrap" style="cursor: pointer;" v-for="(file , index) in details.existDocument" :key="index">
-                <p>{{ file.FileName }}</p>
-                <!-- 在handlePreview依據不同副檔名做不同處理 -->
-                <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
+              <div class="file_upload_wrap" v-for="(file , index) in details.existDocument" :key="index">
+                <p>{{ file.FileName }}
+                  <!-- 在handlePreview依據不同副檔名做不同處理 -->
+                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;cursor: pointer;" @click="handlePreview(file)"></p>
               </div>
               <!-- doc/docx download hidden Link -->
               <a href="" style="display: none;" id="download-link"></a>
@@ -215,9 +215,9 @@
                 </div>
               </div>
               <!-- <div class="file_upload_wrap" style="cursor: pointer;">
-                    <p>File 1</p>
-                    <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;">
-                  </div> -->
+                      <p>File 1</p>
+                      <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;">
+                    </div> -->
             </div>
           </div>
         </div>
@@ -363,7 +363,7 @@
       }
       .info_wrap {
         margin: 30px auto 5%;
-        width: 750px;
+        width: 800px;
         .fixed_info {
           @include fixed_info;
           p {
@@ -389,37 +389,44 @@
               font-weight: 700;
               font-size: 20px;
               text-align: end;
-              width: 155px;
+              width: 140px;
               span {
                 @include red_star
               }
             }
           }
-          .selected_file {
-            margin-left: 20px;
-            p.title {
-              font-weight: 700;
-              color: white;
-              margin-bottom: 5px;
+          .repair_photo_section {
+            .input-group {
+              flex-wrap: unset;
             }
-            .file_upload_wrap {
-              margin-bottom: 5px;
-              display: flex;
-              gap: 5px 0;
-              img {
-                width: 25px;
-                height: 25px;
-              }
-              p {
-                margin-bottom: 0;
+            .input-group-prepend {
+              white-space: nowrap;
+            }
+            .selected_file {
+              p.title {
                 font-weight: 700;
                 color: white;
-                word-break: break-word;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
+                margin-bottom: 5px;
+              }
+              .file_upload_wrap {
+                margin-bottom: 5px;
+                display: flex;
+                gap: 5px 0;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  margin-bottom: 0;
                   font-weight: 700;
                   color: white;
+                  word-break: break-word;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
                 }
               }
             }
@@ -482,7 +489,7 @@
       }
       .info_wrap {
         margin: 30px auto 5%;
-        padding: 0 5%;
+        width: 750px;
         .fixed_info {
           @include fixed_info;
           p {
@@ -521,7 +528,6 @@
           }
           .repair_photo_section {
             .input-group {
-              flex-direction: column;
               white-space: unset;
               .input-group-prepend {
                 white-space: nowrap

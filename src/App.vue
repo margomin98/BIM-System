@@ -22,10 +22,11 @@
 		text-decoration: none;
 	}
 	.main_section .dropdown-menu {
-		padding: 0;
+		padding: 0!important;
 		background: white !important;
 	}
-	.dropdown-item {
+	.dropdown-menu p,.dropdown-item {
+		padding: 5px 10px!important;
 		font-size: 18px!important;
 		margin-bottom: 0!important;
 		&:hover {
@@ -150,6 +151,9 @@
 	}
 	.p-datatable-wrapper {
 		border: 1px solid black
+	}
+	.datatable_checkbox{
+		text-align: center;
 	}
 	@media only screen and (min-width: 1200px) {
 		.container-fluid {

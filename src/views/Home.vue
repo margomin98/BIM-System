@@ -46,17 +46,19 @@
             toggleSeriesVisible: false,
             paddingX: 30,
             label: {
-              fontWeight: '700',
+              fontWeight: '900',
               fontSize: 20,
             },
             marker: {
               shape: 'circle',
               padding: 10,
+              size: 20,
+              strokeWidth: 0
             },
           },
         },
         series: [{
-          fills: ['#98CCD3', '#79A8A9', '#4D6988', '#4B6F70', '#516D8B'],
+          fills: ['#173B63', '#426994', '#5C88B8', '#80A8D4', '#8C9DAF'],
           strokes: ['white'],
           type: 'pie',
           calloutLabelKey: 'os',
@@ -79,7 +81,7 @@
             offset: 5,
             fontSize: 18,
             fontWeight: '600',
-            color: '#132238'
+            color: '#000000'
           },
           calloutLine: {
             strokeWidth: 2,
@@ -89,7 +91,7 @@
           title: {
             text: '倉庫即時數據',
             fontSize: 45,
-            spacing: 30,
+            spacing: 40,
             fontWeight: 'bold',
             color: '#132238',
           },
@@ -101,8 +103,8 @@
           highlightStyle: {
             item: {
               fill: '#283441',
-              stroke: 'grey',
-              strokeWidth: 1,
+              stroke: 'white',
+              strokeWidth: 2,
             },
           },
         }, ],

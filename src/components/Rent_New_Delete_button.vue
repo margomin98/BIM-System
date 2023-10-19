@@ -26,6 +26,7 @@ export default {
 .button_div {
   display: flex;
   align-items: center;
+  justify-content: center;
 
   .btn {
     @include delete_button;
