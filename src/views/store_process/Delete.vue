@@ -379,24 +379,6 @@
   textarea {
     padding: 5px 10px 30px;
   }
-  .nav {
-    overflow-x: auto;
-    overflow-y: hidden;
-    flex-wrap: nowrap;
-    border: none;
-  }
-  ::-webkit-scrollbar {
-		height: 6px;
-		border: 1px solid rgb(219, 218, 218);
-		border-radius: 5px;
-		width: 8px;
-	}
-	 ::-webkit-scrollbar-thumb {
-		display: block;
-		border-radius: 5px;
-		background-color: rgb(176, 175, 175);
-		border: 1px solid rgb(86, 85, 85);
-	}
   .delete_modal {
     .modal-content {
       border: solid 1px black;
@@ -570,6 +552,24 @@
           }
         }
         .tab_section {
+          .nav {
+            overflow-x: auto;
+            overflow-y: hidden;
+            flex-wrap: nowrap;
+            border: none;
+          }
+           ::-webkit-scrollbar {
+            height: 6px;
+            border: 1px solid rgb(219, 218, 218);
+            border-radius: 5px;
+            width: 8px;
+          }
+           ::-webkit-scrollbar-thumb {
+            display: block;
+            border-radius: 5px;
+            background-color: rgb(176, 175, 175);
+            border: 1px solid rgb(86, 85, 85);
+          }
           .nav-tabs {
             button {
               @include tab_section_num;
@@ -811,6 +811,24 @@
           }
         }
         .tab_section {
+          .nav {
+            overflow-x: auto;
+            overflow-y: hidden;
+            flex-wrap: nowrap;
+            border: none;
+          }
+           ::-webkit-scrollbar {
+            height: 6px;
+            border: 1px solid rgb(219, 218, 218);
+            border-radius: 5px;
+            width: 8px;
+          }
+           ::-webkit-scrollbar-thumb {
+            display: block;
+            border-radius: 5px;
+            background-color: rgb(176, 175, 175);
+            border: 1px solid rgb(86, 85, 85);
+          }
           .nav-tabs {
             button {
               @include tab_section_num;
@@ -1075,6 +1093,24 @@
           }
         }
         .tab_section {
+          .nav {
+            overflow-x: auto;
+            overflow-y: hidden;
+            flex-wrap: nowrap;
+            border: none;
+          }
+           ::-webkit-scrollbar {
+            height: 6px;
+            border: 1px solid rgb(219, 218, 218);
+            border-radius: 5px;
+            width: 8px;
+          }
+           ::-webkit-scrollbar-thumb {
+            display: block;
+            border-radius: 5px;
+            background-color: rgb(176, 175, 175);
+            border: 1px solid rgb(86, 85, 85);
+          }
           .nav-tabs {
             button {
               @include tab_section_num;

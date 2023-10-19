@@ -107,7 +107,7 @@
                     資產類型 :
                   </div>
                   <div class="d-flex align-items-center radio_wrap">
-                    <div class="form-check "> 
+                    <div class="form-check ">
                       <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px;" value="資產" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='資產'" />
                       <label class="form-check-label check_box" for='radio1'>資產</label>
                     </div>
@@ -436,24 +436,6 @@
     padding: 5px 10px 30px;
   }
   @import "@/assets/css/global.scss";
-  .nav {
-    overflow-x: auto;
-    overflow-y: hidden;
-    flex-wrap: nowrap;
-    border: none;
-  }
-  ::-webkit-scrollbar {
-		height: 6px;
-		border: 1px solid rgb(219, 218, 218);
-		border-radius: 5px;
-		width: 8px;
-	}
-	 ::-webkit-scrollbar-thumb {
-		display: block;
-		border-radius: 5px;
-		background-color: rgb(176, 175, 175);
-		border: 1px solid rgb(86, 85, 85);
-	}
   .check_box_wrap {
     .radio_wrap {
       margin-left: unset !important;
@@ -616,6 +598,24 @@
           }
         }
         .tab_section {
+          .nav {
+            overflow-x: auto;
+            overflow-y: hidden;
+            flex-wrap: nowrap;
+            border: none;
+          }
+           ::-webkit-scrollbar {
+            height: 6px;
+            border: 1px solid rgb(219, 218, 218);
+            border-radius: 5px;
+            width: 8px;
+          }
+           ::-webkit-scrollbar-thumb {
+            display: block;
+            border-radius: 5px;
+            background-color: rgb(176, 175, 175);
+            border: 1px solid rgb(86, 85, 85);
+          }
           .nav-tabs {
             button {
               @include tab_section_num;
@@ -882,6 +882,24 @@
           }
         }
         .tab_section {
+          .nav {
+            overflow-x: auto;
+            overflow-y: hidden;
+            flex-wrap: nowrap;
+            border: none;
+          }
+           ::-webkit-scrollbar {
+            height: 6px;
+            border: 1px solid rgb(219, 218, 218);
+            border-radius: 5px;
+            width: 8px;
+          }
+           ::-webkit-scrollbar-thumb {
+            display: block;
+            border-radius: 5px;
+            background-color: rgb(176, 175, 175);
+            border: 1px solid rgb(86, 85, 85);
+          }
           .nav-tabs {
             button {
               @include tab_section_num;
@@ -1167,6 +1185,24 @@
           }
         }
         .tab_section {
+          .nav {
+            overflow-x: auto;
+            overflow-y: hidden;
+            flex-wrap: nowrap;
+            border: none;
+          }
+           ::-webkit-scrollbar {
+            height: 6px;
+            border: 1px solid rgb(219, 218, 218);
+            border-radius: 5px;
+            width: 8px;
+          }
+           ::-webkit-scrollbar-thumb {
+            display: block;
+            border-radius: 5px;
+            background-color: rgb(176, 175, 175);
+            border: 1px solid rgb(86, 85, 85);
+          }
           .check_box_wrap {
             .check_box {
               margin-right: 5px;

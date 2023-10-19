@@ -643,24 +643,7 @@
   span {
     @include red_star
   }
-  .nav {
-    overflow-x: auto;
-    overflow-y: hidden;
-    flex-wrap: nowrap;
-    border: none;
-  }
-  ::-webkit-scrollbar {
-		height: 6px;
-		border: 1px solid rgb(219, 218, 218);
-		border-radius: 5px;
-		width: 8px;
-	}
-	 ::-webkit-scrollbar-thumb {
-		display: block;
-		border-radius: 5px;
-		background-color: rgb(176, 175, 175);
-		border: 1px solid rgb(86, 85, 85);
-	}
+
   .selected_file {
     flex-direction: column;
     .uploaded_file {
