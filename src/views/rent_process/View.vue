@@ -67,11 +67,6 @@
         showGridlines 
         scrollable
         scroll-height="420px">
-        <Column style="min-width:50px;" header="項目">
-          <template #body="slotProps">
-            {{ calculateIndex(slotProps) }}
-          </template>
-        </Column>
         <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
         </DataTable>
       </div>
@@ -246,6 +241,7 @@
       const options = Rent_UseOptions;
       // 資產出庫項目
       const datagrid1field = [
+        { field: "id", width: '50px' , header: "項目" },
         { field: "EquipTypeName", width: '150px', header: "設備總類" },
         { field: "EquipCategoryName", width: '150px', header: "設備分類" },
         { field: "ProductName", width: '150px', header: "物品名稱" },

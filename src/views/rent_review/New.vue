@@ -59,8 +59,16 @@
         </div>
       </div>
       <div class="second_content">
-        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :paginationAutoPageSize="true">
-        </ag-grid-vue>
+        <DataTable 
+          :size="'small'"
+          :value="rowData1" 
+          resizableColumns 
+          columnResizeMode="expand"
+          showGridlines 
+          scrollable
+          scroll-height="600px">
+          <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+        </DataTable>
       </div>
       <div class="fixed_info">
         <div>
@@ -68,8 +76,21 @@
         </div>
       </div>
       <div class="third_content">
-        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs2" :rowData="rowData2" :paginationAutoPageSize="true">
-        </ag-grid-vue>
+        <DataTable 
+        :size="'small'"
+        :value="rowData2" 
+        resizableColumns 
+        columnResizeMode="expand"
+        showGridlines 
+        scrollable
+        scroll-height="600px">
+        <Column>
+          <template #body="slotProps">
+            <AssetsView :params="slotProps"/>
+          </template>
+        </Column>
+        <Column v-for="item in datagrid2field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+        </DataTable>
       </div>
       <div class="fixed_info_count">
         <div>
@@ -120,7 +141,8 @@
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name"><p><span>*</span>審核結果</p></label>
             <div class="input-group">
-              <input type="radio" value="true" v-model="optionValue" />通過 <input type="radio" value="false" v-model="optionValue" />不通過
+              <input type="radio" value="true" v-model="validation.VerifyOption" />通過
+              <input type="radio" value="false" v-model="validation.VerifyOption" />不通過
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
@@ -176,29 +198,29 @@
 </template>
 
 <script>
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
+
   import {
     useRoute,
     useRouter
   } from 'vue-router';
-  import Storage_add from "@/components/Storage_add_button";
+  import AssetsView from "@/components/Rent_process_new_view_button.vue"
   import Navbar from "@/components/Navbar.vue";
   import { Rent_UseOptions } from "@/assets/js/dropdown";
   import {
-    computed,
     onMounted,
     reactive,
     ref
   } from "vue";
-import { canEnterPage } from "@/assets/js/common_fn";
-import { RentReview_New_Status } from "@/assets/js/enter_status";
+  import { goBack, getDate, canEnterPage } from "@/assets/js/common_fn";
+  import { RentReview_New_Status } from "@/assets/js/enter_status";
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   export default {
     components: {
       Navbar,
-      AgGridVue,
-      Storage_add
+      Column,
+      DataTable,
+      AssetsView,
     },
     data() {
       return {
@@ -216,142 +238,32 @@ import { RentReview_New_Status } from "@/assets/js/enter_status";
         account: '',
         password: '',
         VerifyMemo: '',
-        VerifyOption: false,
+        VerifyOption: '',
         isVerified: false,
         VerifyPerson: '',
       })
       const details = ref({});
       const options = Rent_UseOptions;
-      const columnDefs1 = [{
-          headerName: "項目",
-          field: "id",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-        },
-        {
-          headerName: "設備總類",
-          field: "EquipTypeName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-        },
-        {
-          headerName: "設備分類",
-          field: "EquipCategoryName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-        },
-        {
-          headerName: "物品名稱",
-          field: "ProductName",
-          unSortIcon: true,
-          sortable: true,
-          width: 140,
-          suppressMovable: true,
-        },
-        {
-          headerName: "數量",
-          field: "Number",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-        },
-        {
-          headerName: "規格需求",
-          field: "RequiredSpec",
-          unSortIcon: true,
-          sortable: true,
-          flex: 1,
-          suppressMovable: true,
-        }
-      ];
-      const columnDefs2 = [{
-          headerName: "項目",
-          field: "OM_List_id",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-        },
-        {
-          headerName: "資產編號",
-          field: "AssetsId",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-        },
-        {
-          headerName: "資產名稱",
-          field: "AssetName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-        },
-        {
-          headerName: "數量",
-          field: "OM_Number",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-        },
-        {
-          headerName: "單位",
-          field: "OM_Unit",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-        },
-        {
-          headerName: "儲位區域",
-          field: "AreaName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-        },
-        {
-          headerName: "儲位櫃位",
-          field: "LayerName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-        },
-        {
-          headerName: "廠商",
-          field: "VendorName",
-          unSortIcon: true,
-          sortable: true,
-          width: 250,
-          suppressMovable: true,
-        },
-        {
-          headerName: "型號",
-          field: "ProductType",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-        },
-        {
-          headerName: "規格",
-          field: "ProductSpec",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-        },
-      ];
+      const datagrid1field = [
+        { header: "項目", field: "id", width: '50px' },
+        { header: "設備總類", field: "EquipTypeName", width: '150px' },
+        { header: "設備分類", field: "EquipCategoryName", width: '150px' },
+        { header: "物品名稱", field: "ProductName", width: '140px' },
+        { header: "數量", field: "Number", width: '50px' },
+        { header: "規格需求", field: "RequiredSpec" , width: '250px' },
+      ]
+      const datagrid2field = [
+        { header: "項目", field: "OM_List_id", width: '50px' },
+        { header: "資產編號", field: "AssetsId", width: '100px' },
+        { header: "資產名稱", field: "AssetName", width: '150px' },
+        { header: "數量", field: "OM_Number", width: '50px' },
+        { header: "單位", field: "OM_Unit", width: '50px' },
+        { header: "儲位區域", field: "AreaName", width: '150px' },
+        { header: "儲位櫃位", field: "LayerName", width: '150px' },
+        { header: "廠商", field: "VendorName", width: '150px' },
+        { header: "型號", field: "ProductType", width: '150px' },
+        { header: "規格", field: "ProductSpec", width: '250px' },
+      ]
       const rowData1 = ref([]);
       const rowData2 = ref([]);
       async function getDetails() {
@@ -416,6 +328,10 @@ import { RentReview_New_Status } from "@/assets/js/enter_status";
         }
       }
       async function submit() {
+        if(!validation.VerifyOption) {
+          alert('請輸入必填項目')
+          return
+        }
         if(validation.VerifyMemo) {
           validation.VerifyMemo = validation.VerifyMemo.trim();
         }
@@ -425,6 +341,7 @@ import { RentReview_New_Status } from "@/assets/js/enter_status";
         }
         const axios = require('axios');
         const formData = new FormData();
+        validation.VerifyOption = validation.VerifyOption === 'true'
         const formFields = {
           'AO_ID': details.value.AO_ID,
           'VerifyPerson': validation.VerifyPerson,
@@ -455,27 +372,8 @@ import { RentReview_New_Status } from "@/assets/js/enter_status";
           console.error(error);
         }
       }
-      const optionValue = computed({
-        get() {
-          return validation.VerifyOption.toString()
-        },
-        set(value) {
-          return validation.VerifyOption = value === 'true'
-        }
-      });
       function validationStatus() {
         return validation.isVerified ? validation.VerifyPerson : '未驗證'
-      }
-      function goBack() {
-        window.history.back();
-      }
-      function getDate() {
-        const today = new Date();
-        var date = '';
-        date += (today.getFullYear() + '/');
-        date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
-        date += ((today.getDate()).toString().padStart(2, '0'));
-        return date;
       }
       return {
         totalNeed,
@@ -483,14 +381,13 @@ import { RentReview_New_Status } from "@/assets/js/enter_status";
         validation,
         details,
         options,
-        columnDefs1,
-        columnDefs2,
+        datagrid1field,
+        datagrid2field,
         rowData1,
         rowData2,
         VerifyDate,
         validate,
         submit,
-        optionValue,
         validationStatus,
         goBack,
       };

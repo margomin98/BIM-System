@@ -143,11 +143,6 @@
             <Storage_button :params="slotProps" @searchList="searchList" />
           </template>
         </Column>
-        <Column style="min-width:50px;" header="項目">
-          <template #body="slotProps">
-            {{ calculateIndex(slotProps) }}
-          </template>
-        </Column>
         <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
         </DataTable>
       </div>
@@ -242,7 +237,6 @@
   } from "ag-grid-vue3";
   import AssetsView from '@/components/Rent_process_new_view_button'
   import Storage_button from "@/components/Storage_button";
-  import Rent_process_new_view_button from "@/components/Rent_process_new_view_button";
   import Storage_add from "@/components/Storage_add_button";
   import Storage_number from "@/components/Storage_number_input"
   import Delete from "@/components/Rent_proccess_new_delete_button";
@@ -282,7 +276,6 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
       DataTable,
       Storage_button,
       Delete,
-      Rent_process_new_view_button,
       Storage_add,
       Storage_number,
       AssetsView,
@@ -319,6 +312,7 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
       });
       // 資產出庫項目
       const datagrid1field = [
+        { field: "id", width: '50px' , header: "項目" },
         { field: "EquipTypeName", width: '150px', header: "設備總類" },
         { field: "EquipCategoryName", width: '150px', header: "設備分類" },
         { field: "ProductName", width: '150px', header: "物品名稱" },
@@ -342,7 +336,7 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
       const columnDefs3 = [{
           headerName: "",
           field: "",
-          cellRenderer: "Rent_process_new_view_button",
+          cellRenderer: "AssetsView",
           width: 100,
           suppressMovable: true,
           resizable: true,

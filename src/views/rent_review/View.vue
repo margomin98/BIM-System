@@ -59,8 +59,16 @@
         </div>
       </div>
       <div class="second_content">
-        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs1" :rowData="rowData1" :paginationAutoPageSize="true">
-        </ag-grid-vue>
+        <DataTable 
+          :size="'small'"
+          :value="rowData1" 
+          resizableColumns 
+          columnResizeMode="expand"
+          showGridlines 
+          scrollable
+          scroll-height="600px">
+          <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+        </DataTable>
       </div>
       <div class="fixed_info">
         <div>
@@ -68,8 +76,21 @@
         </div>
       </div>
       <div class="third_content">
-        <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs2" :rowData="rowData2" :paginationAutoPageSize="true">
-        </ag-grid-vue>
+        <DataTable 
+        :size="'small'"
+        :value="rowData2" 
+        resizableColumns 
+        columnResizeMode="expand"
+        showGridlines 
+        scrollable
+        scroll-height="600px">
+        <Column>
+          <template #body="slotProps">
+            <AssetsView :params="slotProps"/>
+          </template>
+        </Column>
+        <Column v-for="item in datagrid2field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+        </DataTable>
       </div>
       <div class="fixed_info_count">
         <div>
@@ -144,25 +165,26 @@
 </template>
 
 <script>
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   import {
     useRoute,
     useRouter
   } from 'vue-router';
-  import Storage_add from "@/components/Storage_add_button";
+  import AssetsView from "@/components/Rent_process_new_view_button.vue"
   import Navbar from "@/components/Navbar.vue";
   import { Rent_UseOptions } from "@/assets/js/dropdown";
   import {
     onMounted,
     ref
   } from "vue";
+  import {goBack} from "@/assets/js/common_fn"
   export default {
     components: {
       Navbar,
-      AgGridVue,
-      Storage_add
+      Column,
+      DataTable,
+      AssetsView,
     },
     data() {
       return {
@@ -177,138 +199,26 @@
       const totalSelect = ref(0);//總已備數量
       const details = ref({});
       const options = Rent_UseOptions;
-      const isVerified = ref(false);
-      const verifyOption = ref(false);
-      const columnDefs1 = [{
-          headerName: "項目",
-          field: "id",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-        },
-        {
-          headerName: "設備總類",
-          field: "EquipTypeName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-        },
-        {
-          headerName: "設備分類",
-          field: "EquipCategoryName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-        },
-        {
-          headerName: "物品名稱",
-          field: "ProductName",
-          unSortIcon: true,
-          sortable: true,
-          width: 140,
-          suppressMovable: true,
-        },
-        {
-          headerName: "數量",
-          field: "Number",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-        },
-        {
-          headerName: "規格需求",
-          field: "RequiredSpec",
-          unSortIcon: true,
-          sortable: true,
-          flex: 1,
-          suppressMovable: true,
-        }
-      ];
-      const columnDefs2 = [{
-          headerName: "項目",
-          field: "OM_List_id",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-        },
-        {
-          headerName: "資產編號",
-          field: "AssetsId",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-        },
-        {
-          headerName: "資產名稱",
-          field: "AssetName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-        },
-        {
-          headerName: "數量",
-          field: "OM_Number",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-        },
-        {
-          headerName: "單位",
-          field: "OM_Unit",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-        },
-        {
-          headerName: "儲位區域",
-          field: "AreaName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-        },
-        {
-          headerName: "儲位櫃位",
-          field: "LayerName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-        },
-        {
-          headerName: "廠商",
-          field: "VendorName",
-          unSortIcon: true,
-          sortable: true,
-          width: 250,
-          suppressMovable: true,
-        },
-        {
-          headerName: "型號",
-          field: "ProductType",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-        },
-        {
-          headerName: "規格",
-          field: "ProductSpec",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-        },
-      ];
+      const datagrid1field = [
+        { header: "項目", field: "id", width: '50px' },
+        { header: "設備總類", field: "EquipTypeName", width: '150px' },
+        { header: "設備分類", field: "EquipCategoryName", width: '150px' },
+        { header: "物品名稱", field: "ProductName", width: '140px' },
+        { header: "數量", field: "Number", width: '50px' },
+        { header: "規格需求", field: "RequiredSpec" , width: '250px' },
+      ]
+      const datagrid2field = [
+        { header: "項目", field: "OM_List_id", width: '50px' },
+        { header: "資產編號", field: "AssetsId", width: '100px' },
+        { header: "資產名稱", field: "AssetName", width: '150px' },
+        { header: "數量", field: "OM_Number", width: '50px' },
+        { header: "單位", field: "OM_Unit", width: '50px' },
+        { header: "儲位區域", field: "AreaName", width: '150px' },
+        { header: "儲位櫃位", field: "LayerName", width: '150px' },
+        { header: "廠商", field: "VendorName", width: '150px' },
+        { header: "型號", field: "ProductType", width: '150px' },
+        { header: "規格", field: "ProductSpec", width: '250px' },
+      ]
       const rowData1 = ref([]);
       const rowData2 = ref([]);
       async function getDetails() {
@@ -343,18 +253,13 @@
       onMounted(() => {
         getDetails();
       });
-      function goBack() {
-        window.history.back();
-      }
       return {
         totalNeed,
         totalSelect,
         details,
         options,
-        isVerified,
-        verifyOption,
-        columnDefs1,
-        columnDefs2,
+        datagrid1field,
+        datagrid2field,
         rowData1,
         rowData2,
         goBack,
