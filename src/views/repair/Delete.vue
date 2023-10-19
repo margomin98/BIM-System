@@ -191,15 +191,15 @@
         <!-- 已上傳文件-->
         <div class="col-12 repair_photo_section">
           <div class="input-group mt-3">
-            <div class="input-group-prepend">已上傳文件：</div>
+            <div class="input-group-prepend">已上傳的文件：</div>
             <div class="selected_file">
               <!-- v-for讀取已上傳物流文件 -->
-              <div class="file_upload_wrap" style="cursor: pointer;" v-for="(file , index) in details.existDocument" :key="index">
-                <div>
-                  <p>{{ file.FileName }}</p>
+              <div class="file_upload_wrap" v-for="(file , index) in details.existDocument" :key="index">
+               
+                  <p>{{ file.FileName }}
                   <!-- 在handlePreview依據不同副檔名做不同處理 -->
-                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
-                </div>
+                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;cursor: pointer;" @click="handlePreview(file)">
+      </p>
               </div>
               <!-- doc/docx download hidden Link -->
               <a href="" style="display: none;" id="download-link"></a>
@@ -464,7 +464,7 @@ import { Repair_Delete_Status } from '@/assets/js/enter_status';
       }
       .info_wrap {
         margin: 30px auto 5%;
-        width: 750px;
+        width:800px;
         .fixed_info {
           @include fixed_info;
           p {
@@ -498,11 +498,13 @@ import { Repair_Delete_Status } from '@/assets/js/enter_status';
           }
           .repair_photo_section {
             .input-group {
-              flex-direction: column
+              flex-wrap: unset;
             }
-          }
+            .input-group-prepend {
+              white-space: nowrap;
+            }
+         
           .selected_file {
-            margin-left: 20px;
             p.title {
               font-weight: 700;
               color: white;
@@ -529,6 +531,7 @@ import { Repair_Delete_Status } from '@/assets/js/enter_status';
               }
             }
           }
+         }
         }
         .button_wrap {
           display: flex;
@@ -605,7 +608,8 @@ import { Repair_Delete_Status } from '@/assets/js/enter_status';
       }
       .info_wrap {
         margin: 30px auto 5%;
-        padding: 0 5%;
+        width: 750px;
+
         .fixed_info {
           @include fixed_info;
           p {
@@ -644,7 +648,6 @@ import { Repair_Delete_Status } from '@/assets/js/enter_status';
           }
           .repair_photo_section {
             .input-group {
-              flex-direction: column;
               white-space: unset;
               .input-group-prepend {
                 white-space: nowrap

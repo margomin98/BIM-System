@@ -73,23 +73,29 @@
             </div>
           </div>
         </div>
-        <div class="selected_file col">
+        <!-- 已選擇檔案 -->
+        <div class="selected_file col-12">
           <div class="input-group">
-            <div class="input-group-prepend">已選擇檔案：</div>
-            <div v-for="(item , index) in formParams.viewFile" :key="index" class="file_upload_wrap" style="cursor: pointer;">
-              <p @click="viewImgFile('new',index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ item.FileName }}</p>
+            <div class="input-group-prepend">已選擇的檔案：</div>
+            <div class="file_upload_box">
+            <div v-for="(item , index) in formParams.viewFile" :key="index" class="file_upload_wrap">
+              <p >{{ item.FileName }}
+                <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"  @click="viewImgFile('new',index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
               <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('new',index)">
+              </p>
             </div>
+          </div>
           </div>
         </div>
         <!-- 已上傳檔案 -->
         <div class="col-12">
           <div class="input-group mt-3">
-            <div class="input-group-prepend">已上傳檔案：</div>
+            <div class="input-group-prepend">已上傳的檔案：</div>
             <div class="d-flex  flex-column">
               <div v-for="(file , index) in formParams.existFile" :key="index" class="file_upload_wrap" style="cursor: pointer;">
-                <p @click="viewImgFile( 'exist' ,index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
+                <p @click="viewImgFile( 'exist' ,index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}
                 <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('exist', index)">
+                </p>
               </div>
             </div>
           </div>
@@ -415,7 +421,10 @@
 
 
 <style lang="scss" scoped>
-  @import '@/assets/css/global.scss';
+  @import '@/assets/css/global.scss';  .view_icon,
+  .delete_icon {
+    cursor: pointer;
+  }
   .modal {
     .modal-body {
       padding: 20px;
@@ -441,15 +450,6 @@
       color: white;
       display: flex;
       justify-content: center;
-      padding: 0 16px 16px;
-      .close_icon {
-        height: 40px;
-        cursor: pointer;
-      }
-      .modal-title {
-        margin: auto;
-        padding-top: 16px;
-      }
     }
   }
   @media only screen and (min-width: 1200px) {
@@ -469,7 +469,7 @@
       }
       .info_wrap {
         margin: 30px auto 5%;
-        width: 750px;
+        width: 800px;
         .fixed_info {
           @include fixed_info;
           p {
@@ -479,31 +479,7 @@
         }
         .content {
           @include content_bg;
-          .selected_file {
-            .input-group {
-              flex-direction: column;
-            }
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-              img {
-                width: 25px;
-                height: 25px;
-              }
-              p {
-                font-weight: 700;
-                margin-bottom: 5px;
-                color: white;
-                word-break: break-word;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
-          }
+         
           .input-group {
             .input-number {
               @include count_btn;
@@ -520,14 +496,37 @@
               font-weight: 700;
               font-size: 20px;
               text-align: end;
-              width: 155px;
+              width: 140px;
               span {
                 @include red_star
               }
             }
+         
+            .file_wrap {
+              display: flex;
+              flex-direction: column;
+              .choose_btn {
+                margin-bottom: 10px;
+                @include choose_file_btn;
+                &:hover {
+                  background: #3f608f;
+                }
+              }
+            }
+          }
+        }
+         .selected_file {
+          .input-group {
+            flex-wrap: unset;
+          }
+          .input-group-prepend {
+            white-space: nowrap;
+          }
+          .file_upload_box {
             .file_upload_wrap {
               margin-bottom: 0;
               display: flex;
+              word-break: break-word;
               img {
                 width: 25px;
                 height: 25px;
@@ -541,17 +540,6 @@
                   content: '·';
                   font-weight: 700;
                   color: white;
-                }
-              }
-            }
-            .file_wrap {
-              display: flex;
-              flex-direction: column;
-              .choose_btn {
-                margin-bottom: 10px;
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
                 }
               }
             }
@@ -603,7 +591,7 @@
       }
       .info_wrap {
         margin: 30px auto 5%;
-        padding: 0 5%;
+        width: 750px;
         .fixed_info {
           @include fixed_info;
           p {
@@ -613,31 +601,7 @@
         }
         .content {
           @include content_bg;
-          .selected_file {
-            .input-group {
-              flex-direction: column;
-            }
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-              img {
-                width: 25px;
-                height: 25px;
-              }
-              p {
-                font-weight: 700;
-                margin-bottom: 5px;
-                color: white;
-                word-break: break-word;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
-          }
+         
           .input-group {
             width: 100%;
             flex-wrap: nowrap;
@@ -658,7 +622,7 @@
               font-weight: 700;
               font-size: 20px;
               text-align: end;
-              width: 150px;
+              width:140px;
               span {
                 @include red_star
               }
@@ -692,6 +656,36 @@
                 @include choose_file_btn;
                 &:hover {
                   background: #3f608f;
+                }
+              }
+            }
+          }
+        }
+        .selected_file {
+          .input-group {
+            flex-wrap: unset;
+          }
+          .input-group-prepend {
+            white-space: nowrap;
+          }
+          .file_upload_box {
+            .file_upload_wrap {
+              margin-bottom: 0;
+              display: flex;
+              word-break: break-word;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              p {
+                margin-bottom: 0;
+                font-weight: 700;
+                color: white;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
+                  font-weight: 700;
+                  color: white;
                 }
               }
             }

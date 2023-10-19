@@ -72,15 +72,12 @@
         <div class="col-12 selected_file">
           <div class="input-group">
             <div class="input-group-prepend">已選擇的檔案：</div>
-          </div>
-        </div>
-        <div class="col-12 selected_file">
-          <div class="input-group">
             <div class="file_upload_box">
               <div v-for="(item , index) in formParams.viewFile" :key="index" class="file_upload_wrap">
-                <p>{{ item.FileName }}</p>
-                <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="viewImgFile(index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
-                <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index)">
+                <p>{{ item.FileName }}
+                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="viewImgFile(index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+                  <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index)">
+                </p>
               </div>
             </div>
           </div>
@@ -430,7 +427,7 @@
       }
       .info_wrap {
         margin: 30px auto 5%;
-        width: 750px;
+        width: 800px;
         .fixed_info {
           @include fixed_info;
           p {
@@ -456,7 +453,7 @@
               font-weight: 700;
               font-size: 20px;
               text-align: end;
-              width: 155px;
+              width: 140px;
               span {
                 @include red_star
               }
@@ -475,8 +472,13 @@
           }
         }
         .selected_file {
+          .input-group {
+            flex-wrap: unset;
+          }
+          .input-group-prepend {
+            white-space: nowrap;
+          }
           .file_upload_box {
-            padding: 0 20px;
             .file_upload_wrap {
               margin-bottom: 0;
               display: flex;
@@ -545,7 +547,7 @@
       }
       .info_wrap {
         margin: 30px auto 5%;
-        padding: 0 5%;
+        width: 750px;
         .fixed_info {
           @include fixed_info;
           p {
@@ -573,7 +575,7 @@
               font-weight: 700;
               font-size: 20px;
               text-align: end;
-              width: 150px;
+              width: 140px;
               span {
                 @include red_star
               }
@@ -592,8 +594,13 @@
           }
         }
         .selected_file {
+          .input-group {
+            flex-wrap: unset;
+          }
+          .input-group-prepend {
+            white-space: nowrap;
+          }
           .file_upload_box {
-            padding: 0 20px;
             .file_upload_wrap {
               margin-bottom: 0;
               display: flex;

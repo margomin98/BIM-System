@@ -299,7 +299,7 @@
                 {{ calculateIndex(2,slotProps) }}
               </template>
             </Column>
-            <Column style="min-width: 60px;">
+            <Column style="min-width: 60px;" class="datatable_checkbox">
               <template #body="slotProps">
                 <List_view_button :params = "slotProps" />
               </template>
