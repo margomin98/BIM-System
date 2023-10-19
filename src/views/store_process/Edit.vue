@@ -428,6 +428,7 @@
         title: '',
         src: '',
       })
+      const loading = ref(false);
       onMounted(() => {
         getApplicationInfo(); // 申請人
         getDetails();
@@ -694,43 +695,50 @@
             return
           }
         }
-        const filePromises = [];
-        for (let i = 0; i < tabData.length; i++) {
-          filePromises.push(sendFileForm(tabData[i], i));
+        if(!loading.value) {
+          // loading flag open
+          loading.value = true;
+          const filePromises = [];
+          for (let i = 0; i < tabData.length; i++) {
+            filePromises.push(sendFileForm(tabData[i], i));
+          }
+          await Promise.all(filePromises)
+            .then(result => {
+              const allSuccess = result.every(result => result === 'success');
+              if (allSuccess) {
+                // 全部暫存成功後，打api轉狀態，loading flag避免網路延遲
+                const form = new FormData();
+                form.append('AI_ID', AI_ID);
+                axios.post('http://192.168.0.177:7008/AssetsInMng/AssetsIn', form)
+                  .then((response) => {
+                    const data = response.data
+                    if (data.state === 'success') {
+                      // 成功
+                      alert('入庫成功\n單號為:' + AI_ID);
+                      router.push({
+                        name: 'Store_Process_Datagrid'
+                      });
+                    } else if (data.state === 'account_error') {
+                      alert(data.messages);
+                      router.push('/');
+                    } else {
+                      alert(data.messages);
+                    }
+                    loading.value = false;
+                  })
+                  .catch((error) => {
+                    loading.value = false;
+                    console.error(error);
+                  })
+              } else {
+                alert('表單送出失敗');
+              }
+            })
+            .catch(error => {
+              loading.value = false;
+              console.error(error);
+            })
         }
-        await Promise.all(filePromises)
-          .then(result => {
-            const allSuccess = result.every(result => result === 'success');
-            if (allSuccess) {
-              // 全部暫存成功後，打api轉狀態
-              const form = new FormData();
-              form.append('AI_ID', AI_ID);
-              axios.post('http://192.168.0.177:7008/AssetsInMng/AssetsIn', form)
-                .then((response) => {
-                  const data = response.data
-                  if (data.state === 'success') {
-                    // 成功
-                    alert('入庫成功\n單號為:' + AI_ID);
-                    router.push({
-                      name: 'Store_Process_Datagrid'
-                    });
-                  } else if (data.state === 'account_error') {
-                    alert(data.messages);
-                    router.push('/');
-                  } else {
-                    alert(data.messages);
-                  }
-                })
-                .catch((error) => {
-                  console.error(error);
-                })
-            } else {
-              alert('表單送出失敗');
-            }
-          })
-          .catch(error => {
-            console.error(error);
-          })
       }
       // 單次傳送頁籤
       function sendFileForm(tabData, index) {

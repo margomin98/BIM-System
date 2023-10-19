@@ -87,7 +87,7 @@
         scroll-height="600px">
         <Column header="交付確認">
           <template style="min-width:50px; " #body="slotProps">
-            <input type="checkbox" class="p-checkbox p-component" v-model="slotProps.data.OM_IsExecute">
+            <input type="checkbox" class="p-checkbox-box p-component" v-model="slotProps.data.OM_IsExecute">
           </template>
         </Column>
         <Column>
@@ -326,6 +326,7 @@
       const options = Rent_UseArray;
       const DeliveryMemo = ref('');
       const DeliveryDate = ref('');
+      const loading = ref(false);
       const validation = ref({
         user1: {
           account: '',
@@ -478,39 +479,43 @@
           alert('交付備註不可輸入超過100字')
           return
         }
-        let OM_List = [];
-        rowData2.value.forEach( item=> {
-          OM_List.push({
-            OM_id: item.OM_id,
-            OM_IsExecute: item.OM_IsExecute,
-          });
-        });
-        console.log('OM_List', OM_List);
-        const axios = require('axios');
-        const requestData = {
-          AO_ID: details.value.AO_ID,
-          Recipient: validation.value.user1.resultName,
-          DeliveryOperator: validation.value.user2.resultName,
-          DeliveryMemo: DeliveryMemo.value,
-          OM_List: OM_List,
-        };
-        const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/Delivery',requestData);
-        try {
-          const data = response.data;
-          console.log(data);
-          if (data.state === 'success') {
-            let msg = data.messages;
-            msg += '\n單號:' + data.resultList.AO_ID;
-            alert(msg);
-            router.push({
-              name: 'Rent_Process_Datagrid'
+        if(!loading.value) {
+          loading.value = true;
+          let OM_List = [];
+          rowData2.value.forEach( item=> {
+            OM_List.push({
+              OM_id: item.OM_id,
+              OM_IsExecute: item.OM_IsExecute,
             });
-          } else if (data.state === 'error') {
-            alert(data.messages);
-            console.log('error state', response);
+          });
+          console.log('OM_List', OM_List);
+          const axios = require('axios');
+          const requestData = {
+            AO_ID: details.value.AO_ID,
+            Recipient: validation.value.user1.resultName,
+            DeliveryOperator: validation.value.user2.resultName,
+            DeliveryMemo: DeliveryMemo.value,
+            OM_List: OM_List,
+          };
+          try {
+            const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/Delivery',requestData);
+            const data = response.data;
+            console.log(data);
+            if (data.state === 'success') {
+              let msg = data.messages;
+              msg += '\n單號:' + data.resultList.AO_ID;
+              alert(msg);
+              router.push({
+                name: 'Rent_Process_Datagrid'
+              });
+            } else {
+              alert(data.messages);
+              loading.value = false;
+            }
+          } catch (error) {
+            loading.value = false;
+            console.error(error);
           }
-        } catch (error) {
-          console.error(error);
         }
       }
       return {

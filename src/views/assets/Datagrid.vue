@@ -91,8 +91,11 @@
       <div class="button_wrap d-flex">
         <button class="search_btn" @click="submit('','search')">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
+        <button class="export_btn" @click="inputfile.click();">匯入</button>
         <button class="export_btn" @click="exportExcel">匯出</button>
       </div>
+      <!-- input file  -->
+      <input type="file" ref="inputfile" style="display: none;" @change="importExcel" accept=".xlsx, .csv">
     </div>
     <div class="dg-height">
       <DataTable
@@ -195,6 +198,7 @@
       { field: "AssetsInOperator", width: '150px', header: "入庫人員" },
       ]
       const rowData = ref([]);
+      const inputfile = ref(null);
       onMounted(() => {
         datagrid.sortField = 'AssetsId'
         submit('','search');
@@ -206,26 +210,7 @@
           form.append(key, searchParams[key]);
         }
         UpdatePageParameter( datagrid , event , type , form)
-        axios.post('http://192.168.0.177:7008/InventoryMng/Assets', form)
-        .then((response)=>{
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('datagrid', data.resultList);
-            rowData.value = data.resultList.rows;
-            datagrid.totalRecords = data.resultList.total;
-            datagrid.key++;
-          } else if (data.state === 'account_error') {
-            //尚未登入
-            alert(data.messages);
-            router.push('/');
-          } else {
-            //取得datagrid失敗
-            alert(data.messages);
-          }
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+        getMngDatagrid('/InventoryMng/Assets',rowData,datagrid,form)
       }
       async function getEquipTypeName() {
         if (DropdownArray.EquipType.length == 0) {
@@ -266,6 +251,29 @@
           .catch((error) => {
             console.error(error);
           })
+      }
+      async function importExcel(event) {
+        // console.log(event.target.files[0]);
+        const selectedFile = event.target.files[0];
+        if (selectedFile) {
+          const fileName = selectedFile.name;
+          // 以'.'切歌字串並以pop取得最後一組EX: demo.sss.xlsx => ['demo','sss','xlsx'] => pop出 'xlsx'並轉成小寫
+          const fileExtension = fileName.split('.').pop().toLowerCase();
+          if (fileExtension === 'xlsx' || fileExtension === 'csv') {
+            const form = new FormData();
+            form.append('File',selectedFile);
+            axios.post('',form)
+            .then((response)=>{
+              const data = response.data;
+              alert(data.messages);
+            })
+            .catch((error)=>{
+              console.error(error);
+            })
+          } else {
+            alert('檔案格式不正確(.xlsx/.csv)，請重新選擇')
+          }
+        }
       }
       async function exportExcel() {
         const form = new FormData();
@@ -339,7 +347,9 @@
         datagrid,
         datagridfield,
         rowData,
+        inputfile,
         submit,
+        importExcel,
         exportExcel,
         getEquipTypeName,
         getAreaName,
