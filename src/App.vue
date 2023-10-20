@@ -133,6 +133,7 @@
 		}
 	}
 	.modal {
+	
 		.modal-header {
 			.close_icon {
 				cursor: pointer;
@@ -161,6 +162,20 @@
 		.container-fluid {
 			padding-left: 0 !important;
 			padding-right: 0 !important;
+		}
+	}
+	@media only screen and (min-width: 768px) and (max-width: 1199px){
+		.modal{
+			.modal-dialog{
+				padding: 0 5%;
+			}
+		}
+	}
+ @media only screen and (max-width: 767px) {
+		.modal{
+			.modal-dialog{
+				padding: 0 5%;
+			}
 		}
 	}
 </style>

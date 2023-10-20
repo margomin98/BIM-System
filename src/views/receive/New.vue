@@ -103,7 +103,7 @@
             <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#photoModal"></button>
             <!-- Photo Modal -->
             <div class="modal fade" id="photoModal" tabindex="-1" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 800px !important">
+              <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title" id="photoModalLabel">{{ previewParams.title }}</h5>
@@ -207,7 +207,7 @@
               <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#photoModal"></button>
               <!-- Photo Modal -->
               <div class="modal fade" id="photoModal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 800px !important">
+                <div class="modal-dialog modal-dialog-centered ">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="photoModalLabel">{{ previewParams.title }}</h5>
