@@ -81,7 +81,7 @@
             <div v-for="(item , index) in formParams.viewFile" :key="index" class="file_upload_wrap">
               <p >{{ item.FileName }}
                 <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"  @click="viewImgFile('new',index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
-              <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('new',index)">
+              <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('new',index)">
               </p>
             </div>
           </div>
@@ -94,7 +94,7 @@
             <div class="d-flex  flex-column">
               <div v-for="(file , index) in formParams.existFile" :key="index" class="file_upload_wrap" style="cursor: pointer;">
                 <p @click="viewImgFile( 'exist' ,index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}
-                <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('exist', index)">
+                <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('exist', index)">
                 </p>
               </div>
             </div>
@@ -422,7 +422,8 @@
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';  .view_icon,
-  .delete_icon {
+  .view_icon,
+  .trash_icon {
     cursor: pointer;
   }
   .modal {

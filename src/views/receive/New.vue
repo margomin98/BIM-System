@@ -93,7 +93,7 @@
                 <div v-for="(file, index) in fileParams.viewDoc" :key="index" class="file_upload_wrap">
                   <p class='file_name'>{{ file.name }}
                     <img class="view_icon" src="@/assets/view.png" @click="handleDocPreview(file)">
-                    <img class="delete_icon" src="@/assets/trash.png" @click="deleteFile('document',index)"></p>
+                    <img class="trash_icon" src="@/assets/trash.png" @click="deleteFile('document',index)"></p>
                 </div>
               </div>
             </div>
@@ -755,7 +755,7 @@
     max-width: unset
   }
   .view_icon,
-  .delete_icon {
+  .trash_icon {
     cursor: pointer;
     margin: 0 3px
   }

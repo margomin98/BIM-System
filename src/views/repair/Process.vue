@@ -231,10 +231,10 @@
               已上傳文件：
             </div>
             <div class="selected_file">
-              <div v-for="(file, index) in details.existDocument" :key="index" class="file_upload_wrap" style="cursor: pointer;">
+              <div v-for="(file, index) in details.existDocument" :key="index" class="file_upload_wrap">
                 <p>{{ file.FileName}}</p>
                 <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
-                <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)">
+                <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)">
               </div>
             </div>
           </div>
@@ -656,6 +656,9 @@
   .custom-slide {
     display: flex;
     align-self: center;
+  }
+  .view_icon,.trash_icon{
+    cursor: pointer;
   }
   @media only screen and (min-width: 1200px) {
     .main_section {

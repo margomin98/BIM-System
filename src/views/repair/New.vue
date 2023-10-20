@@ -76,7 +76,7 @@
               <div v-for="(item , index) in formParams.viewFile" :key="index" class="file_upload_wrap">
                 <p>{{ item.FileName }}
                   <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="viewImgFile(index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
-                  <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index)">
+                  <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index)">
                 </p>
               </div>
             </div>
@@ -380,7 +380,7 @@
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
   .view_icon,
-  .delete_icon {
+  .trash_icon {
     cursor: pointer;
   }
   .modal {
