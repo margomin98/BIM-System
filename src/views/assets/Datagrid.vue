@@ -276,6 +276,10 @@
           axios.post('http://192.168.0.177:7008/InventoryMng/ImportExcel',form)
           .then((response)=>{
             const data = response.data;
+            if(data.state === 'success') {
+              // 匯入成功則清空條件並刷新datagrid
+              clear();
+            }
             alert(data.messages);
           })
           .catch((error)=>{

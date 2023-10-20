@@ -38,7 +38,7 @@
               <div class='col-xl-3 col-lg-12 col-md-12 col-12'>
                 <p>物品名稱</p>
                 <div class="number-input-box">
-                  <input class="input-number" type="text" placeholder="最多輸入20字" v-model="searchParams.ProductName" />
+                  <input class="input-number" type="text" v-model="searchParams.ProductName" :placeholder="searchPlaceholder" />
                 </div>
               </div>
               <div class="col-xl-3 col-lg-12 col-md-12 col-12">
@@ -78,8 +78,8 @@
             showGridlines 
             scrollable 
             scrollHeight="420px" 
-            @page="searchHistory($event , 'page')" 
-            @sort="searchHistory($event , 'sort')"
+            @page="searchInventory(searchParams.id, searchParams.item_id ,$event , 'page')" 
+            @sort="searchInventory(searchParams.id, searchParams.item_id ,$event , 'sort')"
             paginator 
             :rows="datagrid3.rows" 
             :totalRecords="datagrid3.totalRecords"
@@ -96,7 +96,7 @@
                 <Storage_add :params = "slotProps" :selectedNumber="searchParams.selectedNumber" :Number = "searchParams.Number" @addMaterial ="addMaterial"/>
               </template>
             </Column>
-            <Column style="min-width: 60px;"  header="數量">
+            <Column style="min-width: 80px;"  header="數量">
               <template #body="slotProps">
                 <Storage_number :params="slotProps"/>
               </template>
@@ -341,6 +341,7 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
         item_id: '',
         selectedNumber: 0,
       });
+      const searchPlaceholder = ref('');
       // 資產出庫項目
       const datagrid1field = [
         { field: "id", width: '50px' , header: "項目" },
@@ -366,7 +367,7 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
       // 檢索datagrid
       const datagrid3 = createDatagrid();
       const datagrid3field = [
-        { field: "selectNumber", width: '100px', header: "已選數量" },
+        // { field: "selectNumber", width: '100px', header: "已選數量" },
         { field: "OM_Unit", width: '100px', header: "單位" },
         { field: "AssetsId", width: '150px', header: "資產編號" },
         { field: "AssetName", width: '150px', header: "物品名稱" },
@@ -469,6 +470,7 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
               id: data_id,
             }));
             console.log(rowData3.value);
+            datagrid3.key++;
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -544,6 +546,7 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
         for(const key in data) {
           searchParams[key] = data[key];
         }
+        searchPlaceholder.value = searchParams.ProductName ;
         searchParams.ProductName = '';
         getEquipCategoryName();
         // 額外處理data沒有的參數
@@ -573,6 +576,7 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
         details,
         options,
         searchParams,
+        searchPlaceholder,
         datagrid1field,
         datagrid2field,
         datagrid3field,
