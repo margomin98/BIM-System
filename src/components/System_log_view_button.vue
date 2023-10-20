@@ -1,6 +1,6 @@
 <template>
-  <div class='button_wrap'>
-    <button class="view_btn" >檢視</button>
+  <div class='button_div'>
+    <button class="view_btn" @click="view">檢視</button>
   </div>
 </template>
 
@@ -12,32 +12,32 @@
     props: ['params'],
     setup(props) {
       const router = useRouter();
-      const search_id = props.params.data.AI_ID;
+      const search_id = props.params.data.Account;
       const isDisabled = ref(false);
       onMounted(() => {
-        checkButton();
+        // checkButton();
       });
-      function viewDelete() {
+      function view() {
         // console.log(props.params.data.search_id);
         if (search_id !== '') {
           router.push({
-            name: 'Store_Delete',
+            name: 'System_Log_View',
             query: {
               search_id
             }
           });
         }
       }
-      function checkButton() {
-        const disabledStatus = props.params.data.Status;
-        if (disabledStatus === '待入庫' || disabledStatus === '已入庫' || disabledStatus === '已歸還') {
-          isDisabled.value = true;
-        } else {
-          isDisabled.value = false;
-        }
-      }
+      // function checkButton() {
+      //   const disabledStatus = props.params.data.Status;
+      //   if (disabledStatus === '待入庫' || disabledStatus === '已入庫' || disabledStatus === '已歸還') {
+      //     isDisabled.value = true;
+      //   } else {
+      //     isDisabled.value = false;
+      //   }
+      // }
       return {
-        viewDelete,
+        view,
         isDisabled,
       };
     },

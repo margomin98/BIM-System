@@ -70,13 +70,6 @@
 </template>
 
 <script>
-  import {
-    register
-  } from 'swiper/element/bundle';
-  import {
-    Pagination
-  } from 'swiper/modules';
-  register();
   import Navbar from "@/components/Navbar.vue";
   import {
     onMounted,
@@ -87,6 +80,7 @@
     useRoute,
     useRouter
   } from "vue-router";
+  import { goBack } from "@/assets/js/common_fn";
   export default {
     components: {
       Navbar,
@@ -96,12 +90,8 @@
       const router = useRouter();
       const AR_ID = route.query.search_id;
       const details = ref({});
-      const previewParams = reactive({
-        title: '',
-        src: '',
-      })
       onMounted(() => {
-        getDetails();
+        // getDetails();
       })
       async function getDetails() {
         const axios = require('axios');
@@ -132,47 +122,9 @@
           console.error(error);
         }
       }
-      function handlePreview(file) {
-        // 先提取副檔名
-        // 以"."為基準分割字串
-        const part = file.FileName.split(".");
-        let extension = '';
-        // 如果part長度大於1表示xxxx.aaa => ['xxxx','aaa']
-        if (part.length > 1) {
-          extension = part[part.length - 1];
-        }
-        // 1. pdf 2. word 3. picture
-        switch (extension) {
-          case 'pdf':
-            window.open(file.FileLink)
-            break;
-          case 'doc':
-          case 'docx':
-            const downloadElement = document.getElementById('download-link');
-            downloadElement.href = file.FileLink;
-            downloadElement.download = file.FileName;
-            downloadElement.click();
-            break;
-          default:
-            previewParams.title = file.FileName;
-            previewParams.src = file.FileLink;
-            const modal = document.querySelector('#openModal');
-            modal.click();
-            break;
-        }
-      }
-      function goBack() {
-        window.history.back();
-      }
       return {
         details,
-        previewParams,
-        handlePreview,
         goBack,
-        pagination: {
-          clickable: true,
-        },
-        modules: [Pagination],
       }
     },
   }

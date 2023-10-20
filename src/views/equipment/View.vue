@@ -82,8 +82,30 @@
         </div>
       </div>
       <div style="width: 100%" class="content">
-        <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true">
-        </ag-grid-vue>
+        <DataTable
+          lazy
+          :key="datagrid.key"
+          :first= "datagrid.first"
+          :size="'small'"
+          :loading="datagrid.loading"
+          :value="rowData" 
+          :sort-field="datagrid.sortField"
+          :sort-order="datagrid.sortOrder"
+          resizableColumns 
+          columnResizeMode="expand"
+          showGridlines 
+          scrollable 
+          scrollHeight="420px" 
+          @page="getHistory($event , 'page')" 
+          @sort="getHistory($event , 'sort')"
+          paginator 
+          :rows="datagrid.rows" 
+          :totalRecords="datagrid.totalRecords"
+          paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+          :rowsPerPageOptions="[10, 20, 30]"
+          currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+          <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+        </DataTable>
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
@@ -93,9 +115,8 @@
 </template>
 
 <script>
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   import Navbar from "@/components/Navbar.vue";
   import ListItem from "@/components/Equipment/item.vue"
   import {
@@ -106,10 +127,16 @@
     useRoute,
     useRouter
   } from "vue-router";
+  import {
+    getMngDatagrid,
+  } from '@/assets/js/common_api'
+  import { UpdatePageParameter, createDatagrid , goBack } from '@/assets/js/common_fn';
+  import axios from 'axios';
   export default {
     components: {
       Navbar,
-      AgGridVue,
+      DataTable,
+      Column,
       ListItem,
     },
     setup() {
@@ -117,88 +144,24 @@
       const router = useRouter();
       const details = ref('');
       const IntegrationId = route.query.search_id
-      const columnDefs = [{
-          headerName: "記錄日期",
-          field: "ExecutionDate",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true
-        },
-        {
-          headerName: "記錄行為",
-          field: "Action",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true
-        },
-        {
-          headerName: "設備總類",
-          field: "EquipTypeName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true
-        },
-        {
-          headerName: "設備分類",
-          field: "EquipCategoryName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true
-        },
-        {
-          headerName: "資產編號",
-          field: "AssetsId",
-          unSortIcon: true,
-          sortable: true,
-          width: 200,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "物品名稱",
-          field: "AssetName",
-          unSortIcon: true,
-          sortable: true,
-          width: 200,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "數量",
-          field: "H_Number",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true
-        },
-        {
-          headerName: "單位",
-          field: "Unit",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true
-        },
-        {
-          headerName: "作業人員",
-          field: "ExecutionPerson",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true
-        }
+      const datagrid = createDatagrid();
+      const datagridfield = [
+        { field: "ExecutionDate", width: '150px', header: "記錄日期" },
+        { field: "Action", width: '50px', header: "記錄行為" },
+        { field: "EquipTypeName", width: '150px', header: "設備總類" },
+        { field: "EquipCategoryName", width: '150px', header: "設備分類" },
+        { field: "AssetsId", width: '150px', header: "資產編號" },
+        { field: "AssetName", width: '150px', header: "物品名稱" },
+        { field: "H_Number", width: '50px', header: "數量" },
+        { field: "Unit", width: '50px', header: "單位" },
+        { field: "ExecutionPerson", width: '150px', header: "作業人員" }
       ]
       const rowData = ref([]);
       onMounted(() => { 
         getDetails();
-        getHistory();
+        getHistory('','search');
       });
       async function getDetails() {
-        const axios = require('axios');
         const baseUrl = 'http://192.168.0.177:7008'
         let apiUrl = ''
         apiUrl += baseUrl + '/GetDBdata/GetIntegrationBoxInfo?id=' + `${IntegrationId}`
@@ -220,40 +183,42 @@
           console.error(error);
         }
       }
-      async function getHistory() {
-        const axios = require('axios');
-        const baseUrl = 'http://192.168.0.177:7008'
-        let apiUrl = ''
-        apiUrl += baseUrl + '/IntegrationMng/IntegratedHistory'
+      async function getHistory(event, type) {
         const form = new FormData();
         form.append('IntegrationId' , IntegrationId);
-        try {
-          const response = await axios.post(`${apiUrl}`, form);
-          // console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log(data.resultList);
-            rowData.value = data.resultList;
-            console.log('history', rowData.value);
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
-      function goBack() {
-        window.history.back();
+        UpdatePageParameter( datagrid , event , type , form)
+        getMngDatagrid('/IntegrationMng/IntegratedHistory',rowData,datagrid,form)
+        // datagrid.loading = true;
+        // const baseUrl = 'http://192.168.0.177:7008'
+        // let apiurl = baseUrl + '/IntegrationMng/IntegratedHistory'
+        // axios.post(`${apiurl}`, form)
+        // .then((response)=>{
+        //   const data = response.data;
+        //   if (data.state === 'success') {
+        //     console.log('datagrid', data.resultList);
+        //     rowData.value = data.resultList;
+        //     datagrid.totalRecords = data.resultList.total;
+        //     datagrid.key++;
+        //   } else if (data.state === 'account_error') {
+        //     //尚未登入
+        //     alert(data.messages);
+        //     router.push('/');
+        //   } else {
+        //     //取得datagrid失敗
+        //     alert(data.messages);
+        //   }
+        // })
+        // .catch((error)=>{
+        //   console.error(error);
+        // })
+        // datagrid.loading = false;
       }
       return {
         details,
-        columnDefs,
+        datagrid,
+        datagridfield,
         rowData,
-        pageSize: 10,
-        rowHeight: 35,
+        getHistory,
         goBack,
       };
     },

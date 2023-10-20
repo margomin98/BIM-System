@@ -39,22 +39,48 @@
     </div>
     <div class="col justify-content-center d-flex">
       <div class="button_wrap d-flex">
-        <button class="search_btn" @click="submit">檢索</button>
+        <button class="search_btn" @click="submit('','search')">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
         <!-- <button class="export_btn">匯出</button> -->
       </div>
     </div>
-    <div style="width: 100%;margin-bottom:3%">
-      <ag-grid-vue style="width: 100%; height:380px; background-color: #402a2a;" :rowHeight="rowHeight" id='grid_table' class="ag-theme-alpine" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="true" :alwaysShowHorizontalScroll="true">
-      </ag-grid-vue>
+    <div class="dg-height mb-5">
+      <DataTable
+        lazy 
+        :key="datagrid.key"
+        :first= "datagrid.first"
+        :size="'small'"
+        :loading="datagrid.loading"
+        :value="rowData" 
+        :sort-field="datagrid.sortField"
+        :sort-order="datagrid.sortOrder"
+        resizableColumns 
+        columnResizeMode="expand"
+        showGridlines 
+        scrollable 
+        scrollHeight="420px" 
+        @page="submit($event , 'page')" 
+        @sort="submit($event , 'sort')"
+        paginator 
+        :rows="datagrid.rows" 
+        :totalRecords="datagrid.totalRecords"
+        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        :rowsPerPageOptions="[10, 20, 30]"
+        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+        <Column style="min-width: 60px;">
+          <template #body="slotProps">
+            <System_log_button :params = "slotProps"/>
+          </template>
+        </Column>
+        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+      </DataTable>
     </div>
   </div>
 </template>
 
 <script>
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
   import System_log_button from "@/components/System_log_view_button";
   import Navbar from "@/components/Navbar.vue";
   import {
@@ -62,129 +88,63 @@
     reactive,
     ref
   } from "vue";
-  import {
-    useRouter
-  } from "vue-router";
+  import { UpdatePageParameter, createDatagrid , } from '@/assets/js/common_fn';
+  import axios from 'axios';
   export default {
     components: {
       Navbar,
-      AgGridVue,
+      DataTable,
+      Column,
       System_log_button
     },
     setup() {
-      const router = useRouter();
       const searchParams = reactive({
         ShipmentNum: '',
         ShipmentCompany: '',
         StartDate: '',
         EndDate: '',
       });
-      const columnDefs = [{
-          suppressMovable: true,
-          field: "",
-          cellRenderer: "System_log_button",
-          width: 100,
-          resizable: true,
-        },
-        {
-          headerName: "使用者賬號",
-          field: "",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "執行動作",
-          field: "",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "Controller",
-          field: "",
-          unSortIcon: true,
-          sortable: true,
-          width: 170,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "Action",
-          field: "",
-          unSortIcon: true,
-          sortable: true,
-          width: 180,
-          suppressMovable: true
-        },
-        {
-          headerName: "訊息",
-          field: "",
-          unSortIcon: true,
-          sortable: true,
-          resizable: true,
-          width: 150,
-          suppressMovable: true
-        },
-        {
-          headerName: "執行時間",
-          field: "",
-          unSortIcon: true,
-          sortable: true,
-          width: 200,
-          suppressMovable: true
-        }
+      const datagrid = createDatagrid();
+      const datagridfield = [
+        { field: "Account", width: '150px', header: "使用者賬號" },
+        { field: "Action_text", width: '150px', header: "執行動作" },
+        { field: "Controller", width: '150px', header: "Controller" },
+        { field: "Action", width: '150px', header: "Action" },
+        { field: "MSG", width: '550px', header: "訊息" },
+        { field: "Time", width: '200px', header: "執行時間" }
       ]
       const rowData = ref([]);
       onMounted(() => {
-        submit();
+        datagrid.sortField = 'Time'
+        submit('','search');
       });
-      async function submit() {
-        const formData = new FormData();
-        //將表格資料append到 formData
+      async function submit(event, type) {
+        const form = new FormData();
+        //將表格資料append到 form
         for (const key in searchParams) {
-          formData.append(key, searchParams[key]);
+          form.append(key, searchParams[key]);
         }
-        const axios = require('axios');
-        try {
-          const response = await axios.post('http://192.168.0.177:7008/ReceivingMng/ReceivingNotes', formData);
-          const data = response.data;
-          if (data.state === 'success') {
-            //取得datagrid成功
-            // console.log(data.state);
-            console.log('datagrid:', data.resultList);
-            rowData.value = data.resultList;
-          } else if (data.state === 'error') {
-            //取得datagrid失敗
-            alert(data.messages);
-          } else if (data.state === 'input_error') {
-            //取得datagrid格式錯誤
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            //尚未登入
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error(error);
-        }
+        UpdatePageParameter( datagrid , event , type , form)
+        // getMngDatagrid('/InventoryMng/Assets',rowData,datagrid,form)
+        rowData.value =  [
+          { Account: "User1", Action_text: "Login", Controller: "Authentication", Action: "User Login", MSG: "Login Successful", Time: "2023-10-20 09:15:32" },
+          { Account: "User2", Action_text: "Create", Controller: "User Management", Action: "Create User", MSG: "User Created", Time: "2023-10-20 10:30:45" },
+          { Account: "User3", Action_text: "Update", Controller: "Profile", Action: "Update Profile", MSG: "Profile Updated", Time: "2023-10-20 12:45:22" },
+          { Account: "User4", Action_text: "Delete", Controller: "User Management", Action: "Delete User", MSG: "User Deleted", Time: "2023-10-20 15:20:18" },
+          { Account: "User5", Action_text: "Logout", Controller: "Authentication", Action: "User Logout", MSG: "Logout Successful", Time: "2023-10-20 18:55:09" }
+        ];
       }
       const clear = () => {
         for (const key in searchParams) {
           searchParams[key] = '';
         }
-        submit();
+        submit('','search');
       }
       return {
         searchParams,
-        columnDefs,
+        datagrid,
+        datagridfield,
         rowData,
-        rowHeight: 35,
-        pageSize: 10,
         submit,
         clear,
       };
@@ -194,6 +154,9 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
+  .dg-height {
+    @include datagrid-height;
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       padding: 0 10%;

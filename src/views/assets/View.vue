@@ -318,7 +318,7 @@
   import {
     Pagination
   } from 'swiper/modules';
-import axios from 'axios';
+  import axios from 'axios';
   register();
   export default {
     components: {
@@ -365,7 +365,6 @@ import axios from 'axios';
       });
       // 上半部表單部分 & 送出
       async function getDetails() {
-        const axios = require('axios');
         try {
           const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetAssetInfo?id=${AssetsId}`);
           console.log(response);
