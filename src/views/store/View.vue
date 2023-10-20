@@ -343,6 +343,38 @@
       font-size: 18px;
     }
   }
+  .modal {
+    .modal-body {
+      text-align: center;
+      padding: 20px;
+      margin: auto;
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+    .modal-content {
+      margin: auto;
+    }
+    .modal-input-group-prepend {
+      width: auto;
+      font-weight: 700;
+      font-size: 20px;
+    }
+    .modal-footer {
+      padding: 0 12px 12px;
+      border: none;
+    }
+    .modal-header {
+      h5 {
+        font-weight: 700;
+      }
+      background: #528091;
+      color: white;
+      display: flex;
+      justify-content: center;
+    }
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .form_search_btn {
