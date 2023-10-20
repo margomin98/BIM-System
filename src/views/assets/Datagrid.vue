@@ -253,26 +253,34 @@
           })
       }
       async function importExcel(event) {
-        // console.log(event.target.files[0]);
         const selectedFile = event.target.files[0];
         if (selectedFile) {
           const fileName = selectedFile.name;
-          // 以'.'切歌字串並以pop取得最後一組EX: demo.sss.xlsx => ['demo','sss','xlsx'] => pop出 'xlsx'並轉成小寫
-          const fileExtension = fileName.split('.').pop().toLowerCase();
-          if (fileExtension === 'xlsx' || fileExtension === 'csv') {
-            const form = new FormData();
-            form.append('File',selectedFile);
-            axios.post('',form)
-            .then((response)=>{
-              const data = response.data;
-              alert(data.messages);
-            })
-            .catch((error)=>{
-              console.error(error);
-            })
-          } else {
-            alert('檔案格式不正確(.xlsx/.csv)，請重新選擇')
+          // 檢查檔案大小
+          console.log('filesize',selectedFile.size);
+          const maxFileSize = 28 * 1024 * 1024; // 28MB
+          if(selectedFile.size > maxFileSize) {
+            alert('檔案' + selectedFile.name + '大於28MB，請重新選取');
+            return
           }
+          
+          // 檢查副檔名
+          // 以'.'切割字串並以pop取得最後一組。EX: demo.sss.xlsx => ['demo','sss','xlsx'] => pop出 'xlsx'並轉成小寫
+          const fileExtension = fileName.split('.').pop().toLowerCase();
+          if (fileExtension !== 'xlsx' && fileExtension !== 'csv') {
+            alert('檔案格式不正確(.xlsx/.csv)，請重新選擇')
+            return
+          }
+          const form = new FormData();
+          form.append('File',selectedFile);
+          axios.post('',form)
+          .then((response)=>{
+            const data = response.data;
+            alert(data.messages);
+          })
+          .catch((error)=>{
+            console.error(error);
+          })
         }
       }
       async function exportExcel() {

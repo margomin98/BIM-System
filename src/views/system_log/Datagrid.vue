@@ -11,28 +11,28 @@
           <div class="col">
             <p>執行動作</p>
             <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{  "請選擇" }}
+              <button class="btn dropdown-toggle" type="button" id="activeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{  searchParams.Active ||"請選擇" }}
                   </button>
-              <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p class="dropdown-item">{{ item }}</p>
+              <div class="dropdown-menu" aria-labelledby="activeDropdown">
+                <p v-for="(item , index) in DropdownArray.Active" :key="index" class="dropdown-item" @click="selectActive(item)">{{ item }}</p>
               </div>
             </div>
           </div>
-          <!-- 標題 -->
+          <!-- 訊息 -->
           <div class="col">
-            <p>標題</p>
-            <input type="text" />
+            <p>訊息</p>
+            <input type="text" v-model="searchParams.Message"/>
           </div>
           <!-- 日期（起） -->
           <div class="col">
             <p>日期(起)</p>
-            <input type="date" class="date-input" />
+            <input type="date" class="date-input" v-model="searchParams.StartDate"/>
           </div>
           <!-- 日期(迄) -->
           <div class="col">
             <p>日期(迄)</p>
-            <input type="date" class="date-input" />
+            <input type="date" class="date-input" v-model="searchParams.EndDate"/>
           </div>
         </div>
       </div>
@@ -89,6 +89,7 @@
     ref
   } from "vue";
   import { UpdatePageParameter, createDatagrid , } from '@/assets/js/common_fn';
+  import { SystemLog_ActiveArray } from '@/assets/js/dropdown';
   import axios from 'axios';
   export default {
     components: {
@@ -99,23 +100,26 @@
     },
     setup() {
       const searchParams = reactive({
-        ShipmentNum: '',
-        ShipmentCompany: '',
+        Active: '',
+        Message: '',
         StartDate: '',
         EndDate: '',
       });
+      const DropdownArray = reactive({
+        Active: SystemLog_ActiveArray,
+      })
       const datagrid = createDatagrid();
       const datagridfield = [
-        { field: "Account", width: '150px', header: "使用者賬號" },
-        { field: "Action_text", width: '150px', header: "執行動作" },
+        { field: "Account_Id", width: '150px', header: "使用者帳號" },
+        { field: "Active", width: '150px', header: "執行動作" },
         { field: "Controller", width: '150px', header: "Controller" },
         { field: "Action", width: '150px', header: "Action" },
-        { field: "MSG", width: '550px', header: "訊息" },
-        { field: "Time", width: '200px', header: "執行時間" }
+        { field: "Message", width: '550px', header: "訊息" },
+        { field: "LogTime", width: '200px', header: "執行時間" }
       ]
       const rowData = ref([]);
       onMounted(() => {
-        datagrid.sortField = 'Time'
+        datagrid.sortField = 'LogTime'
         submit('','search');
       });
       async function submit(event, type) {
@@ -127,12 +131,15 @@
         UpdatePageParameter( datagrid , event , type , form)
         // getMngDatagrid('/InventoryMng/Assets',rowData,datagrid,form)
         rowData.value =  [
-          { Account: "user1", Action_text: "登入", Controller: "Account", Action: "Login", MSG: "Login Successful", Time: "2023-10-20 09:15:32" },
-          { Account: "user2", Action_text: "新增", Controller: "AssetsInMng", Action: "NewAssetsIn", MSG: "user2 Created", Time: "2023-10-20 10:30:45" },
-          { Account: "user3", Action_text: "編輯", Controller: "AssetsInMng", Action: "ApplicationEdit", MSG: "Profile Updated", Time: "2023-10-20 12:45:22" },
-          { Account: "user4", Action_text: "刪除", Controller: "AssetsInMng", Action: "ApplicationDelete", MSG: "user2 Deleted", Time: "2023-10-20 15:20:18" },
-          { Account: "user1", Action_text: "登出", Controller: "Account", Action: "LogOff", MSG: "Logout Successful", Time: "2023-10-20 18:55:09" }
+          { Account_Id: "user1", Active: "登入", Controller: "Account", Action: "Login", Message: "Login Successful", LogTime: "2023-10-20 09:15:32" },
+          { Account_Id: "user2", Active: "新增", Controller: "AssetsInMng", Action: "NewAssetsIn", Message: "user2 Created", LogTime: "2023-10-20 10:30:45" },
+          { Account_Id: "user3", Active: "編輯", Controller: "AssetsInMng", Action: "ApplicationEdit", Message: "Profile Updated", LogTime: "2023-10-20 12:45:22" },
+          { Account_Id: "user4", Active: "刪除", Controller: "AssetsInMng", Action: "ApplicationDelete", Message: "user2 Deleted", LogTime: "2023-10-20 15:20:18" },
+          { Account_Id: "user1", Active: "登出", Controller: "Account", Action: "LogOff", Message: "Logout Successful", LogTime: "2023-10-20 18:55:09" }
         ];
+      }
+      const selectActive = (item)=>{
+        searchParams.Active = item;
       }
       const clear = () => {
         for (const key in searchParams) {
@@ -142,10 +149,12 @@
       }
       return {
         searchParams,
+        DropdownArray,
         datagrid,
         datagridfield,
         rowData,
         submit,
+        selectActive,
         clear,
       };
     },
