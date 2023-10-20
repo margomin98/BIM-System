@@ -82,7 +82,6 @@
     </div>
     <div class="dg-height">
       <DataTable
-        lazy
         :key="datagrid.key"
         :first= "datagrid.first"
         :size="'small'"
@@ -136,6 +135,7 @@
   } from "@/assets/js/dropdown.js"
   import { getMngDatagrid } from '@/assets/js/common_api'
   import { UpdatePageParameter, createDatagrid } from '@/assets/js/common_fn';
+  import axios from 'axios';
   export default {
     components: {
       Navbar,
@@ -186,7 +186,30 @@
           }
         }
         UpdatePageParameter(datagrid,event,type,form)
-        getMngDatagrid('/RepairMng/RepairOrders',rowData,datagrid,form);
+        // getMngDatagrid('/RepairMng/RepairOrders',rowData,datagrid,form);
+        datagrid.loading = true;
+        const baseUrl = 'http://192.168.0.177:7008'
+        let apiurl = baseUrl + '/RepairMng/RepairOrders'
+        axios.post(`${apiurl}`, form)
+        .then((response)=>{
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('datagrid', data.resultList);
+            rowData.value = data.resultList;
+            datagrid.key++;
+          } else if (data.state === 'account_error') {
+            //尚未登入
+            alert(data.messages);
+            router.push('/');
+          } else {
+            //取得datagrid失敗
+            alert(data.messages);
+          }
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
+        datagrid.loading = false;
       }
       const selectStatus = (item) => {
         searchParams.Status = item;

@@ -83,7 +83,6 @@
       </div>
       <div style="width: 100%" class="content">
         <DataTable
-          lazy
           :key="datagrid.key"
           :first= "datagrid.first"
           :size="'small'"
@@ -158,6 +157,7 @@
       ]
       const rowData = ref([]);
       onMounted(() => { 
+        datagrid.sortField = 'ExecutionDate'
         getDetails();
         getHistory('','search');
       });
@@ -187,31 +187,31 @@
         const form = new FormData();
         form.append('IntegrationId' , IntegrationId);
         UpdatePageParameter( datagrid , event , type , form)
-        getMngDatagrid('/IntegrationMng/IntegratedHistory',rowData,datagrid,form)
-        // datagrid.loading = true;
-        // const baseUrl = 'http://192.168.0.177:7008'
-        // let apiurl = baseUrl + '/IntegrationMng/IntegratedHistory'
-        // axios.post(`${apiurl}`, form)
-        // .then((response)=>{
-        //   const data = response.data;
-        //   if (data.state === 'success') {
-        //     console.log('datagrid', data.resultList);
-        //     rowData.value = data.resultList;
-        //     datagrid.totalRecords = data.resultList.total;
-        //     datagrid.key++;
-        //   } else if (data.state === 'account_error') {
-        //     //尚未登入
-        //     alert(data.messages);
-        //     router.push('/');
-        //   } else {
-        //     //取得datagrid失敗
-        //     alert(data.messages);
-        //   }
-        // })
-        // .catch((error)=>{
-        //   console.error(error);
-        // })
-        // datagrid.loading = false;
+        // getMngDatagrid('/IntegrationMng/IntegratedHistory',rowData,datagrid,form)
+        datagrid.loading = true;
+        const baseUrl = 'http://192.168.0.177:7008'
+        let apiurl = baseUrl + '/IntegrationMng/IntegratedHistory'
+        axios.post(`${apiurl}`, form)
+        .then((response)=>{
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('datagrid', data.resultList);
+            rowData.value = data.resultList;
+            datagrid.totalRecords = data.resultList.total;
+            datagrid.key++;
+          } else if (data.state === 'account_error') {
+            //尚未登入
+            alert(data.messages);
+            router.push('/');
+          } else {
+            //取得datagrid失敗
+            alert(data.messages);
+          }
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
+        datagrid.loading = false;
       }
       return {
         details,

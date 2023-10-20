@@ -9,6 +9,7 @@
   import { ref, onMounted } from 'vue';
   import { Scrap_Delete_Status } from '@/assets/js/enter_status';
   export default {
+    props: ['params'],
     setup(props) {
       const router = useRouter();
       const search_id = props.params.data.ScrapId
