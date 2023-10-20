@@ -750,10 +750,7 @@
     margin-bottom: 0;
     font-weight: 700;
   }
-  .modal-dialog {
-    width: 80% !important;
-    max-width: unset
-  }
+ 
   .view_icon,
   .trash_icon {
     cursor: pointer;

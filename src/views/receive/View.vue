@@ -271,10 +271,7 @@
   span {
     @include red_star
   }
-  .modal-dialog {
-    width: 80% !important;
-    max-width: unset
-  }
+ 
   .selected_file {
     flex-direction: column;
     .icon {
