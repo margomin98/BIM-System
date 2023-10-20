@@ -298,10 +298,10 @@
           if(header['content-type'].includes('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')) {
             const url = window.URL.createObjectURL(data) ;
             const a = document.createElement('a');
-            const fileNameMatch = /filename=([^;]*)/.exec(response.headers['content-disposition']);
-            console.log('filename', fileNameMatch[1]);
+            const fileName = createFileName();
+            console.log('filename:',fileName);
             a.href = url;
-            a.download = `${fileNameMatch[1]}`;
+            a.download = fileName;
             a.click();
             a.remove();
             window.URL.revokeObjectURL(url);
@@ -310,6 +310,25 @@
         .catch((error)=>{
           console.error(error);
         })
+      }
+      function createFileName() {
+        // 创建一个新的Date对象来获取当前日期和时间
+        var currentDate = new Date();
+
+        // 获取年、月、日、小时、分钟和秒
+        var year = currentDate.getFullYear();
+        var month = currentDate.getMonth() + 1; // 月份是从0开始，所以需要加1
+        var day = currentDate.getDate();
+        var hours = currentDate.getHours();
+        var minutes = currentDate.getMinutes();
+        var seconds = currentDate.getSeconds();
+
+        // 创建一个格式化的时间字符串
+        var formattedTime = year + '' + addZero(month) + '' + addZero(day) + '' + addZero(hours) + '' + addZero(minutes) + '' + addZero(seconds)+'_資產報表.xlsx';
+        return formattedTime;
+      }
+      function addZero(value) {
+        return value < 10 ? '0' + value : value;
       }
       function selectType(item) {
         searchParams.EquipTypeName = item.Name;

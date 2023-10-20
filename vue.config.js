@@ -9,13 +9,4 @@ module.exports = defineConfig({
       },
     },
   },
-  devServer: {
-    proxy: {
-      '/': {
-        target: 'http://192.168.0.177:7008/', // 更改为你的目标域名
-        changeOrigin: true,
-        ws: false, 
-      },
-    },
-  },
 });

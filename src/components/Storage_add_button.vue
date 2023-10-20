@@ -1,26 +1,36 @@
 <template>
   <div>
-    <button type="button" class="btn btn-primary" @click="add()">
-        +
-          </button>
+    <button type="button" class="btn btn-primary" @click="add()">+</button>
   </div>
 </template>
 
 <script>
   export default {
-    props: ['params'],
-    setup(props) {
+    props: ['params','selectedNumber','Number'],
+    setup(props,{emit}) {
       function add() {
-        if (props.params.numberIsValid(props.params.data)) {
+        const selectedNumber = props.selectedNumber;
+        const Number = props.Number;
+        if (numberIsValid(selectedNumber , Number)) {
           // API將物品從資料庫扣除後，更新rowData
           SubtractFromInventory();
         } else {
-          if (props.params.data.selectNumber === 0) {
+          if (!props.params.data.selectNumber) {
             alert('所選數量不得為零')
           } else {
             alert('所選數量超過所需數量上限');
           }
         }
+      }
+      const numberIsValid = (selectedNumber,Number) => {
+        const data = props.params.data
+        // 檢查選擇數量是否正常 1.超過 2.為零 3.正常執行
+        if ((data.selectNumber + selectedNumber) > Number || !data.selectNumber ) {
+          // 1. || 2.
+          return false;
+        }
+        // 2. 正常執行
+        return true;
       }
       async function SubtractFromInventory() {
         console.log(props.params.data);
@@ -35,7 +45,8 @@
           const data = response.data;
           if (data.state === 'success') {
             console.log('暫存結果:' +data);
-            props.params.addMaterial(props.params.data);
+            // props.params.addMaterial(props.params.data);
+            emit('addMaterial',props.params.data)
           }
           else {
             alert(data.messages);

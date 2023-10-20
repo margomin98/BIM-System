@@ -1,8 +1,6 @@
 <template>
   <div>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="searchByRow()">
-  搜索庫存
-  </button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="searchByRow()">搜索庫存</button>
   </div>
 </template>
 

@@ -65,8 +65,44 @@
               <p>目前資產庫存</p>
             </div>
           </div>
-          <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs3" :rowData="rowData3" :paginationAutoPageSize="true" @grid-ready="onGridReady3">
-          </ag-grid-vue>
+          <DataTable
+            :key="datagrid3.key"
+            :first= "datagrid3.first"
+            :size="'small'"
+            :loading="datagrid3.loading"
+            :value="rowData3" 
+            :sort-field="datagrid3.sortField"
+            :sort-order="datagrid3.sortOrder"
+            resizableColumns 
+            columnResizeMode="expand"
+            showGridlines 
+            scrollable 
+            scrollHeight="420px" 
+            @page="searchHistory($event , 'page')" 
+            @sort="searchHistory($event , 'sort')"
+            paginator 
+            :rows="datagrid3.rows" 
+            :totalRecords="datagrid3.totalRecords"
+            paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+            :rowsPerPageOptions="[10, 20, 30]"
+            currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+            <Column style="min-width: 60px;">
+              <template #body="slotProps">
+                <AssetsView :params = "slotProps" />
+              </template>
+            </Column>
+            <Column style="min-width: 60px;" header="選擇">
+              <template #body="slotProps">
+                <Storage_add :params = "slotProps" :selectedNumber="searchParams.selectedNumber" :Number = "searchParams.Number" @addMaterial ="addMaterial"/>
+              </template>
+            </Column>
+            <Column style="min-width: 60px;"  header="數量">
+              <template #body="slotProps">
+                <Storage_number :params="slotProps"/>
+              </template>
+            </Column>
+            <Column v-for="item in datagrid3field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+          </DataTable>
         </div>
       </div>
     </div>
@@ -232,9 +268,6 @@
 </template>
 
 <script>
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
   import AssetsView from '@/components/Rent_process_new_view_button'
   import Storage_button from "@/components/Storage_button";
   import Storage_add from "@/components/Storage_add_button";
@@ -271,7 +304,6 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
   export default {
     components: {
       Navbar,
-      AgGridVue,
       Column,
       DataTable,
       Storage_button,
@@ -286,7 +318,6 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
       const AO_ID = route.query.search_id;
       const details = ref({});
       const options = Rent_UseArray;
-      const gridApi2 = ref(null);
       const gridApi3 = ref(null);
       const selectedNumberArray = ref([]); //紀錄不同項目已選數量array
       const totalNeed = ref(0); //總所需數量
@@ -333,123 +364,17 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
         { field: "ProductSpec", width: '150px', header: "規格", sortable:true, },
       ]
       // 檢索datagrid
-      const columnDefs3 = [{
-          headerName: "",
-          field: "",
-          cellRenderer: "AssetsView",
-          width: 100,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "選擇",
-          suppressMovable: true,
-          field: "",
-          cellRenderer: "Storage_add",
-          cellRendererParams: {
-            numberIsValid: (data) => {
-              // 檢查選擇數量是否正常 1.超過 2.為零 3.正常執行
-              if ((data.selectNumber + searchParams.selectedNumber) > searchParams.Number || data.selectNumber === 0) {
-                // 1. || 2.
-                return false;
-              }
-              // 2. 正常執行
-              return true;
-            },
-            addMaterial: (data) => {
-              selectedNumberArray.value[data.id] += data.selectNumber
-              searchParams.selectedNumber = selectedNumberArray.value[data.id]
-              // searchInventory刷新庫存數量
-              searchInventory(searchParams.id, searchParams.item_id);
-              // getDetail刷新rowData1、2
-              getDetails();
-            },
-          },
-          width: 75,
-          resizable: true,
-        },
-        {
-          headerName: "數量",
-          field: "OM_Number",
-          cellRenderer: "Storage_number",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "單位",
-          field: "OM_Unit",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "資產編號",
-          field: "AssetsId",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "物品名稱",
-          field: "AssetName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "儲位區域",
-          field: "AreaName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "儲位櫃位",
-          field: "LayerName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "廠商",
-          field: "VendorName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "型號",
-          field: "ProductType",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true,
-        },
-        {
-          headerName: "規格",
-          field: "ProductSpec",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          suppressMovable: true,
-          resizable: true,
-        },
+      const datagrid3 = createDatagrid();
+      const datagrid3field = [
+        { field: "selectNumber", width: '100px', header: "已選數量" },
+        { field: "OM_Unit", width: '100px', header: "單位" },
+        { field: "AssetsId", width: '150px', header: "資產編號" },
+        { field: "AssetName", width: '150px', header: "物品名稱" },
+        { field: "AreaName", width: '150px', header: "儲位區域" },
+        { field: "LayerName", width: '150px', header: "儲位櫃位" },
+        { field: "VendorName", width: '150px', header: "廠商" },
+        { field: "ProductType", width: '150px', header: "型號" },
+        { field: "ProductSpec", width: '150px', header: "規格" }
       ]
       const rowData1 = ref([]);
       const rowData2 = ref([]);
@@ -626,6 +551,16 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
         searchInventory(searchParams.id, searchParams.item_id);
         console.log('設定後搜尋參數:\n', searchParams);
       }
+      // 新增庫存
+      function addMaterial (data) {
+        selectedNumberArray.value[data.id] += data.selectNumber
+        searchParams.selectedNumber = selectedNumberArray.value[data.id]
+        // searchInventory刷新庫存數量
+        searchInventory(searchParams.id, searchParams.item_id);
+        // getDetail刷新rowData1、2
+        getDetails();
+      }
+      // 刪除庫存
       function deleteMaterial (data) {
         selectedNumberArray.value[data.id] -= data.selectNumber
         searchParams.selectedNumber = selectedNumberArray.value[data.id]
@@ -640,7 +575,8 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
         searchParams,
         datagrid1field,
         datagrid2field,
-        columnDefs3,
+        datagrid3field,
+        datagrid3,
         rowData1,
         rowData2,
         rowData3,
@@ -656,6 +592,7 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
         submit,
         getDate,
         searchList,
+        addMaterial,
         deleteMaterial,
         calculateIndex,
         onGridReady3,
