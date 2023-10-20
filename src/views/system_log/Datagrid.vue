@@ -127,11 +127,11 @@
         UpdatePageParameter( datagrid , event , type , form)
         // getMngDatagrid('/InventoryMng/Assets',rowData,datagrid,form)
         rowData.value =  [
-          { Account: "User1", Action_text: "Login", Controller: "Authentication", Action: "User Login", MSG: "Login Successful", Time: "2023-10-20 09:15:32" },
-          { Account: "User2", Action_text: "Create", Controller: "User Management", Action: "Create User", MSG: "User Created", Time: "2023-10-20 10:30:45" },
-          { Account: "User3", Action_text: "Update", Controller: "Profile", Action: "Update Profile", MSG: "Profile Updated", Time: "2023-10-20 12:45:22" },
-          { Account: "User4", Action_text: "Delete", Controller: "User Management", Action: "Delete User", MSG: "User Deleted", Time: "2023-10-20 15:20:18" },
-          { Account: "User5", Action_text: "Logout", Controller: "Authentication", Action: "User Logout", MSG: "Logout Successful", Time: "2023-10-20 18:55:09" }
+          { Account: "user1", Action_text: "登入", Controller: "Account", Action: "Login", MSG: "Login Successful", Time: "2023-10-20 09:15:32" },
+          { Account: "user2", Action_text: "新增", Controller: "AssetsInMng", Action: "NewAssetsIn", MSG: "user2 Created", Time: "2023-10-20 10:30:45" },
+          { Account: "user3", Action_text: "編輯", Controller: "AssetsInMng", Action: "ApplicationEdit", MSG: "Profile Updated", Time: "2023-10-20 12:45:22" },
+          { Account: "user4", Action_text: "刪除", Controller: "AssetsInMng", Action: "ApplicationDelete", MSG: "user2 Deleted", Time: "2023-10-20 15:20:18" },
+          { Account: "user1", Action_text: "登出", Controller: "Account", Action: "LogOff", MSG: "Logout Successful", Time: "2023-10-20 18:55:09" }
         ];
       }
       const clear = () => {
