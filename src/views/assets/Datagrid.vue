@@ -272,8 +272,8 @@
             return
           }
           const form = new FormData();
-          form.append('File',selectedFile);
-          axios.post('',form)
+          form.append('file',selectedFile);
+          axios.post('http://192.168.0.177:7008/InventoryMng/ImportExcel',form)
           .then((response)=>{
             const data = response.data;
             alert(data.messages);
