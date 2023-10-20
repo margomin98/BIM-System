@@ -231,10 +231,10 @@
               border-bottom-right-radius: 5px;
             }
             .options-list li {
-              padding: 5px 5px 0;
+              padding: 5px;
               cursor: pointer;
               &:hover {
-                background: #7893b7;
+                background: #2D4864;
                 color: white;
                 font-weight: 700;
               }
@@ -384,10 +384,10 @@
               border-bottom-right-radius: 5px;
             }
             .options-list li {
-              padding: 5px 5px 0;
+              padding: 5px;
               cursor: pointer;
               &:hover {
-                background: #7893b7;
+                background: #2D4864;
                 color: white;
                 font-weight: 700;
               }
@@ -538,10 +538,10 @@
               border-bottom-right-radius: 5px;
             }
             .options-list li {
-              padding: 5px 5px 0;
+              padding: 5px;
               cursor: pointer;
               &:hover {
-                background: #7893b7;
+                background: #2D4864;
                 color: white;
                 font-weight: 700;
               }
