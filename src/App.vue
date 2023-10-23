@@ -133,6 +133,7 @@
 		}
 	}
 	.modal {
+	
 		.modal-header {
 			.close_icon {
 				cursor: pointer;
@@ -154,11 +155,41 @@
 	}
 	.datatable_checkbox{
 		text-align: center;
+    display: flex;
+    justify-content: center;
 	}
 	@media only screen and (min-width: 1200px) {
 		.container-fluid {
 			padding-left: 0 !important;
 			padding-right: 0 !important;
+		}
+		.modal{
+			padding: 0 !important;
+			.modal-body{
+				padding: 3% !important;
+			}
+		}
+	}
+	@media only screen and (min-width: 768px) and (max-width: 1199px){
+		.modal{
+			padding: 0 !important;
+			.modal-dialog{
+				padding: 0 5%;
+			}
+			.modal-body{
+				padding: 5% !important;
+			}
+		}
+	}
+ @media only screen and (max-width: 767px) {
+		.modal{
+			padding: 0 !important;
+			.modal-dialog{
+				padding: 0 5%;
+			}
+			.modal-body{
+				padding: 5% !important;
+			}
 		}
 	}
 </style>

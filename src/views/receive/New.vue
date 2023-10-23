@@ -93,7 +93,7 @@
                 <div v-for="(file, index) in fileParams.viewDoc" :key="index" class="file_upload_wrap">
                   <p class='file_name'>{{ file.name }}
                     <img class="view_icon" src="@/assets/view.png" @click="handleDocPreview(file)">
-                    <img class="delete_icon" src="@/assets/trash.png" @click="deleteFile('document',index)"></p>
+                    <img class="trash_icon" src="@/assets/trash.png" @click="deleteFile('document',index)"></p>
                 </div>
               </div>
             </div>
@@ -103,7 +103,7 @@
             <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#photoModal"></button>
             <!-- Photo Modal -->
             <div class="modal fade" id="photoModal" tabindex="-1" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 800px !important">
+              <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title" id="photoModalLabel">{{ previewParams.title }}</h5>
@@ -207,7 +207,7 @@
               <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#photoModal"></button>
               <!-- Photo Modal -->
               <div class="modal fade" id="photoModal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 800px !important">
+                <div class="modal-dialog modal-dialog-centered ">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="photoModalLabel">{{ previewParams.title }}</h5>
@@ -750,12 +750,9 @@
     margin-bottom: 0;
     font-weight: 700;
   }
-  .modal-dialog {
-    width: 80% !important;
-    max-width: unset
-  }
+ 
   .view_icon,
-  .delete_icon {
+  .trash_icon {
     cursor: pointer;
     margin: 0 3px
   }

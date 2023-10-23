@@ -63,8 +63,8 @@
             <p><span>*</span>設備總類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                {{ myForm.EquipTypeName || '請選擇' }}
-              </button>
+                  {{ myForm.EquipTypeName || '請選擇' }}
+                </button>
               <div class="dropdown-menu" aria-labelledby="typeDropdown">
                 <p v-for="(item, index) in myForm.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
               </div>
@@ -74,8 +74,8 @@
             <p><span>*</span>設備分類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(myForm.EquipTypeName !== '') }">
-                {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
-              </button>
+                  {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
+                </button>
               <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                 <p v-for="(item, index) in myForm.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
               </div>
@@ -110,23 +110,12 @@
         </div>
       </div>
       <div class='third_content'>
-        <DataTable 
-        :size="'small'"
-        :value="rowData" 
-        resizableColumns 
-        columnResizeMode="expand"
-        showGridlines 
-        scrollable 
-        scrollHeight="420px" 
-        paginator 
-        :rows="10" 
-        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-        :rowsPerPageOptions="[10, 20, 30]"
-        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
-        <Column style="min-width:80px;">
-          <template #body="slotProps">
-            <Delete :params = "slotProps" @updateDeleteList="updateDeleteList" @updateItemList="updateItemList" />
-          </template>
+        <DataTable :size="'small'" :value="rowData" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="420px" paginator :rows="10" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+          :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+          <Column style="min-width:80px;">
+            <template #body="slotProps">
+              <Delete :params = "slotProps" @updateDeleteList="updateDeleteList" @updateItemList="updateItemList" />
+</template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
         </DataTable>
@@ -140,7 +129,10 @@
 </template>
 
 <script>
-  import { useRoute, useRouter } from 'vue-router';
+  import {
+    useRoute,
+    useRouter
+  } from 'vue-router';
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
   import Delete from "@/components/Rent_Edit_Delete_button";
@@ -192,22 +184,22 @@
       async function getEquipTypeName() {
         if (myForm.EquipTypeArray.length == 0) {
           getEquipType()
-          .then((data)=>{
-            myForm.EquipTypeArray = data;
-          })
-          .catch((error) =>{
-            console.error(error);
-          })
+            .then((data) => {
+              myForm.EquipTypeArray = data;
+            })
+            .catch((error) => {
+              console.error(error);
+            })
         }
       }
       async function getEquipCategoryName() {
         getEquipCategory(myForm.EquipType_Id)
-        .then((data)=>{
-          myForm.EquipCategoryArray = data;
+          .then((data) => {
+            myForm.EquipCategoryArray = data;
           })
-        .catch((error) =>{
-          console.error(error);
-        })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       async function getProjectName() {
         if (!/^(?![ 　]{10}$)[\s\S]{1,10}$/.test(details.value.ProjectCode)) {
@@ -216,12 +208,12 @@
         }
         details.value.ProjectCode = details.value.ProjectCode.trim()
         getProject(details.value.ProjectCode)
-        .then((data)=>{
-          details.value.ProjectName = data;
-        })
-        .catch((error) =>{
-          console.error(error);
-        })
+          .then((data) => {
+            details.value.ProjectName = data;
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       function selectType(item) {
         myForm.EquipTypeName = item.Name;
@@ -529,7 +521,6 @@
           }
         }
         .third_content {
-          border: 1px solid black;
           .list {
             border: 1px solid black;
             button {
@@ -750,7 +741,6 @@
           }
         }
         .third_content {
-          border: 1px solid black;
           .list {
             border: 1px solid black;
             button {
@@ -988,7 +978,6 @@
           }
         }
         .third_content {
-          border: 1px solid black;
           .list {
             border: 1px solid black;
             button {

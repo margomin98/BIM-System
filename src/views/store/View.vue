@@ -230,7 +230,7 @@
       </div>
       <!-- ViewFile Modal -->
       <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 800px !important;">
+        <div class="modal-dialog modal-dialog-centered" >
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">{{ modalParams.title }}</h5>
@@ -341,6 +341,38 @@
       font-weight: 700;
       color: white;
       font-size: 18px;
+    }
+  }
+  .modal {
+    .modal-body {
+      text-align: center;
+      padding: 20px;
+      margin: auto;
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+    .modal-content {
+      margin: auto;
+    }
+    .modal-input-group-prepend {
+      width: auto;
+      font-weight: 700;
+      font-size: 20px;
+    }
+    .modal-footer {
+      padding: 0 12px 12px;
+      border: none;
+    }
+    .modal-header {
+      h5 {
+        font-weight: 700;
+      }
+      background: #528091;
+      color: white;
+      display: flex;
+      justify-content: center;
     }
   }
   @media only screen and (min-width: 1200px) {

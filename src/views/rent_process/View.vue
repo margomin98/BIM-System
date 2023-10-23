@@ -453,7 +453,7 @@
           align-items: center;
           height: 40px;
           border-radius: 0;
-          border: 1px solid black;
+          border-bottom: 1px solid black;
           padding: 0 10px;
           justify-content: right;
           gap: 10px;
@@ -757,7 +757,7 @@
           align-items: center;
           height: 40px;
           border-radius: 0;
-          border: 1px solid black;
+          border-bottom: 1px solid black;
           padding: 0 10px;
           justify-content: right;
           gap: 10px;
@@ -1066,7 +1066,7 @@
           align-items: center;
           height: 40px;
           border-radius: 0;
-          border: 1px solid black;
+          border-bottom: 1px solid black;
           padding: 0 10px;
           justify-content: right;
           gap: 10px;

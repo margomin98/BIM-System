@@ -67,9 +67,9 @@
         </ul>
         <div class='d-flex right_info'>
           <p class="username">{{ userName }}&nbsp;&nbsp;您好！</p>
-          <div @click="logout()" style="cursor: pointer;">
+          <div class='log_out_btn' @click="logout()"  @touchstart="startTouch" @touchend="endTouch" @mouseover="hovered = true" @mouseout="hovered = false">
             <p class="logout">登出
-              <img src="../assets/navbar/logout.png" alt="登出">
+              <img :src="hovered ? require('@/assets/navbar/logout_hover.png') : require('@/assets/navbar/logout.png')" alt="Image">
             </p>
           </div>
         </div>
@@ -85,6 +85,20 @@
     ref
   } from 'vue';
   export default {
+    data() {
+    return {
+      hovered: false
+    };
+  },
+  // 登出按鈕手機的動作
+  methods: {
+    startTouch() {
+      this.hovered = true;
+    },
+    endTouch() {
+      this.hovered = false;
+    }
+  },
     name: 'Navbar',
     setup(props,{emit}) {
       const userName = ref('');
@@ -151,6 +165,25 @@
       }
     }
   }
+  .log_out_btn{
+    border: 1px dashed black;
+    border-radius: 20px;
+    width: 80px;
+    margin-left: 5px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    p{
+      align-items: center;
+    display: flex;
+    gap: 5px;
+    }
+    &:hover{
+      color: white;
+      border-color: white;
+      background-color: rgb(113, 130, 148);
+    }
+  }
   @media only screen and (min-width: 1200px) {
     .navbar-nav .nav-link.active,
     .navbar-nav .nav-link.show {
@@ -180,6 +213,7 @@
             align-items: center;
             p {
               font-size: 18px;
+              font-weight: 700;
               margin-bottom: 0;
               display: flex;
               align-items: center;

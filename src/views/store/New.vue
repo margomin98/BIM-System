@@ -100,8 +100,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                              {{ itemParams.EquipTypeName || '請選擇' }}
-                            </button>
+                                  {{ itemParams.EquipTypeName || '請選擇' }}
+                                </button>
                 <div class="dropdown-menu" aria-labelledby="typeDropdown">
                   <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType('upperForm' , item)">{{ item.Name }}</p>
                 </div>
@@ -115,8 +115,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(itemParams.EquipTypeName !== '') }">
-                              {{ itemParams.EquipCategoryName || EquipCategoryInit }}
-                            </button>
+                                  {{ itemParams.EquipCategoryName || EquipCategoryInit }}
+                                </button>
                 <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                   <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory('upperForm' , item)">{{ item.Name }}</p>
                 </div>
@@ -194,8 +194,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              {{ itemParams.PackageUnit || '請選擇' }}
-                            </button>
+                                  {{ itemParams.PackageUnit || '請選擇' }}
+                                </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in DropdownArray.PackageUnit" :key="index" class="dropdown-item" @click="selectPackageUnit('upperForm' , item)">
                     {{ item }}</p>
@@ -225,8 +225,8 @@
               </div>
               <div v-if="itemParams.AssetType === '耗材'" class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="itemParams.AssetType !== '耗材'">
-                              {{ itemParams.Unit || '請選擇' }}
-                            </button>
+                                  {{ itemParams.Unit || '請選擇' }}
+                                </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in DropdownArray.Unit" :key="index" class="dropdown-item" @click="selectUnit('upperForm' , item)">
                     {{ item }}</p>
@@ -293,7 +293,7 @@
             <!-- 頁籤專案名稱 -->
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend">專案名稱：</div>
+                <div class="input-group-prepend">專案名稱 :</div>
                 <input type="text" class="form-control readonly_box" v-model="tab.itemProjectName" readonly>
               </div>
             </div>
@@ -306,8 +306,8 @@
                   </div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                              {{ tab.itemEquipTypeName || '請選擇' }}
-                            </button>
+                                  {{ tab.itemEquipTypeName || '請選擇' }}
+                                </button>
                     <div class="dropdown-menu" aria-labelledby="typeDropdown">
                       <p v-for="item in DropdownArray.EquipType" class="dropdown-item" @click="selectType('tab' , item , index)">{{ item.Name }}</p>
                     </div>
@@ -321,8 +321,8 @@
                   </div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!tab.itemEquipTypeName">
-                              {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }}
-                            </button>
+                                  {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }}
+                                </button>
                     <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                       <p v-for="item in tab.EquipCategoryArray" class="dropdown-item" @click="selectCategory('tab' , item , index)">{{ item.Name }}</p>
                     </div>
@@ -398,8 +398,8 @@
                   </div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              {{ tab.itemPackageUnit || '請選擇' }}
-                            </button>
+                                  {{ tab.itemPackageUnit || '請選擇' }}
+                                </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="item in DropdownArray.PackageUnit" class="dropdown-item" @click="selectPackageUnit('tab' , item , index)">{{ item }}</p>
                     </div>
@@ -428,8 +428,8 @@
                   </div>
                   <div v-if="tab.itemAssetType === '耗材'" class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="tab.itemAssetType !== '耗材'">
-                              {{ tab.itemUnit || '請選擇' }}
-                            </button>
+                                  {{ tab.itemUnit || '請選擇' }}
+                                </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="item in DropdownArray.Unit" class="dropdown-item" @click="selectUnit('tab' , item , index)">{{ item }}</p>
                     </div>
@@ -449,7 +449,7 @@
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">資產照片 :</div>
-                <div class="mb-3 file_wrap">
+                <div class="file_wrap">
                   <button class='choose_btn' @click="openFileExplorer(index)">選擇檔案</button>
                   <input type="file" accept="image/*" ref="fileInputs" style="display: none;" multiple @change="handleFileChange(index , $event)" />
                 </div>
@@ -457,10 +457,13 @@
             </div>
             <div class="col selected_file">
               <div class="input-group">
-                <div class="input-group-prepend">已選擇檔案 :</div>
-                <div v-for="(file , file_index) in tab.viewFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
-                  <p @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
-                  <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index,file_index)">
+                <div class="input-group-prepend">已選擇的檔案 :</div>
+                <div class="store_new_file">
+                  <div v-for="(file , file_index) in tab.viewFile" :key="file_index" class="file_upload_wrap" >
+                    <p>{{ file.FileName }}
+                      <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+                      <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index,file_index)"></p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -469,7 +472,7 @@
       </div>
       <!-- ViewFile Modal -->
       <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 800px !important;">
+        <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">{{ modalParams.title }}</h5>
@@ -1338,6 +1341,41 @@
         padding-top: 16px;
       }
     }
+  } 
+  .modal {
+    .modal-body {
+      text-align: center;
+      padding: 20px;
+      margin: auto;
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+    .modal-content {
+      margin: auto;
+    }
+    .modal-input-group-prepend {
+      width: auto;
+      font-weight: 700;
+      font-size: 20px;
+    }
+    .modal-footer {
+      padding: 0 12px 12px;
+      border: none;
+    }
+    .modal-header {
+      h5 {
+        font-weight: 700;
+      }
+      background: #528091;
+      color: white;
+      display: flex;
+      justify-content: center;
+    }
+  }
+  .view_icon,.trash_icon{
+    cursor:pointer
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
@@ -1523,12 +1561,9 @@
         }
         .tab-content {
           background: #3E4E5F;
-          padding: 50px 30px;
+          padding: 50px 20px;
           position: relative;
           .selected_file {
-            .input-group {
-              flex-direction: column;
-            }
             .file_upload_wrap {
               margin-bottom: 0;
               display: flex;
@@ -1551,7 +1586,7 @@
             }
           }
           .input-number {
-            width: 65%;
+            width: 64%;
           }
           .check_box_wrap {
             font-weight: 700;
@@ -1564,7 +1599,7 @@
             }
           }
           .dropdown {
-            width: 240px;
+            width: 245px;
             .dropdown-menu {
               width: 100%;
               max-height: 250px;
@@ -1610,14 +1645,13 @@
               color: white;
               font-weight: 700;
               font-size: 20px;
-              width: 120px;
+              width: 130px;
               text-align: end;
             }
             .file_wrap {
               display: flex;
               flex-direction: column;
               .choose_btn {
-                margin-bottom: 10px;
                 @include choose_file_btn;
                 &:hover {
                   background: #3f608f;
@@ -1740,7 +1774,7 @@
             }
           }
           .input-group-prepend {
-            width: 116.5px;
+            width: 113.5px;
             white-space: nowrap;
           }
           .check_box_wrap {
@@ -1802,28 +1836,23 @@
           background-color: rgb(176, 175, 175);
           border: 1px solid rgb(86, 85, 85);
         }
-        .selected_file {
-          .input-group {
-            flex-direction: column;
+        .file_upload_wrap {
+          margin-bottom: 0;
+          display: flex;
+          img {
+            width: 25px;
+            height: 25px;
           }
-          .file_upload_wrap {
-            margin-bottom: 0;
-            display: flex;
-            img {
-              width: 25px;
-              height: 25px;
-            }
-            p {
+          p {
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: white;
+            word-break: break-word;
+            &::before {
+              margin-right: 5px;
+              content: '·';
               font-weight: 700;
-              margin-bottom: 5px;
               color: white;
-              word-break: break-word;
-              &::before {
-                margin-right: 10px;
-                content: '·';
-                font-weight: 700;
-                color: white;
-              }
             }
           }
         }
@@ -1839,10 +1868,10 @@
         }
         .tab-content {
           background: #3E4E5F;
-          padding: 50px 30px;
+          padding: 50px 20px;
           position: relative;
           .input-number {
-            width: 65%;
+            width: 59%;
           }
           .check_box_wrap {
             font-weight: 700;
@@ -1855,7 +1884,7 @@
             }
           }
           .dropdown {
-            width: 240px;
+            width: 199px;
             .dropdown-menu {
               width: 100%;
               max-height: 250px;
@@ -1901,14 +1930,13 @@
               color: white;
               font-weight: 700;
               font-size: 20px;
-              width: 120px;
+              width: 130px;
               text-align: end;
             }
             .file_wrap {
               display: flex;
               flex-direction: column;
               .choose_btn {
-                margin-bottom: 10px;
                 @include choose_file_btn;
                 &:hover {
                   background: #3f608f;
@@ -2218,7 +2246,6 @@
               flex-direction: column;
               .choose_btn {
                 margin-top: 5px;
-                margin-bottom: 10px;
                 @include choose_file_btn;
                 &:hover {
                   background: #3f608f;
