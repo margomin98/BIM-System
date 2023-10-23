@@ -119,7 +119,7 @@
             </div>
           </div>
           <div class="btn_section">
-            <button class="send_btn" data-bs-toggle="modal" data-bs-target="#searchModal" @click="searchInventory('add')">搜索庫存</button>
+            <button class="send_btn" data-bs-toggle="modal" data-bs-target="#searchModal" @click="searchInventory('','search','add')">搜索庫存</button>
             <!-- Modal -->
             <div class="modal fade" data-bs-backdrop="static" id="searchModal" tabindex="-1">
               <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -161,7 +161,7 @@
                         </div>
                       </div>
                       <div class='col d-flex justify-content-center'>
-                        <button class="btn submit_btn" type="button" @click="searchInventory">搜尋庫存</button>
+                        <button class="btn submit_btn" type="button" @click="searchInventory('','search')">搜尋庫存</button>
                       </div>
                     </div>
                   </div>
@@ -170,8 +170,43 @@
                       <p>目前資產庫存</p>
                     </div>
                   </div>
-                  <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="false" @grid-ready="onGridReady">
-                  </ag-grid-vue>
+                  <DataTable
+                  :key="datagrid.key"
+                  :first= "datagrid.first"
+                  :size="'small'"
+                  :loading="datagrid.loading"
+                  :value="rowData" 
+                  :sort-field="datagrid.sortField"
+                  :sort-order="datagrid.sortOrder"
+                  resizableColumns 
+                  columnResizeMode="expand"
+                  showGridlines 
+                  scrollable 
+                  scrollHeight="420px" 
+                  @page="searchInventory($event , 'page')" 
+                  @sort="searchInventory($event , 'sort')"
+                  :rows="datagrid.rows" 
+                  :totalRecords="datagrid.totalRecords"
+                  paginator
+                  paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+                  currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+                  <Column style="min-width: 60px;">
+                    <template #body="slotProps">
+                      <AssetsView :params = "slotProps" />
+                    </template>
+                  </Column>
+                  <Column style="min-width: 60px;" header="選擇">
+                    <template #body="slotProps">
+                      <Equipment_add :params = "slotProps" :action="action" @addAssetList ="addAssetList" @editAssetList="editAssetList"/>
+                    </template>
+                  </Column>
+                  <Column style="min-width: 80px;"  header="數量">
+                    <template #body="slotProps">
+                      <Equipment_number :params="slotProps"/>
+                    </template>
+                  </Column>
+                  <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+                  </DataTable>
                 </div>
               </div>
             </div>
@@ -191,14 +226,13 @@
 </template>
 
 <script>
-  import {
-    AgGridVue
-  } from "ag-grid-vue3";
-  import List_view_button from "@/components/Rent_process_new_view_button";
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
+  import AssetsView from "@/components/Rent_process_new_view_button";
   import Equipment_add from "@/components/Equipment_add_button";
   import Equipment_number from "@/components/Equipment_number_input.vue";
-  import { getEquipType , getEquipCategory , getArea , getLayer , getApplication , getAccount } from '@/assets/js/common_api'
-  import { goBack } from "@/assets/js/common_fn";
+  import { getEquipType , getEquipCategory , getArea , getLayer , getAccount } from '@/assets/js/common_api'
+  import { UpdatePageParameter,createDatagrid, goBack } from "@/assets/js/common_fn";
   import ListItem from "@/components/Equipment/item.vue"
   import Navbar from "@/components/Navbar.vue";
   import {
@@ -213,8 +247,9 @@
   export default {
     components: {
       Navbar,
-      AgGridVue,
-      List_view_button,
+      DataTable,
+      Column,
+      AssetsView,
       Equipment_add,
       Equipment_number,
       ListItem,
@@ -248,7 +283,6 @@
         index: -1,
         exist: false,
       });
-      const gridApi = ref(null);
       const formParams = reactive({
         IntegrationId: '',
         IntegrationName: '',
@@ -260,196 +294,18 @@
         AssetList: [],
         DeleteList: [],
       })
-      const columnDefs = [
-        {
-          suppressMovable: true,
-          field: "",
-          cellRenderer: "List_view_button",
-          resizable: true,
-          width: 100,
-        },
-        {
-          headerName: "選擇",
-          suppressMovable: true,
-          field: "",
-          cellRenderer: "Equipment_add",
-          cellRendererParams: {
-            numberIsValid: (data) => {
-              // 檢查選擇數量是否正常 1.超過 2.為零 3.正常執行
-              if (data.selectNumber > data.OM_Number || data.selectNumber === 0) {
-                // 1. || 2.
-                return false;
-              }
-              // 3. 正常執行
-              return true;
-            },
-            addAssetList: (data) => {
-              let exist = false;
-              // 重複項目直接將數量疊上
-              details.value.AssetList.forEach(item =>{
-                if(item.AssetsId === data.AssetsId) {
-                  item.Number += data.selectNumber;
-                  exist = true;
-                }
-              })
-              // 新的項目插入至最前方
-              if(!exist) {
-                details.value.AssetList.splice(0 , 0 ,{
-                  AssetsId: data.AssetsId,
-                  Number: data.selectNumber,
-                  AssetName: data.AssetName,
-                  EquipTypeName: data.EquipTypeName,
-                  EquipCategoryName: data.EquipCategoryName,
-                  Failed: false,
-                  error_msg: '',
-                })
-              }
-              exist = false;
-              // 重複項目直接將數量疊上
-              formParams.AssetList.forEach(item =>{
-                if(item.AssetsId === data.AssetsId) {
-                  item.Number += data.selectNumber;
-                  exist = true;
-                }
-              })
-              // 新的項目插入至最前方
-              if(!exist) {
-                formParams.AssetList.splice(0 , 0 ,{
-                  AssetsId: data.AssetsId,
-                  Number: data.selectNumber,
-                  AssetName: data.AssetName,
-                  EquipTypeName: data.EquipTypeName,
-                  EquipCategoryName: data.EquipCategoryName,
-                  Failed: false,
-                })
-              }
-              console.log(details.value.AssetList);
-              // 處理完AssetList後更新rowData
-              searchInventory('add')
-            },
-            editAssetList: (data) => {
-              console.log(data);
-              if(ChangeParams.exist) {
-                // 刪除原本
-                formParams.DeleteList.splice(0,0,details.value.AssetList[ChangeParams.index]);
-                console.log('edit DeleteList:', formParams.DeleteList);
-              }
-              console.log('ChangeIndex:',ChangeParams.index);
-              // 更改edit hash-table
-              formParams.AssetList[ChangeParams.index] = {
-                AssetsId: data.AssetsId,
-                Number: data.selectNumber,
-                AssetName: data.AssetName,
-                EquipTypeName: data.EquipTypeName,
-                EquipCategoryName: data.EquipCategoryName,
-                Failed: false,
-              };
-              // 更改
-              details.value.AssetList.splice(ChangeParams.index, 1, {
-                AssetsId: data.AssetsId,
-                Number: data.selectNumber,
-                AssetName: data.AssetName,
-                EquipTypeName: data.EquipTypeName,
-                EquipCategoryName: data.EquipCategoryName,
-                Failed: false,
-                error_msg: '',
-              });
-              console.log('edit AssetList:', formParams.AssetList);
-              // 
-              const element = document.querySelector('#close-modal');
-              // console.log(element);
-              element.click();
-              searchInventory('edit')
-            },
-            action: searchParams.Action,
-
-          },
-          resizable: true,
-          width: 75,
-        },
-        {
-          headerName: "數量",
-          field: "",
-          cellRenderer: "Equipment_number",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "單位",
-          field: "OM_Unit",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "資產編號",
-          field: "AssetsId",
-          unSortIcon: true,
-          sortable: true,
-          width: 180,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "物品名稱",
-          field: "AssetName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "儲位區域",
-          field: "AreaName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "儲位櫃位",
-          field: "LayerName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "廠商",
-          field: "VendorName",
-          unSortIcon: true,
-          sortable: true,
-          width: 160,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "型號",
-          field: "ProductType",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "規格",
-          field: "ProductSpec",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-      ];
+      const action = ref('');
+      const datagrid = createDatagrid();
+      const datagridfield = [
+        { field: "OM_Unit", width: '100px', header: "單位" },
+        { field: "AssetsId", width: '180px', header: "資產編號" },
+        { field: "AssetName", width: '150px', header: "物品名稱" },
+        { field: "AreaName", width: '150px', header: "儲位區域" },
+        { field: "LayerName", width: '150px', header: "儲位櫃位" },
+        { field: "VendorName", width: '160px', header: "廠商" },
+        { field: "ProductType", width: '150px', header: "型號" },
+        { field: "ProductSpec", width: '150px', header: "規格" },
+      ]
       const rowData = ref([]);
       onMounted(() => {
         getAccountName();
@@ -555,15 +411,10 @@
           console.error(error);
         })
       }
-      async function searchInventory(action) {
-        // 更新+按鈕的行為
-        if (action === 'add' || action === 'edit') {
-          searchParams.Action = action
-          let column = gridApi.value.getColumnDefs()
-          const columnIndex = column.findIndex(item => item.cellRenderer === 'Equipment_add')
-          column[columnIndex].cellRendererParams.action = action;
-          // console.log(column[columnIndex]);
-          gridApi.value.setColumnDefs(column);
+      async function searchInventory(event,type,Action) {
+        if (Action) {
+          // 更新+按鈕的行為
+          action.value = Action;
         }
         // 檢查物品名稱字數
         searchParams.ProductName = searchParams.ProductName.trim();
@@ -577,6 +428,7 @@
           form.append('EquipType_Id', searchParams.EquipType_Id);
           form.append('Category_Id', searchParams.Category_Id);
           form.append('ProductName', searchParams.ProductName);
+          UpdatePageParameter(datagrid,event,type,form);
           const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchInventory', form);
           const data = response.data;
           if (data.state === 'success') {
@@ -642,11 +494,8 @@
             }));
             // console.log('searchData',tempData);
             rowData.value = tempData;
+            datagrid.key++;
             // console.log('完成所有處理之rowData',rowData.value);
-            // setTimeout(()=>{
-            //   gridApi.value.setRowData(rowData.value);
-            //   console.log('完成刷新:',rowData.value);
-            // },50);
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -739,8 +588,84 @@
       const selectAccount = (item) => {
         details.value.Custodian = item;
       }
-      const onGridReady = (params) => {
-        gridApi.value = params.api
+      function addAssetList (data) {
+        let exist = false;
+        // 重複項目直接將數量疊上
+        details.value.AssetList.forEach(item =>{
+          if(item.AssetsId === data.AssetsId) {
+            item.Number += data.selectNumber;
+            exist = true;
+          }
+        })
+        // 新的項目插入至最前方
+        if(!exist) {
+          details.value.AssetList.splice(0 , 0 ,{
+            AssetsId: data.AssetsId,
+            Number: data.selectNumber,
+            AssetName: data.AssetName,
+            EquipTypeName: data.EquipTypeName,
+            EquipCategoryName: data.EquipCategoryName,
+            Failed: false,
+            error_msg: '',
+          })
+        }
+        exist = false;
+        // 重複項目直接將數量疊上
+        formParams.AssetList.forEach(item =>{
+          if(item.AssetsId === data.AssetsId) {
+            item.Number += data.selectNumber;
+            exist = true;
+          }
+        })
+        // 新的項目插入至最前方
+        if(!exist) {
+          formParams.AssetList.splice(0 , 0 ,{
+            AssetsId: data.AssetsId,
+            Number: data.selectNumber,
+            AssetName: data.AssetName,
+            EquipTypeName: data.EquipTypeName,
+            EquipCategoryName: data.EquipCategoryName,
+            Failed: false,
+          })
+        }
+        console.log(details.value.AssetList);
+        // 處理完AssetList後更新rowData
+        searchInventory('','search','add')
+
+      }
+      function editAssetList (data) {
+        console.log(data);
+        if(ChangeParams.exist) {
+          // 刪除原本
+          formParams.DeleteList.splice(0,0,details.value.AssetList[ChangeParams.index]);
+          console.log('edit DeleteList:', formParams.DeleteList);
+        }
+        console.log('ChangeIndex:',ChangeParams.index);
+        // 更改edit hash-table
+        formParams.AssetList[ChangeParams.index] = {
+          AssetsId: data.AssetsId,
+          Number: data.selectNumber,
+          AssetName: data.AssetName,
+          EquipTypeName: data.EquipTypeName,
+          EquipCategoryName: data.EquipCategoryName,
+          Failed: false,
+        };
+        // 更改
+        details.value.AssetList.splice(ChangeParams.index, 1, {
+          AssetsId: data.AssetsId,
+          Number: data.selectNumber,
+          AssetName: data.AssetName,
+          EquipTypeName: data.EquipTypeName,
+          EquipCategoryName: data.EquipCategoryName,
+          Failed: false,
+          error_msg: '',
+        });
+        console.log('edit AssetList:', formParams.AssetList);
+        // 
+        const element = document.querySelector('#close-modal');
+        // console.log(element);
+        element.click();
+        searchInventory('','search','edit')
       }
       function handleDelete(data) {
         console.log(data);
@@ -769,7 +694,7 @@
         searchParams.EquipTypeName = data.EquipTypeName
         searchParams.EquipCategoryName = data.EquipCategoryName
         getEquipCategoryName();
-        searchInventory('edit');
+        searchInventory('','search','edit')
       }
       return {
         details,
@@ -778,12 +703,11 @@
         DropdownArray,
         LayerInit,
         EquipCategoryInit,
-        gridApi,
         formParams,
-        columnDefs,
+        action,
+        datagrid,
+        datagridfield,
         rowData,
-        rowHeight: 35,
-        pageSize: 10,
         getEquipTypeName,
         getAreaName,
         searchInventory,
@@ -793,7 +717,8 @@
         selectArea,
         selectLayer,
         selectAccount,
-        onGridReady,
+        addAssetList,
+        editAssetList,
         handleDelete,
         handleEdit,
         goBack,

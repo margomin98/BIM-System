@@ -119,7 +119,7 @@
             </div>
           </div>
           <div class="btn_section">
-            <button class="send_btn" data-bs-toggle="modal" data-bs-target="#searchModal" @click="searchInventory('add')">搜索庫存</button>
+            <button class="send_btn" data-bs-toggle="modal" data-bs-target="#searchModal" @click="searchInventory('','search','add')">搜索庫存</button>
             <!-- Modal -->
             <div class="modal fade" data-bs-backdrop="static" id="searchModal" tabindex="-1">
               <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -161,7 +161,7 @@
                         </div>
                       </div>
                       <div class='col d-flex justify-content-center'>
-                        <button class="btn submit_btn" type="button" @click="searchInventory('add')">搜尋庫存</button>
+                        <button class="btn submit_btn" type="button" @click="searchInventory('','search')">搜尋庫存</button>
                       </div>
                     </div>
                   </div>
@@ -170,8 +170,43 @@
                       <p>目前資產庫存</p>
                     </div>
                   </div>
-                  <ag-grid-vue style="height: 380px" class="ag-theme-alpine list" :rowHeight="rowHeight" :columnDefs="columnDefs" :rowData="rowData" :paginationPageSize="pageSize" :pagination="false" @grid-ready="onGridReady">
-                  </ag-grid-vue>
+                  <DataTable
+                  :key="datagrid.key"
+                  :first= "datagrid.first"
+                  :size="'small'"
+                  :loading="datagrid.loading"
+                  :value="rowData" 
+                  :sort-field="datagrid.sortField"
+                  :sort-order="datagrid.sortOrder"
+                  resizableColumns 
+                  columnResizeMode="expand"
+                  showGridlines 
+                  scrollable 
+                  scrollHeight="420px" 
+                  @page="searchInventory($event , 'page')" 
+                  @sort="searchInventory($event , 'sort')"
+                  paginator 
+                  :rows="datagrid.rows" 
+                  :totalRecords="datagrid.totalRecords"
+                  paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+                  currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+                  <Column style="min-width: 60px;">
+                    <template #body="slotProps">
+                      <AssetsView :params = "slotProps" />
+                    </template>
+                  </Column>
+                  <Column style="min-width: 60px;" header="選擇">
+                    <template #body="slotProps">
+                      <Equipment_add :params = "slotProps" :action="action" @addAssetList ="addAssetList"/>
+                    </template>
+                  </Column>
+                  <Column style="min-width: 80px;"  header="數量">
+                    <template #body="slotProps">
+                      <Equipment_number :params="slotProps"/>
+                    </template>
+                  </Column>
+                  <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+                  </DataTable>
                 </div>
               </div>
             </div>
@@ -191,21 +226,23 @@
 </template>
 
 <script>
-  import { AgGridVue } from "ag-grid-vue3";
-  import List_view_button from "@/components/Rent_process_new_view_button";
+  import DataTable from 'primevue/datatable';
+  import Column from 'primevue/column';
+  import AssetsView from "@/components/Rent_process_new_view_button";
   import Equipment_add from "@/components/Equipment_add_button";
   import Equipment_number from "@/components/Equipment_number_input.vue";
   import ListItem from "@/components/Equipment/item.vue"
   import Navbar from "@/components/Navbar.vue";
   import { getEquipType , getEquipCategory , getArea , getLayer , getApplication , getAccount } from '@/assets/js/common_api'
-  import { getDate , goBack } from "@/assets/js/common_fn";
+  import { UpdatePageParameter,createDatagrid, getDate , goBack } from "@/assets/js/common_fn";
   import { onMounted, ref, reactive, } from "vue";
   import { useRouter } from "vue-router";
   export default {
     components: {
       Navbar,
-      AgGridVue,
-      List_view_button,
+      DataTable,
+      Column,
+      AssetsView,
       Equipment_add,
       Equipment_number,
       ListItem,
@@ -241,143 +278,20 @@
         Custodian: '',
         AssetList: [],
       })
+      const action = ref('');
       const EquipCategoryInit = ref('請先選擇設備總類');
       const LayerInit = ref('請先選擇區域');
-      const gridApi = ref(null);
-      const columnDefs = [
-        {
-          suppressMovable: true,
-          field: "",
-          cellRenderer: "List_view_button",
-          resizable: true,
-          width: 100,
-        },
-        {
-          headerName: "新增",
-          suppressMovable: true,
-          field: "",
-          cellRenderer: "Equipment_add",
-          cellRendererParams: {
-            numberIsValid: (data) => {
-              // 檢查選擇數量是否正常 1.超過 2.為零 3.正常執行
-              if (data.selectNumber > data.OM_Number || data.selectNumber === 0) {
-                // 1. || 2.
-                return false;
-              }
-              // 3. 正常執行
-              return true;
-            },
-            addAssetList: (data) => {
-              let exist = false;
-              // 重複項目直接將數量疊上
-              formParams.AssetList.forEach(item =>{
-                if(item.AssetsId === data.AssetsId) {
-                  item.Number += data.selectNumber;
-                  exist = true;
-                }
-              })
-              // 新的項目插入至最前方
-              if(!exist) {
-                formParams.AssetList.splice(0 , 0 ,{
-                  AssetsId: data.AssetsId,
-                  Number: data.selectNumber,
-                  AssetName: data.AssetName,
-                  Failed: false,
-                  error_msg: '',
-                })
-              }
-              // 處理完AssetList後更新rowData
-              searchInventory('add')
-            },
-            action: searchParams.Action,
-
-          },
-          resizable: true,
-          width: 75,
-        },
-        {
-          headerName: "數量",
-          field: "",
-          cellRenderer: "Equipment_number",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "單位",
-          field: "OM_Unit",
-          unSortIcon: true,
-          sortable: true,
-          width: 100,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "資產編號",
-          field: "AssetsId",
-          unSortIcon: true,
-          sortable: true,
-          width: 180,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "物品名稱",
-          field: "AssetName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "儲位區域",
-          field: "AreaName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "儲位櫃位",
-          field: "LayerName",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "廠商",
-          field: "VendorName",
-          unSortIcon: true,
-          sortable: true,
-          width: 160,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "型號",
-          field: "ProductType",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-        {
-          headerName: "規格",
-          field: "ProductSpec",
-          unSortIcon: true,
-          sortable: true,
-          width: 150,
-          resizable: true,
-          suppressMovable: true
-        },
-      ];
+      const datagrid = createDatagrid();
+      const datagridfield = [
+        { field: "OM_Unit", width: '100px', header: "單位" },
+        { field: "AssetsId", width: '180px', header: "資產編號" },
+        { field: "AssetName", width: '150px', header: "物品名稱" },
+        { field: "AreaName", width: '150px', header: "儲位區域" },
+        { field: "LayerName", width: '150px', header: "儲位櫃位" },
+        { field: "VendorName", width: '160px', header: "廠商" },
+        { field: "ProductType", width: '150px', header: "型號" },
+        { field: "ProductSpec", width: '150px', header: "規格" },
+      ]
       const rowData = ref([]);
       onMounted(() => {
         getApplicationInfo();
@@ -442,14 +356,10 @@
           console.error(error);
         })
       }
-      async function searchInventory(action) {
-        if (action === 'add' || action === 'edit') {
-          searchParams.Action = action
-          let column = gridApi.value.getColumnDefs()
-          const columnIndex = column.findIndex(item => item.cellRenderer === 'Equipment_add')
-          column[columnIndex].cellRendererParams.action = action;
-          // console.log(column[columnIndex]);
-          gridApi.value.setColumnDefs(column);
+      async function searchInventory(event,type,Action) {
+        if (Action) {
+          // 更新+按鈕的行為
+          action.value = Action;
         }
         // 檢查物品名稱字數
         searchParams.ProductName = searchParams.ProductName.trim();
@@ -463,6 +373,7 @@
           form.append('EquipType_Id', searchParams.EquipType_Id);
           form.append('Category_Id', searchParams.Category_Id);
           form.append('ProductName', searchParams.ProductName);
+          UpdatePageParameter(datagrid,event,type,form);
           const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchInventory', form);
           const data = response.data;
           if (data.state === 'success') {
@@ -496,6 +407,7 @@
               ...item,
               selectNumber: item.OM_Number,
             }));
+            datagrid.key++;
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -584,6 +496,28 @@
         }
         return false;
       }
+      function addAssetList (data) {
+        let exist = false;
+        // 重複項目直接將數量疊上
+        formParams.AssetList.forEach(item =>{
+          if(item.AssetsId === data.AssetsId) {
+            item.Number += data.selectNumber;
+            exist = true;
+          }
+        })
+        // 新的項目插入至最前方
+        if(!exist) {
+          formParams.AssetList.splice(0 , 0 ,{
+            AssetsId: data.AssetsId,
+            Number: data.selectNumber,
+            AssetName: data.AssetName,
+            Failed: false,
+            error_msg: '',
+          })
+        }
+        // 處理完AssetList後更新rowData
+        searchInventory('','search','add')
+      }
       function selectType(item) {
       searchParams.EquipTypeName = item.Name;
       searchParams.EquipType_Id = item.Id;
@@ -611,9 +545,6 @@
       const selectAccount = (item) => {
         formParams.Custodian = item;
       }
-      const onGridReady = (params) => {
-        gridApi.value = params.api
-      }
       function handleDelete(data) {
         const deleteIndex = formParams.AssetList.findIndex(item => item.AssetsId === data.AssetsId)
         formParams.AssetList.splice(deleteIndex, 1);
@@ -623,23 +554,22 @@
         searchParams,
         DropdownArray,
         formParams,
+        action,
         LayerInit,
         EquipCategoryInit,
-        gridApi,
-        columnDefs,
+        datagrid,
+        datagridfield,
         rowData,
-        rowHeight: 35,
-        pageSize: 10,
         getEquipTypeName,
         getAreaName,
         searchInventory,
         submit,
+        addAssetList,
         selectType,
         selectCategory,
         selectArea,
         selectLayer,
         selectAccount,
-        onGridReady,
         handleDelete,
         goBack,
       };

@@ -57,7 +57,7 @@
               </div>
             </div>
             <div class='col d-flex justify-content-center'>
-              <button class="btn submit_btn" type="button" @click="searchInventory(searchParams.id , searchParams.item_id)">搜尋庫存</button>
+              <button class="btn submit_btn" type="button" @click="searchInventory('','search');">搜尋庫存</button>
             </div>
           </div>
           <div class="fixed_info">
@@ -78,13 +78,12 @@
             showGridlines 
             scrollable 
             scrollHeight="420px" 
-            @page="searchInventory(searchParams.id, searchParams.item_id ,$event , 'page')" 
-            @sort="searchInventory(searchParams.id, searchParams.item_id ,$event , 'sort')"
+            @page="searchInventory($event , 'page')" 
+            @sort="searchInventory($event , 'sort')"
             paginator 
             :rows="datagrid3.rows" 
             :totalRecords="datagrid3.totalRecords"
-            paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-            :rowsPerPageOptions="[10, 20, 30]"
+            paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
             currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
             <Column style="min-width: 60px;">
               <template #body="slotProps">
@@ -318,7 +317,6 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
       const AO_ID = route.query.search_id;
       const details = ref({});
       const options = Rent_UseArray;
-      const gridApi3 = ref(null);
       const selectedNumberArray = ref([]); //紀錄不同項目已選數量array
       const totalNeed = ref(0); //總所需數量
       const totalSelect = ref(0); //總已備數量
@@ -445,9 +443,8 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
           console.error(error);
         }
       }
-      async function searchInventory(data_id, data_item_id) {
-        // data_id : 哪一個項目(前端紀錄個項目已備數量)
-        // data_item_id : 項目的item_id(後端項目id)
+      async function searchInventory(event,type) {
+
         if (!/^.{0,20}$/.test(searchParams.ProductName)) {
           alert('物品名稱不可輸入超過20字')
           return
@@ -459,15 +456,18 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
           form.append('Category_Id', searchParams.Category_Id);
           form.append('ProductName', searchParams.ProductName);
           form.append('ProjectCode', searchParams.ProjectCode);
+          UpdatePageParameter(datagrid3,event,type,form);
           const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchInventory', form);
           const data = response.data;
           if (data.state === 'success') {
             // console.log('Details Get成功 資料如下\n', data.resultList);
+            // searchParams.id : 哪一個項目(前端紀錄個項目已備數量)
+            // searchParams.item_id : 項目的item_id(後端項目id)
             rowData3.value = data.resultList.map(item => ({
               ...item,
-              item_id: data_item_id,
+              item_id: searchParams.item_id,
               selectNumber: item.OM_Number,
-              id: data_id,
+              id: searchParams.id,
             }));
             console.log(rowData3.value);
             datagrid3.key++;
@@ -551,7 +551,7 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
         getEquipCategoryName();
         // 額外處理data沒有的參數
         searchParams.selectedNumber = selectedNumberArray.value[data.id]
-        searchInventory(searchParams.id, searchParams.item_id);
+        searchInventory('','search');
         console.log('設定後搜尋參數:\n', searchParams);
       }
       // 新增庫存
@@ -559,7 +559,7 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
         selectedNumberArray.value[data.id] += data.selectNumber
         searchParams.selectedNumber = selectedNumberArray.value[data.id]
         // searchInventory刷新庫存數量
-        searchInventory(searchParams.id, searchParams.item_id);
+        searchInventory('','search');
         // getDetail刷新rowData1、2
         getDetails();
       }
@@ -569,9 +569,7 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
         searchParams.selectedNumber = selectedNumberArray.value[data.id]
         getDetails()
       }
-      const onGridReady3 = (params) => {
-        gridApi3.value = params.api;
-      };
+
       return {
         details,
         options,
@@ -599,7 +597,6 @@ import { RentProcess_New_Status } from "@/assets/js/enter_status";
         addMaterial,
         deleteMaterial,
         calculateIndex,
-        onGridReady3,
         goBack,
       };
     },
