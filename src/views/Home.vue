@@ -96,7 +96,7 @@
             color: '#132238',
           },
           sectorLabel: {
-            fontSize: 25,
+            fontSize: 22,
             color: 'white',
             fontWeight: 'bold',
           },

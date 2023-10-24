@@ -23,8 +23,8 @@
               <div class="input-group-prepend flex"><span>*</span>盤點人員：</div>
               <div class="dropdown">
                 <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                  {{ formParams.InventoryStaffName || '請選擇' }}
-                </button>
+                    {{ formParams.InventoryStaffName || '請選擇' }}
+                  </button>
                 <div class="dropdown-menu">
                   <p v-for="(item , index) in DropdownArray.InventoryStaff" :key="index" @click="selectStaff(item)">{{ item }}</p>
                 </div>
@@ -105,8 +105,8 @@
                       <p>設備總類</p>
                       <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                          {{ searchParams.EquipTypeName || '請選擇' }}
-                        </button>
+                            {{ searchParams.EquipTypeName || '請選擇' }}
+                          </button>
                         <div class="dropdown-menu" aria-labelledby="typeDropdown">
                           <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
                         </div>
@@ -116,8 +116,8 @@
                       <p>設備分類</p>
                       <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
-                          {{ searchParams.EquipCategoryName || EquipCategoryInit }}
-                        </button>
+                            {{ searchParams.EquipCategoryName || EquipCategoryInit }}
+                          </button>
                         <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                           <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
                         </div>
@@ -131,8 +131,8 @@
                       <p>儲位區域</p>
                       <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
-                          {{ searchParams.AreaName || '請選擇' }}
-                        </button>
+                            {{ searchParams.AreaName || '請選擇' }}
+                          </button>
                         <div class="dropdown-menu" aria-labelledby="areaDropdown">
                           <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item" @click="selectArea(item)">{{ item.Name }}</p>
                         </div>
@@ -142,8 +142,8 @@
                       <p>儲位櫃位</p>
                       <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="searchParams.AreaName === ''">
-                          {{ searchParams.LayerName || LayerInit }}
-                        </button>
+                            {{ searchParams.LayerName || LayerInit }}
+                          </button>
                         <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                           <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(item)">{{ item.Name }}</p>
                         </div>
@@ -162,36 +162,15 @@
                   <p>目前資產庫存</p>
                 </div>
               </div>
-              <DataTable 
-              lazy 
-              :first= "datagrid1.first"
-              :size="'small'"
-              :loading="datagrid1.loading"
-              :value="rowData1" 
-              :sort-field="datagrid1.sortField"
-              :sort-order="datagrid1.sortOrder"
-              resizableColumns 
-              columnResizeMode="expand"
-              showGridlines 
-              scrollable 
-              scrollHeight="510px" 
-              @page="searchInventory($event , 'page')" 
-              @sort="searchInventory($event , 'sort')"
-              v-model:selection="datagrid1.selectedList" 
-              :selectAll="datagrid1.selectAll"
-              @select-all-change="onSelectAll"
-              @row-unselect="onRowUnselect"
-              paginator 
-              :rows="10" 
-              :totalRecords="datagrid1.totalRecords"
-              paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-              currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
-              <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-              <Column style="min-width: 60px;">
-                <template #body="slotProps">
-                  <!-- Add the custom component here -->
-                  <List_view_button :params = "slotProps" />
-                </template>
+              <DataTable lazy :first="datagrid1.first" :size="'small'" :loading="datagrid1.loading" :value="rowData1" :sort-field="datagrid1.sortField" :sort-order="datagrid1.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="510px"
+                @page="searchInventory($event , 'page')" @sort="searchInventory($event , 'sort')" v-model:selection="datagrid1.selectedList" :selectAll="datagrid1.selectAll" @select-all-change="onSelectAll" @row-unselect="onRowUnselect" paginator :rows="10"
+                :totalRecords="datagrid1.totalRecords" paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+                <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+                <Column style="min-width: 60px;">
+                  <template #body="slotProps">
+                    <!-- Add the custom component here -->
+                    <List_view_button :params = "slotProps" />
+</template>
               </Column>
               <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
               </DataTable>
@@ -230,15 +209,15 @@
             paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
             currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
             <Column style="min-width: 60px;">
-              <template #body="slotProps">
-                <Inventory_delete_button :params = "slotProps" @delete = "deleteFromAssetList" />
-              </template>
+<template #body="slotProps">
+  <Inventory_delete_button :params="slotProps" @delete="deleteFromAssetList" />
+</template>
             </Column>
             <Column style="min-width: 60px;">
-              <template #body="slotProps">
-                <!-- Add the custom component here -->
-                <List_view_button :params = "slotProps" />
-              </template>
+<template #body="slotProps">
+  <!-- Add the custom component here -->
+  <List_view_button :params="slotProps" />
+</template>
             </Column>
             <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
           </DataTable>
@@ -256,12 +235,29 @@
   import List_view_button from "@/components/Inventory_view_button";
   import Inventory_delete_button from "@/components/Inventory_delete_button";
   import Navbar from "@/components/Navbar.vue";
-  import { onMounted, ref, reactive, } from "vue";
+  import {
+    onMounted,
+    ref,
+    reactive,
+  } from "vue";
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
-  import { useRouter } from "vue-router";
-  import { getEquipType , getEquipCategory , getArea , getLayer , getApplication , getAccount } from '@/assets/js/common_api'
-  import { UpdatePageParameter, createDatagrid, goBack } from "@/assets/js/common_fn";
+  import {
+    useRouter
+  } from "vue-router";
+  import {
+    getEquipType,
+    getEquipCategory,
+    getArea,
+    getLayer,
+    getApplication,
+    getAccount
+  } from '@/assets/js/common_api'
+  import {
+    UpdatePageParameter,
+    createDatagrid,
+    goBack
+  } from "@/assets/js/common_fn";
   import axios from "axios";
   export default {
     components: {
@@ -302,11 +298,9 @@
         LayerName: '',
         Layer_Id: '',
       })
-
       // 搜尋資產 datagrid
       const datagrid1 = createDatagrid();
-      const datagrid1field = [
-        {
+      const datagrid1field = [{
           field: 'AssetStatus',
           header: '資產狀態',
           width: '150px',
@@ -393,7 +387,7 @@
         }
       }
       // 搜尋function
-      async function searchInventory(event , type) {
+      async function searchInventory(event, type) {
         // 檢查物品名稱字數
         if (!/^.{0,20}$/.test(searchParams.AssetName)) {
           alert('物品名稱不可輸入超過20字')
@@ -413,19 +407,19 @@
             form.append('AssetList', item)
           }
         }
-        UpdatePageParameter( datagrid1 , event , type , form)
+        UpdatePageParameter(datagrid1, event, type, form)
         const axios = require('axios');
         try {
           const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/SearchInventory', form);
           const data = response.data;
           if (data.state === 'success') {
-            console.log('搜尋結果',data.resultList);
+            console.log('搜尋結果', data.resultList);
             rowData1.value = data.resultList.rows
             datagrid1.totalRecords = data.resultList.total
-            if(datagrid1.selectAll) {
+            if (datagrid1.selectAll) {
               datagrid1.selectedList = rowData1.value
               // 然後unselect 排除List的項目
-              datagrid1.selectedList = datagrid1.selectedList.filter(item=> !unselectList.value.includes(item.AssetsId));
+              datagrid1.selectedList = datagrid1.selectedList.filter(item => !unselectList.value.includes(item.AssetsId));
             }
           } else if (data.state === 'error') {
             alert(data.messages);
@@ -439,7 +433,7 @@
         datagrid1.loading = false;
       }
       // 取得盤點範圍datagrid
-      async function getRangeOfPlan(event , type) {
+      async function getRangeOfPlan(event, type) {
         datagrid2.loading = true;
         const form = new FormData();
         // 將已有的項目AssetsId加入form
@@ -448,22 +442,22 @@
             form.append('AssetList', item)
           }
         }
-        UpdatePageParameter(datagrid2,event,type,form)
-        axios.post('http://192.168.0.177:7008/StocktakingMng/RangeOfPlan',form)
-        .then((response)=>{
-          const data = response.data
-          if(data.state === 'success') {
-            console.log('盤點範圍:',data.resultList.rows);
-            datagrid2.totalRecords =  data.resultList.total
-            rowData2.value =  data.resultList.rows
-          } else {
-            // state為error
-            alert(data.messages);
-          }
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+        UpdatePageParameter(datagrid2, event, type, form)
+        axios.post('http://192.168.0.177:7008/StocktakingMng/RangeOfPlan', form)
+          .then((response) => {
+            const data = response.data
+            if (data.state === 'success') {
+              console.log('盤點範圍:', data.resultList.rows);
+              datagrid2.totalRecords = data.resultList.total
+              rowData2.value = data.resultList.rows
+            } else {
+              // state為error
+              alert(data.messages);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          })
         datagrid2.loading = false;
       }
       // 取得召集人員名稱
@@ -554,24 +548,24 @@
         formParams.InventoryStaffName = item;
       }
       function deleteFromAssetList(data) {
-        rowData2.value = rowData2.value.filter(item=> item.AssetsId !== data.AssetsId);
-        formParams.AssetList = formParams.AssetList.filter(AssetsId=> AssetsId !== data.AssetsId);
-        if(formParams.AssetList.length !== 0) {
+        rowData2.value = rowData2.value.filter(item => item.AssetsId !== data.AssetsId);
+        formParams.AssetList = formParams.AssetList.filter(AssetsId => AssetsId !== data.AssetsId);
+        if (formParams.AssetList.length !== 0) {
           getRangeOfPlan('', 'search');
         }
       }
-      const clear = ()=>{
-        for(const key in searchParams) {
+      const clear = () => {
+        for (const key in searchParams) {
           searchParams[key] = '';
         }
         EquipCategoryInit.value = '請先選擇設備總類'
         LayerInit.value = '請先選擇區域'
-        searchInventory('','search')
+        searchInventory('', 'search')
       }
       function addList() {
-        if(datagrid1.selectAll) {
+        if (datagrid1.selectAll) {
           const form = new FormData();
-          for(const key in searchParams) {
+          for (const key in searchParams) {
             form.append(key, searchParams[key]);
           }
           // 排除已有細項
@@ -580,30 +574,30 @@
               form.append('AssetList', item)
             }
           }
-          axios.post('http://192.168.0.177:7008/StocktakingMng/SelectAllGrid',form)
-          .then((response)=>{
-            const data = response.data
-            if(data.state === 'success') {
-              // 將符合情況的AssetsId List放入formParams.AssetList
-              console.log('allgrid:',data.resultList);
-              data.resultList.forEach(id => {
-                formParams.AssetList.push(id);
-              });
-              // 全選情況下，扣掉排除List
-              formParams.AssetList = formParams.AssetList.filter(id=> !unselectList.value.includes(id));
-              getRangeOfPlan('', 'search');
-              // 清空排除List、selectedList
-              datagrid1.selectAll = false;
-              datagrid1.selectedList = [];
-              unselectList.value = [];
-            }
-          })
-          .catch((error)=>{
-            console.error(error);
-          })
+          axios.post('http://192.168.0.177:7008/StocktakingMng/SelectAllGrid', form)
+            .then((response) => {
+              const data = response.data
+              if (data.state === 'success') {
+                // 將符合情況的AssetsId List放入formParams.AssetList
+                console.log('allgrid:', data.resultList);
+                data.resultList.forEach(id => {
+                  formParams.AssetList.push(id);
+                });
+                // 全選情況下，扣掉排除List
+                formParams.AssetList = formParams.AssetList.filter(id => !unselectList.value.includes(id));
+                getRangeOfPlan('', 'search');
+                // 清空排除List、selectedList
+                datagrid1.selectAll = false;
+                datagrid1.selectedList = [];
+                unselectList.value = [];
+              }
+            })
+            .catch((error) => {
+              console.error(error);
+            })
         } else {
           // 非全選情況下，加入selectedList
-          datagrid1.selectedList.forEach(item=>{
+          datagrid1.selectedList.forEach(item => {
             formParams.AssetList.push(item.AssetsId);
             rowData2.value.push(item);
           })
@@ -615,7 +609,7 @@
       }
       function onSelectAll(event) {
         datagrid1.selectAll = event.checked;
-        if(datagrid1.selectAll) {
+        if (datagrid1.selectAll) {
           // 全選的情況selectedList僅用來顯示
           datagrid1.selectedList = rowData1.value
         } else {
@@ -625,7 +619,7 @@
         }
       }
       function onRowUnselect(event) {
-        if(datagrid1.selectAll) {
+        if (datagrid1.selectAll) {
           // console.log('unselect:', event.data.AssetsId);
           //加入排除List
           unselectList.value.push(event.data.AssetsId);
@@ -670,10 +664,13 @@
   span {
     @include red_star
   }
-  .no_content_text{
+  .no_content_text {
     padding: 5px 0;
     text-align: center;
     font-weight: 700;
+  }
+  .modal-body {
+    padding: 0 !important;
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
@@ -872,14 +869,12 @@
       .modal-content {
         background: unset;
         border: 0;
-        .modal-body {
-          padding: 0;
-        }
       }
       .fixed_info {
         @include fixed_info;
         background: #528091 !important;
-        border-radius: 0!important;
+        border-bottom: unset !important;
+        border-radius: 0 !important;
         border: 1px solid black;
         padding: 0 10px;
         div {
@@ -888,7 +883,7 @@
         }
         p {
           font-size: 20px;
-          margin-bottom: 0;
+          margin-bottom: 0 !important
         }
         button {
           border: none;
@@ -1191,15 +1186,13 @@
       .modal-content {
         background: unset;
         border: 0;
-        .modal-body {
-          padding: 0;
-        }
       }
       .fixed_info {
         @include fixed_info;
         background: #528091 !important;
-        border-radius: 0!important;
+        border-radius: 0 !important;
         border: 1px solid black;
+        border-bottom: unset !important;
         padding: 0 10px;
         div {
           flex-grow: 1;
@@ -1207,7 +1200,7 @@
         }
         p {
           font-size: 20px;
-          margin-bottom: 0;
+          margin-bottom: 0 !important;
         }
         button {
           border: none;
@@ -1479,15 +1472,13 @@
       .modal-content {
         background-color: unset;
         border: 0;
-        .modal-body {
-          padding: 0;
-        }
       }
       .fixed_info {
         @include fixed_info;
         background: #528091 !important;
-        border-radius: 0!important;
+        border-radius: 0 !important;
         border: 1px solid black;
+        border-bottom: unset !important;
         padding: 0 10px;
         div {
           flex-grow: 1;
@@ -1495,7 +1486,7 @@
         }
         p {
           font-size: 18px;
-          margin-bottom: 0;
+          margin-bottom: 0 !important
         }
         button {
           border: none;
@@ -1504,8 +1495,8 @@
           font-weight: 700;
           font-size: 22px;
           position: absolute;
-          right: 2.5%;
-          top: 0%;
+          right: 3%;
+          top: 1%;
           padding: 0;
         }
       }

@@ -99,7 +99,7 @@
                 <div class="modal-header">
                   <h5 class="modal-title" id="photoModalLabel"> {{ previewParams.title }}</h5>
                   <div class="close_icon">
-                    <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
+                    <p type="button" data-bs-dismiss="modal" aria-label="Close">X</p>
                   </div>
                 </div>
                 <div class="modal-body">
@@ -132,7 +132,7 @@
                   <div class="modal-header">
                     <h5 class="modal-title" id="photoModalLabel">瀏覽</h5>
                     <div class="close_icon">
-                      <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
+                      <p type="button" data-bs-dismiss="modal" aria-label="Close">X</p>
                     </div>
                   </div>
                   <div class="modal-body">

@@ -140,6 +140,9 @@
 				display: flex;
 				align-self: baseline;
 				margin-bottom: 0;
+				font-size: 18px;
+				height: 30px;
+				font-weight: 800;
 			}
 			.modal-title {
 				width: 100%;

@@ -73,7 +73,7 @@
         <button class="empty_btn" @click="clear">清空</button>
       </div>
     </div>
-    <div style="width: 100%">
+    <div style="width: 100%" class="mb-5">
       <DataTable
         lazy
         :key="datagrid.key"
@@ -211,8 +211,7 @@
     .main_section {
       padding: 0 10%;
       h1 {
-        margin-bottom: 20px;
-        margin-top: 30px;
+        margin: 50px 0 20px;
         text-align: center;
         font-size: 55px;
         font-weight: 600;

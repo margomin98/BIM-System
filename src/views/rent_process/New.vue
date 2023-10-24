@@ -17,8 +17,8 @@
                 <p>設備總類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                          {{ searchParams.EquipTypeName || '請選擇' }}
-                        </button>
+                            {{ searchParams.EquipTypeName || '請選擇' }}
+                          </button>
                   <div class="dropdown-menu" aria-labelledby="typeDropdown">
                     <p v-for="(item, index) in searchParams.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
                   </div>
@@ -28,8 +28,8 @@
                 <p>設備分類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
-                          {{ searchParams.EquipCategoryName || searchParams.EquipCategoryInit }}
-                        </button>
+                            {{ searchParams.EquipCategoryName || searchParams.EquipCategoryInit }}
+                          </button>
                   <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                     <p v-for="(item, index) in searchParams.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
                   </div>
@@ -65,40 +65,23 @@
               <p>目前資產庫存</p>
             </div>
           </div>
-          <DataTable
-            :key="datagrid3.key"
-            :first= "datagrid3.first"
-            :size="'small'"
-            :loading="datagrid3.loading"
-            :value="rowData3" 
-            :sort-field="datagrid3.sortField"
-            :sort-order="datagrid3.sortOrder"
-            resizableColumns 
-            columnResizeMode="expand"
-            showGridlines 
-            scrollable 
-            scrollHeight="420px" 
-            @page="searchInventory($event , 'page')" 
-            @sort="searchInventory($event , 'sort')"
-            paginator 
-            :rows="datagrid3.rows" 
-            :totalRecords="datagrid3.totalRecords"
-            paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+          <DataTable :key="datagrid3.key" :first="datagrid3.first" :size="'small'" :loading="datagrid3.loading" :value="rowData3" :sort-field="datagrid3.sortField" :sort-order="datagrid3.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
+            scrollHeight="420px" @page="searchInventory($event , 'page')" @sort="searchInventory($event , 'sort')" paginator :rows="datagrid3.rows" :totalRecords="datagrid3.totalRecords" paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
             currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
             <Column style="min-width: 60px;">
               <template #body="slotProps">
-                <AssetsView :params = "slotProps" />
-              </template>
+                  <AssetsView :params = "slotProps" />
+</template>
             </Column>
             <Column style="min-width: 60px;" header="選擇">
-              <template #body="slotProps">
-                <Storage_add :params = "slotProps" :selectedNumber="searchParams.selectedNumber" :Number = "searchParams.Number" @addMaterial ="addMaterial"/>
-              </template>
+<template #body="slotProps">
+  <Storage_add :params="slotProps" :selectedNumber="searchParams.selectedNumber" :Number="searchParams.Number" @addMaterial="addMaterial" />
+</template>
             </Column>
             <Column style="min-width: 80px;"  header="數量">
-              <template #body="slotProps">
-                <Storage_number :params="slotProps"/>
-              </template>
+<template #body="slotProps">
+  <Storage_number :params="slotProps" />
+</template>
             </Column>
             <Column v-for="item in datagrid3field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
           </DataTable>
@@ -167,9 +150,9 @@
         </div>
         <DataTable :size="'small'" :value="rowData1" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="600px">
           <Column>
-            <template style="min-width:115px;" #body="slotProps">
-              <Storage_button :params="slotProps" @searchList="searchList" />
-            </template>
+<template style="min-width:115px;" #body="slotProps">
+  <Storage_button :params="slotProps" @searchList="searchList" />
+</template>
           </Column>
         <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
         </DataTable>
@@ -336,13 +319,36 @@
       });
       const searchPlaceholder = ref('');
       // 資產出庫項目
-      const datagrid1field = [
-        { field: "id", width: '50px' , header: "項目" },
-        { field: "EquipTypeName", width: '150px', header: "設備總類" },
-        { field: "EquipCategoryName", width: '150px', header: "設備分類" },
-        { field: "ProductName", width: '150px', header: "物品名稱" },
-        { field: "Number", width: '100px', header: "數量" },
-        { field: "RequiredSpec", width: '250px', header: "規格需求" },
+      const datagrid1field = [{
+          field: "id",
+          width: '50px',
+          header: "項目"
+        },
+        {
+          field: "EquipTypeName",
+          width: '150px',
+          header: "設備總類"
+        },
+        {
+          field: "EquipCategoryName",
+          width: '150px',
+          header: "設備分類"
+        },
+        {
+          field: "ProductName",
+          width: '150px',
+          header: "物品名稱"
+        },
+        {
+          field: "Number",
+          width: '100px',
+          header: "數量"
+        },
+        {
+          field: "RequiredSpec",
+          width: '250px',
+          header: "規格需求"
+        },
       ]
       // 資產出庫細項
       const datagrid2field = [{
@@ -410,14 +416,46 @@
       const datagrid3 = createDatagrid();
       const datagrid3field = [
         // { field: "selectNumber", width: '100px', header: "已選數量" },
-        { field: "OM_Unit", width: '100px', header: "單位" },
-        { field: "AssetsId", width: '150px', header: "資產編號" },
-        { field: "AssetName", width: '150px', header: "物品名稱" },
-        { field: "AreaName", width: '150px', header: "儲位區域" },
-        { field: "LayerName", width: '150px', header: "儲位櫃位" },
-        { field: "VendorName", width: '150px', header: "廠商" },
-        { field: "ProductType", width: '150px', header: "型號" },
-        { field: "ProductSpec", width: '150px', header: "規格" }
+        {
+          field: "OM_Unit",
+          width: '100px',
+          header: "單位"
+        },
+        {
+          field: "AssetsId",
+          width: '150px',
+          header: "資產編號"
+        },
+        {
+          field: "AssetName",
+          width: '150px',
+          header: "物品名稱"
+        },
+        {
+          field: "AreaName",
+          width: '150px',
+          header: "儲位區域"
+        },
+        {
+          field: "LayerName",
+          width: '150px',
+          header: "儲位櫃位"
+        },
+        {
+          field: "VendorName",
+          width: '150px',
+          header: "廠商"
+        },
+        {
+          field: "ProductType",
+          width: '150px',
+          header: "型號"
+        },
+        {
+          field: "ProductSpec",
+          width: '150px',
+          header: "規格"
+        }
       ]
       const rowData1 = ref([]);
       const rowData2 = ref([]);
@@ -487,8 +525,7 @@
           console.error(error);
         }
       }
-      async function searchInventory(event,type) {
-
+      async function searchInventory(event, type) {
         if (!/^.{0,20}$/.test(searchParams.ProductName)) {
           alert('物品名稱不可輸入超過20字')
           return
@@ -500,7 +537,7 @@
           form.append('Category_Id', searchParams.Category_Id);
           form.append('ProductName', searchParams.ProductName);
           form.append('ProjectCode', searchParams.ProjectCode);
-          UpdatePageParameter(datagrid3,event,type,form);
+          UpdatePageParameter(datagrid3, event, type, form);
           const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchInventory', form);
           const data = response.data;
           if (data.state === 'success') {
@@ -590,30 +627,29 @@
         for (const key in data) {
           searchParams[key] = data[key];
         }
-        searchPlaceholder.value = searchParams.ProductName ;
+        searchPlaceholder.value = searchParams.ProductName;
         searchParams.ProductName = '';
         getEquipCategoryName();
         // 額外處理data沒有的參數
         searchParams.selectedNumber = selectedNumberArray.value[data.id]
-        searchInventory('','search');
+        searchInventory('', 'search');
         console.log('設定後搜尋參數:\n', searchParams);
       }
       // 新增庫存
-      function addMaterial (data) {
+      function addMaterial(data) {
         selectedNumberArray.value[data.id] += data.selectNumber
         searchParams.selectedNumber = selectedNumberArray.value[data.id]
         // searchInventory刷新庫存數量
-        searchInventory('','search');
+        searchInventory('', 'search');
         // getDetail刷新rowData1、2
         getDetails();
       }
       // 刪除庫存
-      function deleteMaterial (data) {
+      function deleteMaterial(data) {
         selectedNumberArray.value[data.id] -= data.selectNumber
         searchParams.selectedNumber = selectedNumberArray.value[data.id]
         getDetails()
       }
-
       return {
         details,
         options,
@@ -703,21 +739,22 @@
       }
     }
   }
+  .modal-body {
+    padding: 0 !important;
+  }
   @media only screen and (min-width: 1200px) {
     .modal {
       padding: 0 5%;
       .modal-content {
         background-color: unset;
         border: 0;
-        .modal-body {
-          padding: 0;
-        }
       }
       .fixed_info {
         @include fixed_info;
         background: #528091;
         border-radius: 0;
         border: 1px solid black;
+        border-bottom: unset !important;
         padding: 0 10px;
         div {
           flex-grow: 1;
@@ -725,7 +762,7 @@
         }
         p {
           font-size: 20px;
-          margin-bottom: 0;
+          margin-bottom: 0 !important
         }
         button {
           border: none;
@@ -1026,15 +1063,13 @@
       .modal-content {
         background-color: unset;
         border: 0;
-        .modal-body {
-          padding: 0;
-        }
       }
       .fixed_info {
         @include fixed_info;
         background: #528091;
         border-radius: 0;
         border: 1px solid black;
+        border-bottom: unset !important;
         padding: 0 10px;
         div {
           flex-grow: 1;
@@ -1042,7 +1077,7 @@
         }
         p {
           font-size: 20px;
-          margin-bottom: 0;
+          margin-bottom: 0 !important
         }
         button {
           border: none;
@@ -1343,14 +1378,12 @@
       .modal-content {
         background-color: unset;
         border: 0;
-        .modal-body {
-          padding: 0;
-        }
       }
       .fixed_info {
         @include fixed_info;
         background: #528091;
         border-radius: 0;
+        border-bottom: unset !important;
         border: 1px solid black;
         padding: 0 10px;
         div {
@@ -1359,7 +1392,7 @@
         }
         p {
           font-size: 18px;
-          margin-bottom: 0;
+          margin-bottom: 0 !important
         }
         button {
           border: none;

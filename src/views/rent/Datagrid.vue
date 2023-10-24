@@ -70,7 +70,7 @@
         <!-- <button class="export_btn">匯出</button> -->
       </div>
     </div>
-    <div class="dg-height">
+    <div class="dg-height mb-5">
       <DataTable
         lazy
         :key="datagrid.key"
@@ -206,7 +206,7 @@
     .main_section {
       padding: 0 10%;
       h1 {
-        margin-top: 30px;
+        margin: 50px 0 20px;
         text-align: center;
         font-size: 55px;
         font-weight: 600;

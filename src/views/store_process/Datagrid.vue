@@ -110,7 +110,7 @@
         <!-- <button class="export_btn">匯出</button> -->
       </div>
     </div>
-    <div class="dg-height">
+    <div class="dg-height mb-5">
       <DataTable
         lazy
         :key="datagrid.key"
