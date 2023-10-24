@@ -77,7 +77,7 @@
         <button class="empty_btn" @click="clear">清空</button>
       </div>
     </div>
-    <div  style="height: 450px">
+    <div  style="height: 450px" class="mb-5">
       <DataTable 
         :key="datagrid.key"
         lazy 
@@ -120,7 +120,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel">警示</h5>
-          <div class="close_icon"><p type="button" data-bs-dismiss="modal" aria-label="Close">x</p></div>
+          <div class="close_icon"><p type="button" data-bs-dismiss="modal" aria-label="Close">X</p></div>
         </div>
         <div class="modal-body">
         <p>即將開始進行盤點作業，按下確認後即無法編輯盤點計畫內容。</p>
@@ -328,8 +328,7 @@ import { getMngDatagrid } from '@/assets/js/common_api';
     .main_section {
       padding: 0 10%;
       h1 {
-       margin-bottom: 20px;
-    margin-top: 30px;
+        margin: 50px 0 20px;
         text-align: center;
         font-size: 55px;
         font-weight: 600;

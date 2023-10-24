@@ -190,7 +190,7 @@
             <div class="modal-header">
               <h5 class="modal-title">警示</h5>
               <div class="close_icon">
-                <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
+                <p type="button" data-bs-dismiss="modal" aria-label="Close">X</p>
               </div>
             </div>
             <div class="modal-body">

@@ -116,7 +116,7 @@
                 <div class="modal-header">
                   <h5 class="modal-title" id="photoModalLabel">{{ previewParams.title }}</h5>
                   <div class="close_icon">
-                    <p type="button" data-bs-dismiss="modal" aria-label="Close">x</p>
+                    <p type="button" data-bs-dismiss="modal" aria-label="Close">X</p>
                   </div>
                 </div>
                 <div class="modal-body">
@@ -238,40 +238,40 @@
             details.value = data.resultList;
             // 檢查username是否為 admin || 採購主管
             checkRole(checkname.value)
-            .then(result=>{
-              console.log(('flag result:',result));
-              if(!result) {
-                if(checkname.value !== details.value.Recipient) {
-                  goBack();
+              .then(result => {
+                console.log(('flag result:', result));
+                if (!result) {
+                  if (checkname.value !== details.value.Recipient) {
+                    goBack();
+                  }
                 }
-              }
-              console.log('單筆資料如下\n', details.value);
-              if (details.value.InformedPersons) {
-                details.value.InformedPersons = details.value.InformedPersons.map((name) => ({
-                  name
-                }))
-              }
-              if (details.value.ReceivedDate) {
-                details.value.ReceivedDate = details.value.ReceivedDate.replace(/\//g, '-');
-              }
-              // 若有已上傳的物流文件 則新增key值 exist: true
-              if (details.value.existDocument) {
-                details.value.existDocument.forEach(item => {
-                  item.exist = true;
-                });
-              }
-              // 若有已上傳的相片 則新增key值 exist: true
-              if (details.value.existFile) {
-                details.value.existFile.forEach(item => {
-                  item.exist = true;
-                });
-                // 處理完後將existFile加入fileParams.viewPic
-                fileParams.viewPic = details.value.existFile
-              }
-            })
-            .catch(error=>{
-              console.error(error);
-            })
+                console.log('單筆資料如下\n', details.value);
+                if (details.value.InformedPersons) {
+                  details.value.InformedPersons = details.value.InformedPersons.map((name) => ({
+                    name
+                  }))
+                }
+                if (details.value.ReceivedDate) {
+                  details.value.ReceivedDate = details.value.ReceivedDate.replace(/\//g, '-');
+                }
+                // 若有已上傳的物流文件 則新增key值 exist: true
+                if (details.value.existDocument) {
+                  details.value.existDocument.forEach(item => {
+                    item.exist = true;
+                  });
+                }
+                // 若有已上傳的相片 則新增key值 exist: true
+                if (details.value.existFile) {
+                  details.value.existFile.forEach(item => {
+                    item.exist = true;
+                  });
+                  // 處理完後將existFile加入fileParams.viewPic
+                  fileParams.viewPic = details.value.existFile
+                }
+              })
+              .catch(error => {
+                console.error(error);
+              })
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -629,7 +629,7 @@
         }
       }
       function setUsername(name) {
-        console.log('username:',name);
+        console.log('username:', name);
         checkname.value = name;
       }
       return {
@@ -663,7 +663,6 @@
   span {
     @include red_star
   }
-
   .selected_file {
     flex-direction: column;
     .uploaded_file {
@@ -736,15 +735,6 @@
       color: white;
       display: flex;
       justify-content: center;
-      padding: 0 16px 16px;
-      .close_icon {
-        height: 40px;
-        cursor: pointer;
-      }
-      .modal-title {
-        margin: auto;
-        padding-top: 16px;
-      }
     }
   }
   .custom-slide {
