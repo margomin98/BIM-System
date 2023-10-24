@@ -496,20 +496,20 @@ UpdatePageParameter,
           alert('未驗證');
           return
         }
-        const form = new FormData();
         const AssetList = datagrid1.selectedList.map(item => ({
           I_id: item.I_Id,
           Discrepancy: item.Discrepancy,
         }));
-        form.append('PlanId', IP_ID);
-        form.append('RecognizePerson', validation.VerifyPerson);
-        if(AssetList.length>0) {
-          for(const item in AssetList) {
-            form.append('AssetList',item);
-          }
+        var requestData = {
+          PlanId: IP_ID,
+          RecognizePerson: validation.VerifyPerson,
+          AssetList: AssetList,
+        }
+        if(AssetList.length === 0) {
+          delete requestData.AssetList;
         }
         try {
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/BalanceCompleted',form);
+          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/BalanceCompleted',requestData);
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages;
