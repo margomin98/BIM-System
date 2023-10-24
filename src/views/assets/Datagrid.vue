@@ -88,10 +88,10 @@
       </div>
     </div>
     <div class="col justify-content-center d-flex">
-      <div class="button_wrap d-flex">
+      <div class="button_wrap">
         <button class="search_btn" @click="submit('','search')">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
-        <button class="export_btn" @click="inputfile.click();">匯入</button>
+        <button class="import_btn" @click="inputfile.click();">匯入</button>
         <button class="export_btn" @click="exportExcel">匯出</button>
       </div>
       <!-- input file  -->
@@ -397,12 +397,7 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-  .export_btn {
-    @include export_btn;
-    &:hover {
-      background-color: #5e7aa2;
-    }
-  }
+ 
   .dg-height {
     @include datagrid-height;
   }
@@ -417,6 +412,7 @@
         @include title_color;
       }
       .button_wrap {
+        display: flex;
         margin-bottom: 25px;
         gap: 20px;
         .search_btn {
@@ -431,6 +427,18 @@
             background-color: #5d85bd;
           }
         }
+        .export_btn {
+    @include export_btn;
+    &:hover {
+      background-color: #5e7aa2;
+    }
+  }
+  .import_btn {
+    @include import_btn;
+    &:hover {
+      background-color: #7e9ecb;
+    }
+  }
       }
       .datagrid_section {
         .content {
@@ -511,6 +519,7 @@
         margin-bottom: 20px;
       }
       .button_wrap {
+        display: flex;
         margin-bottom: 25px;
         gap: 20px;
         .search_btn {
@@ -525,6 +534,19 @@
             background-color: #5d85bd;
           }
         }
+        .export_btn {
+    @include export_btn;
+    &:hover {
+      background-color: #5e7aa2;
+    }
+  }
+  .import_btn {
+    @include import_btn;
+    &:hover {
+      background-color: #7e9ecb;
+    }
+  }
+        
       }
       .datagrid_section {
         .row {
@@ -591,9 +613,18 @@
         margin-bottom: 20px;
       }
       .button_wrap {
-        margin-bottom: 25px;
-        justify-content: center;
-        gap: 20px;
+        display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+    grid-template-areas:
+        ". ."
+        ". .";
+    margin-bottom: 20px;
+        button{
+          margin:auto;
+        }
         .search_btn {
           @include search_and_send_btn;
           &:hover {
@@ -606,6 +637,18 @@
             background-color: #5d85bd;
           }
         }
+        .export_btn {
+    @include export_btn;
+    &:hover {
+      background-color: #5e7aa2;
+    }
+  }
+  .import_btn {
+    @include import_btn;
+    &:hover {
+      background-color: #7e9ecb;
+    }
+  }
       }
       .datagrid_section {
         .row {

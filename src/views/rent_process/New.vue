@@ -1126,6 +1126,8 @@
           height: 40px;
           border-radius: 0;
           border-bottom: 1px solid black;
+          border-left: 1px solid black;
+            border-right: 1px solid black;
           padding: 0 10px;
           justify-content: right;
           gap: 10px;
@@ -1517,6 +1519,8 @@
           height: 40px;
           border-radius: 0;
           border-bottom: 1px solid black;
+          border-left: 1px solid black;
+            border-right: 1px solid black;
           padding: 0 10px;
           justify-content: right;
           gap: 10px;
@@ -1910,6 +1914,8 @@
           align-items: center;
           height: 40px;
           border-radius: 0;
+          border-left: 1px solid black;
+            border-right: 1px solid black;
           border-bottom: 1px solid black;
           padding: 0 10px;
           justify-content: right;

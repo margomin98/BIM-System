@@ -34,13 +34,13 @@
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label"><p>專案代碼</p></label>
             <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly v-model=" details.ProjectCode"/>
+              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly v-model=" details.ProjectCode" />
             </div>
           </div>
           <div class=" col d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name"><p>專案名稱</p></label>
             <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly v-model=" details.ProjectName"/>
+              <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly v-model=" details.ProjectName" />
             </div>
           </div>
         </div>
@@ -59,14 +59,7 @@
         </div>
       </div>
       <div class="second_content">
-        <DataTable 
-          :size="'small'"
-          :value="rowData1" 
-          resizableColumns 
-          columnResizeMode="expand"
-          showGridlines 
-          scrollable
-          scroll-height="600px">
+        <DataTable :size="'small'" :value="rowData1" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="600px">
           <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
         </DataTable>
       </div>
@@ -76,18 +69,11 @@
         </div>
       </div>
       <div class="third_content">
-        <DataTable 
-        :size="'small'"
-        :value="rowData2" 
-        resizableColumns 
-        columnResizeMode="expand"
-        showGridlines 
-        scrollable
-        scroll-height="600px">
-        <Column>
-          <template #body="slotProps">
-            <AssetsView :params="slotProps"/>
-          </template>
+        <DataTable :size="'small'" :value="rowData2" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="600px">
+          <Column>
+            <template #body="slotProps">
+              <AssetsView :params="slotProps"/>
+</template>
         </Column>
         <Column v-for="item in datagrid2field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
         </DataTable>
@@ -173,12 +159,16 @@
   } from 'vue-router';
   import AssetsView from "@/components/Rent_process_new_view_button.vue"
   import Navbar from "@/components/Navbar.vue";
-  import { Rent_UseArray } from "@/assets/js/dropdown";
+  import {
+    Rent_UseArray
+  } from "@/assets/js/dropdown";
   import {
     onMounted,
     ref
   } from "vue";
-  import {goBack} from "@/assets/js/common_fn"
+  import {
+    goBack
+  } from "@/assets/js/common_fn"
   export default {
     components: {
       Navbar,
@@ -195,29 +185,91 @@
       const route = useRoute();
       const router = useRouter();
       const AO_ID = route.query.search_id;
-      const totalNeed = ref(0);//總所需數量
-      const totalSelect = ref(0);//總已備數量
+      const totalNeed = ref(0); //總所需數量
+      const totalSelect = ref(0); //總已備數量
       const details = ref({});
       const options = Rent_UseArray;
-      const datagrid1field = [
-        { header: "項目", field: "id", width: '50px' },
-        { header: "設備總類", field: "EquipTypeName", width: '150px' },
-        { header: "設備分類", field: "EquipCategoryName", width: '150px' },
-        { header: "物品名稱", field: "ProductName", width: '140px' },
-        { header: "數量", field: "Number", width: '50px' },
-        { header: "規格需求", field: "RequiredSpec" , width: '250px' },
+      const datagrid1field = [{
+          header: "項目",
+          field: "id",
+          width: '50px'
+        },
+        {
+          header: "設備總類",
+          field: "EquipTypeName",
+          width: '150px'
+        },
+        {
+          header: "設備分類",
+          field: "EquipCategoryName",
+          width: '150px'
+        },
+        {
+          header: "物品名稱",
+          field: "ProductName",
+          width: '140px'
+        },
+        {
+          header: "數量",
+          field: "Number",
+          width: '50px'
+        },
+        {
+          header: "規格需求",
+          field: "RequiredSpec",
+          width: '250px'
+        },
       ]
-      const datagrid2field = [
-        { header: "項目", field: "OM_List_id", width: '50px' },
-        { header: "資產編號", field: "AssetsId", width: '100px' },
-        { header: "資產名稱", field: "AssetName", width: '150px' },
-        { header: "數量", field: "OM_Number", width: '50px' },
-        { header: "單位", field: "OM_Unit", width: '50px' },
-        { header: "儲位區域", field: "AreaName", width: '150px' },
-        { header: "儲位櫃位", field: "LayerName", width: '150px' },
-        { header: "廠商", field: "VendorName", width: '150px' },
-        { header: "型號", field: "ProductType", width: '150px' },
-        { header: "規格", field: "ProductSpec", width: '250px' },
+      const datagrid2field = [{
+          header: "項目",
+          field: "OM_List_id",
+          width: '50px'
+        },
+        {
+          header: "資產編號",
+          field: "AssetsId",
+          width: '100px'
+        },
+        {
+          header: "資產名稱",
+          field: "AssetName",
+          width: '150px'
+        },
+        {
+          header: "數量",
+          field: "OM_Number",
+          width: '50px'
+        },
+        {
+          header: "單位",
+          field: "OM_Unit",
+          width: '50px'
+        },
+        {
+          header: "儲位區域",
+          field: "AreaName",
+          width: '150px'
+        },
+        {
+          header: "儲位櫃位",
+          field: "LayerName",
+          width: '150px'
+        },
+        {
+          header: "廠商",
+          field: "VendorName",
+          width: '150px'
+        },
+        {
+          header: "型號",
+          field: "ProductType",
+          width: '150px'
+        },
+        {
+          header: "規格",
+          field: "ProductSpec",
+          width: '250px'
+        },
       ]
       const rowData1 = ref([]);
       const rowData2 = ref([]);
@@ -320,11 +372,8 @@
             margin-bottom: 0;
           }
         }
-        .second_content {
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          border-top: 1px solid black;
-          background: #d9d9d9;
+        .fixed_info:nth-child(5) {
+          border-top: unset;
         }
         .third_content {
           .list {
@@ -347,7 +396,9 @@
           align-items: center;
           height: 40px;
           border-radius: 0;
-          border: 1px solid black;
+          border-bottom: 1px solid black;
+          border-left: 1px solid black;
+          border-right: 1px solid black;
           padding: 0 10px;
           justify-content: right;
           gap: 10px;
@@ -395,7 +446,6 @@
           .wrap:nth-child(1) {
             border-right: 1px solid black;
           }
-         
           .wrap:nth-child(2) #readonly_box {
             height: 100%;
             width: 100%;
@@ -429,14 +479,13 @@
           }
           .form-control {
             height: auto;
-            padding:5px 10px 0;
+            padding: 5px 10px 0;
             border-radius: 0;
           }
           .wrap {
             background: white;
             border-top: 1px solid black;
             align-items: center;
-       
           }
           .form-label {
             font-weight: 700;
@@ -455,19 +504,15 @@
             }
           }
           .wrap:nth-child(1) {
-     
-         
-         
-            textarea{
+            textarea {
               border-left: 1px solid black;
               background-color: #B4B4B4;
-              border:none
+              border: none
             }
           }
           .wrap:nth-child(2) {
             border-left: 1px solid black;
             label {
-              
               width: 100px;
             }
             .input-group {
@@ -482,38 +527,38 @@
           }
           .wrap:nth-child(3) {
             border-right: 1px solid black;
-          
             #readonly_box {
               border-left: 1px solid black;
             }
           }
-          .row:nth-child(3) .input-group{
-              border-left: 1px solid black;
-              border-right: 1px solid black;
-              background-color: #B4B4B4;
+          .row:nth-child(3) .input-group {
+            border-left: 1px solid black;
+            border-right: 1px solid black;
+            background-color: #B4B4B4;
           }
         }
-        .wrap:nth-child(2) .input-group input, .wrap:nth-child(1) .input-group input{
-          border-left:1px solid black
+        .wrap:nth-child(2) .input-group input,
+        .wrap:nth-child(1) .input-group input {
+          border-left: 1px solid black
         }
         form {
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
-          .row:nth-child(1),.row:nth-child(2){
-            .input-group input{
+          .row:nth-child(1),
+          .row:nth-child(2) {
+            .input-group input {
               text-align: center;
-              
             }
           }
-          .row:nth-child(3){
-            .input-group{
-              padding:0 !important;
-          textarea{
-            padding: 5px 10px 0;
+          .row:nth-child(3) {
+            .input-group {
+              padding: 0 !important;
+              textarea {
+                padding: 5px 10px 0;
+              }
+            }
           }
-          }
-        }
           .form-check {
             margin-left: 10px;
           }
@@ -608,7 +653,7 @@
       }
       .info_wrap {
         margin: auto;
-   padding: 0 5%;
+        padding: 0 5%;
         .input-group-prepend {
           width: 100% !important;
           text-align: center !important;
@@ -625,11 +670,8 @@
             margin-bottom: 0;
           }
         }
-        .second_content {
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          border-top: 1px solid black;
-          background: #d9d9d9;
+        .fixed_info:nth-child(5) {
+          border-top: unset;
         }
         .third_content {
           .list {
@@ -652,7 +694,9 @@
           align-items: center;
           height: 40px;
           border-radius: 0;
-          border: 1px solid black;
+          border-bottom: 1px solid black;
+          border-left: 1px solid black;
+          border-right: 1px solid black;
           padding: 0 10px;
           justify-content: right;
           gap: 10px;
@@ -700,7 +744,6 @@
           .wrap:nth-child(1) {
             border-right: 1px solid black;
           }
-         
           .wrap:nth-child(2) #readonly_box {
             height: 100%;
             width: 100%;
@@ -734,14 +777,13 @@
           }
           .form-control {
             height: auto;
-            padding:5px 10px 0;
+            padding: 5px 10px 0;
             border-radius: 0;
           }
           .wrap {
             background: white;
             border-top: 1px solid black;
             align-items: center;
-       
           }
           .form-label {
             font-weight: 700;
@@ -760,19 +802,15 @@
             }
           }
           .wrap:nth-child(1) {
-     
-         
-         
-            textarea{
+            textarea {
               border-left: 1px solid black;
               background-color: #B4B4B4;
-              border:none
+              border: none
             }
           }
           .wrap:nth-child(2) {
             border-left: 1px solid black;
             label {
-              
               width: 100px;
             }
             .input-group {
@@ -786,39 +824,40 @@
           }
           .wrap:nth-child(3) {
             border-right: 1px solid black;
-          
             #readonly_box {
               border-left: 1px solid black;
             }
           }
-          .row:nth-child(3) .input-group{
-              border-left: 1px solid black;
-              border-right: 1px solid black;
+          .row:nth-child(3) .input-group {
+            border-left: 1px solid black;
+            border-right: 1px solid black;
           }
         }
-        .wrap:nth-child(2) .input-group input, .wrap:nth-child(1) .input-group input{
-          border-left:1px solid black
+        .wrap:nth-child(2) .input-group input,
+        .wrap:nth-child(1) .input-group input {
+          border-left: 1px solid black
         }
         form {
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
-          .row:nth-child(3){
-            .input-group{
-              padding:0 !important;
-          textarea{
-            padding: 5px 10px 0;
+          .row:nth-child(3) {
+            .input-group {
+              padding: 0 !important;
+              textarea {
+                padding: 5px 10px 0;
+              }
+            }
           }
-          }
-        }
-          .row:nth-child(1),.row:nth-child(2){
-            .input-group input{
+          .row:nth-child(1),
+          .row:nth-child(2) {
+            .input-group input {
               text-align: center;
             }
           }
-          .row:nth-child(3){
-            textarea{
-              padding:0 10px;
+          .row:nth-child(3) {
+            textarea {
+              padding: 0 10px;
             }
           }
           .form-check {
@@ -933,11 +972,8 @@
             margin-bottom: 0;
           }
         }
-        .second_content {
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          border-top: 1px solid black;
-          background: #d9d9d9;
+        .fixed_info:nth-child(5) {
+          border-top: unset;
         }
         .third_content {
           .list {
@@ -958,7 +994,9 @@
           align-items: center;
           height: 40px;
           border-radius: 0;
-          border: 1px solid black;
+          border-bottom: 1px solid black;
+          border-left: 1px solid black;
+          border-right: 1px solid black;
           padding: 0 10px;
           justify-content: right;
           gap: 10px;
@@ -974,9 +1012,9 @@
           .fixed_info {
             border: none;
           }
-        #readonly_box{
-          background-color: #B4B4B4;
-        }
+          #readonly_box {
+            background-color: #B4B4B4;
+          }
           .wrap:nth-child(2) #readonly_box {
             width: 100%;
           }
@@ -1040,7 +1078,6 @@
             border-top: 1px solid black;
             align-items: center;
             flex-direction: column;
-           
           }
           .form-label {
             font-weight: 700;
@@ -1051,9 +1088,8 @@
             display: flex;
             justify-content: center;
             height: 30px;
-            width:100%;
+            width: 100%;
             border-bottom: 1px solid black;
-
             p {
               font-size: 18px;
               margin-bottom: 0;
@@ -1062,20 +1098,16 @@
           }
           .wrap:nth-child(3) {
             border-right: 1px solid black;
-           
           }
           .wrap:nth-child(1) {
             border-right: 1px solid black;
-             .input-group textarea{
+            .input-group textarea {
               background-color: #B4B4B4;
-              border:none
-              }
-      
-   
+              border: none
+            }
           }
           .wrap:nth-child(2) {
             border-right: 1px solid black;
-         
             .input-group {
               padding: 5px;
               display: flex;
@@ -1090,8 +1122,9 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
-          .row:nth-child(1),.row:nth-child(2){
-            .input-group input{
+          .row:nth-child(1),
+          .row:nth-child(2) {
+            .input-group input {
               text-align: center;
             }
           }

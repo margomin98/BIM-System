@@ -668,17 +668,16 @@
             margin-bottom: 0;
           }
         }
+      
+        .fixed_info:nth-child(5){
+          border-top: unset;
+        }
         #readonly_box {
           padding: 0;
           background-color: #B4B4B4;
           border-left: black 1px solid;
         }
-        .second_content {
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          border-top: 1px solid black;
-          background: #d9d9d9;
-        }
+       
         .third_content {
           .list {
             border-top: 1px solid black;
@@ -700,7 +699,9 @@
           align-items: center;
           height: 40px;
           border-radius: 0;
-          border: 1px solid black;
+          border-bottom: 1px solid black;
+          border-left: 1px solid black;
+          border-right: 1px solid black;
           padding: 0 10px;
           justify-content: right;
           gap: 10px;
@@ -1010,17 +1011,15 @@
             margin-bottom: 0;
           }
         }
+        .fixed_info:nth-child(5){
+          border-top: unset;
+        }
         #readonly_box {
           padding: 0;
           background-color: #B4B4B4;
           border-left: black 1px solid;
         }
-        .second_content {
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          border-top: 1px solid black;
-          background: #d9d9d9;
-        }
+    
         .third_content {
           .list {
             border-top: 1px solid black;
@@ -1042,7 +1041,9 @@
           align-items: center;
           height: 40px;
           border-radius: 0;
-          border: 1px solid black;
+          border-bottom: 1px solid black;
+          border-left: 1px solid black;
+          border-right: 1px solid black;
           padding: 0 10px;
           justify-content: right;
           gap: 10px;
@@ -1364,11 +1365,8 @@
             margin-bottom: 0;
           }
         }
-        .second_content {
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          border-top: 1px solid black;
-          background: #d9d9d9;
+        .fixed_info:nth-child(5){
+          border-top: unset;
         }
         .third_content {
           .list {
@@ -1389,7 +1387,9 @@
           align-items: center;
           height: 40px;
           border-radius: 0;
-          border: 1px solid black;
+          border-bottom: 1px solid black;
+          border-left: 1px solid black;
+          border-right: 1px solid black;
           padding: 0 10px;
           justify-content: right;
           gap: 10px;
