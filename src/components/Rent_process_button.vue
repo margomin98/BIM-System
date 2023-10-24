@@ -2,7 +2,7 @@
   <div class="button_div">
     <button class="btn1" @click="routeTo('檢視')">檢視</button>
     <button @click="routeTo('備料')" :class="{ disabled_btn2: isDisabled.new, btn2: !isDisabled.new }" :disabled="isDisabled.new">備料</button>
-    <button v-if="deliveryNotify" @click="changeStatus" :class="{ disabled_btn3: isDisabled.deliveryNotify, btn3: !isDisabled.deliveryNotify }" :disabled="isDisabled.deliveryNotify">通知交付</button>
+    <button v-if="!deliveryNotify" @click="changeStatus" :class="{ disabled_btn3: isDisabled.deliveryNotify, btn3: !isDisabled.deliveryNotify }" :disabled="isDisabled.deliveryNotify">通知交付</button>
     <button v-else @click="changeStatus" :class="{ disabled_btn3: isDisabled.deliveryNotify, btn3: !isDisabled.deliveryNotify }" :disabled="isDisabled.deliveryNotify">暫停交付</button>
     <button @click="routeTo('交付')" :class="{ disabled_btn4: isDisabled.delivery, btn4: !isDisabled.delivery }" :disabled="isDisabled.delivery">交付</button>
   </div>
