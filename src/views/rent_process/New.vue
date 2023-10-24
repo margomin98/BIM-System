@@ -9,81 +9,128 @@
             <div>
               <p>檢索資產</p>
             </div>
-            <button type="button" class="close" data-bs-dismiss="modal">x</button>
+            <button type="button" class="close" data-bs-dismiss="modal">
+                x
+              </button>
           </div>
-          <div class='second_content'>
-            <div class='wrap1'>
-              <div class='col-xl-3 col-lg-12 col-md-12 col-12'>
+          <div class="second_content">
+            <div class="wrap1">
+              <div class="col-xl-3 col-lg-12 col-md-12 col-12">
                 <p>設備總類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                            {{ searchParams.EquipTypeName || '請選擇' }}
-                          </button>
+                      {{ searchParams.EquipTypeName || '請選擇' }}
+                    </button>
                   <div class="dropdown-menu" aria-labelledby="typeDropdown">
-                    <p v-for="(item, index) in searchParams.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
+                    <p v-for="(item, index) in searchParams.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(item)">
+                      {{ item.Name }}
+                    </p>
                   </div>
                 </div>
               </div>
-              <div class='col-xl-3 col-lg-12 col-md-12 col-12'>
+              <div class="col-xl-3 col-lg-12 col-md-12 col-12">
                 <p>設備分類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
-                            {{ searchParams.EquipCategoryName || searchParams.EquipCategoryInit }}
-                          </button>
+                      {{ searchParams.EquipCategoryName || searchParams.EquipCategoryInit }}
+                    </button>
                   <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                    <p v-for="(item, index) in searchParams.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
+                    <p v-for="(item, index) in searchParams.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(item)">
+                      {{ item.Name }}
+                    </p>
                   </div>
                 </div>
               </div>
-              <div class='col-xl-3 col-lg-12 col-md-12 col-12'>
+              <div class="col-xl-3 col-lg-12 col-md-12 col-12">
                 <p>物品名稱</p>
                 <div class="number-input-box">
                   <input class="input-number" type="text" v-model="searchParams.ProductName" :placeholder="searchPlaceholder" />
                 </div>
               </div>
               <div class="col-xl-3 col-lg-12 col-md-12 col-12">
-                <p>已選/所需 數量 <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"></p>
+                <p>
+                  已選/所需 數量
+                  <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘" />
+                </p>
                 <div class="number-input-box">
-                  <p class="input-number readonly_box" readonly>{{ searchParams.selectedNumber }} / {{ searchParams.Number }}</p>
+                  <p class="input-number readonly_box" readonly>
+                    {{ searchParams.selectedNumber }} / {{ searchParams.Number }}
+                  </p>
                 </div>
               </div>
             </div>
             <div class="row g-0">
               <div class="col-12 d-flex wrap2">
-                <label for="inputTextarea" class="form-label"><p>規格需求：</p></label>
-                <div>
+                <label for="inputTextarea" class="form-label"><p>規格需求：</p></label
+                  >
+                  <div></div>
+                  <textarea
+                    class="form-control readonly_box"
+                    id="inputTextarea"
+                    rows="3"
+                    readonly
+                    >{{ searchParams.RequiredSpec }}</textarea
+                  >
                 </div>
-                <textarea class="form-control readonly_box" id="inputTextarea" rows="3" readonly>{{ searchParams.RequiredSpec }}</textarea>
+              </div>
+              <div class="col d-flex justify-content-center">
+                <button
+                  class="btn submit_btn"
+                  type="button"
+                  @click="searchInventory('','search');"
+                >
+                  搜尋庫存
+                </button>
               </div>
             </div>
-            <div class='col d-flex justify-content-center'>
-              <button class="btn submit_btn" type="button" @click="searchInventory('','search');">搜尋庫存</button>
+            <div class="fixed_info">
+              <div>
+                <p>目前資產庫存</p>
+              </div>
             </div>
-          </div>
-          <div class="fixed_info">
-            <div>
-              <p>目前資產庫存</p>
-            </div>
-          </div>
-          <DataTable :key="datagrid3.key" :first="datagrid3.first" :size="'small'" :loading="datagrid3.loading" :value="rowData3" :sort-field="datagrid3.sortField" :sort-order="datagrid3.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
-            scrollHeight="420px" @page="searchInventory($event , 'page')" @sort="searchInventory($event , 'sort')" paginator :rows="datagrid3.rows" :totalRecords="datagrid3.totalRecords" paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-            currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
-            <Column style="min-width: 60px;">
-              <template #body="slotProps">
-                  <AssetsView :params = "slotProps" />
+            <DataTable
+              :key="datagrid3.key"
+              :first="datagrid3.first"
+              :size="'small'"
+              :loading="datagrid3.loading"
+              :value="rowData3"
+              :sort-field="datagrid3.sortField"
+              :sort-order="datagrid3.sortOrder"
+              resizableColumns
+              columnResizeMode="expand"
+              showGridlines
+              scrollable
+              scrollHeight="420px"
+              @page="searchInventory($event , 'page')"
+              @sort="searchInventory($event , 'sort')"
+              paginator
+              :rows="datagrid3.rows"
+              :totalRecords="datagrid3.totalRecords"
+              paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+              currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}"
+            >
+              <Column style="min-width: 60px">
+                <template #body="slotProps">
+                  <AssetsView :params="slotProps" />
 </template>
             </Column>
-            <Column style="min-width: 60px;" header="選擇">
+            <Column style="min-width: 60px" header="選擇">
 <template #body="slotProps">
   <Storage_add :params="slotProps" :selectedNumber="searchParams.selectedNumber" :Number="searchParams.Number" @addMaterial="addMaterial" />
 </template>
             </Column>
-            <Column style="min-width: 80px;"  header="數量">
+            <Column style="min-width: 80px" header="數量">
 <template #body="slotProps">
   <Storage_number :params="slotProps" />
 </template>
             </Column>
-            <Column v-for="item in datagrid3field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+            <Column
+              v-for="item in datagrid3field"
+              :field="item.field"
+              :header="item.header"
+              sortable
+              :style="{'min-width': item.width}"
+            ></Column>
           </DataTable>
         </div>
       </div>
@@ -108,12 +155,29 @@
       <form>
         <div class="row g-0">
           <div class="col d-flex wrap column_section">
-            <label for="inputTitle1" class="form-label use"><p>用&ensp;&ensp;&ensp;&ensp;途</p></label>
+            <label for="inputTitle1" class="form-label use"
+              ><p>用&ensp;&ensp;&ensp;&ensp;途</p></label
+            >
             <div class="option">
-              <div class='content'>
-                <div class="form-check" v-for="(option, index) in options" :key="index">
-                  <input class="form-check-input" type="radio" :value="option" :id="'radio' + (index + 1)" v-model="details.Use" :disabled="option !== details.Use && details.Use !== ''">
-                  <label class="form-check-label" :for="'radio' + (index + 1)">{{ option }}</label>
+              <div class="content">
+                <div
+                  class="form-check"
+                  v-for="(option, index) in options"
+                  :key="index"
+                >
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    :value="option"
+                    :id="'radio' + (index + 1)"
+                    v-model="details.Use"
+                    :disabled="option !== details.Use && details.Use !== ''"
+                  />
+                  <label
+                    class="form-check-label"
+                    :for="'radio' + (index + 1)"
+                    >{{ option }}</label
+                  >
                 </div>
               </div>
             </div>
@@ -121,23 +185,29 @@
         </div>
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithButton" class="form-label"><p>專案代碼</p></label>
-            <div class="input-group" id='readonly_box'>
-              <p class='readonly_box' readonly> {{ details.ProjectCode }}</p>
+            <label for="inputWithButton" class="form-label"
+              ><p>專案代碼</p></label
+            >
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box" readonly>{{ details.ProjectCode }}</p>
             </div>
           </div>
           <div class="col d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name"><p>專案名稱</p></label>
-            <div class="input-group" id='readonly_box'>
-              <p class='readonly_box' readonly>{{ details.ProjectName}}</p>
+            <label for="inputWithTitle" class="form-label project_name"
+              ><p>專案名稱</p></label
+            >
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box" readonly>{{ details.ProjectName}}</p>
             </div>
           </div>
         </div>
         <div class="row g-0">
           <div class="col d-flex wrap" style="border: none">
-            <label for="inputTextarea" class="form-label"><p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p></label>
-            <div class="input-group" id='readonly_box'>
-              <p class='readonly_box' readonly>{{ details.Description}}</p>
+            <label for="inputTextarea" class="form-label"
+              ><p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p></label
+            >
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box" readonly>{{ details.Description}}</p>
             </div>
           </div>
         </div>
@@ -148,41 +218,63 @@
             <p>資產出庫項目</p>
           </div>
         </div>
-        <DataTable :size="'small'" :value="rowData1" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="600px">
+        <DataTable
+          :size="'small'"
+          :value="rowData1"
+          resizableColumns
+          columnResizeMode="expand"
+          showGridlines
+          scrollable
+          scroll-height="600px"
+        >
           <Column>
-<template style="min-width:115px;" #body="slotProps">
+<template style="min-width: 115px" #body="slotProps">
   <Storage_button :params="slotProps" @searchList="searchList" />
 </template>
           </Column>
-        <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+          <Column
+            v-for="item in datagrid1field"
+            :field="item.field"
+            :header="item.header"
+            sortable
+            :style="{'min-width': item.width}"
+          ></Column>
         </DataTable>
       </div>
-    
-      <div class="third_content">  <!-- <modal-overlay v-if="modalVisible" @close="closeModal" /> -->
-      <div class="fixed_info">
-        <div>
-          <p>資產出庫細項</p>
+
+      <div class="third_content">
+        <!-- <modal-overlay v-if="modalVisible" @close="closeModal" /> -->
+        <div class="fixed_info">
+          <div>
+            <p>資產出庫細項</p>
+          </div>
         </div>
-      </div>
-        <DataTable 
-        :size="'small'"
-        :value="rowData2" 
-        resizableColumns 
-        columnResizeMode="expand"
-        showGridlines 
-        scrollable
-        scroll-height="600px">
-        <Column>
-<template style="min-width:50px;" #body="slotProps">
+        <DataTable
+          :size="'small'"
+          :value="rowData2"
+          resizableColumns
+          columnResizeMode="expand"
+          showGridlines
+          scrollable
+          scroll-height="600px"
+        >
+          <Column>
+<template style="min-width: 50px" #body="slotProps">
   <Delete :params="slotProps" @deleteMaterial="deleteMaterial" />
 </template>
-        </Column>
-        <Column>
+          </Column>
+          <Column>
 <template #body="slotProps">
   <AssetsView :params="slotProps" />
 </template>
-        </Column>
-        <Column v-for="item in datagrid2field" :field="item.field" :header="item.header" :sortable="item.sortable" :style="{'min-width': item.width}"></Column>
+          </Column>
+          <Column
+            v-for="item in datagrid2field"
+            :field="item.field"
+            :header="item.header"
+            :sortable="item.sortable"
+            :style="{'min-width': item.width}"
+          ></Column>
         </DataTable>
       </div>
       <div class="fixed_info_count">
@@ -193,7 +285,7 @@
           <p>已備數量: {{ totalSelect}}個</p>
         </div>
       </div>
-      <div class='fourth_content'>
+      <div class="fourth_content">
         <div class="fixed_info">
           <div>
             <p>備料簽章</p>
@@ -201,21 +293,46 @@
         </div>
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithButton" class="form-label"><p>備料人員</p></label>
+            <label for="inputWithButton" class="form-label"
+              ><p>備料人員</p></label
+            >
             <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly v-model="PreparedPerson" />
+              <input
+                type="text"
+                class="form-control readonly_box"
+                id="inputWithButton"
+                readonly
+                v-model="PreparedPerson"
+              />
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name"><p>備料完成日期</p></label>
+            <label for="inputWithTitle" class="form-label project_name"
+              ><p>備料完成日期</p></label
+            >
             <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly v-model="PreparedDate" />
+              <input
+                type="text"
+                class="form-control readonly_box"
+                id="inputWithTitle"
+                readonly
+                v-model="PreparedDate"
+              />
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name"><p>備料備註</p></label>
+            <label for="inputWithTitle" class="form-label project_name"
+              ><p>備料備註</p></label
+            >
             <div class="input-group">
-              <textarea placeholder="最多輸入100字" class="form-control" id="inputTextarea" style="height:100%" rows="1" v-model="details.PrepareMemo"></textarea>
+              <textarea
+                placeholder="最多輸入100字"
+                class="form-control"
+                id="inputTextarea"
+                style="height: 100%"
+                rows="1"
+                v-model="details.PrepareMemo"
+              ></textarea>
             </div>
           </div>
         </div>
@@ -223,7 +340,13 @@
     </div>
     <div class="col button_wrap">
       <button class="back_btn" @click="goBack">回上一頁</button>
-      <button class="send_btn" data-bs-toggle="modal" data-bs-target="#confirmModal">送出</button>
+      <button
+        class="send_btn"
+        data-bs-toggle="modal"
+        data-bs-target="#confirmModal"
+      >
+        送出
+      </button>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
@@ -233,8 +356,21 @@
             按下確認後將無法再次進行備料作業，請確認資產出庫細項是否備料正確
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="submit">確認</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              取消
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              @click="submit"
+            >
+              確認
+            </button>
           </div>
         </div>
       </div>
@@ -725,7 +861,7 @@
           font-weight: 700;
           border: none;
           &:hover {
-            background: #636260
+            background: #636260;
           }
         }
         button:nth-child(2) {
@@ -733,7 +869,7 @@
           font-weight: 700;
           border: none;
           &:hover {
-            background: #426497
+            background: #426497;
           }
         }
       }
@@ -762,7 +898,7 @@
         }
         p {
           font-size: 20px;
-          margin-bottom: 0 !important
+          margin-bottom: 0 !important;
         }
         button {
           border: none;
@@ -777,6 +913,83 @@
         border-left: 1px solid black;
         border-bottom: 1px solid black;
         border-right: 1px solid black;
+      }
+      .second_content {
+        border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    background: #D9D9D9;
+        .submit_btn {
+          margin-bottom: 20px;
+          background: #48658C;
+          color: white;
+          font-weight: 700;
+          width: 100px;
+          font-size: 18px;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          &:hover {
+            background-color: #5d85bd;
+          }
+        }
+        .wrap1,
+        .wrap2 {
+          display: flex;
+          justify-content: space-evenly;
+          padding: 10px 80px;
+          .input-number {
+            @include count_btn;
+          }
+          .number-input-box {
+            color: black;
+            .input-number {
+              width: 100%;
+            }
+          }
+          .form-label {
+            white-space: nowrap;
+            font-weight: 800;
+            font-size: 18px;
+          }
+          .dropdown {
+            button {
+              background: white;
+              width: 100%;
+              border: none;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            }
+            .dropdown-menu {
+              width: 225px;
+              max-height: 250px;
+              overflow-y: auto;
+              p {
+                font-size: 18px;
+                color: black;
+                font-weight: normal;
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+              .dropdown-item {
+                text-align: left;
+              }
+            }
+          }
+          div {
+            padding: 0 5px;
+            p {
+              text-align: center;
+              white-space: nowrap;
+              font-size: 18px;
+              font-weight: 700;
+              margin-bottom: 5px;
+            }
+          }
+        }
       }
     }
     .main_section {
@@ -811,10 +1024,11 @@
           }
         }
         #readonly_box {
-          background-color: #B4B4B4;
+          background-color: #b4b4b4;
           border-left: black 1px solid;
         }
         .second_content {
+          background: #D9D9D9;
           .submit_btn {
             margin-bottom: 20px;
             background: #48658C;
@@ -889,7 +1103,7 @@
         }
         .third_content {
           .fixed_info {
-            border-top: unset
+            border-top: unset;
           }
           .list {
             border-top: 1px solid black;
@@ -905,7 +1119,7 @@
         }
         .fixed_info_count {
           display: flex;
-          background: #3D5C67;
+          background: #3d5c67;
           color: white;
           font-weight: 700;
           align-items: center;
@@ -1000,11 +1214,11 @@
               align-items: center;
               display: flex;
               .content {
-                display: flex
+                display: flex;
               }
             }
             .project_name {
-              border-left: 1px solid black
+              border-left: 1px solid black;
             }
           }
           .form-label {
@@ -1050,7 +1264,7 @@
           &:nth-child(2) {
             @include search_and_send_btn;
             &:hover {
-              background-color: #5D85BD;
+              background-color: #5d85bd;
             }
           }
         }
@@ -1077,7 +1291,7 @@
         }
         p {
           font-size: 20px;
-          margin-bottom: 0 !important
+          margin-bottom: 0 !important;
         }
         button {
           border: none;
@@ -1092,6 +1306,81 @@
         border-left: 1px solid black;
         border-bottom: 1px solid black;
         border-right: 1px solid black;
+      }
+      .second_content {
+        border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    background: #D9D9D9;
+        .submit_btn {
+          margin-bottom: 20px;
+          background: #48658C;
+          color: white;
+          font-weight: 700;
+          width: 100px;
+          font-size: 18px;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          &:hover {
+            background-color: #5d85bd;
+          }
+        }
+        .wrap1,
+        .wrap2 {
+          display: flex;
+          justify-content: space-evenly;
+          padding: 10px 80px;
+          .input-number {
+            @include count_btn;
+          }
+          .number-input-box {
+            color: black;
+            .input-number {
+              width: 100%;
+            }
+          }
+          .form-label {
+            white-space: nowrap;
+            font-weight: 800;
+            font-size: 18px;
+          }
+          .dropdown {
+            button {
+              background: white;
+              width: 100%;
+              border: none;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            }
+            .dropdown-menu {
+              width: 150px;
+              .dropdown-item {
+                text-align: left;
+              }
+            }
+          }
+          div {
+            padding: 0 5px;
+            p {
+              text-align: center;
+              white-space: nowrap;
+              font-size: 18px;
+              font-weight: 700;
+              margin-bottom: 5px;
+            }
+          }
+        }
+        .wrap1 {
+          display: grid;
+          grid-auto-flow: column;
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: 1fr 1fr;
+          gap: 10px 10px;
+          grid-template-areas: ". ." ". .";
+        }
       }
     }
     .main_section {
@@ -1126,10 +1415,11 @@
           }
         }
         #readonly_box {
-          background-color: #B4B4B4;
+          background-color: #b4b4b4;
           border-left: black 1px solid;
         }
         .second_content {
+          background: #D9D9D9;
           .submit_btn {
             margin-bottom: 20px;
             background: #48658C;
@@ -1174,7 +1464,17 @@
                 align-items: center;
               }
               .dropdown-menu {
-                width: 150px;
+                width: 225px;
+                max-height: 250px;
+                overflow-y: auto;
+                p {
+                  font-size: 18px;
+                  color: black;
+                  font-weight: normal;
+                  &:hover {
+                    cursor: pointer;
+                  }
+                }
                 .dropdown-item {
                   text-align: left;
                 }
@@ -1191,18 +1491,10 @@
               }
             }
           }
-          .wrap1 {
-            display: grid;
-            grid-auto-flow: column;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            gap: 10px 10px;
-            grid-template-areas: ". ." ". .";
-          }
         }
         .third_content {
           .fixed_info {
-            border-top: unset
+            border-top: unset;
           }
           .list {
             border-top: 1px solid black;
@@ -1218,7 +1510,7 @@
         }
         .fixed_info_count {
           display: flex;
-          background: #3D5C67;
+          background: #3d5c67;
           color: white;
           font-weight: 700;
           align-items: center;
@@ -1313,11 +1605,11 @@
               align-items: center;
               display: flex;
               .content {
-                display: flex
+                display: flex;
               }
             }
             .project_name {
-              border-left: 1px solid black
+              border-left: 1px solid black;
             }
           }
           .form-label {
@@ -1363,7 +1655,7 @@
           &:nth-child(2) {
             @include search_and_send_btn;
             &:hover {
-              background-color: #5D85BD;
+              background-color: #5d85bd;
             }
           }
         }
@@ -1392,7 +1684,7 @@
         }
         p {
           font-size: 18px;
-          margin-bottom: 0 !important
+          margin-bottom: 0 !important;
         }
         button {
           border: none;
@@ -1409,13 +1701,90 @@
         border-bottom: 1px solid black;
         border-right: 1px solid black;
       }
+      .second_content {
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        border-top: 1px solid black;
+        background: #D9D9D9;
+        .submit_btn {
+          margin-bottom: 20px;
+          background: #48658C;
+          color: white;
+          font-weight: 700;
+          width: 100px;
+          font-size: 18px;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          &:hover {
+            background-color: #5d85bd;
+          }
+        }
+        .wrap1 {
+          justify-content: space-evenly;
+          padding: 20px 20px 0;
+          .input-number {
+            @include count_btn;
+          }
+          .number-input-box {
+            color: black;
+            .input-number {
+              width: 100%;
+            }
+          }
+          .form-label {
+            white-space: nowrap;
+            font-weight: 800;
+            font-size: 18px;
+          }
+          .dropdown {
+            button {
+              background: white;
+              width: 100%;
+              border: none;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            }
+            .dropdown-menu {
+              width: 225px;
+              .dropdown-item {
+                text-align: left;
+              }
+            }
+          }
+          div {
+            margin: 10px 0;
+            p {
+              white-space: nowrap;
+              font-size: 18px;
+              font-weight: 700;
+              margin-bottom: 5px;
+            }
+          }
+        }
+        .wrap2 {
+          flex-direction: column;
+          padding: 0 20px;
+          margin-bottom: 20px;
+          p {
+            margin-bottom: 0;
+          }
+          .form-label {
+            white-space: nowrap;
+            font-weight: 800;
+            font-size: 18px;
+          }
+        }
+      }
     }
     .main_section {
       .readonly_box {
         @include readonly_box;
       }
       #readonly_box {
-        background: #B4B4B4;
+        background: #b4b4b4;
       }
       h1 {
         margin-top: 50px;
@@ -1449,7 +1818,7 @@
         .second_content {
           .submit_btn {
             margin-bottom: 20px;
-            background: #48658C;
+            background: #48658c;
             color: white;
             font-weight: 700;
             width: 100px;
@@ -1521,7 +1890,7 @@
         }
         .third_content {
           .fixed_info {
-            border-top: unset
+            border-top: unset;
           }
           .list {
             border: 1px solid black;
@@ -1535,7 +1904,7 @@
         }
         .fixed_info_count {
           display: flex;
-          background: #3D5C67;
+          background: #3d5c67;
           color: white;
           font-weight: 700;
           align-items: center;
@@ -1631,7 +2000,7 @@
               height: 100%;
               width: 100%;
               font-size: 18px;
-              background: #B4B4B4;
+              background: #b4b4b4;
               font-weight: 700;
               .content {
                 padding: 5px;
@@ -1693,7 +2062,7 @@
           &:nth-child(2) {
             @include search_and_send_btn;
             &:hover {
-              background-color: #5D85BD;
+              background-color: #5d85bd;
             }
           }
         }
