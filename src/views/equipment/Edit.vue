@@ -452,7 +452,7 @@
           form.append('Category_Id', searchParams.Category_Id);
           form.append('ProductName', searchParams.ProductName);
           UpdatePageParameter(datagrid, event, type, form);
-          const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchInventory', form);
+          const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/SearchInventory', form);
           const data = response.data;
           if (data.state === 'success') {
             // console.log('資產搜尋成功 資料如下\n', data.resultList);

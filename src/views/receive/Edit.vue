@@ -180,6 +180,7 @@
   import {
     goBack
   } from "@/assets/js/common_fn"
+import axios from 'axios';
   register();
   export default {
     components: {
@@ -230,57 +231,56 @@
       }
       // 取得已有資料
       async function getDetails() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/ReceivingGetData?ar_id=${AR_ID}`);
-          const data = response.data;
-          if (data.state === 'success') {
-            details.value = data.resultList;
-            // 檢查username是否為 admin || 採購主管
-            checkRole(checkname.value)
-              .then(result => {
-                console.log(('flag result:', result));
-                if (!result) {
-                  if (checkname.value !== details.value.Recipient) {
-                    goBack();
-                  }
-                }
-                console.log('單筆資料如下\n', details.value);
-                if (details.value.InformedPersons) {
-                  details.value.InformedPersons = details.value.InformedPersons.map((name) => ({
-                    name
-                  }))
-                }
-                if (details.value.ReceivedDate) {
-                  details.value.ReceivedDate = details.value.ReceivedDate.replace(/\//g, '-');
-                }
-                // 若有已上傳的物流文件 則新增key值 exist: true
-                if (details.value.existDocument) {
-                  details.value.existDocument.forEach(item => {
-                    item.exist = true;
-                  });
-                }
-                // 若有已上傳的相片 則新增key值 exist: true
-                if (details.value.existFile) {
-                  details.value.existFile.forEach(item => {
-                    item.exist = true;
-                  });
-                  // 處理完後將existFile加入fileParams.viewPic
-                  fileParams.viewPic = details.value.existFile
-                }
-              })
-              .catch(error => {
-                console.error(error);
-              })
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
+        checkRole(checkname.value)
+        .then(result => {
+          console.log(('flag result:', result));
+          if (!result) {
+            // false則檢查是否為填寫人(收件人員)
+            if (checkname.value !== details.value.Recipient) {
+              goBack();
+            }
           }
-        } catch (error) {
+          try {
+            const response = axios.get(`http://192.168.0.177:7008/GetDBdata/ReceivingGetData?ar_id=${AR_ID}`);
+            const data = response.data;
+            if (data.state === 'success') {
+              details.value = data.resultList;
+            } else if (data.state === 'error') {
+              alert(data.messages);
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            }
+          } catch (error) {
+            console.error(error);
+          }
+          console.log('單筆資料如下\n', details.value);
+          if (details.value.InformedPersons) {
+            details.value.InformedPersons = details.value.InformedPersons.map((name) => ({
+              name
+            }))
+          }
+          if (details.value.ReceivedDate) {
+            details.value.ReceivedDate = details.value.ReceivedDate.replace(/\//g, '-');
+          }
+          // 若有已上傳的物流文件 則新增key值 exist: true
+          if (details.value.existDocument) {
+            details.value.existDocument.forEach(item => {
+              item.exist = true;
+            });
+          }
+          // 若有已上傳的相片 則新增key值 exist: true
+          if (details.value.existFile) {
+            details.value.existFile.forEach(item => {
+              item.exist = true;
+            });
+            // 處理完後將existFile加入fileParams.viewPic
+            fileParams.viewPic = details.value.existFile
+          }
+        })
+        .catch(error => {
           console.error(error);
-        }
+        })
       }
       // 控制 "選擇檔案"按鈕
       const openFileInput = (index) => {

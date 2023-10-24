@@ -112,7 +112,7 @@
             scrollHeight="820px" 
             v-model:selection="datagrid1.selectedList" 
             sort-field="NotBalanced"
-            sort-order="-1"
+            :sort-order= -1
             paginator
             :rows="20"
             @page="updatePage($event)"
@@ -492,11 +492,25 @@ UpdatePageParameter,
         }
       }
       async function force() {
-        const axios = require('axios');
-        const response = await axios.get(`http://192.168.0.177:7008/StocktakingMng/BalanceCompleted?PlanId=${IP_ID}`);
+        if (!validation.isVerified) {
+          alert('未驗證');
+          return
+        }
+        const form = new FormData();
+        const AssetList = datagrid1.selectedList.map(item => ({
+          I_id: item.I_Id,
+          Discrepancy: item.Discrepancy,
+        }));
+        form.append('PlanId', IP_ID);
+        form.append('RecognizePerson', validation.VerifyPerson);
+        if(AssetList.length>0) {
+          for(const item in AssetList) {
+            form.append('AssetList',item);
+          }
+        }
         try {
+          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/BalanceCompleted',form);
           const data = response.data;
-          console.log(data);
           if (data.state === 'success') {
             let msg = data.messages;
             msg += '\n單號:' + data.resultList.IP_Id;
@@ -505,6 +519,7 @@ UpdatePageParameter,
               name: 'Inventory_Datagrid'
             });
           } else if (data.state === 'error') {
+            console.log(data);
             alert(data.messages);
           }
         } catch (error) {

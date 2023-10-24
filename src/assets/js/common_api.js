@@ -169,6 +169,19 @@ export const getAssets = (async (AssetsId)=> {
     // console.error(error);
   }
 })
+export const getRoleOption = (array)=> {
+  axios.get('http://192.168.0.177:7008/GetParameter/GetRoles')
+  .then((response)=>{
+    const data = response.data;
+    if (data.state === 'success') {
+      console.log('get role option:' ,data.resultList.RoleList);
+      array.value = data.resultList.RoleList;
+    }
+  })
+  .catch((error)=>{
+    console.error(error);
+  })
+}
 // 檢查權限
 export const checkRole = (username) => {
   return new Promise(async (resolve, reject) => {
@@ -177,15 +190,13 @@ export const checkRole = (username) => {
       const data = response.data;
 
       if (data.state === 'success') {
-        // if (data.resultList.value === 0 || data.resultList.value === 3) {
-        //   resolve(true);
-        // } else {
-        //   resolve(false);
-        // }
-        resolve(true);
+        if (data.resultList.role.Id === 1 || data.resultList.role.Id === 4) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
       } else {
-        // resolve(false);
-        resolve(true);
+        reject('get role failed');
       }
     } catch (error) {
       console.error(error);

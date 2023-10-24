@@ -109,20 +109,20 @@
               paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
               currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}"
             >
-              <Column style="min-width: 60px">
-                <template #body="slotProps">
-                  <AssetsView :params="slotProps" />
-</template>
+            <Column style="min-width: 60px">
+              <template #body="slotProps">
+                <AssetsView :params="slotProps" />
+              </template>
             </Column>
             <Column style="min-width: 60px" header="選擇">
-<template #body="slotProps">
-  <Storage_add :params="slotProps" :selectedNumber="searchParams.selectedNumber" :Number="searchParams.Number" @addMaterial="addMaterial" />
-</template>
+              <template #body="slotProps">
+                <Storage_add :params="slotProps" :selectedNumber="searchParams.selectedNumber" :Number="searchParams.Number" @addMaterial="addMaterial" />
+              </template>
             </Column>
             <Column style="min-width: 80px" header="數量">
-<template #body="slotProps">
-  <Storage_number :params="slotProps" />
-</template>
+              <template #body="slotProps">
+                <Storage_number :params="slotProps" />
+              </template>
             </Column>
             <Column
               v-for="item in datagrid3field"
@@ -228,9 +228,9 @@
           scroll-height="600px"
         >
           <Column>
-<template style="min-width: 115px" #body="slotProps">
-  <Storage_button :params="slotProps" @searchList="searchList" />
-</template>
+              <template style="min-width: 115px" #body="slotProps">
+                <Storage_button :params="slotProps" @searchList="searchList" />
+              </template>
           </Column>
           <Column
             v-for="item in datagrid1field"
@@ -259,14 +259,14 @@
           scroll-height="600px"
         >
           <Column>
-<template style="min-width: 50px" #body="slotProps">
-  <Delete :params="slotProps" @deleteMaterial="deleteMaterial" />
-</template>
+              <template style="min-width: 50px" #body="slotProps">
+                <Delete :params="slotProps" @deleteMaterial="deleteMaterial" />
+              </template>
           </Column>
           <Column>
-<template #body="slotProps">
-  <AssetsView :params="slotProps" />
-</template>
+              <template #body="slotProps">
+                <AssetsView :params="slotProps" />
+              </template>
           </Column>
           <Column
             v-for="item in datagrid2field"
@@ -674,13 +674,15 @@
           form.append('ProductName', searchParams.ProductName);
           form.append('ProjectCode', searchParams.ProjectCode);
           UpdatePageParameter(datagrid3, event, type, form);
-          const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchInventory', form);
+          const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/SearchInventory', form);
           const data = response.data;
           if (data.state === 'success') {
-            // console.log('Details Get成功 資料如下\n', data.resultList);
+            console.log('Details Get成功 資料如下\n', data.resultList);
             // searchParams.id : 哪一個項目(前端紀錄個項目已備數量)
             // searchParams.item_id : 項目的item_id(後端項目id)
-            rowData3.value = data.resultList.map(item => ({
+
+            datagrid3.totalRecords = data.resultList.total;
+            rowData3.value = data.resultList.rows.map(item => ({
               ...item,
               item_id: searchParams.item_id,
               selectNumber: item.OM_Number,

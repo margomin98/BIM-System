@@ -154,6 +154,7 @@ import { getMngDatagrid } from '@/assets/js/common_api';
       Delete
     },
     setup() {
+      const router = useRouter();
       const search_id = ref('');
       const DropdownArray = reactive({
         PlanType: PlanType,

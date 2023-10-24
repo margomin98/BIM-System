@@ -33,10 +33,10 @@
           <div class="input-group-prepend"><span>*</span>權限：</div>
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ selectedRole || "請選擇" }}
-                  </button>
+              {{ selectedRole || "請選擇" }}
+            </button>
             <div class="dropdown-menu" aria-labelledby="statusDropdown">
-              <p v-for="(item, index) in roleArray" :key="index" class="dropdown-item" @click="selectRole(item)">{{ item }}</p>
+              <p v-for="(item, index) in roleArray" :key="index" class="dropdown-item" @click="selectRole(item)">{{ item.Name }}</p>
             </div>
           </div>
         </div>
@@ -52,6 +52,8 @@
 <script>
   import Navbar from "@/components/Navbar.vue";
   import router from "@/router";
+  import { getRoleOption } from "@/assets/js/common_api";
+  import { goBack } from "@/assets/js/common_fn";
   import {
     onMounted,
     reactive,
@@ -66,12 +68,13 @@
       const dropdownOptions = ref([]); //帳號搜尋結果(選項)
       const filteredOptions = ref(dropdownOptions);
       const roleSearchResult = ref('');
-      const selectedRole = ref(''); //權限
+      const selectedRole = ref(''); //權限名稱(顯示
+      const selectedRoleId = ref(''); //權限id
       const roleArray = ref() //權限選項
       const showOptions = ref(false); //控制搜尋選單出現與否
       onMounted(() => {
         searchFunction();
-        getRoleOption();
+        getRoleOption(roleArray);
       });
       function searchAccount() {
         return new Promise(async(resolve, reject) => {
@@ -97,7 +100,7 @@
             const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetRoleFromName?name=${inputValue.value}`);
             const data = response.data;
             if (data.state === 'success') {
-              resolve(data.resultList.role);
+              resolve(data.resultList.role.Name);
             } else {
               resolve(''); // Resolve with empty value when role search fails
             }
@@ -119,14 +122,14 @@
         }
       }
       async function submit() {
-        if(!inputValue.value || !selectedRole.value) {
+        if(!inputValue.value || !selectedRoleId.value) {
           alert('請輸入必填項目');
           return
         }
         const axios = require('axios');
         const form = new FormData();
         form.append('userName', inputValue.value);
-        form.append('role', selectedRole.value);
+        form.append('role', selectedRoleId.value);
         const response = await axios.post('http://192.168.0.177:7008/AuthorityMng/AccoutChangeRole', form);
         try {
           const data = response.data;
@@ -140,34 +143,19 @@
           console.error(error);
         }
       }
-      async function getRoleOption() {
-        const axios = require('axios');
-        const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetRoles');
-        try {
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('get role option:' ,data.resultList);
-            roleArray.value = data.resultList;
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
       function selectAccount(item) {
         inputValue.value = item;
         searchFunction();
         showOptions.value = false;
       }
       function selectRole(item) {
-        selectedRole.value = item;
+        selectedRole.value = item.Name;
+        selectedRoleId.value = item.Id;
       }
       function handleBlur() {
         setTimeout(() => {
           showOptions.value = false;
         }, 100);
-      }
-      function goBack() {
-        window.history.back();
       }
       return {
         inputValue,
