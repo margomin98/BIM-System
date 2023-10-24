@@ -371,7 +371,7 @@ import router from '@/router';
               font-weight: 700;
               font-size: 20px;
               text-align: end;
-              width: 155px;
+              width: 147px;
               span {
                 @include red_star
               }

@@ -349,7 +349,6 @@
         @include title_color;
       }
       #readonly_box {
-        padding: 0 0 0 10px;
         background-color: #B4B4B4;
         border-left: black 1px solid;
       }
@@ -419,7 +418,6 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            padding: 0;
           }
           .wrap {
             background: white;
@@ -564,7 +562,6 @@
           }
           .form-control {
             border-radius: 0;
-            padding: 0;
           }
           .wrap {
             background: white;
@@ -647,7 +644,6 @@
         @include title_color;
       }
       #readonly_box {
-        padding: 0 0 0 10px;
         background-color: #B4B4B4;
         border-left: black 1px solid;
       }
@@ -717,7 +713,6 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            padding: 0;
           }
           .wrap {
             background: white;
@@ -865,7 +860,6 @@
           }
           .form-control {
             border-radius: 0;
-            padding: 0;
           }
           .wrap {
             background: white;

@@ -21,10 +21,15 @@
 		color: white;
 		text-decoration: none;
 	}
-	.main_section .dropdown-menu {
+	.main_section{
+		input{
+			text-align: left !important;
+		}
+		.dropdown-menu {
 		padding: 0!important;
 		background: white !important;
 	}
+	} 
 	.dropdown-menu p,
 	.dropdown-item {
 		padding: 5px 10px!important;
@@ -123,6 +128,8 @@
 	}
 	.readonly_box {
 		// pointer-events: none;
+	    justify-content: left !important;
+    padding: 0 10px;
 		user-select: none;
 		overflow: hidden;
 		&:focus {

@@ -531,7 +531,6 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            padding: 0;
           }
           .wrap {
             background: white;
@@ -666,7 +665,6 @@
           }
           .form-control {
             border-radius: 0;
-            padding: 0;
           }
           .wrap {
             background: white;
@@ -831,7 +829,6 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            padding: 0;
           }
           .wrap {
             background: white;
@@ -965,7 +962,6 @@
           }
           .form-control {
             border-radius: 0;
-            padding: 0;
           }
           .wrap {
             background: white;
