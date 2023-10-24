@@ -484,15 +484,12 @@
             margin-bottom: 0;
           }
         }
-        .second_content {
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          border-top: 1px solid black;
-          background: #d9d9d9;
+        .fixed_info:nth-child(5){
+          border-top: unset;
         }
+       
         .third_content {
           .list {
-            border-top: 1px solid black;
             border-left: 1px solid black;
             border-right: 1px solid black;
             button {
@@ -511,7 +508,9 @@
           align-items: center;
           height: 40px;
           border-radius: 0;
-          border: 1px solid black;
+          border-bottom: 1px solid black;
+          border-left: 1px solid black;
+            border-right: 1px solid black;
           padding: 0 10px;
           justify-content: right;
           gap: 10px;
@@ -780,6 +779,9 @@
             font-size: 20px;
             margin-bottom: 0;
           }
+        }
+        .fixed_info:nth-child(5){
+          border-top: unset;
         }
         .second_content {
           border-left: 1px solid black;
