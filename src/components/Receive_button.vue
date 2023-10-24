@@ -1,12 +1,13 @@
 <template>
   <div class='button_div'>
     <button @click="viewDetails()">檢視</button>
-    <button class="btn_edit" @click="viewEdit()">編輯</button>
+    <button :class="{ disabled_btn: !canEdit, btn_edit: canEdit }" @click="viewEdit()" :disabled="!canEdit">編輯</button>
     <button class="btn_store" @click="viewStore()">入庫</button>
   </div>
 </template>
 
 <script>
+  import { ref } from 'vue';
   import {
     useRouter
   } from 'vue-router';
@@ -15,6 +16,7 @@
     setup(props) {
       const router = useRouter();
       const search_id = props.params.data.AR_ID;
+      const canEdit = ref(props.params.data.canEdit);
       const ShipmentNum = props.params.data.ShipmentNum;
       function viewDetails() {
         if (search_id !== '') {
@@ -48,6 +50,7 @@
         }
       }
       return {
+        canEdit,
         viewDetails,
         viewEdit,
         viewStore,
@@ -68,14 +71,6 @@
         color: white
       }
     }
-     :nth-child(2) {
-      @include datagrid_edit_button;
-      height: 25px;
-      &:hover {
-        background: #3B6162;
-        color: white
-      }
-    }
      :nth-child(3) {
       @include datagrid_inform_button;
       width: 50px;
@@ -83,6 +78,19 @@
       &:hover {
         background: #359699
       }
+    }
+    .btn_edit {
+      @include datagrid_edit_button;
+      height: 25px;
+      &:hover {
+        background: #3B6162;
+        color: white
+      }
+      }
+    .disabled_btn {
+      @include disabled_btn;
+      width: 50px;
+      height: 25px;
     }
   }
 </style>

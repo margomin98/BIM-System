@@ -212,7 +212,7 @@ import axios from 'axios';
       const fileInput1 = ref();
       const fileInput2 = ref();
       onMounted(() => {
-        getDetails();
+        // getDetails();
         getAccountName();
       })
       // 通知對象dropdown
@@ -233,50 +233,52 @@ import axios from 'axios';
       async function getDetails() {
         checkRole(checkname.value)
         .then(result => {
-          console.log(('flag result:', result));
-          if (!result) {
-            // false則檢查是否為填寫人(收件人員)
-            if (checkname.value !== details.value.Recipient) {
-              goBack();
-            }
-          }
-          try {
-            const response = axios.get(`http://192.168.0.177:7008/GetDBdata/ReceivingGetData?ar_id=${AR_ID}`);
+
+          axios.get(`http://192.168.0.177:7008/GetDBdata/ReceivingGetData?ar_id=${AR_ID}`)
+          .then((response)=>{
             const data = response.data;
             if (data.state === 'success') {
               details.value = data.resultList;
-            } else if (data.state === 'error') {
-              alert(data.messages);
-            } else if (data.state === 'account_error') {
-              alert(data.messages);
-              router.push('/');
+              console.log(('flag result:'+ result));
+              if (!result) {
+                // false則檢查是否為填寫人(收件人員)
+                if (checkname.value !== details.value.Recipient) {
+                  goBack();
+                }
+              }
+              console.log('單筆資料如下\n', details.value);
+            if (details.value.InformedPersons) {
+              details.value.InformedPersons = details.value.InformedPersons.map((name) => ({
+                name
+              }))
             }
-          } catch (error) {
+            if (details.value.ReceivedDate) {
+              details.value.ReceivedDate = details.value.ReceivedDate.replace(/\//g, '-');
+            }
+            // 若有已上傳的物流文件 則新增key值 exist: true
+            if (details.value.existDocument) {
+              details.value.existDocument.forEach(item => {
+                item.exist = true;
+              });
+            }
+            // 若有已上傳的相片 則新增key值 exist: true
+            if (details.value.existFile) {
+              details.value.existFile.forEach(item => {
+                item.exist = true;
+              });
+              // 處理完後將existFile加入fileParams.viewPic
+              fileParams.viewPic = details.value.existFile
+            }
+              } else if (data.state === 'error') {
+                alert(data.messages);
+              } else if (data.state === 'account_error') {
+                alert(data.messages);
+                router.push('/');
+              }
+            })
+          .catch((error)=> {
             console.error(error);
-          }
-          console.log('單筆資料如下\n', details.value);
-          if (details.value.InformedPersons) {
-            details.value.InformedPersons = details.value.InformedPersons.map((name) => ({
-              name
-            }))
-          }
-          if (details.value.ReceivedDate) {
-            details.value.ReceivedDate = details.value.ReceivedDate.replace(/\//g, '-');
-          }
-          // 若有已上傳的物流文件 則新增key值 exist: true
-          if (details.value.existDocument) {
-            details.value.existDocument.forEach(item => {
-              item.exist = true;
-            });
-          }
-          // 若有已上傳的相片 則新增key值 exist: true
-          if (details.value.existFile) {
-            details.value.existFile.forEach(item => {
-              item.exist = true;
-            });
-            // 處理完後將existFile加入fileParams.viewPic
-            fileParams.viewPic = details.value.existFile
-          }
+          })
         })
         .catch(error => {
           console.error(error);
@@ -629,8 +631,9 @@ import axios from 'axios';
         }
       }
       function setUsername(name) {
-        console.log('username:', name);
         checkname.value = name;
+        console.log('username:', checkname.value);
+        getDetails();
       }
       return {
         details,
