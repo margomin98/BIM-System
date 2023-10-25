@@ -22,6 +22,9 @@
 		text-decoration: none;
 	}
 	.main_section{
+		.input-number{
+			padding: 0 10px;
+		}
 		input{
 			text-align: left !important;
 		}
