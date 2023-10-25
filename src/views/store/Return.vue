@@ -357,6 +357,7 @@ import router from '@/router';
             justify-content: end;
             flex-wrap: nowrap;
             .input-number {
+              width: 196px;
               @include count_btn;
             }
             .readonly_box {

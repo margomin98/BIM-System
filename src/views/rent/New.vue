@@ -19,8 +19,8 @@
         <div class="row g-0">
           <div class="col d-flex wrap column_section">
             <label for="inputTitle1" class="form-label use">
-                      <p><span>*</span>用&ensp;&ensp;&ensp;&ensp;途</p>
-                    </label>
+                        <p><span>*</span>用&ensp;&ensp;&ensp;&ensp;途</p>
+                      </label>
             <div class="option">
               <div class="form-check" v-for="(option, index) in options" :key="index">
                 <input class="form-check-input" type="radio" :value="option" :id="'radio' + (index + 1)" v-model="myForm.Use">
@@ -39,8 +39,8 @@
           </div>
           <div class="col d-flex wrap">
             <label for="inputWithTitle" class="form-label" id='project_name'>
-              <p>專案名稱</p>
-            </label>
+                <p>專案名稱</p>
+              </label>
             <div class="input-group" id='readonly_box'>
               <p class='readonly_box' readonly>{{ myForm.ProjectName }}</p>
             </div>
@@ -49,8 +49,8 @@
         <div class="row g-0">
           <div class="col d-flex wrap column_section" style='border:none'>
             <label for="inputTextarea" class="form-label">
-              <p>&nbsp;&nbsp;說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
-            </label>
+                <p>&nbsp;&nbsp;說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
+              </label>
             <textarea class="form-control" id="inputTextarea" placeholder='最多輸入100字' v-model="myForm.Description"></textarea>
           </div>
         </div>
@@ -66,8 +66,8 @@
             <p><span>*</span>設備總類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                {{ myForm.EquipTypeName || '請選擇' }}
-              </button>
+                  {{ myForm.EquipTypeName || '請選擇' }}
+                </button>
               <div class="dropdown-menu" aria-labelledby="typeDropdown">
                 <p v-for="(item, index) in myForm.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
               </div>
@@ -77,8 +77,8 @@
             <p><span>*</span>設備分類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(myForm.EquipTypeName !== '') }">
-                {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
-              </button>
+                  {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
+                </button>
               <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                 <p v-for="(item, index) in myForm.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
               </div>
@@ -100,8 +100,8 @@
         <div class="row g-0">
           <div class="col-12 d-flex wrap text_input">
             <label for="inputTextarea" class="form-label">
-              <p>規格需求：</p>
-            </label>
+                <p>規格需求：</p>
+              </label>
             <div>
             </div>
             <textarea class="form-control" id="inputTextarea" placeholder='最多輸入100字' v-model="myForm.RequiredSpec"></textarea>
@@ -111,29 +111,18 @@
           <button class="btn submit_btn" type="button" @click="insertItemList">新增</button>
         </div>
       </div>
-     
-      <div class='third_content' > <div class="fixed_info">
-        <div>
-          <p><span>*</span>資產出庫項目(請至少新增一項)</p>
+      <div class='third_content'>
+        <div class="fixed_info">
+          <div>
+            <p><span>*</span>資產出庫項目(請至少新增一項)</p>
+          </div>
         </div>
-      </div>
-        <DataTable 
-        :size="'small'"
-        :value="rowData" 
-        resizableColumns 
-        columnResizeMode="expand"
-        showGridlines 
-        scrollable 
-        scrollHeight="420px" 
-        paginator 
-        :rows="10" 
-        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-        :rowsPerPageOptions="[10, 20, 30]"
-        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
-        <Column style="min-width:80px;" class="datatable_checkbox">
-          <template #body="slotProps">
-            <Delete :params = "slotProps" @deleteFromData="deleteFromData" />
-          </template>
+        <DataTable :size="'small'" :value="rowData" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="420px" paginator :rows="10" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+          :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+          <Column style="min-width:80px;" class="datatable_checkbox">
+            <template #body="slotProps">
+              <Delete :params = "slotProps" @deleteFromData="deleteFromData" />
+</template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
         </DataTable>
@@ -151,11 +140,25 @@
   import Column from 'primevue/column';
   import Delete from "@/components/Rent_New_Delete_button";
   import Navbar from '@/components/Navbar.vue';
-  import { Rent_UseArray } from "@/assets/js/dropdown";
-  import { onMounted, reactive, ref } from 'vue';
+  import {
+    Rent_UseArray
+  } from "@/assets/js/dropdown";
+  import {
+    onMounted,
+    reactive,
+    ref
+  } from 'vue';
   import router from "@/router";
-  import { getApplication , getEquipType , getEquipCategory , getProject} from "@/assets/js/common_api";
-  import { getDate , goBack } from "@/assets/js/common_fn";
+  import {
+    getApplication,
+    getEquipType,
+    getEquipCategory,
+    getProject
+  } from "@/assets/js/common_api";
+  import {
+    getDate,
+    goBack
+  } from "@/assets/js/common_fn";
   export default {
     components: {
       Navbar,
@@ -184,12 +187,31 @@
         RequiredSpec: '',
       });
       const increaseId = ref(0); //新增細項時的ID
-      const datagridfield = [
-        {field: 'EquipTypeName', header: '設備總類',width: '150px'},
-        {field: 'EquipCategoryName', header: '設備分類',width: '150px'},
-        {field: 'ProductName', header: '物品名稱',width: '150px'},
-        {field: 'Number', header: '數量',width: '100px'},
-        {field: 'RequiredSpec', header: '規格需求',width: '250px'},
+      const datagridfield = [{
+          field: 'EquipTypeName',
+          header: '設備總類',
+          width: '150px'
+        },
+        {
+          field: 'EquipCategoryName',
+          header: '設備分類',
+          width: '150px'
+        },
+        {
+          field: 'ProductName',
+          header: '物品名稱',
+          width: '150px'
+        },
+        {
+          field: 'Number',
+          header: '數量',
+          width: '100px'
+        },
+        {
+          field: 'RequiredSpec',
+          header: '規格需求',
+          width: '250px'
+        },
       ]
       const rowData = ref([]);
       onMounted(() => {
@@ -198,32 +220,32 @@
       });
       async function getApplicationInfo() {
         getApplication()
-          .then((data)=>{
+          .then((data) => {
             myForm.Applicant = data;
           })
-          .catch((error) =>{
+          .catch((error) => {
             console.error(error);
           })
       }
       async function getEquipTypeName() {
         if (myForm.EquipTypeArray.length == 0) {
           getEquipType()
-          .then((data)=>{
-            myForm.EquipTypeArray = data;
-          })
-          .catch((error) =>{
-            console.error(error);
-          })
+            .then((data) => {
+              myForm.EquipTypeArray = data;
+            })
+            .catch((error) => {
+              console.error(error);
+            })
         }
       }
       async function getEquipCategoryName() {
         getEquipCategory(myForm.EquipType_Id)
-        .then((data)=>{
-          myForm.EquipCategoryArray = data;
+          .then((data) => {
+            myForm.EquipCategoryArray = data;
           })
-        .catch((error) =>{
-          console.error(error);
-        })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       async function getProjectName() {
         if (!/^(?![ 　]{10}$)[\s\S]{1,10}$/.test(myForm.ProjectCode)) {
@@ -232,13 +254,12 @@
         }
         myForm.ProjectCode = myForm.ProjectCode.trim();
         getProject(myForm.ProjectCode)
-        .then((data)=>{
-          myForm.ProjectName = data;
-        })
-        .catch((error) =>{
-          console.error(error);
-        })
-
+          .then((data) => {
+            myForm.ProjectName = data;
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       function selectType(item) {
         myForm.EquipTypeName = item.Name;
@@ -274,7 +295,7 @@
           Description: myForm.Description,
           ItemList: rowData.value,
         };
-        console.log('requestData:',requestData);
+        console.log('requestData:', requestData);
         try {
           const axios = require('axios');
           const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/NewAssetsOut', requestData);
@@ -335,7 +356,7 @@
         myForm.RequiredSpec = '';
       }
       function deleteFromData(data) {
-        rowData.value = rowData.value.filter(item=> item.id !== data.id);
+        rowData.value = rowData.value.filter(item => item.id !== data.id);
       }
       return {
         myForm,
@@ -371,7 +392,6 @@
     display: flex;
     align-items: center;
   }
-
   @media only screen and (min-width: 1200px) {
     .main_section {
       h1 {
@@ -498,7 +518,6 @@
           }
         }
         .third_content {
-     
           .list {
             border: 1px solid black;
             button {
@@ -685,6 +704,9 @@
               font-size: 18px;
             }
             .dropdown {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
               button {
                 background: white;
                 width: 100%;
@@ -694,7 +716,7 @@
                 align-items: center;
               }
               .dropdown-menu {
-                width:100%;
+                width: 100%;
                 max-height: 250px;
                 overflow-y: auto;
                 p {
