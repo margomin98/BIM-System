@@ -89,6 +89,7 @@
               </div>
             </div>
             <DataTable
+              lazy
               :key="datagrid3.key"
               :first="datagrid3.first"
               :size="'small'"
@@ -688,7 +689,7 @@
               selectNumber: item.OM_Number,
               id: searchParams.id,
             }));
-            console.log(rowData3.value);
+            // console.log(rowData3.value);
             datagrid3.key++;
           } else if (data.state === 'error') {
             alert(data.messages);
@@ -716,7 +717,7 @@
           AO_ID: AO_ID,
           PrepareMemo: details.value.PrepareMemo,
         };
-        console.log(requestData);
+        // console.log(requestData);
         try {
           const axios = require('axios');
           const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/MaterialPreparation', requestData);
@@ -761,7 +762,7 @@
       }
       // 點選搜尋庫存，預帶入參數
       function searchList(data) {
-        console.log('data:', data);
+        // console.log('data:', data);
         for (const key in data) {
           searchParams[key] = data[key];
         }
@@ -771,7 +772,7 @@
         // 額外處理data沒有的參數
         searchParams.selectedNumber = selectedNumberArray.value[data.id]
         searchInventory('', 'search');
-        console.log('設定後搜尋參數:\n', searchParams);
+        // console.log('設定後搜尋參數:\n', searchParams);
       }
       // 新增庫存
       function addMaterial(data) {
