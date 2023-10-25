@@ -332,7 +332,6 @@
   textarea {
     padding: 5px 10px 30px;
   }
-
   .check_box_wrap {
     .check_box {
       font-weight: 700;
@@ -535,13 +534,12 @@
           background: #3E4E5F;
           padding: 50px 30px;
           border-radius: 0 0 10px 10px;
-             .radio_wrap {
-      gap: 0 10px;
-      margin-left: 13px !important;
-  
-          .check_box {
-            margin-right: 10px;
-          }
+          .radio_wrap {
+            gap: 0 10px;
+            margin-left: 13px !important;
+            .check_box {
+              margin-right: 10px;
+            }
           }
           .modal {
             .modal-header {
@@ -581,6 +579,8 @@
             }
             .selected_file {
               margin-left: 20px;
+              align-items: center;
+              display: flex;
               p.title {
                 font-weight: 700;
                 color: white;
@@ -807,13 +807,13 @@
           padding: 50px 30px;
           border-radius: 0 0 10px 10px;
           .radio_wrap {
-      gap: 0 10px;
-      margin-left: 10px !important;
-  
-          .check_box {
-            margin-right: 10px;
+            gap: 0 10px;
+            margin-left: 10px !important;
+            .check_box {
+              margin-right: 10px;
+            }
           }
-          }          .modal {
+          .modal {
             .modal-header {
               background: #3D4E61;
               color: white;
@@ -851,6 +851,8 @@
             }
             .selected_file {
               margin-left: 20px;
+              align-items: center;
+              display: flex;
               p.title {
                 font-weight: 700;
                 color: white;
@@ -1134,6 +1136,8 @@
               @include red_star
             }
             .selected_file {
+              align-items: center;
+              display: flex;
               p.title {
                 font-weight: 700;
                 color: white;
