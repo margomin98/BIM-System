@@ -108,15 +108,15 @@
                   </div>
                   <div class="d-flex align-items-center radio_wrap">
                     <div class="form-check ">
-                      <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px;" value="資產" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='資產'" />
+                      <input type="radio" class='form-check-input check_box' id="radio1" value="資產" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='資產'" />
                       <label class="form-check-label check_box" for='radio1'>資產</label>
                     </div>
                     <div class="form-check ">
-                      <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px;" value="存貨" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='存貨'" />
+                      <input type="radio" class='form-check-input check_box ' id="radio2" value="存貨" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='存貨'" />
                       <label class="form-check-label check_box" for='radio2' data-toggle="tooltip" data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
                     </div>
                     <div class="form-check ">
-                      <input type="radio" class='form-check-input check_box' id="radio3" style="border-radius: 100%; width: 16px; height: 16px;" value="耗材" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='耗材'" />
+                      <input type="radio" class='form-check-input check_box' id="radio3" value="耗材" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='耗材'" />
                       <label class="form-check-label check_box" for='radio3'>耗材</label>
                     </div>
                   </div>

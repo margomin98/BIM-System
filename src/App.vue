@@ -21,18 +21,7 @@
 		color: white;
 		text-decoration: none;
 	}
-	.main_section{
-		.input-number{
-			padding: 0 10px;
-		}
-		input{
-			text-align: left !important;
-		}
-		.dropdown-menu {
-		padding: 0!important;
-		background: white !important;
-	}
-	} 
+	 
 	.dropdown-menu p,
 	.dropdown-item {
 		padding: 5px 10px!important;
@@ -45,18 +34,7 @@
 		:active {
 			color: white !important;
 		}
-	} // ::-webkit-scrollbar {
-	// 	height: 6px;
-	// 	border: 1px solid rgb(219, 218, 218);
-	// 	border-radius: 5px;
-	// 	width: 8px;
-	// }
-	//  ::-webkit-scrollbar-thumb {
-	// 	display: block;
-	// 	border-radius: 5px;
-	// 	background-color: rgb(176, 175, 175);
-	// 	border: 1px solid rgb(86, 85, 85);
-	// }
+	} 
 	.ag-body .ag-cell {
 		border: 0;
 	}
@@ -141,6 +119,20 @@
 			box-shadow: unset!important;
 			cursor: pointer;
 		}
+	}
+	.main_section{
+		
+		input{
+			text-align: left !important;
+		}
+		.input-number{
+			padding: 0 10px;
+		text-align: center !important;
+		}
+		.dropdown-menu {
+		padding: 0!important;
+		background: white !important;
+	}
 	}
 	.modal {
 		.modal-header {

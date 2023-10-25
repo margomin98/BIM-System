@@ -71,15 +71,15 @@
                   </div>
                   <div class="d-flex align-items-center radio_wrap">
                     <div class="form-check ">
-                      <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px;" value="資產" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='資產'" />
+                      <input type="radio" class='form-check-input check_box' id="radio1" value="資產" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='資產'" />
                       <label class="form-check-label check_box" for='radio1'>資產</label>
                     </div>
                     <div class="form-check">
-                      <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px;" value="存貨" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='存貨'" />
+                      <input type="radio" class='form-check-input check_box ' id="radio2" value="存貨" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='存貨'" />
                       <label class="form-check-label check_box" for='radio2' data-toggle="tooltip" data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
                     </div>
                     <div class="form-check">
-                      <input type="radio" class='form-check-input check_box' id="radio3" style="border-radius: 100%; width: 16px; height: 16px;" value="耗材" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='耗材'" />
+                      <input type="radio" class='form-check-input check_box' id="radio3" value="耗材" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='耗材'" />
                       <label class="form-check-label check_box" for='radio3'>耗材</label>
                     </div>
                   </div>
@@ -334,9 +334,6 @@
   }
 
   .check_box_wrap {
-    .radio_wrap {
-      margin-left: unset !important;
-    }
     .check_box {
       font-weight: 700;
       color: white;
@@ -538,8 +535,13 @@
           background: #3E4E5F;
           padding: 50px 30px;
           border-radius: 0 0 10px 10px;
+             .radio_wrap {
+      gap: 0 10px;
+      margin-left: 13px !important;
+  
           .check_box {
             margin-right: 10px;
+          }
           }
           .modal {
             .modal-header {
@@ -804,10 +806,14 @@
           background: #3E4E5F;
           padding: 50px 30px;
           border-radius: 0 0 10px 10px;
+          .radio_wrap {
+      gap: 0 10px;
+      margin-left: 10px !important;
+  
           .check_box {
             margin-right: 10px;
           }
-          .modal {
+          }          .modal {
             .modal-header {
               background: #3D4E61;
               color: white;

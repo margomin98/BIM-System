@@ -69,12 +69,18 @@
                     資產類型 :
                   </div>
                   <div class="d-flex align-items-center radio_wrap">
-                    <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="資產" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='資產'" />
-                    <label class="form-check-label check_box" for='radio1'>資產</label>
-                    <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="存貨" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='存貨'" />
-                    <label class="form-check-label check_box" for='radio2' data-toggle="tooltip" data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
-                    <input type="radio" class='form-check-input check_box' id="radio3" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="耗材" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='耗材'" />
-                    <label class="form-check-label check_box" for='radio3'>耗材</label>
+                    <div class="form-check ">
+                      <input type="radio" class='form-check-input check_box' id="radio1" value="資產" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='資產'" />
+                      <label class="form-check-label check_box" for='radio1'>資產</label>
+                    </div>
+                    <div class="form-check ">
+                      <input type="radio" class='form-check-input check_box ' id="radio2" value="存貨" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='存貨'" />
+                      <label class="form-check-label check_box" for='radio2' data-toggle="tooltip" data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
+                    </div>
+                    <div class="form-check ">
+                      <input type="radio" class='form-check-input check_box' id="radio3" value="耗材" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='耗材'" />
+                      <label class="form-check-label check_box" for='radio3'>耗材</label>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -91,7 +97,7 @@
             <!-- 頁籤專案名稱 -->
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend">專案名稱：</div>
+                <div class="input-group-prepend">專案名稱 :</div>
                 <input type="text" class="form-control readonly_box" v-model="tab.itemProjectName" readonly>
               </div>
             </div>
@@ -222,7 +228,7 @@
         </div>
         <!-- view Modal -->
         <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" >
+          <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">{{ modalParams.title }}</h5>
@@ -250,8 +256,8 @@
                 <div class="input-with-icon">
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(1)" />
                   <span class="icon-container">
-                            <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user1.isValidate" />
-                          </span>
+                              <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user1.isValidate" />
+                            </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">驗證</button>
                 <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
@@ -289,8 +295,8 @@
                 <div class="input-with-icon">
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(2)" />
                   <span class="icon-container">
-                      <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user2.isValidate" />
-                    </span>
+                        <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user2.isValidate" />
+                      </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">驗證</button>
                 <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
@@ -345,7 +351,8 @@
     useRouter
   } from "vue-router";
   import {
-    goBack,canEnterPage
+    goBack,
+    canEnterPage
   } from "@/assets/js/common_fn";
   import {
     StoreProcess_Confirm_Status
@@ -653,16 +660,7 @@
               pointer-events: none;
             }
           }
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 114px;
-              }
-              input {
-                margin-left: 15px !important
-              }
-            }
-          }
+      
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -834,8 +832,7 @@
             color: white;
             font-size: 20px;
             div:nth-child(2) {
-              gap: 0 5px;
-              display: flex;
+              gap: 0 10px;
             }
           }
           .modal {
@@ -930,16 +927,7 @@
               }
             }
           }
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 114px;
-              }
-              input {
-                margin-left: 15px !important
-              }
-            }
-          }
+       
         }
       }
     }
@@ -1022,16 +1010,7 @@
               pointer-events: none;
             }
           }
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 114px;
-              }
-              input {
-                margin-left: 15px !important
-              }
-            }
-          }
+        
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -1202,8 +1181,7 @@
             color: white;
             font-size: 20px;
             div:nth-child(2) {
-              gap: 0 5px;
-              display: flex;
+              gap: 0 10px;
             }
           }
           .modal {
@@ -1298,16 +1276,7 @@
               }
             }
           }
-          .form_search_wrap {
-            .input-group {
-              .input-group-prepend {
-                width: 114px;
-              }
-              input {
-                margin-left: 15px !important
-              }
-            }
-          }
+        
         }
       }
     }
@@ -1563,6 +1532,7 @@
         }
         .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
           margin-left: unset !important;
+          padding: 0;
         }
         .nav-tabs {
           button {
