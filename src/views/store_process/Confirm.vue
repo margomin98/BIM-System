@@ -345,8 +345,11 @@
     useRouter
   } from "vue-router";
   import {
-    goBack
+    goBack,canEnterPage
   } from "@/assets/js/common_fn";
+  import {
+    StoreProcess_Confirm_Status
+  } from "@/assets/js/enter_status"
   export default {
     components: {
       Navbar,
