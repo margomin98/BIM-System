@@ -585,7 +585,25 @@ const router = createRouter({
 //     }
 //   } else {
 //     if(to.meta.Store_Return) {
-//       getApplication();
+//       try {
+//         const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
+//         const data = response.data;
+//         if (data.state === 'success') {
+//           next();
+//         } 
+//         else if(data.state === 'account_error') {
+//           alert(data.messages);
+//           next({ name: 'login' });
+//         }
+//         else {
+//           alert(data.messages);
+//           next(false);
+//         }
+//       } catch (error) {
+//         // 处理请求错误
+//         console.error('Error checking permission:', error);
+//         next(false); // 阻止导航继续
+//       }
 //     }
 //     next();
 //   }
