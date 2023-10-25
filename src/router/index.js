@@ -114,8 +114,8 @@ import System_Log_View from "../views/system_log/View"
 import Authorized from "../views/Authorized";
 //權限不足
 
-
-
+import axios from "axios";
+import { getApplication } from "@/assets/js/common_api";
 const routes = [
   {
     path: "/test",
@@ -171,7 +171,7 @@ const routes = [
     path: "/store_return",
     name: "Store_Return",
     component: Store_Return,
-    meta: {auth: false, request: ''},//歸還入庫不綁權限
+    meta: {auth: false, request: '' , Store_Return: true},//歸還入庫不綁權限
   },
   {
     path: "/store_delete",
@@ -557,7 +557,6 @@ const router = createRouter({
 
 // router.beforeEach(async (to, from, next) => {
 //   if (to.meta.auth) {
-//     const axios = require('axios');
 //     try {
 //       const request = to.meta.request
 //       const response = await axios.get(`/GetParameter/HasPermission?id=${request}`);
@@ -585,6 +584,9 @@ const router = createRouter({
 //       next(false); // 阻止导航继续
 //     }
 //   } else {
+//     if(to.meta.Store_Return) {
+//       getApplication();
+//     }
 //     next();
 //   }
 // });

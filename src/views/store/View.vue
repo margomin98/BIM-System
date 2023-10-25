@@ -45,7 +45,7 @@
         <div class="col mb-3">
           <div class="input-group">
             <div class="input-group-prepend">備註 :</div>
-            <textarea style="height: 200px;" class="form-control readonly_box" aria-label="With textarea" placeholder="最多輸入500字" v-model="details.Memo" disabled></textarea>
+            <textarea style="height: 200px;" class="form-control readonly_box" aria-label="With textarea" v-model="details.Memo" disabled></textarea>
           </div>
         </div>
       </div>
