@@ -63,8 +63,8 @@
             <p><span>*</span>設備總類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                  {{ myForm.EquipTypeName || '請選擇' }}
-                </button>
+                    {{ myForm.EquipTypeName || '請選擇' }}
+                  </button>
               <div class="dropdown-menu" aria-labelledby="typeDropdown">
                 <p v-for="(item, index) in myForm.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
               </div>
@@ -74,8 +74,8 @@
             <p><span>*</span>設備分類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(myForm.EquipTypeName !== '') }">
-                  {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
-                </button>
+                    {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
+                  </button>
               <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                 <p v-for="(item, index) in myForm.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
               </div>
@@ -114,7 +114,7 @@
           :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
           <Column style="min-width:80px;">
             <template #body="slotProps">
-              <Delete :params = "slotProps" @updateDeleteList="updateDeleteList" @updateItemList="updateItemList" />
+                <Delete :params = "slotProps" @updateDeleteList="updateDeleteList" @updateItemList="updateItemList" />
 </template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
@@ -137,11 +137,26 @@
   import Column from 'primevue/column';
   import Delete from "@/components/Rent_Edit_Delete_button";
   import Navbar from '@/components/Navbar.vue';
-  import { Rent_UseArray } from "@/assets/js/dropdown";
-  import { onMounted, ref, reactive, } from 'vue';
-  import { getEquipType , getEquipCategory , getProject} from "@/assets/js/common_api";
-  import { Rent_Edit_Status } from "@/assets/js/enter_status";
-  import { goBack , canEnterPage } from "@/assets/js/common_fn";
+  import {
+    Rent_UseArray
+  } from "@/assets/js/dropdown";
+  import {
+    onMounted,
+    ref,
+    reactive,
+  } from 'vue';
+  import {
+    getEquipType,
+    getEquipCategory,
+    getProject
+  } from "@/assets/js/common_api";
+  import {
+    Rent_Edit_Status
+  } from "@/assets/js/enter_status";
+  import {
+    goBack,
+    canEnterPage
+  } from "@/assets/js/common_fn";
   export default {
     components: {
       Navbar,
@@ -154,12 +169,31 @@
       const router = useRouter();
       const AO_ID = route.query.search_id;
       const options = Rent_UseArray;
-      const datagridfield = [
-        {field: 'EquipTypeName', header: '設備總類',width: '150px'},
-        {field: 'EquipCategoryName', header: '設備分類',width: '150px'},
-        {field: 'ProductName', header: '物品名稱',width: '150px'},
-        {field: 'Number', header: '數量',width: '100px'},
-        {field: 'RequiredSpec', header: '規格需求',width: '250px'},
+      const datagridfield = [{
+          field: 'EquipTypeName',
+          header: '設備總類',
+          width: '150px'
+        },
+        {
+          field: 'EquipCategoryName',
+          header: '設備分類',
+          width: '150px'
+        },
+        {
+          field: 'ProductName',
+          header: '物品名稱',
+          width: '150px'
+        },
+        {
+          field: 'Number',
+          header: '數量',
+          width: '100px'
+        },
+        {
+          field: 'RequiredSpec',
+          header: '規格需求',
+          width: '250px'
+        },
       ]
       const rowData = ref([]);
       const details = ref({});
@@ -487,7 +521,7 @@
                 align-items: center;
               }
               .dropdown-menu {
-                width: 180px;
+                width: 100%;
                 max-height: 250px;
                 overflow-y: auto;
                 p {
@@ -708,6 +742,9 @@
               font-size: 18px;
             }
             .dropdown {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
               button {
                 background: white;
                 width: 100%;
@@ -717,7 +754,7 @@
                 align-items: center;
               }
               .dropdown-menu {
-                width: 180px;
+                width: 100%;
                 .dropdown-item {
                   text-align: left;
                 }
@@ -937,7 +974,7 @@
                 align-items: center;
               }
               .dropdown-menu {
-                width: 180px;
+                width: 100%;
                 .dropdown-item {
                   text-align: left;
                 }
