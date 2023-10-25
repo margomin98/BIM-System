@@ -78,23 +78,24 @@
           <div class="input-group">
             <div class="input-group-prepend">已選擇的檔案：</div>
             <div class="file_upload_box">
-            <div v-for="(item , index) in formParams.viewFile" :key="index" class="file_upload_wrap">
-              <p >{{ item.FileName }}
-                <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"  @click="viewImgFile('new',index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
-              <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('new',index)">
-              </p>
+              <div v-for="(item , index) in formParams.viewFile" :key="index" class="file_upload_wrap">
+                <p>{{ item.FileName }}
+                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="viewImgFile('new',index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+                  <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('new',index)">
+                </p>
+              </div>
             </div>
-          </div>
           </div>
         </div>
         <!-- 已上傳檔案 -->
-        <div class="col-12">
+        <div class="selected_file col-12">
           <div class="input-group mt-3">
             <div class="input-group-prepend">已上傳的檔案：</div>
             <div class="d-flex  flex-column">
-              <div v-for="(file , index) in formParams.existFile" :key="index" class="file_upload_wrap" style="cursor: pointer;">
-                <p @click="viewImgFile( 'exist' ,index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}
-                <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('exist', index)">
+              <div v-for="(file , index) in formParams.existFile" :key="index" class="file_upload_wrap">
+                <p>{{ file.FileName }}
+                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"  @click="viewImgFile( 'exist' ,index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+                  <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('exist', index)">
                 </p>
               </div>
             </div>
@@ -102,7 +103,7 @@
         </div>
         <!-- ViewFile Modal -->
         <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" >
+          <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">{{ modalParams.title }}</h5>
@@ -143,7 +144,9 @@
   import {
     getAssets
   } from '@/assets/js/common_api.js'
-  import { Repair_Edit_Status } from '@/assets/js/enter_status';
+  import {
+    Repair_Edit_Status
+  } from '@/assets/js/enter_status';
   export default {
     components: {
       Navbar,
@@ -183,7 +186,7 @@
           .then((response) => {
             const data = response.data;
             if (data.state === 'success') {
-              canEnterPage(data.resultList.Status , Repair_Edit_Status)
+              canEnterPage(data.resultList.Status, Repair_Edit_Status)
               details.value = data.resultList;
               // 將資料帶入formParams
               for (const key in details.value) {
@@ -421,7 +424,7 @@
 
 
 <style lang="scss" scoped>
-  @import '@/assets/css/global.scss';  .view_icon,
+  @import '@/assets/css/global.scss';
   .view_icon,
   .trash_icon {
     cursor: pointer;
@@ -480,7 +483,6 @@
         }
         .content {
           @include content_bg;
-         
           .input-group {
             .input-number {
               @include count_btn;
@@ -502,7 +504,6 @@
                 @include red_star
               }
             }
-         
             .file_wrap {
               display: flex;
               flex-direction: column;
@@ -516,12 +517,23 @@
             }
           }
         }
-         .selected_file {
+        .selected_file {
           .input-group {
             flex-wrap: unset;
           }
           .input-group-prepend {
             white-space: nowrap;
+          }
+          p {
+            margin-bottom: 0;
+            font-weight: 700;
+            color: white;
+            &::before {
+              margin-right: 10px;
+              content: '·';
+              font-weight: 700;
+              color: white;
+            }
           }
           .file_upload_box {
             .file_upload_wrap {
@@ -531,17 +543,6 @@
               img {
                 width: 25px;
                 height: 25px;
-              }
-              p {
-                margin-bottom: 0;
-                font-weight: 700;
-                color: white;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
               }
             }
           }
@@ -602,7 +603,6 @@
         }
         .content {
           @include content_bg;
-         
           .input-group {
             width: 100%;
             flex-wrap: nowrap;
@@ -623,7 +623,7 @@
               font-weight: 700;
               font-size: 20px;
               text-align: end;
-              width:140px;
+              width: 140px;
               span {
                 @include red_star
               }
@@ -669,6 +669,17 @@
           .input-group-prepend {
             white-space: nowrap;
           }
+          p {
+            margin-bottom: 0;
+            font-weight: 700;
+            color: white;
+            &::before {
+              margin-right: 10px;
+              content: '·';
+              font-weight: 700;
+              color: white;
+            }
+          }
           .file_upload_box {
             .file_upload_wrap {
               margin-bottom: 0;
@@ -677,17 +688,6 @@
               img {
                 width: 25px;
                 height: 25px;
-              }
-              p {
-                margin-bottom: 0;
-                font-weight: 700;
-                color: white;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
               }
             }
           }
