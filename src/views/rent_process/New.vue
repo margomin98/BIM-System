@@ -10,8 +10,8 @@
               <p>檢索資產</p>
             </div>
             <button type="button" class="close" data-bs-dismiss="modal">
-                x
-              </button>
+                  x
+                </button>
           </div>
           <div class="second_content">
             <div class="wrap1">
@@ -19,8 +19,8 @@
                 <p>設備總類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                      {{ searchParams.EquipTypeName || '請選擇' }}
-                    </button>
+                        {{ searchParams.EquipTypeName || '請選擇' }}
+                      </button>
                   <div class="dropdown-menu" aria-labelledby="typeDropdown">
                     <p v-for="(item, index) in searchParams.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(item)">
                       {{ item.Name }}
@@ -32,8 +32,8 @@
                 <p>設備分類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
-                      {{ searchParams.EquipCategoryName || searchParams.EquipCategoryInit }}
-                    </button>
+                        {{ searchParams.EquipCategoryName || searchParams.EquipCategoryInit }}
+                      </button>
                   <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                     <p v-for="(item, index) in searchParams.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(item)">
                       {{ item.Name }}
@@ -62,68 +62,68 @@
             <div class="row g-0">
               <div class="col-12 d-flex wrap2">
                 <label for="inputTextarea" class="form-label"><p>規格需求：</p></label
+                    >
+                    <div></div>
+                    <textarea
+                      class="form-control readonly_box"
+                      id="inputTextarea"
+                      rows="3"
+                      readonly
+                      >{{ searchParams.RequiredSpec }}</textarea
+                    >
+                  </div>
+                </div>
+                <div class="col d-flex justify-content-center">
+                  <button
+                    class="btn submit_btn"
+                    type="button"
+                    @click="searchInventory('','search');"
                   >
-                  <div></div>
-                  <textarea
-                    class="form-control readonly_box"
-                    id="inputTextarea"
-                    rows="3"
-                    readonly
-                    >{{ searchParams.RequiredSpec }}</textarea
-                  >
+                    搜尋庫存
+                  </button>
                 </div>
               </div>
-              <div class="col d-flex justify-content-center">
-                <button
-                  class="btn submit_btn"
-                  type="button"
-                  @click="searchInventory('','search');"
-                >
-                  搜尋庫存
-                </button>
+              <div class="fixed_info">
+                <div>
+                  <p>目前資產庫存</p>
+                </div>
               </div>
-            </div>
-            <div class="fixed_info">
-              <div>
-                <p>目前資產庫存</p>
-              </div>
-            </div>
-            <DataTable
-              lazy
-              :key="datagrid3.key"
-              :first="datagrid3.first"
-              :size="'small'"
-              :loading="datagrid3.loading"
-              :value="rowData3"
-              :sort-field="datagrid3.sortField"
-              :sort-order="datagrid3.sortOrder"
-              resizableColumns
-              columnResizeMode="expand"
-              showGridlines
-              scrollable
-              scrollHeight="420px"
-              @page="searchInventory($event , 'page')"
-              @sort="searchInventory($event , 'sort')"
-              paginator
-              :rows="datagrid3.rows"
-              :totalRecords="datagrid3.totalRecords"
-              paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-              currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}"
-            >
-            <Column style="min-width: 60px">
-              <template #body="slotProps">
-                <AssetsView :params="slotProps" />
-              </template>
+              <DataTable
+                lazy
+                :key="datagrid3.key"
+                :first="datagrid3.first"
+                :size="'small'"
+                :loading="datagrid3.loading"
+                :value="rowData3"
+                :sort-field="datagrid3.sortField"
+                :sort-order="datagrid3.sortOrder"
+                resizableColumns
+                columnResizeMode="expand"
+                showGridlines
+                scrollable
+                scrollHeight="420px"
+                @page="searchInventory($event , 'page')"
+                @sort="searchInventory($event , 'sort')"
+                paginator
+                :rows="datagrid3.rows"
+                :totalRecords="datagrid3.totalRecords"
+                paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+                currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}"
+              >
+              <Column style="min-width: 60px">
+                <template #body="slotProps">
+                  <AssetsView :params="slotProps" />
+</template>
             </Column>
             <Column style="min-width: 60px" header="選擇">
-              <template #body="slotProps">
-                <Storage_add :params="slotProps" :selectedNumber="searchParams.selectedNumber" :Number="searchParams.Number" @addMaterial="addMaterial" />
-              </template>
+<template #body="slotProps">
+  <Storage_add :params="slotProps" :selectedNumber="searchParams.selectedNumber" :Number="searchParams.Number" @addMaterial="addMaterial" />
+</template>
             </Column>
             <Column style="min-width: 80px" header="數量">
-              <template #body="slotProps">
-                <Storage_number :params="slotProps" />
-              </template>
+<template #body="slotProps">
+  <Storage_number :params="slotProps" />
+</template>
             </Column>
             <Column
               v-for="item in datagrid3field"
@@ -229,9 +229,9 @@
           scroll-height="600px"
         >
           <Column>
-              <template style="min-width: 115px" #body="slotProps">
-                <Storage_button :params="slotProps" @searchList="searchList" />
-              </template>
+<template style="min-width: 115px" #body="slotProps">
+  <Storage_button :params="slotProps" @searchList="searchList" />
+</template>
           </Column>
           <Column
             v-for="item in datagrid1field"
@@ -260,14 +260,14 @@
           scroll-height="600px"
         >
           <Column>
-              <template style="min-width: 50px" #body="slotProps">
-                <Delete :params="slotProps" @deleteMaterial="deleteMaterial" />
-              </template>
+<template style="min-width: 50px" #body="slotProps">
+  <Delete :params="slotProps" @deleteMaterial="deleteMaterial" />
+</template>
           </Column>
           <Column>
-              <template #body="slotProps">
-                <AssetsView :params="slotProps" />
-              </template>
+<template #body="slotProps">
+  <AssetsView :params="slotProps" />
+</template>
           </Column>
           <Column
             v-for="item in datagrid2field"
@@ -351,7 +351,7 @@
     </div>
     <!-- Modal -->
     <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-sm">
+      <div class="modal-dialog modal-sm confirm_modal">
         <div class="modal-content">
           <div class="modal-body">
             按下確認後將無法再次進行備料作業，請確認資產出庫細項是否備料正確
@@ -681,7 +681,6 @@
             console.log('Details Get成功 資料如下\n', data.resultList);
             // searchParams.id : 哪一個項目(前端紀錄個項目已備數量)
             // searchParams.item_id : 項目的item_id(後端項目id)
-
             datagrid3.totalRecords = data.resultList.total;
             rowData3.value = data.resultList.rows.map(item => ({
               ...item,
@@ -878,15 +877,15 @@
       }
     }
   }
-  .modal-body {
-    padding: 0 !important;
-  }
   @media only screen and (min-width: 1200px) {
     .modal {
       padding: 0 5%;
       .modal-content {
         background-color: unset;
         border: 0;
+      }
+      .confirm_modal .modal-content {
+        width: 300px;
       }
       .fixed_info {
         @include fixed_info;
@@ -919,9 +918,9 @@
       }
       .second_content {
         border-left: 1px solid black;
-    border-right: 1px solid black;
-    border-top: 1px solid black;
-    background: #D9D9D9;
+        border-right: 1px solid black;
+        border-top: 1px solid black;
+        background: #D9D9D9;
         .submit_btn {
           margin-bottom: 20px;
           background: #48658C;
@@ -1130,7 +1129,7 @@
           border-radius: 0;
           border-bottom: 1px solid black;
           border-left: 1px solid black;
-            border-right: 1px solid black;
+          border-right: 1px solid black;
           padding: 0 10px;
           justify-content: right;
           gap: 10px;
@@ -1283,6 +1282,9 @@
         background-color: unset;
         border: 0;
       }
+      .confirm_modal .modal-content {
+        width: 300px;
+      }
       .fixed_info {
         @include fixed_info;
         background: #528091;
@@ -1314,9 +1316,9 @@
       }
       .second_content {
         border-left: 1px solid black;
-    border-right: 1px solid black;
-    border-top: 1px solid black;
-    background: #D9D9D9;
+        border-right: 1px solid black;
+        border-top: 1px solid black;
+        background: #D9D9D9;
         .submit_btn {
           margin-bottom: 20px;
           background: #48658C;
@@ -1523,7 +1525,7 @@
           border-radius: 0;
           border-bottom: 1px solid black;
           border-left: 1px solid black;
-            border-right: 1px solid black;
+          border-right: 1px solid black;
           padding: 0 10px;
           justify-content: right;
           gap: 10px;
@@ -1918,7 +1920,7 @@
           height: 40px;
           border-radius: 0;
           border-left: 1px solid black;
-            border-right: 1px solid black;
+          border-right: 1px solid black;
           border-bottom: 1px solid black;
           padding: 0 10px;
           justify-content: right;

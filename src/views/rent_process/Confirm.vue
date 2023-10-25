@@ -566,10 +566,7 @@
     .modal-body {
       padding: 16px 16px 0;
     }
-    .modal-content {
-      width: 400px;
-      margin: auto;
-    }
+   
     .modal-input-group-prepend {
       width: auto;
       font-weight: 700;
@@ -649,6 +646,10 @@
         font-weight: 600;
         @include title_color;
       }
+      .modal-content {
+      width: 400px;
+      margin: auto;
+    }
       .info_wrap {
         margin: auto;
         width: 1000px;
@@ -992,6 +993,10 @@
         font-weight: 600;
         @include title_color;
       }
+      .modal-content {
+      width: 400px;
+      margin: auto;
+    }
       .info_wrap {
         margin: auto;
         padding: 0 5%;

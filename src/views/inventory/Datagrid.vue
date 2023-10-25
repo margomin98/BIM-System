@@ -9,7 +9,6 @@
         <router-link to="/inventory_new">
           <button class="add_btn">新增盤點計畫</button>
         </router-link>
-  
       </div>
     </div>
     <div class="container-fluid datagrid_section">
@@ -17,14 +16,14 @@
         <div class="row">
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>計畫編號</p>
-            <input type="text" v-model="searchParams.PlanId"/>
+            <input type="text" v-model="searchParams.PlanId" />
           </div>
           <div class="col-xl-2 col-lg-2 col-md-6 col-12">
             <p>盤點類型</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ searchParams.PlanType || "請選擇" }}
-              </button>
+                    {{ searchParams.PlanType || "請選擇" }}
+                  </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item , index) in DropdownArray.PlanType" :key="index" class="dropdown-item" @click="selectType(item)">{{ item }}</p>
               </div>
@@ -34,8 +33,8 @@
             <p>盤點狀態</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ searchParams.PlanStatus || "請選擇" }}
-              </button>
+                    {{ searchParams.PlanStatus || "請選擇" }}
+                  </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item , index) in DropdownArray.PlanStatus" :key="index" class="dropdown-item" @click="selectStatus(item)">{{ item }}</p>
               </div>
@@ -45,8 +44,8 @@
             <p>日期類型</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ searchParams.DateCategory || "請選擇" }}
-              </button>
+                    {{ searchParams.DateCategory || "請選擇" }}
+                  </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item , index) in DropdownArray.PlanDateCategory" :key="index" class="dropdown-item" @click="selectDateCategory(item)">{{ item }}</p>
               </div>
@@ -56,7 +55,7 @@
             <p>日期(起)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="searchParams.StartDate" class="date-input"/>
+                <input type="date" v-model="searchParams.StartDate" class="date-input" />
               </div>
             </div>
           </div>
@@ -64,7 +63,7 @@
             <p>日期(迄)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="searchParams.EndDate" class="date-input"/>
+                <input type="date" v-model="searchParams.EndDate" class="date-input" />
               </div>
             </div>
           </div>
@@ -77,46 +76,27 @@
         <button class="empty_btn" @click="clear">清空</button>
       </div>
     </div>
-    <div  style="height: 450px" class="mb-5">
-      <DataTable 
-        :key="datagrid.key"
-        lazy 
-        :first= "datagrid.first"
-        :size="'small'"
-        :loading="datagrid.loading"
-        :value="rowData" 
-        :sort-field="datagrid.sortField"
-        :sort-order="datagrid.sortOrder"
-        resizableColumns 
-        columnResizeMode="expand"
-        showGridlines 
-        scrollable 
-        scrollHeight="420px" 
-        @page="submit($event , 'page')" 
-        @sort="submit($event , 'sort')"
-        paginator 
-        :rows="datagrid.rows" 
-        :totalRecords="datagrid.totalRecords"
-        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-        :rowsPerPageOptions="[10, 20, 30]"
-        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+    <div style="height: 450px" class="mb-5">
+      <DataTable :key="datagrid.key" lazy :first="datagrid.first" :size="'small'" :loading="datagrid.loading" :value="rowData" :sort-field="datagrid.sortField" :sort-order="datagrid.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
+        scrollHeight="420px" @page="submit($event , 'page')" @sort="submit($event , 'sort')" paginator :rows="datagrid.rows" :totalRecords="datagrid.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <Column style="min-width: 200px;">
           <template #body="slotProps">
-            <Inventory_button :params = "slotProps" @updateSearchId="updateSearchId" />
-          </template>
+                <Inventory_button :params = "slotProps" @updateSearchId="updateSearchId" />
+</template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
         <Column>
-          <template #body="slotProps">
-            <Delete :params = "slotProps"/>
-          </template>
+<template #body="slotProps">
+  <Delete :params="slotProps" />
+</template>
         </Column>
       </DataTable>
     </div>
   </div>
   <!-- Modal -->
   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel">警示</h5>
@@ -136,15 +116,30 @@
 <script>
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
-  import { onMounted, reactive, ref } from "vue";
+  import {
+    onMounted,
+    reactive,
+    ref
+  } from "vue";
   import Inventory_button from "@/components/Inventory_button";
   import Delete from "@/components/Inventory_data_delete_button";
   import Navbar from "@/components/Navbar.vue";
-  import { PlanType , PlanStatus , PlanDateCategory} from "@/assets/js/dropdown.js"
-  import { UpdatePageParameter, createDatagrid } from "@/assets/js/common_fn";
-  import { useRouter } from "vue-router";
+  import {
+    PlanType,
+    PlanStatus,
+    PlanDateCategory
+  } from "@/assets/js/dropdown.js"
+  import {
+    UpdatePageParameter,
+    createDatagrid
+  } from "@/assets/js/common_fn";
+  import {
+    useRouter
+  } from "vue-router";
   import axios from "axios";
-import { getMngDatagrid } from '@/assets/js/common_api';
+  import {
+    getMngDatagrid
+  } from '@/assets/js/common_api';
   export default {
     components: {
       Navbar,
@@ -171,8 +166,7 @@ import { getMngDatagrid } from '@/assets/js/common_api';
       });
       const rowData = ref([]);
       const datagrid = createDatagrid()
-      const datagridfield = [
-        {
+      const datagridfield = [{
           field: 'PlanId',
           header: '計畫編號',
           width: '150px',
@@ -213,19 +207,19 @@ import { getMngDatagrid } from '@/assets/js/common_api';
           width: '180px',
         },
       ];
-      onMounted(()=>{
+      onMounted(() => {
         datagrid.sortField = 'PlanId';
-        submit('' , 'search');
+        submit('', 'search');
       });
-      async function submit(event , type) {
+      async function submit(event, type) {
         const form = new FormData();
         // console.log(event);
         // 將表格資料append到 form
         for (const key in searchParams) {
           form.append(key, searchParams[key]);
         }
-        UpdatePageParameter(datagrid,event,type,form);
-        getMngDatagrid('/StocktakingMng/InventoryPlans',rowData,datagrid,form);
+        UpdatePageParameter(datagrid, event, type, form);
+        getMngDatagrid('/StocktakingMng/InventoryPlans', rowData, datagrid, form);
       }
       const selectType = (item) => {
         searchParams.PlanType = item;
@@ -251,9 +245,8 @@ import { getMngDatagrid } from '@/assets/js/common_api';
         for (const key in searchParams) {
           searchParams[key] = '';
         }
-        submit('' , 'search');
+        submit('', 'search');
       }
-
       return {
         searchParams,
         DropdownArray,
@@ -282,9 +275,10 @@ import { getMngDatagrid } from '@/assets/js/common_api';
     .modal-body {
       padding: 20px;
       margin: auto;
-      p{
+      p {
         text-align: center;
-    font-weight: 800;}
+        font-weight: 800;
+      }
     }
     .modal-content {
       margin: auto;
@@ -298,10 +292,10 @@ import { getMngDatagrid } from '@/assets/js/common_api';
       padding: 0 12px 12px;
       border: none;
       justify-content: center;
-      .confirm{
-        color:white;
+      .confirm {
+        color: white;
         background-color: #132238;
-        &:hover{
+        &:hover {
           background-color: #426497;
         }
       }
@@ -314,18 +308,19 @@ import { getMngDatagrid } from '@/assets/js/common_api';
       color: white;
       display: flex;
       justify-content: center;
-      padding: 0 16px 16px;
       .close_icon {
-        height: 40px;
         cursor: pointer;
+        align-self: unset;
       }
       .modal-title {
         margin: auto;
-        padding-top: 16px;
       }
     }
   }
   @media only screen and (min-width: 1200px) {
+    .modal-content {
+      width: 300px;
+    }
     .main_section {
       padding: 0 10%;
       h1 {
@@ -356,16 +351,15 @@ import { getMngDatagrid } from '@/assets/js/common_api';
           &:hover {
             background-color: #5d85bd;
           }
-        }
-        //  .export_btn {
+        } //  .export_btn {
         //   @include export_btn;
         //   &:hover {
         //     background-color: #274266;
         //   }
         // }
       }
-      .datagrid_section {    
-         .content {
+      .datagrid_section {
+        .content {
           background: rgba(82, 136, 156, 0.8);
           border-radius: 10px;
           margin-bottom: 30px;
@@ -379,8 +373,8 @@ import { getMngDatagrid } from '@/assets/js/common_api';
           grid-template-rows: 1fr 1fr;
           grid-template-columns: 1fr 1fr 1fr;
           gap: 40px 5px;
-           .col-xl-2{
-            margin:0 3px;
+          .col-xl-2 {
+            margin: 0 3px;
           }
           p {
             @include datagrid_title;
@@ -391,7 +385,7 @@ import { getMngDatagrid } from '@/assets/js/common_api';
             height: 35px;
           }
           button {
-            border:none;
+            border: none;
             padding: 0;
             width: 100%;
             font-size: 18px;
@@ -401,7 +395,7 @@ import { getMngDatagrid } from '@/assets/js/common_api';
             width: 200px;
             height: 35px;
             @include dropdown_btn;
-              .dropdown-toggle {
+            .dropdown-toggle {
               display: flex;
               justify-content: space-between;
               align-items: center;
@@ -425,10 +419,12 @@ import { getMngDatagrid } from '@/assets/js/common_api';
       .datagrid-header .datagrid-cell {
         text-align: left !important;
       }
-   
     }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .modal-content {
+      width: 300px;
+    }
     .main_section {
       padding: 0 5%;
       h1 {
@@ -444,12 +440,11 @@ import { getMngDatagrid } from '@/assets/js/common_api';
         gap: 20px;
         .add_btn {
           @include datagrid_button_no1;
-          width:170px;
+          width: 170px;
           &:hover {
             background-color: #537ebc;
           }
-        }
-        //    .export_btn {
+        } //    .export_btn {
         //   @include export_btn;
         //   &:hover {
         //     background-color: #274266;
@@ -541,16 +536,15 @@ import { getMngDatagrid } from '@/assets/js/common_api';
           &:hover {
             background-color: #537ebc;
           }
-        }
-      // .export_btn {
-      //     @include export_btn;
-      //     font-size: 18px;
-      //     width: 100%;
-      //     height: auto;
-      //     &:hover {
-      //       background-color: #274266;
-      //     }
-      //   }
+        } // .export_btn {
+        //     @include export_btn;
+        //     font-size: 18px;
+        //     width: 100%;
+        //     height: auto;
+        //     &:hover {
+        //       background-color: #274266;
+        //     }
+        //   }
         .search_btn {
           @include search_and_send_btn;
           &:hover {
@@ -589,7 +583,7 @@ import { getMngDatagrid } from '@/assets/js/common_api';
             width: 100%;
             height: 35px;
             @include dropdown_btn;
-           .dropdown-toggle {
+            .dropdown-toggle {
               display: flex;
               justify-content: space-between;
               align-items: center;

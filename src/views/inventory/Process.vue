@@ -14,20 +14,20 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">計畫編號：</div>
-            <input type="text" class="form-control readonly_box" v-model="details.PlanId" readonly/>
+            <input type="text" class="form-control readonly_box" v-model="details.PlanId" readonly />
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">標題：</div>
-            <input type="text" class="form-control readonly_box" v-model="details.PlanTitle" readonly/>
+            <input type="text" class="form-control readonly_box" v-model="details.PlanTitle" readonly />
           </div>
         </div>
         <div class="row g-0">
           <div class="col-xl-6 col-lg-6 col-md-12 col-12 d-flex">
             <div class="input-group mb-3">
               <div class="input-group-prepend">盤點人員：</div>
-              <input type="text" class="form-control readonly_box" v-model="details.InventoryStaffName" readonly/>
+              <input type="text" class="form-control readonly_box" v-model="details.InventoryStaffName" readonly />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-12 col-12 d-flex">
@@ -52,23 +52,23 @@
           </div>
         </div>
         <div class="col">
-          <div class="input-group" style="   justify-content: flex-start;">
+          <div class="input-group" style="justify-content: flex-start">
             <div class="input-group-prepend">盤點類型：</div>
             <div class="check_section d-flex">
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no1" name="radio" value="指定盤" v-model="details.PlanType" :disabled="details.PlanType !== '指定盤'"/>
+                <input type="radio" id="no1" name="radio" value="指定盤" v-model="details.PlanType" :disabled="details.PlanType !== '指定盤'" />
                 <label for="no1">指定盤</label>
               </div>
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no2" name="radio" value="月盤" v-model="details.PlanType" :disabled="details.PlanType !== '月盤'"/>
+                <input type="radio" id="no2" name="radio" value="月盤" v-model="details.PlanType" :disabled="details.PlanType !== '月盤'" />
                 <label for="no2">月盤</label>
               </div>
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no3" name="radio" value="季盤" v-model="details.PlanType" :disabled="details.PlanType !== '季盤'"/>
+                <input type="radio" id="no3" name="radio" value="季盤" v-model="details.PlanType" :disabled="details.PlanType !== '季盤'" />
                 <label for="no3">季盤</label>
               </div>
               <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no4" name="radio" value="年盤" v-model="details.PlanType" :disabled="details.PlanType !== '年盤'"/>
+                <input type="radio" id="no4" name="radio" value="年盤" v-model="details.PlanType" :disabled="details.PlanType !== '年盤'" />
                 <label for="no4">年盤</label>
               </div>
             </div>
@@ -91,92 +91,111 @@
           </div>
           <div class="content">
             <div class="col">
-              <div class="input-group ">
+              <div class="input-group">
                 <div class="search_section">
                   <div class="input-wrapper">
-                    <input ref="myInput" placeholder="請掃描資產編號" class="text-center" v-model="InputAssetsId">
+                    <input ref="myInput" placeholder="請掃描資產編號" class="text-center" v-model="InputAssetsId" />
                   </div>
                 </div>
               </div>
             </div>
             <div class="col button">
-              <button class="search_btn" @click="getDatagrid('','search');">搜索</button>
+              <button class="search_btn" @click="getDatagrid('','search');">
+                  搜索
+                </button>
               <button class="empty_btn" @click="clear">清空</button>
             </div>
           </div>
         </div>
         <div style="height;: 100%">
-          <DataTable 
-            :key="datakey"
-            lazy 
-            :first= "datagrid1.first"
-            :size="'small'"
-            :loading="datagrid1.loading"
-            :value="rowData" 
-            :sort-field="datagrid1.sortField"
-            :sort-order="datagrid1.sortOrder"
-            resizableColumns 
-            columnResizeMode="expand"
-            showGridlines 
-            scrollable 
-            scrollHeight="820px" 
-            @page="getDatagrid($event , 'page')" 
-            @sort="getDatagrid($event , 'sort')"
-            paginator 
-            :rows="20" 
-            :totalRecords="datagrid1.totalRecords"
-            paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+          <DataTable :key="datakey" lazy :first="datagrid1.first" :size="'small'" :loading="datagrid1.loading" :value="rowData" :sort-field="datagrid1.sortField" :sort-order="datagrid1.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
+            scrollHeight="820px" @page="getDatagrid($event , 'page')" @sort="getDatagrid($event , 'sort')" paginator :rows="20" :totalRecords="datagrid1.totalRecords" paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
             currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
-            <Column style="min-width: 50px;" header="項目">
+            <Column style="min-width: 50px" header="項目">
               <template #body="slotProps">
-                {{ calculateIndex(slotProps) }}
-              </template>
+                  {{ calculateIndex(slotProps) }}
+</template>
             </Column>
-            <Column field="Status" header="狀態" sortable style="min-width:80px"></Column>
-            <Column style="min-width: 60px;">
-              <template #body="slotProps">
-                <!-- Add the custom component here -->
-                <List_view_button :params = "slotProps" />
-              </template>
+            <Column
+              field="Status"
+              header="狀態"
+              sortable
+              style="min-width: 80px"
+            ></Column>
+            <Column style="min-width: 60px">
+<template #body="slotProps">
+  <!-- Add the custom component here -->
+  <List_view_button :params="slotProps" />
+</template>
             </Column>
-            <Column field="ReceivableNum" header="應盤" style="min-width:60px"></Column>
-            <Column style="min-width: 60px;">
-              <template #body="slotProps">
-                <!-- Add the custom component here -->
-                <Inventory_process_button :params = "slotProps" @update="update" v-show="slotProps.data.IsConsumables"/>
-              </template>
+            <Column
+              field="ReceivableNum"
+              header="應盤"
+              style="min-width: 60px"
+            ></Column>
+            <Column style="min-width: 60px">
+<template #body="slotProps">
+  <!-- Add the custom component here -->
+  <Inventory_process_button :params="slotProps" @update="update" v-show="slotProps.data.IsConsumables" />
+</template>
             </Column>
-            <Column header="實盤" style="min-width: 60px;">
-              <template #body="slotProps">
-                <!-- Add the custom component here -->
-                <Inventory_number :params = "slotProps" @takeParams="takeParams"/>
-              </template>
+            <Column header="實盤" style="min-width: 60px">
+<template #body="slotProps">
+  <!-- Add the custom component here -->
+  <Inventory_number :params="slotProps" @takeParams="takeParams" />
+</template>
             </Column>
-            <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+            <Column
+              v-for="item in datagrid1field"
+              :field="item.field"
+              :header="item.header"
+              sortable
+              :style="{'min-width': item.width}"
+            ></Column>
           </DataTable>
         </div>
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="send_btn" data-bs-toggle="modal" data-bs-target="#confirmModal">盤點完成</button>
+        <button
+          class="send_btn"
+          data-bs-toggle="modal"
+          data-bs-target="#confirmModal"
+        >
+          盤點完成
+        </button>
       </div>
     </div>
   </div>
   <!-- Modal -->
   <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
           即將結束盤點作業，按下確認後即無法變更盤點內容
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="submit">確認</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            取消
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            @click="submit"
+          >
+            確認
+          </button>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 
 <script>
   import Navbar from "@/components/Navbar.vue";
@@ -228,8 +247,7 @@
       const myInput = ref(null);
       const IP_ID = route.query.search_id;
       const datagrid1 = createDatagrid();
-      const datagrid1field = [
-        {
+      const datagrid1field = [{
           field: 'Discrepancy',
           header: '差異',
           width: '80px',
@@ -273,7 +291,6 @@
         confirmItem();
         myInput.value.focus()
       });
-
       // 上半部帶入資料 1.確定盤點項目 -> 2.帶入資料 3.帶入盤點datagrid
       // 1.
       async function confirmItem() {
@@ -285,7 +302,7 @@
             console.log(data.messages);
             // 確認成功才拿資料
             getDetails();
-            getDatagrid('','search');
+            getDatagrid('', 'search');
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -322,31 +339,30 @@
       }
       // 下半部分盤點範圍datagrid資料
       // 3.
-      async function getDatagrid(event , type) {
+      async function getDatagrid(event, type) {
         const form = new FormData();
-        if(InputAssetsId.value.length === 10 || InputAssetsId.value.length === 0) {
-          form.append('Input_AssetsId' , InputAssetsId.value)
+        if (InputAssetsId.value.length === 10 || InputAssetsId.value.length === 0) {
+          form.append('Input_AssetsId', InputAssetsId.value)
         } else {
           return
         }
-        form.append('PlanId' , IP_ID)
-        UpdatePageParameter(datagrid1,event,type,form)
+        form.append('PlanId', IP_ID)
+        UpdatePageParameter(datagrid1, event, type, form)
         try {
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/PlanItems' , form);
+          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/PlanItems', form);
           const data = response.data;
-
           if (data.state === 'success') {
             console.log('下半部datagrid 資料如下\n', data.resultList);
             rowData.value = data.resultList.rows;
             datagrid1.totalRecords = data.resultList.total;
-            datakey.value ++;
+            datakey.value++;
             // 若掃描 QR code
-            if(type === 'take' && data.resultList.rows.length > 0) {
+            if (type === 'take' && data.resultList.rows.length > 0) {
               // 若為非耗材
-              if(!data.resultList.rows[0].IsConsumables) {
+              if (!data.resultList.rows[0].IsConsumables) {
                 // InputAssetsId.value = '';
-                inventoryParams.I_Id = data.resultList.rows[0].I_Id ;
-                inventoryParams.ActualNum = '1' ;
+                inventoryParams.I_Id = data.resultList.rows[0].I_Id;
+                inventoryParams.ActualNum = '1';
                 inventoryParams.Discrepancy = '0';
                 takeInventory();
               }
@@ -365,17 +381,17 @@
       async function takeInventory() {
         let requestData = {};
         for (const keyname in inventoryParams) {
-          if(inventoryParams[keyname] !== '')
-          requestData[keyname] = inventoryParams[keyname]
+          if (inventoryParams[keyname] !== '')
+            requestData[keyname] = inventoryParams[keyname]
         }
-        console.log('單項盤點requestData:' , requestData);
+        console.log('單項盤點requestData:', requestData);
         const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/TakeInventory', requestData);
         const data = response.data;
         try {
           console.log(data);
           if (data.state === 'success') {
-            getDatagrid('','search');
-            datakey.value ++;
+            getDatagrid('', 'search');
+            datakey.value++;
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -391,7 +407,7 @@
         const requestData = {
           PlanId: IP_ID,
         };
-        console.log('submit requestData',requestData);
+        console.log('submit requestData', requestData);
         try {
           const axios = require('axios');
           const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryCompleted', requestData);
@@ -410,19 +426,21 @@
           console.error(error);
         }
       }
-      watch(()=>InputAssetsId.value, (newValue , oldValue) => {
+      watch(() => InputAssetsId.value, (newValue, oldValue) => {
         // 更新datagrid，如果是資產 call 盤點function
-        console.log('new:' + newValue +' old:' + oldValue);
-        if(newValue.length === 20) {
+        console.log('new:' + newValue + ' old:' + oldValue);
+        if (newValue.length === 20) {
           InputAssetsId.value = newValue.slice(10)
         }
-        if(newValue !== '') {
-          getDatagrid('','take');
+        if (newValue !== '') {
+          getDatagrid('', 'take');
         }
-      },{immediate: false});
-      const clear = ()=>{
+      }, {
+        immediate: false
+      });
+      const clear = () => {
         InputAssetsId.value = '';
-        getDatagrid('','search');
+        getDatagrid('', 'search');
       }
       function update(data) {
         inventoryParams.I_Id = data.I_Id;
@@ -430,9 +448,9 @@
         inventoryParams.Discrepancy = '0';
         takeInventory();
       }
-      function takeParams(data , Actual) {
+      function takeParams(data, Actual) {
         // 傳送 實盤-應盤數量
-        let Discrepancy = (Actual-data.ReceivableNum).toString()
+        let Discrepancy = (Actual - data.ReceivableNum).toString()
         if (!Actual) {
           Discrepancy = '';
         }
@@ -508,7 +526,10 @@
     }
   }
   @media only screen and (min-width: 1200px) {
-    
+    .modal-content {
+      width: 300px;
+      margin: auto;
+    }
     .main_section {
       input {
         @include dropdown_btn;
@@ -705,6 +726,10 @@
     }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .modal-content {
+      width: 300px;
+      margin: auto;
+    }
     .main_section {
       input {
         @include dropdown_btn;
