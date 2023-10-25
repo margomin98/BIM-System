@@ -1266,7 +1266,6 @@
             font-size: 20px;
             .radio_wrap {
               gap: 0 10px;
-              padding-left: 10px;
             }
             .input-group-prepend {
               width: auto !important;
