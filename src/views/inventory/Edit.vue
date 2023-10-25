@@ -1061,9 +1061,7 @@
           @include content_bg;
           .organizer_wrap {
             --bs-gutter-x: unset;
-            .flex:nth-child(1) {
-              width: 210px
-            }
+         
           }
           p {
             text-align: center;

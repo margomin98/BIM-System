@@ -428,7 +428,6 @@
           }
         }
         #readonly_box {
-          padding: 0 0 0 10px;
           background-color: #B4B4B4;
           border-left: black 1px solid;
         }
@@ -592,7 +591,7 @@
             display: flex;
             justify-content: center;
             padding: 0 10px;
-            width: 160px;
+            width: 159px;
             p {
               margin-bottom: 0;
               text-align: center;
@@ -732,7 +731,6 @@
           }
         }
         #readonly_box {
-          padding: 0 0 0 10px;
           background-color: #B4B4B4;
           border-left: black 1px solid;
         }
