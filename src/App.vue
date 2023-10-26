@@ -21,7 +21,6 @@
 		color: white;
 		text-decoration: none;
 	}
-	 
 	.dropdown-menu p,
 	.dropdown-item {
 		padding: 5px 10px!important;
@@ -34,7 +33,7 @@
 		:active {
 			color: white !important;
 		}
-	} 
+	}
 	.ag-body .ag-cell {
 		border: 0;
 	}
@@ -109,8 +108,8 @@
 	}
 	.readonly_box {
 		// pointer-events: none;
-	    justify-content: left !important;
-    padding: 0 10px;
+		justify-content: left !important;
+		padding: 0 10px;
 		user-select: none;
 		overflow: hidden;
 		&:focus {
@@ -120,23 +119,22 @@
 			cursor: pointer;
 		}
 	}
-	.main_section{
-		
-		input{
+	.main_section {
+		input {
 			text-align: left !important;
 		}
-		.input-number{
+		.input-number {
 			padding: 0 10px;
 		}
 		.dropdown-menu {
-		padding: 0!important;
-		background: white !important;
-	}
+			padding: 0!important;
+			background: white !important;
+		}
 	}
 	.modal {
-		.input-number{
+		.input-number {
 			padding: 0 10px;
-		text-align: left !important;
+			text-align: left !important;
 		}
 		.modal-header {
 			.close_icon {
@@ -162,7 +160,7 @@
 	}
 	.datatable_checkbox {
 		text-align: center;
-		input{
+		input {
 			display: inline-block !important;
 		}
 	}
@@ -177,6 +175,9 @@
 				padding: 3% !important;
 			}
 		}
+		p.readonly_box,.form-control,.main_section .dropdown-toggle ,.main_section .dropdown-item{
+			font-size: 16px !important;
+		}
 	}
 	@media only screen and (min-width: 768px) and (max-width: 1199px) {
 		.modal {
@@ -188,6 +189,9 @@
 				padding: 5% !important;
 			}
 		}
+		p.readonly_box,.form-control,.main_section .dropdown-toggle,.main_section .dropdown-item{
+			font-size: 16px !important;
+		}
 	}
 	@media only screen and (max-width: 767px) {
 		.modal {
@@ -198,6 +202,9 @@
 			.modal-body {
 				padding: 5% !important;
 			}
+		}
+		p.readonly_box,.form-control,.main_section .dropdown-toggle,.main_section .dropdown-item{
+			font-size: 16px !important;
 		}
 	}
 </style>

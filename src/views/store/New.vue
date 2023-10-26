@@ -1570,6 +1570,7 @@
             .file_upload_wrap {
               margin-bottom: 0;
               display: flex;
+              align-items: center;
               img {
                 width: 25px;
                 height: 25px;
@@ -2161,6 +2162,7 @@
             .file_upload_wrap {
               margin-bottom: 0;
               display: flex;
+              align-items: center;
               img {
                 width: 25px;
                 height: 25px;
