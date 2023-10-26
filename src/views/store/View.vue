@@ -216,7 +216,7 @@
             </div>
             <!-- 頁籤上傳檔案部分 -->
             <div class="col">
-              <div class="input-group mb-3">
+              <div class="input-group">
                 <div class="input-group-prepend">已上傳檔案 :</div>
                 <div class="selected_file">
                   <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
@@ -230,7 +230,7 @@
       </div>
       <!-- ViewFile Modal -->
       <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" >
+        <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">{{ modalParams.title }}</h5>

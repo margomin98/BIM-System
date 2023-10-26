@@ -42,15 +42,15 @@
                   <p>設備總類</p>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ EquipTypeName || '請選擇' }}
-                    </button>
+                        {{ EquipTypeName || '請選擇' }}
+                      </button>
                     <div class="dropdown-menu" aria-labelledby="typeDropdown">
                       <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
                     </div>
                   </div>
                 </div>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :suppressMoveWhenRowDragging="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData2" @rowDragEnd="onRowDragEnd('EquipCategoryName' ,$event)" 
+                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :suppressMoveWhenRowDragging="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData2" @rowDragEnd="onRowDragEnd('EquipCategoryName' ,$event)"
                     @grid-ready="dataApi2">
                   </ag-grid-vue>
                 </div>
@@ -69,7 +69,7 @@
             <div class='row g-0'>
               <div class='col-xl-6 col-lg-6 col-md-6 col-12 grid'>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :suppressMoveWhenRowDragging="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData3" @rowDragEnd="onRowDragEnd('AreaName' ,$event)" 
+                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :suppressMoveWhenRowDragging="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData3" @rowDragEnd="onRowDragEnd('AreaName' ,$event)"
                     @grid-ready="dataApi3">
                   </ag-grid-vue>
                 </div>
@@ -91,15 +91,15 @@
                   <p>儲位區域</p>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ AreaName || '請選擇' }}
-                    </button>
+                        {{ AreaName || '請選擇' }}
+                      </button>
                     <div class="dropdown-menu" aria-labelledby="typeDropdown">
                       <p v-for="(item, index) in AreaArray" :key="index" class="dropdown-item" @click="selectArea(item)">{{ item.Name }}</p>
                     </div>
                   </div>
                 </div>
                 <div style='width:100%'>
-                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :suppressMoveWhenRowDragging="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData4" @rowDragEnd="onRowDragEnd('LayerName' ,$event)" 
+                  <ag-grid-vue style="width: 100%; height: 450px" class="ag-theme-alpine" :rowDragManaged="true" :suppressMoveWhenRowDragging="true" :animateRows="true" :headerHeight="0" :columnDefs="columnDefs" :rowData="rowData4" @rowDragEnd="onRowDragEnd('LayerName' ,$event)"
                     @grid-ready="dataApi4">
                   </ag-grid-vue>
                 </div>
@@ -152,7 +152,6 @@
               <div class="content">
                 <!-- <input type="text" v-model="deleteParams.input" readonly disabled>  -->
                 <span style="font-weight: 700;"> {{ deleteParams.input }} </span>
-                
               </div>
               <div class="button_section">
                 <button type="button" class="btn" data-bs-dismiss="modal">取消</button>
@@ -208,21 +207,21 @@
       const AreaName = ref('');
       const AreaId = ref('');
       const AreaArray = ref([]);
-      const columnDefs =[{
-            field: "",
-            cellRenderer: 'Parameter_button',
-            cellRendererParams: {
-              updateEditType: updateEditType,
-              updateDeleteType: updateDeleteType,
-            },
-            width: 170,
-            rowDrag: true
+      const columnDefs = [{
+          field: "",
+          cellRenderer: 'Parameter_button',
+          cellRendererParams: {
+            updateEditType: updateEditType,
+            updateDeleteType: updateDeleteType,
           },
-          {
-            field: "Name",
-            flex: 1,
-          }
-        ]
+          width: 170,
+          rowDrag: true
+        },
+        {
+          field: "Name",
+          flex: 1,
+        }
+      ]
       const rowData1 = ref([]);
       const rowData2 = ref([]);
       const rowData3 = ref([]);
@@ -236,12 +235,12 @@
       function updateEditType(data) {
         editParams.input = data.Name;
         editParams.type = data.type;
-        editParams.id =data.Id;
+        editParams.id = data.Id;
       }
       function updateDeleteType(data) {
         deleteParams.input = data.Name;
         deleteParams.type = data.type;
-        deleteParams.id =data.Id;
+        deleteParams.id = data.Id;
       }
       onMounted(() => {
         getDataGrid('EquipTypeName');
@@ -280,7 +279,7 @@
                 data.resultList.TypeList.forEach(item => {
                   EquipTypeArray.value.push(item);
                 });
-                rowData1.value.forEach(item=> {
+                rowData1.value.forEach(item => {
                   item.type = 'EquipTypeName'
                 })
                 setTimeout(() => {
@@ -290,7 +289,7 @@
                 break;
               case 'EquipCategoryName':
                 rowData2.value = data.resultList.CategoryList;
-                rowData2.value.forEach(item=> {
+                rowData2.value.forEach(item => {
                   item.type = 'EquipCategoryName'
                 })
                 grid.row2.setRowData(rowData2.value)
@@ -303,7 +302,7 @@
                 data.resultList.AreaList.forEach(item => {
                   AreaArray.value.push(item);
                 });
-                rowData3.value.forEach(item=> {
+                rowData3.value.forEach(item => {
                   item.type = 'AreaName'
                 })
                 setTimeout(() => {
@@ -313,7 +312,7 @@
                 break;
               case 'LayerName':
                 rowData4.value = data.resultList.LayerList;
-                rowData4.value.forEach(item=> {
+                rowData4.value.forEach(item => {
                   item.type = 'LayerName'
                 })
                 grid.row4.setRowData(rowData4.value)
@@ -353,7 +352,7 @@
             rowData3.value.splice(newRowIndex, 0, draggedData);
             break;
           case 'LayerName':
-          originalIndex = rowData4.value.findIndex(item => item.Id === draggedData.Id);
+            originalIndex = rowData4.value.findIndex(item => item.Id === draggedData.Id);
             rowData4.value.splice(originalIndex, 1);
             rowData4.value.splice(newRowIndex, 0, draggedData);
             break;
@@ -370,7 +369,7 @@
           case 'EquipCategoryName':
             apiUrl = baseUrl + '/ParameterMng/EditEquipmentCategoryIndex'
             requestData.CategoryList = rowData2.value;
-          break;
+            break;
           case 'AreaName':
             apiUrl = baseUrl + '/ParameterMng/EditAreaIndex'
             requestData.AreaList = rowData3.value;
@@ -381,7 +380,7 @@
             break;
         }
         try {
-          const response = await axios.post(`${apiUrl}`,requestData);
+          const response = await axios.post(`${apiUrl}`, requestData);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -418,11 +417,11 @@
         const baseUrl = 'http://192.168.0.177:7008'
         let apiUrl = ''
         // 檢查輸入是否符合格式 1. 不為全空白 2. 字數<=10 
-        if(!input) {
+        if (!input) {
           alert('請輸入欲更改之名稱')
           return
         }
-        if( !/^.{1,10}$/.test(input)) {
+        if (!/^.{1,10}$/.test(input)) {
           alert('更改名稱不可超過10字')
           return
         }
@@ -431,24 +430,24 @@
         }
         switch (type) {
           case 'EquipTypeName':
-            apiUrl += baseUrl+ '/ParameterMng/EditEquipmentTypeName'
+            apiUrl += baseUrl + '/ParameterMng/EditEquipmentTypeName'
             requestData.TypeId = id;
             break;
           case 'EquipCategoryName':
-            apiUrl += baseUrl+ '/ParameterMng/EditEquipmentCategoryName'
+            apiUrl += baseUrl + '/ParameterMng/EditEquipmentCategoryName'
             requestData.CategoryId = id;
             break;
           case 'AreaName':
-            apiUrl += baseUrl+ '/ParameterMng/EditAreaName'
+            apiUrl += baseUrl + '/ParameterMng/EditAreaName'
             requestData.AreaId = id;
             break;
           case 'LayerName':
-            apiUrl += baseUrl+ '/ParameterMng/EditLayerName'
+            apiUrl += baseUrl + '/ParameterMng/EditLayerName'
             requestData.LayerId = id;
             break;
         }
         try {
-          const response = await axios.post(`${apiUrl}`,requestData);
+          const response = await axios.post(`${apiUrl}`, requestData);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -484,16 +483,16 @@
         let requestData = {};
         switch (type) {
           case 'EquipTypeName':
-            if(rowData1.value.length === 256) {
+            if (rowData1.value.length === 256) {
               alert('已達設備總類數量上限，請先刪除後再新增')
               return
             }
             newParams.EquipType = newParams.EquipType.trim();
-            if(!newParams.EquipType) {
+            if (!newParams.EquipType) {
               alert('請輸入欲新增之名稱')
               return
             }
-            if(!/^.{1,10}$/.test(newParams.EquipType)) {
+            if (!/^.{1,10}$/.test(newParams.EquipType)) {
               alert('新增名稱不可超過10字')
               return
             }
@@ -501,20 +500,20 @@
             requestData.name = newParams.EquipType;
             break;
           case 'EquipCategoryName':
-            if(!EquipTypeName.value) {
+            if (!EquipTypeName.value) {
               alert('請先選擇設備總類')
               return
             }
-            if(rowData2.value.length === 256) {
+            if (rowData2.value.length === 256) {
               alert('已達設備分類數量上限，請先刪除後再新增')
               return
             }
             newParams.EquipCategory = newParams.EquipCategory.trim();
-            if(!newParams.EquipCategory) {
+            if (!newParams.EquipCategory) {
               alert('請輸入欲新增之名稱')
               return
             }
-            if(!/^.{1,10}$/.test(newParams.EquipCategory)) {
+            if (!/^.{1,10}$/.test(newParams.EquipCategory)) {
               alert('新增名稱不可超過10字')
               return
             }
@@ -523,16 +522,16 @@
             requestData.TypeId = EquipTypeId.value;
             break;
           case 'AreaName':
-            if(rowData3.value.length === 256) {
+            if (rowData3.value.length === 256) {
               alert('已達儲位區域數量上限，請先刪除後再新增')
               return
             }
             newParams.Area = newParams.Area.trim();
-            if(!newParams.Area) {
+            if (!newParams.Area) {
               alert('請輸入欲新增之名稱')
               return
             }
-            if(!/^.{1,10}$/.test(newParams.Area)) {
+            if (!/^.{1,10}$/.test(newParams.Area)) {
               alert('新增名稱不可超過10字')
               return
             }
@@ -540,20 +539,20 @@
             requestData.name = newParams.Area;
             break;
           case 'LayerName':
-            if(!AreaName.value) {
+            if (!AreaName.value) {
               alert('請先選擇儲位區域')
               return
             }
-            if(rowData4.value.length === 256) {
+            if (rowData4.value.length === 256) {
               alert('已達儲位櫃位數量上限，請先刪除後再新增')
               return
             }
             newParams.Layer = newParams.Layer.trim();
-            if(!newParams.Layer) {
+            if (!newParams.Layer) {
               alert('請輸入欲新增之名稱')
               return
             }
-            if(!/^.{1,10}$/.test(newParams.Layer)) {
+            if (!/^.{1,10}$/.test(newParams.Layer)) {
               alert('新增名稱不可超過10字')
               return
             }
@@ -563,8 +562,8 @@
             break;
         }
         try {
-          console.log('requsetData:',requestData);
-          const response = await axios.post(`${apiUrl}`,requestData);
+          console.log('requsetData:', requestData);
+          const response = await axios.post(`${apiUrl}`, requestData);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -618,8 +617,10 @@
             break;
         }
         try {
-          const requestData = {DeleteId: id};
-          const response = await axios.post(`${apiUrl}`,requestData);
+          const requestData = {
+            DeleteId: id
+          };
+          const response = await axios.post(`${apiUrl}`, requestData);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -659,12 +660,12 @@
       const dataApi4 = (params) => {
         grid.row4 = params.api;
       };
-      const selectType = (item)=>{
+      const selectType = (item) => {
         EquipTypeId.value = item.Id
         EquipTypeName.value = item.Name;
         getDataGrid('EquipCategoryName');
       }
-      const selectArea = (item)=>{
+      const selectArea = (item) => {
         AreaId.value = item.Id;
         AreaName.value = item.Name;
         getDataGrid('LayerName');
@@ -706,12 +707,15 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
+  #editInput {
+    padding: 0 10px;
+  }
   .editModal {
     .modal-content {
       border-radius: 0;
       .modal-body {
         border: 1px solid black;
-        padding: 0;
+        padding: 0 !important;
         p {
           border-bottom: 1px solid black;
           background: #528091;
@@ -843,7 +847,7 @@
       }
       .info_wrap {
         margin: auto;
-    width: 950px;
+        width: 950px;
         .button_wrap {
           display: flex;
           margin-top: 30px;
@@ -1336,7 +1340,7 @@
               padding: 20px;
               border-top-right-radius: 5px;
               border-bottom-right-radius: 5px;
-              .search_wrap{
+              .search_wrap {
                 flex-direction: column;
               }
               button {
@@ -1344,7 +1348,7 @@
                 height: 35px;
                 width: 90px;
                 font-size: 18px;
-                margin:10px auto 0;
+                margin: 10px auto 0;
                 &:hover {
                   background: #3B6162;
                   color: white;
@@ -1355,7 +1359,6 @@
                 font-weight: 800;
                 font-size: 20px;
               }
-            
             }
             .modal {
               .modal-header {
