@@ -133,13 +133,13 @@ const routes = [
     path: "/home",
     name: "home",
     component: Home,
-    meta: {auth: false, request: ''},
+    meta: {auth: false, request: '' , checkLogin: true},
   },
   {
     path: "/authorized",
     name: "authorized",
     component: Authorized,
-    meta: {auth: false, request: ''},
+    meta: {auth: false, request: '' , checkLogin: true},
   },
   
   {
@@ -171,7 +171,7 @@ const routes = [
     path: "/store_return",
     name: "Store_Return",
     component: Store_Return,
-    meta: {auth: false, request: '' , Store_Return: true},//歸還入庫不綁權限
+    meta: {auth: false, request: '' , checkLogin: true},//歸還入庫不綁權限
   },
   {
     path: "/store_delete",
@@ -584,7 +584,8 @@ const router = createRouter({
 //       next(false); // 阻止导航继续
 //     }
 //   } else {
-//     if(to.meta.Store_Return) {
+//     if(to.meta.checkLogin) {
+//       // 檢查是否有登入
 //       try {
 //         const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
 //         const data = response.data;
