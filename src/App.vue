@@ -127,7 +127,6 @@
 		}
 		.input-number{
 			padding: 0 10px;
-		text-align: center !important;
 		}
 		.dropdown-menu {
 		padding: 0!important;
@@ -135,6 +134,10 @@
 	}
 	}
 	.modal {
+		.input-number{
+			padding: 0 10px;
+		text-align: left !important;
+		}
 		.modal-header {
 			.close_icon {
 				cursor: pointer;

@@ -107,8 +107,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                              {{ itemParams.EquipTypeName || '請選擇' }}
-                            </button>
+                                {{ itemParams.EquipTypeName || '請選擇' }}
+                              </button>
                 <div class="dropdown-menu" aria-labelledby="typeDropdown">
                   <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType('upperForm' , item)">{{ item.Name }}</p>
                 </div>
@@ -122,8 +122,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(itemParams.EquipTypeName !== '') }">
-                              {{ itemParams.EquipCategoryName || EquipCategoryInit }}
-                            </button>
+                                {{ itemParams.EquipCategoryName || EquipCategoryInit }}
+                              </button>
                 <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                   <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory('upperForm' , item)">{{ item.Name }}</p>
                 </div>
@@ -201,8 +201,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              {{ itemParams.PackageUnit || '請選擇' }}
-                            </button>
+                                {{ itemParams.PackageUnit || '請選擇' }}
+                              </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in DropdownArray.PackageUnit" :key="index" class="dropdown-item" @click="selectPackageUnit('upperForm' , item)">
                     {{ item }}</p>
@@ -232,8 +232,8 @@
               </div>
               <div v-if="itemParams.AssetType === '耗材'" class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="itemParams.AssetType !== '耗材'">
-                                  {{ itemParams.Unit || '請選擇' }}
-                                </button>
+                                    {{ itemParams.Unit || '請選擇' }}
+                                  </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in DropdownArray.Unit" :key="index" class="dropdown-item" @click="selectUnit('upperForm' , item)">
                     {{ item }}</p>
@@ -313,8 +313,8 @@
                   </div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                                {{ tab.itemEquipTypeName || '請選擇' }}
-                              </button>
+                                  {{ tab.itemEquipTypeName || '請選擇' }}
+                                </button>
                     <div class="dropdown-menu" aria-labelledby="typeDropdown">
                       <p v-for="item in DropdownArray.EquipType" class="dropdown-item" @click="selectType('tab' , item , index)">{{ item.Name }}</p>
                     </div>
@@ -328,8 +328,8 @@
                   </div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!tab.itemEquipTypeName">
-                                {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }}
-                              </button>
+                                  {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }}
+                                </button>
                     <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                       <p v-for="item in tab.EquipCategoryArray" class="dropdown-item" @click="selectCategory('tab' , item , index)">{{ item.Name }}</p>
                     </div>
@@ -405,8 +405,8 @@
                   </div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ tab.itemPackageUnit || '請選擇' }}
-                              </button>
+                                  {{ tab.itemPackageUnit || '請選擇' }}
+                                </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="item in DropdownArray.PackageUnit" class="dropdown-item" @click="selectPackageUnit('tab' , item , index)">{{ item }}</p>
                     </div>
@@ -435,8 +435,8 @@
                   </div>
                   <div v-if="tab.itemAssetType === '耗材'" class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="tab.itemAssetType !== '耗材'">
-                                  {{ tab.itemUnit || '請選擇' }}
-                                </button>
+                                    {{ tab.itemUnit || '請選擇' }}
+                                  </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="item in DropdownArray.Unit" class="dropdown-item" @click="selectUnit('tab' , item , index)">{{ item }}</p>
                     </div>
@@ -479,9 +479,9 @@
                 <div class="input-group-prepend">已上傳的檔案 :</div>
                 <div class="selected_file">
                   <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap">
-                    <p >{{ file.FileName }}
-                    <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="viewImgFile('exist',index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
-                    <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('exist',index,file_index)"></p>
+                    <p>{{ file.FileName }}
+                      <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="viewImgFile('exist',index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+                      <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('exist',index,file_index)"></p>
                   </div>
                 </div>
               </div>
@@ -1612,18 +1612,18 @@
           overflow-y: hidden;
           flex-wrap: nowrap;
           border: none;
-        }
-         ::-webkit-scrollbar {
-          height: 6px;
-          border: 1px solid rgb(219, 218, 218);
-          border-radius: 5px;
-          width: 8px;
-        }
-         ::-webkit-scrollbar-thumb {
-          display: block;
-          border-radius: 5px;
-          background-color: rgb(176, 175, 175);
-          border: 1px solid rgb(86, 85, 85);
+           ::-webkit-scrollbar {
+            height: 6px;
+            border: 1px solid rgb(219, 218, 218);
+            border-radius: 5px;
+            width: 8px;
+          }
+           ::-webkit-scrollbar-thumb {
+            display: block;
+            border-radius: 5px;
+            background-color: rgb(176, 175, 175);
+            border: 1px solid rgb(86, 85, 85);
+          }
         }
         .selected_file {
           .file_upload_wrap {
@@ -1899,18 +1899,18 @@
           overflow-y: hidden;
           flex-wrap: nowrap;
           border: none;
-        }
-         ::-webkit-scrollbar {
-          height: 6px;
-          border: 1px solid rgb(219, 218, 218);
-          border-radius: 5px;
-          width: 8px;
-        }
-         ::-webkit-scrollbar-thumb {
-          display: block;
-          border-radius: 5px;
-          background-color: rgb(176, 175, 175);
-          border: 1px solid rgb(86, 85, 85);
+           ::-webkit-scrollbar {
+            height: 6px;
+            border: 1px solid rgb(219, 218, 218);
+            border-radius: 5px;
+            width: 8px;
+          }
+           ::-webkit-scrollbar-thumb {
+            display: block;
+            border-radius: 5px;
+            background-color: rgb(176, 175, 175);
+            border: 1px solid rgb(86, 85, 85);
+          }
         }
         .input-number {
           width: 63%;
@@ -2198,18 +2198,18 @@
           overflow-y: hidden;
           flex-wrap: nowrap;
           border: none;
-        }
-         ::-webkit-scrollbar {
-          height: 6px;
-          border: 1px solid rgb(219, 218, 218);
-          border-radius: 5px;
-          width: 8px;
-        }
-         ::-webkit-scrollbar-thumb {
-          display: block;
-          border-radius: 5px;
-          background-color: rgb(176, 175, 175);
-          border: 1px solid rgb(86, 85, 85);
+           ::-webkit-scrollbar {
+            height: 6px;
+            border: 1px solid rgb(219, 218, 218);
+            border-radius: 5px;
+            width: 8px;
+          }
+           ::-webkit-scrollbar-thumb {
+            display: block;
+            border-radius: 5px;
+            background-color: rgb(176, 175, 175);
+            border: 1px solid rgb(86, 85, 85);
+          }
         }
         .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
           margin-left: unset !important;

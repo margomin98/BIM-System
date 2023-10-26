@@ -631,9 +631,7 @@
             padding: 50px 30px;
             border-radius: 0 0 10px 10px;
             .selected_file {
-              .input-group {
-                flex-direction: column;
-              }
+             
               .file_upload_wrap {
                 margin-bottom: 0;
                 display: flex;
@@ -643,9 +641,11 @@
                 }
                 p {
                   font-weight: 700;
-                  margin-bottom: 5px;
+                  margin-bottom: 0;
                   color: white;
                   word-break: break-word;
+                  display: flex;
+    align-items: center;
                   &::before {
                     margin-right: 10px;
                     content: '·';
@@ -915,9 +915,7 @@
             padding: 50px 30px;
             border-radius: 0 0 10px 10px;
             .selected_file {
-              .input-group {
-                flex-direction: column;
-              }
+             
               .file_upload_wrap {
                 margin-bottom: 0;
                 display: flex;
@@ -927,9 +925,11 @@
                 }
                 p {
                   font-weight: 700;
-                  margin-bottom: 5px;
+                  margin-bottom: 0;
                   color: white;
                   word-break: break-word;
+                  display: flex;
+    align-items: center;
                   &::before {
                     margin-right: 10px;
                     content: '·';
