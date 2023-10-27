@@ -116,8 +116,8 @@
     onMounted,
   } from "vue";
   import {
-    Rent_UseArray,
-    Rent_StatusArray,
+    Rent_Review_UseArray,
+    Rent_Review_StatusArray,
     Rent_Review_DateCategory
   } from "@/assets/js/dropdown";
   import Rent_review_button from "@/components/Rent_review_button";
@@ -141,8 +141,8 @@
         StartDate: '', 
         EndDate: '',
       });
-      const UseArray = Rent_UseArray
-      const StatusArray = Rent_StatusArray
+      const UseArray = Rent_Review_UseArray
+      const StatusArray = Rent_Review_StatusArray
       const DateCategoryArray = Rent_Review_DateCategory
       const datagrid = createDatagrid();
       const datagridfield = [

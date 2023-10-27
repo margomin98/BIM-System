@@ -191,7 +191,7 @@
                       <p>目前資產庫存</p>
                     </div>
                   </div>
-                  <DataTable :key="datagrid.key" :first="datagrid.first" :size="'small'" :loading="datagrid.loading"
+                  <DataTable lazy :key="datagrid.key" :first="datagrid.first" :size="'small'" :loading="datagrid.loading"
                     :value="rowData" :sort-field="datagrid.sortField" :sort-order="datagrid.sortOrder" resizableColumns
                     columnResizeMode="expand" showGridlines scrollable scrollHeight="420px"
                     @page="searchInventory($event, 'page')" @sort="searchInventory($event, 'sort')" paginator
@@ -208,7 +208,7 @@
                         <Equipment_add :params="slotProps" :action="action" @addAssetList="addAssetList" />
                       </template>
                     </Column>
-                    <Column style="min-width: 80px;" header="數量">
+                    <Column style="min-width: 100px;" header="數量">
                       <template #body="slotProps">
                         <Equipment_number :params="slotProps" />
                       </template>
@@ -432,40 +432,19 @@ export default {
         form.append('EquipType_Id', searchParams.EquipType_Id);
         form.append('Category_Id', searchParams.Category_Id);
         form.append('ProductName', searchParams.ProductName);
+        form.append('AssetList', JSON.stringify(formParams.AssetList));
         UpdatePageParameter(datagrid, event, type, form);
         const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/SearchInventory', form);
         const data = response.data;
         if (data.state === 'success') {
           // 取得資料
-          rowData.value = data.resultList;
-          // 檢查AssetList 處理rowData後refresh
-          // 創建一個Map 用來建Hash-table
-          const assetMap = new Map()
-          // 製作Hash-table
-          formParams.AssetList.forEach(asset => {
-            assetMap.set(asset.AssetsId, asset.Number)
+          // console.log('search result:',data.resultList);
+          rowData.value = data.resultList.rows;
+          rowData.value.forEach(item=>{
+            item.selectNumber = item.OM_Number;
           })
-          rowData.value = rowData.value.filter(item => {
-            // 若有相對應的id
-            if (assetMap.has(item.AssetsId)) {
-              // 檢查數量 1.拿完->刪除 2.尚未拿完->減去相對應數量
-              const list_number = assetMap.get(item.AssetsId)
-              // 1.
-              if (list_number >= item.OM_Number) {
-                // console.log('編號:'+item.AssetsId+'被拿完了');
-                return false
-              }
-              // 2.
-              else {
-                item.OM_Number -= list_number;
-              }
-            }
-            return true;
-          })
-          rowData.value = rowData.value.map(item => ({
-            ...item,
-            selectNumber: item.OM_Number,
-          }));
+          datagrid.totalRecords = data.resultList.total;
+
           datagrid.key++;
         } else if (data.state === 'error') {
           alert(data.messages);
@@ -500,7 +479,7 @@ export default {
       const axios = require('axios');
       let requestData = {};
       for (const keyname in formParams) {
-        if (formParams[keyname] !== null && formParams[keyname] !== '') {
+        if (formParams[keyname]) {
           requestData[keyname] = formParams[keyname]
         }
       }

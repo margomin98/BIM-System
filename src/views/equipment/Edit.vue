@@ -170,7 +170,7 @@
                       <p>目前資產庫存</p>
                     </div>
                   </div>
-                  <DataTable :key="datagrid.key" :first="datagrid.first" :size="'small'" :loading="datagrid.loading" :value="rowData" :sort-field="datagrid.sortField" :sort-order="datagrid.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="420px"
+                  <DataTable lazy :key="datagrid.key" :first="datagrid.first" :size="'small'" :loading="datagrid.loading" :value="rowData" :sort-field="datagrid.sortField" :sort-order="datagrid.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="420px"
                     @page="searchInventory($event , 'page')" @sort="searchInventory($event , 'sort')" :rows="datagrid.rows" :totalRecords="datagrid.totalRecords" paginator paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
                     currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
                     <Column style="min-width: 60px;">
@@ -196,7 +196,7 @@
           </div>
         </div>
         <div class="item_wrap">
-          <list-item v-for="(item, index) in details.AssetList" :key="index" :edit_btn="true" :delete_btn="true" :AssetData="item" @editAction="handleEdit" @deleteId="handleDelete">
+          <list-item v-for="(item, index) in formParams.AssetList" :key="index" :edit_btn="true" :delete_btn="true" :AssetData="item" @editAction="handleEdit" @deleteId="handleDelete">
           </list-item>
         </div>
       </div>
@@ -237,6 +237,7 @@
     useRoute,
     useRouter
   } from "vue-router";
+import axios from 'axios';
   export default {
     components: {
       Navbar,
@@ -333,48 +334,24 @@
       const rowData = ref([]);
       onMounted(() => {
         getAccountName();
-        getDetails('initial');
+        getDetails();
       });
-      async function getDetails(type) {
-        const axios = require('axios');
-        const baseUrl = 'http://192.168.0.177:7008'
-        let apiUrl = ''
-        switch (type) {
-          case 'initial':
-            apiUrl += baseUrl + '/GetDBdata/GetIntegrationBoxInfo?id=' + `${Integration.IntegrationId}`
-            break;
-          case 'edit':
-            apiUrl += baseUrl + '/GetDBdata/GetAssetInfo?id=' + `${ChangeParams.id}`
-            break;
-        }
+      async function getDetails() {
         try {
-          const response = await axios.get(`${apiUrl}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetIntegrationBoxInfo?id=${Integration.IntegrationId}`);
           // console.log(response);
           const data = response.data;
           if (data.state === 'success') {
-            switch (type) {
-              case 'initial':
-                console.log(data.resultList);
-                details.value = data.resultList;
-                details.value.AssetList.forEach(item => {
-                  item.exist = true;
-                  item.error_msg = '';
-                });
-                if (details.value.AreaName) {
-                  getLayerName()
-                }
-                console.log('details', details.value.AssetList);
-                break;
-              case 'edit':
-                searchParams.EquipTypeName = data.resultList.EquipTypeName
-                searchParams.EquipCategoryName = data.resultList.EquipCategoryName
-                // console.log(data.resultList.EquipCategoryName);
-                break;
-              default:
-                break;
+            details.value = data.resultList;
+            details.value.AssetList.forEach(item => {
+              item.exist = true;
+              item.error_msg = '';
+            });
+            if (details.value.AreaName) {
+              getLayerName()
             }
-            getEquipCategoryName();
-            getLayerName();
+            formParams.AssetList =  details.value.AssetList;
+            // console.log('details', details.value.AssetList);
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -448,77 +425,24 @@
         const axios = require('axios');
         try {
           const form = new FormData();
+          
+          form.append('IntegrationId', Integration.IntegrationId);
           form.append('EquipType_Id', searchParams.EquipType_Id);
           form.append('Category_Id', searchParams.Category_Id);
           form.append('ProductName', searchParams.ProductName);
+          form.append('AssetList', JSON.stringify(formParams.AssetList));
           UpdatePageParameter(datagrid, event, type, form);
           const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/SearchInventory', form);
           const data = response.data;
           if (data.state === 'success') {
             // console.log('資產搜尋成功 資料如下\n', data.resultList);
             // 取得資料
-            let tempData = data.resultList;
-            // 檢查DeleteList 
-            formParams.DeleteList.forEach((listItem) => {
-              const matchingRow = tempData.find((row) => row.AssetsId === listItem.AssetsId)
-              if (matchingRow) {
-                matchingRow.OM_Number += listItem.Number
-              } else {
-                // DeleteList項目是否有在這次的檢索Datagrid中(符合searchParams)，無則返回
-                if (searchParams.EquipType_Id !== '') {
-                  if (searchParams.EquipType_Id !== listItem.EquipType_Id)
-                    return
-                  if (searchParams.Category_Id !== '') {
-                    if (searchParams.Category_Id !== listItem.Category_Id)
-                      return
-                  }
-                }
-                if (searchParams.ProductName !== '') {
-                  if (!listItem.AssetName.includes(searchParams.ProductName))
-                    return
-                }
-                tempData.splice(0, 0, { ...listItem
-                })
-                tempData[0].AreaName = listItem.itemAreaName
-                tempData[0].LayerName = listItem.itemLayerName
-                tempData[0].OM_Number = listItem.Number
-                delete tempData[0].itemAreaName
-                delete tempData[0].itemLayerName
-                delete tempData[0].Number
-              }
+            rowData.value = data.resultList.rows;
+            rowData.value.forEach(item=>{
+              item.selectNumber = item.OM_Number;
             })
-            // console.log('增加完DeleteList之tempData',tempData);
-            // 檢查AssetList
-            // 創建一個Map 用來建Hash-table
-            const assetMap = new Map()
-            // 製作Hash-table
-            formParams.AssetList.forEach(asset => {
-              assetMap.set(asset.AssetsId, asset.Number)
-            })
-            tempData = tempData.filter(item => {
-              // 若有相對應的id
-              if (assetMap.has(item.AssetsId)) {
-                // 檢查數量 1.拿完->刪除 2.尚未拿完->減去相對應數量
-                const list_number = assetMap.get(item.AssetsId)
-                // 1.
-                if (list_number >= item.OM_Number) {
-                  return false
-                }
-                // 2.
-                else {
-                  item.OM_Number -= list_number;
-                }
-              }
-              return true;
-            })
-            tempData = tempData.map(item => ({
-              ...item,
-              selectNumber: item.OM_Number,
-            }));
-            // console.log('searchData',tempData);
-            rowData.value = tempData;
+            datagrid.totalRecords = data.resultList.total;
             datagrid.key++;
-            // console.log('完成所有處理之rowData',rowData.value);
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -547,7 +471,7 @@
           AreaName: details.value.AreaName,
           LayerName: details.value.LayerName,
           Custodian: details.value.Custodian,
-          AssetList: details.value.AssetList,
+          AssetList: formParams.AssetList,
         };
         const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/ChangeEquipment', requestData);
         const data = response.data;
@@ -614,26 +538,6 @@
       function addAssetList(data) {
         let exist = false;
         // 重複項目直接將數量疊上
-        details.value.AssetList.forEach(item => {
-          if (item.AssetsId === data.AssetsId) {
-            item.Number += data.selectNumber;
-            exist = true;
-          }
-        })
-        // 新的項目插入至最前方
-        if (!exist) {
-          details.value.AssetList.splice(0, 0, {
-            AssetsId: data.AssetsId,
-            Number: data.selectNumber,
-            AssetName: data.AssetName,
-            EquipTypeName: data.EquipTypeName,
-            EquipCategoryName: data.EquipCategoryName,
-            Failed: false,
-            error_msg: '',
-          })
-        }
-        exist = false;
-        // 重複項目直接將數量疊上
         formParams.AssetList.forEach(item => {
           if (item.AssetsId === data.AssetsId) {
             item.Number += data.selectNumber;
@@ -649,40 +553,26 @@
             EquipTypeName: data.EquipTypeName,
             EquipCategoryName: data.EquipCategoryName,
             Failed: false,
+            error_msg: '',
           })
         }
-        console.log(details.value.AssetList);
+        console.log(formParams.AssetList);
         // 處理完AssetList後更新rowData
         searchInventory('', 'search', 'add')
       }
       function editAssetList(data) {
-        console.log(data);
-        if (ChangeParams.exist) {
-          // 刪除原本
-          formParams.DeleteList.splice(0, 0, details.value.AssetList[ChangeParams.index]);
-          console.log('edit DeleteList:', formParams.DeleteList);
-        }
-        console.log('ChangeIndex:', ChangeParams.index);
-        // 更改edit hash-table
+        // 更改
         formParams.AssetList[ChangeParams.index] = {
           AssetsId: data.AssetsId,
           Number: data.selectNumber,
           AssetName: data.AssetName,
           EquipTypeName: data.EquipTypeName,
+          EquipType_Id: data.EquipType_Id,
           EquipCategoryName: data.EquipCategoryName,
+          Category_Id: data.Category_Id,
           Failed: false,
         };
-        // 更改
-        details.value.AssetList.splice(ChangeParams.index, 1, {
-          AssetsId: data.AssetsId,
-          Number: data.selectNumber,
-          AssetName: data.AssetName,
-          EquipTypeName: data.EquipTypeName,
-          EquipCategoryName: data.EquipCategoryName,
-          Failed: false,
-          error_msg: '',
-        });
-        console.log('edit AssetList:', formParams.AssetList);
+        console.log('edited AssetList:', formParams.AssetList);
         // 
         const element = document.querySelector('#close-modal');
         // console.log(element);
@@ -690,30 +580,22 @@
         searchInventory('', 'search', 'edit')
       }
       function handleDelete(data) {
-        console.log(data);
+        // console.log(data);
         let deleteIndex = -1;
-        if (data.exist) {
           // 資料庫已存在資料欲刪除
-          deleteIndex = details.value.AssetList.findIndex(item => item.AssetsId === data.AssetsId)
-          formParams.DeleteList.splice(0, 0, details.value.AssetList[deleteIndex]);
-          console.log('DeleteList', formParams.DeleteList);
-        } else {
-          // 新增資料欲刪除
-          deleteIndex = formParams.AssetList.findIndex(item => item.AssetsId === data.AssetsId)
+          deleteIndex = formParams.AssetList.findIndex(item => item.AssetsId === data.AssetsId);
           formParams.AssetList.splice(deleteIndex, 1);
-        }
-        deleteIndex = details.value.AssetList.findIndex(item => item.AssetsId === data.AssetsId)
-        details.value.AssetList.splice(deleteIndex, 1);
       }
       function handleEdit(data) {
-        ChangeParams.exist = data.exist === true;
         console.log('欲被替換data', data);
         const editIndex = details.value.AssetList.findIndex(item => item.AssetsId === data.AssetsId)
         ChangeParams.id = data.AssetsId;
         ChangeParams.index = editIndex;
         // 預帶入變更資產之設備總類、分類
         searchParams.EquipTypeName = data.EquipTypeName
+        searchParams.EquipType_Id = data.EquipType_Id
         searchParams.EquipCategoryName = data.EquipCategoryName
+        searchParams.Category_Id = data.Category_Id
         getEquipCategoryName();
         searchInventory('', 'search', 'edit')
       }

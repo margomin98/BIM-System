@@ -156,7 +156,7 @@
         EquipTypeName: '', //設備總類
         EquipType_Id: '',
         EquipCategoryName: '', //設備分類
-        EquipCategory_Id: '',
+        Category_Id: '',
         AssetName: '', //物品名稱
         Status: '', //狀態
         ShipmentNum: '',
@@ -220,13 +220,13 @@
         searchParams.EquipTypeName = item.Name;
         searchParams.EquipType_Id = item.Id;
         searchParams.EquipCategoryName = '';
-        searchParams.EquipCategory_Id = '';
+        searchParams.Category_Id = '';
         getEquipCategoryName();
         EquipCategoryInit.value = '請選擇';
       }
       function selectCategory(item) {
         searchParams.EquipCategoryName = item.Name;
-        searchParams.EquipCategory_Id = item.Id;
+        searchParams.Category_Id = item.Id;
       }
       const selectStatus = (item) => {
         searchParams.Status = item;

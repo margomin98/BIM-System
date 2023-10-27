@@ -114,8 +114,8 @@ import System_Log_View from "../views/system_log/View"
 import Authorized from "../views/Authorized";
 //權限不足
 
-
-
+import axios from "axios";
+import { getApplication } from "@/assets/js/common_api";
 const routes = [
   {
     path: "/test",
@@ -133,13 +133,13 @@ const routes = [
     path: "/home",
     name: "home",
     component: Home,
-    meta: {auth: false, request: ''},
+    meta: {auth: false, request: '' , checkLogin: true},
   },
   {
     path: "/authorized",
     name: "authorized",
     component: Authorized,
-    meta: {auth: false, request: ''},
+    meta: {auth: false, request: '' , checkLogin: true},
   },
   
   {
@@ -171,7 +171,7 @@ const routes = [
     path: "/store_return",
     name: "Store_Return",
     component: Store_Return,
-    meta: {auth: false, request: ''},//歸還入庫不綁權限
+    meta: {auth: false, request: '' , checkLogin: true},//歸還入庫不綁權限
   },
   {
     path: "/store_delete",
@@ -557,7 +557,6 @@ const router = createRouter({
 
 // router.beforeEach(async (to, from, next) => {
 //   if (to.meta.auth) {
-//     const axios = require('axios');
 //     try {
 //       const request = to.meta.request
 //       const response = await axios.get(`/GetParameter/HasPermission?id=${request}`);
@@ -585,6 +584,28 @@ const router = createRouter({
 //       next(false); // 阻止导航继续
 //     }
 //   } else {
+//     if(to.meta.checkLogin) {
+//       // 檢查是否有登入
+//       try {
+//         const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
+//         const data = response.data;
+//         if (data.state === 'success') {
+//           next();
+//         } 
+//         else if(data.state === 'account_error') {
+//           alert(data.messages);
+//           next({ name: 'login' });
+//         }
+//         else {
+//           alert(data.messages);
+//           next(false);
+//         }
+//       } catch (error) {
+//         // 处理请求错误
+//         console.error('Error checking permission:', error);
+//         next(false); // 阻止导航继续
+//       }
+//     }
 //     next();
 //   }
 // });

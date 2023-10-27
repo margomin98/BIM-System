@@ -95,7 +95,7 @@
         <button class="export_btn" @click="exportExcel">匯出</button>
       </div>
       <!-- input file  -->
-      <input type="file" ref="inputfile" style="display: none;" @change="importExcel" accept=".xlsx, .csv">
+      <input type="file" ref="inputfile" style="display: none;" @change="importExcel" accept=".xlsx,.csv,.xlsm">
     </div>
     <div class="dg-height mb-5">
       <DataTable
@@ -267,7 +267,7 @@
           // 檢查副檔名
           // 以'.'切割字串並以pop取得最後一組。EX: demo.sss.xlsx => ['demo','sss','xlsx'] => pop出 'xlsx'並轉成小寫
           const fileExtension = fileName.split('.').pop().toLowerCase();
-          if (fileExtension !== 'xlsx' && fileExtension !== 'csv') {
+          if (fileExtension !== 'xlsx' && fileExtension !== 'csv' && fileExtension !== 'xlsm') {
             alert('檔案格式不正確(.xlsx/.csv)，請重新選擇')
             return
           }

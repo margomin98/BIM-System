@@ -377,33 +377,13 @@
           // 圖片
           else {
             reader.onload = (e) => {
-              const img = new Image();
-              img.src = e.target.result;
-              img.onload = () => {
-                const canvas = document.createElement('canvas');
-                const maxWidth = 800; // 设置最大宽度
-                const scaleRatio = Math.min(maxWidth / img.width, 1);
-                canvas.width = img.width * scaleRatio;
-                canvas.height = img.height * scaleRatio;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                canvas.toBlob((blob) => {
-                  const compressedFile = new File([blob], files[i].name, {
-                    // type: files[i].type,
-                    lastModified: files[i].lastModified,
-                  });
-                  // 记录压缩前后的大小
-                  const originalSize = Math.round(files[i].size / 1024); // 原始大小（KB）
-                  const compressedSize = Math.round(compressedFile.size / 1024); // 壓縮後大小（KB）
-                  // console.log(`原始大小: ${originalSize} KB，壓縮後大小: ${compressedSize} KB`);
-                  imgArray.push(compressedFile);
-                  previewUrl.push({
-                    name: files[i].name,
-                    link: URL.createObjectURL(compressedFile),
-                    type: 'pic'
-                  });
-                }, files[i].type, 0.8);
-              };
+              const file = files[i]; // 保持原始文件
+              imgArray.push(file);
+              previewUrl.push({
+                name: file.name,
+                link: URL.createObjectURL(file),
+                type: 'pic'
+              });
             };
           }
           reader.readAsDataURL(files[i]);
@@ -430,43 +410,20 @@
             return;
           }
         }
-        // 處理檔案
         const imgArray = fileParams.newPic;
         const previewUrl = fileParams.viewPic;
         for (let i = 0; i < files.length; i++) {
-          // 依據檔案格式 分為 1.圖片(壓縮、可預覽) 2.pdf(可預覽) 3. doc/docx(可下載)
-          const fileName = files[i].name;
           const reader = new FileReader();
+          const file = files[i]; // 保持原始文件
           reader.onload = (e) => {
-            const img = new Image();
-            img.src = e.target.result;
-            img.onload = () => {
-              const canvas = document.createElement('canvas');
-              const maxWidth = 800; // 设置最大宽度
-              const scaleRatio = Math.min(maxWidth / img.width, 1);
-              canvas.width = img.width * scaleRatio;
-              canvas.height = img.height * scaleRatio;
-              const ctx = canvas.getContext('2d');
-              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-              canvas.toBlob((blob) => {
-                const compressedFile = new File([blob], fileName, {
-                  // type: files[i].type,
-                  lastModified: files[i].lastModified,
-                });
-                // 记录压缩前后的大小
-                const originalSize = Math.round(files[i].size / 1024); // 原始大小（KB）
-                const compressedSize = Math.round(compressedFile.size / 1024); // 壓縮後大小（KB）
-                console.log(`原始大小: ${originalSize} KB，壓縮後大小: ${compressedSize} KB`);
-                imgArray.push(compressedFile);
-                previewUrl.push({
-                  name: fileName,
-                  link: URL.createObjectURL(compressedFile),
-                  type: 'pic'
-                });
-              }, files[i].type, 0.8);
-            };
+            imgArray.push(file);
+            previewUrl.push({
+              name: file.name,
+              link: URL.createObjectURL(file),
+              type: 'pic'
+            });
           };
-          reader.readAsDataURL(files[i]);
+          reader.readAsDataURL(file);
         }
       }
       // 處理物流文件預覽 1.pdf ->開分頁瀏覽 2.pic ->Open Modal 3.doc/docx ->下載

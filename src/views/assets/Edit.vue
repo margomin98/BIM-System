@@ -244,7 +244,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">備註：</div>
-            <textarea style="height: 150px;" class="form-control readonly_box" readonly aria-label="With textarea" v-model="details.Memo"></textarea>
+            <textarea style="height: 150px;" class="form-control" aria-label="With textarea" v-model="details.Memo"></textarea>
           </div>
         </div>
       </div>
@@ -406,7 +406,6 @@ import axios from 'axios';
       })
       //  下半部歷史紀錄
       const searchParams = reactive({
-        AssetsId: AssetsId,
         StartDate: '',
         EndDate: '',
         Action: '',
@@ -700,38 +699,18 @@ import axios from 'axios';
         for (let i = 0; i < files.length; i++) {
           const reader = new FileReader();
           reader.onload = (e) => {
-            const img = new Image();
-            img.src = e.target.result;
-            img.onload = () => {
-              const canvas = document.createElement('canvas');
-              const maxWidth = 800; // 设置最大宽度
-              const scaleRatio = Math.min(maxWidth / img.width, 1);
-              canvas.width = img.width * scaleRatio;
-              canvas.height = img.height * scaleRatio;
-              const ctx = canvas.getContext('2d');
-              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-              canvas.toBlob((blob) => {
-                const compressedFile = new File([blob], files[i].name, {
-                  type: files[i].type,
-                  lastModified: files[i].lastModified,
-                });
-                // 记录压缩前后的大小
-                const originalSize = Math.round(files[i].size / 1024); // 原始大小（KB）
-                const compressedSize = Math.round(compressedFile.size / 1024); // 壓縮後大小（KB）
-                console.log(`原始大小: ${originalSize} KB，壓縮後大小: ${compressedSize} KB`);
-                selectFiles.newFile.push({
-                  file: compressedFile,
-                  id: increseId.value,
-                });
-                selectFiles.viewFile.push({
-                  FileName: compressedFile.name,
-                  FileLink: URL.createObjectURL(compressedFile),
-                  FileType: 'new',
-                  id: increseId.value,
-                });
-                increseId.value++;
-              }, files[i].type, 0.8);
-            };
+            const file = files[i]; // 保持原始文件
+            selectFiles.newFile.push({
+              file: file,
+              id: increseId.value,
+            });
+            selectFiles.viewFile.push({
+              FileName: file.name,
+              FileLink: URL.createObjectURL(file),
+              FileType: 'new',
+              id: increseId.value,
+            });
+            increseId.value++;
           };
           reader.readAsDataURL(files[i]);
         }
@@ -762,6 +741,7 @@ import axios from 'axios';
         for (const key in searchParams) {
           form.append(key, searchParams[key]);
         }
+        form.append('AssetsId',AssetsId);
         UpdatePageParameter( datagrid , event , type , form)
         getMngDatagrid('/InventoryMng/AssetsHistory',rowData,datagrid,form)
         // datagrid.loading = true;

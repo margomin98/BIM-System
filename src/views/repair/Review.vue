@@ -199,7 +199,7 @@
           .then((response) => {
             const data = response.data;
             if (data.state === 'success') {
-              canEnterPage(data.resultList , Repair_Review_Status)
+              canEnterPage(data.resultList.Status , Repair_Review_Status)
               details.value = data.resultList;
             } else if (data.state === 'account_error') {
               alert(data.messages);

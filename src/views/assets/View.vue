@@ -341,7 +341,6 @@
       })
       //  下半部歷史紀錄
       const searchParams = reactive({
-        AssetsId: AssetsId,
         StartDate: '',
         EndDate: '',
         Action: '',
@@ -402,6 +401,7 @@
         for (const key in searchParams) {
           form.append(key, searchParams[key]);
         }
+        form.append('AssetsId',AssetsId);
         UpdatePageParameter( datagrid , event , type , form)
         getMngDatagrid('/InventoryMng/AssetsHistory',rowData,datagrid,form)
         // datagrid.loading = true;

@@ -45,7 +45,7 @@
         <div class="col mb-3">
           <div class="input-group">
             <div class="input-group-prepend">備註 :</div>
-            <textarea style="height: 200px;" class="form-control readonly_box" aria-label="With textarea" placeholder="最多輸入500字" v-model="details.Memo" disabled></textarea>
+            <textarea style="height: 200px;" class="form-control readonly_box" aria-label="With textarea" v-model="details.Memo" disabled></textarea>
           </div>
         </div>
       </div>
@@ -220,7 +220,8 @@
                 <div class="input-group-prepend">已上傳檔案 :</div>
                 <div class="selected_file">
                   <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
-                    <p @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
+                    <p>{{ file.FileName }}</p>
+                    <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
                   </div>
                 </div>
               </div>
