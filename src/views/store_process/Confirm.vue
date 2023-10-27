@@ -256,8 +256,8 @@
                 <div class="input-with-icon">
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(1)" />
                   <span class="icon-container">
-                              <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user1.isValidate" />
-                            </span>
+                                <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user1.isValidate" />
+                              </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">驗證</button>
                 <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
@@ -295,8 +295,8 @@
                 <div class="input-with-icon">
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(2)" />
                   <span class="icon-container">
-                        <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user2.isValidate" />
-                      </span>
+                          <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user2.isValidate" />
+                        </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">驗證</button>
                 <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
@@ -660,7 +660,6 @@
               pointer-events: none;
             }
           }
-      
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -830,7 +829,9 @@
             font-weight: 700;
             align-items: center;
             color: white;
-            font-size: 20px;
+            label {
+              font-size: 18px;
+            }
             div:nth-child(2) {
               gap: 0 10px;
             }
@@ -927,7 +928,6 @@
               }
             }
           }
-       
         }
       }
     }
@@ -1010,7 +1010,6 @@
               pointer-events: none;
             }
           }
-        
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -1179,7 +1178,9 @@
             font-weight: 700;
             align-items: center;
             color: white;
-            font-size: 20px;
+            label {
+              font-size: 18px;
+            }
             div:nth-child(2) {
               gap: 0 10px;
             }
@@ -1276,7 +1277,6 @@
               }
             }
           }
-        
         }
       }
     }
@@ -1552,7 +1552,9 @@
             flex-direction: column;
             font-weight: 700;
             color: white;
-            font-size: 20px;
+            label {
+              font-size: 18px;
+            }
             .radio_wrap {
               gap: 0 10px;
               padding-left: 10px;

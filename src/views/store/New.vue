@@ -1495,9 +1495,9 @@
             font-weight: 700;
             align-items: center;
             color: white;
-            font-size: 20px;
+            font-size: 18px;
             div:nth-child(2) {
-              gap: 0 5px;
+              gap: 0 10px;
               display: flex;
             }
           }
@@ -1596,9 +1596,9 @@
             font-weight: 700;
             align-items: center;
             color: white;
-            font-size: 20px;
+            font-size: 18px;
             div:nth-child(2) {
-              gap: 0 5px;
+              gap: 0 10px;
               display: flex;
             }
           }
@@ -1785,9 +1785,9 @@
             font-weight: 700;
             align-items: center;
             color: white;
-            font-size: 20px;
+            font-size: 18px;
             div:nth-child(2) {
-              gap: 0 5px;
+              gap: 0 10px;
               display: flex;
             }
           }
@@ -1881,9 +1881,9 @@
             font-weight: 700;
             align-items: center;
             color: white;
-            font-size: 20px;
+            font-size: 18px;
             div:nth-child(2) {
-              gap: 0 5px;
+              gap: 0 10px;
               display: flex;
             }
           }
@@ -1999,7 +1999,7 @@
             flex-direction: row;
             font-weight: 700;
             color: white;
-            font-size: 20px;
+            font-size: 18px;
             .check_box {
               margin-right: 10px;
             }
@@ -2185,7 +2185,7 @@
             flex-direction: column;
             font-weight: 700;
             color: white;
-            font-size: 20px;
+            font-size: 18px;
             .radio_wrap {
               gap: 0 10px;
               padding-left: 10px;

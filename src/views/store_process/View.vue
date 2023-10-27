@@ -1205,7 +1205,7 @@
           }
           .check_box_wrap {
             .check_box {
-              margin-right: 5px;
+    margin-right: 10px;
             }
           }
           .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {

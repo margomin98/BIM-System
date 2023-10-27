@@ -929,7 +929,7 @@ import axios from 'axios';
               }
             }
             button {
-              @include dropdown-btn;
+          padding: 0;
               width: 100%;
               color: black;
               justify-content: space-between;
@@ -1103,7 +1103,7 @@ import axios from 'axios';
       }
       .info_wrap {
         margin: auto;
-        width: 800px;
+        width: 700px;
         .fixed_info {
           @include fixed_info;
           border-radius: 0 10px 0 0;
@@ -1122,7 +1122,7 @@ import axios from 'axios';
               width: 100%;
             }
             button {
-              @include dropdown-btn;
+             padding: 0;
               width: 100%;
               color: black;
               justify-content: space-between;
@@ -1195,7 +1195,7 @@ import axios from 'axios';
           }
         }
         .dropdown {
-          width: calc(100% - 35%);
+          width: calc(100% - 41%);
           height: 35px;
           @include dropdown_btn;
           .dropdown-toggle {
