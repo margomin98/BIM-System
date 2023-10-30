@@ -305,7 +305,7 @@
             isLoading.value = false;
             setTimeout(function () {
               alert(data.messages);
-            }, 10); // 延遲alert，以先關閉loading動畫
+            }, 50); // 延遲alert，以先關閉loading動畫
           })
           .catch((error)=>{
             isLoading.value = false;
