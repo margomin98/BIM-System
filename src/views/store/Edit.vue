@@ -1314,6 +1314,14 @@
   textarea {
     padding: 5px 10px 30px;
   }
+  .dropdown {
+    #typeDropdown,
+    #categoryDropdown,
+    #areaDropdown {
+      height: 38px;
+      padding: 5px 10px !important;
+    }
+  }
   .delete_btn {
     background: var(--c-5, #E94B4B);
     justify-content: center;
