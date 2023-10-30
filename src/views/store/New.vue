@@ -100,8 +100,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                                    {{ itemParams.EquipTypeName || '請選擇' }}
-                                  </button>
+                                      {{ itemParams.EquipTypeName || '請選擇' }}
+                                    </button>
                 <div class="dropdown-menu" aria-labelledby="typeDropdown">
                   <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType('upperForm' , item)">{{ item.Name }}</p>
                 </div>
@@ -115,8 +115,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(itemParams.EquipTypeName !== '') }">
-                                    {{ itemParams.EquipCategoryName || EquipCategoryInit }}
-                                  </button>
+                                      {{ itemParams.EquipCategoryName || EquipCategoryInit }}
+                                    </button>
                 <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                   <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory('upperForm' , item)">{{ item.Name }}</p>
                 </div>
@@ -194,8 +194,8 @@
               </div>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{ itemParams.PackageUnit || '請選擇' }}
-                                  </button>
+                                      {{ itemParams.PackageUnit || '請選擇' }}
+                                    </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in DropdownArray.PackageUnit" :key="index" class="dropdown-item" @click="selectPackageUnit('upperForm' , item)">
                     {{ item }}</p>
@@ -225,8 +225,8 @@
               </div>
               <div v-if="itemParams.AssetType === '耗材'" class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="itemParams.AssetType !== '耗材'">
-                                    {{ itemParams.Unit || '請選擇' }}
-                                  </button>
+                                      {{ itemParams.Unit || '請選擇' }}
+                                    </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <p v-for="(item, index) in DropdownArray.Unit" :key="index" class="dropdown-item" @click="selectUnit('upperForm' , item)">
                     {{ item }}</p>
@@ -306,8 +306,8 @@
                   </div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                                    {{ tab.itemEquipTypeName || '請選擇' }}
-                                  </button>
+                                      {{ tab.itemEquipTypeName || '請選擇' }}
+                                    </button>
                     <div class="dropdown-menu" aria-labelledby="typeDropdown">
                       <p v-for="item in DropdownArray.EquipType" class="dropdown-item" @click="selectType('tab' , item , index)">{{ item.Name }}</p>
                     </div>
@@ -321,8 +321,8 @@
                   </div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!tab.itemEquipTypeName">
-                                    {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }}
-                                  </button>
+                                      {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }}
+                                    </button>
                     <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                       <p v-for="item in tab.EquipCategoryArray" class="dropdown-item" @click="selectCategory('tab' , item , index)">{{ item.Name }}</p>
                     </div>
@@ -398,8 +398,8 @@
                   </div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{ tab.itemPackageUnit || '請選擇' }}
-                                  </button>
+                                      {{ tab.itemPackageUnit || '請選擇' }}
+                                    </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="item in DropdownArray.PackageUnit" class="dropdown-item" @click="selectPackageUnit('tab' , item , index)">{{ item }}</p>
                     </div>
@@ -428,8 +428,8 @@
                   </div>
                   <div v-if="tab.itemAssetType === '耗材'" class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="tab.itemAssetType !== '耗材'">
-                                    {{ tab.itemUnit || '請選擇' }}
-                                  </button>
+                                      {{ tab.itemUnit || '請選擇' }}
+                                    </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="item in DropdownArray.Unit" class="dropdown-item" @click="selectUnit('tab' , item , index)">{{ item }}</p>
                     </div>
@@ -1239,6 +1239,14 @@
   textarea {
     padding: 5px 10px 30px;
   }
+  .dropdown {
+    #typeDropdown,
+    #categoryDropdown,
+    #areaDropdown {
+      height: 38px;
+      padding: 5px 10px !important;
+    }
+  }
   .delete_btn {
     background: var(--c-5, #E94B4B);
     justify-content: center;
@@ -1475,9 +1483,9 @@
             font-weight: 700;
             align-items: center;
             color: white;
-            font-size: 20px;
+            font-size: 18px;
             div:nth-child(2) {
-              gap: 0 5px;
+              gap: 0 10px;
               display: flex;
             }
           }
@@ -1576,9 +1584,9 @@
             font-weight: 700;
             align-items: center;
             color: white;
-            font-size: 20px;
+            font-size: 18px;
             div:nth-child(2) {
-              gap: 0 5px;
+              gap: 0 10px;
               display: flex;
             }
           }
@@ -1765,9 +1773,9 @@
             font-weight: 700;
             align-items: center;
             color: white;
-            font-size: 20px;
+            font-size: 18px;
             div:nth-child(2) {
-              gap: 0 5px;
+              gap: 0 10px;
               display: flex;
             }
           }
@@ -1861,9 +1869,9 @@
             font-weight: 700;
             align-items: center;
             color: white;
-            font-size: 20px;
+            font-size: 18px;
             div:nth-child(2) {
-              gap: 0 5px;
+              gap: 0 10px;
               display: flex;
             }
           }
@@ -1979,7 +1987,7 @@
             flex-direction: row;
             font-weight: 700;
             color: white;
-            font-size: 20px;
+            font-size: 18px;
             .check_box {
               margin-right: 10px;
             }
@@ -2165,7 +2173,7 @@
             flex-direction: column;
             font-weight: 700;
             color: white;
-            font-size: 20px;
+            font-size: 18px;
             .radio_wrap {
               gap: 0 10px;
               padding-left: 10px;

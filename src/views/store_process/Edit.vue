@@ -7,10 +7,10 @@
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
-          <p>申請人員: {{ details.Applicant }}</p>
+          <p>申請人員 : {{ details.Applicant }}</p>
         </div>
         <div>
-          <p>申請入庫日期: {{ details.ApplicationDate }}</p>
+          <p>申請入庫日期 : {{ details.ApplicationDate }}</p>
         </div>
       </div>
       <!-- 上半部表單 -->
@@ -319,7 +319,7 @@
             <!-- 頁籤選擇檔案 -->
             <div class="col">
               <div class="input-group">
-                <div class="input-group-prepend">資產照片 :</div>
+                <div class="input-group-prepend">資產照片：</div>
                 <div class="mb-3 file_wrap">
                   <button class='choose_btn' @click="openFileExplorer(index)">選擇檔案</button>
                   <input type="file" accept="image/*" ref="fileInputs" style="display: none;" multiple @change="handleFileChange(index , $event)" />
@@ -328,7 +328,7 @@
             </div>
             <div class="selected_file col">
               <div class="input-group">
-                <div class="input-group-prepend">已選擇檔案 :</div>
+                <div class="input-group-prepend">已選擇檔案：</div>
                 <div v-for="(file , file_index) in tab.viewFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
                   <p @click="viewImgFile('new',index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
                   <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('new',index,file_index)">
@@ -338,7 +338,7 @@
             <!-- 頁籤已上傳檔案 -->
             <div class="col selected_file">
               <div class="input-group mt-3">
-                <div class="input-group-prepend">已上傳檔案 :</div>
+                <div class="input-group-prepend">已上傳檔案：</div>
                 <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
                   <p @click="viewImgFile('exist',index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
                   <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('exist',index,file_index)">
@@ -1291,9 +1291,9 @@
               font-weight: 700;
               align-items: center;
               color: white;
-              font-size: 20px;
+              font-size: 18px;
               div:nth-child(2) {
-                gap: 0 5px;
+                gap: 0 10px;
               }
             }
             .modal {
@@ -1537,9 +1537,9 @@
               font-weight: 700;
               align-items: center;
               color: white;
-              font-size: 20px;
+              font-size: 18px;
               div:nth-child(2) {
-                gap: 0 5px;
+                gap: 0 10px;
               }
             }
             .modal {
@@ -1802,8 +1802,9 @@
             .check_box_wrap {
               font-weight: 700;
               color: white;
+              font-size:18px;
               div:nth-child(2) {
-                gap: 0 5px;
+                gap: 0 10px;
                 display: flex;
               }
             }

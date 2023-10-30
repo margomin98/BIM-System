@@ -621,9 +621,11 @@
               font-weight: 700;
               align-items: center;
               color: white;
-              font-size: 20px;
+              label{
+              font-size:18px;
+            }
               div:nth-child(2) {
-                gap: 0 5px;
+                gap: 0 10px;
               }
             }
             .modal {
@@ -880,9 +882,11 @@
               font-weight: 700;
               align-items: center;
               color: white;
-              font-size: 20px;
+              label{
+              font-size:18px;
+            }
               div:nth-child(2) {
-                gap: 0 5px;
+                gap: 0 10px;
                 display: flex;
               }
             }
@@ -1162,7 +1166,9 @@
               flex-direction: column;
               font-weight: 700;
               color: white;
-              font-size: 20px;
+              label{
+              font-size:18px;
+            }
               .radio_wrap {
                 gap: 0 10px;
               }

@@ -225,7 +225,7 @@
       </div>
       <!-- ViewFile Modal -->
       <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" >
+        <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">{{ modalParams.title }}</h5>
@@ -358,7 +358,6 @@
         modalParams.src = details.value.Tabs[index].existFile[file_index].FileLink;
         console.log('modalParams', modalParams);
       }
-
       return {
         goBack,
         AI_ID,
@@ -640,8 +639,11 @@
             align-items: center;
             color: white;
             font-size: 20px;
+            label {
+              font-size: 18px;
+            }
             div:nth-child(2) {
-              gap: 0 5px;
+              gap: 0 10px;
             }
           }
           .modal {
@@ -942,9 +944,11 @@
             font-weight: 700;
             align-items: center;
             color: white;
-            font-size: 20px;
+            label {
+              font-size: 18px;
+            }
             div:nth-child(2) {
-              gap: 0 5px;
+              gap: 0 10px;
               display: flex;
             }
           }
@@ -1263,7 +1267,9 @@
             flex-direction: column;
             font-weight: 700;
             color: white;
-            font-size: 20px;
+            label {
+              font-size: 18px;
+            }
             .radio_wrap {
               gap: 0 10px;
             }

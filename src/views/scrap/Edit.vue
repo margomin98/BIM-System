@@ -11,17 +11,17 @@
       <div class="fixed_info">
         <div>
           <p>
-            報廢編號: {{ details.ScrapId }}
+            報廢編號 : {{ details.ScrapId }}
           </p>
         </div>
         <div>
           <p>
-            申請人員: {{ details.Applicant }}
+            申請人員 : {{ details.Applicant }}
           </p>
         </div>
         <div>
           <p>
-            申請日期: {{ details.ApplicationDate }}
+            申請日期 : {{ details.ApplicationDate }}
           </p>
         </div>
       </div>
@@ -50,7 +50,7 @@
             <div style="visibility: hidden;" class="input-group-prepend">
               <p >1</p>
             </div>
-            <span style="color:rgb(216, 13, 13); font-weight: 700; font-size: 20px;">{{ alertMsg }}</span>
+            <span style="margin-top:5px;color:#a12727; font-weight: 700; font-size: 20px;">{{ alertMsg }}</span>
             <input type="text" style="visibility: hidden;" class="form-control">
           </div>
         </div>

@@ -29,7 +29,7 @@
         <div class="row g-0">
           <!-- 送修人員 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4">
+            <div class="input-group mb-3">
               <div class="input-group-prepend">
                 送修人員：
               </div>
@@ -38,7 +38,7 @@
           </div>
           <!-- 交付日期 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4">
+            <div class="input-group mb-3">
               <div class="input-group-prepend">
                 交付日期：
               </div>
@@ -49,7 +49,7 @@
         <div class="row g-0">
           <!-- 審核人員 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4">
+            <div class="input-group mb-3">
               <div class="input-group-prepend">
                 審核人員：
               </div>
@@ -58,7 +58,7 @@
           </div>
           <!-- 審核結果 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4">
+            <div class="input-group mb-3">
               <div class="input-group-prepend">
                 審核結果：
               </div>
@@ -68,7 +68,7 @@
         </div>
         <!-- 審核日期 -->
         <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-          <div class="input-group d-flex mb-4">
+          <div class="input-group d-flex mb-3">
             <div class="input-group-prepend">
               審核日期：
             </div>
@@ -78,7 +78,7 @@
         <div class="row g-0">
           <!-- 資產編號 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4">
+            <div class="input-group mb-3">
               <div class="input-group-prepend">
                 資產編號：
               </div>
@@ -87,7 +87,7 @@
           </div>
           <!-- 物品名稱 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4">
+            <div class="input-group mb-3">
               <div class="input-group-prepend">
                 物品名稱：
               </div>
@@ -129,7 +129,7 @@
       <div class="content">
         <!-- 維修廠商 -->
         <div class="col-12">
-          <div class="input-group mb-4">
+          <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span>*</span> 維修廠商：
             </div>
@@ -138,7 +138,7 @@
         </div>
         <!-- 外部維修單號 -->
         <div class="col-12">
-          <div class="input-group mb-4">
+          <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span>*</span> 外部維修單號：
             </div>
@@ -148,7 +148,7 @@
         <div class="row g-0">
           <!-- 廠商聯絡人 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4">
+            <div class="input-group mb-3">
               <div class="input-group-prepend">
                 廠商聯絡人：
               </div>
@@ -157,7 +157,7 @@
           </div>
           <!-- 聯絡電話 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4">
+            <div class="input-group mb-3">
               <div class="input-group-prepend">
                 聯絡電話：
               </div>
@@ -167,7 +167,7 @@
         </div>
         <!-- 送修日期 -->
         <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-          <div class="input-group d-flex mb-4">
+          <div class="input-group d-flex mb-3">
             <div class="input-group-prepend">
               送修日期：
             </div>
@@ -196,10 +196,10 @@
         <div class="selected_file col">
           <div class="input-group">
             <div class="input-group-prepend mb-3">已選擇檔案：</div>
-            <div v-for="(file, index) in formParams.viewDoc" :key="index" class="file_upload_wrap" style="cursor: pointer;">
-              <p>{{ file.FileName}}</p>
+            <div v-for="(file, index) in formParams.viewDoc" :key="index" class="file_upload_wrap">
+              <p>{{ file.FileName}}
               <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
-              <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)">
+              <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)"></p>
             </div>
           </div>
         </div>
@@ -617,6 +617,10 @@
   .form-check-input {
     align-self: center
   }
+  .view_icon,
+  .trash_icon {
+    cursor: pointer
+  }
   .modal {
     .modal-body {
       padding: 20px;
@@ -718,19 +722,19 @@
             }
           }
           .selected_file {
-            .input-group {
-              flex-direction: column;
-            }
+            display: flex;
+            align-items: center;
             .file_upload_wrap {
               margin-bottom: 0;
               display: flex;
+              align-items: center;
               img {
                 width: 25px;
                 height: 25px;
               }
               p {
                 font-weight: 700;
-                margin-bottom: 3%;
+                margin-bottom: 0;
                 color: white;
                 word-break: break-word;
                 &::before {
