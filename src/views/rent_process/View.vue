@@ -104,7 +104,7 @@
           <p>總出庫數量：{{ totalNeed }}個</p>
         </div>
         <div>
-          <p>已備數量: {{ totalSelect }}個</p>
+          <p>已備數量：{{ totalSelect }}個</p>
         </div>
       </div>
       <div class="fourth_content">

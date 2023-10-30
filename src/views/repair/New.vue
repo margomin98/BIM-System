@@ -11,12 +11,12 @@
       <div class="fixed_info">
         <div>
           <p>
-            申請人員: {{ Applicant }}
+            申請人員 : {{ Applicant }}
           </p>
         </div>
         <div>
           <p>
-            申請日期: {{ ApplicationDate }}
+            申請日期 : {{ ApplicationDate }}
           </p>
         </div>
       </div>
