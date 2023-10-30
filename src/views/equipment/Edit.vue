@@ -468,8 +468,8 @@ import axios from 'axios';
         let requestData = {
           IntegrationId: details.value.IntegrationId,
           IntegrationName: details.value.IntegrationName,
-          AreaName: details.value.AreaName,
-          LayerName: details.value.LayerName,
+          Area_Id: details.value.Area_Id,
+          Layer_Id: details.value.Layer_Id,
           Custodian: details.value.Custodian,
           AssetList: formParams.AssetList,
         };

@@ -320,7 +320,7 @@ import { Repair_Delete_Status } from '@/assets/js/enter_status';
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages + '\n';
-            msg += '單號:' + data.resultList.R_Id;
+            msg += '單號:' + data.resultList.R_ID;
             alert(msg);
             router.push({
               name: 'Repair_Datagrid'

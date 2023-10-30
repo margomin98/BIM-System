@@ -129,9 +129,28 @@
       </DataTable>
     </div>
   </div>
+  <!-- 加載動畫 -->
+  <loading :active.sync="isLoading">
+    <div class="loadingio-spinner-ellipsis-kfs3u9hd8sa">
+      <div class="ldio-gxxoh6igtkw">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <p class="upload_text">
+      上傳中
+      <span class="dot-one"> .</span>
+      <span class="dot-two"> .</span>
+      <span class="dot-three"> .</span>
+    </p>
+  </loading>
 </template>
 
 <script>
+  import Loading from 'vue-loading-overlay';
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
   import Assets_return_button from "@/components/Assets_return_button";
@@ -159,6 +178,7 @@
       DataTable,
       Column,
       Assets_return_button,
+      Loading,
     },
     setup() {
       const searchParams = reactive({
@@ -199,6 +219,7 @@
       ]
       const rowData = ref([]);
       const inputfile = ref(null);
+      const isLoading = ref(false);
       onMounted(() => {
         datagrid.sortField = 'AssetsId'
         submit('','search');
@@ -273,6 +294,7 @@
           }
           const form = new FormData();
           form.append('file',selectedFile);
+          isLoading.value = true;
           axios.post('http://192.168.0.177:7008/InventoryMng/ImportExcel',form)
           .then((response)=>{
             const data = response.data;
@@ -280,9 +302,13 @@
               // 匯入成功則清空條件並刷新datagrid
               clear();
             }
-            alert(data.messages);
+            isLoading.value = false;
+            setTimeout(function () {
+              alert(data.messages);
+            }, 50); // 延遲alert，以先關閉loading動畫
           })
           .catch((error)=>{
+            isLoading.value = false;
             console.error(error);
           })
         }
@@ -379,6 +405,7 @@
         datagridfield,
         rowData,
         inputfile,
+        isLoading,
         submit,
         importExcel,
         exportExcel,
@@ -397,7 +424,7 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
- 
+  @import "@/assets/css/loading.css";
   .dg-height {
     @include datagrid-height;
   }
