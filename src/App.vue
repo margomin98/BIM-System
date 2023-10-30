@@ -7,6 +7,7 @@
 </script>
 
 <style lang="scss">
+
 	.ag-chart-no-data-overlay {
 		display: flex;
 		justify-content: center;
