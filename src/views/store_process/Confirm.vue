@@ -256,8 +256,8 @@
                 <div class="input-with-icon">
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(1)" />
                   <span class="icon-container">
-                                <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user1.isValidate" />
-                              </span>
+                                    <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user1.isValidate" />
+                                  </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">驗證</button>
                 <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
@@ -295,8 +295,8 @@
                 <div class="input-with-icon">
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(2)" />
                   <span class="icon-container">
-                          <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user2.isValidate" />
-                        </span>
+                              <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user2.isValidate" />
+                            </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">驗證</button>
                 <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
@@ -765,6 +765,15 @@
             }
           }
           .modal {
+            button {
+              background: #506b91;
+              border: none;
+              font-weight: 700;
+              font-size: 18px;
+              &:hover {
+                background: #6d92b3;
+              }
+            }
             .modal-body {
               padding: 16px 16px 0;
             }
@@ -837,6 +846,15 @@
             }
           }
           .modal {
+            button {
+              background: #506b91;
+              border: none;
+              font-weight: 700;
+              font-size: 18px;
+              &:hover {
+                background: #6d92b3;
+              }
+            }
             .modal-header {
               background: #3D4E61;
               color: white;
@@ -1114,6 +1132,15 @@
             }
           }
           .modal {
+            button {
+              background: #506b91;
+              border: none;
+              font-weight: 700;
+              font-size: 18px;
+              &:hover {
+                background: #6d92b3;
+              }
+            }
             .modal-body {
               padding: 16px 16px 0;
             }
@@ -1186,6 +1213,15 @@
             }
           }
           .modal {
+            button {
+              background: #506b91;
+              border: none;
+              font-weight: 700;
+              font-size: 18px;
+              &:hover {
+                background: #6d92b3;
+              }
+            }
             .modal-header {
               background: #3D4E61;
               color: white;
@@ -1532,8 +1568,7 @@
         }
         .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
           margin-left: unset !important;
-          padding: 0;
-        }
+            }
         .nav-tabs {
           button {
             @include tab_section_num;
@@ -1565,6 +1600,15 @@
             }
           }
           .modal {
+            button {
+              background: #506b91;
+              border: none;
+              font-weight: 700;
+              font-size: 18px;
+              &:hover {
+                background: #6d92b3;
+              }
+            }
             .modal-header {
               background: #3D4E61;
               color: white;

@@ -121,9 +121,9 @@
 		}
 	}
 	.main_section {
-		.content .dropdown button{
-			padding: 0!important;
-		}
+		// .content .dropdown button{
+		// 	padding: 0!important;
+		// }
 		input {
 			text-align: left !important;
 		}

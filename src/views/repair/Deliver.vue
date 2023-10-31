@@ -709,7 +709,6 @@ import { Repair_Deliver_Status } from '@/assets/js/enter_status';
       .readonly_box {
         @include readonly_box;
         height: 35px;
-        text-align: center;
         margin-left: unset !important;
       }
       .swiper_section swiper-slide {

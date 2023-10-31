@@ -739,6 +739,7 @@ UpdatePageParameter,
     @include red_star
   }
   .force_modal {
+    
     .modal-body {
       padding: 20px;
       margin: auto;
@@ -771,19 +772,17 @@ UpdatePageParameter,
       h5 {
         font-weight: 700;
       }
-      background: #528091;
+      background: #3D4E61;
       color: white;
       display: flex;
       justify-content: center;
-      padding: 0 16px 16px;
       .close_icon {
-        height: 40px;
         cursor: pointer;
+        p{
+          margin-bottom: 0;
+        }
       }
-      .modal-title {
-        margin: auto;
-        padding-top: 16px;
-      }
+
     }
   }
   .checkmark-icon {
@@ -1083,11 +1082,18 @@ UpdatePageParameter,
         }
         background: #3D4E61;
         color: white;
-        padding:5px 10px;
         .close_icon {
           cursor: pointer;
         }
+      }  button {
+      background: #506b91;
+      border: none;
+      font-weight: 700;
+      font-size: 18px;
+      &:hover {
+        background: #6d92b3;
       }
+    }
     }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
@@ -1379,7 +1385,6 @@ UpdatePageParameter,
         }
         background: #3D4E61;
         color: white;
-        padding:5px 10px;
         .close_icon {
           cursor: pointer;
         }
@@ -1680,7 +1685,6 @@ UpdatePageParameter,
         }
         background: #3D4E61;
         color: white;
-        padding:5px 10px;
         .close_icon {
           cursor: pointer;
         }

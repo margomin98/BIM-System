@@ -93,10 +93,10 @@
               <div class="input-group">
                 <div class="input-group-prepend">審核人員：</div>
                 <div class="input-with-icon">
-                  <input type="text" class="form-control readonly_box" readonly v-model="validation.resultName"/>
+                  <input type="text" class="form-control readonly_box" readonly v-model="validation.resultName" />
                   <span v-show="validation.isValidate" class="icon-container">
-                    <img src="@/assets/accept.png" class="checkmark-icon" />
-                  </span>
+                      <img src="@/assets/accept.png" class="checkmark-icon" />
+                    </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">驗證</button>
                 <!-- 驗證跳出Modal -->
@@ -111,13 +111,13 @@
                         <div class="col">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">帳號：</div>
-                            <input type="text" class="form-control" v-model="validation.account"/>
+                            <input type="text" class="form-control" v-model="validation.account" />
                           </div>
                         </div>
                         <div class="col">
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">密碼：</div>
-                            <input type="password" class="form-control" v-model="validation.password"/>
+                            <input type="password" class="form-control" v-model="validation.password" />
                           </div>
                         </div>
                       </div>
@@ -157,9 +157,19 @@
 </template>
 
 <script>
-  import { ref, onMounted, reactive } from 'vue';
-  import { useRoute } from 'vue-router'
-  import { canEnterPage, getDate , goBack } from '@/assets/js/common_fn.js'
+  import {
+    ref,
+    onMounted,
+    reactive
+  } from 'vue';
+  import {
+    useRoute
+  } from 'vue-router'
+  import {
+    canEnterPage,
+    getDate,
+    goBack
+  } from '@/assets/js/common_fn.js'
   import Navbar from '@/components/Navbar.vue';
   import axios from 'axios';
   import router from '@/router';
@@ -169,7 +179,10 @@
   import {
     Pagination
   } from 'swiper/modules';
-import { Scrap_Delete_Status, Scrap_Review_Status } from '@/assets/js/enter_status';
+  import {
+    Scrap_Delete_Status,
+    Scrap_Review_Status
+  } from '@/assets/js/enter_status';
   register();
   export default {
     components: {
@@ -188,56 +201,54 @@ import { Scrap_Delete_Status, Scrap_Review_Status } from '@/assets/js/enter_stat
         resultName: '未驗證', //審核人員
         result: '', //審核結果
       });
-      onMounted(()=>{
+      onMounted(() => {
         getDetails();
         reviewDate.value = getDate();
       });
       // 取得單筆資料
       async function getDetails() {
         axios.get(`http://192.168.0.177:7008/GetDBdata/GetScrapInfo?s_id=${ScrapId}`)
-        .then((response)=>{
-          const data = response.data;
-          if(data.state === 'success') {
-            canEnterPage(data.resultList.Status , Scrap_Review_Status)
-            details.value = data.resultList;
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-          else {
-            alert(data.messages);
-          }
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+          .then((response) => {
+            const data = response.data;
+            if (data.state === 'success') {
+              canEnterPage(data.resultList.Status, Scrap_Review_Status)
+              details.value = data.resultList;
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            } else {
+              alert(data.messages);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       async function validate() {
         const form = new FormData();
         form.append('userName', validation.account)
         form.append('userPassword', validation.password)
         form.append('id', 'S_Verify')
-        axios.post('http://192.168.0.177:7008/Account/IdentityValidation' , form)
-        .then((response)=>{
-          const data = response.data;
-          if(data.state === 'success') {
-            validation.isValidate = true;
-            validation.resultName = validation.account;
-            canSubmit.value = true;
-          }
-          else {
-            validation.isValidate = false;
-            validation.resultName = '未驗證';
-            canSubmit.value = false;
-            alert(data.messages)
-          }
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+        axios.post('http://192.168.0.177:7008/Account/IdentityValidation', form)
+          .then((response) => {
+            const data = response.data;
+            if (data.state === 'success') {
+              validation.isValidate = true;
+              validation.resultName = validation.account;
+              canSubmit.value = true;
+            } else {
+              validation.isValidate = false;
+              validation.resultName = '未驗證';
+              canSubmit.value = false;
+              alert(data.messages)
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       async function submit() {
-        if(!validation.result) {
+        if (!validation.result) {
           alert('請輸入必填項目');
         }
         var requestData = {
@@ -246,22 +257,24 @@ import { Scrap_Delete_Status, Scrap_Review_Status } from '@/assets/js/enter_stat
           VerifyResult: '',
         }
         requestData.VerifyResult = validation.result === 'true';
-        axios.post('http://192.168.0.177:7008/ScrapMng/Verify',requestData)
-        .then((response)=>{
-          const data = response.data
-          if(data.state === 'success') {
-            alert(data.messages+'\n單號為:' + data.resultList.S_ID);
-            router.push({ name: 'Scrap_Datagrid' });
-          } else if( data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          } else {
-            alert(data.messages);
-          }
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+        axios.post('http://192.168.0.177:7008/ScrapMng/Verify', requestData)
+          .then((response) => {
+            const data = response.data
+            if (data.state === 'success') {
+              alert(data.messages + '\n單號為:' + data.resultList.S_ID);
+              router.push({
+                name: 'Scrap_Datagrid'
+              });
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            } else {
+              alert(data.messages);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       return {
         details,
@@ -434,6 +447,15 @@ import { Scrap_Delete_Status, Scrap_Review_Status } from '@/assets/js/enter_stat
             }
           }
           .modal {
+            button {
+              background: #506b91;
+              border: none;
+              font-weight: 700;
+              font-size: 18px;
+              &:hover {
+                background: #6d92b3;
+              }
+            }
             .modal-body {
               padding: 16px 16px 0;
             }
@@ -613,6 +635,15 @@ import { Scrap_Delete_Status, Scrap_Review_Status } from '@/assets/js/enter_stat
             }
           }
           .modal {
+            button {
+              background: #506b91;
+              border: none;
+              font-weight: 700;
+              font-size: 18px;
+              &:hover {
+                background: #6d92b3;
+              }
+            }
             .modal-body {
               padding: 16px 16px 0;
             }
@@ -647,7 +678,6 @@ import { Scrap_Delete_Status, Scrap_Review_Status } from '@/assets/js/enter_stat
       .readonly_box {
         @include readonly_box;
         height: 35px;
-        text-align: center;
         margin-left: unset !important;
       }
       .swiper_section swiper-slide {
@@ -801,6 +831,15 @@ import { Scrap_Delete_Status, Scrap_Review_Status } from '@/assets/js/enter_stat
             }
           }
           .modal {
+            button {
+              background: #506b91;
+              border: none;
+              font-weight: 700;
+              font-size: 18px;
+              &:hover {
+                background: #6d92b3;
+              }
+            }
             .modal-body {
               padding: 16px 16px 0;
             }

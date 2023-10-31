@@ -59,16 +59,8 @@
         </div>
       </div>
       <div class="second_content">
-        <DataTable 
-        :size="'small'"
-        :value="rowData1" 
-        resizableColumns 
-        columnResizeMode="expand"
-        showGridlines 
-        scrollable
-        scroll-height="420px">
-
-        <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+        <DataTable :size="'small'" :value="rowData1" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="420px">
+          <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
         </DataTable>
       </div>
       <div class="fixed_info">
@@ -77,23 +69,16 @@
         </div>
       </div>
       <div class="third_content">
-        <DataTable 
-        :size="'small'"
-        :value="rowData2" 
-        resizableColumns 
-        columnResizeMode="expand"
-        showGridlines 
-        scrollable
-        scroll-height="600px">
-        <Column header="交付確認" class="datatable_checkbox">
-          <template style="min-width:50px; " #body="slotProps">
-            <input type="checkbox" class="p-checkbox p-component" v-model="slotProps.data.OM_IsExecute">
-          </template>
+        <DataTable :size="'small'" :value="rowData2" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="600px">
+          <Column header="交付確認" class="datatable_checkbox">
+            <template style="min-width:50px; " #body="slotProps">
+              <input type="checkbox" class="p-checkbox p-component" v-model="slotProps.data.OM_IsExecute">
+</template>
         </Column>
         <Column>
-          <template #body="slotProps">
-            <AssetsView :params="slotProps"/>
-          </template>
+<template #body="slotProps">
+  <AssetsView :params="slotProps" />
+</template>
         </Column>
         <Column v-for="item in datagrid2field" :field="item.field" :header="item.header" :sortable="item.sortable" :style="{'min-width': item.width}"></Column>
         </DataTable>
@@ -302,13 +287,21 @@
     useRouter
   } from 'vue-router';
   import Navbar from "@/components/Navbar.vue";
-  import {canEnterPage ,goBack , getDate } from "@/assets/js/common_fn"
-  import { Rent_UseArray } from "@/assets/js/dropdown";
+  import {
+    canEnterPage,
+    goBack,
+    getDate
+  } from "@/assets/js/common_fn"
+  import {
+    Rent_UseArray
+  } from "@/assets/js/dropdown";
   import {
     onMounted,
     ref
   } from "vue";
-  import { RentProcess_Confirm_Status } from "@/assets/js/enter_status";
+  import {
+    RentProcess_Confirm_Status
+  } from "@/assets/js/enter_status";
   export default {
     components: {
       Navbar,
@@ -342,26 +335,98 @@
         },
       });
       // 資產出庫項目
-      const datagrid1field = [
-        { field: "id", width: '50px' , header: "項目" },
-        { field: "EquipTypeName", width: '150px', header: "設備總類" },
-        { field: "EquipCategoryName", width: '150px', header: "設備分類" },
-        { field: "ProductName", width: '150px', header: "物品名稱" },
-        { field: "Number", width: '100px', header: "數量" },
-        { field: "RequiredSpec", width: '250px', header: "規格需求" },
+      const datagrid1field = [{
+          field: "id",
+          width: '50px',
+          header: "項目"
+        },
+        {
+          field: "EquipTypeName",
+          width: '150px',
+          header: "設備總類"
+        },
+        {
+          field: "EquipCategoryName",
+          width: '150px',
+          header: "設備分類"
+        },
+        {
+          field: "ProductName",
+          width: '150px',
+          header: "物品名稱"
+        },
+        {
+          field: "Number",
+          width: '100px',
+          header: "數量"
+        },
+        {
+          field: "RequiredSpec",
+          width: '250px',
+          header: "規格需求"
+        },
       ]
       // 資產出庫細項
-      const datagrid2field = [
-        { field: "OM_List_id", width: '50px', header: "需求項目", sortable:false, },
-        { field: "OM_Number", width: '30px', header: "數量", sortable:false, },
-        { field: "OM_Unit", width: '30px', header: "單位", sortable:false, },
-        { field: "AssetsId", width: '150px', header: "資產編號", sortable:true, },
-        { field: "AssetName", width: '150px', header: "物品名稱", sortable:true, },
-        { field: "AreaName", width: '150px', header: "儲位區域", sortable:true, },
-        { field: "LayerName", width: '150px', header: "儲位櫃位", sortable:true, },
-        { field: "VendorName", width: '150px', header: "廠商", sortable:true, },
-        { field: "ProductType", width: '150px', header: "型號", sortable:true, },
-        { field: "ProductSpec", width: '150px', header: "規格", sortable:true, },
+      const datagrid2field = [{
+          field: "OM_List_id",
+          width: '50px',
+          header: "需求項目",
+          sortable: false,
+        },
+        {
+          field: "OM_Number",
+          width: '30px',
+          header: "數量",
+          sortable: false,
+        },
+        {
+          field: "OM_Unit",
+          width: '30px',
+          header: "單位",
+          sortable: false,
+        },
+        {
+          field: "AssetsId",
+          width: '150px',
+          header: "資產編號",
+          sortable: true,
+        },
+        {
+          field: "AssetName",
+          width: '150px',
+          header: "物品名稱",
+          sortable: true,
+        },
+        {
+          field: "AreaName",
+          width: '150px',
+          header: "儲位區域",
+          sortable: true,
+        },
+        {
+          field: "LayerName",
+          width: '150px',
+          header: "儲位櫃位",
+          sortable: true,
+        },
+        {
+          field: "VendorName",
+          width: '150px',
+          header: "廠商",
+          sortable: true,
+        },
+        {
+          field: "ProductType",
+          width: '150px',
+          header: "型號",
+          sortable: true,
+        },
+        {
+          field: "ProductSpec",
+          width: '150px',
+          header: "規格",
+          sortable: true,
+        },
       ]
       const rowData1 = ref([]);
       const rowData2 = ref([]);
@@ -398,7 +463,6 @@
           console.error(error);
         }
       }
-
       //分別使用帳號密碼驗證、改變驗證狀態 user1為領用人員 user2為交付人員
       async function validate(user) {
         if (user === 1) {
@@ -472,17 +536,17 @@
         return validation.value.user1.isValidate && validation.value.user2.isValidate;
       }
       async function submit() {
-        if(DeliveryMemo.value) {
-          DeliveryMemo.value =  DeliveryMemo.value.trim();
+        if (DeliveryMemo.value) {
+          DeliveryMemo.value = DeliveryMemo.value.trim();
         }
         if (DeliveryMemo.value && !/^[\s\S]{1,100}$/.test(DeliveryMemo.value)) {
           alert('交付備註不可輸入超過100字')
           return
         }
-        if(!loading.value) {
+        if (!loading.value) {
           loading.value = true;
           let OM_List = [];
-          rowData2.value.forEach( item=> {
+          rowData2.value.forEach(item => {
             OM_List.push({
               OM_id: item.OM_id,
               OM_IsExecute: item.OM_IsExecute,
@@ -498,7 +562,7 @@
             OM_List: OM_List,
           };
           try {
-            const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/Delivery',requestData);
+            const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/Delivery', requestData);
             const data = response.data;
             console.log(data);
             if (data.state === 'success') {
@@ -566,7 +630,15 @@
     .modal-body {
       padding: 16px 16px 0;
     }
-   
+    button {
+      background: #506b91;
+      border: none;
+      font-weight: 700;
+      font-size: 18px;
+      &:hover {
+        background: #6d92b3;
+      }
+    }
     .modal-input-group-prepend {
       width: auto;
       font-weight: 700;
@@ -580,51 +652,51 @@
       h5 {
         font-weight: 700;
       }
-      background: #528091;
-    color: white;
-    display: flex;
-    justify-content: center;
+      background: #3D4E61;
+      color: white;
+      display: flex;
+      justify-content: center;
       .close_icon {
         cursor: pointer;
       }
-      .modal-title{
+      .modal-title {
         margin: auto;
       }
     }
   }
-  #confirmModal{
-    .modal-content{
+  #confirmModal {
+    .modal-content {
       border-radius: 0;
-      border:1px solid black;
-    .modal-body{
-      background: #528091;
-    color: white;
-    font-weight: 700;
-    text-align: center;
-    height: 80px;
-      border-bottom:1px solid black;
+      border: 1px solid black;
+      .modal-body {
+        background: #528091;
+        color: white;
+        font-weight: 700;
+        text-align: center;
+        height: 80px;
+        border-bottom: 1px solid black;
+      }
+      .modal-footer {
+        margin: auto;
+        padding: 10px;
+        gap: 5px;
+        button:nth-child(1) {
+          font-weight: 700;
+          border: none;
+          &:hover {
+            background: #636260
+          }
+        }
+        button:nth-child(2) {
+          background: #132238;
+          font-weight: 700;
+          border: none;
+          &:hover {
+            background: #426497
+          }
+        }
+      }
     }
-    .modal-footer{
-    
-          margin: auto;
-    padding: 10px;
-    gap:5px;
-    button:nth-child(1){
-      font-weight: 700;
-    border:none;
-    &:hover{
-      background:#636260
-    }
-    }
-    button:nth-child(2){
-      background: #132238;
-    font-weight: 700;
-    border: none;
-    &:hover{
-      background:#426497
-    }
-    }
-    }}
   }
   .input-with-icon {
     position: relative;
@@ -647,9 +719,9 @@
         @include title_color;
       }
       .modal-content {
-      width: 400px;
-      margin: auto;
-    }
+        width: 400px;
+        margin: auto;
+      }
       .info_wrap {
         margin: auto;
         width: 1000px;
@@ -669,8 +741,7 @@
             margin-bottom: 0;
           }
         }
-      
-        .fixed_info:nth-child(5){
+        .fixed_info:nth-child(5) {
           border-top: unset;
         }
         #readonly_box {
@@ -678,7 +749,6 @@
           background-color: #B4B4B4;
           border-left: black 1px solid;
         }
-       
         .third_content {
           .list {
             border-top: 1px solid black;
@@ -895,10 +965,9 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
-          .row:nth-child(3){
-          
-            textarea{
-    padding: 5px 10px 0;
+          .row:nth-child(3) {
+            textarea {
+              padding: 5px 10px 0;
             }
           }
           .form-check {
@@ -994,9 +1063,9 @@
         @include title_color;
       }
       .modal-content {
-      width: 400px;
-      margin: auto;
-    }
+        width: 400px;
+        margin: auto;
+      }
       .info_wrap {
         margin: auto;
         padding: 0 5%;
@@ -1016,7 +1085,7 @@
             margin-bottom: 0;
           }
         }
-        .fixed_info:nth-child(5){
+        .fixed_info:nth-child(5) {
           border-top: unset;
         }
         #readonly_box {
@@ -1024,7 +1093,6 @@
           background-color: #B4B4B4;
           border-left: black 1px solid;
         }
-    
         .third_content {
           .list {
             border-top: 1px solid black;
@@ -1244,12 +1312,11 @@
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
-          .row:nth-child(3){
-          
-          textarea{
-  padding: 5px 10px 0;
+          .row:nth-child(3) {
+            textarea {
+              padding: 5px 10px 0;
+            }
           }
-        }
           .form-check {
             margin-left: 10px;
           }
@@ -1370,7 +1437,7 @@
             margin-bottom: 0;
           }
         }
-        .fixed_info:nth-child(5){
+        .fixed_info:nth-child(5) {
           border-top: unset;
         }
         .third_content {
@@ -1459,7 +1526,6 @@
             align-items: center;
             gap: 5px;
             padding: 5px;
-          
           }
           .form-check {
             margin-left: 10px;

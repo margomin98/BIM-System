@@ -86,8 +86,8 @@
                 <div class="input-with-icon">
                   <input type="text" class="form-control readonly_box" readonly v-model="validation.resultName" />
                   <span v-show="validation.isValidate" class="icon-container">
-                      <img src="@/assets/accept.png" class="checkmark-icon" />
-                    </span>
+                        <img src="@/assets/accept.png" class="checkmark-icon" />
+                      </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">驗證</button>
                 <!-- 驗證跳出Modal -->
@@ -170,7 +170,9 @@
   import {
     Pagination
   } from 'swiper/modules';
-  import { Repair_Review_Status } from '@/assets/js/enter_status';
+  import {
+    Repair_Review_Status
+  } from '@/assets/js/enter_status';
   register();
   export default {
     components: {
@@ -199,7 +201,7 @@
           .then((response) => {
             const data = response.data;
             if (data.state === 'success') {
-              canEnterPage(data.resultList.Status , Repair_Review_Status)
+              canEnterPage(data.resultList.Status, Repair_Review_Status)
               details.value = data.resultList;
             } else if (data.state === 'account_error') {
               alert(data.messages);
@@ -443,6 +445,15 @@
             }
           }
           .modal {
+            button {
+              background: #506b91;
+              border: none;
+              font-weight: 700;
+              font-size: 18px;
+              &:hover {
+                background: #6d92b3;
+              }
+            }
             .modal-body {
               padding: 16px 16px 0;
             }
@@ -626,6 +637,15 @@
             }
           }
           .modal {
+            button {
+              background: #506b91;
+              border: none;
+              font-weight: 700;
+              font-size: 18px;
+              &:hover {
+                background: #6d92b3;
+              }
+            }
             .modal-body {
               padding: 16px 16px 0;
             }
@@ -660,7 +680,6 @@
       .readonly_box {
         @include readonly_box;
         height: 35px;
-        text-align: center;
         margin-left: unset !important;
       }
       .swiper_section swiper-slide {
@@ -821,6 +840,15 @@
             }
           }
           .modal {
+            button {
+              background: #506b91;
+              border: none;
+              font-weight: 700;
+              font-size: 18px;
+              &:hover {
+                background: #6d92b3;
+              }
+            }
             .modal-body {
               padding: 16px 16px 0;
             }
