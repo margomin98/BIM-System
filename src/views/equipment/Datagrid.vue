@@ -14,15 +14,15 @@
     <div class="container-fluid datagrid_section">
       <div class="content">
         <div class="row">
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+          <div class="col-xl-12 col-md-6 col-12">
             <p>整合箱產編</p>
             <input type="text" v-model="searchParams.IntegrationId" />
           </div>
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+          <div class="col-xl-12 col-md-6 col-12">
             <p>整合箱名稱</p>
             <input type="text" v-model="searchParams.IntegrationName" />
           </div>
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+          <div class="col-xl-12 col-md-6 col-12">
             <p>區域</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
@@ -33,7 +33,7 @@
               </div>
             </div>
           </div>
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+          <div class="col-xl-12 col-md-6 col-12">
             <p>櫃位</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="searchParams.AreaName === ''">
@@ -44,7 +44,7 @@
               </div>
             </div>
           </div>
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+          <div class="col-xl-12 col-md-6 col-12">
             <p>日期類型</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -55,7 +55,7 @@
               </div>
             </div>
           </div>
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12  flex-col">
+          <div class="col-xl-12 col-md-6 col-12  flex-col">
             <p>日期(起)</p>
             <div class="date-selector">
               <div class="input-container">
@@ -63,7 +63,7 @@
               </div>
             </div>
           </div>
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12 flex-col">
+          <div class="col-xl-12 col-md-6 col-12 flex-col">
             <p>日期(迄)</p>
             <div class="date-selector">
               <div class="input-container">

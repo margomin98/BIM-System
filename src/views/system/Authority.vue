@@ -10,7 +10,7 @@
           <p>變更權限</p>
         </div> -->
         <div>
-          <p>目前權限: {{ roleSearchResult }}</p>
+          <p>目前權限 : {{ roleSearchResult }}</p>
         </div>
         
       </div>

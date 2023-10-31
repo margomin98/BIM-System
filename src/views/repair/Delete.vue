@@ -16,17 +16,17 @@
       <div class="fixed_info">
         <div>
           <p>
-            維修編號: {{ details.RepairId }}
+            維修編號 : {{ details.RepairId }}
           </p>
         </div>
         <div>
           <p>
-            申請人員: {{ details.Applicant }}
+            申請人員 : {{ details.Applicant }}
           </p>
         </div>
         <div>
           <p>
-            申請日期: {{ details.ApplicationDate }}
+            申請日期 : {{ details.ApplicationDate }}
           </p>
         </div>
       </div>

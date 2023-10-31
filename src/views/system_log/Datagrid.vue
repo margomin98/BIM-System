@@ -8,7 +8,7 @@
       <div class="content">
         <div class="row">
           <!-- 執行動作 -->
-          <div class="col">
+          <div class="col-xl-3 col-lg-3 col-md-6 col-12">
             <p>執行動作</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="activeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -20,17 +20,17 @@
             </div>
           </div>
           <!-- 訊息 -->
-          <div class="col">
+          <div class="col-xl-3 col-lg-3 col-md-6 col-12">
             <p>訊息</p>
             <input type="text" v-model="searchParams.Message"/>
           </div>
           <!-- 日期（起） -->
-          <div class="col">
+          <div class="col-xl-3 col-lg-3 col-md-6 col-12">
             <p>日期(起)</p>
             <input type="date" class="date-input" v-model="searchParams.StartDate"/>
           </div>
           <!-- 日期(迄) -->
-          <div class="col">
+          <div class="col-xl-3 col-lg-3 col-md-6 col-12">
             <p>日期(迄)</p>
             <input type="date" class="date-input" v-model="searchParams.EndDate"/>
           </div>

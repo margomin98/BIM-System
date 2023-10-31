@@ -16,17 +16,17 @@
       <div class="fixed_info">
         <div>
           <p>
-            報廢編號: {{ details.ScrapId }}
+            報廢編號 : {{ details.ScrapId }}
           </p>
         </div>
         <div>
           <p>
-            申請人員: {{ details.Applicant }}
+            申請人員 : {{ details.Applicant }}
           </p>
         </div>
         <div>
           <p>
-            申請日期: {{ details.ApplicationDate }}
+            申請日期 : {{ details.ApplicationDate }}
           </p>
         </div>
       </div>
