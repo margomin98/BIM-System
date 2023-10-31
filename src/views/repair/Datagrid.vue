@@ -317,54 +317,7 @@
         text-align: left !important;
       }
     }
-    .modal {
-      .modal-body {
-        padding: 20px;
-        margin: auto;
-        p {
-          text-align: center;
-          font-weight: 800;
-        }
-      }
-      .modal-content {
-        margin: auto;
-      }
-      .modal-input-group-prepend {
-        width: auto;
-        font-weight: 700;
-        font-size: 20px;
-      }
-      .modal-footer {
-        padding: 0 12px 12px;
-        border: none;
-        justify-content: center;
-        .confirm {
-          color: white;
-          background-color: #132238;
-          &:hover {
-            background-color: #426497;
-          }
-        }
-      }
-      .modal-header {
-        h5 {
-          font-weight: 700;
-        }
-        background: #528091;
-        color: white;
-        display: flex;
-        justify-content: center;
-        padding: 0 16px 16px;
-        .close_icon {
-          height: 40px;
-          cursor: pointer;
-        }
-        .modal-title {
-          margin: auto;
-          padding-top: 16px;
-        }
-      }
-    }
+   
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
