@@ -510,7 +510,8 @@
   } from '@/assets/js/common_api'
   import {
     goBack,
-    getDate
+    getDate,
+    checkFileSize,
   } from "@/assets/js/common_fn"
   import {
     onMounted,
@@ -903,7 +904,7 @@
       }
       // 開啟選擇檔案
       function openFileExplorer(index) {
-        console.log('fileInputs', fileInputs);
+        // console.log('fileInputs', fileInputs);
         fileInputs[index].click();
       }
       // 處理選擇的照片
@@ -924,8 +925,10 @@
           alert('上傳至多5張圖片');
           return;
         }
-        console.log(event.target.files);
-        // 压缩并处理图像
+        // 檢查圖片大小
+        if(!checkFileSize(files,tabData[index].newFile)) {
+          return
+        }
         const imgArray = tabData[index].newFile;
         const previewUrl = tabData[index].viewFile;
         for (let i = 0; i < files.length; i++) {

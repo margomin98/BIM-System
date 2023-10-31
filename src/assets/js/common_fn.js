@@ -59,3 +59,28 @@ export const createDatagrid=(()=>{
     selectedList: [],
   })
 })
+// 檢查圖片size
+export const checkFileSize = ((files,selectedFiles,exception)=>{
+  var new_size = 0;
+  var select_size = 0;
+  for (const img of files) {
+    new_size+= img.size;
+  }
+  if(!exception) {
+    for( const img of selectedFiles) {
+      select_size+= img.size;
+    }
+  } else {
+    for( const img of selectedFiles) {
+      select_size+= img.file.size;
+    }
+  }
+  console.log('new size:', new_size);
+  console.log('selct size:', select_size);
+  // 留 1Mb 給文字內容
+  if(new_size+select_size> 49*1024*1024) {
+    alert('所上傳的檔案總大小不可超過50MB,請重新選擇檔案');
+    return false ;
+  }
+  return true;
+})
