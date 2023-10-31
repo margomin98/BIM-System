@@ -197,7 +197,7 @@
               <p>請確認差異細項是否認列無誤，按下"確認"後將會立即結束本次盤點平帳作業，不可再做修正。</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn confirm" data-bs-dismiss="modal" @click="force">確認</button>
+              <button type="button" class="btn confirm" data-bs-dismiss="modal" @click="submit('force')">確認</button>
             </div>
           </div>
         </div>
@@ -451,13 +451,12 @@ UpdatePageParameter,
         getDetails();
         getDatagrid('','search');
       });
-      async function submit() {
+      async function submit(type) {
         if (!validation.isVerified) {
           alert('未驗證');
           return
         }
-        
-        if (datagrid1.selectedList.length === 0) {
+        if (type !== 'force' && datagrid1.selectedList.length === 0) {
           alert('請至少認列一項');
           return
         }
@@ -469,6 +468,10 @@ UpdatePageParameter,
           PlanId: IP_ID,
           RecognizePerson: validation.VerifyPerson,
           AssetList: AssetList,
+          IsCompleted: type === 'force' ? true: false,
+        }
+        if(AssetList.length === 0) {
+          delete requestData.AssetList;
         }
         console.log('requestData:',requestData);
         try {
@@ -486,41 +489,6 @@ UpdatePageParameter,
           } else if (data.state === 'account_error') {
             alert(data.messages);
             router.push('/');
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
-      async function force() {
-        if (!validation.isVerified) {
-          alert('未驗證');
-          return
-        }
-        const AssetList = datagrid1.selectedList.map(item => ({
-          I_id: item.I_Id,
-          Discrepancy: item.Discrepancy,
-        }));
-        var requestData = {
-          PlanId: IP_ID,
-          RecognizePerson: validation.VerifyPerson,
-          AssetList: AssetList,
-        }
-        if(AssetList.length === 0) {
-          delete requestData.AssetList;
-        }
-        try {
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/BalanceCompleted',requestData);
-          const data = response.data;
-          if (data.state === 'success') {
-            let msg = data.messages;
-            msg += '\n單號:' + data.resultList.IP_Id;
-            alert(msg);
-            router.push({
-              name: 'Inventory_Datagrid'
-            });
-          } else if (data.state === 'error') {
-            console.log(data);
-            alert(data.messages);
           }
         } catch (error) {
           console.error(error);
@@ -715,7 +683,6 @@ UpdatePageParameter,
         rowData2,
         rowHeight: 35,
         submit,
-        force,
         validate,
         getDatagrid,
         getAreaName,
