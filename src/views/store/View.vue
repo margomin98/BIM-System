@@ -579,13 +579,31 @@
               @include red_star
             }
             .selected_file {
-              margin-left: 20px;
-              align-items: center;
               display: flex;
-              p.title {
-                font-weight: 700;
-                color: white;
-                margin-bottom: 5px;
+              align-items: center;
+              flex-direction: column;
+              gap: 5px 0;
+              .file_upload_wrap {
+                flex-direction: column;
+                margin-bottom: 0;
+                display: flex;
+                align-items: center;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  font-weight: 700;
+                  margin-bottom: 0;
+                  color: white;
+                  word-break: break-word;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
+                }
               }
             }
             .file_upload_wrap {
@@ -854,6 +872,8 @@
               margin-left: 20px;
               align-items: center;
               display: flex;
+              flex-direction: column;
+              gap: 5px 0;
               p.title {
                 font-weight: 700;
                 color: white;
@@ -861,6 +881,7 @@
               }
             }
             .file_upload_wrap {
+              flex-direction: column;
               margin-bottom: 0;
               display: flex;
               img {
@@ -1137,8 +1158,9 @@
               @include red_star
             }
             .selected_file {
-              align-items: center;
               display: flex;
+              flex-direction: column;
+              gap: 5px 0;
               p.title {
                 font-weight: 700;
                 color: white;

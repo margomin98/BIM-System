@@ -803,6 +803,7 @@ import axios from 'axios';
     @include red_star
   }
   .no_content_text{
+    margin-bottom: 0;
     padding: 10px 0;
     text-align: center;
     font-weight: 700;
