@@ -1085,15 +1085,7 @@ UpdatePageParameter,
         .close_icon {
           cursor: pointer;
         }
-      }  button {
-      background: #506b91;
-      border: none;
-      font-weight: 700;
-      font-size: 18px;
-      &:hover {
-        background: #6d92b3;
-      }
-    }
+      } 
     }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
@@ -1362,6 +1354,7 @@ UpdatePageParameter,
       }
     }
     .modal {
+      
       .modal-body {
         padding: 16px 16px 0;
       }

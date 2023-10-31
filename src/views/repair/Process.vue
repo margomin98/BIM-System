@@ -193,14 +193,16 @@
             </div>
           </div>
         </div>
-        <div class="selected_file col">
+        <div class="col">
           <div class="input-group">
-            <div class="input-group-prepend mb-3">已選擇檔案：</div>
+            <div class="input-group-prepend mb-xl-3 mb-lg-3 mb-md-3">已選擇檔案：</div>
+            <div class="selected_file">
             <div v-for="(file, index) in formParams.viewDoc" :key="index" class="file_upload_wrap">
               <p>{{ file.FileName}}
               <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
               <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)"></p>
             </div>
+          </div>
           </div>
         </div>
         <!-- 瀏覽 -->
@@ -646,15 +648,10 @@
       color: white;
       display: flex;
       justify-content: center;
-      padding: 0 16px 16px;
       .close_icon {
-        height: 40px;
         cursor: pointer;
       }
-      .modal-title {
-        margin: auto;
-        padding-top: 16px;
-      }
+     
     }
   }
   .custom-slide {
@@ -722,30 +719,27 @@
             }
           }
           .selected_file {
+          .file_upload_wrap {
+            margin-bottom: 0;
             display: flex;
-            align-items: center;
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-              align-items: center;
-              img {
-                width: 25px;
-                height: 25px;
-              }
-              p {
+            img {
+              width: 25px;
+              height: 25px;
+            }
+            p {
+              font-weight: 700;
+              margin-bottom: 5px;
+              color: white;
+              word-break: break-word;
+              &::before {
+                margin-right: 10px;
+                content: '·';
                 font-weight: 700;
-                margin-bottom: 0;
                 color: white;
-                word-break: break-word;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
               }
             }
           }
+        }
           .file_wrap {
             display: flex;
             flex-direction: column;
@@ -849,9 +843,6 @@
             }
           }
           .selected_file {
-            .input-group {
-              flex-direction: column;
-            }
             .file_upload_wrap {
               margin-bottom: 0;
               display: flex;
@@ -861,7 +852,7 @@
               }
               p {
                 font-weight: 700;
-                margin-bottom: 3%;
+                margin-bottom: 5px;
                 color: white;
                 word-break: break-word;
                 &::before {
@@ -1003,7 +994,7 @@
               }
               p {
                 font-weight: 700;
-                margin-bottom: 3%;
+                margin-bottom: 5px;
                 color: white;
                 word-break: break-word;
                 &::before {

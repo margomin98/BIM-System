@@ -299,9 +299,10 @@
       justify-content: center;
       .confirm {
         color: white;
-        background-color: #132238;
+        font-weight: 700;
+        background-color: #5d85bd;
         &:hover {
-          background-color: #426497;
+          background-color:#6d92b3;
         }
       }
     }
@@ -309,7 +310,7 @@
       h5 {
         font-weight: 700;
       }
-      background: #528091;
+      background: #3D4E61;
       color: white;
       display: flex;
       justify-content: center;
