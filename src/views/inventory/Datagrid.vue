@@ -199,12 +199,17 @@
         {
           field: 'PlanStart',
           header: '盤點開始日期',
-          width: '180px',
+          width: '150px',
         },
         {
           field: 'PlanEnd',
           header: '盤點結束日期',
-          width: '180px',
+          width: '150px',
+        },
+        {
+          field: 'EditTime',
+          header: '最近編輯時間',
+          width: '150px',
         },
       ];
       onMounted(() => {

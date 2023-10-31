@@ -101,7 +101,7 @@
             <Rent_review_button :params = "slotProps"/>
           </template>
         </Column>
-        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width , 'max-width': item.max}"></Column>
       </DataTable>
     </div>
   </div>
@@ -148,9 +148,9 @@
       const datagridfield = [
         { header: "狀態", field: "Status", width: '160px' },
         { header: "單號", field: "AO_ID", width: '150px' },
-        { header: "專案名稱", field: "ProjectName", width: '150px' },
+        { header: "專案名稱", field: "ProjectName", width: '150px' , max: '300px'},
         { header: "用途", field: "Use", width: '150px' },
-        { header: "說明", field: "Description", width: '150px' },
+        { header: "說明", field: "Description", width: '150px' , max: '350px'},
         { header: "申請日期", field: "ApplicationDate", width: '160px' },
         { header: "申請人員", field: "Applicant", width: '150px' },
         { header: "審核日期", field: "VerifyDate", width: '150px' },

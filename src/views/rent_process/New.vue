@@ -205,10 +205,9 @@
         <div class="row g-0">
           <div class="col d-flex wrap" style="border: none">
             <label for="inputTextarea" class="form-label"
-              ><p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p></label
-            >
+              ><p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p></label>
             <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly>{{ details.Description}}</p>
+              <textarea class="form-control readonly_box" readonly v-model="details.Description"></textarea>
             </div>
           </div>
         </div>
