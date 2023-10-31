@@ -399,6 +399,7 @@
     getDate,
     goBack,
     canEnterPage,
+    checkFileSize,
   } from "@/assets/js/common_fn"
   import {
     StoreProcess_Edit_Status
@@ -1028,6 +1029,10 @@
         if (tabData[index].newFile.length + files.length > 5) {
           alert('上傳至多5張圖片');
           return;
+        }
+        // 檢查圖片大小
+        if(!checkFileSize(files,tabData[index].newFile)) {
+          return
         }
         console.log(event.target.files);
         // 压缩并处理图像

@@ -153,7 +153,7 @@
             if(Assets.Type === '耗材') {
               wrongStatus.value = true;
               canSubmit.value = false;
-              alertMsg.value = '僅提供資產類型為非耗材的物品進行維修'
+              alertMsg.value = '僅提供資產類型為非耗材的物品進行報廢'
             }
             else {
               // 檢查資產狀態(只有非耗材才會檢查)

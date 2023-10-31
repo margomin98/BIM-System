@@ -116,7 +116,8 @@
   import router from '@/router';
   import {
     getDate,
-    goBack
+    goBack,
+    checkFileSize,
   } from '@/assets/js/common_fn.js'
   import {
     getApplication,
@@ -256,6 +257,10 @@
         if (formParams.newFile.length + files.length > 5) {
           alert('上傳至多5張圖片');
           return;
+        }
+        // 檢查圖片大小
+        if(!checkFileSize(files,formParams.newFile)) {  
+          return
         }
         console.log(event.target.files);
         // 压缩并处理图像

@@ -364,7 +364,7 @@
   import Navbar from "@/components/Navbar.vue";
   import { HistoryAction , Asset_TypeArray} from "@/assets/js/dropdown";
   import { getEquipType , getEquipCategory , getArea , getLayer , getProject , getAccount , getMngDatagrid } from '@/assets/js/common_api'
-  import { UpdatePageParameter, createDatagrid , goBack } from '@/assets/js/common_fn';
+  import { UpdatePageParameter, createDatagrid , goBack, checkFileSize } from '@/assets/js/common_fn';
   import { onMounted, ref, reactive } from "vue";
   import { useRoute, useRouter } from "vue-router";
   import { Pagination } from 'swiper/modules';
@@ -695,7 +695,10 @@ import axios from 'axios';
             return;
           }
         }
-        // const previewUrl = formData[index].previewUrl;
+        // 檢查圖片大小
+        if(!checkFileSize(files,selectFiles.newFile,true)) {  
+          return
+        }
         for (let i = 0; i < files.length; i++) {
           const reader = new FileReader();
           reader.onload = (e) => {
@@ -744,30 +747,6 @@ import axios from 'axios';
         form.append('AssetsId',AssetsId);
         UpdatePageParameter( datagrid , event , type , form)
         getMngDatagrid('/InventoryMng/AssetsHistory',rowData,datagrid,form)
-        // datagrid.loading = true;
-        // const baseUrl = 'http://192.168.0.177:7008'
-        // let apiurl = baseUrl + '/InventoryMng/AssetsHistory'
-        // axios.post(`${apiurl}`, form)
-        // .then((response)=>{
-        //   const data = response.data;
-        //   if (data.state === 'success') {
-        //     console.log('datagrid', data.resultList);
-        //     rowData.value = data.resultList;
-        //     datagrid.totalRecords = data.resultList.total;
-        //     datagrid.key++;
-        //   } else if (data.state === 'account_error') {
-        //     //尚未登入
-        //     alert(data.messages);
-        //     router.push('/');
-        //   } else {
-        //     //取得datagrid失敗
-        //     alert(data.messages);
-        //   }
-        // })
-        // .catch((error)=>{
-        //   console.error(error);
-        // })
-        // datagrid.loading = false;
       }
       const selectAction = item => {
         searchParams.Action = item;
