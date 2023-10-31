@@ -15,12 +15,12 @@
       <div class="content">
         <div class="row">
           <!-- 維修編號 -->
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+          <div class="col-xl-12 col-md-6 col-12">
             <p>維修編號</p>
             <input type="text" v-model="searchParams.RepairId" />
           </div>
           <!-- 狀態 -->
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+          <div class="col-xl-12 col-md-6 col-12">
             <p>狀態</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -32,17 +32,17 @@
             </div>
           </div>
           <!-- 資產編號 -->
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+          <div class="col-xl-12 col-md-6 col-12">
             <p>資產編號</p>
             <input type="text" v-model="searchParams.AssetsId" />
           </div>
           <!-- 物品名稱 -->
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+          <div class="col-xl-12 col-md-6 col-12">
             <p>物品名稱</p>
             <input type="text" v-model="searchParams.AssetName" />
           </div>
           <!-- 日期類型 -->
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+          <div class="col-xl-12 col-md-6 col-12">
             <p>日期類型</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -54,7 +54,7 @@
             </div>
           </div>
           <!-- 日期(起) -->
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12  flex-col">
+          <div class="col-xl-12 col-md-6 col-12  flex-col">
             <p>日期(起)</p>
             <div class="date-selector">
               <div class="input-container">
@@ -63,7 +63,7 @@
             </div>
           </div>
           <!-- 日期(迄) -->
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12 flex-col">
+          <div class="col-xl-12 col-md-6 col-12 flex-col">
             <p>日期(迄)</p>
             <div class="date-selector">
               <div class="input-container">

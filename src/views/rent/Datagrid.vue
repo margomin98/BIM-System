@@ -14,15 +14,15 @@
     <div class="container-fluid datagrid_section">
       <div class="content">
         <div class="row">
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+          <div class="col-xl-12 col-md-6 col-12">
             <p>單號</p>
             <input type="text" v-model="searchParams.AO_ID" />
           </div>
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+          <div class="col-xl-12 col-md-6 col-12">
             <p>專案名稱</p>
             <input type="text" v-model="searchParams.ProjectName" />
           </div>
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+          <div class="col-xl-12 col-md-6 col-12">
             <p>用途</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -33,7 +33,7 @@
               </div>
             </div>
           </div>
-          <div class="col-xl-3 col-lg-2 col-md-6 col-12">
+          <div class="col-xl-12 col-md-6 col-12">
             <p>狀態</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -44,7 +44,7 @@
               </div>
             </div>
           </div>
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12  flex-col">
+          <div class="col-xl-12 col-md-6 col-12">
             <p>申請出庫日期(起)</p>
             <div class="date-selector">
               <div class="input-container">
@@ -52,7 +52,7 @@
               </div>
             </div>
           </div>
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12 flex-col">
+          <div class="col-xl-12 col-md-6 col-12">
             <p>申請出庫日期(迄)</p>
             <div class="date-selector">
               <div class="input-container">

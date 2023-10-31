@@ -6,11 +6,11 @@
     </div>
     <div class="container-fluid datagrid_section">
       <div class="row">
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+        <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
           <p>物流單號</p>
           <input type="text" v-model="searchParams.ShipmentNum" />
         </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+        <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
           <p>設備總類</p>
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
@@ -21,7 +21,7 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+        <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
           <p>設備分類</p>
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
@@ -32,15 +32,15 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+        <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
           <p>資產編號</p>
           <input type="text" v-model="searchParams.AssetsId" />
         </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+        <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
           <p>物品名稱</p>
           <input type="text" v-model="searchParams.AssetName" />
         </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+        <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
           <p>狀態</p>
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -52,7 +52,7 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+        <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
           <p>區域</p>
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
@@ -63,7 +63,7 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+        <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
           <p>櫃位</p>
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="searchParams.AreaName === ''">
@@ -74,7 +74,7 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+        <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
           <p>日期類型</p>
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -85,7 +85,7 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12">
+        <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
           <p>日期(起)</p>
           <div class="date-selector">
             <div class="input-container">
@@ -93,7 +93,7 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-2 col-lg-2 col-md-6 col-12 flex-col">
+        <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col flex-col">
           <p>日期(迄)</p>
           <div class="date-selector">
             <div class="input-container">
@@ -388,9 +388,12 @@
           grid-template-rows: 1fr 1fr 1fr;
           ;
           grid-template-columns: 1fr 1fr 1fr 1fr;
-          gap: 5px 0;
+          gap: 15px 0;
           align-items: center;
-          padding: 30px 20px 30px 100px;
+          padding: 30px 20px;
+          .flex-col{
+            margin: auto;
+          }
           p {
             @include datagrid_title;
           }
