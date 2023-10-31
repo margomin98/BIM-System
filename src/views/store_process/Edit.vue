@@ -1116,10 +1116,20 @@
 </script>
 
 <style lang="scss" scoped>
+ @import "@/assets/css/global.scss";
   textarea {
     padding: 5px 10px 30px;
   }
-  @import "@/assets/css/global.scss";
+ 
+.dropdown-toggle{
+  height:35px;
+}
+#categoryDropdown{
+  justify-content: right
+}
+.dropdown-toggle::after {
+    margin-left: auto;
+}
   @media only screen and (min-width: 1200px) {
     .main_section {
       .readonly_box {
