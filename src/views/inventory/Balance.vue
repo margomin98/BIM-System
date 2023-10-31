@@ -156,7 +156,7 @@
             <div class="modal-content ">
               <div class="modal-header">
                 <h5 class="modal-title">認列人員驗證</h5>
-                <p class='m-0 close_icon' data-bs-dismiss="modal">x</p>
+                <p class='m-0 close_icon' data-bs-dismiss="modal">X</p>
               </div>
               <div class="modal-body">
                 <div class="col">
