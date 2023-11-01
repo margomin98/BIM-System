@@ -1879,7 +1879,7 @@
             }
           }
           .dropdown {
-            width: 199px;
+            width: 190px;
             .dropdown-menu {
               width: 100%;
               max-height: 250px;
