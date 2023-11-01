@@ -479,7 +479,7 @@ UpdatePageParameter,
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages;
-            // msg += '\n單號:' + data.resultList.IP_Id;
+            msg += '\n計畫編號:' + data.resultList.IP_Id;
             alert(msg);
             router.push({
               name: 'Inventory_Datagrid'
