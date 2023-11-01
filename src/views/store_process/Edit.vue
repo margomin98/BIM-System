@@ -90,8 +90,8 @@
           <!-- 標頭 -->
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button v-for="tab in parseInt(tabData.length)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab" :aria-selected="tab === 0">
-                      {{ tab }}
-                    </button>
+                              {{ tab }}
+                            </button>
           </div>
         </nav>
         <div v-if="tabData.length > 0" class="tab-content" id="nav-tabContent">
@@ -138,8 +138,8 @@
                   <div class="input-group-prepend"><span>*</span>設備總類：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                              {{ tab.itemEquipTypeName || '請選擇' }}
-                            </button>
+                                      {{ tab.itemEquipTypeName || '請選擇' }}
+                                    </button>
                     <div class="dropdown-menu" aria-labelledby="typeDropdown">
                       <p v-for="item in DropdownArray.EquipType" class="dropdown-item" @click="selectType(item , index)">{{ item.Name }}</p>
                     </div>
@@ -151,8 +151,8 @@
                   <div class="input-group-prepend"><span>*</span>設備分類：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!tab.itemEquipTypeName">
-                              {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }}
-                            </button>
+                                      {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }}
+                                    </button>
                     <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                       <p v-for="item in tab.EquipCategoryArray" class="dropdown-item" @click="selectCategory(item , index)">{{ item.Name }}</p>
                     </div>
@@ -167,8 +167,8 @@
                   <div class="input-group-prepend"><span>*</span>儲位區域：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName(index)">
-                                {{ tab.itemAreaName || '請選擇' }}
-                              </button>
+                                        {{ tab.itemAreaName || '請選擇' }}
+                                      </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="(item, area_index) in DropdownArray.Area" :key="area_index" class="dropdown-item" @click="selectArea(index, item)">{{ item.Name }}</p>
                     </div>
@@ -180,8 +180,8 @@
                   <div class="input-group-prepend"><span>*</span>儲位櫃位：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!tab.itemAreaName">
-                                {{ tab.itemLayerName || tab.LayerInit }}
-                              </button>
+                                        {{ tab.itemLayerName || tab.LayerInit }}
+                                      </button>
                     <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                       <p v-for="(item, layer_index) in tab.LayerArray" :key="layer_index" class="dropdown-item" @click="selectLayer(index, item)">{{ item.Name }}</p>
                     </div>
@@ -246,8 +246,8 @@
                   <div class="input-group-prepend"><span>*</span>包裝單位：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              {{ tab.itemPackageUnit || '請選擇' }}
-                            </button>
+                                      {{ tab.itemPackageUnit || '請選擇' }}
+                                    </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="item in DropdownArray.PackageUnit" class="dropdown-item" @click="selectPackageUnit(item , index)">{{ item }}</p>
                     </div>
@@ -271,8 +271,8 @@
                   <div class="input-group-prepend"><span v-show="tab.itemAssetType === '耗材'">*</span>單位：</div>
                   <div v-if="tab.itemAssetType === '耗材'" class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="tab.itemAssetType !== '耗材'">
-                                {{ tab.itemUnit || '請選擇' }}
-                              </button>
+                                        {{ tab.itemUnit || '請選擇' }}
+                                      </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="item in DropdownArray.Unit" class="dropdown-item" @click="selectUnit(item , index)">{{ item }}</p>
                     </div>
@@ -329,9 +329,12 @@
             <div class="selected_file col">
               <div class="input-group">
                 <div class="input-group-prepend">已選擇檔案：</div>
-                <div v-for="(file , file_index) in tab.viewFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
-                  <p @click="viewImgFile('new',index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
-                  <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('new',index,file_index)">
+                <div class="selected_file_wrap">
+                  <div v-for="(file , file_index) in tab.viewFile" :key="file_index" class="file_upload_wrap">
+                    <p>{{ file.FileName }}
+                      <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="viewImgFile('new',index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+                      <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('new',index,file_index)"></p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -339,9 +342,12 @@
             <div class="col selected_file">
               <div class="input-group mt-3">
                 <div class="input-group-prepend">已上傳檔案：</div>
-                <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
-                  <p @click="viewImgFile('exist',index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
-                  <img class="delete_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('exist',index,file_index)">
+                <div class='selected_file_wrap'>
+                  <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
+                    <p>{{ file.FileName }}
+                      <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="viewImgFile('exist',index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+                      <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('exist',index,file_index)"></p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1031,7 +1037,7 @@
           return;
         }
         // 檢查圖片大小
-        if(!checkFileSize(files,tabData[index].newFile)) {
+        if (!checkFileSize(files, tabData[index].newFile)) {
           return
         }
         console.log(event.target.files);
@@ -1121,20 +1127,34 @@
 </script>
 
 <style lang="scss" scoped>
- @import "@/assets/css/global.scss";
+  @import "@/assets/css/global.scss";
   textarea {
     padding: 5px 10px 30px;
   }
- 
-.dropdown-toggle{
-  height:35px;
-}
-#categoryDropdown{
-  justify-content: right
-}
-.dropdown-toggle::after {
+  .dropdown-toggle {
+    height: 35px;
+  }
+  #categoryDropdown {
+    justify-content: right
+  }
+  .dropdown-toggle::after {
     margin-left: auto;
-}
+  }
+  .view_icon,
+  .trash_icon {
+    cursor: pointer
+  }
+  .modal {
+    .modal-header {
+      background: #528091;
+      color: white;
+      .close_icon {
+        color: white;
+        font-weight: 700;
+        margin-bottom: 0;
+      }
+    }
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .readonly_box {
@@ -1258,26 +1278,26 @@
             padding: 50px 30px;
             border-radius: 0 0 10px 10px;
             .selected_file {
-              .input-group {
+              .selected_file_wrap {
                 flex-direction: column;
-              }
-              .file_upload_wrap {
-                margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  font-weight: 700;
-                  margin-bottom: 5px;
-                  color: white;
-                  word-break: break-word;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
+                .file_upload_wrap {
+                  margin-bottom: 0;
+                  display: flex;
+                  img {
+                    width: 25px;
+                    height: 25px;
+                  }
+                  p {
                     font-weight: 700;
+                    margin-bottom: 5px;
                     color: white;
+                    word-break: break-word;
+                    &::before {
+                      margin-right: 10px;
+                      content: '·';
+                      font-weight: 700;
+                      color: white;
+                    }
                   }
                 }
               }
@@ -1309,17 +1329,6 @@
               font-size: 18px;
               div:nth-child(2) {
                 gap: 0 10px;
-              }
-            }
-            .modal {
-              .modal-header {
-                background: #3D4E61;
-                color: white;
-                .close_icon {
-                  color: white;
-                  font-weight: 700;
-                  margin-bottom: 0;
-                }
               }
             }
             .dropdown {
@@ -1524,26 +1533,26 @@
             padding: 25px;
             border-radius: 0 0 10px 10px;
             .selected_file {
-              .input-group {
+              .selected_file_wrap {
                 flex-direction: column;
-              }
-              .file_upload_wrap {
-                margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  font-weight: 700;
-                  margin-bottom: 5px;
-                  color: white;
-                  word-break: break-word;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
+                .file_upload_wrap {
+                  margin-bottom: 0;
+                  display: flex;
+                  img {
+                    width: 25px;
+                    height: 25px;
+                  }
+                  p {
                     font-weight: 700;
+                    margin-bottom: 5px;
                     color: white;
+                    word-break: break-word;
+                    &::before {
+                      margin-right: 10px;
+                      content: '·';
+                      font-weight: 700;
+                      color: white;
+                    }
                   }
                 }
               }
@@ -1555,17 +1564,6 @@
               font-size: 18px;
               div:nth-child(2) {
                 gap: 0 10px;
-              }
-            }
-            .modal {
-              .modal-header {
-                background: #3D4E61;
-                color: white;
-                .close_icon {
-                  color: white;
-                  font-weight: 700;
-                  margin-bottom: 0;
-                }
               }
             }
             .dropdown {
@@ -1817,21 +1815,10 @@
             .check_box_wrap {
               font-weight: 700;
               color: white;
-              font-size:18px;
+              font-size: 18px;
               div:nth-child(2) {
                 gap: 0 10px;
                 display: flex;
-              }
-            }
-            .modal {
-              .modal-header {
-                background: #3D4E61;
-                color: white;
-                .close_icon {
-                  color: white;
-                  font-weight: 700;
-                  margin-bottom: 0;
-                }
               }
             }
             .dropdown {

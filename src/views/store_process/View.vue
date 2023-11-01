@@ -294,8 +294,12 @@
             <div class="col selected_file">
               <div class="input-group">
                 <div class="input-group-prepend">已上傳檔案 :</div>
-                <div v-for="(file , file_index) in tab.existFile" :key="fprepile_index" class="file_upload_wrap" style="cursor: pointer;">
-                  <p @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
+                <div class='selected_file_wrap'>
+                  <div v-for="(file , file_index) in tab.existFile" :key="fprepile_index" class="file_upload_wrap">
+                    <p>{{ file.FileName }}
+                      <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -303,7 +307,7 @@
         </div>
         <!-- view Modal -->
         <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" >
+          <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">{{ modalParams.title }}</h5>
@@ -436,6 +440,9 @@
     padding: 5px 10px 30px;
   }
   @import "@/assets/css/global.scss";
+  .view_icon {
+    cursor: pointer;
+  }
   .check_box_wrap {
     .radio_wrap {
       margin-left: unset !important;
@@ -444,6 +451,17 @@
       font-weight: 700;
       color: white;
       font-size: 18px;
+    }
+  }
+  .modal {
+    .modal-header {
+      background: #528091;
+      color: white;
+      .close_icon {
+        color: white;
+        font-weight: 700;
+        margin-bottom: 0;
+      }
     }
   }
   @media only screen and (min-width: 1200px) {
@@ -631,26 +649,26 @@
             padding: 50px 30px;
             border-radius: 0 0 10px 10px;
             .selected_file {
-             
-              .file_upload_wrap {
-                margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  font-weight: 700;
+              .selected_file_wrap {
+                flex-direction: column;
+                .file_upload_wrap {
                   margin-bottom: 0;
-                  color: white;
-                  word-break: break-word;
                   display: flex;
-    align-items: center;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
+                  img {
+                    width: 25px;
+                    height: 25px;
+                  }
+                  p {
                     font-weight: 700;
+                    margin-bottom: 5px;
                     color: white;
+                    word-break: break-word;
+                    &::before {
+                      margin-right: 10px;
+                      content: '·';
+                      font-weight: 700;
+                      color: white;
+                    }
                   }
                 }
               }
@@ -663,17 +681,6 @@
             }
             .readonly_box {
               width: 63%;
-            }
-            .modal {
-              .modal-header {
-                background: #3D4E61;
-                color: white;
-                .close_icon {
-                  color: white;
-                  font-weight: 700;
-                  margin-bottom: 0;
-                }
-              }
             }
             .dropdown {
               width: 60%;
@@ -915,7 +922,6 @@
             padding: 50px 30px;
             border-radius: 0 0 10px 10px;
             .selected_file {
-             
               .file_upload_wrap {
                 margin-bottom: 0;
                 display: flex;
@@ -929,7 +935,7 @@
                   color: white;
                   word-break: break-word;
                   display: flex;
-    align-items: center;
+                  align-items: center;
                   &::before {
                     margin-right: 10px;
                     content: '·';
@@ -947,17 +953,6 @@
             }
             .readonly_box {
               width: 63%;
-            }
-            .modal {
-              .modal-header {
-                background: #3D4E61;
-                color: white;
-                .close_icon {
-                  color: white;
-                  font-weight: 700;
-                  margin-bottom: 0;
-                }
-              }
             }
             .dropdown {
               width: 60%;
@@ -1205,7 +1200,7 @@
           }
           .check_box_wrap {
             .check_box {
-    margin-right: 10px;
+              margin-right: 10px;
             }
           }
           .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
@@ -1247,17 +1242,6 @@
                     font-weight: 700;
                     color: white;
                   }
-                }
-              }
-            }
-            .modal {
-              .modal-header {
-                background: #3D4E61;
-                color: white;
-                .close_icon {
-                  color: white;
-                  font-weight: 700;
-                  margin-bottom: 0;
                 }
               }
             }
