@@ -16,49 +16,49 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">使用者帳號：</div>
-            <input type="text" class="form-control text-center readonly_box" readonly/>
+            <input type="text" class="form-control text-center readonly_box" readonly v-model="details.Account_Id"/>
           </div>
         </div>
         <!-- 執行動作 -->
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">執行動作：</div>
-            <input type="text" class="form-control text-center readonly_box" readonly />
+            <input type="text" class="form-control text-center readonly_box" readonly v-model="details.Active"/>
           </div>
         </div>
         <!-- Controller -->
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">Controller：</div>
-            <input type="text" class="form-control text-center readonly_box"  readonly/>
+            <input type="text" class="form-control text-center readonly_box"  readonly v-model="details.Controller"/>
           </div>
         </div>
         <!-- Action -->
         <div class="col">
           <div class="input-group  mb-3">
             <div class="input-group-prepend">Action：</div>
-            <input type="text" class="form-control text-center readonly_box"  readonly/>
+            <input type="text" class="form-control text-center readonly_box"  readonly v-model="details.Action"/>
           </div>
         </div>
         <!-- 訊息 -->
         <div class="col">
           <div class="input-group  mb-3">
             <div class="input-group-prepend">訊息：</div>
-            <input type="text" class="form-control text-center readonly_box"  readonly/>
+            <input type="text" class="form-control text-center readonly_box"  readonly v-model="details.Message"/>
           </div>
         </div>
         <!-- 原始資料 -->
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">原始資料：</div>
-            <textarea class="form-control readonly_box" style="height: 180px;" readonly ></textarea>
+            <textarea class="form-control readonly_box" style="height: 380px;overflow-y: scroll;" readonly>{{ details.OriData }}</textarea>
           </div>
         </div>
           <!-- 更新資料 -->
           <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">更新資料：</div>
-            <textarea class="form-control readonly_box" style="height: 180px;" readonly ></textarea>
+            <textarea class="form-control readonly_box" style="height: 380px;overflow-y: scroll;" readonly>{{ details.UpdateData }}</textarea>
           </div>
         </div>
       </div>
@@ -81,6 +81,7 @@
     useRouter
   } from "vue-router";
   import { goBack } from "@/assets/js/common_fn";
+  import axios from "axios";
   export default {
     components: {
       Navbar,
@@ -88,15 +89,14 @@
     setup() {
       const route = useRoute();
       const router = useRouter();
-      const AR_ID = route.query.search_id;
+      const ID = route.query.search_id;
       const details = ref({});
       onMounted(() => {
-        // getDetails();
+        getDetails();
       })
       async function getDetails() {
-        const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/ReceivingGetData?ar_id=${AR_ID}`);
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetSystemLog?id=${ID}`);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -106,12 +106,6 @@
             // }
             details.value = data.resultList;
             console.log('單筆資料如下\n', details.value);
-            if (details.value.WarrantyStartDate) {
-              details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
-            }
-            if (details.value.WarrantyEndDate) {
-              details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
-            }
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
