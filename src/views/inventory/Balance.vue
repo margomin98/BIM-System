@@ -500,12 +500,13 @@ UpdatePageParameter,
         const formFields = {
           'userName': validation.account,
           'userPassword': validation.password,
+          'id': 'IP_FlatProcess',
         };
         //將表格資料append到 formData
         for (const fieldName in formFields) {
           formData.append(fieldName, formFields[fieldName]);
         }
-        const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidationForA_Operator', formData);
+        const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData);
         try {
           const data = response.data;
           console.log(data);
