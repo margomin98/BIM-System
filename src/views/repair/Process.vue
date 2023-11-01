@@ -31,7 +31,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                送修人員：
+                送修人員 :
               </div>
               <input type="text" class="form-control readonly_box" readonly v-model="details.RepairPerson">
             </div>
@@ -40,7 +40,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                交付日期：
+                交付日期 :
               </div>
               <input type="text" class="form-control readonly_box" readonly v-model="details.DeliveryDate">
             </div>
@@ -51,7 +51,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                審核人員：
+                審核人員 :
               </div>
               <input type="text" class="form-control readonly_box" readonly v-model="details.VerifyPerson">
             </div>
@@ -60,7 +60,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                審核結果：
+                審核結果 :
               </div>
               <input type="text" class="form-control readonly_box" readonly v-model="details.VerifyResult">
             </div>
@@ -70,7 +70,7 @@
         <div class="col-xl-6 col-lg-6 col-md-6 col-12">
           <div class="input-group d-flex mb-3">
             <div class="input-group-prepend">
-              審核日期：
+              審核日期 :
             </div>
             <input type="text" class="form-control readonly_box" readonly v-model="details.VerifyDate">
           </div>
@@ -80,7 +80,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                資產編號：
+                資產編號 :
               </div>
               <input type="text" class="form-control readonly_box" readonly v-model="details.AssetsId">
             </div>
@@ -89,7 +89,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                物品名稱：
+                物品名稱 :
               </div>
               <input type="text" class="form-control readonly_box" readonly v-model="details.AssetName">
             </div>
@@ -99,7 +99,7 @@
         <div class="col-12">
           <div class="input-group d-flex">
             <div class="input-group-prepend">
-              問題描述：
+              問題描述 :
             </div>
             <textarea style="height: 200px;" class="form-control readonly_box" readonly>{{ details.Question }}</textarea>
           </div>
@@ -107,7 +107,7 @@
         <!-- 報修照片 -->
         <div class="col-12 repair_photo_section">
           <div class="input-group mt-3">
-            <div class="input-group-prepend">報修照片：
+            <div class="input-group-prepend">報修照片 :
             </div>
             <div>
             </div>
@@ -131,7 +131,7 @@
         <div class="col-12">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span>*</span> 維修廠商：
+              <span>*</span> 維修廠商 :
             </div>
             <input ref="inputElement" type="text" class="form-control" placeholder="最多輸入20字" v-model="formParams.RepairCompany">
           </div>
@@ -140,7 +140,7 @@
         <div class="col-12">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span>*</span> 外部維修單號：
+              <span>*</span> 外部維修單號 :
             </div>
             <input ref="inputElement" type="text" class="form-control" placeholder="最多輸入50字" v-model="formParams.ExternalRepairId">
           </div>
@@ -150,7 +150,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                廠商聯絡人：
+                廠商聯絡人 :
               </div>
               <input ref="inputElement" type="text" class="form-control" placeholder="最多輸入10字" v-model="formParams.ContactPerson">
             </div>
@@ -159,7 +159,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                聯絡電話：
+                聯絡電話 :
               </div>
               <input ref="inputElement" type="text" class="form-control" placeholder="最多輸入20字" v-model="formParams.ContactPhone">
             </div>
@@ -169,7 +169,7 @@
         <div class="col-xl-6 col-lg-6 col-md-6 col-12">
           <div class="input-group d-flex mb-3">
             <div class="input-group-prepend">
-              送修日期：
+              送修日期 :
             </div>
             <input ref="inputElement" type="date" class="form-control" v-model="formParams.RepairDate">
           </div>
@@ -178,7 +178,7 @@
         <div class="col-12">
           <div class="input-group d-flex">
             <div class="input-group-prepend">
-              備註：
+              備註 :
             </div>
             <textarea style="height: 200px;" class="form-control" placeholder="最多輸入500字" v-model="formParams.Memo"></textarea>
           </div>
@@ -186,23 +186,23 @@
         <!-- 文件上傳 -->
         <div class="col-12 repair_photo_section">
           <div class="input-group mt-3">
-            <div class="input-group-prepend">文件上傳：</div>
+            <div class="input-group-prepend">文件上傳 :</div>
             <div class="mb-3 file_wrap">
               <button class="choose_btn" @click="openFileInput">選擇檔案</button>
               <input type="file" ref="fileInput" style="display: none;" @change="handleDocumentFile($event)" multiple>
             </div>
           </div>
         </div>
-        <div class="col">
+        <div class="col selected_file">
           <div class="input-group">
-            <div class="input-group-prepend mb-xl-3 mb-lg-3 mb-md-3">已選擇檔案：</div>
-            <div class="selected_file">
-            <div v-for="(file, index) in formParams.viewDoc" :key="index" class="file_upload_wrap">
-              <p>{{ file.FileName}}
-              <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
-              <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)"></p>
+            <div class="input-group-prepend mb-xl-3 mb-lg-3 mb-md-3">已選擇檔案 :</div>
+            <div class='selected_file_wrap'>
+              <div v-for="(file, index) in formParams.viewDoc" :key="index" class="file_upload_wrap">
+                <p>{{ file.FileName}}
+                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
+                  <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)"></p>
+              </div>
             </div>
-          </div>
           </div>
         </div>
         <!-- 瀏覽 -->
@@ -212,7 +212,7 @@
         <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#documentModal"></button>
         <!-- Exist Document Modal -->
         <div class="modal fade" id="documentModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered " >
+          <div class="modal-dialog modal-dialog-centered ">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="photoModalLabel"> {{ previewParams.title }}</h5>
@@ -227,16 +227,16 @@
           </div>
         </div>
         <!-- 已上傳文件 -->
-        <div class="col-12">
+        <div class="col-12 selected_file">
           <div class="input-group d-flex">
             <div class="input-group-prepend">
-              已上傳文件：
+              已上傳文件 :
             </div>
-            <div class="selected_file">
+            <div class='selected_file_wrap'>
               <div v-for="(file, index) in details.existDocument" :key="index" class="file_upload_wrap">
-                <p>{{ file.FileName}}</p>
-                <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
-                <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)">
+                <p>{{ file.FileName}}
+                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
+                  <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)"></p>
               </div>
             </div>
           </div>
@@ -272,7 +272,9 @@
     goBack,
     canEnterPage,
   } from '@/assets/js/common_fn.js'
-  import { Repair_Process_Status } from '@/assets/js/enter_status';
+  import {
+    Repair_Process_Status
+  } from '@/assets/js/enter_status';
   register();
   export default {
     components: {
@@ -308,7 +310,7 @@
           .then((response) => {
             const data = response.data;
             if (data.state === 'success') {
-              canEnterPage(data.resultList.Status , Repair_Process_Status)
+              canEnterPage(data.resultList.Status, Repair_Process_Status)
               details.value = data.resultList;
               console.log('資料:\n', details.value);
               if (details.value.RepairDate) {
@@ -651,14 +653,14 @@
       .close_icon {
         cursor: pointer;
       }
-     
     }
   }
   .custom-slide {
     display: flex;
     align-self: center;
   }
-  .view_icon,.trash_icon{
+  .view_icon,
+  .trash_icon {
     cursor: pointer;
   }
   @media only screen and (min-width: 1200px) {
@@ -689,7 +691,7 @@
       }
       .info_wrap {
         margin: 30px auto 5%;
-        width: 750px;
+        width: 800px;
         .fixed_info {
           @include fixed_info;
           p {
@@ -700,6 +702,7 @@
         .content {
           @include content_bg;
           .input-group {
+            flex-wrap: nowrap;
             .input-number {
               @include count_btn;
             }
@@ -719,27 +722,28 @@
             }
           }
           .selected_file {
-          .file_upload_wrap {
-            margin-bottom: 0;
-            display: flex;
-            img {
-              width: 25px;
-              height: 25px;
-            }
-            p {
-              font-weight: 700;
-              margin-bottom: 5px;
-              color: white;
-              word-break: break-word;
-              &::before {
-                margin-right: 10px;
-                content: '·';
+            .file_upload_wrap {
+              margin-bottom: 0;
+              display: flex;
+              width: 590px;
+              img {
+                width: 25px;
+                height: 25px;
+              }
+              p {
                 font-weight: 700;
+                margin-bottom: 5px;
                 color: white;
+                word-break: break-word;
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
+                  font-weight: 700;
+                  color: white;
+                }
               }
             }
           }
-        }
           .file_wrap {
             display: flex;
             flex-direction: column;
@@ -832,19 +836,20 @@
             }
             .form-control {
               height: 37px;
-              width: 65%;
+              width: 54%;
             }
             .input-group-prepend {
               color: white;
               font-weight: 700;
               font-size: 20px;
               text-align: end;
-              width: 115px;
+              width: 145px;
             }
           }
           .selected_file {
             .file_upload_wrap {
               margin-bottom: 0;
+              width: 480px;
               display: flex;
               img {
                 width: 25px;

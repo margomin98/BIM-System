@@ -1389,7 +1389,7 @@
                 color: white;
                 font-weight: 700;
                 font-size: 20px;
-                width: 126px;
+                width: 120px;
                 text-align: end;
                 white-space: nowrap;
               }
@@ -1597,6 +1597,7 @@
               .file_upload_wrap {
                 margin-bottom: 0;
                 display: flex;
+                
                 img {
                   width: 25px;
                   height: 25px;
@@ -1624,7 +1625,7 @@
                 color: white;
                 font-weight: 700;
                 font-size: 20px;
-                width: 126px;
+                width: 119px;
                 text-align: end;
                 white-space: nowrap;
               }
