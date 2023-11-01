@@ -464,7 +464,7 @@ UpdatePageParameter,
           I_id: item.I_Id,
           Discrepancy: item.Discrepancy,
         }));
-        const requestData = {
+        let requestData = {
           PlanId: IP_ID,
           RecognizePerson: validation.VerifyPerson,
           AssetList: AssetList,
