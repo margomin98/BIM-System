@@ -464,7 +464,7 @@ UpdatePageParameter,
           I_id: item.I_Id,
           Discrepancy: item.Discrepancy,
         }));
-        const requestData = {
+        let requestData = {
           PlanId: IP_ID,
           RecognizePerson: validation.VerifyPerson,
           AssetList: AssetList,
@@ -479,7 +479,7 @@ UpdatePageParameter,
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages;
-            // msg += '\n單號:' + data.resultList.IP_Id;
+            msg += '\n計畫編號:' + data.resultList.IP_Id;
             alert(msg);
             router.push({
               name: 'Inventory_Datagrid'
@@ -500,12 +500,13 @@ UpdatePageParameter,
         const formFields = {
           'userName': validation.account,
           'userPassword': validation.password,
+          'id': 'IP_FlatProcess',
         };
         //將表格資料append到 formData
         for (const fieldName in formFields) {
           formData.append(fieldName, formFields[fieldName]);
         }
-        const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidationForA_Operator', formData);
+        const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData);
         try {
           const data = response.data;
           console.log(data);
