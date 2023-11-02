@@ -195,11 +195,10 @@
             <div class="selected_file">
               <!-- v-for讀取已上傳物流文件 -->
               <div class="file_upload_wrap" v-for="(file , index) in details.existDocument" :key="index">
-               
-                  <p>{{ file.FileName }}
+                <p>{{ file.FileName }}
                   <!-- 在handlePreview依據不同副檔名做不同處理 -->
                   <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;cursor: pointer;" @click="handlePreview(file)">
-      </p>
+                </p>
               </div>
               <!-- doc/docx download hidden Link -->
               <a href="" style="display: none;" id="download-link"></a>
@@ -207,7 +206,7 @@
               <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#documentModal"></button>
               <!-- Exist Document Modal -->
               <div class="modal fade" id="documentModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" >
+                <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="photoModalLabel"> {{ previewParams.title }}</h5>
@@ -222,9 +221,9 @@
                 </div>
               </div>
               <!-- <div class="file_upload_wrap" style="cursor: pointer;">
-                    <p>File 1</p>
-                    <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;">
-                  </div> -->
+                      <p>File 1</p>
+                      <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;">
+                    </div> -->
             </div>
           </div>
         </div>
@@ -271,10 +270,12 @@
     Pagination
   } from 'swiper/modules';
   import {
-canEnterPage,
+    canEnterPage,
     goBack
   } from '@/assets/js/common_fn.js'
-import { Repair_Delete_Status } from '@/assets/js/enter_status';
+  import {
+    Repair_Delete_Status
+  } from '@/assets/js/enter_status';
   register();
   export default {
     components: {
@@ -297,7 +298,7 @@ import { Repair_Delete_Status } from '@/assets/js/enter_status';
           .then((response) => {
             const data = response.data;
             if (data.state === 'success') {
-              canEnterPage(data.resultList.Status , Repair_Delete_Status)
+              canEnterPage(data.resultList.Status, Repair_Delete_Status)
               details.value = data.resultList;
               console.log('資料:\n', details.value);
             } else if (data.state === 'account_error') {
@@ -464,7 +465,7 @@ import { Repair_Delete_Status } from '@/assets/js/enter_status';
       }
       .info_wrap {
         margin: 30px auto 5%;
-        width:800px;
+        width: 800px;
         .fixed_info {
           @include fixed_info;
           p {
@@ -503,35 +504,34 @@ import { Repair_Delete_Status } from '@/assets/js/enter_status';
             .input-group-prepend {
               white-space: nowrap;
             }
-         
-          .selected_file {
-            p.title {
-              font-weight: 700;
-              color: white;
-              margin-bottom: 5px;
-            }
-            .file_upload_wrap {
-              margin-bottom: 5px;
-              display: flex;
-              gap: 5px 0;
-              img {
-                width: 25px;
-                height: 25px;
-              }
-              p {
-                margin-bottom: 0;
+            .selected_file {
+              p.title {
                 font-weight: 700;
                 color: white;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
+                margin-bottom: 5px;
+              }
+              .file_upload_wrap {
+                margin-bottom: 5px;
+                display: flex;
+                gap: 5px 0;
+                img {
+                  width: 25px;
+                  height: 25px;
+                }
+                p {
+                  margin-bottom: 0;
                   font-weight: 700;
                   color: white;
+                  &::before {
+                    margin-right: 10px;
+                    content: '·';
+                    font-weight: 700;
+                    color: white;
+                  }
                 }
               }
             }
           }
-         }
         }
         .button_wrap {
           display: flex;
@@ -609,7 +609,6 @@ import { Repair_Delete_Status } from '@/assets/js/enter_status';
       .info_wrap {
         margin: 30px auto 5%;
         width: 750px;
-
         .fixed_info {
           @include fixed_info;
           p {
