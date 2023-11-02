@@ -17,12 +17,12 @@
         </div>
         <div class="form">
           <p>帳號</p>
-          <input class="text_input" type="text" @keyup.enter="login" v-model="userName">
+          <input class="text_input" type="text" @keyup.enter="login" v-model="formParams.userName">
           <p class="mt-3">密碼</p>
-          <input class="text_input" type="password" @keyup.enter="login" v-model="userPassword">
+          <input class="text_input" type="password" @keyup.enter="login" v-model="formParams.userPassword">
           <span style="color: rgb(243, 22, 22);">{{ errorHint }}</span>
           <div class="tick">
-            <input type="checkbox">記住我
+            <input type="checkbox" v-model="formParams.RememberMe">記住我
           </div>
         </div>
         <div class="login_btn">
@@ -35,51 +35,63 @@
 
 <script>
   import {
+    onMounted,
+    reactive,
     ref
   } from 'vue'
   import router from '@/router';
+  import axios from 'axios';
   export default {
     name: 'Login',
     setup() {
-      const userName = ref('');
-      const userPassword = ref('');
+      const formParams = reactive({
+        userName: '',
+        userPassword: '',
+        RememberMe: false,
+      })
       const errorHint = ref('');
+      onMounted(()=>{
+        // 檢查是否有已登入(有cookie)
+        checkCookieIsExist();
+      });
+      // 登入
       async function login() {
-        // console.log(event);
-        const formData = new FormData();
-        formData.append('userName', userName.value);
-        formData.append('userPassword', userPassword.value);
-        console.log(formData.get('userName'));
-        console.log(formData.get('userPassword'));
+        const form = new FormData();
+        for(const key in formParams) {
+          form.append(key, formParams[key]);
+        }
         const axios = require('axios');
         try {
-          const response = await axios.post('http://192.168.0.177:7008/Account/Login', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
+          const response = await axios.post('http://192.168.0.177:7008/Account/Login', form);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
             //接收成功，跳轉至首頁
-            console.log(data.state);
-            console.log(data.messages);
             errorHint.value = '';
             router.push('/home');
           } else if (data.state === 'error') {
             // alert(data.messages);
             var hint = data.messages.toString().replace(/[\[\]"]/g, "");
             errorHint.value = hint;
-          } else {
-            throw new Error('Request was not successful');
           }
         } catch (error) {
           console.error(error);
         }
       }
+      async function checkCookieIsExist() {
+        try {
+          const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
+          const data = response.data;
+          if (data.state === 'success') {
+            console.log('申請人名稱:', data.resultList.Applicant);
+            router.push('/home');
+          } 
+        } catch (error) {
+          console.error('申請人取得失敗:',error);
+        }
+      }
       return {
-        userName,
-        userPassword,
+        formParams,
         errorHint,
         login,
       }
