@@ -8,7 +8,7 @@
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
-          <p>執行時間：</p>
+          <p>執行時間：{{ details.LogTime}}</p>
         </div>
       </div>
       <div class="content">
