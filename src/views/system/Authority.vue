@@ -83,8 +83,8 @@
             const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchName?name=${inputValue.value}`);
             const data = response.data;
             if (data.state === 'success') {
-              const filteredRoles = data.resultList.filter(role => role !== 'admin' && role !== 'guest');
-              resolve(filteredRoles);
+              // const filteredRoles = data.resultList.filter(role => role !== 'admin' && role !== 'guest');
+              resolve(data.resultList);
             } else {
               reject(new Error('Search account failed.'));
             }
@@ -129,7 +129,7 @@
         const axios = require('axios');
         const form = new FormData();
         form.append('userName', inputValue.value);
-        form.append('role', selectedRoleId.value);
+        form.append('role', parseInt(selectedRoleId.value));
         const response = await axios.post('http://192.168.0.177:7008/AuthorityMng/AccoutChangeRole', form);
         try {
           const data = response.data;
@@ -138,6 +138,9 @@
             msg += `${inputValue.value}　變更為　${selectedRole.value}`
             alert(msg);
             router.push('/home');
+          } else {
+            alert(data.messages);
+            console.log('error', data);
           }
         } catch (error) {
           console.error(error);
@@ -163,6 +166,7 @@
         filteredOptions,
         roleSearchResult,
         selectedRole,
+        selectedRoleId,
         roleArray,
         showOptions,
         searchFunction,

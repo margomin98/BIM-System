@@ -51,14 +51,14 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">原始資料：</div>
-            <textarea class="form-control readonly_box" style="height: 380px;overflow-y: scroll;" readonly>{{ details.OriData }}</textarea>
+            <textarea class="form-control readonly_box" style="height: 300px;overflow-y: scroll;" readonly>{{ details.OriData }}</textarea>
           </div>
         </div>
           <!-- 更新資料 -->
           <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">更新資料：</div>
-            <textarea class="form-control readonly_box" style="height: 380px;overflow-y: scroll;" readonly>{{ details.UpdateData }}</textarea>
+            <textarea class="form-control readonly_box" style="height: 300px;overflow-y: scroll;" readonly>{{ details.UpdateData }}</textarea>
           </div>
         </div>
       </div>
@@ -125,7 +125,9 @@
 </script>
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-
+  textarea {
+    resize: none;
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       input {
