@@ -8,31 +8,31 @@
       <div class="content">
         <div class="row">
           <!-- 執行動作 -->
-          <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+          <div class="col-xl-3 col-lg-6 col-md-6 col-12">
             <p>執行動作</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="activeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{  searchParams.Active ||"請選擇" }}
-                  </button>
+                      {{  searchParams.Active ||"請選擇" }}
+                    </button>
               <div class="dropdown-menu" aria-labelledby="activeDropdown">
                 <p v-for="(item , index) in DropdownArray.Active" :key="index" class="dropdown-item" @click="selectActive(item)">{{ item }}</p>
               </div>
             </div>
           </div>
           <!-- 訊息 -->
-          <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+          <div class="col-xl-3 col-lg-6 col-md-6 col-12">
             <p>訊息</p>
-            <input type="text" v-model="searchParams.Message"/>
+            <input type="text" v-model="searchParams.Message" />
           </div>
           <!-- 日期（起） -->
-          <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+          <div class="col-xl-3 col-lg-6 col-md-6 col-12">
             <p>執行時間(起)</p>
-            <input type="datetime-local" class="date-input" v-model="searchParams.StartDate"/>
+            <input type="datetime-local" class="date-input" v-model="searchParams.StartDate" />
           </div>
           <!-- 日期(迄) -->
-          <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+          <div class="col-xl-3 col-lg-6 col-md-6 col-12">
             <p>執行時間(迄)</p>
-            <input type="datetime-local" class="date-input" v-model="searchParams.EndDate"/>
+            <input type="datetime-local" class="date-input" v-model="searchParams.EndDate" />
           </div>
         </div>
       </div>
@@ -45,32 +45,13 @@
       </div>
     </div>
     <div class="dg-height mb-5">
-      <DataTable
-        lazy 
-        :key="datagrid.key"
-        :first= "datagrid.first"
-        :size="'small'"
-        :loading="datagrid.loading"
-        :value="rowData" 
-        :sort-field="datagrid.sortField"
-        :sort-order="datagrid.sortOrder"
-        resizableColumns 
-        columnResizeMode="expand"
-        showGridlines 
-        scrollable 
-        scrollHeight="420px" 
-        @page="submit($event , 'page')" 
-        @sort="submit($event , 'sort')"
-        paginator 
-        :rows="datagrid.rows" 
-        :totalRecords="datagrid.totalRecords"
-        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-        :rowsPerPageOptions="[10, 20, 30]"
-        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+      <DataTable lazy :key="datagrid.key" :first="datagrid.first" :size="'small'" :loading="datagrid.loading" :value="rowData" :sort-field="datagrid.sortField" :sort-order="datagrid.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
+        scrollHeight="420px" @page="submit($event , 'page')" @sort="submit($event , 'sort')" paginator :rows="datagrid.rows" :totalRecords="datagrid.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <Column style="min-width: 60px;">
           <template #body="slotProps">
-            <System_log_button :params = "slotProps"/>
-          </template>
+              <System_log_button :params = "slotProps"/>
+</template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width, 'max-width': item.max}"></Column>
       </DataTable>
@@ -88,9 +69,16 @@
     reactive,
     ref
   } from "vue";
-  import { getMngDatagrid } from '@/assets/js/common_api';
-  import { UpdatePageParameter, createDatagrid , } from '@/assets/js/common_fn';
-  import { SystemLog_ActiveArray } from '@/assets/js/dropdown';
+  import {
+    getMngDatagrid
+  } from '@/assets/js/common_api';
+  import {
+    UpdatePageParameter,
+    createDatagrid,
+  } from '@/assets/js/common_fn';
+  import {
+    SystemLog_ActiveArray
+  } from '@/assets/js/dropdown';
   import axios from 'axios';
   export default {
     components: {
@@ -110,18 +98,42 @@
         Active: SystemLog_ActiveArray,
       })
       const datagrid = createDatagrid();
-      const datagridfield = [
-        { field: "Account_Id", width: '150px', header: "使用者帳號" },
-        { field: "Active", width: '150px', header: "執行動作" },
-        { field: "Controller", width: '150px', header: "Controller" },
-        { field: "Action", width: '150px', header: "Action" },
-        { field: "Message", width: '250px', header: "訊息" , max: '550px'},
-        { field: "LogTime", width: '200px', header: "執行時間" }
+      const datagridfield = [{
+          field: "Account_Id",
+          width: '150px',
+          header: "使用者帳號"
+        },
+        {
+          field: "Active",
+          width: '150px',
+          header: "執行動作"
+        },
+        {
+          field: "Controller",
+          width: '150px',
+          header: "Controller"
+        },
+        {
+          field: "Action",
+          width: '150px',
+          header: "Action"
+        },
+        {
+          field: "Message",
+          width: '250px',
+          header: "訊息",
+          max: '550px'
+        },
+        {
+          field: "LogTime",
+          width: '200px',
+          header: "執行時間"
+        }
       ]
       const rowData = ref([]);
       onMounted(() => {
         datagrid.sortField = 'LogTime'
-        submit('','search');
+        submit('', 'search');
       });
       async function submit(event, type) {
         const form = new FormData();
@@ -129,8 +141,8 @@
         for (const key in searchParams) {
           form.append(key, searchParams[key]);
         }
-        UpdatePageParameter( datagrid , event , type , form);
-        getMngDatagrid('/SystemLogMng/SystemLogs',rowData,datagrid,form);
+        UpdatePageParameter(datagrid, event, type, form);
+        getMngDatagrid('/SystemLogMng/SystemLogs', rowData, datagrid, form);
         // rowData.value =  [
         //   { Account_Id: "user1", Active: "登入", Controller: "Account", Action: "Login", Message: "Login Successful", LogTime: "2023-10-20 09:15:32" },
         //   { Account_Id: "user2", Active: "新增", Controller: "AssetsInMng", Action: "NewAssetsIn", Message: "user2 Created", LogTime: "2023-10-20 10:30:45" },
@@ -139,14 +151,14 @@
         //   { Account_Id: "user1", Active: "登出", Controller: "Account", Action: "LogOff", Message: "Logout Successful", LogTime: "2023-10-20 18:55:09" }
         // ];
       }
-      const selectActive = (item)=>{
+      const selectActive = (item) => {
         searchParams.Active = item;
       }
       const clear = () => {
         for (const key in searchParams) {
           searchParams[key] = '';
         }
-        submit('','search');
+        submit('', 'search');
       }
       return {
         searchParams,
@@ -166,6 +178,22 @@
   @import "@/assets/css/global.scss";
   .dg-height {
     @include datagrid-height;
+  }
+  @media only screen and (min-width: 1200px) and (max-width: 1400px) {
+    .row {
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 10px 10px;
+      grid-template-areas: ". ." ". .";
+      input {
+        width: 250px !important;
+      }
+      .dropdown {
+        width: 250px !important;
+      }
+    }
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
@@ -203,7 +231,7 @@
           background: rgba(82, 136, 156, 0.8);
           border-radius: 10px;
           margin-bottom: 30px;
-          height: 200px;
+          height: 240px;
           align-items: center;
           display: flex;
           justify-content: center;
@@ -214,7 +242,7 @@
           }
           input {
             @include dropdown_btn;
-            width: 200px;
+            width: 240px;
             height: 35px;
           }
           button {
@@ -225,7 +253,7 @@
             height: 100%;
           }
           .dropdown {
-            width: 200px;
+            width: 240px;
             height: 35px;
             @include dropdown_btn;
             .dropdown-toggle {
