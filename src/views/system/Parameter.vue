@@ -465,12 +465,8 @@
                 getDataGrid('LayerName')
                 break;
             }
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
           }
+          alert(data.messages);
         } catch (error) {
           console.error(error);
         }
@@ -585,12 +581,8 @@
                 getDataGrid('LayerName')
                 break;
             }
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
           }
+          alert(data.messages);
         } catch (error) {
           console.error(error);
         }
@@ -638,12 +630,8 @@
                 getDataGrid('LayerName')
                 break;
             }
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
           }
+          alert(data.messages);
         } catch (error) {
           console.error(error);
         }

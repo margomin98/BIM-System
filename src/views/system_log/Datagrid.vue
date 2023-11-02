@@ -10,7 +10,7 @@
           <!-- 使用者帳號 -->
           <div class="col-xl-auto col-lg-auto col-md-auto col-12">
             <p>使用者帳號</p>
-            <input type="text" />
+            <input type="text" v-model="searchParams.Account_Id"/>
           </div>
           <!-- 執行動作 -->
           <div class="col-xl-auto col-lg-auto col-md-auto col-12">
@@ -94,6 +94,7 @@
     },
     setup() {
       const searchParams = reactive({
+        Account_Id: '',
         Active: '',
         Message: '',
         StartDate: '',
@@ -148,13 +149,6 @@
         }
         UpdatePageParameter(datagrid, event, type, form);
         getMngDatagrid('/SystemLogMng/SystemLogs', rowData, datagrid, form);
-        // rowData.value =  [
-        //   { Account_Id: "user1", Active: "登入", Controller: "Account", Action: "Login", Message: "Login Successful", LogTime: "2023-10-20 09:15:32" },
-        //   { Account_Id: "user2", Active: "新增", Controller: "AssetsInMng", Action: "NewAssetsIn", Message: "user2 Created", LogTime: "2023-10-20 10:30:45" },
-        //   { Account_Id: "user3", Active: "編輯", Controller: "AssetsInMng", Action: "ApplicationEdit", Message: "Profile Updated", LogTime: "2023-10-20 12:45:22" },
-        //   { Account_Id: "user4", Active: "刪除", Controller: "AssetsInMng", Action: "ApplicationDelete", Message: "user2 Deleted", LogTime: "2023-10-20 15:20:18" },
-        //   { Account_Id: "user1", Active: "登出", Controller: "Account", Action: "LogOff", Message: "Logout Successful", LogTime: "2023-10-20 18:55:09" }
-        // ];
       }
       const selectActive = (item) => {
         searchParams.Active = item;
