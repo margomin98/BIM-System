@@ -42,8 +42,8 @@
                   <p>設備總類</p>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ EquipTypeName || '請選擇' }}
-                      </button>
+                          {{ EquipTypeName || '請選擇' }}
+                        </button>
                     <div class="dropdown-menu" aria-labelledby="typeDropdown">
                       <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
                     </div>
@@ -91,8 +91,8 @@
                   <p>儲位區域</p>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ AreaName || '請選擇' }}
-                      </button>
+                          {{ AreaName || '請選擇' }}
+                        </button>
                     <div class="dropdown-menu" aria-labelledby="typeDropdown">
                       <p v-for="(item, index) in AreaArray" :key="index" class="dropdown-item" @click="selectArea(item)">{{ item.Name }}</p>
                     </div>
@@ -121,7 +121,7 @@
     </div>
     <!-- Edit Modal -->
     <div class="modal fade editModal" data-bs-backdrop="static" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-sm modal-dialog-centered">
+      <div class="modal-dialog  modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-body">
             <div class="fixed_info">
@@ -142,7 +142,7 @@
     </div>
     <!-- Delete Modal -->
     <div class="modal fade editModal2" data-bs-backdrop="static" id="editModal2" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-sm modal-dialog-centered">
+      <div class="modal-dialog  modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-body">
             <div class="fixed_info">
@@ -713,6 +713,8 @@
   .editModal {
     .modal-content {
       border-radius: 0;
+      margin: auto;
+      width: 350px;
       .modal-body {
         border: 1px solid black;
         padding: 0 !important;
@@ -774,6 +776,8 @@
   .editModal2 {
     .modal-content {
       border-radius: 0;
+      margin: auto;
+      width: 350px;
       .modal-body {
         border: 1px solid black;
         padding: 0;
@@ -832,6 +836,9 @@
         }
       }
     }
+  }
+  .modal-body {
+    padding: 0 !important;
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
