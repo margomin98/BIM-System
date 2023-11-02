@@ -72,7 +72,7 @@
             <System_log_button :params = "slotProps"/>
           </template>
         </Column>
-        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width, 'max-width': item.max}"></Column>
       </DataTable>
     </div>
   </div>
@@ -88,6 +88,7 @@
     reactive,
     ref
   } from "vue";
+  import { getMngDatagrid } from '@/assets/js/common_api';
   import { UpdatePageParameter, createDatagrid , } from '@/assets/js/common_fn';
   import { SystemLog_ActiveArray } from '@/assets/js/dropdown';
   import axios from 'axios';
@@ -114,7 +115,7 @@
         { field: "Active", width: '150px', header: "執行動作" },
         { field: "Controller", width: '150px', header: "Controller" },
         { field: "Action", width: '150px', header: "Action" },
-        { field: "Message", width: '550px', header: "訊息" },
+        { field: "Message", width: '250px', header: "訊息" , max: '550px'},
         { field: "LogTime", width: '200px', header: "執行時間" }
       ]
       const rowData = ref([]);
@@ -128,15 +129,15 @@
         for (const key in searchParams) {
           form.append(key, searchParams[key]);
         }
-        UpdatePageParameter( datagrid , event , type , form)
-        // getMngDatagrid('/InventoryMng/Assets',rowData,datagrid,form)
-        rowData.value =  [
-          { Account_Id: "user1", Active: "登入", Controller: "Account", Action: "Login", Message: "Login Successful", LogTime: "2023-10-20 09:15:32" },
-          { Account_Id: "user2", Active: "新增", Controller: "AssetsInMng", Action: "NewAssetsIn", Message: "user2 Created", LogTime: "2023-10-20 10:30:45" },
-          { Account_Id: "user3", Active: "編輯", Controller: "AssetsInMng", Action: "ApplicationEdit", Message: "Profile Updated", LogTime: "2023-10-20 12:45:22" },
-          { Account_Id: "user4", Active: "刪除", Controller: "AssetsInMng", Action: "ApplicationDelete", Message: "user2 Deleted", LogTime: "2023-10-20 15:20:18" },
-          { Account_Id: "user1", Active: "登出", Controller: "Account", Action: "LogOff", Message: "Logout Successful", LogTime: "2023-10-20 18:55:09" }
-        ];
+        UpdatePageParameter( datagrid , event , type , form);
+        getMngDatagrid('/SystemLogMng/SystemLogs',rowData,datagrid,form);
+        // rowData.value =  [
+        //   { Account_Id: "user1", Active: "登入", Controller: "Account", Action: "Login", Message: "Login Successful", LogTime: "2023-10-20 09:15:32" },
+        //   { Account_Id: "user2", Active: "新增", Controller: "AssetsInMng", Action: "NewAssetsIn", Message: "user2 Created", LogTime: "2023-10-20 10:30:45" },
+        //   { Account_Id: "user3", Active: "編輯", Controller: "AssetsInMng", Action: "ApplicationEdit", Message: "Profile Updated", LogTime: "2023-10-20 12:45:22" },
+        //   { Account_Id: "user4", Active: "刪除", Controller: "AssetsInMng", Action: "ApplicationDelete", Message: "user2 Deleted", LogTime: "2023-10-20 15:20:18" },
+        //   { Account_Id: "user1", Active: "登出", Controller: "Account", Action: "LogOff", Message: "Logout Successful", LogTime: "2023-10-20 18:55:09" }
+        // ];
       }
       const selectActive = (item)=>{
         searchParams.Active = item;

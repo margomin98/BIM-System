@@ -12,7 +12,7 @@
     props: ['params'],
     setup(props) {
       const router = useRouter();
-      const search_id = props.params.data.Account;
+      const search_id = props.params.data.Id;
       const isDisabled = ref(false);
       onMounted(() => {
         // checkButton();

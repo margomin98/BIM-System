@@ -540,13 +540,13 @@ const routes = [
     path: "/system_log_datagrid",
     name: "System_Log_Datagrid",
     component: System_Log_Datagrid,
-    // meta: {auth: true, request: 'AR_Mgr'},
+    meta: {auth: true, request: 'SystemLog'},
   },
   {
     path: "/system_log_view",
     name: "System_Log_View",
     component: System_Log_View,
-    // meta: {auth: true, request: 'AR_Mgr'},
+    meta: {auth: true, request: 'SystemLog'},
   }, 
 ];
 
