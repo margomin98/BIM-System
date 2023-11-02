@@ -7,30 +7,35 @@
     <div class="container-fluid datagrid_section">
       <div class="content">
         <div class="row">
+          <!-- 使用者帳號 -->
+          <div class="col-xl-auto col-lg-auto col-md-auto col-12">
+            <p>使用者帳號</p>
+            <input type="text" />
+          </div>
           <!-- 執行動作 -->
-          <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="col-xl-auto col-lg-auto col-md-auto col-12">
             <p>執行動作</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="activeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{  searchParams.Active ||"請選擇" }}
-                    </button>
+                        {{  searchParams.Active ||"請選擇" }}
+                      </button>
               <div class="dropdown-menu" aria-labelledby="activeDropdown">
                 <p v-for="(item , index) in DropdownArray.Active" :key="index" class="dropdown-item" @click="selectActive(item)">{{ item }}</p>
               </div>
             </div>
           </div>
           <!-- 訊息 -->
-          <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="col-xl-auto col-lg-auto col-md-auto col-12">
             <p>訊息</p>
             <input type="text" v-model="searchParams.Message" />
           </div>
           <!-- 日期（起） -->
-          <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="col-xl-auto col-lg-auto col-md-auto col-12">
             <p>執行時間(起)</p>
             <input type="datetime-local" class="date-input" v-model="searchParams.StartDate" />
           </div>
           <!-- 日期(迄) -->
-          <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="col-xl-auto col-lg-auto col-md-auto col-12">
             <p>執行時間(迄)</p>
             <input type="datetime-local" class="date-input" v-model="searchParams.EndDate" />
           </div>
@@ -50,7 +55,7 @@
         :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <Column style="min-width: 60px;">
           <template #body="slotProps">
-              <System_log_button :params = "slotProps"/>
+                <System_log_button :params = "slotProps"/>
 </template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width, 'max-width': item.max}"></Column>
@@ -179,22 +184,6 @@
   .dg-height {
     @include datagrid-height;
   }
-  @media only screen and (min-width: 1200px) and (max-width: 1400px) {
-    .row {
-      display: grid;
-      grid-auto-flow: column;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      gap: 10px 10px;
-      grid-template-areas: ". ." ". .";
-      input {
-        width: 250px !important;
-      }
-      .dropdown {
-        width: 250px !important;
-      }
-    }
-  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       padding: 0 10%;
@@ -237,6 +226,10 @@
           justify-content: center;
         }
         .row {
+          display: grid;
+          grid-template-rows: 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 40px 5px;
           p {
             @include datagrid_title;
           }
@@ -316,8 +309,11 @@
       }
       .datagrid_section {
         .row {
-          gap: 10px 0;
-          padding: 30px;
+          display: grid;
+          grid-template-rows: 1fr 1fr;
+          grid-template-columns: 1fr 1fr;
+          gap: 40px 5px;
+          padding: 5%;
           @include datagrid_bg;
           p {
             @include datagrid_title;
