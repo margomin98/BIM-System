@@ -26,13 +26,13 @@
           </div>
           <!-- 日期（起） -->
           <div class="col-xl-3 col-lg-3 col-md-6 col-12">
-            <p>日期(起)</p>
-            <input type="date" class="date-input" v-model="searchParams.StartDate"/>
+            <p>執行時間(起)</p>
+            <input type="datetime-local" class="date-input" v-model="searchParams.StartDate"/>
           </div>
           <!-- 日期(迄) -->
           <div class="col-xl-3 col-lg-3 col-md-6 col-12">
-            <p>日期(迄)</p>
-            <input type="date" class="date-input" v-model="searchParams.EndDate"/>
+            <p>執行時間(迄)</p>
+            <input type="datetime-local" class="date-input" v-model="searchParams.EndDate"/>
           </div>
         </div>
       </div>
