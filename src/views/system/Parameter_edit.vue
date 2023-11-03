@@ -42,20 +42,20 @@
     AgGridVue
   } from "ag-grid-vue3";
   import Navbar from "@/components/Navbar.vue";
-import Delete from "@/components/Delete_button";
+  import Delete from "@/components/Delete_button";
   import Edit_pen from "@/components/Edit_pen";
   export default {
     components: {
       Navbar,
       AgGridVue,
-         Delete,
+      Delete,
       Edit_pen
     },
     setup() {
       return {
         columnDefs: [{
             field: "make",
-       cellRenderer: "Delete",
+            cellRenderer: "Delete",
             width: '120',
             rowDrag: true,
           },
@@ -66,7 +66,6 @@ import Delete from "@/components/Delete_button";
             editable: true,
             cellRenderer: 'Edit_pen',
             suppressClickEdit: true,
-            
             enableRtl: true,
           }
         ],
@@ -81,7 +80,6 @@ import Delete from "@/components/Delete_button";
             price: 32000
           }
         ],
-        
       };
     },
     methods: {
@@ -209,33 +207,6 @@ import Delete from "@/components/Delete_button";
             margin-bottom: 0;
           }
         }
-        .info_title {
-          display: flex;
-          gap: 20px;
-          padding-left: 20px;
-          background: #EAEAEA;
-          font-size: 20px;
-          font-weight: 700;
-          align-items: center;
-          height: 50px;
-          p {
-            margin-bottom: 0;
-          }
-          input {
-            border: none
-          }
-          button {
-            background: #364E68;
-            border-radius: 10px;
-            border: none;
-            color: white;
-            font-weight: 700;
-            font-size: 18px;
-            &:hover {
-              background: #496ca1
-            }
-          }
-        }
         .button_wrap {
           display: flex;
           margin-top: 30px;
@@ -324,35 +295,6 @@ import Delete from "@/components/Delete_button";
           @include fixed_info;
           p {
             margin-bottom: 0;
-          }
-        }
-        .info_title {
-          display: flex;
-          gap: 10px;
-          padding: 10px;
-          background: #EAEAEA;
-          font-size: 20px;
-          font-weight: 700;
-          align-items: center;
-          flex-direction: column;
-          p {
-            margin-bottom: 0;
-          }
-          input {
-            border: none;
-            width: 100%;
-          }
-          button {
-            width: 90px;
-            background: #364E68;
-            border-radius: 10px;
-            border: none;
-            color: white;
-            font-weight: 700;
-            font-size: 18px;
-            &:hover {
-              background: #496ca1
-            }
           }
         }
         .button_wrap {

@@ -7,12 +7,11 @@
     <div class="info_wrap col">
       <div class="fixed_info">
         <!-- <div>
-          <p>變更權限</p>
-        </div> -->
+            <p>變更權限</p>
+          </div> -->
         <div>
           <p>目前權限 : {{ roleSearchResult }}</p>
         </div>
-        
       </div>
       <div class="content">
         <div class="col">
@@ -33,8 +32,8 @@
           <div class="input-group-prepend"><span>*</span>權限：</div>
           <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{ selectedRole || "請選擇" }}
-            </button>
+                {{ selectedRole || "請選擇" }}
+              </button>
             <div class="dropdown-menu" aria-labelledby="statusDropdown">
               <p v-for="(item, index) in roleArray" :key="index" class="dropdown-item" @click="selectRole(item)">{{ item.Name }}</p>
             </div>
@@ -52,8 +51,12 @@
 <script>
   import Navbar from "@/components/Navbar.vue";
   import router from "@/router";
-  import { getRoleOption } from "@/assets/js/common_api";
-  import { goBack } from "@/assets/js/common_fn";
+  import {
+    getRoleOption
+  } from "@/assets/js/common_api";
+  import {
+    goBack
+  } from "@/assets/js/common_fn";
   import {
     onMounted,
     reactive,
@@ -122,7 +125,7 @@
         }
       }
       async function submit() {
-        if(!inputValue.value || !selectedRoleId.value) {
+        if (!inputValue.value || !selectedRoleId.value) {
           alert('請輸入必填項目');
           return
         }
@@ -231,30 +234,8 @@
                 font-weight: 700;
               }
             }
-            .arrow-icon {
-              z-index: 2;
-              position: absolute;
-              cursor: pointer;
-              border-top: 0.3em solid;
-              border-right: 0.3em solid transparent;
-              border-bottom: 0;
-              border-left: 0.3em solid transparent;
-              position: absolute;
-              top: 50%;
-              right: 0;
-              margin-right: 8px
-            }
             input {
               padding: 10px;
-            }
-            .input-placeholder {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              color: gray;
-              font-size: 14px;
-              pointer-events: none;
             }
           }
           .authority {
@@ -384,30 +365,8 @@
                 font-weight: 700;
               }
             }
-            .arrow-icon {
-              z-index: 2;
-              position: absolute;
-              cursor: pointer;
-              border-top: 0.3em solid;
-              border-right: 0.3em solid transparent;
-              border-bottom: 0;
-              border-left: 0.3em solid transparent;
-              position: absolute;
-              top: 50%;
-              right: 0;
-              margin-right: 8px
-            }
             input {
               padding: 10px;
-            }
-            .input-placeholder {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              color: gray;
-              font-size: 14px;
-              pointer-events: none;
             }
           }
           .authority {
@@ -538,30 +497,8 @@
                 font-weight: 700;
               }
             }
-            .arrow-icon {
-              z-index: 2;
-              position: absolute;
-              cursor: pointer;
-              border-top: 0.3em solid;
-              border-right: 0.3em solid transparent;
-              border-bottom: 0;
-              border-left: 0.3em solid transparent;
-              position: absolute;
-              top: 50%;
-              right: 0;
-              margin-right: 8px
-            }
             input {
               padding: 10px;
-            }
-            .input-placeholder {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              color: gray;
-              font-size: 14px;
-              pointer-events: none;
             }
           }
           .authority {

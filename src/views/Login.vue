@@ -88,6 +88,9 @@
 </script>
 
 <style lang="scss" scoped>
+  .text_input {
+    padding: 0 10px;
+  }
   @media only screen and (min-width: 1200px) {
     .home {
       background-image: url('../assets/login/login_bg.png');

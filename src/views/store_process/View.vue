@@ -491,67 +491,6 @@
         }
         .content {
           @include content_bg;
-          .search_section {
-            position: relative;
-            display: flex;
-            flex: 1 1 auto; // width: 100%;
-            .options-list {
-              position: absolute;
-              z-index: 99;
-              background-color: white;
-              border: 1px solid #ccc;
-              max-height: 200px;
-              overflow-y: auto;
-              list-style-type: none;
-              padding: 0;
-              margin: 0;
-              width: 100%;
-              top: 0;
-              top: 40px;
-              border-radius: 5px;
-            }
-            .options-list li {
-              padding: 10px 10px 0;
-              font-size: 18px;
-              cursor: pointer; // &:hover {
-              //   // background: #7893b7;
-              //   // color: white;
-              //   font-weight: 700;
-              // }
-            }
-            input {
-              height: 35px;
-              padding: 10px;
-              border-radius: 5px;
-              border: none;
-            }
-            .input-placeholder {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              color: gray;
-              font-size: 14px;
-              pointer-events: none;
-            }
-          }
-          .dropdown {
-            .dropdown-menu {
-              width: 100%;
-              p {
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-            }
-            button {
-              @include dropdown-btn;
-              width: 187px;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
           .input-group {
             .input-number {
               @include count_btn;
@@ -682,31 +621,8 @@
             .readonly_box {
               width: 63%;
             }
-            .dropdown {
-              width: 60%;
-              .dropdown-menu {
-                width: 100%;
-                max-height: 250px;
-                overflow-y: auto;
-                p {
-                  &:hover {
-                    cursor: pointer;
-                  }
-                }
-              }
-              button {
-                @include dropdown-btn;
-                width: 100%;
-                color: black;
-                justify-content: space-between;
-                align-items: center;
-              }
-            }
             .input-group {
               flex-wrap: nowrap;
-              span {
-                @include red_star
-              }
               .input-number {
                 @include count_btn;
               }
@@ -719,17 +635,6 @@
                 font-weight: 700;
                 font-size: 20px;
                 text-align: end;
-              }
-              .file_wrap {
-                display: flex;
-                flex-direction: column;
-                .choose_btn {
-                  margin-bottom: 10px;
-                  @include choose_file_btn;
-                  &:hover {
-                    background: #3f608f;
-                  }
-                }
               }
             }
           }
@@ -764,67 +669,6 @@
         }
         .content {
           @include content_bg;
-          .search_section {
-            position: relative;
-            display: flex;
-            flex: 1 1 auto; // width: 100%;
-            .options-list {
-              position: absolute;
-              z-index: 99;
-              background-color: white;
-              border: 1px solid #ccc;
-              max-height: 200px;
-              overflow-y: auto;
-              list-style-type: none;
-              padding: 0;
-              margin: 0;
-              width: 100%;
-              top: 0;
-              top: 40px;
-              border-radius: 5px;
-            }
-            .options-list li {
-              padding: 10px 10px 0;
-              font-size: 18px;
-              cursor: pointer; // &:hover {
-              //   // background: #7893b7;
-              //   // color: white;
-              //   font-weight: 700;
-              // }
-            }
-            input {
-              height: 35px;
-              padding: 10px;
-              border-radius: 5px;
-              border: none;
-            }
-            .input-placeholder {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              color: gray;
-              font-size: 14px;
-              pointer-events: none;
-            }
-          }
-          .dropdown {
-            .dropdown-menu {
-              width: 100%;
-              p {
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-            }
-            button {
-              @include dropdown-btn;
-              width: 187px;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
           .input-group {
             .input-number {
               @include count_btn;
@@ -954,31 +798,8 @@
             .readonly_box {
               width: 63%;
             }
-            .dropdown {
-              width: 60%;
-              .dropdown-menu {
-                width: 100%;
-                max-height: 250px;
-                overflow-y: auto;
-                p {
-                  &:hover {
-                    cursor: pointer;
-                  }
-                }
-              }
-              button {
-                @include dropdown-btn;
-                width: 100%;
-                color: black;
-                justify-content: space-between;
-                align-items: center;
-              }
-            }
             .input-group {
               flex-wrap: nowrap;
-              span {
-                @include red_star
-              }
               .input-number {
                 @include count_btn;
               }
@@ -991,17 +812,6 @@
                 font-weight: 700;
                 font-size: 20px;
                 text-align: end;
-              }
-              .file_wrap {
-                display: flex;
-                flex-direction: column;
-                .choose_btn {
-                  margin-bottom: 10px;
-                  @include choose_file_btn;
-                  &:hover {
-                    background: #3f608f;
-                  }
-                }
               }
             }
           }
@@ -1049,62 +859,6 @@
         }
         .content {
           @include content_bg;
-          .search_section {
-            position: relative;
-            display: flex;
-            flex: 1 1 auto; // width: 100%;
-            .options-list {
-              position: absolute;
-              z-index: 99;
-              background-color: white;
-              border: 1px solid #ccc;
-              max-height: 200px;
-              overflow-y: auto;
-              list-style-type: none;
-              padding: 0;
-              margin: 0;
-              width: 100%;
-              top: 0;
-              top: 40px;
-              border-radius: 5px;
-            }
-            .options-list li {
-              padding: 10px 10px 0;
-              font-size: 18px;
-              cursor: pointer; // &:hover {
-              //   // background: #7893b7;
-              //   // color: white;
-              //   font-weight: 700;
-              // }
-            }
-            input {
-              height: 35px;
-              padding: 10px;
-              border-radius: 5px;
-              border: none;
-            }
-            .input-placeholder {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              color: gray;
-              font-size: 14px;
-              pointer-events: none;
-            }
-          }
-          .dropdown {
-            .dropdown-menu {
-              width: 100%;
-            }
-            button {
-              @include dropdown-btn;
-              width: 187px;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
           .input-group {
             flex-direction: column;
             .input-number {
@@ -1203,9 +957,6 @@
               margin-right: 10px;
             }
           }
-          .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-            margin-left: unset !important;
-          }
           .nav-tabs {
             button {
               @include tab_section_num;
@@ -1245,32 +996,8 @@
                 }
               }
             }
-            .dropdown {
-              margin-left: unset !important;
-              margin-top: 5px;
-              .dropdown-menu {
-                width: 100%;
-                max-height: 250px;
-                overflow-y: auto;
-                p {
-                  &:hover {
-                    cursor: pointer;
-                  }
-                }
-              }
-              button {
-                @include dropdown-btn;
-                width: 100%;
-                color: black;
-                justify-content: space-between;
-                align-items: center;
-              }
-            }
             .input-group {
               flex-direction: column;
-              span {
-                @include red_star
-              }
               .input-number {
                 @include count_btn;
               }
@@ -1286,18 +1013,6 @@
                 font-weight: 700;
                 font-size: 20px;
                 width: 100%;
-              }
-              .file_wrap {
-                display: flex;
-                flex-direction: column;
-                .choose_btn {
-                  margin-top: 5px;
-                  margin-bottom: 10px;
-                  @include choose_file_btn;
-                  &:hover {
-                    background: #3f608f;
-                  }
-                }
               }
             }
           }

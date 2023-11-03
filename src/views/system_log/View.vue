@@ -156,9 +156,6 @@
             margin-bottom: 0;
           }
         }
-        .fixed_title {
-          @include fixed_title;
-        }
       
         .content {
           @include content_bg;
@@ -173,9 +170,6 @@
          
           .input-group {
             flex-wrap: nowrap;
-            .input-number {
-              @include count_btn;
-            }
             .form-control {
               height: 35px;
               border-radius: 0;
@@ -203,23 +197,6 @@
             &:hover {
               background-color: #5d85bb;
             }
-          }
-          button.send_btn {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
-        }
-       
-        .item_wrap {
-          height: 350px;
-          overflow: auto;
-          .item {
-            background-color: #526F8E;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
           }
         }
       }
@@ -257,18 +234,9 @@
             margin-bottom: 0;
           }
         }
-        .fixed_title {
-          @include fixed_title;
-        }
        
         .content {
           @include content_bg;
-          .organizer_wrap {
-            --bs-gutter-x: unset;
-            .flex:nth-child(1) {
-              width: 210px
-            }
-          }
           p {
             text-align: center;
             white-space: nowrap;
@@ -280,9 +248,6 @@
       
           .input-group {
             flex-wrap: nowrap;
-            .input-number {
-              @include count_btn;
-            }
             .form-control {
               height: 35px;
               width: 55%;
@@ -310,23 +275,6 @@
               background-color: #5d85bb;
             }
           }
-          button.send_btn {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
-        }
-       
-        .item_wrap {
-          height: 350px;
-          overflow: auto;
-          .item {
-            background-color: #526F8E;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-          }
         }
       }
    
@@ -345,13 +293,6 @@
         height: 35px;
         width: 100%
       }
-      .swiper_section swiper-slide {
-        img {
-          width: 100%;
-          height: auto;
-          padding: 40px;
-        }
-      }
       .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
         margin-left: 0 !important;
         border-radius: 5px;
@@ -365,9 +306,6 @@
       }
       .info_wrap {
         padding: 1% 5% 0;
-        .fixed_title {
-          @include fixed_title;
-        }
         .fixed_info {
           @include fixed_info;
           flex-direction: column;
@@ -381,16 +319,9 @@
      
         .content {
           @include content_bg;
-          .row {
-            gap: 10px 0;
-          }
       
           .input-group {
             flex-direction: column;
-            .input-number {
-              @include count_btn;
-              width: 100%;
-            }
             .form-control {
               width: 100%;
               height: 35px;
@@ -419,32 +350,7 @@
               background-color: #5d85bb;
             }
           }
-          button.send_btn {
-            @include search_and_send_btn;
-            padding: 5px;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
         }
-        .item_wrap {
-          height: 350px;
-          overflow: auto;
-          .item {
-            background-color: #526F8E;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-          }
-        }
-      }
-      .info_wrap:nth-child(3) {
-        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-          margin-left: unset !important;
-          border-radius: 5px;
-        }
-        margin-top: 3%;
-      
       }
     }
    

@@ -42,8 +42,8 @@
                   <p>設備總類</p>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          {{ EquipTypeName || '請選擇' }}
-                        </button>
+                            {{ EquipTypeName || '請選擇' }}
+                          </button>
                     <div class="dropdown-menu" aria-labelledby="typeDropdown">
                       <p v-for="(item, index) in EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
                     </div>
@@ -91,8 +91,8 @@
                   <p>儲位區域</p>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          {{ AreaName || '請選擇' }}
-                        </button>
+                            {{ AreaName || '請選擇' }}
+                          </button>
                     <div class="dropdown-menu" aria-labelledby="typeDropdown">
                       <p v-for="(item, index) in AreaArray" :key="index" class="dropdown-item" @click="selectArea(item)">{{ item.Name }}</p>
                     </div>
@@ -951,80 +951,7 @@
                 width: 400px;
               }
             }
-            .modal {
-              .modal-header {
-                background: #3D4E61;
-                color: white;
-                .close_icon {
-                  color: white;
-                  font-weight: 700;
-                  margin-bottom: 0;
-                }
-              }
-            }
-            .input-group {
-              span {
-                @include red_star
-              }
-              .selected_file {
-                margin-left: 20px;
-                p.title {
-                  font-weight: 700;
-                  color: white;
-                  margin-bottom: 5px;
-                }
-                .file_upload_wrap {
-                  margin-bottom: 0;
-                  display: flex;
-                  img {
-                    width: 25px;
-                    height: 25px;
-                  }
-                  p {
-                    margin-bottom: 0;
-                    font-weight: 700;
-                    color: white;
-                    &::before {
-                      margin-right: 10px;
-                      content: '·';
-                      font-weight: 700;
-                      color: white;
-                    }
-                  }
-                }
-              }
-              .input-number {
-                @include count_btn;
-              }
-              .form-control {
-                height: 35px;
-                border-radius: 0;
-              }
-              .input-group-prepend {
-                color: white;
-                font-weight: 700;
-                font-size: 20px;
-                width: 120px;
-                text-align: end;
-              }
-              .file_wrap {
-                display: flex;
-                flex-direction: column;
-                .choose_btn {
-                  margin-bottom: 10px;
-                  @include choose_file_btn;
-                  &:hover {
-                    background: #3f608f;
-                  }
-                }
-                .upload_btn {
-                  @include upload_file_btn;
-                  &:hover {
-                    background: #2f507e;
-                  }
-                }
-              }
-            }
+            .modal {}
           }
         }
       }
@@ -1152,80 +1079,7 @@
                 width: 400px;
               }
             }
-            .modal {
-              .modal-header {
-                background: #3D4E61;
-                color: white;
-                .close_icon {
-                  color: white;
-                  font-weight: 700;
-                  margin-bottom: 0;
-                }
-              }
-            }
-            .input-group {
-              span {
-                @include red_star
-              }
-              .selected_file {
-                margin-left: 20px;
-                p.title {
-                  font-weight: 700;
-                  color: white;
-                  margin-bottom: 5px;
-                }
-                .file_upload_wrap {
-                  margin-bottom: 0;
-                  display: flex;
-                  img {
-                    width: 25px;
-                    height: 25px;
-                  }
-                  p {
-                    margin-bottom: 0;
-                    font-weight: 700;
-                    color: white;
-                    &::before {
-                      margin-right: 10px;
-                      content: '·';
-                      font-weight: 700;
-                      color: white;
-                    }
-                  }
-                }
-              }
-              .input-number {
-                @include count_btn;
-              }
-              .form-control {
-                height: 35px;
-                border-radius: 0;
-              }
-              .input-group-prepend {
-                color: white;
-                font-weight: 700;
-                font-size: 20px;
-                width: 120px;
-                text-align: end;
-              }
-              .file_wrap {
-                display: flex;
-                flex-direction: column;
-                .choose_btn {
-                  margin-bottom: 10px;
-                  @include choose_file_btn;
-                  &:hover {
-                    background: #3f608f;
-                  }
-                }
-                .upload_btn {
-                  @include upload_file_btn;
-                  &:hover {
-                    background: #2f507e;
-                  }
-                }
-              }
-            }
+            .modal {}
           }
         }
       }
@@ -1355,80 +1209,7 @@
                 font-size: 20px;
               }
             }
-            .modal {
-              .modal-header {
-                background: #3D4E61;
-                color: white;
-                .close_icon {
-                  color: white;
-                  font-weight: 700;
-                  margin-bottom: 0;
-                }
-              }
-            }
-            .input-group {
-              span {
-                @include red_star
-              }
-              .selected_file {
-                margin-left: 20px;
-                p.title {
-                  font-weight: 700;
-                  color: white;
-                  margin-bottom: 5px;
-                }
-                .file_upload_wrap {
-                  margin-bottom: 0;
-                  display: flex;
-                  img {
-                    width: 25px;
-                    height: 25px;
-                  }
-                  p {
-                    margin-bottom: 0;
-                    font-weight: 700;
-                    color: white;
-                    &::before {
-                      margin-right: 10px;
-                      content: '·';
-                      font-weight: 700;
-                      color: white;
-                    }
-                  }
-                }
-              }
-              .input-number {
-                @include count_btn;
-              }
-              .form-control {
-                height: 35px;
-                border-radius: 0;
-              }
-              .input-group-prepend {
-                color: white;
-                font-weight: 700;
-                font-size: 20px;
-                width: 120px;
-                text-align: end;
-              }
-              .file_wrap {
-                display: flex;
-                flex-direction: column;
-                .choose_btn {
-                  margin-bottom: 10px;
-                  @include choose_file_btn;
-                  &:hover {
-                    background: #3f608f;
-                  }
-                }
-                .upload_btn {
-                  @include upload_file_btn;
-                  &:hover {
-                    background: #2f507e;
-                  }
-                }
-              }
-            }
+            .modal {}
           }
         }
       }
