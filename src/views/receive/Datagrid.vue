@@ -171,7 +171,7 @@ import { getMngDatagrid } from '@/assets/js/common_api';
         margin-bottom: 25px;
         gap: 20px;
         .add_btn {
-          @include datagrid_button_no1; // width: 100px;
+          @include datagrid_button_no1;
           &:hover {
             background-color: #537ebc;
           }
@@ -188,12 +188,7 @@ import { getMngDatagrid } from '@/assets/js/common_api';
             background-color: #5d85bd;
           }
         }
-        // .export_btn {
-        //   @include export_btn;
-        //   &:hover {
-        //     background-color: #274266;
-        //   }
-        // }
+       
       }
       .datagrid_section {
         .content {
@@ -224,12 +219,6 @@ import { getMngDatagrid } from '@/assets/js/common_api';
         
         }
       }
-      .datagrid-header-row {
-        background: var(--c-7, #1f4e5f);
-      }
-      .datagrid-header .datagrid-cell {
-        text-align: left importtant;
-      }
     }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
@@ -247,17 +236,12 @@ import { getMngDatagrid } from '@/assets/js/common_api';
         margin-bottom: 25px;
         gap: 20px;
         .add_btn {
-          @include datagrid_button_no1; // width:100px;
+          @include datagrid_button_no1; 
           &:hover {
             background-color: #537ebc;
           }
         }
-        // .export_btn {
-        //   @include export_btn;
-        //   &:hover {
-        //     background-color: #274266;
-        //   }
-        // }
+    
         .search_btn {
           @include search_and_send_btn;
           &:hover {
@@ -294,12 +278,6 @@ import { getMngDatagrid } from '@/assets/js/common_api';
          
         }
       }
-      .datagrid-header-row {
-        background: var(--c-7, #1f4e5f);
-      }
-      .datagrid-header .datagrid-cell {
-        text-align: left importtant;
-      }
     }
   }
   @media only screen and (max-width: 767px) {
@@ -326,15 +304,7 @@ import { getMngDatagrid } from '@/assets/js/common_api';
             background-color: #537ebc;
           }
         }
-        // .export_btn {
-        //   @include export_btn;
-        //   font-size: 18px;
-        //   width: 100%;
-        //   height: auto;
-        //   &:hover {
-        //     background-color: #274266;
-        //   }
-        // }
+    
         .search_btn {
           @include search_and_send_btn;
           &:hover {
@@ -373,12 +343,6 @@ import { getMngDatagrid } from '@/assets/js/common_api';
           }
          
         }
-      }
-      .datagrid-header-row {
-        background: var(--c-7, #1f4e5f);
-      }
-      .datagrid-header .datagrid-cell {
-        text-align: left importtant;
       }
     }
   }

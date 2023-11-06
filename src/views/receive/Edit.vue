@@ -643,10 +643,6 @@ import axios from 'axios';
       gap: 5px;
       display: flex;
       width: 100%;
-      .icon_wrap {
-        display: flex;
-        align-items: self-start;
-      }
       img {
         cursor: pointer;
         margin: 0 5px
@@ -680,15 +676,6 @@ import axios from 'axios';
     }
     .modal-content {
       margin: auto;
-    }
-    .modal-input-group-prepend {
-      width: auto;
-      font-weight: 700;
-      font-size: 20px;
-    }
-    .modal-footer {
-      padding: 0 12px 12px;
-      border: none;
     }
     .modal-header {
       h5 {
@@ -758,28 +745,6 @@ import axios from 'axios';
             margin-bottom: 0;
           }
         }
-        .fixed_title {
-          @include fixed_title;
-        }
-        .add_btn {
-          display: inline-flex;
-          padding: 10px 25px;
-          justify-content: center;
-          align-items: center;
-          border-radius: 9px;
-          background: #314F7A;
-          height: 50px;
-          width: 174px;
-          color: #FFF;
-          text-align: center;
-          font-size: 20px;
-          font-weight: 700;
-          border: none;
-          margin-bottom: 20px;
-          &:hover {
-            background-color: #456ca7
-          }
-        }
         .content {
           @include content_bg;
           p.uploded_file_name {
@@ -787,23 +752,6 @@ import axios from 'axios';
             margin-bottom: 5px;
             color: white;
             word-break: break-word;
-          }
-          .dropdown {
-            width: 55%;
-            .dropdown-menu {
-              width: 100%;
-              p {
-                text-align: left;
-                padding: 0 10px
-              }
-            }
-            button {
-              @include dropdown-btn;
-              width: 100%;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
           }
           .input-group {
             flex-wrap: nowrap;
@@ -850,45 +798,9 @@ import axios from 'axios';
             }
           }
         }
-        .dropdown {
-          height: 35px;
-          @include dropdown_btn;
-          .dropdown-toggle {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: none;
-          }
-          .dropdown-menu {
-            width: 100%;
-            transform: translate3d(-1px, 35px, 0px) !important;
-            p {
-              padding-top: 5px;
-              text-align: left;
-              font-size: 18px;
-              color: black;
-              font-weight: normal;
-            }
-          }
-        }
-        .item_wrap {
-          height: 350px;
-          overflow: auto;
-          .item {
-            background-color: #526F8E;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-          }
-        }
       }
       .info_wrap:nth-child(3) {
         margin-top: 3%;
-      }
-      .row:nth-child(3) {
-        .input-group {
-          justify-content: flex-start;
-        }
       }
     }
   }
@@ -949,57 +861,13 @@ import axios from 'axios';
             margin-bottom: 0;
           }
         }
-        .fixed_title {
-          @include fixed_title;
-        }
-        .add_btn {
-          display: inline-flex;
-          padding: 10px 25px;
-          justify-content: center;
-          align-items: center;
-          border-radius: 9px;
-          background: #314F7A;
-          height: 50px;
-          width: 174px;
-          color: #FFF;
-          text-align: center;
-          font-size: 20px;
-          font-weight: 700;
-          border: none;
-          margin-bottom: 20px;
-          &:hover {
-            background-color: #456ca7
-          }
-        }
         .content {
           @include content_bg;
-          .organizer_wrap {
-            --bs-gutter-x: unset;
-            .flex:nth-child(1) {
-              width: 210px
-            }
-          }
           p.uploded_file_name {
             font-weight: 700;
             margin-bottom: 5px;
             color: white;
             word-break: break-word;
-          }
-          .dropdown {
-            .dropdown-menu {
-              width: 100%;
-              p {
-                text-align: left;
-                padding: 0 10px
-              }
-            }
-            button {
-              @include dropdown-btn;
-              width: 100%;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
           }
           .input-group {
             flex-wrap: nowrap;
@@ -1042,38 +910,6 @@ import axios from 'axios';
             &:hover {
               background-color: #5e7aa2;
             }
-          }
-        }
-        .dropdown {
-          width: calc(100% - 10%);
-          height: 35px;
-          @include dropdown_btn;
-          .dropdown-toggle {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: none;
-          }
-          .dropdown-menu {
-            width: 100%;
-            transform: translate3d(-1px, 35px, 0px) !important;
-            p {
-              padding-top: 5px;
-              text-align: left;
-              font-size: 18px;
-              color: black;
-              font-weight: normal;
-            }
-          }
-        }
-        .item_wrap {
-          height: 350px;
-          overflow: auto;
-          .item {
-            background-color: #526F8E;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
           }
         }
       }
@@ -1149,9 +985,6 @@ import axios from 'axios';
       }
       .info_wrap {
         padding: 1% 5% 0;
-        .fixed_title {
-          @include fixed_title;
-        }
         .fixed_info {
           @include fixed_info;
           flex-direction: column;
@@ -1160,25 +993,6 @@ import axios from 'axios';
           p {
             font-size: 20px;
             margin-bottom: 0;
-          }
-        }
-        .add_btn {
-          display: inline-flex;
-          padding: 10px;
-          justify-content: center;
-          align-items: center;
-          border-radius: 9px;
-          background: #314F7A;
-          height: 50px;
-          width: 150px;
-          color: #FFF;
-          text-align: center;
-          font-size: 18px;
-          font-weight: 700;
-          border: none;
-          margin-bottom: 15px;
-          &:hover {
-            background-color: #456ca7
           }
         }
         .content {
@@ -1191,19 +1005,6 @@ import axios from 'axios';
           }
           .row {
             gap: 10px 0;
-          }
-          .dropdown {
-            margin-left: unset !important;
-            .dropdown-menu {
-              width: 100%;
-            }
-            button {
-              @include dropdown-btn;
-              width: 100%;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
           }
           .input-group {
             flex-direction: column;
@@ -1247,44 +1048,13 @@ import axios from 'axios';
             }
           }
         }
-        .item_wrap {
-          height: 350px;
-          overflow: auto;
-          .item {
-            background-color: #526F8E;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-          }
-        }
       }
       .info_wrap:nth-child(3) {
         .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
           margin-left: unset !important;
           border-radius: 5px;
         }
-        margin-top: 11%;
-        .count {
-          .number-input-box {
-            width: 100%;
-            margin-left: unset !important;
-          }
-          .btn_section {
-            margin-left: 10px;
-            .delete_btn {
-              display: flex;
-              align-items: center;
-              @include delete_button;
-              height: 100%;
-              padding: 5px;
-              width: 80px;
-              font-size: 18px;
-              &:hover {
-                background: #FF7272
-              }
-            }
-          }
-        }
+        margin-top: 11%
       }
     }
     .modal-dialog {

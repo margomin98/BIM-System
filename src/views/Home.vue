@@ -1,9 +1,7 @@
 <template>
   <Navbar />
-
   <div class="chart">
-
-    <ag-charts-vue  class="chart-container" :options="options"></ag-charts-vue>
+    <ag-charts-vue class="chart-container" :options="options"></ag-charts-vue>
   </div>
 </template>
 
@@ -31,9 +29,7 @@
         padding: {
           top: 50,
           bottom: 40,
-   
         },
-      
         overlays: {
           noData: {
             renderer: () => '<p class="no_data" style="font-size:30px;font-weight:700;">無數據</p>'
@@ -66,7 +62,7 @@
           calloutLabelKey: 'os',
           angleKey: 'share',
           innerRadiusRatio: 0.40,
-          rotation:-50,
+          rotation: -50,
           innerLabels: [{
               text: total.value.toString(),
               fontSize: 35,
@@ -89,14 +85,14 @@
             strokeWidth: 2,
             colors: ['#ffffff']
           },
-        
           title: {
             text: '倉庫即時數據',
             fontSize: 45,
             spacing: 40,
             fontWeight: 'bold',
             color: '#132238',
-          },  sectorLabelKey: 'share',
+          },
+          sectorLabelKey: 'share',
           sectorLabel: {
             fontSize: 23,
             color: 'white',
