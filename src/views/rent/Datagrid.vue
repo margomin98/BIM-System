@@ -301,7 +301,7 @@
         background: var(--c-7, #1f4e5f);
       }
       .datagrid-header .datagrid-cell {
-        text-align: left !important;
+        text-align: left importtant;
       }
     }
   }
@@ -390,7 +390,7 @@
         background: var(--c-7, #1f4e5f);
       }
       .datagrid-header .datagrid-cell {
-        text-align: left !important;
+        text-align: left importtant;
       }
     }
   }
@@ -487,7 +487,7 @@
         background: var(--c-7, #1f4e5f);
       }
       .datagrid-header .datagrid-cell {
-        text-align: left !important;
+        text-align: left importtant;
       }
     }
   }

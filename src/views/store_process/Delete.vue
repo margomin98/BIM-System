@@ -213,13 +213,15 @@
               </div>
             </div>
             <!-- 頁籤上傳檔案部分 -->
-            <div class="col selected_file">
+            <div class="col">
               <div class="input-group">
                 <div class="input-group-prepend">已上傳檔案 :</div>
+                <div class="selected_file">
                 <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
                   <p @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
                 </div>
               </div>
+            </div>
             </div>
           </div>
         </div>
@@ -463,50 +465,6 @@
         }
         .content {
           @include content_bg;
-          .search_section {
-            position: relative;
-            display: flex;
-            flex: 1 1 auto; // width: 100%;
-            .options-list {
-              position: absolute;
-              z-index: 99;
-              background-color: white;
-              border: 1px solid #ccc;
-              max-height: 200px;
-              overflow-y: auto;
-              list-style-type: none;
-              padding: 0;
-              margin: 0;
-              width: 100%;
-              top: 0;
-              top: 40px;
-              border-radius: 5px;
-            }
-            .options-list li {
-              padding: 10px 10px 0;
-              font-size: 18px;
-              cursor: pointer; // &:hover {
-              //   // background: #7893b7;
-              //   // color: white;
-              //   font-weight: 700;
-              // }
-            }
-            input {
-              height: 35px;
-              padding: 10px;
-              border-radius: 5px;
-              border: none;
-            }
-            .input-placeholder {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              color: gray;
-              font-size: 14px;
-              pointer-events: none;
-            }
-          }
           .input-group {
             .input-number {
               @include count_btn;
@@ -579,8 +537,7 @@
             button {
               @include tab_section_num;
               background: #5C7897;
-            }
-            .active {
+            }   .active {
               @include tab_section_num;
               background: #3E4E5F;
             }
@@ -592,7 +549,8 @@
             .input-number {
               width: 64%
             }
-            .selected_file {
+            .selected_file {  display: flex;
+              align-items: center;
               .input-group {
                 flex-direction: column;
               }
@@ -640,9 +598,6 @@
               }
             }
             .input-group {
-              span {
-                @include red_star
-              }
               .file_upload_wrap {
                 margin-bottom: 0;
                 display: flex;
@@ -724,50 +679,6 @@
         }
         .content {
           @include content_bg;
-          .search_section {
-            position: relative;
-            display: flex;
-            flex: 1 1 auto; // width: 100%;
-            .options-list {
-              position: absolute;
-              z-index: 99;
-              background-color: white;
-              border: 1px solid #ccc;
-              max-height: 200px;
-              overflow-y: auto;
-              list-style-type: none;
-              padding: 0;
-              margin: 0;
-              width: 100%;
-              top: 0;
-              top: 40px;
-              border-radius: 5px;
-            }
-            .options-list li {
-              padding: 10px 10px 0;
-              font-size: 18px;
-              cursor: pointer; // &:hover {
-              //   // background: #7893b7;
-              //   // color: white;
-              //   font-weight: 700;
-              // }
-            }
-            input {
-              height: 35px;
-              padding: 10px;
-              border-radius: 5px;
-              border: none;
-            }
-            .input-placeholder {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              color: gray;
-              font-size: 14px;
-              pointer-events: none;
-            }
-          }
           .input-group {
             .input-number {
               @include count_btn;
@@ -840,8 +751,7 @@
             button {
               @include tab_section_num;
               background: #5C7897;
-            }
-            .active {
+            }   .active {
               @include tab_section_num;
               background: #3E4E5F;
             }
@@ -853,7 +763,8 @@
             .input-number {
               width: 62%
             }
-            .selected_file {
+            .selected_file {  display: flex;
+              align-items: center;
               .input-group {
                 flex-direction: column;
               }
@@ -902,9 +813,6 @@
               }
             }
             .input-group {
-              span {
-                @include red_star
-              }
               .file_upload_wrap {
                 margin-bottom: 0;
                 display: flex;
@@ -962,6 +870,7 @@
         }
       }
       .readonly_box {
+        margin-top: 5px;
         @include readonly_box;
       }
       .form_search_btn {
@@ -999,50 +908,6 @@
         }
         .content {
           @include content_bg;
-          .search_section {
-            position: relative;
-            display: flex;
-            flex: 1 1 auto; // width: 100%;
-            .options-list {
-              position: absolute;
-              z-index: 99;
-              background-color: white;
-              border: 1px solid #ccc;
-              max-height: 200px;
-              overflow-y: auto;
-              list-style-type: none;
-              padding: 0;
-              margin: 0;
-              width: 100%;
-              top: 0;
-              top: 40px;
-              border-radius: 5px;
-            }
-            .options-list li {
-              padding: 10px 10px 0;
-              font-size: 18px;
-              cursor: pointer; // &:hover {
-              //   // background: #7893b7;
-              //   // color: white;
-              //   font-weight: 700;
-              // }
-            }
-            input {
-              height: 35px;
-              padding: 10px;
-              border-radius: 5px;
-              border: none;
-            }
-            .input-placeholder {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              color: gray;
-              font-size: 14px;
-              pointer-events: none;
-            }
-          }
           .info {
             display: flex;
             flex-direction: row-reverse;
@@ -1124,8 +989,7 @@
             button {
               @include tab_section_num;
               background: #5C7897;
-            }
-            .active {
+            }   .active {
               @include tab_section_num;
               background: #3E4E5F;
             }
@@ -1134,7 +998,8 @@
             background: #3E4E5F;
             padding: 50px 30px;
             border-radius: 0 0 10px 10px;
-            .selected_file {
+            .selected_file {  display: flex;
+              align-items: center;
               .input-group {
                 flex-direction: column;
               }
@@ -1190,9 +1055,6 @@
             }
             .input-group {
               flex-direction: column;
-              span {
-                @include red_star
-              }
               .file_upload_wrap {
                 margin-bottom: 0;
                 display: flex;

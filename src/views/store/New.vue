@@ -1840,7 +1840,7 @@
           }
           p {
             font-weight: 700;
-            margin-bottom: 5px;
+            margin-bottom:0;
             color: white;
             word-break: break-word;
             &::before {

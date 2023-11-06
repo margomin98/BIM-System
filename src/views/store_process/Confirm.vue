@@ -217,7 +217,7 @@
             <div class="col">
               <div class="input-group">
                 <div class="input-group-prepend">已上傳檔案 :</div>
-                <div class="selected_file">
+                <div class="selected_file" style="display: flex;align-items:center">
                   <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap" style="cursor: pointer;">
                     <p @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">{{ file.FileName }}</p>
                   </div>
@@ -256,8 +256,8 @@
                 <div class="input-with-icon">
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(1)" />
                   <span class="icon-container">
-                                    <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user1.isValidate" />
-                                  </span>
+                                      <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user1.isValidate" />
+                                    </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">驗證</button>
                 <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
@@ -295,8 +295,8 @@
                 <div class="input-with-icon">
                   <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(2)" />
                   <span class="icon-container">
-                              <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user2.isValidate" />
-                            </span>
+                                <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user2.isValidate" />
+                              </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">驗證</button>
                 <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
@@ -616,62 +616,6 @@
         }
         .content {
           @include content_bg;
-          .search_section {
-            position: relative;
-            display: flex;
-            flex: 1 1 auto; // width: 100%;
-            .options-list {
-              position: absolute;
-              z-index: 99;
-              background-color: white;
-              border: 1px solid #ccc;
-              max-height: 200px;
-              overflow-y: auto;
-              list-style-type: none;
-              padding: 0;
-              margin: 0;
-              width: 100%;
-              top: 0;
-              top: 40px;
-              border-radius: 5px;
-            }
-            .options-list li {
-              padding: 10px 10px 0;
-              font-size: 18px;
-              cursor: pointer; // &:hover {
-              //   // background: #7893b7;
-              //   // color: white;
-              //   font-weight: 700;
-              // }
-            }
-            input {
-              height: 35px;
-              padding: 10px;
-              border-radius: 5px;
-              border: none;
-            }
-            .input-placeholder {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              color: gray;
-              font-size: 14px;
-              pointer-events: none;
-            }
-          }
-          .dropdown {
-            .dropdown-menu {
-              width: 100%;
-            }
-            button {
-              @include dropdown-btn;
-              width: 187px;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
           .input-group {
             .input-number {
               @include count_btn;
@@ -865,26 +809,6 @@
               }
             }
           }
-          .dropdown {
-            width: 60%;
-            .dropdown-menu {
-              width: 100%;
-              max-height: 250px;
-              overflow-y: auto;
-              p {
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-            }
-            button {
-              @include dropdown-btn;
-              width: 100%;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
           .input-group {
             flex-wrap: nowrap;
             span {
@@ -892,14 +816,6 @@
             }
             .input-number {
               width: 65%;
-            }
-            .selected_file {
-              margin-left: 20px;
-              p.title {
-                font-weight: 700;
-                color: white;
-                margin-bottom: 5px;
-              }
             }
             .file_upload_wrap {
               margin-bottom: 0;
@@ -933,17 +849,6 @@
               font-size: 20px;
               width: 120px;
               text-align: end;
-            }
-            .file_wrap {
-              display: flex;
-              flex-direction: column;
-              .choose_btn {
-                margin-bottom: 10px;
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
-                }
-              }
             }
           }
         }
@@ -984,62 +889,6 @@
         }
         .content {
           @include content_bg;
-          .search_section {
-            position: relative;
-            display: flex;
-            flex: 1 1 auto; // width: 100%;
-            .options-list {
-              position: absolute;
-              z-index: 99;
-              background-color: white;
-              border: 1px solid #ccc;
-              max-height: 200px;
-              overflow-y: auto;
-              list-style-type: none;
-              padding: 0;
-              margin: 0;
-              width: 100%;
-              top: 0;
-              top: 40px;
-              border-radius: 5px;
-            }
-            .options-list li {
-              padding: 10px 10px 0;
-              font-size: 18px;
-              cursor: pointer; // &:hover {
-              //   // background: #7893b7;
-              //   // color: white;
-              //   font-weight: 700;
-              // }
-            }
-            input {
-              height: 35px;
-              padding: 10px;
-              border-radius: 5px;
-              border: none;
-            }
-            .input-placeholder {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              color: gray;
-              font-size: 14px;
-              pointer-events: none;
-            }
-          }
-          .dropdown {
-            .dropdown-menu {
-              width: 100%;
-            }
-            button {
-              @include dropdown-btn;
-              width: 187px;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
           .input-group {
             .input-number {
               @include count_btn;
@@ -1232,41 +1081,13 @@
               }
             }
           }
-          .dropdown {
-            width: 60%;
-            .dropdown-menu {
-              width: 100%;
-              max-height: 250px;
-              overflow-y: auto;
-              p {
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-            }
-            button {
-              @include dropdown-btn;
-              width: 100%;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
           .input-group {
             flex-wrap: nowrap;
             span {
               @include red_star
             }
             .input-number {
-              width: 65%;
-            }
-            .selected_file {
-              margin-left: 20px;
-              p.title {
-                font-weight: 700;
-                color: white;
-                margin-bottom: 5px;
-              }
+              width: 62%;
             }
             .file_upload_wrap {
               margin-bottom: 0;
@@ -1301,17 +1122,6 @@
               width: 120px;
               text-align: end;
             }
-            .file_wrap {
-              display: flex;
-              flex-direction: column;
-              .choose_btn {
-                margin-bottom: 10px;
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
-                }
-              }
-            }
           }
         }
       }
@@ -1321,6 +1131,7 @@
     .main_section {
       .readonly_box {
         @include readonly_box;
+        margin-top: 5px;
       }
       .form_search_btn {
         border: none;
@@ -1363,67 +1174,11 @@
         }
         .content {
           @include content_bg;
-          .search_section {
-            position: relative;
-            display: flex;
-            flex: 1 1 auto; // width: 100%;
-            .options-list {
-              position: absolute;
-              z-index: 99;
-              background-color: white;
-              border: 1px solid #ccc;
-              max-height: 200px;
-              overflow-y: auto;
-              list-style-type: none;
-              padding: 0;
-              margin: 0;
-              width: 100%;
-              top: 0;
-              top: 40px;
-              border-radius: 5px;
-            }
-            .options-list li {
-              padding: 10px 10px 0;
-              font-size: 18px;
-              cursor: pointer; // &:hover {
-              //   // background: #7893b7;
-              //   // color: white;
-              //   font-weight: 700;
-              // }
-            }
-            input {
-              height: 35px;
-              padding: 10px;
-              border-radius: 5px;
-              border: none;
-            }
-            .input-placeholder {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              color: gray;
-              font-size: 14px;
-              pointer-events: none;
-            }
-          }
           .form_search_wrap {
             .input-group {
               button {
                 margin-left: unset !important
               }
-            }
-          }
-          .dropdown {
-            .dropdown-menu {
-              width: 100%;
-            }
-            button {
-              @include dropdown-btn;
-              width: 187px;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
             }
           }
           .input-group {
@@ -1568,7 +1323,7 @@
         }
         .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
           margin-left: unset !important;
-            }
+        }
         .nav-tabs {
           button {
             @include tab_section_num;
@@ -1619,38 +1374,10 @@
               }
             }
           }
-          .dropdown {
-            margin-left: unset !important;
-            margin-top: 5px;
-            .dropdown-menu {
-              width: 100%;
-              max-height: 250px;
-              overflow-y: auto;
-              p {
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-            }
-            button {
-              @include dropdown-btn;
-              width: 100%;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
           .input-group {
             flex-direction: column;
             span {
               @include red_star
-            }
-            .selected_file {
-              p.title {
-                font-weight: 700;
-                color: white;
-                margin-bottom: 5px;
-              }
             }
             .file_upload_wrap {
               margin-bottom: 0;
@@ -1686,18 +1413,6 @@
               font-weight: 700;
               font-size: 20px;
               width: 100%;
-            }
-            .file_wrap {
-              display: flex;
-              flex-direction: column;
-              .choose_btn {
-                margin-top: 5px;
-                margin-bottom: 10px;
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
-                }
-              }
             }
           }
         }

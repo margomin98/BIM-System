@@ -64,23 +64,12 @@
         </div>
       </div>
       <div class='third_content'>
-        <DataTable 
-        :size="'small'"
-        :value="rowData" 
-        resizableColumns 
-        columnResizeMode="expand"
-        showGridlines 
-        scrollable 
-        scrollHeight="420px" 
-        paginator 
-        @page="updatePage"
-        :rows="20" 
-        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
-        <Column style="min-width:50px;" header="項目">
-          <template #body="slotProps">
-            {{ calculateIndex(slotProps) }}
-          </template>
+        <DataTable :size="'small'" :value="rowData" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="420px" paginator @page="updatePage" :rows="20" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+          currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+          <Column style="min-width:50px;" header="項目">
+            <template #body="slotProps">
+              {{ calculateIndex(slotProps) }}
+</template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
         </DataTable>
@@ -121,8 +110,14 @@
     onMounted,
     ref
   } from 'vue';
-  import { goBack ,canEnterPage , createDatagrid } from "@/assets/js/common_fn";
-  import { Rent_Delete_Status } from "@/assets/js/enter_status";
+  import {
+    goBack,
+    canEnterPage,
+    createDatagrid
+  } from "@/assets/js/common_fn";
+  import {
+    Rent_Delete_Status
+  } from "@/assets/js/enter_status";
   export default {
     components: {
       Navbar,
@@ -131,12 +126,31 @@
     },
     setup() {
       const datagrid = createDatagrid();
-      const datagridfield = [
-        {field: 'EquipTypeName', header: '設備總類',width: '150px'},
-        {field: 'EquipCategoryName', header: '設備分類',width: '150px'},
-        {field: 'ProductName', header: '物品名稱',width: '150px'},
-        {field: 'Number', header: '數量',width: '100px'},
-        {field: 'RequiredSpec', header: '規格需求',width: '250px'},
+      const datagridfield = [{
+          field: 'EquipTypeName',
+          header: '設備總類',
+          width: '150px'
+        },
+        {
+          field: 'EquipCategoryName',
+          header: '設備分類',
+          width: '150px'
+        },
+        {
+          field: 'ProductName',
+          header: '物品名稱',
+          width: '150px'
+        },
+        {
+          field: 'Number',
+          header: '數量',
+          width: '100px'
+        },
+        {
+          field: 'RequiredSpec',
+          header: '規格需求',
+          width: '250px'
+        },
       ]
       const rowData = ref([]);
       const route = useRoute();
@@ -151,7 +165,7 @@
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
-            canEnterPage(data.resultList.Status , Rent_Delete_Status)
+            canEnterPage(data.resultList.Status, Rent_Delete_Status)
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             rowData.value = data.resultList.ItemList;
@@ -291,26 +305,8 @@
       .info_wrap {
         margin: auto;
         width: 1000px;
-        .code_search {
-          background: #48658C;
-          color: white;
-          font-weight: 800;
-          height: 30px;
-          width: 60px;
-          margin-right: 10px;
-          display: flex;
-          align-self: center;
-          align-items: center;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
         #readonly_box {
           border-left: black 1px solid;
-        }
-        .input-group-prepend {
-          width: 100% !important;
-          text-align: center !important;
         }
         .fixed_info {
           @include fixed_info;
@@ -324,35 +320,12 @@
             margin-bottom: 0;
           }
         }
-        .third_content {
-          .list {
-            border: 1px solid black;
-            button {
-              @include delete_button;
-              &:hover {
-                background: #FF7272
-              }
-            }
-          }
-          .delete {
-            border-top: 0px solid #484143;
-            border-right: 0px dashed #484143;
-            border-bottom: 0px dashed #484143;
-            border-left: 1px solid #484143;
-            width: 70px;
-          }
-        }
         form {
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
           .form-check {
             margin-left: 10px;
-          }
-          .form-control {
-            height: 50px !important;
-            border-radius: 0;
-            border-left: 1px solid black;
           }
           .wrap {
             background: white;
@@ -370,9 +343,6 @@
               .content {
                 display: flex
               }
-            }
-            .project_name {
-              border-left: 1px solid black
             }
           }
           .form-label {
@@ -395,23 +365,6 @@
         .input-group {
           height: 100%;
         }
-        .input-group-prepend {
-          color: white;
-          font-weight: 700;
-          font-size: 20px;
-          width: 120px;
-          text-align: end;
-        }
-        .input-number {
-          @include count_btn;
-        }
-        .form-control {
-          height: 35px;
-          border-radius: 0;
-        }
-      }
-      #project_id {
-        border-right: 1px solid black;
       }
       #project_name {
         border-left: 1px solid black;
@@ -475,26 +428,11 @@
       .info_wrap {
         margin: auto;
         padding: 0 5%;
-        .code_search {
-          background: #48658C;
-          color: white;
-          font-weight: 800;
-          height: 30px;
-          width: 60px;
-          margin-right: 10px;
-          display: flex;
-          align-self: center;
-          align-items: center;
-          &:hover {
-            background-color: #5d85bd;
-          }
+        #project_name {
+          height: 100%;
         }
         #readonly_box {
           border-left: 1px solid black;
-        }
-        .input-group-prepend {
-          width: 100% !important;
-          text-align: center !important;
         }
         .fixed_info {
           @include fixed_info;
@@ -508,35 +446,12 @@
             margin-bottom: 0;
           }
         }
-        .third_content {
-          .list {
-            border: 1px solid black;
-            button {
-              @include delete_button;
-              &:hover {
-                background: #FF7272
-              }
-            }
-          }
-          .delete {
-            border-top: 0px solid #484143;
-            border-right: 0px dashed #484143;
-            border-bottom: 0px dashed #484143;
-            border-left: 1px solid #484143;
-            width: 70px;
-          }
-        }
         form {
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
           .form-check {
             margin-left: 10px;
-          }
-          .form-control {
-            height: 50px !important;
-            border-radius: 0;
-            border-left: 1px solid black;
           }
           .wrap {
             background: white;
@@ -554,9 +469,6 @@
               .content {
                 display: flex
               }
-            }
-            .project_name {
-              border-left: 1px solid black
             }
           }
           .form-label {
@@ -579,23 +491,6 @@
         .input-group {
           height: 100%;
         }
-        .input-group-prepend {
-          color: white;
-          font-weight: 700;
-          font-size: 20px;
-          width: 120px;
-          text-align: end;
-        }
-        .input-number {
-          @include count_btn;
-        }
-        .form-control {
-          height: 35px;
-          border-radius: 0;
-        }
-      }
-      #project_id {
-        border-right: 1px solid black;
       }
       #project_name {
         border-left: 1px solid black;
@@ -659,24 +554,6 @@
       .info_wrap {
         margin: auto;
         padding: 0 5%;
-        .code_search {
-          background: #48658C;
-          color: white;
-          font-weight: 800;
-          height: 30px;
-          width: 60px;
-          margin-right: 10px;
-          display: flex;
-          align-self: center;
-          align-items: center;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-        .input-group-prepend {
-          width: 100% !important;
-          text-align: center !important;
-        }
         .fixed_info {
           @include fixed_info;
           background: #528091;
@@ -695,34 +572,12 @@
         .column_section {
           flex-direction: column;
         }
-        .third_content {
-          .list {
-            border: 1px solid black;
-            button {
-              @include delete_button;
-              &:hover {
-                background: #FF7272
-              }
-            }
-          }
-          .delete {
-            border-top: 0px solid #484143;
-            border-right: 0px dashed #484143;
-            border-bottom: 0px dashed #484143;
-            border-left: 1px solid #484143;
-            width: 70px;
-          }
-        }
         form {
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
           .form-check {
             margin-left: 10px;
-          }
-          .form-control {
-            height: 50px !important;
-            border-radius: 0;
           }
           .wrap {
             background: white;
@@ -773,20 +628,6 @@
               text-align: center;
             }
           }
-        }
-        .input-group-prepend {
-          color: white;
-          font-weight: 700;
-          font-size: 20px;
-          width: 120px;
-          text-align: end;
-        }
-        .input-number {
-          @include count_btn;
-        }
-        .form-control {
-          height: 35px;
-          border-radius: 0;
         }
       }
       .button_wrap {

@@ -39,7 +39,7 @@
         <div v-show="wrongStatus" class="col-12">
           <div class="input-group">
             <div style="visibility: hidden;" class="input-group-prepend">
-              <p >1</p>
+              <p>1</p>
             </div>
             <span style="color:rgb(216, 13, 13); font-weight: 700; font-size: 20px;">{{ alertMsg }}</span>
             <input type="text" style="visibility: hidden;" class="form-control">
@@ -88,7 +88,7 @@
     watch
   } from 'vue';
   import Navbar from '@/components/Navbar.vue';
-import router from '@/router';
+  import router from '@/router';
   export default {
     components: {
       Navbar
@@ -177,7 +177,6 @@ import router from '@/router';
         //         case '已被設備整合':
         //           alertMsg.value = '此資產已被整合進設備整合箱，無法進行歸還作業。'
         //           break;
-                
         //         default:
         //           canSubmit.value = true;
         //           wrongStatus.value = false;
@@ -208,11 +207,11 @@ import router from '@/router';
         const axios = require('axios');
         try {
           // 檢查必填 & 限制項目
-          if(!formParams.AssetsId || formParams.Count < 1) {
+          if (!formParams.AssetsId || formParams.Count < 1) {
             alert('請輸入必填項目')
             return
           }
-          if(formParams.Memo && !/^.{1,500}$/.test(formParams.Memo)) {
+          if (formParams.Memo && !/^.{1,500}$/.test(formParams.Memo)) {
             alert('備註不可輸入超過500字');
             return
           }
@@ -241,7 +240,7 @@ import router from '@/router';
           console.error(error);
         }
       }
-      watch(()=>formParams.AssetsId, async (newValue , oldValue) => {
+      watch(() => formParams.AssetsId, async(newValue, oldValue) => {
         const axios = require('axios');
         try {
           const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetAssetInfo?id=${newValue}`);
@@ -251,9 +250,9 @@ import router from '@/router';
             formParams.Unit = data.resultList.Unit;
             formParams.Status = data.resultList.Status;
             // 如為非耗材 1.資產數量為一，且不可更改 2.Status不對，不能提交
-            if(data.resultList.AssetType !== '耗材') {
+            if (data.resultList.AssetType !== '耗材') {
               // 1.
-              canEdit.value =false;
+              canEdit.value = false;
               formParams.Count = 1;
               // 2.
               wrongStatus.value = true;
@@ -274,7 +273,6 @@ import router from '@/router';
                 case '已被設備整合':
                   alertMsg.value = '此資產已被整合進設備整合箱，無法進行歸還作業。'
                   break;
-                
                 default:
                   canSubmit.value = true;
                   wrongStatus.value = false;
@@ -287,7 +285,7 @@ import router from '@/router';
             }
           } else if (data.state === 'error') {
             console.log(data.messages);
-            canEdit.value =true;
+            canEdit.value = true;
             canSubmit.value = false;
             wrongStatus.value = false;
             formParams.Unit = '';
@@ -300,7 +298,9 @@ import router from '@/router';
         } catch (error) {
           console.error(error);
         }
-      },{immediate: false});
+      }, {
+        immediate: false
+      });
       const goBack = () => {
         window.history.back();
       };
@@ -330,7 +330,6 @@ import router from '@/router';
   @import '@/assets/css/global.scss';
   @media only screen and (min-width: 1200px) {
     .main_section {
-    
       .readonly_box {
         @include readonly_box;
       }
@@ -495,6 +494,7 @@ import router from '@/router';
       .readonly_box {
         @include readonly_box;
         height: 35px;
+        margin-top: 5px;
         margin-left: unset !important;
       }
       h1 {
@@ -527,10 +527,12 @@ import router from '@/router';
               height: 35px;
             }
             .input-number {
+              margin-top: 5px;
               @include count_btn;
               margin-left: unset !important;
             }
             .form-control {
+              margin-top: 5px;
               height: 35px;
               width: 100%;
               border-radius: 0;
@@ -572,8 +574,6 @@ import router from '@/router';
           }
           .send_btn_disabled {
             background: #878787;
-            width: 70px;
-            padding: 5px;
             &:hover {
               background: #878787;
             }

@@ -164,7 +164,7 @@
               </div>
             </div>
             <!-- 頁籤 包裝數量 & 包裝單位 -->
-            <div class="row g-0 row_wrap">
+            <div class="row g-0 row_wrap package_wrap">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3 " id='number'>
                   <div class="input-group-prepend info  d-xl-block d-lg-block d-md-block d-none">
@@ -186,7 +186,7 @@
               </div>
             </div>
             <!-- 頁籤 數量 & 單位 (only耗材) -->
-            <div class="row g-0 row_wrap">
+            <div class="row g-0 row_wrap package_wrap">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3" id='number'>
                   <div class="input-group-prepend d-xl-block d-lg-block d-md-block d-none">
@@ -826,6 +826,9 @@
           background: #3E4E5F;
           padding: 50px 30px;
           border-radius: 0 0 10px 10px;
+          .package_wrap .readonly_box{
+            width: 60%;
+          }
           .radio_wrap {
             gap: 0 10px;
             margin-left: 10px !important;
@@ -947,6 +950,7 @@
         }
       }
       .readonly_box {
+        margin-top: 5px;
         @include readonly_box;
       }
       h1 {

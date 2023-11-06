@@ -360,12 +360,6 @@
           }
         }
       }
-      .datagrid-header-row {
-        background: var(--c-7, #1f4e5f);
-      }
-      .datagrid-header .datagrid-cell {
-        text-align: left !important;
-      }
     }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
@@ -451,12 +445,6 @@
             }
           }
         }
-      }
-      .datagrid-header-row {
-        background: var(--c-7, #1f4e5f);
-      }
-      .datagrid-header .datagrid-cell {
-        text-align: left !important;
       }
     }
   }
@@ -548,12 +536,6 @@
             }
           }
         }
-      }
-      .datagrid-header-row {
-        background: var(--c-7, #1f4e5f);
-      }
-      .datagrid-header .datagrid-cell {
-        text-align: left !important;
       }
     }
   }

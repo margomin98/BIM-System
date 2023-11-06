@@ -19,8 +19,8 @@
         <div class="row g-0">
           <div class="col d-flex wrap column_section">
             <label for="inputTitle1" class="form-label use">
-                        <p><span>*</span>用&ensp;&ensp;&ensp;&ensp;途</p>
-                      </label>
+                          <p><span>*</span>用&ensp;&ensp;&ensp;&ensp;途</p>
+                        </label>
             <div class="option">
               <div class="form-check" v-for="(option, index) in options" :key="index">
                 <input class="form-check-input" type="radio" :value="option" :id="'radio' + (index + 1)" v-model="myForm.Use">
@@ -39,8 +39,8 @@
           </div>
           <div class="col d-flex wrap">
             <label for="inputWithTitle" class="form-label" id='project_name'>
-                <p>專案名稱</p>
-              </label>
+                  <p>專案名稱</p>
+                </label>
             <div class="input-group" id='readonly_box'>
               <p class='readonly_box' readonly>{{ myForm.ProjectName }}</p>
             </div>
@@ -49,8 +49,8 @@
         <div class="row g-0">
           <div class="col d-flex wrap column_section" style='border:none'>
             <label for="inputTextarea" class="form-label">
-                <p>&nbsp;&nbsp;說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
-              </label>
+                  <p>&nbsp;&nbsp;說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
+                </label>
             <textarea class="form-control" id="inputTextarea" placeholder='最多輸入100字' v-model="myForm.Description"></textarea>
           </div>
         </div>
@@ -66,8 +66,8 @@
             <p><span>*</span>設備總類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                  {{ myForm.EquipTypeName || '請選擇' }}
-                </button>
+                    {{ myForm.EquipTypeName || '請選擇' }}
+                  </button>
               <div class="dropdown-menu" aria-labelledby="typeDropdown">
                 <p v-for="(item, index) in myForm.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
               </div>
@@ -77,8 +77,8 @@
             <p><span>*</span>設備分類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(myForm.EquipTypeName !== '') }">
-                  {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
-                </button>
+                    {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
+                  </button>
               <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                 <p v-for="(item, index) in myForm.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
               </div>
@@ -100,8 +100,8 @@
         <div class="row g-0">
           <div class="col-12 d-flex wrap text_input">
             <label for="inputTextarea" class="form-label">
-                <p>規格需求：</p>
-              </label>
+                  <p>規格需求：</p>
+                </label>
             <div>
             </div>
             <textarea class="form-control" id="inputTextarea" placeholder='最多輸入100字' v-model="myForm.RequiredSpec"></textarea>
@@ -121,7 +121,7 @@
           :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
           <Column style="min-width:80px;" class="datatable_checkbox">
             <template #body="slotProps">
-              <Delete :params = "slotProps" @deleteFromData="deleteFromData" />
+                <Delete :params = "slotProps" @deleteFromData="deleteFromData" />
 </template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
@@ -421,10 +421,6 @@
         #readonly_box {
           border-left: black 1px solid;
         }
-        .input-group-prepend {
-          width: 100% !important;
-          text-align: center !important;
-        }
         span {
           @include red_star
         }
@@ -517,24 +513,6 @@
             }
           }
         }
-        .third_content {
-          .list {
-            border: 1px solid black;
-            button {
-              @include delete_button;
-              &:hover {
-                background: #FF7272
-              }
-            }
-          }
-          .delete {
-            border-top: 0px solid #484143;
-            border-right: 0px dashed #484143;
-            border-bottom: 0px dashed #484143;
-            border-left: 1px solid #484143;
-            width: 70px;
-          }
-        }
         form {
           border-top: 1px solid black;
           border-left: 1px solid black;
@@ -580,16 +558,6 @@
         }
         .input-group {
           height: 100%;
-        }
-        .input-group-prepend {
-          color: white;
-          font-weight: 700;
-          font-size: 20px;
-          width: 120px;
-          text-align: end;
-          span {
-            @include red_star
-          }
         }
         .input-number {
           @include count_btn;
@@ -649,10 +617,6 @@
         }
         #readonly_box {
           border-left: black 1px solid;
-        }
-        .input-group-prepend {
-          width: 100% !important;
-          text-align: center !important;
         }
         span {
           @include red_star
@@ -749,24 +713,6 @@
             }
           }
         }
-        .third_content {
-          .list {
-            border: 1px solid black;
-            button {
-              @include delete_button;
-              &:hover {
-                background: #FF7272
-              }
-            }
-          }
-          .delete {
-            border-top: 0px solid #484143;
-            border-right: 0px dashed #484143;
-            border-bottom: 0px dashed #484143;
-            border-left: 1px solid #484143;
-            width: 70px;
-          }
-        }
         form {
           border-top: 1px solid black;
           border-left: 1px solid black;
@@ -812,16 +758,6 @@
         }
         .input-group {
           height: 100%;
-        }
-        .input-group-prepend {
-          color: white;
-          font-weight: 700;
-          font-size: 20px;
-          width: 120px;
-          text-align: end;
-          span {
-            @include red_star
-          }
         }
         .input-number {
           @include count_btn;
@@ -878,10 +814,6 @@
           &:hover {
             background-color: #5d85bd;
           }
-        }
-        .input-group-prepend {
-          width: 100% !important;
-          text-align: center !important;
         }
         span {
           @include red_star
@@ -978,28 +910,7 @@
           }
         }
         .column_section {
-          flex-direction: column;
-          #inputWithButton {
-            border-right: 1px solid black;
-          }
-        }
-        .third_content {
-          .list {
-            border: 1px solid black;
-            button {
-              @include delete_button;
-              &:hover {
-                background: #FF7272
-              }
-            }
-          }
-          .delete {
-            border-top: 0px solid #484143;
-            border-right: 0px dashed #484143;
-            border-bottom: 0px dashed #484143;
-            border-left: 1px solid #484143;
-            width: 70px;
-          }
+          flex-direction: column
         }
         form {
           border-top: 1px solid black;
@@ -1057,16 +968,6 @@
               margin-bottom: 0;
               text-align: center;
             }
-          }
-        }
-        .input-group-prepend {
-          color: white;
-          font-weight: 700;
-          font-size: 20px;
-          width: 120px;
-          text-align: end;
-          span {
-            @include red_star
           }
         }
         .input-number {
