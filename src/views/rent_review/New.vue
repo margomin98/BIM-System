@@ -489,16 +489,6 @@
         }
        
         .third_content {
-          .list {
-            border-left: 1px solid black;
-            border-right: 1px solid black;
-            button {
-              @include delete_button;
-              &:hover {
-                background: #ff7272;
-              }
-            }
-          }
         }
         .fixed_info_count {
           display: flex;
@@ -715,9 +705,6 @@
           width: 120px;
           text-align: end;
         }
-        .input-number {
-          @include count_btn;
-        }
       }
       .button_wrap {
         display: flex;
@@ -736,12 +723,6 @@
           @include search_and_send_btn;
           &:hover {
             background-color: #5e7aa2;
-          }
-        }
-        .send_btn_disabled {
-          background: #878787;
-          &:hover {
-            background: #878787;
           }
         }
       }
@@ -788,17 +769,6 @@
           background: #d9d9d9;
         }
         .third_content {
-          .list {
-            border-top: 1px solid black;
-            border-left: 1px solid black;
-            border-right: 1px solid black;
-            button {
-              @include delete_button;
-              &:hover {
-                background: #ff7272;
-              }
-            }
-          }
         }
         .fixed_info_count {
           display: flex;
@@ -1012,9 +982,6 @@
           width: 120px;
           text-align: end;
         }
-        .input-number {
-          @include count_btn;
-        }
       }
       .button_wrap {
         display: flex;
@@ -1033,12 +1000,6 @@
           @include search_and_send_btn;
           &:hover {
             background-color: #5e7aa2;
-          }
-        }
-        .send_btn_disabled {
-          background: #878787;
-          &:hover {
-            background: #878787;
           }
         }
       }
@@ -1085,15 +1046,6 @@
           background: #d9d9d9;
         }
         .third_content {
-          .list {
-            border: 1px solid black;
-            button {
-              @include delete_button;
-              &:hover {
-                background: #ff7272;
-              }
-            }
-          }
         }
         .fixed_info_count {
           display: flex;
@@ -1311,9 +1263,6 @@
           width: 120px;
           text-align: end;
         }
-        .input-number {
-          @include count_btn;
-        }
       }
       .button_wrap {
         display: flex;
@@ -1332,12 +1281,6 @@
           @include search_and_send_btn;
           &:hover {
             background-color: #5e7aa2;
-          }
-        }
-        .send_btn_disabled {
-          background: #878787;
-          &:hover {
-            background: #878787;
           }
         }
       }

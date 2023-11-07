@@ -243,12 +243,7 @@
           &:hover {
             background-color: #5d85bd;
           }
-        } // .export_btn {
-        //   @include export_btn;
-        //   &:hover {
-        //     background-color: #274266;
-        //   }
-        // }
+        }
       }
       .datagrid_section {
         .content {
@@ -331,12 +326,7 @@
       }
       .button_wrap {
         margin-bottom: 25px;
-        gap: 20px; // .export_btn {
-        //   @include export_btn;
-        //   &:hover {
-        //     background-color: #274266;
-        //   }
-        // }
+        gap: 20px; 
         .search_btn {
           @include search_and_send_btn;
           &:hover {
@@ -414,15 +404,7 @@
       .button_wrap {
         margin-bottom: 25px;
         justify-content: center;
-        gap: 20px; // .export_btn {
-        //   @include export_btn;
-        //   font-size: 18px;
-        //   width: 100%;
-        //   height: auto;
-        //   &:hover {
-        //     background-color: #274266;
-        //   }
-        // }
+        gap: 20px; 
         .search_btn {
           @include search_and_send_btn;
           &:hover {

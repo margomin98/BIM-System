@@ -1200,7 +1200,7 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            padding: 0;
+            padding: 5px;
           }
           .wrap {
             border-bottom: 1px solid black;
@@ -1596,7 +1596,7 @@
           .form-control {
             height: auto;
             border-radius: 0;
-            padding: 0;
+            padding: 5px;
           }
           .wrap {
             border-bottom: 1px solid black;

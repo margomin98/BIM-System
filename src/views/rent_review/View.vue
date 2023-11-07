@@ -72,7 +72,7 @@
         <DataTable :size="'small'" :value="rowData2" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="600px">
           <Column>
             <template #body="slotProps">
-              <AssetsView :params="slotProps"/>
+                <AssetsView :params="slotProps"/>
 </template>
         </Column>
         <Column v-for="item in datagrid2field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
@@ -355,10 +355,6 @@
       .info_wrap {
         margin: auto;
         width: 1000px;
-        .input-group-prepend {
-          width: 100% !important;
-          text-align: center !important;
-        }
         .fixed_info {
           @include fixed_info;
           background: #528091;
@@ -374,19 +370,7 @@
         .fixed_info:nth-child(5) {
           border-top: unset;
         }
-        .third_content {
-          .list {
-            border-top: 1px solid black;
-            border-left: 1px solid black;
-            border-right: 1px solid black;
-            button {
-              @include delete_button;
-              &:hover {
-                background: #ff7272;
-              }
-            }
-          }
-        }
+        .third_content {}
         .fixed_info_count {
           display: flex;
           background: #3D5C67;
@@ -450,9 +434,6 @@
             background-color: #B4B4B4;
             text-align-last: left;
           }
-          #readonly_box:nth-child(1) {
-            border-left: 1px solid black;
-          }
           #readonly_box {
             display: flex;
             align-items: center;
@@ -466,9 +447,6 @@
           border-left: 1px solid black;
           background: white;
           border-bottom: 1px solid black;
-          span {
-            @include red_star;
-          }
           .fixed_info {
             border: none;
           }
@@ -601,16 +579,6 @@
             }
           }
         }
-        .input-group-prepend {
-          color: white;
-          font-weight: 700;
-          font-size: 20px;
-          width: 120px;
-          text-align: end;
-        }
-        .input-number {
-          @include count_btn;
-        }
       }
       .button_wrap {
         display: flex;
@@ -650,10 +618,6 @@
       .info_wrap {
         margin: auto;
         padding: 0 5%;
-        .input-group-prepend {
-          width: 100% !important;
-          text-align: center !important;
-        }
         .fixed_info {
           @include fixed_info;
           background: #528091;
@@ -669,19 +633,7 @@
         .fixed_info:nth-child(5) {
           border-top: unset;
         }
-        .third_content {
-          .list {
-            border-top: 1px solid black;
-            border-left: 1px solid black;
-            border-right: 1px solid black;
-            button {
-              @include delete_button;
-              &:hover {
-                background: #ff7272;
-              }
-            }
-          }
-        }
+        .third_content {}
         .fixed_info_count {
           display: flex;
           background: #3D5C67;
@@ -745,9 +697,6 @@
             background-color: #B4B4B4;
             text-align-last: left;
           }
-          #readonly_box:nth-child(1) {
-            border-left: 1px solid black;
-          }
           #readonly_box {
             display: flex;
             align-items: center;
@@ -761,9 +710,6 @@
           border-left: 1px solid black;
           background: white;
           border-bottom: 1px solid black;
-          span {
-            @include red_star;
-          }
           .fixed_info {
             border: none;
           }
@@ -899,16 +845,6 @@
             }
           }
         }
-        .input-group-prepend {
-          color: white;
-          font-weight: 700;
-          font-size: 20px;
-          width: 120px;
-          text-align: end;
-        }
-        .input-number {
-          @include count_btn;
-        }
       }
       .button_wrap {
         display: flex;
@@ -947,10 +883,6 @@
       .info_wrap {
         margin: auto;
         padding: 0 5%;
-        .input-group-prepend {
-          width: 100% !important;
-          text-align: center !important;
-        }
         .fixed_info {
           @include fixed_info;
           background: #528091;
@@ -969,17 +901,7 @@
         .fixed_info:nth-child(5) {
           border-top: unset;
         }
-        .third_content {
-          .list {
-            border: 1px solid black;
-            button {
-              @include delete_button;
-              &:hover {
-                background: #ff7272;
-              }
-            }
-          }
-        }
+        .third_content {}
         .fixed_info_count {
           display: flex;
           background: #3D5C67;
@@ -1181,16 +1103,6 @@
               text-align: center;
             }
           }
-        }
-        .input-group-prepend {
-          color: white;
-          font-weight: 700;
-          font-size: 20px;
-          width: 120px;
-          text-align: end;
-        }
-        .input-number {
-          @include count_btn;
         }
       }
       .button_wrap {

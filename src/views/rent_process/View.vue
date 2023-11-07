@@ -391,9 +391,6 @@
     width: 100%;
     align-items: center;
   }
-  span {
-    @include red_star;
-  }
   .third_content{
     .fixed_info{
       border-top: none !important;
@@ -411,10 +408,6 @@
       .info_wrap {
         margin: auto;
         width: 1000px;
-        .input-group-prepend {
-          width: 100% !important;
-          text-align: center !important;
-        }
         .fixed_info {
           @include fixed_info;
           background: #528091;
@@ -431,19 +424,7 @@
           background-color: #B4B4B4;
           border-left: black 1px solid;
         }
-        .third_content {
-          .list {
-            border-top: 1px solid black;
-            border-left: 1px solid black;
-            border-right: 1px solid black;
-            button {
-              @include delete_button;
-              &:hover {
-                background: #ff7272;
-              }
-            }
-          }
-        }
+    
         .fixed_info_count {
           display: flex;
           background: #3d5c67;
@@ -561,9 +542,6 @@
           border-left: 1px solid black;
           background: white;
           border-bottom: 1px solid black;
-          span {
-            @include red_star;
-          }
           .fixed_info {
             border: none;
           }
@@ -678,13 +656,6 @@
             }
           }
         }
-        .input-group-prepend {
-          color: white;
-          font-weight: 700;
-          font-size: 20px;
-          width: 120px;
-          text-align: end;
-        }
       }
       .button_wrap {
         display: flex;
@@ -714,10 +685,6 @@
       .info_wrap {
         margin: auto;
         padding: 0 5%;
-        .input-group-prepend {
-          width: 100% !important;
-          text-align: center !important;
-        }
         .fixed_info {
           @include fixed_info;
           background: #528091;
@@ -734,19 +701,7 @@
           background-color: #B4B4B4;
           border-left: black 1px solid;
         }
-        .third_content {
-          .list {
-            border-top: 1px solid black;
-            border-left: 1px solid black;
-            border-right: 1px solid black;
-            button {
-              @include delete_button;
-              &:hover {
-                background: #ff7272;
-              }
-            }
-          }
-        }
+   
         .fixed_info_count {
           display: flex;
           background: #3d5c67;
@@ -864,9 +819,6 @@
           border-left: 1px solid black;
           background: white;
           border-bottom: 1px solid black;
-          span {
-            @include red_star;
-          }
           .fixed_info {
             border: none;
           }
@@ -981,13 +933,6 @@
             }
           }
         }
-        .input-group-prepend {
-          color: white;
-          font-weight: 700;
-          font-size: 20px;
-          width: 120px;
-          text-align: end;
-        }
       }
       .button_wrap {
         display: flex;
@@ -1026,10 +971,6 @@
       .info_wrap {
         margin: auto;
         padding: 0 5%;
-        .input-group-prepend {
-          width: 100% !important;
-          text-align: center !important;
-        }
         .fixed_info {
           @include fixed_info;
           background: #528091;
@@ -1045,18 +986,7 @@
             margin-bottom: 0;
           }
         }
-        .third_content {
-          .list {
-            border: 1px solid black;
-            button {
-              @include delete_button;
-              &:hover {
-                background: #ff7272;
-              }
-            }
-          }
-        }
-        .fixed_info_count {
+             .fixed_info_count {
           display: flex;
           background: #3d5c67;
           color: white;
@@ -1290,13 +1220,6 @@
               text-align: center;
             }
           }
-        }
-        .input-group-prepend {
-          color: white;
-          font-weight: 700;
-          font-size: 20px;
-          width: 120px;
-          text-align: end;
         }
       }
       .button_wrap {

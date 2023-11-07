@@ -231,12 +231,7 @@
           &:hover {
             background-color: #5d85bd;
           }
-        } // .export_btn {
-        //   @include export_btn;
-        //   &:hover {
-        //     background-color: #274266;
-        //   }
-        // }
+        } 
       }
       .datagrid_section {
         .content {
@@ -253,9 +248,6 @@
           grid-template-rows: 1fr 1fr;
           grid-template-columns: 1fr 1fr 1fr 1fr;
           gap: 40px 5px;
-          .col-xl-2 {
-            margin: 0 3px;
-          }
           p {
             @include datagrid_title;
           }
@@ -298,12 +290,6 @@
           }
         }
       }
-      .datagrid-header-row {
-        background: var(--c-7, #1f4e5f);
-      }
-      .datagrid-header .datagrid-cell {
-        text-align: left !important;
-      }
     }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
@@ -319,12 +305,7 @@
       }
       .button_wrap {
         margin-bottom: 25px;
-        gap: 20px; // .export_btn {
-        //   @include export_btn;
-        //   &:hover {
-        //     background-color: #274266;
-        //   }
-        // }
+        gap: 20px; 
         .search_btn {
           @include search_and_send_btn;
           &:hover {
@@ -379,12 +360,6 @@
             }
           }
         }
-      }
-      .datagrid-header-row {
-        background: var(--c-7, #1f4e5f);
-      }
-      .datagrid-header .datagrid-cell {
-        text-align: left !important;
       }
     }
   }
@@ -402,15 +377,7 @@
       .button_wrap {
         margin-bottom: 25px;
         justify-content: center;
-        gap: 20px; // .export_btn {
-        //   @include export_btn;
-        //   font-size: 18px;
-        //   width: 100%;
-        //   height: auto;
-        //   &:hover {
-        //     background-color: #274266;
-        //   }
-        // }
+        gap: 20px; 
         .search_btn {
           @include search_and_send_btn;
           &:hover {
@@ -466,12 +433,6 @@
             }
           }
         }
-      }
-      .datagrid-header-row {
-        background: var(--c-7, #1f4e5f);
-      }
-      .datagrid-header .datagrid-cell {
-        text-align: left !important;
       }
     }
   }

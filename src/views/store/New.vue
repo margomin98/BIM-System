@@ -2074,6 +2074,7 @@
               color: white;
               font-weight: 700;
               font-size: 20px;
+              margin-bottom: 5px;
               margin-right: 10px;
               white-space: nowrap;
               span {
