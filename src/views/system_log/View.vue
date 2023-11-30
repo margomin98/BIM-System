@@ -44,7 +44,7 @@
         <div class="col">
           <div class="input-group  mb-3">
             <div class="input-group-prepend">訊息：</div>
-            <input type="text" class="form-control text-center readonly_box"  readonly v-model="details.Message"/>
+            <textarea class="form-control readonly_box" style="height: 70px;overflow-y: scroll;" readonly>{{ details.Message }}</textarea>
           </div>
         </div>
         <!-- 原始資料 -->
