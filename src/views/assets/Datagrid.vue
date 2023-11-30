@@ -49,6 +49,14 @@
             </div>
           </div>
           <div class="col-xl-2 col-lg-6 col-md-6 col-12">
+            <p>型號</p>
+            <input type="text" v-model="searchParams.ProductType" />
+          </div>
+          <div class="col-xl-2 col-lg-6 col-md-6 col-12">
+            <p>規格</p>
+            <input type="text" v-model="searchParams.ProductSpec" />
+          </div>
+          <div class="col-xl-2 col-lg-6 col-md-6 col-12">
             <p>區域</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
@@ -189,6 +197,8 @@
         AssetsId: '',
         AssetName: '',
         Status: '',
+        ProductType: '',
+        ProductSpec: '',
         AreaName: '',
         Area_Id: '',
         LayerName: '',
@@ -209,11 +219,13 @@
       const datagridfield = [
         { field: "AssetsId", width: '150px', header: "資產編號" },
         { field: "AssetName", width: '150px', header: "物品名稱" },
+        { field: "Status", width: '150px', header: "狀態" },
+        { field: "ProductType", width: '150px', header: "型號" },
+        { field: "ProductSpec", width: '150px', header: "規格" },
         { field: "EquipTypeName", width: '150px', header: "設備總類" },
         { field: "EquipCategoryName", width: '150px', header: "設備分類" },
         { field: "AreaName", width: '150px', header: "區域" },
         { field: "LayerName", width: '150px', header: "櫃位" },
-        { field: "Status", width: '150px', header: "狀態" },
         { field: "InboundDate", width: '150px', header: "入庫日期" },
         { field: "AssetsInOperator", width: '150px', header: "入庫人員" },
       ]
@@ -472,7 +484,7 @@
           background: rgba(82, 136, 156, 0.8);
           border-radius: 10px;
           margin-bottom: 30px;
-          height: 250px;
+          height: 310px;
           align-items: center;
           display: flex;
           justify-content: center;
