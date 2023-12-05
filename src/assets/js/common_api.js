@@ -1,31 +1,51 @@
 import axios from 'axios';
 import router from '@/router';
+// 取得 AntiForgery Token
+export const GetAntiForgeryToken = async () => {
+  try {
+    const response = await axios.post('/Manage/GetAntiForgeryToken');
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 // 管理頁面datagrid
 export const getMngDatagrid = (async (url , rowData, datagrid,form)=>{
   datagrid.loading = true;
-  const baseUrl = 'http://192.168.0.177:7008'
-  let apiurl = baseUrl + url
-  axios.post(`${apiurl}`, form)
-  .then((response)=>{
-    const data = response.data;
-    if (data.state === 'success') {
-      console.log('datagrid', data.resultList);
-      rowData.value = data.resultList.rows;
-      datagrid.totalRecords = data.resultList.total;
-      datagrid.key++;
-    } else if (data.state === 'account_error') {
-      //尚未登入
-      alert(data.messages);
-      router.push('/');
-    } else {
-      //取得datagrid失敗
-      alert(data.messages);
-    }
-  })
-  .catch((error)=>{
-    console.error(error);
-  })
-  datagrid.loading = false;
+  try {
+    const token = await GetAntiForgeryToken();
+    const baseUrl = 'http://192.168.0.177:7008'
+    let apiurl = baseUrl + url
+    axios.post(`${apiurl}`, form ,{
+      headers:{
+        'RequestVerificationToken': token,
+      }
+    })
+    .then((response)=>{
+      const data = response.data;
+      if (data.state === 'success') {
+        console.log('datagrid', data.resultList);
+        rowData.value = data.resultList.rows;
+        datagrid.totalRecords = data.resultList.total;
+        datagrid.key++;
+      } else if (data.state === 'account_error') {
+        //尚未登入
+        alert(data.messages);
+        router.push('/');
+      } else {
+        //取得datagrid失敗
+        alert(data.messages);
+      }
+    })
+    .catch((error)=>{
+      console.error(error);
+    })
+  } catch (error) {
+    console.error('Get Datagrid Error:', error);
+  } finally {
+    datagrid.loading = false;
+  }
 })
 // 申請人名稱 & Navbar 名稱
 export const getApplication = (async ()=> {
