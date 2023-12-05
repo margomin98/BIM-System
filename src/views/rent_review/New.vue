@@ -215,6 +215,7 @@
   import { RentReview_New_Status } from "@/assets/js/enter_status";
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
+import { GetAntiForgeryToken } from '@/assets/js/common_api';
   export default {
     components: {
       Navbar,
@@ -312,13 +313,22 @@
           formData.append(fieldName, formFields[fieldName]);
           console.log(formData.get(`${fieldName}`));
         }
-        const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData);
         try {
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           const data = response.data;
           console.log(data);
           if (data.state === 'success') {
             validation.isVerified = true;
             validation.VerifyPerson = validation.account;
+          } else if (data.state === 'account_error') {
+            //尚未登入
+            alert(data.messages);
+            router.push('/');
           } else if (data.state === 'error') {
             alert(data.messages);
             validation.isVerified = false;
@@ -353,8 +363,13 @@
           formData.append(fieldName, formFields[fieldName]);
           console.log(formData.get(`${fieldName}`));
         }
-        const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/Verify', formData);
         try {
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/Verify', formData,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           const data = response.data;
           console.log(data);
           if (data.state === 'success') {
@@ -364,6 +379,10 @@
             router.push({
               name: 'Rent_Review_Datagrid'
             });
+          } else if (data.state === 'account_error') {
+            //尚未登入
+            alert(data.messages);
+            router.push('/');
           } else if (data.state === 'error') {
             alert(data.messages);
             console.log('error state', response);

@@ -249,7 +249,8 @@ import {
   getArea,
   getLayer,
   getApplication,
-  getAccount
+  getAccount,
+GetAntiForgeryToken
 } from '@/assets/js/common_api'
 import {
   UpdatePageParameter,
@@ -434,7 +435,12 @@ export default {
         form.append('ProductName', searchParams.ProductName);
         form.append('AssetList', JSON.stringify(formParams.AssetList));
         UpdatePageParameter(datagrid, event, type, form);
-        const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/SearchInventory', form);
+        const token = await GetAntiForgeryToken();
+        const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/SearchInventory', form,{
+          headers:{
+            'RequestVerificationToken': token,
+          }
+        });
         const data = response.data;
         if (data.state === 'success') {
           // 取得資料
@@ -483,9 +489,14 @@ export default {
           requestData[keyname] = formParams[keyname]
         }
       }
-      const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/Integrate', requestData);
-      const data = response.data;
       try {
+        const token = await GetAntiForgeryToken();
+        const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/Integrate', requestData,{
+          headers:{
+            'RequestVerificationToken': token,
+          }
+        });
+        const data = response.data;
         console.log(data);
         if (data.state === 'success') {
           let msg = data.messages;

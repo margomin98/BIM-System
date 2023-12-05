@@ -77,7 +77,7 @@
   import Navbar from '@/components/Navbar.vue';
   import router from '@/router';
   import { canEnterPage, goBack } from '@/assets/js/common_fn.js'
-  import { getAssets } from '@/assets/js/common_api.js'
+  import { GetAntiForgeryToken, getAssets } from '@/assets/js/common_api.js'
   import axios from 'axios';
   import { useRoute } from 'vue-router';
 import { Scrap_Edit_Status } from '@/assets/js/enter_status';
@@ -146,8 +146,12 @@ import { Scrap_Edit_Status } from '@/assets/js/enter_status';
             form.append(key , formParams[key]);
           }
         }
-
-        axios.post('http://192.168.0.177:7008/ScrapMng/ScrapEdit',form)
+        const token = await GetAntiForgeryToken();
+        axios.post('http://192.168.0.177:7008/ScrapMng/ScrapEdit',form,{
+          headers:{
+            'RequestVerificationToken': token,
+          }
+        })
         .then((response)=>{
           const data = response.data;
           if(data.state === 'success') {

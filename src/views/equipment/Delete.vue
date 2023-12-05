@@ -145,6 +145,7 @@
     useRouter
   } from "vue-router";
   import {
+GetAntiForgeryToken,
     getMngDatagrid,
   } from '@/assets/js/common_api'
   import { UpdatePageParameter, createDatagrid , goBack } from '@/assets/js/common_fn';
@@ -211,8 +212,13 @@
         const form = new FormData();
         form.append('IntegrationId', IntegrationId);
         const axios = require('axios');
-        const response = await axios.post(`http://192.168.0.177:7008/IntegrationMng/IntegrationDelete`, form);
         try {
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post(`http://192.168.0.177:7008/IntegrationMng/IntegrationDelete`, form,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages + '\n';

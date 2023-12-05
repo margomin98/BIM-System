@@ -224,6 +224,7 @@
     Inventory_Process_Status
   } from '@/assets/js/enter_status'
   import axios from "axios";
+import { GetAntiForgeryToken } from "@/assets/js/common_api";
   export default {
     components: {
       Navbar,
@@ -349,7 +350,12 @@
         form.append('PlanId', IP_ID)
         UpdatePageParameter(datagrid1, event, type, form)
         try {
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/PlanItems', form);
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/PlanItems', form,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           const data = response.data;
           if (data.state === 'success') {
             console.log('下半部datagrid 資料如下\n', data.resultList);
@@ -385,9 +391,14 @@
             requestData[keyname] = inventoryParams[keyname]
         }
         console.log('單項盤點requestData:', requestData);
-        const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/TakeInventory', requestData);
-        const data = response.data;
         try {
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/TakeInventory', requestData,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
+          const data = response.data;
           console.log(data);
           if (data.state === 'success') {
             getDatagrid('', 'search');
@@ -410,7 +421,12 @@
         console.log('submit requestData', requestData);
         try {
           const axios = require('axios');
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryCompleted', requestData);
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryCompleted', requestData,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages + '\n';

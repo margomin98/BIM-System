@@ -267,7 +267,8 @@
     getEquipType,
     getEquipCategory,
     getArea,
-    getLayer
+    getLayer,
+GetAntiForgeryToken
   } from '@/assets/js/common_api'
   import {
     goBack,
@@ -421,7 +422,12 @@ UpdatePageParameter,
         }
         UpdatePageParameter(datagrid2,event,type,form)
         try {
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryResult', form);
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryResult', form,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           const data = response.data;
           if (data.state === 'success') {
             console.log('下半部datagrid\n', data.resultList);

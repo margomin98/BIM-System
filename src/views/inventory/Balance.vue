@@ -333,7 +333,8 @@
     getEquipType,
     getEquipCategory,
     getArea,
-    getLayer
+    getLayer,
+GetAntiForgeryToken
   } from '@/assets/js/common_api'
   import {
     goBack,
@@ -475,7 +476,12 @@ UpdatePageParameter,
         }
         console.log('requestData:',requestData);
         try {
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/BalanceAsset', requestData);
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/BalanceAsset', requestData,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages;
@@ -506,7 +512,12 @@ UpdatePageParameter,
         for (const fieldName in formFields) {
           formData.append(fieldName, formFields[fieldName]);
         }
-        const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData);
+        const token = await GetAntiForgeryToken();
+        const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData,{
+          headers:{
+            'RequestVerificationToken': token,
+          }
+        });
         try {
           const data = response.data;
           console.log(data);
@@ -560,7 +571,12 @@ UpdatePageParameter,
         }
         UpdatePageParameter(datagrid2,event,type,form)
         try {
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryResult', form);
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryResult', form,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           const data = response.data;
           if (data.state === 'success') {
             console.log('下半部datagrid\n', data.resultList);

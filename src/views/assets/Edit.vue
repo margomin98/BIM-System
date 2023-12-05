@@ -363,7 +363,7 @@
   import Storage_list_view_button from "@/components/Storage_list_view_button";
   import Navbar from "@/components/Navbar.vue";
   import { HistoryAction , Asset_TypeArray} from "@/assets/js/dropdown";
-  import { getEquipType , getEquipCategory , getArea , getLayer , getProject , getAccount , getMngDatagrid } from '@/assets/js/common_api'
+  import { getEquipType , getEquipCategory , getArea , getLayer , getProject , getAccount , getMngDatagrid, GetAntiForgeryToken } from '@/assets/js/common_api'
   import { UpdatePageParameter, createDatagrid , goBack, checkFileSize } from '@/assets/js/common_fn';
   import { onMounted, ref, reactive } from "vue";
   import { useRoute, useRouter } from "vue-router";
@@ -547,8 +547,13 @@ import axios from 'axios';
             formData.append('deleteFile', item);
           });
         }
-        const response = await axios.post('http://192.168.0.177:7008/InventoryMng/AssetEdit', formData);
         try {
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post('http://192.168.0.177:7008/InventoryMng/AssetEdit', formData,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           const data = response.data;
           console.log(data);
           if (data.state === 'success') {
@@ -558,6 +563,10 @@ import axios from 'axios';
             router.push({
               name: 'Assets_Datagrid'
             });
+          } else if (data.state === 'account_error') {
+            //尚未登入
+            alert(data.messages);
+            router.push('/');
           } else if (data.state === 'error') {
             alert(data.messages);
             console.log('error state', response);

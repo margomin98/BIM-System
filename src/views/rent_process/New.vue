@@ -393,7 +393,8 @@
   import {
     getApplication,
     getEquipType,
-    getEquipCategory
+    getEquipCategory,
+GetAntiForgeryToken
   } from "@/assets/js/common_api";
   import {
     canEnterPage,
@@ -429,6 +430,7 @@
       const route = useRoute();
       const router = useRouter();
       const AO_ID = route.query.search_id;
+      const token = ref('');
       const details = ref({});
       const options = Rent_UseArray;
       const selectedNumberArray = ref([]); //紀錄不同項目已選數量array
@@ -668,13 +670,20 @@
         }
         const axios = require('axios');
         try {
+          if(!token.value) {
+            token.value = await GetAntiForgeryToken();
+          }
           const form = new FormData();
           form.append('EquipType_Id', searchParams.EquipType_Id);
           form.append('Category_Id', searchParams.Category_Id);
           form.append('ProductName', searchParams.ProductName);
           form.append('ProjectCode', searchParams.ProjectCode);
           UpdatePageParameter(datagrid3, event, type, form);
-          const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/SearchInventory', form);
+          const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/SearchInventory', form,{
+            headers: { 
+              'RequestVerificationToken': token.value,
+            }
+          });
           const data = response.data;
           if (data.state === 'success') {
             console.log('Details Get成功 資料如下\n', data.resultList);
@@ -718,7 +727,12 @@
         // console.log(requestData);
         try {
           const axios = require('axios');
-          const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/MaterialPreparation', requestData);
+          token.value = await GetAntiForgeryToken();
+          const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/MaterialPreparation', requestData,{
+            headers: { 
+              'RequestVerificationToken': token.value,
+            }
+          });
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages + '\n';

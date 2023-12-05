@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import { GetAntiForgeryToken } from '@/assets/js/common_api';
+
   export default {
     props: ['params'],
     setup(props, {emit}) {
@@ -22,12 +24,20 @@
           OM_Number: props.params.data.OM_Number,
         }
         try {
-          const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/AddToInventory', requestData);
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/AddToInventory', requestData , {
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           const data = response.data;
           if (data.state === 'success') {
             console.log('刪除暫存結果:' +data);
             // props.params.deleteMaterial(props.params.data)
             emit('deleteMaterial',props.params.data);
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
           }
           else {
             alert(data.messages);

@@ -302,6 +302,7 @@
   import {
     RentProcess_Confirm_Status
   } from "@/assets/js/enter_status";
+import { GetAntiForgeryToken } from '@/assets/js/common_api';
   export default {
     components: {
       Navbar,
@@ -312,6 +313,7 @@
     setup() {
       const route = useRoute();
       const router = useRouter();
+      const token = ref('');
       const AO_ID = route.query.search_id;
       const totalNeed = ref(0); //總所需數量
       const totalSelect = ref(0); //總已備數量
@@ -465,6 +467,7 @@
       }
       //分別使用帳號密碼驗證、改變驗證狀態 user1為領用人員 user2為交付人員
       async function validate(user) {
+        token.value = await GetAntiForgeryToken();
         if (user === 1) {
           const axios = require('axios');
           const formData = new FormData();
@@ -479,7 +482,7 @@
           }
           const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
             headers: {
-              'Content-Type': 'multipart/form-data',
+              'RequestVerificationToken': token.value,
             },
           });
           try {
@@ -487,6 +490,9 @@
             if (data.state === 'success') {
               validation.value.user1.isValidate = true;
               validation.value.user1.resultName = validation.value.user1.account;
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
             } else if (data.state === 'error') {
               alert(data.messages);
               validation.value.user1.isValidate = false;
@@ -508,7 +514,7 @@
           }
           const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
             headers: {
-              'Content-Type': 'multipart/form-data',
+              'RequestVerificationToken': token.value,
             },
           });
           try {
@@ -516,6 +522,9 @@
             if (data.state === 'success') {
               validation.value.user2.isValidate = true;
               validation.value.user2.resultName = validation.value.user2.account;
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
             } else if (data.state === 'error') {
               alert(data.messages);
               validation.value.user2.isValidate = false;
@@ -562,7 +571,12 @@
             OM_List: OM_List,
           };
           try {
-            const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/Delivery', requestData);
+            token.value = await GetAntiForgeryToken();
+            const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/Delivery', requestData,{
+              headers: { 
+                'RequestVerificationToken': token.value,
+              }
+            });
             const data = response.data;
             console.log(data);
             if (data.state === 'success') {
@@ -572,6 +586,9 @@
               router.push({
                 name: 'Rent_Process_Datagrid'
               });
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
             } else {
               alert(data.messages);
               loading.value = false;

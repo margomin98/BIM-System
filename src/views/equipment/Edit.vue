@@ -219,7 +219,8 @@
     getEquipCategory,
     getArea,
     getLayer,
-    getAccount
+    getAccount,
+GetAntiForgeryToken
   } from '@/assets/js/common_api'
   import {
     UpdatePageParameter,
@@ -432,7 +433,12 @@ import axios from 'axios';
           form.append('ProductName', searchParams.ProductName);
           form.append('AssetList', JSON.stringify(formParams.AssetList));
           UpdatePageParameter(datagrid, event, type, form);
-          const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/SearchInventory', form);
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/SearchInventory', form,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           const data = response.data;
           if (data.state === 'success') {
             // console.log('資產搜尋成功 資料如下\n', data.resultList);
@@ -473,9 +479,14 @@ import axios from 'axios';
           Custodian: details.value.Custodian,
           AssetList: formParams.AssetList,
         };
-        const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/ChangeEquipment', requestData);
-        const data = response.data;
         try {
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/ChangeEquipment', requestData,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
+          const data = response.data;
           console.log(data);
           if (data.state === 'success') {
             let msg = data.messages;

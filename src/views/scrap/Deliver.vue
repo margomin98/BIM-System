@@ -169,6 +169,7 @@
   import axios from 'axios';
   import { useRoute } from 'vue-router';
 import { Scrap_Deliver_Status } from '@/assets/js/enter_status';
+import { GetAntiForgeryToken } from '@/assets/js/common_api';
   export default {
     components: {
       Navbar
@@ -229,9 +230,10 @@ import { Scrap_Deliver_Status } from '@/assets/js/enter_status';
             formData.append(fieldName, formFields[fieldName]);
             console.log(formData.get(`${fieldName}`));
           }
+          const token = await GetAntiForgeryToken();
           const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
             headers: {
-              'Content-Type': 'multipart/form-data',
+              'RequestVerificationToken': token,
             },
           });
           try {
@@ -261,9 +263,10 @@ import { Scrap_Deliver_Status } from '@/assets/js/enter_status';
             formData.append(fieldName, formFields[fieldName]);
             console.log(formData.get(`${fieldName}`));
           }
+          const token = await GetAntiForgeryToken();
           const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
             headers: {
-              'Content-Type': 'multipart/form-data',
+              'RequestVerificationToken': token,
             },
           });
           try {
@@ -297,7 +300,12 @@ import { Scrap_Deliver_Status } from '@/assets/js/enter_status';
           DeliveryOperator: validation.value.user1.resultName,
           ScrapPerson: validation.value.user2.resultName,
         }
-        axios.post('http://192.168.0.177:7008/ScrapMng/Delivery',requestData)
+        const token = await GetAntiForgeryToken();
+        axios.post('http://192.168.0.177:7008/ScrapMng/Delivery',requestData,{
+          headers:{
+            'RequestVerificationToken': token,
+          }
+        })
         .then((response)=>{
           const data = response.data
           if(data.state === 'success') {

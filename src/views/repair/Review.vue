@@ -173,6 +173,7 @@
   import {
     Repair_Review_Status
   } from '@/assets/js/enter_status';
+import { GetAntiForgeryToken } from '@/assets/js/common_api';
   register();
   export default {
     components: {
@@ -219,7 +220,12 @@
         form.append('userName', validation.account)
         form.append('userPassword', validation.password)
         form.append('id', 'R_Verify')
-        axios.post('http://192.168.0.177:7008/Account/IdentityValidation', form)
+        const token = await GetAntiForgeryToken();
+        axios.post('http://192.168.0.177:7008/Account/IdentityValidation', form,{
+          headers:{
+            'RequestVerificationToken': token,
+          }
+        })
           .then((response) => {
             const data = response.data;
             if (data.state === 'success') {
@@ -247,7 +253,12 @@
           VerifyResult: '',
         }
         requestData.VerifyResult = validation.result === 'true';
-        axios.post('http://192.168.0.177:7008/RepairMng/Verify', requestData)
+        const token = await GetAntiForgeryToken();
+        axios.post('http://192.168.0.177:7008/RepairMng/Verify', requestData,{
+          headers:{
+            'RequestVerificationToken': token,
+          }
+        })
           .then((response) => {
             const data = response.data
             if (data.state === 'success') {

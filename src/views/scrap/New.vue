@@ -123,8 +123,12 @@
             form.append(key , formParams[key]);
           }
         }
-
-        axios.post('http://192.168.0.177:7008/ScrapMng/CreateOrder',form)
+        const token = await GetAntiForgeryToken();
+        axios.post('http://192.168.0.177:7008/ScrapMng/CreateOrder',form,{
+          headers:{
+            'RequestVerificationToken': token,
+          }
+        })
         .then((response)=>{
           const data = response.data;
           if(data.state === 'success') {

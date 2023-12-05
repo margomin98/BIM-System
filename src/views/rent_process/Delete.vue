@@ -320,6 +320,7 @@
   import {
     RentProcess_Delete_Status
   } from "@/assets/js/enter_status";
+import { GetAntiForgeryToken } from '@/assets/js/common_api';
   export default {
     components: {
       Navbar,
@@ -463,8 +464,13 @@
         const form = new FormData();
         form.append('AO_ID', AO_ID);
         const axios = require('axios');
-        const response = await axios.post(`http://192.168.0.177:7008/AssetsOutMng/ApplicationDelete`, form);
         try {
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post(`http://192.168.0.177:7008/AssetsOutMng/ApplicationDelete`, form,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages + '\n';

@@ -4,6 +4,10 @@ import router from '@/router';
 export const GetAntiForgeryToken = async () => {
   try {
     const response = await axios.post('/Manage/GetAntiForgeryToken');
+    if(response.data.state === 'account_error') {
+      alert(response.data.messages);
+      router.push('/');
+    }
     return response.data;
   } catch (error) {
     console.error(error);

@@ -143,6 +143,7 @@
     checkFileSize,
   } from '@/assets/js/common_fn.js'
   import {
+GetAntiForgeryToken,
     getAssets
   } from '@/assets/js/common_api.js'
   import {
@@ -244,7 +245,12 @@
         for (let i = 0; i < formParams.deleteFile.length; i++) {
           form.append('deleteFile', formParams.deleteFile[i]);
         }
-        axios.post('http://192.168.0.177:7008/RepairMng/RepairEdit', form)
+        const token = await GetAntiForgeryToken();
+        axios.post('http://192.168.0.177:7008/RepairMng/RepairEdit', form,{
+          headers:{
+            'RequestVerificationToken': token,
+          }
+        })
           .then((response) => {
             const data = response.data;
             if (data.state === 'success') {

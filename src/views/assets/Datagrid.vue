@@ -177,6 +177,7 @@
     getEquipCategory,
     getArea,
     getLayer,
+GetAntiForgeryToken,
   } from '@/assets/js/common_api'
   import { UpdatePageParameter, createDatagrid , } from '@/assets/js/common_fn';
   import axios from 'axios';
@@ -307,7 +308,12 @@
           const form = new FormData();
           form.append('file',selectedFile);
           isLoading.value = true;
-          axios.post('http://192.168.0.177:7008/InventoryMng/ImportExcel',form)
+          const token = await GetAntiForgeryToken();
+          axios.post('http://192.168.0.177:7008/InventoryMng/ImportExcel',form,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          })
           .then((response)=>{
             const data = response.data;
             if(data.state === 'success') {
@@ -331,7 +337,13 @@
         for (const key in searchParams) {
           form.append(key, searchParams[key]);
         }
-        axios.post('http://192.168.0.177:7008/InventoryMng/ExportExcel',form, {responseType: 'blob', })
+        const token = await GetAntiForgeryToken();
+        axios.post('http://192.168.0.177:7008/InventoryMng/ExportExcel',form, {
+          responseType: 'blob',
+          headers: {
+            'RequestVerificationToken': token,
+          }
+        })
         .then((response)=>{
           const data = response.data
           const header = response.headers

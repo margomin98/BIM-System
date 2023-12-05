@@ -52,6 +52,7 @@
   import Navbar from "@/components/Navbar.vue";
   import router from "@/router";
   import {
+GetAntiForgeryToken,
     getRoleOption
   } from "@/assets/js/common_api";
   import {
@@ -133,7 +134,12 @@
         const form = new FormData();
         form.append('userName', inputValue.value);
         form.append('role', parseInt(selectedRoleId.value));
-        const response = await axios.post('http://192.168.0.177:7008/AuthorityMng/AccoutChangeRole', form);
+        const token = await GetAntiForgeryToken();
+        const response = await axios.post('http://192.168.0.177:7008/AuthorityMng/AccoutChangeRole', form,{
+          headers: { 
+            'RequestVerificationToken': token,
+          }
+        });
         try {
           const data = response.data;
           if (data.state === 'success') {

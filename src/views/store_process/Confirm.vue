@@ -535,12 +535,13 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
           formData.append(fieldName, formFields[fieldName]);
           console.log(formData.get(`${fieldName}`));
         }
-        const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/Delivery', formData, {
-          headers: { 
-            'RequestVerificationToken': token.value,
-          }
-        });
         try {
+          token.value = await GetAntiForgeryToken();
+          const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/Delivery', formData, {
+            headers: { 
+              'RequestVerificationToken': token.value,
+            }
+          });
           const data = response.data;
           console.log(data);
           if (data.state === 'success') {

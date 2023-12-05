@@ -248,7 +248,8 @@
     getEquipCategory,
     getArea,
     getLayer,
-    getAccount
+    getAccount,
+GetAntiForgeryToken
   } from '@/assets/js/common_api'
   import {
     goBack,
@@ -408,7 +409,12 @@
         }
         console.log('requestData:', requestData);
         try {
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/EditPlan', requestData);
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/EditPlan', requestData,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           const data = response.data;
           console.log(data);
           if (data.state === 'success') {
@@ -452,7 +458,12 @@
         UpdatePageParameter(datagrid1, event, type, form)
         const axios = require('axios');
         try {
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/SearchInventory', form);
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/SearchInventory', form,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           const data = response.data;
           if (data.state === 'success') {
             console.log('搜尋結果', data.resultList);
@@ -485,7 +496,12 @@
           }
         }
         UpdatePageParameter(datagrid2, event, type, form)
-        axios.post('http://192.168.0.177:7008/StocktakingMng/RangeOfPlan', form)
+          const token = await GetAntiForgeryToken();
+        axios.post('http://192.168.0.177:7008/StocktakingMng/RangeOfPlan', form,{
+          headers:{
+            'RequestVerificationToken': token,
+          }
+        })
           .then((response) => {
             const data = response.data
             if (data.state === 'success') {
@@ -587,7 +603,7 @@
         LayerInit.value = '請先選擇區域'
         searchInventory()
       }
-      function addList() {
+      async function addList() {
         if (datagrid1.selectAll) {
           const form = new FormData();
           for (const key in searchParams) {
@@ -599,7 +615,12 @@
               form.append('AssetList', item)
             }
           }
-          axios.post('http://192.168.0.177:7008/StocktakingMng/SelectAllGrid', form)
+          const token = await GetAntiForgeryToken();
+          axios.post('http://192.168.0.177:7008/StocktakingMng/SelectAllGrid', form,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          })
             .then((response) => {
               const data = response.data
               if (data.state === 'success') {

@@ -177,6 +177,7 @@
     reactive,
     ref
   } from "vue";
+import { GetAntiForgeryToken } from "@/assets/js/common_api";
   export default {
     components: {
       Navbar,
@@ -380,7 +381,12 @@
             break;
         }
         try {
-          const response = await axios.post(`${apiUrl}`, requestData);
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post(`${apiUrl}`, requestData,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -447,7 +453,12 @@
             break;
         }
         try {
-          const response = await axios.post(`${apiUrl}`, requestData);
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post(`${apiUrl}`, requestData,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -559,7 +570,12 @@
         }
         try {
           console.log('requsetData:', requestData);
-          const response = await axios.post(`${apiUrl}`, requestData);
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post(`${apiUrl}`, requestData,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -612,7 +628,12 @@
           const requestData = {
             DeleteId: id
           };
-          const response = await axios.post(`${apiUrl}`, requestData);
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post(`${apiUrl}`, requestData,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {

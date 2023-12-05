@@ -120,6 +120,7 @@
     checkFileSize,
   } from '@/assets/js/common_fn.js'
   import {
+GetAntiForgeryToken,
     getApplication,
     getAssets
   } from '@/assets/js/common_api.js'
@@ -219,7 +220,12 @@
         for (let i = 0; i < formParams.newFile.length; i++) {
           form.append('newFile', formParams.newFile[i]);
         }
-        axios.post('http://192.168.0.177:7008/RepairMng/CreateOrder', form)
+        const token = await GetAntiForgeryToken();
+        axios.post('http://192.168.0.177:7008/RepairMng/CreateOrder', form,{
+          headers:{
+            'RequestVerificationToken': token,
+          }
+        })
           .then((response) => {
             const data = response.data;
             if (data.state === 'success') {

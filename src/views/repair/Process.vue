@@ -275,6 +275,7 @@
   import {
     Repair_Process_Status
   } from '@/assets/js/enter_status';
+import { GetAntiForgeryToken } from '@/assets/js/common_api';
   register();
   export default {
     components: {
@@ -284,6 +285,7 @@
       const route = useRoute();
       const RepairId = route.query.search_id;
       const details = ref({});
+      const token = ref('');
       const fileInput = ref(null);
       const previewParams = reactive({
         title: '',
@@ -372,6 +374,7 @@
           return
         }
         try {
+          token.value = await GetAntiForgeryToken();
           // 先編輯表單上半部內容
           await sendUpperForm();
           // 再依照R_ID將 文件 單次檔案上傳
@@ -420,7 +423,11 @@
             }
           }
           console.log('上半部資料(含刪除):\n', msg);
-          axios.post('http://192.168.0.177:7008/RepairMng/SendingForRepair', form)
+          axios.post('http://192.168.0.177:7008/RepairMng/SendingForRepair', form,{
+            headers: { 
+              'RequestVerificationToken': token.value,
+            }
+          })
             .then(response => {
               const data = response.data;
               if (data.state === 'success') {
@@ -444,7 +451,11 @@
           form.append('num', index);
           form.append('Document', fileData);
           const axios = require('axios');
-          axios.post('http://192.168.0.177:7008/RepairMng/UploadDoc', form)
+          axios.post('http://192.168.0.177:7008/RepairMng/UploadDoc', form,{
+            headers: { 
+              'RequestVerificationToken': token.value,
+            }
+          })
             .then((response) => {
               const data = response.data;
               if (data.state === 'success') {

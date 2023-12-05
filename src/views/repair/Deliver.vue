@@ -196,6 +196,7 @@ canEnterPage,
     Pagination
   } from 'swiper/modules';
 import { Repair_Deliver_Status } from '@/assets/js/enter_status';
+import { GetAntiForgeryToken } from '@/assets/js/common_api';
   register();
   export default {
     components: {
@@ -258,12 +259,13 @@ import { Repair_Deliver_Status } from '@/assets/js/enter_status';
             formData.append(fieldName, formFields[fieldName]);
             console.log(formData.get(`${fieldName}`));
           }
-          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
           try {
+            const token = await GetAntiForgeryToken();
+            const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
+              headers: {
+                'RequestVerificationToken': token,
+              },
+            });
             const data = response.data;
             console.log(data);
             if (data.state === 'success') {
@@ -289,12 +291,13 @@ import { Repair_Deliver_Status } from '@/assets/js/enter_status';
             formData.append(fieldName, formFields[fieldName]);
             console.log(formData.get(`${fieldName}`));
           }
-          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
           try {
+            const token = await GetAntiForgeryToken();
+            const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
+              headers: {
+                'RequestVerificationToken': token,
+              },
+            });
             const data = response.data;
             console.log(data);
             if (data.state === 'success') {
@@ -325,7 +328,12 @@ import { Repair_Deliver_Status } from '@/assets/js/enter_status';
           DeliveryOperator: validation.value.user1.resultName,
           RepairPerson: validation.value.user2.resultName,
         }
-        axios.post('http://192.168.0.177:7008/RepairMng/Delivery', requestData)
+        const token = await GetAntiForgeryToken();
+        axios.post('http://192.168.0.177:7008/RepairMng/Delivery', requestData,{
+          headers:{
+            'RequestVerificationToken': token,
+          }
+        })
           .then((response) => {
             const data = response.data
             if (data.state === 'success') {
