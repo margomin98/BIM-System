@@ -176,6 +176,7 @@
   import {
     getAccount,
     checkRole,
+GetAntiForgeryToken,
   } from '@/assets/js/common_api'
   import {
     goBack
@@ -190,6 +191,7 @@ import axios from 'axios';
     setup() {
       const route = useRoute();
       const router = useRouter();
+      const token = ref('');
       const AR_ID = route.query.search_id;
       const details = ref({});
       const DropdownArray = reactive({
@@ -313,6 +315,7 @@ import axios from 'axios';
           return
         }
         try {
+          token.value = await GetAntiForgeryToken();
           // 先編輯表單上半部內容
           const ShipmentNum = await sendUpperForm();
           // 再依照AR_ID將 中間部分物流文件 & 下半部照片 單次檔案上傳
@@ -384,7 +387,11 @@ import axios from 'axios';
               form.append('deleteFile', item)
             }
           }
-          axios.post('http://192.168.0.177:7008/ReceivingMng/EditReceipt', form)
+          axios.post('http://192.168.0.177:7008/ReceivingMng/EditReceipt', form , {
+            headers: { 
+              'RequestVerificationToken': token.value,
+            }
+          })
             .then(response => {
               const data = response.data;
               if (data.state === 'success') {
@@ -408,13 +415,20 @@ import axios from 'axios';
           form.append('num', index);
           form.append(type, fileData);
           const axios = require('axios');
-          axios.post('http://192.168.0.177:7008/ReceivingMng/UploadFile', form)
+          axios.post('http://192.168.0.177:7008/ReceivingMng/UploadFile', form , {
+            headers: { 
+              'RequestVerificationToken': token.value,
+            }
+          })
             .then((response) => {
               const data = response.data;
               if (data.state === 'success') {
                 // 文件表单提交成功，继续执行
                 console.log(`第${index+1}個${type}檔案上傳成功`);
                 resolve(data.state)
+              } else if (data.state === 'account_error') {
+                alert(data.messages);
+                router.push('/');
               } else {
                 // 如果状态不是 "success"，调用 reject 并传递错误信息
                 console.error(type + '上傳失敗，' + response.data.messages);

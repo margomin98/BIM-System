@@ -269,7 +269,8 @@
   } from "vue-router";
   import {
     getApplication,
-    getAccount
+    getAccount,
+GetAntiForgeryToken
   } from '@/assets/js/common_api'
   import {
     goBack
@@ -309,6 +310,7 @@
         title: '',
         src: '',
       })
+      const token = ref('');
       // 下半部頁籤
       const Tabs = ref([]);
       // 控制按鈕
@@ -563,6 +565,7 @@
         }
         console.log('下半部頁籤', Tabs.value);
         try {
+          token.value = await GetAntiForgeryToken();
           // 先建立表單並回傳resultList
           const resultList = await sendTextForm();
           console.log('resultList:', resultList);
@@ -616,13 +619,20 @@
             Tabs: itemList,
           }
           console.log('共同、頁籤文字部分', requestJson);
-          axios.post('http://192.168.0.177:7008/ReceivingMng/CreateReceipt', requestJson)
+          axios.post('http://192.168.0.177:7008/ReceivingMng/CreateReceipt', requestJson , {
+            headers: { 
+              'RequestVerificationToken': token.value,
+            }
+          })
             .then(response => {
               const data = response.data;
               if (data.state === 'success') {
                 const resultList = response.data.resultList;
                 resolve(resultList);
-              } else {
+              } else if (data.state === 'account_error') {
+                alert(data.messages);
+                router.push('/');
+              }else {
                 reject(data.messages);
               }
             })
@@ -638,14 +648,21 @@
           form.append('AR_ID', AR_ID);
           form.append('num', index);
           form.append(type, fileData);
-          axios.post('http://192.168.0.177:7008/ReceivingMng/UploadFile', form)
+          axios.post('http://192.168.0.177:7008/ReceivingMng/UploadFile', form , {
+            headers: { 
+              'RequestVerificationToken': token.value,
+            }
+          })
             .then((response) => {
               const data = response.data;
               if (data.state === 'success') {
                 // 文件表单提交成功，继续执行
                 console.log(`第${index+1}個${type}檔案上傳成功`);
                 resolve(data.state)
-              } else {
+              } else if (data.state === 'account_error') {
+                alert(data.messages);
+                router.push('/');
+              }else {
                 // 如果状态不是 "success"，调用 reject 并传递错误信息
                 reject(new Error(`第${index+1}個${type}檔案上傳失敗` + response.data.messages));
               }

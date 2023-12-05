@@ -277,6 +277,7 @@
   import {
     StoreProcess_Delete_Status
   } from '@/assets/js/enter_status'
+import { GetAntiForgeryToken } from '@/assets/js/common_api';
   export default {
     components: {
       Navbar,
@@ -338,8 +339,13 @@
         const form = new FormData();
         form.append('AI_ID', AI_ID);
         const axios = require('axios');
-        const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/ApplicationDelete', form);
         try {
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/ApplicationDelete', form,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages + '\n';
@@ -348,6 +354,9 @@
             router.push({
               name: 'Store_Datagrid'
             });
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
           } else if (data.state === 'error') {
             alert(data.messages);
           }

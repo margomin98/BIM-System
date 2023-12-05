@@ -170,6 +170,7 @@
     useRoute,
     useRouter
   } from "vue-router";
+import { GetAntiForgeryToken } from '@/assets/js/common_api';
   export default {
     components: {
       Navbar,
@@ -219,8 +220,13 @@
         const form = new FormData();
         form.append('AR_ID', AR_ID);
         const axios = require('axios');
-        const response = await axios.post(`http://192.168.0.177:7008/ReceivingMng/DeleteReceipt`, form);
         try {
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post(`http://192.168.0.177:7008/ReceivingMng/DeleteReceipt`, form , {
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages + '\n';

@@ -399,7 +399,8 @@
     getEquipCategory,
     getArea,
     getLayer,
-    getProject
+    getProject,
+GetAntiForgeryToken
   } from '@/assets/js/common_api';
   import {
     getDate,
@@ -416,6 +417,7 @@
     },
     setup() {
       const route = useRoute();
+      const token = ref('');
       const AI_ID = route.query.search_id;
       const DropdownArray = reactive({
         EquipType: [],
@@ -650,6 +652,7 @@
             return
           }
         }
+        token.value = await GetAntiForgeryToken();
         const filePromises = [];
         for (let i = 0; i < tabData.length; i++) {
           filePromises.push(sendFileForm(tabData[i], i));
@@ -706,6 +709,7 @@
           // loading flag open
           loading.value = true;
           const filePromises = [];
+          token.value = await GetAntiForgeryToken();
           for (let i = 0; i < tabData.length; i++) {
             filePromises.push(sendFileForm(tabData[i], i));
           }
@@ -716,7 +720,11 @@
                 // 全部暫存成功後，打api轉狀態，loading flag避免網路延遲
                 const form = new FormData();
                 form.append('AI_ID', AI_ID);
-                axios.post('http://192.168.0.177:7008/AssetsInMng/AssetsIn', form)
+                axios.post('http://192.168.0.177:7008/AssetsInMng/AssetsIn', form , {
+                  headers: { 
+                    'RequestVerificationToken': token.value,
+                  }
+                })
                   .then((response) => {
                     const data = response.data
                     if (data.state === 'success') {
@@ -783,13 +791,20 @@
             form.append('deleteFile', tabData.deleteFile[i]);
           }
           const axios = require('axios');
-          axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form)
+          axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form,{
+            headers: { 
+              'RequestVerificationToken': token.value,
+            }
+          })
             .then((response) => {
               const data = response.data;
               if (data.state === 'success') {
                 // 文件表单提交成功，继续执行
                 console.log(`第${index+1}個頁籤上傳成功`);
                 resolve(data.state)
+              } else if (data.state === 'account_error') {
+                alert(data.messages);
+                router.push('/');
               } else {
                 // 如果状态不是 "success"，调用 reject 并传递错误信息
                 console.error(`第${index+1}個頁籤上傳失敗，${data.messages}`);

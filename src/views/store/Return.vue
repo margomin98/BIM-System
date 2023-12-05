@@ -89,6 +89,7 @@
   } from 'vue';
   import Navbar from '@/components/Navbar.vue';
   import router from '@/router';
+import { GetAntiForgeryToken } from '@/assets/js/common_api';
   export default {
     components: {
       Navbar
@@ -205,23 +206,27 @@
       }
       async function submit() {
         const axios = require('axios');
+        // 檢查必填 & 限制項目
+        if (!formParams.AssetsId || formParams.Count < 1) {
+          alert('請輸入必填項目')
+          return
+        }
+        if (formParams.Memo && !/^.{1,500}$/.test(formParams.Memo)) {
+          alert('備註不可輸入超過500字');
+          return
+        }
+        const requestData = {
+          AssetsId: formParams.AssetsId,
+          Count: formParams.Count,
+          Memo: formParams.Memo,
+        };
         try {
-          // 檢查必填 & 限制項目
-          if (!formParams.AssetsId || formParams.Count < 1) {
-            alert('請輸入必填項目')
-            return
-          }
-          if (formParams.Memo && !/^.{1,500}$/.test(formParams.Memo)) {
-            alert('備註不可輸入超過500字');
-            return
-          }
-          const requestData = {
-            AssetsId: formParams.AssetsId,
-            Count: formParams.Count,
-            Memo: formParams.Memo,
-          };
-          const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/OldAssetsIn', requestData);
-          console.log(response);
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/OldAssetsIn', requestData , {
+            headers: { 
+              'RequestVerificationToken': token,
+            }
+          });
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages;

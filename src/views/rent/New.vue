@@ -153,7 +153,8 @@
     getApplication,
     getEquipType,
     getEquipCategory,
-    getProject
+    getProject,
+GetAntiForgeryToken
   } from "@/assets/js/common_api";
   import {
     getDate,
@@ -298,7 +299,12 @@
         console.log('requestData:', requestData);
         try {
           const axios = require('axios');
-          const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/NewAssetsOut', requestData);
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/NewAssetsOut', requestData , {
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages + '\n';
@@ -307,6 +313,10 @@
             router.push({
               name: 'Rent_Datagrid'
             });
+          } else if (data.state === 'account_error') {
+            //尚未登入
+            alert(data.messages);
+            router.push('/');
           } else if (data.state === 'error') {
             alert(data.messages);
           }

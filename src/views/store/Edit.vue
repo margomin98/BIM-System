@@ -524,7 +524,8 @@
   import {
     getEquipType,
     getEquipCategory,
-    getProject
+    getProject,
+GetAntiForgeryToken
   } from '@/assets/js/common_api'
   import {
     goBack,
@@ -546,6 +547,7 @@
     },
     setup() {
       const route = useRoute();
+      const token = ref('');
       const ShipmentNum = ref('')
       const deleteTab = ref([]);
       const AR_ID = ref('')
@@ -1030,6 +1032,7 @@
         }
         console.log('頁籤資料', tabData);
         try {
+          token.value = await GetAntiForgeryToken();
           // 先建立表單並回傳resultList
           const resultList = await sendUpperForm();
           console.log('上半部resultList', resultList);
@@ -1073,19 +1076,26 @@
               form.append('deleteTab', itemId);
             })
           }
-          axios.post('http://192.168.0.177:7008/AssetsInMng/ApplicationEdit', form)
-            .then(response => {
-              const data = response.data;
-              if (data.state === 'success') {
-                const resultList = response.data.resultList;
-                resolve(resultList);
-              } else {
-                reject(data.messages);
-              }
-            })
-            .catch(error => {
-              reject(error);
-            });
+          axios.post('http://192.168.0.177:7008/AssetsInMng/ApplicationEdit', form,{ 
+            headers: { 
+              'RequestVerificationToken': token.value,
+            }
+          })
+          .then(response => {
+            const data = response.data;
+            if (data.state === 'success') {
+              const resultList = response.data.resultList;
+              resolve(resultList);
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            } else {
+              reject(data.messages);
+            }
+          })
+          .catch(error => {
+            reject(error);
+          });
         });
       }
       // 傳送頁籤部分
@@ -1128,13 +1138,20 @@
             }
           }
           const axios = require('axios');
-          axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form)
+          axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form ,{
+            headers: { 
+              'RequestVerificationToken': token.value,
+            }
+          })
             .then((response) => {
               const data = response.data;
               if (data.state === 'success') {
                 // 文件表单提交成功，继续执行
                 console.log(`第${index+1}個頁籤上傳成功`);
                 resolve(data.state)
+              } else if (data.state === 'account_error') {
+                alert(data.messages);
+                router.push('/');
               } else {
                 // 如果状态不是 "success"，调用 reject 并传递错误信息
                 console.error(`第${index+1}個頁籤上傳失敗，${data.messages}`);

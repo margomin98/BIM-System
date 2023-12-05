@@ -519,12 +519,14 @@
     ref
   } from 'vue';
   import axios from 'axios';
+  import { GetAntiForgeryToken } from '@/assets/js/common_api';
   export default {
     components: {
       Navbar
     },
     setup() {
       const route = useRoute();
+      const token = ref('');
       const Applicant = ref(''); //申請人 發API 帶入
       const ApplicationDate = ref(''); //申請日期 function帶入
       const ShipmentNum = ref('')
@@ -997,6 +999,7 @@
         }
         console.log('頁籤資料', tabData);
         try {
+          token.value = await GetAntiForgeryToken();
           // 先建立表單並回傳resultList
           const resultList = await sendUpperForm();
           console.log('上半部resultList', resultList);
@@ -1033,19 +1036,27 @@
           form.append('AR_ID', AR_ID.value);
           form.append('tab_count', tabData.length);
           form.append('Memo', Memo.value);
-          axios.post('http://192.168.0.177:7008/AssetsInMng/NewAssetsIn', form)
-            .then(response => {
-              const data = response.data;
-              if (data.state === 'success') {
-                const resultList = response.data.resultList;
-                resolve(resultList);
-              } else {
-                reject(data.messages);
-              }
-            })
-            .catch(error => {
-              reject(error);
-            });
+          axios.post('http://192.168.0.177:7008/AssetsInMng/NewAssetsIn', form ,{ 
+            headers: { 
+              'RequestVerificationToken': token.value,
+            }
+          })
+          .then(response => {
+            const data = response.data;
+            if (data.state === 'success') {
+              const resultList = response.data.resultList;
+              resolve(resultList);
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            }
+            else {
+              reject(data.messages);
+            }
+          })
+          .catch(error => {
+            reject(error);
+          });
         });
       }
       // 頁籤部分
@@ -1078,13 +1089,20 @@
             form.append('newFile', tabData.newFile[i]);
           }
           const axios = require('axios');
-          axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form)
+          axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form ,{
+            headers: { 
+              'RequestVerificationToken': token.value,
+            }
+          })
             .then((response) => {
               const data = response.data;
               if (data.state === 'success') {
                 // 文件表单提交成功，继续执行
                 console.log(`第${index+1}個頁籤上傳成功`);
                 resolve(data.state)
+              } else if (data.state === 'account_error') {
+                alert(data.messages);
+                router.push('/');
               } else {
                 // 如果状态不是 "success"，调用 reject 并传递错误信息
                 console.error(`第${index+1}個頁籤上傳失敗，${data.messages}`);

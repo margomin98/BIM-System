@@ -357,6 +357,7 @@
   import {
     StoreProcess_Confirm_Status
   } from "@/assets/js/enter_status"
+import { GetAntiForgeryToken } from "@/assets/js/common_api";
   export default {
     components: {
       Navbar,
@@ -364,6 +365,7 @@
     setup() {
       const route = useRoute();
       const router = useRouter();
+      const token = ref('');
       const AI_ID = route.query.search_id;
       const deliveryDate = ref('');
       const details = ref({});
@@ -439,6 +441,7 @@
       }
       //分別使用帳號密碼驗證、改變驗證狀態 user1為交付人員 user2為入庫人員
       async function validate(user) {
+        token.value = await GetAntiForgeryToken();
         if (user === 1) {
           const axios = require('axios');
           const formData = new FormData();
@@ -453,9 +456,9 @@
             console.log(formData.get(`${fieldName}`));
           }
           const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
+            headers: { 
+              'RequestVerificationToken': token.value,
+            }
           });
           try {
             const data = response.data;
@@ -463,6 +466,9 @@
             if (data.state === 'success') {
               validation.value.user1.isValidate = true;
               validation.value.user1.resultName = validation.value.user1.account;
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
             } else if (data.state === 'error') {
               alert(data.messages);
               validation.value.user1.isValidate = false;
@@ -484,9 +490,9 @@
             console.log(formData.get(`${fieldName}`));
           }
           const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
+            headers: { 
+              'RequestVerificationToken': token.value,
+            }
           });
           try {
             const data = response.data;
@@ -494,6 +500,9 @@
             if (data.state === 'success') {
               validation.value.user2.isValidate = true;
               validation.value.user2.resultName = validation.value.user2.account;
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
             } else if (data.state === 'error') {
               alert(data.messages);
               validation.value.user2.isValidate = false;
@@ -527,9 +536,9 @@
           console.log(formData.get(`${fieldName}`));
         }
         const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/Delivery', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+          headers: { 
+            'RequestVerificationToken': token.value,
+          }
         });
         try {
           const data = response.data;
@@ -541,6 +550,9 @@
             router.push({
               name: 'Store_Process_Datagrid'
             });
+          } else if (data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
           } else if (data.state === 'error') {
             alert(data.messages);
             console.log('error state', response);

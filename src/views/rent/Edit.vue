@@ -148,7 +148,8 @@
   import {
     getEquipType,
     getEquipCategory,
-    getProject
+    getProject,
+GetAntiForgeryToken
   } from "@/assets/js/common_api";
   import {
     Rent_Edit_Status
@@ -309,7 +310,12 @@
         console.log(requestData);
         try {
           const axios = require('axios');
-          const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/ApplicationEdit', requestData);
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/ApplicationEdit', requestData,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages + '\n';
@@ -318,7 +324,11 @@
             router.push({
               name: 'Rent_Datagrid'
             });
-          } else if (data.state === 'error') {
+          } else if (data.state === 'account_error') {
+            //尚未登入
+            alert(data.messages);
+            router.push('/');
+          } else {
             alert(data.messages);
           }
         } catch (error) {
