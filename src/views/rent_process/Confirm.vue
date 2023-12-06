@@ -69,17 +69,18 @@
         </div>
       </div>
       <div class="third_content">
-        <DataTable :size="'small'" :value="rowData2" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="600px">
+        <DataTable :size="'small'" :value="rowData2" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="600px"
+          :row-style="({ OM_IsExecute }) => !OM_IsExecute ? 'background-color: #CEE4EB;': null ">
           <Column header="交付確認" class="datatable_checkbox">
             <template style="min-width:50px; " #body="slotProps">
               <input type="checkbox" class="p-checkbox p-component" v-model="slotProps.data.OM_IsExecute">
-</template>
-        </Column>
-        <Column>
-<template #body="slotProps">
-  <AssetsView :params="slotProps" />
-</template>
-        </Column>
+            </template>
+          </Column>
+          <Column>
+            <template #body="slotProps">
+              <AssetsView :params="slotProps" />
+            </template>
+          </Column>
         <Column v-for="item in datagrid2field" :field="item.field" :header="item.header" :sortable="item.sortable" :style="{'min-width': item.width}"></Column>
         </DataTable>
       </div>
