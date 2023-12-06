@@ -142,6 +142,7 @@
   } from "vue-router";
   import axios from "axios";
   import { UpdatePageParameter, createDatagrid, goBack } from "@/assets/js/common_fn";
+import { GetAntiForgeryToken } from "@/assets/js/common_api";
   export default {
     components: {
       DataTable,
@@ -238,7 +239,12 @@
           }
         }
         UpdatePageParameter(datagrid,event,type,form)
-        axios.post('http://192.168.0.177:7008/StocktakingMng/RangeOfPlan',form)
+        const token = await GetAntiForgeryToken();
+        axios.post('http://192.168.0.177:7008/StocktakingMng/RangeOfPlan',form,{
+          headers:{
+            'RequestVerificationToken': token,
+          }
+        })
         .then((response)=>{
           const data = response.data
           if(data.state === 'success') {
