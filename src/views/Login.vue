@@ -41,6 +41,7 @@
   } from 'vue'
   import router from '@/router';
   import axios from 'axios';
+import { GetAntiForgeryToken } from '@/assets/js/common_api';
   export default {
     name: 'Login',
     setup() {
@@ -62,7 +63,12 @@
         }
         const axios = require('axios');
         try {
-          const response = await axios.post('http://192.168.0.177:7008/Account/Login', form);
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post('http://192.168.0.177:7008/Account/Login', form,{
+            headers: {
+              'RequestVerificationToken': token,
+            }
+          });
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {

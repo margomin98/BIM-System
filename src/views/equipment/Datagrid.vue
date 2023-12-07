@@ -135,6 +135,7 @@
     Equipment_DateCategory
   } from "@/assets/js/dropdown.js"
   import {
+GetAntiForgeryToken,
     getArea,
     getLayer,
     getMngDatagrid,
@@ -189,8 +190,12 @@
         for (const key in searchParams) {
           form.append(key, searchParams[key]);
         }
+        const token = await GetAntiForgeryToken();
         axios.post('http://192.168.0.177:7008/IntegrationMng/ExportExcel',form, {
           responseType: 'blob',
+          headers: {
+            'RequestVerificationToken': token,
+          }
         })
         .then((response)=>{
           const data = response.data
