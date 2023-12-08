@@ -63,7 +63,7 @@
     </div>
     <!-- 物流文件部分 -->
     <div class="info_wrap col">
-      <div class="fixed_info">
+      <div class="fixed_info mt-5">
         <div>
           <p>已上傳物流文件</p>
         </div>
@@ -110,7 +110,10 @@
       <div class="content">
         <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
           <swiper-slide v-for="(file , index) in details.existFile" :key="index" class="custom-slide">
-            <img :src="file.FileLink" alt="">
+            <img  class="swiper_bottom_img" :src="file.FileLink" alt="">
+            <button class='zoom_img' @click="handlePreview(file)">
+      <img src="@/assets/zoom.png">
+    </button>
           </swiper-slide>
         </swiper-container>
         <div class="swiper_pagination">

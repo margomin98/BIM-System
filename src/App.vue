@@ -168,6 +168,56 @@
 			display: inline-block !important;
 		}
 	}
+
+	//放大Swiper圖片
+	.swiper_section swiper-slide{
+		position:relative;
+		.swiper_bottom_img{
+			filter: brightness(40%);
+  width: 100%;
+  height: auto;
+}
+		.zoom_img{
+background: transparent;
+border: none;
+   position: absolute;
+  top: 50%;
+  left: 50%;
+ justify-content:center;
+display: flex;
+    align-items: center;
+  transform: translate(-50%, -50%);
+	img{
+		width: 40px !important;
+	}
+  }
+
+	}
+	.zoom_img_modal{
+  .modal-header {
+      h5 {
+        font-weight: 700;
+      }
+      background: #528091;
+      color: white;
+      display: flex;
+      justify-content: center;
+      .close_icon {
+        cursor: pointer;
+      }
+      .modal-title {
+        margin: auto;
+      }
+     
+    }
+     .modal-body {
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+	//放大Swiper圖片
 	@media only screen and (min-width: 1200px) {
 		.container-fluid {
 			padding-left: 0 !important;

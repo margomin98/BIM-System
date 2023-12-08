@@ -127,7 +127,10 @@
         </div>
         <swiper-container :autoHeight="true" class='swiper_section' :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
           <swiper-slide v-for="(file , index) in fileParams.viewPic" :key="index" class="custom-slide">
-            <img :src="file.link" alt="">
+            <img class="swiper_bottom_img"  :src="file.link" alt="">
+            <button class='zoom_img' @click="handleDocPreview(file)">
+              <img src="@/assets/zoom.png">
+            </button>
             <span @click="deleteFile('picture' , index)">x</span>
           </swiper-slide>
         </swiper-container>
@@ -228,7 +231,10 @@
             </div>
             <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
               <swiper-slide v-for="file in tab.viewPic" class="custom-slide">
-                <img :src="file.link" alt="">
+                <img class="swiper_bottom_img" :src="file.link" alt="">
+                <button class='zoom_img' @click="handleDocPreview(file)">
+                  <img src="@/assets/zoom.png">
+                </button>
               </swiper-slide>
             </swiper-container>
             <div class="swiper_pagination">
