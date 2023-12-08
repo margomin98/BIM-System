@@ -210,7 +210,7 @@
               <!-- Modal Trigger -->
               <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#documentModal"></button>
               <!-- Exist Document Modal -->
-              <div class="modal fade" id="documentModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+              <div class="modal preview_modal fade" id="documentModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -436,6 +436,24 @@
           }
         }
       }
+    }
+  }
+  .preview_modal {
+    .modal-body {
+      padding: 20px;
+      margin: auto;
+    }
+    .modal-content {
+      margin: auto;
+    }
+    .modal-header {
+      h5 {
+        font-weight: 700;
+      }
+      background: #528091;
+      color: white;
+      display: flex;
+      justify-content: center;
     }
   }
   .custom-slide {
