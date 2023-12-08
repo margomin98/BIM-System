@@ -204,7 +204,7 @@
               <!-- Modal Trigger -->
               <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#documentModal"></button>
               <!-- Exist Document Modal -->
-              <div class="modal fade" id="documentModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+              <div class="modal preview_modal fade" id="documentModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered " >
                   <div class="modal-content">
                     <div class="modal-header">
@@ -339,6 +339,41 @@
   .custom-slide {
     display: flex;
     align-self: center;
+  }
+  .preview_modal {
+    button {
+      background: #506b91;
+      border: none;
+      font-weight: 700;
+      font-size: 18px;
+      &:hover {
+        background: #6d92b3;
+      }
+    }
+    .modal-body {
+      padding: 16px 16px 0;
+    }
+    .modal-content {
+      width: 400px;
+      margin: auto;
+    }
+    .input-group-prepend {
+      width: auto;
+    }
+    .modal-footer {
+      padding: 0 12px 12px;
+      border: none;
+    }
+    .modal-header {
+      h5 {
+        font-weight: 700;
+      }
+      background: #3D4E61;
+      color: white;
+      .close_icon {
+        cursor: pointer;
+      }
+    }
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
