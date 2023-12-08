@@ -78,7 +78,7 @@
       <div class="button_wrap d-flex">
         <button class="search_btn" @click="submit('','search')">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
-        <!-- <button class="export_btn">匯出</button> -->
+        <button class="export_btn"  @click="exportExcel">匯出</button>
       </div>
     </div>
     <div class="dg-height mb-5">
@@ -182,6 +182,37 @@
         datagrid.sortField = 'IntegrationId'
         submit('','search');
       });
+      // 匯出
+      async function exportExcel() {
+        const form = new FormData();
+        //將表格資料append到 form
+        for (const key in searchParams) {
+          form.append(key, searchParams[key]);
+        }
+        axios.post('http://192.168.0.177:7008/IntegrationMng/ExportExcel',form, {
+          responseType: 'blob',
+        })
+        .then((response)=>{
+          const data = response.data
+          const header = response.headers
+          console.log('content-disposition:',header['content-disposition']);
+          console.log('content-type:',header['content-type']);
+          if(header['content-type'].includes('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')) {
+            const url = window.URL.createObjectURL(data) ;
+            const a = document.createElement('a');
+            const fileName = createFileName();
+            console.log('filename:',fileName);
+            a.href = url;
+            a.download = fileName;
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+          }
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
+      }
       async function submit(event,type) {
         const form = new FormData();
         //將表格資料append到 form
@@ -235,6 +266,22 @@
         LayerInit.value = '請先選擇區域';
         submit('','search');
       }
+      function createFileName() {
+        // 创建一个新的Date对象来获取当前日期和时间
+        var currentDate = new Date();
+
+        // 获取年、月、日、小时、分钟和秒
+        var year = currentDate.getFullYear();
+        var month = currentDate.getMonth() + 1; // 月份是从0开始，所以需要加1
+        var day = currentDate.getDate();
+        var hours = currentDate.getHours();
+        var minutes = currentDate.getMinutes();
+        var seconds = currentDate.getSeconds();
+
+        // 创建一个格式化的时间字符串
+        var formattedTime = year + '' + addZero(month) + '' + addZero(day) + '' + addZero(hours) + '' + addZero(minutes) + '' + addZero(seconds)+'_整合箱報表.xlsx';
+        return formattedTime;
+      }
       return {
         searchParams,
         DropdownArray,
@@ -242,6 +289,7 @@
         datagrid,
         datagridfield,
         rowData,
+        exportExcel,
         submit,
         getAreaName,
         selectArea,
@@ -290,12 +338,12 @@
             background-color: #5d85bd;
           }
         }
-        // .export_btn {
-        //   @include export_btn;
-        //   &:hover {
-        //     background-color: #274266;
-        //   }
-        // }
+        .export_btn {
+          @include export_btn;
+          &:hover {
+            background-color: #5e7aa2;
+          }
+        }
       }
       .datagrid_section {
         .content {
