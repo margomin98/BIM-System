@@ -1,20 +1,20 @@
 <template>
   <Navbar />
   <div class="main_section">
-  <!-- 放大Swiper圖片 -->
-  <div class="zoom_img_modal modal fade" id="zoomImg" tabindex="-1"  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">檢視照片</h5>
-                <p data-bs-dismiss="modal" class='close_icon'>X</p>
-            </div>
-      <div class="modal-body">
-        <img  src="" alt="Zoomed Image">
+    <!-- 放大Swiper圖片 -->
+    <div class="zoom_img_modal modal fade" id="zoomImg" tabindex="-1"  aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{ previewParams.title}}</h5>
+            <p data-bs-dismiss="modal" class='close_icon'>X</p>
+          </div>
+          <div class="modal-body">
+            <img :src="previewParams.src" alt="Zoomed Image">
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
     <div class="title col">
       <h1>編輯資產</h1>
     </div>
@@ -276,9 +276,9 @@
           <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
             <swiper-slide v-for="(item , index) in selectFiles.viewFile" :key="index" class="custom-slide">
               <img class="swiper_bottom_img"  :src="item.FileLink" alt="">
-              <button class='zoom_img' data-bs-toggle="modal" data-bs-target="#zoomImg" data-image-src="">
-      <img src="@/assets/zoom.png">
-    </button>
+              <button class='zoom_img' data-bs-toggle="modal" data-bs-target="#zoomImg" @click="handlePreview(item)" >
+                <img src="@/assets/zoom.png">
+              </button>
               <span @click="deleteFileFunction(index)">x</span>
             </swiper-slide>
           </swiper-container>
@@ -388,7 +388,7 @@
   import {
     register
   } from 'swiper/element/bundle';
-import axios from 'axios';
+  import axios from 'axios';
   register();
   export default {
     components: {
@@ -427,6 +427,11 @@ import axios from 'axios';
         EndDate: '',
         Action: '',
       });
+      // Modal Params
+      const previewParams = reactive({
+        title: '',
+        src: '',
+      })
       const ActionArray = HistoryAction;
       const datagrid = createDatagrid();
       const datagridfield = [
@@ -696,6 +701,10 @@ import axios from 'axios';
       function openFileExplorer() {
         fileInputs.value.click();
       }
+      function handlePreview(file) {
+        previewParams.title = file.FileName;
+        previewParams.src = file.FileLink;
+      }
       function handleFileChange(event) {
         const files = event.target.files;
         const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
@@ -783,6 +792,7 @@ import axios from 'axios';
         fileInputs,
         selectFiles,
         searchParams,
+        previewParams,
         ActionArray,
         datagrid,
         datagridfield,
@@ -801,6 +811,7 @@ import axios from 'axios';
         selectAssetType,
         openFileExplorer,
         handleFileChange,
+        handlePreview,
         deleteFileFunction,
         searchHistory,
         selectAction,
