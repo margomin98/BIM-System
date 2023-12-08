@@ -439,21 +439,38 @@
     }
   }
   .preview_modal {
+    button {
+      background: #506b91;
+      border: none;
+      font-weight: 700;
+      font-size: 18px;
+      &:hover {
+        background: #6d92b3;
+      }
+    }
     .modal-body {
-      padding: 20px;
-      margin: auto;
+      padding: 16px 16px 0;
     }
     .modal-content {
+      width: 400px;
       margin: auto;
+    }
+    .input-group-prepend {
+      width: auto;
+    }
+    .modal-footer {
+      padding: 0 12px 12px;
+      border: none;
     }
     .modal-header {
       h5 {
         font-weight: 700;
       }
-      background: #528091;
+      background: #3D4E61;
       color: white;
-      display: flex;
-      justify-content: center;
+      .close_icon {
+        cursor: pointer;
+      }
     }
   }
   .custom-slide {
