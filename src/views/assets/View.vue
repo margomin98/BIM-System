@@ -1,6 +1,22 @@
 <template>
   <Navbar />
   <div class="main_section">
+
+<!-- 放大Swiper圖片 -->
+    <div class="zoom_img_modal modal fade" id="zoomImg" tabindex="-1"  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">檢視照片</h5>
+                <p data-bs-dismiss="modal" class='close_icon'>X</p>
+            </div>
+      <div class="modal-body">
+        <img  src="" alt="Zoomed Image">
+      </div>
+    </div>
+  </div>
+</div>
+
     <div class="title col">
       <h1>檢視資產</h1>
     </div>
@@ -204,7 +220,10 @@
         <div v-show="selectFiles.viewFile.length !== 0">
           <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
             <swiper-slide v-for="(item , index) in selectFiles.viewFile" :key="index" class="custom-slide">
-              <img :src="item.FileLink" alt="">
+              <img class="swiper_bottom_img" :src="item.FileLink" alt="">
+               <button class='zoom_img' data-bs-toggle="modal" data-bs-target="#zoomImg" data-image-src="">
+      <img src="@/assets/zoom.png">
+    </button>
             </swiper-slide>
           </swiper-container>
           <div class="swiper_pagination">
@@ -445,6 +464,7 @@
           link.click();
         }
       }
+      
       return {
         AssetsId,
         details,
@@ -475,6 +495,7 @@
     text-align: center;
     font-weight: 700;
   }
+ 
   @media only screen and (min-width: 1200px) {
     .main_section {
       .swiper_section {
