@@ -116,7 +116,7 @@ export default {
       const axios = require('axios');
       try {
         const token = await GetAntiForgeryToken();
-        const response = await axios.post('http://192.168.0.177:7008/Account/LogOff',{
+        const response = await axios.post('http://192.168.0.177:7008/Account/LogOff','',{
           headers:{
             'RequestVerificationToken': token,
           }
