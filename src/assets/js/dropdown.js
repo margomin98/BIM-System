@@ -17,7 +17,7 @@ export const Asset_TypeArray = ['資產' , '存貨'];
 // 設備集成管理
 export const Equipment_DateCategory = ['最後更換日期' , '整合日期']
 // 盤點計畫管理
-export const PlanType = ['指定盤' , '月盤' , '季盤' , '年盤']
+export const PlanType = ['指定盤' , '專案盤點' , '月盤' , '季盤' , '年盤']
 export const PlanStatus = ['待盤點' , '盤點中' , '待平帳' , '已完成']
 export const PlanDateCategory = ['盤點開始日期' , '盤點結束日期' , '最近編輯時間']
 // 維修管理
@@ -26,5 +26,6 @@ export const Repair_DateCategory = ['申請日期' , '交付日期' , '審核日
 // 報廢管理
 export const Scrap_StatusArray = ['待交付' , '待審核' , '已報廢' , '審核不通過']
 export const Scrap_DateCategory = ['申請日期' , '交付日期' , '審核日期']
+export const Scrap_Type = ['歸還報廢' , '庫內報廢']
 // 系統日誌管理
 export const SystemLog_ActiveArray = ['登出','登入','新增','編輯','刪除','通知']

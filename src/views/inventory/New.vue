@@ -60,26 +60,35 @@
             </div>
           </div>
         </div>
+        <!-- 專案代碼 -->
+        <div v-show="formParams.PlanType === '專案盤點'" class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span>*</span>專案代碼 :
+            </div>
+            <input type="text" class="form-control" placeholder="最多輸入10字" v-model="formParams.ProjectCode">
+            <button class="form_search_btn" @click="getProjectName('upperForm')">搜尋</button>
+          </div>
+        </div>
+        <!-- 專案名稱 -->
+        <div v-show="formParams.PlanType === '專案盤點'" class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              專案名稱 :
+            </div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="formParams.ProjectName" readonly>
+          </div>
+        </div>
         <div class="col">
           <div class="input-group" style="   justify-content: flex-start;">
             <div class="input-group-prepend"><span>*</span>盤點類型：</div>
             <div class="check_section d-flex">
-              <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no1" name="radio" value="指定盤" v-model="formParams.PlanType" />
-                <label for="no1">指定盤</label>
-              </div>
-              <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no2" name="radio" value="月盤" v-model="formParams.PlanType" />
-                <label for="no2">月盤</label>
-              </div>
-              <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no3" name="radio" value="季盤" v-model="formParams.PlanType" />
-                <label for="no3">季盤</label>
-              </div>
-              <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no4" name="radio" value="年盤" v-model="formParams.PlanType" />
-                <label for="no4">年盤</label>
-              </div>
+              <template v-for="(item , index) in PlanType" :key="item">
+                <div class="form-check d-flex align-items-center">
+                  <input type="radio" :id="`no${index}`" name="radio" :value="item" v-model="formParams.PlanType" />
+                  <label :for="`no${index}`">{{ item }}</label>
+                </div>
+              </template>
             </div>
           </div>
         </div>
@@ -87,7 +96,7 @@
     </div>
     <div class="info_wrap col">
       <div class="col">
-        <button class="add_btn" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="searchInventory('','search')">新增盤點項目</button>
+        <button class="add_btn" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="()=>{searchParams.ProjectCode =formParams.ProjectCode;searchInventory('','search');}">新增盤點項目</button>
         <!-- Modal -->
         <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1">
           <div class="modal-dialog modal-dialog-centered">
@@ -148,6 +157,10 @@
                           <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(item)">{{ item.Name }}</p>
                         </div>
                       </div>
+                    </div>
+                    <div v-show="formParams.PlanType === '專案盤點'" class='col'>
+                      <p>專案代碼</p>
+                      <input type="text" class="form-control text-center" placeholder="最多輸入10字" v-model="searchParams.ProjectCode" />
                     </div>
                   </div>
                   <div class='col d-flex justify-content-center'>
@@ -239,6 +252,8 @@
     onMounted,
     ref,
     reactive,
+computed,
+watch,
   } from "vue";
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
@@ -251,13 +266,15 @@
     getArea,
     getLayer,
     getApplication,
-    getAccount
+    getAccount,
+getProject
   } from '@/assets/js/common_api'
   import {
     UpdatePageParameter,
     createDatagrid,
     goBack
   } from "@/assets/js/common_fn";
+  import { PlanType } from "@/assets/js/dropdown";
   import axios from "axios";
   export default {
     components: {
@@ -282,6 +299,8 @@
       const formParams = reactive({
         PlanTitle: '',
         InventoryStaffName: '',
+        ProjectName: '',
+        ProjectCode: '',
         PlanStart: '',
         PlanEnd: '',
         PlanType: '',
@@ -297,6 +316,7 @@
         Area_Id: '',
         LayerName: '',
         Layer_Id: '',
+        ProjectCode: '',
       })
       // 搜尋資產 datagrid
       const datagrid1 = createDatagrid();
@@ -346,23 +366,44 @@
         getAccountName();
         getApplicationInfo();
       });
+      watch(formParams, (newValue,oldValue)=>{
+        if(newValue.PlanType !== '專案盤點') {
+          formParams.ProjectCode = '';
+          formParams.ProjectName = '';
+          searchParams.ProjectCode = '';
+        }
+      });
       // 送出新增計畫單
       async function submit() {
         // console.log(details.value);
         // 檢查必填項目
         if (!formParams.PlanTitle || !formParams.InventoryStaffName || !formParams.PlanStart || !formParams.PlanEnd || !formParams.PlanType || formParams.AssetList.length === 0) {
           alert('請填寫所有必填項目');
-          return;
+          return
         }
         if (!/^.{1,20}$/.test(formParams.PlanTitle)) {
           alert('標題不可輸入超過20字');
           return
+        }
+        // 類型為"專案盤點" => 額外檢查 專案代碼
+        if( formParams.PlanType === '專案盤點' ) {
+          if(!formParams.ProjectCode) {
+            alert('請填寫所有必填項目');
+            return
+          } else if (!/^[\s\S]{0,10}$/.test(formParams.ProjectCode)) {
+            alert('專案代碼不可輸入超過10字');
+            return
+          }
         }
         // 送出
         const axios = require('axios');
         let requestData = {};
         for (const keyname in formParams) {
           requestData[keyname] = formParams[keyname]
+        }
+        if(formParams.PlanType !== '專案盤點') {
+          delete requestData.ProjectCode;
+          delete requestData.ProjectName;
         }
         console.log('requestData:', requestData);
         try {
@@ -391,6 +432,10 @@
         // 檢查物品名稱字數
         if (!/^.{0,20}$/.test(searchParams.AssetName)) {
           alert('物品名稱不可輸入超過20字')
+          return
+        }
+        if (!/^.{0,10}$/.test(searchParams.ProjectCode)) {
+          alert('專案代碼不可輸入超過10字')
           return
         }
         datagrid1.loading = true;
@@ -429,8 +474,9 @@
           }
         } catch (error) {
           console.error(error);
+        } finally {
+          datagrid1.loading = false;
         }
-        datagrid1.loading = false;
       }
       // 取得盤點範圍datagrid
       async function getRangeOfPlan(event, type) {
@@ -515,6 +561,16 @@
         getLayer(searchParams.Area_Id)
           .then((data) => {
             DropdownArray.Layer = data;
+          })
+          .catch((error) => {
+            console.error(error);
+          })
+      }
+      // 專案代碼查詢
+      async function getProjectName() {
+        getProject(formParams.ProjectCode)
+          .then((data) => {
+            formParams.ProjectName = data;
           })
           .catch((error) => {
             console.error(error);
@@ -639,11 +695,13 @@
         rowData1,
         rowData2,
         rowHeight: 35,
+        PlanType,
         submit,
         searchInventory,
         getRangeOfPlan,
         getEquipTypeName,
         getAreaName,
+        getProjectName,
         selectType,
         selectCategory,
         selectArea,
