@@ -449,6 +449,7 @@
           border-bottom: 1px solid black;
           .fixed_info {
             border: none;
+            border-right: 1px solid black;
           }
           .form-check {
             margin-left: 10px;
@@ -712,6 +713,7 @@
           border-bottom: 1px solid black;
           .fixed_info {
             border: none;
+            border-right: 1px solid black;
           }
           .form-check {
             margin-left: 10px;
@@ -973,6 +975,7 @@
           border-left: 1px solid black;
           .fixed_info {
             border: none;
+            border-right: 1px solid black;
           }
           .form-check {
             margin-left: 10px;
