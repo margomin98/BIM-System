@@ -21,34 +21,72 @@
         </div>
       </div>
       <div class="content">
-        <!-- 產編 -->
+        <!-- 資產編號 -->
         <div class="col-12">
-          <div class="input-group mb-4">
+          <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span>*</span>產編：
+              <span>*</span>資產編號：
             </div>
-            <input ref="inputElement" type="text" class="form-control" placeholder="請掃描輸入產編" v-model="formParams.AssetsId">
+            <input ref="inputElement" type="text" class="form-control" placeholder="請掃描輸入資產編號" v-model="formParams.AssetsId">
+          </div>
+        </div>
+         <!-- Error Hint -->
+        <div v-show="wrongStatus" class="col-12 error_hint">
+          <div class="input-group">
+            <div style="visibility: hidden;" class="input-group-prepend">
+              <p>1</p>
+            </div>
+            <span style="color:rgb(216, 13, 13); font-weight: 700; font-size: 20px;">{{ alertMsg }}</span>
+            <input type="text" style="visibility: hidden;" class="form-control">
           </div>
         </div>
         <!-- 物品名稱 -->
         <div class="col-12">
-          <div class="input-group" :class="{'mb-4': !wrongStatus}">
+          <div class="input-group mb-3" :class="{'': !wrongStatus}">
             <div class="input-group-prepend">
               物品名稱：
             </div>
             <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="Assets.Name">
           </div>
         </div>
-        <!-- Error Hint -->
-        <div v-show="wrongStatus" class="col-12">
-          <div class="input-group">
-            <div style="visibility: hidden;" class="input-group-prepend">
-              <p >1</p>
+        <!-- 報廢方式 -->
+        <div class="col-12">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">報廢方式：</div>
+            <div class="check_section d-flex">
+              <div class="form-check d-flex align-items-center">
+                <input type="radio" id="no1" name="radio" value="歸還報廢" />
+                <label for="no1">歸還報廢</label>
+              </div>
+              <div class="form-check d-flex align-items-center">
+                <input type="radio" id="no2" name="radio" value="庫内報廢" />
+                <label for="no2">庫内報廢</label>
+              </div>
             </div>
-            <span style="color:rgb(216, 13, 13); font-weight: 700; font-size: 20px;">{{ alertMsg }}</span>
-            <input type="text" style="visibility: hidden;" class="form-control">
           </div>
         </div>
+        <!-- 報廢數量 -->
+        <div class="col-12">
+          <div class="input-group  mb-3">
+            <div class="input-group-prepend">報廢數量：</div>
+            <div class="num_wrap d-flex ">
+              <div class="number-input-box">
+                <input class="input-number " type="number" min="1" />
+                <span class="scrap_quantity">條</span>
+                <span class="scrap_quantity_storage">（總庫存量10000）</span>
+              </div>
+            </div>
+          </div>
+        </div>
+          <!-- scrap_hint -->
+          <div class="col-12">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            </div>
+            <span class="scrap_hint">將已出庫使用之耗材進行報廢處理</span>
+          </div>
+        </div>
+       
         <!-- 報廢原因 -->
         <div class="col-12">
           <div class="input-group d-flex">
@@ -68,11 +106,22 @@
 </template>
 
 <script>
-  import { ref, onMounted, reactive, watch} from 'vue';
+  import {
+    ref,
+    onMounted,
+    reactive,
+    watch
+  } from 'vue';
   import Navbar from '@/components/Navbar.vue';
   import router from '@/router';
-  import { getDate , goBack } from '@/assets/js/common_fn.js'
-  import { getApplication , getAssets } from '@/assets/js/common_api.js'
+  import {
+    getDate,
+    goBack
+  } from '@/assets/js/common_fn.js'
+  import {
+    getApplication,
+    getAssets
+  } from '@/assets/js/common_api.js'
   import axios from 'axios';
   export default {
     components: {
@@ -93,16 +142,16 @@
       const alertMsg = ref('');
       const wrongStatus = ref(false);
       const canSubmit = ref(false);
-      onMounted(()=>{
+      onMounted(() => {
         getApplicationInfo()
         ApplicationDate.value = getDate()
       });
       async function getApplicationInfo() {
         getApplication()
-          .then((data)=>{
+          .then((data) => {
             Applicant.value = data;
           })
-          .catch((error) =>{
+          .catch((error) => {
             console.error(error);
           })
       }
@@ -118,44 +167,42 @@
           return
         }
         const form = new FormData();
-        for(const key in formParams) {
-          if(formParams[key]) {
-            form.append(key , formParams[key]);
+        for (const key in formParams) {
+          if (formParams[key]) {
+            form.append(key, formParams[key]);
           }
         }
-
-        axios.post('http://192.168.0.177:7008/ScrapMng/CreateOrder',form)
-        .then((response)=>{
-          const data = response.data;
-          if(data.state === 'success') {
-            alert('新增報廢單成功\n單號為:' + data.resultList.S_ID);
-            router.push({ name: 'Scrap_Datagrid' });
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-          else {
-            alert('新增報廢單失敗')
-          }
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+        axios.post('http://192.168.0.177:7008/ScrapMng/CreateOrder', form)
+          .then((response) => {
+            const data = response.data;
+            if (data.state === 'success') {
+              alert('新增報廢單成功\n單號為:' + data.resultList.S_ID);
+              router.push({
+                name: 'Scrap_Datagrid'
+              });
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            } else {
+              alert('新增報廢單失敗')
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
-      watch(()=>formParams.AssetsId, (newValue , oldValue) => {
+      watch(() => formParams.AssetsId, (newValue, oldValue) => {
         getAssets(newValue)
-        .then((data)=>{
+          .then((data) => {
             Assets.Name = data.AssetName;
             Assets.Type = data.AssetType;
             Assets.Status = data.Status;
-
             // 檢查資產類型
-            if(Assets.Type === '耗材') {
+            if (Assets.Type === '耗材') {
               wrongStatus.value = true;
               canSubmit.value = false;
               alertMsg.value = '僅提供資產類型為非耗材的物品進行報廢'
-            }
-            else {
+            } else {
               // 檢查資產狀態(只有非耗材才會檢查)
               const Status = Assets.Status
               const Type = Assets.Type
@@ -185,13 +232,15 @@
               }
             }
           })
-          .catch((error) =>{
+          .catch((error) => {
             wrongStatus.value = true;
             canSubmit.value = false;
             Assets.Name = '';
             alertMsg.value = '請輸入正確的資產編號'
           })
-      },{immediate: false});
+      }, {
+        immediate: false
+      });
       return {
         Applicant,
         ApplicationDate,
@@ -210,6 +259,37 @@
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
+  .scrap_quantity,
+  .scrap_quantity_storage {
+    font-size: 20px;
+    color: white;
+    font-weight: 700;
+    margin-left: 10px;
+  }
+  .scrap_hint {
+    font-weight: 700;
+    color: #00438B;
+    font-size: 18px;
+  }
+  .check_section {
+    gap: 10px;
+    .form-check {
+      gap: 5px;
+      padding: 0;
+      margin: 0;
+      input {
+        width: 15px;
+        padding: 0;
+        height: 15px;
+        border-radius: 50%;
+      }
+      label {
+        color: white;
+        font-size: 20px;
+        font-weight: 600;
+      }
+    }
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .readonly_box {
@@ -358,9 +438,11 @@
             width: 100%;
             white-space: nowrap;
             flex-wrap: nowrap;
-            .input-number {
-              width: 100%;
-              @include count_btn;
+            .num_wrap {
+              .input-number {
+                width: 50%;
+                @include count_btn;
+              }
             }
             .readonly_box {
               height: 37px;
@@ -413,6 +495,16 @@
   }
   @media only screen and (max-width: 767px) {
     .main_section {
+      .error_hint .input-group {
+        .input-group-prepend,
+        .form-control {
+          display: none;
+        }
+        span {
+          margin-left: 0;
+          margin-bottom: 16px;
+        }
+      }
       .readonly_box {
         @include readonly_box;
         height: 35px;
@@ -453,17 +545,23 @@
         }
         .content {
           @include content_bg;
+          .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+            margin-left: unset;
+            border-radius: 5px;
+            margin-top: 5px;
+            height: 35px;
+          }
           .input-group {
             flex-direction: column;
-            .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-              margin-left: unset;
-              border-radius: 5px;
-              margin-top: 5px;
-              height: 35px;
-            }
-            .input-number {
-              @include count_btn;
+            .num_wrap {
               margin-left: unset !important;
+              .number-input-box {
+                width: 100%;
+                .input-number {
+                  @include count_btn;
+                  width: 20%;
+                }
+              }
             }
             .form-control {
               height: 35px;
@@ -487,7 +585,7 @@
           display: flex;
           justify-content: space-between;
           margin: 30px auto 5%;
-          width: 190px;
+          width:220px;
           button {
             &:nth-child(1) {
               @include back_to_previous_btn;
