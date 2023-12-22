@@ -70,6 +70,14 @@ import Inventory_Balance_Result from "../views/inventory/Balance_result";
 import Inventory_Delete from "../views/inventory/Delete";
 //盤點管理
 
+//訂單管理
+import Order_Datagrid from "../views/order/Datagrid";
+import Order_New from "../views/order/New";
+import Order_Edit from "../views/order/Edit";
+import Order_View from "../views/order/View";
+import Order_Delete from "../views/order/Delete";
+//訂單管理
+
 //收貨管理
 import Receive_Datagrid from "../views/receive/Datagrid";
 import Receive_New from "../views/receive/New";
@@ -341,6 +349,36 @@ const routes = [
     component: Inventory_Delete,
     meta: {auth: true, request: 'IP_Delete'},
   },
+  {
+    path: "/order_datagrid",
+    name: "Order_Datagrid",
+    component: Order_Datagrid,
+    // meta: {auth: true, request: 'AR_Mgr'},
+  },
+  {
+    path: "/order_new",
+    name: "Order_New",
+    component: Order_New,
+    // meta: {auth: true, request: 'AR_Mgr'},
+  }, 
+  {
+    path: "/order_edit",
+    name: "Order_Edit",
+    component: Order_Edit,
+    // meta: {auth: true, request: 'AR_Mgr'},
+  }, 
+  {
+    path: "/order_view",
+    name: "Order_View",
+    component: Order_View,
+    // meta: {auth: true, request: 'AR_Mgr'},
+  }, 
+  {
+    path: "/order_delete",
+    name: "Order_Delete",
+    component: Order_Delete,
+    // meta: {auth: true, request: 'AR_Mgr'},
+  }, 
   {
     path: "/receive_datagrid",
     name: "Receive_Datagrid",

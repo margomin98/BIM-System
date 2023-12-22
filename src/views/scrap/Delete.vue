@@ -80,11 +80,11 @@
             <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.VerifyDate">
           </div>
         </div>
-        <!-- 產編 -->
+        <!-- 資產編號 -->
         <div class="col-12">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              產編：
+             資產編號：
             </div>
             <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.AssetsId">
           </div>
@@ -96,6 +96,43 @@
               物品名稱：
             </div>
             <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.AssetName">
+          </div>
+        </div>
+         <!-- 報廢方式 -->
+         <div class="col-12">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">報廢方式：</div>
+            <div class="check_section d-flex">
+              <div class="form-check d-flex align-items-center">
+                <input type="radio" id="no1" name="radio " value="歸還報廢" checked />
+                <label for="no1">歸還報廢</label>
+              </div>
+              <div class="form-check d-flex align-items-center">
+                <input type="radio" id="no2" name="radio" value="庫内報廢" />
+                <label for="no2">庫内報廢</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 報廢數量 -->
+        <div class="col-12">
+          <div class="input-group  mb-3">
+            <div class="input-group-prepend">報廢數量：</div>
+            <div class="num_wrap d-flex ">
+              <div class="number-input-box">
+                <input class="input-number readonly_box" type="number" readonly />
+                <span class="scrap_quantity">條</span>
+                <span class="scrap_quantity_storage">（總庫存量10000）</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- scrap_hint -->
+        <div class="col-12">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            </div>
+            <span class="scrap_hint">將已出庫使用之耗材進行報廢處理</span>
           </div>
         </div>
         <!-- 報廢原因 -->
@@ -202,6 +239,37 @@ import { Scrap_Delete_Status } from '@/assets/js/enter_status';
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
+  .scrap_quantity,
+  .scrap_quantity_storage {
+    font-size: 20px;
+    color: white;
+    font-weight: 700;
+    margin-left: 10px;
+  }
+  .scrap_hint {
+    font-weight: 700;
+    color: #00438B;
+    font-size: 18px;
+  }
+  .check_section {
+    gap: 10px;
+    .form-check {
+      gap: 5px;
+      padding: 0;
+      margin: 0;
+      input {
+        width: 15px;
+        padding: 0;
+        height: 15px;
+        border-radius: 50%;
+      }
+      label {
+        color: white;
+        font-size: 20px;
+        font-weight: 600;
+      }
+    }
+  }
   .warn {
     text-align: center;
     padding: 10px 0;
@@ -343,7 +411,7 @@ import { Scrap_Delete_Status } from '@/assets/js/enter_status';
         }
         .button_wrap {
           display: flex;
-          justify-content: center;
+          justify-content: space-between;
           margin: 30px auto 5%;
           width: 220px;
           button {
@@ -366,7 +434,6 @@ import { Scrap_Delete_Status } from '@/assets/js/enter_status';
               font-size: 20px;
               font-weight: 700;
               border: none;
-              margin: 0 10px;
               &:hover {
                 background-color: #a51e1e;
               }
@@ -417,9 +484,11 @@ import { Scrap_Delete_Status } from '@/assets/js/enter_status';
             width: 100%;
             white-space: nowrap;
             flex-wrap: nowrap;
-            .input-number {
-              width: 100%;
-              @include count_btn;
+            .num_wrap {
+              .input-number {
+                width: 50%;
+                @include count_btn;
+              }
             }
             .readonly_box {
               height: 37px;
@@ -483,7 +552,7 @@ import { Scrap_Delete_Status } from '@/assets/js/enter_status';
         }
         .button_wrap {
           display: flex;
-          justify-content: center;
+          justify-content: space-between;
           margin: 30px auto 5%;
           width: 220px;
           button {
@@ -506,7 +575,6 @@ import { Scrap_Delete_Status } from '@/assets/js/enter_status';
               font-size: 20px;
               font-weight: 700;
               border: none;
-              margin: 0 10px;
               &:hover {
                 background-color: #a51e1e;
               }
@@ -556,18 +624,24 @@ import { Scrap_Delete_Status } from '@/assets/js/enter_status';
           }
         }
         .content {
-          @include content_bg;
-          .input-group {
-            flex-direction: column;
-            .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+          @include content_bg;    .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
               margin-left: unset;
               border-radius: 5px;
               margin-top: 5px;
               height: 35px;
             }
-            .input-number {
-              @include count_btn;
+          .input-group {
+            flex-direction: column;
+        
+            .num_wrap {
               margin-left: unset !important;
+              .number-input-box {
+                width: 100%;
+                .input-number {
+                  @include count_btn;
+                  width: 20%;
+                }
+              }
             }
             .form-control {
               height: 35px;
@@ -628,9 +702,9 @@ import { Scrap_Delete_Status } from '@/assets/js/enter_status';
         }
         .button_wrap {
           display: flex;
-          justify-content: center;
+          justify-content: space-between;
           margin: 30px auto 5%;
-          width: 190px;
+          width: 220px;
           button {
             &:nth-child(1) {
               @include back_to_previous_btn;
@@ -652,7 +726,6 @@ import { Scrap_Delete_Status } from '@/assets/js/enter_status';
               font-size: 20px;
               font-weight: 700;
               border: none;
-              margin: 0 10px;
               &:hover {
                 background-color: #a51e1e;
               }

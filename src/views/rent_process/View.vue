@@ -60,15 +60,8 @@
           </div>
         </div>
         <div>
-          <DataTable 
-          :size="'small'"
-          :value="rowData1" 
-          resizableColumns 
-          columnResizeMode="expand"
-          showGridlines 
-          scrollable
-          scroll-height="420px">
-          <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+          <DataTable :size="'small'" :value="rowData1" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="420px">
+            <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
           </DataTable>
         </div>
       </div>
@@ -78,23 +71,16 @@
             <p>資產出庫細項</p>
           </div>
         </div>
-        <DataTable
-        :size="'small'"
-        :value="rowData2" 
-        resizableColumns 
-        columnResizeMode="expand"
-        showGridlines 
-        scrollable
-        scroll-height="600px">
-        <Column header="交付確認" class="datatable_checkbox">
-          <template style="min-width:50px; " #body="slotProps">
-            <input type="checkbox" class="p-checkbox p-component" :checked="slotProps.data.OM_IsExecute" disabled>
-          </template>
+        <DataTable :size="'small'" :value="rowData2" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="600px">
+          <Column header="交付確認" class="datatable_checkbox">
+            <template style="min-width:50px; " #body="slotProps">
+              <input type="checkbox" class="p-checkbox p-component" :checked="slotProps.data.OM_IsExecute" disabled>
+</template>
         </Column>
         <Column>
-          <template #body="slotProps">
-            <AssetsView :params="slotProps" />
-          </template>
+<template #body="slotProps">
+  <AssetsView :params="slotProps" />
+</template>
         </Column>
         <Column v-for="item in datagrid2field" :field="item.field" :header="item.header" :sortable="item.sortable" :style="{'min-width': item.width}"></Column>
         </DataTable>
@@ -220,7 +206,9 @@
     useRouter
   } from 'vue-router';
   import Navbar from "@/components/Navbar.vue";
-  import { Rent_UseArray } from "@/assets/js/dropdown";
+  import {
+    Rent_UseArray
+  } from "@/assets/js/dropdown";
   import {
     onMounted,
     ref
@@ -244,13 +232,36 @@
       const details = ref({});
       const options = Rent_UseArray;
       // 資產出庫項目
-      const datagrid1field = [
-        { field: "id", width: '50px' , header: "項目" },
-        { field: "EquipTypeName", width: '150px', header: "設備總類" },
-        { field: "EquipCategoryName", width: '150px', header: "設備分類" },
-        { field: "ProductName", width: '150px', header: "物品名稱" },
-        { field: "Number", width: '100px', header: "數量" },
-        { field: "RequiredSpec", width: '250px', header: "規格需求" },
+      const datagrid1field = [{
+          field: "id",
+          width: '50px',
+          header: "項目"
+        },
+        {
+          field: "EquipTypeName",
+          width: '150px',
+          header: "設備總類"
+        },
+        {
+          field: "EquipCategoryName",
+          width: '150px',
+          header: "設備分類"
+        },
+        {
+          field: "ProductName",
+          width: '150px',
+          header: "物品名稱"
+        },
+        {
+          field: "Number",
+          width: '100px',
+          header: "數量"
+        },
+        {
+          field: "RequiredSpec",
+          width: '250px',
+          header: "規格需求"
+        },
       ]
       // 資產出庫細項
       const datagrid2field = [{
@@ -369,7 +380,6 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-
   .readonly_box {
     @include readonly_box;
     width: 100%;
@@ -391,8 +401,8 @@
     width: 100%;
     align-items: center;
   }
-  .third_content{
-    .fixed_info{
+  .third_content {
+    .fixed_info {
       border-top: none !important;
     }
   }
@@ -424,7 +434,6 @@
           background-color: #B4B4B4;
           border-left: black 1px solid;
         }
-    
         .fixed_info_count {
           display: flex;
           background: #3d5c67;
@@ -544,6 +553,7 @@
           border-bottom: 1px solid black;
           .fixed_info {
             border: none;
+            border-right: 1px solid black;
           }
           .form-check {
             margin-left: 10px;
@@ -701,7 +711,6 @@
           background-color: #B4B4B4;
           border-left: black 1px solid;
         }
-   
         .fixed_info_count {
           display: flex;
           background: #3d5c67;
@@ -821,6 +830,7 @@
           border-bottom: 1px solid black;
           .fixed_info {
             border: none;
+            border-right: 1px solid black;
           }
           .form-check {
             margin-left: 10px;
@@ -986,7 +996,7 @@
             margin-bottom: 0;
           }
         }
-             .fixed_info_count {
+        .fixed_info_count {
           display: flex;
           background: #3d5c67;
           color: white;
@@ -1108,10 +1118,7 @@
             }
           }
           .fixed_info {
-            border-top: 1px solid black;
-            border-bottom: none;
             border-left: none;
-            border-right: 1px solid black;
           }
           .form-check {
             margin-left: 10px;

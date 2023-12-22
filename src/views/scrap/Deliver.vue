@@ -26,24 +26,59 @@
         </div>
       </div>
       <div class="content">
-        <div class="row g-0">
-          <!-- 產編 -->
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4">
-              <div class="input-group-prepend">
-                產編：
+        <!-- 資產編號 -->
+        <div class="col-12">
+          <div class="input-group mb-4">
+            <div class="input-group-prepend">
+              資產編號：
+            </div>
+            <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.AssetsId">
+          </div>
+        </div>
+        <!-- 物品名稱 -->
+        <div class="col-12">
+          <div class="input-group mb-4">
+            <div class="input-group-prepend">
+              物品名稱：
+            </div>
+            <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.AssetName">
+          </div>
+        </div>
+        <!-- 報廢方式 -->
+        <div class="col-12">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">報廢方式：</div>
+            <div class="check_section d-flex">
+              <div class="form-check d-flex align-items-center">
+                <input type="radio" id="no1" name="radio " value="歸還報廢" checked />
+                <label for="no1">歸還報廢</label>
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.AssetsId">
+              <div class="form-check d-flex align-items-center">
+                <input type="radio" id="no2" name="radio" value="庫内報廢" />
+                <label for="no2">庫内報廢</label>
+              </div>
             </div>
           </div>
-          <!-- 物品名稱 -->
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-4">
-              <div class="input-group-prepend">
-                物品名稱：
+        </div>
+        <!-- 報廢數量 -->
+        <div class="col-12">
+          <div class="input-group  mb-3">
+            <div class="input-group-prepend">報廢數量：</div>
+            <div class="num_wrap d-flex ">
+              <div class="number-input-box">
+                <input class="input-number readonly_box" type="number" readonly />
+                <span class="scrap_quantity">條</span>
+                <span class="scrap_quantity_storage">（總庫存量10000）</span>
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.AssetName">
             </div>
+          </div>
+        </div>
+        <!-- scrap_hint -->
+        <div class="col-12">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            </div>
+            <span class="scrap_hint">將已出庫使用之耗材進行報廢處理</span>
           </div>
         </div>
         <!-- 報廢原因 -->
@@ -73,10 +108,10 @@
               <div class="input-group">
                 <div class="input-group-prepend">交付人員：</div>
                 <div class="input-with-icon">
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(1)"/>
+                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(1)" />
                   <span v-show="validation.user1.isValidate" class="icon-container">
-                    <img src="@/assets/accept.png" class="checkmark-icon" />
-                  </span>
+                        <img src="@/assets/accept.png" class="checkmark-icon" />
+                      </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">驗證</button>
                 <!-- 驗證跳出Modal -->
@@ -114,10 +149,10 @@
               <div class="input-group">
                 <div class="input-group-prepend">報廢人員：</div>
                 <div class="input-with-icon">
-                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(2)"/>
+                  <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(2)" />
                   <span v-show="validation.user2.isValidate" class="icon-container">
-                    <img src="@/assets/accept.png" class="checkmark-icon" />
-                  </span>
+                        <img src="@/assets/accept.png" class="checkmark-icon" />
+                      </span>
                 </div>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">驗證</button>
                 <!-- 驗證跳出Modal -->
@@ -162,13 +197,24 @@
 </template>
 
 <script>
-  import { ref, onMounted} from 'vue';
+  import {
+    ref,
+    onMounted
+  } from 'vue';
   import Navbar from '@/components/Navbar.vue';
   import router from '@/router';
-  import { goBack , getDate, canEnterPage } from '@/assets/js/common_fn.js'
+  import {
+    goBack,
+    getDate,
+    canEnterPage
+  } from '@/assets/js/common_fn.js'
   import axios from 'axios';
-  import { useRoute } from 'vue-router';
-import { Scrap_Deliver_Status } from '@/assets/js/enter_status';
+  import {
+    useRoute
+  } from 'vue-router';
+  import {
+    Scrap_Deliver_Status
+  } from '@/assets/js/enter_status';
   export default {
     components: {
       Navbar
@@ -192,27 +238,27 @@ import { Scrap_Deliver_Status } from '@/assets/js/enter_status';
           resultName: '',
         },
       });
-      onMounted(()=>{
+      onMounted(() => {
         getDetails()
         deliveryDate.value = getDate();
       });
       async function getDetails() {
         axios.get(`http://192.168.0.177:7008/GetDBdata/GetScrapInfo?s_id=${ScrapId}`)
-        .then((response)=>{
-          const data = response.data
-          if(data.state === 'success') {
-            canEnterPage(data.resultList.Status , Scrap_Deliver_Status)
-            details.value = data.resultList
-          } else if (data.state === 'account_error') {
-            alert(data.messages)
-            router.push('/');
-          } else {
-            alert(data.messages)
-          }
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+          .then((response) => {
+            const data = response.data
+            if (data.state === 'success') {
+              canEnterPage(data.resultList.Status, Scrap_Deliver_Status)
+              details.value = data.resultList
+            } else if (data.state === 'account_error') {
+              alert(data.messages)
+              router.push('/');
+            } else {
+              alert(data.messages)
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       //分別使用帳號密碼驗證、改變驗證狀態 user1為交付人員 user2為報廢人員
       async function validate(user) {
@@ -254,7 +300,6 @@ import { Scrap_Deliver_Status } from '@/assets/js/enter_status';
             'userName': validation.value.user2.account,
             'userPassword': validation.value.user2.password,
             'id': 'S_ScrapDelivery',
-
           };
           //將表格資料append到 formData
           for (const fieldName in formFields) {
@@ -297,22 +342,24 @@ import { Scrap_Deliver_Status } from '@/assets/js/enter_status';
           DeliveryOperator: validation.value.user1.resultName,
           ScrapPerson: validation.value.user2.resultName,
         }
-        axios.post('http://192.168.0.177:7008/ScrapMng/Delivery',requestData)
-        .then((response)=>{
-          const data = response.data
-          if(data.state === 'success') {
-            alert('傳送報廢交付表單成功\n單號為:' + data.resultList.S_ID);
-            router.push({ name: 'Scrap_Datagrid' });
-          } else if( data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          } else {
-            alert(data.messages);
-          }
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+        axios.post('http://192.168.0.177:7008/ScrapMng/Delivery', requestData)
+          .then((response) => {
+            const data = response.data
+            if (data.state === 'success') {
+              alert('傳送報廢交付表單成功\n單號為:' + data.resultList.S_ID);
+              router.push({
+                name: 'Scrap_Datagrid'
+              });
+            } else if (data.state === 'account_error') {
+              alert(data.messages);
+              router.push('/');
+            } else {
+              alert(data.messages);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       return {
         details,
@@ -331,11 +378,41 @@ import { Scrap_Deliver_Status } from '@/assets/js/enter_status';
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
+  .scrap_quantity,
+  .scrap_quantity_storage {
+    font-size: 20px;
+    color: white;
+    font-weight: 700;
+    margin-left: 10px;
+  }
+  .scrap_hint {
+    font-weight: 700;
+    color: #00438B;
+    font-size: 18px;
+  }
+  .check_section {
+    gap: 10px;
+    .form-check {
+      gap: 5px;
+      padding: 0;
+      margin: 0;
+      input {
+        width: 15px;
+        padding: 0;
+        height: 15px;
+        border-radius: 50%;
+      }
+      label {
+        color: white;
+        font-size: 20px;
+        font-weight: 600;
+      }
+    }
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .readonly_box {
         @include readonly_box;
-      
       }
       h1 {
         margin-top: 100px;
@@ -563,9 +640,11 @@ import { Scrap_Deliver_Status } from '@/assets/js/enter_status';
             width: 100%;
             white-space: nowrap;
             flex-wrap: nowrap;
-            .input-number {
-              width: 100%;
-              @include count_btn;
+            .num_wrap {
+              .input-number {
+                width: 50%;
+                @include count_btn;
+              }
             }
             .readonly_box {
               height: 37px;
@@ -765,17 +844,23 @@ import { Scrap_Deliver_Status } from '@/assets/js/enter_status';
         }
         .content {
           @include content_bg;
+          .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+            margin-left: unset;
+            border-radius: 5px;
+            margin-top: 5px;
+            height: 35px;
+          }
           .input-group {
             flex-direction: column;
-            .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-              margin-left: unset;
-              border-radius: 5px;
-              margin-top: 5px;
-              height: 35px;
-            }
-            .input-number {
-              @include count_btn;
+            .num_wrap {
               margin-left: unset !important;
+              .number-input-box {
+                width: 100%;
+                .input-number {
+                  @include count_btn;
+                  width: 20%;
+                }
+              }
             }
             .form-control {
               height: 35px;
@@ -838,7 +923,7 @@ import { Scrap_Deliver_Status } from '@/assets/js/enter_status';
           display: flex;
           justify-content: space-between;
           margin: 30px auto 5%;
-          width: 190px;
+          width:220px;
           button {
             &:nth-child(1) {
               @include back_to_previous_btn;

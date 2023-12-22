@@ -808,6 +808,13 @@
     display: flex;
     align-self: center;
   }
+     .readonly_box {
+        @include readonly_box;
+      }
+
+      //beautify code
+      
+      //beautify code
   @media only screen and (min-width: 1200px) {
     .main_section {
       .multi_user_select {
@@ -837,9 +844,7 @@
           padding: 40px 0;
         }
       }
-      .readonly_box {
-        @include readonly_box;
-      }
+   
       h1 {
         margin-top: 80px;
         margin-bottom: 40px;
@@ -1002,9 +1007,7 @@
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
-      .readonly_box {
-        width: 100px !important;
-      }
+
       .multi_user_select {
         width: 77%
       }
@@ -1032,9 +1035,7 @@
           padding: 40px 0;
         }
       }
-      .readonly_box {
-        @include readonly_box;
-      }
+   
       h1 {
         margin-top: 80px;
         margin-bottom: 40px;
@@ -1249,10 +1250,7 @@
   }
   @media only screen and (max-width: 767px) {
     .main_section {
-      .readonly_box {
-        @include readonly_box;
-        width: 100%;
-      }
+
       .selected_file {
         margin-top: 10px;
         color: white;
