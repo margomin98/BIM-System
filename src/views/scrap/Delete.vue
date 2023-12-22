@@ -704,7 +704,7 @@ import { Scrap_Delete_Status } from '@/assets/js/enter_status';
           display: flex;
           justify-content: space-between;
           margin: 30px auto 5%;
-          width: 220px;
+          width: 200px;
           button {
             &:nth-child(1) {
               @include back_to_previous_btn;
