@@ -143,7 +143,33 @@
             <textarea style="height: 200px;" class="form-control readonly_box" readonly v-model="details.Reason"></textarea>
           </div>
         </div>
-     
+        <!-- 已上傳檔案 -->
+        <div class="selected_file col-12">
+          <div class="input-group mt-3">
+            <div class="input-group-prepend">已上傳的檔案：</div>
+            <div class="d-flex  flex-column">
+              <div v-for="(file , index) in details.existFile" :key="index" class="file_upload_wrap">
+                <p>{{ file.FileName }}
+                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"  @click="viewImgFile(index,details,modalParams,'exist')" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ViewFile Modal -->
+        <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" >
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">{{ modalParams.title }}</h5>
+                <p data-bs-dismiss="modal" class='close_icon'>X</p>
+              </div>
+              <div class="modal-body">
+                <img :src="modalParams.src" alt="Uploaded Image" class="w-100" />
+              </div>
+            </div>
+          </div>
+        </div>        
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
@@ -172,7 +198,7 @@
   import { ref, reactive, onMounted} from 'vue';
   import Navbar from '@/components/Navbar.vue';
   import router from '@/router';
-  import { canEnterPage, goBack } from '@/assets/js/common_fn.js'
+  import { canEnterPage, goBack , viewImgFile } from '@/assets/js/common_fn.js'
   import axios from 'axios';
   import { useRoute } from 'vue-router';
   import { Scrap_Delete_Status } from '@/assets/js/enter_status';
@@ -253,6 +279,7 @@
         modalParams,
         Scrap_TypeArray,
         Assets,
+        viewImgFile,
         goBack,
         deleteData,
       }
