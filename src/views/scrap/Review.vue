@@ -246,6 +246,7 @@
     Scrap_Review_Status
   } from '@/assets/js/enter_status';
   import { Scrap_TypeArray } from '@/assets/js/dropdown';
+import { getAssets } from '@/assets/js/common_api';
   register();
   export default {
     components: {
@@ -287,6 +288,15 @@
             if (data.state === 'success') {
               canEnterPage(data.resultList.Status, Scrap_Review_Status)
               details.value = data.resultList;
+              getAssets(details.value.AssetsId)
+              .then((data)=>{
+                Assets.Type = data.AssetType;
+                Assets.Unit = data.Unit;
+                Assets.Max = data.Number;
+              })
+              .catch((error)=>{
+                console.error(error);
+              })
             } else if (data.state === 'account_error') {
               alert(data.messages);
               router.push('/');
