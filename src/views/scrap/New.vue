@@ -31,12 +31,13 @@
           </div>
         </div>
          <!-- Error Hint -->
-        <div v-show="wrongStatus" class="col-12 error_hint">
+        <div v-show="wrongStatus || Assets.Type === '耗材'" class="col-12 error_hint">
           <div class="input-group">
             <div style="visibility: hidden;" class="input-group-prepend">
               <p>1</p>
             </div>
-            <span style="color:rgb(216, 13, 13); font-weight: 700; font-size: 20px;">{{ alertMsg }}</span>
+            <span v-if="Assets.Type === '耗材'" class="scrap_hint">此資產為耗材</span>
+            <span v-else-if="wrongStatus" class="scrap_error">{{ alertMsg }}</span>
             <input type="text" style="visibility: hidden;" class="form-control">
           </div>
         </div>
@@ -50,43 +51,42 @@
           </div>
         </div>
         <!-- 報廢方式 -->
-        <div class="col-12">
+        <div v-show="Assets.Type === '耗材'" class="col-12">
           <div class="input-group mb-3">
-            <div class="input-group-prepend">報廢方式：</div>
+            <div class="input-group-prepend"><span>*</span>報廢方式：</div>
             <div class="check_section d-flex">
-              <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no1" name="radio" value="歸還報廢" />
-                <label for="no1">歸還報廢</label>
-              </div>
-              <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no2" name="radio" value="庫内報廢" />
-                <label for="no2">庫内報廢</label>
-              </div>
+              <template v-for="(item,index) in Scrap_TypeArray" :key="item">
+                <div class="form-check d-flex align-items-center">
+                  <input type="radio" :id="'no'+index" name="radio" :value="item" v-model="formParams.ConsumableScrap"/>
+                  <label :for="'no'+index">{{ item }}</label>
+                </div>
+              </template>
             </div>
+          </div>
+        </div>
+        <!-- scrap_hint -->
+        <div v-show="formParams.ConsumableScrap && Assets.Type === '耗材'" class="col-12">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend"></div>
+            <span v-if="formParams.ConsumableScrap == '歸還報廢'" class="scrap_hint">對已出庫耗材進行報廢處理</span>
+            <span v-else-if="formParams.ConsumableScrap == '庫內報廢' && !wrongStatus" class="scrap_hint">對庫內耗材進行報廢處理(有庫存上限)</span>
+            <span v-else-if="formParams.ConsumableScrap == '庫內報廢' && wrongStatus" class="scrap_error">無庫存耗材不可進行庫內報廢</span>
           </div>
         </div>
         <!-- 報廢數量 -->
-        <div class="col-12">
+        <div v-show="Assets.Type === '耗材'" class="col-12">
           <div class="input-group  mb-3">
-            <div class="input-group-prepend">報廢數量：</div>
+            <div class="input-group-prepend"><span>*</span>報廢數量：</div>
             <div class="num_wrap d-flex ">
-              <div class="number-input-box">
-                <input class="input-number " type="number" min="1" />
-                <span class="scrap_quantity">條</span>
-                <span class="scrap_quantity_storage">（總庫存量10000）</span>
+              <div class="number-input-box">  
+                <input v-if="formParams.ConsumableScrap !== '庫內報廢'" class="input-number " type="number" min="1" v-model="formParams.ConsumableNum"/>
+                <input v-else class="input-number " type="number" min="1" v-model="formParams.ConsumableNum" :max="Assets.Max"/>
+                <span class="scrap_quantity">{{ Assets.Unit }}</span>
+                <span v-if="formParams.ConsumableScrap === '庫內報廢'" class="scrap_quantity_storage">（總庫存量: {{ Assets.Max }}）</span>
               </div>
             </div>
           </div>
         </div>
-          <!-- scrap_hint -->
-          <div class="col-12">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-            </div>
-            <span class="scrap_hint">將已出庫使用之耗材進行報廢處理</span>
-          </div>
-        </div>
-       
         <!-- 報廢原因 -->
         <div class="col-12">
           <div class="input-group d-flex">
@@ -96,7 +96,46 @@
             <textarea style="height: 200px;" class="form-control" placeholder="最多輸入500字" v-model="formParams.Reason"></textarea>
           </div>
         </div>
+        <!-- 報廢照片 -->
+        <div class="col-12 repair_photo_section">
+          <div class="input-group mt-3">
+            <div class="input-group-prepend">照片上傳：</div>
+            <div class="mb-3 file_wrap">
+              <button class="choose_btn" @click="openFileExplorer(fileInputs)">選擇檔案</button>
+              <input type="file" ref="fileInputs" accept="image/*" multiple style="display: none;" @change="handleFileChange($event,formParams)">
+            </div>
+          </div>
+        </div>
+        <!-- 已選擇的檔案 -->
+        <div class="col-12 selected_file">
+          <div class="input-group">
+            <div class="input-group-prepend">已選擇的檔案：</div>
+            <div class="file_upload_box">
+              <div v-for="(item , index) in formParams.viewFile" :key="index" class="file_upload_wrap">
+                <p>{{ item.FileName }}
+                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="viewImgFile(index,formParams,modalParams,'new')" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+                  <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index,formParams,'new')">
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ViewFile Modal -->
+        <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" >
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">{{ modalParams.title }}</h5>
+                <p data-bs-dismiss="modal" class='close_icon'>X</p>
+              </div>
+              <div class="modal-body">
+                <img :src="modalParams.src" alt="Uploaded Image" class="w-100" />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
         <button class="send_btn" :disabled="!canSubmit" :class="{send_btn_disabled: !canSubmit}" @click="submit">新增</button>
@@ -116,13 +155,18 @@
   import router from '@/router';
   import {
     getDate,
-    goBack
+    goBack,
+    handleFileChange,
+    viewImgFile,
+    openFileExplorer,
+    deleteFile
   } from '@/assets/js/common_fn.js'
   import {
     getApplication,
-    getAssets
+    getAssets,
   } from '@/assets/js/common_api.js'
   import axios from 'axios';
+  import { Scrap_TypeArray } from '@/assets/js/dropdown';
   export default {
     components: {
       Navbar
@@ -134,14 +178,25 @@
         Name: '',
         Type: '',
         Status: '',
+        Unit: '',
+        Max: 1,
       });
       const formParams = reactive({
         AssetsId: '',
         Reason: '',
+        newFile: [],
+        viewFile: [],
+        ConsumableScrap: '',
+        ConsumableNum: 1,
       });
       const alertMsg = ref('');
       const wrongStatus = ref(false);
       const canSubmit = ref(false);
+      const fileInputs = ref(null);
+      const modalParams = reactive({
+        title: '',
+        src: '',
+      });
       onMounted(() => {
         getApplicationInfo()
         ApplicationDate.value = getDate()
@@ -158,6 +213,22 @@
       async function submit() {
         const pattern = /^(BF\d{8})$/;
         // 檢查必填項目、格式        
+        if(!formParams.AssetsId) {
+          alert('請輸入必填項目');
+          return
+        }
+        if(Assets.Type === '耗材') {
+          if(!formParams.ConsumableScrap || !formParams.ConsumableNum) {
+            alert('請輸入必填項目');
+            return
+          }
+          if(formParams.ConsumableScrap === '庫內報廢') {
+            if(formParams.ConsumableNum > Assets.Max) {
+              alert('報廢數量超過庫存上限');
+              return
+            }
+          }
+        }
         if (!pattern.test(formParams.AssetsId)) {
           alert('資產編號格式錯誤');
           return
@@ -171,6 +242,13 @@
           if (formParams[key]) {
             form.append(key, formParams[key]);
           }
+        }
+        // 移除viewFile
+        form.delete('viewFile');
+        // newFile額外append
+        form.delete('newFile');
+        for (let i = 0; i < formParams.newFile.length; i++) {
+          form.append('newFile', formParams.newFile[i]);
         }
         axios.post('http://192.168.0.177:7008/ScrapMng/CreateOrder', form)
           .then((response) => {
@@ -197,11 +275,15 @@
             Assets.Name = data.AssetName;
             Assets.Type = data.AssetType;
             Assets.Status = data.Status;
+            Assets.Unit = data.Unit;
+            Assets.Max = data.Number;
             // 檢查資產類型
+            formParams.ConsumableScrap = '';
+            formParams.ConsumableNum = 1;
             if (Assets.Type === '耗材') {
-              wrongStatus.value = true;
-              canSubmit.value = false;
-              alertMsg.value = '僅提供資產類型為非耗材的物品進行報廢'
+              wrongStatus.value = false;
+              canSubmit.value = true;
+              alertMsg.value = ''
             } else {
               // 檢查資產狀態(只有非耗材才會檢查)
               const Status = Assets.Status
@@ -233,21 +315,41 @@
             wrongStatus.value = true;
             canSubmit.value = false;
             Assets.Name = '';
+            Assets.Type = '';
             alertMsg.value = '請輸入正確的資產編號'
           })
       }, {
         immediate: false
+      });
+      watch(() => formParams.ConsumableScrap, (newValue, oldValue) =>{
+        formParams.ConsumableNum = 1;
+        if(newValue == '庫內報廢') {
+          if(Assets.Max == 0) {
+            wrongStatus.value = true;
+            canSubmit.value = false;
+          }
+        } else {
+          wrongStatus.value = false;
+          canSubmit.value = true;
+        }
       });
       return {
         Applicant,
         ApplicationDate,
         Assets,
         alertMsg,
+        Scrap_TypeArray,
         wrongStatus,
         canSubmit,
         formParams,
+        fileInputs,
+        modalParams,
         submit,
         goBack,
+        handleFileChange,
+        viewImgFile,
+        deleteFile,
+        openFileExplorer,
       }
     },
   };
@@ -266,6 +368,11 @@
   .scrap_hint {
     font-weight: 700;
     color: #00438B;
+    font-size: 18px;
+  }
+  .scrap_error {
+    font-weight: 700;
+    color: #D80D0D;
     font-size: 18px;
   }
   .check_section {

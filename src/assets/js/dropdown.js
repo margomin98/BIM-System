@@ -1,6 +1,7 @@
-// 入庫管理
+// 單位
 export const UnitArray = ['個', '支', '枝', '隻', '根', '條', '顆']
 export const PackageUnitArray = ['個', '對', '箱', '包', '組', '台', '件']
+// 入庫管理
 export const Store_StatusArray = ['申請入庫', '申請歸還', '可交付', '待入庫', '已入庫', '已歸還']
 export const Store_Process_DateTypeArray = ['申請入庫日期' , '交付日期' , '入庫日期']
 // 出庫管理
@@ -26,6 +27,6 @@ export const Repair_DateCategory = ['申請日期' , '交付日期' , '審核日
 // 報廢管理
 export const Scrap_StatusArray = ['待交付' , '待審核' , '已報廢' , '審核不通過']
 export const Scrap_DateCategory = ['申請日期' , '交付日期' , '審核日期']
-export const Scrap_Type = ['歸還報廢' , '庫內報廢']
+export const Scrap_TypeArray = ['歸還報廢' , '庫內報廢']
 // 系統日誌管理
 export const SystemLog_ActiveArray = ['登出','登入','新增','編輯','刪除','通知']

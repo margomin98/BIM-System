@@ -98,41 +98,40 @@
             <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.AssetName">
           </div>
         </div>
-         <!-- 報廢方式 -->
-         <div class="col-12">
+        <!-- 報廢方式 -->
+        <div v-show="Assets.Type==='耗材'" class="col-12">
           <div class="input-group mb-3">
             <div class="input-group-prepend">報廢方式：</div>
             <div class="check_section d-flex">
-              <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no1" name="radio " value="歸還報廢" checked />
-                <label for="no1">歸還報廢</label>
-              </div>
-              <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no2" name="radio" value="庫内報廢" />
-                <label for="no2">庫内報廢</label>
-              </div>
+              <template v-for="(item,index) in Scrap_TypeArray" :key="item">
+                <div class="form-check d-flex align-items-center">
+                  <input type="radio" :id="'no'+index" name="radio" :value="item" v-model="details.ConsumableScrap" :disabled="details.ConsumableScrap !== item"/>
+                  <label :for="'no'+index">{{ item }}</label>
+                </div>
+              </template>
             </div>
           </div>
         </div>
+        <!-- scrap_hint -->
+        <div v-show="Assets.Type==='耗材'" class="col-12">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            </div>
+            <span v-if="details.ConsumableScrap == '歸還報廢'" class="scrap_hint">對已出庫耗材進行報廢處理</span>
+            <span v-else-if="details.ConsumableScrap == '庫內報廢'" class="scrap_hint">對庫內耗材進行報廢處理(有庫存上限)</span>
+          </div>
+        </div>
         <!-- 報廢數量 -->
-        <div class="col-12">
+        <div v-show="Assets.Type==='耗材'" class="col-12">
           <div class="input-group  mb-3">
             <div class="input-group-prepend">報廢數量：</div>
             <div class="num_wrap d-flex ">
               <div class="number-input-box">
                 <input class="input-number readonly_box" type="number" readonly />
-                <span class="scrap_quantity">條</span>
-                <span class="scrap_quantity_storage">（總庫存量10000）</span>
+                <span class="scrap_quantity">{{ Assets.Unit }}</span>
+                <!-- <span class="scrap_quantity_storage">（總庫存量 {{ Assets.Max }}）</span> -->
               </div>
             </div>
-          </div>
-        </div>
-        <!-- scrap_hint -->
-        <div class="col-12">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-            </div>
-            <span class="scrap_hint">將已出庫使用之耗材進行報廢處理</span>
           </div>
         </div>
         <!-- 報廢原因 -->
@@ -170,13 +169,15 @@
 </template>
 
 <script>
-  import { ref, onMounted} from 'vue';
+  import { ref, reactive, onMounted} from 'vue';
   import Navbar from '@/components/Navbar.vue';
   import router from '@/router';
   import { canEnterPage, goBack } from '@/assets/js/common_fn.js'
   import axios from 'axios';
   import { useRoute } from 'vue-router';
-import { Scrap_Delete_Status } from '@/assets/js/enter_status';
+  import { Scrap_Delete_Status } from '@/assets/js/enter_status';
+  import { getAssets } from '@/assets/js/common_api';
+  import { Scrap_TypeArray } from '@/assets/js/dropdown';
   export default {
     components: {
       Navbar
@@ -185,6 +186,17 @@ import { Scrap_Delete_Status } from '@/assets/js/enter_status';
       const route = useRoute();
       const ScrapId = route.query.search_id;
       const details = ref({});
+      const Assets = reactive({
+        Name: '',
+        Type: '',
+        Status: '',
+        Unit: '',
+        Max: 1,
+      });
+      const modalParams = reactive({
+        title: '',
+        src: '',
+      });
       onMounted(()=>{
         getDetails()
       });
@@ -194,7 +206,16 @@ import { Scrap_Delete_Status } from '@/assets/js/enter_status';
           const data = response.data
           if(data.state === 'success') {
             canEnterPage(data.resultList.Status , Scrap_Delete_Status)
-            details.value = data.resultList
+            details.value = data.resultList;
+            getAssets(details.value.AssetsId)
+              .then((data)=>{
+                Assets.Type = data.AssetType;
+                Assets.Unit = data.Unit;
+                Assets.Max = data.Number;
+              })
+              .catch((error) => {
+                console.error(error);
+              })
           } else if (data.state === 'account_error') {
             alert(data.messages)
             router.push('/');
@@ -229,6 +250,9 @@ import { Scrap_Delete_Status } from '@/assets/js/enter_status';
       }
       return {
         details,
+        modalParams,
+        Scrap_TypeArray,
+        Assets,
         goBack,
         deleteData,
       }
