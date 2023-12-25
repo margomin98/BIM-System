@@ -195,7 +195,7 @@
     setup() {
       const route = useRoute();
       const ScrapId = route.query.search_id;
-      const startWaching = ref(false);
+      const startWaching = ref(0); // 必須讓2個watch都跑一遍後才開始監聽(value >=2)，否則ConsumableNum會被覆蓋
       const details = ref({});
       const Assets = reactive({
         Name: '',
@@ -328,9 +328,11 @@
             Assets.Unit = data.Unit;
             Assets.Max = data.Number;
             // 檢查資產類型
-            if(startWaching.value) {
+            if(startWaching.value >= 2) {
               formParams.ConsumableScrap = '';
               formParams.ConsumableNum = 1;
+            } else {
+              startWaching.value++;
             }
             if (Assets.Type === '耗材') {
               wrongStatus.value = false;
@@ -362,7 +364,6 @@
                   break;
               }
             }
-            startWaching.value = true;
           })
           .catch((error) => {
             wrongStatus.value = true;
@@ -375,7 +376,11 @@
         immediate: false
       });
       watch(() => formParams.ConsumableScrap, (newValue, oldValue) =>{
-        formParams.ConsumableNum = 1;
+        if(startWaching.value >=2) {
+          formParams.ConsumableNum = 1;
+        } else {
+          startWaching.value++;
+        }
         if(newValue == '庫內報廢') {
           if(Assets.Max == 0) {
             wrongStatus.value = true;
