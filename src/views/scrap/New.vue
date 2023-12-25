@@ -162,6 +162,7 @@
     deleteFile
   } from '@/assets/js/common_fn.js'
   import {
+GetAntiForgeryToken,
     getApplication,
     getAssets,
   } from '@/assets/js/common_api.js'
