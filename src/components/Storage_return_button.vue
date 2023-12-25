@@ -38,7 +38,7 @@ export default {
 
     function checkButton() {
       const disabledStatus = props.params.data.Status;
-      if(!Store_Edit_Status.includes(disabledStatus)) {
+      if(!Store_Edit_Status.includes(disabledStatus) || !props.params.data.canEdit) {
         isDisabled.value = true;
       }
     }

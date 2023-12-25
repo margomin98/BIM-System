@@ -51,7 +51,7 @@ export const getEquipType = (async ()=> {
     const response = await axios.get('http://192.168.0.177:7008/GetParameter/EquipTypeParameter');
     const data = response.data;
     if (data.state === 'success') {
-      console.log('設備總類options:\n', data.resultList.TypeList);
+      // console.log('設備總類options:\n', data.resultList.TypeList);
       return data.resultList.TypeList;
     } else if (data.state === 'error') {
       alert(data.messages);
@@ -69,7 +69,7 @@ export const getEquipCategory = (async (EquipType_Id) => {
     const response = await axios.get(`http://192.168.0.177:7008/GetParameter/EquipCategoryParameter?id=${EquipType_Id}`);
     const data = response.data;
     if (data.state === 'success') {
-      console.log('設備分類options:\n', data.resultList.CategoryList);
+      // console.log('設備分類options:\n', data.resultList.CategoryList);
       return data.resultList.CategoryList;
     } else if (data.state === 'error') {
       alert(data.messages);
@@ -87,7 +87,7 @@ export const getArea = (async () => {
     const response = await axios.get('http://192.168.0.177:7008/GetParameter/AreaParameter');
     const data = response.data;
     if (data.state === 'success') {
-      console.log('儲位區域options:\n', data.resultList.AreaList);
+      // console.log('儲位區域options:\n', data.resultList.AreaList);
       return data.resultList.AreaList;
     } else if (data.state === 'error') {
       alert(data.messages);
@@ -105,7 +105,7 @@ export const getLayer = (async (Area_Id)=> {
     const response = await axios.get(`http://192.168.0.177:7008/GetParameter/LayerParameter?id=${Area_Id}`);
     const data = response.data;
     if (data.state === 'success') {
-      console.log('儲位櫃位options:\n', data.resultList.LayerList);
+      // console.log('儲位櫃位options:\n', data.resultList.LayerList);
       return data.resultList.LayerList;
     } else if (data.state === 'error') {
       alert(data.messages);
@@ -196,6 +196,7 @@ export const checkRole = (username) => {
           resolve(false);
         }
       } else {
+        // resolve(true); //測試用
         reject('get role failed');
       }
     } catch (error) {
