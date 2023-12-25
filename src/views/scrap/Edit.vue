@@ -195,6 +195,7 @@
     setup() {
       const route = useRoute();
       const ScrapId = route.query.search_id;
+      const startWaching = ref(false);
       const details = ref({});
       const Assets = reactive({
         Name: '',
@@ -327,8 +328,10 @@
             Assets.Unit = data.Unit;
             Assets.Max = data.Number;
             // 檢查資產類型
-            formParams.ConsumableScrap = '';
-            formParams.ConsumableNum = 1;
+            if(startWaching.value) {
+              formParams.ConsumableScrap = '';
+              formParams.ConsumableNum = 1;
+            }
             if (Assets.Type === '耗材') {
               wrongStatus.value = false;
               canSubmit.value = true;
@@ -359,6 +362,7 @@
                   break;
               }
             }
+            startWaching.value = true;
           })
           .catch((error) => {
             wrongStatus.value = true;

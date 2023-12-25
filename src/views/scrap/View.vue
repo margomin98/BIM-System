@@ -122,7 +122,7 @@
             <div class="input-group-prepend">報廢數量：</div>
             <div class="num_wrap d-flex ">
               <div class="number-input-box">
-                <input class="input-number readonly_box" type="number" readonly />
+                <input class="input-number readonly_box" type="number" readonly v-model="details.ConsumableNum"/>
                 <span class="scrap_quantity">{{ Assets.Unit }}</span>
                 <!-- <span class="scrap_quantity_storage">（總庫存量 {{ Assets.Max }}）</span> -->
               </div>
