@@ -246,6 +246,7 @@
         modalParams,
         Assets,
         Scrap_TypeArray,
+        viewImgFile,
         goBack,
       }
     },
