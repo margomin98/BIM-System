@@ -65,7 +65,7 @@
       </div>
       <div class="fixed_info">
         <div>
-          <p>資產出庫細項</p>
+          <p><span>*</span>資產出庫細項(請至少勾選一項)</p>
         </div>
       </div>
       <div class="third_content">
@@ -159,36 +159,51 @@
       <div class="six_content">
         <div class="fixed_info">
           <div>
-            <p>交付簽章</p>
+            <p>交付簽章 {{ DeliveryDate}}</p>
           </div>
         </div>
         <div class="row g-0">
-          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithButton" class="form-label "><span>*</span><p>領用人員</p></label>
-            <div class="input-group use_acc input-with-icon" id="readonly_box">
-              <p class="readonly_box" readonly>{{ validationStatus(1) }}</p>
-              <span class="icon-container">
-                <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user1.isValidate" />
-              </span>
+          <template v-for="(item,index) in validation" :key="item.title">
+            <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
+              <label for="inputWithButton" class="form-label "><span v-if="index !== 1">*</span><p>{{ item.title }}</p></label>
+              <div class="input-group use_acc input-with-icon" id="readonly_box">
+                <p class="readonly_box" readonly>{{ item.resultName }}</p>
+                <span class="icon-container">
+                  <img src="@/assets/accept.png" class="checkmark-icon" v-show="item.isValidate" />
+                </span>
+              </div>
+              <button type="button" data-bs-toggle="modal" :data-bs-target="`#userConfirm-${index}`">驗證</button>
             </div>
-            <button type="button" data-bs-toggle="modal" data-bs-target="#userConfirm1">驗證</button>
-          </div>
-          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithButton" class="form-label"><span>*</span><p>交付人員</p></label>
-            <div class="input-group input-with-icon" id="readonly_box">
-              <p class="readonly_box" readonly>{{ validationStatus(2) }}</p>
-              <span class="icon-container">
-                <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user2.isValidate" />
-              </span>
+            <!-- Modal Start -->
+            <div class="modal fade" :id="`userConfirm-${index}`" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content ">
+                  <div class="modal-header">
+                    <h5 class="modal-title">{{ item.title }}驗證</h5>
+                    <p class='m-0 close_icon' data-bs-dismiss="modal">X</p>
+                  </div>
+                  <div class="modal-body">
+                    <div class="col">
+                      <div class="input-group mb-3">
+                        <div class="modal-input-group-prepend">帳號：</div>
+                        <input type="text" class="form-control" aria-label="Default" v-model="item.account" />
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="input-group mb-3">
+                        <div class="modal-input-group-prepend">密碼：</div>
+                        <input type="password" class="form-control" aria-label="Default" v-model="item.password" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer m-auto">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="validate(index)">驗證</button>
+                  </div>
+                </div>
+              </div>
             </div>
-            <button type="button" data-bs-toggle="modal" data-bs-target="#userConfirm2">驗證</button>
-          </div>
-          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name" id="done_date"><p>交付完成日期</p></label>
-            <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly>{{ DeliveryDate}}</p>
-            </div>
-          </div>
+            <!-- Modal End -->
+          </template>
         </div>
         <div class="row g-0">
           <div class="col d-flex wrap">
@@ -199,68 +214,10 @@
           </div>
         </div>
       </div>
-      <!-- Modal1 Start -->
-      <div class="modal fade" id="userConfirm1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content ">
-            <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel1">領用人員驗證</h5>
-              <p class='m-0 close_icon' data-bs-dismiss="modal">X</p>
-            </div>
-            <div class="modal-body">
-              <div class="col">
-                <div class="input-group mb-3">
-                  <div class="modal-input-group-prepend">帳號：</div>
-                  <input type="text" class="form-control" aria-label="Default" v-model="validation.user1.account" />
-                </div>
-              </div>
-              <div class="col">
-                <div class="input-group mb-3">
-                  <div class="modal-input-group-prepend">密碼：</div>
-                  <input type="password" class="form-control" aria-label="Default" v-model="validation.user1.password" />
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer m-auto">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="validate(1)">驗證</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Modal1 End -->
-      <!-- Modal2 Start -->
-      <div class="modal fade" id="userConfirm2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content ">
-            <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel2">交付人員驗證</h5>
-              <p class='m-0 close_icon' data-bs-dismiss="modal">X</p>
-            </div>
-            <div class="modal-body">
-              <div class="col">
-                <div class="input-group mb-3">
-                  <div class="modal-input-group-prepend">帳號：</div>
-                  <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="validation.user2.account" />
-                </div>
-              </div>
-              <div class="col">
-                <div class="input-group mb-3">
-                  <div class="modal-input-group-prepend">密碼：</div>
-                  <input type="password" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="validation.user2.password" />
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer m-auto">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="validate(2)">驗證</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Modal2 End -->
     </div>
     <div class="col button_wrap">
       <button class="back_btn" @click="goBack">回上一頁</button>
-      <button class="send_btn" :disabled="!canSubmit()" :class="{ send_btn_disabled: !canSubmit() }" data-bs-toggle="modal" data-bs-target="#confirmModal">送出</button>
+      <button class="send_btn" :disabled="!canSubmit" :class="{ send_btn_disabled: !canSubmit }" data-bs-toggle="modal" data-bs-target="#confirmModal">送出</button>
     </div>
     <!-- confirmModal -->
     <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
@@ -298,7 +255,9 @@
   } from "@/assets/js/dropdown";
   import {
     onMounted,
-    ref
+    ref,
+    reactive,
+computed,
   } from "vue";
   import {
     RentProcess_Confirm_Status
@@ -323,20 +282,32 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
       const DeliveryMemo = ref('');
       const DeliveryDate = ref('');
       const loading = ref(false);
-      const validation = ref({
-        user1: {
+      const validation = reactive([
+        {
+          title: '申請人員',
           account: '',
           password: '',
           isValidate: false,
-          resultName: '',
+          resultName: '未驗證',
+          id:'',
         },
-        user2: {
+        {
+          title: '領用人員',
           account: '',
           password: '',
           isValidate: false,
-          resultName: '',
+          resultName: '未驗證',
+          id:'AOP_ReceivedDelivery',
         },
-      });
+        {
+          title: '交付人員',
+          account: '',
+          password: '',
+          isValidate: false,
+          resultName: '未驗證',
+          id:'AOP_OutboundDelivery',
+        },
+      ]);
       // 資產出庫項目
       const datagrid1field = [{
           field: "id",
@@ -401,24 +372,6 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           sortable: true,
         },
         {
-          field: "AreaName",
-          width: '150px',
-          header: "儲位區域",
-          sortable: true,
-        },
-        {
-          field: "LayerName",
-          width: '150px',
-          header: "儲位櫃位",
-          sortable: true,
-        },
-        {
-          field: "VendorName",
-          width: '150px',
-          header: "廠商",
-          sortable: true,
-        },
-        {
           field: "ProductType",
           width: '150px',
           header: "型號",
@@ -428,6 +381,24 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           field: "ProductSpec",
           width: '150px',
           header: "規格",
+          sortable: true,
+        },
+        {
+          field: "VendorName",
+          width: '150px',
+          header: "廠商",
+          sortable: true,
+        },
+        {
+          field: "AreaName",
+          width: '150px',
+          header: "儲位區域",
+          sortable: true,
+        },
+        {
+          field: "LayerName",
+          width: '150px',
+          header: "儲位櫃位",
           sortable: true,
         },
       ]
@@ -467,84 +438,51 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
         }
       }
       //分別使用帳號密碼驗證、改變驗證狀態 user1為領用人員 user2為交付人員
-      async function validate(user) {
-        token.value = await GetAntiForgeryToken();
-        if (user === 1) {
-          const axios = require('axios');
-          const formData = new FormData();
-          const formFields = {
-            'userName': validation.value.user1.account,
-            'userPassword': validation.value.user1.password,
-            'id': 'AOP_ReceivedDelivery',
-          };
-          //將表格資料append到 formData
-          for (const fieldName in formFields) {
-            formData.append(fieldName, formFields[fieldName]);
-          }
-          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
+      async function validate(index) {
+        const axios = require('axios');
+        const formData = new FormData();
+        const formFields = {
+          'userName': validation[index].account,
+          'userPassword': validation[index].password,
+          'id': validation[index].id,
+        };
+        //將表格資料append到 formData
+        for (const key in formFields) {
+          formData.append(key, formFields[key]);
+        }
+        try {
+          token.value = await GetAntiForgeryToken();
+          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData,{
             headers: {
               'RequestVerificationToken': token.value,
             },
           });
-          try {
-            const data = response.data;
-            if (data.state === 'success') {
-              validation.value.user1.isValidate = true;
-              validation.value.user1.resultName = validation.value.user1.account;
-            } else if (data.state === 'account_error') {
-              alert(data.messages);
-              router.push('/');
-            } else if (data.state === 'error') {
-              alert(data.messages);
-              validation.value.user1.isValidate = false;
-            }
-          } catch (error) {
-            console.error(error);
+          const data = response.data;
+          if (data.state === 'success') {
+            validation[index].isValidate = true;
+            validation[index].resultName = validation[index].account;
+          } else if (data.state === 'error') {
+            alert(data.messages);
+            validation[index].isValidate = false;
+            validation[index].resultName = '未驗證';
           }
-        } else if (user === 2) {
-          const axios = require('axios');
-          const formData = new FormData();
-          const formFields = {
-            'userName': validation.value.user2.account,
-            'userPassword': validation.value.user2.password,
-            'id': 'AOP_OutboundDelivery',
-          };
-          //將表格資料append到 formData
-          for (const fieldName in formFields) {
-            formData.append(fieldName, formFields[fieldName]);
-          }
-          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
-            headers: {
-              'RequestVerificationToken': token.value,
-            },
-          });
-          try {
-            const data = response.data;
-            if (data.state === 'success') {
-              validation.value.user2.isValidate = true;
-              validation.value.user2.resultName = validation.value.user2.account;
-            } else if (data.state === 'account_error') {
-              alert(data.messages);
-              router.push('/');
-            } else if (data.state === 'error') {
-              alert(data.messages);
-              validation.value.user2.isValidate = false;
-            }
-          } catch (error) {
-            console.error(error);
-          }
+        } catch (error) {
+          console.error(error);
         }
       }
-      function validationStatus(user) {
-        if (user === 1) {
-          return validation.value.user1.isValidate ? validation.value.user1.resultName : '未驗證'
-        } else if (user === 2) {
-          return validation.value.user2.isValidate ? validation.value.user2.resultName : '未驗證'
+      const canSubmit = computed(()=>{
+        // 至少一項交付
+        let atLeastOne = false;
+        for(let i=0 ; i < rowData2.value.length ; i++) {
+          if(rowData2.value[i].OM_IsExecute) {
+            atLeastOne = true;
+            break;
+          }
         }
-      }
-      function canSubmit() {
-        return validation.value.user1.isValidate && validation.value.user2.isValidate;
-      }
+        // 申請人員、交付人員驗證
+        const isValidate = validation[0].isValidate && validation[2].isValidate
+        return isValidate && atLeastOne
+      })
       async function submit() {
         if (DeliveryMemo.value) {
           DeliveryMemo.value = DeliveryMemo.value.trim();
@@ -566,8 +504,8 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           const axios = require('axios');
           const requestData = {
             AO_ID: details.value.AO_ID,
-            Recipient: validation.value.user1.resultName,
-            DeliveryOperator: validation.value.user2.resultName,
+            Recipient: validation[0].resultName,
+            DeliveryOperator: validation[1].resultName,
             DeliveryMemo: DeliveryMemo.value,
             OM_List: OM_List,
           };
@@ -613,7 +551,6 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
         DeliveryMemo,
         DeliveryDate,
         validate,
-        validationStatus,
         canSubmit,
         submit,
         goBack,

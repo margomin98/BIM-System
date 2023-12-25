@@ -579,6 +579,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           }
           .fixed_info {
             border: none;
+            border-right: 1px solid black;
           }
           .form-check {
             margin-left: 10px;
@@ -787,8 +788,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           border-top: 1px solid black;
           background: #d9d9d9;
         }
-        .third_content {
-        }
+    
         .fixed_info_count {
           display: flex;
           background: #3D5C67;
@@ -857,6 +857,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           }
           .fixed_info {
             border: none;
+            border-right: 1px solid black;
           }
           .form-check {
             margin-left: 10px;
@@ -1047,7 +1048,6 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           @include fixed_info;
           background: #528091;
           border-radius: 0;
-          border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
           flex-direction: column;
@@ -1058,13 +1058,9 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
             margin-bottom: 0;
           }
         }
-        .second_content {
-          border-left: 1px solid black;
-          border-right: 1px solid black;
+        .fixed_info:nth-child(1),.fixed_info:nth-child(3){
+          
           border-top: 1px solid black;
-          background: #d9d9d9;
-        }
-        .third_content {
         }
         .fixed_info_count {
           display: flex;
@@ -1074,7 +1070,9 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           align-items: center;
           height: 40px;
           border-radius: 0;
-          border: 1px solid black;
+          border-bottom: 1px solid black;
+          border-left: 1px solid black;
+          border-right: 1px solid black;
           padding: 0 10px;
           justify-content: right;
           gap: 10px;
@@ -1139,6 +1137,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           }
           .fixed_info {
             border: none;
+            border-right: 1px solid black;
           }
           .form-check {
             margin-left: 10px;

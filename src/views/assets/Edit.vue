@@ -641,6 +641,7 @@
         getAccount('')
         .then((data)=>{
           DropdownArray.Custodian = data;
+          DropdownArray.Custodian.unshift('無');
         })
         .catch((error)=>{
           console.error(error);
@@ -696,7 +697,12 @@
         details.value.Custodian = data;
       }
       const selectAccount = (item) => {
-        details.value.Custodian = item;
+        if(item ==='無') {
+          details.value.Custodian = '';
+        }
+        else {
+          details.value.Custodian = item;
+        }
       }
       const selectAssetType = (item) => {
         // 資產類型變更為"資產" 清空專案代碼、名稱

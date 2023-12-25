@@ -190,6 +190,9 @@
                 </div>
               </div>
             </div>
+            <div class="col">
+              <button @click="alignAreaLayer(index)">套用</button>
+            </div>
             <!-- 頁籤物品名稱 -->
             <div class="col">
               <div class="input-group mb-3">
@@ -1109,6 +1112,15 @@ GetAntiForgeryToken
             break;
         }
       }
+      // 套用區域櫃位
+      function alignAreaLayer(index) {
+        tabData.forEach((item)=>{
+          item.itemArea_Id = tabData[index].itemArea_Id
+          item.itemLayer_Id = tabData[index].itemLayer_Id
+          item.itemAreaName = tabData[index].itemAreaName
+          item.itemLayerName = tabData[index].itemLayerName
+        })
+      }
       return {
         details,
         AI_ID,
@@ -1134,6 +1146,7 @@ GetAntiForgeryToken
         handleFileChange,
         viewImgFile,
         deleteFileFunction,
+        alignAreaLayer,
         viewReceive,
         goBack,
       }
@@ -1413,12 +1426,12 @@ GetAntiForgeryToken
               .file_wrap {
                 display: flex;
                 flex-direction: column;
-                .choose_btn {
-                  margin-bottom: 10px;
-                  @include choose_file_btn;
-                  &:hover {
-                    background: #3f608f;
-                  }
+              }
+              .choose_btn {
+                margin-bottom: 10px;
+                @include choose_file_btn;
+                &:hover {
+                  background: #3f608f;
                 }
               }
             }
