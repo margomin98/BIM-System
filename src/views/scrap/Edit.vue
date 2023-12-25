@@ -361,7 +361,6 @@
                   break;
               }
             }
-            startWaching.value = true;
           })
           .catch((error) => {
             wrongStatus.value = true;
