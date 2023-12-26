@@ -22,7 +22,7 @@
     watch
   } from 'vue';
   import Navbar from '@/components/Navbar.vue';
-  import Order_component from '@/components/Order_component.vue';
+  import Order_component from '@/components/order_page/Order_component.vue';
   import router from '@/router';
   import {
     getDate,

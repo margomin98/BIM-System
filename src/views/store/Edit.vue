@@ -1,5 +1,5 @@
 <template>
-  <Navbar />
+  <Navbar @username="setUsername"/>
   <div class="main_section">
     <div class="title col">
       <h1>
@@ -525,7 +525,8 @@
     getEquipType,
     getEquipCategory,
     getProject,
-GetAntiForgeryToken
+    GetAntiForgeryToken,
+    checkRole
   } from '@/assets/js/common_api'
   import {
     goBack,
@@ -581,6 +582,7 @@ GetAntiForgeryToken
         Unit: UnitArray,
         PackageUnit: PackageUnitArray,
       })
+      const checkname = ref(''); //檢查編輯者是否為同一人
       const showOptions = ref(false);
       const EquipCategoryInit = ref('請先選擇設備總類');
       // 下半部頁籤內容
@@ -593,7 +595,7 @@ GetAntiForgeryToken
       })
       onMounted(() => {
         getShipmentNum(); //物流單號選單選項
-        getDetails();
+        // getDetails();
       });
       // 生成Tab頁籤資料，生成後清空填寫欄位
       function insertTab() {
@@ -1164,44 +1166,56 @@ GetAntiForgeryToken
         });
       }
       async function getDetails() {
-        axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`)
-          .then((response) => {
-            const data = response.data;
-            if (data.state === 'success') {
-              canEnterPage(data.resultList.Status, Store_Edit_Status);
-              console.log('Details Get成功 資料如下\n', data.resultList);
-              details.value = data.resultList;
-              // 將資料帶入上半部表單formParams
-              if (details.value.AR_ID) {
-                AR_ID.value = details.value.AR_ID
-              }
-              if (details.value.ShipmentNum) {
-                ShipmentNum.value = details.value.ShipmentNum
-              }
-              if (details.value.Memo) {
-                Memo.value = details.value.Memo
-              }
-              // 將頁籤資料帶入下半部tabData
-              details.value.Tabs.forEach(tab => {
-                tabData.push({
-                  ...tab, // 保留原始 tab 的所有屬性
-                  deleteFile: [],
-                  newFile: [],
-                  viewFile: [],
-                  // 如果需要，可以選擇性地添加其他屬性，或者不需要添加viewFile屬性
+        checkRole(checkname.value)
+        .then((result)=>{
+          axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`)
+            .then((response) => {
+              const data = response.data;
+              if (data.state === 'success') {
+                canEnterPage(data.resultList.Status, Store_Edit_Status);
+                console.log('Details Get成功 資料如下\n', data.resultList);
+                details.value = data.resultList;
+                if (!result) {
+                // false則檢查是否為填寫人(收件人員)
+                  if (checkname.value !== details.value.Applicant) {
+                    goBack();
+                  }
+                }
+                // 將資料帶入上半部表單formParams
+                if (details.value.AR_ID) {
+                  AR_ID.value = details.value.AR_ID
+                }
+                if (details.value.ShipmentNum) {
+                  ShipmentNum.value = details.value.ShipmentNum
+                }
+                if (details.value.Memo) {
+                  Memo.value = details.value.Memo
+                }
+                // 將頁籤資料帶入下半部tabData
+                details.value.Tabs.forEach(tab => {
+                  tabData.push({
+                    ...tab, // 保留原始 tab 的所有屬性
+                    deleteFile: [],
+                    newFile: [],
+                    viewFile: [],
+                    // 如果需要，可以選擇性地添加其他屬性，或者不需要添加viewFile屬性
+                  });
+                  getEquipCategoryName('tab', 0);
                 });
-                getEquipCategoryName('tab', 0);
-              });
-            } else if (data.state === 'error') {
-              alert(data.messages);
-            } else if (data.state === 'account_error') {
-              alert(data.messages);
-              router.push('/');
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-          })
+              } else if (data.state === 'error') {
+                alert(data.messages);
+              } else if (data.state === 'account_error') {
+                alert(data.messages);
+                router.push('/');
+              }
+            })
+            .catch((error) => {
+              console.error(error);
+            })
+        })
+        .catch((error)=>{
+          console.error(error);
+        })
       }
       async function getEquipTypeName() {
         if (DropdownArray.EquipType.length == 0) {
@@ -1293,6 +1307,11 @@ GetAntiForgeryToken
             console.error(error);
           })
       }
+      function setUsername(name) {
+        checkname.value = name;
+        console.log('username:', checkname.value);
+        getDetails();
+      }
       return {
         details,
         AI_ID,
@@ -1325,6 +1344,7 @@ GetAntiForgeryToken
         getEquipCategoryName,
         getProjectName,
         getShipmentNum,
+        setUsername,
         goBack,
       };
     }
