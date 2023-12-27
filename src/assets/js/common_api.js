@@ -14,6 +14,19 @@ export const GetAntiForgeryToken = async () => {
     throw error;
   }
 };
+// 取得資料單
+export const getDetails = (async (url,id)=>{
+  const response = await axios.get(`http://192.168.0.177:7008${url}${id}`);
+  try {
+    const data = response.data;
+    if (data.state === 'success') {
+      // console.log(data.resultList);
+      return Promise.resolve(data.resultList);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+})
 // 管理頁面datagrid
 export const getMngDatagrid = (async (url , rowData, datagrid,form)=>{
   datagrid.loading = true;

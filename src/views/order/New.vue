@@ -9,7 +9,7 @@
     <Order_component :hidden="hidden" :placeholder="placeholder"/>
     <div class="col button_wrap">
       <button class="back_btn" @click="goBack">回上一頁</button>
-      <button class="send_btn" :class="{'send_btn_disabled': loading}" @click="submit" :disabled="loading">新增</button>
+      <button class="send_btn" :class="{'send_btn_disabled': loading}" :disabled="loading" @click="submit" >新增</button>
     </div>
   </div>
 </template>
