@@ -20,7 +20,7 @@
   import Order_component from '@/components/order_page/Order_component.vue';
   import router from '@/router';
   import { goBack, checkRequire, checkMaxLetter, } from '@/assets/js/common_fn.js'
-  import { checkRole, getDetails } from '@/assets/js/common_api'
+  import { checkRole, getDetails , GetAntiForgeryToken } from '@/assets/js/common_api'
   import axios from 'axios'
   import { useRoute } from 'vue-router';
   const route = useRoute();
@@ -106,11 +106,12 @@
     // console.log('file',fileParams.newDoc);
     loading.value = true;
     try {
+      const token =  await GetAntiForgeryToken();
       // 先用文字部分建立訂購單，再用訂購單ID(PO_ID)將檔案上傳
-      await sendTextForm();
+      await sendTextForm(token);
       let filePromises = [];
       fileParams.newDoc.forEach((file,index)=>{
-        filePromises.push(sendFileForm(PO_ID, file, index));
+        filePromises.push(sendFileForm(PO_ID, file, index,token));
       })
       await Promise.all(filePromises)
       .then((result)=>{
@@ -137,7 +138,7 @@
 
   })
   // 送出-文字部分
-  const sendTextForm = (()=>{
+  const sendTextForm = ((token)=>{
     return new Promise((resolve, reject) => {
       const form = new FormData();
       for (const key in formParams) {
@@ -151,7 +152,11 @@
           form.append('deleteDocument', fileName);
         })
       }
-      axios.post('http://192.168.0.177:7008/PurchasingMng/EditOrder', form)
+      axios.post('http://192.168.0.177:7008/PurchasingMng/EditOrder', form,{
+        headers: { 
+          'RequestVerificationToken': token,
+        }
+      })
         .then(response => {
           const data = response.data;
           if (data.state === 'success') {
@@ -168,14 +173,18 @@
     });
   })
   // 送出-檔案部分
-  const sendFileForm = (( PO_ID , file , index)=>{
+  const sendFileForm = (( PO_ID , file , index ,token)=>{
     return new Promise((resolve, reject) => {
           const form = new FormData();
           form.append('PO_ID', PO_ID);
           form.append('num', index);
           form.append('Document', file);
           const axios = require('axios');
-          axios.post('http://192.168.0.177:7008/PurchasingMng/UploadFile', form)
+          axios.post('http://192.168.0.177:7008/PurchasingMng/UploadFile', form,{
+            headers: { 
+              'RequestVerificationToken': token,
+            }
+          })
             .then((response) => {
               const data = response.data;
               if (data.state === 'success') {
