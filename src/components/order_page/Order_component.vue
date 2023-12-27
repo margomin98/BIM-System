@@ -31,8 +31,8 @@
 							<div class="input-group-prepend">
 								<span>*</span>訂單編號：
 							</div>
-							<input ref="inputElement" type="text" class="form-control" :placeholder="props.placeholder.PurchaseNum"
-								v-model="formParams.PurchaseNum">
+							<input ref="inputElement" type="text" class="form-control" :class="{'readonly_box': props.disabled}" :placeholder="props.placeholder.PurchaseNum"
+								v-model="formParams.PurchaseNum" :readonly="props.disabled">
 						</div>
 					</div>
 					<!-- 採購來源 -->
@@ -41,7 +41,7 @@
 							<div class="input-group-prepend">
 								採購來源：
 							</div>
-							<input ref="inputElement" type="text" class="form-control" :placeholder="props.placeholder.Source" v-model="formParams.Source">
+							<input ref="inputElement" type="text" class="form-control" :class="{'readonly_box': props.disabled}" :placeholder="props.placeholder.Source" v-model="formParams.Source" :readonly="props.disabled">
 						</div>
 					</div>
 					<!-- 使用專案 -->
@@ -50,7 +50,7 @@
 							<div class="input-group-prepend">
 								使用專案：
 							</div>
-							<input ref="inputElement" type="text" class="form-control" :placeholder="props.placeholder.Use" v-model="formParams.Use">
+							<input ref="inputElement" type="text" class="form-control" :class="{'readonly_box': props.disabled}" :placeholder="props.placeholder.Use" v-model="formParams.Use" :readonly="props.disabled">
 						</div>
 					</div>
 					<!-- 下訂日期 -->
@@ -59,7 +59,7 @@
 							<div class="input-group mb-3">
 								<div class="input-group-prepend"><span>*</span>下訂日期：</div>
 								<div class="date-selector">
-									<input type="date" class="date-input" v-model="formParams.PurchaseDate" />
+									<input type="date" class="date-input" :class="{'readonly_box': props.disabled}" v-model="formParams.PurchaseDate"  :readonly="props.disabled"/>
 								</div>
 							</div>
 						</div>
@@ -69,14 +69,14 @@
 								<div class="input-group-prepend"><span>*</span>採購件數：</div>
 								<div class="num_wrap d-flex ">
 									<div class="number-input-box">
-										<input class="input-number " type="number" min="1" v-model="formParams.Quantity" />
+										<input class="input-number" :class="{'readonly_box': props.disabled}" type="number" min="1" v-model="formParams.Quantity"  :readonly="props.disabled"/>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 					<!-- 文件上傳 -->
-					<div class="col-12 repair_photo_section">
+					<div v-show="!hidden.div.selected_btn" class="col-12 repair_photo_section">
 						<div class="input-group ">
 							<div class="input-group-prepend"> <span>*</span>文件上傳：</div>
 							<div class="mb-3 file_wrap">
@@ -87,14 +87,14 @@
 						</div>
 					</div>
 					<!-- 已選擇的檔案 -->
-					<div class="col-12 selected_file">
+					<div v-show="!hidden.div.selected_file" class="col-12 selected_file">
 						<div class="input-group">
 							<div class="input-group-prepend">已選擇檔案：</div>
 							<div class="file_upload_box">
 								<div v-for="(item, index) in fileParams.viewDoc" :key="index" class="file_upload_wrap">
 									<p>{{ item.FileName }}
 										<img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(item,modalParams)">
-										<img v-show="!hidden.file_trashcan" class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteDocument(index,item,fileParams)">
+										<img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteDocument(index,item,fileParams)">
 									</p>
 								</div>
 							</div>
@@ -105,10 +105,10 @@
 						<div class="input-group">
 							<div class="input-group-prepend">已上傳文件：</div>
 							<div class="file_upload_box">
-								<div v-for="(item, index) in fileParams.viewDoc" :key="index" class="file_upload_wrap">
+								<div v-for="(item, index) in fileParams.existDoc" :key="index" class="file_upload_wrap">
 									<p>{{ item.FileName }}
 										<img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(item,modalParams)">
-										<img v-show="!hidden.file_trashcan" class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteDocument(index,item,fileParams)">
+										<img v-show="!hidden.input.file_trashcan" class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteDocument(index,item,fileParams)">
 									</p>
 								</div>
 							</div>
@@ -152,7 +152,7 @@ import {
 	getAssets
 } from '@/assets/js/common_api.js'
 import axios from 'axios';
-const props = defineProps(['hidden','placeholder']);
+const props = defineProps(['hidden','placeholder','disabled']);
 const ApplicationDate = ref('');
 const modalParams = reactive({
 	title: '',

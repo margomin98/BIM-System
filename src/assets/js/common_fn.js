@@ -21,7 +21,7 @@ export const checkRequire = ((checkList,formParams,fileParams)=>{
     }
   }
   if(fileParams) {
-    if(fileParams.newDoc.length == 0) {
+    if(fileParams.newDoc.length == 0 && fileParams.existDoc.length == 0) {
       alert('請輸入必填項目')
       return false;
     }
@@ -247,10 +247,12 @@ export const handlePreview = ((file,modalParams) => {
       break;
     case 'doc':
     case 'docx':
-      const downloadElement = document.getElementById('download-link');
+      const downloadElement = document.createElement('a');
       downloadElement.href = file.FileLink;
       downloadElement.download = file.FileName;
+      document.body.appendChild(downloadElement);
       downloadElement.click();
+      document.body.removeChild(downloadElement);
       break;
     default:
       modalParams.title = file.FileName;
@@ -265,7 +267,7 @@ export const deleteDocument = ((index, file ,fileParams) => {
   // 1.
   if (file.exist) {
     fileParams.deleteDoc.push(file.FileName);
-    fileParams.existDocument.splice(index, 1);
+    fileParams.existDoc.splice(index, 1);
     console.log('已加入的deleteDoc:', fileParams.deleteDoc);
   }
   // 2.
@@ -274,4 +276,9 @@ export const deleteDocument = ((index, file ,fileParams) => {
     fileParams.viewDoc.splice(index, 1);
     console.log('剩餘newDoc:', fileParams.newDoc);
   }
+})
+
+// select option
+export const selectItem = ((item,formParams,key) => {
+  formParams[key] = item ;
 })
