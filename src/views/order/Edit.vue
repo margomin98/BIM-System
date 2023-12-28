@@ -116,12 +116,12 @@
       .then((result)=>{
         const allSuccess = result.every(result => result === 'success')
         if (allSuccess) {
-          alert('新增訂購單成功\n單號為:' + PO_ID);
+          alert('編輯訂購單成功\n單號為:' + PO_ID);
           router.push({
             name: 'Order_Datagrid'
           });
         } else {
-          alert('新增訂購單失敗');
+          alert('編輯訂購單失敗');
         }
       })
       .catch((e)=>{

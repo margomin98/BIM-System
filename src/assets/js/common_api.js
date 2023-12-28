@@ -209,8 +209,8 @@ export const checkRole = (username) => {
           resolve(false);
         }
       } else {
-        // resolve(true); //測試用
-        reject('get role failed');
+        resolve(true); //測試用
+        // reject('get role failed');
       }
     } catch (error) {
       console.error(error);

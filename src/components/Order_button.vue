@@ -3,61 +3,49 @@
     <button @click="viewDetails()">檢視</button>
     <button :class="{ disabled_btn: !canEdit, btn_edit: canEdit }"  :disabled="!canEdit" @click="viewEdit()">編輯</button>
     <!-- <button class="btn_edit" @click="viewEdit()">編輯</button> -->
-    <button class="btn_store" @click="viewStore()">收貨</button>
+    <button class="btn_store" @click="viewReceive()">收貨</button>
   </div>
 </template>
 
-<script>
+<script setup>
   import { ref } from 'vue';
   import {
     useRouter
   } from 'vue-router';
-  export default {
-    props: ['params'],
-    setup(props) {
-      const router = useRouter();
-      const search_id = props.params.data.PO_ID;
-      const canEdit = ref(props.params.data.canEdit);
-      const ShipmentNum = props.params.data.ShipmentNum;
-      function viewDetails() {
-        if (search_id !== '') {
-          router.push({
-            name: 'Order_View',
-            query: {
-              search_id
-            }
-          });
-        }
+    const props = defineProps(['params']);
+    const router = useRouter();
+    const search_id = props.params.data.PO_ID;
+    const canEdit = ref(props.params.data.canEdit);
+    const PurchaseNum = props.params.data.PurchaseNum;
+    function viewDetails() {
+      if (search_id !== '') {
+        router.push({
+          name: 'Order_View',
+          query: {
+            search_id
+          }
+        });
       }
-      function viewEdit() {
-        if (search_id !== '') {
-          router.push({
-            name: 'Order_Edit',
-            query: {
-              search_id
-            }
-          });
-        }
+    }
+    function viewEdit() {
+      if (search_id !== '') {
+        router.push({
+          name: 'Order_Edit',
+          query: {
+            search_id
+          }
+        });
       }
-      function viewStore() {
-        if (search_id !== '') {
-          router.push({
-            name: 'Receive_New',
-            query: {
-              search_id,
-              ShipmentNum,
-            }
-          });
+    }
+    function viewReceive() {
+      router.push({
+        name: 'Receive_New',
+        query: {
+          search_id,
+          PurchaseNum,
         }
-      }
-      return {
-        canEdit,
-        viewDetails,
-        viewEdit,
-        viewStore,
-      };
-    },
-  };
+      });
+    }
 </script>
 
 <style lang="scss" scoped>
