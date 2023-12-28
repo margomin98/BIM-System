@@ -92,6 +92,58 @@
             <textarea style="height: 200px;" class="form-control" placeholder="最多輸入500字" v-model="formParams.Reason"></textarea>
           </div>
         </div>
+        <!-- 報廢照片 -->
+        <div class="col-12 repair_photo_section">
+          <div class="input-group mt-3">
+            <div class="input-group-prepend">照片上傳：</div>
+            <div class="mb-3 file_wrap">
+              <button class="choose_btn" @click="openFileExplorer(fileInputs)">選擇檔案</button>
+              <input type="file" ref="fileInputs" accept="image/*" multiple style="display: none;" @change="handleFileChange($event,formParams)">
+            </div>
+          </div>
+        </div>
+        <!-- 已選擇的檔案 -->
+        <div class="col-12 selected_file">
+          <div class="input-group">
+            <div class="input-group-prepend">已選擇檔案：</div>
+            <div class="file_upload_box">
+              <div v-for="(item , index) in formParams.viewFile" :key="index" class="file_upload_wrap">
+                <p class='file_name'>{{ item.FileName }}
+                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="viewImgFile(index,formParams,modalParams,'new')" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+                  <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index,formParams,'new')">
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 已上傳檔案 -->
+        <div class="selected_file col-12">
+          <div class="input-group mt-3">
+            <div class="input-group-prepend">已上傳檔案：</div>
+            <div class="d-flex  flex-column">
+              <div v-for="(file , index) in formParams.existFile" :key="index" class="file_upload_wrap">
+                <p  class='file_name'>{{ file.FileName }}
+                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"  @click="viewImgFile(index,formParams,modalParams,'exist')" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+                  <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index,formParams,'exist')">
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ViewFile Modal -->
+        <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" >
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">{{ modalParams.title }}</h5>
+                <p data-bs-dismiss="modal" class='close_icon'>X</p>
+              </div>
+              <div class="modal-body">
+                <img :src="modalParams.src" alt="Uploaded Image" class="w-100" />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
@@ -298,6 +350,60 @@
         font-size: 20px;
         font-weight: 600;
       }
+    }
+  }  .modal {
+    .modal-body {
+      padding: 20px;
+      margin: auto;
+    }
+    .modal-content {
+      margin: auto;
+    }
+    .modal-header {
+      h5 {
+        font-weight: 700;
+      }
+      background: #528091;
+      color: white;
+      display: flex;
+      justify-content: center;
+    }
+  }
+   .file_wrap {
+              display: flex;
+              flex-direction: column;
+              .choose_btn {
+                margin-bottom: 10px;
+                @include choose_file_btn;
+                &:hover {
+                  background: #3f608f;
+                }
+              }
+            }
+  .file_name::before {
+    margin-right: 5px;
+    content: '·';
+    font-weight: 700;
+    color: white;
+  }
+  .selected_file {
+    p {
+      margin-bottom: 5px;
+      font-weight: 700;
+      color: white;
+    }
+    .file_upload_box {
+      .file_upload_wrap {
+        margin-bottom: 0;
+        display: flex;
+        word-break: break-word;
+        img {
+          width: 25px;
+          height: 25px;
+        }
+      }
+       
+            
     }
   }
   .main_section {
@@ -600,7 +706,6 @@
             margin-left: unset;
             border-radius: 5px;
             margin-top: 5px;
-            height: 35px;
           }
           .input-group {
             flex-direction: column;

@@ -111,6 +111,33 @@
             <textarea style="height: 200px;" class="form-control readonly_box" readonly v-model="details.Reason"></textarea>
           </div>
         </div>
+        <!-- 已上傳檔案 -->
+        <div class="selected_file col-12">
+          <div class="input-group mt-3">
+            <div class="input-group-prepend">已上傳檔案：</div>
+            <div class="d-flex  flex-column">
+              <div v-for="(file , index) in details.existFile" :key="index" class="file_upload_wrap">
+                <p  class='file_name'>{{ file.FileName }}
+                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"  @click="viewImgFile(index,details,modalParams,'exist')" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ViewFile Modal -->
+        <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" >
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">{{ modalParams.title }}</h5>
+                <p data-bs-dismiss="modal" class='close_icon'>X</p>
+              </div>
+              <div class="modal-body">
+                <img :src="modalParams.src" alt="Uploaded Image" class="w-100" />
+              </div>
+            </div>
+          </div>
+        </div>        
       </div>
       <div class='confirm_section'>
         <h2>
@@ -367,6 +394,61 @@
         font-size: 20px;
         font-weight: 600;
       }
+    }
+  }
+  .modal {
+    .modal-body {
+      padding: 20px;
+      margin: auto;
+    }
+    .modal-content {
+      margin: auto;
+    }
+    .modal-header {
+      h5 {
+        font-weight: 700;
+      }
+      background: #528091;
+      color: white;
+      display: flex;
+      justify-content: center;
+    }
+  }
+   .file_wrap {
+              display: flex;
+              flex-direction: column;
+              .choose_btn {
+                margin-bottom: 10px;
+                @include choose_file_btn;
+                &:hover {
+                  background: #3f608f;
+                }
+              }
+            }
+  .file_name::before {
+    margin-right: 5px;
+    content: '·';
+    font-weight: 700;
+    color: white;
+  }
+  .selected_file {
+    p {
+      margin-bottom: 5px;
+      font-weight: 700;
+      color: white;
+    }
+    .file_upload_box {
+      .file_upload_wrap {
+        margin-bottom: 0;
+        display: flex;
+        word-break: break-word;
+        img {
+          width: 25px;
+          height: 25px;
+        }
+      }
+       
+            
     }
   }
   @media only screen and (min-width: 1200px) {
