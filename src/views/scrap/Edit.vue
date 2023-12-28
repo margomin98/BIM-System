@@ -61,10 +61,10 @@
             <div class="input-group-prepend"><span>*</span>報廢方式：</div>
             <div class="check_section d-flex">
               <template v-for="(item,index) in Scrap_TypeArray" :key="item">
-                  <div class="form-check d-flex align-items-center">
-                    <input type="radio" :id="'no'+index" name="radio" :value="item" v-model="formParams.ConsumableScrap"/>
-                    <label :for="'no'+index">{{ item }}</label>
-                  </div>
+                      <div class="form-check d-flex align-items-center">
+                        <input type="radio" :id="'no'+index" name="radio" :value="item" v-model="formParams.ConsumableScrap"/>
+                        <label :for="'no'+index">{{ item }}</label>
+                      </div>
 </template>
             </div>
           </div>
@@ -84,8 +84,8 @@
             <div class="input-group-prepend"><span>*</span>報廢數量：</div>
             <div class="num_wrap d-flex ">
               <div class="number-input-box">  
-                <input v-if="formParams.ConsumableScrap !== '庫內報廢'" class="input-number " type="number" min="1" v-model="formParams.ConsumableNum"/>
-                <input v-else class="input-number " type="number" min="1" v-model="formParams.ConsumableNum" :max="Assets.Max"/>
+                <input v-if="formParams.ConsumableScrap !== '庫內報廢'" class="input-number scrap_input_length" type="number" min="1" v-model="formParams.ConsumableNum"/>
+                <input v-else class="input-number scrap_input_length" type="number" min="1" v-model="formParams.ConsumableNum" :max="Assets.Max"/>
                 <span class="scrap_quantity">{{ Assets.Unit }}</span>
                 <span v-if="formParams.ConsumableScrap === '庫內報廢'" class="scrap_quantity_storage">（總庫存量: {{ Assets.Max }}）</span>
               </div>
@@ -504,6 +504,9 @@
     }
   }
   .main_section {
+    .scrap_input_length {
+      width: 200px
+    }
     .readonly_box {
       @include readonly_box;
     }

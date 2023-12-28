@@ -764,6 +764,9 @@ watch,
   }
   .form_search_btn {
         @include form_search_btn;
+        &:hover {
+          background-color: #43546d;
+        }
       }
   @media only screen and (min-width: 1200px) {
     .main_section {

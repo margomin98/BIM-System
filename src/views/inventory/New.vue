@@ -724,6 +724,12 @@
   span {
     @include red_star
   }
+  .form_search_btn {
+      @include form_search_btn;
+      &:hover {
+          background-color: #43546d;
+        }
+    }
   .no_content_text {
     padding: 5px 0;
     text-align: center;
