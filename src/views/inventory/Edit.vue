@@ -783,6 +783,12 @@ watch,
   .modal-body {
     padding: 0 !important;
   }
+  .form_search_btn {
+        @include form_search_btn;
+        &:hover {
+          background-color: #43546d;
+        }
+      }
   @media only screen and (min-width: 1200px) {
     .main_section {
       input {
@@ -1389,6 +1395,10 @@ watch,
   }
   @media only screen and (max-width: 767px) {
     .main_section {
+      .form_search_btn {
+       margin-top: 10px;
+       padding: 5px 0;
+      }
       .readonly_box {
         @include readonly_box;
       }

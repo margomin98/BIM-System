@@ -68,13 +68,13 @@
         <div class="col">
           <div class="input-group" style="   justify-content: flex-start;">
             <div class="input-group-prepend">盤點類型：</div>
-            <div class="check_section d-flex">
+            <div class="check_section">
               <template v-for="(item , index) in PlanType" :key="item">
-                <div class="form-check d-flex align-items-center">
-                  <input type="radio" :id="`no${index}`" name="radio" :value="item" v-model="details.PlanType" :disabled="details.PlanType !== item" />
-                  <label :for="`no${index}`">{{ item }}</label>
-                </div>
-              </template>
+                  <div class="form-check d-flex align-items-center">
+                    <input type="radio" :id="`no${index}`" name="radio" :value="item" v-model="details.PlanType" :disabled="details.PlanType !== item" />
+                    <label :for="`no${index}`">{{ item }}</label>
+                  </div>
+</template>
             </div>
           </div>
         </div>
@@ -126,15 +126,15 @@
             paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
             currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
             <Column style="min-width: 50px;" header="項目">
-              <template #body="slotProps">
-                {{ calculateIndex(1,slotProps) }}
-              </template>
+<template #body="slotProps">
+   {{ calculateIndex(1,slotProps) }}
+</template>
             </Column>
             <Column style="min-width: 60px;">
-              <template #body="slotProps">
-                <!-- Add the custom component here -->
-                <List_view_button :params = "slotProps" />
-              </template>
+<template #body="slotProps">
+  <!-- Add the custom component here -->
+  <List_view_button :params="slotProps" />
+</template>
             </Column>
             <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
           </DataTable>
@@ -236,14 +236,14 @@
             :rowsPerPageOptions="[10, 20, 30]"
             currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
             <Column style="min-width: 50px;" header="項目">
-              <template #body="slotProps">
-                {{ calculateIndex(2,slotProps) }}
-              </template>
+<template #body="slotProps">
+   {{ calculateIndex(2,slotProps) }}
+</template>
             </Column>
             <Column style="min-width: 60px;">
-              <template #body="slotProps">
-                <List_view_button :params = "slotProps" />
-              </template>
+<template #body="slotProps">
+  <List_view_button :params="slotProps" />
+</template>
             </Column>
             <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
           </DataTable>
@@ -287,7 +287,9 @@ GetAntiForgeryToken
   import {
     Inventory_BalanceResult_Status
   } from '@/assets/js/enter_status';
-  import { PlanType } from '@/assets/js/dropdown';
+  import {
+    PlanType
+  } from '@/assets/js/dropdown';
   import axios from 'axios';
   const route = useRoute();
   const router = useRouter();
@@ -540,7 +542,7 @@ GetAntiForgeryToken
   span {
     @include red_star
   }
-  .no_content_text{
+  .no_content_text {
     padding: 5px 0;
     text-align: center;
     font-weight: 700;
@@ -627,6 +629,7 @@ GetAntiForgeryToken
           }
           .check_section {
             gap: 10px;
+            display: flex;
             .form-check {
               gap: 5px;
               padding: 0;
@@ -870,6 +873,7 @@ GetAntiForgeryToken
           }
           .check_section {
             gap: 10px;
+            display: flex;
             .form-check {
               gap: 5px;
               padding: 0;
@@ -1237,7 +1241,11 @@ GetAntiForgeryToken
       }
     }
     .check_section {
-      gap: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 5px;
+      margin-left: 0 !important;
       .form-check {
         gap: 5px;
         padding: 0;

@@ -68,13 +68,13 @@
         <div class="col">
           <div class="input-group" style="   justify-content: flex-start;">
             <div class="input-group-prepend">盤點類型：</div>
-            <div class="check_section d-flex">
+            <div class="check_section">
               <template v-for="(item , index) in PlanType" :key="item">
-                <div class="form-check d-flex align-items-center">
-                  <input type="radio" :id="`no${index}`" name="radio" :value="item" v-model="details.PlanType" :disabled="details.PlanType !== item" />
-                  <label :for="`no${index}`">{{ item }}</label>
-                </div>
-              </template>
+                  <div class="form-check d-flex align-items-center">
+                    <input type="radio" :id="`no${index}`" name="radio" :value="item" v-model="details.PlanType" :disabled="details.PlanType !== item" />
+                    <label :for="`no${index}`">{{ item }}</label>
+                  </div>
+</template>
             </div>
           </div>
         </div>
@@ -116,8 +116,8 @@
             scrollHeight="820px" @page="getDatagrid($event , 'page')" @sort="getDatagrid($event , 'sort')" paginator :rows="20" :totalRecords="datagrid1.totalRecords" paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
             currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
             <Column style="min-width: 50px" header="項目">
-              <template #body="slotProps">
-                  {{ calculateIndex(slotProps) }}
+<template #body="slotProps">
+   {{ calculateIndex(slotProps) }}
 </template>
             </Column>
             <Column
@@ -224,7 +224,9 @@
     createDatagrid,
     UpdatePageParameter,
   } from "@/assets/js/common_fn";
-  import { PlanType } from "@/assets/js/dropdown";
+  import {
+    PlanType
+  } from "@/assets/js/dropdown";
   import {
     Inventory_Process_Status
   } from '@/assets/js/enter_status'
@@ -629,6 +631,7 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
           }
           .check_section {
             gap: 10px;
+            display: flex;
             .form-check {
               gap: 5px;
               padding: 0;
@@ -829,6 +832,7 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
           }
           .check_section {
             gap: 10px;
+            display: flex;
             .form-check {
               gap: 5px;
               padding: 0;
@@ -1080,7 +1084,7 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
           margin-left: unset !important;
           border-radius: 5px;
         }
-        margin-top: 3%;
+        margin-top: 5%;
         .count {
           .number-input-box {
             width: 100%;
@@ -1105,7 +1109,11 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
       }
     }
     .check_section {
-      gap: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 5px;
+      margin-left: 0 !important;
       .form-check {
         gap: 5px;
         padding: 0;
@@ -1133,6 +1141,9 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
         align-items: center;
         border-radius: 10px 10px 0px 0px;
         height: 50px;
+        p{
+          margin-bottom: 0;
+        }
       }
       .content {
         background-color: #C3D3DA !important
@@ -1156,7 +1167,6 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
         }
       }
       .search_section {
-        padding: 0 80px;
         width: 100%;
         input {
           @include dropdown_btn;

@@ -15,7 +15,7 @@
           </div>
           <div class="second_content">
             <div class="wrap1">
-              <div class="col-xl-3 col-lg-12 col-md-12 col-12">
+              <div class="col">
                 <p>設備總類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
@@ -28,7 +28,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-xl-3 col-lg-12 col-md-12 col-12">
+              <div class="col">
                 <p>設備分類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
@@ -41,28 +41,26 @@
                   </div>
                 </div>
               </div>
-              <div class="col-xl-3 col-lg-12 col-md-12 col-12">
+              <div class="col">
                 <p>物品名稱</p>
                 <div class="number-input-box">
-                  <input class="input-number" type="text" v-model="searchParams.ProductName" :placeholder="searchPlaceholder" />
+                  <input class="form-control" type="text" v-model="searchParams.ProductName" :placeholder="searchPlaceholder" />
                 </div>
               </div>
-              <div class="col-xl-3 col-lg-12 col-md-12 col-12">
+              <div class="col">
                 <p>資產編號</p>
                 <div class="number-input-box">
-                  <input class="input-number" type="text" v-model="searchParams.AssetsId" placeholder="BFXXXXXXXX" />
+                  <input class="form-control" type="text" v-model="searchParams.AssetsId" placeholder="BFXXXXXXXX" />
                 </div>
               </div>
-              <div class="col-xl-3 col-lg-12 col-md-12 col-12">
+              <div class="col">
                 <p>
                   已選/所需 數量
                   <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘" />
                 </p>
                 <div class="number-input-box">
-                  <p class="input-number readonly_box" readonly>
-                    {{ searchParams.selectedNumber }} / {{ searchParams.Number }}
-                  </p>
-                </div>
+                  <input class="input-number readonly_box" readonly :value="searchParams.selectedNumber + ' / ' + searchParams.Number">
+                  </div>
               </div>
             </div>
             <div class="row g-0">
@@ -902,6 +900,7 @@ GetAntiForgeryToken
       }
     }
   }
+
   @media only screen and (min-width: 1200px) {
     .modal {
       padding: 0 5%;
@@ -961,10 +960,13 @@ GetAntiForgeryToken
             background-color: #5d85bd;
           }
         }
-        .wrap1,
-        .wrap2 {
+      .wrap2 {
           display: flex;
           justify-content: space-evenly;
+        }
+        .wrap1,
+        .wrap2 {
+      
           padding: 10px 80px;
           .input-number {
             @include count_btn;
@@ -1299,6 +1301,12 @@ GetAntiForgeryToken
         }
       }
     }
+    .modal .second_content .wrap1{
+    display: grid; 
+  grid-template-columns: 1fr 1fr 1fr; 
+  grid-template-rows: 1fr 1fr; 
+  gap: 10px;
+  }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .modal {
@@ -1363,7 +1371,7 @@ GetAntiForgeryToken
         .wrap2 {
           display: flex;
           justify-content: space-evenly;
-          padding: 10px 80px;
+          padding: 10px 30px;
           .input-number {
             @include count_btn;
           }
@@ -1695,6 +1703,12 @@ GetAntiForgeryToken
         }
       }
     }
+    .modal .second_content .wrap1{
+    display: grid; 
+  grid-template-columns: 1fr 1fr 1fr; 
+  grid-template-rows: 1fr 1fr; 
+  gap: 10px;
+  }
   }
   @media only screen and (max-width: 767px) {
     .modal {

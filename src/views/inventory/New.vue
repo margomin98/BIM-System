@@ -23,8 +23,8 @@
               <div class="input-group-prepend flex"><span>*</span>盤點人員：</div>
               <div class="dropdown">
                 <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    {{ formParams.InventoryStaffName || '請選擇' }}
-                  </button>
+                      {{ formParams.InventoryStaffName || '請選擇' }}
+                    </button>
                 <div class="dropdown-menu">
                   <p v-for="(item , index) in DropdownArray.InventoryStaff" :key="index" @click="selectStaff(item)">{{ item }}</p>
                 </div>
@@ -82,13 +82,13 @@
         <div class="col">
           <div class="input-group" style="   justify-content: flex-start;">
             <div class="input-group-prepend"><span>*</span>盤點類型：</div>
-            <div class="check_section d-flex">
+            <div class="check_section">
               <template v-for="(item , index) in PlanType" :key="item">
-                <div class="form-check d-flex align-items-center">
-                  <input type="radio" :id="`no${index}`" name="radio" :value="item" v-model="formParams.PlanType" />
-                  <label :for="`no${index}`">{{ item }}</label>
-                </div>
-              </template>
+                  <div class="form-check d-flex align-items-center">
+                    <input type="radio" :id="`no${index}`" name="radio" :value="item" v-model="formParams.PlanType" />
+                    <label :for="`no${index}`">{{ item }}</label>
+                  </div>
+</template>
             </div>
           </div>
         </div>
@@ -180,9 +180,9 @@
                 :totalRecords="datagrid1.totalRecords" paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
                 <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
                 <Column style="min-width: 60px;">
-                  <template #body="slotProps">
-                    <!-- Add the custom component here -->
-                    <List_view_button :params = "slotProps" />
+<template #body="slotProps">
+  <!-- Add the custom component here -->
+  <List_view_button :params="slotProps" />
 </template>
               </Column>
               <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
@@ -252,8 +252,8 @@
     onMounted,
     ref,
     reactive,
-computed,
-watch,
+    computed,
+    watch,
   } from "vue";
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
@@ -275,7 +275,9 @@ watch,
     createDatagrid,
     goBack
   } from "@/assets/js/common_fn";
-  import { PlanType } from "@/assets/js/dropdown";
+  import {
+    PlanType
+  } from "@/assets/js/dropdown";
   import axios from "axios";
   export default {
     components: {
@@ -367,8 +369,8 @@ watch,
         getAccountName();
         getApplicationInfo();
       });
-      watch(formParams, (newValue,oldValue)=>{
-        if(newValue.PlanType !== '專案盤點') {
+      watch(formParams, (newValue, oldValue) => {
+        if (newValue.PlanType !== '專案盤點') {
           formParams.ProjectCode = '';
           formParams.ProjectName = '';
           searchParams.ProjectCode = '';
@@ -387,8 +389,8 @@ watch,
           return
         }
         // 類型為"專案盤點" => 額外檢查 專案代碼
-        if( formParams.PlanType === '專案盤點' ) {
-          if(!formParams.ProjectCode) {
+        if (formParams.PlanType === '專案盤點') {
+          if (!formParams.ProjectCode) {
             alert('請填寫所有必填項目');
             return
           } else if (!/^[\s\S]{0,10}$/.test(formParams.ProjectCode)) {
@@ -402,7 +404,7 @@ watch,
         for (const keyname in formParams) {
           requestData[keyname] = formParams[keyname]
         }
-        if(formParams.PlanType !== '專案盤點') {
+        if (formParams.PlanType !== '專案盤點') {
           delete requestData.ProjectCode;
           delete requestData.ProjectName;
         }
@@ -743,6 +745,12 @@ watch,
   span {
     @include red_star
   }
+  .form_search_btn {
+      @include form_search_btn;
+      &:hover {
+          background-color: #43546d;
+        }
+    }
   .no_content_text {
     padding: 5px 0;
     text-align: center;
@@ -848,6 +856,7 @@ watch,
           }
           .check_section {
             gap: 10px;
+            display: flex;
             .form-check {
               gap: 5px;
               padding: 0;
@@ -1025,8 +1034,12 @@ watch,
           }
         }
         .wrap1 {
-          display: flex;
-          justify-content: space-evenly;
+          // display: flex;
+          // justify-content: space-evenly;
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          grid-template-rows: 1fr 1fr;
+          gap: 15px;
           padding: 10px 80px;
           .input-number {
             @include count_btn;
@@ -1170,6 +1183,7 @@ watch,
           }
           .check_section {
             gap: 10px;
+            display: flex;
             .form-check {
               gap: 5px;
               margin: 0;
@@ -1675,7 +1689,11 @@ watch,
       }
     }
     .check_section {
-      gap: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 5px;
+      margin-left: 0 !important;
       .form-check {
         gap: 5px;
         padding: 0;
