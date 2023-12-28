@@ -50,11 +50,11 @@
             <div class="input-group-prepend">報廢方式：</div>
             <div class="check_section d-flex">
               <template v-for="(item,index) in Scrap_TypeArray" :key="item">
-                <div class="form-check d-flex align-items-center">
-                  <input type="radio" :id="'no'+index" name="radio" :value="item" v-model="details.ConsumableScrap" :disabled="details.ConsumableScrap !== item"/>
-                  <label :for="'no'+index">{{ item }}</label>
-                </div>
-              </template>
+                  <div class="form-check d-flex align-items-center">
+                    <input type="radio" :id="'no'+index" name="radio" :value="item" v-model="details.ConsumableScrap" :disabled="details.ConsumableScrap !== item"/>
+                    <label :for="'no'+index">{{ item }}</label>
+                  </div>
+</template>
             </div>
           </div>
         </div>
@@ -243,8 +243,12 @@
   import {
     Scrap_Deliver_Status
   } from '@/assets/js/enter_status';
-  import { getAssets } from '@/assets/js/common_api';
-  import { Scrap_TypeArray } from '@/assets/js/dropdown';
+  import {
+    getAssets
+  } from '@/assets/js/common_api';
+  import {
+    Scrap_TypeArray
+  } from '@/assets/js/dropdown';
   export default {
     components: {
       Navbar
@@ -291,14 +295,14 @@
               canEnterPage(data.resultList.Status, Scrap_Deliver_Status)
               details.value = data.resultList
               getAssets(details.value.AssetsId)
-              .then((data)=>{
-                Assets.Type = data.AssetType;
-                Assets.Unit = data.Unit;
-                Assets.Max = data.Number;
-              })
-              .catch((error)=>{
-                console.error(error);
-              })
+                .then((data) => {
+                  Assets.Type = data.AssetType;
+                  Assets.Unit = data.Unit;
+                  Assets.Max = data.Number;
+                })
+                .catch((error) => {
+                  console.error(error);
+                })
             } else if (data.state === 'account_error') {
               alert(data.messages)
               router.push('/');
@@ -481,17 +485,17 @@
       justify-content: center;
     }
   }
-   .file_wrap {
-              display: flex;
-              flex-direction: column;
-              .choose_btn {
-                margin-bottom: 10px;
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
-                }
-              }
-            }
+  .file_wrap {
+    display: flex;
+    flex-direction: column;
+    .choose_btn {
+      margin-bottom: 10px;
+      @include choose_file_btn;
+      &:hover {
+        background: #3f608f;
+      }
+    }
+  }
   .file_name::before {
     margin-right: 5px;
     content: '·';
@@ -514,8 +518,6 @@
           height: 25px;
         }
       }
-       
-            
     }
   }
   @media only screen and (min-width: 1200px) {

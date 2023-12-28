@@ -69,17 +69,16 @@
         </div>
       </div>
       <div class="third_content">
-        <DataTable :size="'small'" :value="rowData2" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="600px"
-          :row-style="({ OM_IsExecute }) => !OM_IsExecute ? 'background-color: #CEE4EB;': null ">
+        <DataTable :size="'small'" :value="rowData2" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="600px" :row-style="({ OM_IsExecute }) => !OM_IsExecute ? 'background-color: #CEE4EB;': null ">
           <Column header="交付確認" class="datatable_checkbox">
             <template style="min-width:50px; " #body="slotProps">
-              <input type="checkbox" class="p-checkbox p-component" v-model="slotProps.data.OM_IsExecute">
-            </template>
+                <input type="checkbox" class="p-checkbox p-component" v-model="slotProps.data.OM_IsExecute">
+</template>
           </Column>
           <Column>
-            <template #body="slotProps">
-              <AssetsView :params="slotProps" />
-            </template>
+<template #body="slotProps">
+  <AssetsView :params="slotProps" />
+</template>
           </Column>
         <Column v-for="item in datagrid2field" :field="item.field" :header="item.header" :sortable="item.sortable" :style="{'min-width': item.width}"></Column>
         </DataTable>
@@ -158,52 +157,54 @@
       </div>
       <div class="six_content">
         <div class="fixed_info">
-          <div>
-            <p>交付簽章 {{ DeliveryDate}}</p>
-          </div>
+          <div class="six_content_title">
+            <p>交付簽章</p> </div>
+            <div class="six_content_date">
+            <p> {{ DeliveryDate}}</p>
+         </div>
         </div>
         <div class="row g-0">
-          <template v-for="(item,index) in validation" :key="item.title">
-            <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-              <label for="inputWithButton" class="form-label "><span v-if="index !== 1">*</span><p>{{ item.title }}</p></label>
-              <div class="input-group use_acc input-with-icon" id="readonly_box">
-                <p class="readonly_box" readonly>{{ item.resultName }}</p>
-                <span class="icon-container">
-                  <img src="@/assets/accept.png" class="checkmark-icon" v-show="item.isValidate" />
-                </span>
-              </div>
-              <button type="button" data-bs-toggle="modal" :data-bs-target="`#userConfirm-${index}`">驗證</button>
+<template v-for="(item,index) in validation" :key="item.title">
+  <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
+    <label for="inputWithButton" class="form-label "><span v-if="index !== 1">*</span><p>{{ item.title }}</p></label>
+    <div class="input-group use_acc input-with-icon" id="readonly_box">
+      <p class="readonly_box" readonly>{{ item.resultName }}</p>
+      <span class="icon-container">
+                    <img src="@/assets/accept.png" class="checkmark-icon" v-show="item.isValidate" />
+                  </span>
+    </div>
+    <button type="button" data-bs-toggle="modal" :data-bs-target="`#userConfirm-${index}`">驗證</button>
+  </div>
+  <!-- Modal Start -->
+  <div class="modal fade" :id="`userConfirm-${index}`" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content ">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ item.title }}驗證</h5>
+          <p class='m-0 close_icon' data-bs-dismiss="modal">X</p>
+        </div>
+        <div class="modal-body">
+          <div class="col">
+            <div class="input-group mb-3">
+              <div class="modal-input-group-prepend">帳號：</div>
+              <input type="text" class="form-control" aria-label="Default" v-model="item.account" />
             </div>
-            <!-- Modal Start -->
-            <div class="modal fade" :id="`userConfirm-${index}`" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content ">
-                  <div class="modal-header">
-                    <h5 class="modal-title">{{ item.title }}驗證</h5>
-                    <p class='m-0 close_icon' data-bs-dismiss="modal">X</p>
-                  </div>
-                  <div class="modal-body">
-                    <div class="col">
-                      <div class="input-group mb-3">
-                        <div class="modal-input-group-prepend">帳號：</div>
-                        <input type="text" class="form-control" aria-label="Default" v-model="item.account" />
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="input-group mb-3">
-                        <div class="modal-input-group-prepend">密碼：</div>
-                        <input type="password" class="form-control" aria-label="Default" v-model="item.password" />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal-footer m-auto">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="validate(index)">驗證</button>
-                  </div>
-                </div>
-              </div>
+          </div>
+          <div class="col">
+            <div class="input-group mb-3">
+              <div class="modal-input-group-prepend">密碼：</div>
+              <input type="password" class="form-control" aria-label="Default" v-model="item.password" />
             </div>
-            <!-- Modal End -->
-          </template>
+          </div>
+        </div>
+        <div class="modal-footer m-auto">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="validate(index)">驗證</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal End -->
+</template>
         </div>
         <div class="row g-0">
           <div class="col d-flex wrap">
@@ -257,7 +258,7 @@
     onMounted,
     ref,
     reactive,
-computed,
+    computed,
   } from "vue";
   import {
     RentProcess_Confirm_Status
@@ -280,14 +281,13 @@ computed,
       const DeliveryMemo = ref('');
       const DeliveryDate = ref('');
       const loading = ref(false);
-      const validation = reactive([
-        {
+      const validation = reactive([{
           title: '申請人員',
           account: '',
           password: '',
           isValidate: false,
           resultName: '未驗證',
-          id:'',
+          id: '',
         },
         {
           title: '領用人員',
@@ -295,7 +295,7 @@ computed,
           password: '',
           isValidate: false,
           resultName: '未驗證',
-          id:'AOP_ReceivedDelivery',
+          id: 'AOP_ReceivedDelivery',
         },
         {
           title: '交付人員',
@@ -303,7 +303,7 @@ computed,
           password: '',
           isValidate: false,
           resultName: '未驗證',
-          id:'AOP_OutboundDelivery',
+          id: 'AOP_OutboundDelivery',
         },
       ]);
       // 資產出庫項目
@@ -463,11 +463,11 @@ computed,
           console.error(error);
         }
       }
-      const canSubmit = computed(()=>{
+      const canSubmit = computed(() => {
         // 至少一項交付
         let atLeastOne = false;
-        for(let i=0 ; i < rowData2.value.length ; i++) {
-          if(rowData2.value[i].OM_IsExecute) {
+        for (let i = 0; i < rowData2.value.length; i++) {
+          if (rowData2.value[i].OM_IsExecute) {
             atLeastOne = true;
             break;
           }
@@ -546,6 +546,19 @@ computed,
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
+  .six_content .fixed_info {
+    position: relative;
+    .six_content_title,
+    .six_content_date {
+      position: absolute;
+    }
+    .six_content_date {
+      right: 10px;
+      p {
+        font-size: 16px !important
+      }
+    }
+  }
   .readonly_box {
     @include readonly_box;
     width: 100%;
@@ -827,7 +840,9 @@ computed,
             @include red_star;
           }
           .fixed_info {
-            border: none;
+            border-left: none;
+            border-top: none;
+            border-right: 1px solid black;
           }
           .form-check {
             margin-left: 10px;
@@ -841,6 +856,7 @@ computed,
             background: white;
             border-top: 1px solid black;
             align-items: center;
+            border-right: 1px solid black;
             button {
               margin: 0 10px;
               border-radius: 7px;
@@ -1171,7 +1187,8 @@ computed,
             @include red_star;
           }
           .fixed_info {
-            border: none;
+            border-left: none;
+            border-top: none;
             border-right: 1px solid black;
           }
           .form-check {
@@ -1186,15 +1203,17 @@ computed,
             background: white;
             border-top: 1px solid black;
             align-items: center;
+            border-right: 1px solid black;
             button {
-              margin: 0 5px;
+              margin: 0 10px;
               border-radius: 7px;
               height: 30px;
-              width: 150px;
+              width: 70px;
               border: none;
               background: #48658c;
               color: white;
               font-weight: 700;
+              font-size: 18px;
               &:hover {
                 background-color: #5d85bd;
               }
@@ -1219,7 +1238,7 @@ computed,
           .wrap:nth-child(2) {
             border-right: 1px solid black;
             label {
-              width: 40%;
+              width: 80%;
             }
             #readonly_box {
               border-right: 1px solid black;
@@ -1233,11 +1252,8 @@ computed,
             textarea {
               border-bottom: 0;
             }
-            label {
-              width: 40%;
-            }
             #memo {
-              width: 110px;
+              width: 123px;
               border: none
             }
           }
@@ -1246,6 +1262,7 @@ computed,
           }
           .use_acc {
             border-right: 1px solid black;
+            width: 100px;
           }
         }
         form {
@@ -1506,7 +1523,9 @@ computed,
           border-bottom: 1px solid black;
           border-left: 1px solid black;
           .fixed_info {
+            height: 47px;
             border: none;
+            border-bottom: 1px solid black;
             border-right: 1px solid black;
           }
           .form-check {
@@ -1570,7 +1589,13 @@ computed,
             border-top: 1px solid black;
             border-right: 1px solid black;
           }
-          .wrap:nth-child(3) {
+          .wrap:nth-child(3),
+          .wrap:nth-child(4){
+            border-right: 1px solid black;
+            border-top: 1px solid black;
+          }
+          .wrap:nth-child(5) {
+            border-bottom: 1px solid black;
             border-right: 1px solid black;
             border-top: 1px solid black;
           }

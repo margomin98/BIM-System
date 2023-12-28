@@ -456,6 +456,50 @@
        
             
     }
+  
+  }  .main_section {
+    .readonly_box {
+      @include readonly_box;
+    }
+    .form_search_btn {
+      @include form_search_btn;
+    }
+    h1 {
+      margin-top: 100px;
+      text-align: center;
+      font-size: 55px;
+      font-weight: 600;
+      @include title_color;
+    }
+    .info_wrap {
+      margin: 30px auto 5%;
+      .button_wrap {
+        display: flex;
+        justify-content: space-between;
+        margin: 30px auto 5%;
+        width: 220px;
+        button {
+          &:nth-child(1) {
+            @include back_to_previous_btn;
+            &:hover {
+              background-color: #5d85bb;
+            }
+          }
+        }
+        .send_btn {
+          @include search_and_send_btn;
+          &:hover {
+            background-color: #5e7aa2;
+          }
+        }
+        .send_btn_disabled {
+          background: #878787;
+          &:hover {
+            background: #878787;
+          }
+        }
+      }
+    }
   }
   @media only screen and (min-width: 1200px) {
     .main_section {

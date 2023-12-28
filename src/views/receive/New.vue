@@ -23,11 +23,13 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">訂購單號：</div>
+            <div class="search_section">
             <input @input="getPurchaseNum" class="form-control" placeholder="最多輸入20字" @focus="showOptions = true;" @blur="closeOption()" v-model="formParams.PurchaseNum" />
             <ul v-if="showOptions" class="options-list">
               <li v-for="(option, index) in DropdownArray.PurchaseNum" :key="index" @click="selectPurchaseNum(option)">{{ option.PurchaseNum }}
               </li>
             </ul>
+            </div>
             <view-order :id="formParams.PO_ID"></view-order>
           </div>
         </div>
@@ -727,13 +729,11 @@
     overflow-y: auto;
     list-style-type: none;
     padding: 0;
-    margin: 0;
     width: 100%;
-    top: 0;
     top: 40px;
-    border-radius: 5px;
+
     li {
-      padding: 10px 10px 0;
+      padding:5px 10px;
       font-size: 18px;
       cursor: pointer;
     }
@@ -856,9 +856,28 @@
         @include readonly_box;
       }
 
-      //beautify code
-      
-      //beautify code
+  
+            .search_section {
+            position: relative;
+            display: flex;
+            flex: 1 1 auto; // width: 100%;
+            
+            input {
+              height: 35px;
+              padding: 10px;
+              border-radius: 5px;
+              border: none;
+            }
+            .input-placeholder {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              color: gray;
+              font-size: 14px;
+              pointer-events: none;
+            }
+          }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .multi_user_select {
@@ -920,8 +939,7 @@
               height: 35px
             }
             .form-control {
-              height: 35px;
-              border-radius: 0;
+              height: 35px
             }
             .input-group-prepend {
               white-space: nowrap;
@@ -1053,7 +1071,7 @@
     .main_section {
 
       .multi_user_select {
-        width: 77%
+        width: 80%
       }
       .swiper_section {
         swiper-slide {
@@ -1090,7 +1108,7 @@
       }
       .info_wrap {
         margin: auto;
-        padding: 0 5%;
+        width: 750px;
         .selected_file {
           margin-left: 150px;
           margin-bottom: 3%;
@@ -1113,6 +1131,9 @@
             .form-control {
               height: 35px;
               width: 55%;
+            }
+            .search_section .form-control{
+              width: 100%;
             }
             .input-group-prepend {
               white-space: nowrap;

@@ -61,11 +61,11 @@
             <div class="input-group-prepend"><span>*</span>報廢方式：</div>
             <div class="check_section d-flex">
               <template v-for="(item,index) in Scrap_TypeArray" :key="item">
-                <div class="form-check d-flex align-items-center">
-                  <input type="radio" :id="'no'+index" name="radio" :value="item" v-model="formParams.ConsumableScrap"/>
-                  <label :for="'no'+index">{{ item }}</label>
-                </div>
-              </template>
+                  <div class="form-check d-flex align-items-center">
+                    <input type="radio" :id="'no'+index" name="radio" :value="item" v-model="formParams.ConsumableScrap"/>
+                    <label :for="'no'+index">{{ item }}</label>
+                  </div>
+</template>
             </div>
           </div>
         </div>
@@ -189,7 +189,9 @@
   import {
     Scrap_Edit_Status
   } from '@/assets/js/enter_status';
-  import { Scrap_TypeArray } from '@/assets/js/dropdown';
+  import {
+    Scrap_TypeArray
+  } from '@/assets/js/dropdown';
   export default {
     components: {
       Navbar
@@ -254,22 +256,22 @@
       async function submit() {
         const pattern = /^(BF\d{8})$/;
         // 檢查必填項目、格式
-        if(!formParams.AssetsId) {
+        if (!formParams.AssetsId) {
           alert('請輸入必填項目');
           return
-        }    
-        if(Assets.Type === '耗材') {
-          if(!formParams.ConsumableScrap || !formParams.ConsumableNum) {
+        }
+        if (Assets.Type === '耗材') {
+          if (!formParams.ConsumableScrap || !formParams.ConsumableNum) {
             alert('請輸入必填項目');
             return
           }
-          if(formParams.ConsumableScrap === '庫內報廢') {
-            if(formParams.ConsumableNum > Assets.Max) {
+          if (formParams.ConsumableScrap === '庫內報廢') {
+            if (formParams.ConsumableNum > Assets.Max) {
               alert('報廢數量超過庫存上限');
               return
             }
           }
-        }   
+        }
         if (!pattern.test(formParams.AssetsId)) {
           alert('資產編號格式錯誤');
           return
@@ -325,7 +327,7 @@
             Assets.Unit = data.Unit;
             Assets.Max = data.Number;
             // 檢查資產類型
-            if(startWaching.value >= 2) {
+            if (startWaching.value >= 2) {
               formParams.ConsumableScrap = '';
               formParams.ConsumableNum = 1;
             } else {
@@ -372,14 +374,14 @@
       }, {
         immediate: false
       });
-      watch(() => formParams.ConsumableScrap, (newValue, oldValue) =>{
-        if(startWaching.value >=2) {
+      watch(() => formParams.ConsumableScrap, (newValue, oldValue) => {
+        if (startWaching.value >= 2) {
           formParams.ConsumableNum = 1;
         } else {
           startWaching.value++;
         }
-        if(newValue == '庫內報廢') {
-          if(Assets.Max == 0) {
+        if (newValue == '庫內報廢') {
+          if (Assets.Max == 0) {
             wrongStatus.value = true;
             canSubmit.value = false;
           }
@@ -447,7 +449,8 @@
         font-weight: 600;
       }
     }
-  }  .modal {
+  }
+  .modal {
     .modal-body {
       padding: 20px;
       margin: auto;
@@ -465,17 +468,17 @@
       justify-content: center;
     }
   }
-   .file_wrap {
-              display: flex;
-              flex-direction: column;
-              .choose_btn {
-                margin-bottom: 10px;
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
-                }
-              }
-            }
+  .file_wrap {
+    display: flex;
+    flex-direction: column;
+    .choose_btn {
+      margin-bottom: 10px;
+      @include choose_file_btn;
+      &:hover {
+        background: #3f608f;
+      }
+    }
+  }
   .file_name::before {
     margin-right: 5px;
     content: '·';
@@ -498,8 +501,6 @@
           height: 25px;
         }
       }
-       
-            
     }
   }
   .main_section {
@@ -548,7 +549,6 @@
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
-    
       .form_search_btn {
         @include form_search_btn;
       }
@@ -636,17 +636,12 @@
           justify-content: space-between;
           margin: 30px auto 5%;
           width: 220px;
-        
-        
-    
-        
         }
       }
     }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
-    
       .form_search_btn {
         @include form_search_btn;
       }
@@ -743,9 +738,6 @@
           justify-content: space-between;
           margin: 30px auto 5%;
           width: 220px;
-      
-       
-        
         }
       }
     }
@@ -783,7 +775,7 @@
       h1 {
         margin-top: 80px;
         font-size: 40px;
-            }
+      }
       .info_wrap {
         padding: 0 5%;
         .fixed_info {
@@ -880,19 +872,16 @@
           button {
             &:nth-child(1) {
               width: 100px;
-             
             }
           }
           .send_btn {
             width: 70px;
             padding: 5px;
-          
           }
           .send_btn_disabled {
             background: #878787;
             width: 70px;
             padding: 5px;
-          
           }
         }
       }

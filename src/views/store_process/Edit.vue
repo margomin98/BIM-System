@@ -190,8 +190,11 @@
                 </div>
               </div>
             </div>
+            <!-- 套用按鈕 -->
             <div class="col">
+              <div class="input-group mb-3 apply_btn">
               <button @click="alignAreaLayer(index)">套用</button>
+              </div>
             </div>
             <!-- 頁籤物品名稱 -->
             <div class="col">
@@ -1144,6 +1147,22 @@
   textarea {
     padding: 5px 10px 30px;
   }
+.apply_btn{
+  display:flex;
+  justify-content: right;
+  button{
+    border: none;
+    width: 120px;
+    height: 35px;
+    background: #132238;
+    border-radius: 10px;
+    color: white;
+    font-weight: 700;
+    &:hover{
+      background: #5980b9;
+    }
+  }
+}
   .dropdown-toggle {
     height: 35px;
   }

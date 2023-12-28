@@ -68,13 +68,13 @@
         <div class="col">
           <div class="input-group" style="   justify-content: flex-start;">
             <div class="input-group-prepend">盤點類型：</div>
-            <div class="check_section d-flex">
+            <div class="check_section">
               <template v-for="(item , index) in PlanType" :key="item">
-                <div class="form-check d-flex align-items-center">
-                  <input type="radio" :id="`no${index}`" name="radio" :value="item" v-model="details.PlanType" :disabled="details.PlanType !== item" />
-                  <label :for="`no${index}`">{{ item }}</label>
-                </div>
-              </template>
+                  <div class="form-check d-flex align-items-center">
+                    <input type="radio" :id="`no${index}`" name="radio" :value="item" v-model="details.PlanType" :disabled="details.PlanType !== item" />
+                    <label :for="`no${index}`">{{ item }}</label>
+                  </div>
+</template>
             </div>
           </div>
         </div>
@@ -126,15 +126,15 @@
             paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
             currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
             <Column style="min-width: 50px;" header="項目">
-              <template #body="slotProps">
-                {{ calculateIndex(1,slotProps) }}
-              </template>
+<template #body="slotProps">
+   {{ calculateIndex(1,slotProps) }}
+</template>
             </Column>
             <Column style="min-width: 60px;">
-              <template #body="slotProps">
-                <!-- Add the custom component here -->
-                <List_view_button :params = "slotProps" />
-              </template>
+<template #body="slotProps">
+  <!-- Add the custom component here -->
+  <List_view_button :params="slotProps" />
+</template>
             </Column>
             <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
           </DataTable>
@@ -233,14 +233,14 @@
             :rowsPerPageOptions="[10, 20, 30]"
             currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
             <Column style="min-width: 50px;" header="項目">
-              <template #body="slotProps">
-                {{ calculateIndex(2,slotProps) }}
-              </template>
+<template #body="slotProps">
+   {{ calculateIndex(2,slotProps) }}
+</template>
             </Column>
             <Column style="min-width: 60px;">
-              <template #body="slotProps">
-                <List_view_button :params = "slotProps" />
-              </template>
+<template #body="slotProps">
+  <List_view_button :params="slotProps" />
+</template>
             </Column>
             <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
           </DataTable>
@@ -276,13 +276,15 @@
   import {
     goBack,
     canEnterPage,
-createDatagrid,
-UpdatePageParameter,
+    createDatagrid,
+    UpdatePageParameter,
   } from "@/assets/js/common_fn";
   import {
     Inventory_BalanceResult_Status
   } from '@/assets/js/enter_status';
-  import { PlanType } from '@/assets/js/dropdown';
+  import {
+    PlanType
+  } from '@/assets/js/dropdown';
   import axios from 'axios';
   export default {
     components: {
@@ -318,8 +320,7 @@ UpdatePageParameter,
       });
       const datagrid1 = createDatagrid()
       const datagrid2 = createDatagrid()
-      const datagrid1field = [
-        {
+      const datagrid1field = [{
           field: 'AssetsId',
           header: '資產編號',
           width: '150px',
@@ -381,7 +382,7 @@ UpdatePageParameter,
         datagrid1.rows = 20
         datagrid1.sortField = 'RecognizePerson'
         getDetails();
-        getDatagrid('','search');
+        getDatagrid('', 'search');
       });
       async function submit() {
         const rows = grid.value.getSelectedRows();
@@ -411,7 +412,7 @@ UpdatePageParameter,
         }
       }
       // 下半部盤點範圍Datagrid
-      async function getDatagrid(event , type) {
+      async function getDatagrid(event, type) {
         searchParams.AssetName = searchParams.AssetName.trim();
         if (searchParams.AssetName && !/^[\s\S]{0,20}$/.test(searchParams.AssetName)) {
           alert('物品名稱不可輸入超過20字')
@@ -424,7 +425,7 @@ UpdatePageParameter,
             form.append(key, searchParams[key]);
           }
         }
-        UpdatePageParameter(datagrid2,event,type,form)
+        UpdatePageParameter(datagrid2, event, type, form)
         try {
           const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryResult', form);
           const data = response.data;
@@ -516,12 +517,12 @@ UpdatePageParameter,
         }
         EquipCategoryInit.value = '請先選擇設備總類'
         LayerInit.value = '請先選擇區域'
-        getDatagrid('','search');
+        getDatagrid('', 'search');
       }
-      function calculateIndex(number,slotProps) {
+      function calculateIndex(number, slotProps) {
         switch (number) {
           case 1:
-            return String(datagrid1.first +slotProps.index + 1).padStart(2, '0');
+            return String(datagrid1.first + slotProps.index + 1).padStart(2, '0');
             break;
           case 2:
             return String(datagrid2.first + slotProps.index + 1).padStart(2, '0');
@@ -563,7 +564,7 @@ UpdatePageParameter,
   span {
     @include red_star
   }
-  .no_content_text{
+  .no_content_text {
     padding: 5px 0;
     text-align: center;
     font-weight: 700;
@@ -650,6 +651,7 @@ UpdatePageParameter,
           }
           .check_section {
             gap: 10px;
+            display: flex;
             .form-check {
               gap: 5px;
               padding: 0;
@@ -893,6 +895,7 @@ UpdatePageParameter,
           }
           .check_section {
             gap: 10px;
+            display: flex;
             .form-check {
               gap: 5px;
               padding: 0;
@@ -1260,7 +1263,11 @@ UpdatePageParameter,
       }
     }
     .check_section {
-      gap: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 5px;
+      margin-left: 0 !important;
       .form-check {
         gap: 5px;
         padding: 0;

@@ -68,13 +68,13 @@
         <div class="col">
           <div class="input-group" style="   justify-content: flex-start;">
             <div class="input-group-prepend">盤點類型：</div>
-            <div class="check_section d-flex">
+            <div class="check_section">
               <template v-for="(item , index) in PlanType" :key="item">
-                <div class="form-check d-flex align-items-center">
-                  <input type="radio" :id="`no${index}`" name="radio" :value="item" v-model="details.PlanType" :disabled="details.PlanType !== item" />
-                  <label :for="`no${index}`">{{ item }}</label>
-                </div>
-              </template>
+                  <div class="form-check d-flex align-items-center">
+                    <input type="radio" :id="`no${index}`" name="radio" :value="item" v-model="details.PlanType" :disabled="details.PlanType !== item" />
+                    <label :for="`no${index}`">{{ item }}</label>
+                  </div>
+</template>
             </div>
           </div>
         </div>
@@ -109,15 +109,15 @@
             paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
             currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
             <Column style="min-width: 50px;" header="項目">
-              <template #body="slotProps">
-                {{ calculateIndex(slotProps) }}
-              </template>
+<template #body="slotProps">
+   {{ calculateIndex(slotProps) }}
+</template>
             </Column>
             <Column style="min-width: 60px;">
-              <template #body="slotProps">
-                <!-- Add the custom component here -->
-                <List_view_button :params = "slotProps" />
-              </template>
+<template #body="slotProps">
+  <!-- Add the custom component here -->
+  <List_view_button :params="slotProps" />
+</template>
             </Column>
             <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
           </DataTable>
@@ -145,8 +145,14 @@
     useRouter
   } from "vue-router";
   import axios from "axios";
-  import { PlanType } from "@/assets/js/dropdown";
-  import { UpdatePageParameter, createDatagrid, goBack } from "@/assets/js/common_fn";
+  import {
+    PlanType
+  } from "@/assets/js/dropdown";
+  import {
+    UpdatePageParameter,
+    createDatagrid,
+    goBack
+  } from "@/assets/js/common_fn";
   export default {
     components: {
       DataTable,
@@ -167,8 +173,7 @@
         LayerName: '',
       })
       // 盤點範圍項目 datagrid
-      const datagridfield = [
-        {
+      const datagridfield = [{
           field: 'AssetStatus',
           header: '資產狀態',
           width: '150px',
@@ -221,7 +226,7 @@
             details.value = data.resultList;
             details.value.PlanStart = details.value.PlanStart.replace(/-/g, '/');
             details.value.PlanEnd = details.value.PlanEnd.replace(/-/g, '/');
-            getRangeOfPlan('','search');
+            getRangeOfPlan('', 'search');
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -233,7 +238,7 @@
         }
       }
       // 取得盤點範圍datagrid
-      async function getRangeOfPlan(event , type) {
+      async function getRangeOfPlan(event, type) {
         datagrid.loading = true;
         const form = new FormData();
         // 將已有的項目AssetsId加入form
@@ -242,22 +247,22 @@
             form.append('AssetList', item)
           }
         }
-        UpdatePageParameter(datagrid,event,type,form)
-        axios.post('http://192.168.0.177:7008/StocktakingMng/RangeOfPlan',form)
-        .then((response)=>{
-          const data = response.data
-          if(data.state === 'success') {
-            console.log('盤點範圍:',data.resultList.rows);
-            datagrid.totalRecords =  data.resultList.total
-            rowData2.value =  data.resultList.rows
-          } else {
-            // state為error
-            alert(data.messages);
-          }
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+        UpdatePageParameter(datagrid, event, type, form)
+        axios.post('http://192.168.0.177:7008/StocktakingMng/RangeOfPlan', form)
+          .then((response) => {
+            const data = response.data
+            if (data.state === 'success') {
+              console.log('盤點範圍:', data.resultList.rows);
+              datagrid.totalRecords = data.resultList.total
+              rowData2.value = data.resultList.rows
+            } else {
+              // state為error
+              alert(data.messages);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          })
         datagrid.loading = false;
       }
       function calculateIndex(slotProps) {
@@ -343,6 +348,7 @@
           }
           .check_section {
             gap: 10px;
+            display: flex;
             .form-check {
               gap: 5px;
               padding: 0;
@@ -450,6 +456,7 @@
           }
           .check_section {
             gap: 10px;
+            display: flex;
             .form-check {
               gap: 5px;
               padding: 0;
@@ -599,7 +606,7 @@
         }
       }
       .info_wrap:nth-child(3) {
-        margin-top: 3%;
+        margin-top: 5%;
         .count {
           .number-input-box {
             width: 100%;
@@ -624,7 +631,11 @@
       }
     }
     .check_section {
-      gap: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 5px;
+      margin-left: 0 !important;
       .form-check {
         gap: 5px;
         padding: 0;
