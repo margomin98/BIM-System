@@ -1,4 +1,4 @@
-import { reactive } from "vue";
+import { reactive , ref } from "vue";
 // 取得今日日期
 export const getDate = (()=>{
   const today = new Date();
@@ -75,8 +75,8 @@ export const checkFileSize = ((files,selectedFiles,exception)=>{
       select_size+= img.file.size;
     }
   }
-  console.log('new size:', new_size);
-  console.log('selct size:', select_size);
+  // console.log('new size:', new_size);
+  // console.log('selct size:', select_size);
   // 留 1Mb 給文字內容
   if(new_size+select_size> 49*1024*1024) {
     alert('所上傳的檔案總大小不可超過50MB,請重新選擇檔案');
@@ -84,3 +84,75 @@ export const checkFileSize = ((files,selectedFiles,exception)=>{
   }
   return true;
 })
+// 圖片上傳
+export const handleFileChange = ((event,formParams) => {
+  const files = event.target.files;
+  const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+  //檢查檔名
+  for (let i = 0; i < files.length; i++) {
+    const fileName = files[i].name;
+    const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
+    if (!imageExtensions.includes(fileExtension.toLowerCase())) {
+      alert(fileExtension + '不在允許的格式範圍內，請重新選取');
+      return;
+    }
+  }
+  //圖片總數量不超過五張
+  if(formParams.existFile) {
+    if (formParams.existFile.length + formParams.newFile.length + files.length > 5) {
+      alert('上傳至多5張圖片');
+      return;
+    }
+  } else {
+    if (formParams.newFile.length + files.length > 5) {
+      alert('上傳至多5張圖片');
+      return;
+    }
+  }
+  // 檢查圖片大小
+  if(!checkFileSize(files,formParams.newFile)) {  
+    return
+  }
+  const imgArray = formParams.newFile;
+  const previewUrl = formParams.viewFile;
+  for (let i = 0; i < files.length; i++) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const file = files[i]; // 保持原始文件
+      imgArray.push(file);
+      previewUrl.push({
+        FileName: file.name,
+        FileLink: URL.createObjectURL(file),
+        Type: 'new',
+      });
+    };
+    reader.readAsDataURL(files[i]);
+  }
+});
+export const viewImgFile = ((index,formParams,modalParams,type) => {
+  switch (type) {
+    case 'new':
+      modalParams.title = formParams.viewFile[index].FileName;
+      modalParams.src = formParams.viewFile[index].FileLink;
+      break;
+    case 'exist':
+      modalParams.title = formParams.existFile[index].FileName;
+      modalParams.src = formParams.existFile[index].FileLink;
+      break;
+  }
+});
+export const deleteFile = ((index,formParams,type) => {
+  switch (type) {
+    case 'new':
+      formParams.newFile.splice(index, 1);
+      formParams.viewFile.splice(index, 1);
+      break;
+    case 'exist':
+      formParams.deleteFile.push(formParams.existFile[index].FileName);
+      formParams.existFile.splice(index, 1);
+      break;
+  }
+});
+export const openFileExplorer = ((fileInputs) => {
+  fileInputs.click();
+});

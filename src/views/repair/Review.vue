@@ -1,20 +1,20 @@
 <template>
   <Navbar/>
   <div class="main_section">
-  <!-- 放大Swiper圖片 -->
-  <div class="zoom_img_modal modal fade" id="zoomImg" tabindex="-1"  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">檢視照片</h5>
-                <p data-bs-dismiss="modal" class='close_icon'>X</p>
-            </div>
-      <div class="modal-body">
-        <img  src="" alt="Zoomed Image">
+    <!-- 放大Swiper圖片 -->
+    <div class="zoom_img_modal modal fade" id="zoomImg" tabindex="-1"  aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{ previewParams.title}}</h5>
+            <p data-bs-dismiss="modal" class='close_icon'>X</p>
+          </div>
+          <div class="modal-body">
+            <img :src="previewParams.src" alt="Zoomed Image">
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
     <div class="title col">
       <h1>
         審核作業
@@ -77,9 +77,9 @@
           <swiper-container class="swiper_section" :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
             <swiper-slide v-for="(item , index) in details.existFile" :key="index"> 
             <img class="swiper_bottom_img" :src="item.FileLink"> 
-              <button class='zoom_img' data-bs-toggle="modal" data-bs-target="#zoomImg" data-image-src="">
-      <img src="@/assets/zoom.png">
-    </button>
+            <button class='zoom_img' data-bs-toggle="modal" data-bs-target="#zoomImg" @click="handlePreview(item)">
+              <img src="@/assets/zoom.png">
+            </button>
             </swiper-slide>
           </swiper-container>
           <div class="swiper_pagination">
@@ -210,6 +210,11 @@
         resultName: '未驗證', //審核人員
         result: '', //審核結果
       });
+      // Modal Params
+      const previewParams = reactive({
+        title: '',
+        src: '',
+      })
       onMounted(() => {
         getDetails();
         reviewDate.value = getDate();
@@ -285,14 +290,20 @@
             console.error(error);
           })
       }
+      function handlePreview(file) {
+        previewParams.title = file.FileName;
+        previewParams.src = file.FileLink;
+      }
       return {
         details,
         reviewDate,
         validation,
         canSubmit,
+        previewParams,
         validate,
         submit,
         goBack,
+        handlePreview,
         pagination: {
           clickable: true,
         },

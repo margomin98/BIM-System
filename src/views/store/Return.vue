@@ -261,14 +261,8 @@
                 case '在庫':
                   alertMsg.value = '此資產已在庫，無法重複歸還。'
                   break;
-                case '出貨':
-                  alertMsg.value = '此資產已被出貨，無法進行歸還作業。'
-                  break;
                 case '報廢':
                   alertMsg.value = '此資產已被報廢，無法進行歸還作業。'
-                  break;
-                case '退貨':
-                  alertMsg.value = '此資產已被退貨，無法進行歸還作業。'
                   break;
                 case '已被設備整合':
                   alertMsg.value = '此資產已被整合進設備整合箱，無法進行歸還作業。'

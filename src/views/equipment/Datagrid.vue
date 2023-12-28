@@ -282,6 +282,9 @@
         var formattedTime = year + '' + addZero(month) + '' + addZero(day) + '' + addZero(hours) + '' + addZero(minutes) + '' + addZero(seconds)+'_整合箱報表.xlsx';
         return formattedTime;
       }
+      function addZero(value) {
+        return value < 10 ? '0' + value : value;
+      }
       return {
         searchParams,
         DropdownArray,

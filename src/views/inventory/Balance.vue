@@ -51,26 +51,30 @@
             </div>
           </div>
         </div>
+        <!-- 專案代碼 -->
+        <div v-show="details.PlanType === '專案盤點'" class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">專案代碼 :</div>
+            <input type="text" class="form-control readonly_box" v-model="details.ProjectCode" readonly>
+          </div>
+        </div>
+        <!-- 專案名稱 -->
+        <div v-show="details.PlanType === '專案盤點'" class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">專案名稱 :</div>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.ProjectName" readonly>
+          </div>
+        </div>
         <div class="col">
           <div class="input-group" style="   justify-content: flex-start;">
             <div class="input-group-prepend">盤點類型：</div>
             <div class="check_section d-flex">
-              <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no1" name="radio" value="指定盤" v-model="details.PlanType" :disabled="details.PlanType !== '指定盤'" />
-                <label for="no1">指定盤</label>
-              </div>
-              <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no2" name="radio" value="月盤" v-model="details.PlanType" :disabled="details.PlanType !== '月盤'" />
-                <label for="no2">月盤</label>
-              </div>
-              <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no3" name="radio" value="季盤" v-model="details.PlanType" :disabled="details.PlanType !== '季盤'" />
-                <label for="no3">季盤</label>
-              </div>
-              <div class="form-check d-flex align-items-center">
-                <input type="radio" id="no4" name="radio" value="年盤" v-model="details.PlanType" :disabled="details.PlanType !== '年盤'" />
-                <label for="no4">年盤</label>
-              </div>
+              <template v-for="(item , index) in PlanType" :key="item">
+                <div class="form-check d-flex align-items-center">
+                  <input type="radio" :id="`no${index}`" name="radio" :value="item" v-model="details.PlanType" :disabled="details.PlanType !== item" />
+                  <label :for="`no${index}`">{{ item }}</label>
+                </div>
+              </template>
             </div>
           </div>
         </div>
@@ -341,6 +345,7 @@
 createDatagrid,
 UpdatePageParameter,
   } from "@/assets/js/common_fn";
+  import { PlanType } from '@/assets/js/dropdown';
   import {
     Inventory_Balance_Status
   } from '@/assets/js/enter_status'
@@ -683,6 +688,7 @@ UpdatePageParameter,
         rowData1,
         rowData2,
         rowHeight: 35,
+        PlanType,
         submit,
         validate,
         getDatagrid,

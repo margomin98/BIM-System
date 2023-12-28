@@ -55,12 +55,12 @@
       </div>
     </div>
     <div class="info_wrap col">
-      <div class="fixed_info">
+      <div v-if="details.Type == 0" class="fixed_info">
         <div>
           <p><span>*</span>填寫資產資訊(請至少填寫一項)</p>
         </div>
       </div>
-      <div class="content">
+      <div v-if="details.Type == 0" class="content">
         <!-- 資產類型 -->
         <div class="row">
           <div class="col-12">
@@ -347,8 +347,8 @@
             <!-- 頁籤資產編號 -->
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend">資產編號 :</div>
-                <input type="text" class="form-control" placeholder="BFXXXXXXXX" v-model="tab.itemAssetsId">
+                <div class="input-group-prepend" >資產編號 :</div>
+                <input type="text" class="form-control" :class="{'readonly_box': details.Type == 1}" placeholder="BFXXXXXXXX" v-model="tab.itemAssetsId" :readonly="details.Type == 1">
               </div>
             </div>
             <!-- 頁籤廠商 -->

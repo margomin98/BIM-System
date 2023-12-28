@@ -364,9 +364,6 @@
                 case '報廢':
                   alertMsg.value = `此${Type}已${Status}`
                   break;
-                case '出貨':
-                  alertMsg.value = `此${Type}已${Status}`
-                  break;
                 case '退貨':
                   alertMsg.value = `此${Type}已${Status}`
                   break;
