@@ -3,14 +3,20 @@
 </template>
   
 <script setup>
-import { onMounted , ref } from 'vue';
-const props = defineProps(['datagrid']);
-
+import { reactive, ref } from 'vue';
+const props = defineProps(['datagrid','title']);
+const title = reactive({
+  pj_code: '',
+  pj_name: '',
+  person: '',
+})
 const grid_data = ref(null);
-onMounted(()=>{
-grid_data.value =  getData();
-});
 const printDataGrid = () => {
+  // grid_data.value =  getData();
+  grid_data.value =  props.datagrid;
+  title.pj_code = props.title.pj_code || '';
+  title.pj_name = props.title.pj_name || '';
+  title.person = props.title.person || '';
   // 開啟一個新的窗口進行列印
   const printWindow = window.open('', '_blank');
   // 創建列印友好的 HTML 模板
@@ -28,15 +34,16 @@ const printDataGrid = () => {
     </head>
     <body>
       <div style='display: flex;gap: 0 20px;'>
-      <p style='font-size: 14px'>專案代碼:<br>12345678902</p>
-      <p style='font-size: 14px'>專案名稱:<br>長佳TPKC資料中心IDC及MSC機房機電新建工程BIM服務</p>
-      <p style='font-size: 14px'>製表人:<br>蕭敬騰</p></div>
+        <p style='font-size: 14px'>製表人:<br>${ title.person }</p>
+        <p style='font-size: 14px'>專案代碼:<br>${ title.pj_code }</p>
+        <p style='font-size: 14px'>專案名稱:<br>${ title.pj_name }</p>
+      </div>
       <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
         <thead>
           <tr>
             <th style="border: 1px solid black; font-size: 12px;">項目</th>
+            <th style="border: 1px solid black; font-size:12px">資產編號</th>
             <th style="border: 1px solid black; font-size: 12px;">物品名稱</th>
-            <th style="border: 1px solid black;font-size:12px">資產編號</th>
             <th style="border: 1px solid black;font-size:12px">設備總類</th>
             <th style="border: 1px solid black;font-size:12px">設備分類</th>
             <th style="border: 1px solid black;font-size:12px">應盤</th>
@@ -64,15 +71,15 @@ const getPrintableData = () => {
     .map(
       (item,index) => `
         <tr>
-          <td style="border: 1px solid black; font-size: 12px;padding:5px;  text-align: center;">${(index + 1).toString().padStart(2, '0')}</td>
-          <td style="border: 1px solid black; font-size: 12px;padding:5px">${item.AssetName}</td>
+          <td style="border: 1px solid black; font-size: 12px;padding:5px; text-align: center;">${(index + 1).toString().padStart(2, '0')}</td>
           <td style="border: 1px solid black;font-size:12px;padding:5px">${item.AssetsId}</td>
+          <td style="border: 1px solid black; font-size: 12px;padding:5px">${item.AssetName}</td>
           <td style="border: 1px solid black;font-size:12px;padding:5px">${item.EquipTypeName}</td>
           <td style="border: 1px solid black;font-size:12px;padding:5px">${item.EquipCategoryName}</td>
-          <td style="border: 1px solid black;font-size:12px;padding:5px">${item.ReceivableNum}</td>
-          <td style="border: 1px solid black;font-size:12px;padding:5px">${item.ActualNum}</td>
-          <td style="border: 1px solid black;font-size:12px;padding:5px">${item.Discrepancy}</td>
-          <td style="border: 1px solid black;font-size:12px;padding:5px">${item.Unit}</td>
+          <td style="border: 1px solid black;font-size:12px;padding:5px; text-align: center;">${item.ReceivableNum}</td>
+          <td style="border: 1px solid black;font-size:12px;padding:5px; text-align: center;">${item.ActualNum}</td>
+          <td style="border: 1px solid black;font-size:12px;padding:5px; text-align: center;">${item.Discrepancy}</td>
+          <td style="border: 1px solid black;font-size:12px;padding:5px; text-align: center;">${item.Unit}</td>
         </tr>
       `
     )

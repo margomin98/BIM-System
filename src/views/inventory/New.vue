@@ -638,7 +638,7 @@
               if (data.state === 'success') {
                 // 將符合情況的AssetsId List放入formParams.AssetList
                 console.log('allgrid:', data.resultList);
-                data.resultList.forEach(id => {
+                data.resultList.rows.forEach(id => {
                   formParams.AssetList.push(id);
                 });
                 // 全選情況下，扣掉排除List

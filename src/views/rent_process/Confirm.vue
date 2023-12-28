@@ -237,7 +237,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
   import AssetsView from '@/components/Rent_process_new_view_button'
@@ -263,285 +263,273 @@
   import {
     RentProcess_Confirm_Status
   } from "@/assets/js/enter_status";
-  export default {
-    components: {
-      Navbar,
-      Column,
-      DataTable,
-      AssetsView,
+  import axios from 'axios';
+  const route = useRoute();
+  const router = useRouter();
+  const AO_ID = route.query.search_id;
+  const totalNeed = ref(0); //總所需數量
+  const totalSelect = ref(0); //總已備數量
+  const details = ref({});
+  const options = Rent_UseArray;
+  const DeliveryMemo = ref('');
+  const DeliveryDate = ref('');
+  const loading = ref(false);
+  const validation = reactive([
+    {
+      title: '申請人員',
+      account: '',
+      password: '',
+      isValidate: false,
+      resultName: '未驗證',
     },
-    setup() {
-      const route = useRoute();
-      const router = useRouter();
-      const AO_ID = route.query.search_id;
-      const totalNeed = ref(0); //總所需數量
-      const totalSelect = ref(0); //總已備數量
-      const details = ref({});
-      const options = Rent_UseArray;
-      const DeliveryMemo = ref('');
-      const DeliveryDate = ref('');
-      const loading = ref(false);
-      const validation = reactive([{
-          title: '申請人員',
-          account: '',
-          password: '',
-          isValidate: false,
-          resultName: '未驗證',
-          id: '',
-        },
-        {
-          title: '領用人員',
-          account: '',
-          password: '',
-          isValidate: false,
-          resultName: '未驗證',
-          id: 'AOP_ReceivedDelivery',
-        },
-        {
-          title: '交付人員',
-          account: '',
-          password: '',
-          isValidate: false,
-          resultName: '未驗證',
-          id: 'AOP_OutboundDelivery',
-        },
-      ]);
-      // 資產出庫項目
-      const datagrid1field = [{
-          field: "id",
-          width: '50px',
-          header: "項目"
-        },
-        {
-          field: "EquipTypeName",
-          width: '150px',
-          header: "設備總類"
-        },
-        {
-          field: "EquipCategoryName",
-          width: '150px',
-          header: "設備分類"
-        },
-        {
-          field: "ProductName",
-          width: '150px',
-          header: "物品名稱"
-        },
-        {
-          field: "Number",
-          width: '100px',
-          header: "數量"
-        },
-        {
-          field: "RequiredSpec",
-          width: '250px',
-          header: "規格需求"
-        },
-      ]
-      // 資產出庫細項
-      const datagrid2field = [{
-          field: "OM_List_id",
-          width: '50px',
-          header: "需求項目",
-          sortable: false,
-        },
-        {
-          field: "OM_Number",
-          width: '30px',
-          header: "數量",
-          sortable: false,
-        },
-        {
-          field: "OM_Unit",
-          width: '30px',
-          header: "單位",
-          sortable: false,
-        },
-        {
-          field: "AssetsId",
-          width: '150px',
-          header: "資產編號",
-          sortable: true,
-        },
-        {
-          field: "AssetName",
-          width: '150px',
-          header: "物品名稱",
-          sortable: true,
-        },
-        {
-          field: "ProductType",
-          width: '150px',
-          header: "型號",
-          sortable: true,
-        },
-        {
-          field: "ProductSpec",
-          width: '150px',
-          header: "規格",
-          sortable: true,
-        },
-        {
-          field: "VendorName",
-          width: '150px',
-          header: "廠商",
-          sortable: true,
-        },
-        {
-          field: "AreaName",
-          width: '150px',
-          header: "儲位區域",
-          sortable: true,
-        },
-        {
-          field: "LayerName",
-          width: '150px',
-          header: "儲位櫃位",
-          sortable: true,
-        },
-      ]
-      const rowData1 = ref([]);
-      const rowData2 = ref([]);
-      onMounted(() => {
-        getDetails();
-        DeliveryDate.value = getDate();
-      });
-      async function getDetails() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
-          const data = response.data;
-          if (data.state === 'success') {
-            canEnterPage(data.resultList.Status, RentProcess_Confirm_Status)
-            console.log('Details Get成功 資料如下\n', data.resultList);
-            details.value = data.resultList;
-            rowData1.value = data.resultList.ItemList;
-            rowData2.value = data.resultList.OM_List;
-            totalNeed.value = 0;
-            rowData1.value.forEach(item => {
-              totalNeed.value += item.Number;
-            });
-            totalSelect.value = 0;
-            rowData2.value.forEach(item => {
-              totalSelect.value += item.OM_Number;
-            });
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error(error);
-        }
+    {
+      title: '領用人員',
+      account: '',
+      password: '',
+      isValidate: false,
+      resultName: '未驗證',
+      id:'AOP_ReceivedDelivery',
+    },
+    {
+      title: '交付人員',
+      account: '',
+      password: '',
+      isValidate: false,
+      resultName: '未驗證',
+      id:'AOP_OutboundDelivery',
+    },
+  ]);
+  // 資產出庫項目
+  const datagrid1field = [{
+      field: "id",
+      width: '50px',
+      header: "項目"
+    },
+    {
+      field: "EquipTypeName",
+      width: '150px',
+      header: "設備總類"
+    },
+    {
+      field: "EquipCategoryName",
+      width: '150px',
+      header: "設備分類"
+    },
+    {
+      field: "ProductName",
+      width: '150px',
+      header: "物品名稱"
+    },
+    {
+      field: "Number",
+      width: '100px',
+      header: "數量"
+    },
+    {
+      field: "RequiredSpec",
+      width: '250px',
+      header: "規格需求"
+    },
+  ]
+  // 資產出庫細項
+  const datagrid2field = [{
+      field: "OM_List_id",
+      width: '50px',
+      header: "需求項目",
+      sortable: false,
+    },
+    {
+      field: "OM_Number",
+      width: '30px',
+      header: "數量",
+      sortable: false,
+    },
+    {
+      field: "OM_Unit",
+      width: '30px',
+      header: "單位",
+      sortable: false,
+    },
+    {
+      field: "AssetsId",
+      width: '150px',
+      header: "資產編號",
+      sortable: true,
+    },
+    {
+      field: "AssetName",
+      width: '150px',
+      header: "物品名稱",
+      sortable: true,
+    },
+    {
+      field: "ProductType",
+      width: '150px',
+      header: "型號",
+      sortable: true,
+    },
+    {
+      field: "ProductSpec",
+      width: '150px',
+      header: "規格",
+      sortable: true,
+    },
+    {
+      field: "VendorName",
+      width: '150px',
+      header: "廠商",
+      sortable: true,
+    },
+    {
+      field: "AreaName",
+      width: '150px',
+      header: "儲位區域",
+      sortable: true,
+    },
+    {
+      field: "LayerName",
+      width: '150px',
+      header: "儲位櫃位",
+      sortable: true,
+    },
+  ]
+  const rowData1 = ref([]);
+  const rowData2 = ref([]);
+  onMounted(() => {
+    getDetails();
+    DeliveryDate.value = getDate();
+  });
+  async function getDetails() {
+    const axios = require('axios');
+    try {
+      const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
+      const data = response.data;
+      if (data.state === 'success') {
+        canEnterPage(data.resultList.Status, RentProcess_Confirm_Status)
+        console.log('Details Get成功 資料如下\n', data.resultList);
+        details.value = data.resultList;
+        rowData1.value = data.resultList.ItemList;
+        rowData2.value = data.resultList.OM_List;
+        totalNeed.value = 0;
+        rowData1.value.forEach(item => {
+          totalNeed.value += item.Number;
+        });
+        totalSelect.value = 0;
+        rowData2.value.forEach(item => {
+          totalSelect.value += item.OM_Number;
+        });
+      } else if (data.state === 'error') {
+        alert(data.messages);
+      } else if (data.state === 'account_error') {
+        alert(data.messages);
+        router.push('/');
       }
-      //分別使用帳號密碼驗證、改變驗證狀態 user1為領用人員 user2為交付人員
-      async function validate(index) {
-        const axios = require('axios');
-        const formData = new FormData();
-        const formFields = {
-          'userName': validation[index].account,
-          'userPassword': validation[index].password,
-          'id': validation[index].id,
-        };
-        //將表格資料append到 formData
-        for (const key in formFields) {
-          formData.append(key, formFields[key]);
-        }
-        try {
-          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData);
-          const data = response.data;
-          if (data.state === 'success') {
-            validation[index].isValidate = true;
-            validation[index].resultName = validation[index].account;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-            validation[index].isValidate = false;
-            validation[index].resultName = '未驗證';
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
-      const canSubmit = computed(() => {
-        // 至少一項交付
-        let atLeastOne = false;
-        for (let i = 0; i < rowData2.value.length; i++) {
-          if (rowData2.value[i].OM_IsExecute) {
-            atLeastOne = true;
-            break;
-          }
-        }
-        // 申請人員、交付人員驗證
-        const isValidate = validation[0].isValidate && validation[2].isValidate
-        return isValidate && atLeastOne
-      })
-      async function submit() {
-        if (DeliveryMemo.value) {
-          DeliveryMemo.value = DeliveryMemo.value.trim();
-        }
-        if (DeliveryMemo.value && !/^[\s\S]{1,100}$/.test(DeliveryMemo.value)) {
-          alert('交付備註不可輸入超過100字')
-          return
-        }
-        if (!loading.value) {
-          loading.value = true;
-          let OM_List = [];
-          rowData2.value.forEach(item => {
-            OM_List.push({
-              OM_id: item.OM_id,
-              OM_IsExecute: item.OM_IsExecute,
-            });
-          });
-          console.log('OM_List', OM_List);
-          const axios = require('axios');
-          const requestData = {
-            AO_ID: details.value.AO_ID,
-            Recipient: validation[0].resultName,
-            DeliveryOperator: validation[1].resultName,
-            DeliveryMemo: DeliveryMemo.value,
-            OM_List: OM_List,
-          };
-          try {
-            const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/Delivery', requestData);
-            const data = response.data;
-            console.log(data);
-            if (data.state === 'success') {
-              let msg = data.messages;
-              msg += '\n單號:' + data.resultList.AO_ID;
-              alert(msg);
-              router.push({
-                name: 'Rent_Process_Datagrid'
-              });
-            } else {
-              alert(data.messages);
-              loading.value = false;
-            }
-          } catch (error) {
-            loading.value = false;
-            console.error(error);
-          }
-        }
-      }
-      return {
-        datagrid1field,
-        datagrid2field,
-        totalNeed,
-        totalSelect,
-        details,
-        options,
-        rowData1,
-        rowData2,
-        validation,
-        DeliveryMemo,
-        DeliveryDate,
-        validate,
-        canSubmit,
-        submit,
-        goBack,
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  //分別使用帳號密碼驗證、改變驗證狀態 user1為領用人員 user2為交付人員
+  async function validate(index) {
+    // 領用/交付人員驗證
+    const formData = new FormData();
+    let formFields = {};
+    let url = '';
+    if(index != 0 ) {
+      formFields = {
+        'userName': validation[index].account,
+        'userPassword': validation[index].password,
+        'id': validation[index].id,
       };
-    },
-  };
+      url = 'http://192.168.0.177:7008/Account/IdentityValidation'
+    } else {
+      formFields = {
+        'userName': validation[index].account,
+        'userPassword': validation[index].password,
+        'ao_id': AO_ID,
+      };
+      url = 'http://192.168.0.177:7008/AssetsOutMng/AO_ApplicantValidation'
+    }
+
+    for (const key in formFields) {
+      formData.append(key, formFields[key]);
+    }
+
+    try {
+      const response = await axios.post(url, formData);
+      const data = response.data;
+      if (data.state === 'success') {
+        validation[index].isValidate = true;
+        validation[index].resultName = validation[index].account;
+      } else if (data.state === 'error') {
+        alert(data.messages);
+        validation[index].isValidate = false;
+        validation[index].resultName = '未驗證';
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  const canSubmit = computed(()=>{
+    // 至少一項交付
+    let atLeastOne = false;
+    for(let i=0 ; i < rowData2.value.length ; i++) {
+      if(rowData2.value[i].OM_IsExecute) {
+        atLeastOne = true;
+        break;
+      }
+    }
+    // 申請人員、交付人員驗證
+    const isValidate = validation[0].isValidate && validation[2].isValidate
+    return isValidate && atLeastOne
+  })
+  async function submit() {
+    if (DeliveryMemo.value) {
+      DeliveryMemo.value = DeliveryMemo.value.trim();
+    }
+    if (DeliveryMemo.value && !/^[\s\S]{1,100}$/.test(DeliveryMemo.value)) {
+      alert('交付備註不可輸入超過100字')
+      return
+    }
+    if (!loading.value) {
+      loading.value = true;
+      let OM_List = [];
+      rowData2.value.forEach(item => {
+        OM_List.push({
+          OM_id: item.OM_id,
+          OM_IsExecute: item.OM_IsExecute,
+        });
+      });
+      console.log('OM_List', OM_List);
+      const axios = require('axios');
+      const Recipient = validation[1].resultName === '未驗證' ? '' : validation[1].resultName;
+      const requestData = {
+        AO_ID: details.value.AO_ID,
+        Recipient: Recipient,
+        DeliveryOperator: validation[2].resultName,
+        DeliveryMemo: DeliveryMemo.value,
+        OM_List: OM_List,
+      };
+      try {
+        const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/Delivery', requestData);
+        const data = response.data;
+        console.log(data);
+        if (data.state === 'success') {
+          let msg = data.messages;
+          msg += '\n單號:' + data.resultList.AO_ID;
+          alert(msg);
+          router.push({
+            name: 'Rent_Process_Datagrid'
+          });
+        } else {
+          alert(data.messages);
+          loading.value = false;
+        }
+      } catch (error) {
+        loading.value = false;
+        console.error(error);
+      }
+    }
+  }
 </script>
 
 <style lang="scss" scoped>
