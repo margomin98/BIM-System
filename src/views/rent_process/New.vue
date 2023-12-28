@@ -48,6 +48,12 @@
                 </div>
               </div>
               <div class="col-xl-3 col-lg-12 col-md-12 col-12">
+                <p>資產編號</p>
+                <div class="number-input-box">
+                  <input class="input-number" type="text" v-model="searchParams.AssetsId" placeholder="BFXXXXXXXX" />
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-12 col-md-12 col-12">
                 <p>
                   已選/所需 數量
                   <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘" />
@@ -452,6 +458,7 @@ GetAntiForgeryToken
         Number: 1,
         RequiredSpec: '',
         id: 1,
+        AssetsId: '',
         item_id: '',
         selectedNumber: 0,
       });
@@ -553,7 +560,6 @@ GetAntiForgeryToken
       // 檢索datagrid
       const datagrid3 = createDatagrid();
       const datagrid3field = [
-        // { field: "selectNumber", width: '100px', header: "已選數量" },
         {
           field: "OM_Unit",
           width: '100px',
@@ -570,6 +576,21 @@ GetAntiForgeryToken
           header: "物品名稱"
         },
         {
+          field: "ProductType",
+          width: '150px',
+          header: "型號"
+        },
+        {
+          field: "ProductSpec",
+          width: '150px',
+          header: "規格"
+        },
+        {
+          field: "VendorName",
+          width: '150px',
+          header: "廠商"
+        },
+        {
           field: "AreaName",
           width: '150px',
           header: "儲位區域"
@@ -579,21 +600,6 @@ GetAntiForgeryToken
           width: '150px',
           header: "儲位櫃位"
         },
-        {
-          field: "VendorName",
-          width: '150px',
-          header: "廠商"
-        },
-        {
-          field: "ProductType",
-          width: '150px',
-          header: "型號"
-        },
-        {
-          field: "ProductSpec",
-          width: '150px',
-          header: "規格"
-        }
       ]
       const rowData1 = ref([]);
       const rowData2 = ref([]);
@@ -664,8 +670,13 @@ GetAntiForgeryToken
         }
       }
       async function searchInventory(event, type) {
+        const BF_pattern = /^(BF\d{8})$/;
         if (!/^.{0,20}$/.test(searchParams.ProductName)) {
           alert('物品名稱不可輸入超過20字')
+          return
+        }
+        if (searchParams.AssetsId && !BF_pattern.test(searchParams.AssetsId)) {
+          alert('資產編號格式錯誤')
           return
         }
         const axios = require('axios');
@@ -678,6 +689,7 @@ GetAntiForgeryToken
           form.append('Category_Id', searchParams.Category_Id);
           form.append('ProductName', searchParams.ProductName);
           form.append('ProjectCode', searchParams.ProjectCode);
+          form.append('AssetsId', searchParams.AssetsId);
           UpdatePageParameter(datagrid3, event, type, form);
           const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/SearchInventory', form,{
             headers: { 

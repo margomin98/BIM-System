@@ -112,10 +112,10 @@
         <!-- 已上傳檔案 -->
         <div class="selected_file col-12">
           <div class="input-group mt-3">
-            <div class="input-group-prepend">已上傳的檔案：</div>
+            <div class="input-group-prepend">已上傳檔案：</div>
             <div class="d-flex  flex-column">
               <div v-for="(file , index) in details.existFile" :key="index" class="file_upload_wrap">
-                <p>{{ file.FileName }}
+                <p  class='file_name'>{{ file.FileName }}
                   <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"  @click="viewImgFile(index,details,modalParams,'exist')" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
                 </p>
               </div>
@@ -429,6 +429,61 @@ import { getAssets , GetAntiForgeryToken} from '@/assets/js/common_api';
         font-size: 20px;
         font-weight: 600;
       }
+    }
+  }
+  .modal {
+    .modal-body {
+      padding: 20px;
+      margin: auto;
+    }
+    .modal-content {
+      margin: auto;
+    }
+    .modal-header {
+      h5 {
+        font-weight: 700;
+      }
+      background: #528091;
+      color: white;
+      display: flex;
+      justify-content: center;
+    }
+  }
+   .file_wrap {
+              display: flex;
+              flex-direction: column;
+              .choose_btn {
+                margin-bottom: 10px;
+                @include choose_file_btn;
+                &:hover {
+                  background: #3f608f;
+                }
+              }
+            }
+  .file_name::before {
+    margin-right: 5px;
+    content: '·';
+    font-weight: 700;
+    color: white;
+  }
+  .selected_file {
+    p {
+      margin-bottom: 5px;
+      font-weight: 700;
+      color: white;
+    }
+    .file_upload_box {
+      .file_upload_wrap {
+        margin-bottom: 0;
+        display: flex;
+        word-break: break-word;
+        img {
+          width: 25px;
+          height: 25px;
+        }
+      }
+       
+            
     }
   }
   @media only screen and (min-width: 1200px) {

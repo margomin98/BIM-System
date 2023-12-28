@@ -29,7 +29,7 @@
 					<div class="col-12">
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
-								<span>*</span>訂單編號：
+								<span v-if="!props.disabled">*</span>訂單編號：
 							</div>
 							<input ref="inputElement" type="text" class="form-control" :class="{'readonly_box': props.disabled}" :placeholder="props.placeholder.PurchaseNum"
 								v-model="formParams.PurchaseNum" :readonly="props.disabled">
@@ -57,7 +57,7 @@
 					<div class="row g-0">
 						<div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
 							<div class="input-group mb-3">
-								<div class="input-group-prepend"><span>*</span>下訂日期：</div>
+								<div class="input-group-prepend"><span v-if="!props.disabled">*</span>下訂日期：</div>
 								<div class="date-selector">
 									<input type="date" class="date-input" :class="{'readonly_box': props.disabled}" v-model="formParams.PurchaseDate"  :readonly="props.disabled"/>
 								</div>
@@ -66,7 +66,7 @@
 						<!-- 採購件數 -->
 						<div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
 							<div class="input-group  mb-3">
-								<div class="input-group-prepend"><span>*</span>採購件數：</div>
+								<div class="input-group-prepend"><span v-if="!props.disabled">*</span>採購件數：</div>
 								<div class="num_wrap d-flex ">
 									<div class="number-input-box">
 										<input class="input-number" :class="{'readonly_box': props.disabled}" type="number" min="1" v-model="formParams.Quantity"  :readonly="props.disabled"/>

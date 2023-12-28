@@ -25,6 +25,12 @@
         </div>
         <div class="col">
           <div class="input-group mb-3">
+            <div class="input-group-prepend">訂購單號：</div>
+            <input type="text" class="form-control text-center readonly_box" v-model="details.PurchaseNum" readonly />
+          </div>
+        </div>
+        <div class="col">
+          <div class="input-group mb-3">
             <div class="input-group-prepend">物流單號：</div>
             <input type="text" class="form-control text-center readonly_box" v-model="details.ShipmentNum" readonly />
           </div>

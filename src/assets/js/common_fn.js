@@ -282,3 +282,4 @@ export const deleteDocument = ((index, file ,fileParams) => {
 export const selectItem = ((item,formParams,key) => {
   formParams[key] = item ;
 })
+

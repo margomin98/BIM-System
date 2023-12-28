@@ -68,10 +68,10 @@
           formParams['PurchaseNum'] = details.value[key];
         }
         // 檔案部分
-        // if(details.value.existDocument) {
-        //   fileParams.existDoc = details.value.existDocument;
-        // }
-        fileParams.existDoc = [{"FileName": "20231226142509.png", "FileLink": "https://truth.bahamut.com.tw/s01/201909/9ede4b8227205d338399d2dfbb3e7938.JPG" , "exist": true}]
+        if(details.value.existDocument) {
+          fileParams.existDoc = details.value.existDocument;
+        }
+        // fileParams.existDoc = [{"FileName": "20231226142509.png", "FileLink": "https://truth.bahamut.com.tw/s01/201909/9ede4b8227205d338399d2dfbb3e7938.JPG" , "exist": true}]
       }
     })
   })

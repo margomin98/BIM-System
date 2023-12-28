@@ -114,10 +114,10 @@
         <!-- 已選擇的檔案 -->
         <div class="col-12 selected_file">
           <div class="input-group">
-            <div class="input-group-prepend">已選擇的檔案：</div>
+            <div class="input-group-prepend">已選擇檔案：</div>
             <div class="file_upload_box">
               <div v-for="(item , index) in formParams.viewFile" :key="index" class="file_upload_wrap">
-                <p>{{ item.FileName }}
+                <p class='file_name'>{{ item.FileName }}
                   <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="viewImgFile(index,formParams,modalParams,'new')" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
                   <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index,formParams,'new')">
                 </p>
@@ -128,10 +128,10 @@
         <!-- 已上傳檔案 -->
         <div class="selected_file col-12">
           <div class="input-group mt-3">
-            <div class="input-group-prepend">已上傳的檔案：</div>
+            <div class="input-group-prepend">已上傳檔案：</div>
             <div class="d-flex  flex-column">
               <div v-for="(file , index) in formParams.existFile" :key="index" class="file_upload_wrap">
-                <p>{{ file.FileName }}
+                <p  class='file_name'>{{ file.FileName }}
                   <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"  @click="viewImgFile(index,formParams,modalParams,'exist')" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
                   <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index,formParams,'exist')">
                 </p>
@@ -450,12 +450,108 @@
         font-weight: 600;
       }
     }
+  }  .modal {
+    .modal-body {
+      padding: 20px;
+      margin: auto;
+    }
+    .modal-content {
+      margin: auto;
+    }
+    .modal-header {
+      h5 {
+        font-weight: 700;
+      }
+      background: #528091;
+      color: white;
+      display: flex;
+      justify-content: center;
+    }
+  }
+   .file_wrap {
+              display: flex;
+              flex-direction: column;
+              .choose_btn {
+                margin-bottom: 10px;
+                @include choose_file_btn;
+                &:hover {
+                  background: #3f608f;
+                }
+              }
+            }
+  .file_name::before {
+    margin-right: 5px;
+    content: '·';
+    font-weight: 700;
+    color: white;
+  }
+  .selected_file {
+    p {
+      margin-bottom: 5px;
+      font-weight: 700;
+      color: white;
+    }
+    .file_upload_box {
+      .file_upload_wrap {
+        margin-bottom: 0;
+        display: flex;
+        word-break: break-word;
+        img {
+          width: 25px;
+          height: 25px;
+        }
+      }
+       
+            
+    }
+  }
+  .main_section {
+    .readonly_box {
+      @include readonly_box;
+    }
+    .form_search_btn {
+      @include form_search_btn;
+    }
+    h1 {
+      margin-top: 100px;
+      text-align: center;
+      font-size: 55px;
+      font-weight: 600;
+      @include title_color;
+    }
+    .info_wrap {
+      margin: 30px auto 5%;
+      .button_wrap {
+        display: flex;
+        justify-content: space-between;
+        margin: 30px auto 5%;
+        width: 220px;
+        button {
+          &:nth-child(1) {
+            @include back_to_previous_btn;
+            &:hover {
+              background-color: #5d85bb;
+            }
+          }
+        }
+        .send_btn {
+          @include search_and_send_btn;
+          &:hover {
+            background-color: #5e7aa2;
+          }
+        }
+        .send_btn_disabled {
+          background: #878787;
+          &:hover {
+            background: #878787;
+          }
+        }
+      }
+    }
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
-      .readonly_box {
-        @include readonly_box;
-      }
+    
       .form_search_btn {
         @include form_search_btn;
       }
@@ -467,7 +563,6 @@
         @include title_color;
       }
       .info_wrap {
-        margin: 30px auto 5%;
         width: 750px;
         .fixed_info {
           @include fixed_info;
@@ -544,35 +639,17 @@
           justify-content: space-between;
           margin: 30px auto 5%;
           width: 220px;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-          }
-          .send_btn {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
-          .send_btn_disabled {
-            background: #878787;
-            &:hover {
-              background: #878787;
-            }
-          }
+        
+        
+    
+        
         }
       }
     }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
-      .readonly_box {
-        @include readonly_box;
-      }
+    
       .form_search_btn {
         @include form_search_btn;
       }
@@ -584,7 +661,6 @@
         @include title_color;
       }
       .info_wrap {
-        margin: 30px auto 5%;
         padding: 0 5%;
         .fixed_info {
           @include fixed_info;
@@ -670,26 +746,9 @@
           justify-content: space-between;
           margin: 30px auto 5%;
           width: 220px;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-          }
-          .send_btn {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
-          .send_btn_disabled {
-            background: #878787;
-            &:hover {
-              background: #878787;
-            }
-          }
+      
+       
+        
         }
       }
     }
@@ -707,7 +766,6 @@
         }
       }
       .readonly_box {
-        @include readonly_box;
         height: 35px;
         margin-left: unset !important;
       }
@@ -727,11 +785,8 @@
       }
       h1 {
         margin-top: 80px;
-        text-align: center;
         font-size: 40px;
-        font-weight: 600;
-        @include title_color;
-      }
+            }
       .info_wrap {
         padding: 0 5%;
         .fixed_info {
@@ -750,7 +805,6 @@
             margin-left: unset;
             border-radius: 5px;
             margin-top: 5px;
-            height: 35px;
           }
           .input-group {
             flex-direction: column;
@@ -825,31 +879,23 @@
           display: flex;
           justify-content: space-between;
           margin: 30px auto 5%;
-          width: 220px;
+          width: 200px;
           button {
             &:nth-child(1) {
-              @include back_to_previous_btn;
               width: 100px;
-              &:hover {
-                background-color: #5d85bb;
-              }
+             
             }
           }
           .send_btn {
-            @include search_and_send_btn;
             width: 70px;
             padding: 5px;
-            &:hover {
-              background-color: #5e7aa2;
-            }
+          
           }
           .send_btn_disabled {
             background: #878787;
             width: 70px;
             padding: 5px;
-            &:hover {
-              background: #878787;
-            }
+          
           }
         }
       }

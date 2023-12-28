@@ -1,5 +1,5 @@
 <template>
-  <Navbar />
+  <Navbar @username="getUserName" />
   <div class="main_section">
     <div class="title col">
       <h1>盤點結果</h1>
@@ -108,7 +108,7 @@
         <div v-if="!rowData1">
           <h2 class="no_content_text">無差異細項</h2>
         </div>
-        <div v-else style="width: 100%">
+        <div v-else style="width: 100%" class="mb-3">
           <DataTable 
             :size="'small'"
             :value="rowData1" 
@@ -138,6 +138,9 @@
             </Column>
             <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
           </DataTable>
+        </div>
+        <div class="d-flex justify-content-center">
+          <print-btn :datagrid="rowData1" :title="{pj_code:details.ProjectCode||'', pj_name: details.ProjectName || '', person: userName || ''}"></print-btn>
         </div>
       </div>
     </div>
@@ -253,11 +256,12 @@
   </div>
 </template>
 
-<script>
+<script setup>
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
   import Navbar from "@/components/Navbar.vue";
   import List_view_button from "@/components/Inventory_view_button.vue"
+  import PrintBtn from "@/components/Print_button.vue"
   import {
     onMounted,
     reactive,
@@ -277,291 +281,258 @@ GetAntiForgeryToken
   import {
     goBack,
     canEnterPage,
-createDatagrid,
-UpdatePageParameter,
+    createDatagrid,
+    UpdatePageParameter,
   } from "@/assets/js/common_fn";
   import {
     Inventory_BalanceResult_Status
   } from '@/assets/js/enter_status';
   import { PlanType } from '@/assets/js/dropdown';
   import axios from 'axios';
-  export default {
-    components: {
-      Navbar,
-      DataTable,
-      Column,
-      List_view_button,
+  const route = useRoute();
+  const router = useRouter();
+  const IP_ID = route.query.search_id;
+  const details = ref('');
+  const userName = ref('');
+  const DropdownArray = reactive({
+    EquipType: [],
+    EquipCategory: [],
+    Area: [],
+    Layer: [],
+  });
+  const EquipCategoryInit = ref('請先選擇設備總類');
+  const LayerInit = ref('請先選擇區域');
+  const searchParams = reactive({
+    EquipTypeName: '',
+    EquipType_Id: '',
+    EquipCategoryName: '',
+    Category_Id: '',
+    AssetsId: '',
+    AssetName: '',
+    AreaName: '',
+    Area_Id: '',
+    LayerName: '',
+    Layer_Id: '',
+  });
+  const datagrid1 = createDatagrid()
+  const datagrid2 = createDatagrid()
+  const datagrid1field = [
+    {
+      field: 'AssetsId',
+      header: '資產編號',
+      width: '150px',
     },
-    setup() {
-      const route = useRoute();
-      const router = useRouter();
-      const IP_ID = route.query.search_id;
-      const details = ref('');
-      const DropdownArray = reactive({
-        EquipType: [],
-        EquipCategory: [],
-        Area: [],
-        Layer: [],
-      });
-      const EquipCategoryInit = ref('請先選擇設備總類');
-      const LayerInit = ref('請先選擇區域');
-      const searchParams = reactive({
-        EquipTypeName: '',
-        EquipType_Id: '',
-        EquipCategoryName: '',
-        Category_Id: '',
-        AssetsId: '',
-        AssetName: '',
-        AreaName: '',
-        Area_Id: '',
-        LayerName: '',
-        Layer_Id: '',
-      });
-      const datagrid1 = createDatagrid()
-      const datagrid2 = createDatagrid()
-      const datagrid1field = [
-        {
-          field: 'AssetsId',
-          header: '資產編號',
-          width: '150px',
-        },
-        {
-          field: 'RecognizePerson',
-          header: '認列人員',
-          width: '150px',
-        },
-        {
-          field: 'EquipTypeName',
-          header: '設備總類',
-          width: '150px',
-        },
-        {
-          field: 'EquipCategoryName',
-          header: '設備分類',
-          width: '150px',
-        },
-        {
-          field: 'AssetName',
-          header: '物品名稱',
-          width: '150px',
-        },
-        {
-          field: 'AreaName',
-          header: '儲位區域',
-          width: '150px',
-        },
-        {
-          field: 'LayerName',
-          header: '儲位櫃位',
-          width: '150px',
-        },
-        {
-          field: 'ReceivableNum',
-          header: '應盤',
-          width: '80px',
-        },
-        {
-          field: 'ActualNum',
-          header: '實盤',
-          width: '80px',
-        },
-        {
-          field: 'Discrepancy',
-          header: '差異',
-          width: '80px',
-        },
-        {
-          field: 'Unit',
-          header: '單位',
-          width: '80px',
-        },
-      ];
-      const rowData1 = ref([]);
-      const rowData2 = ref([]);
-      onMounted(() => {
-        datagrid1.rows = 20
-        datagrid1.sortField = 'RecognizePerson'
-        getDetails();
-        getDatagrid('','search');
-      });
-      async function submit() {
-        const rows = grid.value.getSelectedRows();
-        console.log(rows);
-      }
-      async function force() {}
-      // 上半部資料 + 差異細項Datagrid
-      async function getDetails() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetInventoryResult?id=${IP_ID}`);
-          const data = response.data;
-          if (data.state === 'success') {
-            // 檢查資料狀態是否可編輯
-            canEnterPage(data.resultList.PlanStatus, Inventory_BalanceResult_Status);
-            console.log('上半部資料如下\n', data.resultList);
-            details.value = data.resultList;
-            rowData1.value = data.resultList.AssetList
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
-      // 下半部盤點範圍Datagrid
-      async function getDatagrid(event , type) {
-        searchParams.AssetName = searchParams.AssetName.trim();
-        if (searchParams.AssetName && !/^[\s\S]{0,20}$/.test(searchParams.AssetName)) {
-          alert('物品名稱不可輸入超過20字')
-          return
-        }
-        const form = new FormData();
-        form.append('PlanId', IP_ID)
-        for (const key in searchParams) {
-          if (searchParams[key]) {
-            form.append(key, searchParams[key]);
-          }
-        }
-        UpdatePageParameter(datagrid2,event,type,form)
-        try {
-          const token = await GetAntiForgeryToken();
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryResult', form,{
-            headers:{
-              'RequestVerificationToken': token,
-            }
-          });
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('下半部datagrid\n', data.resultList);
-            rowData2.value = data.resultList.rows;
-            datagrid2.totalRecords = data.resultList.total;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
-      async function getEquipTypeName() {
-        if (DropdownArray.EquipType.length == 0) {
-          getEquipType()
-            .then((data) => {
-              DropdownArray.EquipType = data;
-            })
-            .catch((error) => {
-              console.error(error);
-            })
-        }
-      }
-      async function getEquipCategoryName() {
-        getEquipCategory(searchParams.EquipType_Id)
-          .then((data) => {
-            DropdownArray.EquipCategory = data;
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-      }
-      async function getAreaName() {
-        if (DropdownArray.Area.length == 0) {
-          getArea()
-            .then((data) => {
-              DropdownArray.Area = data;
-            })
-            .catch((error) => {
-              console.error(error);
-            })
-        }
-      }
-      async function getLayerName() {
-        getLayer(searchParams.Area_Id)
-          .then((data) => {
-            DropdownArray.Layer = data;
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-      }
-      function selectType(item) {
-        searchParams.EquipTypeName = item.Name;
-        searchParams.EquipType_Id = item.Id;
-        searchParams.EquipCategoryName = '';
-        searchParams.Category_Id = '';
-        getEquipCategoryName();
-        EquipCategoryInit.value = '請選擇';
-      }
-      function selectCategory(item) {
-        searchParams.EquipCategoryName = item.Name;
-        searchParams.Category_Id = item.Id;
-      }
-      function selectArea(item) {
-        searchParams.AreaName = item.Name;
-        searchParams.Area_Id = item.Id;
-        searchParams.LayerName = '';
-        searchParams.Layer_Id = '';
-        getLayerName();
-        LayerInit.value = '請選擇';
-      };
-      function selectLayer(item) {
-        searchParams.LayerName = item.Name;
-        searchParams.Layer_Id = item.Id;
-      };
-      function updatePage(event) {
-        // console.log('event',event);
-        datagrid1.first = event.first
-      }
-      function clear() {
-        for (const key in searchParams) {
-          searchParams[key] = '';
-        }
-        EquipCategoryInit.value = '請先選擇設備總類'
-        LayerInit.value = '請先選擇區域'
-        getDatagrid('','search');
-      }
-      function calculateIndex(number,slotProps) {
-        switch (number) {
-          case 1:
-            return String(datagrid1.first +slotProps.index + 1).padStart(2, '0');
-            break;
-          case 2:
-            return String(datagrid2.first + slotProps.index + 1).padStart(2, '0');
-            break;
-        }
-      }
-      return {
-        details,
-        DropdownArray,
-        EquipCategoryInit,
-        LayerInit,
-        searchParams,
-        datagrid1,
-        datagrid1field,
-        datagrid2,
-        rowData1,
-        rowData2,
-        rowHeight: 35,
-        PlanType,
-        submit,
-        force,
-        getDatagrid,
-        getAreaName,
-        getEquipTypeName,
-        selectType,
-        selectCategory,
-        selectArea,
-        selectLayer,
-        updatePage,
-        calculateIndex,
-        clear,
-        goBack,
-      };
+    {
+      field: 'RecognizePerson',
+      header: '認列人員',
+      width: '150px',
     },
+    {
+      field: 'EquipTypeName',
+      header: '設備總類',
+      width: '150px',
+    },
+    {
+      field: 'EquipCategoryName',
+      header: '設備分類',
+      width: '150px',
+    },
+    {
+      field: 'AssetName',
+      header: '物品名稱',
+      width: '150px',
+    },
+    {
+      field: 'AreaName',
+      header: '儲位區域',
+      width: '150px',
+    },
+    {
+      field: 'LayerName',
+      header: '儲位櫃位',
+      width: '150px',
+    },
+    {
+      field: 'ReceivableNum',
+      header: '應盤',
+      width: '80px',
+    },
+    {
+      field: 'ActualNum',
+      header: '實盤',
+      width: '80px',
+    },
+    {
+      field: 'Discrepancy',
+      header: '差異',
+      width: '80px',
+    },
+    {
+      field: 'Unit',
+      header: '單位',
+      width: '80px',
+    },
+  ];
+  const rowData1 = ref([]);
+  const rowData2 = ref([]);
+  onMounted(() => {
+    datagrid1.rows = 20
+    datagrid1.sortField = 'RecognizePerson'
+    getDetails();
+    getDatagrid('','search');
+  });
+  async function submit() {
+    const rows = grid.value.getSelectedRows();
+    console.log(rows);
+  }
+  async function force() {}
+  // 上半部資料 + 差異細項Datagrid
+  async function getDetails() {
+    const axios = require('axios');
+    try {
+      const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetInventoryResult?id=${IP_ID}`);
+      const data = response.data;
+      if (data.state === 'success') {
+        // 檢查資料狀態是否可編輯
+        canEnterPage(data.resultList.PlanStatus, Inventory_BalanceResult_Status);
+        console.log('上半部資料如下\n', data.resultList);
+        details.value = data.resultList;
+        rowData1.value = data.resultList.AssetList
+      } else if (data.state === 'error') {
+        alert(data.messages);
+      } else if (data.state === 'account_error') {
+        alert(data.messages);
+        router.push('/');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  // 下半部盤點範圍Datagrid
+  async function getDatagrid(event , type) {
+    searchParams.AssetName = searchParams.AssetName.trim();
+    if (searchParams.AssetName && !/^[\s\S]{0,20}$/.test(searchParams.AssetName)) {
+      alert('物品名稱不可輸入超過20字')
+      return
+    }
+    const form = new FormData();
+    form.append('PlanId', IP_ID)
+    for (const key in searchParams) {
+      if (searchParams[key]) {
+        form.append(key, searchParams[key]);
+      }
+    }
+    UpdatePageParameter(datagrid2,event,type,form)
+    try {
+      const token = await GetAntiForgeryToken();
+      const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryResult', form,{
+        headers:{
+          'RequestVerificationToken': token,
+        }
+      });
+      const data = response.data;
+      if (data.state === 'success') {
+        console.log('下半部datagrid\n', data.resultList);
+        rowData2.value = data.resultList.rows;
+        datagrid2.totalRecords = data.resultList.total;
+      } else if (data.state === 'error') {
+        alert(data.messages);
+      } else if (data.state === 'account_error') {
+        alert(data.messages);
+        router.push('/');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  async function getEquipTypeName() {
+    if (DropdownArray.EquipType.length == 0) {
+      getEquipType()
+        .then((data) => {
+          DropdownArray.EquipType = data;
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+    }
+  }
+  async function getEquipCategoryName() {
+    getEquipCategory(searchParams.EquipType_Id)
+      .then((data) => {
+        DropdownArray.EquipCategory = data;
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+  }
+  async function getAreaName() {
+    if (DropdownArray.Area.length == 0) {
+      getArea()
+        .then((data) => {
+          DropdownArray.Area = data;
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+    }
+  }
+  async function getLayerName() {
+    getLayer(searchParams.Area_Id)
+      .then((data) => {
+        DropdownArray.Layer = data;
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+  }
+  function selectType(item) {
+    searchParams.EquipTypeName = item.Name;
+    searchParams.EquipType_Id = item.Id;
+    searchParams.EquipCategoryName = '';
+    searchParams.Category_Id = '';
+    getEquipCategoryName();
+    EquipCategoryInit.value = '請選擇';
+  }
+  function selectCategory(item) {
+    searchParams.EquipCategoryName = item.Name;
+    searchParams.Category_Id = item.Id;
+  }
+  function selectArea(item) {
+    searchParams.AreaName = item.Name;
+    searchParams.Area_Id = item.Id;
+    searchParams.LayerName = '';
+    searchParams.Layer_Id = '';
+    getLayerName();
+    LayerInit.value = '請選擇';
+  };
+  function selectLayer(item) {
+    searchParams.LayerName = item.Name;
+    searchParams.Layer_Id = item.Id;
+  };
+  function updatePage(event) {
+    // console.log('event',event);
+    datagrid1.first = event.first
+  }
+  function clear() {
+    for (const key in searchParams) {
+      searchParams[key] = '';
+    }
+    EquipCategoryInit.value = '請先選擇設備總類'
+    LayerInit.value = '請先選擇區域'
+    getDatagrid('','search');
+  }
+  function calculateIndex(number,slotProps) {
+    switch (number) {
+      case 1:
+        return String(datagrid1.first +slotProps.index + 1).padStart(2, '0');
+        break;
+      case 2:
+        return String(datagrid2.first + slotProps.index + 1).padStart(2, '0');
+        break;
+    }
+  }
+  const getUserName = (name) => {
+    userName.value = name;
   }
 </script>
 <style lang="scss" scoped>
