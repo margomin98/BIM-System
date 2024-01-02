@@ -70,10 +70,10 @@
             <div class="input-group-prepend">盤點類型：</div>
             <div class="check_section">
               <template v-for="(item , index) in PlanType" :key="item">
-                    <div class="form-check d-flex align-items-center">
-                      <input type="radio" :id="`no${index}`" name="radio" :value="item" v-model="details.PlanType" :disabled="details.PlanType !== item" />
-                      <label :for="`no${index}`">{{ item }}</label>
-                    </div>
+                      <div class="form-check d-flex align-items-center">
+                        <input type="radio" :id="`no${index}`" name="radio" :value="item" v-model="details.PlanType" :disabled="details.PlanType !== item" />
+                        <label :for="`no${index}`">{{ item }}</label>
+                      </div>
 </template>
             </div>
           </div>

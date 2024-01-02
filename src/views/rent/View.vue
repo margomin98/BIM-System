@@ -32,14 +32,14 @@
             </div>
           </div>
         </div>
-        <div class="row g-0">
+        <div class="row g-0 project_details">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label"><p>專案代碼</p></label>
             <div class="input-group" id='readonly_box'>
               <p class='readonly_box' readonly>{{ details.ProjectCode }}</p>
             </div>
           </div>
-          <div class="col d-flex wrap">
+          <div class="col d-flex wrap ">
             <label for="inputWithTitle" class="form-label" id='project_name'><p>專案名稱</p></label>
             <div class="input-group" id='readonly_box'>
               <p class='readonly_box' readonly>{{ details.ProjectName }}</p>
@@ -63,7 +63,7 @@
           currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
           <Column style="min-width:50px;" header="項目">
             <template #body="slotProps">
-              {{ calculateIndex(slotProps) }}
+                {{ calculateIndex(slotProps) }}
 </template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
@@ -192,6 +192,9 @@
     justify-content: center;
     display: flex;
     align-items: center;
+  }
+  .project_details #project_name {
+    height: 100%;
   }
   @media only screen and (min-width: 1200px) {
     .main_section {

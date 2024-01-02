@@ -10,8 +10,8 @@
               <p>檢索資產</p>
             </div>
             <button type="button" class="close" data-bs-dismiss="modal">
-                  x
-                </button>
+                    x
+                  </button>
           </div>
           <div class="second_content">
             <div class="wrap1">
@@ -19,8 +19,8 @@
                 <p>設備總類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                        {{ searchParams.EquipTypeName || '請選擇' }}
-                      </button>
+                          {{ searchParams.EquipTypeName || '請選擇' }}
+                        </button>
                   <div class="dropdown-menu" aria-labelledby="typeDropdown">
                     <p v-for="(item, index) in searchParams.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(item)">
                       {{ item.Name }}
@@ -32,8 +32,8 @@
                 <p>設備分類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
-                        {{ searchParams.EquipCategoryName || searchParams.EquipCategoryInit }}
-                      </button>
+                          {{ searchParams.EquipCategoryName || searchParams.EquipCategoryInit }}
+                        </button>
                   <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                     <p v-for="(item, index) in searchParams.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(item)">
                       {{ item.Name }}
@@ -60,63 +60,63 @@
                 </p>
                 <div class="number-input-box">
                   <input class="input-number readonly_box" readonly :value="searchParams.selectedNumber + ' / ' + searchParams.Number">
-                  </div>
+                </div>
               </div>
             </div>
             <div class="row g-0">
               <div class="col-12 d-flex wrap2">
                 <label for="inputTextarea" class="form-label"><p>規格需求：</p></label
+                      >
+                      <div></div>
+                      <textarea
+                        class="form-control readonly_box"
+                        id="inputTextarea"
+                        rows="3"
+                        readonly
+                        >{{ searchParams.RequiredSpec }}</textarea
+                      >
+                    </div>
+                  </div>
+                  <div class="col d-flex justify-content-center">
+                    <button
+                      class="btn submit_btn"
+                      type="button"
+                      @click="searchInventory('','search');"
                     >
-                    <div></div>
-                    <textarea
-                      class="form-control readonly_box"
-                      id="inputTextarea"
-                      rows="3"
-                      readonly
-                      >{{ searchParams.RequiredSpec }}</textarea
-                    >
+                      搜尋庫存
+                    </button>
                   </div>
                 </div>
-                <div class="col d-flex justify-content-center">
-                  <button
-                    class="btn submit_btn"
-                    type="button"
-                    @click="searchInventory('','search');"
-                  >
-                    搜尋庫存
-                  </button>
+                <div class="fixed_info">
+                  <div>
+                    <p>目前資產庫存</p>
+                  </div>
                 </div>
-              </div>
-              <div class="fixed_info">
-                <div>
-                  <p>目前資產庫存</p>
-                </div>
-              </div>
-              <DataTable
-                lazy
-                :key="datagrid3.key"
-                :first="datagrid3.first"
-                :size="'small'"
-                :loading="datagrid3.loading"
-                :value="rowData3"
-                :sort-field="datagrid3.sortField"
-                :sort-order="datagrid3.sortOrder"
-                resizableColumns
-                columnResizeMode="expand"
-                showGridlines
-                scrollable
-                scrollHeight="420px"
-                @page="searchInventory($event , 'page')"
-                @sort="searchInventory($event , 'sort')"
-                paginator
-                :rows="datagrid3.rows"
-                :totalRecords="datagrid3.totalRecords"
-                paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-                currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}"
-              >
-              <Column style="min-width: 60px">
-                <template #body="slotProps">
-                  <AssetsView :params="slotProps" />
+                <DataTable
+                  lazy
+                  :key="datagrid3.key"
+                  :first="datagrid3.first"
+                  :size="'small'"
+                  :loading="datagrid3.loading"
+                  :value="rowData3"
+                  :sort-field="datagrid3.sortField"
+                  :sort-order="datagrid3.sortOrder"
+                  resizableColumns
+                  columnResizeMode="expand"
+                  showGridlines
+                  scrollable
+                  scrollHeight="420px"
+                  @page="searchInventory($event , 'page')"
+                  @sort="searchInventory($event , 'sort')"
+                  paginator
+                  :rows="datagrid3.rows"
+                  :totalRecords="datagrid3.totalRecords"
+                  paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+                  currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}"
+                >
+                <Column style="min-width: 60px">
+                  <template #body="slotProps">
+                    <AssetsView :params="slotProps" />
 </template>
             </Column>
             <Column style="min-width: 60px" header="選擇">
@@ -188,7 +188,7 @@
             </div>
           </div>
         </div>
-        <div class="row g-0">
+        <div class="row g-0 project_details">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label"
               ><p>專案代碼</p></label
@@ -198,7 +198,7 @@
             </div>
           </div>
           <div class="col d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name"
+            <label for="inputWithTitle" class="form-label project_name" id="project_name"
               ><p>專案名稱</p></label
             >
             <div class="input-group" id="readonly_box">
@@ -555,8 +555,7 @@
       ]
       // 檢索datagrid
       const datagrid3 = createDatagrid();
-      const datagrid3field = [
-        {
+      const datagrid3field = [{
           field: "OM_Unit",
           width: '100px',
           header: "單位"
@@ -886,7 +885,9 @@
       }
     }
   }
-
+  .project_details #project_name {
+    height: 100%;
+  }
   @media only screen and (min-width: 1200px) {
     .modal {
       padding: 0 5%;
@@ -946,13 +947,12 @@
             background-color: #5d85bd;
           }
         }
-      .wrap2 {
+        .wrap2 {
           display: flex;
           justify-content: space-evenly;
         }
         .wrap1,
         .wrap2 {
-      
           padding: 10px 80px;
           .input-number {
             @include count_btn;
@@ -1287,12 +1287,12 @@
         }
       }
     }
-    .modal .second_content .wrap1{
-    display: grid; 
-  grid-template-columns: 1fr 1fr 1fr; 
-  grid-template-rows: 1fr 1fr; 
-  gap: 10px;
-  }
+    .modal .second_content .wrap1 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 10px;
+    }
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .modal {
@@ -1689,12 +1689,12 @@
         }
       }
     }
-    .modal .second_content .wrap1{
-    display: grid; 
-  grid-template-columns: 1fr 1fr 1fr; 
-  grid-template-rows: 1fr 1fr; 
-  gap: 10px;
-  }
+    .modal .second_content .wrap1 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 10px;
+    }
   }
   @media only screen and (max-width: 767px) {
     .modal {

@@ -30,7 +30,7 @@
             </div>
           </div>
         </div>
-        <div class="row g-0">
+        <div class="row g-0 project_details">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label"><p>專案代碼</p></label>
             <div class="input-group">
@@ -38,7 +38,7 @@
             </div>
           </div>
           <div class=" col d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name"><p>專案名稱</p></label>
+            <label for="inputWithTitle" class="form-label project_name" id="project_name"><p>專案名稱</p></label>
             <div class="input-group">
               <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly v-model=" details.ProjectName" />
             </div>
@@ -72,7 +72,7 @@
         <DataTable :size="'small'" :value="rowData2" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="600px">
           <Column>
             <template #body="slotProps">
-                <AssetsView :params="slotProps"/>
+                  <AssetsView :params="slotProps"/>
 </template>
         </Column>
         <Column v-for="item in datagrid2field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
@@ -338,6 +338,9 @@
     justify-content: center;
     display: flex;
     align-items: center;
+  }
+  .project_details #project_name {
+    height: 100%;
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
