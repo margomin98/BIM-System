@@ -191,7 +191,7 @@
               </div>
             </div>
             <!-- 套用按鈕 -->
-            <div class="col">
+            <div class="col" v-show="tab.itemLayerName">
               <div class="input-group mb-3 apply_btn">
               <button @click="alignAreaLayer(index)">套用</button>
               </div>

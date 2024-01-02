@@ -22,6 +22,7 @@
           <div class="input-group mb-3">
             <div class="input-group-prepend">訂購單號：</div>
             <input type="text" class="form-control text-center readonly_box" v-model="details.PurchaseNum" readonly />
+            <view-order :id="details.PO_ID"></view-order>
           </div>
         </div>
         <div class="col">
@@ -166,6 +167,7 @@
   } from 'swiper/modules';
   register();
   import Navbar from "@/components/Navbar.vue";
+  import viewOrder from "@/components/receive_page/order_view_btn.vue"
   import {
     onMounted,
     ref,
@@ -178,6 +180,7 @@
   export default {
     components: {
       Navbar,
+      viewOrder,
     },
     setup() {
       const route = useRoute();
