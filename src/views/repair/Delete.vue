@@ -3,7 +3,7 @@
   <div class="main_section">
     <div class="title col">
       <h1>
-        刪除項目
+        刪除維修單
       </h1>
     </div>
     <div class="info_wrap col">

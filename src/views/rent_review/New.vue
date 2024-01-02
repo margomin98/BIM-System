@@ -30,7 +30,7 @@
             </div>
           </div>
         </div>
-        <div class="row g-0">
+        <div class="row g-0 project_details">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label "><p>專案代碼</p></label>
             <div class="input-group">
@@ -38,7 +38,7 @@
             </div>
           </div>
           <div class=" col d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name"><p>專案名稱</p></label>
+            <label for="inputWithTitle" class="form-label project_name" id="project_name"><p>專案名稱</p></label>
             <div class="input-group">
               <input type="text" class="form-control readonly_box text-center" id="inputWithTitle" readonly v-model=" details.ProjectName" />
             </div>
@@ -59,14 +59,7 @@
         </div>
       </div>
       <div class="second_content">
-        <DataTable 
-          :size="'small'"
-          :value="rowData1" 
-          resizableColumns 
-          columnResizeMode="expand"
-          showGridlines 
-          scrollable
-          scroll-height="600px">
+        <DataTable :size="'small'" :value="rowData1" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="600px">
           <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
         </DataTable>
       </div>
@@ -76,18 +69,11 @@
         </div>
       </div>
       <div class="third_content">
-        <DataTable 
-        :size="'small'"
-        :value="rowData2" 
-        resizableColumns 
-        columnResizeMode="expand"
-        showGridlines 
-        scrollable
-        scroll-height="600px">
-        <Column>
-          <template #body="slotProps">
-            <AssetsView :params="slotProps"/>
-          </template>
+        <DataTable :size="'small'" :value="rowData2" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="600px">
+          <Column>
+            <template #body="slotProps">
+              <AssetsView :params="slotProps"/>
+</template>
         </Column>
         <Column v-for="item in datagrid2field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
         </DataTable>
@@ -198,21 +184,28 @@
 </template>
 
 <script>
-
   import {
     useRoute,
     useRouter
   } from 'vue-router';
   import AssetsView from "@/components/Rent_process_new_view_button.vue"
   import Navbar from "@/components/Navbar.vue";
-  import { Rent_UseArray } from "@/assets/js/dropdown";
+  import {
+    Rent_UseArray
+  } from "@/assets/js/dropdown";
   import {
     onMounted,
     reactive,
     ref
   } from "vue";
-  import { goBack, getDate, canEnterPage } from "@/assets/js/common_fn";
-  import { RentReview_New_Status } from "@/assets/js/enter_status";
+  import {
+    goBack,
+    getDate,
+    canEnterPage
+  } from "@/assets/js/common_fn";
+  import {
+    RentReview_New_Status
+  } from "@/assets/js/enter_status";
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
 import { GetAntiForgeryToken } from '@/assets/js/common_api';
@@ -245,25 +238,87 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
       })
       const details = ref({});
       const options = Rent_UseArray;
-      const datagrid1field = [
-        { header: "項目", field: "id", width: '50px' },
-        { header: "設備總類", field: "EquipTypeName", width: '150px' },
-        { header: "設備分類", field: "EquipCategoryName", width: '150px' },
-        { header: "物品名稱", field: "ProductName", width: '140px' },
-        { header: "數量", field: "Number", width: '50px' },
-        { header: "規格需求", field: "RequiredSpec" , width: '250px' },
+      const datagrid1field = [{
+          header: "項目",
+          field: "id",
+          width: '50px'
+        },
+        {
+          header: "設備總類",
+          field: "EquipTypeName",
+          width: '150px'
+        },
+        {
+          header: "設備分類",
+          field: "EquipCategoryName",
+          width: '150px'
+        },
+        {
+          header: "物品名稱",
+          field: "ProductName",
+          width: '140px'
+        },
+        {
+          header: "數量",
+          field: "Number",
+          width: '50px'
+        },
+        {
+          header: "規格需求",
+          field: "RequiredSpec",
+          width: '250px'
+        },
       ]
-      const datagrid2field = [
-        { header: "項目", field: "OM_List_id", width: '50px' },
-        { header: "資產編號", field: "AssetsId", width: '100px' },
-        { header: "資產名稱", field: "AssetName", width: '150px' },
-        { header: "數量", field: "OM_Number", width: '50px' },
-        { header: "單位", field: "OM_Unit", width: '50px' },
-        { header: "儲位區域", field: "AreaName", width: '150px' },
-        { header: "儲位櫃位", field: "LayerName", width: '150px' },
-        { header: "廠商", field: "VendorName", width: '150px' },
-        { header: "型號", field: "ProductType", width: '150px' },
-        { header: "規格", field: "ProductSpec", width: '250px' },
+      const datagrid2field = [{
+          header: "項目",
+          field: "OM_List_id",
+          width: '50px'
+        },
+        {
+          header: "資產編號",
+          field: "AssetsId",
+          width: '100px'
+        },
+        {
+          header: "資產名稱",
+          field: "AssetName",
+          width: '150px'
+        },
+        {
+          header: "數量",
+          field: "OM_Number",
+          width: '50px'
+        },
+        {
+          header: "單位",
+          field: "OM_Unit",
+          width: '50px'
+        },
+        {
+          header: "儲位區域",
+          field: "AreaName",
+          width: '150px'
+        },
+        {
+          header: "儲位櫃位",
+          field: "LayerName",
+          width: '150px'
+        },
+        {
+          header: "廠商",
+          field: "VendorName",
+          width: '150px'
+        },
+        {
+          header: "型號",
+          field: "ProductType",
+          width: '150px'
+        },
+        {
+          header: "規格",
+          field: "ProductSpec",
+          width: '250px'
+        },
       ]
       const rowData1 = ref([]);
       const rowData2 = ref([]);
@@ -273,7 +328,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
           const data = response.data;
           if (data.state === 'success') {
-            canEnterPage(data.resultList.Status , RentReview_New_Status)
+            canEnterPage(data.resultList.Status, RentReview_New_Status)
             console.log('Details Get成功 資料如下\n', data.resultList);
             details.value = data.resultList;
             rowData1.value = data.resultList.ItemList;
@@ -338,11 +393,11 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
         }
       }
       async function submit() {
-        if(!validation.VerifyOption) {
+        if (!validation.VerifyOption) {
           alert('請輸入必填項目')
           return
         }
-        if(validation.VerifyMemo) {
+        if (validation.VerifyMemo) {
           validation.VerifyMemo = validation.VerifyMemo.trim();
         }
         if (validation.VerifyMemo && !/^[\s\S]{1,100}$/.test(validation.VerifyMemo)) {
@@ -472,6 +527,9 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
     width: 20px;
     height: 20px;
   }
+  .project_details #project_name {
+    height: 100%;
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       h1 {
@@ -503,12 +561,10 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
             margin-bottom: 0;
           }
         }
-        .fixed_info:nth-child(5){
+        .fixed_info:nth-child(5) {
           border-top: unset;
         }
-       
-        .third_content {
-        }
+        .third_content {}
         .fixed_info_count {
           display: flex;
           background: #3D5C67;
@@ -519,7 +575,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           border-radius: 0;
           border-bottom: 1px solid black;
           border-left: 1px solid black;
-            border-right: 1px solid black;
+          border-right: 1px solid black;
           padding: 0 10px;
           justify-content: right;
           gap: 10px;
@@ -662,14 +718,14 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
-          .row:nth-child(3){
-            .input-group{
-              padding:0 !important;
-          textarea{
-            padding: 5px 10px 0;
+          .row:nth-child(3) {
+            .input-group {
+              padding: 0 !important;
+              textarea {
+                padding: 5px 10px 0;
+              }
+            }
           }
-          }
-        }
           .form-check {
             margin-left: 10px;
           }
@@ -779,7 +835,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
             margin-bottom: 0;
           }
         }
-        .fixed_info:nth-child(5){
+        .fixed_info:nth-child(5) {
           border-top: unset;
         }
         .second_content {
@@ -788,7 +844,6 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           border-top: 1px solid black;
           background: #d9d9d9;
         }
-    
         .fixed_info_count {
           display: flex;
           background: #3D5C67;
@@ -939,14 +994,14 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
-          .row:nth-child(3){
-            .input-group{
-              padding:0 !important;
-          textarea{
-            padding: 5px 10px 0;
+          .row:nth-child(3) {
+            .input-group {
+              padding: 0 !important;
+              textarea {
+                padding: 5px 10px 0;
+              }
+            }
           }
-          }
-        }
           .form-check {
             margin-left: 10px;
           }
@@ -1058,8 +1113,8 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
             margin-bottom: 0;
           }
         }
-        .fixed_info:nth-child(1),.fixed_info:nth-child(3){
-          
+        .fixed_info:nth-child(1),
+        .fixed_info:nth-child(3) {
           border-top: 1px solid black;
         }
         .fixed_info_count {

@@ -3,7 +3,7 @@
   <div class="main_section">
     <div class="title col">
       <h1>
-        檢視報廢
+        刪除報廢單
       </h1>
     </div>
     <div class="info_wrap col">

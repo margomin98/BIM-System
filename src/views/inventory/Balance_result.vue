@@ -764,36 +764,7 @@ GetAntiForgeryToken
         }
       }
     }
-    .modal {
-      .modal-body {
-        padding: 16px 16px 0;
-      }
-      .modal-content {
-        width: 400px;
-        margin: auto;
-      }
-      input {
-        border: 1px solid lightgrey;
-      }
-      .input-group-prepend {
-        width: auto;
-      }
-      .modal-footer {
-        padding: 0 12px 12px;
-        border: none;
-      }
-      .modal-header {
-        h5 {
-          font-weight: 700;
-        }
-        background: #3D4E61;
-        color: white;
-        padding:5px 10px;
-        .close_icon {
-          cursor: pointer;
-        }
-      }
-    }
+    
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
@@ -1008,36 +979,7 @@ GetAntiForgeryToken
         }
       }
     }
-    .modal {
-      .modal-body {
-        padding: 16px 16px 0;
-      }
-      .modal-content {
-        width: 400px;
-        margin: auto;
-      }
-      input {
-        border: 1px solid lightgrey;
-      }
-      .input-group-prepend {
-        width: auto;
-      }
-      .modal-footer {
-        padding: 0 12px 12px;
-        border: none;
-      }
-      .modal-header {
-        h5 {
-          font-weight: 700;
-        }
-        background: #3D4E61;
-        color: white;
-        padding:5px 10px;
-        .close_icon {
-          cursor: pointer;
-        }
-      }
-    }
+  
   }
   @media only screen and (max-width: 767px) {
     .main_section {
@@ -1261,35 +1203,6 @@ GetAntiForgeryToken
         }
       }
     }
-    .modal {
-      .modal-body {
-        padding: 16px 16px 0;
-      }
-      .modal-content {
-        width: 400px;
-        margin: auto;
-      }
-      input {
-        border: 1px solid lightgrey;
-      }
-      .input-group-prepend {
-        width: auto;
-      }
-      .modal-footer {
-        padding: 0 12px 12px;
-        border: none;
-      }
-      .modal-header {
-        h5 {
-          font-weight: 700;
-        }
-        background: #3D4E61;
-        color: white;
-        padding:5px 10px;
-        .close_icon {
-          cursor: pointer;
-        }
-      }
-    }
+   
   }
 </style>

@@ -37,7 +37,7 @@
             </div>
           </div>
         </div>
-        <div class="row g-0">
+        <div class="row g-0 project_details">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label"><p>專案代碼</p></label>
             <div class="input-group" id='readonly_box'>
@@ -287,6 +287,9 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
     justify-content: center;
     display: flex;
     align-items: center;
+  }
+  .project_details #project_name{
+    height: 100%;
   }
   @media only screen and (min-width: 1200px) {
     .main_section {

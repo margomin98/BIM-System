@@ -30,7 +30,7 @@
             </div>
           </div>
         </div>
-        <div class="row g-0">
+        <div class="row g-0 project_details">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label"><p>專案代碼</p></label>
             <div class="input-group" id="readonly_box">
@@ -38,7 +38,7 @@
             </div>
           </div>
           <div class="col d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name"><p>專案名稱</p></label>
+            <label for="inputWithTitle" class="form-label project_name" id="project_name"><p>專案名稱</p></label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>{{ details.ProjectName }}</p>
             </div>
@@ -74,7 +74,7 @@
         <DataTable :size="'small'" :value="rowData2" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="600px">
           <Column header="交付確認" class="datatable_checkbox">
             <template style="min-width:50px; " #body="slotProps">
-              <input type="checkbox" class="p-checkbox p-component" :checked="slotProps.data.OM_IsExecute" disabled>
+                <input type="checkbox" class="p-checkbox p-component" :checked="slotProps.data.OM_IsExecute" disabled>
 </template>
         </Column>
         <Column>
@@ -405,6 +405,9 @@
     .fixed_info {
       border-top: none !important;
     }
+  }
+  .project_details #project_name {
+    height: 100%;
   }
   @media only screen and (min-width: 1200px) {
     .main_section {

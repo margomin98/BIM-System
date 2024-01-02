@@ -4,6 +4,24 @@
     <div class="title col">
       <h1>資產入庫作業</h1>
     </div>
+    <div class="modal fade" id="apply_storage_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content ">
+          <div class="modal-header">
+            <h5 class="modal-title">套用資料</h5>
+            <p class='m-0 close_icon' data-bs-dismiss="modal">X</p>
+          </div>
+          <div class="modal-body">
+            <div class="col">
+              <p>確定套用儲位嗎？</p>
+            </div>
+          </div>
+          <div class="modal-footer m-auto">
+            <button type="button" class="btn" data-bs-dismiss="modal" @click="alignAreaLayer(index)">確認</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
@@ -90,8 +108,8 @@
           <!-- 標頭 -->
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button v-for="tab in parseInt(tabData.length)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab" :aria-selected="tab === 0">
-                                {{ tab }}
-                              </button>
+                                  {{ tab }}
+                                </button>
           </div>
         </nav>
         <div v-if="tabData.length > 0" class="tab-content" id="nav-tabContent">
@@ -138,8 +156,8 @@
                   <div class="input-group-prepend"><span>*</span>設備總類：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                                        {{ tab.itemEquipTypeName || '請選擇' }}
-                                      </button>
+                                          {{ tab.itemEquipTypeName || '請選擇' }}
+                                        </button>
                     <div class="dropdown-menu" aria-labelledby="typeDropdown">
                       <p v-for="item in DropdownArray.EquipType" class="dropdown-item" @click="selectType(item , index)">{{ item.Name }}</p>
                     </div>
@@ -151,8 +169,8 @@
                   <div class="input-group-prepend"><span>*</span>設備分類：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!tab.itemEquipTypeName">
-                                        {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }}
-                                      </button>
+                                          {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }}
+                                        </button>
                     <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                       <p v-for="item in tab.EquipCategoryArray" class="dropdown-item" @click="selectCategory(item , index)">{{ item.Name }}</p>
                     </div>
@@ -161,39 +179,34 @@
               </div>
             </div>
             <!-- 頁籤儲位 區域&櫃位 -->
-            <div class="row g-0">
-              <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="row g-0 storage_dropdown">
+              <div class="col">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend"><span>*</span>儲位區域：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName(index)">
-                                          {{ tab.itemAreaName || '請選擇' }}
-                                        </button>
+                                            {{ tab.itemAreaName || '請選擇' }}
+                                          </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="(item, area_index) in DropdownArray.Area" :key="area_index" class="dropdown-item" @click="selectArea(index, item)">{{ item.Name }}</p>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+              <div class="col">
                 <div class="input-group mb-3 justify-content-end">
                   <div class="input-group-prepend"><span>*</span>儲位櫃位：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!tab.itemAreaName">
-                                          {{ tab.itemLayerName || tab.LayerInit }}
-                                        </button>
+                                            {{ tab.itemLayerName || tab.LayerInit }}
+                                          </button>
                     <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                       <p v-for="(item, layer_index) in tab.LayerArray" :key="layer_index" class="dropdown-item" @click="selectLayer(index, item)">{{ item.Name }}</p>
                     </div>
                   </div>
+                  <button v-show="tab.itemLayerName" class="apply_btn" data-bs-toggle="modal" data-bs-target="#apply_storage_modal" @click="updateIndex(index)">套用儲位</button>
                   <!-- <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" /> -->
                 </div>
-              </div>
-            </div>
-            <!-- 套用按鈕 -->
-            <div class="col">
-              <div class="input-group mb-3 apply_btn">
-              <button @click="alignAreaLayer(index)">套用</button>
               </div>
             </div>
             <!-- 頁籤物品名稱 -->
@@ -252,8 +265,8 @@
                   <div class="input-group-prepend"><span>*</span>包裝單位：</div>
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        {{ tab.itemPackageUnit || '請選擇' }}
-                                      </button>
+                                          {{ tab.itemPackageUnit || '請選擇' }}
+                                        </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="item in DropdownArray.PackageUnit" class="dropdown-item" @click="selectPackageUnit(item , index)">{{ item }}</p>
                     </div>
@@ -277,8 +290,8 @@
                   <div class="input-group-prepend"><span v-show="tab.itemAssetType === '耗材'">*</span>單位：</div>
                   <div v-if="tab.itemAssetType === '耗材'" class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="tab.itemAssetType !== '耗材'">
-                                          {{ tab.itemUnit || '請選擇' }}
-                                        </button>
+                                            {{ tab.itemUnit || '請選擇' }}
+                                          </button>
                     <div class="dropdown-menu" aria-labelledby="areaDropdown">
                       <p v-for="item in DropdownArray.Unit" class="dropdown-item" @click="selectUnit(item , index)">{{ item }}</p>
                     </div>
@@ -444,6 +457,7 @@ GetAntiForgeryToken
         src: '',
       })
       const loading = ref(false);
+      const alignIndex = ref(0);
       onMounted(() => {
         getApplicationInfo(); // 申請人
         getDetails();
@@ -1115,13 +1129,18 @@ GetAntiForgeryToken
             break;
         }
       }
+      // 更新套用Index
+      function updateIndex(index) {
+        alignIndex.value = index;
+      }
       // 套用區域櫃位
-      function alignAreaLayer(index) {
-        tabData.forEach((item)=>{
-          item.itemArea_Id = tabData[index].itemArea_Id
-          item.itemLayer_Id = tabData[index].itemLayer_Id
-          item.itemAreaName = tabData[index].itemAreaName
-          item.itemLayerName = tabData[index].itemLayerName
+      function alignAreaLayer() {
+        tabData.forEach((item,index) => {
+          item.itemArea_Id = tabData[alignIndex.value].itemArea_Id
+          item.itemLayer_Id = tabData[alignIndex.value].itemLayer_Id
+          item.itemAreaName = tabData[alignIndex.value].itemAreaName
+          item.itemLayerName = tabData[alignIndex.value].itemLayerName
+          getLayerName(index);
         })
       }
       return {
@@ -1133,6 +1152,7 @@ GetAntiForgeryToken
         tabData,
         fileInputs,
         modalParams,
+        alignIndex,
         getAreaName,
         getEquipTypeName,
         selectType,
@@ -1149,6 +1169,7 @@ GetAntiForgeryToken
         handleFileChange,
         viewImgFile,
         deleteFileFunction,
+        updateIndex,
         alignAreaLayer,
         viewReceive,
         goBack,
@@ -1162,22 +1183,18 @@ GetAntiForgeryToken
   textarea {
     padding: 5px 10px 30px;
   }
-.apply_btn{
-  display:flex;
-  justify-content: right;
-  button{
+  .apply_btn {
     border: none;
-    width: 120px;
+    width: 80px;
     height: 35px;
     background: #132238;
     border-radius: 10px;
     color: white;
     font-weight: 700;
-    &:hover{
+    &:hover {
       background: #5980b9;
     }
   }
-}
   .dropdown-toggle {
     height: 35px;
   }
@@ -1200,6 +1217,26 @@ GetAntiForgeryToken
         font-weight: 700;
         margin-bottom: 0;
       }
+    }
+  }
+  #apply_storage_modal {
+    p {
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 0;
+    }
+    .modal-header {
+      margin-bottom: 10px;
+    }
+    button {
+      color: white;
+      background-color: #132238;
+      &:hover {
+        background-color: #426497
+      }
+    }
+    .modal-footer {
+      border: none;
     }
   }
   @media only screen and (min-width: 1200px) {
@@ -1324,6 +1361,18 @@ GetAntiForgeryToken
             background: #3E4E5F;
             padding: 50px 30px;
             border-radius: 0 0 10px 10px;
+            .storage_dropdown {
+              .col:nth-child(1),
+              .col:nth-child(2) {
+                .dropdown {
+                  width: 180px;
+                  button {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                  }
+                }
+              }
+            }
             .selected_file {
               display: flex;
               align-items: center;
@@ -1581,6 +1630,18 @@ GetAntiForgeryToken
             background: #3E4E5F;
             padding: 25px;
             border-radius: 0 0 10px 10px;
+            .storage_dropdown {
+              .col:nth-child(1),
+              .col:nth-child(2) {
+                .dropdown {
+                  width: 150px;
+                  button {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                  }
+                }
+              }
+            }
             .selected_file {
               display: flex;
               align-items: center;
@@ -1838,6 +1899,13 @@ GetAntiForgeryToken
           .tab-content {
             background: #3E4E5F;
             padding: 50px 30px;
+            .storage_dropdown {
+              display: flex;
+              flex-direction: column;
+              .apply_btn {
+                margin-top: 10px;
+              }
+            }
             .selected_file {
               display: flex;
               align-items: center;
