@@ -204,7 +204,7 @@
                       <p v-for="(item, layer_index) in tab.LayerArray" :key="layer_index" class="dropdown-item" @click="selectLayer(index, item)">{{ item.Name }}</p>
                     </div>
                   </div>
-                  <button v-show="tab.itemLayerName" class="apply_btn" data-bs-toggle="modal" data-bs-target="#apply_storage_modal">套用儲位</button>
+                  <button v-show="tab.itemLayerName" class="apply_btn" data-bs-toggle="modal" data-bs-target="#apply_storage_modal" @click="updateIndex(index)">套用儲位</button>
                   <!-- <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" /> -->
                 </div>
               </div>
@@ -455,6 +455,7 @@
         src: '',
       })
       const loading = ref(false);
+      const alignIndex = ref(0);
       onMounted(() => {
         getApplicationInfo(); // 申請人
         getDetails();
@@ -1113,13 +1114,18 @@
             break;
         }
       }
+      // 更新套用Index
+      function updateIndex(index) {
+        alignIndex.value = index;
+      }
       // 套用區域櫃位
-      function alignAreaLayer(index) {
-        tabData.forEach((item) => {
-          item.itemArea_Id = tabData[index].itemArea_Id
-          item.itemLayer_Id = tabData[index].itemLayer_Id
-          item.itemAreaName = tabData[index].itemAreaName
-          item.itemLayerName = tabData[index].itemLayerName
+      function alignAreaLayer() {
+        tabData.forEach((item,index) => {
+          item.itemArea_Id = tabData[alignIndex.value].itemArea_Id
+          item.itemLayer_Id = tabData[alignIndex.value].itemLayer_Id
+          item.itemAreaName = tabData[alignIndex.value].itemAreaName
+          item.itemLayerName = tabData[alignIndex.value].itemLayerName
+          getLayerName(index);
         })
       }
       return {
@@ -1131,6 +1137,7 @@
         tabData,
         fileInputs,
         modalParams,
+        alignIndex,
         getAreaName,
         getEquipTypeName,
         selectType,
@@ -1147,6 +1154,7 @@
         handleFileChange,
         viewImgFile,
         deleteFileFunction,
+        updateIndex,
         alignAreaLayer,
         viewReceive,
         goBack,
