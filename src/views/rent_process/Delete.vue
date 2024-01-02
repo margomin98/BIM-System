@@ -49,7 +49,7 @@
               </div>
             </div>
           </div>
-          <div class="row g-0">
+          <div class="row g-0 project_details">
             <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
               <label for="inputWithButton" class="form-label"
                 ><p>專案代碼</p></label
@@ -59,7 +59,7 @@
               </div>
             </div>
             <div class="col d-flex wrap">
-              <label for="inputWithTitle" class="form-label project_name"
+              <label for="inputWithTitle" class="form-label project_name" id="project_name"
                 ><p>專案名稱</p></label
               >
               <div class="input-group" id="readonly_box">
@@ -504,6 +504,9 @@
   @import "@/assets/css/global.scss";
   textarea {
     padding: 5px 0 0 5px !important;
+  }
+  .project_details #project_name {
+    height: 100%;
   }
   .delete_modal {
     .modal-content {

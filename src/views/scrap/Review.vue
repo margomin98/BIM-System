@@ -424,7 +424,6 @@ import { getAssets } from '@/assets/js/common_api';
   .modal {
     .modal-body {
       padding: 20px;
-      margin: auto;
     }
     .modal-content {
       margin: auto;

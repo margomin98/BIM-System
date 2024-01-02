@@ -30,7 +30,7 @@
             </div>
           </div>
         </div>
-        <div class="row g-0">
+        <div class="row g-0 project_details">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithButton" class="form-label"><p>專案代碼</p></label>
             <div class="input-group" id="readonly_box">
@@ -38,7 +38,7 @@
             </div>
           </div>
           <div class="col d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name"><p>專案名稱</p></label>
+            <label for="inputWithTitle" class="form-label project_name" id="project_name"><p>專案名稱</p></label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>{{ details.ProjectName }}</p>
             </div>
@@ -72,7 +72,7 @@
         <DataTable :size="'small'" :value="rowData2" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="600px" :row-style="({ OM_IsExecute }) => !OM_IsExecute ? 'background-color: #CEE4EB;': null ">
           <Column header="交付確認" class="datatable_checkbox">
             <template style="min-width:50px; " #body="slotProps">
-                <input type="checkbox" class="p-checkbox p-component" v-model="slotProps.data.OM_IsExecute">
+                  <input type="checkbox" class="p-checkbox p-component" v-model="slotProps.data.OM_IsExecute">
 </template>
           </Column>
           <Column>
@@ -170,8 +170,8 @@
     <div class="input-group use_acc input-with-icon" id="readonly_box">
       <p class="readonly_box" readonly>{{ item.resultName }}</p>
       <span class="icon-container">
-                    <img src="@/assets/accept.png" class="checkmark-icon" v-show="item.isValidate" />
-                  </span>
+                      <img src="@/assets/accept.png" class="checkmark-icon" v-show="item.isValidate" />
+                    </span>
     </div>
     <button type="button" data-bs-toggle="modal" :data-bs-target="`#userConfirm-${index}`">驗證</button>
   </div>
@@ -274,8 +274,7 @@
   const DeliveryMemo = ref('');
   const DeliveryDate = ref('');
   const loading = ref(false);
-  const validation = reactive([
-    {
+  const validation = reactive([{
       title: '申請人員',
       account: '',
       password: '',
@@ -288,7 +287,7 @@
       password: '',
       isValidate: false,
       resultName: '未驗證',
-      id:'AOP_ReceivedDelivery',
+      id: 'AOP_ReceivedDelivery',
     },
     {
       title: '交付人員',
@@ -296,7 +295,7 @@
       password: '',
       isValidate: false,
       resultName: '未驗證',
-      id:'AOP_OutboundDelivery',
+      id: 'AOP_OutboundDelivery',
     },
   ]);
   // 資產出庫項目
@@ -434,7 +433,7 @@
     const formData = new FormData();
     let formFields = {};
     let url = '';
-    if(index != 0 ) {
+    if (index != 0) {
       formFields = {
         'userName': validation[index].account,
         'userPassword': validation[index].password,
@@ -449,11 +448,9 @@
       };
       url = 'http://192.168.0.177:7008/AssetsOutMng/AO_ApplicantValidation'
     }
-
     for (const key in formFields) {
       formData.append(key, formFields[key]);
     }
-
     try {
       const response = await axios.post(url, formData);
       const data = response.data;
@@ -469,11 +466,11 @@
       console.error(error);
     }
   }
-  const canSubmit = computed(()=>{
+  const canSubmit = computed(() => {
     // 至少一項交付
     let atLeastOne = false;
-    for(let i=0 ; i < rowData2.value.length ; i++) {
-      if(rowData2.value[i].OM_IsExecute) {
+    for (let i = 0; i < rowData2.value.length; i++) {
+      if (rowData2.value[i].OM_IsExecute) {
         atLeastOne = true;
         break;
       }
@@ -649,6 +646,9 @@
     transform: translateY(-50%);
     width: 20px;
     height: 20px;
+  }
+  .project_details #project_name {
+    height: 100%;
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
@@ -1578,7 +1578,7 @@
             border-right: 1px solid black;
           }
           .wrap:nth-child(3),
-          .wrap:nth-child(4){
+          .wrap:nth-child(4) {
             border-right: 1px solid black;
             border-top: 1px solid black;
           }
