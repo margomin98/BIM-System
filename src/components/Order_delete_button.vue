@@ -52,9 +52,9 @@ function checkButton() {
     @include disabled_btn;
     height: 25px;
     width: 50px;
-
-    &:hover {
+    &:hover{
       @include disabled_btn;
+      height: 25px;
       width: 50px;
     }
   }
