@@ -215,11 +215,9 @@
     Scrap_Delete_Status
   } from '@/assets/js/enter_status';
   import {
-    getAssets
-  } from '@/assets/js/common_api';
-  import {
     Scrap_TypeArray
   } from '@/assets/js/dropdown';
+  import { GetAntiForgeryToken, getAssets } from '@/assets/js/common_api.js'
   export default {
     components: {
       Navbar
@@ -273,8 +271,13 @@
         const form = new FormData();
         form.append('ScrapId', ScrapId);
         const axios = require('axios');
-        const response = await axios.post(`http://192.168.0.177:7008/ScrapMng/DeleteScrap`, form);
         try {
+          const token = await GetAntiForgeryToken();
+          const response = await axios.post(`http://192.168.0.177:7008/ScrapMng/DeleteScrap`, form,{
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages + '\n';
