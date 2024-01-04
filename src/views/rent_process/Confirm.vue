@@ -288,7 +288,6 @@
       password: '',
       isValidate: false,
       resultName: '未驗證',
-      id: 'AOP_ReceivedDelivery',
     },
     {
       title: '交付人員',
@@ -434,20 +433,33 @@
     const formData = new FormData();
     let formFields = {};
     let url = '';
-    if (index != 0) {
-      formFields = {
-        'userName': validation[index].account,
-        'userPassword': validation[index].password,
-        'id': validation[index].id,
-      };
-      url = 'http://192.168.0.177:7008/Account/IdentityValidation'
-    } else {
-      formFields = {
-        'userName': validation[index].account,
-        'userPassword': validation[index].password,
-        'ao_id': AO_ID,
-      };
-      url = 'http://192.168.0.177:7008/AssetsOutMng/AO_ApplicantValidation'
+    switch(index) {
+      // 申請
+      case 0:
+        formFields = {
+          'userName': validation[index].account,
+          'userPassword': validation[index].password,
+          'ao_id': AO_ID,
+        };
+        url = 'http://192.168.0.177:7008/AssetsOutMng/AO_ApplicantOrReceivedValidation'
+        break
+      // 領用
+      case 1:
+        formFields = {
+          'userName': validation[index].account,
+          'userPassword': validation[index].password,
+        };
+        url = 'http://192.168.0.177:7008/AssetsOutMng/AO_ApplicantOrReceivedValidation'
+        break
+      // 交付
+      case 2:
+        formFields = {
+          'userName': validation[index].account,
+          'userPassword': validation[index].password,
+          'id': validation[index].id,
+        };
+        url = 'http://192.168.0.177:7008/Account/IdentityValidation'
+        break
     }
     for (const key in formFields) {
       formData.append(key, formFields[key]);
