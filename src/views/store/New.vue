@@ -1709,7 +1709,7 @@
         }
         .input-number {
           @include count_btn;
-          width: 62%;
+          width: 65%;
         }
         .fixed_info {
           @include fixed_info;

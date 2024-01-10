@@ -15,7 +15,7 @@
       <div class="content">
         <div class="row">
           <!-- 狀態 -->
-          <div class="col-xl-auto col-lg-auto col-md-auto col-12">
+          <div class="col-xl-auto col-lg-auto col-md-6 col-12">
             <p>狀態</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="activeDropdown" data-bs-toggle="dropdown"
@@ -30,22 +30,22 @@
             </div>
           </div>
           <!-- 使用專案 -->
-          <div class="col-xl-auto col-lg-auto col-md-auto col-12">
+          <div class="col-xl-auto col-lg-auto col-md-6 col-12">
             <p>使用專案</p>
             <input type="text" v-model="searchParams.Use" />
           </div>
           <!-- 採購來源 -->
-          <div class="col-xl-auto col-lg-auto col-md-auto col-12">
+          <div class="col-xl-auto col-lg-auto col-md-6 col-12">
             <p>採購來源</p>
             <input type="text" v-model="searchParams.Source" />
           </div>
           <!-- 下訂日期(起) -->
-          <div class="col-xl-auto col-lg-auto col-md-auto col-12">
+          <div class="col-xl-auto col-lg-auto col-md-6 col-12">
             <p>下訂日期(起)</p>
             <input type="date" class="date-input" v-model="searchParams.StartDate" />
           </div>
           <!-- 下訂日期(迄) -->
-          <div class="col-xl-auto col-lg-auto col-md-auto col-12">
+          <div class="col-xl-auto col-lg-auto col-md-6 col-12">
             <p>下訂日期(迄)</p>
             <input type="date" class="date-input" v-model="searchParams.EndDate" />
           </div>
@@ -316,6 +316,26 @@ const clear = () => {
           height: 100%;
           text-align: left;
         }
+        .dropdown {
+            width: 100%;
+            height: 35px;
+            @include dropdown_btn;
+            .dropdown-toggle {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              border: none;
+            }
+            .dropdown-menu {
+              width: 100%;
+              transform: translate3d(-1px, 35px, 0px) !important;
+              p {
+                font-size: 18px;
+                color: black;
+                font-weight: normal;
+              }
+            }
+          }
 
       }
     }
@@ -394,7 +414,26 @@ const clear = () => {
           height: 100%;
           text-align: left;
         }
-
+        .dropdown {
+            width: 100%;
+            height: 35px;
+            @include dropdown_btn;
+            .dropdown-toggle {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              border: none;
+            }
+            .dropdown-menu {
+              width: 100%;
+              transform: translate3d(-1px, 35px, 0px) !important;
+              p {
+                font-size: 18px;
+                color: black;
+                font-weight: normal;
+              }
+            }
+          }
       }
     }
   }
