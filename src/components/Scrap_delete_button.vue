@@ -59,8 +59,9 @@
   height: 25px;
   width: 50px;
   &:hover{
-      @include disabled_btn;
-  width: 50px;
+    @include disabled_btn;
+    height: 25px;
+    width: 50px;
   }
 }
 }

@@ -3,7 +3,7 @@
   <div class="main_section">
     <div class="title col">
       <h1>
-        刪除項目
+        刪除訂購單
       </h1>
     </div>
     <Order_component :hidden="hidden" :placeholder="placeholder" :disabled="disabled" />

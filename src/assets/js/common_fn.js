@@ -22,7 +22,7 @@ export const checkRequire = ((checkList,formParams,fileParams)=>{
   }
   if(fileParams) {
     if(fileParams.newDoc.length == 0 && fileParams.existDoc.length == 0) {
-      alert('請輸入必填項目')
+      alert('請上傳至少一份文件')
       return false;
     }
   }

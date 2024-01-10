@@ -34,7 +34,7 @@
     newDoc: [],
     viewDoc: [],
     deleteDoc: [], //將刪除的 已上傳物流文件記錄於此
-    existDocument: [],
+    existDoc: [],
   })
   const hidden = {
     div: {
