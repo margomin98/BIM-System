@@ -174,12 +174,10 @@
     <div class="row g-0 row_wrap">
         <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3" id='number'>
-                <div class="input-group-prepend info  d-xl-block d-lg-block d-md-block d-none">
-                    <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"><span>*</span>包裝數量 :
-                </div>
-                <div class="input-group-prepend info  d-xl-none d-lg-none d-md-none d-block">
-                    <span>*</span>包裝數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
-                </div>
+                <div class="input-group-prepend info  ">
+                            <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
+                            <span>*</span>包裝數量 :<img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
+                        </div>
                 <input class="input-number" type="number" min="1">
             </div>
         </div>
@@ -203,12 +201,10 @@
     <div class="row g-0 row_wrap">
         <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3" id='number'>
-                <div class="input-group-prepend d-xl-block d-lg-block d-md-block d-none">
-                    <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘"><span>*</span>數量 :
-                </div>
-                <div class="input-group-prepend d-xl-none d-lg-none d-md-none d-block">
-                    <span>*</span> 數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘">
-                </div>
+                <div class="input-group-prepend">
+                            <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘">
+                            <span>*</span>數量 :<img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘">
+                        </div>
                 <input class="input-number" type="number" min="1">
             </div>
         </div>
@@ -314,7 +310,7 @@
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                    <div class="input-group mb-">
+                    <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span>*</span>設備分類 :
                         </div>
@@ -381,12 +377,11 @@
             <div class="row g-0 row_wrap">
                 <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                     <div class="input-group mb-3" id='number'>
-                        <div class="input-group-prepend info  d-xl-block d-lg-block d-md-block d-none">
-                            <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"><span>*</span>包裝數量 :
+                        <div class="input-group-prepend info  ">
+                            <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
+                            <span>*</span>包裝數量 :<img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
                         </div>
-                        <div class="input-group-prepend info  d-xl-none d-lg-none d-md-none d-block">
-                            <span>*</span>包裝數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
-                        </div>
+              
                         <input class="input-number readonly_box" type="number" min="1" readonly>
                     </div>
                 </div>
@@ -410,13 +405,11 @@
             <div class="row g-0 row_wrap">
                 <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                     <div class="input-group mb-3" id='number'>
-                        <div class="input-group-prepend d-xl-block d-lg-block d-md-block d-none">
-                            <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘">
-                            <span>*</span>數量 :
+                        <div class="input-group-prepend">
+                            <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘">
+                            <span>*</span>數量 :<img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘">
                         </div>
-                        <div class="input-group-prepend d-xl-none d-lg-none d-md-none d-block">
-                            <span >*</span> 數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘">
-                        </div>
+               
                         <input  class="input-number" type="number" min="1">
                         <!-- <input v-else class="input-number readonly_box" type="number" min="1" readonly> -->
                     </div>
@@ -796,7 +789,7 @@ export default {
             }
           }
           .input-number {
-            width: 64%;
+            width: 62.5%;
           }
           .check_box_wrap {
             font-weight: 700;
@@ -809,7 +802,7 @@ export default {
             }
           }
           .dropdown {
-            width: 245px;
+            width: 240px;
             .dropdown-menu {
               width: 100%;
               max-height: 250px;
@@ -895,7 +888,7 @@ export default {
         }
         .input-number {
           @include count_btn;
-          width: 65%;
+          width: 62%;
         }
         .fixed_info {
           @include fixed_info;
@@ -909,10 +902,10 @@ export default {
         }
         .content {
           @include content_bg;
-          padding: 12px;
+          padding: 17px;
         
           .input-group-prepend {
-            width: 113.5px;
+            width: 117px;
             white-space: nowrap;
           }
           .check_box_wrap {
@@ -934,7 +927,7 @@ export default {
             }
           }
           .dropdown {
-            width: 218px;
+            width: 205px;
             .dropdown-menu {
               width: 100%;
               max-height: 250px;
