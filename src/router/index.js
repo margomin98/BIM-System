@@ -3,6 +3,7 @@ import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Test from "../views/test/Test.vue";
 import Print from "../views/test/Print.vue";
+import Component from "../views/test/Component.vue";
 
 //入庫填報
 import Store_Datagrid from "../views/store/Datagrid.vue";
@@ -130,6 +131,12 @@ const routes = [
     path: "/test",
     name: "test",
     component: Test,
+    // meta: {auth: false, request: ''},
+  },
+  {
+    path: "/component",
+    name: "component",
+    component: Component,
     // meta: {auth: false, request: ''},
   },
   {
