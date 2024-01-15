@@ -7,11 +7,7 @@
       </h1>
     </div>
     <div class="info_wrap col">
-      <div class="warn">
-        <h4>
-          確定刪除以下項目嗎？
-        </h4>
-      </div>
+      <warn/>
       <div class="fixed_info">
         <div>
           <p>
@@ -262,6 +258,7 @@
 
 <script>
   import Navbar from '@/components/Navbar.vue'
+  import Warn from '@/components/Delete_warn.vue'
   import {
     useRoute,
     useRouter
@@ -280,7 +277,8 @@
   } from '@/assets/js/enter_status'
   export default {
     components: {
-      Navbar
+      Navbar,
+      Warn
     },
     setup() {
       const route = useRoute();
@@ -416,21 +414,6 @@
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
-      .warn {
-        text-align: center;
-        padding: 10px 0;
-        background: #9f0000;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        h4 {
-          color: white;
-          margin-bottom: 0;
-          font-weight: 700;
-          &::before {
-            content: "\26A0";
-          }
-        }
-      }
       .readonly_box {
         @include readonly_box;
       }
@@ -623,21 +606,6 @@
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
-      .warn {
-        text-align: center;
-        padding: 10px 0;
-        background: #9f0000;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        h4 {
-          color: white;
-          margin-bottom: 0;
-          font-weight: 700;
-          &::before {
-            content: "\26A0";
-          }
-        }
-      }
       .readonly_box {
         @include readonly_box;
       }
@@ -842,21 +810,6 @@
   }
   @media only screen and (max-width: 767px) {
     .main_section {
-      .warn {
-        text-align: center;
-        padding: 10px 0;
-        background: #9f0000;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        h4 {
-          color: white;
-          margin-bottom: 0;
-          font-weight: 700;
-          &::before {
-            content: "\26A0";
-          }
-        }
-      }
       .form_search_btn {
         border: none;
         color: white;
