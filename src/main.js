@@ -12,6 +12,7 @@ import PrimeVue from 'primevue/config';
 // loding animation
 import {LoadingPlugin} from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
-
-createApp(App).use(router).use(PrimeVue).use(LoadingPlugin).mount('#app');
+// pinia
+import { pinia } from '@/plugins/pinia'
+createApp(App).use(router).use(PrimeVue).use(LoadingPlugin).use(pinia).mount('#app');
 // .use(EasyUI).use(VueColumnsResizable)use(vuetify)
