@@ -1,5 +1,5 @@
 <template>
-    <div class="main_section">
+    <div >
         <!-- 放大Swiper圖片 -->
         <div class="zoom_img_modal modal fade" id="zoomImg" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
