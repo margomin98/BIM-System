@@ -62,7 +62,13 @@
         }
         const axios = require('axios');
         try {
-          const response = await axios.post('http://192.168.0.177:7008/Account/Login', form);
+          const token = await getToken();
+          const response = await axios.post('http://192.168.0.177:7008/Account/Login', form,{
+            withCredentials: true,
+            headers:{
+              'RequestVerificationToken': token,
+            }
+          });
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -89,6 +95,19 @@
         } catch (error) {
           console.error('申請人取得失敗:',error);
         }
+      }
+      const getToken = () => {
+        return new Promise((resolve, reject) => {
+          axios.post('http://192.168.0.177:7008/Manage/GetAntiForgeryToken')
+            .then((r) => {
+              console.log(r.data);
+              resolve(r.data);
+            })
+            .catch((e) => {
+              // console.error(e);
+              reject(e);
+            })
+        })
       }
       return {
         formParams,

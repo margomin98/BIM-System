@@ -302,14 +302,13 @@
     </div>
 </template>
 
-//<script>
-    //     import view_modal from "@/components/View_modal.vue"
-    //     export default {
-    //         components: {
-    //             view_modal
-    //         }
-    //     }
-    //
+<script>
+    import view_modal from "@/components/view_modal.vue"
+    export default {
+        components: {
+            view_modal
+        }
+    }
 </script>
 
 <style lang="scss" scoped>
