@@ -16,6 +16,8 @@ import Store_Delete from "../views/store/Delete";
 
 //快速入庫
 import Quick_Store_New from "../views/quick_store/New.vue";
+import Quick_Store_Edit from "../views/quick_store/Edit.vue";
+import Quick_Store_View from "../views/quick_store/View.vue";
 //快速入庫
 
 //入庫作業
@@ -178,6 +180,18 @@ const routes = [
     path: "/quick_store_new",
     name: "Quick_Store_New",
     component: Quick_Store_New,
+    // meta: {auth: true, request: 'AI_Create'},
+  },
+  {
+    path: "/quick_store_edit",
+    name: "Quick_Store_Edit",
+    component: Quick_Store_Edit,
+    // meta: {auth: true, request: 'AI_Create'},
+  },
+  {
+    path: "/quick_store_View",
+    name: "Quick_Store_View",
+    component: Quick_Store_View,
     // meta: {auth: true, request: 'AI_Create'},
   },
   {

@@ -1,6 +1,6 @@
 <template>
-  <!-- <Component /> -->
-  <button type="button" @click="login">123</button>
+  <Component />
+  <!-- <button type="button" @click="login">123</button> -->
 </template>
 
 <script>

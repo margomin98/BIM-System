@@ -1,5 +1,20 @@
 <template>
     <div class="main_section">
+        <!-- 放大Swiper圖片 -->
+        <div class="zoom_img_modal modal fade" id="zoomImg" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">標題</h5>
+                        <p data-bs-dismiss="modal" class='close_icon'>X</p>
+                    </div>
+                    <div class="modal-body">
+                        <img src="https://www.akc.org/wp-content/uploads/2018/05/Three-Australian-Shepherd-puppies-sitting-in-a-field.jpg" alt="Zoomed Image">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <view_modal/>
         <div class="info_wrap col mb-5">
             <div class="fixed_info">
                 <div>
@@ -14,7 +29,26 @@
                 </div>
             </div>
             <div class="content">
-            
+                <!-- 單號 -->
+                <div class="col mb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">單號 :</div>
+                        <input type="text" class="form-control ">
+                    </div>
+                </div>
+                <!-- 物流單號 -->
+                <div class="col form_search_wrap mb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            物流單號 :
+                        </div>
+                        <div class="search_section">
+                            <input type="text" class="form-control " />
+                        </div>
+                        <button class="form_search_btn" @click="viewReceive">檢視</button>
+                        <router-link to="#" target="_blank" id="view-receive" style="display: none;"></router-link>
+                    </div>
+                </div>
                 <!-- 備註 -->
                 <div class="col mb-3">
                     <div class="input-group">
@@ -55,17 +89,16 @@
                         <div class="input-group-prepend">
                             <span>*</span>專案代碼 :
                         </div>
-                        <input type="text" class="form-control" placeholder="最多輸入10字">
-                        <button class="form_search_btn">搜尋</button>
-                    </div>
-                </div>
-                <!-- 專案名稱 -->
-                <div class="col">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            專案名稱 :
+                        <div class="option_section">
+                            <div>
+                                <input @input="handleInput" @focus="handleInput" @blur="handleBlur" v-model="searchTerm" type="text" class="form-control" placeholder="請選擇" />
+                                <ul v-if="showDropdown" class="options-list">
+                                    <li v-for="(option, index) in filteredOptions" :key="index" @click="selectItem(option)">
+                                        {{ option.name }}
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                        <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
                     </div>
                 </div>
                 <!-- 設備 總類&分類 -->
@@ -73,31 +106,23 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend equipment_wrap">
-                                <span>*</span>設備總類 :
+                                <span>*</span>設備總類:
                             </div>
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    請選擇
-                                                </button>
-                                <div class="dropdown-menu" aria-labelledby="typeDropdown">
-                                    <!-- Dropdown items -->
-                                </div>
-                            </div>
+                            <select class="form-select" id="typeDropdown">
+                    <option value="" selected>請選擇</option>
+                    <!-- Add your options here -->
+                </select>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span>*</span>設備分類 :
+                                <span>*</span>設備分類:
                             </div>
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            請選擇
-                                        </button>
-                                <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                                    <!-- Dropdown items -->
-                                </div>
-                            </div>
+                            <select class="form-select" id="categoryDropdown">
+                    <option value="" selected>請選擇</option>
+                    <!-- Add your options here -->
+                </select>
                         </div>
                     </div>
                 </div>
@@ -110,64 +135,6 @@
                         <input type="text" class="form-control" placeholder="最多輸入20字">
                     </div>
                 </div>
-                <!-- 資產編號 -->
-                <div class="col">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">資產編號 :</div>
-                        <input type="text" class="form-control" placeholder="BFXXXXXXXX">
-                    </div>
-                </div>
-                <!-- 廠商 -->
-                <div class="col">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            廠商 :
-                        </div>
-                        <input type="text" class="form-control" placeholder="最多輸入100字">
-                    </div>
-                </div>
-                <!-- 規格 -->
-                <div class="col">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            規格 :
-                        </div>
-                        <input type="text" class="form-control" placeholder="最多輸入100字">
-                    </div>
-                </div>
-                <!-- 型號 -->
-                <div class="col">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            型號 :
-                        </div>
-                        <input type="text" class="form-control" placeholder="最多輸入100字">
-                    </div>
-                </div>
-                <!-- S/N -->
-                <div class="col">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">S/N :</div>
-                        <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字">
-                    </div>
-                </div>
-                 <!-- 採購金額 -->
-                 <div class="row g-0 row_wrap purchase_amount">
-                            <div class="col-xl-auto col-lg-auto col-md-auto col-12">
-                                <div class="input-group mb-xl-3 mb-lg-3 mb-md-3">
-                                    <div class="input-group-prepend   ">
-                                        採購金額 :
-                                    </div>
-                                    <div class="amount_input">
-                                        <span class="symbol">$</span><input type="text" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-5 col-12">
-                                <span class="note">/每包裝單位<span>($<span class="purchase_total_amount">10</span>/每單位)</span>
-                                </span>
-                            </div>
-                        </div>
                 <!-- 包裝數量 & 包裝單位 -->
                 <div class="row g-0 row_wrap">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -182,16 +149,12 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3" id='unit'>
                             <div class="input-group-prepend">
-                                <span>*</span>包裝單位 :
+                                <span>*</span>包裝單位:
                             </div>
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    請選擇
-                                                </button>
-                                <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                                    <!-- Dropdown items -->
-                                </div>
-                            </div>
+                            <select class="form-select" id="areaDropdown">
+                <option value="" selected>請選擇</option>
+                <!-- Add your options here -->
+            </select>
                         </div>
                     </div>
                 </div>
@@ -207,18 +170,14 @@
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                        <div class="input-group mb-3" id='unit'>
+                        <div class="input-group mb-3" id="unit">
                             <div class="input-group-prepend">
-                                <span>*</span>單位 :
+                                <span>*</span>單位:
                             </div>
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    請選擇
-                                                </button>
-                                <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                                    <!-- Dropdown items -->
-                                </div>
-                            </div>
+                            <select class="form-select" id="areaDropdown">
+                <option value="" selected>請選擇</option>
+                <!-- Add your options here -->
+            </select>
                         </div>
                     </div>
                 </div>
@@ -231,8 +190,74 @@
                         <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入500字"></textarea>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center">
-                    <button class="send_btn">新增</button>
+            </div>
+            <!-- 入庫方式 -->
+            <div class="store_option_wrap mt-5">
+                <div class="fixed_info">
+                    <p>
+                        入庫方式
+                    </p>
+                </div>
+                <div class="content">
+                    <!-- 直接入庫/指派給保管人 -->
+                    <div class="option_wrap">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                            <label class="form-check-label" for="inlineRadio1">直接入庫</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                            <label class="form-check-label" for="inlineRadio2">指派給保管人</label>
+                        </div>
+                    </div>
+                    <!-- 用途 -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-group mb-3 check_box_wrap">
+                                <div class="input-group-prepend check_box">
+                                    <span>*</span>用途 :
+                                </div>
+                                <div class="d-flex align-items-center radio_wrap">
+                                    <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="内部領用" />
+                                    <label class="form-check-label check_box" for='radio1'>内部領用</label>
+                                    <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="借測" />
+                                    <label class="form-check-label check_box" for='radio2'>借測</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 保管人員 -->
+                    <div class="col">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend"> <span>*</span>保管人員 :</div>
+                            <select class="form-select" v-model="selectedKeeper">
+                    <option value="">請選擇</option>
+                    <option value="Michal">Michal</option>
+                    <option value="Michelle">Michelle</option>
+                  </select>
+                        </div>
+                    </div>
+                    <!-- 儲位區域/儲位櫃位 -->
+                    <div class="store_location row g-0">
+                        <div class="col row">
+                            <label for="inputPassword" class="col col-form-label"><span>*</span>儲位區域：</label>
+                            <select class="form-select col" aria-label="Default select example">
+                  <option selected>請選擇</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+                        </div>
+                        <div class="col row">
+                            <label for="inputPassword" class="col col-form-label"><span>*</span>儲位櫃位：</label>
+                            <select class="form-select col" aria-label="Default select example">
+                  <option selected>請選擇</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- 頁籤部分 -->
@@ -240,7 +265,7 @@
                 <!-- tab頂端頁籤 -->
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <button :key="tab" class="nav-link" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab">tab </button>
+                        <button :key="tab" class="nav-link" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab">1 </button>
                     </div>
                 </nav>
                 <!-- tab內容 -->
@@ -248,12 +273,12 @@
                     <div class="tab-pane fade show active" id="" role="tabpanel">
                         <!-- deleteButton -->
                         <button class="delete_btn" @click="deleteTab(index)">刪除此筆</button>
-                        <!-- 頁籤資產類型 -->
+                        <!-- 頁籤專案類型 -->
                         <div class="row">
                             <div class="col-12">
                                 <div class="input-group mb-3 check_box_wrap">
                                     <div class="input-group-prepend check_box">
-                                        <span>*</span>資產類型 :
+                                        <span>*</span>專案類型 :
                                     </div>
                                     <div class="d-flex align-items-center radio_wrap">
                                         <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="資產" />
@@ -272,15 +297,16 @@
                                 <div class="input-group-prepend">
                                     <span>*</span>專案代碼 :
                                 </div>
-                                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="最多輸入10字">
-                                <button class="form_search_btn">搜尋</button>
-                            </div>
-                        </div>
-                        <!-- 頁籤專案名稱 -->
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">專案名稱 :</div>
-                                <input type="text" class="form-control readonly_box" readonly>
+                                <div class="option_section">
+                                    <div>
+                                        <input @input="handleInput" @focus="handleInput" @blur="handleBlur" v-model="searchTerm" type="text" class="form-control" placeholder="請選擇" />
+                                        <ul v-if="showDropdown" class="options-list">
+                                            <li v-for="(option, index) in filteredOptions" :key="index" @click="selectItem(option)">
+                                                {{ option.name }}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- 頁籤設備 總類&分類 -->
@@ -290,14 +316,10 @@
                                     <div class="input-group-prepend equipment_wrap">
                                         <span>*</span>設備總類 :
                                     </div>
-                                    <div class="dropdown">
-                                        <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            請選擇
-                                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="typeDropdown">
-                                            <!-- Dropdown items -->
-                                        </div>
-                                    </div>
+                                    <select class="form-select" id="typeDropdown">
+                    <option value="" selected>請選擇</option>
+                    <!-- Add your options here -->
+                </select>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -305,14 +327,10 @@
                                     <div class="input-group-prepend">
                                         <span>*</span>設備分類 :
                                     </div>
-                                    <div class="dropdown">
-                                        <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            請選擇
-                                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                                            <!-- Dropdown items -->
-                                        </div>
-                                    </div>
+                                    <select class="form-select" id="categoryDropdown">
+                    <option value="" selected>請選擇</option>
+                    <!-- Add your options here -->
+                </select>
                                 </div>
                             </div>
                         </div>
@@ -333,52 +351,29 @@
                         <!-- 頁籤廠商 -->
                         <div class="col">
                             <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    廠商 :
-                                </div>
-                                <input type="text" class="form-control" placeholder="最多輸入100字">
+                                <div class="input-group-prepend">廠商 :</div>
+                                <input type="text" class="form-control " aria-label="Default" placeholder="最多輸入100字" />
                             </div>
                         </div>
                         <!-- 頁籤規格 -->
                         <div class="col">
                             <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    規格 :
-                                </div>
-                                <input type="text" class="form-control" placeholder="最多輸入100字">
+                                <div class="input-group-prepend">規格 :</div>
+                                <input type="text" class="form-control " aria-label="Default" placeholder="最多輸入100字" />
                             </div>
                         </div>
-                        <!--頁籤型號 -->
+                        <!-- 頁籤型號 -->
                         <div class="col">
                             <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    型號 :
-                                </div>
-                                <input type="text" class="form-control" placeholder="最多輸入100字">
+                                <div class="input-group-prepend">型號 :</div>
+                                <input type="text" class="form-control " aria-label="Default" placeholder="最多輸入100字" />
                             </div>
                         </div>
                         <!-- 頁籤S/N -->
                         <div class="col">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">S/N :</div>
-                                <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字">
-                            </div>
-                        </div>
-                        <!-- 頁籤 採購金額 -->
-                        <div class="row g-0 row_wrap purchase_amount">
-                            <div class="col-xl-6 col-lg-auto col-md-auto col-12">
-                                <div class="input-group mb-xl-3 mb-lg-3 mb-md-3">
-                                    <div class="input-group-prepend   ">
-                                        採購金額 :
-                                    </div>
-                                    <div class="amount_input">
-                                        <span class="symbol">$</span><input type="text" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-5 col-12">
-                                <span class="note">/每包裝單位<span>($<span class="purchase_total_amount">10</span>/每單位)</span>
-                                </span>
+                                <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" />
                             </div>
                         </div>
                         <!-- 頁籤 包裝數量 & 包裝單位 -->
@@ -393,18 +388,14 @@
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                                <div class="input-group mb-3" id='unit'>
+                                <div class="input-group mb-3" id="unit">
                                     <div class="input-group-prepend">
-                                        <span>*</span>包裝單位 :
+                                        <span>*</span>單位:
                                     </div>
-                                    <div class="dropdown">
-                                        <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            請選擇
-                                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                                            <!-- Dropdown items -->
-                                        </div>
-                                    </div>
+                                    <select class="form-select" id="areaDropdown">
+                <option value="" selected>請選擇</option>
+                <!-- Add your options here -->
+            </select>
                                 </div>
                             </div>
                         </div>
@@ -425,15 +416,38 @@
                                     <div class="input-group-prepend">
                                         <span>*</span>單位 :
                                     </div>
-                                    <div class="dropdown">
-                                        <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                          請選擇
-                                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                                        </div>
-                                    </div>
+                                    <select class="form-select" id="areaDropdown">
+                <option value="" selected>請選擇</option>
+                <!-- Add your options here -->
+            </select>
                                     <!-- <input  class="input-number" type="number" min="1"> -->
                                     <!-- <input v-else class="input-number readonly_box" type="text" min="1" readonly> -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 頁籤保固期限 -->
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        保固期限：
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="最多輸入10字">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 頁籤 保固 開始&結束 -->
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">保固開始日：</div>
+                                    <input type="date" class="form-control " />
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">保固到期日：</div>
+                                    <input type="date" class="form-control " />
                                 </div>
                             </div>
                         </div>
@@ -444,24 +458,98 @@
                                 <textarea class="col" rows="5" placeholder="最多輸入500字"></textarea>
                             </div>
                         </div>
-                        <!-- 頁籤上傳檔案部分 -->
+                        <!-- 頁籤選擇檔案 -->
                         <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">資產照片 :</div>
-                                <div class="file_wrap">
+                            <div class="input-group">
+                                <div class="input-group-prepend">資產照片：</div>
+                                <div class="mb-3 file_wrap">
                                     <button class='choose_btn'>選擇檔案</button>
-                                    <input type="file" accept="image/*" style="display: none;" multiple @change="handleFileChange(index , $event)" />
+                                    <input style="display: none;" />
                                 </div>
                             </div>
                         </div>
-                        <div class="col selected_file">
+                        <div class="selected_file col">
                             <div class="input-group">
-                                <div class="input-group-prepend">已選擇的檔案 :</div>
-                                <div class="store_new_file">
+                                <div class="input-group-prepend">已選擇檔案：</div>
+                                <div class="selected_file_wrap">
                                     <div class="file_upload_wrap">
                                         <p>
-                                            <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
-                                            <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index,file_index)"></p>
+                                            <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+                                            <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Swiper -->
+                        <div class="col mb-3">
+                            <div>
+                                <div>
+                                    <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
+                                        <swiper-slide>
+                                            <img class="swiper_bottom_img" src="https://www.akc.org/wp-content/uploads/2018/05/Three-Australian-Shepherd-puppies-sitting-in-a-field.jpg">
+                                            <button class='zoom_img' data-bs-toggle="modal" data-bs-target="#zoomImg" onclick="handlePreview(item)">
+                  <img src="@/assets/zoom.png" alt="Zoom">
+                </button>
+                                        </swiper-slide>
+                                        <swiper-slide>
+                                            <img class="swiper_bottom_img" src="https://hips.hearstapps.com/ghk.h-cdn.co/assets/17/30/bernese-mountain-dog.jpg?crop=1.00xw:0.668xh;0,0.252xh&resize=640:*">
+                                            <button class='zoom_img' data-bs-toggle="modal" data-bs-target="#zoomImg" onclick="handlePreview(item)">
+                  <img src="@/assets/zoom.png" alt="Zoom">
+                </button>
+                                        </swiper-slide>
+                                        <swiper-slide>
+                                            <img class="swiper_bottom_img" src="https://hips.hearstapps.com/hmg-prod/images/best-dog-breeds-for-kids-beagle-1565102201.jpg?crop=0.668xw:1.00xh;0.0816xw,0.00255xh&resize=980:*">
+                                            <button class='zoom_img' data-bs-toggle="modal" data-bs-target="#zoomImg" onclick="handlePreview(item)">
+                  <img src="@/assets/zoom.png" alt="Zoom">          </button>
+                                        </swiper-slide>
+                                        <swiper-slide>
+                                            <img class="swiper_bottom_img" src="https://hips.hearstapps.com/ghk.h-cdn.co/assets/17/30/bernese-mountain-dog.jpg?crop=1.00xw:0.668xh;0,0.252xh&resize=640:*">
+                                            <button class='zoom_img' data-bs-toggle="modal" data-bs-target="#zoomImg" onclick="handlePreview(item)">
+                  <img src="@/assets/zoom.png" alt="Zoom">          </button>
+                                        </swiper-slide>
+                                    </swiper-container>
+                                    <div class="swiper_pagination"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 頁籤入庫方式 -->
+                        <div class="store_option">
+                            <div class="title">
+                                <p>
+                                    入庫方式
+                                </p>
+                            </div>
+                            <div class="content">
+                                <!-- 直接入庫/指派給保管人 -->
+                                <div class="option_wrap">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                        <label class="form-check-label" for="inlineRadio1">直接入庫</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                        <label class="form-check-label" for="inlineRadio2">指派給保管人</label>
+                                    </div>
+                                </div>
+                                <!-- 儲位區域/儲位櫃位 -->
+                                <div class="store_location row g-xl-0 g-lg-0 g-md-0">
+                                    <div class="col row">
+                                        <label for="inputPassword" class="col col-form-label"><span>*</span>儲位區域：</label>
+                                        <select class="form-select col" aria-label="Default select example">
+                  <option selected>請選擇</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+                                    </div>
+                                    <div class="col row">
+                                        <label for="inputPassword" class="col col-form-label"><span>*</span>儲位櫃位：</label>
+                                        <select class="form-select col" aria-label="Default select example">
+                  <option selected>請選擇</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
                                     </div>
                                 </div>
                             </div>
@@ -469,29 +557,74 @@
                     </div>
                 </div>
             </div>
-            <!-- ViewFile Modal -->
-            <!-- <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title">標題</h5>
-                                          <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
-                                        </div>
-                                        <div class="modal-body">
-                                <img src="path_to_your_image" alt="Uploaded Image" class="w-100" />
-                            </div>
-                                      </div>
-                                    </div>
-                                  </div> -->
-            <view_modal/>
         </div>
     </div>
 </template>
-
 <script>
+    import {
+        register
+    } from 'swiper/element/bundle';
+    import {
+        Pagination
+    } from 'swiper/modules';
+    import view_modal from "@/components/View_modal.vue"
     export default {
-      
-    }
+        components: {
+            view_modal
+        },
+        data() {
+            return {
+                searchTerm: "",
+                dropdownOptions: [], // Array to store all options
+                showDropdown: false,
+            };
+        },
+        computed: {
+            filteredOptions() {
+                // Filter options based on searchTerm
+                return this.dropdownOptions.filter(option =>
+                    option.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+                );
+            },
+        },
+        methods: {
+            handleInput() {
+                // Perform search and update dropdownOptions based on searchTerm
+                // For demo purposes, using random data
+                this.dropdownOptions = this.generateRandomData();
+                this.showDropdown = true; // Always show dropdown when input is focused
+            },
+            selectItem(item) {
+                // Handle selection of an item from the dropdown
+                // For example, you can set the selected item to the input field
+                this.searchTerm = item.name;
+                this.showDropdown = false;
+            },
+            handleBlur() {
+                // Close the dropdown when input loses focus
+                this.showDropdown = false;
+            },
+            generateRandomData() {
+                // Function to generate random data for demo purposes
+                const data = [];
+                for (let i = 0; i < 5; i++) {
+                    data.push({
+                        id: i,
+                        name: `Item ${i}`
+                    });
+                }
+                return data;
+            },
+        },
+        setup() {
+            return {
+                pagination: {
+                    clickable: true,
+                },
+                modules: [Pagination],
+            }
+        }
+    };
 </script>
 
 <style lang="scss" scoped>
@@ -636,6 +769,102 @@
             pointer-events: none;
         }
     }
+    .store_option {
+        padding: 10px 0;
+        .title {
+            background: white !important;
+            display: flex;
+            justify-content: center;
+            background: #3D4E61;
+            align-items: center;
+            border-radius: 10px 10px 0px 0px;
+            height: 45px;
+        }
+        p {
+            color: black;
+            font-weight: 700;
+            margin-bottom: 0;
+            font-size: 20px;
+        }
+        .content {
+            border-right: 1px solid #FFF;
+            border-bottom: 1px solid #FFF;
+            border-left: 1px solid #FFF;
+            background: rgba(255, 255, 255, 0.30) !important;
+            .option_wrap {
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                .form-check-label {
+                    font-size: 20px;
+                    color: white;
+                    font-weight: 700;
+                }
+            }
+            .store_location {
+                .col-form-label {
+                    padding: 0 3px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: end;
+                }
+                .form-select {
+                    height: 37px
+                }
+            }
+        }
+    }
+    .store_option_wrap {
+        padding: 10px 0;
+        .content {
+            .option_wrap {
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                .form-check-label {
+                    font-size: 20px;
+                    color: white;
+                    font-weight: 700;
+                }
+            }
+            .store_location {
+                gap: 0 30px;
+                .col-form-label {
+                    padding: 0 3px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: end;
+                }
+                .form-select {
+                    height: 37px
+                }
+            }
+        }
+    }
+    .swiper_section {
+        swiper-slide {
+            span {
+                cursor: pointer;
+                position: absolute;
+                background: #E94B4B;
+                height: 30px;
+                width: 30px;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white;
+                font-weight: 700;
+            }
+        }
+        swiper-slide img {
+            width: 100%;
+            height: auto;
+        }
+    }
+    .tab-content {
+        border-radius: 0 10px 0 0
+    }
     @media only screen and (min-width: 1200px) {
         .main_section {
             .form_search_btn {
@@ -644,31 +873,29 @@
             .readonly_box {
                 @include readonly_box;
             }
-            .purchase_amount {
-                align-items: baseline;
-                flex-wrap: nowrap;
-                .input-group-prepend {
-                    margin-right: 10px;
+            .swiper_section {
+                swiper-slide {
+                    align-self: baseline;
+                    top: 25px;
+                    right: -14px;
                 }
-                .amount_input {
-                    display: flex;
-                    gap: 0 13px;
+                swiper-slide img {
+                    padding: 40px 0;
                 }
-                span {
-                    color: white !important;
-                }
-                span.symbol {
-                    font-size: 22px;
-                }
-                span.note {
-                    font-weight: 700;
-                    font-size: 18px;
-                }
+            }
+            .content .option_section,
+            .content .option_section .options-list {
+                width: 78.5%;
+            }
+            .tab-content .option_section,
+            .tab-content .option_section .options-list {
+                width: 82%;
             }
             .info_wrap {
                 margin: auto;
                 width: 800px;
-                .input-group-prepend {
+                .input-group-prepend,
+                .col-form-label {
                     color: white;
                     font-weight: 700;
                     font-size: 20px;
@@ -695,14 +922,6 @@
                 }
                 .content {
                     @include content_bg;
-                    .purchase_amount {
-                        input{
-                        width: 80%; 
-                    }
-                    span.note {
-                    margin-left: -10px;
-                }
-                }
                     .input-group-prepend {
                         width: 150px;
                         white-space: nowrap;
@@ -748,11 +967,6 @@
                 }
             }
             .tab_section {
-                .purchase_amount{
-                    span.note {
-                    margin-left: 10px;
-                }
-                }
                 .nav {
                     overflow-x: auto;
                     overflow-y: hidden;
@@ -811,7 +1025,7 @@
                         }
                     }
                     .input-number {
-                        width: 62.5%;
+                        width: 60.5%;
                     }
                     .check_box_wrap {
                         font-weight: 700;
@@ -884,33 +1098,29 @@
             .readonly_box {
                 @include readonly_box;
             }
-            .purchase_amount {
-    align-items: baseline;
-    flex-wrap: nowrap;
-  
-                .amount_input {
-                    display: flex;
-    gap: 0 5px;
-    margin-left: 0 !important;
+            .content .option_section,
+            .content .option_section .options-list {
+                width: 80%;
+            }
+            .tab-content .option_section,
+            .tab-content .option_section .options-list {
+                width: 79%;
+            }
+            .swiper_section {
+                swiper-slide {
+                    align-self: baseline;
+                    top: 25px;
+                    right: -14px;
                 }
-                .input-group-prepend {
-                    margin-right: 10px;
-                }
-                span {
-                    color: white !important;
-                }
-                span.symbol {
-                    font-size: 22px;
-                }
-                span.note {
-    font-weight: 700;
-    font-size: 18px;
+                swiper-slide img {
+                    padding: 40px 0;
                 }
             }
             .info_wrap {
                 margin: auto;
                 width: 700px;
-                .input-group-prepend {
+                .input-group-prepend,
+                .col-form-label {
                     color: white;
                     font-weight: 700;
                     font-size: 20px;
@@ -937,12 +1147,6 @@
                 }
                 .content {
                     @include content_bg;
-                    .purchase_amount input{
-                        width: 86%; 
-                        span.note {
-                    margin-left: -5%;
-                }
-                    }
                     padding: 17px;
                     .input-group-prepend {
                         width: 117px;
@@ -989,14 +1193,6 @@
                 }
             }
             .tab_section {
-                .purchase_amount {
-                    span.note {
-                    margin-left: -5%;
-                }
-                    input{
-                        width: 80%; 
-                    }
-                }
                 .nav {
                     overflow-x: auto;
                     overflow-y: hidden;
@@ -1050,7 +1246,7 @@
                     padding: 50px 20px;
                     position: relative;
                     .input-number {
-                        width: 59%;
+                        width: 54%;
                     }
                     .check_box_wrap {
                         font-weight: 700;
@@ -1117,6 +1313,9 @@
     }
     @media only screen and (max-width: 767px) {
         .main_section {
+            .form-select {
+                width: 100%
+            }
             .form_search_btn {
                 border: none;
                 color: white;
@@ -1133,30 +1332,47 @@
             .readonly_box {
                 @include readonly_box;
             }
-            .purchase_amount {
-                .amount_input {
-                    display: flex;
-                    gap: 0 10px;
-                    font-size: 20px;
-                    align-items: center;
+            .swiper_section {
+                swiper-slide {
+                    top: 25px;
+                    right: 27px;
                 }
-                .input-group-prepend {
-                    margin-right: 10px;
+                swiper-slide img {
+                    padding: 40px;
                 }
-                span {
-                    color: white !important;
-                }
-                span.note {
-                    margin-top: 5px;
-                    margin-bottom: 16px;
-                    display: block;
-                    font-weight: 700;
-                    font-size: 18px;
-                }
+            }
+            .content .option_section,
+            .content .option_section .options-list,
+            .tab-content .option_section,
+            .tab-content .option_section .options-list,
+            .input-number {
+                width: 100%;
             }
             .info_wrap {
                 margin: auto;
                 padding: 0 5%;
+                .store_option .content {
+                    .option_wrap {
+                        flex-direction: column;
+                        align-items: self-start;
+                    }
+                    .store_location {
+                        gap: 10px 0;
+                        flex-direction: column;
+                    }
+                }
+                .input-group-prepend,
+                .col-form-label {
+                    color: white;
+                    font-weight: 700;
+                    font-size: 20px;
+                    margin-bottom: 5px;
+                    margin-right: 10px;
+                    white-space: nowrap;
+                    span {
+                        @include red_star
+                    }
+                }
                 .fixed_info {
                     @include fixed_info;
                     height: unset;
@@ -1211,17 +1427,6 @@
                         .form-control {
                             height: 35px;
                             width: 100%;
-                        }
-                        .input-group-prepend {
-                            color: white;
-                            font-weight: 700;
-                            font-size: 20px;
-                            margin-bottom: 5px;
-                            margin-right: 10px;
-                            white-space: nowrap;
-                            span {
-                                @include red_star
-                            }
                         }
                     }
                     .info {

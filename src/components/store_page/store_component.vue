@@ -1,81 +1,80 @@
 <template>
- <div class="main_section">
- 
-    <div class="info_wrap col mb-5">
-      <div class="fixed_info">
-        <div>
-          <p>
-            申請人員 : {{ utilsStore.userName }}
-          </p>
-        </div>
-        <div>
-          <p>
-            申請入庫日期 : {{ utilsStore.today }}
-          </p>
-        </div>
-      </div>
-      <div class="content">
-        <!-- 物流單號 -->
-        <div class="col form_search_wrap mb-3">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              物流單號 :
-            </div>
-            <div class="search_section">
-              <input @input="getShipmentNum" class="form-control" @focus="showOptions = true;" @blur="handleBlur" v-model="upperForm.ShipmentNum" />
-              <ul v-if="showOptions" class="options-list">
-                <li v-for="(option, index) in DropdownArray.ShipmentNum" :key="index" @click="selectShipmentNum(option)">{{ option.ShipmentNum }}
-                </li>
-              </ul>
-            </div>
-            <button class="form_search_btn" @click="viewReceive">檢視</button>
-            <!-- 隱藏跳轉按鈕 -->
-            <router-link :to="{name: 'Receive_View' , query:{ search_id : upperForm.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
-          </div>
-        </div>
-        <!-- 備註 -->
-        <div class="col mb-3">
-          <div class="input-group">
-            <div class="input-group-prepend">備註 :</div>
-            <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="upperForm.Memo"></textarea>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="info_wrap col">
-      <div class="fixed_info">
-        <div>
-          <p><span>*</span>填寫資產資訊(請至少填寫一項)</p>
-        </div>
-      </div>
-      <div class="content">
-    <!-- 資產類型 -->
-    <div class="row">
-        <div class="col-12">
-            <div class="input-group mb-3 check_box_wrap">
-                <div class="input-group-prepend check_box">
-                    <span>*</span>資產類型 :
+    <div class="main_section">
+        <div class="info_wrap col mb-5">
+            <div class="fixed_info">
+                <div>
+                    <p>
+                        申請人員 : {{ utilsStore.userName }}
+                    </p>
                 </div>
-                <div class="d-flex align-items-center radio_wrap">
-                  <template v-for="(item, index) in DropdownArray.AssetType" :key="'radio' + (index + 1)">
-                  <input
-                    type="radio"
-                    class="form-check-input check_box"
-                    :id="'radio' + (index + 1)"
-                    style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"
-                    :value="item"
-                    v-model="middleForm.itemAssetType"
-                  />
-                  <label
-                    class="form-check-label check_box"
-                    :for="'radio' + (index + 1)"
-                    :data-toggle="index === 1 ? 'tooltip' : null"
-                    :data-placement="index === 1 ? 'top' : null"
-                    :title="index === 1 ? '註記此資產僅限特定專案出貨所使用' : null"
-                  >
-        {{ item }}
-      </label>
-    </template>
+                <div>
+                    <p>
+                        申請入庫日期 : {{ utilsStore.today }}
+                    </p>
+                </div>
+            </div>
+            <div class="content">
+                <!-- 物流單號 -->
+                <div class="col form_search_wrap mb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            物流單號 :
+                        </div>
+                        <div class="search_section">
+                            <input @input="getShipmentNum" class="form-control" @focus="showOptions = true;" @blur="handleBlur" v-model="upperForm.ShipmentNum" />
+                            <ul v-if="showOptions" class="options-list">
+                                <li v-for="(option, index) in DropdownArray.ShipmentNum" :key="index" @click="selectShipmentNum(option)">{{ option.ShipmentNum }}
+                                </li>
+                            </ul>
+                        </div>
+                        <button class="form_search_btn" @click="viewReceive">檢視</button>
+                        <!-- 隱藏跳轉按鈕 -->
+                        <router-link :to="{name: 'Receive_View' , query:{ search_id : upperForm.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
+                    </div>
+                </div>
+                <!-- 備註 -->
+                <div class="col mb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">備註 :</div>
+                        <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="upperForm.Memo"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="info_wrap col">
+            <div class="fixed_info">
+                <div>
+                    <p><span>*</span>填寫資產資訊(請至少填寫一項)</p>
+                </div>
+            </div>
+            <div class="content">
+                <!-- 資產類型 -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="input-group mb-3 check_box_wrap">
+                            <div class="input-group-prepend check_box">
+                                <span>*</span>資產類型 :
+                            </div>
+                            <div class="d-flex align-items-center radio_wrap">
+                                <template v-for="(item, index) in DropdownArray.AssetType" :key="'radio' + (index + 1)">
+                          <input
+                            type="radio"
+                            class="form-check-input check_box"
+                            :id="'radio' + (index + 1)"
+                            style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"
+                            :value="item"
+                            v-model="middleForm.itemAssetType"
+                          />
+                          <label
+                            class="form-check-label check_box"
+                            :for="'radio' + (index + 1)"
+                            :data-toggle="index === 1 ? 'tooltip' : null"
+                            :data-placement="index === 1 ? 'top' : null"
+                            :title="index === 1 ? '註記此資產僅限特定專案出貨所使用' : null"
+                          >
+                {{ item }}
+              </label>
+</template>
                 </div>
             </div>
         </div>
@@ -492,848 +491,849 @@
 </template>
 
 <script setup>
-import view_modal from "@/components/view_modal.vue"
-import { useStorageStore , useUtilsStore} from '@/store'
-import { storeToRefs } from "pinia";
-const storageStore = useStorageStore();
-const utilsStore = useUtilsStore();
-const { DropdownArray , upperForm , middleForm , tabData } = storeToRefs(storageStore) ;
-
+    import view_modal from "@/components/View_modal.vue"
+    import {
+        useStorageStore,
+        useUtilsStore
+    } from '@/store'
+    import {
+        storeToRefs
+    } from "pinia";
+    const storageStore = useStorageStore();
+    const utilsStore = useUtilsStore();
+    const {
+        DropdownArray,
+        upperForm,
+        middleForm,
+        tabData
+    } = storeToRefs(storageStore);
 </script>
 
 <style lang="scss" scoped>
-  @import '@/assets/css/global.scss';
-  textarea {
-    padding: 5px 10px 30px;
-  }
-  .dropdown {
-    #typeDropdown,
-    #categoryDropdown,
-    #areaDropdown {
-      height: 38px;
-      padding: 5px 10px !important;
+    @import '@/assets/css/global.scss';
+    textarea {
+        padding: 5px 10px 30px;
     }
-  }
-  .delete_btn {
-    background: var(--c-5, #E94B4B);
-    justify-content: center;
-    align-items: center;
-    display: inline-flex;
-    height: 40px;
-    color: #FFF;
-    text-align: center;
-    font-size: 20px;
-    font-weight: 700;
-    border: none;
-    position: absolute;
-    bottom: -1%;
-    width: 100%;
-    z-index: 2;
-    left: 0;
-    right: 0;
-    margin: 0;
-    border-radius: 0 0 10px 10px;
-    &:hover {
-      background-color: #a51e1e;
-    }
-  }
-  .back_btn {
-    @include back_to_previous_btn;
-    &:hover {
-      background-color: #5d85bb;
-    }
-  }
-  .send_btn {
-    @include search_and_send_btn;
-    &:hover {
-      background-color: #5D85BD;
-    }
-  }
-  .count-modal {
-    .modal-body {
-      padding: 20px;
-      margin: auto;
-      p {
-        text-align: center;
-        font-weight: 800;
-      }
-    }
-    .modal-content {
-      margin: auto;
-    }
-    .modal-input-group-prepend {
-      width: auto;
-      font-weight: 700;
-      font-size: 20px;
-    }
-    .modal-footer {
-      padding: 0 12px 12px;
-      border: none;
-      justify-content: center;
-      .confirm {
-        color: white;
-        background-color: #132238;
-        &:hover {
-          background-color: #426497;
+    .dropdown {
+        #typeDropdown,
+        #categoryDropdown,
+        #areaDropdown {
+            height: 38px;
+            padding: 5px 10px !important;
         }
-      }
     }
-    .modal-header {
-      h5 {
-        font-weight: 700;
-      }
-      background: #528091;
-      color: white;
-      display: flex;
-      justify-content: center;
-      padding: 0 16px 16px;
-      .close_icon {
+    .delete_btn {
+        background: var(--c-5, #E94B4B);
+        justify-content: center;
+        align-items: center;
+        display: inline-flex;
         height: 40px;
-        cursor: pointer;
-      }
-      .modal-title {
-        margin: auto;
-        padding-top: 16px;
-      }
-    }
-  }
- 
-  .view_icon,
-  .trash_icon {
-    cursor: pointer
-  }
-  .options-list {
-              position: absolute;
-              z-index: 99;
-              background-color: white;
-              border: 1px solid #ccc;
-              max-height: 200px;
-              overflow-y: auto;
-              list-style-type: none;
-              padding: 0;
-              margin: 0;
-              width: 100%;
-              top: 40px;
-            }
-            .options-list li {
-              padding: 10px 10px 0;
-              font-size: 18px;
-              cursor: pointer; // &:hover {
-              //   // background: #7893b7;
-              //   // color: white;
-              //   font-weight: 700;
-              // }
-            }
-            .search_section {
-            position: relative;
-            display: flex;
-            flex: 1 1 auto; // width: 100%;
-            
-            input {
-              height: 35px;
-              padding: 10px;
-              border-radius: 5px;
-              border: none;
-            }
-            .input-placeholder {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              color: gray;
-              font-size: 14px;
-              pointer-events: none;
-            }
-          }
-  @media only screen and (min-width: 1200px) {
-    .main_section {
-      h1 {
-        margin-top: 50px;
+        color: #FFF;
         text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .form_search_btn {
-        @include form_search_btn;
-      }
-      .readonly_box {
-        @include readonly_box;
-      }
-      .info_wrap {
-        margin: auto;
-        width: 800px;
-    
-        .input-group-prepend {
-          color: white;
-          font-weight: 700;
-          font-size: 20px;
-          width: calc(100px + 6%);
-          text-align: end;
-          white-space: nowrap;
-          span {
-            @include red_star
-          }
-        }
-        .input-number {
-          @include count_btn;
-          width: 57%;
-        }
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-          span {
-            @include red_star
-          }
-        }
-        .content {
-          @include content_bg;
-          
-          .input-group-prepend {
-            width: 150px;
-            white-space: nowrap;
-          }
-          .check_box_wrap {
-            font-weight: 700;
-            align-items: center;
-            color: white;
-            font-size: 18px;
-            div:nth-child(2) {
-              gap: 0 10px;
-              display: flex;
-            }
-          }
-          .row_wrap {
-            .input-group {
-              flex-wrap: nowrap
-            } .purchase_amount {
-                align-items: baseline;
-                flex-wrap: nowrap;
-                .input-group-prepend {
-                    margin-right: 10px;
-                }
-                .amount_input {
-                    display: flex;
-                    gap: 0 13px;
-                }
-                span {
-                    color: white !important;
-                }
-                span.symbol {
-                    font-size: 22px;
-                }
-                span.note {
-                    font-weight: 700;
-                    font-size: 18px;
-                }
-            }
-            .flex {
-              width: 130px
-            }
-          }
-          .dropdown {
-            width: 218px;
-            .dropdown-menu {
-              width: 100%;
-              max-height: 250px;
-              overflow-y: auto;
-              p {
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-            }  .purchase_amount {
-            .dropdown-toggle {
-              width: 100%;
-              @include dropdown-btn;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
-        }
-      }
-      .tab_section {
-        .nav {
-          overflow-x: auto;
-          overflow-y: hidden;
-          flex-wrap: nowrap;
-          border: none;
-           ::-webkit-scrollbar {
-            height: 6px;
-            border: 1px solid rgb(219, 218, 218);
-            border-radius: 5px;
-            width: 8px;
-          }
-           ::-webkit-scrollbar-thumb {
-            display: block;
-            border-radius: 5px;
-            background-color: rgb(176, 175, 175);
-            border: 1px solid rgb(86, 85, 85);
-          }
-        }
-        .nav-tabs {
-          button {
-            @include tab_section_num;
-            background: #5C7897;
-          }
-          .active {
-            @include tab_section_num;
-            background: #3E4E5F;
-          }
-        }
-        .tab-content {
-          background: #3E4E5F;
-          padding: 50px 20px;
-          position: relative;
-          .selected_file {
-            display: flex;
-            align-items: center;
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-              align-items: center;
-              img {
-                width: 25px;
-                height: 25px;
-              }
-              p {
-                font-weight: 700;
-                margin-bottom: 0;
-                color: white;
-                word-break: break-word;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
-          }
-          .input-number {
-            width: 62.5%;
-          }
-          .check_box_wrap {
-            font-weight: 700;
-            align-items: center;
-            color: white;
-            font-size: 18px;
-            div:nth-child(2) {
-              gap: 0 10px;
-              display: flex;
-            }
-          }
-          .dropdown {
-            width: 240px;
-            .dropdown-menu {
-              width: 100%;
-              max-height: 250px;
-              overflow-y: auto;
-              p {
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-            }
-            .dropdown-toggle {
-              width: 100%;
-              @include dropdown-btn;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
-          
-          .input-group {
-            flex-wrap: nowrap;
-            span {
-              @include red_star
-            }
-            .input-number {
-              @include count_btn;
-            }
-            .form-control {
-              height: 35px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              width: 130px;
-              text-align: end;
-            }
-            .file_wrap {
-              display: flex;
-              flex-direction: column;
-              .choose_btn {
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .main_section {
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .form_search_btn {
-        @include form_search_btn;
-      }
-      .readonly_box {
-        @include readonly_box;
-      }
-      .info_wrap {
-        margin: auto;
-        width: 700px;
-       
-        .input-group-prepend {
-          color: white;
-          font-weight: 700;
-          font-size: 20px;
-          width: calc(100px + 6%);
-          text-align: end;
-          white-space: nowrap;
-          span {
-            @include red_star
-          }
-        }
-        .input-number {
-          @include count_btn;
-          width: 62%;
-        }
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-          span {
-            @include red_star
-          }
-        }
-        .content {
-          @include content_bg;
-          padding: 17px;
-        
-          .input-group-prepend {
-            width: 117px;
-            white-space: nowrap;
-          }
-          .check_box_wrap {
-            font-weight: 700;
-            align-items: center;
-            color: white;
-            font-size: 18px;
-            div:nth-child(2) {
-              gap: 0 10px;
-              display: flex;
-            }
-          }
-          .row_wrap {
-            .input-group {
-              flex-wrap: nowrap
-            }
-            .flex {
-              width: 130px
-            }
-          }
-          .dropdown {
-            width: 205px;
-            .dropdown-menu {
-              width: 100%;
-              max-height: 250px;
-              overflow-y: auto;
-              p {
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-            }
-            .dropdown-toggle {
-              width: 100%;
-              @include dropdown-btn;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
-        }
-      }
-      .tab_section {
-        .nav {
-          overflow-x: auto;
-          overflow-y: hidden;
-          flex-wrap: nowrap;
-          border: none;
-           ::-webkit-scrollbar {
-            height: 6px;
-            border: 1px solid rgb(219, 218, 218);
-            border-radius: 5px;
-            width: 8px;
-          }
-           ::-webkit-scrollbar-thumb {
-            display: block;
-            border-radius: 5px;
-            background-color: rgb(176, 175, 175);
-            border: 1px solid rgb(86, 85, 85);
-          }
-        }
-        .file_upload_wrap {
-          margin-bottom: 0;
-          display: flex;
-          img {
-            width: 25px;
-            height: 25px;
-          }
-          p {
-            font-weight: 700;
-            margin-bottom:0;
-            color: white;
-            word-break: break-word;
-            &::before {
-              margin-right: 5px;
-              content: '·';
-              font-weight: 700;
-              color: white;
-            }
-          }
-        }
-        .nav-tabs {
-          button {
-            @include tab_section_num;
-            background: #5C7897;
-          }
-          .active {
-            @include tab_section_num;
-            background: #3E4E5F;
-          }
-        }
-        .tab-content {
-          background: #3E4E5F;
-          padding: 50px 20px;
-          position: relative;
-          .input-number {
-            width: 59%;
-          }
-          .check_box_wrap {
-            font-weight: 700;
-            align-items: center;
-            color: white;
-            font-size: 18px;
-            div:nth-child(2) {
-              gap: 0 10px;
-              display: flex;
-            }
-          }
-          .dropdown {
-            width: 190px;
-            .dropdown-menu {
-              width: 100%;
-              max-height: 250px;
-              overflow-y: auto;
-              p {
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-            }
-            .dropdown-toggle {
-              width: 100%;
-              @include dropdown-btn;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
-         
-          .input-group {
-            flex-wrap: nowrap;
-            span {
-              @include red_star
-            }
-            .input-number {
-              @include count_btn;
-            }
-            .form-control {
-              height: 35px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              width: 130px;
-              text-align: end;
-            }
-            .file_wrap {
-              display: flex;
-              flex-direction: column;
-              .choose_btn {
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  @media only screen and (max-width: 767px) {
-    .main_section {
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 50px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .form_search_btn {
-        border: none;
-        color: white;
-        width: 60px;
-        height: 35px;
-        margin-top: 10px;
+        font-size: 20px;
         font-weight: 700;
-        padding: 0 10px;
-        background-color: #132238;
+        border: none;
+        position: absolute;
+        bottom: -1%;
+        width: 100%;
+        z-index: 2;
+        left: 0;
+        right: 0;
+        margin: 0;
+        border-radius: 0 0 10px 10px;
         &:hover {
-          background-color: #43546d;
+            background-color: #a51e1e;
         }
-      }
-      .readonly_box {
-        @include readonly_box;
-      }
-      .info_wrap {
-        margin: auto;
-        padding: 0 5%;
-        .fixed_info {
-          @include fixed_info;
-          height: unset;
-          flex-direction: column;
-          padding: 10px;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-          span {
-            @include red_star
-          }
-        }
-        .content {
-          @include content_bg;
-          .check_box_wrap {
-            flex-direction: row;
-            font-weight: 700;
-            color: white;
-            font-size: 18px;
-            .check_box {
-              margin-right: 10px;
-            }
-          }
-         
-          .dropdown {
-            .dropdown-menu {
-              width: 100%;
-              p {
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-            }
-            button {
-              @include dropdown-btn;
-              width: 100%;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
-          .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-            margin-left: unset;
-            border-radius: 5px;
-          }
-          .input-group {
-            flex-direction: column;
-            .input-number {
-              width: 100%;
-              @include count_btn;
-            }
-            .form-control {
-              height: 35px;
-              width: 100%;
-            }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              margin-bottom: 5px;
-              margin-right: 10px;
-              white-space: nowrap;
-              span {
-                @include red_star
-              }
-            }
-          }
-          .info {
-            display: flex;
-            flex-direction: row-reverse;
-            justify-content: flex-end;
-          }
-        }
-      
-      }
-      .tab_section {
-        .nav {
-          overflow-x: auto;
-          overflow-y: hidden;
-          flex-wrap: nowrap;
-          border: none;
-           ::-webkit-scrollbar {
-            height: 6px;
-            border: 1px solid rgb(219, 218, 218);
-            border-radius: 5px;
-            width: 8px;
-          }
-           ::-webkit-scrollbar-thumb {
-            display: block;
-            border-radius: 5px;
-            background-color: rgb(176, 175, 175);
-            border: 1px solid rgb(86, 85, 85);
-          }
-        }
-        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-          margin-left: unset !important;
-        }
-        .nav-tabs {
-          button {
-            @include tab_section_num;
-            background: #5C7897;
-          }
-          .active {
-            @include tab_section_num;
-            background: #3E4E5F;
-          }
-        }
-        .tab-content {
-          background: #3E4E5F;
-          padding: 50px 30px;
-          position: relative;
-          .selected_file {
-            display: flex;
-            align-items: center;
-            .input-group {
-              flex-direction: column;
-            }
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-              align-items: center;
-              img {
-                width: 25px;
-                height: 25px;
-              }
-              p {
-                font-weight: 700;
-                margin-bottom: 0;
-                color: white;
-                word-break: break-word;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
-          }
-          .check_box_wrap {
-            flex-direction: column;
-            font-weight: 700;
-            color: white;
-            font-size: 18px;
-            .radio_wrap {
-              gap: 0 10px;
-              padding-left: 10px;
-            }
-            .input-group-prepend {
-              width: auto !important;
-              align-self: self-start;
-            }
-          }
-       
-          .dropdown {
-            margin-left: unset !important;
-            margin-top: 5px;
-            .dropdown-menu {
-              width: 100%;
-              max-height: 250px;
-              overflow-y: auto;
-              p {
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-            }
-            button {
-              @include dropdown-btn;
-              width: 100%;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
-          .input-group {
-            flex-direction: column;
-            span {
-              @include red_star
-            }
-            .input-number {
-              @include count_btn;
-            }
-            .form-control {
-              height: 35px;
-              width: 100%;
-              border-radius: 0;
-              margin-left: unset !important;
-              margin-top: 5px;
-            }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              width: 100%;
-            }
-            .file_wrap {
-              display: flex;
-              flex-direction: column;
-              .choose_btn {
-                margin-top: 5px;
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
-                }
-              }
-            }
-          }
-        }
-      }
     }
-  }
+    .back_btn {
+        @include back_to_previous_btn;
+        &:hover {
+            background-color: #5d85bb;
+        }
+    }
+    .send_btn {
+        @include search_and_send_btn;
+        &:hover {
+            background-color: #5D85BD;
+        }
+    }
+    .count-modal {
+        .modal-body {
+            padding: 20px;
+            margin: auto;
+            p {
+                text-align: center;
+                font-weight: 800;
+            }
+        }
+        .modal-content {
+            margin: auto;
+        }
+        .modal-input-group-prepend {
+            width: auto;
+            font-weight: 700;
+            font-size: 20px;
+        }
+        .modal-footer {
+            padding: 0 12px 12px;
+            border: none;
+            justify-content: center;
+            .confirm {
+                color: white;
+                background-color: #132238;
+                &:hover {
+                    background-color: #426497;
+                }
+            }
+        }
+        .modal-header {
+            h5 {
+                font-weight: 700;
+            }
+            background: #528091;
+            color: white;
+            display: flex;
+            justify-content: center;
+            padding: 0 16px 16px;
+            .close_icon {
+                height: 40px;
+                cursor: pointer;
+            }
+            .modal-title {
+                margin: auto;
+                padding-top: 16px;
+            }
+        }
+    }
+    .view_icon,
+    .trash_icon {
+        cursor: pointer
+    }
+    .options-list {
+        position: absolute;
+        z-index: 99;
+        background-color: white;
+        border: 1px solid #ccc;
+        max-height: 200px;
+        overflow-y: auto;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        top: 40px;
+    }
+    .options-list li {
+        padding: 10px 10px 0;
+        font-size: 18px;
+        cursor: pointer; // &:hover {
+        //   // background: #7893b7;
+        //   // color: white;
+        //   font-weight: 700;
+        // }
+    }
+    .search_section {
+        position: relative;
+        display: flex;
+        flex: 1 1 auto; // width: 100%;
+        input {
+            height: 35px;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+        .input-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: gray;
+            font-size: 14px;
+            pointer-events: none;
+        }
+    }
+    @media only screen and (min-width: 1200px) {
+        .main_section {
+            h1 {
+                margin-top: 50px;
+                text-align: center;
+                font-size: 55px;
+                font-weight: 600;
+                @include title_color;
+            }
+            .form_search_btn {
+                @include form_search_btn;
+            }
+            .readonly_box {
+                @include readonly_box;
+            }
+            .info_wrap {
+                margin: auto;
+                width: 800px;
+                .input-group-prepend {
+                    color: white;
+                    font-weight: 700;
+                    font-size: 20px;
+                    width: calc(100px + 6%);
+                    text-align: end;
+                    white-space: nowrap;
+                    span {
+                        @include red_star
+                    }
+                }
+                .input-number {
+                    @include count_btn;
+                    width: 57%;
+                }
+                .fixed_info {
+                    @include fixed_info;
+                    p {
+                        font-size: 20px;
+                        margin-bottom: 0;
+                    }
+                    span {
+                        @include red_star
+                    }
+                }
+                .content {
+                    @include content_bg;
+                    .input-group-prepend {
+                        width: 150px;
+                        white-space: nowrap;
+                    }
+                    .check_box_wrap {
+                        font-weight: 700;
+                        align-items: center;
+                        color: white;
+                        font-size: 18px;
+                        div:nth-child(2) {
+                            gap: 0 10px;
+                            display: flex;
+                        }
+                    }
+                    .row_wrap {
+                        .input-group {
+                            flex-wrap: nowrap
+                        }
+                        .purchase_amount {
+                            align-items: baseline;
+                            flex-wrap: nowrap;
+                            .input-group-prepend {
+                                margin-right: 10px;
+                            }
+                            .amount_input {
+                                display: flex;
+                                gap: 0 13px;
+                            }
+                            span {
+                                color: white !important;
+                            }
+                            span.symbol {
+                                font-size: 22px;
+                            }
+                            span.note {
+                                font-weight: 700;
+                                font-size: 18px;
+                            }
+                        }
+                        .flex {
+                            width: 130px
+                        }
+                    }
+                    .dropdown {
+                        width: 218px;
+                        .dropdown-menu {
+                            width: 100%;
+                            max-height: 250px;
+                            overflow-y: auto;
+                            p {
+                                &:hover {
+                                    cursor: pointer;
+                                }
+                            }
+                        }
+                        .purchase_amount {
+                            .dropdown-toggle {
+                                width: 100%;
+                                @include dropdown-btn;
+                                color: black;
+                                justify-content: space-between;
+                                align-items: center;
+                            }
+                        }
+                    }
+                }
+                .tab_section {
+                    .nav {
+                        overflow-x: auto;
+                        overflow-y: hidden;
+                        flex-wrap: nowrap;
+                        border: none;
+                         ::-webkit-scrollbar {
+                            height: 6px;
+                            border: 1px solid rgb(219, 218, 218);
+                            border-radius: 5px;
+                            width: 8px;
+                        }
+                         ::-webkit-scrollbar-thumb {
+                            display: block;
+                            border-radius: 5px;
+                            background-color: rgb(176, 175, 175);
+                            border: 1px solid rgb(86, 85, 85);
+                        }
+                    }
+                    .nav-tabs {
+                        button {
+                            @include tab_section_num;
+                            background: #5C7897;
+                        }
+                        .active {
+                            @include tab_section_num;
+                            background: #3E4E5F;
+                        }
+                    }
+                    .tab-content {
+                        background: #3E4E5F;
+                        padding: 50px 20px;
+                        position: relative;
+                        .selected_file {
+                            display: flex;
+                            align-items: center;
+                            .file_upload_wrap {
+                                margin-bottom: 0;
+                                display: flex;
+                                align-items: center;
+                                img {
+                                    width: 25px;
+                                    height: 25px;
+                                }
+                                p {
+                                    font-weight: 700;
+                                    margin-bottom: 0;
+                                    color: white;
+                                    word-break: break-word;
+                                    &::before {
+                                        margin-right: 10px;
+                                        content: '·';
+                                        font-weight: 700;
+                                        color: white;
+                                    }
+                                }
+                            }
+                        }
+                        .input-number {
+                            width: 62.5%;
+                        }
+                        .check_box_wrap {
+                            font-weight: 700;
+                            align-items: center;
+                            color: white;
+                            font-size: 18px;
+                            div:nth-child(2) {
+                                gap: 0 10px;
+                                display: flex;
+                            }
+                        }
+                        .dropdown {
+                            width: 240px;
+                            .dropdown-menu {
+                                width: 100%;
+                                max-height: 250px;
+                                overflow-y: auto;
+                                p {
+                                    &:hover {
+                                        cursor: pointer;
+                                    }
+                                }
+                            }
+                            .dropdown-toggle {
+                                width: 100%;
+                                @include dropdown-btn;
+                                color: black;
+                                justify-content: space-between;
+                                align-items: center;
+                            }
+                        }
+                        .input-group {
+                            flex-wrap: nowrap;
+                            span {
+                                @include red_star
+                            }
+                            .input-number {
+                                @include count_btn;
+                            }
+                            .form-control {
+                                height: 35px;
+                                border-radius: 0;
+                            }
+                            .input-group-prepend {
+                                color: white;
+                                font-weight: 700;
+                                font-size: 20px;
+                                width: 130px;
+                                text-align: end;
+                            }
+                            .file_wrap {
+                                display: flex;
+                                flex-direction: column;
+                                .choose_btn {
+                                    @include choose_file_btn;
+                                    &:hover {
+                                        background: #3f608f;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @media only screen and (min-width: 768px) and (max-width: 1199px) {
+        .main_section {
+            h1 {
+                margin-top: 50px;
+                text-align: center;
+                font-size: 55px;
+                font-weight: 600;
+                @include title_color;
+            }
+            .form_search_btn {
+                @include form_search_btn;
+            }
+            .readonly_box {
+                @include readonly_box;
+            }
+            .info_wrap {
+                margin: auto;
+                width: 700px;
+                .input-group-prepend {
+                    color: white;
+                    font-weight: 700;
+                    font-size: 20px;
+                    width: calc(100px + 6%);
+                    text-align: end;
+                    white-space: nowrap;
+                    span {
+                        @include red_star
+                    }
+                }
+                .input-number {
+                    @include count_btn;
+                    width: 62%;
+                }
+                .fixed_info {
+                    @include fixed_info;
+                    p {
+                        font-size: 20px;
+                        margin-bottom: 0;
+                    }
+                    span {
+                        @include red_star
+                    }
+                }
+                .content {
+                    @include content_bg;
+                    padding: 17px;
+                    .input-group-prepend {
+                        width: 117px;
+                        white-space: nowrap;
+                    }
+                    .check_box_wrap {
+                        font-weight: 700;
+                        align-items: center;
+                        color: white;
+                        font-size: 18px;
+                        div:nth-child(2) {
+                            gap: 0 10px;
+                            display: flex;
+                        }
+                    }
+                    .row_wrap {
+                        .input-group {
+                            flex-wrap: nowrap
+                        }
+                        .flex {
+                            width: 130px
+                        }
+                    }
+                    .dropdown {
+                        width: 205px;
+                        .dropdown-menu {
+                            width: 100%;
+                            max-height: 250px;
+                            overflow-y: auto;
+                            p {
+                                &:hover {
+                                    cursor: pointer;
+                                }
+                            }
+                        }
+                        .dropdown-toggle {
+                            width: 100%;
+                            @include dropdown-btn;
+                            color: black;
+                            justify-content: space-between;
+                            align-items: center;
+                        }
+                    }
+                }
+            }
+            .tab_section {
+                .nav {
+                    overflow-x: auto;
+                    overflow-y: hidden;
+                    flex-wrap: nowrap;
+                    border: none;
+                     ::-webkit-scrollbar {
+                        height: 6px;
+                        border: 1px solid rgb(219, 218, 218);
+                        border-radius: 5px;
+                        width: 8px;
+                    }
+                     ::-webkit-scrollbar-thumb {
+                        display: block;
+                        border-radius: 5px;
+                        background-color: rgb(176, 175, 175);
+                        border: 1px solid rgb(86, 85, 85);
+                    }
+                }
+                .file_upload_wrap {
+                    margin-bottom: 0;
+                    display: flex;
+                    img {
+                        width: 25px;
+                        height: 25px;
+                    }
+                    p {
+                        font-weight: 700;
+                        margin-bottom: 0;
+                        color: white;
+                        word-break: break-word;
+                        &::before {
+                            margin-right: 5px;
+                            content: '·';
+                            font-weight: 700;
+                            color: white;
+                        }
+                    }
+                }
+                .nav-tabs {
+                    button {
+                        @include tab_section_num;
+                        background: #5C7897;
+                    }
+                    .active {
+                        @include tab_section_num;
+                        background: #3E4E5F;
+                    }
+                }
+                .tab-content {
+                    background: #3E4E5F;
+                    padding: 50px 20px;
+                    position: relative;
+                    .input-number {
+                        width: 59%;
+                    }
+                    .check_box_wrap {
+                        font-weight: 700;
+                        align-items: center;
+                        color: white;
+                        font-size: 18px;
+                        div:nth-child(2) {
+                            gap: 0 10px;
+                            display: flex;
+                        }
+                    }
+                    .dropdown {
+                        width: 190px;
+                        .dropdown-menu {
+                            width: 100%;
+                            max-height: 250px;
+                            overflow-y: auto;
+                            p {
+                                &:hover {
+                                    cursor: pointer;
+                                }
+                            }
+                        }
+                        .dropdown-toggle {
+                            width: 100%;
+                            @include dropdown-btn;
+                            color: black;
+                            justify-content: space-between;
+                            align-items: center;
+                        }
+                    }
+                    .input-group {
+                        flex-wrap: nowrap;
+                        span {
+                            @include red_star
+                        }
+                        .input-number {
+                            @include count_btn;
+                        }
+                        .form-control {
+                            height: 35px;
+                            border-radius: 0;
+                        }
+                        .input-group-prepend {
+                            color: white;
+                            font-weight: 700;
+                            font-size: 20px;
+                            width: 130px;
+                            text-align: end;
+                        }
+                        .file_wrap {
+                            display: flex;
+                            flex-direction: column;
+                            .choose_btn {
+                                @include choose_file_btn;
+                                &:hover {
+                                    background: #3f608f;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 767px) {
+        .main_section {
+            h1 {
+                margin-top: 50px;
+                text-align: center;
+                font-size: 50px;
+                font-weight: 600;
+                @include title_color;
+            }
+            .form_search_btn {
+                border: none;
+                color: white;
+                width: 60px;
+                height: 35px;
+                margin-top: 10px;
+                font-weight: 700;
+                padding: 0 10px;
+                background-color: #132238;
+                &:hover {
+                    background-color: #43546d;
+                }
+            }
+            .readonly_box {
+                @include readonly_box;
+            }
+            .info_wrap {
+                margin: auto;
+                padding: 0 5%;
+                .fixed_info {
+                    @include fixed_info;
+                    height: unset;
+                    flex-direction: column;
+                    padding: 10px;
+                    p {
+                        font-size: 20px;
+                        margin-bottom: 0;
+                    }
+                    span {
+                        @include red_star
+                    }
+                }
+                .content {
+                    @include content_bg;
+                    .check_box_wrap {
+                        flex-direction: row;
+                        font-weight: 700;
+                        color: white;
+                        font-size: 18px;
+                        .check_box {
+                            margin-right: 10px;
+                        }
+                    }
+                    .dropdown {
+                        .dropdown-menu {
+                            width: 100%;
+                            p {
+                                &:hover {
+                                    cursor: pointer;
+                                }
+                            }
+                        }
+                        button {
+                            @include dropdown-btn;
+                            width: 100%;
+                            color: black;
+                            justify-content: space-between;
+                            align-items: center;
+                        }
+                    }
+                    .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+                        margin-left: unset;
+                        border-radius: 5px;
+                    }
+                    .input-group {
+                        flex-direction: column;
+                        .input-number {
+                            width: 100%;
+                            @include count_btn;
+                        }
+                        .form-control {
+                            height: 35px;
+                            width: 100%;
+                        }
+                        .input-group-prepend {
+                            color: white;
+                            font-weight: 700;
+                            font-size: 20px;
+                            margin-bottom: 5px;
+                            margin-right: 10px;
+                            white-space: nowrap;
+                            span {
+                                @include red_star
+                            }
+                        }
+                    }
+                    .info {
+                        display: flex;
+                        flex-direction: row-reverse;
+                        justify-content: flex-end;
+                    }
+                }
+            }
+            .tab_section {
+                .nav {
+                    overflow-x: auto;
+                    overflow-y: hidden;
+                    flex-wrap: nowrap;
+                    border: none;
+                     ::-webkit-scrollbar {
+                        height: 6px;
+                        border: 1px solid rgb(219, 218, 218);
+                        border-radius: 5px;
+                        width: 8px;
+                    }
+                     ::-webkit-scrollbar-thumb {
+                        display: block;
+                        border-radius: 5px;
+                        background-color: rgb(176, 175, 175);
+                        border: 1px solid rgb(86, 85, 85);
+                    }
+                }
+                .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+                    margin-left: unset !important;
+                }
+                .nav-tabs {
+                    button {
+                        @include tab_section_num;
+                        background: #5C7897;
+                    }
+                    .active {
+                        @include tab_section_num;
+                        background: #3E4E5F;
+                    }
+                }
+                .tab-content {
+                    background: #3E4E5F;
+                    padding: 50px 30px;
+                    position: relative;
+                    .selected_file {
+                        display: flex;
+                        align-items: center;
+                        .input-group {
+                            flex-direction: column;
+                        }
+                        .file_upload_wrap {
+                            margin-bottom: 0;
+                            display: flex;
+                            align-items: center;
+                            img {
+                                width: 25px;
+                                height: 25px;
+                            }
+                            p {
+                                font-weight: 700;
+                                margin-bottom: 0;
+                                color: white;
+                                word-break: break-word;
+                                &::before {
+                                    margin-right: 10px;
+                                    content: '·';
+                                    font-weight: 700;
+                                    color: white;
+                                }
+                            }
+                        }
+                    }
+                    .check_box_wrap {
+                        flex-direction: column;
+                        font-weight: 700;
+                        color: white;
+                        font-size: 18px;
+                        .radio_wrap {
+                            gap: 0 10px;
+                            padding-left: 10px;
+                        }
+                        .input-group-prepend {
+                            width: auto !important;
+                            align-self: self-start;
+                        }
+                    }
+                    .dropdown {
+                        margin-left: unset !important;
+                        margin-top: 5px;
+                        .dropdown-menu {
+                            width: 100%;
+                            max-height: 250px;
+                            overflow-y: auto;
+                            p {
+                                &:hover {
+                                    cursor: pointer;
+                                }
+                            }
+                        }
+                        button {
+                            @include dropdown-btn;
+                            width: 100%;
+                            color: black;
+                            justify-content: space-between;
+                            align-items: center;
+                        }
+                    }
+                    .input-group {
+                        flex-direction: column;
+                        span {
+                            @include red_star
+                        }
+                        .input-number {
+                            @include count_btn;
+                        }
+                        .form-control {
+                            height: 35px;
+                            width: 100%;
+                            border-radius: 0;
+                            margin-left: unset !important;
+                            margin-top: 5px;
+                        }
+                        .input-group-prepend {
+                            color: white;
+                            font-weight: 700;
+                            font-size: 20px;
+                            width: 100%;
+                        }
+                        .file_wrap {
+                            display: flex;
+                            flex-direction: column;
+                            .choose_btn {
+                                margin-top: 5px;
+                                @include choose_file_btn;
+                                &:hover {
+                                    background: #3f608f;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 </style>

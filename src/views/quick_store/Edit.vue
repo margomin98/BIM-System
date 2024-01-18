@@ -1,27 +1,31 @@
 <template>
     <div class="main_section">
         <Navbar />
+        <ConfirmModal/>
         <div class="title col">
             <h1>
-                快速入庫
+                編輯快速入庫單
             </h1>
         </div>
-        <div class="col button_wrap">
-            <button class="back_btn" @click="goBack">回上一頁</button>
-      <button class="send_btn" @click="store.submit()">送出</button>
+              <div class="col button_wrap">
+        <button class="back_btn" @click="goBack">回上一頁</button>
+        <button class="save_btn" @click="temp" data-bs-toggle="modal" data-bs-target="#staticBackdrop">暫存</button>
+        <button class="send_btn" @click="submit">送出</button>
       </div>
     </div>
 </template>
-
+  
 <script>
     import Navbar from '@/components/Navbar.vue';
+    import ConfirmModal from '@/components/Confirm_modal.vue'
     export default {
         components: {
-            Navbar
+            Navbar,
+            ConfirmModal
         }
     }
 </script>
-
+  
 <style lang="scss" scoped>
     @import '@/assets/css/global.scss';
     h1 {
@@ -32,9 +36,9 @@
     }
     .button_wrap {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin: 30px auto 5%;
-  width: 220px;
+  gap: 20px;
 }
 
 
@@ -53,6 +57,11 @@
     background-color: #5D85BD;
   }
 }
+.save_btn{
+@include search_and_send_btn;
+              &:hover {
+                background-color: #5e7aa2;
+                  }    }
     @media only screen and (min-width: 1200px) {
         .main_section {
             h1 {

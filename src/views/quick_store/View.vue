@@ -3,16 +3,15 @@
         <Navbar />
         <div class="title col">
             <h1>
-                快速入庫
+                檢視快速入庫單
             </h1>
         </div>
         <div class="col button_wrap">
-            <button class="back_btn" @click="goBack">回上一頁</button>
-      <button class="send_btn" @click="store.submit()">送出</button>
+        <button class="back_btn" @click="goBack">回上一頁</button>
       </div>
     </div>
 </template>
-
+  
 <script>
     import Navbar from '@/components/Navbar.vue';
     export default {
@@ -21,7 +20,7 @@
         }
     }
 </script>
-
+  
 <style lang="scss" scoped>
     @import '@/assets/css/global.scss';
     h1 {
@@ -32,7 +31,7 @@
     }
     .button_wrap {
   display: flex;
-  justify-content: space-between;
+  justify-content:center;
   margin: 30px auto 5%;
   width: 220px;
 }
@@ -46,13 +45,6 @@
   }
 }
 
-.send_btn {
-  @include search_and_send_btn;
-
-  &:hover {
-    background-color: #5D85BD;
-  }
-}
     @media only screen and (min-width: 1200px) {
         .main_section {
             h1 {
