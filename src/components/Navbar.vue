@@ -5,8 +5,8 @@
         <img class='logo_img' src="@/assets/navbar/logo.png" alt="logo">
       </router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item dropdown">
@@ -19,7 +19,9 @@
               <router-link to="/receive_new">新增收貨</router-link>
               <router-link to="/receive_datagrid">收貨管理</router-link>
               <div class='dropdown-divider' style='border-color:white'></div>
-              <router-link to="/store_new">新品入庫</router-link>
+              <router-link to="#" class="d-flex speed_icon" style="flex-direction: row">
+  <img :src="speedIcon" alt="快速入庫" @mouseover="changeImage" @mouseout="resetImage">快速入庫
+</router-link>              <router-link to="/store_new">新品入庫</router-link>
               <router-link to="/store_return">歸還入庫</router-link>
               <router-link to="/store_datagrid">入庫填報管理</router-link>
               <div class='dropdown-divider' style='border-color:white'></div>
@@ -31,6 +33,7 @@
               <img src="../assets/navbar/deliver.png" alt="出庫管理"> 出庫管理
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <router-link to="#" class="d-flex speed_icon" style="flex-direction:row" @mouseover="changeImage" @mouseout="resetImage"><img :src="speedIcon"  alt="快速出庫">快速出庫</router-link>
               <router-link to="/rent_datagrid">出庫填報管理</router-link>
               <router-link to="/rent_process_datagrid">出庫作業管理</router-link>
               <router-link to="/rent_review_datagrid">出庫審核管理</router-link>
@@ -69,7 +72,7 @@
         </ul>
         <div class='d-flex right_info'>
           <p class="username">{{ userName }}&nbsp;&nbsp;您好！</p>
-          <div class='log_out_btn' @click="logout()"  @touchstart="startTouch" @touchend="endTouch" @mouseover="hovered = true" @mouseout="hovered = false">
+          <div class='log_out_btn' @click="logout()" @touchstart="startTouch" @touchend="endTouch" @mouseover="hovered = true" @mouseout="hovered = false">
             <p class="logout">登出
               <img :src="hovered ? require('@/assets/navbar/logout_hover.png') : require('@/assets/navbar/logout.png')" alt="Image">
             </p>
@@ -88,21 +91,34 @@
   } from 'vue';
   export default {
     data() {
-    return {
-      hovered: false
-    };
-  },
-  // 登出按鈕手機的動作
-  methods: {
-    startTouch() {
-      this.hovered = true;
+      return {
+        hovered: false,
+        defaultImage: require("@/assets/navbar/speed.png"),
+        hoverImage: require("@/assets/navbar/speed_hover.png"),
+        speedIcon: require("@/assets/navbar/speed.png"),
+      };
     },
-    endTouch() {
-      this.hovered = false;
-    }
-  },
+    // 登出按鈕手機的動作
+    methods: {
+      startTouch() {
+        this.hovered = true;
+      },
+      endTouch() {
+        this.hovered = false;
+      },
+      changeImage() {
+        console.log('Hovered. Changing image...');
+        this.speedIcon = this.hoverImage;
+      },
+      resetImage() {
+        console.log('Mouse left. Resetting image...');
+        this.speedIcon = this.defaultImage;
+      }
+    },
     name: 'Navbar',
-    setup(props,{emit}) {
+    setup(props, {
+      emit
+    }) {
       const userName = ref('');
       //登出function 沒有回傳值，正確直接回登入頁面
       async function logout() {
@@ -130,7 +146,7 @@
             //接收成功，顯示使用者名稱
             // console.log(data.messages);
             userName.value = data.resultList.Applicant;
-            emit('username',data.resultList.Applicant);
+            emit('username', data.resultList.Applicant);
           } else if (data.state === 'account_error') {
             alert(data.messages);
             router.push('/');
@@ -154,6 +170,15 @@
 </script>
 
 <style lang="scss" scoped>
+.speed_icon img {
+  visibility: visible;
+}
+
+.speed_icon:hover img {
+  visibility: hidden;
+}
+
+
   .dropdown-menu {
     animation: fadeIn 0.5s;
     @keyframes fadeIn {
@@ -167,7 +192,7 @@
       }
     }
   }
-  .log_out_btn{
+  .log_out_btn {
     border: 1px dashed black;
     border-radius: 20px;
     width: 80px;
@@ -175,12 +200,12 @@
     display: flex;
     justify-content: center;
     cursor: pointer;
-    p{
+    p {
       align-items: center;
-    display: flex;
-    gap: 5px;
+      display: flex;
+      gap: 5px;
     }
-    &:hover{
+    &:hover {
       color: white;
       border-color: white;
       background-color: rgb(113, 130, 148);

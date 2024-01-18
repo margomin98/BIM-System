@@ -18,30 +18,72 @@ const printDataGrid = () => {
   <html>
     <head>
       <style>
-        @media print {
-          title {
+      @media print {
+          title, head {
             display: none;
           }
         }
+
+        h2 {
+          text-align: center;
+        }
+
+        .bottom_info_title {
+          text-align: center;
+          padding: 10px;
+          border-right: 1px solid black;
+          border-left: 1px solid black;
+          font-weight: 700;
+        }
+        .print_info p{
+          margin:5px 0
+        }
+
+        .info_wrap_top {
+          display: flex;
+          border: 1px solid black;
+        }
+        .info_wrap_bottom{
+          display:flex; border-bottom: 1px solid black;   border-right: 1px solid black; border-left: 1px solid black;
+        }
+
+        .left_col {
+          justify-content: center;
+          width: 100px;
+          text-align: center;
+          border-right: 1px solid black;
+          padding: 10px;
+          display: flex;
+          height: auto;
+          align-items: center;
+        }
+        .info_wrap_bottom .left_col{
+          height:100px
+        }
+        .right_col {
+          padding: 5px 20px;
+        }
       </style>
-        <title>採購項目報表</title>
+      <title>出貨簽收單</title>
     </head>
     <body>
-      <div style='display: flex;gap: 0 20px;'>
-      <p style='font-size: 14px'>專案代碼:<br>12345678902</p>
-      <p style='font-size: 14px'>專案名稱:<br>長佳TPKC資料中心IDC及MSC機房機電新建工程BIM服務</p>
-      <p style='font-size: 14px'>製表人:<br>蕭敬騰</p></div>
+      <h2>出貨簽收單</h2>
+      <img src='https://www.bimfm.com.tw/image/logo.png' style='width: 180px; margin: 10px 0'>
+      <div class='print_info' style='display: flex;flex-direction:column; gap: 0 20px;'>
+        <p style='font-size: 14px'>單號:12345678902</p>
+        <p style='font-size: 14px'>專案名稱:長佳TPKC資料中心IDC及MSC機房機電新建工程BIM服務</p>
+        <p style='font-size: 14px'>承辦人:蕭敬騰</p>
+      </div>
       <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
         <thead>
           <tr>
-            <th style="border: 1px solid black; font-size: 12px;">項目</th>
-            <th style="border: 1px solid black; font-size: 12px;">物品名稱</th>
-            <th style="border: 1px solid black;font-size:12px">資產編號</th>
-            <th style="border: 1px solid black;font-size:12px">設備總類</th>
-            <th style="border: 1px solid black;font-size:12px">設備分類</th>
-            <th style="border: 1px solid black;font-size:12px">應盤</th>
-            <th style="border: 1px solid black;font-size:12px">實盤</th>
-            <th style="border: 1px solid black;font-size:12px">差異</th>
+            <th style="border: 1px solid black; font-size: 12px;">序號</th>
+            <th style="border: 1px solid black; font-size: 12px;">資產編號</th>
+            <th style="border: 1px solid black;font-size:12px">物品名稱</th>
+            <th style="border: 1px solid black;font-size:12px">廠商</th>
+            <th style="border: 1px solid black;font-size:12px">型號</th>
+            <th style="border: 1px solid black;font-size:12px">規格</th>
+            <th style="border: 1px solid black;font-size:12px">數量</th>
             <th style="border: 1px solid black;font-size:12px">單位</th>
           </tr>
         </thead>
@@ -49,9 +91,29 @@ const printDataGrid = () => {
           ${getPrintableData()}
         </tbody>
       </table>
+      <div class='bottom_info_title'>請收貨單位驗收物品後填寫下欄，此簽收單由本公司收存</div>
+      <div class='row info_wrap_top'>
+        <div class='left_col'>
+          簽收欄
+        </div>
+        <div class='col-auto right_col'>
+          <p>以上貨物已於西元<span style='width: 60px; display: inline-block;'></span>年<span style='width: 60px; display: inline-block;'></span>月<span style='width: 60px; display: inline-block;'></span>日清點無誤。</p>
+          <p>收貨單位：</p>
+          <p>驗收人簽章</p>
+        </div>
+      </div>
+      <div class='row info_wrap_bottom' >
+        <div class=' left_col'>
+          備註
+        </div>
+        <div class='col-auto right_col'>
+        
+        </div>
+      </div>
     </body>
   </html>
-    `;
+`;
+
   // 將內容寫入新窗口
   printWindow.document.write(printContent);
   // 關閉文件以確保正確呈現
@@ -62,16 +124,15 @@ const printDataGrid = () => {
 const getPrintableData = () => {
   return grid_data.value
     .map(
-      (item,index) => `
+      (item, index) => `
         <tr>
           <td style="border: 1px solid black; font-size: 12px;padding:5px;  text-align: center;">${(index + 1).toString().padStart(2, '0')}</td>
-          <td style="border: 1px solid black; font-size: 12px;padding:5px">${item.AssetName}</td>
           <td style="border: 1px solid black;font-size:12px;padding:5px">${item.AssetsId}</td>
-          <td style="border: 1px solid black;font-size:12px;padding:5px">${item.EquipTypeName}</td>
-          <td style="border: 1px solid black;font-size:12px;padding:5px">${item.EquipCategoryName}</td>
-          <td style="border: 1px solid black;font-size:12px;padding:5px">${item.ReceivableNum}</td>
-          <td style="border: 1px solid black;font-size:12px;padding:5px">${item.ActualNum}</td>
-          <td style="border: 1px solid black;font-size:12px;padding:5px">${item.Discrepancy}</td>
+          <td style="border: 1px solid black;font-size:12px;padding:5px">${item.AssetName}</td>
+          <td style="border: 1px solid black;font-size:12px;padding:5px">${item.Manufacturer}</td>
+          <td style="border: 1px solid black;font-size:12px;padding:5px">${item.Model}</td>
+          <td style="border: 1px solid black;font-size:12px;padding:5px">${item.Specification}</td>
+          <td style="border: 1px solid black;font-size:12px;padding:5px">${item.Quantity}</td>
           <td style="border: 1px solid black;font-size:12px;padding:5px">${item.Unit}</td>
         </tr>
       `
@@ -79,20 +140,19 @@ const getPrintableData = () => {
     .join('');
 };
 const getData = () => {
-  // 生成用於演示的隨機數據
-  return Array.from({
-    length: 100
-  }, () => ({
+  // Generate sample data for demonstration
+  return Array.from({ length: 5 }, (_, index) => ({
+    SerialNumber: (index + 1).toString().padStart(2, '0'),
+    AssetId: 'BF00001186',
     AssetName: '滑鼠滑鼠滑鼠滑鼠滑鼠滑鼠滑鼠滑鼠滑鼠滑鼠',
-    AssetsId: 'BF00001186',
-    EquipTypeName: '電腦設備類假資料',
-    EquipCategoryName: '顯示器',
-    ReceivableNum: 200,
-    ActualNum: 199,
-    Discrepancy: -1,
+    Manufacturer: 'LG',
+    Model: 'S156498',
+    Specification: '黑色 100g',
+    Quantity: 200,
     Unit: '模',
   }));
 };
+
 </script>
 
 
@@ -107,4 +167,7 @@ button.print_btn {
     background-color: #5e7aa2;
   }
 }
+
+
+
 </style>

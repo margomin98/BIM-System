@@ -94,8 +94,8 @@
                             </div>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            請選擇
-                                        </button>
+                                                    請選擇
+                                                </button>
                                 <div class="dropdown-menu" aria-labelledby="typeDropdown">
                                     <!-- Dropdown items -->
                                 </div>
@@ -109,8 +109,8 @@
                             </div>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    請選擇
-                                </button>
+                                            請選擇
+                                        </button>
                                 <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                                     <!-- Dropdown items -->
                                 </div>
@@ -168,6 +168,23 @@
                         <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字">
                     </div>
                 </div>
+                 <!-- 採購金額 -->
+                 <div class="row g-0 row_wrap purchase_amount">
+                            <div class="col-xl-auto col-lg-auto col-md-auto col-12">
+                                <div class="input-group mb-xl-3 mb-lg-3 mb-md-3">
+                                    <div class="input-group-prepend   ">
+                                        採購金額 :
+                                    </div>
+                                    <div class="amount_input">
+                                        <span class="symbol">$</span><input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-5 col-12">
+                                <span class="note">/每包裝單位<span>($<span class="purchase_total_amount">10</span>/每單位)</span>
+                                </span>
+                            </div>
+                        </div>
                 <!-- 包裝數量 & 包裝單位 -->
                 <div class="row g-0 row_wrap">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -186,8 +203,8 @@
                             </div>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            請選擇
-                                        </button>
+                                                    請選擇
+                                                </button>
                                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                                     <!-- Dropdown items -->
                                 </div>
@@ -213,8 +230,8 @@
                             </div>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            請選擇
-                                        </button>
+                                                    請選擇
+                                                </button>
                                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                                     <!-- Dropdown items -->
                                 </div>
@@ -292,8 +309,8 @@
                                     </div>
                                     <div class="dropdown">
                                         <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    請選擇
-                                                </button>
+                                                            請選擇
+                                                        </button>
                                         <div class="dropdown-menu" aria-labelledby="typeDropdown">
                                             <!-- Dropdown items -->
                                         </div>
@@ -307,8 +324,8 @@
                                     </div>
                                     <div class="dropdown">
                                         <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    請選擇
-                                                </button>
+                                                            請選擇
+                                                        </button>
                                         <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                                             <!-- Dropdown items -->
                                         </div>
@@ -364,6 +381,23 @@
                                 <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字">
                             </div>
                         </div>
+                        <!-- 頁籤 採購金額 -->
+                        <div class="row g-0 row_wrap purchase_amount">
+                            <div class="col-xl-6 col-lg-auto col-md-auto col-12">
+                                <div class="input-group mb-xl-3 mb-lg-3 mb-md-3">
+                                    <div class="input-group-prepend   ">
+                                        採購金額 :
+                                    </div>
+                                    <div class="amount_input">
+                                        <span class="symbol">$</span><input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-5 col-12">
+                                <span class="note">/每包裝單位<span>($<span class="purchase_total_amount">10</span>/每單位)</span>
+                                </span>
+                            </div>
+                        </div>
                         <!-- 頁籤 包裝數量 & 包裝單位 -->
                         <div class="row g-0 row_wrap">
                             <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -372,7 +406,7 @@
                                         <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
                                         <span>*</span>包裝數量 :<img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
                                     </div>
-                                    <input class="input-number readonly_box" type="number" min="1" readonly>
+                                    <input class="input-number" type="number" min="1">
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -382,8 +416,8 @@
                                     </div>
                                     <div class="dropdown">
                                         <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    請選擇
-                                                </button>
+                                                            請選擇
+                                                        </button>
                                         <div class="dropdown-menu" aria-labelledby="areaDropdown">
                                             <!-- Dropdown items -->
                                         </div>
@@ -410,8 +444,8 @@
                                     </div>
                                     <div class="dropdown">
                                         <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                  請選擇
-                                                </button>
+                                                          請選擇
+                                                        </button>
                                         <div class="dropdown-menu" aria-labelledby="areaDropdown">
                                         </div>
                                     </div>
@@ -454,18 +488,18 @@
             </div>
             <!-- ViewFile Modal -->
             <!-- <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title">標題</h5>
-                                  <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
-                                </div>
-                                <div class="modal-body">
-                        <img src="path_to_your_image" alt="Uploaded Image" class="w-100" />
-                    </div>
-                              </div>
+                                    <div class="modal-dialog modal-dialog-centered">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title">標題</h5>
+                                          <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
+                                        </div>
+                                        <div class="modal-body">
+                                <img src="path_to_your_image" alt="Uploaded Image" class="w-100" />
                             </div>
-                          </div> -->
+                                      </div>
+                                    </div>
+                                  </div> -->
             <view_modal/>
         </div>
     </div>
@@ -630,6 +664,27 @@
             .readonly_box {
                 @include readonly_box;
             }
+            .purchase_amount {
+                align-items: baseline;
+                flex-wrap: nowrap;
+                .input-group-prepend {
+                    margin-right: 10px;
+                }
+                .amount_input {
+                    display: flex;
+                    gap: 0 13px;
+                }
+                span {
+                    color: white !important;
+                }
+                span.symbol {
+                    font-size: 22px;
+                }
+                span.note {
+                    font-weight: 700;
+                    font-size: 18px;
+                }
+            }
             .info_wrap {
                 margin: auto;
                 width: 800px;
@@ -660,6 +715,14 @@
                 }
                 .content {
                     @include content_bg;
+                    .purchase_amount {
+                        input{
+                        width: 80%; 
+                    }
+                    span.note {
+                    margin-left: -10px;
+                }
+                }
                     .input-group-prepend {
                         width: 150px;
                         white-space: nowrap;
@@ -705,6 +768,11 @@
                 }
             }
             .tab_section {
+                .purchase_amount{
+                    span.note {
+                    margin-left: 10px;
+                }
+                }
                 .nav {
                     overflow-x: auto;
                     overflow-y: hidden;
@@ -805,7 +873,6 @@
                         }
                         .form-control {
                             height: 35px;
-                            border-radius: 0;
                         }
                         .input-group-prepend {
                             color: white;
@@ -837,6 +904,29 @@
             .readonly_box {
                 @include readonly_box;
             }
+            .purchase_amount {
+    align-items: baseline;
+    flex-wrap: nowrap;
+  
+                .amount_input {
+                    display: flex;
+    gap: 0 5px;
+    margin-left: 0 !important;
+                }
+                .input-group-prepend {
+                    margin-right: 10px;
+                }
+                span {
+                    color: white !important;
+                }
+                span.symbol {
+                    font-size: 22px;
+                }
+                span.note {
+    font-weight: 700;
+    font-size: 18px;
+                }
+            }
             .info_wrap {
                 margin: auto;
                 width: 700px;
@@ -867,6 +957,12 @@
                 }
                 .content {
                     @include content_bg;
+                    .purchase_amount input{
+                        width: 86%; 
+                        span.note {
+                    margin-left: -5%;
+                }
+                    }
                     padding: 17px;
                     .input-group-prepend {
                         width: 117px;
@@ -913,6 +1009,14 @@
                 }
             }
             .tab_section {
+                .purchase_amount {
+                    span.note {
+                    margin-left: -5%;
+                }
+                    input{
+                        width: 80%; 
+                    }
+                }
                 .nav {
                     overflow-x: auto;
                     overflow-y: hidden;
@@ -1008,7 +1112,6 @@
                         }
                         .form-control {
                             height: 35px;
-                            border-radius: 0;
                         }
                         .input-group-prepend {
                             color: white;
@@ -1049,6 +1152,27 @@
             }
             .readonly_box {
                 @include readonly_box;
+            }
+            .purchase_amount {
+                .amount_input {
+                    display: flex;
+                    gap: 0 10px;
+                    font-size: 20px;
+                    align-items: center;
+                }
+                .input-group-prepend {
+                    margin-right: 10px;
+                }
+                span {
+                    color: white !important;
+                }
+                span.note {
+                    margin-top: 5px;
+                    margin-bottom: 16px;
+                    display: block;
+                    font-weight: 700;
+                    font-size: 18px;
+                }
             }
             .info_wrap {
                 margin: auto;
@@ -1237,7 +1361,6 @@
                         .form-control {
                             height: 35px;
                             width: 100%;
-                            border-radius: 0;
                             margin-left: unset !important;
                             margin-top: 5px;
                         }

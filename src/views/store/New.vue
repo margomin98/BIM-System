@@ -1412,14 +1412,16 @@
               pointer-events: none;
             }
           }
+          h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-weight: 600;
+        @include title_color;
+      }
   @media only screen and (min-width: 1200px) {
     .main_section {
       h1 {
-        margin-top: 50px;
-        text-align: center;
         font-size: 55px;
-        font-weight: 600;
-        @include title_color;
       }
       .form_search_btn {
         @include form_search_btn;
@@ -1661,11 +1663,7 @@
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
       h1 {
-        margin-top: 50px;
-        text-align: center;
         font-size: 55px;
-        font-weight: 600;
-        @include title_color;
       }
       .form_search_btn {
         @include form_search_btn;
@@ -1903,11 +1901,7 @@
   @media only screen and (max-width: 767px) {
     .main_section {
       h1 {
-        margin-top: 50px;
-        text-align: center;
         font-size: 50px;
-        font-weight: 600;
-        @include title_color;
       }
       .form_search_btn {
         border: none;

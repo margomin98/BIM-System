@@ -93,6 +93,23 @@
                         <input type="text" class="form-control readonly_box" readonly />
                     </div>
                 </div>
+                <!-- 採購金額 -->
+                <div class="row  purchase_amount">
+                    <div class="col-xl-6 col-lg-auto col-md-auto col-12">
+                        <div class="input-group mb-xl-3 mb-lg-3 mb-md-3">
+                            <div class="input-group-prepend   ">
+                                採購金額：
+                            </div>
+                            <div class="amount_input">
+                                <span class="symbol">$</span><input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                        <span class="note">/每包裝單位<span>($<span class="purchase_total_amount">10</span>/每單位)</span>
+                        </span>
+                    </div>
+                </div>
                 <!-- 總庫存數量 -->
                 <div class="row">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -194,13 +211,13 @@
                 <h2 class="no_content_text">查無照片</h2>
                 <div>
                     <!-- <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
-                <swiper-slide v-for="(item , index) in selectFiles.viewFile" :key="index" class="custom-slide">
-                  <img class="swiper_bottom_img" :src="item.FileLink" alt="">
-                   <button class='zoom_img' data-bs-toggle="modal" data-bs-target="#zoomImg" @click="handlePreview(item)">
-          <img src="@/assets/zoom.png">
-        </button>
-                </swiper-slide>
-              </swiper-container> -->
+                    <swiper-slide v-for="(item , index) in selectFiles.viewFile" :key="index" class="custom-slide">
+                      <img class="swiper_bottom_img" :src="item.FileLink" alt="">
+                       <button class='zoom_img' data-bs-toggle="modal" data-bs-target="#zoomImg" @click="handlePreview(item)">
+              <img src="@/assets/zoom.png">
+            </button>
+                    </swiper-slide>
+                  </swiper-container> -->
                     <div class="swiper_pagination">
                     </div>
                 </div>
@@ -235,45 +252,45 @@
                             <p>作業行為</p>
                             <div class="dropdown">
                                 <!-- <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{ searchParams.Action || "請選擇" }}
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                      <p v-for="(item , index) in ActionArray" :key="index" class="dropdown-item" @click="selectAction(item)">{{ item}}</p>
-                    </div> -->
+                          {{ searchParams.Action || "請選擇" }}
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="statusDropdown">
+                          <p v-for="(item , index) in ActionArray" :key="index" class="dropdown-item" @click="selectAction(item)">{{ item}}</p>
+                        </div> -->
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col button_wrap">
                     <!-- <button class="search_btn" @click="searchHistory('','search')">檢索</button>
-              <button class="empty_btn" @click="clear">清空</button> -->
+                  <button class="empty_btn" @click="clear">清空</button> -->
                 </div>
                 <div class="info_wrap">
                     <!-- <DataTable
-                lazy
-                :key="datagrid.key"
-                :first= "datagrid.first"
-                :size="'small'"
-                :loading="datagrid.loading"
-                :value="rowData" 
-                :sort-field="datagrid.sortField"
-                :sort-order="datagrid.sortOrder"
-                resizableColumns 
-                columnResizeMode="expand"
-                showGridlines 
-                scrollable 
-                scrollHeight="420px" 
-                @page="searchHistory($event , 'page')" 
-                @sort="searchHistory($event , 'sort')"
-                paginator 
-                :rows="datagrid.rows" 
-                :totalRecords="datagrid.totalRecords"
-                paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-                :rowsPerPageOptions="[10, 20, 30]"
-                currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
-                <Column style="min-width: 60px;">
-                  <template #body="slotProps">
-                    <Storage_list_view_button :params = "slotProps" v-if="slotProps.data.FormID"/>
+                    lazy
+                    :key="datagrid.key"
+                    :first= "datagrid.first"
+                    :size="'small'"
+                    :loading="datagrid.loading"
+                    :value="rowData" 
+                    :sort-field="datagrid.sortField"
+                    :sort-order="datagrid.sortOrder"
+                    resizableColumns 
+                    columnResizeMode="expand"
+                    showGridlines 
+                    scrollable 
+                    scrollHeight="420px" 
+                    @page="searchHistory($event , 'page')" 
+                    @sort="searchHistory($event , 'sort')"
+                    paginator 
+                    :rows="datagrid.rows" 
+                    :totalRecords="datagrid.totalRecords"
+                    paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+                    :rowsPerPageOptions="[10, 20, 30]"
+                    currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+                    <Column style="min-width: 60px;">
+                      <template #body="slotProps">
+                        <Storage_list_view_button :params = "slotProps" v-if="slotProps.data.FormID"/>
 </template>
             </Column>
             <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
@@ -285,13 +302,14 @@
     </div>
 </template>
 
-<script>
-    import view_modal from "@/components/View_modal.vue"
-    export default {
-        components: {
-            view_modal
-        }
-    }
+//<script>
+    //     import view_modal from "@/components/View_modal.vue"
+    //     export default {
+    //         components: {
+    //             view_modal
+    //         }
+    //     }
+    //
 </script>
 
 <style lang="scss" scoped>
@@ -351,6 +369,29 @@
             .form_search_btn {
                 @include form_search_btn;
             }
+            .purchase_amount {
+                align-items: baseline;
+                flex-wrap: nowrap;
+                .input-group-prepend {
+                    margin-right: 10px;
+                }
+                .amount_input {
+                    display: flex;
+                    gap: 0 13px;
+                    margin-left: 0;
+                }
+                span {
+                    color: white !important;
+                }
+                span.symbol {
+                    font-size: 22px;
+                }
+                span.note {
+                    margin-left: -5%;
+                    font-weight: 700;
+                    font-size: 18px;
+                }
+            }
             .info_wrap {
                 margin: auto;
                 width: 800px;
@@ -395,7 +436,6 @@
                         }
                         .form-control {
                             height: 35px;
-                            border-radius: 0;
                         }
                         .input-group-prepend {
                             color: white;
@@ -448,9 +488,36 @@
             .readonly_box {
                 @include readonly_box;
             }
+            .purchase_amount {
+                align-items: baseline;
+                flex-wrap: nowrap;
+                input{
+                    width: calc(100% - 36%);
+                }
+                .input-group-prepend {
+                    margin-right: 10px;
+                }
+                .amount_input {
+                    display: flex;
+                    gap: 0 13px;
+                    margin-left: 0;
+                }
+                span {
+                    color: white !important;
+                }
+                span.symbol {
+                    font-size: 22px;
+                }
+                span.note {
+                    font-weight: 700;
+    margin-left: calc(100% - 120%);
+    font-size: 18px;
+                }
+            }
             .info_wrap {
                 margin: auto;
                 padding: 0 5%;
+                width: 800px;
                 .fixed_info {
                     @include fixed_info;
                     border-radius: 10px 10px 0 0;
@@ -462,6 +529,8 @@
                 .fixed_title {
                     @include fixed_title;
                 }
+
+
                 .content {
                     @include content_bg;
                     .form_search_wrap {
@@ -492,7 +561,6 @@
                         }
                         .form-control {
                             height: 35px;
-                            border-radius: 0;
                         }
                         .input-group-prepend {
                             color: white;
@@ -554,6 +622,27 @@
             .readonly_box {
                 @include readonly_box;
             }
+            .purchase_amount {
+                .amount_input {
+                    display: flex;
+                    gap: 0 10px;
+                    font-size: 20px;
+                    align-items: center;
+                }
+                .input-group-prepend {
+                    margin-right: 10px;
+                }
+                span {
+                    color: white !important;
+                }
+                span.note {
+                    margin-top: 5px;
+                    margin-bottom: 16px;
+                    display: block;
+                    font-weight: 700;
+                    font-size: 18px;
+                }
+            }
             .info_wrap {
                 padding: 1% 5% 0;
                 .fixed_title {
@@ -595,7 +684,6 @@
                         .form-control {
                             width: 100%;
                             height: 35px;
-                            border-radius: 0;
                             margin-left: unset !important;
                         }
                         .input-group-prepend {

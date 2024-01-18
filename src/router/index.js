@@ -14,6 +14,10 @@ import Store_Return from "../views/store/Return.vue";
 import Store_Delete from "../views/store/Delete";
 //入庫填報
 
+//快速入庫
+import Quick_Store_New from "../views/quick_store/New.vue";
+//快速入庫
+
 //入庫作業
 import Store_Process_Datagrid from "../views/store_process/Datagrid.vue";
 import Store_Process_View from "../views/store_process/View.vue";
@@ -169,6 +173,12 @@ const routes = [
     name: "Store_Datagrid",
     component: Store_Datagrid,
     meta: {auth: true, request: 'AI_Detail'},
+  },
+  {
+    path: "/quick_store_new",
+    name: "Quick_Store_New",
+    component: Quick_Store_New,
+    // meta: {auth: true, request: 'AI_Create'},
   },
   {
     path: "/store_new",

@@ -3,8 +3,7 @@
 </template>
 
 <script>
-// import Component from '@/components/store_process_page/storage_process_component';
-import Component from '@/components/assets_page/assets_component';
+import Component from '@/components/quick_store_page/quick_store_component';
 
 export default {
     components: {
