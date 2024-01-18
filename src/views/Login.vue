@@ -52,7 +52,7 @@
       const errorHint = ref('');
       onMounted(()=>{
         // 檢查是否有已登入(有cookie)
-        // checkCookieIsExist();
+        checkCookieIsExist();
       });
       // 登入
       async function login() {

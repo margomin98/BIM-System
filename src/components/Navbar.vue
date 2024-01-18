@@ -68,7 +68,7 @@
           </li>
         </ul>
         <div class='d-flex right_info'>
-          <p class="username">{{ userName }}&nbsp;&nbsp;您好！</p>
+          <p class="username">{{ utilsStore.userName }}&nbsp;&nbsp;您好！</p>
           <div class='log_out_btn' @click="logout()"  @touchstart="startTouch" @touchend="endTouch" @mouseover="hovered = true" @mouseout="hovered = false">
             <p class="logout">登出
               <img :src="hovered ? require('@/assets/navbar/logout_hover.png') : require('@/assets/navbar/logout.png')" alt="Image">
@@ -80,77 +80,41 @@
   </div>
 </template>
 
-<script>
+<script setup>
+  import { useUtilsStore } from '@/store'
   import router from '@/router';
-  import {
-    onMounted,
-    ref
-  } from 'vue';
-  export default {
-    data() {
-    return {
-      hovered: false
-    };
-  },
+  import { onMounted, ref } from 'vue';
+  const hovered= ref(false);
+  const utilsStore = useUtilsStore();
+  const emit = defineEmits(['username']);
   // 登出按鈕手機的動作
-  methods: {
-    startTouch() {
-      this.hovered = true;
-    },
-    endTouch() {
-      this.hovered = false;
-    }
-  },
-    name: 'Navbar',
-    setup(props,{emit}) {
-      const userName = ref('');
-      //登出function 沒有回傳值，正確直接回登入頁面
-      async function logout() {
-        const axios = require('axios');
-        try {
-          const response = await axios.post('http://192.168.0.177:7008/Account/LogOff');
-          if (response.status === 200) {
-            //登出成功，跳轉至首頁
-            router.push('/');
-          } else {
-            throw new Error(response.data.messages);
-          }
-        } catch (error) {
-          console.error('Error sending data to backend', error);
-        }
-      }
-      //取得navbar使用者名稱
-      async function getUserName() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
-          // console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            //接收成功，顯示使用者名稱
-            // console.log(data.messages);
-            userName.value = data.resultList.Applicant;
-            emit('username',data.resultList.Applicant);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          } else {
-            alert(data.messages);
-            throw new Error(data.messages);
-          }
-        } catch (error) {
-          console.error('Error sending data to backend', error);
-        }
-      }
-      onMounted(() => {
-        getUserName();
-      });
-      return {
-        userName,
-        logout,
-      }
-    },
+  function startTouch() {
+    hovered.value = true;
   }
+  function endTouch() {
+    hovered.value = false;
+  }
+
+  //登出function 沒有回傳值，正確直接回登入頁面
+  async function logout() {
+    const axios = require('axios');
+    try {
+      const response = await axios.post('http://192.168.0.177:7008/Account/LogOff');
+      if (response.status === 200) {
+        //登出成功，跳轉至首頁
+        router.push('/');
+      } else {
+        throw new Error(response.data.messages);
+      }
+    } catch (error) {
+      console.error('Error sending data to backend', error);
+    }
+  }
+  onMounted(async() => {
+    await utilsStore.getUserName();
+    utilsStore.getDate();
+    emit('username',utilsStore.userName); //收貨、入庫填報 edit修改後再移除
+  });
 </script>
 
 <style lang="scss" scoped>
