@@ -224,6 +224,20 @@ export const useAPIStore = defineStore('API',{
   getters: {
   },
   actions: {
+    // AntiForegeory Token
+    async GetAntiForgeryToken() {
+      try {
+        const response = await axios.post('/Manage/GetAntiForgeryToken');
+        if(response.data.state === 'account_error') {
+          alert(response.data.messages);
+          router.push('/');
+        }
+        return response.data;
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
+    },
     //下拉選單
     async getEquipType() {
       try {

@@ -241,13 +241,14 @@ export const useStorageStore = defineStore('Storage', {
       }
       // 傳送upperForm
       try {
-        const resultList = await this.sendUpperForm();
+        const token = await apiStore.GetAntiForgeryToken();
+        const resultList = await this.sendUpperForm(token);
         console.log('上半部resultList', resultList);
         // 再依照resultList將 下半部頁籤 單次分別上傳
         const ImgPromises = [];
         this.tabData.forEach((tab,index)=>{
           const itemId = resultList.Tabs[index];
-          ImgPromises.push(this.sendImgForm(itemId, tab, index));
+          ImgPromises.push(this.sendImgForm(itemId, tab, index,token));
         })
         // 等待所有檔案上傳完成
         await Promise.all(filePromises)
@@ -268,13 +269,17 @@ export const useStorageStore = defineStore('Storage', {
         alert(error);
       }
     },
-    async sendUpperForm() {
+    async sendUpperForm(token) {
       return new Promise((resolve, reject) => {
         const form = new FormData();
         form.append('AR_ID', this.upperForm.AR_ID);
         form.append('tab_count', this.tabData.length);
         form.append('Memo', this.upperForm.Memo);
-        axios.post('http://192.168.0.177:7008/AssetsInMng/NewAssetsIn', form)
+        axios.post('http://192.168.0.177:7008/AssetsInMng/NewAssetsIn', form,{
+          headers: { 
+            'RequestVerificationToken': token,
+          }
+        })
           .then(response => {
             const data = response.data;
             if (data.state === 'success') {
@@ -289,7 +294,7 @@ export const useStorageStore = defineStore('Storage', {
           });
       });
     },
-    async sendImgForm(itemId, tab, index) {
+    async sendImgForm(itemId, tab, index,token) {
       return new Promise((resolve, reject) => {
         const form = new FormData();
         // 先append itemId
@@ -312,7 +317,11 @@ export const useStorageStore = defineStore('Storage', {
         for (let i = 0; i < tab.newFile.length; i++) {
           form.append('newFile', tab.newFile[i]);
         }
-        axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form)
+        axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form,{
+          headers: { 
+            'RequestVerificationToken': token,
+          }
+        })
           .then((response) => {
             const data = response.data;
             if (data.state === 'success') {
