@@ -34,7 +34,9 @@
               <img src="../assets/navbar/deliver.png" alt="出庫管理"> 出庫管理
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <router-link to="#" class="d-flex speed_icon" style="flex-direction:row" @mouseover="changeImage" @mouseout="resetImage"><img :src="speedIcon" alt="快速出庫">快速出庫</router-link>
+              <router-link to="/quick_rent_new" class="d-flex speed_icon" style="flex-direction: row" @mouseover="changeImage" @mouseout="resetImage">
+                <img :src="speedIcon" alt="快速出庫">快速出庫
+              </router-link>
               <router-link to="/rent_datagrid">出庫填報管理</router-link>
               <router-link to="/rent_process_datagrid">出庫作業管理</router-link>
               <router-link to="/rent_review_datagrid">出庫審核管理</router-link>

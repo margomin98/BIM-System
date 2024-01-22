@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import Component from '@/components/quick_store_page/quick_store_component';
+import Component from '@/components/ship_receive_page/ship_receive.vue';
 
 export default {
     components: {

@@ -28,6 +28,15 @@ import Store_Process_Edit from "../views/store_process/Edit.vue";
 import Store_Process_Delete from "../views/store_process/Delete.vue";
 //入庫作業
 
+// 快速出庫
+import Quick_Rent_New from "../views/quick_rent/New.vue";
+
+// 出貨簽收
+import Ship_Receive_Datagrid from "../views/ship_receive/Datagrid.vue";
+import Ship_Receive_Confirm from "../views/ship_receive/Confirm.vue";
+
+// 出貨簽收
+
 //出庫填報
 import Rent_Datagrid from "../views/rent/Datagrid.vue";
 import Rent_New from "../views/rent/New.vue";
@@ -49,7 +58,6 @@ import Rent_Review_Datagrid from "../views/rent_review/Datagrid";
 import Rent_Review_View from "../views/rent_review/View.vue";
 import Rent_Review_New from "../views/rent_review/New.vue";
 import Rent_Review_Delete from "../views/rent_review/Delete.vue";
-
 //出庫審核
 
 //資產管理
@@ -278,6 +286,24 @@ const routes = [
     name: "Assets_Search",
     component: Assets_Search,
     meta: {auth: true, request: 'SearchInventory'},
+  },
+  {
+    path: "/quick_rent_new",
+    name: "Quick_Rent_New",
+    component: Quick_Rent_New,
+    // meta: {auth: true, request: 'AO_Create'},
+  },
+  {
+    path: "/ship_receive_datagrid",
+    name: "Ship_Receive_Datagrid",
+    component: Ship_Receive_Datagrid,
+    // meta: {auth: true, request: 'AO_Detail'},
+  },
+  {
+    path: "/ship_receive_confirm",
+    name: "Ship_Receive_Confirm",
+    component: Ship_Receive_Confirm,
+    // meta: {auth: true, request: 'AO_Detail'},
   },
   {
     path: "/rent_datagrid",
