@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import Store_Component from '@/components/store_page/storage_component';
+import Store_Component from '@/components/store_page/store_component';
 import Navbar from '@/components/Navbar.vue';
 import { useStorageStore } from '@/store/storage'
 import { useAPIStore, useUtilsStore } from '@/store';

@@ -14,6 +14,12 @@ import Store_Return from "../views/store/Return.vue";
 import Store_Delete from "../views/store/Delete";
 //入庫填報
 
+//快速入庫
+import Quick_Store_New from "../views/quick_store/New.vue";
+import Quick_Store_Edit from "../views/quick_store/Edit.vue";
+import Quick_Store_View from "../views/quick_store/View.vue";
+//快速入庫
+
 //入庫作業
 import Store_Process_Datagrid from "../views/store_process/Datagrid.vue";
 import Store_Process_View from "../views/store_process/View.vue";
@@ -21,6 +27,15 @@ import Store_Process_Confirm from "../views/store_process/Confirm.vue";
 import Store_Process_Edit from "../views/store_process/Edit.vue";
 import Store_Process_Delete from "../views/store_process/Delete.vue";
 //入庫作業
+
+// 快速出庫
+import Quick_Rent_New from "../views/quick_rent/New.vue";
+
+// 出貨簽收
+import Ship_Receive_Datagrid from "../views/ship_receive/Datagrid.vue";
+import Ship_Receive_Confirm from "../views/ship_receive/Confirm.vue";
+
+// 出貨簽收
 
 //出庫填報
 import Rent_Datagrid from "../views/rent/Datagrid.vue";
@@ -43,7 +58,6 @@ import Rent_Review_Datagrid from "../views/rent_review/Datagrid";
 import Rent_Review_View from "../views/rent_review/View.vue";
 import Rent_Review_New from "../views/rent_review/New.vue";
 import Rent_Review_Delete from "../views/rent_review/Delete.vue";
-
 //出庫審核
 
 //資產管理
@@ -171,6 +185,24 @@ const routes = [
     meta: {auth: true, request: 'AI_Detail'},
   },
   {
+    path: "/quick_store_new",
+    name: "Quick_Store_New",
+    component: Quick_Store_New,
+    // meta: {auth: true, request: 'AI_Create'},
+  },
+  {
+    path: "/quick_store_edit",
+    name: "Quick_Store_Edit",
+    component: Quick_Store_Edit,
+    // meta: {auth: true, request: 'AI_Create'},
+  },
+  {
+    path: "/quick_store_View",
+    name: "Quick_Store_View",
+    component: Quick_Store_View,
+    // meta: {auth: true, request: 'AI_Create'},
+  },
+  {
     path: "/store_new",
     name: "Store_New",
     component: Store_New,
@@ -254,6 +286,24 @@ const routes = [
     name: "Assets_Search",
     component: Assets_Search,
     meta: {auth: true, request: 'SearchInventory'},
+  },
+  {
+    path: "/quick_rent_new",
+    name: "Quick_Rent_New",
+    component: Quick_Rent_New,
+    // meta: {auth: true, request: 'AO_Create'},
+  },
+  {
+    path: "/ship_receive_datagrid",
+    name: "Ship_Receive_Datagrid",
+    component: Ship_Receive_Datagrid,
+    // meta: {auth: true, request: 'AO_Detail'},
+  },
+  {
+    path: "/ship_receive_confirm",
+    name: "Ship_Receive_Confirm",
+    component: Ship_Receive_Confirm,
+    // meta: {auth: true, request: 'AO_Detail'},
   },
   {
     path: "/rent_datagrid",
