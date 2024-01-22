@@ -28,6 +28,10 @@ import Store_Process_Edit from "../views/store_process/Edit.vue";
 import Store_Process_Delete from "../views/store_process/Delete.vue";
 //入庫作業
 
+//專案採購
+import Case_Purchase_Datagrid from "../views/case_purchase/Datagrid.vue";
+//專案採購
+
 // 快速出庫
 import Quick_Rent_New from "../views/quick_rent/New.vue";
 
@@ -303,6 +307,12 @@ const routes = [
     path: "/ship_receive_confirm",
     name: "Ship_Receive_Confirm",
     component: Ship_Receive_Confirm,
+    // meta: {auth: true, request: 'AO_Detail'},
+  },
+  {
+    path: "/case_purchase_datagrid",
+    name: "Case_Purchase_Datagrid",
+    component: Case_Purchase_Datagrid,
     // meta: {auth: true, request: 'AO_Detail'},
   },
   {
