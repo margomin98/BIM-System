@@ -222,7 +222,7 @@ export const useStorageStore = defineStore('Storage', {
         if(tab.itemProjectCode) {
           projectCodeList.push({
             PadNum: index,
-            projectCode: item.itemProjectCode,
+            projectCode: tab.itemProjectCode,
           })
         }
       })
