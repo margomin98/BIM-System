@@ -170,23 +170,12 @@
 </template>
 
 <script setup>
-  import {
-    register
-  } from 'swiper/element/bundle';
-  import {
-    Pagination
-  } from 'swiper/modules';
+  import { register } from 'swiper/element/bundle';
+  import { Pagination } from 'swiper/modules';
   import Navbar from "@/components/Navbar.vue";
   import viewOrder from "@/components/receive_page/order_view_btn.vue"
-  import {
-    onMounted,
-    ref,
-    reactive,
-  } from "vue";
-  import {
-    useRoute,
-    useRouter
-  } from "vue-router";
+  import { onMounted, ref, reactive, } from "vue";
+  import { useRoute, useRouter } from "vue-router";
   import VueMultiselect from 'vue-multiselect'
   import {
     getAccount,

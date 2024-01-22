@@ -1,9 +1,5 @@
 <template>
-  <Navbar />
   <div class="main_section">
-    <div class="title col">
-      <h1>新增盤點計畫</h1>
-    </div>
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
@@ -14,7 +10,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend"><span>*</span>標題：</div>
-            <input type="text" class="form-control text-center" placeholder="最多輸入20字" v-model="formParams.PlanTitle" />
+            <input type="text" class="form-control text-center" placeholder="最多輸入20字" />
           </div>
         </div>
         <div class="row organizer_wrap">
@@ -23,10 +19,10 @@
               <div class="input-group-prepend flex"><span>*</span>盤點人員：</div>
               <div class="dropdown">
                 <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ formParams.InventoryStaffName || '請選擇' }}
-                      </button>
+                      請選擇
+                    </button>
                 <div class="dropdown-menu">
-                  <p v-for="(item , index) in DropdownArray.InventoryStaff" :key="index" @click="selectStaff(item)">{{ item }}</p>
+                  <!-- <p v-for="(item , index) in DropdownArray.InventoryStaff" :key="index" @click="selectStaff(item)">{{ item }}</p> -->
                 </div>
               </div>
             </div>
@@ -34,7 +30,7 @@
           <div class="col-xl-6 col-lg-12 col-md-12 col-12 d-flex">
             <div class="input-group mb-3">
               <div class="input-group-prepend">盤點召集人：</div>
-              <input type="text" class="form-control readonly_box organizer" v-model="ConvenerName" readonly />
+              <input type="text" class="form-control readonly_box organizer" readonly />
             </div>
           </div>
         </div>
@@ -44,7 +40,7 @@
               <div class="input-group-prepend"><span>*</span>盤點開始日期：</div>
               <div class="date-selector">
                 <div class="input-container">
-                  <input type="date" class="date-input" v-model="formParams.PlanStart" />
+                  <input type="date" class="date-input" />
                 </div>
               </div>
             </div>
@@ -54,692 +50,310 @@
               <div class="input-group-prepend"><span>*</span>盤點結束日期：</div>
               <div class="date-selector">
                 <div class="input-container">
-                  <input type="date" class="date-input" v-model="formParams.PlanEnd" />
+                  <input type="date" class="date-input" />
                 </div>
               </div>
             </div>
           </div>
         </div>
         <!-- 專案代碼 -->
-        <div v-show="formParams.PlanType === '專案盤點'" class="col">
+        <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span>*</span>專案代碼 :
             </div>
-            <input type="text" class="form-control" placeholder="最多輸入10字" v-model="formParams.ProjectCode">
+            <input type="text" class="form-control" placeholder="最多輸入10字" />
             <button class="form_search_btn" @click="getProjectName('upperForm')">搜尋</button>
           </div>
         </div>
         <!-- 專案名稱 -->
-        <div v-show="formParams.PlanType === '專案盤點'" class="col">
+        <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               專案名稱 :
             </div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="formParams.ProjectName" readonly>
+            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly />
           </div>
         </div>
         <div class="col">
           <div class="input-group" style="   justify-content: flex-start;">
             <div class="input-group-prepend"><span>*</span>盤點類型：</div>
-            <div class="check_section">
-              <template v-for="(item , index) in PlanType" :key="item">
+            <!-- <div class="check_section">
+                  <template v-for="(item , index) in PlanType" :key="item">
                     <div class="form-check d-flex align-items-center">
-                      <input type="radio" :id="`no${index}`" name="radio" :value="item" v-model="formParams.PlanType" />
+                      <input type="radio" :id="`no${index}`" name="radio" :value="item" />
                       <label :for="`no${index}`">{{ item }}</label>
                     </div>
 </template>
-            </div>
-          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+<div class="info_wrap col">
+      <div class="fixed_info">
+        <div>
+          <p>盤點結果</p>
+        </div>
+      </div>
+      <div class="content d-flex">
+        <div>
+          <p>應盤內容 ： 項</p>
+        </div>
+        <div>
+          <p>合格項目 ： 項</p>
+        </div>
+        <div>
+          <p>差異項目 ：項</p>
         </div>
       </div>
     </div>
-    <div class="info_wrap col">
-      <div class="col">
-        <button class="add_btn" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="()=>{searchParams.ProjectCode =formParams.ProjectCode;searchInventory('','search');}">新增盤點項目</button>
-        <!-- Modal -->
-        <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-body">
-                <div class="fixed_info">
-                  <div>
-                    <p>檢索資產</p>
-                  </div>
-                  <button type="button" class="close" data-bs-dismiss="modal">x</button>
-                </div>
-                <div class='second_content'>
-                  <div class='wrap1'>
-                    <div class='col'>
-                      <p>設備總類</p>
-                      <div class="dropdown">
-                        <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                            {{ searchParams.EquipTypeName || '請選擇' }}
-                          </button>
-                        <div class="dropdown-menu" aria-labelledby="typeDropdown">
-                          <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class='col'>
-                      <p>設備分類</p>
-                      <div class="dropdown">
-                        <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
-                            {{ searchParams.EquipCategoryName || EquipCategoryInit }}
-                          </button>
-                        <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                          <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class='col'>
-                      <p>物品名稱</p>
-                      <input type="text" class="form-control text-center" placeholder="最多輸入20字" v-model="searchParams.AssetName" />
-                    </div>
-                    <div class='col'>
-                      <p>儲位區域</p>
-                      <div class="dropdown">
-                        <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
-                            {{ searchParams.AreaName || '請選擇' }}
-                          </button>
-                        <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                          <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item" @click="selectArea(item)">{{ item.Name }}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class='col'>
-                      <p>儲位櫃位</p>
-                      <div class="dropdown">
-                        <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="searchParams.AreaName === ''">
-                            {{ searchParams.LayerName || LayerInit }}
-                          </button>
-                        <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
-                          <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(item)">{{ item.Name }}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div v-show="formParams.PlanType === '專案盤點'" class='col'>
-                      <p>專案代碼</p>
-                      <input type="text" class="form-control text-center" placeholder="最多輸入10字" v-model="searchParams.ProjectCode" />
-                    </div>
-                  </div>
-                  <div class='col d-flex justify-content-center'>
-                    <button class="btn submit_btn" type="button" @click="searchInventory('','search')">搜尋</button>
-                    <button class="btn submit_btn" style="margin-left: 0.5rem;" type="button" @click="clear">清空</button>
-                    <button class="btn add_btn" style="margin-left: 0.5rem;" type="button" data-bs-dismiss="modal" @click="addList">加入</button>
-                  </div>
-                </div>
-              </div>
-              <div class="fixed_info">
-                <div>
-                  <p>目前資產庫存</p>
-                </div>
-              </div>
-              <DataTable lazy :first="datagrid1.first" :size="'small'" :loading="datagrid1.loading" :value="rowData1" :sort-field="datagrid1.sortField" :sort-order="datagrid1.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="510px"
-                @page="searchInventory($event , 'page')" @sort="searchInventory($event , 'sort')" v-model:selection="datagrid1.selectedList" :selectAll="datagrid1.selectAll" @select-all-change="onSelectAll" @row-unselect="onRowUnselect" paginator :rows="10"
-                :totalRecords="datagrid1.totalRecords" paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
-                <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-                <Column style="min-width: 60px;">
-<template #body="slotProps">
-  <!-- Add the custom component here -->
-  <List_view_button :params="slotProps" />
-</template>
-              </Column>
-              <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
-              </DataTable>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="info_wrap col">
       <div class="fixed_info">
         <div>
-          <p><span>*</span>盤點範圍(請至少新增一項)</p>
+          <p>差異細項</p>
         </div>
       </div>
-      <div class="content">
-        <div v-if="rowData2.length ===0">
-          <h2 class="no_content_text">尚未選取盤點項目</h2>
-        </div>
-        <div v-else style="height: 100%;">
+      <!-- <div class="content">
+        <div style="width: 100%">
           <DataTable 
-            lazy 
-            :first= "datagrid2.first"
             :size="'small'"
-            :loading="datagrid2.loading"
-            :value="rowData2" 
-            :sort-field="datagrid2.sortField"
-            :sort-order="datagrid2.sortOrder"
+            :value="rowData1" 
             resizableColumns 
             columnResizeMode="expand"
             showGridlines 
             scrollable 
             scrollHeight="820px" 
-            @page="getRangeOfPlan($event , 'page')" 
-            @sort="getRangeOfPlan($event , 'sort')"
-            paginator 
-            :rows="20" 
-            :totalRecords="datagrid2.totalRecords"
+            v-model:selection="datagrid1.selectedList" 
+            sort-field="NotBalanced"
+            :sort-order= -1
+            paginator
+            :rows="20"
+            @page="updatePage($event)"
+            :row-style="({ NotBalanced }) => NotBalanced ? 'background-color: #FFE1E1;': null "
             paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
             currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
-            <Column style="min-width: 60px;">
+            <Column style="min-width: 50px;" header="項目">
 <template #body="slotProps">
-  <Inventory_delete_button :params="slotProps" @delete="deleteFromAssetList" />
+   {{ calculateIndex(1,slotProps) }}
 </template>
             </Column>
             <Column style="min-width: 60px;">
 <template #body="slotProps">
-  <!-- Add the custom component here -->
   <List_view_button :params="slotProps" />
+</template>
+            </Column>
+            <Column header="認列" class="datatable_checkbox">
+<template #body="slotProps">
+  <input class="p-checkbox p-component" type="checkbox" :disabled="!slotProps.data.NotBalanced" :checked="!slotProps.data.NotBalanced" @change="updateList($event,slotProps)" />
 </template>
             </Column>
             <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
           </DataTable>
         </div>
+      </div> -->
+      <div class="bottom_fixed">
+        <div class="col d-flex">
+          <div class="input-group">
+            <div class="input-group-prepend">認列人員：</div>
+            <input type="text" class="form-control text-center readonly_box" readonly/>
+            <!-- <span class="icon-container">
+              <img src="@/assets/accept.png" class="checkmark-icon" />
+            </span> -->
+          </div>
+          <button class="send_btn" data-bs-toggle="modal" data-bs-target="#auth_modal">驗證</button>
+        </div>
+        <!--Validation Modal -->
+        <div class="modal fade" id="auth_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content ">
+              <div class="modal-header">
+                <h5 class="modal-title">認列人員驗證</h5>
+                <p class='m-0 close_icon' data-bs-dismiss="modal">X</p>
+              </div>
+              <div class="modal-body">
+                <div class="col">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">帳號：</div>
+                    <input type="text" class="form-control" />
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">密碼：</div>
+                    <input type="password" class="form-control" />
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer m-auto">
+                <button type="button" class="btn" data-bs-dismiss="modal" @click="validate()">驗證</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="col button_wrap">
-        <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="send_btn" @click="submit">送出</button>
+        <!-- <button class="send_btn" :class="{send_btn_disabled: !validation.isVerified}" @click="submit" :disabled="!validation.isVerified">確定認列</button>
+        <button class="send_btn" :class="{send_btn_disabled: !validation.isVerified}" :disabled="!validation.isVerified" data-bs-toggle="modal" data-bs-target="#force_modal">完成平帳</button> -->
+      </div>
+      <!--Force Warning Modal -->
+      <div class="modal force_modal fade" id="force_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">警示</h5>
+              <div class="close_icon">
+                <p type="button" data-bs-dismiss="modal" aria-label="Close">X</p>
+              </div>
+            </div>
+            <div class="modal-body">
+              <p>請確認差異細項是否認列無誤，按下"確認"後將會立即結束本次盤點平帳作業，不可再做修正。</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn confirm" data-bs-dismiss="modal" @click="submit('force')">確認</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+<div class="info_wrap col">
+    <div class="col">
+        <button class="add_btn" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="searchInventory('','search')">新增盤點項目</button>
+        <!-- Modal -->
+        <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="fixed_info">
+                            <div>
+                                <p>檢索資產</p>
+                            </div>
+                            <button type="button" class="close" data-bs-dismiss="modal">x</button>
+                        </div>
+                        <div class='second_content'>
+                            <div class='wrap1'>
+                                <div class='col'>
+                                    <p>設備總類</p>
+                                    <div class="dropdown">
+                                        <!-- <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
+                                            請選擇
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="typeDropdown">
+                                            <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <!-- ... (other form fields) ... -->
+                            </div>
+                            <div class='col d-flex justify-content-center'>
+                                <button class="btn submit_btn" type="button" @click="searchInventory('','search')">搜尋</button>
+                                <button class="btn submit_btn" style="margin-left: 0.5rem;" type="button" @click="clear">清空</button>
+                                <button class="btn add_btn" style="margin-left: 0.5rem;" type="button" data-bs-dismiss="modal" @click="addList">加入</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fixed_info">
+                        <div>
+                            <p>目前資產庫存</p>
+                        </div>
+                    </div>
+                    <!-- <DataTable lazy :first="datagrid1.first" :size="'small'" :loading="datagrid1.loading" :value="rowData1" :sort-field="datagrid1.sortField" :sort-order="datagrid1.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="510px"
+                        @page="searchInventory($event , 'page')" @sort="searchInventory($event , 'sort')" v-model:selection="datagrid1.selectedList" :selectAll="datagrid1.selectAll" @select-all-change="onSelectAll" @row-unselect="onRowUnselect" paginator :rows="10"
+                        :totalRecords="datagrid1.totalRecords" paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+                        <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+                        <Column style="min-width: 60px;">
+<template #body="slotProps">
+  <List_view_button :params="slotProps" />
+</template>
+                        </Column>
+                      
+                    </DataTable> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fixed_info">
+        <div>
+            <p><span>*</span>盤點範圍(請至少新增一項)</p>
+        </div>
+    </div>
+    <div class="content">
+        <div>
+            <h2 class="no_content_text">尚未選取盤點項目</h2>
+        </div>
+        <div class="search_wrap col">
+          <div class="title">
+            <div>
+              <p>掃描盤點</p>
+            </div>
+          </div>
+          <div class="content">
+            <div class="col">
+              <div class="input-group">
+                <div class="search_section">
+                  <div class="input-wrapper">
+                    <input ref="myInput" placeholder="請掃描資產編號" class="text-center" v-model="InputAssetsId" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col button">
+              <button class="search_btn" @click="getDatagrid('','search');">
+                  搜索
+                </button>
+              <button class="empty_btn" @click="clear">清空</button>
+            </div>
+          </div>
+          
+        </div>
+        <div style="height: 100%;">
+            <!-- <DataTable 
+                lazy 
+                :first= "datagrid2.first"
+                :size="'small'"
+                :loading="datagrid2.loading"
+                :value="rowData2" 
+                :sort-field="datagrid2.sortField"
+                :sort-order="datagrid2.sortOrder"
+                resizableColumns 
+                columnResizeMode="expand"
+                showGridlines 
+                scrollable 
+                scrollHeight="820px" 
+                @page="getRangeOfPlan($event , 'page')" 
+                @sort="getRangeOfPlan($event , 'sort')"
+                paginator 
+                :rows="20" 
+                :totalRecords="datagrid2.totalRecords"
+                paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+                currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+                <Column style="min-width: 60px;">
+<template #body="slotProps">
+  <Inventory_delete_button :params="slotProps" @delete="deleteFromAssetList" />
+</template>
+                </Column>
+                <Column style="min-width: 60px;">
+<template #body="slotProps">
+  <List_view_button :params="slotProps" />
+</template>
+                </Column>
+   
+            </DataTable> -->
+        </div>
+    </div>
+    <div class="col button_wrap">
+        <button class="back_btn" @click="goBack">回上一頁</button>
+        <button class="send_btn" @click="submit">送出</button>
+    </div>
+</div>
+
+
+
+    </div>
 </template>
 
-<script>
-  import List_view_button from "@/components/Inventory_view_button";
-  import Inventory_delete_button from "@/components/Inventory_delete_button";
-  import Navbar from "@/components/Navbar.vue";
-  import {
-    onMounted,
-    ref,
-    reactive,
-    computed,
-    watch,
-  } from "vue";
-  import DataTable from 'primevue/datatable';
-  import Column from 'primevue/column';
-  import {
-    useRouter
-  } from "vue-router";
-  import {
-    getEquipType,
-    getEquipCategory,
-    getArea,
-    getLayer,
-    getApplication,
-    getAccount,
-    getProject,
-    GetAntiForgeryToken
-  } from '@/assets/js/common_api'
-  import {
-    UpdatePageParameter,
-    createDatagrid,
-    goBack
-  } from "@/assets/js/common_fn";
-  import {
-    PlanType
-  } from "@/assets/js/dropdown";
-  import axios from "axios";
-  export default {
-    components: {
-      DataTable,
-      Column,
-      Navbar,
-      List_view_button,
-      Inventory_delete_button,
-    },
-    setup() {
-      const router = useRouter();
-      const ConvenerName = ref('');
-      const DropdownArray = reactive({
-        EquipType: [],
-        EquipCategory: [],
-        Area: [],
-        Layer: [],
-        InventoryStaff: [],
-      });
-      const EquipCategoryInit = ref('請先選擇設備總類');
-      const LayerInit = ref('請先選擇區域');
-      const formParams = reactive({
-        PlanTitle: '',
-        InventoryStaffName: '',
-        ProjectName: '',
-        ProjectCode: '',
-        PlanStart: '',
-        PlanEnd: '',
-        PlanType: '',
-        AssetList: [],
-      })
-      const searchParams = reactive({
-        EquipTypeName: '',
-        EquipType_Id: '',
-        EquipCategoryName: '',
-        Category_Id: '',
-        AssetName: '',
-        AreaName: '',
-        Area_Id: '',
-        LayerName: '',
-        Layer_Id: '',
-        ProjectCode: '',
-      })
-      // 搜尋資產 datagrid
-      const datagrid1 = createDatagrid();
-      const datagrid1field = [{
-          field: 'AssetStatus',
-          header: '資產狀態',
-          width: '150px',
-        },
-        {
-          field: 'AssetsId',
-          header: '資產編號',
-          width: '150px',
-        },
-        {
-          field: 'AssetName',
-          header: '物品名稱',
-          width: '150px',
-        },
-        {
-          field: 'EquipTypeName',
-          header: '設備總類',
-          width: '150px',
-        },
-        {
-          field: 'EquipCategoryName',
-          header: '設備分類',
-          width: '150px',
-        },
-        {
-          field: 'AreaName',
-          header: '儲位區域',
-          width: '150px',
-        },
-        {
-          field: 'LayerName',
-          header: '儲位櫃位',
-          width: '150px',
-        },
-      ];
-      const unselectList = ref([]);
-      // 盤點範圍項目 datagrid
-      const datagrid2 = createDatagrid();
-      const rowData1 = ref([]);
-      const rowData2 = ref([]);
-      onMounted(() => {
-        datagrid2.rows = 20;
-        getAccountName();
-        getApplicationInfo();
-      });
-      watch(formParams, (newValue, oldValue) => {
-        if (newValue.PlanType !== '專案盤點') {
-          formParams.ProjectCode = '';
-          formParams.ProjectName = '';
-          searchParams.ProjectCode = '';
-        }
-      });
-      // 送出新增計畫單
-      async function submit() {
-        // console.log(details.value);
-        // 檢查必填項目
-        if (!formParams.PlanTitle || !formParams.InventoryStaffName || !formParams.PlanStart || !formParams.PlanEnd || !formParams.PlanType || formParams.AssetList.length === 0) {
-          alert('請填寫所有必填項目');
-          return
-        }
-        if (!/^.{1,20}$/.test(formParams.PlanTitle)) {
-          alert('標題不可輸入超過20字');
-          return
-        }
-        // 類型為"專案盤點" => 額外檢查 專案代碼
-        if (formParams.PlanType === '專案盤點') {
-          if (!formParams.ProjectCode) {
-            alert('請填寫所有必填項目');
-            return
-          } else if (!/^[\s\S]{0,10}$/.test(formParams.ProjectCode)) {
-            alert('專案代碼不可輸入超過10字');
-            return
-          }
-        }
-        // 送出
-        const axios = require('axios');
-        let requestData = {};
-        for (const keyname in formParams) {
-          requestData[keyname] = formParams[keyname]
-        }
-        if (formParams.PlanType !== '專案盤點') {
-          delete requestData.ProjectCode;
-          delete requestData.ProjectName;
-        }
-        console.log('requestData:', requestData);
-        try {
-          const token = await GetAntiForgeryToken();
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/CreatePlan', requestData,{
-            headers:{
-              'RequestVerificationToken': token,
-            }
-          });
-          const data = response.data;
-          console.log(data);
-          if (data.state === 'success') {
-            let msg = data.messages;
-            msg += '\n單號:' + data.resultList.IP_Id;
-            alert(msg);
-            router.push({
-              name: 'Inventory_Datagrid'
-            });
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
-      // 搜尋function
-      async function searchInventory(event, type) {
-        // 檢查物品名稱字數
-        if (!/^.{0,20}$/.test(searchParams.AssetName)) {
-          alert('物品名稱不可輸入超過20字')
-          return
-        }
-        if (!/^.{0,10}$/.test(searchParams.ProjectCode)) {
-          alert('專案代碼不可輸入超過10字')
-          return
-        }
-        datagrid1.loading = true;
-        const form = new FormData();
-        // 將搜尋參數加入form
-        for (const key in searchParams) {
-          if (searchParams[key]) {
-            form.append(key, searchParams[key])
-          }
-        }
-        // 將已有的項目AssetsId加入form (給後端做篩選)
-        if (formParams.AssetList.length !== 0) {
-          for (const item of formParams.AssetList) {
-            form.append('AssetList', item)
-          }
-        }
-        UpdatePageParameter(datagrid1, event, type, form)
-        const axios = require('axios');
-        try {
-          const token = await GetAntiForgeryToken();
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/SearchInventory', form,{
-            headers:{
-              'RequestVerificationToken': token,
-            }
-          });
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('搜尋結果', data.resultList);
-            rowData1.value = data.resultList.rows
-            datagrid1.totalRecords = data.resultList.total
-            if (datagrid1.selectAll) {
-              datagrid1.selectedList = rowData1.value
-              // 然後unselect 排除List的項目
-              datagrid1.selectedList = datagrid1.selectedList.filter(item => !unselectList.value.includes(item.AssetsId));
-            }
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error(error);
-        } finally {
-          datagrid1.loading = false;
-        }
-      }
-      // 取得盤點範圍datagrid
-      async function getRangeOfPlan(event, type) {
-        datagrid2.loading = true;
-        const form = new FormData();
-        // 將已有的項目AssetsId加入form
-        if (formParams.AssetList.length !== 0) {
-          for (const item of formParams.AssetList) {
-            form.append('AssetList', item)
-          }
-        }
-        UpdatePageParameter(datagrid2, event, type, form)
-        const token = await GetAntiForgeryToken();
-        axios.post('http://192.168.0.177:7008/StocktakingMng/RangeOfPlan', form,{
-          headers:{
-            'RequestVerificationToken': token,
-          }
-        })
-          .then((response) => {
-            const data = response.data
-            if (data.state === 'success') {
-              console.log('盤點範圍:', data.resultList.rows);
-              datagrid2.totalRecords = data.resultList.total
-              rowData2.value = data.resultList.rows
-            } else {
-              // state為error
-              alert(data.messages);
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-        datagrid2.loading = false;
-      }
-      // 取得召集人員名稱
-      async function getApplicationInfo() {
-        getApplication()
-          .then((data) => {
-            ConvenerName.value = data;
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-      }
-      // 取得盤點人員DropdownArray
-      async function getAccountName() {
-        getAccount('')
-          .then((data) => {
-            DropdownArray.InventoryStaff = data;
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-      }
-      async function getEquipTypeName() {
-        if (DropdownArray.EquipType.length == 0) {
-          getEquipType()
-            .then((data) => {
-              DropdownArray.EquipType = data;
-            })
-            .catch((error) => {
-              console.error(error);
-            })
-        }
-      }
-      async function getEquipCategoryName() {
-        getEquipCategory(searchParams.EquipType_Id)
-          .then((data) => {
-            DropdownArray.EquipCategory = data;
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-      }
-      async function getAreaName() {
-        if (DropdownArray.Area.length == 0) {
-          getArea()
-            .then((data) => {
-              DropdownArray.Area = data;
-            })
-            .catch((error) => {
-              console.error(error);
-            })
-        }
-      }
-      async function getLayerName() {
-        getLayer(searchParams.Area_Id)
-          .then((data) => {
-            DropdownArray.Layer = data;
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-      }
-      // 專案代碼查詢
-      async function getProjectName() {
-        getProject(formParams.ProjectCode)
-          .then((data) => {
-            formParams.ProjectName = data;
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-      }
-      function selectType(item) {
-        searchParams.EquipTypeName = item.Name;
-        searchParams.EquipType_Id = item.Id;
-        searchParams.EquipCategoryName = '';
-        searchParams.Category_Id = '';
-        getEquipCategoryName();
-        EquipCategoryInit.value = '請選擇';
-      }
-      function selectCategory(item) {
-        searchParams.EquipCategoryName = item.Name;
-        searchParams.Category_Id = item.Id;
-      }
-      function selectArea(item) {
-        searchParams.AreaName = item.Name;
-        searchParams.Area_Id = item.Id;
-        searchParams.LayerName = '';
-        searchParams.Layer_Id = '';
-        getLayerName();
-        LayerInit.value = '請選擇';
-      };
-      function selectLayer(item) {
-        searchParams.LayerName = item.Name;
-        searchParams.Layer_Id = item.Id;
-      };
-      const selectStaff = (item) => {
-        formParams.InventoryStaffName = item;
-      }
-      function deleteFromAssetList(data) {
-        rowData2.value = rowData2.value.filter(item => item.AssetsId !== data.AssetsId);
-        formParams.AssetList = formParams.AssetList.filter(AssetsId => AssetsId !== data.AssetsId);
-        if (formParams.AssetList.length !== 0) {
-          getRangeOfPlan('', 'search');
-        }
-      }
-      const clear = () => {
-        for (const key in searchParams) {
-          searchParams[key] = '';
-        }
-        EquipCategoryInit.value = '請先選擇設備總類'
-        LayerInit.value = '請先選擇區域'
-        searchInventory('', 'search')
-      }
-      async function addList() {
-        if (datagrid1.selectAll) {
-          const form = new FormData();
-          for (const key in searchParams) {
-            form.append(key, searchParams[key]);
-          }
-          // 排除已有細項
-          if (formParams.AssetList.length !== 0) {
-            for (const item of formParams.AssetList) {
-              form.append('AssetList', item)
-            }
-          }
-          const token = await GetAntiForgeryToken();
-          axios.post('http://192.168.0.177:7008/StocktakingMng/SelectAllGrid', form,{
-            headers:{
-              'RequestVerificationToken': token,
-            }
-          })
-            .then((response) => {
-              const data = response.data
-              if (data.state === 'success') {
-                // 將符合情況的AssetsId List放入formParams.AssetList
-                console.log('allgrid:', data.resultList);
-                data.resultList.rows.forEach(id => {
-                  formParams.AssetList.push(id);
-                });
-                // 全選情況下，扣掉排除List
-                formParams.AssetList = formParams.AssetList.filter(id => !unselectList.value.includes(id));
-                getRangeOfPlan('', 'search');
-                // 清空排除List、selectedList
-                datagrid1.selectAll = false;
-                datagrid1.selectedList = [];
-                unselectList.value = [];
-              }
-            })
-            .catch((error) => {
-              console.error(error);
-            })
-        } else {
-          // 非全選情況下，加入selectedList
-          datagrid1.selectedList.forEach(item => {
-            formParams.AssetList.push(item.AssetsId);
-            rowData2.value.push(item);
-          })
-          // 加入後清空selectedList
-          datagrid1.selectedList = [];
-          getRangeOfPlan('', 'search');
-        }
-        // 取得切頁的formParams.AssetList
-      }
-      function onSelectAll(event) {
-        datagrid1.selectAll = event.checked;
-        if (datagrid1.selectAll) {
-          // 全選的情況selectedList僅用來顯示
-          datagrid1.selectedList = rowData1.value
-        } else {
-          // 清空selectedList與排除List
-          datagrid1.selectedList = [];
-          unselectList.value = [];
-        }
-      }
-      function onRowUnselect(event) {
-        if (datagrid1.selectAll) {
-          // console.log('unselect:', event.data.AssetsId);
-          //加入排除List
-          unselectList.value.push(event.data.AssetsId);
-        }
-      }
-      return {
-        ConvenerName,
-        DropdownArray,
-        EquipCategoryInit,
-        LayerInit,
-        formParams,
-        searchParams,
-        datagrid1,
-        datagrid1field,
-        unselectList,
-        datagrid2,
-        rowData1,
-        rowData2,
-        rowHeight: 35,
-        PlanType,
-        submit,
-        searchInventory,
-        getRangeOfPlan,
-        getEquipTypeName,
-        getAreaName,
-        getProjectName,
-        selectType,
-        selectCategory,
-        selectArea,
-        selectLayer,
-        selectStaff,
-        deleteFromAssetList,
-        clear,
-        addList,
-        onSelectAll,
-        onRowUnselect,
-        goBack,
-      };
-    },
-  }
-</script>
+
+
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
   span {
@@ -758,6 +372,85 @@
   }
   .modal-body {
     padding: 0 !important;
+  }
+  .search_wrap {
+    margin-bottom: 20px;
+    .title {
+      display: flex;
+      justify-content: space-around;
+      background: #3D4E61;
+      color: white;
+      font-size: 25px;
+      font-weight: 700;
+      align-items: center;
+      border-radius: 10px 10px 0px 0px;
+      height: 50px;
+      p {
+        margin-bottom: 0
+      }
+    }
+    .content {
+      background-color: #C3D3DA !important
+    }
+    .button {
+      display: flex;
+      margin-top: 20px;
+      justify-content: center;
+      gap: 20px;
+      button.empty_btn {
+        @include empty_btn;
+        &:hover {
+          background-color: #244f86;
+        }
+      }
+      button.search_btn {
+        @include search_and_send_btn;
+        &:hover {
+          background-color: #5e7aa2;
+        }
+      }
+    }
+    .search_section {
+      padding: 0 80px;
+      width: 100%;
+      input {
+        @include dropdown_btn;
+        width: 100%;
+        height: 35px;
+      }
+    }
+  }
+  .info_wrap:nth-child(1) {
+    margin-bottom: 3% !important
+  }
+  .bottom_fixed {
+    display: flex;
+    justify-content: space-around;
+    background: white;
+    color: white;
+    font-size: 25px;
+    font-weight: 700;
+    align-items: center;
+    border-radius: 0 0 10px 10px;
+    height: 70px;
+    padding: 0 30%;
+    .input-group {
+      height: auto;
+    }
+    .input-group-prepend {
+      font-size: 20px;
+      margin-bottom: 0;
+      color: black
+    }
+    button {
+      margin-left: 15px;
+      @include auth_btn;
+      font-size: 20px;
+      border-radius: 7px;
+      &:hover {
+        background: #5a6d87;
+      }
+    }
   }
   @media only screen and (min-width: 1200px) {
     .main_section {

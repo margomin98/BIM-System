@@ -21,6 +21,9 @@
               <router-link to="/receive_new">新增收貨</router-link>
               <router-link to="/receive_datagrid">收貨管理</router-link>
               <div class='dropdown-divider' style='border-color:white'></div>
+              <router-link to="/quick_store_new" class="d-flex speed_icon" style="flex-direction: row" @mouseover="changeImage" @mouseout="resetImage">
+                <img :src="speedIcon" alt="快速入庫">快速入庫
+              </router-link>
               <router-link to="/store_new">新品入庫</router-link>
               <router-link to="/store_return">歸還入庫</router-link>
               <router-link to="/store_datagrid">入庫填報管理</router-link>
@@ -34,6 +37,9 @@
               <img src="../assets/navbar/deliver.png" alt="出庫管理"> 出庫管理
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <router-link to="/quick_rent_new" class="d-flex speed_icon" style="flex-direction: row" @mouseover="changeImage" @mouseout="resetImage">
+                <img :src="speedIcon" alt="快速出庫">快速出庫
+              </router-link>
               <router-link to="/rent_datagrid">出庫填報管理</router-link>
               <router-link to="/rent_process_datagrid">出庫作業管理</router-link>
               <router-link to="/rent_review_datagrid">出庫審核管理</router-link>
@@ -74,9 +80,8 @@
           </li>
         </ul>
         <div class='d-flex right_info'>
-          <p class="username">{{ userName }}&nbsp;&nbsp;您好！</p>
-          <div class='log_out_btn' @click="logout()" @touchstart="startTouch" @touchend="endTouch"
-            @mouseover="hovered = true" @mouseout="hovered = false">
+          <p class="username">{{ utilsStore.userName }}&nbsp;&nbsp;您好！</p>
+          <div class='log_out_btn' @click="logout()" @touchstart="startTouch" @touchend="endTouch" @mouseover="hovered = true" @mouseout="hovered = false">
             <p class="logout">登出
               <img :src="hovered ? require('@/assets/navbar/logout_hover.png') : require('@/assets/navbar/logout.png')"
                 alt="Image">
@@ -88,83 +93,54 @@
   </div>
 </template>
 
-<script>
-import { GetAntiForgeryToken } from '@/assets/js/common_api';
-import router from '@/router';
-import {
-  onMounted,
-  ref
-} from 'vue';
-export default {
-  data() {
-    return {
-      hovered: false
-    };
-  },
+<script setup>
+  import {
+    useUtilsStore
+  } from '@/store'
+  import router from '@/router';
+  import {
+    onMounted,
+    ref
+  } from 'vue';
+  const hovered = ref(false);
+  const utilsStore = useUtilsStore();
+  const emit = defineEmits(['username']);
+  const speedIcon = ref(require('@/assets/navbar/speed.png')); // 快速的Icon
+  const hoverImage = require('@/assets/navbar/speed_hover.png'); // 快速的Icon
+  // Hover effect functions
+  function changeImage() {
+    speedIcon.value = hoverImage;
+  }
+  function resetImage() {
+    speedIcon.value = require('@/assets/navbar/speed.png'); // 快速的Icon
+  }
   // 登出按鈕手機的動作
-  methods: {
-    startTouch() {
-      this.hovered = true;
-    },
-    endTouch() {
-      this.hovered = false;
-    }
-  },
-  name: 'Navbar',
-  setup(props, { emit }) {
-    const userName = ref('');
-    //登出function 沒有回傳值，正確直接回登入頁面
-    async function logout() {
-      const axios = require('axios');
-      try {
-        const token = await GetAntiForgeryToken();
-        const response = await axios.post('http://192.168.0.177:7008/Account/LogOff','',{
-          headers:{
-            'RequestVerificationToken': token,
-          }
-        });
-        if (response.status === 200) {
-          //登出成功，跳轉至首頁
-          router.push('/');
-        } else {
-          throw new Error(response.data.messages);
-        }
-      } catch (error) {
-        console.error('Error sending data to backend', error);
+  function startTouch() {
+    hovered.value = true;
+  }
+  function endTouch() {
+    hovered.value = false;
+  }
+  //登出function 沒有回傳值，正確直接回登入頁面
+  async function logout() {
+    const axios = require('axios');
+    try {
+      const response = await axios.post('http://192.168.0.177:7008/Account/LogOff');
+      if (response.status === 200) {
+        //登出成功，跳轉至首頁
+        router.push('/');
+      } else {
+        throw new Error(response.data.messages);
       }
+    } catch (error) {
+      console.error('Error sending data to backend', error);
     }
-    //取得navbar使用者名稱
-    async function getUserName() {
-      const axios = require('axios');
-      try {
-        const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
-        // console.log(response);
-        const data = response.data;
-        if (data.state === 'success') {
-          //接收成功，顯示使用者名稱
-          // console.log(data.messages);
-          userName.value = data.resultList.Applicant;
-          emit('username', data.resultList.Applicant);
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
-        } else {
-          alert(data.messages);
-          throw new Error(data.messages);
-        }
-      } catch (error) {
-        console.error('Error sending data to backend', error);
-      }
-    }
-    onMounted(() => {
-      getUserName();
-    });
-    return {
-      userName,
-      logout,
-    }
-  },
-}
+  }
+  onMounted(async() => {
+    await utilsStore.getUserName();
+    utilsStore.getDate();
+    emit('username', utilsStore.userName); //收貨、入庫填報 edit修改後再移除
+  });
 </script>
 
 <style lang="scss" scoped>
@@ -182,111 +158,23 @@ export default {
       transform: translate3d(0, 0, 0);
     }
   }
-}
-
-.log_out_btn {
-  border: 1px dashed black;
-  border-radius: 20px;
-  width: 80px;
-  margin-left: 5px;
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-
-  p {
-    align-items: center;
+  .log_out_btn {
+    border: 1px dashed black;
+    border-radius: 20px;
+    width: 80px;
+    margin-left: 5px;
     display: flex;
-    gap: 5px;
-  }
-
-  &:hover {
-    color: white;
-    border-color: white;
-    background-color: rgb(113, 130, 148);
-  }
-}
-
-@media only screen and (min-width: 1200px) {
-
-  .navbar-nav .nav-link.active,
-  .navbar-nav .nav-link.show {
-    color: white;
-  }
-
-  .navbar {
-    height: 60px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    background: linear-gradient(151deg, #0E2135 1.56%, #4A74A1 42.39%, #FFF 96.44%);
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-
-    .nav-link:hover {
-      background: #213d5d;
-      border-radius: 5px;
+    justify-content: center;
+    cursor: pointer;
+    p {
+      align-items: center;
+      display: flex;
+      gap: 5px;
     }
-
-    nav {
-      padding: 13px 19.749px 12px 20.5px;
-
-      a {
-        font-size: 18px;
-        color: white;
-        padding: 5px;
-      }
-
-      .navbar-collapse {
-        justify-content: space-between;
-
-        .right_info {
-          align-items: center;
-
-          p {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 0;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-          }
-        }
-
-        ul {
-          display: flex;
-          align-items: center;
-          gap: 15px;
-          margin-left: 50px;
-
-          a {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-          }
-        }
-      }
-
-      .dropdown-menu {
-        border-radius: 0px 0px 5px 5px;
-        background: #2D4864;
-        box-shadow: 4px 2px 4px 0px rgba(0, 0, 0, 0.25);
-        margin-top: 10px;
-        left: calc(100% - 111%);
-
-        a {
-          padding: 0 10px;
-          text-decoration: none;
-          justify-content: center;
-          align-items: center;
-          gap: 5px;
-          flex-direction: column;
-          display: flex;
-
-          &:hover {
-            background: white;
-            color: black
-          }
-        }
-      }
+    &:hover {
+      color: white;
+      border-color: white;
+      background-color: rgb(113, 130, 148);
     }
   }
 }

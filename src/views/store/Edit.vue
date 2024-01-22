@@ -459,7 +459,7 @@
                 <div class="mb-3 file_wrap">
                   <button class='choose_btn' @click="openFileExplorer(index)">選擇檔案</button>
                   <input type="file" accept="image/*" ref="fileInputs" style="display: none;" multiple @change="handleFileChange(index , $event)" />
-                </div>
+                </div> 
               </div>
             </div>
             <div class="selected_file col">
