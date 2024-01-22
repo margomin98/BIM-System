@@ -4,16 +4,26 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">標題</h5>
+                    <h5 class="modal-title">{{ utilsStore.modalParams.title }}</h5>
                     <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
                 </div>
                 <div class="modal-body">
-                    <img src="https://i.pinimg.com/736x/ad/a2/ed/ada2edc637fc1dac75afed1c70fd71db.jpg" alt="Uploaded Image" class="w-100" />
+                    <img :src="utilsStore.modalParams.src" alt="Uploaded Image" class="w-100" />
                 </div>
             </div>
         </div>
     </div>
 </template>
+
+<script setup>
+import { useUtilsStore } from '@/store';
+import { onMounted } from 'vue';
+const utilsStore = useUtilsStore()
+onMounted(()=>{
+    utilsStore.modalParams.src = '';
+    utilsStore.modalParams.title = '';
+})
+</script>
 
 <style lang="scss" scoped>
     .modal {
