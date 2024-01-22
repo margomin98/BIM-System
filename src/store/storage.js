@@ -244,13 +244,13 @@ export const useStorageStore = defineStore('Storage', {
         const resultList = await this.sendUpperForm();
         console.log('上半部resultList', resultList);
         // 再依照resultList將 下半部頁籤 單次分別上傳
-        const ImgPromises = [];
+        const tabPromises = [];
         this.tabData.forEach((tab,index)=>{
           const itemId = resultList.Tabs[index];
-          ImgPromises.push(this.sendImgForm(itemId, tab, index));
+          tabPromises.push(this.sendImgForm(itemId, tab, index));
         })
         // 等待所有檔案上傳完成
-        await Promise.all(filePromises)
+        await Promise.all(tabPromises)
         .then(result => {
           const allSuccess = result.every(result => result === 'success')
           if (allSuccess) {
