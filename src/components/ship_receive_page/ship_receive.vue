@@ -1,7 +1,7 @@
 <template>
     <Viewmodal/>
     <div class="modal fade" id="auth_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content ">
                 <div class="modal-header">
                     <h5 class="modal-title">驗證</h5>
@@ -27,7 +27,7 @@
             </div>
         </div>
     </div>
-    <div class="main_section">
+    <div>
         <div class="info_wrap col">
             <div class="fixed_info">
                 <div>
@@ -44,8 +44,8 @@
                 <div class="row g-0">
                     <div class="col d-flex wrap column_section">
                         <label for="inputTitle1" class="form-label use">
-                            <p>用&ensp;&ensp;&ensp;&ensp;途</p>
-                        </label>
+                                <p>用&ensp;&ensp;&ensp;&ensp;途</p>
+                            </label>
                         <div class="option">
                             <div class='content'>
                                 <div class="form-check" v-for="(option, index) in options" :key="index">
@@ -59,16 +59,16 @@
                 <div class="row g-0 project_details">
                     <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
                         <label for="inputWithButton" class="form-label">
-                            <p>專案代碼</p>
-                        </label>
+                                <p>專案代碼</p>
+                            </label>
                         <div class="input-group" id="readonly_box">
                             <p class="readonly_box" readonly></p>
                         </div>
                     </div>
                     <div class="col d-flex wrap">
                         <label for="inputWithTitle" class="form-label project_name" id="project_name">
-                            <p>專案名稱</p>
-                        </label>
+                                <p>專案名稱</p>
+                            </label>
                         <div class="input-group" id="readonly_box">
                             <p class="readonly_box" readonly></p>
                         </div>
@@ -77,8 +77,8 @@
                 <div class="row g-0">
                     <div class="col d-flex wrap" style="border: none">
                         <label for="inputTextarea" class="form-label">
-                            <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
-                        </label>
+                                <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
+                            </label>
                         <div class="input-group" id='readonly_box'>
                             <textarea class="form-control readonly_box" readonly></textarea>
                         </div>
@@ -92,8 +92,8 @@
             </div>
             <div class="second_content">
                 <!-- <DataTable size="small" :value="rowData1" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="420px">
-                                <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
-                            </DataTable> -->
+                                    <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+                                </DataTable> -->
             </div>
             <div class="fixed_info">
                 <div>
@@ -102,9 +102,9 @@
             </div>
             <div class="third_content">
                 <!-- <DataTable :size="'small'" :value="rowData2" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="600px" :row-style="({ OM_IsExecute }) => !OM_IsExecute ? 'background-color: #CEE4EB;': null ">
-                                    <Column header="交付確認" class="datatable_checkbox">
-                                        <template style="min-width:50px; " #body="slotProps">
-                                          <input type="checkbox" class="p-checkbox p-component" v-model="slotProps.data.OM_IsExecute">
+                                        <Column header="交付確認" class="datatable_checkbox">
+                                            <template style="min-width:50px; " #body="slotProps">
+                                              <input type="checkbox" class="p-checkbox p-component" v-model="slotProps.data.OM_IsExecute">
 </template>
           </Column>
           <Column>
@@ -264,7 +264,7 @@
         <div class="auth_section d-flex">
               <p><span class="red_star">*</span>上傳人員</p> 
             <input type="text" name="" value="">
-            <button>驗證</button>
+            <button data-bs-toggle="modal" data-bs-target="#auth_modal">驗證</button>
               </div>
         </div>
     </div>
@@ -297,18 +297,17 @@
         justify-content: center;
         align-items: center;
         background: white;
-           padding:5px 0;
-           border-radius:0 0 10px 10px;
-           gap:0 10px;
-        p{
-            margin-bottom:0;
-            color:black !important;
-       
+        padding: 5px 0;
+        border-radius: 0 0 10px 10px;
+        gap: 0 10px;
+        p {
+            margin-bottom: 0;
+            color: black !important;
         }
-        button{  padding:10px 17px;
-         font-size:18px;
-            background:#3569AF;
-
+        button {
+            padding: 10px 17px;
+            font-size: 18px;
+            background: #3569AF;
         }
     }
     .selected_file {
@@ -344,8 +343,7 @@
         .content {
             gap: 0 20px;
             padding: 10px 20px;
-           
-         background:rgba(82, 136, 156, 0.8)
+            background: rgba(82, 136, 156, 0.8)
         }
         p {
             margin-bottom: 0;
@@ -357,7 +355,6 @@
             border-radius: 5px;
             display: flex;
             height: 35px;
-          
             font-size: 20px;
             justify-content: center;
             color: #FFF;
@@ -371,24 +368,24 @@
             align-items: center;
             height: 60px;
             border-radius: 10px !important;
-            button {  padding: 10px 25px;
+            button {
+                padding: 10px 25px;
                 background: var(--c3, #364E68);
             }
         }
     }
     .upload_receive_section {
         .content {
-            border-radius:10px 10px 0 0 !important;
-            .upload_wrap{
-                  button {
+            border-radius: 10px 10px 0 0 !important;
+            .upload_wrap {
+                button {
                     padding: 10px 25px;
-                background: #7CA6DD;
-            }
+                    background: #7CA6DD;
+                }
             }
             .selected_file {
                 margin-top: 10px;
             }
-          
         }
     }
     .readonly_box {
@@ -497,14 +494,16 @@
     .project_details #project_name {
         height: 100%;
     }
+    h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-weight: 600;
+        @include title_color;
+    }
     @media only screen and (min-width: 1200px) {
         .main_section {
             h1 {
-                margin-top: 50px;
-                text-align: center;
                 font-size: 55px;
-                font-weight: 600;
-                @include title_color;
             }
             .modal-content {
                 width: 400px;
@@ -848,11 +847,7 @@
     @media only screen and (min-width: 768px) and (max-width: 1199px) {
         .main_section {
             h1 {
-                margin-top: 50px;
-                text-align: center;
                 font-size: 55px;
-                font-weight: 600;
-                @include title_color;
             }
             .modal-content {
                 width: 400px;
@@ -1202,18 +1197,14 @@
             #readonly_box {
                 background: #b4b4b4;
             }
-            .upload_receive_section .content{
+            .upload_receive_section .content {
                 flex-direction: column;
-             .upload_wrap{
-                   margin-top:10px;
+                .upload_wrap {
+                    margin-top: 10px;
                 }
             }
             h1 {
-                margin-top: 50px;
-                text-align: center;
                 font-size: 40px;
-                font-weight: 600;
-                @include title_color;
             }
             .info_wrap {
                 margin: auto;

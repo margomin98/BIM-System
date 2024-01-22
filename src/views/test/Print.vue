@@ -70,15 +70,17 @@ const printDataGrid = () => {
       <h2>出貨簽收單</h2>
       <img src='https://www.bimfm.com.tw/image/logo.png' style='width: 180px; margin: 10px 0'>
       <div class='print_info' style='display: flex;flex-direction:column; gap: 0 20px;'>
-        <p style='font-size: 14px'>單號:12345678902</p>
-        <p style='font-size: 14px'>專案名稱:長佳TPKC資料中心IDC及MSC機房機電新建工程BIM服務</p>
-        <p style='font-size: 14px'>承辦人:蕭敬騰</p>
+        <p style='font-size: 14px'>單號：12345678902</p>
+        <p style='font-size: 14px'>專案名稱：長佳TPKC資料中心IDC及MSC機房機電新建工程BIM服務</p>
+        <p style='font-size: 14px'>廠商名稱：三星電子</p>
+        <p style='font-size: 14px'>承辦人：蕭敬騰</p>
+        <p style='font-size: 14px'>日期：2022/01/01</p>
       </div>
       <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
         <thead>
           <tr>
+            <th style="border: 1px solid black; font-size: 12px;"></th>
             <th style="border: 1px solid black; font-size: 12px;">序號</th>
-            <th style="border: 1px solid black; font-size: 12px;">資產編號</th>
             <th style="border: 1px solid black;font-size:12px">物品名稱</th>
             <th style="border: 1px solid black;font-size:12px">廠商</th>
             <th style="border: 1px solid black;font-size:12px">型號</th>
@@ -97,9 +99,9 @@ const printDataGrid = () => {
           簽收欄
         </div>
         <div class='col-auto right_col'>
-          <p>以上貨物已於西元<span style='width: 60px; display: inline-block;'></span>年<span style='width: 60px; display: inline-block;'></span>月<span style='width: 60px; display: inline-block;'></span>日清點無誤。</p>
+          <p>以上貨物已於西元<span style='width: 60px; display: inline-block;'></span>年<span style='width: 60px; display: inline-block;'></span>月<span style='width: 60px; display: inline-block;'></span>日清點及交付無誤。</p>
           <p>收貨單位：</p>
-          <p>驗收人簽章</p>
+          <p>收貨人簽章：</p>
         </div>
       </div>
       <div class='row info_wrap_bottom' >
@@ -143,7 +145,7 @@ const getData = () => {
   // Generate sample data for demonstration
   return Array.from({ length: 5 }, (_, index) => ({
     SerialNumber: (index + 1).toString().padStart(2, '0'),
-    AssetId: 'BF00001186',
+    AssetsId: 'BF00001186',
     AssetName: '滑鼠滑鼠滑鼠滑鼠滑鼠滑鼠滑鼠滑鼠滑鼠滑鼠',
     Manufacturer: 'LG',
     Model: 'S156498',
