@@ -140,7 +140,7 @@
         throw new Error(response.data.messages);
       }
     } catch (error) {
-      console.error('Error sending data to backend', error);
+      console.error(error);
     }
   }
   onMounted(async() => {
