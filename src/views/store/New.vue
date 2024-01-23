@@ -22,17 +22,21 @@ const storageStore = useStorageStore();
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();
 // 解構
-const { DropdownArray , upperForm , middleForm , tabData } = storeToRefs(storageStore) ;
+const { DropdownArray , upperForm , hidden } = storeToRefs(storageStore) ;
 const route = useRoute();
 
 onMounted(async() => {
   storageStore.$reset();
+  hidden.value = true;
   DropdownArray.value.EquipType = await apiStore.getEquipType();
   DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();
   if(route.query.search_id && route.query.ShipmentNum) {
     upperForm.value.ShipmentNum = route.query.ShipmentNum;
     storageStore.fuzzyShipmentNum();
     upperForm.value.AR_ID = route.query.search_id;
+  }
+  else {
+    storageStore.fuzzyShipmentNum();
   }
 });
 </script>

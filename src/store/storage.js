@@ -5,10 +5,15 @@ import { UnitArray, PackageUnitArray } from '@/assets/js/dropdown'
 import router from '@/router';
 // lodash
 import _ from "lodash"
+import { useRoute } from 'vue-router';
 
 export const useStorageStore = defineStore('Storage', {
   // data
   state: () => ({
+    // 隱藏欄位(這頁只有已上傳需要特別處理)
+    hidden: false,
+    // 入庫單類型: 0-新品, 1-歸還, 2-快速入庫
+    Type: 0,
     // 下拉選單
     DropdownArray: {
       ShipmentNum: [],
@@ -21,12 +26,16 @@ export const useStorageStore = defineStore('Storage', {
     },
     // 上方表格
     upperForm: {
+      Applicant: '',
+      ApplicationDate: '',
       ShipmentNum: '',
       AR_ID: '',
+      AI_ID: '',
       Memo: '',
     },
     // 中間填寫表格
     middleForm: {
+      itemId: '', //編輯
       itemAssetType: '',
       itemProjectCode: '',
       itemProjectName: '',
@@ -51,10 +60,10 @@ export const useStorageStore = defineStore('Storage', {
     },
     // 下方頁籤資料
     tabData: [],
+    // 欲刪除的已存在頁籤數組
+    deleteTab: [],
     // 控制物流單號選單 boolean
     showOptions: false,
-    // 圖片input
-    fileInputs: [],
     // 字數上限(固定)
     LetterCheckList: {
       itemProjectCode: {field: '專案代碼', max: 10},
@@ -95,6 +104,24 @@ export const useStorageStore = defineStore('Storage', {
       this.tabData.push(newData);
       console.log(this.tabData);
       this.clear();
+    },
+    // 刪除頁籤
+    deleteTabFn(index) {
+      // 將已存在頁籤加入deleteTab中(編輯)
+      if(this.tabData[index].itemId) {
+        this.deleteTab.push(this.tabData[index].itemId);
+      }
+      console.log('deltetTab',this.deleteTab);
+      this.tabData.splice(index, 1);
+      // 若刪除的為最後一筆 則將頁籤切換到現有的最後一筆
+      if (index == this.tabData.length && index != 0) {
+        const tabs = document.querySelectorAll('button.nav-link');
+        // console.log('tabs:', tabs);
+        tabs[index - 1].classList.add('active');
+        // 顯示對應頁籤內容
+        const tabContents = document.querySelectorAll('.tab-pane');
+        tabContents[index - 1].classList.add('show', 'active');
+      }
     },
     // 變更資產類型時reset單位、數量(表單、頁籤)
     resetUnitCount(type, index) {
@@ -153,19 +180,6 @@ export const useStorageStore = defineStore('Storage', {
     chooseFile(index) {
       const fileInput = document.querySelectorAll('input[type="file"]')[index];
       fileInput.click();
-    },
-    // 刪除頁籤
-    deleteTab(index) {
-      this.tabData.splice(index, 1);
-      // 若刪除的為最後一筆 則將頁籤切換到現有的最後一筆
-      if (index == this.tabData.length && index != 0) {
-        const tabs = document.querySelectorAll('button.nav-link');
-        // console.log('tabs:', tabs);
-        tabs[index - 1].classList.add('active');
-        // 顯示對應頁籤內容
-        const tabContents = document.querySelectorAll('.tab-pane');
-        tabContents[index - 1].classList.add('show', 'active');
-      }
     },
     // 檢查頁籤內容
     checkTabContent() {
@@ -242,7 +256,7 @@ export const useStorageStore = defineStore('Storage', {
       // 傳送upperForm
       try {
         const token = await apiStore.GetAntiForgeryToken();
-        const resultList = await this.sendUpperForm(token);
+        const resultList = await this.sendUpperForm(type, token);
         console.log('上半部resultList', resultList);
         // 再依照resultList將 下半部頁籤 單次分別上傳
         const tabPromises = [];
@@ -255,12 +269,13 @@ export const useStorageStore = defineStore('Storage', {
         .then(result => {
           const allSuccess = result.every(result => result === 'success')
           if (allSuccess) {
-            alert('傳送新品入庫表單成功\n單號為:' + resultList.AI_ID);
+            let title = type === 'edit' ? '編輯' : '傳送'
+            alert(`${title}新品入庫表單成功\n單號為:` + resultList.AI_ID);
             router.push({
               name: 'Store_Datagrid'
             });
           } else {
-            alert('傳送新品入庫表單失敗')
+            alert(`${title}新品入庫表單失敗`)
           }
         }) 
       } 
@@ -269,13 +284,22 @@ export const useStorageStore = defineStore('Storage', {
         alert(error);
       }
     },
-    async sendUpperForm(token) {
+    async sendUpperForm(type, token) {
       return new Promise((resolve, reject) => {
         const form = new FormData();
+        let url = 'http://192.168.0.177:7008/AssetsInMng/NewAssetsIn'
+        if(type === 'edit') {
+          // 入庫單號
+          form.append('AI_ID',this.upperForm.AI_ID);
+          this.deleteTab.forEach(itemId=>{
+            form.append('deleteTab', itemId);
+          })
+          url = 'http://192.168.0.177:7008/AssetsInMng/ApplicationEdit'
+        }
         form.append('AR_ID', this.upperForm.AR_ID);
         form.append('tab_count', this.tabData.length);
         form.append('Memo', this.upperForm.Memo);
-        axios.post('http://192.168.0.177:7008/AssetsInMng/NewAssetsIn', form,{
+        axios.post(url, form,{
           headers: { 
             'RequestVerificationToken': token,
           }
@@ -307,6 +331,7 @@ export const useStorageStore = defineStore('Storage', {
         }
         // 先剔除不需要key值
         form.delete('viewFile')
+        form.delete('existFile')
         // 不是耗材的話 剔除itemCount、itemUnit
         if (tab.itemAssetType !== '耗材') {
           form.delete('itemUnit')
@@ -316,6 +341,11 @@ export const useStorageStore = defineStore('Storage', {
         form.delete('newFile')
         for (let i = 0; i < tab.newFile.length; i++) {
           form.append('newFile', tab.newFile[i]);
+        }
+        // deleteFile等等額外append 先剔除
+        form.delete('deleteFile')
+        for (let i = 0; i < tab.deleteFile.length; i++) {
+          form.append('deleteFile', tab.deleteFile[i]);
         }
         axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form,{
           headers: { 
@@ -337,5 +367,40 @@ export const useStorageStore = defineStore('Storage', {
           });
       });
     },
+    async getDetails(AI_ID) {
+      const utilsStore = useUtilsStore()
+      try {
+        const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`)
+        const data = response.data ;
+        if(data.state === 'success') {
+          const RoleCheckResult = await utilsStore.checkRole(data.resultList.Applicant);
+          if(!RoleCheckResult) return
+          // 取得填報類型
+          this.Type = data.resultList.Type ;
+          // 塞入上半部資訊
+          Object.keys(this.upperForm).forEach(key=>{
+            if(data.resultList[key]) {
+              this.upperForm[key] = data.resultList[key];
+            }
+          })
+          console.log('Tabs:',data.resultList);
+          // 塞入頁籤(資料本身就有existFile)
+          data.resultList.Tabs.forEach(tab=>{
+            // console.log('tab',tab);
+            Object.keys(this.middleForm).forEach(key=>{
+              if(tab[key]) {
+                this.middleForm[key] = tab[key];
+              }
+            })
+            // console.log('middle',this.middleForm);
+            this.insertTab();
+          })
+          console.log('tab',this.tabData);
+        }
+      }
+      catch(e) {
+        console.error(e);
+      }
+    }
   },
 })
