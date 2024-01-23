@@ -339,9 +339,7 @@
         }
     }
     .modal {
-        .dropdown-toggle {
-            width: 100%
-        }
+       
         padding: 0 5%;
         .modal-content {
             background: unset;
