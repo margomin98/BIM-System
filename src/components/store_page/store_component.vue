@@ -29,7 +29,7 @@
                  物流單號 :
                </div>
                <div class="search_section">
-                 <input @input="storageStore.fuzzyShipmentNum" class="form-control" @focus="showOptions = true;" @blur="storageStore.handleBlur" v-model="upperForm.ShipmentNum" />
+                 <input @input="storageStore.fuzzyShipmentNum(true)" class="form-control" @focus="showOptions = true;" @blur="storageStore.handleBlur" v-model="upperForm.ShipmentNum" />
                  <ul v-if="showOptions" class="options-list">
                    <li v-for="(option, index) in DropdownArray.fuzzyShipmentNum" :key="index" @click="storageStore.selectShipmentNum(option)">{{ option.ShipmentNum }}
                    </li>
@@ -470,7 +470,7 @@
                                     <option v-for="option in DropdownArray.Unit" :value="option">{{ option }}</option>
                                   </select>
                                 </div>
-                                <input v-else class="input-number readonly_box" type="text" v-model="tab.itemPackageUnit" min="1" readonly>
+                                <input v-else class="form-select readonly_box" type="text" v-model="tab.itemPackageUnit" min="1" readonly>
                               </div>
                               <!-- <input  class="input-number" type="number" min="1"> -->
                               <!-- <input v-else class="input-number readonly_box" type="text" min="1" readonly> -->

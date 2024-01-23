@@ -18,6 +18,7 @@ import { useAPIStore, useUtilsStore } from '@/store';
 import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
+import { Store_Edit_Status } from '@/assets/js/enter_status';
 const storageStore = useStorageStore();
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();
@@ -29,7 +30,7 @@ onMounted(async()=>{
   storageStore.$reset();
   DropdownArray.value.EquipType = await apiStore.getEquipType();
   DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();
-  await storageStore.getDetails(AI_ID);
+  await storageStore.getDetails(AI_ID, Store_Edit_Status, true);
   storageStore.fuzzyShipmentNum();
 })
 </script>

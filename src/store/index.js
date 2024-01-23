@@ -247,6 +247,12 @@ export const useUtilsStore = defineStore('Utils',{
           reject(error);
         }
       });
+    },
+    // 檢查單號狀態是否可進入(編輯、交付、刪除等需要鎖定狀態的頁面)
+    canEnterPage(Status , Condition) {
+      if(!Condition.includes(Status)) {
+        window.history.back();
+      }
     }
   },
 

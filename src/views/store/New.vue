@@ -30,14 +30,12 @@ onMounted(async() => {
   hidden.value = true;
   DropdownArray.value.EquipType = await apiStore.getEquipType();
   DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();
-  if(route.query.search_id && route.query.ShipmentNum) {
+  if(route.query.ShipmentNum && route.query.search_id) {
+    console.log('y');
     upperForm.value.ShipmentNum = route.query.ShipmentNum;
-    storageStore.fuzzyShipmentNum();
     upperForm.value.AR_ID = route.query.search_id;
   }
-  else {
-    storageStore.fuzzyShipmentNum();
-  }
+  storageStore.fuzzyShipmentNum(false);
 });
 </script>
 

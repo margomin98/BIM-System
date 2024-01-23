@@ -102,7 +102,7 @@ export const useStorageStore = defineStore('Storage', {
       const newData = _.cloneDeep(this.middleForm);
       newData.EquipCategoryArray = await dropdownStore.getEquipCategory(newData.itemEquipType_Id);
       this.tabData.push(newData);
-      console.log(this.tabData);
+      // console.log(this.tabData);
       this.clear();
     },
     // 刪除頁籤
@@ -156,8 +156,10 @@ export const useStorageStore = defineStore('Storage', {
       }, 100);
     },
     // 模糊查詢
-    fuzzyShipmentNum() {
-      this.upperForm.AR_ID = '';
+    fuzzyShipmentNum(clearAR_ID = false) {
+      if(clearAR_ID) {
+        this.upperForm.AR_ID = '';
+      }
       this.DropdownArray.fuzzyShipmentNum = this.DropdownArray.ShipmentNum.filter(option => option.ShipmentNum.includes(this.upperForm.ShipmentNum));
       // console.log('ff',this.DropdownArray.fuzzyShipmentNum);
     },
@@ -175,7 +177,7 @@ export const useStorageStore = defineStore('Storage', {
         link.click();
       }
     },
-    // ----圖片相關
+    // ----圖片相關function
     // 選擇檔案
     chooseFile(index) {
       const fileInput = document.querySelectorAll('input[type="file"]')[index];
@@ -358,14 +360,20 @@ export const useStorageStore = defineStore('Storage', {
           });
       });
     },
-    async getDetails(AI_ID) {
+    // 取得入庫填報資料(單號, 是否需要檢查權限, 檢查狀態是否可以進入頁面)
+    async getDetails(AI_ID, Conditions = null, needCheckRole =false) {
       const utilsStore = useUtilsStore()
       try {
         const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`)
         const data = response.data ;
         if(data.state === 'success') {
-          const RoleCheckResult = await utilsStore.checkRole(data.resultList.Applicant);
-          if(!RoleCheckResult) return
+          if(Conditions) {
+            utilsStore.canEnterPage(data.resultList.Status, Conditions);
+          }
+          if(needCheckRole) {
+            const RoleCheckResult = await utilsStore.checkRole(data.resultList.Applicant);
+            if(!RoleCheckResult) return
+          }
           // 取得填報類型
           this.Type = data.resultList.Type ;
           // 塞入上半部資訊
@@ -374,6 +382,7 @@ export const useStorageStore = defineStore('Storage', {
               this.upperForm[key] = data.resultList[key];
             }
           })
+          console.log('upperForm',this.upperForm);
           console.log('Tabs:',data.resultList);
           // 塞入頁籤(資料本身就有existFile)
           data.resultList.Tabs.forEach(tab=>{
@@ -391,6 +400,26 @@ export const useStorageStore = defineStore('Storage', {
       }
       catch(e) {
         console.error(e);
+      }
+    },
+    // 刪除此單
+    async deleteData(AI_ID) {
+      const form = new FormData();
+      form.append('AI_ID', AI_ID);
+      try {
+        const response = await axios.post(`http://192.168.0.177:7008/AssetsInMng/ApplicationDelete`, form);
+        const data = response.data;
+        if (data.state === 'success') {
+          let msg = data.messages + '\n單號:'+ data.resultList.AI_ID;
+          alert(msg);
+          router.push({
+            name: 'Store_Datagrid'
+          });
+        } else if (data.state === 'error') {
+          alert(data.messages);
+        }
+      } catch (error) {
+        console.error(error);
       }
     }
   },
