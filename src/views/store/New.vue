@@ -1,15 +1,11 @@
 <template>
   <Navbar />
   <div class="main_section">
-    <div class="title col">
-      <h1>
-        新品入庫
-      </h1>
-    </div>
+    <div class="title col"><h1>新品入庫</h1></div>
     <Store_Component></Store_Component>
     <div class="col button_wrap">
-      <button class="back_btn" @click="goBack">回上一頁</button>
-      <button class="send_btn" @click="store.submit()">送出</button>
+      <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
+      <button class="send_btn" @click="storageStore.submit">送出</button>
     </div>
   </div>
 </template>
@@ -17,11 +13,29 @@
 <script setup>
 import Store_Component from '@/components/store_page/store_component';
 import Navbar from '@/components/Navbar.vue';
-import { useStorageStore } from '@/store'
+import { useStorageStore } from '@/store/storage'
+import { useAPIStore, useUtilsStore } from '@/store';
 import { onMounted } from 'vue';
-const store = useStorageStore();
-onMounted(() => {
-  store.$reset();
+import { storeToRefs } from 'pinia';
+import { useRoute } from 'vue-router';
+const storageStore = useStorageStore();
+const utilsStore = useUtilsStore();
+const apiStore = useAPIStore();
+// 解構
+const { DropdownArray , upperForm , hidden } = storeToRefs(storageStore) ;
+const route = useRoute();
+
+onMounted(async() => {
+  storageStore.$reset();
+  hidden.value = true;
+  DropdownArray.value.EquipType = await apiStore.getEquipType();
+  DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();
+  if(route.query.ShipmentNum && route.query.search_id) {
+    console.log('y');
+    upperForm.value.ShipmentNum = route.query.ShipmentNum;
+    upperForm.value.AR_ID = route.query.search_id;
+  }
+  storageStore.fuzzyShipmentNum(false);
 });
 </script>
 
