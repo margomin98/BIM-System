@@ -11,8 +11,8 @@
             <p>設備總類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                  {{ searchParams.EquipTypeName || '請選擇' }}
-                </button>
+                      {{ searchParams.EquipTypeName || '請選擇' }}
+                    </button>
               <div class="dropdown-menu" aria-labelledby="areaDropdown">
                 <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(item)"> {{ item.Name }}</p>
               </div>
@@ -22,12 +22,17 @@
             <p>設備分類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!searchParams.EquipTypeName">
-                  {{ searchParams.EquipCategoryName || EquipCategoryInit }}
-                </button>
+                      {{ searchParams.EquipCategoryName || EquipCategoryInit }}
+                    </button>
               <div class="dropdown-menu" aria-labelledby="areaDropdown">
                 <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(item)"> {{ item.Name }}</p>
               </div>
             </div>
+          </div>
+          <!-- 專案代碼 -->
+          <div class="col">
+            <p>專案代碼</p>
+            <multiselect v-model="value" :options="options" :allow-empty="false" :max-height="300" placeholder="請選擇" label="name" :showLabels="false" track-by="name"></multiselect>
           </div>
           <div class="col">
             <p>資產編號</p>
@@ -41,8 +46,8 @@
             <p>狀態</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ searchParams.Status || '請選擇' }}
-                  </button>
+                        {{ searchParams.Status || '請選擇' }}
+                      </button>
               <div class="dropdown-menu" aria-labelledby="statusDropdown">
                 <p v-for="(item, index) in DropdownArray.Status" :key="index" class="dropdown-item" @click="selectStatus(item)">{{ item }}</p>
               </div>
@@ -60,8 +65,8 @@
             <p>區域</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
-                  {{ searchParams.AreaName || '請選擇' }}
-                </button>
+                      {{ searchParams.AreaName || '請選擇' }}
+                    </button>
               <div class="dropdown-menu" aria-labelledby="areaDropdown">
                 <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item" @click="selectArea(item)">{{ item.Name }}</p>
               </div>
@@ -71,8 +76,8 @@
             <p>櫃位</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!searchParams.AreaName">
-                  {{ searchParams.LayerName || LayerInit }}
-                </button>
+                      {{ searchParams.LayerName || LayerInit }}
+                    </button>
               <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                 <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(item)">{{ item.Name }}</p>
               </div>
@@ -106,32 +111,13 @@
       <input type="file" ref="inputfile" style="display: none;" @change="importExcel" accept=".xlsx,.csv,.xlsm">
     </div>
     <div class="dg-height mb-5">
-      <DataTable
-        lazy 
-        :key="datagrid.key"
-        :first= "datagrid.first"
-        :size="'small'"
-        :loading="datagrid.loading"
-        :value="rowData" 
-        :sort-field="datagrid.sortField"
-        :sort-order="datagrid.sortOrder"
-        resizableColumns 
-        columnResizeMode="expand"
-        showGridlines 
-        scrollable 
-        scrollHeight="420px" 
-        @page="submit($event , 'page')" 
-        @sort="submit($event , 'sort')"
-        paginator 
-        :rows="datagrid.rows" 
-        :totalRecords="datagrid.totalRecords"
-        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-        :rowsPerPageOptions="[10, 20, 30]"
-        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+      <DataTable lazy :key="datagrid.key" :first="datagrid.first" :size="'small'" :loading="datagrid.loading" :value="rowData" :sort-field="datagrid.sortField" :sort-order="datagrid.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
+        scrollHeight="420px" @page="submit($event , 'page')" @sort="submit($event , 'sort')" paginator :rows="datagrid.rows" :totalRecords="datagrid.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <Column style="min-width: 60px;">
           <template #body="slotProps">
-            <Assets_return_button :params = "slotProps"/>
-          </template>
+                <Assets_return_button :params = "slotProps"/>
+</template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
       </DataTable>
@@ -158,6 +144,7 @@
 </template>
 
 <script>
+  import Multiselect from 'vue-multiselect'
   import Loading from 'vue-loading-overlay';
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
@@ -178,7 +165,10 @@
     getArea,
     getLayer,
   } from '@/assets/js/common_api'
-  import { UpdatePageParameter, createDatagrid , } from '@/assets/js/common_fn';
+  import {
+    UpdatePageParameter,
+    createDatagrid,
+  } from '@/assets/js/common_fn';
   import axios from 'axios';
   export default {
     components: {
@@ -187,6 +177,29 @@
       Column,
       Assets_return_button,
       Loading,
+      Multiselect
+    },
+    data() {
+      return {
+        value: {
+          name: '請選擇',
+        },
+        options: [{
+            name: 'F489184964146142847'
+          },
+          {
+            name: 'D47F846'
+          },
+        ]
+      }
+    },
+    methods: {
+      nameWithLang({
+        name,
+        language
+      }) {
+        return `${name}`
+      }
     },
     setup() {
       const searchParams = reactive({
@@ -216,25 +229,68 @@
       const EquipCategoryInit = ref('請先選擇設備總類');
       const LayerInit = ref('請先選擇區域');
       const datagrid = createDatagrid();
-      const datagridfield = [
-        { field: "AssetsId", width: '150px', header: "資產編號" },
-        { field: "AssetName", width: '150px', header: "物品名稱" },
-        { field: "Status", width: '150px', header: "狀態" },
-        { field: "ProductType", width: '150px', header: "型號" },
-        { field: "ProductSpec", width: '150px', header: "規格" },
-        { field: "EquipTypeName", width: '150px', header: "設備總類" },
-        { field: "EquipCategoryName", width: '150px', header: "設備分類" },
-        { field: "AreaName", width: '150px', header: "區域" },
-        { field: "LayerName", width: '150px', header: "櫃位" },
-        { field: "InboundDate", width: '150px', header: "入庫日期" },
-        { field: "AssetsInOperator", width: '150px', header: "入庫人員" },
+      const datagridfield = [{
+          field: "AssetsId",
+          width: '150px',
+          header: "資產編號"
+        },
+        {
+          field: "AssetName",
+          width: '150px',
+          header: "物品名稱"
+        },
+        {
+          field: "Status",
+          width: '150px',
+          header: "狀態"
+        },
+        {
+          field: "ProductType",
+          width: '150px',
+          header: "型號"
+        },
+        {
+          field: "ProductSpec",
+          width: '150px',
+          header: "規格"
+        },
+        {
+          field: "EquipTypeName",
+          width: '150px',
+          header: "設備總類"
+        },
+        {
+          field: "EquipCategoryName",
+          width: '150px',
+          header: "設備分類"
+        },
+        {
+          field: "AreaName",
+          width: '150px',
+          header: "區域"
+        },
+        {
+          field: "LayerName",
+          width: '150px',
+          header: "櫃位"
+        },
+        {
+          field: "InboundDate",
+          width: '150px',
+          header: "入庫日期"
+        },
+        {
+          field: "AssetsInOperator",
+          width: '150px',
+          header: "入庫人員"
+        },
       ]
       const rowData = ref([]);
       const inputfile = ref(null);
       const isLoading = ref(false);
       onMounted(() => {
         datagrid.sortField = 'AssetsId'
-        submit('','search');
+        submit('', 'search');
       });
       async function submit(event, type) {
         const form = new FormData();
@@ -242,8 +298,8 @@
         for (const key in searchParams) {
           form.append(key, searchParams[key]);
         }
-        UpdatePageParameter( datagrid , event , type , form)
-        getMngDatagrid('/InventoryMng/Assets',rowData,datagrid,form)
+        UpdatePageParameter(datagrid, event, type, form)
+        getMngDatagrid('/InventoryMng/Assets', rowData, datagrid, form)
       }
       async function getEquipTypeName() {
         if (DropdownArray.EquipType.length == 0) {
@@ -290,13 +346,12 @@
         if (selectedFile) {
           const fileName = selectedFile.name;
           // 檢查檔案大小
-          console.log('filesize',selectedFile.size);
+          console.log('filesize', selectedFile.size);
           const maxFileSize = 28 * 1024 * 1024; // 28MB
-          if(selectedFile.size > maxFileSize) {
+          if (selectedFile.size > maxFileSize) {
             alert('檔案' + selectedFile.name + '大於28MB，請重新選取');
             return
           }
-          
           // 檢查副檔名
           // 以'.'切割字串並以pop取得最後一組。EX: demo.sss.xlsx => ['demo','sss','xlsx'] => pop出 'xlsx'並轉成小寫
           const fileExtension = fileName.split('.').pop().toLowerCase();
@@ -305,24 +360,24 @@
             return
           }
           const form = new FormData();
-          form.append('file',selectedFile);
+          form.append('file', selectedFile);
           isLoading.value = true;
-          axios.post('http://192.168.0.177:7008/InventoryMng/ImportExcel',form)
-          .then((response)=>{
-            const data = response.data;
-            if(data.state === 'success') {
-              // 匯入成功則清空條件並刷新datagrid
-              clear();
-            }
-            isLoading.value = false;
-            setTimeout(function () {
-              alert(data.messages);
-            }, 50); // 延遲alert，以先關閉loading動畫
-          })
-          .catch((error)=>{
-            isLoading.value = false;
-            console.error(error);
-          })
+          axios.post('http://192.168.0.177:7008/InventoryMng/ImportExcel', form)
+            .then((response) => {
+              const data = response.data;
+              if (data.state === 'success') {
+                // 匯入成功則清空條件並刷新datagrid
+                clear();
+              }
+              isLoading.value = false;
+              setTimeout(function() {
+                alert(data.messages);
+              }, 50); // 延遲alert，以先關閉loading動畫
+            })
+            .catch((error) => {
+              isLoading.value = false;
+              console.error(error);
+            })
         }
       }
       async function exportExcel() {
@@ -331,32 +386,33 @@
         for (const key in searchParams) {
           form.append(key, searchParams[key]);
         }
-        axios.post('http://192.168.0.177:7008/InventoryMng/ExportExcel',form, {responseType: 'blob', })
-        .then((response)=>{
-          const data = response.data
-          const header = response.headers
-          console.log('content-disposition:',header['content-disposition']);
-          console.log('content-type:',header['content-type']);
-          if(header['content-type'].includes('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')) {
-            const url = window.URL.createObjectURL(data) ;
-            const a = document.createElement('a');
-            const fileName = createFileName();
-            console.log('filename:',fileName);
-            a.href = url;
-            a.download = fileName;
-            a.click();
-            a.remove();
-            window.URL.revokeObjectURL(url);
-          }
-        })
-        .catch((error)=>{
-          console.error(error);
-        })
+        axios.post('http://192.168.0.177:7008/InventoryMng/ExportExcel', form, {
+            responseType: 'blob',
+          })
+          .then((response) => {
+            const data = response.data
+            const header = response.headers
+            console.log('content-disposition:', header['content-disposition']);
+            console.log('content-type:', header['content-type']);
+            if (header['content-type'].includes('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')) {
+              const url = window.URL.createObjectURL(data);
+              const a = document.createElement('a');
+              const fileName = createFileName();
+              console.log('filename:', fileName);
+              a.href = url;
+              a.download = fileName;
+              a.click();
+              a.remove();
+              window.URL.revokeObjectURL(url);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          })
       }
       function createFileName() {
         // 创建一个新的Date对象来获取当前日期和时间
         var currentDate = new Date();
-
         // 获取年、月、日、小时、分钟和秒
         var year = currentDate.getFullYear();
         var month = currentDate.getMonth() + 1; // 月份是从0开始，所以需要加1
@@ -364,9 +420,8 @@
         var hours = currentDate.getHours();
         var minutes = currentDate.getMinutes();
         var seconds = currentDate.getSeconds();
-
         // 创建一个格式化的时间字符串
-        var formattedTime = year + '' + addZero(month) + '' + addZero(day) + '' + addZero(hours) + '' + addZero(minutes) + '' + addZero(seconds)+'_資產報表.xlsx';
+        var formattedTime = year + '' + addZero(month) + '' + addZero(day) + '' + addZero(hours) + '' + addZero(minutes) + '' + addZero(seconds) + '_資產報表.xlsx';
         return formattedTime;
       }
       function addZero(value) {
@@ -406,7 +461,7 @@
         }
         EquipCategoryInit.value = '請先選擇設備總類'
         LayerInit.value = '請先選擇區域';
-        submit('','search');
+        submit('', 'search');
       }
       return {
         searchParams,
@@ -440,7 +495,7 @@
   .dg-height {
     @include datagrid-height;
   }
-  .datagrid_section .row{
+  .datagrid_section .row {
     display: grid;
   }
   @media only screen and (min-width: 1200px) {
@@ -470,17 +525,17 @@
           }
         }
         .export_btn {
-    @include export_btn;
-    &:hover {
-      background-color: #5e7aa2;
-    }
-  }
-  .import_btn {
-    @include import_btn;
-    &:hover {
-      background-color: #7e9ecb;
-    }
-  }
+          @include export_btn;
+          &:hover {
+            background-color: #5e7aa2;
+          }
+        }
+        .import_btn {
+          @include import_btn;
+          &:hover {
+            background-color: #7e9ecb;
+          }
+        }
       }
       .datagrid_section {
         .content {
@@ -495,15 +550,15 @@
         }
         .row {
           grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            gap: 20px;
+          grid-template-rows: 1fr 1fr;
+          gap: 10px;
           p {
             @include datagrid_title;
           }
           input {
             @include dropdown_btn;
-            width: calc(100% - 10%);
             height: 35px;
+            width: 100%;
           }
           button {
             border: none;
@@ -513,7 +568,6 @@
             height: 100%;
           }
           .dropdown {
-            width: calc(100% - 10%);
             height: 35px;
             @include dropdown_btn;
             .dropdown-toggle {
@@ -578,25 +632,24 @@
           }
         }
         .export_btn {
-    @include export_btn;
-    &:hover {
-      background-color: #5e7aa2;
-    }
-  }
-  .import_btn {
-    @include import_btn;
-    &:hover {
-      background-color: #7e9ecb;
-    }
-  }
-        
+          @include export_btn;
+          &:hover {
+            background-color: #5e7aa2;
+          }
+        }
+        .import_btn {
+          @include import_btn;
+          &:hover {
+            background-color: #7e9ecb;
+          }
+        }
       }
       .datagrid_section {
         .row {
           grid-template-columns: 1fr 1fr 1fr 1fr;
-            grid-template-rows: 1fr 1fr 1fr;
-            gap: 15px;
-            padding: 20px;
+          grid-template-rows: 1fr 1fr 1fr;
+          gap: 15px;
+          padding: 20px;
           @include datagrid_bg;
           p {
             @include datagrid_title;
@@ -659,16 +712,14 @@
       }
       .button_wrap {
         display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 20px;
-    grid-template-areas:
-        ". ."
-        ". .";
-    margin-bottom: 20px;
-        button{
-          margin:auto;
+        grid-auto-flow: column;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 20px;
+        grid-template-areas: ". ." ". .";
+        margin-bottom: 20px;
+        button {
+          margin: auto;
         }
         .search_btn {
           @include search_and_send_btn;
@@ -683,24 +734,24 @@
           }
         }
         .export_btn {
-    @include export_btn;
-    &:hover {
-      background-color: #5e7aa2;
-    }
-  }
-  .import_btn {
-    @include import_btn;
-    &:hover {
-      background-color: #7e9ecb;
-    }
-  }
+          @include export_btn;
+          &:hover {
+            background-color: #5e7aa2;
+          }
+        }
+        .import_btn {
+          @include import_btn;
+          &:hover {
+            background-color: #7e9ecb;
+          }
+        }
       }
       .datagrid_section {
         .row {
           grid-template-columns: 1fr;
-            grid-template-rows: 1fr;
-            gap: 10px;
-            padding:20px;
+          grid-template-rows: 1fr;
+          gap: 10px;
+          padding: 20px;
           @include datagrid_bg;
           p {
             @include datagrid_title;

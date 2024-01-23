@@ -7,10 +7,15 @@
 </script>
 
 <style lang="scss">
-.form-check-input:checked {
-    background-color: #4d525b !important;
-    border-color: #4d525b  !important;;
+.datagrid_section .multiselect__tags{
+min-height: 35px;
+display: flex;
+    align-items: end;
+	padding:  unset;
+    padding-left: 5px;
 }
+
+
 	.ag-chart-no-data-overlay {
 		display: flex;
 		justify-content: center;

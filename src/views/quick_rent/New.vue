@@ -1,4 +1,5 @@
 <template>
+      <Navbar />
     <ConfirmModal/>
     <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -95,7 +96,7 @@
           </div>
         </div>
     <div class="main_section">
-        <Navbar />
+      
         <div class="title col">
             <h1>
                 快速出庫
@@ -339,7 +340,9 @@
         }
     }
     .modal {
-       
+        .dropdown-toggle {
+            width: 100%
+        }
         padding: 0 5%;
         .modal-content {
             background: unset;
