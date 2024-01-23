@@ -7,7 +7,10 @@
 </script>
 
 <style lang="scss">
-
+.form-check-input:checked {
+    background-color: #4d525b !important;
+    border-color: #4d525b  !important;;
+}
 	.ag-chart-no-data-overlay {
 		display: flex;
 		justify-content: center;
