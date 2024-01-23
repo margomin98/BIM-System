@@ -135,7 +135,7 @@ export const useUtilsStore = defineStore('Utils',{
       }
       return true;
     },
-    // 上傳圖片
+    // -----圖片相關
     handleImgChange(event, formParams, LimitSize = 50, LimitLength = 5) {
       const files = event.target.files;
       // 檢查副檔名
@@ -176,15 +176,15 @@ export const useUtilsStore = defineStore('Utils',{
     },
     deleteImgFile(type, formParams, file_index) {
       // 1.尚未上傳->從資料的new、view裡面刪掉
-      // 2.已上傳->從資料的existFile裡面刪掉 、 將檔案名稱加入tab資料的deleteFile
+      // 2.已上傳->從資料的existFile裡面刪掉 、 將檔案名稱加入資料的deleteFile
       switch (type) {
         case 'new':
           formParams.newFile.splice(file_index, 1);
           formParams.viewFile.splice(file_index, 1);
           break;
         case 'exist':
-          const fileName = tabData[index].existFile[file_index].FileName
-          formParams.deleteFile.push(fileName)
+          const fileName = formParams.existFile[file_index].FileName
+          formParams.deleteFile.push(fileName);
           formParams.existFile.splice(file_index, 1);
         // console.log(`已加入頁籤${index}的deleteFile:\n${tabData[index].deleteFile}`);
         break;
@@ -214,6 +214,40 @@ export const useUtilsStore = defineStore('Utils',{
       }
       return true;
     },
+    // -----
+    // 檢查權限
+    checkRole(Applicant) {
+      return new Promise(async(resolve, reject)=>{
+        try {
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetRoleFromName?name=${this.userName}`);
+          const data = response.data;
+          // console.log('userName', this.userName);
+          // console.log('Applicant',Applicant);
+          if (data.state === 'success') {
+            // 填寫人 = 查看人
+            if(Applicant === this.userName) {
+              resolve(true);
+            }
+            //權限正確
+            else if (data.resultList.role.Id === 1 || data.resultList.role.Id === 4) {
+              resolve(true);
+            } 
+            // 都不是
+            else {
+              resolve(false);
+            }
+          } 
+          // 存取失敗
+          else {
+            // resolve(true); //測試用
+            reject('get role failed');
+          }
+        } catch (error) {
+          console.error(error);
+          reject(error);
+        }
+      });
+    }
   },
 
 })
