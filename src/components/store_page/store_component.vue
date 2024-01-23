@@ -491,7 +491,7 @@
 </template>
 
 <script setup>
-    import view_modal from "@/components/View_modal.vue"
+    import view_modal from "@/components/view_modal.vue"
     import {
         useStorageStore,
         useUtilsStore

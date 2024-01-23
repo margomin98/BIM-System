@@ -188,7 +188,7 @@
                   </div>
                   <div class="fixed_info">
                     <div>
-                      <p>目前資產庫存</p>
+                      <p>目前資產庫存（請優先選擇存貨）</p>
                     </div>
                   </div>
                   <DataTable lazy :key="datagrid.key" :first="datagrid.first" :size="'small'" :loading="datagrid.loading"

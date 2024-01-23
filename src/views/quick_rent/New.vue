@@ -16,46 +16,46 @@
                             <div class='col'>
                                 <p>設備總類</p>
                                 <select class="form-select" v-model="selectedEquipType">
-                      <option value="">請選擇</option>
-                      <option value="equipType1">設備類型1</option>
-                      <option value="equipType2">設備類型2</option>
-                    </select>
+                          <option value="">請選擇</option>
+                          <option value="equipType1">設備類型1</option>
+                          <option value="equipType2">設備類型2</option>
+                        </select>
                             </div>
                             <!-- 設備分類 -->
                             <div class='col'>
                                 <p>設備分類</p>
                                 <select class="form-select" v-model="selectedEquipCategory">
-                      <option value="">請選擇</option>
-                      <option value="equipCategory1">設備分類1</option>
-                      <option value="equipCategory2">設備分類2</option>
-                    </select>
+                          <option value="">請選擇</option>
+                          <option value="equipCategory1">設備分類1</option>
+                          <option value="equipCategory2">設備分類2</option>
+                        </select>
                             </div>
                             <!-- 儲位區域 -->
                             <div class='col'>
                                 <p>儲位區域</p>
                                 <select class="form-select" v-model="selectedArea">
-                      <option value="">請選擇</option>
-                      <option value="area1">儲位區域1</option>
-                      <option value="area2">儲位區域2</option>
-                    </select>
+                          <option value="">請選擇</option>
+                          <option value="area1">儲位區域1</option>
+                          <option value="area2">儲位區域2</option>
+                        </select>
                             </div>
                             <!-- 儲位櫃位 -->
                             <div class='col'>
                                 <p>儲位櫃位</p>
                                 <select class="form-select" v-model="selectedCabinet">
-                      <option value="">請選擇</option>
-                      <option value="cabinet1">儲位櫃位1</option>
-                      <option value="cabinet2">儲位櫃位2</option>
-                    </select>
+                          <option value="">請選擇</option>
+                          <option value="cabinet1">儲位櫃位1</option>
+                          <option value="cabinet2">儲位櫃位2</option>
+                        </select>
                             </div>
                             <!-- 專案代碼 -->
                             <div class='col'>
                                 <p>專案代碼</p>
                                 <select class="form-select" v-model="selectedCabinet">
-                      <option value="">請選擇</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                    </select>
+                          <option value="">請選擇</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                        </select>
                             </div>
                             <!-- 資產編號 -->
                             <div class='col'>
@@ -77,16 +77,16 @@
                 </div>
                 <div class="fixed_info">
                     <div>
-                        <p>目前資產庫存</p>
+                        <p>目前資產庫存（請優先選擇存貨）</p>
                     </div>
                 </div>
                 <!-- <DataTable lazy :first="datagrid1.first" :size="'small'" :loading="datagrid1.loading" :value="rowData1" :sort-field="datagrid1.sortField" :sort-order="datagrid1.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="510px"
-                                    @page="searchInventory($event , 'page')" @sort="searchInventory($event , 'sort')" v-model:selection="datagrid1.selectedList" :selectAll="datagrid1.selectAll" @select-all-change="onSelectAll" @row-unselect="onRowUnselect" paginator :rows="10"
-                                    :totalRecords="datagrid1.totalRecords" paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
-                                    <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-                                    <Column style="min-width: 60px;">
-                                        <template #body="slotProps">
-                      <List_view_button :params="slotProps" />
+                                        @page="searchInventory($event , 'page')" @sort="searchInventory($event , 'sort')" v-model:selection="datagrid1.selectedList" :selectAll="datagrid1.selectAll" @select-all-change="onSelectAll" @row-unselect="onRowUnselect" paginator :rows="10"
+                                        :totalRecords="datagrid1.totalRecords" paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+                                        <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+                                        <Column style="min-width: 60px;">
+                                            <template #body="slotProps">
+                          <List_view_button :params="slotProps" />
 </template>
               </Column>
               <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
@@ -255,7 +255,10 @@
     }
 </script>
 <style lang="scss" scoped>
-    @import '@/assets/css/global.scss'; // Shared styles
+    @import '@/assets/css/global.scss';
+    .modal .modal-body {
+        padding: 0 !important;
+    }
     h1 {
         margin-top: 50px;
         text-align: center;
@@ -558,16 +561,16 @@
         }
     }
     @media only screen and (max-width: 767px) {
-        .modal .second_content .wrap1 {
-            grid-template-columns: 1fr;
-            grid-template-rows: 1fr;
-            gap: 10px;
-            padding: 5px;
+        .modal {
+            .fixed_info {
+                height: unset!important;
+            }
+            .second_content .wrap1 {
+                gap: 10px;
+                padding: 5px;
+            }
         }
         .modal {
-            .modal-body {
-                padding: 0 !important;
-            }
             .fixed_info button {
                 position: absolute;
                 right: 10px;
