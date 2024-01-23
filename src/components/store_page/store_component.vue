@@ -50,12 +50,12 @@
          </div>
        </div>
        <div class="info_wrap col">
-         <div v-if="Type !== 1" class="fixed_info">
+        <div v-if="Type !== 1" class="fixed_info">
            <div>
              <p><span>*</span>填寫資產資訊(請至少填寫一項)</p>
            </div>
-         </div>
-         <div v-if="Type !== 1" class="content">
+        </div>
+        <div v-if="Type !== 1" class="content">
        <!-- 資產類型 -->
        <div class="row">
            <div class="col-12">
@@ -540,10 +540,6 @@
    const utilsStore = useUtilsStore();
    const apiStore = useAPIStore();
    const { DropdownArray , upperForm , middleForm , tabData , showOptions , Type , hidden } = storeToRefs(storageStore) ;
-   
-   // function insertTab() {
-     
-   // }
    </script>
    
    <style lang="scss" scoped>
