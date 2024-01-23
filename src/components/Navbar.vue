@@ -95,15 +95,18 @@
 
 <script setup>
   import {
-    useUtilsStore
+    useUtilsStore,
+    useAPIStore
   } from '@/store'
   import router from '@/router';
   import {
     onMounted,
     ref
   } from 'vue';
+  import axios from 'axios';
   const hovered = ref(false);
   const utilsStore = useUtilsStore();
+  const apiStore = useAPIStore();
   const emit = defineEmits(['username']);
   const speedIcon = ref(require('@/assets/navbar/speed.png')); // 快速的Icon
   const hoverImage = require('@/assets/navbar/speed_hover.png'); // 快速的Icon
@@ -123,9 +126,13 @@
   }
   //登出function 沒有回傳值，正確直接回登入頁面
   async function logout() {
-    const axios = require('axios');
     try {
-      const response = await axios.post('http://192.168.0.177:7008/Account/LogOff');
+      const token = await apiStore.GetAntiForgeryToken();
+      const response = await axios.post('http://192.168.0.177:7008/Account/LogOff',{},{
+        headers:{
+          'RequestVerificationToken': token,
+        }
+      });
       if (response.status === 200) {
         //登出成功，跳轉至首頁
         router.push('/');
