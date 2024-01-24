@@ -1,5 +1,5 @@
 <template>
-  <div class="main_section">
+  <div>
     <div class="info_wrap col mb-5">
         <Delete_warn v-show="!hidden"></Delete_warn>
         <div class="fixed_info">
