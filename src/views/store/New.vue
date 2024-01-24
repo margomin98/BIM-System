@@ -31,7 +31,6 @@ onMounted(async() => {
   DropdownArray.value.EquipType = await apiStore.getEquipType();
   DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();
   if(route.query.ShipmentNum && route.query.search_id) {
-    console.log('y');
     upperForm.value.ShipmentNum = route.query.ShipmentNum;
     upperForm.value.AR_ID = route.query.search_id;
   }

@@ -21,11 +21,12 @@
                  物流單號 :
                </div>
                <div class="search_section">
-                 <input @input="storageStore.fuzzyShipmentNum(true)" class="form-control" @focus="showOptions = true;" @blur="storageStore.handleBlur" v-model="upperForm.ShipmentNum" />
-                 <ul v-if="showOptions" class="options-list">
-                   <li v-for="(option, index) in DropdownArray.fuzzyShipmentNum" :key="index" @click="storageStore.selectShipmentNum(option)">{{ option.ShipmentNum }}
-                   </li>
-                 </ul>
+                <div class="option_section">
+                    <vue-multiselect v-model="upperForm.ShipmentSelect" :options="DropdownArray.ShipmentNum" 
+                    :allow-empty="true"  :max-height="300" placeholder="請選擇" label="ShipmentNum" :showLabels="false" track-by="ShipmentNum" 
+                    :show-no-results="false" @select="storageStore.onShipmentnumSelect" @close="storageStore.onShipmentnumUnselect">
+                    </vue-multiselect>
+                </div>
                </div>
                <button class="form_search_btn" @click="storageStore.viewReceive">檢視</button>
                <!-- 隱藏跳轉按鈕 -->
@@ -96,17 +97,12 @@
                         <div class="input-group-prepend">
                             <span v-show="middleForm.itemAssetType === '存貨'">*</span>專案代碼 :
                         </div>
-                        <input type="text" class="form-control" placeholder="最多輸入10字" v-model="middleForm.itemProjectCode">
-                        <button class="form_search_btn" @click="async()=>{ middleForm.itemProjectName = await apiStore.getProject(middleForm.itemProjectCode)}">搜尋</button>
-                    </div>
-                </div>
-                <!-- 專案名稱 -->
-                <div class="col">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            專案名稱 :
+                        <div class="option_section">
+                            <vue-multiselect v-model="middleForm.itemProjectSelect" :options="DropdownArray.ProjectCode" 
+                            :max-height="300" placeholder="請選擇" label="Text" :showLabels="false" track-by="Text" 
+                            :show-no-results="false" @select="storageStore.onFormProjectcodeSelect" @close="storageStore.onFormProjectcodeUnselect">
+                            </vue-multiselect>
                         </div>
-                        <input type="text" class="form-control readonly_box" v-model="middleForm.itemProjectName" readonly>
                     </div>
                 </div>
                 <!-- 設備 總類&分類 -->
@@ -216,72 +212,93 @@
             <!-- 入庫方式 -->
             <div class="store_option_wrap mt-5">
                 <div class="fixed_info">
-                    <p>入庫方式</p>
+                    <p><span>*</span>入庫方式</p>
                 </div>
                 <div class="content">
                     <!-- 直接入庫/指派給保管人 -->
-                    <div class="option_wrap">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                            <label class="form-check-label" for="inlineRadio1">直接入庫</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                            <label class="form-check-label" for="inlineRadio2">指派給保管人</label>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-group mb-3 check_box_wrap">
+                                <div class="input-group-prepend check_box">
+                                    <span>*</span>入庫方式 :
+                                </div>
+                                <div class="d-flex align-items-center radio_wrap">
+                                    <template v-for="(item, index) in DropdownArray.InboundWay" :key="'radio' + (index + 1)">
+                                        <input
+                                            type="radio"
+                                            class="form-check-input check_box"
+                                            :id="'InboundRadio' + (index + 1)"
+                                            :value="item"
+                                            v-model="middleForm.itemInboundWay"
+                                            @change="storageStore.changeInboundWay('middleForm')"
+                                        />
+                                        <label class="form-check-label check_box" :for="'InboundRadio' + (index + 1)" > {{ item }} </label>
+                                    </template>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- 用途 -->
-                    <div class="row">
+                    <div v-show="middleForm.itemInboundWay === '指派給保管人'" class="row">
                         <div class="col-12">
                             <div class="input-group mb-3 check_box_wrap">
                                 <div class="input-group-prepend check_box">
                                     <span>*</span>用途 :
                                 </div>
                                 <div class="d-flex align-items-center radio_wrap">
-                                    <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="内部領用" />
-                                    <label class="form-check-label check_box" for='radio1'>内部領用</label>
-                                    <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="借測" />
-                                    <label class="form-check-label check_box" for='radio2'>借測</label>
+                                    <template v-for="(item, index) in DropdownArray.Use" :key="'radio' + (index + 1)">
+                                        <input
+                                            type="radio"
+                                            class="form-check-input check_box"
+                                            :id="'UseRadio' + (index + 1)"
+                                            :value="item"
+                                            v-model="middleForm.itemUse"
+                                        />
+                                        <label
+                                            class="form-check-label check_box"
+                                            :for="'UseRadio' + (index + 1)"
+                                        >
+                                        {{ item }}
+                                        </label>
+                                    </template>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- 保管人員 -->
-                    <div class="col">
+                    <div v-show="middleForm.itemInboundWay === '指派給保管人'" class="col">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend"> <span>*</span>保管人員 :</div>
-                            <select class="form-select" v-model="selectedKeeper">
-                    <option value="">請選擇</option>
-                    <option value="Michal">Michal</option>
-                    <option value="Michelle">Michelle</option>
-                  </select>
+                            <select class="form-select" v-model="middleForm.itemCustodian">
+                                <option value="">--請選擇--</option>
+                                <option v-for="option in DropdownArray.Custodian" :value="option">{{ option }}</option>
+                            </select>
                         </div>
                     </div>
                     <!-- 儲位區域/儲位櫃位 -->
-                    <div class="store_location row g-0">
+                    <div v-show="middleForm.itemInboundWay === '直接入庫'" class="store_location row g-0">
                         <div class="col row">
                             <label for="inputPassword" class="col col-form-label"><span>*</span>儲位區域：</label>
-                            <select class="form-select col" aria-label="Default select example">
-                  <option selected>請選擇</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                </select>
+                            <select class="form-select col" v-model="middleForm.itemArea_Id" @change="async()=>{DropdownArray.Layer = await apiStore.getLayer(middleForm.itemArea_Id); middleForm.itemLayer_Id = '';}">
+                            <option value="">--請選擇--</option>
+                            <option v-for="option in DropdownArray.Area" :value="option.Id">{{ option.Name }}</option>
+                            </select>
                         </div>
                         <div class="col row">
                             <label for="inputPassword" class="col col-form-label"><span>*</span>儲位櫃位：</label>
-                            <select class="form-select col" aria-label="Default select example">
-                  <option selected>請選擇</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                </select>
+                            <select class="form-select col" v-model="middleForm.itemLayer_Id">
+                                <option v-if="DropdownArray.Layer.length == 0" value="">--請先選擇儲位區域--</option>
+                                <template v-else>
+                                    <option value="">--請選擇--</option>
+                                    <option v-for="option in DropdownArray.Layer" :value="option.Id">{{ option.Name }}</option>
+                                </template>
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <button class="send_btn" @click="storageStore.insertTab">新增</button>
+                <button class="send_btn" @click="storageStore.insertTab(true)">新增</button>
             </div>
             <!-- 頁籤部分 -->
             <div v-show="tabData.length > 0" class="tab_section mt-5">
@@ -304,12 +321,36 @@
                                         <span>*</span>專案類型 :
                                     </div>
                                     <div class="d-flex align-items-center radio_wrap">
-                                        <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="資產" />
-                                        <label class="form-check-label check_box" for='radio1'>資產</label>
-                                        <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="存貨" />
-                                        <label class="form-check-label check_box" for='radio2' data-toggle="tooltip" data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
-                                        <input type="radio" class='form-check-input check_box' id="radio3" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="耗材" />
-                                        <label class="form-check-label check_box" for='radio3'>耗材</label>
+                                        <template v-for="(item, typeIndex) in DropdownArray.AssetType" :key="'radio' + (typeIndex + 1)">
+                                            <input
+                                                v-if="item !== '耗材'"
+                                                type="radio"
+                                                class="form-check-input check_box"
+                                                :id="'radio' + (typeIndex + 1)"
+                                                style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"
+                                                :value="item"
+                                                v-model="tab.itemAssetType"
+                                                @change="storageStore.resetUnitCount('tab',index)"
+                                            />
+                                            <input
+                                                v-else
+                                                type="radio"
+                                                class="form-check-input check_box"
+                                                :id="'radio' + (typeIndex + 1)"
+                                                style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"
+                                                :value="item"
+                                                v-model="tab.itemAssetType"
+                                            />
+                                            <label
+                                                class="form-check-label check_box"
+                                                :for="'radio' + (typeIndex + 1)"
+                                                :data-toggle="typeIndex === 1 ? 'tooltip' : null"
+                                                :data-placement="typeIndex === 1 ? 'top' : null"
+                                                :title="typeIndex === 1 ? '註記此資產僅限特定專案出貨所使用' : null"
+                                            >
+                                            {{ item }}
+                                            </label>
+                                        </template>
                                     </div>
                                 </div>
                             </div>
@@ -318,17 +359,13 @@
                         <div class="col form_search_wrap">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span>*</span>專案代碼 :
+                                    <span v-show="tab.itemAssetType === '存貨'">*</span>專案代碼 :
                                 </div>
                                 <div class="option_section">
-                                    <div>
-                                        <input @input="handleInput" @focus="handleInput" @blur="handleBlur" v-model="searchTerm" type="text" class="form-control" placeholder="請選擇" />
-                                        <ul v-if="showDropdown" class="options-list">
-                                            <li v-for="(option, index) in filteredOptions" :key="index" @click="selectItem(option)">
-                                                {{ option.name }}
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <vue-multiselect v-model="tab.itemProjectSelect" :options="tab.tabProjectCode" 
+                                    :allow-empty="false"  :max-height="300" placeholder="請選擇" label="Text" 
+                                    :showLabels="false" track-by="Text" :show-no-results="false" @select="storageStore.onTabProjectcodeSelect" @close="storageStore.onTabProjectcodeUnselect(index)">
+                                    </vue-multiselect>
                                 </div>
                             </div>
                         </div>
@@ -339,10 +376,12 @@
                                     <div class="input-group-prepend equipment_wrap">
                                         <span>*</span>設備總類 :
                                     </div>
-                                    <select class="form-select" id="typeDropdown">
-                    <option value="" selected>請選擇</option>
-                    <!-- Add your options here -->
-                </select>
+                                    <div class="dropdown">
+                                        <select class="form-select" id="floatingSelect" v-model="tab.itemEquipType_Id" @change="async()=>{tab.EquipCategoryArray = await apiStore.getEquipCategory(tab.itemEquipType_Id); tab.itemCategory_Id = '';}">
+                                            <option value="">--請選擇--</option>
+                                            <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name }}</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -350,10 +389,15 @@
                                     <div class="input-group-prepend">
                                         <span>*</span>設備分類 :
                                     </div>
-                                    <select class="form-select" id="categoryDropdown">
-                    <option value="" selected>請選擇</option>
-                    <!-- Add your options here -->
-                </select>
+                                    <div class="dropdown">
+                                        <select class="form-select" id="floatingSelect" v-model="tab.itemCategory_Id">
+                                        <option v-if="tab.EquipCategoryArray.length == 0" value="">--請先選擇設備總類--</option>
+                                        <template v-else>
+                                            <option value="">--請選擇--</option>
+                                            <option v-for="option in tab.EquipCategoryArray" :value="option.Id">{{ option.Name }}</option>
+                                        </template>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -361,42 +405,59 @@
                         <div class="col">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend"><span>*</span>物品名稱 :</div>
-                                <input type="text" class="form-control" placeholder="最多輸入20字">
+                                <input type="text" class="form-control" placeholder="最多輸入20字" v-model="tab.itemAssetName">
                             </div>
                         </div>
                         <!-- 頁籤資產編號 -->
-                        <div class="col">
+                        <div v-show="!hidden" class="col">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">資產編號 :</div>
-                                <input type="text" class="form-control" placeholder="BFXXXXXXXX">
+                                <input type="text" class="form-control" placeholder="BFXXXXXXXX" v-model="tab.itemAssetsId">
                             </div>
                         </div>
                         <!-- 頁籤廠商 -->
-                        <div class="col">
+                        <div v-show="!hidden" class="col">
                             <div class="input-group mb-3">
-                                <div class="input-group-prepend">廠商 :</div>
-                                <input type="text" class="form-control " aria-label="Default" placeholder="最多輸入100字" />
+                                <div class="input-group-prepend">
+                                    廠商 :
+                                </div>
+                                <input type="text" class="form-control" placeholder="最多輸入100字" v-model="tab.itemVendorName">
                             </div>
                         </div>
                         <!-- 頁籤規格 -->
-                        <div class="col">
+                        <div v-show="!hidden" class="col">
                             <div class="input-group mb-3">
-                                <div class="input-group-prepend">規格 :</div>
-                                <input type="text" class="form-control " aria-label="Default" placeholder="最多輸入100字" />
+                                <div class="input-group-prepend">
+                                    規格 :
+                                </div>
+                                <input type="text" class="form-control" placeholder="最多輸入100字" v-model="tab.itemProductSpec">
                             </div>
                         </div>
-                        <!-- 頁籤型號 -->
-                        <div class="col">
+                        <!--頁籤型號 -->
+                        <div v-show="!hidden" class="col">
                             <div class="input-group mb-3">
-                                <div class="input-group-prepend">型號 :</div>
-                                <input type="text" class="form-control " aria-label="Default" placeholder="最多輸入100字" />
+                                <div class="input-group-prepend">
+                                    型號 :
+                                </div>
+                                <input type="text" class="form-control" placeholder="最多輸入100字" v-model="tab.itemProductType">
                             </div>
                         </div>
                         <!-- 頁籤S/N -->
-                        <div class="col">
+                        <div v-show="!hidden" class="col">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">S/N :</div>
-                                <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" />
+                                <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="tab.itemSN">
+                            </div>
+                        </div>
+                        <!-- 頁籤選購金額 -->
+                        <div v-show="!hidden" class="row g-0 row_wrap">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                <div class="input-group mb-3" id='number'>
+                                    <div class="input-group-prepend info  ">
+                                        選購金額 :
+                                    </div>
+                                    <input class="input-number" type="number" v-model="tab.itemPrice" min="1">
+                                </div>
                             </div>
                         </div>
                         <!-- 頁籤 包裝數量 & 包裝單位 -->
@@ -407,18 +468,21 @@
                                         <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
                                         <span>*</span>包裝數量 :<img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
                                     </div>
-                                    <input class="input-number" type="number" min="1">
+                                    <input v-if="tab.itemAssetType === '耗材'" class="input-number" type="number" v-model="tab.itemPackageNum" min="1">
+                                    <input v-else class="input-number readonly_box" type="number" v-model="tab.itemPackageNum" min="1" readonly>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                                <div class="input-group mb-3" id="unit">
+                                <div class="input-group mb-3" id='unit'>
                                     <div class="input-group-prepend">
-                                        <span>*</span>單位:
+                                        <span>*</span>包裝單位 :
                                     </div>
-                                    <select class="form-select" id="areaDropdown">
-                <option value="" selected>請選擇</option>
-                <!-- Add your options here -->
-            </select>
+                                    <div class="dropdown">
+                                        <select class="form-select" id="floatingSelect" v-model="tab.itemPackageUnit">
+                                        <option value="">--請選擇--</option>
+                                        <option v-for="option in DropdownArray.PackageUnit" :value="option">{{ option }}</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -428,28 +492,36 @@
                                 <div class="input-group mb-3" id='number'>
                                     <div class="input-group-prepend">
                                         <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘">
-                                        <span>*</span>數量 :<img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘">
+                                        <span v-show="tab.itemAssetType === '耗材'">*</span>數量 :
+                                        <img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘">
                                     </div>
-                                    <input class="input-number" type="number" min="1">
-                                    <!-- <input v-else class="input-number readonly_box" type="number" min="1" readonly> -->
+                            
+                                    <input v-if="tab.itemAssetType === '耗材'" class="input-number" type="number" v-model="tab.itemCount" min="1">
+                                    <input v-else class="input-number readonly_box" type="number" v-model="tab.itemCount" min="1" readonly>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                                 <div class="input-group mb-3" id='unit'>
                                     <div class="input-group-prepend">
-                                        <span>*</span>單位 :
+                                        <span v-show="tab.itemAssetType === '耗材'">*</span>單位 :
                                     </div>
-                                    <select class="form-select" id="areaDropdown">
-                <option value="" selected>請選擇</option>
-                <!-- Add your options here -->
-            </select>
+                                
+                                    <div  class="dropdown">
+                                        <div v-if="tab.itemAssetType === '耗材'" class="dropdown">
+                                        <select class="form-select" id="floatingSelect" v-model="tab.itemUnit">
+                                            <option value="">--請選擇--</option>
+                                            <option v-for="option in DropdownArray.Unit" :value="option">{{ option }}</option>
+                                        </select>
+                                        </div>
+                                        <input v-else class="form-select readonly_box" type="text" v-model="tab.itemPackageUnit" min="1" readonly>
+                                    </div>
                                     <!-- <input  class="input-number" type="number" min="1"> -->
                                     <!-- <input v-else class="input-number readonly_box" type="text" min="1" readonly> -->
                                 </div>
                             </div>
                         </div>
                         <!-- 頁籤保固期限 -->
-                        <div class="row">
+                        <div v-show="!hidden" class="row">
                             <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
@@ -460,7 +532,7 @@
                             </div>
                         </div>
                         <!-- 頁籤 保固 開始&結束 -->
-                        <div class="row">
+                        <div v-show="!hidden" class="row">
                             <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">保固開始日：</div>
@@ -478,11 +550,11 @@
                         <div class="col">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">備註 :</div>
-                                <textarea class="col" rows="5" placeholder="最多輸入500字"></textarea>
+                                <textarea class="col" rows="5" placeholder="最多輸入500字"  v-model="tab.itemMemo"></textarea>
                             </div>
                         </div>
                         <!-- 頁籤選擇檔案 -->
-                        <div class="col">
+                        <div v-show="!hidden" class="col">
                             <div class="input-group">
                                 <div class="input-group-prepend">資產照片：</div>
                                 <div class="mb-3 file_wrap">
@@ -491,7 +563,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="selected_file col">
+                        <div v-show="!hidden" class="selected_file col">
                             <div class="input-group">
                                 <div class="input-group-prepend">已選擇檔案：</div>
                                 <div class="selected_file_wrap">
@@ -503,45 +575,90 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- 頁籤入庫方式 -->
                         <div class="store_option">
                             <div class="title">
-                                <p>
-                                    入庫方式
-                                </p>
+                                <p>入庫方式</p>
                             </div>
                             <div class="content">
                                 <!-- 直接入庫/指派給保管人 -->
-                                <div class="option_wrap">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                                        <label class="form-check-label" for="inlineRadio1">直接入庫</label>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="input-group mb-3 check_box_wrap">
+                                            <div class="input-group-prepend check_box">
+                                                <span>*</span>入庫方式 :
+                                            </div>
+                                            <div class="d-flex align-items-center radio_wrap">
+                                                <template v-for="(item, InboundIndex) in DropdownArray.InboundWay" :key="'radio' + (InboundIndex + 1)">
+                                                    <input
+                                                        type="radio"
+                                                        class="form-check-input check_box"
+                                                        :id="'InboundRadio_'+(index+1) + (InboundIndex + 1)"
+                                                        :value="item"
+                                                        v-model="tab.itemInboundWay"
+                                                        @change="storageStore.changeInboundWay('tab',index)"
+                                                    />
+                                                    <label class="form-check-label check_box" :for="'InboundRadio_'+(index+1) + (InboundIndex + 1)" > {{ item }} </label>
+                                                </template>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                        <label class="form-check-label" for="inlineRadio2">指派給保管人</label>
+                                </div>
+                                <!-- 用途 -->
+                                <div v-show="tab.itemInboundWay === '指派給保管人'" class="row">
+                                    <div class="col-12">
+                                        <div class="input-group mb-3 check_box_wrap">
+                                            <div class="input-group-prepend check_box">
+                                                <span>*</span>用途 :
+                                            </div>
+                                            <div class="d-flex align-items-center radio_wrap">
+                                                <template v-for="(item, UseIndex) in DropdownArray.Use" :key="'radio' + (UseIndex + 1)">
+                                                    <input
+                                                        type="radio"
+                                                        class="form-check-input check_box"
+                                                        :id="'UseRadio_'+ (index + 1) + (UseIndex + 1)"
+                                                        :value="item"
+                                                        v-model="tab.itemUse"
+                                                    />
+                                                    <label
+                                                        class="form-check-label check_box"
+                                                        :for="'UseRadio_'+ (index + 1) + (UseIndex + 1)"
+                                                    >
+                                                    {{ item }}
+                                                    </label>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 保管人員 -->
+                                <div v-show="tab.itemInboundWay === '指派給保管人'" class="col">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend"> <span>*</span>保管人員 :</div>
+                                        <select class="form-select" v-model="tab.itemCustodian">
+                                            <option value="">--請選擇--</option>
+                                            <option v-for="option in DropdownArray.Custodian" :value="option">{{ option }}</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <!-- 儲位區域/儲位櫃位 -->
-                                <div class="store_location row g-xl-0 g-lg-0 g-md-0">
+                                <div v-show="tab.itemInboundWay === '直接入庫'" class="store_location row g-xl-0 g-lg-0 g-md-0">
                                     <div class="col row">
                                         <label for="inputPassword" class="col col-form-label"><span>*</span>儲位區域：</label>
-                                        <select class="form-select col" aria-label="Default select example">
-                  <option selected>請選擇</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                </select>
+                                        <select class="form-select col" v-model="tab.itemArea_Id" @change="async()=>{tab.LayerArray = await apiStore.getLayer(tab.itemArea_Id); tab.itemLayer_Id = '';}">
+                                            <option value="">--請選擇--</option>
+                                            <option v-for="option in DropdownArray.Area" :value="option.Id">{{ option.Name }}</option>
+                                        </select>
                                     </div>
                                     <div class="col row">
                                         <label for="inputPassword" class="col col-form-label"><span>*</span>儲位櫃位：</label>
-                                        <select class="form-select col" aria-label="Default select example">
-                  <option selected>請選擇</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                </select>
+                                        <select class="form-select col" v-model="tab.itemLayer_Id">
+                                            <option v-if="tab.LayerArray.length == 0" value="">--請先選擇設備總類--</option>
+                                            <template v-else>
+                                                <option value="">--請選擇--</option>
+                                                <option v-for="option in tab.LayerArray" :value="option.Id">{{ option.Name }}</option>
+                                            </template>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -553,15 +670,20 @@
     </div>
 </template>
 <script setup>
-    import view_modal from "@/components/view_modal.vue"
-    // pinia
-    import { useUtilsStore , useAPIStore } from '@/store'
-    import { useStorageStore } from '@/store/storage'
-    import { storeToRefs } from "pinia";
-    const storageStore = useStorageStore();
-    const utilsStore = useUtilsStore();
-    const apiStore = useAPIStore();
-    const { DropdownArray , upperForm , middleForm , tabData , showOptions , Type , hidden } = storeToRefs(storageStore) ;
+import view_modal from "@/components/view_modal.vue"
+import VueMultiselect from 'vue-multiselect'
+// pinia
+import { useUtilsStore , useAPIStore } from '@/store'
+import { useStorageStore } from '@/store/storage'
+import { storeToRefs } from "pinia";
+const storageStore = useStorageStore();
+const utilsStore = useUtilsStore();
+const apiStore = useAPIStore();
+const { DropdownArray , upperForm , middleForm , tabData , showOptions , Type , hidden } = storeToRefs(storageStore) ;
+const test = (option) =>{
+    console.log('onSelect option', option);
+}
+
 </script>
 
 <style lang="scss" scoped>

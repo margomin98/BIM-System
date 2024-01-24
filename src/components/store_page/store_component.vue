@@ -495,6 +495,7 @@
                           </div>
                       </div>
                   </div>
+                  <!-- 已選擇檔案 -->
                   <div class="col selected_file">
                       <div class="input-group">
                           <div class="input-group-prepend">已選擇的檔案 :</div>
@@ -508,18 +509,19 @@
                           </div>
                       </div>
                   </div> 
-                    <div class="col" v-if="!hidden">
-                      <div class="input-group my-3">
-                        <div class="input-group-prepend">已上傳的檔案 :</div>
-                        <div class="selected_file">
-                          <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap">
-                            <p>{{ file.FileName }}
-                              <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="utilsStore.viewImgFile(file, file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
-                              <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="utilsStore.deleteImgFile('exist', tab, file_index)"></p>
-                          </div>
+                  <!-- 以上傳檔案 -->
+                  <div class="col" v-if="!hidden">
+                    <div class="input-group my-3">
+                      <div class="input-group-prepend">已上傳的檔案 :</div>
+                      <div class="selected_file">
+                        <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap">
+                          <p>{{ file.FileName }}
+                            <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="utilsStore.viewImgFile(file, file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+                            <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="utilsStore.deleteImgFile('exist', tab, file_index)"></p>
                         </div>
                       </div>
                     </div>
+                  </div>
               </div>
           </div>
       </div>

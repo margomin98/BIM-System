@@ -16,11 +16,19 @@ export const useStorageStore = defineStore('Storage', {
 		Type: 0,
 		// 下拉選單
 		DropdownArray: {
-			ShipmentNum: [],
+			ShipmentNum: [], //api原本資料
+			formShipmentNum: [], // 處理陣列
 			fuzzyShipmentNum: [],
 			EquipType: [],
 			EquipCategory: [],
+			Area: [],
+			Layer: [],
+			Custodian: [],
+			ProjectCode: [], //api原本資料
+			formProjectCode: [], // 處理陣列
 			AssetType: ['資產','存貨','耗材'],
+			InboundWay: ['直接入庫', '指派給保管人'],
+			Use: ['內部領用','借測'],
 			Unit: UnitArray,
 			PackageUnit: PackageUnitArray,
 		},
@@ -29,6 +37,7 @@ export const useStorageStore = defineStore('Storage', {
 			Applicant: '',
 			ApplicationDate: '',
 			ShipmentNum: '',
+			ShipmentSelect: null,
 			AR_ID: '',
 			AI_ID: '',
 			Memo: '',
@@ -47,6 +56,7 @@ export const useStorageStore = defineStore('Storage', {
 			itemProductSpec: '',
 			itemProductType: '',
 			itemSN: '',
+			itemPrice: null,
 			itemCount: 1,
 			itemUnit: '',
 			itemPackageUnit: '',
@@ -57,6 +67,16 @@ export const useStorageStore = defineStore('Storage', {
 			viewFile: [],
 			deleteFile: [],
 			existFile:[],
+			// 快速入庫才有的欄位
+			AreaArray:[],
+			LayerArray:[],
+			itemProjectSelect: {}, // 綁定multiselect，再用function轉換
+			tabProjectCode: [], // 每個頁籤都需要，將所需資訊塞入option
+			itemInboundWay: '',
+			itemUse: '',
+			itemCustodian: '',
+			itemArea_Id: '',
+			itemLayer_Id: '',
 		},
 		// 下方頁籤資料
 		tabData: [],
@@ -82,25 +102,45 @@ export const useStorageStore = defineStore('Storage', {
 	// method
 	actions: {
 		// 插入頁籤(以及取得每個頁籤所需下拉)
-		async insertTab() {
+		async insertTab(isQuick = false) {
 			const dropdownStore = useAPIStore();
 			const utilsStore = useUtilsStore();
 			// 檢查必填 & 字數
 			let RequireCheckList = [ 'itemAssetType', 'itemEquipType_Id', 'itemCategory_Id', 'itemAssetName', 'itemPackageUnit', 'itemPackageNum'];
 			switch (this.middleForm.itemAssetType) {
 				case '存貨':
-					RequireCheckList.push['itemProjectCode'];
+					RequireCheckList.push('itemProjectCode');
 					break;
 				case '耗材':
-					RequireCheckList.push['itemCount'];
-					RequireCheckList.push['itemUnit'];
+					RequireCheckList.push('itemCount');
+					RequireCheckList.push('itemUnit');
 					break;
+			}
+			if(isQuick) {
+				RequireCheckList.push('itemInboundWay');
+				switch (this.middleForm.itemInboundWay) {
+					case '直接入庫':
+						RequireCheckList.push('itemArea_Id');
+						RequireCheckList.push('itemLayer_Id');
+						break;
+					case '指派給保管人':
+						RequireCheckList.push('itemUse');
+						RequireCheckList.push('itemCustodian');
+						break;
+				}
 			}
 			if(!utilsStore.checkRequired(this.middleForm,RequireCheckList)) return;
 			if(!utilsStore.checkMaxLetter(this.middleForm,this.LetterCheckList)) return;
 
 			const newData = _.cloneDeep(this.middleForm);
 			newData.EquipCategoryArray = await dropdownStore.getEquipCategory(newData.itemEquipType_Id);
+			if(isQuick) {
+				// 取得櫃位下拉
+				newData.LayerArray = await dropdownStore.getLayer(newData.itemArea_Id);
+				// 整理Vue MultiSelect option資訊
+				newData.itemProjectSelect.index = this.tabData ? this.tabData.length : 0;
+				newData.tabProjectCode = this.DropdownArray.ProjectCode.map(option =>({...option, index: this.tabData.length}))
+			}
 			this.tabData.push(newData);
 			// console.log(this.tabData);
 			this.clear();
@@ -136,6 +176,26 @@ export const useStorageStore = defineStore('Storage', {
 					break;
 			}
 		},
+		// 變更入庫方式(快速入庫)時 reset參數
+		changeInboundWay(type,index) {
+			switch (type) {
+				case 'middleForm':
+					this.middleForm.itemArea_Id = '';
+					this.middleForm.itemLayer_Id = '';
+					this.middleForm.LayerArray = [];
+					this.middleForm.itemUse = '';
+					this.middleForm.itemCustodian = '';
+					break;
+				case 'tab':
+					this.tabData[index].itemArea_Id = '';
+					this.tabData[index].itemLayer_Id = '';
+					this.tabData[index].LayerArray = [];
+					this.tabData[index].itemUse = '';
+					this.tabData[index].itemCustodian = '';
+					break;
+			}
+
+		},
 		// 新增頁籤後清除表單資料
 		clear() {
 			for (const key in this.middleForm) {
@@ -146,6 +206,7 @@ export const useStorageStore = defineStore('Storage', {
 					this.middleForm[key] = 1;
 				}
 			}
+			this.middleForm.itemProjectSelect = null;
 			this.DropdownArray.EquipCategory = [];
 		},
 		// ----物流單號相關function
@@ -219,6 +280,35 @@ export const useStorageStore = defineStore('Storage', {
 				return false;
 			}
 			return true;
+		},
+		// 將vue multiselect選項轉換給對應key值(分為 表單專案代碼 頁籤專案代碼 物流單號)
+		onFormProjectcodeSelect(option) {
+			this.middleForm.itemProjectCode = option.Value;
+		},
+		onTabProjectcodeSelect(option) {
+			this.tabData[option.index].itemProjectCode = option.Value;
+		},
+		onShipmentnumSelect(option) {
+			this.upperForm.AR_ID = option.AR_ID;
+		},
+		// 以及各自的取消function
+		onFormProjectcodeUnselect() {
+			if(!this.middleForm.itemProjectSelect) {
+				this.middleForm.itemProjectCode = '';
+				this.middleForm.itemProjectSelect = {};
+			}
+		},
+		onTabProjectcodeUnselect(index) {
+			if(!this.tabData[index].itemProjectSelect){
+				this.tabData[index].itemProjectSelect = {};
+				this.tabData[index].itemProjectCode = '';
+			} 
+		},
+		onShipmentnumUnselect() {
+			if(!this.upperForm.ShipmentSelect){
+				this.upperForm.AR_ID = '';
+				this.upperForm.ShipmentSelect = {};
+			} 
 		},
 		// 送出表單(create: 新增, edit: 編輯)
 		async submit(type) {
@@ -421,6 +511,6 @@ export const useStorageStore = defineStore('Storage', {
 			} catch (error) {
 				console.error(error);
 			}
-		}
+		},
 	},
 })
