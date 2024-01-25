@@ -15,7 +15,7 @@
 import Store_View_Component from '@/components/store_page/store_view_component';
 import delete_modal from '@/components/delete_modal.vue';
 import Navbar from '@/components/Navbar.vue';
-import { useStorageStore } from '@/store/storage'
+import { useStorageStore } from '@/store/storage/_index'
 import { useAPIStore, useUtilsStore } from '@/store';
 import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
@@ -32,7 +32,7 @@ onMounted(async()=>{
   storageStore.$reset();
   DropdownArray.value.EquipType = await apiStore.getEquipType();
   DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();
-  await storageStore.getDetails(AI_ID , Store_Delete_Status);
+  await storageStore.getDetails(AI_ID, false , Store_Delete_Status);
 })
 </script>
 

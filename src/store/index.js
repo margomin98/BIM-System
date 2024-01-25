@@ -39,6 +39,7 @@ export const useCounterStore = defineStore('counter', {
 })
 export const useUtilsStore = defineStore('Utils',{
   state: ()=>({
+    isLoading: false,
     userName: '',
     today: '',
     imgExtensions: ['jpg', 'jpeg', 'png', 'gif'],
@@ -108,7 +109,7 @@ export const useUtilsStore = defineStore('Utils',{
       let result = true;
       for(const key of checkList) {
         if(!formParams[key]) {
-          // console.log(key);
+          console.log(key);
           alert('請輸入必填項目')
           result =  false;
           break
@@ -346,7 +347,7 @@ export const useAPIStore = defineStore('API',{
         console.error(error);
       }
     },
-    // 專案代碼
+    // 專案代碼 精準查詢
     async getProject(projectCode) {
       const form = new FormData();
       form.append('projectCode', projectCode);
@@ -364,6 +365,18 @@ export const useAPIStore = defineStore('API',{
         }
       } catch (error) {
         console.error('專案名稱取得失敗:',error);
+      }
+    },
+    // 專案代碼 (權限下可看的所有代碼下拉選單)
+    async getFuzzyProject() {
+      try {
+        const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetProjects`);
+        const data = response.data;
+        if (data.state === 'success') {
+          return data.resultList.ProjList;
+        }
+      } catch (error) {
+        console.error(error);
       }
     },
     async checkProjectCode(projectCodeList) {

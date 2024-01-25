@@ -289,11 +289,10 @@ import Delete_warn from '@/components/Delete_warn.vue';
 
 // pinia
 import { useUtilsStore , useAPIStore } from '@/store'
-import { useStorageStore } from '@/store/storage'
+import { useStorageStore } from '@/store/storage/_index'
 import { storeToRefs } from "pinia";
 const storageStore = useStorageStore();
 const utilsStore = useUtilsStore();
-const apiStore = useAPIStore();
 const { DropdownArray , upperForm , tabData , hidden } = storeToRefs(storageStore) ;
 </script>
 

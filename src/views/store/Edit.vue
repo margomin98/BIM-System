@@ -5,7 +5,7 @@
     <Store_Component></Store_Component>
     <div class="col button_wrap">
       <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
-      <button class="send_btn" @click="storageStore.submit('edit')">送出</button>
+      <button class="send_btn" @click="applyStore.submit('edit')">送出</button>
     </div>
   </div>
 </template>
@@ -13,25 +13,26 @@
 <script setup>
 import Store_Component from '@/components/store_page/store_component';
 import Navbar from '@/components/Navbar.vue';
-import { useStorageStore } from '@/store/storage'
+import { useStorageStore } from '@/store/storage/_index'
 import { useAPIStore, useUtilsStore } from '@/store';
+import { useApplyStore } from '@/store/storage/apply'
 import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 import { Store_Edit_Status } from '@/assets/js/enter_status';
 const storageStore = useStorageStore();
+const applyStore = useApplyStore();
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();
 // 解構
-const { DropdownArray , upperForm , tabData } = storeToRefs(storageStore) ;
+const { DropdownArray } = storeToRefs(storageStore) ;
 const route = useRoute();
 const AI_ID = route.query.search_id ;
 onMounted(async()=>{
   storageStore.$reset();
   DropdownArray.value.EquipType = await apiStore.getEquipType();
   DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();
-  await storageStore.getDetails(AI_ID, Store_Edit_Status, true);
-  storageStore.fuzzyShipmentNum();
+  await storageStore.getDetails(AI_ID, false, Store_Edit_Status, true);
 })
 </script>
 

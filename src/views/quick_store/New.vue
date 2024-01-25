@@ -8,8 +8,8 @@
         </div>
         <quick_store_component></quick_store_component>
         <div class="col button_wrap">
-            <button class="back_btn" @click="goBack">回上一頁</button>
-            <button class="send_btn" @click="submit()">送出</button>
+            <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
+            <button class="send_btn" @click="quickprocessStore.createQuick()">送出</button>
       </div>
     </div>
 </template>
@@ -17,40 +17,37 @@
 <script setup>
 import quick_store_component from '@/components/quick_store_page/quick_store_component.vue';
 import Navbar from '@/components/Navbar.vue';
-import { useStorageStore } from '@/store/storage'
+import { useStorageStore } from '@/store/storage/_index'
 import { useAPIStore, useUtilsStore } from '@/store';
+import { useQuickProcessStore } from '@/store/storage/quick_process'
 import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 const storageStore = useStorageStore();
 const utilsStore = useUtilsStore();
+const quickprocessStore = useQuickProcessStore();
 const apiStore = useAPIStore();
 // 解構
 const { DropdownArray , upperForm , middleForm , hidden , tabData } = storeToRefs(storageStore) ;
 const route = useRoute();
 
 onMounted(async() => {
-  storageStore.$reset();
-  hidden.value = true;
-  DropdownArray.value.ProjectCode = [
+    storageStore.$reset();
+    hidden.value = true;
+    DropdownArray.value.ProjectCode = [
         {Text: '專案1', Value: '0001'},
         {Text: '專案2', Value: '0002'},
         {Text: '專案3', Value: '0003'},
         {Text: '專案4', Value: '0004'},
         {Text: '專案5', Value: '0005'}
     ]
-  DropdownArray.value.EquipType = await apiStore.getEquipType();
-  DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();
-  DropdownArray.value.Area = await apiStore.getArea();
-  DropdownArray.value.Custodian = await apiStore.getCustodian('');
-  storageStore.fuzzyShipmentNum(false);
-  console.log(DropdownArray.value);
+    DropdownArray.value.EquipType = await apiStore.getEquipType();
+    DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();
+    DropdownArray.value.Area = await apiStore.getArea();
+    DropdownArray.value.Custodian = await apiStore.getCustodian('');
+//   DropdownArray.value.ProjectCode = await apiStore.getFuzzyProject();
+//   console.log(DropdownArray.value);
 });
-const submit = ()=>{
-    console.log('upperForm',upperForm.value);
-    console.log('middleForm',middleForm.value);
-    console.log('tabData',tabData.value);
-}
 </script>
 <style lang="scss" scoped>
     @import '@/assets/css/global.scss';

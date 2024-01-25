@@ -5,7 +5,7 @@
     <Store_Component></Store_Component>
     <div class="col button_wrap">
       <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
-      <button class="send_btn" @click="storageStore.submit">送出</button>
+      <button class="send_btn" @click="applyStore.submit">送出</button>
     </div>
   </div>
 </template>
@@ -13,12 +13,14 @@
 <script setup>
 import Store_Component from '@/components/store_page/store_component';
 import Navbar from '@/components/Navbar.vue';
-import { useStorageStore } from '@/store/storage'
+import { useStorageStore } from '@/store/storage/_index'
 import { useAPIStore, useUtilsStore } from '@/store';
+import { useApplyStore } from '@/store/storage/apply.js'
 import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 const storageStore = useStorageStore();
+const applyStore = useApplyStore();
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();
 // 解構
@@ -34,7 +36,6 @@ onMounted(async() => {
     upperForm.value.ShipmentNum = route.query.ShipmentNum;
     upperForm.value.AR_ID = route.query.search_id;
   }
-  storageStore.fuzzyShipmentNum(false);
 });
 </script>
 

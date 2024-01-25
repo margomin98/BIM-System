@@ -363,7 +363,7 @@
                                 </div>
                                 <div class="option_section">
                                     <vue-multiselect v-model="tab.itemProjectSelect" :options="tab.tabProjectCode" 
-                                    :allow-empty="false"  :max-height="300" placeholder="請選擇" label="Text" 
+                                    :max-height="300" placeholder="請選擇" label="Text" 
                                     :showLabels="false" track-by="Text" :show-no-results="false" @select="storageStore.onTabProjectcodeSelect" @close="storageStore.onTabProjectcodeUnselect(index)">
                                     </vue-multiselect>
                                 </div>
@@ -409,9 +409,9 @@
                             </div>
                         </div>
                         <!-- 頁籤資產編號 -->
-                        <div v-show="!hidden" class="col">
+                        <div class="col">
                             <div class="input-group mb-3">
-                                <div class="input-group-prepend">資產編號 :</div>
+                                <div class="input-group-prepend"><span>*</span>資產編號 :</div>
                                 <input type="text" class="form-control" placeholder="BFXXXXXXXX" v-model="tab.itemAssetsId">
                             </div>
                         </div>
@@ -674,15 +674,12 @@ import view_modal from "@/components/view_modal.vue"
 import VueMultiselect from 'vue-multiselect'
 // pinia
 import { useUtilsStore , useAPIStore } from '@/store'
-import { useStorageStore } from '@/store/storage'
+import { useStorageStore } from '@/store/storage/_index'
 import { storeToRefs } from "pinia";
 const storageStore = useStorageStore();
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();
-const { DropdownArray , upperForm , middleForm , tabData , showOptions , Type , hidden } = storeToRefs(storageStore) ;
-const test = (option) =>{
-    console.log('onSelect option', option);
-}
+const { DropdownArray , upperForm , middleForm , tabData , Type , hidden } = storeToRefs(storageStore) ;
 
 </script>
 
