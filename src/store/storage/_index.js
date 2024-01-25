@@ -349,10 +349,16 @@ export const useStorageStore = defineStore('Storage', {
 		},
 		// 刪除此單
 		async deleteData(AI_ID) {
+			const apiStore = useAPIStore();
 			const form = new FormData();
 			form.append('AI_ID', AI_ID);
 			try {
-				const response = await axios.post(`http://192.168.0.177:7008/AssetsInMng/ApplicationDelete`, form);
+        const token = await apiStore.GetAntiForgeryToken();
+				const response = await axios.post(`http://192.168.0.177:7008/AssetsInMng/ApplicationDelete`, form,{
+					headers: { 
+            'RequestVerificationToken': token,
+          }
+				});
 				const data = response.data;
 				if (data.state === 'success') {
 					let msg = data.messages + '\n單號:'+ data.resultList.AI_ID;
@@ -403,36 +409,46 @@ export const useStorageStore = defineStore('Storage', {
 		},
 		// 入庫
 		async FinishStorageProcess(AI_ID = '', isQuick = false) {
+			const apiStore = useAPIStore();
 			const utilsStore = useUtilsStore();
 			const form = new FormData();
 			form.append('AI_ID', AI_ID);
-			axios.post('http://192.168.0.177:7008/AssetsInMng/AssetsIn', form)
-				.then((response) => {
-					utilsStore.isLoading = false;
-					const data = response.data
-					if (data.state === 'success') {
-						// 成功
-						if(isQuick) {
-							alert('快速入庫成功\n單號為:' + AI_ID);
-							router.push({
-								name: 'Store_Datagrid'
-							});
+			try {
+				const token = await apiStore.GetAntiForgeryToken();
+				axios.post('http://192.168.0.177:7008/AssetsInMng/AssetsIn', form,{
+					headers: { 
+            'RequestVerificationToken': token,
+          }
+				})
+					.then((response) => {
+						utilsStore.isLoading = false;
+						const data = response.data
+						if (data.state === 'success') {
+							// 成功
+							if(isQuick) {
+								alert('快速入庫成功\n單號為:' + AI_ID);
+								router.push({
+									name: 'Store_Datagrid'
+								});
+							} else {
+								alert('入庫成功\n單號為:' + AI_ID);
+								router.push({
+									name: 'Store_Process_Datagrid'
+								});
+							}
+						} else if (data.state === 'account_error') {
+							alert(data.messages);
+							router.push('/');
 						} else {
-							alert('入庫成功\n單號為:' + AI_ID);
-							router.push({
-								name: 'Store_Process_Datagrid'
-							});
+							alert(data.messages);
 						}
-					} else if (data.state === 'account_error') {
-						alert(data.messages);
-						router.push('/');
-					} else {
-						alert(data.messages);
-					}
-				})
-				.catch((error) => {
-					console.error(error);
-				})
+					})
+					.catch((error) => {
+						console.error(error);
+					})
+			} catch (error) {
+				console.error(error);
+			}
 		},
 	},
 })

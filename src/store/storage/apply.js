@@ -95,13 +95,14 @@ export const useApplyStore = defineStore('Apply', {
 			}
 			// 傳送upperForm
 			try {
-				const resultList = await this.sendUpperForm(type);
+        const token = await apiStore.GetAntiForgeryToken();
+        const resultList = await this.sendUpperForm(type, token);
 				console.log('上半部resultList', resultList);
 				// 再依照resultList將 下半部頁籤 單次分別上傳
 				const tabPromises = [];
 				storageStore.tabData.forEach((tab,index)=>{
 					const itemId = resultList.Tabs[index];
-					tabPromises.push(this.sendImgForm(itemId, tab, index));
+          tabPromises.push(this.sendImgForm(itemId, tab, index,token));
 				})
 				// 等待所有檔案上傳完成
 				await Promise.all(tabPromises)
@@ -123,7 +124,7 @@ export const useApplyStore = defineStore('Apply', {
 				alert(error);
 			}
 		},
-		async sendUpperForm(type) {
+    async sendUpperForm(type, token) {
 			const storageStore = useStorageStore();
 			return new Promise((resolve, reject) => {
 				const form = new FormData();
@@ -139,7 +140,11 @@ export const useApplyStore = defineStore('Apply', {
 				form.append('AR_ID', storageStore.upperForm.AR_ID);
 				form.append('tab_count', storageStore.tabData.length);
 				form.append('Memo', storageStore.upperForm.Memo);
-				axios.post(url, form)
+				axios.post(url, form,{
+          headers: { 
+            'RequestVerificationToken': token,
+          }
+        })
 					.then(response => {
 						const data = response.data;
 						if (data.state === 'success') {
@@ -184,7 +189,11 @@ export const useApplyStore = defineStore('Apply', {
 				for (let i = 0; i < tab.deleteFile.length; i++) {
 					form.append('deleteFile', tab.deleteFile[i]);
 				}
-				axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form)
+				axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form,{
+          headers: { 
+            'RequestVerificationToken': token,
+          }
+        })
 					.then((response) => {
 						const data = response.data;
 						if (data.state === 'success') {
