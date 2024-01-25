@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import Component from '@/components/rent_page/rent_view_delete.vue';
+import Component from '@/components/receive_page/receive_edit_view_delete.vue';
 
 export default {
     components: {
