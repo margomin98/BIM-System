@@ -89,7 +89,7 @@
                 </div>
                 <div class="fixed_info">
                   <div>
-                    <p>目前資產庫存</p>
+                    <p>目前資產庫存（請優先選擇存貨）</p>
                   </div>
                 </div>
                 <DataTable

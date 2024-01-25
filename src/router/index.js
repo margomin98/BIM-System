@@ -30,6 +30,9 @@ import Store_Process_Delete from "../views/store_process/Delete.vue";
 
 //專案採購
 import Case_Purchase_Datagrid from "../views/case_purchase/Datagrid.vue";
+import Case_Purchase_Order from "../views/case_purchase/Order.vue";
+import Case_Purchase_Process from "../views/case_purchase/Process.vue";
+import Case_Purchase_View from "../views/case_purchase/View.vue";
 //專案採購
 
 // 快速出庫
@@ -313,6 +316,24 @@ const routes = [
     path: "/case_purchase_datagrid",
     name: "Case_Purchase_Datagrid",
     component: Case_Purchase_Datagrid,
+    // meta: {auth: true, request: 'AO_Detail'},
+  },
+  {
+    path: "/case_purchase_order",
+    name: "Case_Purchase_Order",
+    component: Case_Purchase_Order,
+    // meta: {auth: true, request: 'AO_Detail'},
+  },
+  {
+    path: "/case_purchase_process",
+    name: "Case_Purchase_Process",
+    component: Case_Purchase_Process,
+    // meta: {auth: true, request: 'AO_Detail'},
+  },
+  {
+    path: "/case_purchase_view",
+    name: "Case_Purchase_View",
+    component: Case_Purchase_View,
     // meta: {auth: true, request: 'AO_Detail'},
   },
   {

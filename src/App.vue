@@ -7,6 +7,14 @@
 </script>
 
 <style lang="scss">
+.datagrid_section .multiselect__tags{
+min-height: 35px;
+display: flex;
+    align-items: end;
+	padding:  unset;
+    padding-left: 5px;
+}
+
 
 	.ag-chart-no-data-overlay {
 		display: flex;

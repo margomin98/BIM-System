@@ -1,5 +1,5 @@
 <template>
-    <div class="main_section">
+    <div>
         <div class="info_wrap col mb-5">
             <div class="fixed_info">
                 <div>

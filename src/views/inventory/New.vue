@@ -172,7 +172,7 @@
               </div>
               <div class="fixed_info">
                 <div>
-                  <p>目前資產庫存</p>
+                  <p>目前資產庫存（請優先選擇存貨）</p>
                 </div>
               </div>
               <DataTable lazy :first="datagrid1.first" :size="'small'" :loading="datagrid1.loading" :value="rowData1" :sort-field="datagrid1.sortField" :sort-order="datagrid1.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="510px"

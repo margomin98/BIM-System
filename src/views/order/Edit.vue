@@ -93,7 +93,7 @@
   // 送出-(含文字 & 檔案)
   const submit = (async ()=>{
     const RequireCheckList = ['PurchaseNum','PurchaseDate','Quantity'];
-    const LetterCheckList = {
+    const FormLetterCheckList = {
       PurchaseNum: {field:'訂單編號',max:50},
       Source: {field:'採購來源',max:50},
       Use: {field:'使用專案',max:100},
@@ -101,7 +101,7 @@
     // 檢查必填
     if(!checkRequire(RequireCheckList,formParams,fileParams)) { return }
     // 檢查字數
-    if(!checkMaxLetter(LetterCheckList,formParams)) { return }
+    if(!checkMaxLetter(FormLetterCheckList,formParams)) { return }
     // console.log('form',formParams);
     // console.log('file',fileParams.newDoc);
     loading.value = true;
