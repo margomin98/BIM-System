@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import Component from '@/components/case_purchase_page/case_purchase.vue';
+import Component from '@/components/rent_page/rent_view_delete.vue';
 
 export default {
     components: {
