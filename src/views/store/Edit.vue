@@ -29,6 +29,7 @@ const { DropdownArray } = storeToRefs(storageStore) ;
 const route = useRoute();
 const AI_ID = route.query.search_id ;
 onMounted(async()=>{
+  applyStore.$reset();
   storageStore.$reset();
   DropdownArray.value.EquipType = await apiStore.getEquipType();
   DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();

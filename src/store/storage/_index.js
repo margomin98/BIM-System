@@ -61,6 +61,9 @@ export const useStorageStore = defineStore('Storage', {
 			itemUnit: '',
 			itemPackageUnit: '',
 			itemPackageNum: 1,
+			itemWarranty: '',
+			itemWarrantyStartDate: '',
+			itemWarrantyEndDate: '',
 			itemMemo: '',
 			EquipCategoryArray: [],
 			newFile: [],
@@ -92,6 +95,7 @@ export const useStorageStore = defineStore('Storage', {
 			itemProductSpec: {field: '規格', max: 100},
 			itemProductType: {field: '型號', max: 100},
 			itemSN: {field: 'S/N', max: 100},
+			itemWarranty: {field: '保固期限', max: 10},
 			itemMemo: {field: '備註', max: 500},
 		},
 		FormLetterCheckList: {
@@ -182,6 +186,8 @@ export const useStorageStore = defineStore('Storage', {
 					this.tabData[index].itemUnit = '';
 					this.tabData[index].itemCount = 1;
 					break;
+				default:
+					break ;
 			}
 		},
 		// 變更入庫方式(for 新增快速入庫)時 reset參數
@@ -400,6 +406,52 @@ export const useStorageStore = defineStore('Storage', {
 				console.error(error);
 			}
 			return true;
+		},
+		// 頁籤儲存 [填報-新增、編輯] [快速入庫-編輯] [入庫作業]
+		async sendImgForm(itemId, tab, index) {
+			const storageStore = useStorageStore();
+			return new Promise((resolve, reject) => {
+				const form = new FormData();
+				// 先append itemId
+				form.append('itemId', itemId);
+				for (const key in tab) {
+					// 不為null、undefined、空字串就append
+					if (tab[key]) {
+						form.append(key, tab[key]);
+					}
+				}
+				// 先剔除不需要key值
+				form.delete('viewFile')
+				form.delete('existFile')
+				// 不是耗材的話 剔除itemCount、itemUnit
+				if (tab.itemAssetType !== '耗材') {
+					form.delete('itemUnit')
+					form.delete('itemCount')
+				}
+				// newFile等等額外append 先剔除
+				form.delete('newFile')
+				for (let i = 0; i < tab.newFile.length; i++) {
+					form.append('newFile', tab.newFile[i]);
+				}
+				// deleteFile等等額外append 先剔除
+				form.delete('deleteFile')
+				for (let i = 0; i < tab.deleteFile.length; i++) {
+					form.append('deleteFile', tab.deleteFile[i]);
+				}
+				axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form)
+					.then((response) => {
+						const data = response.data;
+						if (data.state === 'success') {
+							console.log(`第${index+1}個頁籤上傳成功`);
+							resolve(data.state)
+						} else {
+							console.error(`第${index+1}個頁籤上傳失敗，${data.messages}`);
+						}
+					})
+					.catch(error => {
+						reject(error);
+					});
+			});
 		},
 		// 入庫
 		async FinishStorageProcess(AI_ID = '', isQuick = false) {

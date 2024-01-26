@@ -33,7 +33,9 @@ const route = useRoute();
 
 onMounted(async() => {
     storageStore.$reset();
-    hidden.value = true;
+    quickprocessStore.$reset();
+    quickprocessStore.createHidden = true;
+
     DropdownArray.value.ProjectCode = [
         {Text: '專案1', Value: '0001'},
         {Text: '專案2', Value: '0002'},

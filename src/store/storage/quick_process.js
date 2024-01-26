@@ -8,6 +8,10 @@ import _ from "lodash"
 import { useRoute } from 'vue-router';
 
 export const useQuickProcessStore = defineStore('QuickProcess', {
+	state:() => ({
+		createHidden: false,
+		editHidden: false,
+	}),
 	// method
 	actions: {
 		// 檢查表單內容
@@ -69,72 +73,7 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 			}
 			return true;
 		},
-		// 送出表單(create: 新增, edit: 編輯)
-		async submit(type) {
-			const apiStore = useAPIStore();
-			// 檢查是否至少一項頁籤
-			if(this.tabData.length == 0 ) {
-				alert('請至少填寫一項資產資訊')
-				return
-			}
-			// 檢查頁籤內容
-			if(!this.checkTabContent()) {
-				return
-			}
-			// 檢查頁籤內有填寫的project code是否存在
-			let projectCodeList = [];
-			this.tabData.forEach((tab,index)=>{
-				if(tab.itemProjectCode) {
-					projectCodeList.push({
-						PadNum: index,
-						projectCode: tab.itemProjectCode,
-					})
-				}
-			})
-			if (projectCodeList.length !== 0) {
-				console.log('projectCodeList:', projectCodeList);
-				try {
-					const messages = await apiStore.checkProjectCode(projectCodeList);
-					if (messages !== 'success') {
-						alert(messages);
-						throw new Error(messages);
-					}
-				} catch (error) {
-					console.error(error);
-					return
-				}
-			}
-			// 傳送upperForm
-			try {
-				const resultList = await this.sendUpperForm(type);
-				console.log('上半部resultList', resultList);
-				// 再依照resultList將 下半部頁籤 單次分別上傳
-				const tabPromises = [];
-				this.tabData.forEach((tab,index)=>{
-					const itemId = resultList.Tabs[index];
-					tabPromises.push(this.sendImgForm(itemId, tab, index));
-				})
-				// 等待所有檔案上傳完成
-				await Promise.all(tabPromises)
-				.then(result => {
-					const allSuccess = result.every(result => result === 'success')
-					if (allSuccess) {
-						let title = type === 'edit' ? '編輯' : '傳送'
-						alert(`${title}新品入庫表單成功\n單號為:` + resultList.AI_ID);
-						router.push({
-							name: 'Store_Datagrid'
-						});
-					} else {
-						alert(`${title}新品入庫表單失敗`)
-					}
-				})
-			}
-			catch (error) {
-				console.error(error);
-				alert(error);
-			}
-		},
-		// -----快速入庫
+		// 新增快速入庫 (表單、頁籤一次全給)
 		async createQuick() {
 			const utilsStore = useUtilsStore();
 			const storageStore = useStorageStore();
@@ -151,12 +90,12 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 			// 檢查頁籤內容
 			if(!this.checkTabContent()) return ;
 			// 檢查有無重複資產編號
-			if(!(await storageStore.checkAssetsIdRepeat())) return
+			if(!(await storageStore.checkAssetsIdRepeat())) return ;
 			// 傳送整個資料(包括Form、tabData)
 			utilsStore.isLoading = true ; 
 			try {
 				let requestData = {
-					Memo: storageStore.upperForm,
+					Memo: storageStore.upperForm.Memo,
 					Tabs: storageStore.tabData
 				}
 				const response = await axios.post('',requestData);
@@ -164,13 +103,83 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 				if(data.state === 'success') {
 					// 轉狀態
 					const AI_ID = data.resultList.AI_ID ;
-					await storageStore.FinishStorageProcess(AI_ID);
+					await storageStore.FinishStorageProcess(AI_ID , true);
 				}
 			} catch (error) {
 				console.error(error);	
 			} finally {
 				utilsStore.isLoading = false;
 			}
-		}
+		},
+		// 編輯快速入庫
+		async editQuick(isDone = false) {
+			const utilsStore = useUtilsStore();
+			const storageStore = useStorageStore();
+			console.log('upperForm',storageStore.upperForm);
+			console.log('middleForm',storageStore.middleForm);
+			console.log('tabData',storageStore.tabData);
+			// 檢查表單內容
+			if(!this.checkFormContent()) return ;
+			// 檢查頁籤內容
+			if(!this.checkTabContent()) return ;
+			utilsStore.isLoading = true ;
+			try {
+				// 頁籤部分
+				const tabPromises = [];
+				storageStore.tabData.forEach((tab,index)=>{
+					tabPromises.push(storageStore.sendImgForm(tab.itemId, tab, index));
+				})
+				// 等待所有頁籤上傳完成
+				await Promise.all(tabPromises)
+				.then(async result => {
+					const allSuccess = result.every(result => result === 'success')
+					if (allSuccess) {
+						// 文字部分
+						try {
+							const result = await this.sendUpperForm(isDone);
+							alert(`${result.messages}\n單號為:` + storageStore.upperForm.AI_ID);
+							if(isDone) {
+								router.push({
+									name: 'Store_Datagrid'
+								});
+							} else {
+								window.location.reload();
+							}
+						} catch (error) {
+							console.error(error);
+						}
+					} else {
+						alert(`編輯快速入庫表單失敗`)
+					}
+				})
+			} catch (error) {
+				console.error(error);
+			} finally {
+				utilsStore.isLoading = false ;
+			}
+		},
+		async sendUpperForm(isDone) {
+			const storageStore = useStorageStore();
+			return new Promise((resolve, reject) => {
+				const form = new FormData();
+				form.append('Done', isDone);
+				form.append('AI_ID', storageStore.upperForm.AI_ID);
+				form.append('AR_ID', storageStore.upperForm.AR_ID);
+				form.append('Memo', storageStore.upperForm.Memo);
+				axios.post('http://192.168.0.177:7008/AssetsInMng/ExpressEdit', form)
+					.then(response => {
+						const data = response.data;
+						if (data.state === 'success') {
+							// const resultList = response.data.resultList;
+							resolve({state: data.state , messages: data.messages});
+						} else {
+							reject(data.messages);
+						}
+					})
+					.catch(error => {
+						reject(error);
+					});
+			});
+		},
 	},
 })

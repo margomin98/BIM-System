@@ -7,48 +7,48 @@
                 <div><p>申請入庫日期 : {{ upperForm.ApplicationDate || utilsStore.today }}</p></div>
             </div>
             <div class="content">
-            <!-- 單號 -->
-            <div class="col mb-3" v-show="upperForm.AI_ID">
-              <div class="input-group">
-                <div class="input-group-prepend">單號 :</div>
-                <input type="text" class="form-control readonly_box" v-model="upperForm.AI_ID" readonly>
-              </div>
-            </div>
-           <!-- 物流單號 -->
-           <div class="col form_search_wrap mb-3">
-             <div class="input-group">
-               <div class="input-group-prepend">
-                 物流單號 :
-               </div>
-               <div class="search_section">
-                <div class="option_section">
-                    <vue-multiselect v-model="upperForm.ShipmentSelect" :options="DropdownArray.ShipmentNum" 
-                    :allow-empty="true"  :max-height="300" placeholder="請選擇" label="ShipmentNum" :showLabels="false" track-by="ShipmentNum" 
-                    :show-no-results="false" @select="storageStore.onShipmentnumSelect" @close="storageStore.onShipmentnumUnselect">
-                    </vue-multiselect>
+                <!-- 單號 -->
+                <div class="col mb-3" v-show="upperForm.AI_ID">
+                    <div class="input-group">
+                        <div class="input-group-prepend">單號 :</div>
+                        <input type="text" class="form-control readonly_box" v-model="upperForm.AI_ID" readonly>
+                    </div>
                 </div>
-               </div>
-               <button class="form_search_btn" @click="storageStore.viewReceive">檢視</button>
-               <!-- 隱藏跳轉按鈕 -->
-               <router-link :to="{name: 'Receive_View' , query:{ search_id : upperForm.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
-                </div>
+                <!-- 物流單號 -->
+                <div v-show="!quickprocessStore.createHidden" class="col form_search_wrap mb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            物流單號 :
+                        </div>
+                        <div class="search_section">
+                                <div class="option_section">
+                                    <vue-multiselect v-model="upperForm.ShipmentSelect" :options="DropdownArray.ShipmentNum" 
+                                    :allow-empty="true"  :max-height="300" placeholder="請選擇" label="ShipmentNum" :showLabels="false" track-by="ShipmentNum" 
+                                    :show-no-results="false" @select="storageStore.onShipmentnumSelect" @close="storageStore.onShipmentnumUnselect">
+                                    </vue-multiselect>
+                                </div>
+                        </div>
+                        <button class="form_search_btn" @click="storageStore.viewReceive">檢視</button>
+                        <!-- 隱藏跳轉按鈕 -->
+                        <router-link :to="{name: 'Receive_View' , query:{ search_id : upperForm.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
+                    </div>
                 </div>
                 <!-- 備註 -->
                 <div class="col mb-3">
                     <div class="input-group">
-                    <div class="input-group-prepend">備註 :</div>
-                    <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="upperForm.Memo"></textarea>
+                        <div class="input-group-prepend">備註 :</div>
+                        <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="upperForm.Memo"></textarea>
                     </div>
                 </div>
             </div>
         </div>
         <div class="info_wrap col">
-            <div v-if="Type !== 1" class="fixed_info">
+            <div v-show="!quickprocessStore.editHidden" class="fixed_info">
                 <div>
                     <p><span>*</span>填寫資產資訊(請至少填寫一項)</p>
                 </div>
             </div>
-            <div v-if="Type !== 1" class="content">
+            <div v-show="!quickprocessStore.editHidden" class="content">
                 <!-- 資產類型 -->
                 <div class="row">
                     <div class="col-12">
@@ -210,7 +210,7 @@
                 </div>
             </div>
             <!-- 入庫方式 -->
-            <div class="store_option_wrap mt-5">
+            <div v-show="!quickprocessStore.editHidden" class="store_option_wrap mt-5">
                 <div class="fixed_info">
                     <p><span>*</span>入庫方式</p>
                 </div>
@@ -297,8 +297,8 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-center">
-                <button class="send_btn" @click="storageStore.insertTab(true)">新增</button>
+            <div  class="d-flex justify-content-center">
+                <button v-show="!quickprocessStore.editHidden" class="send_btn" @click="storageStore.insertTab(true)">新增</button>
             </div>
             <!-- 頁籤部分 -->
             <div v-show="tabData.length > 0" class="tab_section mt-5">
@@ -312,9 +312,9 @@
                 <div class="tab-content" id="nav-tabContent">
                     <div v-for="(tab, index) in tabData" :key="index" :class="['tab-pane', 'fade', { 'show active': index === 0 }]" :id="'tab' + (index + 1)" role="tabpanel">      
                         <!-- deleteButton -->
-                        <button class="delete_btn" @click="storageStore.deleteTabFn(index)">刪除此筆</button>
+                        <button class="delete_btn" v-show="!quickprocessStore.editHidden" @click="storageStore.deleteTabFn(index)">刪除此筆</button>
                         <!-- 頁籤專案類型 -->
-                        <div class="row">
+                        <div v-show="!quickprocessStore.editHidden" class="row">
                             <div class="col-12">
                                 <div class="input-group mb-3 check_box_wrap">
                                     <div class="input-group-prepend check_box">
@@ -323,27 +323,17 @@
                                     <div class="d-flex align-items-center radio_wrap">
                                         <template v-for="(item, typeIndex) in DropdownArray.AssetType" :key="'radio' + (typeIndex + 1)">
                                             <input
-                                                v-if="item !== '耗材'"
                                                 type="radio"
                                                 class="form-check-input check_box"
-                                                :id="'radio' + (typeIndex + 1)"
+                                                :id="'tabProjectType_'+(index+1) + (typeIndex + 1)"
                                                 style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"
                                                 :value="item"
                                                 v-model="tab.itemAssetType"
-                                                @change="storageStore.resetUnitCount('tab',index)"
-                                            />
-                                            <input
-                                                v-else
-                                                type="radio"
-                                                class="form-check-input check_box"
-                                                :id="'radio' + (typeIndex + 1)"
-                                                style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"
-                                                :value="item"
-                                                v-model="tab.itemAssetType"
+                                                @input="storageStore.resetUnitCount('tab',index)"
                                             />
                                             <label
                                                 class="form-check-label check_box"
-                                                :for="'radio' + (typeIndex + 1)"
+                                                :for="'tabProjectType_'+(index+1) + (typeIndex + 1)"
                                                 :data-toggle="typeIndex === 1 ? 'tooltip' : null"
                                                 :data-placement="typeIndex === 1 ? 'top' : null"
                                                 :title="typeIndex === 1 ? '註記此資產僅限特定專案出貨所使用' : null"
@@ -351,6 +341,24 @@
                                             {{ item }}
                                             </label>
                                         </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-show="!quickprocessStore.createHidden" class="row">
+                            <div class="col-12">
+                                <div class="input-group mb-3 check_box_wrap">
+                                    <div class="input-group-prepend check_box">
+                                        <span>*</span>專案類型 :
+                                    </div>
+                                    <div class="d-flex align-items-center radio_wrap">
+                                        <div v-if="tab.itemAssetType !== '耗材'" class="dropdown">
+                                            <select class="form-select" id="floatingSelect" v-model="tab.itemAssetType">
+                                                <option value="資產">資產</option>
+                                                <option value="存貨">存貨</option>
+                                            </select>
+                                        </div>
+                                        <input v-else type="text" class="form-control readonly_box" readonly v-model="tab.itemAssetType">
                                     </div>
                                 </div>
                             </div>
@@ -412,11 +420,11 @@
                         <div class="col">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend"><span>*</span>資產編號 :</div>
-                                <input type="text" class="form-control" placeholder="BFXXXXXXXX" v-model="tab.itemAssetsId">
+                                <input type="text" class="form-control" :class="{'readonly_box':quickprocessStore.editHidden}" placeholder="BFXXXXXXXX" v-model="tab.itemAssetsId" :readonly="quickprocessStore.editHidden">
                             </div>
                         </div>
                         <!-- 頁籤廠商 -->
-                        <div v-show="!hidden" class="col">
+                        <div v-show="!quickprocessStore.createHidden" class="col">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     廠商 :
@@ -425,7 +433,7 @@
                             </div>
                         </div>
                         <!-- 頁籤規格 -->
-                        <div v-show="!hidden" class="col">
+                        <div v-show="!quickprocessStore.createHidden" class="col">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     規格 :
@@ -434,7 +442,7 @@
                             </div>
                         </div>
                         <!--頁籤型號 -->
-                        <div v-show="!hidden" class="col">
+                        <div v-show="!quickprocessStore.createHidden" class="col">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     型號 :
@@ -443,20 +451,26 @@
                             </div>
                         </div>
                         <!-- 頁籤S/N -->
-                        <div v-show="!hidden" class="col">
+                        <div v-show="!quickprocessStore.createHidden" class="col">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">S/N :</div>
                                 <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="tab.itemSN">
                             </div>
                         </div>
                         <!-- 頁籤選購金額 -->
-                        <div v-show="!hidden" class="row g-0 row_wrap">
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                        <div v-show="!quickprocessStore.createHidden" class="row g-0 row_wrap">
+                            <div class="col-xl-12 col-lg-6 col-md-6 col-12">
                                 <div class="input-group mb-3" id='number'>
-                                    <div class="input-group-prepend info  ">
+                                    <div class="input-group-prepend info">
                                         選購金額 :
                                     </div>
-                                    <input class="input-number" type="number" v-model="tab.itemPrice" min="1">
+                                    <div class="d-flex">
+                                        $
+                                        <input class="" type="number" v-model="tab.itemPrice" min="1"> 
+                                        <div>
+                                            / 每包裝單位 <span v-show="tab.itemAssetType==='耗材'">(${{ tab.itemPrice / tab.itemCount }}/每單位)</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -521,28 +535,28 @@
                             </div>
                         </div>
                         <!-- 頁籤保固期限 -->
-                        <div v-show="!hidden" class="row">
+                        <div v-show="!quickprocessStore.createHidden" class="row">
                             <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         保固期限：
                                     </div>
-                                    <input type="text" class="form-control" placeholder="最多輸入10字">
+                                    <input type="text" class="form-control" placeholder="最多輸入10字" v-model="tab.itemWarranty">
                                 </div>
                             </div>
                         </div>
                         <!-- 頁籤 保固 開始&結束 -->
-                        <div v-show="!hidden" class="row">
+                        <div v-show="!quickprocessStore.createHidden" class="row">
                             <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">保固開始日：</div>
-                                    <input type="date" class="form-control " />
+                                    <input type="date" class="form-control " v-model="tab.itemWarrantyStartDate"/>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">保固到期日：</div>
-                                    <input type="date" class="form-control " />
+                                    <input type="date" class="form-control " v-model="tab.itemWarrantyEndDate"/>
                                 </div>
                             </div>
                         </div>
@@ -554,23 +568,39 @@
                             </div>
                         </div>
                         <!-- 頁籤選擇檔案 -->
-                        <div v-show="!hidden" class="col">
+                        <div v-show="!quickprocessStore.createHidden" class="col">
                             <div class="input-group">
                                 <div class="input-group-prepend">資產照片：</div>
                                 <div class="mb-3 file_wrap">
-                                    <button class='choose_btn'>選擇檔案</button>
-                                    <input style="display: none;" />
+                                    <button class='choose_btn' @click="storageStore.chooseFile(index)">選擇檔案</button>
+                                    <input type="file" accept="image/*"  style="display: none;" multiple 
+                                    @change="utilsStore.handleImgChange($event, tab)" />
                                 </div>
                             </div>
                         </div>
-                        <div v-show="!hidden" class="selected_file col">
+                        <!-- 頁籤已選擇檔案 -->
+                        <div v-show="!quickprocessStore.createHidden" class="selected_file col">
                             <div class="input-group">
                                 <div class="input-group-prepend">已選擇檔案：</div>
                                 <div class="selected_file_wrap">
-                                    <div class="file_upload_wrap">
-                                        <p>
-                                            <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
-                                            <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;"></p>
+                                    <div v-for="(file , file_index) in tab.viewFile" :key="file_index" class="file_upload_wrap">
+                                        <p>{{ file.FileName }}
+                                            <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="utilsStore.viewImgFile(file, file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+                                            <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="utilsStore.deleteImgFile('new', tab, file_index)">
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 已上傳檔案 -->
+                        <div v-show="!quickprocessStore.createHidden" class="selected_file col">
+                            <div class="input-group my-3">
+                                <div class="input-group-prepend">已上傳檔案：</div>
+                                <div class="selected_file_wrap">
+                                    <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap">
+                                    <p>{{ file.FileName }}
+                                        <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="utilsStore.viewImgFile(file, file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+                                        <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="utilsStore.deleteImgFile('exist', tab, file_index)"></p>
                                     </div>
                                 </div>
                             </div>
@@ -588,17 +618,34 @@
                                             <div class="input-group-prepend check_box">
                                                 <span>*</span>入庫方式 :
                                             </div>
-                                            <div class="d-flex align-items-center radio_wrap">
+                                            <div v-if="!quickprocessStore.editHidden" class="d-flex align-items-center radio_wrap">
                                                 <template v-for="(item, InboundIndex) in DropdownArray.InboundWay" :key="'radio' + (InboundIndex + 1)">
-                                                    <input
+                                                    <div class="form-check">
+                                                        <input
+                                                            type="radio"
+                                                            class="form-check-input check_box"
+                                                            :id="'InboundRadio_'+(index+1) + (InboundIndex + 1)"
+                                                            :value="item"
+                                                            v-model="tab.itemInboundWay"
+                                                            @change="storageStore.changeInboundWay('tab',index)"
+                                                        />
+                                                        <label class="form-check-label check_box" :for="'InboundRadio_'+(index+1) + (InboundIndex + 1)" > {{ item }} </label>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                            <div v-else-if="!quickprocessStore.createHidden" class="d-flex align-items-center radio_wrap">
+                                                <template v-for="(item, InboundIndex) in DropdownArray.InboundWay" :key="'radio' + (InboundIndex + 1)">
+                                                    <div class="form-check">
+                                                        <input
                                                         type="radio"
                                                         class="form-check-input check_box"
                                                         :id="'InboundRadio_'+(index+1) + (InboundIndex + 1)"
                                                         :value="item"
                                                         v-model="tab.itemInboundWay"
-                                                        @change="storageStore.changeInboundWay('tab',index)"
-                                                    />
-                                                    <label class="form-check-label check_box" :for="'InboundRadio_'+(index+1) + (InboundIndex + 1)" > {{ item }} </label>
+                                                        :disabled="item !== tab.itemInboundWay"
+                                                        />
+                                                        <label class="form-check-label check_box" :for="'InboundRadio_'+(index+1) + (InboundIndex + 1)" > {{ item }} </label>
+                                                    </div>
                                                 </template>
                                             </div>
                                         </div>
@@ -676,8 +723,10 @@ import VueMultiselect from 'vue-multiselect'
 import { useUtilsStore , useAPIStore } from '@/store'
 import { useStorageStore } from '@/store/storage/_index'
 import { storeToRefs } from "pinia";
+import { useQuickProcessStore } from "@/store/storage/quick_process";
 const storageStore = useStorageStore();
 const utilsStore = useUtilsStore();
+const quickprocessStore = useQuickProcessStore();
 const apiStore = useAPIStore();
 const { DropdownArray , upperForm , middleForm , tabData , Type , hidden } = storeToRefs(storageStore) ;
 

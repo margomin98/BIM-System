@@ -14,17 +14,21 @@ import Store_View_Component from '@/components/store_page/store_view_component';
 import Navbar from '@/components/Navbar.vue';
 import { useStorageStore } from '@/store/storage/_index'
 import { useAPIStore, useUtilsStore } from '@/store';
+import { useApplyStore } from '@/store/storage/apply'
 import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 const storageStore = useStorageStore();
+const applyStore = useApplyStore();
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();
 // 解構
-const { DropdownArray ,hidden } = storeToRefs(storageStore) ;
+const { DropdownArray } = storeToRefs(storageStore) ;
+const { hidden } = storeToRefs(applyStore);
 const route = useRoute();
 const AI_ID = route.query.search_id ;
 onMounted(async()=>{
+  applyStore.$reset();
   storageStore.$reset();
   hidden.value = true;
   DropdownArray.value.EquipType = await apiStore.getEquipType();

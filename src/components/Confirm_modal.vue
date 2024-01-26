@@ -10,15 +10,19 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    <p>按下確認後將無法再次變更，請確認是否正確填寫入庫項目</p>
+                    <p>{{ props.text }}</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn confirm" data-bs-dismiss="modal" @click="routerProcess">確認</button>
+                    <button type="button" class="btn confirm" data-bs-dismiss="modal" @click="props.function(props.parameter1)">確認</button>
                 </div>
             </div>
         </div>
     </div>
 </template>
+
+<script setup>
+const props = defineProps(['function' , 'parameter1' , 'text']);
+</script>
 
 <style lang="scss" scoped>
     @import '@/assets/css/global.scss';

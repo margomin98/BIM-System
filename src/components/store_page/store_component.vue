@@ -65,7 +65,6 @@
                    <div class="d-flex align-items-center radio_wrap">
                      <template v-for="(item, index) in DropdownArray.AssetType" :key="'radio' + (index + 1)">
                        <input
-                         v-if="item !== '耗材'"
                          type="radio"
                          class="form-check-input check_box"
                          :id="'radio' + (index + 1)"
@@ -73,15 +72,6 @@
                          :value="item"
                          v-model="middleForm.itemAssetType"
                          @change="storageStore.resetUnitCount('middleForm')"
-                       />
-                       <input
-                         v-else
-                         type="radio"
-                         class="form-check-input check_box"
-                         :id="'radio' + (index + 1)"
-                         style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"
-                         :value="item"
-                         v-model="middleForm.itemAssetType"
                        />
                        <label
                          class="form-check-label check_box"
@@ -287,27 +277,17 @@
                               <div class="d-flex align-items-center radio_wrap">
                                 <template v-for="(item, typeIndex) in DropdownArray.AssetType" :key="'radio' + (typeIndex + 1)">
                                   <input
-                                    v-if="item !== '耗材'"
                                     type="radio"
                                     class="form-check-input check_box"
-                                    :id="'radio' + (typeIndex + 1)"
+                                    :id="'radio_'+(index+1) + (typeIndex + 1)"
                                     style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"
                                     :value="item"
                                     v-model="tab.itemAssetType"
                                     @change="storageStore.resetUnitCount('tab',index)"
                                   />
-                                  <input
-                                    v-else
-                                    type="radio"
-                                    class="form-check-input check_box"
-                                    :id="'radio' + (typeIndex + 1)"
-                                    style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"
-                                    :value="item"
-                                    v-model="tab.itemAssetType"
-                                  />
                                   <label
                                     class="form-check-label check_box"
-                                    :for="'radio' + (typeIndex + 1)"
+                                    :for="'radio_'+(index+1) + (typeIndex + 1)"
                                     :data-toggle="typeIndex === 1 ? 'tooltip' : null"
                                     :data-placement="typeIndex === 1 ? 'top' : null"
                                     :title="typeIndex === 1 ? '註記此資產僅限特定專案出貨所使用' : null"
@@ -511,7 +491,7 @@
                   <!-- 以上傳檔案 -->
                   <div class="col" v-if="!hidden">
                     <div class="input-group my-3">
-                      <div class="input-group-prepend">已上傳的檔案 :</div>
+                      <div class="input-group-prepend">已上傳檔案 :</div>
                       <div class="selected_file">
                         <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap">
                           <p>{{ file.FileName }}
@@ -537,11 +517,14 @@ import VueMultiselect from 'vue-multiselect'
 // pinia
 import { useUtilsStore , useAPIStore } from '@/store'
 import { useStorageStore } from '@/store/storage/_index'
+import { useApplyStore } from '@/store/storage/apply.js'
 import { storeToRefs } from "pinia";
 const storageStore = useStorageStore();
+const applyStore = useApplyStore();
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();
-const { DropdownArray , upperForm , middleForm , tabData , Type , hidden } = storeToRefs(storageStore) ;
+const { DropdownArray , upperForm , middleForm , tabData , Type } = storeToRefs(storageStore) ;
+const { hidden } = storeToRefs(applyStore);
 </script>
    
 <style lang="scss" scoped>

@@ -67,21 +67,9 @@
                             <div class="d-flex align-items-center radio_wrap">
                               <div class="form-check" v-for="(item, typeIndex) in DropdownArray.AssetType" :key="'radio' + (typeIndex + 1)">
                                 <input
-                                  v-if="item !== '耗材'"
                                   type="radio"
                                   class="form-check-input check_box"
-                                  :id="'radio' + (typeIndex + 1)"
-                                  style="border-radius: 100%; width: 16px; height: 16px;"
-                                  :value="item"
-                                  v-model="tab.itemAssetType"
-                                  @change="storageStore.resetUnitCount('tab',index)"
-                                  :disabled="item !== tab.itemAssetType"
-                                />
-                                <input
-                                  v-else
-                                  type="radio"
-                                  class="form-check-input check_box"
-                                  :id="'radio' + (typeIndex + 1)"
+                                  :id="'radio_'+(index+1) + (typeIndex + 1)"
                                   style="border-radius: 100%; width: 16px; height: 16px;"
                                   :value="item"
                                   v-model="tab.itemAssetType"
@@ -89,7 +77,7 @@
                                 />
                                 <label
                                   class="form-check-label check_box"
-                                  :for="'radio' + (typeIndex + 1)"
+                                  :for="'radio_'+(index+1) + (typeIndex + 1)"
                                   :data-toggle="typeIndex === 1 ? 'tooltip' : null"
                                   :data-placement="typeIndex === 1 ? 'top' : null"
                                   :title="typeIndex === 1 ? '註記此資產僅限特定專案出貨所使用' : null"
@@ -290,10 +278,13 @@ import Delete_warn from '@/components/Delete_warn.vue';
 // pinia
 import { useUtilsStore , useAPIStore } from '@/store'
 import { useStorageStore } from '@/store/storage/_index'
+import { useApplyStore } from '@/store/storage/apply'
 import { storeToRefs } from "pinia";
 const storageStore = useStorageStore();
+const applyStore = useApplyStore();
 const utilsStore = useUtilsStore();
-const { DropdownArray , upperForm , tabData , hidden } = storeToRefs(storageStore) ;
+const { DropdownArray , upperForm , tabData } = storeToRefs(storageStore) ;
+const { hidden } = storeToRefs(applyStore);
 </script>
 
 <style lang="scss" scoped>
