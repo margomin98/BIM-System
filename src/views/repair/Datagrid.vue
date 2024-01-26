@@ -23,12 +23,11 @@
           <div class="col-xl-12 col-md-6 col-12">
             <p>狀態</p>
             <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ searchParams.Status || "請選擇" }}
-                  </button>
-              <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p v-for="(item , index) in DropdownArray.Status" :key="index" class="dropdown-item" @click="selectStatus(item)">{{ item }}</p>
-              </div>
+              <label for="statusDropdown"><span>*</span>狀態</label>
+    <select v-model="searchParams.Status" class="form-control" id="statusDropdown" @change="submit($event, 'search')">
+        <option value="">請選擇</option>
+        <option v-for="(item, index) in DropdownArray.Status" :key="index" :value="item">{{ item }}</option>
+    </select>
             </div>
           </div>
           <!-- 資產編號 -->
@@ -189,9 +188,9 @@
         UpdatePageParameter(datagrid,event,type,form)
         getMngDatagrid('/RepairMng/RepairOrders',rowData,datagrid,form);
       }
-      const selectStatus = (item) => {
-        searchParams.Status = item;
-      };
+      // const selectStatus = (item) => {
+      //   searchParams.Status = item;
+      // };
       const selectDateCategory = (item) => {
         searchParams.DateCategory = item;
       };
@@ -208,10 +207,8 @@
         datagridfield,
         rowData,
         submit,
-        selectStatus,
-        selectStatus,
         selectDateCategory,
-        clear,
+        clear
       };
     },
   };
