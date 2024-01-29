@@ -195,19 +195,19 @@ const routes = [
     path: "/quick_store_new",
     name: "Quick_Store_New",
     component: Quick_Store_New,
-    // meta: {auth: true, request: 'AI_Create'},
+    meta: {auth: true, request: 'AI_Fast'},
   },
   {
     path: "/quick_store_edit",
     name: "Quick_Store_Edit",
     component: Quick_Store_Edit,
-    // meta: {auth: true, request: 'AI_Create'},
+    meta: {auth: true, request: 'AI_Edit'},
   },
   {
     path: "/quick_store_View",
     name: "Quick_Store_View",
     component: Quick_Store_View,
-    // meta: {auth: true, request: 'AI_Create'},
+    meta: {auth: true, request: 'AI_Create'},
   },
   {
     path: "/store_new",

@@ -15,24 +15,28 @@
 import Store_View_Component from '@/components/store_page/store_view_component';
 import delete_modal from '@/components/delete_modal.vue';
 import Navbar from '@/components/Navbar.vue';
-import { useStorageStore } from '@/store/storage'
+import { useStorageStore } from '@/store/storage/_index'
 import { useAPIStore, useUtilsStore } from '@/store';
+import { useApplyStore } from '@/store/storage/apply'
 import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 import { Store_Delete_Status } from '@/assets/js/enter_status';
 const storageStore = useStorageStore();
+const applyStore = useApplyStore();
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();
 // 解構
 const { DropdownArray } = storeToRefs(storageStore) ;
+const { hidden } = storeToRefs(applyStore);
 const route = useRoute();
 const AI_ID = route.query.search_id ;
 onMounted(async()=>{
+  applyStore.$reset();
   storageStore.$reset();
   DropdownArray.value.EquipType = await apiStore.getEquipType();
   DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();
-  await storageStore.getDetails(AI_ID , Store_Delete_Status);
+  await storageStore.getDetails(AI_ID, false , Store_Delete_Status);
 })
 </script>
 

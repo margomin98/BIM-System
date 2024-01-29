@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { defineStore } from 'pinia'
-import { UnitArray, PackageUnitArray } from '@/assets/js/dropdown'
 import router from '@/router';
 export const useCounterStore = defineStore('counter', {
   // data
@@ -40,6 +39,7 @@ export const useCounterStore = defineStore('counter', {
 })
 export const useUtilsStore = defineStore('Utils',{
   state: ()=>({
+    isLoading: false,
     userName: '',
     today: '',
     imgExtensions: ['jpg', 'jpeg', 'png', 'gif'],
@@ -259,12 +259,11 @@ export const useUtilsStore = defineStore('Utils',{
 })
 export const useAPIStore = defineStore('API',{
   state: ()=>({
-    test: ['123']
   }),
   getters: {
   },
   actions: {
-    //下拉選單
+    // 設備總類&櫃位、儲位區域&櫃位
     async getEquipType() {
       try {
         const response = await axios.get('http://192.168.0.177:7008/GetParameter/EquipTypeParameter');
@@ -300,7 +299,55 @@ export const useAPIStore = defineStore('API',{
         console.error('分類取得失敗:',error);
       }
     },
-    // 專案代碼
+    async getArea() {
+      try {
+        const response = await axios.get('http://192.168.0.177:7008/GetParameter/AreaParameter');
+        const data = response.data;
+        if (data.state === 'success') {
+          // console.log('儲位區域options:\n', data.resultList.AreaList);
+          return data.resultList.AreaList;
+        } else if (data.state === 'error') {
+          alert(data.messages);
+        } else if (data.state === 'account_error') {
+          alert(data.messages);
+          router.push('/');
+        }
+      } catch (error) {
+        console.error('區域取得失敗:',error);
+      }
+    },
+    async getLayer(Area_Id) {
+      if(!Area_Id) { return []}
+      try {
+        const response = await axios.get(`http://192.168.0.177:7008/GetParameter/LayerParameter?id=${Area_Id}`);
+        const data = response.data;
+        if (data.state === 'success') {
+          // console.log('儲位櫃位options:\n', data.resultList.LayerList);
+          return data.resultList.LayerList;
+        } else if (data.state === 'error') {
+          alert(data.messages);
+        } else if (data.state === 'account_error') {
+          alert(data.messages);
+          router.push('/');
+        }
+      } catch (error) {
+        console.error('櫃位取得失敗:',error);
+      }
+    },
+    // 保管人員
+    async getCustodian(name) {
+      try {
+        const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchName?name=${name}`);
+        const data = response.data;
+        if (data.state === 'success') {
+          const filteredRoles = data.resultList.filter(role => role !== 'admin' && role !== 'guest');
+          return filteredRoles;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    // 專案代碼 精準查詢
     async getProject(projectCode) {
       const form = new FormData();
       form.append('projectCode', projectCode);
@@ -318,6 +365,18 @@ export const useAPIStore = defineStore('API',{
         }
       } catch (error) {
         console.error('專案名稱取得失敗:',error);
+      }
+    },
+    // 專案代碼 (權限下可看的所有代碼下拉選單)
+    async getFuzzyProject() {
+      try {
+        const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetProjects`);
+        const data = response.data;
+        if (data.state === 'success') {
+          return data.resultList.ProjList;
+        }
+      } catch (error) {
+        console.error(error);
       }
     },
     async checkProjectCode(projectCodeList) {
