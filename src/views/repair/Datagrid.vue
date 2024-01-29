@@ -22,13 +22,11 @@
           <!-- 狀態 -->
           <div class="col-xl-12 col-md-6 col-12">
             <p>狀態</p>
-
-    <select class="form-select" v-model="searchParams.Status" id="statusDropdown">
-        <option value="">請選擇</option>
-        <option v-for="(item, index) in DropdownArray.Status" :key="index" :value="item">{{ item }}</option>
-    </select>
-            </div>
-   
+            <select v-model="searchParams.Status" class="form-select" id="statusDropdown">
+                <option value="">請選擇</option>
+                <option v-for="(item, index) in DropdownArray.Status" :key="index" :value="item">{{ item }}</option>
+            </select>
+          </div>
           <!-- 資產編號 -->
           <div class="col-xl-12 col-md-6 col-12">
             <p>資產編號</p>

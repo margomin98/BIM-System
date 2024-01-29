@@ -130,6 +130,7 @@
     }
   }
   onMounted(async() => {
+    utilsStore.$reset();
     await utilsStore.getUserName();
     utilsStore.getDate();
     emit('username', utilsStore.userName); //收貨、入庫填報 edit修改後再移除

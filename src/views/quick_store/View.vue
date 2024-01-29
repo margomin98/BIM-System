@@ -6,19 +6,42 @@
                 檢視快速入庫單
             </h1>
         </div>
+        <quick_store_view_component></quick_store_view_component>
         <div class="col button_wrap">
-        <button class="back_btn" @click="goBack">回上一頁</button>
+        <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
       </div>
     </div>
 </template>
   
-<script>
-    import Navbar from '@/components/Navbar.vue';
-    export default {
-        components: {
-            Navbar
-        }
-    }
+<script setup>
+import Navbar from '@/components/Navbar.vue';
+import quick_store_view_component from '@/components/quick_store_page/quick_store_view_component.vue';
+import { useStorageStore } from '@/store/storage/_index'
+import { useAPIStore, useUtilsStore } from '@/store';
+import { useQuickProcessStore } from '@/store/storage/quick_process'
+import { onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useRoute } from 'vue-router';
+const storageStore = useStorageStore();
+const utilsStore = useUtilsStore();
+const quickprocessStore = useQuickProcessStore();
+const apiStore = useAPIStore();
+// 解構
+const { DropdownArray , upperForm , middleForm , hidden , tabData } = storeToRefs(storageStore) ;
+const route = useRoute();
+const AI_ID = route.query.search_id ;
+
+onMounted(async() => {
+    storageStore.$reset();
+    quickprocessStore.$reset();
+    DropdownArray.value.EquipType = await apiStore.getEquipType();
+    DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();
+    DropdownArray.value.Area = await apiStore.getArea();
+    DropdownArray.value.Custodian = await apiStore.getCustodian('');
+    await storageStore.getDetails(AI_ID, true, null, false);
+//   DropdownArray.value.ProjectCode = await apiStore.getFuzzyProject();
+//   console.log(DropdownArray.value);
+});
 </script>
   
 <style lang="scss" scoped>
