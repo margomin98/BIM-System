@@ -99,7 +99,12 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 					Memo: storageStore.upperForm.Memo,
 					Tabs: storageStore.tabData
 				}
-				const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/ExpressAssetsIn',requestData);
+				const token = await apiStore.GetAntiForgeryToken();
+				const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/ExpressAssetsIn', requestData, {
+					headers: { 
+            'RequestVerificationToken': token,
+          }
+				});
 				const data = response.data;
 				if(data.state === 'success') {
 					// 轉狀態
