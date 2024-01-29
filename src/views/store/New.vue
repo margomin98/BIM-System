@@ -24,7 +24,8 @@ const applyStore = useApplyStore();
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();
 // 解構
-const { DropdownArray , upperForm , hidden } = storeToRefs(storageStore) ;
+const { DropdownArray , upperForm } = storeToRefs(storageStore) ;
+const { hidden } = storeToRefs(applyStore);
 const route = useRoute();
 
 onMounted(async() => {

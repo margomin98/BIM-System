@@ -7,6 +7,10 @@ import router from '@/router';
 import _ from "lodash"
 
 export const useApplyStore = defineStore('Apply', {
+	// data
+	state: () => ({
+		hidden: false
+	}),
 	// method
 	actions: {
 		// 檢查表單內容
@@ -102,7 +106,7 @@ export const useApplyStore = defineStore('Apply', {
 				const tabPromises = [];
 				storageStore.tabData.forEach((tab,index)=>{
 					const itemId = resultList.Tabs[index];
-          tabPromises.push(this.sendImgForm(itemId, tab, index,token));
+					tabPromises.push(storageStore.sendImgForm(itemId, tab, index,token));
 				})
 				// 等待所有檔案上傳完成
 				await Promise.all(tabPromises)
@@ -159,7 +163,7 @@ export const useApplyStore = defineStore('Apply', {
 					});
 			});
 		},
-		async sendImgForm(itemId, tab, index) {
+		async sendImgForm(itemId, tab, index,token) {
 			const storageStore = useStorageStore();
 			return new Promise((resolve, reject) => {
 				const form = new FormData();

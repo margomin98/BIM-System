@@ -20,12 +20,14 @@
     StoreProcess_NotifyConfirm_Status ,
     StoreProcess_Confirm_Status, 
     StoreProcess_Edit_Status, 
+    Quick_Store_Status,
   } from '@/assets/js/enter_status';
   export default {
     props: ['params'],
     setup(props,{emit}) {
       const router = useRouter();
       const search_id = props.params.data.AI_ID;
+      const status = props.params.data.Status;
       const deliveryNotify = ref(true);
       const isDisabled = ref({
         deliveryNotify: false, //通知交付
@@ -35,8 +37,9 @@
       function routeTo(view) {
         switch (view) {
           case '檢視':
+            let route_name = Quick_Store_Status.includes(status) ? 'Quick_Store_View' : 'Store_Process_View'
             router.push({
-              name: 'Store_Process_View',
+              name: route_name,
               query: {
                 search_id
               }
@@ -80,14 +83,13 @@
         }
       }
       function checkButton() {
-        const disabledStatus = props.params.data.Status;
-        if(!StoreProcess_NotifyConfirm_Status.includes(disabledStatus)) {
+        if(!StoreProcess_NotifyConfirm_Status.includes(status)) {
           isDisabled.value.deliveryNotify = true;
         }
-        if(!StoreProcess_Confirm_Status.includes(disabledStatus)) {
+        if(!StoreProcess_Confirm_Status.includes(status)) {
           isDisabled.value.delivery = true;
         }
-        if(!StoreProcess_Edit_Status.includes(disabledStatus)) {
+        if(!StoreProcess_Edit_Status.includes(status)) {
           isDisabled.value.edit = true;
         }
       }

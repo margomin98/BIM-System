@@ -33,19 +33,21 @@ const route = useRoute();
 
 onMounted(async() => {
     storageStore.$reset();
-    hidden.value = true;
-    DropdownArray.value.ProjectCode = [
-        {Text: '專案1', Value: '0001'},
-        {Text: '專案2', Value: '0002'},
-        {Text: '專案3', Value: '0003'},
-        {Text: '專案4', Value: '0004'},
-        {Text: '專案5', Value: '0005'}
-    ]
+    quickprocessStore.$reset();
+    quickprocessStore.createHidden = true;
+
+    // DropdownArray.value.ProjectCode = [
+    //     {Text: '專案1', Value: '0001'},
+    //     {Text: '專案2', Value: '0002'},
+    //     {Text: '專案3', Value: '0003'},
+    //     {Text: '專案4', Value: '0004'},
+    //     {Text: '專案5', Value: '0005'}
+    // ]
     DropdownArray.value.EquipType = await apiStore.getEquipType();
     DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();
     DropdownArray.value.Area = await apiStore.getArea();
     DropdownArray.value.Custodian = await apiStore.getCustodian('');
-//   DropdownArray.value.ProjectCode = await apiStore.getFuzzyProject();
+  DropdownArray.value.ProjectCode = await apiStore.getFuzzyProject();
 //   console.log(DropdownArray.value);
 });
 </script>

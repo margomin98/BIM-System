@@ -9,7 +9,7 @@
 // import router from '@/router';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { Store_Edit_Status } from '@/assets/js/enter_status';
+import { Store_Edit_Status , Quick_Store_Status } from '@/assets/js/enter_status';
 
 
 export default {
@@ -17,28 +17,24 @@ export default {
   setup(props) {
     const router = useRouter();
     const search_id = props.params.data.AI_ID;
+    const status = props.params.data.Status;
     const isDisabled = ref(false);
 
     onMounted(()=> {
       checkButton();
     });
     function viewDetails() {
-      // console.log(props.params.data.AI_ID);
-      if (search_id !== '') {
-        router.push({ name: 'Store_View', query: { search_id } });
-      }
+      let route_name = Quick_Store_Status.includes(status) ? 'Quick_Store_View' : 'Store_View'
+      router.push({ name: route_name, query: { search_id } });
     }
 
     function viewEdit() {
-      // console.log(props.params.data.search_id);
-      if (search_id !== '') {
-        router.push({ name: 'Store_Edit', query: { search_id } });
-      }
+      let route_name = Quick_Store_Status.includes(status) ? 'Quick_Store_Edit' : 'Store_Edit'
+      router.push({ name: route_name, query: { search_id } });
     }
 
     function checkButton() {
-      const disabledStatus = props.params.data.Status;
-      if(!Store_Edit_Status.includes(disabledStatus) || !props.params.data.canEdit) {
+      if(!Store_Edit_Status.includes(status) || !props.params.data.canEdit) {
         isDisabled.value = true;
       }
     }

@@ -65,7 +65,6 @@
                    <div class="d-flex align-items-center radio_wrap">
                      <template v-for="(item, index) in DropdownArray.AssetType" :key="'radio' + (index + 1)">
                        <input
-                         v-if="item !== '耗材'"
                          type="radio"
                          class="form-check-input check_box"
                          :id="'radio' + (index + 1)"
@@ -73,15 +72,6 @@
                          :value="item"
                          v-model="middleForm.itemAssetType"
                          @change="storageStore.resetUnitCount('middleForm')"
-                       />
-                       <input
-                         v-else
-                         type="radio"
-                         class="form-check-input check_box"
-                         :id="'radio' + (index + 1)"
-                         style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"
-                         :value="item"
-                         v-model="middleForm.itemAssetType"
                        />
                        <label
                          class="form-check-label check_box"
@@ -198,6 +188,16 @@
                <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="middleForm.itemSN">
            </div>
        </div>
+       <div class="col">
+           <div class="input-group mb-3">
+               <div class="input-group-prepend">選購金額 :</div>
+               NT$
+              <input class="" type="number" v-model="middleForm.itemPrice"> 
+              <div>
+                  / 每包裝單位 <span v-show="middleForm.itemAssetType==='耗材'">(NT${{ (middleForm.itemPrice / middleForm.itemCount).toFixed(2) }}/每單位)</span>
+              </div>
+           </div>
+       </div>
        <!-- 包裝數量 & 包裝單位 -->
        <div class="row g-0 row_wrap">
            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -287,27 +287,17 @@
                               <div class="d-flex align-items-center radio_wrap">
                                 <template v-for="(item, typeIndex) in DropdownArray.AssetType" :key="'radio' + (typeIndex + 1)">
                                   <input
-                                    v-if="item !== '耗材'"
                                     type="radio"
                                     class="form-check-input check_box"
-                                    :id="'radio' + (typeIndex + 1)"
+                                    :id="'radio_'+(index+1) + (typeIndex + 1)"
                                     style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"
                                     :value="item"
                                     v-model="tab.itemAssetType"
                                     @change="storageStore.resetUnitCount('tab',index)"
                                   />
-                                  <input
-                                    v-else
-                                    type="radio"
-                                    class="form-check-input check_box"
-                                    :id="'radio' + (typeIndex + 1)"
-                                    style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"
-                                    :value="item"
-                                    v-model="tab.itemAssetType"
-                                  />
                                   <label
                                     class="form-check-label check_box"
-                                    :for="'radio' + (typeIndex + 1)"
+                                    :for="'radio_'+(index+1) + (typeIndex + 1)"
                                     :data-toggle="typeIndex === 1 ? 'tooltip' : null"
                                     :data-placement="typeIndex === 1 ? 'top' : null"
                                     :title="typeIndex === 1 ? '註記此資產僅限特定專案出貨所使用' : null"
@@ -416,16 +406,26 @@
                           <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="tab.itemSN">
                       </div>
                   </div>
+                  <div class="col">
+                      <div class="input-group mb-3">
+                          <div class="input-group-prepend">選購金額 :</div>
+                          NT$
+                          <input class="" type="number" v-model="tab.itemPrice"> 
+                          <div>
+                              / 每包裝單位 <span v-show="tab.itemAssetType==='耗材'">(NT${{ (tab.itemPrice / tab.itemCount).toFixed(2) }}/每單位)</span>
+                          </div>
+                      </div>
+                  </div>
+
                   <!-- 頁籤 包裝數量 & 包裝單位 -->
                   <div class="row g-0 row_wrap">
                       <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                           <div class="input-group mb-3" id='number'>
                               <div class="input-group-prepend info  ">
-                                  <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
-                                  <span>*</span>包裝數量 :<img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
+                                <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
+                                <span>*</span>包裝數量 :<img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
                               </div>
-                              <input v-if="tab.itemAssetType === '耗材'" class="input-number" type="number" v-model="tab.itemPackageNum" min="1">
-                              <input v-else class="input-number readonly_box" type="number" v-model="tab.itemPackageNum" min="1" readonly>
+                              <input class="input-number readonly_box" type="number" v-model="tab.itemPackageNum" min="1" readonly>
                           </div>
                       </div>
                       <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -511,7 +511,7 @@
                   <!-- 以上傳檔案 -->
                   <div class="col" v-if="!hidden">
                     <div class="input-group my-3">
-                      <div class="input-group-prepend">已上傳的檔案 :</div>
+                      <div class="input-group-prepend">已上傳檔案 :</div>
                       <div class="selected_file">
                         <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap">
                           <p>{{ file.FileName }}
@@ -537,11 +537,14 @@ import VueMultiselect from 'vue-multiselect'
 // pinia
 import { useUtilsStore , useAPIStore } from '@/store'
 import { useStorageStore } from '@/store/storage/_index'
+import { useApplyStore } from '@/store/storage/apply.js'
 import { storeToRefs } from "pinia";
 const storageStore = useStorageStore();
+const applyStore = useApplyStore();
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();
-const { DropdownArray , upperForm , middleForm , tabData , Type , hidden } = storeToRefs(storageStore) ;
+const { DropdownArray , upperForm , middleForm , tabData , Type } = storeToRefs(storageStore) ;
+const { hidden } = storeToRefs(applyStore);
 </script>
    
 <style lang="scss" scoped>
