@@ -188,6 +188,16 @@
                <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="middleForm.itemSN">
            </div>
        </div>
+       <div class="col">
+           <div class="input-group mb-3">
+               <div class="input-group-prepend">選購金額 :</div>
+               NT$
+              <input class="" type="number" v-model="middleForm.itemPrice"> 
+              <div>
+                  / 每包裝單位 <span v-show="middleForm.itemAssetType==='耗材'">(NT${{ (middleForm.itemPrice / middleForm.itemCount).toFixed(2) }}/每單位)</span>
+              </div>
+           </div>
+       </div>
        <!-- 包裝數量 & 包裝單位 -->
        <div class="row g-0 row_wrap">
            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -396,16 +406,26 @@
                           <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="tab.itemSN">
                       </div>
                   </div>
+                  <div class="col">
+                      <div class="input-group mb-3">
+                          <div class="input-group-prepend">選購金額 :</div>
+                          NT$
+                          <input class="" type="number" v-model="tab.itemPrice"> 
+                          <div>
+                              / 每包裝單位 <span v-show="tab.itemAssetType==='耗材'">(NT${{ (tab.itemPrice / tab.itemCount).toFixed(2) }}/每單位)</span>
+                          </div>
+                      </div>
+                  </div>
+
                   <!-- 頁籤 包裝數量 & 包裝單位 -->
                   <div class="row g-0 row_wrap">
                       <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                           <div class="input-group mb-3" id='number'>
                               <div class="input-group-prepend info  ">
-                                  <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
-                                  <span>*</span>包裝數量 :<img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
+                                <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
+                                <span>*</span>包裝數量 :<img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
                               </div>
-                              <input v-if="tab.itemAssetType === '耗材'" class="input-number" type="number" v-model="tab.itemPackageNum" min="1">
-                              <input v-else class="input-number readonly_box" type="number" v-model="tab.itemPackageNum" min="1" readonly>
+                              <input class="input-number readonly_box" type="number" v-model="tab.itemPackageNum" min="1" readonly>
                           </div>
                       </div>
                       <div class="col-xl-6 col-lg-6 col-md-6 col-12">

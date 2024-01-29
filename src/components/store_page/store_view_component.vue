@@ -185,6 +185,17 @@
                         <input type="text" class="form-control readonly_box" aria-label="Default" v-model="tab.itemSN" readonly>
                     </div>
                 </div>
+                <!-- 選購金額 -->
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">選購金額 :</div>
+                        NT$
+                        <input type="text" class="form-control readonly_box" aria-label="Default" v-model="tab.itemPrice" readonly>
+                        <div>
+                          / 每包裝單位 <span v-show="tab.itemAssetType==='耗材'">(${{ tab.itemPrice / tab.itemCount }}/每單位)</span>
+                        </div>
+                    </div>
+                </div>
                 <!-- 頁籤 包裝數量 & 包裝單位 -->
                 <div class="row g-0 row_wrap">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">

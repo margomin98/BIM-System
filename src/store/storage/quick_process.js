@@ -111,7 +111,7 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 				utilsStore.isLoading = false;
 			}
 		},
-		// 編輯快速入庫
+		// 編輯快速入庫 (暫存/送出)
 		async editQuick(isDone = false) {
 			const utilsStore = useUtilsStore();
 			const storageStore = useStorageStore();
