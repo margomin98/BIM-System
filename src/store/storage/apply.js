@@ -163,55 +163,5 @@ export const useApplyStore = defineStore('Apply', {
 					});
 			});
 		},
-		async sendImgForm(itemId, tab, index,token) {
-			const storageStore = useStorageStore();
-			return new Promise((resolve, reject) => {
-				const form = new FormData();
-				// 先append itemId
-				form.append('itemId', itemId);
-				for (const key in tab) {
-					// 不為null、undefined、空字串就append
-					if (tab[key]) {
-						form.append(key, tab[key]);
-					}
-				}
-				// 先剔除不需要key值
-				form.delete('viewFile')
-				form.delete('existFile')
-				// 不是耗材的話 剔除itemCount、itemUnit
-				if (tab.itemAssetType !== '耗材') {
-					form.delete('itemUnit')
-					form.delete('itemCount')
-				}
-				// newFile等等額外append 先剔除
-				form.delete('newFile')
-				for (let i = 0; i < tab.newFile.length; i++) {
-					form.append('newFile', tab.newFile[i]);
-				}
-				// deleteFile等等額外append 先剔除
-				form.delete('deleteFile')
-				for (let i = 0; i < tab.deleteFile.length; i++) {
-					form.append('deleteFile', tab.deleteFile[i]);
-				}
-				axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form,{
-          headers: { 
-            'RequestVerificationToken': token,
-          }
-        })
-					.then((response) => {
-						const data = response.data;
-						if (data.state === 'success') {
-							console.log(`第${index+1}個頁籤上傳成功`);
-							resolve(data.state)
-						} else {
-							console.error(`第${index+1}個頁籤上傳失敗，${data.messages}`);
-						}
-					})
-					.catch(error => {
-						// 如果提交失败，调用 reject 并传递错误信息
-						reject(error);
-					});
-			});
-		},
 	},
 })

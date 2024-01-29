@@ -75,6 +75,7 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 		},
 		// 新增快速入庫 (表單、頁籤一次全給)
 		async createQuick() {
+			const apiStore = useAPIStore();
 			const utilsStore = useUtilsStore();
 			const storageStore = useStorageStore();
 			console.log('upperForm',storageStore.upperForm);
@@ -98,7 +99,7 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 					Memo: storageStore.upperForm.Memo,
 					Tabs: storageStore.tabData
 				}
-				const response = await axios.post('',requestData);
+				const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/ExpressAssetsIn',requestData);
 				const data = response.data;
 				if(data.state === 'success') {
 					// 轉狀態
@@ -113,6 +114,7 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 		},
 		// 編輯快速入庫 (暫存/送出)
 		async editQuick(isDone = false) {
+			const apiStore = useAPIStore();
 			const utilsStore = useUtilsStore();
 			const storageStore = useStorageStore();
 			console.log('upperForm',storageStore.upperForm);
@@ -124,10 +126,11 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 			if(!this.checkTabContent()) return ;
 			utilsStore.isLoading = true ;
 			try {
+				const token = apiStore.GetAntiForgeryToken();
 				// 頁籤部分
 				const tabPromises = [];
 				storageStore.tabData.forEach((tab,index)=>{
-					tabPromises.push(storageStore.sendImgForm(tab.itemId, tab, index));
+					tabPromises.push(storageStore.sendImgForm(tab.itemId, tab, index,token));
 				})
 				// 等待所有頁籤上傳完成
 				await Promise.all(tabPromises)
@@ -136,7 +139,7 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 					if (allSuccess) {
 						// 文字部分
 						try {
-							const result = await this.sendUpperForm(isDone);
+							const result = await this.sendUpperForm(isDone, token);
 							alert(`${result.messages}\n單號為:` + storageStore.upperForm.AI_ID);
 							if(isDone) {
 								router.push({
@@ -158,7 +161,7 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 				utilsStore.isLoading = false ;
 			}
 		},
-		async sendUpperForm(isDone) {
+		async sendUpperForm(isDone , token) {
 			const storageStore = useStorageStore();
 			return new Promise((resolve, reject) => {
 				const form = new FormData();
@@ -166,7 +169,11 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 				form.append('AI_ID', storageStore.upperForm.AI_ID);
 				form.append('AR_ID', storageStore.upperForm.AR_ID);
 				form.append('Memo', storageStore.upperForm.Memo);
-				axios.post('http://192.168.0.177:7008/AssetsInMng/ExpressEdit', form)
+				axios.post('http://192.168.0.177:7008/AssetsInMng/ExpressEdit', form,{
+					headers: { 
+            'RequestVerificationToken': token,
+          }
+				})
 					.then(response => {
 						const data = response.data;
 						if (data.state === 'success') {

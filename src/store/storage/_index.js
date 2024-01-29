@@ -414,8 +414,7 @@ export const useStorageStore = defineStore('Storage', {
 			return true;
 		},
 		// 頁籤儲存 [填報-新增、編輯] [快速入庫-編輯] [入庫作業]
-		async sendImgForm(itemId, tab, index) {
-			const storageStore = useStorageStore();
+		async sendImgForm(itemId, tab, index,token) {
 			return new Promise((resolve, reject) => {
 				const form = new FormData();
 				// 先append itemId
@@ -444,7 +443,11 @@ export const useStorageStore = defineStore('Storage', {
 				for (let i = 0; i < tab.deleteFile.length; i++) {
 					form.append('deleteFile', tab.deleteFile[i]);
 				}
-				axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form)
+				axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form,{
+          headers: { 
+            'RequestVerificationToken': token,
+          }
+        })
 					.then((response) => {
 						const data = response.data;
 						if (data.state === 'success') {
@@ -455,6 +458,7 @@ export const useStorageStore = defineStore('Storage', {
 						}
 					})
 					.catch(error => {
+						// 如果提交失败，调用 reject 并传递错误信息
 						reject(error);
 					});
 			});
