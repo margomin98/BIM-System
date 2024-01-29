@@ -22,14 +22,10 @@
           <!-- 狀態 -->
           <div class="col-xl-12 col-md-6 col-12">
             <p>狀態</p>
-            <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ searchParams.Status || "請選擇" }}
-                  </button>
-              <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p v-for="(item , index) in DropdownArray.Status" :key="index" class="dropdown-item" @click="selectStatus(item)">{{ item }}</p>
-              </div>
-            </div>
+            <select class="form-select" v-model="searchParams.Status" id="statusDropdown">
+          <option value="" disabled selected>請選擇</option>
+          <option v-for="(item, index) in DropdownArray.Status" :key="index" :value="item">{{ item }}</option>
+      </select>
           </div>
           <!-- 資產編號 -->
           <div class="col-xl-12 col-md-6 col-12">
@@ -44,14 +40,10 @@
           <!-- 日期類型 -->
           <div class="col-xl-12 col-md-6 col-12">
             <p>日期類型</p>
-            <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ searchParams.DateCategory || "請選擇" }}
-                  </button>
-              <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p v-for="(item , index) in DropdownArray.DateCategory" :key="index" class="dropdown-item" @click="selectDateCategory(item)">{{ item }}</p>
-              </div>
-            </div>
+            <select class="form-select" v-model="searchParams.DateCategory" id="dateCategoryDropdown">
+          <option value="" disabled selected>請選擇</option>
+          <option v-for="(item, index) in DropdownArray.DateCategory" :key="index" :value="item">{{ item }}</option>
+      </select>
           </div>
           <!-- 日期(起) -->
           <div class="col-xl-12 col-md-6 col-12  flex-col">
@@ -82,38 +74,19 @@
     </div>
     <div style="width: 100%;margin-bottom:3%" class="mb-5">
       <div class="dg-height">
-        <DataTable
-          lazy
-          :key="datagrid.key"
-          :first= "datagrid.first"
-          :size="'small'"
-          :loading="datagrid.loading"
-          :value="rowData" 
-          :sort-field="datagrid.sortField"
-          :sort-order="datagrid.sortOrder"
-          resizableColumns 
-          columnResizeMode="expand"
-          showGridlines 
-          scrollable 
-          scrollHeight="420px" 
-          @page="submit($event , 'page')" 
-          @sort="submit($event , 'sort')"
-          paginator 
-          :rows="datagrid.rows" 
-          :totalRecords="datagrid.totalRecords"
-          paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-          :rowsPerPageOptions="[10, 20, 30]"
-          currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+        <DataTable lazy :key="datagrid.key" :first="datagrid.first" :size="'small'" :loading="datagrid.loading" :value="rowData" :sort-field="datagrid.sortField" :sort-order="datagrid.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
+          scrollHeight="420px" @page="submit($event , 'page')" @sort="submit($event , 'sort')" paginator :rows="datagrid.rows" :totalRecords="datagrid.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+          :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
           <Column style="min-width: 60px;">
             <template #body="slotProps">
-              <Scrap_button :params = "slotProps"/>
-            </template>
+                <Scrap_button :params = "slotProps"/>
+</template>
           </Column>
           <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
           <Column style="min-width: 60px;">
-            <template #body="slotProps">
-              <Delete :params = "slotProps"/>
-            </template>
+<template #body="slotProps">
+  <Delete :params="slotProps" />
+</template>
           </Column>
         </DataTable>
       </div>
@@ -136,8 +109,13 @@
     Scrap_StatusArray,
     Scrap_DateCategory
   } from "@/assets/js/dropdown.js"
-  import { getMngDatagrid, } from '@/assets/js/common_api'
-  import { UpdatePageParameter, createDatagrid } from '@/assets/js/common_fn';
+  import {
+    getMngDatagrid,
+  } from '@/assets/js/common_api'
+  import {
+    UpdatePageParameter,
+    createDatagrid
+  } from '@/assets/js/common_fn';
   import axios from 'axios';
   export default {
     components: {
@@ -162,24 +140,63 @@
         DateCategory: Scrap_DateCategory,
       })
       const datagrid = createDatagrid();
-      const datagridfield = [
-        { header: "報廢編號", field: "ScrapId", width: '180px' },
-        { header: "狀態", field: "Status", width: '120px' },
-        { header: "資產編號", field: "AssetsId", width: '150px' },
-        { header: "物品名稱", field: "AssetName", width: '180px' },
-        { header: "申請日期", field: "ApplicationDate", width: '150px' },
-        { header: "申請人員", field: "Applicant", width: '120px' },
-        { header: "交付日期", field: "DeliveryDate", width: '150px' },
-        { header: "報廢人員", field: "ScrapPerson", width: '120px' },
-        { header: "審核日期", field: "VerifyDate", width: '150px' },
-        { header: "審核人員", field: "VerifyPerson", width: '120px' },
+      const datagridfield = [{
+          header: "報廢編號",
+          field: "ScrapId",
+          width: '180px'
+        },
+        {
+          header: "狀態",
+          field: "Status",
+          width: '120px'
+        },
+        {
+          header: "資產編號",
+          field: "AssetsId",
+          width: '150px'
+        },
+        {
+          header: "物品名稱",
+          field: "AssetName",
+          width: '180px'
+        },
+        {
+          header: "申請日期",
+          field: "ApplicationDate",
+          width: '150px'
+        },
+        {
+          header: "申請人員",
+          field: "Applicant",
+          width: '120px'
+        },
+        {
+          header: "交付日期",
+          field: "DeliveryDate",
+          width: '150px'
+        },
+        {
+          header: "報廢人員",
+          field: "ScrapPerson",
+          width: '120px'
+        },
+        {
+          header: "審核日期",
+          field: "VerifyDate",
+          width: '150px'
+        },
+        {
+          header: "審核人員",
+          field: "VerifyPerson",
+          width: '120px'
+        },
       ]
       const rowData = ref([]);
       onMounted(() => {
         datagrid.sortField = 'ScrapId'
-        submit('','search');
+        submit('', 'search');
       });
-      async function submit(event,type) {
+      async function submit(event, type) {
         const form = new FormData();
         //將表格資料append到 form
         for (const key in searchParams) {
@@ -187,20 +204,14 @@
             form.append(key, searchParams[key]);
           }
         }
-        UpdatePageParameter(datagrid,event,type,form)
-        getMngDatagrid('/ScrapMng/ScrapOrders',rowData,datagrid,form);
+        UpdatePageParameter(datagrid, event, type, form)
+        getMngDatagrid('/ScrapMng/ScrapOrders', rowData, datagrid, form);
       }
-      const selectStatus = (item) => {
-        searchParams.Status = item;
-      };
-      const selectDateCategory = (item) => {
-        searchParams.DateCategory = item;
-      };
       function clear() {
         for (const key in searchParams) {
           searchParams[key] = '';
         }
-        submit('','search');
+        submit('', 'search');
       }
       return {
         searchParams,
@@ -209,8 +220,6 @@
         datagridfield,
         rowData,
         submit,
-        selectStatus,
-        selectDateCategory,
         clear,
       };
     },
@@ -221,6 +230,14 @@
   @import "@/assets/css/global.scss";
   .dg-height {
     @include datagrid-height;
+  }
+  .datagrid_section {
+    input,
+    select {
+      @include dropdown_btn;
+      width: 100%;
+      height: 35px;
+    }
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
@@ -281,37 +298,12 @@
           p {
             @include datagrid_title;
           }
-          input {
-            @include dropdown_btn;
-            width: 200px;
-            height: 35px;
-          }
           button {
             border: none;
             padding: 0;
             width: 100%;
             font-size: 18px;
             height: 100%;
-          }
-          .dropdown {
-            width: 200px;
-            height: 35px;
-            @include dropdown_btn;
-            .dropdown-toggle {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              border: none;
-            }
-            .dropdown-menu {
-              width: 100%;
-              transform: translate3d(-1px, 35px, 0px) !important;
-              p {
-                font-size: 18px;
-                color: black;
-                font-weight: normal;
-              }
-            }
           }
         }
       }
@@ -322,7 +314,6 @@
         text-align: left !important;
       }
     }
-   
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
@@ -371,37 +362,12 @@
           p {
             @include datagrid_title;
           }
-          input {
-            @include dropdown_btn;
-            width: 100%;
-            height: 35px;
-          }
           button {
             padding: 0;
             width: 100%;
             font-size: 18px;
             height: 100%;
             text-align: left;
-          }
-          .dropdown {
-            width: 100%;
-            height: 35px;
-            @include dropdown_btn;
-            .dropdown-toggle {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              border: none;
-            }
-            .dropdown-menu {
-              width: 100%;
-              transform: translate3d(-1px, 35px, 0px) !important;
-              p {
-                font-size: 18px;
-                color: black;
-                font-weight: normal;
-              }
-            }
           }
         }
       }
