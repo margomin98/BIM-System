@@ -65,7 +65,7 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 					InputMessages += `頁籤${index+1} :　資產編號不符合格式\n`
 				}
 				// 字數
-				InputMessages += utilsStore.checkTabMaxLetter(tab, this.TabLetterCheckList, index);
+				InputMessages += utilsStore.checkTabMaxLetter(tab, storageStore.TabLetterCheckList, index);
 			});
 			if(InputMessages) {
 				alert(InputMessages);
