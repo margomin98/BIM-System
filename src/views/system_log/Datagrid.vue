@@ -10,19 +10,15 @@
           <!-- 使用者帳號 -->
           <div class="col-xl-auto col-lg-auto col-md-auto col-12">
             <p>使用者帳號</p>
-            <input type="text" v-model="searchParams.Account_Id"/>
+            <input type="text" v-model="searchParams.Account_Id" />
           </div>
           <!-- 執行動作 -->
           <div class="col-xl-auto col-lg-auto col-md-auto col-12">
             <p>執行動作</p>
-            <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="activeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{  searchParams.Active ||"請選擇" }}
-                      </button>
-              <div class="dropdown-menu" aria-labelledby="activeDropdown">
-                <p v-for="(item , index) in DropdownArray.Active" :key="index" class="dropdown-item" @click="selectActive(item)">{{ item }}</p>
-              </div>
-            </div>
+            <select v-model="searchParams.Active" class="form-select">
+            <option value="" disabled selected>請選擇</option>
+            <option v-for="(item, index) in DropdownArray.Active" :key="index" :value="item">{{ item }}</option>
+        </select>
           </div>
           <!-- 訊息 -->
           <div class="col-xl-auto col-lg-auto col-md-auto col-12">
@@ -55,7 +51,7 @@
         :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <Column style="min-width: 60px;">
           <template #body="slotProps">
-                <System_log_button :params = "slotProps"/>
+                    <System_log_button :params = "slotProps"/>
 </template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width, 'max-width': item.max}"></Column>
@@ -150,9 +146,6 @@
         UpdatePageParameter(datagrid, event, type, form);
         getMngDatagrid('/SystemLogMng/SystemLogs', rowData, datagrid, form);
       }
-      const selectActive = (item) => {
-        searchParams.Active = item;
-      }
       const clear = () => {
         for (const key in searchParams) {
           searchParams[key] = '';
@@ -166,7 +159,6 @@
         datagridfield,
         rowData,
         submit,
-        selectActive,
         clear,
       };
     },
@@ -177,6 +169,14 @@
   @import "@/assets/css/global.scss";
   .dg-height {
     @include datagrid-height;
+  }
+  .datagrid_section {
+    input,
+    select {
+      @include dropdown_btn;
+      width: 100%;
+      height: 35px;
+    }
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
@@ -202,7 +202,7 @@
           &:hover {
             background-color: #5d85bd;
           }
-        } 
+        }
       }
       .datagrid_section {
         .content {
@@ -222,37 +222,12 @@
           p {
             @include datagrid_title;
           }
-          input {
-            @include dropdown_btn;
-            width: 240px;
-            height: 35px;
-          }
           button {
             border: none;
             padding: 0;
             width: 100%;
             font-size: 18px;
             height: 100%;
-          }
-          .dropdown {
-            width: 240px;
-            height: 35px;
-            @include dropdown_btn;
-            .dropdown-toggle {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              border: none;
-            }
-            .dropdown-menu {
-              width: 100%;
-              transform: translate3d(-1px, 35px, 0px) !important;
-              p {
-                font-size: 18px;
-                color: black;
-                font-weight: normal;
-              }
-            }
           }
         }
       }
@@ -271,7 +246,7 @@
       }
       .button_wrap {
         margin-bottom: 25px;
-        gap: 20px; 
+        gap: 20px;
         .search_btn {
           @include search_and_send_btn;
           &:hover {
@@ -296,37 +271,12 @@
           p {
             @include datagrid_title;
           }
-          input {
-            @include dropdown_btn;
-            width: 100%;
-            height: 35px;
-          }
           button {
             padding: 0;
             width: 100%;
             font-size: 18px;
             height: 100%;
             text-align: left;
-          }
-          .dropdown {
-            width: 100%;
-            height: 35px;
-            @include dropdown_btn;
-            .dropdown-toggle {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              border: none;
-            }
-            .dropdown-menu {
-              width: 100%;
-              transform: translate3d(-1px, 35px, 0px) !important;
-              p {
-                font-size: 18px;
-                color: black;
-                font-weight: normal;
-              }
-            }
           }
         }
       }
@@ -346,7 +296,7 @@
       .button_wrap {
         margin-bottom: 25px;
         justify-content: center;
-        gap: 20px; 
+        gap: 20px;
         .search_btn {
           @include search_and_send_btn;
           &:hover {
@@ -371,37 +321,12 @@
             @include datagrid_title;
             font-size: 18px;
           }
-          input {
-            @include dropdown_btn;
-            width: 100%;
-            height: 35px;
-          }
           button {
             padding: 0;
             width: 100%;
             font-size: 18px;
             height: 100%;
             text-align: left;
-          }
-          .dropdown {
-            width: 100%;
-            height: 35px;
-            @include dropdown_btn;
-            .dropdown-toggle {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              border: none;
-            }
-            .dropdown-menu {
-              width: 100%;
-              transform: translate3d(-1px, 35px, 0px) !important;
-              p {
-                font-size: 18px;
-                color: black;
-                font-weight: normal;
-              }
-            }
           }
         }
       }

@@ -453,7 +453,10 @@
     }
     span {
         @include red_star
-    } // Media Queries
+    } 
+    .fixed_info{
+        position: relative;
+    }
     @media only screen and (min-width: 1200px) {
         .modal .second_content .wrap1 {
             grid-template-columns: 1fr 1fr 1fr;
@@ -500,11 +503,11 @@
                     }
                 }
             }
-            .info_wrap:nth-child(3) {
+            .info_wrap:nth-child(2) {
                 width: 850px;
                 margin-bottom: 60px;
             }
-            .info_wrap:nth-child(4) {
+            .info_wrap:nth-child(3) {
                 width: 1200px;
             }
         }
@@ -557,7 +560,7 @@
                 }
             }
             .info_wrap:nth-child(3) {
-                margin-bottom: 60px;
+                margin-top: 60px;
             }
         }
     }
