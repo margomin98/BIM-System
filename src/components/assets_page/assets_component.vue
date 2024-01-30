@@ -28,12 +28,12 @@
                 <div v-if="PageType === 'edit'" class="row">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
-                        <div class="input-group-prepend flex"><span v-if="Form.AssetType !== '耗材'">*</span>資產類型：</div>
-                        <select v-if="Form.AssetType !== '耗材'" class="form-select" v-model="Form.AssetType">
-                            <option value="資產">資產</option>
-                            <option value="存貨">存貨</option>
-                        </select>
-                        <input v-else type="text" class="form-control readonly_box" readonly v-model="Form.AssetType">
+                            <div class="input-group-prepend flex"><span v-if="Form.AssetType !== '耗材'">*</span>資產類型：</div>
+                            <select v-if="Form.AssetType !== '耗材'" class="form-select" v-model="Form.AssetType">
+                                <option value="資產">資產</option>
+                                <option value="存貨">存貨</option>
+                            </select>
+                            <input v-else type="text" class="form-control readonly_box" readonly v-model="Form.AssetType">
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                 <div class="col">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend"><span v-show="PageType==='edit' && Form.AssetType === '存貨'">*</span>專案代碼：</div>
-                        <input type="text" class="form-control" :class="{'readonly_box': PageType === 'view'}" :readonly="PageType === 'view'" v-model="Form.ProjectCode"/>
+                        <input type="text" class="form-control" :class="{'readonly_box': PageType === 'view'}" :readonly="PageType === 'view'" v-model="Form.ProjectCode" />
                         <button v-show="PageType==='edit'" class="form_search_btn" @click="async()=>{ Form.ProjectName = await apiStore.getProject(Form.ProjectCode)}">搜尋</button>
                     </div>
                 </div>
@@ -49,14 +49,14 @@
                 <div class="col">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">專案名稱：</div>
-                        <input type="text" class="form-control readonly_box" readonly v-model="Form.ProjectName"/>
+                        <input type="text" class="form-control readonly_box" readonly v-model="Form.ProjectName" />
                     </div>
                 </div>
                 <!-- 物流單號 -->
                 <div class="col form_search_wrap">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            物流單號 :
+                            物流單號：
                         </div>
                         <input type="text" class="form-control readonly_box" readonly v-model="Form.ShipmentNum">
                         <button class="form_search_btn" @click="storageStore.viewReceive(Form)">檢視</button>
@@ -68,22 +68,22 @@
                 <div class="row">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
-                            <div class="input-group-prepend"><span v-show="PageType==='edit'">*</span>設備總類：</div>
+                            <div class="input-group-prepend"><span v-show="PageType==='edit'" class="red_star">*</span>設備總類：</div>
                             <select class="form-select" :class="{'readonly_box': PageType==='view'}" :disabled="PageType==='view'" v-model="Form.EquipType_Id" @change="async()=>{Form.EquipCategoryArray = await apiStore.getEquipCategory(Form.EquipType_Id); Form.Category_Id = '';}">
-                                <option value="">--請選擇--</option>
-                                <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name }}</option>
-                            </select>
+                                    <option value="">--請選擇--</option>
+                                    <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name }}</option>
+                                </select>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
-                            <div class="input-group-prepend"><span v-show="PageType==='edit'">*</span>設備分類：</div>
+                            <div class="input-group-prepend"><span v-show="PageType==='edit'" class="red_star">*</span>設備分類：</div>
                             <select class="form-select" :class="{'readonly_box': PageType==='view'}" :disabled="PageType==='view'" v-model="Form.Category_Id">
-                                <option v-if="DropdownArray.EquipCategory.length == 0" value="">--請先選擇設備總類--</option>
-                                <template v-else>
-                                    <option value="">--請選擇--</option>
-                                    <option v-for="option in DropdownArray.EquipCategory" :value="option.Id">{{ option.Name }}</option>
-                                </template>
+                                    <option v-if="DropdownArray.EquipCategory.length == 0" value="">--請先選擇設備總類--</option>
+                                    <template v-else>
+                                        <option value="">--請選擇--</option>
+                                        <option v-for="option in DropdownArray.EquipCategory" :value="option.Id">{{ option.Name }}</option>
+</template>
                             </select>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                 <!-- 物品名稱 -->
                 <div v-show="PageType==='edit'" class="col">
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend"><span>*</span>物品名稱：</div>
+                        <div class="input-group-prepend"><span class="red_star">*</span>物品名稱：</div>
                         <input type="text" class="form-control " placeholder="最多輸入20字" v-model="Form.AssetName" />
                     </div>
                 </div>
@@ -175,10 +175,11 @@
                             <div class="input-group-prepend">儲位櫃位：</div>
                             <select class="form-select col" :class="{'readonly_box': PageType === 'view'}" v-model="Form.Layer_Id" :disabled="PageType === 'view'">
                                 <option v-if="DropdownArray.Layer.length == 0" value="">--請先選擇設備總類--</option>
-                                <template v-else>
-                                    <option value="">--請選擇--</option>
-                                    <option v-for="option in DropdownArray.Layer" :value="option.Id">{{ option.Name }}</option>
-                                </template>
+<template v-else>
+    <option value="">
+        --請選擇--</option>
+    <option v-for="option in DropdownArray.Layer" :value="option.Id">{{ option.Name }}</option>
+</template>
                             </select>
                         </div>
                     </div>
@@ -286,7 +287,7 @@
             <div class="content_wrap">
                 <div class="content">
                     <div class="row">
-                        <div class="col-xl-4 col-lg-4 col-md-4 col-6">
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-12">
                             <p>作業日期(起)</p>
                             <div class="date-selector">
                                 <div class="input-container">
@@ -294,7 +295,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-4 col-lg-4 col-md-4 col-6">
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-12">
                             <p>作業日期(迄)</p>
                             <div class="date-selector">
                                 <div class="input-container">
@@ -315,7 +316,7 @@
                     <button class="search_btn" @click="assetStore.searchHistory('','search')">檢索</button>
                     <button class="empty_btn" @click="()=>{utilsStore.clearSearchParams(searchParams); assetStore.searchHistory('','search'); }">清空</button>
                 </div>
-                <div class="info_wrap">
+                <div>
                     <DataTable
                         lazy
                         :key="datagrid.key"
@@ -339,9 +340,9 @@
                         :rowsPerPageOptions="[10, 20, 30]"
                         currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
                         <Column style="min-width: 60px;">
-                            <template #body="slotProps">
-                                <Storage_list_view_button :params = "slotProps" v-if="slotProps.data.FormID"/>
-                            </template>
+<template #body="slotProps">
+    <Storage_list_view_button :params="slotProps" v-if="slotProps.data.FormID" />
+</template>
                         </Column>
                         <Column v-for="item in datagridField" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
                     </DataTable>
@@ -353,47 +354,77 @@
 </template>
 
 <script setup>
-import Storage_list_view_button from '../Storage_list_view_button.vue';
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
-import view_modal from '../view_modal.vue';
-import { useAssetStore } from "@/store/asset/_index";
-import { useAPIStore, useUtilsStore } from '@/store';
-import { useStorageStore } from '@/store/storage/_index';
-import { useEditStore } from "@/store/asset/edit";
-import { onMounted, ref } from 'vue';
-import { storeToRefs } from 'pinia';
-import { useRoute } from 'vue-router';
-// swiper
-import { register } from 'swiper/element/bundle';
-import { Pagination } from 'swiper/modules';
-
-const utilsStore = useUtilsStore();
-const storageStore = useStorageStore();
-const editStore = useEditStore();
-const apiStore = useAPIStore();
-const assetStore = useAssetStore();
-
-const pagination = { clickable: true }
-const modules = [Pagination]
-const fileInput = ref();
-// 解構
-const { DropdownArray, Form, searchParams, PageType , datagrid , datagridField , rowData } = storeToRefs(assetStore) ;
-onMounted(()=>{
-    register();
-})
-const openFileExplorer = ()=>{
-    fileInput.value.click();
-}
+    import Storage_list_view_button from '../Storage_list_view_button.vue';
+    import DataTable from 'primevue/datatable';
+    import Column from 'primevue/column';
+    import view_modal from '../view_modal.vue';
+    import {
+        useAssetStore
+    } from "@/store/asset/_index";
+    import {
+        useAPIStore,
+        useUtilsStore
+    } from '@/store';
+    import {
+        useStorageStore
+    } from '@/store/storage/_index';
+    import {
+        useEditStore
+    } from "@/store/asset/edit";
+    import {
+        onMounted,
+        ref
+    } from 'vue';
+    import {
+        storeToRefs
+    } from 'pinia';
+    import {
+        useRoute
+    } from 'vue-router';
+    // swiper
+    import {
+        register
+    } from 'swiper/element/bundle';
+    import {
+        Pagination
+    } from 'swiper/modules';
+    const utilsStore = useUtilsStore();
+    const storageStore = useStorageStore();
+    const editStore = useEditStore();
+    const apiStore = useAPIStore();
+    const assetStore = useAssetStore();
+    const pagination = {
+        clickable: true
+    }
+    const modules = [Pagination]
+    const fileInput = ref();
+    // 解構
+    const {
+        DropdownArray,
+        Form,
+        searchParams,
+        PageType,
+        datagrid,
+        datagridField,
+        rowData
+    } = storeToRefs(assetStore);
+    onMounted(() => {
+        register();
+    })
+    const openFileExplorer = () => {
+        fileInput.value.click();
+    }
 </script>
 
 <style lang="scss" scoped>
     @import "@/assets/css/global.scss";
+    .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+        margin-left: unset;
+    }
     .button_wrap {
         display: flex;
         margin-top: 30px;
         justify-content: center;
-        padding: 0 28%;
         margin-bottom: 5%;
         gap: 20px;
     }
@@ -418,7 +449,13 @@ const openFileExplorer = ()=>{
     .send_btn {
         @include search_and_send_btn;
         &:hover {
-        background-color: #5e7aa2;
+            background-color: #5e7aa2;
+        }
+    }
+    .select_btn {
+        @include select_btn;
+        &:hover {
+            background-color: #899bb6;
         }
     }
     .no_content_text {
@@ -460,13 +497,15 @@ const openFileExplorer = ()=>{
                 background-color: white;
                 padding: 5px 10px;
                 font-size: 18px;
-                width: 200px;
                 height: 35px;
             }
         }
     }
     .info_wrap:nth-child(1) {
         margin-bottom: 3% !important
+    }
+    span.red_star{
+    @include red_star
     }
     @media only screen and (min-width: 1200px) {
         .main_section {
@@ -475,6 +514,7 @@ const openFileExplorer = ()=>{
             }
             .form_search_btn {
                 @include form_search_btn;
+                margin-left: 10px !important;
             }
             .purchase_amount {
                 align-items: baseline;
@@ -515,16 +555,7 @@ const openFileExplorer = ()=>{
                 }
                 .content {
                     @include content_bg;
-                    .form_search_wrap {
-                        .input-group {
-                            .input-group-prepend {
-                                width: 114px;
-                            }
-                            input {
-                                margin-left: 15px !important
-                            }
-                        }
-                    }
+               
                     .dropdown {
                         .dropdown-menu {
                             width: 100%;
@@ -584,21 +615,29 @@ const openFileExplorer = ()=>{
                         }
                     }
                 }
+                .date-selector input {
+                    width: 100%
+                }
             }
+        }
+        .button_wrap {
+            padding: 0 28%;
         }
     }
     @media only screen and (min-width: 768px) and (max-width: 1199px) {
         .main_section {
-            .form_search_btn {
+                .form_search_btn {
                 @include form_search_btn;
+                margin-left: 10px !important;
             }
+          
             .readonly_box {
                 @include readonly_box;
             }
             .purchase_amount {
                 align-items: baseline;
                 flex-wrap: nowrap;
-                input{
+                input {
                     width: calc(100% - 36%);
                 }
                 .input-group-prepend {
@@ -617,8 +656,8 @@ const openFileExplorer = ()=>{
                 }
                 span.note {
                     font-weight: 700;
-    margin-left: calc(100% - 120%);
-    font-size: 18px;
+                    margin-left: calc(100% - 120%);
+                    font-size: 18px;
                 }
             }
             .info_wrap {
@@ -636,20 +675,9 @@ const openFileExplorer = ()=>{
                 .fixed_title {
                     @include fixed_title;
                 }
-
-
                 .content {
                     @include content_bg;
-                    .form_search_wrap {
-                        .input-group {
-                            .input-group-prepend {
-                                width: 114px;
-                            }
-                            input {
-                                margin-left: 15px !important
-                            }
-                        }
-                    }
+                
                     .dropdown {
                         .dropdown-menu {
                             width: 100%;
@@ -709,9 +737,19 @@ const openFileExplorer = ()=>{
                 padding: 0;
             }
         }
+        .button_wrap {
+            padding: 0 28%;
+        }
+        .date-selector input {
+            width: 100%
+        }
     }
     @media only screen and (max-width: 767px) {
         .main_section {
+            select,
+            input {
+                width: 100%
+            }
             .form_search_btn {
                 border: none;
                 color: white;

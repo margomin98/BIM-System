@@ -251,7 +251,8 @@
       }
     }
   }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
+ 
+  @media only screen and (max-width:993px) {
     nav {
       width: 100%;
       .logo_img {
@@ -265,6 +266,7 @@
       }
       .navbar-collapse {
         background: linear-gradient(151deg, #0E2135 1.56%, #4A74A1 42.39%, #FFF 96.44%);
+   
         .right_info {
           margin-top: 20px;
         }
@@ -278,6 +280,7 @@
       }
     }
   }
+  
   @media only screen and (max-width: 767px) {
     nav {
       .logo_img {
