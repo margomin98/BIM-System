@@ -40,7 +40,7 @@ export const useEditStore = defineStore('Edit', {
       // newFile額外append 
       form.delete('newFile')
       for (let i = 0; i < assetStore.Form.newFile.length; i++) {
-        form.append('newFile', assetStore.Form.newFile[i]);
+        form.append('newFile', assetStore.Form.newFile[i].file);
       }
       // deleteFile額外append 
       form.delete('deleteFile')

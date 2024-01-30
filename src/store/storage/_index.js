@@ -235,43 +235,6 @@ export const useStorageStore = defineStore('Storage', {
 			const fileInput = document.querySelectorAll('input[type="file"]')[index];
 			fileInput.click();
 		},
-		// 檢查頁籤內容
-		checkTabContent() {
-			const utilsStore = useUtilsStore();
-			let InputMessages = '';
-			this.tabData.forEach((tab,index) => {
-				let RequireCheckList = {
-					itemAssetType: '資產類型',
-					itemEquipType_Id: '設備總類',
-					itemCategory_Id: '設備分類',
-					itemAssetName: '物品名稱',
-					itemPackageUnit: '包裝單位',
-					itemPackageNum: '包裝數量',
-				}
-				switch (tab.itemAssetType) {
-					case '存貨':
-						RequireCheckList.itemProjectCode = '專案代碼';
-						break;
-					case '耗材':
-						RequireCheckList.itemCount = '數量';
-						RequireCheckList.itemUnit = '單位';
-						break;
-				}
-				// 必填
-				InputMessages += utilsStore.checkTabRequired(tab, RequireCheckList, index);
-				// 資產編號(有填再檢查)
-				if(tab.itemAssetsId && (!utilsStore.BF_pattern.test(tab.itemAssetsId))) {
-					InputMessages += `頁籤${index+1} :　資產編號不符合格式\n`
-				}
-				// 字數
-				InputMessages += utilsStore.checkTabMaxLetter(tab, this.TabLetterCheckList, index);
-			});
-			if(InputMessages) {
-				alert(InputMessages);
-				return false;
-			}
-			return true;
-		},
 		// 將vue multiselect選項轉換給對應key值(分為 表單專案代碼 頁籤專案代碼 物流單號)
 		onFormProjectcodeSelect(option) {
 			this.middleForm.itemProjectCode = option.Value;
