@@ -1,6 +1,6 @@
 <template>
+    <Navbar />
     <div class="main_section">
-        <Navbar />
         <div class="title col">
             <h1>
                 檢視快速入庫單

@@ -23,7 +23,7 @@
                         <div class="search_section">
                             <input type="text" class="form-control readonly_box" v-model="upperForm.ShipmentNum" readonly/>
                         </div>
-                        <button class="form_search_btn" @click="storageStore.viewReceive">檢視</button>
+                        <button class="form_search_btn" @click="storageStore.viewReceive(upperForm)">檢視</button>
                         <!-- 隱藏跳轉按鈕 -->
                         <router-link :to="{name: 'Receive_View' , query:{ search_id : upperForm.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
                     </div>
@@ -190,7 +190,7 @@
                                         NT$
                                         <input type="text" class="form-control readonly_box" aria-label="Default" v-model="tab.itemPrice" readonly>
                                         <div>
-                                            / 每包裝單位 <span v-show="tab.itemAssetType==='耗材'">(${{ tab.itemPrice / tab.itemCount }}/每單位)</span>
+                                            / 每包裝單位 <span v-show="tab.itemAssetType==='耗材'">(NT${{ (tab.itemPrice / tab.itemCount).toFixed(2) }}/每單位)</span>
                                         </div>
                                     </div>
                                 </div>

@@ -96,10 +96,10 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
+                                    <input class="form-check-input order_check" type="radio" value="true" id="flexCheckDefault" v-model="test">
                                 </td>
                                 <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
+                                    <input class="form-check-input order_check" type="radio" value="false" id="flexCheckDefault" v-model="test">
                                 </td>
                                 <td class="table_content">路由器</td>
                                 <td class="table_content">1</td>
@@ -210,13 +210,10 @@
         </div>
     </div>
 </template>
-<script>
+<script setup>
     import Navbar from '@/components/Navbar.vue';
-    export default {
-        components: {
-            Navbar
-        },
-    }
+    import { ref } from 'vue';
+    const test = ref(false);
 </script>
 
 <style lang="scss" scoped>

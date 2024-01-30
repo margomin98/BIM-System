@@ -34,7 +34,7 @@
                     :show-no-results="false" @select="storageStore.onShipmentnumSelect" @close="storageStore.onShipmentnumUnselect">
                     </vue-multiselect>
                </div>
-               <button class="form_search_btn" @click="storageStore.viewReceive">檢視</button>
+               <button class="form_search_btn" @click="storageStore.viewReceive(upperForm)">檢視</button>
                <!-- 隱藏跳轉按鈕 -->
                <router-link :to="{name: 'Receive_View' , query:{ search_id : upperForm.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
              </div>
@@ -188,6 +188,7 @@
                <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="middleForm.itemSN">
            </div>
        </div>
+       <!-- 選購金額 -->
        <div class="col">
            <div class="input-group mb-3">
                <div class="input-group-prepend">選購金額 :</div>
@@ -316,7 +317,7 @@
                             <span v-show="tab.itemAssetType === '存貨'">*</span>專案代碼 :
                           </div>
                           <input type="text" class="form-control" placeholder="最多輸入10字" v-model="tab.itemProjectCode">
-                          <button class="form_search_btn">搜尋</button>
+                          <button class="form_search_btn"  @click="async()=>{ tab.itemProjectName = await apiStore.getProject(tab.itemProjectCode)}">搜尋</button>
                       </div>
                   </div>
                   <!-- 頁籤專案名稱 -->
@@ -406,6 +407,7 @@
                           <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="tab.itemSN">
                       </div>
                   </div>
+                  <!-- 頁籤選購金額 -->
                   <div class="col">
                       <div class="input-group mb-3">
                           <div class="input-group-prepend">選購金額 :</div>
@@ -496,7 +498,7 @@
                   </div>
                   <!-- 已選擇檔案 -->
                   <div class="col selected_file">
-                      <div class="input-group">
+                      <div class="input-group my-3">
                           <div class="input-group-prepend">已選擇的檔案 :</div>
                           <div class="store_new_file">
                             <div v-for="(file , file_index) in tab.viewFile" :key="file_index" class="file_upload_wrap">
@@ -508,11 +510,11 @@
                           </div>
                       </div>
                   </div> 
-                  <!-- 以上傳檔案 -->
-                  <div class="col" v-if="!hidden">
+                  <!-- 已上傳檔案 -->
+                  <div class="col selected_file" v-if="!hidden">
                     <div class="input-group my-3">
                       <div class="input-group-prepend">已上傳檔案 :</div>
-                      <div class="selected_file">
+                      <div class="store_new_file">
                         <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap">
                           <p>{{ file.FileName }}
                             <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="utilsStore.viewImgFile(file, file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">

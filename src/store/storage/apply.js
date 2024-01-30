@@ -5,7 +5,7 @@ import { useStorageStore } from '@/store/storage/_index';
 import router from '@/router';
 // lodash
 import _ from "lodash"
-
+// 入庫填報-CRUD
 export const useApplyStore = defineStore('Apply', {
 	// data
 	state: () => ({

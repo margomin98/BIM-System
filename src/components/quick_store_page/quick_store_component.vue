@@ -28,7 +28,7 @@
                                     </vue-multiselect>
                                 </div>
                         </div>
-                        <button class="form_search_btn" @click="storageStore.viewReceive">檢視</button>
+                        <button class="form_search_btn" @click="storageStore.viewReceive(upperForm)">檢視</button>
                         <!-- 隱藏跳轉按鈕 -->
                         <router-link :to="{name: 'Receive_View' , query:{ search_id : upperForm.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
                     </div>
@@ -465,10 +465,10 @@
                                         選購金額 :
                                     </div>
                                     <div class="d-flex">
-                                        $
+                                        NT$
                                         <input class="" type="number" v-model="tab.itemPrice" min="1"> 
                                         <div>
-                                            / 每包裝單位 <span v-show="tab.itemAssetType==='耗材'">(${{ tab.itemPrice / tab.itemCount }}/每單位)</span>
+                                            / 每包裝單位 <span v-show="tab.itemAssetType==='耗材'">(NT${{ (tab.itemPrice / tab.itemCount).toFixed(2) }}/每單位)</span>
                                         </div>
                                     </div>
                                 </div>
@@ -580,7 +580,7 @@
                         </div>
                         <!-- 頁籤已選擇檔案 -->
                         <div v-show="!quickprocessStore.createHidden" class="selected_file col">
-                            <div class="input-group">
+                            <div class="input-group my-3">
                                 <div class="input-group-prepend">已選擇檔案：</div>
                                 <div class="selected_file_wrap">
                                     <div v-for="(file , file_index) in tab.viewFile" :key="file_index" class="file_upload_wrap">

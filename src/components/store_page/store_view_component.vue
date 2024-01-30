@@ -31,7 +31,7 @@
               <div class="search_section">
                 <input type="text" class="form-control readonly_box" v-model="upperForm.ShipmentNum" readonly/>
               </div>
-              <button class="form_search_btn" @click="storageStore.viewReceive">檢視</button>
+              <button class="form_search_btn" @click="storageStore.viewReceive(upperForm)">檢視</button>
               <!-- 隱藏跳轉按鈕 -->
               <router-link :to="{name: 'Receive_View' , query:{ search_id : upperForm.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
             </div>
@@ -185,14 +185,14 @@
                         <input type="text" class="form-control readonly_box" aria-label="Default" v-model="tab.itemSN" readonly>
                     </div>
                 </div>
-                <!-- 選購金額 -->
+                <!-- 頁籤選購金額 -->
                 <div class="col">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">選購金額 :</div>
                         NT$
                         <input type="text" class="form-control readonly_box" aria-label="Default" v-model="tab.itemPrice" readonly>
                         <div>
-                          / 每包裝單位 <span v-show="tab.itemAssetType==='耗材'">(${{ tab.itemPrice / tab.itemCount }}/每單位)</span>
+                          / 每包裝單位 <span v-show="tab.itemAssetType==='耗材'">(NT${{ (tab.itemPrice / tab.itemCount).toFixed(2) }}/每單位)</span>
                         </div>
                     </div>
                 </div>
@@ -260,10 +260,10 @@
                     <textarea class="col readonly_box" rows="5" v-model="tab.itemMemo" readonly></textarea>
                   </div>
                 </div>
-                <!-- 頁籤上傳檔案部分 -->
+                <!-- 已上傳檔案 -->
                 <div class="col selected_file">
                   <div class="input-group my-3">
-                    <div class="input-group-prepend">已上傳的檔案 :</div>
+                    <div class="input-group-prepend">已上傳檔案 :</div>
                     <div class="store_new_file">
                       <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap">
                         <p>{{ file.FileName }}
