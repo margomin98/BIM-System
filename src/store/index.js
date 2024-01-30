@@ -499,9 +499,13 @@ export const useAPIStore = defineStore('API',{
       datagrid.loading = true;
       const baseUrl = 'http://192.168.0.177:7008';
       let apiurl = baseUrl + url;
-
       try {
-        const response = await axios.post(apiurl, form);
+        const token = await this.GetAntiForgeryToken();
+        const response = await axios.post(apiurl, form, {
+          headers: { 
+            'RequestVerificationToken': token,
+          }
+        });
         const data = response.data;
         if (data.state === 'success') {
           console.log('datagrid', data.resultList);

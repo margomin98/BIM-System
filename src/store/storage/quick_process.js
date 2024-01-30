@@ -131,7 +131,7 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 			if(!this.checkTabContent()) return ;
 			utilsStore.isLoading = true ;
 			try {
-				const token = apiStore.GetAntiForgeryToken();
+				const token = await apiStore.GetAntiForgeryToken();
 				// 頁籤部分
 				const tabPromises = [];
 				storageStore.tabData.forEach((tab,index)=>{

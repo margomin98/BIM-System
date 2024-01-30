@@ -48,7 +48,12 @@ export const useEditStore = defineStore('Edit', {
         form.append('deleteFile', assetStore.Form.deleteFile[i]);
       }
       try {
-        const response = await axios.post('http://192.168.0.177:7008/InventoryMng/AssetEdit', form);
+        const token = await apiStore.GetAntiForgeryToken();
+        const response = await axios.post('http://192.168.0.177:7008/InventoryMng/AssetEdit', form,{
+          headers: { 
+            'RequestVerificationToken': token,
+          }
+        });
         const data = response.data;
         console.log(data);
         if (data.state === 'success') {
