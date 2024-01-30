@@ -498,7 +498,7 @@
                   </div>
                   <!-- 已選擇檔案 -->
                   <div class="col selected_file">
-                      <div class="input-group">
+                      <div class="input-group my-3">
                           <div class="input-group-prepend">已選擇的檔案 :</div>
                           <div class="store_new_file">
                             <div v-for="(file , file_index) in tab.viewFile" :key="file_index" class="file_upload_wrap">
@@ -510,11 +510,11 @@
                           </div>
                       </div>
                   </div> 
-                  <!-- 以上傳檔案 -->
-                  <div class="col" v-if="!hidden">
+                  <!-- 已上傳檔案 -->
+                  <div class="col selected_file" v-if="!hidden">
                     <div class="input-group my-3">
                       <div class="input-group-prepend">已上傳檔案 :</div>
-                      <div class="selected_file">
+                      <div class="store_new_file">
                         <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap">
                           <p>{{ file.FileName }}
                             <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="utilsStore.viewImgFile(file, file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">

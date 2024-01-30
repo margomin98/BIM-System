@@ -580,7 +580,7 @@
                         </div>
                         <!-- 頁籤已選擇檔案 -->
                         <div v-show="!quickprocessStore.createHidden" class="selected_file col">
-                            <div class="input-group">
+                            <div class="input-group my-3">
                                 <div class="input-group-prepend">已選擇檔案：</div>
                                 <div class="selected_file_wrap">
                                     <div v-for="(file , file_index) in tab.viewFile" :key="file_index" class="file_upload_wrap">

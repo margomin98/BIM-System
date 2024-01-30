@@ -260,10 +260,10 @@
                     <textarea class="col readonly_box" rows="5" v-model="tab.itemMemo" readonly></textarea>
                   </div>
                 </div>
-                <!-- 頁籤上傳檔案部分 -->
+                <!-- 已上傳檔案 -->
                 <div class="col selected_file">
                   <div class="input-group my-3">
-                    <div class="input-group-prepend">已上傳的檔案 :</div>
+                    <div class="input-group-prepend">已上傳檔案 :</div>
                     <div class="store_new_file">
                       <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap">
                         <p>{{ file.FileName }}
