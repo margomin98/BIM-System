@@ -1,8 +1,37 @@
 <template>
   <Navbar />
-  <div class="chart">
-    <ag-charts-vue class="chart-container" :options="options"></ag-charts-vue>
+  <div class="row g-0 home_section">
+  <div class="col pt_left">
+  <div class="user_info">
+  2</div>
+  <div class="line_notification">
+  1
   </div>
+  <div class="code_search">
+  <div class="search_section">
+  <input type="text">
+  <button class="search_btn">搜尋</button>
+  </div>
+  <div class="search_result">
+  <div class="result_wrap">
+<p class="case_code">1234568</p>
+<p class="case_name">中興_台電離岸風力發電第一期XX</p>
+  </div>
+  </div>
+  </div>
+  </div>
+  <div class="col pt_center">
+<div class="dg_section">12</div>
+  </div>
+  <div class="col pt_right">
+  <div class="warn_window">2</div>
+  <div class="amount_chart"></div>
+  <div class="case_chart"></div>
+  </div>
+  </div>
+  <!-- <div class="chart">
+    <ag-charts-vue class="chart-container" :options="options"></ag-charts-vue>
+  </div> -->
 </template>
 
 <script>
@@ -15,6 +44,10 @@
   } from "ag-charts-vue3";
   import Navbar from '../components/Navbar.vue';
   import axios from 'axios';
+  function getRandomColor() {
+    // 隨機生成chart顔色
+    return `#${Math.floor(Math.random()*16777215).toString(16)}`;
+  }
   export default {
     components: {
       AgChartsVue,
@@ -56,7 +89,7 @@
           },
         },
         series: [{
-          fills: ['#173B63', '#426994', '#5C88B8', '#80A8D4', '#8C9DAF'],
+          fills: Array.from({ length: 5 }, () => getRandomColor()), 
           strokes: ['white'],
           type: 'pie',
           calloutLabelKey: 'os',
@@ -162,4 +195,53 @@
       margin-bottom: 5%;
     }
   }
+.home_section{
+  padding:32px;
+  background: rgba(90, 90, 90, 0.40);
+  height: 100%;
+  p{
+    margin-bottom: 0;
+  }
+}
+.user_info,.line_notification,.amount_chart,.case_amount,.warn_window,.search_section,.search_result{
+  border-radius: 20px;
+}
+.pt_left{
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .user_info{
+    background-color: white;
+    width: 320px;
+    height: 105px;
+  }
+  .line_notification{
+    background-color:#00C200 ;
+    width: 320px;
+    height: 60px;
+  }
+  .code_search{
+    width: 320px;   
+    .search_section{
+   background-color: #132238; 
+padding: 20px;
+    width: 100%;
+
+  border-radius :20px 20px 0 0;
+    }
+.search_result{
+  background-color:#F4F4F4;
+  height: 100%;
+  padding: 16px;
+  border-radius :0 0 20px 20px;
+  height: 518px;
+  .result_wrap{
+    padding: 10px;
+    background: #A7AFBB;
+    border-radius: 10px;
+  }
+}
+ }
+ }
 </style>
