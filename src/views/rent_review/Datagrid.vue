@@ -21,36 +21,24 @@
           </div>
           <div class="col">
             <p>用途</p>
-            <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ searchParams.Use || "請選擇" }}
-                              </button>
-              <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p v-for="(item , index) in UseArray" :key="index" class="dropdown-item" @click="selectUse(item)">{{ item }}</p>
-              </div>
-            </div>
+            <select class="form-select" id="useSelect" v-model="searchParams.Use" @change="selectUse">
+                <option value="" disabled selected>請選擇</option>>
+            <option v-for="(item, index) in UseArray" :key="index" :value="item">{{ item }}</option>
+        </select>
           </div>
           <div class="col">
             <p>狀態</p>
-            <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ searchParams.Status || "請選擇" }}
-                              </button>
-              <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p v-for="(item , index) in StatusArray" :key="index" class="dropdown-item" @click="selectStatus(item)">{{ item }}</p>
-              </div>
-            </div>
+            <select class="form-select" id="statusSelect" v-model="searchParams.Status" @change="selectStatus">
+                <option value="" disabled selected>請選擇</option>
+            <option v-for="(item, index) in StatusArray" :key="index" :value="item">{{ item }}</option>
+        </select>
           </div>
           <div class="col">
             <p>日期類型</p>
-            <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ searchParams.DateCategory || "請選擇" }}
-                              </button>
-              <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p v-for="(item , index) in DateCategoryArray" :key="index" class="dropdown-item" @click="selectDateCategory(item)">{{ item }}</p>
-              </div>
-            </div>
+            <select class="form-select" id="dateCategorySelect" v-model="searchParams.DateCategory" @change="selectDateCategory">
+                <option value="" disabled selected>請選擇</option>
+            <option v-for="(item, index) in DateCategoryArray" :key="index" :value="item">{{ item }}</option>
+        </select>
           </div>
           <div class="col">
             <p>日期(起)</p>
@@ -83,7 +71,7 @@
         :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <Column style="min-width: 60px;">
           <template #body="slotProps">
-              <Rent_review_button :params = "slotProps"/>
+                  <Rent_review_button :params = "slotProps"/>
 </template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width , 'max-width': item.max}"></Column>
@@ -223,15 +211,6 @@
         UpdatePageParameter(datagrid, event, type, form)
         getMngDatagrid('/AssetsOutMng/ReviewOperating', rowData, datagrid, form);
       }
-      function selectUse(item) {
-        searchParams.Use = item;
-      }
-      const selectStatus = (item) => {
-        searchParams.Status = item;
-      };
-      const selectDateCategory = (item) => {
-        searchParams.DateCategory = item;
-      };
       const clear = () => {
         for (const key in searchParams) {
           searchParams[key] = '';
@@ -246,9 +225,6 @@
         datagrid,
         datagridfield,
         rowData,
-        selectUse,
-        selectStatus,
-        selectDateCategory,
         submit,
         clear,
       };
@@ -258,6 +234,14 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
+  .datagrid_section {
+    input,
+    select {
+      @include dropdown_btn;
+      width: 100%;
+      height: 35px;
+    }
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       padding: 0 10%;
@@ -302,42 +286,12 @@
           p {
             @include datagrid_title;
           }
-          input {
-            @include dropdown_btn;
-            width: 200px;
-            height: 35px;
-          }
           button {
             border: none;
             padding: 0;
             width: 100%;
             font-size: 18px;
             height: 100%;
-          }
-          .dropdown {
-            width: 200px;
-            height: 35px;
-            @include dropdown_btn;
-            .dropdown-toggle {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              border: none;
-            }
-            .dropdown-menu {
-              width: 100%;
-              transform: translate3d(-1px, 35px, 0px) !important;
-              max-height: 250px;
-              overflow-y: auto;
-              p {
-                font-size: 18px;
-                color: black;
-                font-weight: normal;
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-            }
           }
         }
       }
@@ -381,37 +335,12 @@
           p {
             @include datagrid_title;
           }
-          input {
-            @include dropdown_btn;
-            width: 100%;
-            height: 35px;
-          }
           button {
             padding: 0;
             width: 100%;
             font-size: 18px;
             height: 100%;
             text-align: left;
-          }
-          .dropdown {
-            width: 100%;
-            height: 35px;
-            @include dropdown_btn;
-            .dropdown-toggle {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              border: none;
-            }
-            .dropdown-menu {
-              width: 100%;
-              transform: translate3d(-1px, 35px, 0px) !important;
-              p {
-                font-size: 18px;
-                color: black;
-                font-weight: normal;
-              }
-            }
           }
         }
       }
@@ -457,37 +386,12 @@
             @include datagrid_title;
             font-size: 18px;
           }
-          input {
-            @include dropdown_btn;
-            width: 100%;
-            height: 35px;
-          }
           button {
             padding: 0;
             width: 100%;
             font-size: 18px;
             height: 100%;
             text-align: left;
-          }
-          .dropdown {
-            width: 100%;
-            height: 35px;
-            @include dropdown_btn;
-            .dropdown-toggle {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              border: none;
-            }
-            .dropdown-menu {
-              width: 100%;
-              transform: translate3d(-1px, 35px, 0px) !important;
-              p {
-                font-size: 18px;
-                color: black;
-                font-weight: normal;
-              }
-            }
           }
         }
       }

@@ -36,6 +36,7 @@ onMounted(async() => {
   if(route.query.ShipmentNum && route.query.search_id) {
     upperForm.value.ShipmentNum = route.query.ShipmentNum;
     upperForm.value.AR_ID = route.query.search_id;
+    upperForm.value.ShipmentSelect = {ShipmentNum: upperForm.value.ShipmentNum , AR_ID: upperForm.value.AR_ID};
   }
 });
 </script>
