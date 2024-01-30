@@ -34,7 +34,7 @@
                     :show-no-results="false" @select="storageStore.onShipmentnumSelect" @close="storageStore.onShipmentnumUnselect">
                     </vue-multiselect>
                </div>
-               <button class="form_search_btn" @click="storageStore.viewReceive">檢視</button>
+               <button class="form_search_btn" @click="storageStore.viewReceive(upperForm)">檢視</button>
                <!-- 隱藏跳轉按鈕 -->
                <router-link :to="{name: 'Receive_View' , query:{ search_id : upperForm.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
              </div>
@@ -188,6 +188,7 @@
                <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="middleForm.itemSN">
            </div>
        </div>
+       <!-- 選購金額 -->
        <div class="col">
            <div class="input-group mb-3">
                <div class="input-group-prepend">選購金額 :</div>
@@ -316,7 +317,7 @@
                             <span v-show="tab.itemAssetType === '存貨'">*</span>專案代碼 :
                           </div>
                           <input type="text" class="form-control" placeholder="最多輸入10字" v-model="tab.itemProjectCode">
-                          <button class="form_search_btn">搜尋</button>
+                          <button class="form_search_btn"  @click="async()=>{ tab.itemProjectName = await apiStore.getProject(tab.itemProjectCode)}">搜尋</button>
                       </div>
                   </div>
                   <!-- 頁籤專案名稱 -->
@@ -406,6 +407,7 @@
                           <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="tab.itemSN">
                       </div>
                   </div>
+                  <!-- 頁籤選購金額 -->
                   <div class="col">
                       <div class="input-group mb-3">
                           <div class="input-group-prepend">選購金額 :</div>

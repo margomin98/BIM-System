@@ -6,7 +6,7 @@ import router from '@/router';
 // lodash
 import _ from "lodash"
 import { useRoute } from 'vue-router';
-
+// 快速入庫-CRU
 export const useQuickProcessStore = defineStore('QuickProcess', {
 	state:() => ({
 		createHidden: false,

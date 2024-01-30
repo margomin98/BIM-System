@@ -72,6 +72,20 @@ export const UpdatePageParameter= (( datagrid,event, type , form)=>{
   form.append('order',order);
 })
 // 創建datagrid切頁參數
+export const createDadagridObject=(sortField = '')=>{
+  return {
+    key: 0,
+    totalRecords: 0,
+    first: 0,
+    rows: 10,
+    currentPage: 1,
+    sortField: sortField,
+    sortOrder: -1,
+    loading: false,
+    selectAll: false,
+    selectedList: [],
+  }
+}
 export const createDatagrid=(()=>{
   return reactive({
     key: 0,

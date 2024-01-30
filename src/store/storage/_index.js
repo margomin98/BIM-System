@@ -5,8 +5,7 @@ import { UnitArray, PackageUnitArray } from '@/assets/js/dropdown'
 import router from '@/router';
 // lodash
 import _ from "lodash"
-import { useRoute } from 'vue-router';
-
+// 入庫系統通用function
 export const useStorageStore = defineStore('Storage', {
 	// data
 	state: () => ({
@@ -224,8 +223,8 @@ export const useStorageStore = defineStore('Storage', {
 			this.DropdownArray.EquipCategory = [];
 		},
 		// 查看收貨單(如果有)
-		viewReceive() {
-			if (this.upperForm.AR_ID) {
+		viewReceive(formParams) {
+			if (formParams.AR_ID) {
 				const link = document.getElementById('view-receive');
 				link.click();
 			}
