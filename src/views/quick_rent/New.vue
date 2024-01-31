@@ -244,17 +244,17 @@ const warningText = '按下確認後將無法再次變更，請確認是否正�
 onMounted(async ()=>{
     utilsStore.$reset();
     rentStore.$reset();
-    DropdownArray.value.ProjectCode = [
-        {Text: '專案1', Value: '0001'},
-        {Text: '專案2', Value: '0002'},
-        {Text: '專案3', Value: '0003'},
-        {Text: '專案4', Value: '0004'},
-        {Text: '專案5', Value: '0005'}
-    ]
+    // DropdownArray.value.ProjectCode = [
+    //     {Text: '專案1', Value: '0001'},
+    //     {Text: '專案2', Value: '0002'},
+    //     {Text: '專案3', Value: '0003'},
+    //     {Text: '專案4', Value: '0004'},
+    //     {Text: '專案5', Value: '0005'}
+    // ]
     DropdownArray.value.Recipient = await apiStore.getCustodian('');
     DropdownArray.value.EquipType = await apiStore.getEquipType();
     DropdownArray.value.Area = await apiStore.getArea();
-    // DropdownArray.value.ProjectCode = await apiStore.getFuzzyProject();
+    DropdownArray.value.ProjectCode = await apiStore.getFuzzyProject();
     datagrid1.value.sortField = ''
     datagrid1field.value = [
         { field: "OM_Unit",  width: '100px',  header: "單位" },
