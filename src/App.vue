@@ -14,7 +14,9 @@ display: flex;
 	padding:  unset;
     padding-left: 5px;
 }
-
+body{
+	min-height:100vh;
+}
 
 	.ag-chart-no-data-overlay {
 		display: flex;
