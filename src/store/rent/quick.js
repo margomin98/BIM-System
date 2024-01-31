@@ -82,7 +82,7 @@ export const useQuickRentStore = defineStore('QuickRent', {
         alert('請至少出庫一項資產');
         return
       }
-      let requestData = {};
+      const form = new FormData;
       for(const key in rentStore.Form) {
         if(rentStore.Form[key]) {
           if(key === 'ItemList') {
