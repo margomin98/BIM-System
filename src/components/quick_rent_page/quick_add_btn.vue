@@ -26,11 +26,13 @@ const add = () => {
   }
   // 將物品加入，更新下方清單
   // 出庫數量看的是OM_Number，所以從搜尋拉下來要將OM_Number替換成剛剛所選的數量
+  // Number是檢索api所需要的key
   let exist = false;
   let data = props.params.data;
   rentStore.Form.ItemList.forEach(item=>{
     if(item.AssetsId === data.AssetsId) {
       item.OM_Number += data.selectNumber
+      item.Number += data.selectNumber
       exist = true; 
     }
   })
@@ -38,6 +40,7 @@ const add = () => {
     data.OM_Number = data.selectNumber;
     rentStore.Form.ItemList.splice(0,0,{
       ...data,
+      Number: data.selectNumber
     });
   }
   quickrentStore.searchInventory('','');
