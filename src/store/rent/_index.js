@@ -52,7 +52,7 @@ export const useRentStore = defineStore('Rent', {
 			VerifyPerson: '',
 			VerifyResult: null,
       // ----
-			AssetList: [],
+			ItemList: [],
 			existFile: [],
 		},
     // 搜尋表單參數

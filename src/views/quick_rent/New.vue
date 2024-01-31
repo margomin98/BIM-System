@@ -194,12 +194,12 @@
                 </div>
             </div>
             <div class="content">
-                <DataTable :size="'small'" :value="Form.AssetList" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="510px"
+                <DataTable :size="'small'" :value="Form.ItemList" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="510px"
                 paginator :rows="10" paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
                 currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
                 <Column style="min-width: 60px;">
                     <template #body="slotProps">
-                        <delete_btn :function="quickrentStore.deleteItemFromAssetList" :parameter1="slotProps.data.AssetsId" />
+                        <delete_btn :function="quickrentStore.deleteFromItemList" :parameter1="slotProps.data.AssetsId" />
                     </template>
                 </Column>
                 <Column style="min-width: 60px;">

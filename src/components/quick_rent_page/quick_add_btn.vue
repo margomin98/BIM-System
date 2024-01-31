@@ -27,14 +27,14 @@ const add = () => {
   // 將物品加入，更新下方清單
   let exist = false;
   const data = props.params.data;
-  rentStore.Form.AssetList.forEach(item=>{
+  rentStore.Form.ItemList.forEach(item=>{
     if(item.AssetsId === data.AssetsId) {
       item.Number += data.selectNumber
       exist = true; 
     }
   })
   if(!exist) {
-    rentStore.Form.AssetList.splice(0,0,{
+    rentStore.Form.ItemList.splice(0,0,{
       ...data,
       Number: data.selectNumber
     });

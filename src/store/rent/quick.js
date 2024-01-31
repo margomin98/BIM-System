@@ -52,7 +52,7 @@ export const useQuickRentStore = defineStore('QuickRent', {
         if(rentStore.searchParams[key]) form.append(key, rentStore.searchParams[key]);
       }
       // 已加入清單
-      form.append('AssetList', JSON.stringify(rentStore.Form.AssetList));
+      form.append('ItemList', JSON.stringify(rentStore.Form.ItemList));
       utilsStore.UpdatePageParameter(rentStore.datagrid1, event, type, form);
       try {
         const resultList =  await apiStore.getMngDatagrid('/AssetsOutMng/SearchInventory', rentStore.datagrid1, form);
@@ -68,9 +68,9 @@ export const useQuickRentStore = defineStore('QuickRent', {
       }
     },
     // 刪除細項
-    deleteItemFromAssetList(AssetsId) {
+    deleteFromItemList(AssetsId) {
       const rentStore = useRentStore();
-      rentStore.Form.AssetList = rentStore.Form.AssetList.filter(item => item.AssetsId !== AssetsId);
+      rentStore.Form.ItemList = rentStore.Form.ItemList.filter(item => item.AssetsId !== AssetsId);
     },
     async submit() {
       const apiStore = useAPIStore();
@@ -78,14 +78,14 @@ export const useQuickRentStore = defineStore('QuickRent', {
       // 檢查表單內容
 			if(!this.checkFormContent()) return ;
       // 至少輸入一項
-      if(rentStore.Form.AssetList.length === 0) {
+      if(rentStore.Form.ItemList.length === 0) {
         alert('請至少出庫一項資產');
         return
       }
       const form = new FormData;
       for(const key in rentStore.Form) {
         if(rentStore.Form[key]) {
-          if(key === 'AssetList') {
+          if(key === 'ItemList') {
             form.append(key, JSON.stringify(rentStore.Form[key]));
           } else {
             form.append(key,rentStore.Form[key]);
@@ -115,7 +115,6 @@ export const useQuickRentStore = defineStore('QuickRent', {
       } catch (error) {
         console.error(error);
       }
-      alert('OK');
     }
   }
 })
