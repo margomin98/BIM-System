@@ -700,15 +700,7 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
-router.beforeEach(async(to, from, next)=>{
-  // useUtilsStore().$reset();
-  // useStorageStore().$reset();
-  // useAssetStore().$reset();
-  // useRentStore().$reset();
-  // useQuickRentStore().$reset();
-  // useQuickProcessStore().$reset();
-  next();
-})
+
 // router.beforeEach(async (to, from, next) => {
 //   if (to.meta.auth) {
 //     try {
