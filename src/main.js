@@ -12,7 +12,11 @@ import PrimeVue from 'primevue/config';
 // loding animation
 import {LoadingPlugin} from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
+
+// scrollbars
+import PerfectScrollbar from 'vue3-perfect-scrollbar'
+import 'vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css'
 // pinia
 import { pinia } from '@/plugins/pinia'
-createApp(App).use(router).use(PrimeVue).use(LoadingPlugin).use(pinia).mount('#app');
+createApp(App).use(router).use(PrimeVue).use(LoadingPlugin).use(pinia).use(PerfectScrollbar).mount('#app');
 // .use(EasyUI).use(VueColumnsResizable)use(vuetify)

@@ -88,6 +88,21 @@
       }
 }
 
+@mixin select_btn{
+    height: 40px;
+    color: #FFF;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    border: none;
+    display: flex;
+    padding: 10px 25px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background: var(--c3, #364E68);
+    border:none;
+}
 //data grid css
 @mixin datagrid_view_button {
     border: none;
