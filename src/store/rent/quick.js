@@ -93,7 +93,12 @@ export const useQuickRentStore = defineStore('QuickRent', {
         }
       }
       try {
-        const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/ExpressAssetsOut',form);
+        const token = await apiStore.GetAntiForgeryToken();
+        const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/ExpressAssetsOut',form,{
+          headers: { 
+            'RequestVerificationToken': token,
+          }
+        });
         const data = response.data ; 
         if(data.state === 'success') {
           alert(`${data.messages}\n單號:${data.resultList.AO_ID}`);
