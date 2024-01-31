@@ -79,7 +79,7 @@
             <div class="purchase_list" role="region" tabindex="0">
                 <div class="fixed_info">
                     <div>
-                        <p>待採購清單</p>
+                        <p>未新增訂購單項目</p>
                     </div>
                 </div>
                 <div class="purchase_table">
@@ -87,8 +87,7 @@
                         <thead>
                             <tr>
                                 <th class="check_col"><span>勾選<br>下訂</span></th>
-                                <th class="check_col">暫緩<br>採購<span></span></th>
-                                <th class="item_col"><span>採購項目</span></th>
+                                  <th class="item_col"><span>採購項目</span></th>
                                 <th class="amount_col"><span>數量</span></th>
                                 <th><span>規格需求</span></th>
                             </tr>
@@ -96,19 +95,13 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <input class="form-check-input order_check" type="radio" value="true" id="flexCheckDefault" v-model="test">
+                                    <input class="form-check-input order_check" type="checkbox" value="true" id="flexCheckDefault" v-model="test">
                                 </td>
-                                <td>
-                                    <input class="form-check-input order_check" type="radio" value="false" id="flexCheckDefault" v-model="test">
-                                </td>
-                                <td class="table_content">路由器</td>
+                                  <td class="table_content">路由器</td>
                                 <td class="table_content">1</td>
                                 <td class="table_content">文字文字文字</td>
                             </tr>
                             <tr>
-                                <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
-                                </td>
                                 <td>
                                     <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
                                 </td>
@@ -120,10 +113,7 @@
                                 <td>
                                     <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
                                 </td>
-                                <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
-                                </td>
-                                <td class="table_content">滑鼠</td>
+                               <td class="table_content">滑鼠</td>
                                 <td class="table_content">6</td>
                                 <td class="table_content">文字文字文字文字文字文字文字文字文字</td>
                             </tr>
@@ -131,35 +121,11 @@
                                 <td>
                                     <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
                                 </td>
-                                <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
-                                </td>
-                                <td class="table_content">電腦主機</td>
+                               <td class="table_content">電腦主機</td>
                                 <td class="table_content">4</td>
                                 <td class="table_content">文字文字文字</td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
-                                </td>
-                                <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
-                                </td>
-                                <td class="table_content">電腦主機</td>
-                                <td class="table_content">4</td>
-                                <td class="table_content">文字文字文字</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
-                                </td>
-                                <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
-                                </td>
-                                <td class="table_content">電腦主機</td>
-                                <td class="table_content">4</td>
-                                <td class="table_content">文字文字文字</td>
-                            </tr>
+                         
                         </tbody>
                     </table>
                 </div>
@@ -168,8 +134,69 @@
                 <p>*可勾選多個採購項目後，合併新增訂單</p>
             </div>
             <div class="add_btn">
-                <button class="">新增訂單</button>
+                <button>新增訂單</button>
             </div>
+        </div>
+        <div class="info_wrap mb-5">
+            <div class="purchase_list" role="region" tabindex="0">
+                <div class="fixed_info">
+                    <div>
+                        <p>已新增訂購單項目</p>
+                    </div>
+                </div>
+                <div class="purchase_table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="check_col"><span>取消<br>下訂</span></th>
+                                <th class="item_col"><span>採購項目</span></th>
+                                <th class="amount_col"><span>數量</span></th>
+                                <th><span>規格需求</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input class="form-check-input order_check" type="checkbox" value="true" id="flexCheckDefault" v-model="test">
+                                </td>
+                                  <td class="table_content">路由器</td>
+                                <td class="table_content">1</td>
+                                <td class="table_content">文字文字文字</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
+                                </td>
+                                 <td class="table_content">電腦主機</td>
+                                <td class="table_content">2</td>
+                                <td class="table_content">文字文字文字文字文字文字</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
+                                </td>
+                                 <td class="table_content">滑鼠</td>
+                                <td class="table_content">6</td>
+                                <td class="table_content">文字文字文字文字文字文字文字文字文字</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
+                                </td>
+                                  <td class="table_content">電腦主機</td>
+                                <td class="table_content">4</td>
+                                <td class="table_content">文字文字文字</td>
+                            </tr>
+                     
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="purchase_list_note cancel_note_wrap d-flex">
+                <p>*可勾選多個採購項目後，取消項目</p>
+                <button class="cancel_order_btn">取消訂購</button>
+            </div>
+       
         </div>
         <div class="info_wrap col">
             <div class="fixed_info">
@@ -316,7 +343,8 @@
         }
         .purchase_table {
             height: 250px;
-            overflow-y: scroll;
+    overflow-y: scroll;
+    background: white;
         }
         .purchase_list {
             overflow: auto;
@@ -366,6 +394,22 @@
                 margin-bottom: 0
             }
         }
+        .cancel_note_wrap{
+            padding:10px;
+            align-items: center;
+                    .cancel_order_btn{
+                background: #87AADD;
+                border-radius: 10px;
+                height: 35px;
+                color: white;
+                font-weight: 700;
+                padding:0 25px;
+                border: none;
+                &:hover{
+                    background-color: #6d8fc1;
+                }
+            }
+        }
     }
     .button_wrap {
         display: flex;
@@ -406,7 +450,10 @@
                             text-align: end;
                         }
                     }
-                }
+                   
+                } .cancel_note_wrap{
+            justify-content: space-between;
+                    }
             }
         }
     }
@@ -425,7 +472,10 @@
                             text-align: end;
                         }
                     }
-                }
+                  
+                }  .cancel_note_wrap{
+            justify-content: space-between;
+                    }
             }
         }
     }
@@ -463,7 +513,11 @@
                     .input-group {
                         flex-direction: column;
                     }
-                }
+                    
+                }.cancel_note_wrap{
+                    gap:10px 0;
+flex-direction: column;
+                    }
             }
         }
     }

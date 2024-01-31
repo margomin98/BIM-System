@@ -19,6 +19,8 @@ export const RentProcess_New_Status = ['已填報'];
 export const RentProcess_NotifyConfirm_Status = ['待交付','可交付'];
 export const RentProcess_Confirm_Status = ['可交付'];
 export const RentProcess_Delete_Status = ['已填報'];
+// 快速出庫: 檢視
+export const Quick_Rent_Status = ['快速出庫完成'];
 // 出庫審核: 審核
 export const RentReview_New_Status = ['待審核'];
 // 盤點管理: 編輯、盤點、平帳、結果、刪除

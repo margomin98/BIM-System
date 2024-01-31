@@ -1,88 +1,86 @@
 <template>
-    <div>
-    
-       <div class="info_wrap col mb-5">
-         <div class="fixed_info">
-           <div>
-             <p>
-               申請人員 : {{ upperForm.Applicant || utilsStore.userName }}
-             </p>
-           </div>
-           <div>
-             <p>
-               申請入庫日期 : {{ upperForm.ApplicationDate || utilsStore.today }}
-             </p>
-           </div>
-         </div>
-         <div class="content">
-            <!-- 單號 -->
-            <div class="col mb-3" v-show="upperForm.AI_ID">
-              <div class="input-group">
-                <div class="input-group-prepend">單號 :</div>
-                <input type="text" class="form-control readonly_box" v-model="upperForm.AI_ID" readonly>
-              </div>
-            </div>
-           <!-- 物流單號 -->
-           <div class="col form_search_wrap mb-3">
-             <div class="input-group">
-               <div class="input-group-prepend">
-                 物流單號 :
-               </div>
-               <div class="search_section">
-                <vue-multiselect v-model="upperForm.ShipmentSelect" :options="DropdownArray.ShipmentNum" 
-                    :allow-empty="true"  :max-height="300" placeholder="請選擇" label="ShipmentNum" :showLabels="false" track-by="ShipmentNum" 
-                    :show-no-results="false" @select="storageStore.onShipmentnumSelect" @close="storageStore.onShipmentnumUnselect">
-                    </vue-multiselect>
-               </div>
-               <button class="form_search_btn" @click="storageStore.viewReceive(upperForm)">檢視</button>
-               <!-- 隱藏跳轉按鈕 -->
-               <router-link :to="{name: 'Receive_View' , query:{ search_id : upperForm.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
-             </div>
-           </div>
-           <!-- 備註 -->
-           <div class="col mb-3">
-             <div class="input-group">
-               <div class="input-group-prepend">備註 :</div>
-               <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="upperForm.Memo"></textarea>
-             </div>
-           </div>
-         </div>
-       </div>
-       <div class="info_wrap col">
-        <div v-if="Type !== 1" class="fixed_info">
-           <div>
-             <p><span>*</span>填寫資產資訊(請至少填寫一項)</p>
-           </div>
+  <div>
+    <div class="info_wrap col mb-5">
+      <div class="fixed_info">
+        <div>
+          <p>
+            申請人員 : {{ upperForm.Applicant || utilsStore.userName }}
+          </p>
         </div>
-        <div v-if="Type !== 1" class="content">
-       <!-- 資產類型 -->
-       <div class="row">
-           <div class="col-12">
-               <div class="input-group mb-3 check_box_wrap">
-                   <div class="input-group-prepend check_box">
-                       <span>*</span>資產類型 :
-                   </div>
-                   <div class="d-flex align-items-center radio_wrap">
-                     <template v-for="(item, index) in DropdownArray.AssetType" :key="'radio' + (index + 1)">
-                       <input
-                         type="radio"
-                         class="form-check-input check_box"
-                         :id="'radio' + (index + 1)"
-                         style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"
-                         :value="item"
-                         v-model="middleForm.itemAssetType"
-                         @change="storageStore.resetUnitCount('middleForm')"
-                       />
-                       <label
-                         class="form-check-label check_box"
-                         :for="'radio' + (index + 1)"
-                         :data-toggle="index === 1 ? 'tooltip' : null"
-                         :data-placement="index === 1 ? 'top' : null"
-                         :title="index === 1 ? '註記此資產僅限特定專案出貨所使用' : null"
-                       >
-                       {{ item }}
-                       </label>
-                     </template>
+        <div>
+          <p>
+            申請入庫日期 : {{ upperForm.ApplicationDate || utilsStore.today }}
+          </p>
+        </div>
+      </div>
+      <div class="content">
+        <!-- 單號 -->
+        <div class="col mb-3" v-show="upperForm.AI_ID">
+          <div class="input-group">
+            <div class="input-group-prepend">單號 :</div>
+            <input type="text" class="form-control readonly_box" v-model="upperForm.AI_ID" readonly>
+          </div>
+        </div>
+        <!-- 物流單號 -->
+        <div class="col form_search_wrap mb-3">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              物流單號 :
+            </div>
+            <div class="search_section">
+              <vue-multiselect v-model="upperForm.ShipmentSelect" :options="DropdownArray.ShipmentNum" :allow-empty="true" :max-height="300" placeholder="請選擇" label="ShipmentNum" :showLabels="false" track-by="ShipmentNum" :show-no-results="false" @select="storageStore.onShipmentnumSelect"
+                @close="storageStore.onShipmentnumUnselect">
+              </vue-multiselect>
+            </div>
+            <button class="form_search_btn" @click="storageStore.viewReceive(upperForm)">檢視</button>
+            <!-- 隱藏跳轉按鈕 -->
+            <router-link :to="{name: 'Receive_View' , query:{ search_id : upperForm.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
+          </div>
+        </div>
+        <!-- 備註 -->
+        <div class="col mb-3">
+          <div class="input-group">
+            <div class="input-group-prepend">備註 :</div>
+            <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="upperForm.Memo"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="info_wrap col">
+      <div v-if="Type !== 1" class="fixed_info">
+        <div>
+          <p><span>*</span>填寫資產資訊(請至少填寫一項)</p>
+        </div>
+      </div>
+      <div v-if="Type !== 1" class="content">
+        <!-- 資產類型 -->
+        <div class="row">
+          <div class="col-12">
+            <div class="input-group mb-3 check_box_wrap">
+              <div class="input-group-prepend check_box">
+                <span>*</span>資產類型 :
+              </div>
+              <div class="d-flex align-items-center radio_wrap">
+                <template v-for="(item, index) in DropdownArray.AssetType" :key="'radio' + (index + 1)">
+                         <input
+                           type="radio"
+                           class="form-check-input check_box"
+                           :id="'radio' + (index + 1)"
+                           style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"
+                           :value="item"
+                           v-model="middleForm.itemAssetType"
+                           @change="storageStore.resetUnitCount('middleForm')"
+                         />
+                         <label
+                           class="form-check-label check_box"
+                           :for="'radio' + (index + 1)"
+                           :data-toggle="index === 1 ? 'tooltip' : null"
+                           :data-placement="index === 1 ? 'top' : null"
+                           :title="index === 1 ? '註記此資產僅限特定專案出貨所使用' : null"
+                         >
+                         {{ item }}
+                         </label>
+</template>
                    </div>
                </div>
            </div>
@@ -129,10 +127,11 @@
              <div class="dropdown">
                <select class="form-select" id="floatingSelect" v-model="middleForm.itemCategory_Id">
                  <option v-if="DropdownArray.EquipCategory.length == 0" value="">--請先選擇設備總類--</option>
-                 <template v-else>
-                   <option value="">--請選擇--</option>
-                   <option v-for="option in DropdownArray.EquipCategory" :value="option.Id">{{ option.Name }}</option>
-                 </template>
+<template v-else>
+  <option value="">
+    --請選擇--</option>
+  <option v-for="option in DropdownArray.EquipCategory" :value="option.Id">{{ option.Name }}</option>
+</template>
                </select>
              </div>
            </div>
@@ -189,16 +188,23 @@
            </div>
        </div>
        <!-- 選購金額 -->
-       <div class="col">
-           <div class="input-group mb-3">
-               <div class="input-group-prepend">選購金額 :</div>
-               NT$
-              <input class="" type="number" v-model="middleForm.itemPrice"> 
-              <div>
-                  / 每包裝單位 <span v-show="middleForm.itemAssetType==='耗材'">(NT${{ (middleForm.itemPrice / middleForm.itemCount).toFixed(2) }}/每單位)</span>
-              </div>
-           </div>
-       </div>
+       <div class="row  purchase_amount ">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                        <div class="input-group mb-xl-3 mb-lg-3 mb-md-3">
+                            <div class="input-group-prepend">
+                                採購金額 :
+                            </div>
+                            <div class="amount_input">
+                                <span class="symbol">$</span>
+                                <input type="number" class="form-control"  v-model="middleForm.itemPrice"> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                        <span class="note">/每包裝單位<span v-show="middleForm.itemAssetType==='耗材'">($<span class="purchase_total_amount">{{ (middleForm.itemPrice / middleForm.itemCount).toFixed(2) }}</span>/每單位)</span>
+                        </span>
+                    </div>
+                </div>
        <!-- 包裝數量 & 包裝單位 -->
        <div class="row g-0 row_wrap">
            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -286,26 +292,13 @@
                                   <span>*</span>資產類型 :
                               </div>
                               <div class="d-flex align-items-center radio_wrap">
-                                <template v-for="(item, typeIndex) in DropdownArray.AssetType" :key="'radio' + (typeIndex + 1)">
-                                  <input
-                                    type="radio"
-                                    class="form-check-input check_box"
-                                    :id="'radio_'+(index+1) + (typeIndex + 1)"
-                                    style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"
-                                    :value="item"
-                                    v-model="tab.itemAssetType"
-                                    @change="storageStore.resetUnitCount('tab',index)"
-                                  />
-                                  <label
-                                    class="form-check-label check_box"
-                                    :for="'radio_'+(index+1) + (typeIndex + 1)"
-                                    :data-toggle="typeIndex === 1 ? 'tooltip' : null"
-                                    :data-placement="typeIndex === 1 ? 'top' : null"
-                                    :title="typeIndex === 1 ? '註記此資產僅限特定專案出貨所使用' : null"
-                                  >
-                                  {{ item }}
-                                  </label>
-                                </template>
+<template v-for="(item, typeIndex) in DropdownArray.AssetType" :key="'radio' + (typeIndex + 1)">
+  <input type="radio" class="form-check-input check_box" :id="'radio_'+(index+1) + (typeIndex + 1)" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" :value="item" v-model="tab.itemAssetType" @change="storageStore.resetUnitCount('tab',index)"
+  />
+  <label class="form-check-label check_box" :for="'radio_'+(index+1) + (typeIndex + 1)" :data-toggle="typeIndex === 1 ? 'tooltip' : null" :data-placement="typeIndex === 1 ? 'top' : null" :title="typeIndex === 1 ? '註記此資產僅限特定專案出貨所使用' : null">
+                                    {{ item }}
+                                    </label>
+</template>
                               </div>
                           </div>
                       </div>
@@ -350,10 +343,11 @@
                               <div class="dropdown">
                                 <select class="form-select" id="floatingSelect" v-model="tab.itemCategory_Id">
                                   <option v-if="tab.EquipCategoryArray.length == 0" value="">--請先選擇設備總類--</option>
-                                  <template v-else>
-                                    <option value="">--請選擇--</option>
-                                    <option v-for="option in tab.EquipCategoryArray" :value="option.Id">{{ option.Name }}</option>
-                                  </template>
+<template v-else>
+  <option value="">
+    --請選擇--</option>
+  <option v-for="option in tab.EquipCategoryArray" :value="option.Id">{{ option.Name }}</option>
+</template>
                                 </select>
                               </div>
                           </div>
@@ -408,16 +402,23 @@
                       </div>
                   </div>
                   <!-- 頁籤選購金額 -->
-                  <div class="col">
-                      <div class="input-group mb-3">
-                          <div class="input-group-prepend">選購金額 :</div>
-                          NT$
-                          <input class="" type="number" v-model="tab.itemPrice"> 
-                          <div>
-                              / 每包裝單位 <span v-show="tab.itemAssetType==='耗材'">(NT${{ (tab.itemPrice / tab.itemCount).toFixed(2) }}/每單位)</span>
-                          </div>
-                      </div>
-                  </div>
+                  <div class="row  purchase_amount">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                        <div class="input-group mb-xl-3 mb-lg-3 mb-md-3">
+                            <div class="input-group-prepend">
+                                採購金額 :
+                            </div>
+                            <div class="amount_input">
+                                <span class="symbol">$</span>
+                                <input type="number" class="form-control" v-model="tab.itemPrice"> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                        <span class="note">/每包裝單位<span v-show="tab.itemAssetType==='耗材'">($<span class="purchase_total_amount">{{ (tab.itemPrice / tab.itemCount).toFixed(2) }}</span>/每單位)</span>
+                        </span>
+                    </div>
+                </div>
 
                   <!-- 頁籤 包裝數量 & 包裝單位 -->
                   <div class="row g-0 row_wrap">
@@ -532,27 +533,68 @@
 </template>
    
 <script setup>
-// component
-import view_modal from "@/components/view_modal.vue"
-import VueMultiselect from 'vue-multiselect'
-
-// pinia
-import { useUtilsStore , useAPIStore } from '@/store'
-import { useStorageStore } from '@/store/storage/_index'
-import { useApplyStore } from '@/store/storage/apply.js'
-import { storeToRefs } from "pinia";
-const storageStore = useStorageStore();
-const applyStore = useApplyStore();
-const utilsStore = useUtilsStore();
-const apiStore = useAPIStore();
-const { DropdownArray , upperForm , middleForm , tabData , Type } = storeToRefs(storageStore) ;
-const { hidden } = storeToRefs(applyStore);
+  // component
+  import view_modal from "@/components/view_modal.vue"
+  import VueMultiselect from 'vue-multiselect'
+  // pinia
+  import {
+    useUtilsStore,
+    useAPIStore
+  } from '@/store'
+  import {
+    useStorageStore
+  } from '@/store/storage/_index'
+  import {
+    useApplyStore
+  } from '@/store/storage/apply.js'
+  import {
+    storeToRefs
+  } from "pinia";
+  const storageStore = useStorageStore();
+  const applyStore = useApplyStore();
+  const utilsStore = useUtilsStore();
+  const apiStore = useAPIStore();
+  const {
+    DropdownArray,
+    upperForm,
+    middleForm,
+    tabData,
+    Type
+  } = storeToRefs(storageStore);
+  const {
+    hidden
+  } = storeToRefs(applyStore);
 </script>
    
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
   textarea {
     padding: 5px 10px 30px;
+  }
+  .purchase_amount {
+    align-items: baseline;
+    .input-group {
+      flex-wrap: nowrap;
+      .input-group-prepend {
+        margin-right: 5px;
+      }
+    }
+    .amount_input {
+      display: flex;
+      gap: 0 13px;
+      margin-left: 0;
+    }
+    span {
+      color: white !important;
+    }
+    span.symbol {
+      font-size: 22px;
+    }
+    span.note {
+      margin-left: -2%;
+      font-weight: 700;
+      font-size: 18px;
+    }
   }
   .dropdown {
     #typeDropdown,
@@ -645,54 +687,52 @@ const { hidden } = storeToRefs(applyStore);
       }
     }
   }
-
   .view_icon,
   .trash_icon {
     cursor: pointer
   }
   .options-list {
-              position: absolute;
-              z-index: 99;
-              background-color: white;
-              border: 1px solid #ccc;
-              max-height: 200px;
-              overflow-y: auto;
-              list-style-type: none;
-              padding: 0;
-              margin: 0;
-              width: 100%;
-              top: 40px;
-            }
-            .options-list li {
-              padding: 10px 10px 0;
-              font-size: 18px;
-              cursor: pointer; // &:hover {
-              //   // background: #7893b7;
-              //   // color: white;
-              //   font-weight: 700;
-              // }
-            }
-            .search_section {
-            position: relative;
-            display: flex;
-            flex: 1 1 auto; // width: 100%;
-            
-            input {
-              height: 35px;
-              padding: 10px;
-              border-radius: 5px;
-              border: none;
-            }
-            .input-placeholder {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              color: gray;
-              font-size: 14px;
-              pointer-events: none;
-            }
-          }
+    position: absolute;
+    z-index: 99;
+    background-color: white;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    top: 40px;
+  }
+  .options-list li {
+    padding: 10px 10px 0;
+    font-size: 18px;
+    cursor: pointer; // &:hover {
+    //   // background: #7893b7;
+    //   // color: white;
+    //   font-weight: 700;
+    // }
+  }
+  .search_section {
+    position: relative;
+    display: flex;
+    flex: 1 1 auto; // width: 100%;
+    input {
+      height: 35px;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+    .input-placeholder {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: gray;
+      font-size: 14px;
+      pointer-events: none;
+    }
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       h1 {
@@ -711,7 +751,6 @@ const { hidden } = storeToRefs(applyStore);
       .info_wrap {
         margin: auto;
         width: 800px;
-    
         .input-group-prepend {
           color: white;
           font-weight: 700;
@@ -733,13 +772,13 @@ const { hidden } = storeToRefs(applyStore);
             font-size: 20px;
             margin-bottom: 0;
           }
-          span {
-            @include red_star
-          }
         }
         .content {
           @include content_bg;
-          
+          .purchase_amount .input-group-prepend {
+            margin-right: 5px;
+            width: 170px !important;
+          }
           .input-group-prepend {
             width: 150px;
             white-space: nowrap;
@@ -790,13 +829,13 @@ const { hidden } = storeToRefs(applyStore);
           overflow-y: hidden;
           flex-wrap: nowrap;
           border: none;
-          ::-webkit-scrollbar {
+           ::-webkit-scrollbar {
             height: 6px;
             border: 1px solid rgb(219, 218, 218);
             border-radius: 5px;
             width: 8px;
           }
-          ::-webkit-scrollbar-thumb {
+           ::-webkit-scrollbar-thumb {
             display: block;
             border-radius: 5px;
             background-color: rgb(176, 175, 175);
@@ -875,18 +914,13 @@ const { hidden } = storeToRefs(applyStore);
               align-items: center;
             }
           }
-          
           .input-group {
             flex-wrap: nowrap;
-            span {
-              @include red_star
-            }
             .input-number {
               @include count_btn;
             }
             .form-control {
               height: 35px;
-              border-radius: 0;
             }
             .input-group-prepend {
               color: white;
@@ -928,7 +962,7 @@ const { hidden } = storeToRefs(applyStore);
       .info_wrap {
         margin: auto;
         width: 700px;
-      
+
         .input-group-prepend {
           color: white;
           font-weight: 700;
@@ -957,9 +991,12 @@ const { hidden } = storeToRefs(applyStore);
         .content {
           @include content_bg;
           padding: 17px;
-        
+          .purchase_amount .input-group-prepend {
+                    margin-right: 5px;
+                    width: 140px !important;
+                }
           .input-group-prepend {
-            width: 117px;
+            width: 117px !important;
             white-space: nowrap;
           }
           .check_box_wrap {
@@ -1003,18 +1040,22 @@ const { hidden } = storeToRefs(applyStore);
         }
       }
       .tab_section {
+        .purchase_amount .input-group-prepend {
+                    margin-right: 5px;
+                    width: 170px !important;
+                }
         .nav {
           overflow-x: auto;
           overflow-y: hidden;
           flex-wrap: nowrap;
           border: none;
-          ::-webkit-scrollbar {
+           ::-webkit-scrollbar {
             height: 6px;
             border: 1px solid rgb(219, 218, 218);
             border-radius: 5px;
             width: 8px;
           }
-          ::-webkit-scrollbar-thumb {
+           ::-webkit-scrollbar-thumb {
             display: block;
             border-radius: 5px;
             background-color: rgb(176, 175, 175);
@@ -1030,7 +1071,7 @@ const { hidden } = storeToRefs(applyStore);
           }
           p {
             font-weight: 700;
-            margin-bottom:0;
+            margin-bottom: 0;
             color: white;
             word-break: break-word;
             &::before {
@@ -1088,7 +1129,6 @@ const { hidden } = storeToRefs(applyStore);
               align-items: center;
             }
           }
-        
           .input-group {
             flex-wrap: nowrap;
             span {
@@ -1099,7 +1139,6 @@ const { hidden } = storeToRefs(applyStore);
             }
             .form-control {
               height: 35px;
-              border-radius: 0;
             }
             .input-group-prepend {
               color: white;
@@ -1125,6 +1164,12 @@ const { hidden } = storeToRefs(applyStore);
   }
   @media only screen and (max-width: 767px) {
     .main_section {
+      .purchase_amount{
+        margin-bottom:16px;
+        .amount_input{
+          margin-bottom: 5px;
+        }
+      }
       h1 {
         margin-top: 50px;
         text-align: center;
@@ -1175,7 +1220,6 @@ const { hidden } = storeToRefs(applyStore);
               margin-right: 10px;
             }
           }
-        
           .dropdown {
             .dropdown-menu {
               width: 100%;
@@ -1225,7 +1269,6 @@ const { hidden } = storeToRefs(applyStore);
             justify-content: flex-end;
           }
         }
-      
       }
       .tab_section {
         .nav {
@@ -1233,13 +1276,13 @@ const { hidden } = storeToRefs(applyStore);
           overflow-y: hidden;
           flex-wrap: nowrap;
           border: none;
-          ::-webkit-scrollbar {
+           ::-webkit-scrollbar {
             height: 6px;
             border: 1px solid rgb(219, 218, 218);
             border-radius: 5px;
             width: 8px;
           }
-          ::-webkit-scrollbar-thumb {
+           ::-webkit-scrollbar-thumb {
             display: block;
             border-radius: 5px;
             background-color: rgb(176, 175, 175);
@@ -1305,7 +1348,6 @@ const { hidden } = storeToRefs(applyStore);
               align-self: self-start;
             }
           }
-      
           .dropdown {
             margin-left: unset !important;
             margin-top: 5px;
@@ -1338,7 +1380,6 @@ const { hidden } = storeToRefs(applyStore);
             .form-control {
               height: 35px;
               width: 100%;
-              border-radius: 0;
               margin-left: unset !important;
               margin-top: 5px;
             }

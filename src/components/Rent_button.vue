@@ -9,7 +9,7 @@
 // import router from '@/router';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { Rent_Edit_Status } from '@/assets/js/enter_status';
+import { Rent_Edit_Status , Quick_Rent_Status } from '@/assets/js/enter_status';
 
 
 export default {
@@ -17,6 +17,7 @@ export default {
   setup(props) {
     const router = useRouter();
     const search_id = props.params.data.AO_ID;
+    const status = props.params.data.Status;
     const isDisabled = ref(false);
 
     onMounted(()=> {
@@ -25,7 +26,8 @@ export default {
     function viewDetails() {
       // console.log(props.params.data.AI_ID);
       if (search_id !== '') {
-        router.push({ name: 'Rent_View', query: { search_id } });
+        let route_name = Quick_Rent_Status.includes(status) ? 'Quick_Rent_View' : 'Rent_View'
+        router.push({ name: route_name, query: { search_id } });
       }
     }
 
@@ -37,8 +39,7 @@ export default {
     }
 
     function checkButton() {
-      const disabledStatus = props.params.data.Status;
-      if(!Rent_Edit_Status.includes(disabledStatus)) {
+      if(!Rent_Edit_Status.includes(status)) {
         isDisabled.value = true;
       }
     }
