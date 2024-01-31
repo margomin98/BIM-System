@@ -207,7 +207,7 @@
                         <asset-view-btn :params="slotProps" />
                     </template>
                 </Column>
-                <Column field="Number" header="選擇數量" sortable style="{'min-width': '100px';}"></Column>
+                <Column field="OM_Number" header="選擇數量" sortable style="{'min-width': '100px';}"></Column>
                 <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
               </DataTable>
             </div>

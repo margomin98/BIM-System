@@ -25,18 +25,19 @@ const add = () => {
     return;
   }
   // 將物品加入，更新下方清單
+  // 出庫數量看的是OM_Number，所以從搜尋拉下來要將OM_Number替換成剛剛所選的數量
   let exist = false;
-  const data = props.params.data;
+  let data = props.params.data;
   rentStore.Form.ItemList.forEach(item=>{
     if(item.AssetsId === data.AssetsId) {
-      item.Number += data.selectNumber
+      item.OM_Number += data.selectNumber
       exist = true; 
     }
   })
   if(!exist) {
+    data.OM_Number = data.selectNumber;
     rentStore.Form.ItemList.splice(0,0,{
       ...data,
-      Number: data.selectNumber
     });
   }
   quickrentStore.searchInventory('','');
