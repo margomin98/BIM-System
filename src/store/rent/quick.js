@@ -82,20 +82,8 @@ export const useQuickRentStore = defineStore('QuickRent', {
         alert('請至少出庫一項資產');
         return
       }
-      const form = new FormData;
-      for(const key in rentStore.Form) {
-        if(rentStore.Form[key]) {
-          if(key === 'ItemList') {
-            for(const item of rentStore.Form[key]) {
-              form.append(key, JSON.stringify(item));
-            }
-          } else {
-            form.append(key,rentStore.Form[key]);
-          }
-        }
-      }
       try {
-        const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/ExpressAssetsOut',form);
+        const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/ExpressAssetsOut',rentStore.Form);
         const data = response.data ; 
         if(data.state === 'success') {
           alert(`${data.messages}\n單號:${data.resultList.AO_ID}`);
