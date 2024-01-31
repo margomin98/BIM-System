@@ -1,6 +1,6 @@
 <template>
       <Navbar />
-    <ConfirmModal/>
+    <ConfirmModal :function="quickrentStore.submit" :text="warningText"/>
     <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -16,63 +16,63 @@
                             <!-- 設備總類 -->
                             <div class='col'>
                                 <p>設備總類</p>
-                                <select class="form-select" v-model="selectedEquipType">
-                          <option value="">請選擇</option>
-                          <option value="equipType1">設備類型1</option>
-                          <option value="equipType2">設備類型2</option>
-                        </select>
+                                <select class="form-select" v-model="searchParams.EquipType_Id" @change="async()=>{searchParams.Category_Id = ''; DropdownArray.EquipCategory = await apiStore.getEquipCategory(searchParams.EquipType_Id)}">
+                                    <option value="">--請選擇--</option>
+                                    <option v-for="option in DropdownArray.EquipType" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
+                                </select>
                             </div>
                             <!-- 設備分類 -->
                             <div class='col'>
                                 <p>設備分類</p>
-                                <select class="form-select" v-model="selectedEquipCategory">
-                          <option value="">請選擇</option>
-                          <option value="equipCategory1">設備分類1</option>
-                          <option value="equipCategory2">設備分類2</option>
-                        </select>
+                                <select class="form-select" v-model="searchParams.Category_Id">
+                                    <option v-if="DropdownArray.EquipCategory.length === 0" value="">--請先選擇設備總類--</option>
+                                    <template v-else>
+                                        <option value="">--請選擇--</option>
+                                        <option v-for="option in DropdownArray.EquipCategory" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
+                                    </template>
+                                </select>
                             </div>
                             <!-- 儲位區域 -->
                             <div class='col'>
                                 <p>儲位區域</p>
-                                <select class="form-select" v-model="selectedArea">
-                          <option value="">請選擇</option>
-                          <option value="area1">儲位區域1</option>
-                          <option value="area2">儲位區域2</option>
-                        </select>
+                                <select class="form-select" v-model="searchParams.Area_Id" @change="async()=>{searchParams.Layer_Id = ''; DropdownArray.Layer = await apiStore.getLayer(searchParams.Area_Id)}">
+                                    <option value="">--請選擇--</option>
+                                    <option v-for="option in DropdownArray.Area" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
+                                </select>
                             </div>
                             <!-- 儲位櫃位 -->
                             <div class='col'>
                                 <p>儲位櫃位</p>
-                                <select class="form-select" v-model="selectedCabinet">
-                          <option value="">請選擇</option>
-                          <option value="cabinet1">儲位櫃位1</option>
-                          <option value="cabinet2">儲位櫃位2</option>
-                        </select>
+                                <select class="form-select" v-model="searchParams.Layer_Id">
+                                    <option v-if="DropdownArray.Layer.length === 0" value="">--請先選擇儲位區域--</option>
+                                    <template v-else>
+                                        <option value="">--請選擇--</option>
+                                        <option v-for="option in DropdownArray.Layer" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
+                                    </template>
+                                </select>
                             </div>
                             <!-- 專案代碼 -->
                             <div class='col'>
                                 <p>專案代碼</p>
-                                <select class="form-select" v-model="selectedCabinet">
-                          <option value="">請選擇</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                        </select>
+                                <vue-multiselect v-model="searchParams.ProjectSelect" :options="DropdownArray.ProjectCode" 
+                                :allow-empty="true"  :max-height="300" placeholder="請選擇" label="Text" :showLabels="false" track-by="Text" 
+                                :show-no-results="false" @select="rentStore.onSearchProjectSelect" @close="rentStore.onSearchProjectUnselect">
+                                </vue-multiselect>
                             </div>
                             <!-- 資產編號 -->
                             <div class='col'>
                                 <p>資產編號</p>
-                                <input type="text" class="form-control text-center" placeholder="(明確查詢)" v-model="itemName" />
+                                <input type="text" class="form-control text-center" placeholder="BFXXXXXXXX" v-model="searchParams.AssetsId" />
                             </div>
                             <!-- 物品名稱 -->
                             <div class='col'>
                                 <p>物品名稱</p>
-                                <input type="text" class="form-control text-center" placeholder="(模糊查詢)" v-model="itemName" />
+                                <input type="text" class="form-control text-center" placeholder="最多輸入10字" v-model="searchParams.AssetName" />
                             </div>
                         </div>
                         <div class='col d-flex justify-content-center'>
-                            <button class="btn submit_btn" type="button" @click="searchInventory('','search')">搜尋</button>
-                            <button class="btn submit_btn" style="margin-left: 0.5rem;" type="button" @click="clear">清空</button>
-                            <button class="btn add_btn" style="margin-left: 0.5rem;" type="button" data-bs-dismiss="modal" @click="addList">加入</button>
+                            <button class="btn submit_btn" type="button" @click="quickrentStore.searchInventory('','search')">搜尋</button>
+                            <button class="btn submit_btn" style="margin-left: 0.5rem;" type="button" @click="resetParams">清空</button>
                         </div>
                     </div>
                 </div>
@@ -81,20 +81,30 @@
                         <p>目前資產庫存（請優先選擇存貨）</p>
                     </div>
                 </div>
-                <!-- <DataTable lazy :first="datagrid1.first" :size="'small'" :loading="datagrid1.loading" :value="rowData1" :sort-field="datagrid1.sortField" :sort-order="datagrid1.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="510px"
-                                        @page="searchInventory($event , 'page')" @sort="searchInventory($event , 'sort')" v-model:selection="datagrid1.selectedList" :selectAll="datagrid1.selectAll" @select-all-change="onSelectAll" @row-unselect="onRowUnselect" paginator :rows="10"
-                                        :totalRecords="datagrid1.totalRecords" paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
-                                        <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-                                        <Column style="min-width: 60px;">
-                                            <template #body="slotProps">
-                          <List_view_button :params="slotProps" />
-</template>
-              </Column>
-              <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
-              </DataTable> -->
+                <DataTable lazy :key="datagrid1.key" :first="datagrid1.first" :size="'small'" :loading="datagrid1.loading" :value="rowData1" :sort-field="datagrid1.sortField" :sort-order="datagrid1.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="510px"
+                @page="quickrentStore.searchInventory($event , 'page')" @sort="quickrentStore.searchInventory($event , 'sort')" paginator :rows="10"
+                :totalRecords="datagrid1.totalRecords" paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+                <Column style="min-width: 60px;">
+                    <template #body="slotProps">
+                        <asset-view-btn :params="slotProps" />
+                    </template>
+                </Column>
+                <Column style="min-width: 60px" header="選擇">
+                    <template #body="slotProps">
+                        <!-- <Storage_add :params="slotProps" :selectedNumber="searchParams.selectedNumber" :Number="searchParams.Number" @addMaterial="addMaterial" /> -->
+                        <quick_add_btn :params="slotProps" />
+                    </template>
+                </Column>
+                <Column style="min-width: 80px" header="數量">
+                    <template #body="slotProps">
+                    <Storage_number :params="slotProps" />
+                    </template>
+                </Column>
+                <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+              </DataTable>
             </div>
           </div>
-        </div>
+    </div>
     <div class="main_section">
       
         <div class="title col">
@@ -106,12 +116,12 @@
             <div class="fixed_info">
                 <div>
                     <p>
-                        申請人員 : {{ Applicant }}
+                        申請人員 : {{ utilsStore.userName }}
                     </p>
                 </div>
                 <div>
                     <p>
-                        申請入庫日期 : {{ ApplicationDate }}
+                        申請入庫日期 : {{ utilsStore.today }}
                     </p>
                 </div>
             </div>
@@ -124,14 +134,12 @@
                                 <span>*</span>用途 :
                             </div>
                             <div class="d-flex align-items-center radio_wrap">
-                                <input type="radio" class="form-check-input check_box" id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="内部領用" name="radioGroup" />
-                                <label class="form-check-label check_box" for="radio1">内部領用</label>
-                                <input type="radio" class="form-check-input check_box" id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="借測" name="radioGroup" />
-                                <label class="form-check-label check_box" for="radio2">借測</label>
-                                <input type="radio" class="form-check-input check_box" id="radio3" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="出貨" name="radioGroup" />
-                                <label class="form-check-label check_box" for="radio3">出貨</label>
-                                <input type="radio" class="form-check-input check_box" id="radio4" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="退貨" name="radioGroup" />
-                                <label class="form-check-label check_box" for="radio4">退貨</label>
+                                <template v-for="(option , index) in rentStore.DropdownArray.Use" :key="option">
+                                    <div class="form-check d-flex align-items-center">
+                                        <input type="radio" class="form-check-input check_box" :id="'radio'+index" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" :value="option" v-model="Form.Use" />
+                                        <label class="form-check-label check_box" :for="'radio'+index">{{ option }}</label>
+                                    </div>
+                                </template>
                             </div>
                         </div>
                     </div>
@@ -140,11 +148,10 @@
                 <div class="col-xl-5 col-lg-5 col-md-5 col">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend"> <span>*</span>領用人員 :</div>
-                        <select class="form-select" v-model="selectedKeeper">
-                        <option value="">請選擇</option>
-                        <option value="Michal">Michal</option>
-                        <option value="Michelle">Michelle</option>
-                      </select>
+                        <select class="form-select" v-model="Form.Recipient">
+                            <option value="">--請選擇--</option>
+                            <option v-for="option in DropdownArray.Recipient" :value="option">{{ option }}</option>
+                        </select>
                     </div>
                 </div>
                 <!-- 專案代碼 -->
@@ -154,14 +161,10 @@
                             <span>*</span>專案代碼 :
                         </div>
                         <div class="option_section">
-                            <div>
-                                <input @input="handleInput" @focus="handleInput" @blur="handleBlur" v-model="searchTerm" type="text" class="form-control" placeholder="請選擇" />
-                                <ul v-if="showDropdown" class="options-list">
-                                    <li v-for="(option, index) in filteredOptions" :key="index" @click="selectItem(option)">
-                                        {{ option.name }}
-                                    </li>
-                                </ul>
-                            </div>
+                            <vue-multiselect v-model="Form.ProjectSelect" :options="DropdownArray.ProjectCode" 
+                                :allow-empty="true"  :max-height="300" placeholder="請選擇" label="Text" :showLabels="false" track-by="Text" 
+                                :show-no-results="false" @select="rentStore.onProjectSelect" @close="rentStore.onProjectUnselect">
+                                </vue-multiselect>
                         </div>
                     </div>
                 </div>
@@ -170,18 +173,18 @@
                 <div class="col mb-3">
                     <div class="input-group">
                         <div class="input-group-prepend">説明 :</div>
-                        <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入100字" v-model="Memo"></textarea>
+                        <textarea style="height: 200px;" class="form-control" placeholder="最多輸入100字" v-model="Form.Description"></textarea>
                     </div>
                 </div>
             </div>
            
         </div>
          <div class="info_wrap">
-            <button class="add_btn" data-bs-toggle="modal" data-bs-target="#exampleModal" >新增出庫資產</button>
+            <button class="add_btn" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="updateProjectCode" >新增出庫資產</button>
             <div class="fixed_info">
                 <div>
                     <p>
-                        資產出庫細項
+                        <span>*</span>資產出庫細項(請至少出庫一項)
                     </p>
                 </div>
                 <div class="prepare_amount">
@@ -191,69 +194,96 @@
                 </div>
             </div>
             <div class="content">
-            12
+                <DataTable :size="'small'" :value="Form.AssetList" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="510px"
+                paginator :rows="10" paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+                currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+                <Column style="min-width: 60px;">
+                    <template #body="slotProps">
+                        <delete_btn :function="quickrentStore.deleteItemFromAssetList" :parameter1="slotProps.data.AssetsId" />
+                    </template>
+                </Column>
+                <Column style="min-width: 60px;">
+                    <template #body="slotProps">
+                        <asset-view-btn :params="slotProps" />
+                    </template>
+                </Column>
+                <Column field="Number" header="選擇數量" sortable style="{'min-width': '100px';}"></Column>
+                <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+              </DataTable>
             </div>
             </div>
             <div class="col button_wrap">
             <button class="back_btn" @click="goBack">回上一頁</button>
-      <button class="send_btn" @click="store.submit()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">送出</button>
+      <button class="send_btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">送出</button>
       </div>
     </div>
 </template>
 
-<script>
-    import ConfirmModal from '@/components/Confirm_modal.vue'
-    import Navbar from '@/components/Navbar.vue';
-    export default {
-        components: {
-            Navbar,
-            ConfirmModal
-        },
-        data() {
-            return {
-                searchTerm: "",
-                dropdownOptions: [], // Array to store all options
-                showDropdown: false,
-            };
-        },
-        computed: {
-            filteredOptions() {
-                // Filter options based on searchTerm
-                return this.dropdownOptions.filter(option =>
-                    option.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-                );
-            },
-        },
-        methods: {
-            handleInput() {
-                // Perform search and update dropdownOptions based on searchTerm
-                // For demo purposes, using random data
-                this.dropdownOptions = this.generateRandomData();
-                this.showDropdown = true; // Always show dropdown when input is focused
-            },
-            selectItem(item) {
-                // Handle selection of an item from the dropdown
-                // For example, you can set the selected item to the input field
-                this.searchTerm = item.name;
-                this.showDropdown = false;
-            },
-            handleBlur() {
-                // Close the dropdown when input loses focus
-                this.showDropdown = false;
-            },
-            generateRandomData() {
-                // Function to generate random data for demo purposes
-                const data = [];
-                for (let i = 0; i < 5; i++) {
-                    data.push({
-                        id: i,
-                        name: `Item ${i}`
-                    });
-                }
-                return data;
-            },
-        },
-    }
+<script setup>
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import ConfirmModal from '@/components/Confirm_modal.vue';
+import Navbar from '@/components/Navbar.vue';
+import AssetViewBtn from '@/components/utils/asset_view_btn.vue'
+import delete_btn from '@/components/utils/delete_btn.vue';
+import quick_add_btn from "@/components/quick_rent_page/quick_add_btn.vue";
+import Storage_number from "@/components/Storage_number_input"
+import VueMultiselect from 'vue-multiselect'
+import { useAPIStore, useUtilsStore } from '@/store';
+import { useRentStore } from '@/store/rent/_index'
+import { storeToRefs } from 'pinia';
+import { computed, onMounted, reactive, ref } from 'vue';
+import { useQuickRentStore } from '@/store/rent/quick';
+const utilsStore = useUtilsStore();
+const apiStore = useAPIStore();
+const rentStore = useRentStore();
+const quickrentStore = useQuickRentStore();
+const { Form , DropdownArray , searchParams, datagrid1, datagrid1field, rowData1 } = storeToRefs(rentStore);
+
+const warningText = '按下確認後將無法再次變更，請確認是否正確填寫出庫項目';
+onMounted(async ()=>{
+    utilsStore.$reset();
+    rentStore.$reset();
+    DropdownArray.value.ProjectCode = [
+        {Text: '專案1', Value: '0001'},
+        {Text: '專案2', Value: '0002'},
+        {Text: '專案3', Value: '0003'},
+        {Text: '專案4', Value: '0004'},
+        {Text: '專案5', Value: '0005'}
+    ]
+    DropdownArray.value.Recipient = await apiStore.getCustodian('');
+    DropdownArray.value.EquipType = await apiStore.getEquipType();
+    DropdownArray.value.Area = await apiStore.getArea();
+    // DropdownArray.value.ProjectCode = await apiStore.getFuzzyProject();
+    datagrid1.value.sortField = ''
+    datagrid1field.value = [
+        { field: "OM_Unit",  width: '100px',  header: "單位" },
+        { field: "AssetType",  width: '60',  header: "類型" },
+        { field: "AssetsId", width: '150px', header: "資產編號" },
+        { field: "AssetName", width: '150px', header: "物品名稱" },
+        { field: "ProductType", width: '150px', header: "型號" },
+        { field: "ProductSpec", width: '150px', header: "規格" },
+        { field: "VendorName", width: '150px', header: "廠商" },
+        { field: "AreaName", width: '150px', header: "儲位區域" },
+        { field: "LayerName", width: '150px', header: "儲位櫃位" }
+    ]
+})
+
+
+const searchTerm = ref('');
+const dropdownOptions = ref([]);
+const showDropdown = ref(false);
+
+const updateProjectCode = ()=>{
+    searchParams.value.ProjectCode = Form.value.ProjectCode;
+    searchParams.value.ProjectSelect = Form.value.ProjectSelect;
+    quickrentStore.searchInventory('','search');
+}
+
+const resetParams = ()=>{
+    quickrentStore.clear();
+    quickrentStore.searchInventory('','search');
+}
 </script>
 <style lang="scss" scoped>
     @import '@/assets/css/global.scss';

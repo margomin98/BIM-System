@@ -21,12 +21,14 @@
     RentProcess_New_Status, 
     RentProcess_NotifyConfirm_Status ,
     RentProcess_Confirm_Status, 
+    Quick_Rent_Status
   } from '@/assets/js/enter_status';
   export default {
     props: ["params", "refresh"],
     setup(props,{emit}) {
       const router = useRouter();
       const search_id = props.params.data.AO_ID;
+      const status = props.params.data.Status;
       const deliveryNotify = ref(true);
       const isDisabled = reactive({
         deliveryNotify: false, //通知交付
@@ -36,12 +38,8 @@
       function routeTo(view) {
         switch (view) {
           case "檢視":
-            router.push({
-              name: "Rent_Process_View",
-              query: {
-                search_id,
-              },
-            });
+            let route_name = Quick_Rent_Status.includes(status) ? 'Quick_Rent_View' : 'Rent_Process_View'
+            router.push({ name: route_name, query: { search_id } });
             break;
           case "備料":
             router.push({
@@ -80,14 +78,13 @@
         }
       }
       function checkButton() {
-        const disabledStatus = props.params.data.Status;
-        if (!RentProcess_New_Status.includes(disabledStatus)) {
+        if (!RentProcess_New_Status.includes(status)) {
           isDisabled.new = true;
         }
-        if (!RentProcess_NotifyConfirm_Status.includes(disabledStatus)) {
+        if (!RentProcess_NotifyConfirm_Status.includes(status)) {
           isDisabled.deliveryNotify = true;
         }
-        if (!RentProcess_Confirm_Status.includes(disabledStatus)) {
+        if (!RentProcess_Confirm_Status.includes(status)) {
           isDisabled.delivery = true;
         }
       }

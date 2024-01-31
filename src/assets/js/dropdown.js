@@ -8,7 +8,7 @@ export const Store_StatusArray = ['申請入庫', '申請歸還', '可交付', '
 export const Store_Process_DateTypeArray = ['申請入庫日期' , '交付日期' , '入庫日期']
 // 出庫管理
 export const Rent_UseArray = ['內部領用', '借測', '出貨', '退貨'];
-export const Rent_StatusArray = ['已填報', '待審核', '待交付', '可交付', '部分交付', '已交付' , '審核不通過' ];
+export const Rent_StatusArray = ['已填報', '待審核', '待交付', '可交付', '部分交付', '已交付' , '審核不通過', '快速出庫完成' ];
 export const Rent_Process_DateCategory = ['申請日期', '出庫日期', '備料日期', '審核日期'];
 export const Rent_Review_DateCategory = ['申請日期', '審核日期'];
 export const Rent_Review_UseArray = ['出貨', '退貨'];
