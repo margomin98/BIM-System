@@ -17,7 +17,9 @@ display: flex;
 body{
 	min-height:100vh;
 }
-
+#brandingLogo{
+  display: none !important;
+}
 	.ag-chart-no-data-overlay {
 		display: flex;
 		justify-content: center;
