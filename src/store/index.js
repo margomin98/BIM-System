@@ -604,11 +604,7 @@ export const useAPIStore = defineStore('API',{
       let apiurl = baseUrl + url;
       try {
         const token = await this.GetAntiForgeryToken();
-        const response = await axios.post(apiurl, form, {
-          headers: { 
-            'RequestVerificationToken': token,
-          }
-        });
+        const response = await axios.post(apiurl, form);
         const data = response.data;
         if (data.state === 'success') {
           console.log('datagrid', data.resultList);
