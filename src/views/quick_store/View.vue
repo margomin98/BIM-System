@@ -19,7 +19,7 @@ import quick_store_view_component from '@/components/quick_store_page/quick_stor
 import { useStorageStore } from '@/store/storage/_index'
 import { useAPIStore, useUtilsStore } from '@/store';
 import { useQuickProcessStore } from '@/store/storage/quick_process'
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 const storageStore = useStorageStore();
@@ -42,6 +42,13 @@ onMounted(async() => {
 //   DropdownArray.value.ProjectCode = await apiStore.getFuzzyProject();
 //   console.log(DropdownArray.value);
 });
+
+onUnmounted(()=>{
+    utilsStore.$dispose();
+    storageStore.$dispose();
+    quickprocessStore.$dispose();
+    apiStore.$dispose();
+})
 </script>
   
 <style lang="scss" scoped>

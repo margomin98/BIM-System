@@ -55,8 +55,8 @@
                             <div class='col'>
                                 <p>專案代碼</p>
                                 <vue-multiselect v-model="searchParams.ProjectSelect" :options="DropdownArray.ProjectCode" 
-                                :allow-empty="true"  :max-height="300" placeholder="請選擇" label="Text" :showLabels="false" track-by="Text" 
-                                :show-no-results="false" @select="rentStore.onSearchProjectSelect" @close="rentStore.onSearchProjectUnselect">
+                                :allow-empty="false"  :max-height="300" placeholder="請選擇" label="Text" :showLabels="false" track-by="Text" 
+                                :show-no-results="false" @select="rentStore.onSearchProjectSelect">
                                 </vue-multiselect>
                             </div>
                             <!-- 資產編號 -->
@@ -162,8 +162,8 @@
                         </div>
                         <div class="option_section">
                             <vue-multiselect v-model="Form.ProjectSelect" :options="DropdownArray.ProjectCode" 
-                                :allow-empty="true"  :max-height="300" placeholder="請選擇" label="Text" :showLabels="false" track-by="Text" 
-                                :show-no-results="false" @select="rentStore.onProjectSelect" @close="rentStore.onProjectUnselect">
+                                :allow-empty="false"  :max-height="300" placeholder="請選擇" label="Text" :showLabels="false" track-by="Text" 
+                                :show-no-results="false" @select="rentStore.onProjectSelect">
                                 </vue-multiselect>
                         </div>
                     </div>
@@ -232,7 +232,7 @@ import VueMultiselect from 'vue-multiselect'
 import { useAPIStore, useUtilsStore } from '@/store';
 import { useRentStore } from '@/store/rent/_index'
 import { storeToRefs } from 'pinia';
-import { computed, onMounted, reactive, ref } from 'vue';
+import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
 import { useQuickRentStore } from '@/store/rent/quick';
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();
@@ -268,12 +268,11 @@ onMounted(async ()=>{
         { field: "LayerName", width: '150px', header: "儲位櫃位" }
     ]
 })
-
-
-const searchTerm = ref('');
-const dropdownOptions = ref([]);
-const showDropdown = ref(false);
-
+onUnmounted(()=>{
+    utilsStore.$dispose();
+    rentStore.$dispose();
+    apiStore.$dispose();
+})
 const updateProjectCode = ()=>{
     searchParams.value.ProjectCode = Form.value.ProjectCode;
     searchParams.value.ProjectSelect = Form.value.ProjectSelect;

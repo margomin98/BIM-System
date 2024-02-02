@@ -407,12 +407,20 @@ import { useUtilsStore , useAPIStore } from '@/store'
 import { useStorageStore } from '@/store/storage/_index'
 import { storeToRefs } from "pinia";
 import { useQuickProcessStore } from "@/store/storage/quick_process";
+import { onUnmounted } from "vue";
 const storageStore = useStorageStore();
 const utilsStore = useUtilsStore();
 const quickprocessStore = useQuickProcessStore();
 const apiStore = useAPIStore();
 const { DropdownArray , upperForm , middleForm , tabData , Type , hidden } = storeToRefs(storageStore) ;
 
+
+onUnmounted(()=>{
+    quickprocessStore.$dispose();
+    storageStore.$dispose();
+    utilsStore.$dispose();
+    apiStore.$dispose();
+})
 </script>
 
 <style lang="scss" scoped>

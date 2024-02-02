@@ -1,44 +1,37 @@
 <template>
   <Navbar />
   <div class="main_section">
-    <div class="title col"><h1>編輯入庫</h1></div>
-    <Store_Component></Store_Component>
+    <div class="title col"><h1>檢視出貨簽收單</h1></div>
+    <ship_receive></ship_receive>
     <div class="col button_wrap">
       <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
-      <button class="send_btn" @click="applyStore.submit('edit')">送出</button>
     </div>
   </div>
 </template>
 
 <script setup>
-import Store_Component from '@/components/store_page/store_component';
-import Navbar from '@/components/Navbar.vue';
-import { useStorageStore } from '@/store/storage/_index'
+import ship_receive from '@/components/ship_receive_page/ship_receive.vue';
+import Navbar from "@/components/Navbar.vue";
+import { useRentStore } from '@/store/rent/_index';
 import { useAPIStore, useUtilsStore } from '@/store';
-import { useApplyStore } from '@/store/storage/apply'
-import { onMounted, onUnmounted } from 'vue';
 import { storeToRefs } from 'pinia';
+import { onMounted , onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { Store_Edit_Status } from '@/assets/js/enter_status';
-const storageStore = useStorageStore();
-const applyStore = useApplyStore();
+const rentStore = useRentStore();
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();
-// 解構
-const { DropdownArray } = storeToRefs(storageStore) ;
 const route = useRoute();
-const AI_ID = route.query.search_id ;
-onMounted(async()=>{
-  applyStore.$reset();
-  storageStore.$reset();
-  DropdownArray.value.EquipType = await apiStore.getEquipType();
-  DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();
-  await storageStore.getDetails(AI_ID, false, Store_Edit_Status, false);
-})
+const AO_ID = route.query.search_id;
+onMounted(()=>{
+  rentStore.$reset();
+  utilsStore.$reset();
+  apiStore.$reset();
+  rentStore.PageType = 'ShipReceiveView'
+  rentStore.getDetails(AO_ID);
+});
 onUnmounted(()=>{
+  rentStore.$dispose();
   utilsStore.$dispose();
-  storageStore.$dispose();
-  applyStore.$dispose();
   apiStore.$dispose();
 })
 </script>
@@ -59,7 +52,7 @@ onUnmounted(()=>{
 
 .button_wrap {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin: 30px auto 5%;
   width: 220px;
 }

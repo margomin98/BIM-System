@@ -32,7 +32,7 @@ export const useQuickRentStore = defineStore('QuickRent', {
       useUtilsStore().clearSearchParams(rentStore.searchParams);
       rentStore.DropdownArray.EquipCategory = [];
       rentStore.DropdownArray.Layer = [];
-      rentStore.searchParams.ProjectSelect = {};
+      rentStore.searchParams.ProjectSelect = { Text: '--請選擇--',Value: '' };
     },
     // 按下查詢
     async searchInventory(event, type) {

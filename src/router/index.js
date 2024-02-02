@@ -42,6 +42,7 @@ import Quick_Rent_View from "../views/quick_rent/View.vue";
 // 出貨簽收
 import Ship_Receive_Datagrid from "../views/ship_receive/Datagrid.vue";
 import Ship_Receive_Confirm from "../views/ship_receive/Confirm.vue";
+import Ship_Receive_View from "../views/ship_receive/View.vue";
 
 // 出貨簽收
 
@@ -317,13 +318,19 @@ const routes = [
     path: "/ship_receive_datagrid",
     name: "Ship_Receive_Datagrid",
     component: Ship_Receive_Datagrid,
-    // meta: {auth: true, request: 'AO_Detail'},
+    meta: {auth: true, request: 'SR_Mgr'},
   },
   {
     path: "/ship_receive_confirm",
     name: "Ship_Receive_Confirm",
     component: Ship_Receive_Confirm,
-    // meta: {auth: true, request: 'AO_Detail'},
+    meta: {auth: true, request: 'SR_Upload'},
+  },
+  {
+    path: "/ship_receive_view",
+    name: "Ship_Receive_View",
+    component: Ship_Receive_View,
+    meta: {auth: true, request: 'SR_Detail'},
   },
   {
     path: "/case_purchase_datagrid",
