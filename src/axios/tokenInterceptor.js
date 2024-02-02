@@ -7,12 +7,12 @@ axios.interceptors.request.use(
     if (config.method === 'post') {
       if(config.url !== '/Manage/GetAntiForgeryToken') {
         const token = await GetAntiForgeryToken();
-        console.log('攔截取得token成功',token);
+        // console.log('攔截取得token成功',token);
         // 將 token 放入請求的 header 中
         config.headers['RequestVerificationToken'] = token;
       }
     }
-    console.log('攔截後config',config);
+    // console.log('攔截後config',config);
     return config;
   },
   error => {
