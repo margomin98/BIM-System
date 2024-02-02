@@ -20,7 +20,7 @@ import { useAPIStore, useUtilsStore } from '@/store';
 import { onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import axios from 'axios';
+import axios from '@/axios/tokenInterceptor'
 import router from '@/router';
 const rentStore = useRentStore();
 const utilsStore = useUtilsStore();
