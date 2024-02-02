@@ -373,6 +373,7 @@
     } from "@/store/asset/edit";
     import {
         onMounted,
+        onUnmounted,
         ref
     } from 'vue';
     import {
@@ -410,6 +411,13 @@
     } = storeToRefs(assetStore);
     onMounted(() => {
         register();
+    })
+    onUnmounted(()=>{
+      apiStore.$dispose();
+      utilsStore.$dispose();
+      editStore.$dispose();
+      assetStore.$dispose();
+      storageStore.$dispose();
     })
     const openFileExplorer = () => {
         fileInput.value.click();

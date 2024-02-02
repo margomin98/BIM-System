@@ -13,32 +13,37 @@
 <script setup>
 import Navbar from "@/components/Navbar.vue";
 import assets_component from "@/components/assets_page/assets_component.vue";
-    import { useAssetStore } from "@/store/asset/_index";
-    import { useAPIStore, useUtilsStore } from '@/store';
-    // import { useEditStore } from "@/store/asset/edit";
-    import { onMounted } from 'vue';
-    import { storeToRefs } from 'pinia';
-    import { useRoute } from 'vue-router';
-    const utilsStore = useUtilsStore();
-    const apiStore = useAPIStore();
-    const assetStore = useAssetStore();
+import { useAssetStore } from "@/store/asset/_index";
+import { useAPIStore, useUtilsStore } from '@/store';
+// import { useEditStore } from "@/store/asset/edit";
+import { onMounted, onUnmounted } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useRoute } from 'vue-router';
+const utilsStore = useUtilsStore();
+const apiStore = useAPIStore();
+const assetStore = useAssetStore();
 
-    // 解構
-    const { DropdownArray } = storeToRefs(assetStore) ;
-    const route = useRoute();
-    const AssetsId = route.query.search_id ;
+// 解構
+const { DropdownArray } = storeToRefs(assetStore) ;
+const route = useRoute();
+const AssetsId = route.query.search_id ;
 
-    onMounted(async ()=>{
-      utilsStore.$reset();
-      assetStore.$reset();
-      assetStore.PageType = 'view';
-      DropdownArray.value.Custodian = await apiStore.getCustodian('');
-      DropdownArray.value.Area = await apiStore.getArea();
-      DropdownArray.value.EquipType = await apiStore.getEquipType();
-      await assetStore.getDetails(AssetsId);
-      assetStore.searchHistory('','search');
-      console.log(DropdownArray.value);
-    })
+onMounted(async ()=>{
+  utilsStore.$reset();
+  assetStore.$reset();
+  assetStore.PageType = 'view';
+  DropdownArray.value.Custodian = await apiStore.getCustodian('');
+  DropdownArray.value.Area = await apiStore.getArea();
+  DropdownArray.value.EquipType = await apiStore.getEquipType();
+  await assetStore.getDetails(AssetsId);
+  assetStore.searchHistory('','search');
+  console.log(DropdownArray.value);
+})
+onUnmounted(()=>{
+  utilsStore.$dispose();
+  assetStore.$dispose();
+  apiStore.$dispose();
+})
 </script>
 
 

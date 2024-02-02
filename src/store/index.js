@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { defineStore } from 'pinia'
 import router from '@/router';
+import { createDadagridObject } from '@/assets/js/common_fn';
 // 所有通用的function、API、dropdownList
 export const useUtilsStore = defineStore('Utils',{
   state: ()=>({
@@ -8,11 +9,19 @@ export const useUtilsStore = defineStore('Utils',{
     userName: '',
     today: '',
     imgExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+    fileExtensions: ['doc', 'docx', 'pdf', 'jpg', 'jpeg', 'png', 'gif'],
     BF_pattern: /^(BF\d{8})$/,
     imgId: 1,
     modalParams:{
       title: '',
       src: ''
+    },
+    // 給各個模組管理頁面使用
+    dg: createDadagridObject(''),
+    dgRowData: [],
+    dgSearchParams: {
+      ProjectCode: '',
+      ProjectSelect: { Text: '--請選擇--',Value: '' },
     },
   }),
   getters: {
@@ -194,7 +203,7 @@ export const useUtilsStore = defineStore('Utils',{
       }
       // 檢查圖片上限(與方法一稍微不同)
       if (formParams.viewFile.length + files.length > LimitLength) {
-        alert('上傳至多5張圖片');
+        alert(`上傳至多${LimitLength}張圖片`);
         return;
       }
       // 檢查圖片檔案上限
@@ -239,9 +248,99 @@ export const useUtilsStore = defineStore('Utils',{
     },
     // 查看圖片
     viewImgFile(file) {
-      this.modalParams.title = file.FileName ;
-      this.modalParams.src = file.FileLink ;
+      // 先提取副檔名
+      // 以"."為基準分割字串
+      const part = file.FileName.split(".");
+      let extension = '';
+      // 如果part長度大於1表示xxxx.aaa => ['xxxx','aaa']
+      if (part.length > 1) {
+        extension = part[part.length - 1];
+      }
+      // 1. pdf 2. word 3. picture
+      switch (extension) {
+        case 'pdf':
+          window.open(file.FileLink)
+          break;
+        case 'doc':
+        case 'docx':
+          const downloadElement = document.getElementById('download-link');
+          downloadElement.href = file.FileLink;
+          downloadElement.download = file.FileName;
+          downloadElement.click();
+          break;
+        default:
+          this.modalParams.title = file.FileName ;
+          this.modalParams.src = file.FileLink ;
+          const modal = document.querySelector('#openModal');
+          if(modal) {
+            // 如果是文件上傳圖片，有trigger按鈕的話
+            modal.click();
+          }
+          break;
+      }
+
     },
+    // -----
+    // -----上傳檔案相關
+    handleFileChange(event,formParams, LimitLength = 0, LimitSize = 28) {
+      // ****參數說明: 呼叫函式使用object來包裝formParams，避免call by vlaue和key值不同的問題
+      const newFile = formParams.newDoc;
+      const viewFile = formParams.viewDoc;
+      const existFile = formParams.existDoc;
+      const files = event.target.files;
+      // 文件通常不限件數，但如果有 就檢查
+      if(LimitLength > 0) {
+        console.log(newFile.length);
+        if (newFile.length + existFile.length + files.length  > LimitLength) {
+          alert(`上傳至多${LimitLength}個文件`);
+          return;
+        }
+      }
+      // 檢查副檔名 & 檔案大小
+      for (let i = 0; i < files.length; i++) {
+        const fileName = files[i].name;
+        const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
+        if (!this.fileExtensions.includes(fileExtension.toLowerCase())) {
+          alert(fileExtension + '不在允許的格式範圍內，請重新選取');
+          return;
+        }
+        if (files[i].size > LimitSize * 1024 * 1024) {
+          alert('檔案' + fileName + '大於28MB，請重新選取');
+          return;
+        }
+      }
+      // 處理檔案
+
+      for (let i = 0; i < files.length; i++) {
+        // 依據檔案格式 分為 1.圖片(可預覽) 2.pdf(可預覽) 3. doc/docx(可下載)
+        const fileName = files[i].name;
+        const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
+        const reader = new FileReader();
+        // .pdf/.doc/.docx
+        if (fileExtension === 'pdf' || fileExtension === 'doc' || fileExtension == 'docx') {
+          newFile.push(files[i]);
+          viewFile.push({
+            FileName: files[i].name,
+            FileLink: URL.createObjectURL(files[i]),
+            type: fileExtension,
+          });
+        }
+        // 圖片
+        else {
+          reader.onload = (e) => {
+            const file = files[i]; // 保持原始文件
+            newFile.push(file);
+            viewFile.push({
+              FileName: file.name,
+              FileLink: URL.createObjectURL(file),
+              type: 'pic'
+            });
+          };
+        }
+        reader.readAsDataURL(files[i]);
+      }
+    },
+    // -----
     // 檢查檔案大小
     checkFileSize(files,selectedFiles,exception = false,LimitSize = 50) {
       let new_size = 0;
@@ -263,12 +362,11 @@ export const useUtilsStore = defineStore('Utils',{
       // console.log('selct size:', select_size);
       // 留 1Mb 給文字內容
       if(new_size+select_size> (LimitSize-1)*1024*1024) {
-        alert('所上傳的檔案總大小不可超過50MB,請重新選擇檔案');
+        alert(`所上傳的檔案總大小不可超過${LimitSize}MB,請重新選擇檔案`);
         return false ;
       }
       return true;
     },
-    // -----
     // 檢查權限
     checkRole(Applicant) {
       return new Promise(async(resolve, reject)=>{
@@ -318,7 +416,10 @@ export const useUtilsStore = defineStore('Utils',{
           searchParams[key] = 1;
         }
       }
-    }
+    },
+    onDGProjectSelect(option){
+      this.dgSearchParams.ProjectCode = option.Value;
+    },
   },
 
 })
@@ -436,8 +537,9 @@ export const useAPIStore = defineStore('API',{
     async getFuzzyProject() {
       try {
         const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetProjects`);
-        const data = response.data;
+        let data = response.data;
         if (data.state === 'success') {
+          data.resultList.ProjList.splice(0,0,{Text:'--請選擇--' , Value: ''});
           return data.resultList.ProjList;
         }
       } catch (error) {
@@ -466,9 +568,10 @@ export const useAPIStore = defineStore('API',{
       const axios = require('axios');
       const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchShipmentNum?id=${ShipmentNum}`);
       try {
-        const data = response.data;
+        let data = response.data;
         if (data.state === 'success') {
           // console.log('物流單號查詢結果', data.resultList);
+          data.resultList.splice(0,0,{ShipmentNum:'--請選擇--' , AR_ID: ''});
           return data.resultList;
         } else if (data.state === 'account_error') {
           alert(data.messages);
@@ -515,7 +618,7 @@ export const useAPIStore = defineStore('API',{
         const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetAssetInfo?id=${AssetsId}`);
         const data = response.data;
         if (data.state === 'success') {
-          console.log('Details Get成功 資料如下\n', data.resultList);
+          console.log('資產資料:\n', data.resultList);
           return data.resultList;
         } else if (data.state === 'error') {
           alert(data.messages);
@@ -525,6 +628,33 @@ export const useAPIStore = defineStore('API',{
         }
       } catch (e) {
         console.error(e);
+      }
+    },
+    // 驗證人員(正常情況)
+    async validateUser(user) {
+      const requestData = {
+        userName: user.userName,
+        userPassword: user.userPassword,
+        id: user.id,
+      }
+      const form = new FormData;
+      for (const key in requestData) {
+        form.append(key, requestData[key]);
+      }
+      //
+      try {
+        const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', form);
+        const data = response.data;
+        if (data.state === 'success') {
+          user.isValidate = true;
+          user.resultName = user.userName;
+        } else if (data.state === 'error') {
+          alert(data.messages);
+          user.isValidate = false;
+          user.resultName = '未驗證';
+        }
+      } catch (error) {
+        console.error(error);
       }
     }
   }

@@ -37,10 +37,12 @@ import Case_Purchase_View from "../views/case_purchase/View.vue";
 
 // 快速出庫
 import Quick_Rent_New from "../views/quick_rent/New.vue";
+import Quick_Rent_View from "../views/quick_rent/View.vue";
 
 // 出貨簽收
 import Ship_Receive_Datagrid from "../views/ship_receive/Datagrid.vue";
 import Ship_Receive_Confirm from "../views/ship_receive/Confirm.vue";
+import Ship_Receive_View from "../views/ship_receive/View.vue";
 
 // 出貨簽收
 
@@ -147,6 +149,12 @@ import Authorized from "../views/Authorized";
 
 import axios from "axios";
 import { getApplication } from "@/assets/js/common_api";
+import { useAssetStore } from "@/store/asset/_index";
+import { useUtilsStore } from "@/store";
+import { useStorageStore } from "@/store/storage/_index";
+import { useRentStore } from "@/store/rent/_index";
+import { useQuickRentStore } from "@/store/rent/quick";
+import { useQuickProcessStore } from "@/store/storage/quick_process";
 const routes = [
   {
     path: "/test",
@@ -298,19 +306,31 @@ const routes = [
     path: "/quick_rent_new",
     name: "Quick_Rent_New",
     component: Quick_Rent_New,
-    // meta: {auth: true, request: 'AO_Create'},
+    meta: {auth: true, request: 'AO_Fast'},
+  },
+  {
+    path: "/quick_rent_view",
+    name: "Quick_Rent_View",
+    component: Quick_Rent_View,
+    meta: {auth: true, request: 'AO_Detail'},
   },
   {
     path: "/ship_receive_datagrid",
     name: "Ship_Receive_Datagrid",
     component: Ship_Receive_Datagrid,
-    // meta: {auth: true, request: 'AO_Detail'},
+    meta: {auth: true, request: 'SR_Mgr'},
   },
   {
     path: "/ship_receive_confirm",
     name: "Ship_Receive_Confirm",
     component: Ship_Receive_Confirm,
-    // meta: {auth: true, request: 'AO_Detail'},
+    meta: {auth: true, request: 'SR_Upload'},
+  },
+  {
+    path: "/ship_receive_view",
+    name: "Ship_Receive_View",
+    component: Ship_Receive_View,
+    meta: {auth: true, request: 'SR_Detail'},
   },
   {
     path: "/case_purchase_datagrid",

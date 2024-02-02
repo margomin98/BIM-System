@@ -28,8 +28,7 @@
               物流單號 :
             </div>
             <div class="search_section">
-              <vue-multiselect v-model="upperForm.ShipmentSelect" :options="DropdownArray.ShipmentNum" :allow-empty="true" :max-height="300" placeholder="請選擇" label="ShipmentNum" :showLabels="false" track-by="ShipmentNum" :show-no-results="false" @select="storageStore.onShipmentnumSelect"
-                @close="storageStore.onShipmentnumUnselect">
+              <vue-multiselect v-model="upperForm.ShipmentSelect" :options="DropdownArray.ShipmentNum" :allow-empty="false" :max-height="300" placeholder="請選擇" label="ShipmentNum" :showLabels="false" track-by="ShipmentNum" :show-no-results="false" @select="storageStore.onShipmentnumSelect">
               </vue-multiselect>
             </div>
             <button class="form_search_btn" @click="storageStore.viewReceive(upperForm)">檢視</button>
@@ -550,6 +549,7 @@
   import {
     storeToRefs
   } from "pinia";
+import { onUnmounted } from "vue"
   const storageStore = useStorageStore();
   const applyStore = useApplyStore();
   const utilsStore = useUtilsStore();
@@ -564,6 +564,13 @@
   const {
     hidden
   } = storeToRefs(applyStore);
+
+  onUnmounted(()=>{
+    applyStore.$dispose();
+    storageStore.$dispose();
+    utilsStore.$dispose();
+    apiStore.$dispose();
+  })
 </script>
    
 <style lang="scss" scoped>

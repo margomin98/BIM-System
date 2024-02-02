@@ -8,11 +8,14 @@ export const Store_StatusArray = ['申請入庫', '申請歸還', '可交付', '
 export const Store_Process_DateTypeArray = ['申請入庫日期' , '交付日期' , '入庫日期']
 // 出庫管理
 export const Rent_UseArray = ['內部領用', '借測', '出貨', '退貨'];
-export const Rent_StatusArray = ['已填報', '待審核', '待交付', '可交付', '部分交付', '已交付' , '審核不通過' ];
+export const Rent_StatusArray = ['已填報', '待審核', '待交付', '可交付', '部分交付', '已交付' , '審核不通過', '快速出庫完成' ];
 export const Rent_Process_DateCategory = ['申請日期', '出庫日期', '備料日期', '審核日期'];
 export const Rent_Review_DateCategory = ['申請日期', '審核日期'];
 export const Rent_Review_UseArray = ['出貨', '退貨'];
 export const Rent_Review_StatusArray = ['待審核', '審核通過', '審核不通過' ];
+// 出貨簽收管理
+export const ShipReceive_StatusArray = ['尚未簽收' , '已簽收'];
+export const ShipReceive_DateCategory = ['申請日期' , '審核日期'];
 // 資產管理
 export const Asset_StastusArraay = ['在庫', '內部領用', '借測', '維修', '出貨', '報廢', '退貨', '無庫存', '已被設備整合']
 export const HistoryAction = ['入庫', '歸還', '借測', '維修', '內部領用', '出貨', '報廢', '退貨' , '盤點平帳', '移出設備整合箱' , '加入設備整合箱','Excel匯入'];
