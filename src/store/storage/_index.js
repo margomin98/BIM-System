@@ -36,7 +36,7 @@ export const useStorageStore = defineStore('Storage', {
 			Applicant: '',
 			ApplicationDate: '',
 			ShipmentNum: '',
-			ShipmentSelect: {},
+			ShipmentSelect: {ShipmentNum:'--請選擇--' , AR_ID: ''},
 			AR_ID: '',
 			AI_ID: '',
 			Memo: '',
@@ -72,7 +72,7 @@ export const useStorageStore = defineStore('Storage', {
 			// 快速入庫才有的欄位
 			AreaArray:[],
 			LayerArray:[],
-			itemProjectSelect: {}, // 綁定multiselect，再用function轉換
+			itemProjectSelect: { Text: '--請選擇--',Value: '' }, // 綁定multiselect，再用function轉換
 			tabProjectCode: [], // 每個頁籤都需要，將所需資訊塞入option
 			itemInboundWay: '',
 			itemUse: '',
@@ -219,7 +219,7 @@ export const useStorageStore = defineStore('Storage', {
 					this.middleForm[key] = 1;
 				}
 			}
-			this.middleForm.itemProjectSelect = {};
+			this.middleForm.itemProjectSelect = { Text: '--請選擇--',Value: '' };
 			this.DropdownArray.EquipCategory = [];
 		},
 		// 查看收貨單(如果有)

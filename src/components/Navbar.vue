@@ -39,6 +39,8 @@
             <router-link to="/rent_datagrid">出庫填報管理</router-link>
             <router-link to="/rent_process_datagrid">出庫作業管理</router-link>
             <router-link to="/rent_review_datagrid">出庫審核管理</router-link>
+            <div class='dropdown-divider' style='border-color:white'></div>
+            <router-link to="/ship_receive_datagrid">出貨簽收管理</router-link>
           </div>
         </li>
         <li class="nav-item dropdown">

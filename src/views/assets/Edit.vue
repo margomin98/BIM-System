@@ -16,7 +16,7 @@ import assets_component from "@/components/assets_page/assets_component.vue";
 import { useAssetStore } from "@/store/asset/_index";
 import { useAPIStore, useUtilsStore } from '@/store';
 // import { useEditStore } from "@/store/asset/edit";
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 const utilsStore = useUtilsStore();
@@ -38,6 +38,12 @@ onMounted(async ()=>{
   await assetStore.getDetails(AssetsId);
   assetStore.searchHistory('','search');
   console.log(DropdownArray.value);
+})
+
+onUnmounted(()=>{
+  utilsStore.$dispose();
+  assetStore.$dispose();
+  apiStore.$dispose();
 })
 </script>
 <style lang="scss" scoped>

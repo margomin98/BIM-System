@@ -10,6 +10,17 @@ import { createDadagridObject } from '@/assets/js/common_fn';
 export const useRentStore = defineStore('Rent', {
 	// data
 	state: () => ({
+		PageType: '',
+		canSubmit: false,
+		// 驗證人員*3(最多一次三個):
+		user1: {
+			title:'',
+			userName:'',
+			userPassword:'',
+			id:'',
+			isValidate: false,
+      resultName: '未驗證',
+		},
 		// 下拉選單
 		DropdownArray: {
 			EquipType: [],
@@ -42,7 +53,7 @@ export const useRentStore = defineStore('Rent', {
       // ----
 			ProjectCode: '',
 			ProjectName: '',
-			ProjectSelect: {},
+			ProjectSelect: { Text: '--請選擇--',Value: '' },
 			Recipient: '', // 領用人員
 			Status: '',
 			Use: '',
@@ -52,7 +63,11 @@ export const useRentStore = defineStore('Rent', {
 			VerifyPerson: '',
 			VerifyResult: null,
       // ----
+			UploadPerson: '',
 			ItemList: [],
+			newFile: [],
+			viewFile: [],
+			deleteFile: [],
 			existFile: [],
 		},
     // 搜尋表單參數
@@ -62,7 +77,7 @@ export const useRentStore = defineStore('Rent', {
       Area_Id: '',
       Layer_Id: '',
       ProjectCode: '',
-			ProjectSelect: {},
+			ProjectSelect: { Text: '--請選擇--',Value: '' },
       AssetsId: '',
       AssetName: '',
     },
@@ -72,6 +87,28 @@ export const useRentStore = defineStore('Rent', {
     datagrid2: createDadagridObject('AssetsId'),
     datagrid2field: [],
     rowData2: [],
+		// 出庫項目field
+		ItemList_field: [
+			{ field: "id", width: '50px', header: "項目" },
+			{ field: "EquipTypeName", width: '150px', header: "設備總類" },
+			{ field: "EquipCategoryName", width: '150px', header: "設備分類" },
+			{ field: "ProductName", width: '150px', header: "物品名稱" },
+			{ field: "Number", width: '100px', header: "數量" },
+			{ field: "RequiredSpec", width: '250px', header: "規格需求" }
+		],
+		// 出庫細項field
+		OMList_field: [
+			{ field: "OM_List_id", width: '50px', header: "需求項目", sortable: false },
+			{ field: "OM_Number", width: '30px', header: "數量", sortable: false },
+			{ field: "OM_Unit", width: '30px', header: "單位", sortable: false },
+			{ field: "AssetsId", width: '150px', header: "資產編號", sortable: true },
+			{ field: "AssetName", width: '150px', header: "物品名稱", sortable: true },
+			{ field: "AreaName", width: '150px', header: "儲位區域", sortable: true },
+			{ field: "LayerName", width: '150px', header: "儲位櫃位", sortable: true },
+			{ field: "VendorName", width: '150px', header: "廠商", sortable: true },
+			{ field: "ProductType", width: '150px', header: "型號", sortable: true },
+			{ field: "ProductSpec", width: '150px', header: "規格", sortable: true },
+		],
 		// 字數上限(固定)
 		FormLetterCheckList: {
 			ProjectCode: {field: '專案代碼', max: 10},
@@ -90,20 +127,27 @@ export const useRentStore = defineStore('Rent', {
     onProjectSelect(option) {
 			this.Form.ProjectCode = option.Value;
 		},
-		onProjectUnselect() {
-			if(!this.Form.ProjectSelect) {
-				this.Form.ProjectCode = '';
-				this.Form.ProjectSelect = {};
-			} 
-		},
     onSearchProjectSelect(option) {
 			this.searchParams.ProjectCode = option.Value;
 		},
-		onSearchProjectUnselect() {
-			if(!this.Form.ProjectSelect) {
-				this.searchParams.ProjectCode = '';
-				this.searchParams.ProjectSelect = {};
-			} 
+		// 取得資料單
+		async getDetails(AO_ID) {
+			try {
+				const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`)
+				const data = response.data ;
+				if(data.state === 'success') {
+					console.log('出庫單資料', data.resultList);
+					// 塞入上半部資訊
+					Object.keys(this.Form).forEach(key=>{
+						if(data.resultList[key]) {
+							this.Form[key] = data.resultList[key];
+						}
+					})
+				}
+			}
+			catch(e) {
+				console.error(e);
+			}
 		},
   }
 })

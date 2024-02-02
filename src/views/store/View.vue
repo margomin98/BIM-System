@@ -15,7 +15,7 @@ import Navbar from '@/components/Navbar.vue';
 import { useStorageStore } from '@/store/storage/_index'
 import { useAPIStore, useUtilsStore } from '@/store';
 import { useApplyStore } from '@/store/storage/apply'
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 const storageStore = useStorageStore();
@@ -34,6 +34,12 @@ onMounted(async()=>{
   DropdownArray.value.EquipType = await apiStore.getEquipType();
   DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();
   await storageStore.getDetails(AI_ID);
+})
+onUnmounted(()=>{
+  utilsStore.$dispose();
+  storageStore.$dispose();
+  applyStore.$dispose();
+  apiStore.$dispose();
 })
 </script>
 

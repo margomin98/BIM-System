@@ -287,15 +287,22 @@ import view_modal from "@/components/view_modal.vue"
 import Delete_warn from '@/components/Delete_warn.vue';
 
 // pinia
-import { useUtilsStore , useAPIStore } from '@/store'
+import { useUtilsStore } from '@/store'
 import { useStorageStore } from '@/store/storage/_index'
 import { useApplyStore } from '@/store/storage/apply'
 import { storeToRefs } from "pinia";
+import { onUnmounted } from "vue";
 const storageStore = useStorageStore();
 const applyStore = useApplyStore();
 const utilsStore = useUtilsStore();
 const { DropdownArray , upperForm , tabData } = storeToRefs(storageStore) ;
 const { hidden } = storeToRefs(applyStore);
+
+onUnmounted(()=>{
+  applyStore.$dispose();
+  storageStore.$dispose();
+  utilsStore.$dispose();
+})
 </script>
 
 <style lang="scss" scoped>

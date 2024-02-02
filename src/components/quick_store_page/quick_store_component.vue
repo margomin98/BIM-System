@@ -23,8 +23,8 @@
                         <div class="search_section">
                                 <div class="option_section">
                                     <vue-multiselect v-model="upperForm.ShipmentSelect" :options="DropdownArray.ShipmentNum" 
-                                    :allow-empty="true"  :max-height="300" placeholder="請選擇" label="ShipmentNum" :showLabels="false" track-by="ShipmentNum" 
-                                    :show-no-results="false" @select="storageStore.onShipmentnumSelect" @close="storageStore.onShipmentnumUnselect">
+                                    :allow-empty="false"  :max-height="300" placeholder="請選擇" label="ShipmentNum" :showLabels="false" track-by="ShipmentNum" 
+                                    :show-no-results="false" @select="storageStore.onShipmentnumSelect">
                                     </vue-multiselect>
                                 </div>
                         </div>
@@ -98,9 +98,9 @@
                             <span v-show="middleForm.itemAssetType === '存貨'">*</span>專案代碼 :
                         </div>
                         <div class="option_section">
-                            <vue-multiselect v-model="middleForm.itemProjectSelect" :options="DropdownArray.ProjectCode" 
+                            <vue-multiselect v-model="middleForm.itemProjectSelect" :options="DropdownArray.ProjectCode" :allow-empty = "false"
                             :max-height="300" placeholder="請選擇" label="Text" :showLabels="false" track-by="Text" 
-                            :show-no-results="false" @select="storageStore.onFormProjectcodeSelect" @close="storageStore.onFormProjectcodeUnselect">
+                            :show-no-results="false" @select="storageStore.onFormProjectcodeSelect">
                             </vue-multiselect>
                         </div>
                     </div>
@@ -371,8 +371,8 @@
                                 </div>
                                 <div class="option_section">
                                     <vue-multiselect v-model="tab.itemProjectSelect" :options="tab.tabProjectCode" 
-                                    :max-height="300" placeholder="請選擇" label="Text" 
-                                    :showLabels="false" track-by="Text" :show-no-results="false" @select="storageStore.onTabProjectcodeSelect" @close="storageStore.onTabProjectcodeUnselect(index)">
+                                    :max-height="300" placeholder="請選擇" label="Text" :allow-empty="false"
+                                    :showLabels="false" track-by="Text" :show-no-results="false" @select="storageStore.onTabProjectcodeSelect">
                                     </vue-multiselect>
                                 </div>
                             </div>
@@ -724,12 +724,19 @@ import { useUtilsStore , useAPIStore } from '@/store'
 import { useStorageStore } from '@/store/storage/_index'
 import { storeToRefs } from "pinia";
 import { useQuickProcessStore } from "@/store/storage/quick_process";
+import { onUnmounted } from "vue";
 const storageStore = useStorageStore();
 const utilsStore = useUtilsStore();
 const quickprocessStore = useQuickProcessStore();
 const apiStore = useAPIStore();
 const { DropdownArray , upperForm , middleForm , tabData , Type , hidden } = storeToRefs(storageStore) ;
 
+onUnmounted(()=>{
+    quickprocessStore.$dispose();
+    storageStore.$dispose();
+    utilsStore.$dispose();
+    apiStore.$dispose();
+})
 </script>
 
 <style lang="scss" scoped>

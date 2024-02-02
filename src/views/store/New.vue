@@ -16,7 +16,7 @@ import Navbar from '@/components/Navbar.vue';
 import { useStorageStore } from '@/store/storage/_index'
 import { useAPIStore, useUtilsStore } from '@/store';
 import { useApplyStore } from '@/store/storage/apply.js'
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 const storageStore = useStorageStore();
@@ -39,6 +39,12 @@ onMounted(async() => {
     upperForm.value.ShipmentSelect = {ShipmentNum: upperForm.value.ShipmentNum , AR_ID: upperForm.value.AR_ID};
   }
 });
+onUnmounted(()=>{
+  utilsStore.$dispose();
+  storageStore.$dispose();
+  applyStore.$dispose();
+  apiStore.$dispose();
+})
 </script>
 
 <style lang="scss" scoped>
