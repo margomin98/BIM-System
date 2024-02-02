@@ -104,7 +104,7 @@ const DropdownArray = reactive({
 const searchParams = reactive({
   AO_ID: '',
   ProjectName: '',
-  Status: '',
+  Status: '尚未簽收',
   DateCategory: '',
   StartDate: '',
   EndDate: '',
@@ -138,7 +138,7 @@ async function submit(event, type) {
     }
   }
   utilsStore.UpdatePageParameter(dg.value, event, type, form);
-  const resultList = await apiStore.getMngDatagrid('/AssetsOutMng/SignaturesForShipment', form);
+  const resultList = await apiStore.getMngDatagrid('/AssetsOutMng/SignaturesForShipment',dg.value, form);
   dgRowData.value = resultList.rows;
   dg.value.totalRecords = resultList.total;
   dg.value.key++;
