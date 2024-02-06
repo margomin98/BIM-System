@@ -210,6 +210,9 @@ const clear = () => {
         // }
       }
       .datagrid_section {
+        input,select,.multiselect{
+          width:200px;
+                  }
         .content {
           background: rgba(82, 136, 156, 0.8);
           border-radius: 10px;
