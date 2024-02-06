@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '@/axios/tokenInterceptor'
 import { defineStore } from 'pinia'
 import {  useUtilsStore, useAPIStore } from '@/store'
 import { createDadagridObject } from '@/assets/js/common_fn'
