@@ -125,7 +125,7 @@
           name: '請選擇',
         },
         options: [{
-            name: 'F489184964146142847'
+            name: 'F4891849asassasxxzx64146142847'
           },
           {
             name: 'D47F846'
@@ -285,6 +285,9 @@
         }
       }
       .datagrid_section {
+        input,select,.multiselect{
+          width:220px;
+                  }
         .content {
           background: rgba(82, 136, 156, 0.8);
           border-radius: 10px;

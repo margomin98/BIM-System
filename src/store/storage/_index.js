@@ -301,7 +301,7 @@ export const useStorageStore = defineStore('Storage', {
 							if(tab[key]) {
 								this.middleForm[key] = tab[key];
 								if(key === 'itemProjectCode' && isQuick) {
-									this.middleForm.itemProjectSelect = {Text: tab.itemProjectName , Value: tab.itemProjectCode};
+									this.middleForm.itemProjectSelect = {Text:`${tab.itemProjectCode.trim()} ${tab.itemProjectName}` , Value: tab.itemProjectCode};
 								}
 							}
 						})

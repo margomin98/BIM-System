@@ -29,10 +29,13 @@ import Store_Process_Delete from "../views/store_process/Delete.vue";
 //入庫作業
 
 //專案採購
+import Case_Purchase_New from "../views/case_purchase/New.vue";
+import Case_Purchase_Edit from "../views/case_purchase/Edit.vue";
+import Case_Purchase_View from "../views/case_purchase/View.vue";
+import Case_Purchase_Delete from "../views/case_purchase/Delete.vue";
 import Case_Purchase_Datagrid from "../views/case_purchase/Datagrid.vue";
 import Case_Purchase_Order from "../views/case_purchase/Order.vue";
 import Case_Purchase_Process from "../views/case_purchase/Process.vue";
-import Case_Purchase_View from "../views/case_purchase/View.vue";
 //專案採購
 
 // 快速出庫
@@ -336,25 +339,43 @@ const routes = [
     path: "/case_purchase_datagrid",
     name: "Case_Purchase_Datagrid",
     component: Case_Purchase_Datagrid,
-    // meta: {auth: true, request: 'AO_Detail'},
+    meta: {auth: true, request: 'PP_Detail'},
   },
   {
-    path: "/case_purchase_order",
-    name: "Case_Purchase_Order",
-    component: Case_Purchase_Order,
-    // meta: {auth: true, request: 'AO_Detail'},
+    path: "/case_purchase_new",
+    name: "Case_Purchase_New",
+    component: Case_Purchase_New,
+    meta: {auth: true, request: 'PP_Create'},
   },
   {
-    path: "/case_purchase_process",
-    name: "Case_Purchase_Process",
-    component: Case_Purchase_Process,
-    // meta: {auth: true, request: 'AO_Detail'},
+    path: "/case_purchase_edit",
+    name: "Case_Purchase_Edit",
+    component: Case_Purchase_Edit,
+    meta: {auth: true, request: 'PP_Edit'},
   },
   {
     path: "/case_purchase_view",
     name: "Case_Purchase_View",
     component: Case_Purchase_View,
-    // meta: {auth: true, request: 'AO_Detail'},
+    meta: {auth: true, request: 'PP_Detail'},
+  },
+  {
+    path: "/case_purchase_delete",
+    name: "Case_Purchase_Delete",
+    component: Case_Purchase_Delete,
+    meta: {auth: true, request: 'PP_Delete'},
+  },
+  {
+    path: "/case_purchase_order",
+    name: "Case_Purchase_Order",
+    component: Case_Purchase_Order,
+    meta: {auth: true, request: 'PP_Order'},
+  },
+  {
+    path: "/case_purchase_process",
+    name: "Case_Purchase_Process",
+    component: Case_Purchase_Process,
+    meta: {auth: true, request: 'PP_Writeoff'},
   },
   {
     path: "/rent_datagrid",

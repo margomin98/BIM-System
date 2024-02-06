@@ -6,7 +6,7 @@
     </div>
     <div class="col">
       <div class="button_wrap d-flex">
-        <router-link to="/rent_new">
+        <router-link to="/case_purchase_new">
           <button class="add_btn">採購填報</button>
         </router-link>
       </div>
@@ -17,40 +17,35 @@
           <!-- 狀態 -->
           <div class="col">
             <p>狀態</p>
-            <select class="form-select" aria-label="Default select example">
-    <option selected>請選擇</option>
-    <option value="1">One</option>
-    <option value="2">Two</option>
-  </select>
+            <select class="form-select" aria-label="Default select example" v-model="dgSearchParams.Status">
+              <option value="">--請選擇--</option>
+              <option v-for="option in DropdownArray.Status" :value="option">{{ option }}</option>
+            </select>
           </div>
           <!-- 專案代碼 -->
           <div class="col">
             <p>專案代碼</p>
-            <multiselect v-model="value" :options="options" :allow-empty="false" :max-height="300" placeholder="請選擇" label="name" :showLabels="false" track-by="name"></multiselect>
+            <multiselect v-model="dgSearchParams.ProjectSelect" :allow-empty="false" @select="utilsStore.onDGProjectSelect" :options="DropdownArray.ProjectCode" :max-height="300" placeholder="請選擇" label="Text" :showLabels="false" track-by="Text"></multiselect>
           </div>
           <!-- 專案名稱 -->
           <div class="col">
             <p>專案名稱</p>
-            <input type="text" />
+            <input type="text" v-model="dgSearchParams.ProjectName"/>
           </div>
           <!-- 日期類型 -->
           <div class="col">
             <p>日期類型</p>
-            <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{ searchParams.Status || "請選擇" }}
-                </button>
-              <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p v-for="(item , index) in StatusArray" :key="index" class="dropdown-item" @click="selectStatus(item)">{{ item }}</p>
-              </div>
-            </div>
+            <select class="form-select" aria-label="Default select example" v-model="dgSearchParams.DateCategory">
+              <option value="">--請選擇--</option>
+              <option v-for="option in DropdownArray.DateCategory" :value="option">{{ option }}</option>
+            </select>
           </div>
           <!-- 時間（起） -->
           <div class="col">
             <p>時間(起)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="searchParams.StartDate" class="date-input" />
+                <input type="date" v-model="dgSearchParams.StartDate" class="date-input" />
               </div>
             </div>
           </div>
@@ -59,7 +54,7 @@
             <p>時間(迄)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="searchParams.EndDate" class="date-input" />
+                <input type="date" v-model="dgSearchParams.EndDate" class="date-input" />
               </div>
             </div>
           </div>
@@ -70,175 +65,103 @@
       <div class="button_wrap d-flex">
         <button class="search_btn" @click="submit('','search')">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
-        <!-- <button class="export_btn">匯出</button> -->
       </div>
     </div>
     <div class="dg-height mb-5">
-      <DataTable lazy :key="datagrid.key" :first="datagrid.first" :size="'small'" :loading="datagrid.loading" :value="rowData" :sort-field="datagrid.sortField" :sort-order="datagrid.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
-        scrollHeight="420px" @page="submit($event , 'page')" @sort="submit($event , 'sort')" paginator :rows="datagrid.rows" :totalRecords="datagrid.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+      <DataTable lazy :key="dg.key" :first="dg.first" :size="'small'" :loading="dg.loading" :value="dgRowData" :sort-field="dg.sortField" :sort-order="dg.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
+        scrollHeight="420px" @page="submit($event , 'page')" @sort="submit($event , 'sort')" paginator :rows="dg.rows" :totalRecords="dg.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <Column style="min-width: 60px;">
           <template #body="slotProps">
-              <Rent_button :params = "slotProps"/>
-</template>
+            <case_purchase_btn :params = "slotProps"/>
+          </template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width , 'max-width': item.max}"></Column>
         <Column style="min-width: 60px;">
-<template #body="slotProps">
-  <Delete :params="slotProps" />
-</template>
+        <template #body="slotProps">
+          <Delete :params="slotProps" />
+        </template>
         </Column>
       </DataTable>
     </div>
   </div>
 </template>
 
-<script>
-  import Multiselect from 'vue-multiselect'
-  import DataTable from 'primevue/datatable';
-  import Column from 'primevue/column';
-  import {
-    ref,
-    reactive,
-    onMounted,
-  } from "vue";
-  import Rent_button from "@/components/Rent_button";
-  import Delete from "@/components/Rent_delete_button.vue";
-  import Navbar from "@/components/Navbar.vue";
-  import {
-    Rent_UseArray,
-    Rent_StatusArray
-  } from "@/assets/js/dropdown";
-  import {
-    UpdatePageParameter,
-    createDatagrid
-  } from '@/assets/js/common_fn';
-  import {
-    getMngDatagrid
-  } from '@/assets/js/common_api';
-  export default {
-    components: {
-      Navbar,
-      DataTable,
-      Column,
-      Rent_button,
-      Delete,
-      Multiselect
-    },
-    data() {
-      return {
-        value: {
-          name: '請選擇',
-        },
-        options: [{
-            name: 'F489184964146142847'
-          },
-          {
-            name: 'D47F846'
-          },
-        ]
-      }
-    },
-    methods: {
-      nameWithLang({
-        name,
-        language
-      }) {
-        return `${name}`
-      }
-    },
-    setup() {
-      const searchParams = reactive({
-        AO_ID: '',
-        ProjectName: '',
-        Use: '',
-        Status: '',
-        StartDate: '',
-        EndDate: '',
-      });
-      const UseArray = Rent_UseArray
-      const StatusArray = Rent_StatusArray
-      const datagrid = createDatagrid();
-      const datagridfield = [{
-          header: "狀態",
-          field: "Status",
-          width: '130px'
-        },
-        {
-          header: "單號",
-          field: "AO_ID",
-          width: '150px'
-        },
-        {
-          header: "專案名稱",
-          field: "ProjectName",
-          width: '170px',
-          max: '300px'
-        },
-        {
-          header: "用途",
-          field: "Use",
-          width: '130px'
-        },
-        {
-          header: "說明",
-          field: "Description",
-          width: '150px',
-          max: '350px'
-        },
-        {
-          header: "申請人員",
-          field: "Applicant",
-          width: '150px'
-        },
-        {
-          header: "申請出庫日期",
-          field: "ApplicationDate",
-          width: '170px'
-        },
-      ]
-      const rowData = ref([]);
-      onMounted(() => {
-        datagrid.sortField = 'AO_ID'
-        submit('', 'search');
-      });
-      async function submit(event, type) {
-        const form = new FormData();
-        //將表格資料append到 form
-        for (const key in searchParams) {
-          if (searchParams[key]) {
-            form.append(key, searchParams[key]);
-          }
-        }
-        UpdatePageParameter(datagrid, event, type, form)
-        getMngDatagrid('/AssetsOutMng/Applications', rowData, datagrid, form);
-      }
-      function selectUse(item) {
-        searchParams.Use = item;
-      }
-      const selectStatus = (item) => {
-        searchParams.Status = item;
-      };
-      const clear = () => {
-        for (const key in searchParams) {
-          searchParams[key] = '';
-        }
-        submit('', 'search');
-      };
-      return {
-        searchParams,
-        UseArray,
-        StatusArray,
-        datagrid,
-        datagridfield,
-        rowData,
-        selectUse,
-        selectStatus,
-        submit,
-        clear,
-      };
+<script setup>
+import Column from 'primevue/column';
+import DataTable from 'primevue/datatable';
+import Multiselect from 'vue-multiselect';
+import { ref, reactive, onMounted } from 'vue';
+import case_purchase_btn from '@/components/case_purchase_page/case_purchase_btn.vue';
+import Delete from '@/components/case_purchase_page/delete_btn.vue'
+import Navbar from "@/components/Navbar.vue";
+import { CasePurchase_StatusArray, CasePurchase_DateCategory } from "@/assets/js/dropdown";
+import {  useUtilsStore, useAPIStore } from '@/store'
+import { storeToRefs } from 'pinia';
+
+const utilsStore = useUtilsStore();
+const apiStore = useAPIStore();
+const { dgSearchParams , dg , dgRowData } = storeToRefs(utilsStore);
+const DropdownArray = reactive({
+  ProjectCode: [],
+  Status: CasePurchase_StatusArray,
+  DateCategory: CasePurchase_DateCategory
+})
+
+const searchParams = reactive({
+  ProjectName: '',
+  Status: '',
+  DateCategory: '',
+  StartDate: '',
+  EndDate: '',
+});
+
+const datagridfield = ref([
+  { header: "狀態", field: "Status", width: '130px' },
+  { header: "單號", field: "PP_ID", width: '150px' },
+  { header: "專案名稱", field: "ProjectName", width: '170px', max: '300px' },
+  { header: "說明", field: "Description", width: '150px', max: '350px' },
+  { header: "交貨期限", field: "Deadline", width: '170px' },
+  { header: "申請人員", field: "Applicant", width: '150px' },
+  { header: "申請日期", field: "ApplicationDate", width: '170px' },
+  { header: "完成人員", field: "PurchasePerson", width: '150px' },
+  { header: "完成日期", field: "PurchaseDate", width: '170px' },
+]);
+
+onMounted(async() => {
+  utilsStore.$reset();
+  for(const key in searchParams) {
+    dgSearchParams.value[key] = '';
+  }
+  submit('', 'search');
+  // DropdownArray.ProjectCode = [
+  //   {Text:'--請選擇--' , Value: ''},
+  //   {Text:'000-1  12345678901234567890' , Value: '0001'},
+  //   {Text:'000-2  asdasdasdwqweqwasdaw' , Value: '0002'},
+  // ]
+  DropdownArray.ProjectCode = await useAPIStore().getFuzzyProject();
+});
+
+async function submit(event, type) {
+  const form = new FormData();
+  // 將表格資料 append 到 form
+  for (const key in dgSearchParams.value) {
+    if (dgSearchParams.value[key]) {
+      form.append(key, dgSearchParams.value[key]);
     }
-  };
+  }
+  utilsStore.UpdatePageParameter(dg.value, event, type, form);
+  const resultList = await apiStore.getMngDatagrid('/PurchasingMng/PurchaseRequisitions',dg.value, form);
+  dgRowData.value = resultList.rows;
+  dg.value.totalRecords = resultList.total;
+  dg.value.key++;
+}
+
+const clear = () => {
+  utilsStore.clearSearchParams(dgSearchParams.value);
+  dgSearchParams.value.ProjectSelect = { Text: '--請選擇--',Value: '' };
+  submit('', 'search');
+};
 </script>
 
 <style lang="scss" scoped>
@@ -287,6 +210,9 @@
         // }
       }
       .datagrid_section {
+        input,select,.multiselect{
+          width:200px;
+                  }
         .content {
           background: rgba(82, 136, 156, 0.8);
           border-radius: 10px;

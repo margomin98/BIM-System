@@ -7,19 +7,26 @@
 </script>
 
 <style lang="scss">
-.datagrid_section .multiselect__tags{
-min-height: 35px;
-display: flex;
-    align-items: end;
-	padding:  unset;
-    padding-left: 5px;
-}
-body{
-	min-height:100vh;
-}
-#brandingLogo{
-  display: none !important;
-}
+	.datagrid_section .multiselect__tags {
+		min-height: 35px;
+		display: flex;
+		align-items: end;
+		padding: unset;
+		padding-left: 5px;
+	}
+	body {
+		min-height: 100vh;
+	}
+	.multiselect .multiselect__tags,
+	.multiselect__single {
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+
+	#brandingLogo {
+		display: none !important;
+	}
 	.ag-chart-no-data-overlay {
 		display: flex;
 		justify-content: center;
@@ -179,57 +186,52 @@ body{
 		input {
 			display: inline-block !important;
 		}
-	}
-
-	//放大Swiper圖片
-	.swiper_section swiper-slide{
-		position:relative;
-		.swiper_bottom_img{
+	} //放大Swiper圖片
+	.swiper_section swiper-slide {
+		position: relative;
+		.swiper_bottom_img {
 			filter: brightness(40%);
-  width: 100%;
-  height: auto;
-}
-		.zoom_img{
-background: transparent;
-border: none;
-   position: absolute;
-  top: 50%;
-  left: 50%;
- justify-content:center;
-display: flex;
-    align-items: center;
-  transform: translate(-50%, -50%);
-	img{
-		width: 40px !important;
+			width: 100%;
+			height: auto;
+		}
+		.zoom_img {
+			background: transparent;
+			border: none;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			justify-content: center;
+			display: flex;
+			align-items: center;
+			transform: translate(-50%, -50%);
+			img {
+				width: 40px !important;
+			}
+		}
 	}
-  }
-
-	}
-	.zoom_img_modal{
-  .modal-header {
-      h5 {
-        font-weight: 700;
-      }
-      background: #528091;
-      color: white;
-      display: flex;
-      justify-content: center;
-      .close_icon {
-        cursor: pointer;
-      }
-      .modal-title {
-        margin: auto;
-      }
-     
-    }
-     .modal-body {
-      img {
-        width: 100%;
-        height: auto;
-      }
-    }
-  }
-	//放大Swiper圖片
+	.zoom_img_modal {
+		.modal-header {
+			h5 {
+				font-weight: 700;
+			}
+			background: #528091;
+			color: white;
+			display: flex;
+			justify-content: center;
+			.close_icon {
+				cursor: pointer;
+			}
+			.modal-title {
+				margin: auto;
+			}
+		}
+		.modal-body {
+			img {
+				width: 100%;
+				height: auto;
+			}
+		}
+	} //放大Swiper圖片
 	@media only screen and (min-width: 1200px) {
 		.container-fluid {
 			padding-left: 0 !important;
@@ -241,7 +243,10 @@ display: flex;
 				padding: 3% !important;
 			}
 		}
-		p.readonly_box,.form-control,.main_section .dropdown-toggle ,.main_section .dropdown-item{
+		p.readonly_box,
+		.form-control,
+		.main_section .dropdown-toggle,
+		.main_section .dropdown-item {
 			font-size: 16px !important;
 		}
 	}
@@ -255,7 +260,10 @@ display: flex;
 				padding: 5% !important;
 			}
 		}
-		p.readonly_box,.form-control,.main_section .dropdown-toggle,.main_section .dropdown-item{
+		p.readonly_box,
+		.form-control,
+		.main_section .dropdown-toggle,
+		.main_section .dropdown-item {
 			font-size: 16px !important;
 		}
 	}
@@ -269,7 +277,10 @@ display: flex;
 				padding: 5% !important;
 			}
 		}
-		p.readonly_box,.form-control,.main_section .dropdown-toggle,.main_section .dropdown-item{
+		p.readonly_box,
+		.form-control,
+		.main_section .dropdown-toggle,
+		.main_section .dropdown-item {
 			font-size: 16px !important;
 		}
 	}

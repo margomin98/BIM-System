@@ -226,12 +226,12 @@
                     <div class="upload_wrap">
                         <button v-show="PageType === 'ShipReceiveConfirm'" @click="openFileExplorer(fileinput)">選擇檔案</button>
                         <input type="file" accept="image/*,.doc,.docs,.pdf"  style="display: none;" ref="fileinput" @input="utilsStore.handleFileChange($event, {newDoc: Form.newFile , viewDoc: Form.viewFile, existDoc: Form.existFile},1)">
+                        <button type="button" id="openModal" data-bs-toggle="modal" data-bs-target="#viewFile_modal" style="display:none;">開啟modal隱藏按鈕</button>
                         <div class="selected_file col">
                             <div class="input-group">
                             <div class="store_edit_file">
                                 <div class="file_upload_wrap">
-                                    <button type="button" id="openModal" data-bs-toggle="modal" data-bs-target="#viewFile_modal" style="display:none;">開啟modal隱藏按鈕</button>
-                                    <p v-for="file in Form.viewFile">{{ file.FileName }}
+                                    <p v-for="(file, file_index) in Form.viewFile">{{ file.FileName }}
                                         <img class="view_icon" src="@/assets/view.png" style="margin-left:10px" @click="utilsStore.viewImgFile(file)">
                                         <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="utilsStore.deleteImgFile('new',Form,file_index)">
                                     </p>
@@ -248,10 +248,9 @@
                             <div class="input-group">
                             <div class="store_edit_file">
                                 <div class="file_upload_wrap">
-                                    <button type="button" id="openModal" data-bs-toggle="modal" data-bs-target="#viewFile_modal" style="display:none;">開啟modal隱藏按鈕</button>
-                                    <p v-for="file in Form.existFile">{{ file.FileName }}
+                                    <p v-for="(file, file_index) in Form.existFile">{{ file.FileName }}
                                         <img class="view_icon" src="@/assets/view.png" style="margin-left:10px" @click="utilsStore.viewImgFile(file)">
-                                        <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="utilsStore.deleteImgFile('exist',Form,file_index)">
+                                        <img v-show="PageType === 'ShipReceiveConfirm'" class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="utilsStore.deleteImgFile('exist',Form,file_index)">
                                     </p>
                                 </div>
                             </div>

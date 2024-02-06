@@ -138,7 +138,7 @@ async function submit(event, type) {
     }
   }
   utilsStore.UpdatePageParameter(dg.value, event, type, form);
-  const resultList = await apiStore.getMngDatagrid('/AssetsOutMng/SignaturesForShipment', form);
+  const resultList = await apiStore.getMngDatagrid('/AssetsOutMng/SignaturesForShipment',dg.value, form);
   dgRowData.value = resultList.rows;
   dg.value.totalRecords = resultList.total;
   dg.value.key++;
@@ -184,6 +184,11 @@ const clear = () => {
         }
       }
       .datagrid_section {
+        input,
+        select,
+        .multiselect {
+          width: 200px;
+        }
         .content {
           background: rgba(82, 136, 156, 0.8);
           border-radius: 10px;
@@ -279,11 +284,14 @@ const clear = () => {
         }
       }
       .datagrid_section {
+        // input,select,.multiselect{
+        //   width:calc(50% - -40%) !important;
+        // }
         .row {
           display: grid;
           grid-template-rows: 1fr 1fr 1fr;
           grid-template-columns: 1fr 1fr 1fr;
-          gap: 10px 20px;
+          gap: 10px;
           padding: 20px;
           @include datagrid_bg;
           p {

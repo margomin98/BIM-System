@@ -7,10 +7,10 @@
         <div class="info_wrap col">
             <div class="fixed_info">
                 <div>
-                    <p>申請人員：</p>
+                    <p>申請人員：{{ Form.Applicant }}</p>
                 </div>
                 <div>
-                    <p>申請日期：</p>
+                    <p>申請日期：{{ Form.ApplicationDate }}</p>
                 </div>
             </div>
             <div class="content">
@@ -18,7 +18,7 @@
                 <div class="col form_search_wrap">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend"> 單號：</div>
-                        <input type="text" class="form-control readonly_box" readonly />
+                        <input type="text" class="form-control readonly_box" readonly v-model="Form.PP_ID"/>
                     </div>
                 </div>
                 <!-- 狀態 -->
@@ -28,7 +28,7 @@
                             <div class="input-group-prepend">
                                 狀態：
                             </div>
-                            <input type="text" class="form-control readonly_box" readonly>
+                            <input type="text" class="form-control readonly_box" readonly v-model="Form.Status">
                         </div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                 <div class="col">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend"> 説明：</div>
-                        <textarea style="height: 150px;" class="form-control readonly_box" readonly></textarea>
+                        <textarea style="height: 150px;" class="form-control readonly_box" readonly v-model="Form.Description"></textarea>
                     </div>
                 </div>
                 <!-- 採購人員/完成採購日期 -->
@@ -51,13 +51,13 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">採購人員：</div>
-                            <input type="text" class="form-control readonly_box" readonly />
+                            <input type="text" class="form-control readonly_box" readonly  v-model="Form.PurchasePerson"/>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">完成採購日期：</div>
-                            <input type="text" class="form-control readonly_box" readonly />
+                            <input type="text" class="form-control readonly_box" readonly  v-model="Form.PurchaseDate"/>
                         </div>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                 <div class="col">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend"> 採購備註：</div>
-                        <textarea style="height: 150px;" class="form-control readonly_box" readonly></textarea>
+                        <textarea style="height: 150px;" class="form-control readonly_box" readonly v-model="Form.PurchaseMemo"></textarea>
                     </div>
                 </div>
                 <!-- 沖銷人員/完成沖銷日期 -->
@@ -73,13 +73,13 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">沖銷人員：</div>
-                            <input type="text" class="form-control readonly_box" readonly />
+                            <input type="text" class="form-control readonly_box" readonly  v-model="Form.WriteoffPerson"/>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">完成沖銷日期：</div>
-                            <input type="text" class="form-control readonly_box" readonly />
+                            <input type="text" class="form-control readonly_box" readonly  v-model="Form.WriteoffDate"/>
                         </div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                 <div class="col">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend"> 沖銷備註：</div>
-                        <textarea style="height: 150px;" class="form-control readonly_box" readonly></textarea>
+                        <textarea style="height: 150px;" class="form-control readonly_box" readonly v-model="Form.WriteoffMemo"></textarea>
                     </div>
                 </div>
             </div>
@@ -116,10 +116,10 @@
                             <tr>
                                 <td class="table_content edit_order_btn"><button>編輯訂單</button></td>
                                 <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
+                                    <input class="form-check-input order_check" type="checkbox" value="" disabled>
                                 </td>
                                 <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
+                                    <input class="form-check-input order_check" type="checkbox" value="" disabled>
                                 </td>
                                 <td class="table_content">
                                     <div class="item_number_wrap">
@@ -175,13 +175,26 @@
         </div>
     </div>
 </template>
-<script>
-    import Navbar from '@/components/Navbar.vue';
-    export default {
-        components: {
-            Navbar
-        },
-    }
+<script setup>
+import Navbar from '@/components/Navbar.vue';
+import { usePurchaseStore } from '@/store/purchase/_index'
+import { useAPIStore, useUtilsStore } from '@/store';
+import { onMounted, onUnmounted } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useRoute } from 'vue-router';
+const purchaseStore = usePurchaseStore();
+// 解構
+const { Form } = storeToRefs(purchaseStore) ;
+const route = useRoute();
+
+const PP_ID = route.query.search_id;
+onMounted(async() => {
+  purchaseStore.$reset();
+  purchaseStore.getDetails(PP_ID);
+});
+onUnmounted(()=>{
+  purchaseStore.$dispose();
+})
 </script>
 
 <style lang="scss" scoped>

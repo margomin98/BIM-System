@@ -124,10 +124,10 @@
           name: '請選擇',
         },
         options: [{
-            name: 'F489184964146142847'
+            name: 'F4891849641461fsfdzsfsdefwefewfscd42847'
           },
           {
-            name: 'D47F846'
+            name: 'D47Ff324124314212153252353846'
           },
         ]
       }
@@ -277,6 +277,9 @@
         // }
       }
       .datagrid_section {
+        input,select,.multiselect{
+          width:220px;
+        }
         .content {
           background: rgba(82, 136, 156, 0.8);
           border-radius: 10px;
