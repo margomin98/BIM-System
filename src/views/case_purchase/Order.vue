@@ -179,7 +179,7 @@ import { onMounted, onUnmounted, reactive, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 import { CasePurchase_Order } from '@/assets/js/enter_status'
-import axios from 'axios';
+import axios from '@/axios/tokenInterceptor'
 import router from '@/router';
 const purchaseStore = usePurchaseStore();
 const utilsStore = useUtilsStore();
