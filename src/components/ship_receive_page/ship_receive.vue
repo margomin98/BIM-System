@@ -273,8 +273,8 @@
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Viewmodal from '@/components/view_modal.vue'
-import validate_modal from '../utils/validate_modal.vue';
-import asset_view_btn from '../utils/asset_view_btn.vue';
+import validate_modal from '@/components/utils/validate_modal.vue';
+import asset_view_btn from '@/components/utils/asset_view_btn.vue';
 import printBtn from '@/components/ship_receive_page/ship_receive_print_btn.vue'
 import { useAPIStore, useUtilsStore } from '@/store';
 import { useRentStore } from '@/store/rent/_index';

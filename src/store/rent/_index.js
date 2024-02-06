@@ -38,6 +38,7 @@ export const useRentStore = defineStore('Rent', {
 			AO_ID: '',
 			Applicant: '',
 			ApplicationDate: '',
+			Owner: '', //廠商
       // 交付
 			DeliveryDate: '',
 			DeliveryMemo: '',
