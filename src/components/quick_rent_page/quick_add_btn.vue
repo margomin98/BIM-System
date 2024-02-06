@@ -7,7 +7,6 @@
 <script setup>
 import { useRentStore } from '@/store/rent/_index';
 import { useQuickRentStore } from '@/store/rent/quick';
-import { defineProps, defineEmits } from 'vue';
 
 const props = defineProps(['params', 'selectedNumber', 'Number']);
 const emit = defineEmits(['addMaterial']);

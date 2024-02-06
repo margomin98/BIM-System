@@ -28,7 +28,7 @@
                 <div v-if="PageType === 'edit'" class="row">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
-                            <div class="input-group-prepend flex"><span v-if="Form.AssetType !== '耗材'">*</span>資產類型：</div>
+                            <div class="input-group-prepend flex"><span class="red_star" v-if="Form.AssetType !== '耗材'">*</span>資產類型：</div>
                             <select v-if="Form.AssetType !== '耗材'" class="form-select" v-model="Form.AssetType">
                                 <option value="資產">資產</option>
                                 <option value="存貨">存貨</option>
@@ -40,7 +40,7 @@
                 <!-- 專案代碼 -->
                 <div class="col">
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend"><span v-show="PageType==='edit' && Form.AssetType === '存貨'">*</span>專案代碼：</div>
+                        <div class="input-group-prepend"><span class="red_star" v-show="PageType==='edit' && Form.AssetType === '存貨'">*</span>專案代碼：</div>
                         <input type="text" class="form-control" :class="{'readonly_box': PageType === 'view'}" :readonly="PageType === 'view'" v-model="Form.ProjectCode" />
                         <button v-show="PageType==='edit'" class="form_search_btn" @click="async()=>{ Form.ProjectName = await apiStore.getProject(Form.ProjectCode)}">搜尋</button>
                     </div>
@@ -70,9 +70,9 @@
                         <div class="input-group mb-3">
                             <div class="input-group-prepend"><span v-show="PageType==='edit'" class="red_star">*</span>設備總類：</div>
                             <select class="form-select" :class="{'readonly_box': PageType==='view'}" :disabled="PageType==='view'" v-model="Form.EquipType_Id" @change="async()=>{Form.EquipCategoryArray = await apiStore.getEquipCategory(Form.EquipType_Id); Form.Category_Id = '';}">
-                                    <option value="">--請選擇--</option>
-                                    <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name }}</option>
-                                </select>
+                                <option value="">--請選擇--</option>
+                                <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name }}</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -83,7 +83,7 @@
                                     <template v-else>
                                         <option value="">--請選擇--</option>
                                         <option v-for="option in DropdownArray.EquipCategory" :value="option.Id">{{ option.Name }}</option>
-</template>
+                                    </template>
                             </select>
                         </div>
                     </div>

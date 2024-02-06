@@ -1,4 +1,9 @@
 // 在頁面有限定狀態的情況下，檢查是否可進入頁面的狀態Array
+// 專案採購: 編輯、下定、沖銷、刪除
+export const CasePurchase_Edit = ['待採購'];
+export const CasePurchase_Order = ['待採購', '採購中'];
+export const CasePurchase_Process = ['沖銷中'];
+export const CasePurchase_Delete = ['待採購'];
 // 訂購: 刪除
 export const Order_Delete = ['待收貨']
 // 入庫填報: 編輯、刪除 

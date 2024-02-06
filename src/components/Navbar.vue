@@ -13,6 +13,8 @@
             <img src="../assets/navbar/store.png" alt="入庫管理"> 入庫管理
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <router-link to="/case_purchase_datagrid">專案採購管理</router-link>
+            <div class='dropdown-divider' style='border-color:white'></div>
             <router-link to="/order_datagrid">訂單管理</router-link>
             <div class='dropdown-divider' style='border-color:white'></div>
             <router-link to="/receive_new">新增收貨</router-link>

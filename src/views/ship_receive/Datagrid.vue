@@ -104,7 +104,7 @@ const DropdownArray = reactive({
 const searchParams = reactive({
   AO_ID: '',
   ProjectName: '',
-  Status: '尚未簽收',
+  Status: '',
   DateCategory: '',
   StartDate: '',
   EndDate: '',

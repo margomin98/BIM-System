@@ -3,18 +3,18 @@
         <div class="info_wrap col mb-5">
             <div class="fixed_info">
                 <div>
-                    <p>申請人員：</p>
+                    <p>申請人員：{{  Form.Applicant || utilsStore.userName }}</p>
                 </div>
                 <div>
-                    <p>申請日期：</p>
+                    <p>申請日期：{{  Form.ApplicationDate || utilsStore.today }}</p>
                 </div>
             </div>
             <div class="content">
                 <!-- 單號 -->
-                <div class="col form_search_wrap">
+                <div v-show="Form.PP_ID" class="col form_search_wrap">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend"> 單號：</div>
-                        <input type="text" class="form-control readonly_box" readonly />
+                        <input type="text" class="form-control readonly_box" readonly v-model="Form.PP_ID" />
                     </div>
                 </div>
                 <!-- 專案 -->
@@ -22,12 +22,7 @@
                     <div class="input-group mb-3">
                         <div class="input-group-prepend"> <span class="red_star">*</span>專案：</div>
                         <div class="option_section">
-                            <input @input="handleInput" @focus="handleInput" @blur="handleBlur" v-model="searchTerm" type="text" class="form-control" placeholder="請選擇" />
-                            <ul v-if="showDropdown" class="options-list">
-                                <li v-for="(option, index) in filteredOptions" :key="index" @click="selectItem(option)">
-                                    {{ option.name }}
-                                </li>
-                            </ul>
+                            <multiselect v-model="Form.ProjectSelect" :allow-empty="false" @select="purchaseStore.onProjectSelect" :options="DropdownArray.ProjectCode" :max-height="300" placeholder="請選擇" label="Text" :showLabels="false" track-by="Text"></multiselect>
                         </div>
                     </div>
                 </div>
@@ -35,7 +30,7 @@
                 <div class="col">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend"> <span class="red_star">*</span>説明：</div>
-                        <textarea style="height: 150px;" class="form-control " placeholder="最多輸入100字"></textarea>
+                        <textarea style="height: 150px;" class="form-control " placeholder="最多輸入100字" v-model="Form.Description"></textarea>
                     </div>
                 </div>
                 <!-- 交貨期限 -->
@@ -45,7 +40,7 @@
                             <div class="input-group-prepend">
                                 <span class="red_star">*</span>交貨期限：
                             </div>
-                            <input type="date" class="form-control">
+                            <input type="date" class="form-control" v-model="Form.Deadline">
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -65,37 +60,37 @@
                 <div class="col">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend"> <span class="red_star">*</span>採購項目：</div>
-                        <input type="text" class="form-control " placeholder="最多輸入20字" />
+                        <input type="text" class="form-control " placeholder="最多輸入20字"  v-model="itemParams.ItemName"/>
                     </div>
                 </div>
-                <!-- 説明 -->
-                <div class="col">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">規格需求：</div>
-                        <input type="text" class="form-control " placeholder="最多輸入100字" />
-                    </div>
-                </div>
-                <!-- 交貨期限 -->
+                <!-- 數量 -->
                 <div class="row expire_date_wrap">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="red_star">*</span>數量：
                             </div>
-                            <input type="number" class="form-control " />
+                            <input type="number" class="form-control " min="1"  v-model="itemParams.Number"/>
                         </div>
+                    </div>
+                </div>
+                <!-- 説明 -->
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">規格需求：</div>
+                        <textarea style="height: 150px;" class="form-control " placeholder="最多輸入100字"  v-model="itemParams.RequiredSpec"/>
                     </div>
                 </div>
             </div>
             <div class="add_btn">
-                <button class="">新增</button>
-                </div>
+                <button class="" @click="purchaseStore.addItem">新增</button>
+            </div>
         </div>
         <div class="info_wrap">
             <div class="purchase_list" role="region" tabindex="0">
                 <div class="fixed_info">
                     <div>
-                        <p>待採購清單</p>
+                        <p><span class="red_star">*</span>待採購清單(請至少新增一項)</p>
                     </div>
                 </div>
                 <div class="purchase_table">
@@ -109,35 +104,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><img class="table_delete_icon" src='@/assets/delete.png'></td>
-                            <td class="table_content">路由器</td>
-                            <td class="table_content">1</td>
-                            <td class="table_content">文字文字文字</td>
-                        </tr>
-                        <tr>
-                            <td><img class="table_delete_icon" src='@/assets/delete.png'></td>
-                            <td class="table_content">路由器</td>
-                            <td class="table_content">1</td>
-                            <td class="table_content">文字文字文字</td>
-                        </tr>
-                        <tr>
-                            <td><img class="table_delete_icon" src='@/assets/delete.png'></td>
-                            <td class="table_content">電腦主機</td>
-                            <td class="table_content">2</td>
-                            <td class="table_content">文字文字文字文字文字文字</td>
-                        </tr>
-                        <tr>
-                            <td><img class="table_delete_icon" src='@/assets/delete.png'></td>
-                            <td class="table_content">滑鼠</td>
-                            <td class="table_content">6</td>
-                            <td class="table_content">文字文字文字文字文字文字文字文字文字</td>
-                        </tr>
-                        <tr>
-                            <td><img class="table_delete_icon" src='@/assets/delete.png'></td>
-                            <td class="table_content">電腦主機</td>
-                            <td class="table_content">4</td>
-                            <td class="table_content">文字文字文字</td>
+                        <tr v-for="(item , index) in Form.Requisitions" :key="item.RequiredSpec">
+                            <td @click="purchaseStore.deleteItem(index)"><img class="table_delete_icon" src='@/assets/delete.png'></td>
+                            <td class="table_content">{{ item.ItemName }}</td>
+                            <td class="table_content">{{ item.Number }}</td>
+                            <td class="table_content">{{ item.RequiredSpec }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -147,53 +118,21 @@
     </div>
 </template>
 
-<script>
-    export default {
-        data() {
-            return {
-                searchTerm: "",
-                dropdownOptions: [], // Array to store all options
-                showDropdown: false,
-            };
-        },
-        computed: {
-            filteredOptions() {
-                // Filter options based on searchTerm
-                return this.dropdownOptions.filter(option =>
-                    option.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-                );
-            },
-        },
-        methods: {
-            handleInput() {
-                // Perform search and update dropdownOptions based on searchTerm
-                // For demo purposes, using random data
-                this.dropdownOptions = this.generateRandomData();
-                this.showDropdown = true; // Always show dropdown when input is focused
-            },
-            selectItem(item) {
-                // Handle selection of an item from the dropdown
-                // For example, you can set the selected item to the input field
-                this.searchTerm = item.name;
-                this.showDropdown = false;
-            },
-            handleBlur() {
-                // Close the dropdown when input loses focus
-                this.showDropdown = false;
-            },
-            generateRandomData() {
-                // Function to generate random data for demo purposes
-                const data = [];
-                for (let i = 0; i < 5; i++) {
-                    data.push({
-                        id: i,
-                        name: `Item ${i}`
-                    });
-                }
-                return data;
-            },
-        },
-    }
+<script setup>
+import { useUtilsStore } from '@/store';
+import { usePurchaseStore } from '@/store/purchase/_index';
+import { storeToRefs } from 'pinia';
+import { onUnmounted } from 'vue';
+import Multiselect from 'vue-multiselect';
+
+const utilsStore = useUtilsStore();
+const purchaseStore = usePurchaseStore();
+const { DropdownArray , Form , itemParams } = storeToRefs(purchaseStore);
+
+onUnmounted(()=>{
+    utilsStore.$dispose();
+    purchaseStore.$dispose();
+})
 </script>
 
 <style lang="scss" scoped>
@@ -274,8 +213,8 @@
             }
         }
         .purchase_table{
-            height: 250px;
-    overflow-y: scroll;
+            max-height: 250px;
+            overflow-y: scroll;
         }
         .purchase_list {
             overflow: auto;

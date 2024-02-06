@@ -1,44 +1,45 @@
 <template>
   <Navbar />
   <div class="main_section">
-    <div class="title col"><h1>編輯入庫</h1></div>
-    <Store_Component></Store_Component>
+    <div class="title col"><h1>編輯專案採購單</h1></div>
+    <case_purchase></case_purchase>
     <div class="col button_wrap">
       <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
-      <button class="send_btn" @click="applyStore.submit('edit')">送出</button>
+      <button class="send_btn" @click="purchaseStore.submit('edit')">送出</button>
     </div>
   </div>
 </template>
 
 <script setup>
-import Store_Component from '@/components/store_page/store_component';
+import case_purchase from '@/components/case_purchase_page/case_purchase.vue';
 import Navbar from '@/components/Navbar.vue';
-import { useStorageStore } from '@/store/storage/_index'
+import { usePurchaseStore } from '@/store/purchase/_index'
 import { useAPIStore, useUtilsStore } from '@/store';
-import { useApplyStore } from '@/store/storage/apply'
 import { onMounted, onUnmounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
-import { Store_Edit_Status } from '@/assets/js/enter_status';
-const storageStore = useStorageStore();
-const applyStore = useApplyStore();
+import { CasePurchase_Edit } from '@/assets/js/enter_status'
+const purchaseStore = usePurchaseStore();
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();
 // 解構
-const { DropdownArray } = storeToRefs(storageStore) ;
+const { DropdownArray , Form } = storeToRefs(purchaseStore) ;
 const route = useRoute();
-const AI_ID = route.query.search_id ;
-onMounted(async()=>{
-  applyStore.$reset();
-  storageStore.$reset();
-  DropdownArray.value.EquipType = await apiStore.getEquipType();
-  DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();
-  await storageStore.getDetails(AI_ID, false, Store_Edit_Status, true);
-})
+
+const PP_ID = route.query.search_id;
+onMounted(async() => {
+  purchaseStore.$reset();
+  // DropdownArray.value.ProjectCode = [
+  //   {Text:'--請選擇--' , Value: ''},
+  //   {Text:'0000-1  資產管理系統開發-內部領用/借測' , Value: "0000-1" },
+  //   {Text:'0000-2  asdasdasdwqweqwasdaw' , Value: '0000-2'},
+  // ]
+  DropdownArray.value.ProjectCode = await apiStore.getFuzzyProject();
+  purchaseStore.getDetails(PP_ID, CasePurchase_Edit);
+});
 onUnmounted(()=>{
   utilsStore.$dispose();
-  storageStore.$dispose();
-  applyStore.$dispose();
+  purchaseStore.$dispose();
   apiStore.$dispose();
 })
 </script>
