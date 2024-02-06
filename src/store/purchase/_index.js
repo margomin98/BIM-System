@@ -1,7 +1,6 @@
 import axios from '@/axios/tokenInterceptor'
 import { defineStore } from 'pinia'
-import {  useUtilsStore, useAPIStore } from '@/store'
-import { createDadagridObject } from '@/assets/js/common_fn'
+import {  useUtilsStore } from '@/store'
 import router from '@/router';
 // lodash
 import _ from "lodash"
@@ -40,6 +39,7 @@ export const usePurchaseStore = defineStore('Purchase', {
 		// ----進出庫歷史紀錄
     // 採購需求參數
 		itemParams: {
+      PI_ID: '',
       ItemName: '',
       Number: 1,
       RequiredSpec: '',
@@ -48,6 +48,7 @@ export const usePurchaseStore = defineStore('Purchase', {
 		// 字數上限(固定)
 		FormLetterCheckList: {
 			Description: {field: '說明', max: 100},
+			PurchaseMemo: {field: '說明', max: 100},
 		},
     ItemLetterCheckList: {
 			ItemName: {field: '採購項目', max: 20},
@@ -83,6 +84,7 @@ export const usePurchaseStore = defineStore('Purchase', {
     deleteItem(index) {
       this.Form.Requisitions.splice(index,1);
     },
+    // 新增/編輯 採購單
     async submit(type) {
       const utilsStore = useUtilsStore();
       // 檢查 必填&字數
@@ -94,22 +96,10 @@ export const usePurchaseStore = defineStore('Purchase', {
         alert('請至少新增一項採購需求');
         return
       }
-      const form = new FormData;
-      for(const key in this.Form) {
-        if(this.Form[key]) {
-          if(typeof this.Form[key] === 'number' || typeof this.Form[key] === 'string') {
-            form.append(key, this.Form[key]);
-          }
-        }
-      }
-      for(const item of this.Form.Requisitions) {
-        console.log(item);
-        form.append('Requisitions' , item);
-      }
       // output內容差不多 type決定api URL
       const url= type === 'edit' ? '/PurchasingMng/EditRequisition' : '/PurchasingMng/CreateRequisition'
       try {
-        const response = await axios.post('http://192.168.0.177:7008'+url,form);
+        const response = await axios.post('http://192.168.0.177:7008'+url,this.Form);
         const data = response.data
         if(data.state === 'success') {
           alert(data.messages + '\n單號:' + data.resultList.PP_ID);
