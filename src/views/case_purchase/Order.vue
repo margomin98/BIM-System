@@ -112,7 +112,7 @@
                         <tbody>
                             <tr v-for="(item , index) in Form.Ordered" :key="item.PI_ID">
                                 <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="true" id="flexCheckDefault">
+                                    <input class="form-check-input order_check" type="checkbox" value="true" v-model="OrderedList[index]">
                                 </td>
                                   <td class="table_content">{{item.ItemName}}</td>
                                 <td class="table_content">{{item.Number}}</td>
@@ -194,7 +194,7 @@ const user = reactive({
     userName: '',
     userPassword: '',
     resultName: '未驗證',
-    isValidate: true,
+    isValidate: false,
     id: 'PP_Order',
 });
 const NotOrderedList = ref([]);
