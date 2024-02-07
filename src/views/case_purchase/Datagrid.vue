@@ -91,7 +91,7 @@
 import Column from 'primevue/column';
 import DataTable from 'primevue/datatable';
 import Multiselect from 'vue-multiselect';
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, onUnmounted } from 'vue';
 import case_purchase_btn from '@/components/case_purchase_page/case_purchase_btn.vue';
 import Delete from '@/components/case_purchase_page/delete_btn.vue'
 import Navbar from "@/components/Navbar.vue";
@@ -141,7 +141,9 @@ onMounted(async() => {
   // ]
   DropdownArray.ProjectCode = await useAPIStore().getFuzzyProject();
 });
-
+onUnmounted(()=>{
+  utilsStore.$dispose();
+})
 async function submit(event, type) {
   const form = new FormData();
   // 將表格資料 append 到 form

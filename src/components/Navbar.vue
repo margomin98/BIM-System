@@ -20,7 +20,7 @@
             <router-link to="/receive_new">新增收貨</router-link>
             <router-link to="/receive_datagrid">收貨管理</router-link>
             <div class='dropdown-divider' style='border-color:white'></div>
-            <router-link to="/quick_store_new" class="d-flex speed_icon" style="flex-direction: row" @mouseover="changeImage" @mouseout="resetImage">
+            <router-link v-if="roleId === 1 || roleId === 4" to="/quick_store_new" class="d-flex speed_icon" style="flex-direction: row" @mouseover="changeImage" @mouseout="resetImage">
               <img :src="speedIcon" alt="快速入庫">快速入庫
             </router-link>
             <router-link to="/store_new">新品入庫</router-link>
@@ -35,7 +35,7 @@
             <img src="../assets/navbar/deliver.png" alt="出庫管理"> 出庫管理
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <router-link to="/quick_rent_new" class="d-flex speed_icon" style="flex-direction: row" @mouseover="changeImage" @mouseout="resetImage">
+            <router-link v-if="roleId === 1 || roleId === 4" to="/quick_rent_new" class="d-flex speed_icon" style="flex-direction: row" @mouseover="changeImage" @mouseout="resetImage">
               <img :src="speedIcon" alt="快速出庫">快速出庫
             </router-link>
             <router-link to="/rent_datagrid">出庫填報管理</router-link>
@@ -90,15 +90,16 @@
 
 <script setup>
   import {
-    useUtilsStore,
-    useAPIStore
+    useUtilsStore , useAPIStore
   } from '@/store'
   import router from '@/router';
   import {
     onMounted,
+    onUnmounted,
     ref
   } from 'vue';
-  import axios from 'axios';
+  import axios from '@/axios/tokenInterceptor'
+  const roleId = ref('');
   const hovered = ref(false);
   const utilsStore = useUtilsStore();
   const apiStore = useAPIStore();
@@ -122,12 +123,7 @@
   //登出function 沒有回傳值，正確直接回登入頁面
   async function logout() {
     try {
-      const token = await apiStore.GetAntiForgeryToken();
-      const response = await axios.post('http://192.168.0.177:7008/Account/LogOff',{},{
-        headers:{
-          'RequestVerificationToken': token,
-        }
-      });
+      const response = await axios.post('http://192.168.0.177:7008/Account/LogOff','');
       if (response.status === 200) {
         //登出成功，跳轉至首頁
         router.push('/');
@@ -140,10 +136,16 @@
   }
   onMounted(async() => {
     utilsStore.$reset();
-    await utilsStore.getUserName();
     utilsStore.getDate();
+    await utilsStore.getUserName();
+    // roleId.value =  await apiStore.getRoleId('user_1');
+    roleId.value =  await apiStore.getRoleId(utilsStore.userName);
+    // console.log('roleId',roleId.value);
     emit('username', utilsStore.userName); //收貨、入庫填報 edit修改後再移除
   });
+  onUnmounted(()=>{
+    utilsStore.$dispose();
+  })
 </script>
 
 <style lang="scss" scoped>
