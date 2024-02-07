@@ -136,7 +136,7 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Assets_return_button from "@/components/Assets_return_button";
 import Navbar from "@/components/Navbar.vue";
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, onUnmounted } from "vue";
 import { Asset_StastusArray } from "@/assets/js/dropdown"
 import { useUtilsStore, useAPIStore } from '@/store'
 import { storeToRefs } from 'pinia';
@@ -187,11 +187,15 @@ onMounted(async () => {
   for(const key in searchParams) {
     dgSearchParams.value[key] = '';
   }
+  dg.value.sortField = 'AssetsId'
   submit('', 'search');
   DropdownArray.EquipType = await apiStore.getEquipType();
   DropdownArray.Area = await apiStore.getArea();
-  DropdownArray.ProjectCode =  await apiStore.getFuzzyProject();
+  DropdownArray.ProjectCode = await apiStore.getFuzzyProject();
 });
+onUnmounted(()=>{
+  utilsStore.$dispose();
+})
 async function submit(event, type) {
   const form = new FormData();
   //將表格資料append到 form

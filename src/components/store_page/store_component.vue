@@ -342,11 +342,11 @@
                               <div class="dropdown">
                                 <select class="form-select" id="floatingSelect" v-model="tab.itemCategory_Id">
                                   <option v-if="tab.EquipCategoryArray.length == 0" value="">--請先選擇設備總類--</option>
-<template v-else>
-  <option value="">
-    --請選擇--</option>
-  <option v-for="option in tab.EquipCategoryArray" :value="option.Id">{{ option.Name }}</option>
-</template>
+                                  <template v-else>
+                                    <option value="">
+                                      --請選擇--</option>
+                                    <option v-for="option in tab.EquipCategoryArray" :value="option.Id">{{ option.Name }}</option>
+                                  </template>
                                 </select>
                               </div>
                           </div>

@@ -656,6 +656,27 @@ export const useAPIStore = defineStore('API',{
       } catch (error) {
         console.error(error);
       }
+    },
+    // 查詢User權限(0:訪客(無法登入系統) 1:系統管理員 2.設備工程師 3:倉管人員 4.主管 5.收貨人員)
+    async getRoleId(userName) {
+      return new Promise(async(resolve, reject)=>{
+        try {
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetRoleFromName?name=${userName}`);
+          const data = response.data;
+          // console.log('userName', this.userName);
+          // console.log('Applicant',Applicant);
+          if (data.state === 'success') {
+            resolve(data.resultList.role.Id);
+          } 
+          // 存取失敗
+          else {
+            reject(data.messages);
+          }
+        } catch (error) {
+          console.error(error);
+          reject(error);
+        }
+      });
     }
   }
 })
