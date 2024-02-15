@@ -648,7 +648,7 @@ const fake_case_data = [
 onMounted(async() => {
   utilsStore.$reset();
   // await project api, then handle "Text" part
-  // project.OriginOptions = await apiStore.getFuzzyProject();
+  project.OriginOptions = await apiStore.getFuzzyProject();
   // 去掉Value的空白??? 需要嘛?
   project.OriginOptions = project.OriginOptions.map(option => {
     const newValue = option.Text.replace(option.Value.trim(), '');
@@ -659,12 +659,12 @@ onMounted(async() => {
   util_Dropdown.EquipType = await apiStore.getEquipType();
   util_Dropdown.Area = await apiStore.getArea();
   // 4個dg搜尋
-  // submit('Warehouse','','search');
-  // submit('PurchasedItem','','search');
-  // submit('DeliveredItem','','search');
-  // submit('CustodyAssets','','search');
+  submit('Warehouse','','search');
+  submit('PurchasedItem','','search');
+  submit('DeliveredItem','','search');
+  submit('CustodyAssets','','search');
   // 警示訊息
-  // getAlertMsg();
+  getAlertMsg();
   updatePie();
 });
 onUnmounted(()=>{
