@@ -649,6 +649,7 @@ onMounted(async() => {
   utilsStore.$reset();
   // await project api, then handle "Text" part
   project.OriginOptions = await apiStore.getFuzzyProject();
+  project.OriginOptions.splice(0,1);
   // 去掉Value的空白??? 需要嘛?
   project.OriginOptions = project.OriginOptions.map(option => {
     const newValue = option.Text.replace(option.Value.trim(), '');
