@@ -698,24 +698,24 @@ const submit = async (type = '', event, action = '') => {
   PurchasedItem: {
     datagrid: PurchasedItem.datagrid,
     rowData: PurchasedItem.rowData,
-    url: '/HomePage/GetDataOfPurchasedItem',
+    url: '/HomePage/GetListOfPurchasedItem',
     Form: PurchasedItem.searchParams
   },
   DeliveredItem: {
     datagrid: DeliveredItem.datagrid,
     rowData: DeliveredItem.rowData,
-    url: '/HomePage/GetDataOfDeliveredItem',
+    url: '/HomePage/GetListOfDeliveredItem',
     Form: DeliveredItem.searchParams
   },
   CustodyAssets: {
     datagrid: CustodyAssets.datagrid,
     rowData: CustodyAssets.rowData,
-    url: '/HomePage/GetDataOfCustodyAssets',
+    url: '/HomePage/GetListOfCustodyAssets',
     Form: CustodyAssets.searchParams
   }
 };
 
-const { datagrid, rowData, url, Form } = typeMappings[type];
+const { datagrid, url, Form } = typeMappings[type];
   const form = new FormData();
   //將表格資料append到 form
   for (const key in Form) {
@@ -726,7 +726,7 @@ const { datagrid, rowData, url, Form } = typeMappings[type];
   utilsStore.UpdatePageParameter(datagrid, event, action, form);
   const resultList = await apiStore.getMngDatagrid(url,datagrid, form);
   console.log('resultList',resultList);
-  rowData = resultList.rows;
+  typeMappings[type].rowData = resultList.rows;
   datagrid.totalRecords = resultList.total;
   datagrid.key++;
   // 如果是Warehouse，要更新pie chart數據
