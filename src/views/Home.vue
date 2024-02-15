@@ -726,24 +726,35 @@ const { datagrid, url, Form } = typeMappings[type];
   utilsStore.UpdatePageParameter(datagrid, event, action, form);
   const resultList = await apiStore.getMngDatagrid(url,datagrid, form);
   console.log('resultList',resultList);
-  typeMappings[type].rowData = resultList.rows;
+  switch (type) {
+    case 'Warehouse':
+      Warehouse.rowData = resultList.rows ;   
+      // 如果是Warehouse，要更新pie chart數據
+      Warehouse.rowData.forEach((item, index)=>{
+        Warehouse.rowData[index].Amount ='$'+item.Amount.toLocaleString();
+      })
+      amount_pie_data = resultList.AmountAnalysis.map(item => ({
+        name: item.EquipTypeName,
+        y: item.Amount
+      }));
+      case_pie_data = resultList.EquipTypeAnalysis.map(item => ({
+        name: item.EquipTypeName,
+        y: item.Count
+      }));
+      updatePie();   
+      break;
+    case 'PurchasedItem':
+      PurchasedItem.rowData = resultList.rows ;      
+      break;
+    case 'DeliveredItem':
+      DeliveredItem.rowData = resultList.rows ;      
+      break;
+    case 'CustodyAssets':
+      CustodyAssets.rowData = resultList.rows ;      
+      break;
+  }
   datagrid.totalRecords = resultList.total;
   datagrid.key++;
-  // 如果是Warehouse，要更新pie chart數據
-  if(type === 'Warehouse') {
-    Warehouse.rowData.forEach((item, index)=>{
-      Warehouse.rowData[index].Amount ='$'+item.Amount.toLocaleString();
-    })
-    amount_pie_data = resultList.AmountAnalysis.map(item => ({
-      name: item.EquipTypeName,
-      y: item.Amount
-    }));
-    case_pie_data = resultList.EquipTypeAnalysis.map(item => ({
-      name: item.EquipTypeName,
-      y: item.Count
-    }));
-    updatePie();
-  }
 }
 const getAlertMsg = async()=>{
   try {
