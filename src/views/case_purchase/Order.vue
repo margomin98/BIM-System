@@ -213,14 +213,13 @@ const submitOrder = async (type) => {
             break;
         case 'Ordered':
             url='/CancelForRequisitionItems'
-            for(let i=0 ; i<Form.value.NotOrdered.length; i++) {
+            for(let i=0 ; i<Form.value.Ordered.length; i++) {
                 if(OrderedList.value[i]) {
                     array.push(Form.value.Ordered[i].PI_ID);
                 }
             }
             break;
     }
-
     if(array.length === 0 ) {
         alert('請至少勾選一項項目');
         return

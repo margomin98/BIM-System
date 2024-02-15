@@ -10,37 +10,6 @@
           </div>
         </div>
         <div class="modal-body">
-          <!-- <ag-charts-vue class="chart-container" :options="modalOptions"></ag-charts-vue>
-            <div class="amount_text">
-                    <p>總金額</p>
-                    <p class="amount">100</p>
-              </div>
-       <div class="chart_data_table mt-3">
-        <table>
-    <tbody>
-      <tr>
-        <td class="details_name">電腦設備類</td>
-        <td class="details_percentage">15%</td>
-        <td class="details_amount">1,202</td>
-      </tr>
-      <tr>
-        <td class="details_name">維修設備類</td>
-        <td class="details_percentage">32.5%</td>
-        <td class="details_amount">4,879</td>
-      </tr>
-      <tr>
-        <td class="details_name">電腦設備類</td>
-        <td class="details_percentage">5%</td>
-        <td class="details_amount">4,555</td>
-      </tr>
-      <tr>
-        <td class="details_name">耗材類</td>
-        <td class="details_percentage">42%</td>
-        <td class="details_amount">6,219</td>
-      </tr>
-    </tbody>
-    </table>
-       </div>   -->
           <div id="amount_pie" class="modal_pie"></div>
           <div class="amount_text d-flex">
             <p>總金額
@@ -62,37 +31,6 @@
           </div>
         </div>
         <div class="modal-body">
-          <!-- <ag-charts-vue class="chart-container" :options="modalOptions"></ag-charts-vue>
-            <div class="amount_text">
-                    <p>總件數</p>
-                    <p class="amount">100</p>
-              </div>
-       <div class="chart_data_table mt-3">
-        <table>
-    <tbody>
-      <tr>
-        <td class="details_name">電腦設備類</td>
-        <td class="details_percentage">15%</td>
-        <td class="details_amount">1,202</td>
-      </tr>
-      <tr>
-        <td class="details_name">維修設備類</td>
-        <td class="details_percentage">32.5%</td>
-        <td class="details_amount">4,879</td>
-      </tr>
-      <tr>
-        <td class="details_name">電腦設備類</td>
-        <td class="details_percentage">5%</td>
-        <td class="details_amount">4,555</td>
-      </tr>
-      <tr>
-        <td class="details_name">耗材類</td>
-        <td class="details_percentage">42%</td>
-        <td class="details_amount">6,219</td>
-      </tr>
-    </tbody>
-    </table>
-       </div>   -->
           <div id="case_pie" class="modal_pie"></div>
           <div class="amount_text d-flex">
             <p>總件數
@@ -130,9 +68,19 @@
       <!-- 有代碼搜索框 -->
       <div class="code_search">
         <div class="search_section">
-          <input type="text" placeholder="請輸入代碼">
-          <button class="search_btn">搜尋</button>
+          <input type="text" placeholder="請輸入代碼或名稱" v-model="project.input">
         </div>
+        <div class="search_result">
+          <perfect-scrollbar>
+            <div v-for="option in filterProject" class="result_wrap" :class="{'selected': project.Project_Id === option.Value}" @click="selectProject(option)">
+              <p class="case_code d-flex">{{ option.Value }}</p>
+              <p class="case_name">{{option.Text}}</p>
+            </div>
+          </perfect-scrollbar>
+        </div>
+      </div>
+      <!-- 沒有代碼搜索框 -->
+      <!-- <div class="code_search with_search_input">
         <div class="search_result">
           <perfect-scrollbar>
             <div class="result_wrap">
@@ -169,46 +117,7 @@
             </div>
           </perfect-scrollbar>
         </div>
-      </div>
-      <!-- 沒有代碼搜索框 -->
-      <!-- <div class="code_search with_search_input">
-            <div class="search_result">
-              <perfect-scrollbar>
-                <div class="result_wrap">
-                  <p class="case_code d-flex">1234568</p>
-                  <p class="case_name">中興_台電離岸風力發電第一期XX</p>
-                </div>
-                <div class="result_wrap selected">
-                  <p class="case_code d-flex">1234568</p>
-                  <p class="case_name">中興_台電離岸風力發電第一期第三期</p>
-                </div>
-                <div class="result_wrap">
-                  <p class="case_code d-flex">1234568</p>
-                  <p class="case_name">中興_台電離岸風力發電第一期XX</p>
-                </div>
-                <div class="result_wrap">
-                  <p class="case_code d-flex">1234568</p>
-                  <p class="case_name">中興_台電離岸風力發電第一期XX</p>
-                </div>
-                <div class="result_wrap">
-                  <p class="case_code d-flex">1234568</p>
-                  <p class="case_name">中興_台電離岸風力發電第一期XX</p>
-                </div>
-                <div class="result_wrap">
-                  <p class="case_code d-flex">1234568</p>
-                  <p class="case_name">中興_台電離岸風力發電第一期XX</p>
-                </div>
-                <div class="result_wrap">
-                  <p class="case_code d-flex">148944568</p>
-                  <p class="case_name">中興_台電離岸風力發電第100000期XX</p>
-                </div>
-                <div class="result_wrap">
-                  <p class="case_code d-flex">1234568</p>
-                  <p class="case_name">中興_台電離岸風力發電第一期XX</p>
-                </div>
-              </perfect-scrollbar>
-            </div>
-          </div> -->
+      </div> -->
     </div>
     <div class="col pt_center">
       <div class="datagrid_section">
@@ -223,95 +132,111 @@
           </li>
           <!-- 待交付資產列表 -->
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#ProcessProperty" type="button" role="tab" aria-controls="contact" aria-selected="false">待交付資產列表</button>
+            <button class="nav-link active" id="contact-tab" data-bs-toggle="tab" data-bs-target="#ProcessProperty" type="button" role="tab" aria-controls="contact" aria-selected="false">待交付資產列表</button>
           </li>
           <!-- 名下保管資產 -->
           <li class="nav-item" role="presentation">
-            <button class="nav-link  active" id="contact-tab" data-bs-toggle="tab" data-bs-target="#organizeProperty" type="button" role="tab" aria-controls="contact" aria-selected="false">名下保管資產</button>
+            <button class="nav-link  " id="contact-tab" data-bs-toggle="tab" data-bs-target="#organizeProperty" type="button" role="tab" aria-controls="contact" aria-selected="false">名下保管資產</button>
           </li>
         </ul>
         <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade TotalProperty" id="TotalProperty" role="tabpanel" aria-labelledby="home-tab">
+          <!-- 總覽庫房資產 -->
+          <div class="tab-pane fade TotalProperty " id="TotalProperty" role="tabpanel" aria-labelledby="home-tab">
             <div class="row dg_search_wrap">
               <!-- 資產類型 -->
               <div class="col">
                 <p>資產類型</p>
-                <select class="date-input form-select">
-                              <option value="" disabled selected>請選擇</option>
-                              <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
-                          </select> </div>
+                <select class="date-input form-select" v-model="Warehouse.searchParams.AssetType">
+                  <option value="">--請選擇--</option>
+                  <option value="資產">資產</option>
+                  <option value="存貨">存貨</option>
+                  <option value="耗材">耗材</option>
+                </select> </div>
               <!-- 資產狀態 -->
               <div class="col">
                 <p>資產狀態</p>
-                <select class="form-select" id="statusDropdown">
-                          <option value="">請選擇</option>
-                          <!-- <option v-for="(item, index) in DropdownArray.Status" :key="index" :value="item">{{ item }}</option> -->
-                      </select>
+                <select class="form-select" v-model="Warehouse.searchParams.Status">
+                  <option value="">--請選擇--</option>
+                  <option v-for="(item, index) in Asset_StastusArray" :key="index" :value="item">{{ item }}</option>
+                </select>
               </div>
               <!-- 設備總類 -->
               <div class="col">
                 <p>設備總類</p>
-                <select class="date-input form-select">
-                              <option value="" disabled selected>請選擇</option>
-                              <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
-                          </select> </div>
+                <select class="form-select" v-model="Warehouse.searchParams.EquipType_Id"  @change="async()=>{Warehouse.DropdownArray.EquipCategory = await apiStore.getEquipCategory(Warehouse.searchParams.EquipType_Id); Warehouse.searchParams.Category_Id = '';}">
+                  <option value="">--請選擇--</option>
+                  <option v-for="(option, index) in util_Dropdown.EquipType" :key="index" :value="option.Id">{{ option.Name }}</option>
+                </select>
+              </div>
               <!-- 設備分類 -->
               <div class="col">
                 <p>設備分類</p>
-                <select class="date-input form-select">
-                              <option value="" disabled selected>請選擇</option>
-                              <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
-                          </select>
+                <select class="date-input form-select" v-model="Warehouse.searchParams.Category_Id">
+                  <option v-if="Warehouse.DropdownArray.EquipCategory.length === 0" value="">--請先選擇設備總類--</option>
+                  <template v-else>
+                    <option value="">--請選擇--</option>
+                    <option v-for="(option, index) in Warehouse.DropdownArray.EquipCategory" :key="index" :value="option.Id">{{ option.Name }}</option>
+                  </template>
+                </select>
               </div>
               <!-- 儲位區域 -->
               <div class="col">
                 <p>儲位區域</p>
-                <select class="date-input form-select">
-                              <option value="" disabled selected>請選擇</option>
-                              <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
-                          </select>
+                <select class="form-select" v-model="Warehouse.searchParams.Area_Id"  @change="async()=>{Warehouse.DropdownArray.Layer = await apiStore.getLayer(Warehouse.searchParams.Area_Id); Warehouse.searchParams.Layer_Id = '';}">
+                  <option value="">--請選擇--</option>
+                  <option v-for="(option, index) in util_Dropdown.Area" :key="index" :value="option.Id">{{ option.Name }}</option>
+                </select>
               </div>
               <!-- 儲位櫃位 -->
               <div class="col">
                 <p>儲位櫃位</p>
-                <select class="date-input form-select">
-                              <option value="" disabled selected>請選擇</option>
-                              <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
-                          </select>
+                <select class="date-input form-select" v-model="Warehouse.searchParams.Layer_Id">
+                  <option v-if="Warehouse.DropdownArray.Layer.length === 0" value="">--請先選擇儲位區域--</option>
+                  <template v-else>
+                    <option value="">--請選擇--</option>
+                    <option v-for="(option, index) in Warehouse.DropdownArray.Layer" :key="index" :value="option.Id">{{ option.Name }}</option>
+                  </template>
+                </select>
               </div>
             </div>
             <div class="button_wrap">
-              <button class="reset_btn">重設</button>
+              <button class="search_btn" @click="submit('Warehouse','','search')">檢索</button>
+              <button class="reset_btn" @click="clear('Warehouse')">重設</button>
             </div>
             <div class="dg">
-              dg
+              <DataTable lazy :key="Warehouse.datagrid.key" :first="Warehouse.datagrid.first" :size="'small'" :loading="Warehouse.datagrid.loading" :value="Warehouse.rowData" :sort-field="Warehouse.datagrid.sortField" :sort-order="Warehouse.datagrid.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
+                scrollHeight="420px" @page="submit('Warehouse', $event , 'page')" @sort="submit('Warehouse', $event , 'sort')" paginator :rows="Warehouse.datagrid.rows" :totalRecords="Warehouse.datagrid.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+                :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+                <Column style="min-width: 60px;">
+                  <template #body="slotProps">
+                    <asset_view_btn :params = "slotProps"/>
+                  </template>
+                </Column>
+                <Column v-for="item in Warehouse.datagridField" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+              </DataTable>
             </div>
           </div>
+          <!-- 待採購清單 -->
           <div class="tab-pane fade PurchaseList" id="PurchaseList" role="tabpanel" aria-labelledby="profile-tab">
             <div class="row dg_search_wrap">
               <!-- 採購項目 -->
               <div class="col-xl-auto col-lg-auto col-md col-12">
                 <p>採購項目</p>
-                <input type="text" placeholder="(模糊查詢)" />
+                <input type="text" placeholder="最多輸入20字" v-model="PurchasedItem.searchParams.PurchasedItem"/>
               </div>
               <!-- 交貨期限(起) -->
               <div class="col-xl-auto col-lg-auto col-md col-12">
                 <p>交貨期限(起)</p>
-                <select class="date-input form-select">
-                              <option value="" disabled selected>請選擇</option>
-                              <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
-                          </select>
+                <input type="date" v-model="PurchasedItem.searchParams.StartDate">
               </div>
               <!-- 交貨期限(訖) -->
               <div class="col-xl-auto col-lg-auto col-md col-12">
                 <p>交貨期限(訖)</p>
-                <select class="form-select" id="statusDropdown">
-                          <option value="">請選擇</option>
-                          <!-- <option v-for="(item, index) in DropdownArray.Status" :key="index" :value="item">{{ item }}</option> -->
-                      </select>
+                <input type="date" v-model="PurchasedItem.searchParams.EndDate">
               </div>
               <div class="col-xl-auto col-lg-auto button_wrap">
-                <button class="reset_btn">重設</button>
+                <button class="search_btn" @click="submit('PurchasedItem','','search')">檢索</button>
+                <button class="reset_btn" @click="clear('PurchasedItem')">重設</button>
               </div>
               <div class="col-auto total_amount">
                 <p>共計
@@ -319,76 +244,119 @@
               </div>
             </div>
             <div class="dg">
-              dg
+              <DataTable lazy :key="PurchasedItem.datagrid.key" :first="PurchasedItem.datagrid.first" :size="'small'" :loading="PurchasedItem.datagrid.loading" :value="PurchasedItem.rowData" :sort-field="PurchasedItem.datagrid.sortField" :sort-order="PurchasedItem.datagrid.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
+                scrollHeight="420px" @page="submit('PurchasedItem', $event , 'page')" @sort="submit('PurchasedItem', $event , 'sort')" paginator :rows="PurchasedItem.datagrid.rows" :totalRecords="PurchasedItem.datagrid.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+                :row-style="({ IsDue }) => IsDue ? 'background-color: #FFE1E1;': null "
+                :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}" >
+                <Column style="min-width: 60px;">
+                  <template #body="slotProps">
+                    <purchase_view_btn :params = "slotProps"/>
+                  </template>
+                </Column>
+                <Column v-for="item in PurchasedItem.datagridField" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+              </DataTable>
             </div>
           </div>
-          <div class="tab-pane fade ProcessProperty" id="ProcessProperty" role="tabpanel" aria-labelledby="contact-tab">
+          <!-- 待交付資產列表 -->
+          <div class="tab-pane fade ProcessProperty show active" id="ProcessProperty" role="tabpanel" aria-labelledby="contact-tab">
             <div class="warn_text">
               <p>
                 *若未實際收到該資產而無法交付時，請按下拒絕交付後主動與指派人確認
               </p>
             </div>
             <div class="dg">
-              dg
+              <DataTable lazy :key="DeliveredItem.datagrid.key" :first="DeliveredItem.datagrid.first" :size="'small'" :loading="DeliveredItem.datagrid.loading" :value="DeliveredItem.rowData" :sort-field="DeliveredItem.datagrid.sortField" :sort-order="DeliveredItem.datagrid.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
+                scrollHeight="420px" @page="submit('DeliveredItem', $event , 'page')" @sort="submit('DeliveredItem', $event , 'sort')" paginator :rows="DeliveredItem.datagrid.rows" :totalRecords="DeliveredItem.datagrid.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+                :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}" >
+                <Column style="min-width: 60px;" header="接受交付">
+                  <template #body="slotProps">
+                    <input type="radio" value="true" v-model="slotProps.data.IsExecute" @change="changeIsExcute(slotProps.data)">
+                  </template>
+                </Column>
+                <Column style="min-width: 60px;" header="拒絕交付">
+                  <template #body="slotProps">
+                    <input type="radio" value="false" v-model="slotProps.data.IsExecute" @change="changeIsExcute(slotProps.data)">
+                  </template>
+                </Column>
+                <Column v-for="item in DeliveredItem.datagridField" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+              </DataTable>
             </div>
           </div>
-          <div class="tab-pane fade show active organizeProperty" id="organizeProperty" role="tabpanel" aria-labelledby="contact-tab">
+          <!-- 名下保管資產 -->
+          <div class="tab-pane fade organizeProperty" id="organizeProperty" role="tabpanel" aria-labelledby="contact-tab">
             <div class="row dg_search_wrap">
               <!-- 資產狀態 -->
               <div class="col">
                 <p>資產狀態</p>
-                <select class="form-select" id="statusDropdown">
-                          <option value="">請選擇</option>
-                          <!-- <option v-for="(item, index) in DropdownArray.Status" :key="index" :value="item">{{ item }}</option> -->
-                      </select>
+                <select class="form-select" v-model="CustodyAssets.searchParams.Status">
+                  <option value="">--請選擇--</option>
+                  <option v-for="(item, index) in Asset_StastusArray" :key="index" :value="item">{{ item }}</option>
+                </select>
               </div>
               <!-- 設備總類 -->
               <div class="col">
                 <p>設備總類</p>
-                <select class="date-input form-select">
-                              <option value="" disabled selected>請選擇</option>
-                              <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
-                          </select> </div>
+                <select class="form-select" v-model="CustodyAssets.searchParams.EquipType_Id"  @change="async()=>{CustodyAssets.DropdownArray.EquipCategory = await apiStore.getEquipCategory(CustodyAssets.searchParams.EquipType_Id); CustodyAssets.searchParams.Category_Id = '';}">
+                  <option value="">--請選擇--</option>
+                  <option v-for="(option, index) in util_Dropdown.EquipType" :key="index" :value="option.Id">{{ option.Name }}</option>
+                </select>
+              </div>
               <!-- 設備分類 -->
               <div class="col">
                 <p>設備分類</p>
-                <select class="date-input form-select">
-                              <option value="" disabled selected>請選擇</option>
-                              <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
-                          </select>
+                <select class="date-input form-select" v-model="CustodyAssets.searchParams.Category_Id">
+                  <option v-if="CustodyAssets.DropdownArray.EquipCategory.length === 0" value="">--請先選擇設備總類--</option>
+                  <template v-else>
+                    <option value="">--請選擇--</option>
+                    <option v-for="(option, index) in CustodyAssets.DropdownArray.EquipCategory" :key="index" :value="option.Id">{{ option.Name }}</option>
+                  </template>
+                </select>
               </div>
               <!-- 儲位區域 -->
               <div class="col">
                 <p>儲位區域</p>
-                <select class="date-input form-select">
-                              <option value="" disabled selected>請選擇</option>
-                              <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
-                          </select>
+                <select class="form-select" v-model="CustodyAssets.searchParams.Area_Id"  @change="async()=>{CustodyAssets.DropdownArray.Layer = await apiStore.getLayer(CustodyAssets.searchParams.Area_Id); CustodyAssets.searchParams.Layer_Id = '';}">
+                  <option value="">--請選擇--</option>
+                  <option v-for="(option, index) in util_Dropdown.Area" :key="index" :value="option.Id">{{ option.Name }}</option>
+                </select>
               </div>
               <!-- 儲位櫃位 -->
               <div class="col">
                 <p>儲位櫃位</p>
-                <select class="date-input form-select">
-                              <option value="" disabled selected>請選擇</option>
-                              <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
-                          </select>
+                <select class="date-input form-select" v-model="CustodyAssets.searchParams.Layer_Id">
+                  <option v-if="CustodyAssets.DropdownArray.Layer.length === 0" value="">--請先選擇儲位區域--</option>
+                  <template v-else>
+                    <option value="">--請選擇--</option>
+                    <option v-for="(option, index) in CustodyAssets.DropdownArray.Layer" :key="index" :value="option.Id">{{ option.Name }}</option>
+                  </template>
+                </select>
               </div>
               <!-- 資產編號 -->
               <div class="col">
                 <p>資產編號</p>
-                <input type="text" placeholder="(明確查詢)" />
+                <input type="text" placeholder="請輸入資產編號" v-model="CustodyAssets.searchParams.AssetsId"/>
               </div>
               <!-- 物品名稱 -->
               <div class="col">
                 <p>物品名稱</p>
-                <input type="text" placeholder="(模糊查詢)" />
+                <input type="text" placeholder="最多輸入20字" v-model="CustodyAssets.searchParams.AssetName"/>
               </div>
             </div>
             <div class="button_wrap">
-              <button class="reset_btn">重設</button>
+              <button class="search_btn" @click="submit('CustodyAssets','','search')">檢索</button>
+              <button class="reset_btn" @click="clear('CustodyAssets')">重設</button>
             </div>
             <div class="dg">
-              dg
+              <DataTable lazy :key="CustodyAssets.datagrid.key" :first="CustodyAssets.datagrid.first" :size="'small'" :loading="CustodyAssets.datagrid.loading" :value="CustodyAssets.rowData" :sort-field="CustodyAssets.datagrid.sortField" :sort-order="CustodyAssets.datagrid.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
+                scrollHeight="420px" @page="submit('CustodyAssets', $event , 'page')" @sort="submit('CustodyAssets', $event , 'sort')" paginator :rows="CustodyAssets.datagrid.rows" :totalRecords="CustodyAssets.datagrid.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+                :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}" >
+                <Column style="min-width: 60px;">
+                  <template #body="slotProps">
+                    <asset_view_btn :params = "slotProps"/>
+                  </template>
+                </Column>
+                <Column v-for="item in CustodyAssets.datagridField" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+              </DataTable>
             </div>
           </div>
         </div>
@@ -403,15 +371,7 @@
         <div class="content">
           <perfect-scrollbar>
             <div class="warn_info">
-              <p class="case_name">截止日期 2024/01/01 前，尚為完成......</p>
-              <p class="case_name">截止日期 2025/01/01 前，尚為完成文字文字文字文字文字文字文字......</p>
-              <p class="case_name">截止日期 2025/01/01 前，尚為完成文字文字文字......</p>
-              <p class="case_name">截止日期 2024/01/01 前，尚為完成......</p>
-              <p class="case_name">截止日期 2025/01/01 前，尚為完成文字文字文字......</p>
-              <p class="case_name">截止日期 2024/01/01 前，尚為完成......</p>
-              <p class="case_name">截止日期 2025/01/01 前，尚為完成......</p>
-              <p class="case_name">截止日期 2024/01/01 前，尚為完成......</p>
-              <p class="case_name">截止日期 2025/01/01 前，尚為完成......</p>
+              <p class="case_name" v-for="object in alertMsgArray">{{ object.Message }}</p>
             </div>
           </perfect-scrollbar>
         </div>
@@ -443,7 +403,8 @@
         <div class="content d-flex">
           <div class="case_info">
             <div class="chart">
-              <ag-charts-vue class="chart-container" :options="options"></ag-charts-vue>
+              <div id="case_window_pie" class="window_pie"></div>
+              <!-- <ag-charts-vue class="chart-container" :options="options"></ag-charts-vue> -->
             </div>
           </div>
           <div class="case_text">
@@ -456,312 +417,459 @@
   </div>
 </template>
 
-<script>
-  import JSCharting from 'jscharting-vue';
-  import {
-    onMounted,
-    ref
-  } from 'vue';
-  import {
-    AgChartsVue
-  } from "ag-charts-vue3";
-  import Navbar from '../components/Navbar.vue';
-  import axios from 'axios';
-  function getRandomColor() {
-    // 隨機生成chart顔色
-    return `#${Math.floor(Math.random()*16777215).toString(16)}`;
+<script setup>
+import Navbar from '@/components/Navbar.vue';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import asset_view_btn from '@/components/utils/asset_view_btn.vue';
+import purchase_view_btn from '@/components/home_page/purchase_view_btn.vue'
+import { Asset_StastusArray } from '@/assets/js/dropdown';
+import JSCharting from 'jscharting-vue';
+import { AgChartsVue } from "ag-charts-vue3";
+import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
+import axios from 'axios';
+import { useAPIStore, useUtilsStore } from '@/store';
+import _ from "lodash"
+import { createDadagridObject } from '@/assets/js/common_fn';
+import router from '@/router';
+
+const apiStore = useAPIStore();
+const utilsStore = useUtilsStore();
+const util_Dropdown = reactive({
+  EquipType: [],
+  Area: [],
+})
+// 左側專案代碼
+const project = reactive({
+  OriginOptions: [
+  { Text: "0000-1 資產管理系統開發-內部領用/借測", Value: "0000-1    " },
+  { Text: "0000-2 資產管理系統開發-出貨", Value: "0000-2    " },
+  { Text: "0000-3 資產管理系統開發-維修", Value: "0000-3    " },
+  { Text: "0000-4 資產管理系統開發-報廢", Value: "0000-4    " },
+  { Text: "0000-5 資產管理系統開發-退貨", Value: "0000-5    " }
+  ],
+  FuzzyOptions: [],
+  Project_Id: '',
+  input: '',
+})
+// 總覽庫房資產
+const Warehouse = reactive({
+  datagrid: createDadagridObject(''),
+  datagridField: [
+    { field: "Status", width: '120px', header: "狀態" },
+    { field: "AssetsId", width: '150px', header: "資產編號" },
+    { field: "AssetName", width: '150px', header: "物品名稱" },
+    { field: "ProjectName", width: '150px', header: "專案名稱" },
+    { field: "Amount", width: '150px', header: "採購金額" },
+    { field: "EquipTypeName", width: '150px', header: "設備總類" },
+    { field: "EquipCategoryName", width: '150px', header: "設備分類" },
+    { field: "AreaName", width: '150px', header: "儲位區域" },
+    { field: "LayerName", width: '150px', header: "儲位櫃位" },
+    { field: "InitNumber", width: '150px', header: "總入庫量" },
+    { field: "AvailableNum", width: '150px', header: "庫存量" },
+    { field: "AssetType", width: '150px', header: "類型" },
+    { field: "ProductSpec", width: '150px', header: "規格" },
+  ],
+  rowData: [],
+  searchParams: {
+    EquipType_Id: '',
+    Category_Id: '',
+    Area_Id: '',
+    Layer_Id: '',
+    Status: '',
+    AssetType: '',
+    Project_Id: '',
+  },
+  DropdownArray: {
+    EquipType: [],
+    EquipCategory: [],
+    Area: [],
+    Layer: [],
   }
-  export default {
-    components: {
-      AgChartsVue,
-      Navbar,
-      JSCharting
-    },
-    setup() {
-      const total = ref(0);
-      const rowData = ref([]);
-      const options = ref({
-        data: rowData.value,
-        height: 150,
-        width: 150,
-        overlays: {
-          noData: {
-            renderer: () => '<p class="no_data" style="font-size:30px;font-weight:700;">無數據</p>'
-          },
-        },
-        background: {
-          fill: 'transparent',
-        },
-        series: [{
-          fills: Array.from({
-            length: 5
-          }, () => getRandomColor()),
-          strokes: ['white'],
-          type: 'pie',
-          angleKey: 'share',
-          innerLabels: [{
-            enabled: false,
-          }],
-          highlightStyle: {
-            item: {
-              fills: Array.from({
-                length: 5
-              }, () => getRandomColor()),
-              stroke: 'white',
-              strokeWidth: 2,
-            },
-          },
-        }, ],
-      });
-      // modal的甜甜圈
-      const modalTotal = ref(0);
-      const modalRowData = ref([]);
-      const modalOptions = ref({
-        data: modalRowData.value,
-        overlays: {
-          noData: {
-            renderer: () => '<p class="no_data" style="font-size:30px;font-weight:700;">無數據</p>'
-          },
-        },
-        background: {
-          fill: 'transparent',
-        },
-        series: [{
-          fills: Array.from({
-            length: 5
-          }, () => getRandomColor()),
-          strokes: ['white'],
-          type: 'pie',
-          angleKey: 'share',
-          // labelKey: 'asset',
-          calloutLabelKey: "asset",
-          innerLabels: [{
-            enabled: false,
-          }, ],
-          highlightStyle: {
-            item: {
-              fills: Array.from({
-                length: 5
-              }, () => getRandomColor()),
-              stroke: 'white',
-              strokeWidth: 2,
-            },
-          },
-        }, ],
-        legend: {
-          item: {
-            marker: {
-              shape: 'circle',
-              size: 14,
-            },
-          },
-          position: 'right',
-        },
-      });
-      onMounted(() => {
-        addRandomData(options, rowData, total);
-        addRandomData(modalOptions, modalRowData, modalTotal);
-      });
-      function addRandomData(chartOptions, chartRowData, chartTotal) {
-        const itemCount = 10; // Adjust as needed
-        const randomData = [];
-        const assetNames = ['耗材類', '維修設備類', '電腦設備類'];
-        for (let i = 0; i < itemCount; i++) {
-          const randomShare = Math.floor(Math.random() * 100); // Adjust range as needed
-          const randomLabel = `Label ${i + 1}`; // Generate a random label
-          const randomAsset = assetNames[i]; // Use the predefined asset names
-          const item = {
-            os: `Item ${i + 1}`,
-            share: randomShare,
-            label: randomLabel,
-            asset: randomAsset, // Add the random asset name to the item
-          };
-          randomData.push(item);
-          chartTotal.value += randomShare;
+})
+// 待採購資產
+const PurchasedItem = reactive({
+  datagrid: createDadagridObject(''),
+  datagridField: [
+    { field: "DeadLine", width: '150px', header: "交貨期限" },
+    { field: "ProjectName", width: '150px', header: "專案名稱" },
+    { field: "PurchasedItem", width: '150px', header: "採購項目" },
+    { field: "Number", width: '150px', header: "數量" },
+    { field: "ProductSpec", width: '150px', header: "規格" },
+  ],
+  rowData: [],
+  searchParams: {
+    PurchasedItem: '',
+    StartDate: '',
+    EndDate: '',
+    Project_Id: '',
+  },
+})
+// 待交付資產
+const DeliveredItem = reactive({
+  datagrid: createDadagridObject(''),
+  datagridField: [
+    { field: "AO_ID", width: '150px', header: "出庫單編號" },
+    { field: "ProjectName", width: '150px', header: "專案名稱" },
+    { field: "Reason", width: '150px', header: "出庫原因" },
+    { field: "AssetsId", width: '150px', header: "資產編號" },
+    { field: "AssetName", width: '150px', header: "物品名稱" },
+    { field: "Number", width: '150px', header: "數量" },
+    { field: "AssigneeName", width: '150px', header: "指派人名稱" },
+  ],
+  rowData: [],
+  searchParams: {
+    Project_Id: '',
+  }
+})
+// 名下保管資產
+const CustodyAssets = reactive({
+  datagrid: createDadagridObject(''),
+  datagridField: [
+    { field: "Status", width: '120px', header: "狀態" },
+    { field: "ProjectName", width: '150px', header: "專案名稱" },
+    { field: "AssetsId", width: '150px', header: "資產編號" },
+    { field: "AssetName", width: '150px', header: "物品名稱" },
+    { field: "EquipTypeName", width: '150px', header: "設備總類" },
+    { field: "EquipCategoryName", width: '150px', header: "設備分類" },
+    { field: "AreaName", width: '150px', header: "儲位區域" },
+    { field: "LayerName", width: '150px', header: "儲位櫃位" },
+    { field: "Number", width: '150px', header: "數量" },
+  ],
+  rowData: [],
+  searchParams: {
+    AssetsId: '',
+    AssetName: '',
+    EquipType_Id: '',
+    Category_Id: '',
+    Area_Id: '',
+    Layer_Id: '',
+    Status: '',
+    Project_Id: '',
+  },
+  DropdownArray: {
+    Status: [],
+    EquipType: [],
+    EquipCategory: [],
+    Area: [],
+    Layer: [],
+  }
+})
+// 右側警示訊息
+const alertMsgArray = ref([]);
+// 點擊選擇專案，並將結果帶入其餘4項datagrid searchParams
+const selectProject = (option) => {
+  let value = ''
+  // Poject_id === option.Value ->原本未選擇-> 將value套用option.Value
+  // Poject_id !== option.Value ->原本已選擇-> 將value套用空字串來取消選擇
+  if(project.Project_Id !== option.Value) {
+    value = option.Value;
+  }
+  project.Project_Id = value;
+  Warehouse.searchParams.Project_Id = value;
+  PurchasedItem.searchParams.Project_Id = value;
+  DeliveredItem.searchParams.Project_Id = value;
+  CustodyAssets.searchParams.Project_Id = value;
+  // 重新刷新4個datagrid
+}
+// 模糊查詢左側專案代碼
+const filterProject = computed(()=>{
+  return project.FuzzyOptions.filter(option=>{
+    return option.Text.toLowerCase().includes(project.input.toLowerCase()) || option.Value.toLowerCase().includes(project.input.toLowerCase())
+  })
+});
+const getRandomColor = () => `#${Math.floor(Math.random()*16777215).toString(16)}`;
+const rowData = ref([]);
+
+// Modal pie chart
+const amount_pie_data = reactive([]);
+const case_pie_data = reactive([]);
+const fake_amount_data = [
+  {
+    name: '電腦設備類',
+    y: 12200
+  },
+  {
+    name: '維修保護類',
+    y: 7467
+  },
+  {
+    name: '安裝類',
+    y: 5460
+  },
+  {
+    name: '電子設備類',
+    y: 3305
+  },
+]
+const fake_case_data = [
+  {
+      "name": "電腦設備類",
+      "y": 131,
+  },
+  {
+      "name": "監測設備類",
+      "y": 17,
+  },
+  {
+      "name": "線材與轉接頭",
+      "y": 16,
+  },
+  {
+      "name": "音響類",
+      "y": 5,
+  },
+  {
+      "name": "支架類",
+      "y": 2,
+  },
+  {
+      "name": "工具類",
+      "y": 6,
+  },
+  {
+      "name": "未分類",
+      "y": 547,
+  },
+  {
+      "name": "電源類",
+      "y": 18,
+  },
+  {
+      "name": "其他",
+      "y": 11,
+  },
+  {
+      "name": "網通設備類",
+      "y": 1,
+  }
+]
+
+onMounted(async() => {
+  utilsStore.$reset();
+  // await project api, then handle "Text" part
+  // project.OriginOptions = await apiStore.getFuzzyProject();
+  // 去掉Value的空白??? 需要嘛?
+  project.OriginOptions = project.OriginOptions.map(option => {
+    const newValue = option.Text.replace(option.Value.trim(), '');
+    return { Text: newValue, Value: option.Value };
+  });
+  project.FuzzyOptions = project.OriginOptions;
+  // 取得共通的dropdown(設備總類、儲位區域)
+  util_Dropdown.EquipType = await apiStore.getEquipType();
+  util_Dropdown.Area = await apiStore.getArea();
+  // 4個dg搜尋
+  // submit('Warehouse','','search');
+  // submit('PurchasedItem','','search');
+  // submit('DeliveredItem','','search');
+  // submit('CustodyAssets','','search');
+  // 警示訊息
+  // getAlertMsg();
+  updatePie();
+});
+onUnmounted(()=>{
+  utilsStore.$dispose();
+  apiStore.$dispose();
+})
+const submit = async (type = '', event, action = '') => {
+  // 檢查查詢欄位(如果有需要)
+  if(type === 'PurchasedItem') {
+    const regexPattern = new RegExp(`^[\\s\\S]{0,20}$`);
+    if(!regexPattern.test(PurchasedItem.searchParams.PurchasedItem)) {
+      alert(`採購項目不可輸入超過20字`);
+      return ;
+    }
+  } else if(type === 'CustodyAssets') {
+    const regexPattern = new RegExp(`^[\\s\\S]{0,20}$`);
+    if(!regexPattern.test(CustodyAssets.searchParams.AssetName)) {
+      alert(`物品名稱不可輸入超過20字`);
+      return ;
+    }
+
+  }
+  const typeMappings = {
+  // 總覽庫房包括 圓餅圖*2
+  Warehouse: {
+    datagrid: Warehouse.datagrid,
+    rowData: Warehouse.rowData,
+    url: '/HomePage/GetDataOfWarehouse',
+    Form: Warehouse.searchParams
+  },
+  PurchasedItem: {
+    datagrid: PurchasedItem.datagrid,
+    rowData: PurchasedItem.rowData,
+    url: '/HomePage/GetDataOfPurchasedItem',
+    Form: PurchasedItem.searchParams
+  },
+  DeliveredItem: {
+    datagrid: DeliveredItem.datagrid,
+    rowData: DeliveredItem.rowData,
+    url: '/HomePage/GetDataOfDeliveredItem',
+    Form: DeliveredItem.searchParams
+  },
+  CustodyAssets: {
+    datagrid: CustodyAssets.datagrid,
+    rowData: CustodyAssets.rowData,
+    url: '/HomePage/GetDataOfCustodyAssets',
+    Form: CustodyAssets.searchParams
+  }
+};
+
+const { datagrid, rowData, url, Form } = typeMappings[type];
+  const form = new FormData();
+  //將表格資料append到 form
+  for (const key in Form) {
+    if (Form[key]) {
+      form.append(key, Form[key]);
+    }
+  }
+  utilsStore.UpdatePageParameter(datagrid, event, action, form);
+  const resultList = await apiStore.getMngDatagrid(url,datagrid, form);
+  console.log('resultList',resultList);
+  rowData = resultList.rows;
+  datagrid.totalRecords = resultList.total;
+  datagrid.key++;
+  // 如果是Warehouse，要更新pie chart數據
+  if(type === 'Warehouse') {
+    Warehouse.rowData.forEach((item, index)=>{
+      Warehouse.rowData[index].Amount ='$'+item.Amount.toLocaleString();
+    })
+    amount_pie_data = resultList.AmountAnalysis.map(item => ({
+      name: item.EquipTypeName,
+      y: item.Amount
+    }));
+    case_pie_data = resultList.EquipTypeAnalysis.map(item => ({
+      name: item.EquipTypeName,
+      y: item.Count
+    }));
+    updatePie();
+  }
+}
+const getAlertMsg = async()=>{
+  try {
+    const response = await axios.post('http://192.168.0.177:7008/HomePage/GetAlertMessage','');
+    const data = response.data;
+    if(data.state === 'success') {
+      alertMsgArray.value = data.resultList.MsgArray;
+    } 
+    else if(data.state === 'account_error') {
+      alert(data.messages);
+      router.push('/');
+    } else {
+      alert(data.messages);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+const clear = (type) => {
+  switch (type) {
+    case 'Warehouse':
+      for(const key in Warehouse.searchParams) {
+        if(Warehouse.searchParams[key] && key != 'Project_Id') {
+          Warehouse.searchParams[key] = '';
         }
-        chartRowData.value = randomData;
-        // Update chart options
-        const newOptions = { ...chartOptions.value
-        };
-        newOptions.data = chartRowData.value;
-        newOptions.series[0].innerLabels[0].text = chartTotal.value.toString();
-        chartOptions.value = newOptions;
       }
-      return {
-        options,
-        rowData,
-        total,
-        modalOptions,
-        modalRowData,
-        modalTotal,
-      };
-      // function getDetails() {
-      //   axios.get('http://192.168.0.177:7008/GetParameter/GetDataOfWarehouse')
-      //     .then((response) => {
-      //       const data = response.data;
-      //       if (data.state === 'success') {
-      //         rowData.value = data.resultList;
-      //         console.log('資料:', rowData.value);
-      //         // 計算總件數
-      //         rowData.value.forEach((item) => {
-      //           total.value += item.share;
-      //         })
-      //       }
-      //       const newOptions = { ...options.value
-      //       };
-      //       newOptions.data = rowData.value
-      //       newOptions.series[0].innerLabels[0].text = total.value.toString()
-      //       options.value = newOptions;
-      //     })
-      //     .catch((error) => {
-      //       console.error(error);
-      //     })
-      // }
-    },
-    data() {
-      return {
-        amountpie: null,
-        casepie: null,
-        amountWindowPieChart: null,
+      Warehouse.DropdownArray.EquipCategory = [];
+      Warehouse.DropdownArray.Layer = [];
+      break;
+    case 'PurchasedItem':
+      for(const key in PurchasedItem.searchParams) {
+        if(PurchasedItem.searchParams[key] && key != 'Project_Id') {
+          PurchasedItem.searchParams[key] = '';
+        }
       }
-    },
-    mounted() {
-      this.initializeChart();
-      this.initializeCasePieChart();
-      this.initializeAmountWindowPieChart();
-    },
-    methods: {
-      initializeChart() {
-        const chartConfig = {
-          debug: false,
-          title_position: 'center',
-          legend: {
-            template: '%icon   %name    {%percentOfTotal:n1}%    %value',
-            position: 'bottom',
-          },
-          defaultSeries: {
-            type: 'pie',
-            pointSelection: false,
-          },
-          // defaultPoint_label_text: '<b>%name</b>',
-          yAxis: {
-            label_text: '金額',
-            formatString: 'n'
-          },
-          series: [{
-            name: '占比',
-            points: [{
-                name: '電腦設備類',
-                y: 30
-              },
-              {
-                name: '維修保護類',
-                y: 645
-              },
-              {
-                name: '安裝類',
-                y: 20
-              },
-              {
-                name: '電子設備類',
-                y: 540
-              },
-              {
-                name: 'XX設備類',
-                y: 282
-              },
-              {
-                name: 'XX設備類',
-                y: 60
-              },
-              {
-                name: 'XXX類',
-                y: 56
-              },
-              {
-                name: 'XXX設備類',
-                y: 58
-              },
-              {
-                name: 'XX設備類',
-                y: 58
-              },
-            ],
-          }, ],
-        };
-        // 渲染pie
-        this.amountpie = JSC.Chart('amount_pie', chartConfig);
-      },
-      initializeCasePieChart() {
-        const caseChartData = this.generateRandomData();
-        const caseChartConfig = {
-          debug: false,
-          title_position: 'center',
-          legend: {
-            template: '%icon   %name    {%percentOfTotal:n1}%    %value',
-            position: 'bottom',
-          },
-          defaultSeries: {
-            type: 'pie',
-            pointSelection: false,
-          },
-          yAxis: {
-            label_text: 'Cases',
-            formatString: 'n'
-          },
-          series: [{
-            name: 'Case Types',
-            points: caseChartData,
-          }, ],
-        };
-        this.casePieChart = JSC.Chart('case_pie', caseChartConfig);
-      },
-      initializeAmountWindowPieChart() {
-        const amountWindowChartData = this.generateRandomData();
-        const amountWindowChartConfig = {
-          debug: false,
-          fill: "#F4F4F4",
-          box: {
-            radius: 20,
-                //  Pie後面的背景顏色
-                fill: "#F4F4F4"
-          }
-          ,
-          //  Pie後面的背景顏色
-          chartArea: {
-            fill: "#F4F4F4",
-          },
-          boxVisible: false,
- 
-          legend: {
-            visible: false
-          },
-          defaultSeries: {
-            type: 'pie',
-            pointSelection: false,
-            seleted: false,
-          },
-          series: [
-            {
-              // 開關hover要顯示的内容框
-              mouseTracking: false,
-              name: '',
-              points: amountWindowChartData,
-            },
-          ],
-        };
-        this.amountWindowPieChart = JSC.Chart('amount_window_pie', amountWindowChartConfig);
-      },
-      generateRandomData() {
-        // Generate random data for the pie charts
-        const categories = ['Category A', 'Category B', 'Category C', 'Category D', 'Category E'];
-        return categories.map((category) => ({
-          name: category,
-          y: Math.floor(Math.random() * 100),
-        }));
-      },
-    },
+      break;
+    case 'CustodyAssets':
+      for(const key in CustodyAssets.searchParams) {
+        if(CustodyAssets.searchParams[key] && key != 'Project_Id') {
+          CustodyAssets.searchParams[key] = '';
+        }
+      }
+      CustodyAssets.DropdownArray.EquipCategory = [];
+      CustodyAssets.DropdownArray.Layer = [];
+      break;
   }
+  submit(type,'','search');
+}
+// 圓餅圖設定
+const PieChartSetting = (label_text='', target_id='', pie_data=[], isOuterPie = true) => {
+  // 如果為詳情圓餅圖(isOuter為false)，則addtionalConfig為{}、legend設定也不同
+  const baseConfig = {
+    debug: false,
+    legend: {
+      template: '%icon   %name    {%percentOfTotal:n1}%    %value',
+      position: 'bottom',
+    },
+    defaultSeries: {
+      type: 'pie',
+      pointSelection: false,
+      seleted: false,
+    },
+    series: [
+      {
+        name: 'all',
+        points: pie_data,
+      }, 
+    ],
+    yAxis: {
+      label_text: label_text,
+      // formatString: 'n元'
+    },
+  };
+  const additionalConfig = isOuterPie ? {
+    legend: {
+      visible: false
+    },
+    fill: "#F4F4F4",
+    box: {
+      radius: 20,
+      //  Pie後面的背景顏色
+      fill: "#F4F4F4"
+    },
+    //  Pie後面的背景顏色
+    chartArea: {
+      fill: "#F4F4F4",
+    },
+    boxVisible: false,
+  } : {};
+  const chartConfig = {
+    ...baseConfig,
+    ...additionalConfig, 
+  }
+  JSC.Chart(target_id, chartConfig);
+};
+// 更新圓餅圖
+const updatePie = () => {
+  // 詳情modal圓餅
+  PieChartSetting('金額','amount_pie', amount_pie_data, false);
+  PieChartSetting('件數','case_pie', case_pie_data, false);
+  // 外側圓餅
+  PieChartSetting('金額','amount_window_pie', amount_pie_data, true);
+  PieChartSetting('件數','case_window_pie', case_pie_data, true);
+}
+// 變更交付
+const changeIsExcute = async (itemData) =>{
+  console.group("交付資訊");
+  console.log('狀態:', itemData.IsExecute);
+  console.log('產編:', itemData.AssetsId);
+  console.log('單號:', itemData.AO_ID);
+  console.groupEnd();
+  try {
+    const response = await axios.post('http://192.168.0.177:7008/HomePage/SetExecuteOfDeliveredItem',{OM_ID: itemData.OM_ID, IsExecute: itemData.IsExecute});
+    const data = response.data;
+    if(data.state === 'account_error') {
+      alert(data.messages);
+      router.push('/');
+    } else {
+      alert(data.messages);
+    }
+  } catch (error) {
+    console.error(error);
+  } finally {
+    submit('DeliveredItem','','');
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -778,6 +886,12 @@
     height: 40px;
     width: 70px;
   }
+  .search_btn {
+          @include search_and_send_btn;
+          &:hover {
+            background-color: #5e7aa2;
+          }
+        }
   .modal {
     .modal_pie {
       margin: auto
@@ -843,6 +957,7 @@
   }
   .dg {
     margin-top: 16px;
+    max-width: 1196px;
   }
   .nav-tabs,
   .nav-tabs .nav-link:hover,
@@ -855,7 +970,7 @@
     .nav-link {
       padding: 6px 10px;
     }
-    input,
+    input:not([type="radio"]),
     select {
       @include dropdown_btn;
       width: 100%;
@@ -889,6 +1004,7 @@
       font-weight: 700;
     }
     .tab-pane {
+      max-width: 1200px;
       border-radius: 0 10px 10px 10px;
       .dg_search_wrap {
         display: grid;
