@@ -427,7 +427,7 @@ import { Asset_StastusArray } from '@/assets/js/dropdown';
 import JSCharting from 'jscharting-vue';
 import { AgChartsVue } from "ag-charts-vue3";
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
-import axios from 'axios';
+import axios from '@/axios/tokenInterceptor'
 import { useAPIStore, useUtilsStore } from '@/store';
 import _ from "lodash"
 import { createDadagridObject } from '@/assets/js/common_fn';
