@@ -1,4 +1,9 @@
 <template>
+  <!-- Modal -->
+  <button type="button" style="display: none;" data-bs-toggle="modal" data-bs-target="#ExecuteModal" ref="exbtn"></button>
+  <button type="button" style="display: none;" data-bs-toggle="modal" data-bs-target="#LineModal" ref="linebtn"></button>
+  <Confirm_modal :id="'ExecuteModal'" :text="warningText" :function="changeIsExcute" :parameter1="itemData" @cancel="submit('DeliveredItem','','')"></Confirm_modal>
+  <Line_modal :id="'LineModal'" @confirm="handleLineSwitch" @cancel="()=>{lineSwitch.checked = !lineSwitch.checked}"></Line_modal>
   <!-- 金額支出modal -->
   <div class="modal fade" id="amount_pie_modal" tabindex="-1" aria-labelledby="amount_pie_modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -51,7 +56,7 @@
             <img src="@/assets/manager_profile.png">
           </div>
           <div class="profile_name">
-            <h4 class="name">Tony</h4>
+            <h4 class="name">{{ utilsStore.userName }}</h4>
           </div>
         </div>
         <!-- Lline通知 -->
@@ -61,7 +66,7 @@
             <p>LINE 通知設定</p>
           </div>
           <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+            <input class="form-check-input" type="checkbox" role="switch" ref="lineSwitch" @change="()=>{linebtn.click()}">
           </div>
         </div>
       </div>
@@ -123,16 +128,16 @@
       <div class="datagrid_section">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <!-- 總覽庫房資產 -->
-          <li class="nav-item" role="presentation">
+          <li v-show="roleId === 1 || roleId === 4" class="nav-item" role="presentation">
             <button class="nav-link " id="home-tab" data-bs-toggle="tab" data-bs-target="#TotalProperty" type="button" role="tab" aria-controls="home" aria-selected="true">總覽庫房資產</button>
           </li>
           <!-- 待採購清單 -->
-          <li class="nav-item" role="presentation">
+          <li v-show="roleId === 1 || roleId === 4" class="nav-item" role="presentation">
             <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#PurchaseList" type="button" role="tab" aria-controls="profile" aria-selected="false">待採購清單</button>
           </li>
           <!-- 待交付資產列表 -->
           <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="contact-tab" data-bs-toggle="tab" data-bs-target="#ProcessProperty" type="button" role="tab" aria-controls="contact" aria-selected="false">待交付資產列表</button>
+            <button class="nav-link " id="contact-tab" data-bs-toggle="tab" data-bs-target="#ProcessProperty" type="button" role="tab" aria-controls="contact" aria-selected="false">待交付資產列表</button>
           </li>
           <!-- 名下保管資產 -->
           <li class="nav-item" role="presentation">
@@ -141,7 +146,7 @@
         </ul>
         <div class="tab-content" id="myTabContent">
           <!-- 總覽庫房資產 -->
-          <div class="tab-pane fade TotalProperty " id="TotalProperty" role="tabpanel" aria-labelledby="home-tab">
+          <div v-show="roleId === 1 || roleId === 4" class="tab-pane fade TotalProperty" id="TotalProperty" role="tabpanel" aria-labelledby="home-tab">
             <div class="row dg_search_wrap">
               <!-- 資產類型 -->
               <div class="col">
@@ -217,7 +222,7 @@
             </div>
           </div>
           <!-- 待採購清單 -->
-          <div class="tab-pane fade PurchaseList" id="PurchaseList" role="tabpanel" aria-labelledby="profile-tab">
+          <div v-show="roleId === 1 || roleId === 4" class="tab-pane fade PurchaseList" id="PurchaseList" role="tabpanel" aria-labelledby="profile-tab">
             <div class="row dg_search_wrap">
               <!-- 採購項目 -->
               <div class="col-xl-auto col-lg-auto col-md col-12">
@@ -238,10 +243,6 @@
                 <button class="search_btn" @click="submit('PurchasedItem','','search')">檢索</button>
                 <button class="reset_btn" @click="clear('PurchasedItem')">重設</button>
               </div>
-              <div class="col-auto total_amount">
-                <p>共計
-                  <p class="total_number">100</p>件</p>
-              </div>
             </div>
             <div class="dg">
               <DataTable lazy :key="PurchasedItem.datagrid.key" :first="PurchasedItem.datagrid.first" :size="'small'" :loading="PurchasedItem.datagrid.loading" :value="PurchasedItem.rowData" :sort-field="PurchasedItem.datagrid.sortField" :sort-order="PurchasedItem.datagrid.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
@@ -258,7 +259,7 @@
             </div>
           </div>
           <!-- 待交付資產列表 -->
-          <div class="tab-pane fade ProcessProperty show active" id="ProcessProperty" role="tabpanel" aria-labelledby="contact-tab">
+          <div class="tab-pane fade ProcessProperty " id="ProcessProperty" role="tabpanel" aria-labelledby="contact-tab">
             <div class="warn_text">
               <p>
                 *若未實際收到該資產而無法交付時，請按下拒絕交付後主動與指派人確認
@@ -270,12 +271,12 @@
                 :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}" >
                 <Column style="min-width: 60px;" header="接受交付">
                   <template #body="slotProps">
-                    <input type="radio" value="true" v-model="slotProps.data.IsExecute" @change="changeIsExcute(slotProps.data)">
+                    <input type="radio" value="true" v-model="slotProps.data.IsExecute" @change="updateItemData(slotProps.data)">
                   </template>
                 </Column>
                 <Column style="min-width: 60px;" header="拒絕交付">
                   <template #body="slotProps">
-                    <input type="radio" value="false" v-model="slotProps.data.IsExecute" @change="changeIsExcute(slotProps.data)">
+                    <input type="radio" value="false" v-model="slotProps.data.IsExecute" @change="updateItemData(slotProps.data)">
                   </template>
                 </Column>
                 <Column v-for="item in DeliveredItem.datagridField" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
@@ -364,7 +365,7 @@
     </div>
     <div class="col-xl-auto col-lg-12 col-md-12 col-12 pt_right">
       <!-- 警示消息窗口 -->
-      <div class="warn_window">
+      <div v-show="roleId === 1 || roleId === 4" class="warn_window">
         <div class="title">
           警示訊息
         </div>
@@ -377,7 +378,7 @@
         </div>
       </div>
       <!-- 金額支出窗口 -->
-      <div class="amount_chart">
+      <div v-show="roleId === 1 || roleId === 4" class="amount_chart">
         <div class="title">
           金額支出
           <button data-bs-toggle="modal" data-bs-target="#amount_pie_modal">詳情</button>
@@ -395,7 +396,7 @@
         </div>
       </div>
       <!-- 件數窗口 -->
-      <div class="case_chart">
+      <div v-show="roleId === 1 || roleId === 4" class="case_chart">
         <div class="title">
           件數
           <button data-bs-toggle="modal" data-bs-target="#case_pie_modal">詳情</button>
@@ -419,34 +420,38 @@
 
 <script setup>
 import Navbar from '@/components/Navbar.vue';
+import Confirm_modal from '@/components/home_page/Confirm_modal.vue';
+import Line_modal from '@/components/home_page/Line_modal.vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import asset_view_btn from '@/components/utils/asset_view_btn.vue';
 import purchase_view_btn from '@/components/home_page/purchase_view_btn.vue'
 import { Asset_StastusArray } from '@/assets/js/dropdown';
 import JSCharting from 'jscharting-vue';
-import { AgChartsVue } from "ag-charts-vue3";
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
 import axios from 'axios';
 import { useAPIStore, useUtilsStore } from '@/store';
 import _ from "lodash"
 import { createDadagridObject } from '@/assets/js/common_fn';
 import router from '@/router';
+import { useRoute } from 'vue-router';
 
+const route = useRoute();
 const apiStore = useAPIStore();
 const utilsStore = useUtilsStore();
 const util_Dropdown = reactive({
   EquipType: [],
   Area: [],
 })
+const roleId = ref(null);
 // 左側專案代碼
 const project = reactive({
   OriginOptions: [
-  { Text: "0000-1 資產管理系統開發-內部領用/借測", Value: "0000-1    " },
-  { Text: "0000-2 資產管理系統開發-出貨", Value: "0000-2    " },
-  { Text: "0000-3 資產管理系統開發-維修", Value: "0000-3    " },
-  { Text: "0000-4 資產管理系統開發-報廢", Value: "0000-4    " },
-  { Text: "0000-5 資產管理系統開發-退貨", Value: "0000-5    " }
+  // { Text: "0000-1 資產管理系統開發-內部領用/借測", Value: "0000-1    " },
+  // { Text: "0000-2 資產管理系統開發-出貨", Value: "0000-2    " },
+  // { Text: "0000-3 資產管理系統開發-維修", Value: "0000-3    " },
+  // { Text: "0000-4 資產管理系統開發-報廢", Value: "0000-4    " },
+  // { Text: "0000-5 資產管理系統開發-退貨", Value: "0000-5    " }
   ],
   FuzzyOptions: [],
   Project_Id: '',
@@ -578,9 +583,13 @@ const filterProject = computed(()=>{
     return option.Text.toLowerCase().includes(project.input.toLowerCase()) || option.Value.toLowerCase().includes(project.input.toLowerCase())
   })
 });
-const getRandomColor = () => `#${Math.floor(Math.random()*16777215).toString(16)}`;
-const rowData = ref([]);
-
+// ExecuteModal資訊 
+const exbtn = ref(null);
+const warningText = '請確認是否要變更交付狀態'
+const itemData = reactive({
+  IsExecute: true,
+  OM_ID: '',
+});
 // Modal pie chart
 const amount_pie_data = ref([]);
 const case_pie_data = ref([]);
@@ -644,12 +653,35 @@ const fake_case_data = [
       "y": 1,
   }
 ]
-
+// line
+const lineSwitch = ref(null);
+const linebtn = ref(null);
 onMounted(async() => {
   utilsStore.$reset();
+  await utilsStore.getUserName();
+  // 取得權限id 決定顯示欄位
+  roleId.value = await apiStore.getRoleId('admin');
+  // roleId.value = await apiStore.getRoleId(utilsStore.userName);
+  const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+  if(roleId.value === 1 || roleId.value === 4) {
+    tabs[0].classList.add('active');
+    const element = document.getElementById('TotalProperty');
+    element.classList.add('show');
+    element.classList.add('active');
+  } 
+  else {
+    tabs[2].classList.add('active');
+    const element = document.getElementById('ProcessProperty');
+    element.classList.add('show');
+    element.classList.add('active');
+  }
+  // 檢查是否為Line通知跳轉回來首頁
+  if(route.query.ResponseMsg) {
+    alert(route.query.ResponseMsg);
+  }
+  await getLineNotificationStatus();
   // await project api, then handle "Text" part
   // project.OriginOptions = await apiStore.getFuzzyProject();
-  // 去掉Value的空白??? 需要嘛?
   project.OriginOptions = project.OriginOptions.map(option => {
     const newValue = option.Text.replace(option.Value.trim(), '');
     return { Text: newValue, Value: option.Value };
@@ -666,6 +698,46 @@ onMounted(async() => {
   // 警示訊息
   // getAlertMsg();
   updatePie();
+
+  //測試data
+  DeliveredItem.rowData = [
+  {
+      "AO_ID": "W202400006",
+      "Reason": "快速出庫交付",
+      "AssetsId": "BF10000013",
+      "AssetName": "伺服器",
+      "Number": 1,
+      "ProjectName": "0010-昆明南站BIMFM示範系統建置服務",
+      "Project_Id": "0010",
+      "AssigneeName": "admin",
+      "IsExecute": true,
+      "OM_ID": "OM00000054"
+  },
+  {
+      "AO_ID": "W202400006",
+      "Reason": "快速出庫交付",
+      "AssetsId": "BF00000763",
+      "AssetName": "UPS相關用品",
+      "Number": 5,
+      "ProjectName": "0010-昆明南站BIMFM示範系統建置服務",
+      "Project_Id": "0010",
+      "AssigneeName": "admin",
+      "IsExecute": true,
+      "OM_ID": "OM00000055"
+  },
+  {
+      "AO_ID": "W202400006",
+      "Reason": "快速出庫交付",
+      "AssetsId": "BF01000005",
+      "AssetName": "pixel 8 pro",
+      "Number": 1,
+      "ProjectName": "0010-昆明南站BIMFM示範系統建置服務",
+      "Project_Id": "0010",
+      "AssigneeName": "admin",
+      "IsExecute": true,
+      "OM_ID": "OM00000056"
+  }
+  ]
 });
 onUnmounted(()=>{
   utilsStore.$dispose();
@@ -860,13 +932,19 @@ const updatePie = () => {
   PieChartSetting('金額','amount_window_pie', amount_pie_data.value, true);
   PieChartSetting('件數','case_window_pie', case_pie_data.value, true);
 }
+// 1.暫存交付資料2. -> modal決定執行與否
+const updateItemData = (data) => {
+  itemData.IsExecute = data.IsExecute;
+  itemData.OM_ID = data.OM_ID;
+  exbtn.value.click();
+}
 // 變更交付
 const changeIsExcute = async (itemData) =>{
   console.group("交付資訊");
   console.log('狀態:', itemData.IsExecute);
-  console.log('產編:', itemData.AssetsId);
-  console.log('單號:', itemData.AO_ID);
+  console.log('OM_ID:', itemData.OM_ID);
   console.groupEnd();
+
   try {
     const response = await axios.post('http://192.168.0.177:7008/HomePage/SetExecuteOfDeliveredItem',{OM_ID: itemData.OM_ID, IsExecute: itemData.IsExecute});
     const data = response.data;
@@ -882,6 +960,59 @@ const changeIsExcute = async (itemData) =>{
     submit('DeliveredItem','','');
   }
 }
+// LineAPI相關
+const getLineNotificationStatus = async () => {
+  try {
+    const response = await axios.post('http://192.168.0.177:7008/HomePage/GetLineSetting', '');
+    const data = response.data;
+    if(data.state === 'success') {
+      // 有開啟
+      lineSwitch.value.checked = true;
+    } 
+    else if(data.state === 'error') {
+      // 無開啟
+      lineSwitch.value.checked = false;
+    } 
+    else if(data.state === 'account_error') {
+      alert(data.messages);
+      router.push('/');
+    } 
+    else {
+      alert(data.messages);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+const handleLineSwitch = async () => {
+  // console.log('isChecked', lineSwitch.value.checked);
+  try {
+    const response = await axios.post('http://192.168.0.177:7008/HomePage/SetLineSetting', {isOpen: lineSwitch.value.checked});
+    const data = response.data;
+    if(data.state === 'success') {
+     switch (data.resultList.ResponseState) {
+      // 從未建立授權
+      case 0:
+        // 導向到line首頁
+        window.location.href = data.resultList.ResponseMsg
+        break;
+      // case 1、2、3(已建立授權、成功取消、已取消過授權)
+      default:
+        alert(data.resultList.ResponseMsg);
+        break;
+     }
+    } 
+    else if(data.state === 'account_error') {
+      alert(data.messages);
+      router.push('/');
+    } else {
+      alert(data.messages);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 </script>
 
 <style lang="scss" scoped>
