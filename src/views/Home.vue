@@ -18,7 +18,7 @@
           <div id="amount_pie" class="modal_pie"></div>
           <div class="amount_text d-flex">
             <p>總金額
-              <p class="amount">100</p>
+              <p class="amount">{{ total_amount.toLocaleString() }}</p>
             </p>
           </div>
         </div>
@@ -39,7 +39,7 @@
           <div id="case_pie" class="modal_pie"></div>
           <div class="amount_text d-flex">
             <p>總件數
-              <p class="amount">100</p>
+              <p class="amount">{{ total_case.toLocaleString() }}</p>
             </p>
           </div>
         </div>
@@ -391,7 +391,7 @@
           </div>
           <div class="amount_text">
             <p>總金額</p>
-            <p class="amount">100</p>
+            <p class="amount">{{ total_amount.toLocaleString()}}</p>
           </div>
         </div>
       </div>
@@ -410,7 +410,7 @@
           </div>
           <div class="case_text">
             <p>總件數</p>
-            <p class="amount">100</p>
+            <p class="amount">{{ total_case.toLocaleString() }}</p>
           </div>
         </div>
       </div>
@@ -576,6 +576,10 @@ const selectProject = (option) => {
   DeliveredItem.searchParams.Project_Id = value;
   CustodyAssets.searchParams.Project_Id = value;
   // 重新刷新4個datagrid
+  // submit('Warehouse','','');
+  // submit('PurchasedItem','','');
+  // submit('DeliveredItem','','');
+  // submit('CustodyAssets','','');
 }
 // 模糊查詢左側專案代碼
 const filterProject = computed(()=>{
@@ -591,6 +595,8 @@ const itemData = reactive({
   OM_ID: '',
 });
 // Modal pie chart
+const total_amount = ref(0);
+const total_case = ref(0);
 const amount_pie_data = ref([]);
 const case_pie_data = ref([]);
 const fake_amount_data = [
@@ -925,6 +931,20 @@ const PieChartSetting = (label_text='', target_id='', pie_data=[], isOuterPie = 
 };
 // 更新圓餅圖
 const updatePie = () => {
+  // 更新總金額
+  total_amount.value = 0;
+  if(fake_amount_data.length !== 0 ) {
+    fake_amount_data.forEach((item)=>{
+      total_amount.value+= item.y;
+    })
+  }
+  // 更新總件數
+  total_case.value = 0;
+  if(fake_case_data.length !== 0 ) {
+    fake_case_data.forEach((item)=>{
+      total_case.value+= item.y;
+    })
+  }
   // 詳情modal圓餅
   PieChartSetting('金額','amount_pie', amount_pie_data.value, false);
   PieChartSetting('件數','case_pie', case_pie_data.value, false);
