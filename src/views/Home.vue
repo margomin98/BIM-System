@@ -582,8 +582,8 @@ const getRandomColor = () => `#${Math.floor(Math.random()*16777215).toString(16)
 const rowData = ref([]);
 
 // Modal pie chart
-const amount_pie_data = reactive([]);
-const case_pie_data = reactive([]);
+const amount_pie_data = ref([]);
+const case_pie_data = ref([]);
 const fake_amount_data = [
   {
     name: '電腦設備類',
@@ -735,11 +735,11 @@ const { datagrid, url, Form } = typeMappings[type];
       Warehouse.rowData.forEach((item, index)=>{
         Warehouse.rowData[index].Amount ='$'+item.Amount.toLocaleString();
       })
-      amount_pie_data = resultList.AmountAnalysis.map(item => ({
+      amount_pie_data.value = resultList.AmountAnalysis.map(item => ({
         name: item.EquipTypeName,
         y: item.Amount
       }));
-      case_pie_data = resultList.EquipTypeAnalysis.map(item => ({
+      case_pie_data.value = resultList.EquipTypeAnalysis.map(item => ({
         name: item.EquipTypeName,
         y: item.Count
       }));
@@ -855,11 +855,11 @@ const PieChartSetting = (label_text='', target_id='', pie_data=[], isOuterPie = 
 // 更新圓餅圖
 const updatePie = () => {
   // 詳情modal圓餅
-  PieChartSetting('金額','amount_pie', amount_pie_data, false);
-  PieChartSetting('件數','case_pie', case_pie_data, false);
+  PieChartSetting('金額','amount_pie', amount_pie_data.value, false);
+  PieChartSetting('件數','case_pie', case_pie_data.value, false);
   // 外側圓餅
-  PieChartSetting('金額','amount_window_pie', amount_pie_data, true);
-  PieChartSetting('件數','case_window_pie', case_pie_data, true);
+  PieChartSetting('金額','amount_window_pie', amount_pie_data.value, true);
+  PieChartSetting('件數','case_window_pie', case_pie_data.value, true);
 }
 // 變更交付
 const changeIsExcute = async (itemData) =>{
