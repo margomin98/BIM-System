@@ -10,7 +10,8 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    <p>繼續完成LINE通知綁定</p>
+                    <p v-show="props.isChecked">繼續完成LINE通知綁定</p>
+                    <p v-show="!props.isChecked">繼續<span style="color: red;">取消</span>LINE通知綁定</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn cancel" data-bs-dismiss="modal" @click="cancelChange">取消</button>
@@ -22,7 +23,7 @@
 </template>
 
 <script setup>
-const props = defineProps(['text', 'cancel','id']);
+const props = defineProps(['text', 'cancel', 'id', 'isChecked']);
 const emit = defineEmits(['cancel', 'confirm']);
 const cancelChange = ()=>{
     emit('cancel');

@@ -3,7 +3,7 @@
   <button type="button" style="display: none;" data-bs-toggle="modal" data-bs-target="#ExecuteModal" ref="exbtn"></button>
   <button type="button" style="display: none;" data-bs-toggle="modal" data-bs-target="#LineModal" ref="linebtn"></button>
   <Confirm_modal :id="'ExecuteModal'" :text="warningText" :function="changeIsExcute" :parameter1="itemData" @cancel="submit('DeliveredItem','','')"></Confirm_modal>
-  <Line_modal :id="'LineModal'" @confirm="handleLineSwitch" @cancel="()=>{lineSwitch.checked = !lineSwitch.checked}"></Line_modal>
+  <Line_modal :id="'LineModal'" :isChecked="SwitchProps" @confirm="handleLineSwitch" @cancel="()=>{lineSwitch.checked = !lineSwitch.checked; SwitchProps = !SwitchProps}"></Line_modal>
   <!-- 金額支出modal -->
   <div class="modal fade" id="amount_pie_modal" tabindex="-1" aria-labelledby="amount_pie_modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -66,7 +66,7 @@
             <p>LINE 通知設定</p>
           </div>
           <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" role="switch" ref="lineSwitch" @change="()=>{linebtn.click()}">
+            <input class="form-check-input" type="checkbox" role="switch" ref="lineSwitch" @change="clickLineSwitch">
           </div>
         </div>
       </div>
@@ -661,6 +661,7 @@ const fake_case_data = [
 ]
 // line
 const lineSwitch = ref(null);
+const SwitchProps = ref(false);
 const linebtn = ref(null);
 onMounted(async() => {
   utilsStore.$reset();
@@ -988,10 +989,12 @@ const getLineNotificationStatus = async () => {
     if(data.state === 'success') {
       // 有開啟
       lineSwitch.value.checked = true;
+      SwitchProps.value = true;
     } 
     else if(data.state === 'error') {
       // 無開啟
       lineSwitch.value.checked = false;
+      SwitchProps.value = false;
     } 
     else if(data.state === 'account_error') {
       alert(data.messages);
@@ -1003,6 +1006,10 @@ const getLineNotificationStatus = async () => {
   } catch (error) {
     console.error(error);
   }
+}
+const clickLineSwitch = () => {
+  SwitchProps.value = lineSwitch.value.checked;
+  setTimeout(()=>{linebtn.value.click()},10);
 }
 const handleLineSwitch = async () => {
   // console.log('isChecked', lineSwitch.value.checked);
