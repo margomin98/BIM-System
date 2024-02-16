@@ -39,7 +39,7 @@
           <div id="case_pie" class="modal_pie"></div>
           <div class="amount_text d-flex">
             <p>總件數
-              <p class="amount">{{ total_case.toLocaleString() }}</p>
+              <p>{{ total_case.toLocaleString() }}</p>
             </p>
           </div>
         </div>
