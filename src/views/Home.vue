@@ -666,8 +666,8 @@ onMounted(async() => {
   utilsStore.$reset();
   await utilsStore.getUserName();
   // 取得權限id 決定顯示欄位
-  roleId.value = await apiStore.getRoleId('admin');
-  // roleId.value = await apiStore.getRoleId(utilsStore.userName);
+  // roleId.value = await apiStore.getRoleId('admin');
+  roleId.value = await apiStore.getRoleId(utilsStore.userName);
   const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
   if(roleId.value === 1 || roleId.value === 4) {
     tabs[0].classList.add('active');
@@ -705,46 +705,6 @@ onMounted(async() => {
   // 警示訊息
   getAlertMsg();
   updatePie();
-
-  //測試data
-  DeliveredItem.rowData = [
-  {
-      "AO_ID": "W202400006",
-      "Reason": "快速出庫交付",
-      "AssetsId": "BF10000013",
-      "AssetName": "伺服器",
-      "Number": 1,
-      "ProjectName": "0010-昆明南站BIMFM示範系統建置服務",
-      "Project_Id": "0010",
-      "AssigneeName": "admin",
-      "IsExecute": true,
-      "OM_ID": "OM00000054"
-  },
-  {
-      "AO_ID": "W202400006",
-      "Reason": "快速出庫交付",
-      "AssetsId": "BF00000763",
-      "AssetName": "UPS相關用品",
-      "Number": 5,
-      "ProjectName": "0010-昆明南站BIMFM示範系統建置服務",
-      "Project_Id": "0010",
-      "AssigneeName": "admin",
-      "IsExecute": true,
-      "OM_ID": "OM00000055"
-  },
-  {
-      "AO_ID": "W202400006",
-      "Reason": "快速出庫交付",
-      "AssetsId": "BF01000005",
-      "AssetName": "pixel 8 pro",
-      "Number": 1,
-      "ProjectName": "0010-昆明南站BIMFM示範系統建置服務",
-      "Project_Id": "0010",
-      "AssigneeName": "admin",
-      "IsExecute": true,
-      "OM_ID": "OM00000056"
-  }
-  ]
 });
 onUnmounted(()=>{
   utilsStore.$dispose();
