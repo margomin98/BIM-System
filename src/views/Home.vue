@@ -576,10 +576,10 @@ const selectProject = (option) => {
   DeliveredItem.searchParams.Project_Id = value;
   CustodyAssets.searchParams.Project_Id = value;
   // 重新刷新4個datagrid
-  // submit('Warehouse','','');
-  // submit('PurchasedItem','','');
-  // submit('DeliveredItem','','');
-  // submit('CustodyAssets','','');
+  submit('Warehouse','','');
+  submit('PurchasedItem','','');
+  submit('DeliveredItem','','');
+  submit('CustodyAssets','','');
 }
 // 模糊查詢左側專案代碼
 const filterProject = computed(()=>{
@@ -934,15 +934,15 @@ const PieChartSetting = (label_text='', target_id='', pie_data=[], isOuterPie = 
 const updatePie = () => {
   // 更新總金額
   total_amount.value = 0;
-  if(fake_amount_data.length !== 0 ) {
-    fake_amount_data.forEach((item)=>{
+  if(amount_pie_data.value.length !== 0 ) {
+    amount_pie_data.value.forEach((item)=>{
       total_amount.value+= item.y;
     })
   }
   // 更新總件數
   total_case.value = 0;
-  if(fake_case_data.length !== 0 ) {
-    fake_case_data.forEach((item)=>{
+  if(case_pie_data.value.length !== 0 ) {
+    case_pie_data.value.forEach((item)=>{
       total_case.value+= item.y;
     })
   }
