@@ -7,6 +7,7 @@ export const useUtilsStore = defineStore('Utils',{
   state: ()=>({
     isLoading: false,
     userName: '',
+    userRoleId: null,
     today: '',
     imgExtensions: ['jpg', 'jpeg', 'png', 'gif'],
     fileExtensions: ['doc', 'docx', 'pdf', 'jpg', 'jpeg', 'png', 'gif'],
