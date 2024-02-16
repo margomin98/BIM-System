@@ -724,7 +724,8 @@ const { datagrid, url, Form } = typeMappings[type];
     }
   }
   utilsStore.UpdatePageParameter(datagrid, event, action, form);
-  const resultList = await apiStore.getMngDatagrid(url,datagrid, form);
+  // 要對resultList做map運算=>不能用const
+  let resultList = await apiStore.getMngDatagrid(url,datagrid, form);
   console.log('resultList',resultList);
   switch (type) {
     case 'Warehouse':
