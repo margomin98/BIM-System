@@ -267,7 +267,7 @@ import { onMounted, onUnmounted, reactive, ref, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 import { CasePurchase_Process } from '@/assets/js/enter_status'
-import axios from 'axios';
+import axios from '@/axios/tokenInterceptor'
 import router from '@/router';
 import { createDadagridObject } from '@/assets/js/common_fn';
 const purchaseStore = usePurchaseStore();
@@ -367,14 +367,7 @@ onMounted(async() => {
     purchaseStore.$reset();
     await purchaseStore.getDetails(PP_ID, CasePurchase_Process);
     itemData.value = [...Form.value.NotOrdered,...Form.value.Ordered];
-    DropdownArray.value.ProjectCode = [
-        { Text: "0000-1 資產管理系統開發-內部領用/借測", Value: "0000-1    " },
-        { Text: "0000-2 資產管理系統開發-出貨", Value: "0000-2    " },
-        { Text: "0000-3 資產管理系統開發-維修", Value: "0000-3    " },
-        { Text: "0000-4 資產管理系統開發-報廢", Value: "0000-4    " },
-        { Text: "0000-5 資產管理系統開發-退貨", Value: "0000-5    " }
-    ]
-    // DropdownArray.value.ProjectCode = await apiStore.getFuzzyProject();
+    DropdownArray.value.ProjectCode = await apiStore.getFuzzyProject();
     DropdownArray.value.EquipType = await apiStore.getEquipType();
     DropdownArray.value.Area = await apiStore.getArea();
     updateSelectedNumber();
