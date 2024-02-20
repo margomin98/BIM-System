@@ -143,43 +143,39 @@
                     </thead>
                     <tbody>
                         <!-- NotOrdered -->
-                        <tr v-for="asset in Form.NotOrdered">
+                        <tr v-for="item in Form.NotOrdered">
                             <td class="table_content edit_order_btn"><button class="edit_order_btn_grey">編輯訂單</button></td>
                             <td>
                                 <p v-if="Form.Status === '待採購'">尚未決定</p>
                                 <p v-else-if="Form.Status === '採購中'">暫緩採購</p>
-                                <p v-else-if="Form.Status === '沖銷中' && asset.Number != asset.selectNumber">沖銷中</p>
+                                <p v-else-if="Form.Status === '沖銷中' && item.Number != item.selectNumber">沖銷中</p>
                                 <p v-else>已沖銷</p>
                             </td>
                             <td class="table_content">
                                 <div class="item_number_wrap">
-                                    <div class="item_number"><span>B05234311</span></div>
-                                    <div class="item_number"><span>B232511</span></div>
-                                    <div class="item_number"><span>B98574311</span></div>
+                                    <div v-for="asset in item.WriteoffAssets" :key="asset.AssetsId" class="item_number"><span>{{ asset.AssetsId }}</span></div>
                                 </div>
                             </td>
-                            <td class="table_content">{{ asset.ItemName }}</td>
-                            <td class="table_content">0/{{ asset.Number }}</td>
-                            <td class="table_content">{{ asset.RequiredSpec }}</td>
+                            <td class="table_content">{{ item.ItemName }}</td>
+                            <td class="table_content">0/{{ item.Number }}</td>
+                            <td class="table_content">{{ item.RequiredSpec }}</td>
                         </tr>
                         <!-- Ordered -->
-                        <tr v-for="asset in Form.Ordered">
-                            <td class="table_content edit_order_btn"><button :class="{'edit_order_btn_grey': Form.Status !== '採購中'}">編輯訂單</button></td>
+                        <tr v-for="item in Form.Ordered">
+                            <td class="table_content edit_order_btn"><button :class="{'edit_order_btn_grey': Form.Status !== '採購中'}" @click="editOrder" :disabled="Form.Status !=='採購中'">編輯訂單</button></td>
                             <td>
                                 <p v-if="Form.Status === '採購中'">已採購</p>
-                                <p v-else-if="Form.Status === '沖銷中' && asset.Number != asset.selectNumber">沖銷中</p>
+                                <p v-else-if="Form.Status === '沖銷中' && item.Number != item.selectNumber">沖銷中</p>
                                 <p v-else>已沖銷</p>
                             </td>
                             <td class="table_content">
                                 <div class="item_number_wrap">
-                                    <div class="item_number"><span>B05234311</span></div>
-                                    <div class="item_number"><span>B232511</span></div>
-                                    <div class="item_number"><span>B98574311</span></div>
+                                    <div v-for="asset in item.WriteoffAssets" :key="asset.AssetsId" class="item_number"><span>{{ asset.AssetsId }}</span></div>
                                 </div>
                             </td>
-                            <td class="table_content">{{ asset.ItemName }}</td>
-                            <td class="table_content">0/{{ asset.Number }}</td>
-                            <td class="table_content">{{ asset.RequiredSpec }}</td>
+                            <td class="table_content">{{ item.ItemName }}</td>
+                            <td class="table_content">0/{{ item.Number }}</td>
+                            <td class="table_content">{{ item.RequiredSpec }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -194,16 +190,23 @@ import { usePurchaseStore } from '@/store/purchase/_index';
 import Delete_warn from '@/components/Delete_warn.vue';
 import { storeToRefs } from 'pinia';
 import { onMounted, onUnmounted, ref } from 'vue';
+import router from '@/router';
 
 const utilsStore = useUtilsStore();
 const purchaseStore = usePurchaseStore();
 const { Form , PageType } = storeToRefs(purchaseStore);
 const fullproject = ref('');
 fullproject.value = purchaseStore.Project;
+
 onUnmounted(()=> {
     utilsStore.$dispose();
     purchaseStore.$dispose();
 })
+const editOrder = (PO_ID) => {
+    if(PO_ID) {
+        router.push({name: '', query:  { search_id: PO_ID }});
+    }
+}
 </script>
 
 <style lang="scss" scoped>
