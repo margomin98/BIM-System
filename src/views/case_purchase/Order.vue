@@ -257,10 +257,6 @@ const submitOrder = async (type) => {
     }
 }
 const submit = async() =>{
-    if(Form.value.Ordered.length === 0) {
-        alert('請至少新增一張訂單');
-        return
-    }
     // 檢查字數上限
     if(!utilsStore.checkMaxLetter(Form.value,purchaseStore.FormLetterCheckList)) return;
     const form = new FormData;

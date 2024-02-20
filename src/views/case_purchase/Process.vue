@@ -16,9 +16,9 @@
                             <p>規格需求</p>
                             <input type="text" class="form-control text-center readonly_box" readonly v-model="tempParams.RequiredSpec" />
                         </div>
-                        <!-- 已選/待選數量 -->
+                        <!-- 已沖/待沖數量 -->
                         <div class='col'>
-                            <p>已選/待選數量</p>
+                            <p>已沖/待沖數量</p>
                             <p class="form-control text-center readonly_box" style="color: black;">{{ tempCombine }}</p>
                         </div>
                     </div>
@@ -106,7 +106,6 @@
                     </Column>
                     <Column style="min-width: 60px" header="選擇">
                         <template #body="slotProps">
-                            <!-- <Storage_add :params="slotProps" :selectedNumber="searchParams.selectedNumber" :Number="searchParams.Number" @addMaterial="addMaterial" /> -->
                             <case_purchase_add_btn :params="slotProps" @add-material="addToList" />
                         </template>
                     </Column>
@@ -194,7 +193,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(item, index) in testData" :key="item.PI_ID">
+                            <tr v-for="(item, index) in itemData" :key="item.PI_ID">
                                 <td class="table_content"><button class="writeoff_btn" data-bs-toggle="modal" data-bs-target="#propertymodal" @click="updateSearchingModal(index)">沖銷</button></td>
                                 <td class="table_content">
                                     <div class="item_number_wrap">
@@ -202,7 +201,7 @@
                                     </div>
                                 </td>
                                 <td class="table_content">{{ item.ItemName }}</td>
-                                <td class="table_content">{{ item.selectedNumber }}/{{ item.Number }}</td>
+                                <td class="table_content">{{ item.SelectedNumber }}/{{ item.Number }}</td>
                                 <td class="table_content">{{ item.RequiredSpec }}</td>
                             </tr>
                         </tbody>
@@ -247,8 +246,8 @@
         </div>
         <div class="col button_wrap">
             <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
-            <button class="save_btn" @click="temp">暫存</button>
-            <button class="send_btn" :class="{'send_btn_disabled': !user.isValidate}" @click="submit('submit')" :disabled="!user.isValidate">完成</button>
+            <button class="save_btn" @click="submit(false)">暫存</button>
+            <button class="send_btn" :class="{'send_btn_disabled': !user.isValidate}" @click="submit(true)" :disabled="!user.isValidate">完成</button>
         </div>
     </div>
 </template>
@@ -293,6 +292,7 @@ const datagridfield = [
     { field: "AreaName", width: '150px', header: "儲位區域" },
     { field: "LayerName", width: '150px', header: "儲位櫃位" }
 ]
+const itemData = ref([]);
 const testData = ref([
     {
         "PI_ID": "PP24020005_01",
@@ -343,7 +343,7 @@ const user = reactive({
 const tempParams = reactive({
     ItemName: '', // 採購項目
     Number: 0, // 所需數量
-    selectedNumber: 0, // 已選數量
+    SelectedNumber: 0, // 已選數量
     RequiredSpec: '', // 規格需求
     index: 0, // 採購清單index
 })
@@ -361,11 +361,12 @@ const searchParams = reactive({
 })
 // 檢索上方顯示欄位之一
 const tempCombine = computed(()=>{
-    return `${tempParams.selectedNumber}/${tempParams.Number}`
+    return `${tempParams.SelectedNumber}/${tempParams.Number}`
 })
 onMounted(async() => {
     purchaseStore.$reset();
     await purchaseStore.getDetails(PP_ID, CasePurchase_Process);
+    itemData.value = [...Form.value.NotOrdered,...Form.value.Ordered];
     DropdownArray.value.ProjectCode = [
         { Text: "0000-1 資產管理系統開發-內部領用/借測", Value: "0000-1    " },
         { Text: "0000-2 資產管理系統開發-出貨", Value: "0000-2    " },
@@ -384,40 +385,48 @@ onUnmounted(()=>{
   utilsStore.$dispose();
 })
 
-const submit = async(type) =>{
+const submit = async(isDone) =>{
     // 檢查字數上限
     const regexPattern = new RegExp(`^[\\s\\S]{0,100}$`);
     if(!regexPattern.test(Form.value.WriteoffMemo)) {
         alert(`沖銷備註不可輸入超過100字`);
         return 
     }
-    // 完成要檢查是否沖銷完成
-    if(type === 'submit') {
-        for(let i=0; i<testData.value.length; i++)  {
+    // 完成要檢查是否全部沖銷完畢
+    if(isDone) {
+        for(let i=0; i<itemData.value.length; i++)  {
             let total = 0;
-            testData.value[i].WriteoffAssets.forEach(item =>{
+            itemData.value[i].WriteoffAssets.forEach(item =>{
                 total += item.Number;
             })
-            if(total !== testData.value[i].Number) {
-                console.log(`${total}/${testData.value[i].Number}`);
+            if(total !== itemData.value[i].Number) {
+                console.log(`${total}/${itemData.value[i].Number}`);
                 alert('請先將所有項目沖銷完畢');
                 return 
             }
         }
     }
-    console.log('OK');
-    const requestData = {
+    let requestData = {
         PP_ID: PP_ID,
         WriteoffPerson: user.resultName,
-        WriteoffMemo: Form.value.PurchaseMemo,
-        WriteoffAssets: testData.value,
+        Memo: Form.value.WriteoffMemo,
+        WriteoffAssets: itemData.value,
+        Done: isDone
     }
+    if(!isDone) {
+        delete requestData.WriteoffPerson;
+    }
+    console.log('requestData',requestData);
     try {
-        const response = await axios.post('http://192.168.0.177:7008/PurchasingMng/PurchaseConfirmed',requestData);
+        const response = await axios.post('http://192.168.0.177:7008/PurchasingMng/ItemsWriteOff', requestData);
         const data = response.data;
         if(data.state === 'success') {
             alert(data.messages+'\n'+data.resultList.PP_ID);
-            router.push({name: 'Case_Purchase_Datagrid'});
+            if(isDone) {
+                router.push({name: 'Case_Purchase_Datagrid'});
+            } else {
+                window.location.reload();
+            }
         } else if(data.state === 'account_error') {
             alert(data.messages);
             router.push('/');
@@ -443,24 +452,24 @@ const onProjectSelect = (option) => {
 const updateSearchingModal = (index) => {
     updateSelectedNumber();
     updateSelectedList();
-    tempParams.ItemName = testData.value[index].ItemName
-    tempParams.Number = testData.value[index].Number
-    tempParams.selectedNumber = testData.value[index].selectedNumber
-    tempParams.RequiredSpec = testData.value[index].RequiredSpec
+    tempParams.ItemName = itemData.value[index].ItemName
+    tempParams.Number = itemData.value[index].Number
+    tempParams.SelectedNumber = itemData.value[index].SelectedNumber
+    tempParams.RequiredSpec = itemData.value[index].RequiredSpec
     tempParams.index = index
     searchInventory('', 'search');
 }
 // 更新各採購項目的已沖數量
 const updateSelectedNumber = () => {
-    testData.value.forEach(item => {
+    itemData.value.forEach(item => {
         const total = item.WriteoffAssets.reduce((total,asset)=> total + asset.Number,0);
-        item.selectedNumber = total;
+        item.SelectedNumber = total;
     })
 }
 // 更新搜尋時的AssetList清單
 const updateSelectedList = () => {
     searchParams.WriteoffAssets = [];
-    testData.value.forEach((item)=>{
+    itemData.value.forEach((item)=>{
         item.WriteoffAssets.forEach((asset)=>{
             searchParams.WriteoffAssets.push(asset);
         })
@@ -484,7 +493,7 @@ const searchInventory = async (event, type) => {
         }
         form.append('WriteoffAssets', JSON.stringify(searchParams.WriteoffAssets));
         utilsStore.UpdatePageParameter(datagrid, event, type, form);
-        const resultList = await apiStore.getMngDatagrid('/AssetsOutMng/SearchInventory',datagrid, form);
+        const resultList = await apiStore.getMngDatagrid('/PurchasingMng/SearchInventory',datagrid, form);
         rowData.value = resultList.rows.map(item => ({
           ...item,
           selectNumber: item.OM_Number,
@@ -497,30 +506,30 @@ const searchInventory = async (event, type) => {
 }
 // 刪除已沖項目
 const deleteFromList = (index, itemIndex) => {
-    testData.value[index].WriteoffAssets.splice(itemIndex,1);
+    itemData.value[index].WriteoffAssets.splice(itemIndex,1);
     updateSelectedNumber()
 }
 const addToList = (data) => {
-    if(tempParams.selectedNumber + data.selectNumber > tempParams.Number) {
+    if(tempParams.SelectedNumber + data.selectNumber > tempParams.Number) {
         alert('所選數量超過沖銷所需數量');
         return
     }
     const index = tempParams.index;
     let exist = false;
-    testData.value[index].WriteoffAssets.forEach(item=>{
+    itemData.value[index].WriteoffAssets.forEach(item=>{
         if(item.AssetsId === data.AssetsId) {
             item.Number += data.selectNumber ;
             exist = true;
         }
     })
     if(!exist) {
-        testData.value[index].WriteoffAssets.splice(0,0,{
+        itemData.value[index].WriteoffAssets.splice(0,0,{
             AssetsId: data.AssetsId,
             Number: data.selectNumber
         })
     }
     updateSelectedNumber();
-    tempParams.selectedNumber = testData.value[index].selectedNumber
+    tempParams.SelectedNumber = itemData.value[index].SelectedNumber
     updateSelectedList();
     searchInventory('','');
 }
