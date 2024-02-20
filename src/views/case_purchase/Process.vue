@@ -1,6 +1,7 @@
 <template>
     <Navbar />
     <validate_modal :modal_id="'auth_modal'" :user="user"></validate_modal>
+    <confirm_modal :id="'ConfirmModal'" @confirm="submit(true)" :text="warningText"/>
     <div class="modal fade" data-bs-backdrop="static" id="propertymodal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -247,7 +248,7 @@
         <div class="col button_wrap">
             <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
             <button class="save_btn" @click="submit(false)">暫存</button>
-            <button class="send_btn" :class="{'send_btn_disabled': !user.isValidate}" @click="submit(true)" :disabled="!user.isValidate">完成</button>
+            <button class="send_btn" :class="{'send_btn_disabled': !user.isValidate}" data-bs-toggle="modal" data-bs-target="#ConfirmModal" :disabled="!user.isValidate">完成</button>
         </div>
     </div>
 </template>
@@ -259,6 +260,7 @@ import Column from 'primevue/column';
 import AssetViewBtn from '@/components/utils/asset_view_btn.vue'
 import case_purchase_add_btn from '@/components/case_purchase_page/case_purchase_add_btn.vue'
 import Storage_number from "@/components/Storage_number_input"
+import confirm_modal from '@/components/utils/confirm_modal.vue'
 import validate_modal from '@/components/utils/validate_modal.vue';
 import Multiselect from 'vue-multiselect';
 import { usePurchaseStore } from '@/store/purchase/_index'
@@ -292,6 +294,9 @@ const datagridfield = [
     { field: "AreaName", width: '150px', header: "儲位區域" },
     { field: "LayerName", width: '150px', header: "儲位櫃位" }
 ]
+const warningText = "按下確認後將無法再次變更，請確認待沖銷清單是否沖銷正確";
+
+
 const itemData = ref([]);
 const testData = ref([
     {

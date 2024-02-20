@@ -1,7 +1,7 @@
 <template>
     <Navbar />
     <validate_modal :modal_id="'auth_modal'" :user="user"></validate_modal>
-
+    <confirm_modal :id="'ConfirmModal'" @confirm="submit" :text="warningText"/>
     <div class="main_section">
         <div class="title col">
             <h1>下訂作業</h1>
@@ -166,12 +166,13 @@
         <div class="col button_wrap">
             <button class="back_btn" @click="goBack">回上一頁</button>
             <!-- <button class="save_btn" @click="temp">暫存</button> -->
-            <button class="send_btn" :class="{'send_btn_disabled': !user.isValidate}" @click="submit" :disabled="!user.isValidate">完成</button>
+            <button class="send_btn" :class="{'send_btn_disabled': !user.isValidate}" data-bs-toggle="modal" data-bs-target="#ConfirmModal" :disabled="!user.isValidate">完成</button>
         </div>
     </div>
 </template>
 <script setup>
 import Navbar from '@/components/Navbar.vue';
+import confirm_modal from '@/components/utils/confirm_modal.vue'
 import validate_modal from '@/components/utils/validate_modal.vue';
 import { usePurchaseStore } from '@/store/purchase/_index'
 import { useUtilsStore } from '@/store';
@@ -199,6 +200,7 @@ const user = reactive({
 });
 const NotOrderedList = ref([]);
 const OrderedList = ref([]);
+const warningText = "按下確認後將無法再次變更，請確認是否正確新增訂購單項目";
 const submitOrder = async (type) => {
     let array = [];
     let url = '';
