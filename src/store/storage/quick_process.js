@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '@/axios/tokenInterceptor'
 import { defineStore } from 'pinia'
 import { useUtilsStore, useAPIStore } from '@/store'
 import { useStorageStore } from '@/store/storage/_index';
@@ -80,7 +80,7 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 			const storageStore = useStorageStore();
 			console.log('upperForm',storageStore.upperForm);
 			console.log('middleForm',storageStore.middleForm);
-			console.log('tabData',storageStore.tabData);
+			console.log('originTabData',storageStore.tabData);
 			// 檢查表單內容
 			if(!this.checkFormContent()) return ;
 			// 檢查是否至少一項頁籤
@@ -94,17 +94,18 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 			if(!(await storageStore.checkAssetsIdRepeat())) return ;
 			// 傳送整個資料(包括Form、tabData)
 			utilsStore.isLoading = true ; 
+			let originTabData =  _.cloneDeep(storageStore.tabData);
+			let modifiedTabData = originTabData.map(item =>{
+				// 反回去除指定key的物件
+				return _.omit(item, ['EquipCategoryArray','LayerArray','AreaArray','tabProjectCode','existFile','itemProjectSelect','viewFile']);
+			})
+			console.log('modifiedTabData',modifiedTabData);
 			try {
 				let requestData = {
 					Memo: storageStore.upperForm.Memo,
-					Tabs: storageStore.tabData
+					Tabs: modifiedTabData
 				}
-				const token = await apiStore.GetAntiForgeryToken();
-				const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/ExpressAssetsIn', requestData, {
-					headers: { 
-            'RequestVerificationToken': token,
-          }
-				});
+				const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/ExpressAssetsIn', requestData);
 				const data = response.data;
 				if(data.state === 'success') {
 					// 轉狀態
@@ -131,11 +132,10 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 			if(!this.checkTabContent()) return ;
 			utilsStore.isLoading = true ;
 			try {
-				const token = await apiStore.GetAntiForgeryToken();
 				// 頁籤部分
 				const tabPromises = [];
 				storageStore.tabData.forEach((tab,index)=>{
-					tabPromises.push(storageStore.sendImgForm(tab.itemId, tab, index,token));
+					tabPromises.push(storageStore.sendImgForm(tab.itemId, tab, index));
 				})
 				// 等待所有頁籤上傳完成
 				await Promise.all(tabPromises)

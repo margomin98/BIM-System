@@ -134,8 +134,7 @@
                     <thead>
                         <tr>
                             <th class="edit_order"><span></span></th>
-                            <th class="check_col"><span>勾選<br>下訂</span></th>
-                            <th class="check_col">暫緩<br>採購<span></span></th>
+                            <th class="check_col"><span>採購狀態</span></th>
                             <th class="writeoff_property"><span>沖銷所選資產</span></th>
                             <th class="item_col"><span>採購項目</span></th>
                             <th class="amount_col"><span>已沖/待沖數量</span></th>
@@ -143,13 +142,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="table_content edit_order_btn"><button>編輯訂單</button></td>
+                        <!-- NotOrdered -->
+                        <tr v-for="asset in Form.NotOrdered">
+                            <td class="table_content edit_order_btn"><button class="edit_order_btn_grey">編輯訂單</button></td>
                             <td>
-                                <input class="form-check-input order_check" type="checkbox" value="" disabled>
-                            </td>
-                            <td>
-                                <input class="form-check-input order_check" type="checkbox" value="" disabled>
+                                <p v-if="Form.Status === '待採購'">尚未決定</p>
+                                <p v-else-if="Form.Status === '採購中'">暫緩採購</p>
+                                <p v-else-if="Form.Status === '沖銷中' && asset.Number != asset.selectNumber">沖銷中</p>
+                                <p v-else>已沖銷</p>
                             </td>
                             <td class="table_content">
                                 <div class="item_number_wrap">
@@ -158,42 +158,28 @@
                                     <div class="item_number"><span>B98574311</span></div>
                                 </div>
                             </td>
-                            <td class="table_content">路由器</td>
-                            <td class="table_content">0/11</td>
-                            <td class="table_content">文字文字文字</td>
+                            <td class="table_content">{{ asset.ItemName }}</td>
+                            <td class="table_content">0/{{ asset.Number }}</td>
+                            <td class="table_content">{{ asset.RequiredSpec }}</td>
                         </tr>
-                        <tr>
-                            <td class="table_content edit_order_btn"><button>編輯訂單</button></td>
+                        <!-- Ordered -->
+                        <tr v-for="asset in Form.Ordered">
+                            <td class="table_content edit_order_btn"><button :class="{'edit_order_btn_grey': Form.Status !== '採購中'}">編輯訂單</button></td>
                             <td>
-                                <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
-                            </td>
-                            <td>
-                                <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
-                            </td>
-                            <td class="table_content">
-                                <div class="item_number_wrap">
-                                </div>
-                            </td>
-                            <td class="table_content">路由器</td>
-                            <td class="table_content">0/11</td>
-                            <td class="table_content">文字文字文字</td>
-                        </tr>
-                        <tr>
-                            <td class="table_content edit_order_btn"><button class="edit_order_btn_grey">編輯訂單</button></td>
-                            <td>
-                                <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
-                            </td>
-                            <td>
-                                <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
+                                <p v-if="Form.Status === '採購中'">已採購</p>
+                                <p v-else-if="Form.Status === '沖銷中' && asset.Number != asset.selectNumber">沖銷中</p>
+                                <p v-else>已沖銷</p>
                             </td>
                             <td class="table_content">
                                 <div class="item_number_wrap">
                                     <div class="item_number"><span>B05234311</span></div>
+                                    <div class="item_number"><span>B232511</span></div>
+                                    <div class="item_number"><span>B98574311</span></div>
                                 </div>
                             </td>
-                            <td class="table_content">路由器</td>
-                            <td class="table_content">0/11</td>
-                            <td class="table_content">文字文字文字</td>
+                            <td class="table_content">{{ asset.ItemName }}</td>
+                            <td class="table_content">0/{{ asset.Number }}</td>
+                            <td class="table_content">{{ asset.RequiredSpec }}</td>
                         </tr>
                     </tbody>
                 </table>

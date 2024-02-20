@@ -390,6 +390,10 @@ export const useStorageStore = defineStore('Storage', {
 				// 先剔除不需要key值
 				form.delete('viewFile')
 				form.delete('existFile')
+				form.delete('EquipCategoryArray')
+				form.delete('LayerArray')
+				form.delete('itemProjectSelect')
+				form.delete('tabProjectCode')
 				// 不是耗材的話 剔除itemCount、itemUnit
 				if (tab.itemAssetType !== '耗材') {
 					form.delete('itemUnit')

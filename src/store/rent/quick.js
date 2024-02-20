@@ -3,9 +3,9 @@ import { defineStore } from 'pinia'
 import {  useUtilsStore, useAPIStore } from '@/store'
 import router from '@/router';
 // lodash
-import _, { result } from "lodash"
+import _ from "lodash"
 import { useRentStore } from './_index';
-// 入庫系統通用function
+// 快速出庫 通用function
 export const useQuickRentStore = defineStore('QuickRent', {
 	// data
 	state: () => ({

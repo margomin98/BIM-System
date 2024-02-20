@@ -45,7 +45,7 @@ export const useRentStore = defineStore('Rent', {
 			DeliveryOperator: '',
       // ----
 			Description: '',
-			ItemList: [], // 出庫項目 <-需求
+			ItemList: [], // 出庫項目 <-需求 or 快速出庫出庫細項 <-實際資產
 			OM_List: [], // 出庫細項 <-實際資產
       // 備料
 			PrepareDate: '',
