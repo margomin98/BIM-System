@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '@/axios/tokenInterceptor'
 import { defineStore } from 'pinia'
 import {  useUtilsStore, useAPIStore } from '@/store'
 import { UnitArray, PackageUnitArray } from '@/assets/js/dropdown'
@@ -321,12 +321,7 @@ export const useStorageStore = defineStore('Storage', {
 			const form = new FormData();
 			form.append('AI_ID', AI_ID);
 			try {
-        const token = await apiStore.GetAntiForgeryToken();
-				const response = await axios.post(`http://192.168.0.177:7008/AssetsInMng/ApplicationDelete`, form,{
-					headers: { 
-            'RequestVerificationToken': token,
-          }
-				});
+				const response = await axios.post(`http://192.168.0.177:7008/AssetsInMng/ApplicationDelete`, form);
 				const data = response.data;
 				if (data.state === 'success') {
 					let msg = data.messages + '\n單號:'+ data.resultList.AI_ID;
@@ -376,7 +371,7 @@ export const useStorageStore = defineStore('Storage', {
 			return true;
 		},
 		// 頁籤儲存 [填報-新增、編輯] [快速入庫-編輯] [入庫作業]
-		async sendImgForm(itemId, tab, index,token) {
+		async sendImgForm(itemId, tab, index) {
 			return new Promise((resolve, reject) => {
 				const form = new FormData();
 				// 先append itemId
@@ -409,11 +404,7 @@ export const useStorageStore = defineStore('Storage', {
 				for (let i = 0; i < tab.deleteFile.length; i++) {
 					form.append('deleteFile', tab.deleteFile[i]);
 				}
-				axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form,{
-          headers: { 
-            'RequestVerificationToken': token,
-          }
-        })
+				axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form)
 					.then((response) => {
 						const data = response.data;
 						if (data.state === 'success') {
@@ -436,12 +427,7 @@ export const useStorageStore = defineStore('Storage', {
 			const form = new FormData();
 			form.append('AI_ID', AI_ID);
 			try {
-				const token = await apiStore.GetAntiForgeryToken();
-				axios.post('http://192.168.0.177:7008/AssetsInMng/AssetsIn', form,{
-					headers: { 
-            'RequestVerificationToken': token,
-          }
-				})
+				axios.post('http://192.168.0.177:7008/AssetsInMng/AssetsIn', form)
 					.then((response) => {
 						utilsStore.isLoading = false;
 						const data = response.data
