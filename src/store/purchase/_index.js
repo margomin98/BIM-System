@@ -13,6 +13,10 @@ export const usePurchaseStore = defineStore('Purchase', {
 		// 下拉選單
 		DropdownArray: {
 			ProjectCode: [],
+      EquipType: [],
+      EquipCategory: [],
+      Area: [],
+      Layer: [],
 		},
 		// 表單
     // 新增/編輯 採購清單時使用Requisitions， 下訂/沖銷 使用Ordered、NotOrdered。
@@ -66,7 +70,7 @@ export const usePurchaseStore = defineStore('Purchase', {
   actions: {
     onProjectSelect (option) {
       this.Form.ProjectCode = option.Value;
-      console.log(this.Form.ProjectCode);
+      // console.log(this.Form.ProjectCode);
     },
     // 增加清單項目
     addItem() {

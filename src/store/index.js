@@ -407,7 +407,7 @@ export const useUtilsStore = defineStore('Utils',{
         window.history.back();
       }
     },
-    // 清除搜尋內容
+    // 清除搜尋內容(string 和 number)
     clearSearchParams(searchParams) {
       for(const key in searchParams) {
         const type = typeof searchParams[key]

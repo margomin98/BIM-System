@@ -5,13 +5,9 @@
 </template>
 
 <script setup>
-import { useRentStore } from '@/store/rent/_index';
-import { useQuickRentStore } from '@/store/rent/quick';
-import { onUnmounted } from 'vue'
+
 const props = defineProps(['params', 'selectedNumber', 'Number']);
 const emit = defineEmits(['addMaterial']);
-const rentStore = useRentStore();
-const quickrentStore = useQuickRentStore();
 const add = () => {
   const selectedNumber = props.selectedNumber;
   const Number = props.Number;
@@ -19,30 +15,11 @@ const add = () => {
     if (!props.params.data.selectNumber) {
       alert('所選數量不得為零');
     } else {
-      alert('所選數量超過所需數量上限');
+      alert('所選數量超過資產數量上限');
     }
     return;
   }
-  // 將物品加入，更新下方清單
-  // 出庫數量看的是OM_Number，所以從搜尋拉下來要將OM_Number替換成剛剛所選的數量
-  // Number是檢索api所需要的key
-  let exist = false;
-  let data = props.params.data;
-  rentStore.Form.ItemList.forEach(item=>{
-    if(item.AssetsId === data.AssetsId) {
-      item.OM_Number += data.selectNumber
-      item.Number += data.selectNumber
-      exist = true; 
-    }
-  })
-  if(!exist) {
-    data.OM_Number = data.selectNumber;
-    rentStore.Form.ItemList.splice(0,0,{
-      ...data,
-      Number: data.selectNumber
-    });
-  }
-  quickrentStore.searchInventory('','');
+  emit('addMaterial', props.params.data);
 };
 
 const numberIsValid = (selectedNumber, Number) => {
@@ -55,10 +32,6 @@ const numberIsValid = (selectedNumber, Number) => {
   // 2. 正常執行
   return true;
 };
-onUnmounted(()=>{
-  rentStore.$dispose();
-  quickrentStore.$dispose();
-})
 </script>
 
 
