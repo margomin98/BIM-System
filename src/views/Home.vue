@@ -384,14 +384,23 @@
           <button data-bs-toggle="modal" data-bs-target="#amount_pie_modal">詳情</button>
         </div>
         <div class="content d-flex">
-          <div class="amount_info">
-            <div class="chart">
-              <div id="amount_window_pie" class="window_pie"></div>
+          <div v-show="amount_pie_data.length != 0 ">
+            <div class="amount_info">
+              <div class="chart">
+                <div id="amount_window_pie" class="window_pie"></div>
+              </div>
+            </div>
+            <div class="amount_text">
+              <p>總金額</p>
+              <p class="amount">{{ total_amount.toLocaleString()}}</p>
             </div>
           </div>
-          <div class="amount_text">
-            <p>總金額</p>
-            <p class="amount">{{ total_amount.toLocaleString()}}</p>
+          <div v-show="amount_pie_data.length == 0 ">
+            <div class="amount_info">
+            </div>
+            <div class="amount_text">
+              <p>nodata</p>
+            </div>
           </div>
         </div>
       </div>
@@ -707,6 +716,7 @@ onMounted(async() => {
   updatePie();
 
   //測試data
+  
   DeliveredItem.rowData = [
   {
       "AO_ID": "W202400006",
@@ -920,7 +930,7 @@ const PieChartSetting = (label_text='', target_id='', pie_data=[], isOuterPie = 
     },
     //  Pie後面的背景顏色
     chartArea: {
-      fill: "#F4F4F4",
+      fill: "transparent",
     },
     boxVisible: false,
   } : {};
@@ -1304,6 +1314,12 @@ const handleLineSwitch = async () => {
         .result_wrap {
           background: #A7AFBB;
           border-radius: 10px;
+          border: 3px solid var(--home_hover, transparent);
+          &:hover {
+            color: white;
+            border: 3px solid var(--home_hover, #3B6097);
+            background: #363C45;
+          }
         }
         .case_code {
           margin-bottom: 5px;
