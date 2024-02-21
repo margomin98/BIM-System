@@ -15,11 +15,18 @@
           </div>
         </div>
         <div class="modal-body">
-          <div id="amount_pie" class="modal_pie"></div>
-          <div class="amount_text d-flex">
-            <p>總金額
-              <p class="amount">{{ total_amount.toLocaleString() }}</p>
-            </p>
+          <div v-show="amount_pie_data.length !== 0 ">
+            <div id="amount_pie" class="modal_pie"></div>
+            <div class="amount_text d-flex">
+              <p>總金額
+                <p class="amount">{{ total_amount.toLocaleString() }}</p>
+              </p>
+            </div>
+          </div>
+          <div v-show="amount_pie_data.length == 0 ">
+            <div class="amount_text d-flex">
+              <p>nodata</p>
+            </div>
           </div>
         </div>
       </div>
@@ -36,11 +43,18 @@
           </div>
         </div>
         <div class="modal-body">
-          <div id="case_pie" class="modal_pie"></div>
-          <div class="amount_text d-flex">
-            <p>總件數
-              <p>{{ total_case.toLocaleString() }}</p>
-            </p>
+          <div v-show="case_pie_data.length !== 0 ">
+            <div id="case_pie" class="modal_pie"></div>
+            <div class="amount_text d-flex">
+              <p>總件數
+                <p>{{ total_case.toLocaleString() }}</p>
+              </p>
+            </div>
+          </div>
+          <div v-show="case_pie_data.length == 0 ">
+            <div class="amount_text d-flex">
+              <p>nodata</p>
+            </div>
           </div>
         </div>
       </div>
@@ -383,8 +397,8 @@
           金額支出
           <button data-bs-toggle="modal" data-bs-target="#amount_pie_modal">詳情</button>
         </div>
-        <div class="content d-flex">
-          <div v-show="amount_pie_data.length != 0 ">
+        <div v-show="amount_pie_data.length !== 0 ">
+          <div class="content d-flex">
             <div class="amount_info">
               <div class="chart">
                 <div id="amount_window_pie" class="window_pie"></div>
@@ -395,7 +409,9 @@
               <p class="amount">{{ total_amount.toLocaleString()}}</p>
             </div>
           </div>
-          <div v-show="amount_pie_data.length == 0 ">
+        </div>
+        <div v-show="amount_pie_data.length == 0 " >
+          <div class="content d-flex">
             <div class="amount_info">
             </div>
             <div class="amount_text">
@@ -410,16 +426,26 @@
           件數
           <button data-bs-toggle="modal" data-bs-target="#case_pie_modal">詳情</button>
         </div>
-        <div class="content d-flex">
-          <div class="case_info">
-            <div class="chart">
-              <div id="case_window_pie" class="window_pie"></div>
-              <!-- <ag-charts-vue class="chart-container" :options="options"></ag-charts-vue> -->
+        <div v-show="case_pie_data.length !== 0 ">
+          <div class="content d-flex">
+            <div class="case_info">
+              <div class="chart">
+                <div id="case_window_pie" class="window_pie"></div>
+              </div>
+            </div>
+            <div class="case_text">
+              <p>總件數</p>
+              <p class="amount">{{ total_case.toLocaleString() }}</p>
             </div>
           </div>
-          <div class="case_text">
-            <p>總件數</p>
-            <p class="amount">{{ total_case.toLocaleString() }}</p>
+        </div>
+        <div v-show="case_pie_data.length == 0 ">
+          <div class="content d-flex">
+            <div class="case_info">
+            </div>
+            <div class="case_text">
+              <p>nodata</p>
+            </div>
           </div>
         </div>
       </div>
@@ -609,6 +635,70 @@ const total_case = ref(0);
 const amount_pie_data = ref([]);
 const case_pie_data = ref([]);
 const fake_amount_data = [
+  {
+    name: '電腦設備類',
+    y: 12200
+  },
+  {
+    name: '維修保護類',
+    y: 7467
+  },
+  {
+    name: '安裝類',
+    y: 5460
+  },
+  {
+    name: '電子設備類',
+    y: 3305
+  },
+  {
+    name: '電腦設備類',
+    y: 12200
+  },
+  {
+    name: '維修保護類',
+    y: 7467
+  },
+  {
+    name: '安裝類',
+    y: 5460
+  },
+  {
+    name: '電子設備類',
+    y: 3305
+  },
+  {
+    name: '電腦設備類',
+    y: 12200
+  },
+  {
+    name: '維修保護類',
+    y: 7467
+  },
+  {
+    name: '安裝類',
+    y: 5460
+  },
+  {
+    name: '電子設備類',
+    y: 3305
+  },
+  {
+    name: '電腦設備類',
+    y: 12200
+  },
+  {
+    name: '維修保護類',
+    y: 7467
+  },
+  {
+    name: '安裝類',
+    y: 5460
+  },
+  {
+    name: '電子設備類',
+    y: 3305
+  },
   {
     name: '電腦設備類',
     y: 12200
@@ -901,6 +991,7 @@ const PieChartSetting = (label_text='', target_id='', pie_data=[], isOuterPie = 
     legend: {
       template: '%icon   %name    {%percentOfTotal:n1}%    %value',
       position: 'bottom',
+      // height: 200,
     },
     defaultSeries: {
       type: 'pie',
@@ -917,6 +1008,8 @@ const PieChartSetting = (label_text='', target_id='', pie_data=[], isOuterPie = 
       label_text: label_text,
       // formatString: 'n元'
     },
+    width: 150,
+    height: 150,
   };
   const additionalConfig = isOuterPie ? {
     legend: {
@@ -933,7 +1026,10 @@ const PieChartSetting = (label_text='', target_id='', pie_data=[], isOuterPie = 
       fill: "transparent",
     },
     boxVisible: false,
-  } : {};
+  } : {
+    width: 640,
+    height: 600,
+  };
   const chartConfig = {
     ...baseConfig,
     ...additionalConfig, 
@@ -1443,7 +1539,7 @@ const handleLineSwitch = async () => {
     }
     .modal_pie {
       width: 100%;
-      height: 100%
+      height: 100%;
     }
     .PurchaseList .button_wrap .total_amount p,
     .ProcessProperty .warn_text p {
