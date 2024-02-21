@@ -15,20 +15,32 @@
       <div class="content">
         <div class="row">
           <div class="col">
+            <p>收貨單號</p>
+            <input type="text" v-model="dgSearchParams.AR_ID" />
+          </div>
+          <div class="col">
             <p>物流單號</p>
-            <input type="text" v-model="searchParams.ShipmentNum" />
+            <input type="text" v-model="dgSearchParams.ShipmentNum" />
           </div>
           <div class="col">
             <p>貨運公司</p>
-            <input type="text" v-model="searchParams.ShipmentCompany" />
+            <input type="text" v-model="dgSearchParams.ShipmentCompany" />
           </div>
           <div class="col">
             <p>收件日期(起)</p>
-            <input type="date" v-model="searchParams.StartDate" class="date-input" />
+            <input type="date" v-model="dgSearchParams.StartDate" class="date-input" />
           </div>
           <div class="col">
             <p>收件日期(迄)</p>
-            <input type="date" v-model="searchParams.EndDate" class="date-input" />
+            <input type="date" v-model="dgSearchParams.EndDate" class="date-input" />
+          </div>
+          <!-- 收件人員 -->
+          <div class="col">
+            <p>收件人員</p>
+            <select class="form-select" aria-label="Default select example" v-model="dgSearchParams.Recipient">
+              <option value="">--請選擇--</option>
+              <option v-for="option in DropdownArray.Staff" :value="option">{{ option }}</option>
+            </select>
           </div>
         </div>
       </div>
@@ -41,28 +53,9 @@
       </div>
     </div>
     <div class="dg-height mb-5">
-      <DataTable
-        lazy
-        :key="datagrid.key"
-        :first= "datagrid.first"
-        :size="'small'"
-        :loading="datagrid.loading"
-        :value="rowData" 
-        :sort-field="datagrid.sortField"
-        :sort-order="datagrid.sortOrder"
-        resizableColumns 
-        columnResizeMode="expand"
-        showGridlines 
-        scrollable 
-        scrollHeight="420px" 
-        @page="submit($event , 'page')" 
-        @sort="submit($event , 'sort')"
-        paginator 
-        :rows="datagrid.rows" 
-        :totalRecords="datagrid.totalRecords"
-        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-        :rowsPerPageOptions="[10, 20, 30]"
-        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+      <DataTable lazy :key="dg.key" :first="dg.first" :size="'small'" :loading="dg.loading" :value="dgRowData" :sort-field="dg.sortField" :sort-order="dg.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
+        scrollHeight="420px" @page="submit($event , 'page')" @sort="submit($event , 'sort')" paginator :rows="dg.rows" :totalRecords="dg.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <Column style="min-width: 60px;">
           <template #body="slotProps">
             <Receive_button :params = "slotProps"/>
@@ -79,80 +72,72 @@
   </div>
 </template>
 
-<script>
-  import DataTable from 'primevue/datatable';
-  import Column from 'primevue/column';
-  import Receive_button from "@/components/Receive_button";
-  import Delete from "@/components/Receive_delete_button";
-  import Navbar from "@/components/Navbar.vue";
-  import {
-    onMounted,
-    reactive,
-    ref
-  } from "vue";
-  import {
-    useRouter
-  } from "vue-router";
-  import { UpdatePageParameter, createDatagrid } from '@/assets/js/common_fn';
-  import axios from 'axios';
-import { getMngDatagrid } from '@/assets/js/common_api';
-  export default {
-    components: {
-      Navbar,
-      DataTable,
-      Column,
-      Receive_button,
-      Delete
-    },
-    setup() {
-      const router = useRouter();
-      const searchParams = reactive({
-        ShipmentNum: '',
-        ShipmentCompany: '',
-        StartDate: '',
-        EndDate: '',
-      });
-      const datagrid = createDatagrid();
-      const datagridfield = [
-        { header: "收貨單號", field: "Show_AR_ID", width: '180px' },
-        { header: "物流單號", field: "ShipmentNum", width: '180px' },
-        { header: "貨運公司", field: "ShipmentCompany", width: '150px' },
-        { header: "到貨件數", field: "GoodsNum", width: '150px' },
-        { header: "收件日期", field: "ReceivedDate", width: '150px' },
-        { header: "收件人員", field: "Recipient", width: '150px' },
-      ]
-      const rowData = ref([]);
-      onMounted(() => {
-        datagrid.sortField = 'AR_ID'
-        submit('','search');
-      });
-      async function submit(event,type) {
-        const form = new FormData();
-        //將表格資料append到 form
-        for (const key in searchParams) {
-          if (searchParams[key]) {
-            form.append(key, searchParams[key]);
-          }
-        }
-        UpdatePageParameter(datagrid,event,type,form)
-        getMngDatagrid('/ReceivingMng/ReceivingNotes',rowData,datagrid,form);
-      }
-      const clear = () => {
-        for (const key in searchParams) {
-          searchParams[key] = '';
-        }
-        submit('','search');
-      }
-      return {
-        searchParams,
-        datagrid,
-        datagridfield,
-        rowData,
-        submit,
-        clear,
-      };
-    },
-  };
+<script setup>
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import Receive_button from "@/components/Receive_button";
+import Delete from "@/components/Receive_delete_button";
+import Navbar from "@/components/Navbar.vue";
+import {
+  onMounted,
+  onUnmounted,
+  reactive,
+} from "vue";
+import {  useUtilsStore, useAPIStore } from '@/store'
+import { storeToRefs } from 'pinia';
+
+const utilsStore = useUtilsStore();
+const apiStore = useAPIStore();
+const { dgSearchParams , dg , dgRowData } = storeToRefs(utilsStore);
+
+const DropdownArray = reactive({
+  Staff: [],
+})
+const searchParams = reactive({
+  AR_ID: '',
+  Recipient: '',
+  ShipmentNum: '',
+  ShipmentCompany: '',
+  StartDate: '',
+  EndDate: '',
+});
+const datagridfield = [ 
+  { header: "收貨單號", field: "AR_ID", width: '180px' },
+  { header: "物流單號", field: "ShipmentNum", width: '180px' },
+  { header: "貨運公司", field: "ShipmentCompany", width: '150px' },
+  { header: "到貨件數", field: "GoodsNum", width: '150px' },
+  { header: "收件日期", field: "ReceivedDate", width: '150px' },
+  { header: "收件人員", field: "Recipient", width: '150px' },
+]
+onMounted(async() => {
+  utilsStore.$reset();
+  for(const key in searchParams) {
+    dgSearchParams.value[key] = '';
+  }
+  submit('', 'search');
+  DropdownArray.Staff = await apiStore.getCustodian();
+});
+onUnmounted(()=>{
+  utilsStore.$dispose();
+})
+async function submit(event, type) {
+  const form = new FormData();
+  // 將表格資料 append 到 form
+  for (const key in dgSearchParams.value) {
+    if (dgSearchParams.value[key]) {
+      form.append(key, dgSearchParams.value[key]);
+    }
+  }
+  utilsStore.UpdatePageParameter(dg.value, event, type, form);
+  const resultList = await apiStore.getMngDatagrid('/ReceivingMng/ReceivingNotes',dg.value, form);
+  dgRowData.value = resultList.rows;
+  dg.value.totalRecords = resultList.total;
+  dg.value.key++;
+}
+const clear = () => {
+  utilsStore.clearSearchParams(dgSearchParams.value);
+  submit('', 'search');
+};
 </script>
 
 <style lang="scss" scoped>

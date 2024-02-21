@@ -61,10 +61,6 @@ export const usePurchaseStore = defineStore('Purchase', {
 	}),
 	// computed
 	getters: {
-    Project(state) {
-      console.log(`${state.Form.ProjectCode.trim()} ${state.Form.ProjectName}`);
-      return `${state.Form.ProjectCode.trim()} ${state.Form.ProjectName}`
-    }
 	},
 	// method
   actions: {

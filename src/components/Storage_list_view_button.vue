@@ -42,15 +42,17 @@ export default {
         case 5:
           linkName.value = 'Scrap_View';
           break;
-        // (待補資料)快速入庫
+        // Excel匯入(不應該顯示)
         case 6:
-          linkName.value = 'Quick_Store_View';
           break;
-        // (快速入庫完成)快速入庫
+        // 入庫(快速入庫完成)
         case 7:
           linkName.value = 'Quick_Store_View';
           break;
-        // Excel匯入(不應該顯示)
+        // 快速出庫(可能是借測、內部領用、出貨)
+        case 8:
+          linkName.value = 'Quick_Rent_View';
+          break;
       }
     }
     return {

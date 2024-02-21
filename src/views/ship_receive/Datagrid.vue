@@ -9,7 +9,7 @@
         <div class="row">
           <!-- 單號 -->
           <div class="col">
-            <p>單號</p>
+            <p>出庫單號</p>
             <input type="text" v-model="dgSearchParams.AO_ID" />
           </div>
           <!-- 專案代碼 -->
@@ -56,6 +56,14 @@
               </div>
             </div>
           </div>
+          <!-- 申請人員 -->
+          <div class="col flex-col">
+            <p>申請人員</p>
+            <select class="form-select" v-model="dgSearchParams.Applicant">
+              <option value="">--請選擇--</option>
+              <option v-for="item in DropdownArray.Staff" :key="item" :value="item">{{ item }}</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
@@ -98,7 +106,8 @@ const { dgSearchParams , dg , dgRowData } = storeToRefs(utilsStore);
 const DropdownArray = reactive({
   ProjectCode: [],
   Status: ShipReceive_StatusArray,
-  DateCategory: ShipReceive_DateCategory
+  DateCategory: ShipReceive_DateCategory,
+  Staff: [],
 })
 
 const searchParams = reactive({
@@ -108,11 +117,12 @@ const searchParams = reactive({
   DateCategory: '',
   StartDate: '',
   EndDate: '',
+  Applicant: '',
 });
 
 const datagridfield = ref([
   { header: "狀態", field: "Status", width: '130px' },
-  { header: "單號", field: "AO_ID", width: '150px' },
+  { header: "出庫單號", field: "AO_ID", width: '150px' },
   { header: "專案名稱", field: "ProjectName", width: '170px', max: '300px' },
   { header: "說明", field: "Description", width: '150px', max: '350px' },
   { header: "申請人員", field: "Applicant", width: '150px' },
@@ -126,6 +136,7 @@ onMounted(async() => {
     dgSearchParams.value[key] = '';
   }
   submit('', 'search');
+  DropdownArray.Staff = await apiStore.getCustodian();
   DropdownArray.ProjectCode = await useAPIStore().getFuzzyProject();
 });
 onUnmounted(()=>{

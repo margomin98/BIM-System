@@ -502,7 +502,7 @@ export const useAPIStore = defineStore('API',{
       }
     },
     // 保管人員
-    async getCustodian(name) {
+    async getCustodian(name='') {
       try {
         const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchName?name=${name}`);
         const data = response.data;
@@ -539,9 +539,12 @@ export const useAPIStore = defineStore('API',{
       try {
         const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetProjects`);
         let data = response.data;
+        console.log(data);
         if (data.state === 'success') {
           data.resultList.ProjList.splice(0,0,{Text:'--請選擇--' , Value: ''});
           return data.resultList.ProjList;
+        } else {
+          return [{Text:'--請選擇--' , Value: ''}]
         }
       } catch (error) {
         console.error(error);

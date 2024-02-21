@@ -153,16 +153,16 @@
                             </td>
                             <td class="table_content">
                                 <div class="item_number_wrap">
-                                    <div v-for="asset in item.WriteoffAssets" :key="asset.AssetsId" class="item_number"><span>{{ asset.AssetsId }}</span></div>
+                                    <div v-for="asset in item.AssetList" :key="asset.AssetsId" class="item_number"><span>{{ asset.AssetsId }}</span></div>
                                 </div>
                             </td>
                             <td class="table_content">{{ item.ItemName }}</td>
-                            <td class="table_content">0/{{ item.Number }}</td>
+                            <td class="table_content">{{ item.SelectedNumber }}/{{ item.Number }}</td>
                             <td class="table_content">{{ item.RequiredSpec }}</td>
                         </tr>
                         <!-- Ordered -->
                         <tr v-for="item in Form.Ordered">
-                            <td class="table_content edit_order_btn"><button :class="{'edit_order_btn_grey': Form.Status !== '採購中'}" @click="editOrder" :disabled="Form.Status !=='採購中'">編輯訂單</button></td>
+                            <td class="table_content edit_order_btn"><button :class="{'edit_order_btn_grey': Form.Status !== '採購中'}" @click="editOrder(item.PO_ID)" :disabled="Form.Status !=='採購中'">編輯訂單</button></td>
                             <td>
                                 <p v-if="Form.Status === '採購中'">已採購</p>
                                 <p v-else-if="Form.Status === '沖銷中' && item.Number != item.selectNumber">沖銷中</p>
@@ -170,11 +170,11 @@
                             </td>
                             <td class="table_content">
                                 <div class="item_number_wrap">
-                                    <div v-for="asset in item.WriteoffAssets" :key="asset.AssetsId" class="item_number"><span>{{ asset.AssetsId }}</span></div>
+                                    <div v-for="asset in item.AssetList" :key="asset.AssetsId" class="item_number"><span>{{ asset.AssetsId }}&nbsp;&nbsp;&nbsp;&nbsp;*{{asset.Number}}</span></div>
                                 </div>
                             </td>
                             <td class="table_content">{{ item.ItemName }}</td>
-                            <td class="table_content">0/{{ item.Number }}</td>
+                            <td class="table_content">{{ item.SelectedNumber }}/{{ item.Number }}</td>
                             <td class="table_content">{{ item.RequiredSpec }}</td>
                         </tr>
                     </tbody>
@@ -204,7 +204,7 @@ onUnmounted(()=> {
 })
 const editOrder = (PO_ID) => {
     if(PO_ID) {
-        router.push({name: '', query:  { search_id: PO_ID }});
+        router.push({name: 'Order_Edit', query:  { search_id: PO_ID }});
     }
 }
 </script>

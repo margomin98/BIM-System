@@ -8,98 +8,100 @@
       <div class="row">
         <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
           <p>物流單號</p>
-          <input type="text" v-model="searchParams.ShipmentNum" />
+          <input type="text" v-model="dgSearchParams.ShipmentNum" />
         </div>
         <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
           <p>設備總類</p>
-          <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                  {{ searchParams.EquipTypeName || '請選擇' }}
-                </button>
-            <div class="dropdown-menu" aria-labelledby="typeDropdown">
-              <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(item)">{{ item.Name }}</p>
-            </div>
-          </div>
+          <select class="form-select" v-model="dgSearchParams.EquipType_Id" @change="async()=>{DropdownArray.EquipCategory = await apiStore.getEquipCategory(dgSearchParams.EquipType_Id); dgSearchParams.Category_Id = '';}">
+            <option value="">--請選擇--</option>
+            <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name }}</option>
+          </select>
         </div>
         <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
           <p>設備分類</p>
-          <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
-                  {{ searchParams.EquipCategoryName || EquipCategoryInit }}
-                </button>
-            <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-              <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(item)">{{ item.Name }}</p>
-            </div>
-          </div>
+          <select class="form-select" v-model="dgSearchParams.Category_Id">
+            <option v-if="DropdownArray.EquipCategory.length == 0" value="">--請先選擇設備總類--</option>
+            <template v-else>
+              <option value="">--請選擇--</option>
+              <option v-for="option in DropdownArray.EquipCategory" :value="option.Id">{{ option.Name }}</option>
+            </template>
+          </select>
         </div>
         <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
           <p>資產編號</p>
-          <input type="text" v-model="searchParams.AssetsId" />
+          <input type="text" v-model="dgSearchParams.AssetsId" />
         </div>
         <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
           <p>物品名稱</p>
-          <input type="text" v-model="searchParams.AssetName" />
+          <input type="text" v-model="dgSearchParams.AssetName" />
         </div>
         <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
           <p>狀態</p>
-          <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{ searchParams.Status || "請選擇" }}
-                </button>
-            <div class="dropdown-menu" aria-labelledby="statusDropdown">
-              <p v-for="(item, index) in DropdownArray.Status" :key="index" class="dropdown-item" @click="selectStatus(item)">
-                {{ item }}</p>
-            </div>
-          </div>
+          <select class="form-select" v-model="dgSearchParams.Status">
+            <option value="">--請選擇--</option>
+            <option v-for="option in DropdownArray.Status" :value="option">{{ option }}</option>
+          </select>
         </div>
         <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
-          <p>區域</p>
-          <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
-                  {{ searchParams.AreaName || '請選擇' }}
-                </button>
-            <div class="dropdown-menu" aria-labelledby="areaDropdown">
-              <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item" @click="selectArea(item)">{{ item.Name }}</p>
-            </div>
-          </div>
+          <p>儲位區域</p>
+          <select class="form-select" v-model="dgSearchParams.Area_Id" @change="async()=>{DropdownArray.Layer = await apiStore.getLayer(dgSearchParams.Area_Id); dgSearchParams.Layer_Id = '';}">
+            <option value="">--請選擇--</option>
+            <option v-for="option in DropdownArray.Area" :value="option.Id">{{ option.Name }}</option>
+          </select>
         </div>
         <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
-          <p>櫃位</p>
-          <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="searchParams.AreaName === ''">
-                  {{ searchParams.LayerName || LayerInit }}
-                </button>
-            <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
-              <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(item)">{{ item.Name }}</p>
-            </div>
-          </div>
+          <p>儲位櫃位</p>
+          <select class="form-select" v-model="dgSearchParams.Layer_Id">
+            <option v-if="DropdownArray.Layer.length == 0" value="">--請先選擇儲位區域--</option>
+            <template v-else>
+              <option value="">--請選擇--</option>
+              <option v-for="option in DropdownArray.Layer" :value="option.Id">{{ option.Name }}</option>
+            </template>
+          </select>
         </div>
         <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
           <p>日期類型</p>
-          <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{ searchParams.DateCategory || "請選擇" }}
-                </button>
-            <div class="dropdown-menu" aria-labelledby="statusDropdown">
-              <p v-for="(item , index) in DropdownArray.DateType" :key="index" class="dropdown-item" @click="selectDateType(item)">{{ item}}</p>
-            </div>
-          </div>
+          <select class="form-select" v-model="dgSearchParams.DateCategory">
+            <option value="">--請選擇--</option>
+            <option v-for="option in DropdownArray.DateCategory" :value="option">{{ option }}</option>
+          </select>
         </div>
         <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
           <p>日期(起)</p>
           <div class="date-selector">
             <div class="input-container">
-              <input type="date" v-model="searchParams.StartDate" class="date-input" :disabled="searchParams.DateCategory === ''" />
+              <input type="date" v-model="dgSearchParams.StartDate" class="date-input" :disabled="dgSearchParams.DateCategory === ''" />
             </div>
           </div>
         </div>
-        <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col flex-col">
+        <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
           <p>日期(迄)</p>
           <div class="date-selector">
             <div class="input-container">
-              <input type="date" v-model="searchParams.EndDate" class="date-input" :disabled="searchParams.DateCategory === ''" />
+              <input type="date" v-model="dgSearchParams.EndDate" class="date-input" :disabled="dgSearchParams.DateCategory === ''" />
             </div>
           </div>
+        </div>
+        <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
+          <p>申請人員</p>
+          <select class="form-select" v-model="dgSearchParams.Applicant">
+            <option value="">--請選擇--</option>
+            <option v-for="item in DropdownArray.Staff" :key="item" :value="item">{{ item }}</option>
+          </select>
+        </div>
+        <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
+          <p>交付人員</p>
+          <select class="form-select" v-model="dgSearchParams.DeliveryOperator">
+            <option value="">--請選擇--</option>
+            <option v-for="item in DropdownArray.Staff" :key="item" :value="item">{{ item }}</option>
+          </select>
+        </div>
+        <div class="col-xl-auto col-lg-4 col-md-6 col-12 flex-col">
+          <p>入庫人員</p>
+          <select class="form-select" v-model="dgSearchParams.AssetsInOperator">
+            <option value="">--請選擇--</option>
+            <option v-for="item in DropdownArray.Staff" :key="item" :value="item">{{ item }}</option>
+          </select>
         </div>
       </div>
     </div>
@@ -111,28 +113,9 @@
       </div>
     </div>
     <div class="dg-height mb-5">
-      <DataTable
-        lazy
-        :key="datagrid.key"
-        :first= "datagrid.first"
-        :size="'small'"
-        :loading="datagrid.loading"
-        :value="rowData" 
-        :sort-field="datagrid.sortField"
-        :sort-order="datagrid.sortOrder"
-        resizableColumns 
-        columnResizeMode="expand"
-        showGridlines 
-        scrollable 
-        scrollHeight="420px" 
-        @page="submit($event , 'page')" 
-        @sort="submit($event , 'sort')"
-        paginator 
-        :rows="datagrid.rows" 
-        :totalRecords="datagrid.totalRecords"
-        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-        :rowsPerPageOptions="[10, 20, 30]"
-        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+      <DataTable lazy :key="dg.key" :first="dg.first" :size="'small'" :loading="dg.loading" :value="dgRowData" :sort-field="dg.sortField" :sort-order="dg.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
+        scrollHeight="420px" @page="submit($event , 'page')" @sort="submit($event , 'sort')" paginator :rows="dg.rows" :totalRecords="dg.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <Column style="min-width: 60px;">
           <template #body="slotProps">
             <Storage_process_button :params = "slotProps" @updategrid="submit('','');"/>
@@ -148,201 +131,101 @@
     </div>
   </div>
 </template>
+<script setup>
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import Storage_process_button from "@/components/Storage_process_button";
+import Delete from "@/components/Storage_process_delete_button";
+import Navbar from "@/components/Navbar.vue";
+import {
+  onMounted,
+  onUnmounted,
+  reactive,
+} from "vue";
+import {
+  Store_StatusArray,
+  Store_Process_DateTypeArray
+} from "@/assets/js/dropdown";
+import {  useUtilsStore, useAPIStore } from '@/store'
+import { storeToRefs } from 'pinia';
 
-<script>
-  import DataTable from 'primevue/datatable';
-  import Column from 'primevue/column';
-  import Storage_process_button from "@/components/Storage_process_button";
-  import Delete from "@/components/Storage_process_delete_button";
-  import Navbar from "@/components/Navbar.vue";
-  import {
-    onMounted,
-    reactive,
-    ref
-  } from "vue";
-  import {
-    Store_StatusArray,
-    Store_Process_DateTypeArray
-  } from "@/assets/js/dropdown";
-  import {
-    getMngDatagrid,
-    getEquipType,
-    getEquipCategory,
-    getArea,
-    getLayer
-  } from '@/assets/js/common_api'
-  import { UpdatePageParameter, createDatagrid } from '@/assets/js/common_fn';
-  export default {
-    components: {
-      Navbar,
-      DataTable,
-      Column,
-      Storage_process_button,
-      Delete,
-    },
-    setup() {
-      const searchParams = reactive({
-        ShipmentNum: '',
-        EquipTypeName: '',
-        EquipType_Id: '',
-        EquipCategoryName: '',
-        Category_Id: '',
-        Status: '',
-        AssetsId: '',
-        AssetName: '',
-        AreaName: '',
-        Area_Id: '',
-        LayerName: '',
-        Layer_Id: '',
-        DateCategory: '',
-        StartDate: '',
-        EndDate: '',
-      });
-      const DropdownArray = reactive({
-        EquipType: [],
-        EquipCategory: [],
-        Status: Store_StatusArray,
-        Area: [],
-        Layer: [],
-        DateType: Store_Process_DateTypeArray,
-      })
-      const EquipCategoryInit = ref('請先選擇設備總類');
-      const LayerInit = ref('請先選擇區域');
-      const datagrid = createDatagrid();
-      const datagridfield = [
-        { header: "狀態", field: "Status", width: '100px' },
-        { header: "編號", field: "AI_ID", width: '150px' },
-        { header: "物流單號", field: "ShipmentNum", width: '150px' },
-        { header: "設備總類", field: "EquipTypeName", width: '150px' },
-        { header: "設備分類", field: "EquipCategoryName", width: '150px' },
-        { header: "資產編號", field: "AssetsId", width: '150px' },
-        { header: "物品名稱", field: "AssetName", width: '160px' },
-        { header: "區域", field: "AreaName", width: '100px' },
-        { header: "櫃位", field: "LayerName", width: '100px' },
-        { header: "申請入庫日期", field: "ApplicationDate", width: '170px' },
-        { header: "申請人員", field: "Applicant", width: '150px' },
-        { header: "交付日期", field: "DeliveryDate", width: '170px' },
-        { header: "交付人員", field: "DeliveryOperator", width: '150px' },
-        { header: "入庫日期", field: "AssetsInDate", width: '170px' },
-        { header: "入庫人員", field: "AssetsInOperator", width: '150px' },
-      ]
-      const rowData = ref([]);
-      onMounted(() => {
-        datagrid.sortField = 'AI_ID'
-        submit('','search');
-      });
-      async function submit(event,type) {
-        const form = new FormData();
-        //將表格資料append到 form
-        for (const key in searchParams) {
-          if (searchParams[key]) {
-            form.append(key, searchParams[key]);
-          }
-        }
-        UpdatePageParameter(datagrid,event,type,form)
-        getMngDatagrid('/AssetsInMng/Operating',rowData,datagrid,form);
-      }
-      async function getEquipTypeName() {
-        if (DropdownArray.EquipType.length == 0) {
-          getEquipType()
-            .then((data) => {
-              DropdownArray.EquipType = data;
-            })
-            .catch((error) => {
-              console.error(error);
-            })
-        }
-      }
-      async function getEquipCategoryName() {
-        getEquipCategory(searchParams.EquipType_Id)
-          .then((data) => {
-            DropdownArray.EquipCategory = data;
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-      }
-      async function getAreaName() {
-        if (DropdownArray.Area.length == 0) {
-          getArea()
-            .then((data) => {
-              DropdownArray.Area = data;
-            })
-            .catch((error) => {
-              console.error(error);
-            })
-        }
-      }
-      async function getLayerName() {
-        getLayer(searchParams.Area_Id)
-          .then((data) => {
-            DropdownArray.Layer = data;
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-      }
-      function selectType(item) {
-        searchParams.EquipTypeName = item.Name;
-        searchParams.EquipType_Id = item.Id;
-        searchParams.EquipCategoryName = '';
-        searchParams.Category_Id = '';
-        getEquipCategoryName();
-        EquipCategoryInit.value = '請選擇';
-      }
-      function selectCategory(item) {
-        searchParams.EquipCategoryName = item.Name;
-        searchParams.Category_Id = item.Id;
-      }
-      function selectArea(item) {
-        searchParams.AreaName = item.Name;
-        searchParams.Area_Id = item.Id;
-        searchParams.LayerName = '';
-        searchParams.Layer_Id = '';
-        getLayerName();
-        LayerInit.value = '請選擇';
-      };
-      function selectLayer(item) {
-        searchParams.LayerName = item.Name;
-        searchParams.Layer_Id = item.Id;
-      };
-      const selectStatus = (item) => {
-        searchParams.Status = item;
-      };
-      const selectDateType = (item) => {
-        searchParams.DateCategory = item;
-      };
-      const clear = () => {
-        for (const key in searchParams) {
-          searchParams[key] = '';
-        }
-        EquipCategoryInit.value = '請先選擇設備總類';
-        LayerInit.value = '請先選擇區域';
-        submit('','search');
-      };
-      return {
-        searchParams,
-        DropdownArray,
-        EquipCategoryInit,
-        LayerInit,
-        datagrid,
-        datagridfield,
-        rowData,
-        getEquipTypeName,
-        getEquipCategoryName,
-        getAreaName,
-        getLayerName,
-        submit,
-        selectType,
-        selectCategory,
-        selectStatus,
-        selectArea,
-        selectLayer,
-        selectDateType,
-        clear,
-      };
+const utilsStore = useUtilsStore();
+const apiStore = useAPIStore();
+const { dgSearchParams , dg , dgRowData } = storeToRefs(utilsStore);
+
+const DropdownArray = reactive({
+  EquipType: [],
+  EquipCategory: [],
+  Status: Store_StatusArray,
+  Area: [],
+  Layer: [],
+  DateCategory: Store_Process_DateTypeArray,
+  Staff: [],
+})
+const searchParams = reactive({
+  ShipmentNum: '',
+  EquipType_Id: '',
+  Category_Id: '',
+  Status: '',
+  AssetsId: '',
+  AssetName: '',
+  Area_Id: '',
+  Layer_Id: '',
+  DateCategory: '',
+  StartDate: '',
+  EndDate: '',
+  Applicant: '',
+  DeliveryOperator: '',
+  AssetsInOperator: '',
+});
+const datagridfield = [ 
+  { header: "狀態", field: "Status", width: '100px' },
+  { header: "編號", field: "AI_ID", width: '150px' },
+  { header: "物流單號", field: "ShipmentNum", width: '150px' },
+  { header: "設備總類", field: "EquipTypeName", width: '150px' },
+  { header: "設備分類", field: "EquipCategoryName", width: '150px' },
+  { header: "資產編號", field: "AssetsId", width: '150px' },
+  { header: "物品名稱", field: "AssetName", width: '160px' },
+  { header: "區域", field: "AreaName", width: '100px' },
+  { header: "櫃位", field: "LayerName", width: '100px' },
+  { header: "申請入庫日期", field: "ApplicationDate", width: '170px' },
+  { header: "申請人員", field: "Applicant", width: '150px' },
+  { header: "交付日期", field: "DeliveryDate", width: '170px' },
+  { header: "交付人員", field: "DeliveryOperator", width: '150px' },
+  { header: "入庫日期", field: "AssetsInDate", width: '170px' },
+  { header: "入庫人員", field: "AssetsInOperator", width: '150px' },
+]
+onMounted(async() => {
+  utilsStore.$reset();
+  for(const key in searchParams) {
+    dgSearchParams.value[key] = '';
+  }
+  submit('', 'search');
+  DropdownArray.Staff = await apiStore.getCustodian();
+  DropdownArray.EquipType = await apiStore.getEquipType();
+  DropdownArray.Area = await apiStore.getArea();
+});
+onUnmounted(()=>{
+  utilsStore.$dispose();
+})
+async function submit(event, type) {
+  const form = new FormData();
+  // 將表格資料 append 到 form
+  for (const key in dgSearchParams.value) {
+    if (dgSearchParams.value[key]) {
+      form.append(key, dgSearchParams.value[key]);
     }
-  };
+  }
+  utilsStore.UpdatePageParameter(dg.value, event, type, form);
+  const resultList = await apiStore.getMngDatagrid('/AssetsInMng/Operating',dg.value, form);
+  dgRowData.value = resultList.rows;
+  dg.value.totalRecords = resultList.total;
+  dg.value.key++;
+}
+const clear = () => {
+  utilsStore.clearSearchParams(dgSearchParams.value);
+  submit('', 'search');
+};
 </script>
 
 <style lang="scss" scoped>

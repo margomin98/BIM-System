@@ -242,7 +242,7 @@ const { Form , DropdownArray , searchParams, datagrid1, datagrid1field, rowData1
 
 const warningText = '按下確認後將無法再次變更，請確認是否正確填寫出庫項目';
 onMounted(async ()=>{
-    utilsStore.$reset();
+    // utilsStore.$reset();
     rentStore.$reset();
     // DropdownArray.value.ProjectCode = [
     //     {Text: '專案1', Value: '0001'},

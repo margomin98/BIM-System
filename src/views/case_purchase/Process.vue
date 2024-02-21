@@ -198,7 +198,7 @@
                                 <td class="table_content"><button class="writeoff_btn" data-bs-toggle="modal" data-bs-target="#propertymodal" @click="updateSearchingModal(index)">沖銷</button></td>
                                 <td class="table_content">
                                     <div class="item_number_wrap">
-                                        <div v-for="(asset, assetIndex) in item.WriteoffAssets" class="item_number"><img src="@/assets/delete.png" @click="deleteFromList(index, assetIndex)"><span>{{ asset.AssetsId}}&nbsp;&nbsp;&nbsp;&nbsp;*{{asset.Number}}</span></div>
+                                        <div v-for="(asset, assetIndex) in item.AssetList" class="item_number"><img src="@/assets/delete.png" @click="deleteFromList(index, assetIndex)"><span>{{ asset.AssetsId}}&nbsp;&nbsp;&nbsp;&nbsp;*{{asset.Number}}</span></div>
                                     </div>
                                 </td>
                                 <td class="table_content">{{ item.ItemName }}</td>
@@ -302,12 +302,12 @@ const testData = ref([
     {
         "PI_ID": "PP24020005_01",
         "ItemName": "iphone 15",
-        "WriteoffAssets": [
-            {AssetsId: 'BF12345678' , Number: 1},
-            {AssetsId: 'BF98765321' , Number: 1},
-            {AssetsId: 'BF65417891' , Number: 1},
-            {AssetsId: 'BF98741235' , Number: 1},
-            {AssetsId: 'BF00001234' , Number: 1}
+        "AssetList": [
+            {AssetsId: 'BF12345678' , Number: 1, Deletable: true},
+            {AssetsId: 'BF98765321' , Number: 1, Deletable: true},
+            {AssetsId: 'BF65417891' , Number: 1, Deletable: true},
+            {AssetsId: 'BF98741235' , Number: 1, Deletable: true},
+            {AssetsId: 'BF00001234' , Number: 1, Deletable: true}
         ],
         "Number": 5,
         "RequiredSpec": "玫瑰金"
@@ -315,9 +315,9 @@ const testData = ref([
     {
         "PI_ID": "PP24020005_02",
         "ItemName": "行動充電器",
-        "WriteoffAssets": [
-            {AssetsId: 'BF56781234' , Number: 1},
-            {AssetsId: 'BF98765123' , Number: 1}
+        "AssetList": [
+            {AssetsId: 'BF56781234' , Number: 1, Deletable: true},
+            {AssetsId: 'BF98765123' , Number: 1, Deletable: true}
         ],
         "Number": 2,
         "RequiredSpec": "小台的，至少20000mAh"
@@ -325,11 +325,11 @@ const testData = ref([
     {
         "PI_ID": "PP24020005_03",
         "ItemName": "TypeC線",
-        "WriteoffAssets": [
-            {AssetsId: 'BF12345876' , Number: 2},
-            {AssetsId: 'BF98765231' , Number: 1},
-            {AssetsId: 'BF65417198' , Number: 2},
-            {AssetsId: 'BF00004321' , Number: 3}
+        "AssetList": [
+            {AssetsId: 'BF12345876' , Number: 2, Deletable: true},
+            {AssetsId: 'BF98765231' , Number: 1, Deletable: true},
+            {AssetsId: 'BF65417198' , Number: 2, Deletable: true},
+            {AssetsId: 'BF00004321' , Number: 3, Deletable: true}
         ],
         "Number": 8,
         "RequiredSpec": "2米長"
@@ -362,7 +362,7 @@ const searchParams = reactive({
     ProjectSelect: {Text:'--請選擇--' ,Value: ''},
     AssetsId: '',
     AssetName: '',
-    WriteoffAssets: [],
+    AssetList: [],
 })
 // 檢索上方顯示欄位之一
 const tempCombine = computed(()=>{
@@ -372,14 +372,7 @@ onMounted(async() => {
     purchaseStore.$reset();
     await purchaseStore.getDetails(PP_ID, CasePurchase_Process);
     itemData.value = [...Form.value.NotOrdered,...Form.value.Ordered];
-    DropdownArray.value.ProjectCode = [
-        { Text: "0000-1 資產管理系統開發-內部領用/借測", Value: "0000-1    " },
-        { Text: "0000-2 資產管理系統開發-出貨", Value: "0000-2    " },
-        { Text: "0000-3 資產管理系統開發-維修", Value: "0000-3    " },
-        { Text: "0000-4 資產管理系統開發-報廢", Value: "0000-4    " },
-        { Text: "0000-5 資產管理系統開發-退貨", Value: "0000-5    " }
-    ]
-    // DropdownArray.value.ProjectCode = await apiStore.getFuzzyProject();
+    DropdownArray.value.ProjectCode = await apiStore.getFuzzyProject();
     DropdownArray.value.EquipType = await apiStore.getEquipType();
     DropdownArray.value.Area = await apiStore.getArea();
     updateSelectedNumber();
@@ -401,7 +394,7 @@ const submit = async(isDone) =>{
     if(isDone) {
         for(let i=0; i<itemData.value.length; i++)  {
             let total = 0;
-            itemData.value[i].WriteoffAssets.forEach(item =>{
+            itemData.value[i].AssetList.forEach(item =>{
                 total += item.Number;
             })
             if(total !== itemData.value[i].Number) {
@@ -467,16 +460,16 @@ const updateSearchingModal = (index) => {
 // 更新各採購項目的已沖數量
 const updateSelectedNumber = () => {
     itemData.value.forEach(item => {
-        const total = item.WriteoffAssets.reduce((total,asset)=> total + asset.Number,0);
+        const total = item.AssetList.reduce((total,asset)=> total + asset.Number,0);
         item.SelectedNumber = total;
     })
 }
 // 更新搜尋時的AssetList清單
 const updateSelectedList = () => {
-    searchParams.WriteoffAssets = [];
+    searchParams.AssetList = [];
     itemData.value.forEach((item)=>{
-        item.WriteoffAssets.forEach((asset)=>{
-            searchParams.WriteoffAssets.push(asset);
+        item.AssetList.forEach((asset)=>{
+            searchParams.AssetList.push(asset);
         })
     })
 }
@@ -492,11 +485,13 @@ const searchInventory = async (event, type) => {
         const form = new FormData();
         // 將表格資料 append 到 form
         for (const key in searchParams) {
-            if (searchParams[key] && key !== 'WriteoffAssets') {
+            if (searchParams[key] && key !== 'AssetList') {
                 form.append(key, searchParams[key]);
             }
         }
-        form.append('WriteoffAssets', JSON.stringify(searchParams.WriteoffAssets));
+        // console.log('ItemList',searchParams.AssetList);
+        form.append('PP_ID', PP_ID);
+        form.append('ItemList', JSON.stringify(searchParams.AssetList));
         utilsStore.UpdatePageParameter(datagrid, event, type, form);
         const resultList = await apiStore.getMngDatagrid('/PurchasingMng/SearchInventory',datagrid, form);
         rowData.value = resultList.rows.map(item => ({
@@ -511,8 +506,8 @@ const searchInventory = async (event, type) => {
 }
 // 刪除已沖項目
 const deleteFromList = (index, itemIndex) => {
-    if(itemData.value[index].WriteoffAssets[itemIndex].Deletable) {
-        itemData.value[index].WriteoffAssets.splice(itemIndex,1);
+    if(itemData.value[index].AssetList[itemIndex].Deletable) {
+        itemData.value[index].AssetList.splice(itemIndex,1);
         updateSelectedNumber()
     } else {
         alert('此資產已被本專案出庫使用，因此無法移除');
@@ -525,16 +520,17 @@ const addToList = (data) => {
     }
     const index = tempParams.index;
     let exist = false;
-    itemData.value[index].WriteoffAssets.forEach(item=>{
+    itemData.value[index].AssetList.forEach(item=>{
         if(item.AssetsId === data.AssetsId) {
             item.Number += data.selectNumber ;
             exist = true;
         }
     })
     if(!exist) {
-        itemData.value[index].WriteoffAssets.splice(0,0,{
+        itemData.value[index].AssetList.splice(0,0,{
             AssetsId: data.AssetsId,
-            Number: data.selectNumber
+            Number: data.selectNumber,
+            Deletable: true
         })
     }
     updateSelectedNumber();

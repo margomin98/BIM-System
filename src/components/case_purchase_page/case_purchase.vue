@@ -93,25 +93,30 @@
                         <p><span class="red_star">*</span>待採購清單(請至少新增一項)</p>
                     </div>
                 </div>
-                <div class="purchase_table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="delete_col"><span>刪除</span></th>
-                            <th class="item_col"><span>採購項目</span></th>
-                            <th class="amount_col"><span>數量</span></th>
-                            <th><span>規格需求</span></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(item , index) in Form.Requisitions" :key="item.RequiredSpec">
-                            <td @click="purchaseStore.deleteItem(index)"><img class="table_delete_icon" src='@/assets/delete.png'></td>
-                            <td class="table_content">{{ item.ItemName }}</td>
-                            <td class="table_content">{{ item.Number }}</td>
-                            <td class="table_content">{{ item.RequiredSpec }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <!-- 無表格內容 -->
+                <div v-if="Form.Requisitions.length === 0">
+                    尚未新增待採購項目
+                </div>
+                <!-- 表格 -->
+                <div v-else class="purchase_table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="delete_col"><span>刪除</span></th>
+                                <th class="item_col"><span>採購項目</span></th>
+                                <th class="amount_col"><span>數量</span></th>
+                                <th><span>規格需求</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(item , index) in Form.Requisitions" :key="item.RequiredSpec">
+                                <td @click="purchaseStore.deleteItem(index)"><img class="table_delete_icon" src='@/assets/delete.png'></td>
+                                <td class="table_content">{{ item.ItemName }}</td>
+                                <td class="table_content">{{ item.Number }}</td>
+                                <td class="table_content">{{ item.RequiredSpec }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

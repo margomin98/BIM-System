@@ -14,35 +14,51 @@
     <div class="container-fluid datagrid_section">
       <div class="content">
         <div class="row">
+          <!-- 單號 -->
+          <div class="col-xl-auto col-lg-auto col-md-6 col-12">
+            <p>單號</p>
+            <input type="text" v-model="dgSearchParams.PO_ID" />
+          </div>
           <!-- 狀態 -->
           <div class="col-xl-auto col-lg-auto col-md-6 col-12">
             <p>狀態</p>
-            <select class="form-select" v-model="searchParams.Status" id="statusSelect">
-            <option value="" selected>請選擇</option>
-            <template v-for="item in Order_StatusArray" :key="item">
-              <option :value="item">{{ item }}</option>
-</template>
-      </select>
-          </div>
+            <select class="form-select" v-model="dgSearchParams.Status">
+              <option value="">--請選擇--</option>
+              <option v-for="item in Order_StatusArray" :key="item" :value="item">{{ item }}</option>
+            </select>
+          </div>                 
           <!-- 使用專案 -->
           <div class="col-xl-auto col-lg-auto col-md-6 col-12">
             <p>使用專案</p>
-            <input type="text" v-model="searchParams.Use" />
+            <input type="text" v-model="dgSearchParams.Use" />
           </div>
           <!-- 採購來源 -->
           <div class="col-xl-auto col-lg-auto col-md-6 col-12">
             <p>採購來源</p>
-            <input type="text" v-model="searchParams.Source" />
+            <input type="text" v-model="dgSearchParams.Source" />
           </div>
+          <!-- 訂購編號 -->
+          <div class="col-xl-auto col-lg-auto col-md-6 col-12">
+            <p>訂購編號</p>
+            <input type="text" v-model="dgSearchParams.PurchaseNum" />
+          </div>   
           <!-- 下訂日期(起) -->
           <div class="col-xl-auto col-lg-auto col-md-6 col-12">
             <p>下訂日期(起)</p>
-            <input type="date" class="date-input" v-model="searchParams.StartDate" />
+            <input type="date" class="date-input" v-model="dgSearchParams.StartDate" />
           </div>
           <!-- 下訂日期(迄) -->
           <div class="col-xl-auto col-lg-auto col-md-6 col-12">
             <p>下訂日期(迄)</p>
-            <input type="date" class="date-input" v-model="searchParams.EndDate" />
+            <input type="date" class="date-input" v-model="dgSearchParams.EndDate" />
+          </div>
+          <!-- 承辦人員 -->
+          <div class="col-xl-auto col-lg-auto col-md-6 col-12">
+            <p>承辦人員</p>
+            <select class="form-select" aria-label="Default select example" v-model="dgSearchParams.Executor">
+              <option value="">--請選擇--</option>
+              <option v-for="option in DropdownArray.Staff" :value="option">{{ option }}</option>
+            </select>
           </div>
         </div>
       </div>
@@ -55,24 +71,20 @@
       </div>
     </div>
     <div class="dg-height mb-5">
-      <DataTable lazy :key="datagrid.key" :first="datagrid.first" :size="'small'" :loading="datagrid.loading"
-        :value="rowData" :sort-field="datagrid.sortField" :sort-order="datagrid.sortOrder" resizableColumns
-        columnResizeMode="expand" showGridlines scrollable scrollHeight="420px" @page="submit($event, 'page')"
-        @sort="submit($event, 'sort')" paginator :rows="datagrid.rows" :totalRecords="datagrid.totalRecords"
-        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-        :rowsPerPageOptions="[10, 20, 30]"
-        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+      <DataTable lazy :key="dg.key" :first="dg.first" :size="'small'" :loading="dg.loading" :value="dgRowData" :sort-field="dg.sortField" :sort-order="dg.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
+        scrollHeight="420px" @page="submit($event , 'page')" @sort="submit($event , 'sort')" paginator :rows="dg.rows" :totalRecords="dg.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <Column style="min-width: 60px;">
-<template #body="slotProps">
-  <Order_button :params="slotProps" />
-</template>
+          <template #body="slotProps">
+            <Order_button :params="slotProps" />
+          </template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable
           :style="{ 'min-width': item.width }"></Column>
         <Column style="min-width: 60px;">
-<template #body="slotProps">
-  <Delete :params="slotProps" />
-</template>
+          <template #body="slotProps">
+            <Delete :params="slotProps" />
+          </template>
         </Column>
       </DataTable>
     </div>
@@ -87,6 +99,7 @@
   import Navbar from "@/components/Navbar.vue";
   import {
     onMounted,
+    onUnmounted,
     reactive,
     ref
   } from "vue";
@@ -94,89 +107,68 @@
     useRouter
   } from "vue-router";
   import {
-    UpdatePageParameter,
-    createDatagrid,
-    selectItem
-  } from '@/assets/js/common_fn';
-  import {
     Order_StatusArray
   } from '@/assets/js/dropdown'
-  import {
-    getMngDatagrid
-  } from '@/assets/js/common_api';
-  const router = useRouter();
+  import {  useUtilsStore, useAPIStore } from '@/store'
+  import { storeToRefs } from 'pinia';
+
+  const utilsStore = useUtilsStore();
+  const apiStore = useAPIStore();
+  const { dgSearchParams , dg , dgRowData } = storeToRefs(utilsStore);
+
+  const DropdownArray = reactive({
+    Staff: [],
+  })
   const searchParams = reactive({
+    PO_ID: '',
+    PurchaseNum: '',
+    Executor: '',
     Status: '',
     Use: '',
     Source: '',
     StartDate: '',
     EndDate: '',
   });
-  const datagrid = createDatagrid();
-  const datagridfield = [{
-      header: "單號",
-      field: "PO_ID",
-      width: '150px'
-    },
-    {
-      header: "狀態",
-      field: "Status",
-      width: '130px'
-    },
-    {
-      header: "訂單編號",
-      field: "PurchaseNum",
-      width: '150px'
-    },
-    {
-      header: "使用專案",
-      field: "Use",
-      width: '180px'
-    },
-    {
-      header: "採購來源",
-      field: "Source",
-      width: '150px'
-    },
-    {
-      header: "採購件數",
-      field: "Quantity",
-      width: '130px'
-    },
-    {
-      header: "下訂日期",
-      field: "PurchaseDate",
-      width: '130px'
-    },
-    {
-      header: "承辦人員",
-      field: "Executor",
-      width: '130px'
-    },
+  const datagridfield = [ 
+    { header: "單號",field: "PO_ID",width: '150px'},
+    { header: "狀態", field: "Status", width: '130px' },
+    { header: "訂單編號", field: "PurchaseNum", width: '150px' },
+    { header: "使用專案", field: "Use", width: '180px' },
+    { header: "採購來源", field: "Source", width: '150px' },
+    { header: "採購件數", field: "Quantity", width: '130px' },
+    { header: "下訂日期", field: "PurchaseDate", width: '130px' },
+    { header: "承辦人員", field: "Executor", width: '130px' },
   ]
-  const rowData = ref([]);
-  onMounted(() => {
-    datagrid.sortField = 'PO_ID'
+  onMounted(async() => {
+    utilsStore.$reset();
+    for(const key in searchParams) {
+      dgSearchParams.value[key] = '';
+    }
     submit('', 'search');
+    DropdownArray.Staff = await apiStore.getCustodian();
   });
+  onUnmounted(()=>{
+    utilsStore.$dispose();
+  })
   async function submit(event, type) {
     const form = new FormData();
-    //將表格資料append到 form
-    for (const key in searchParams) {
-      if (searchParams[key]) {
-        form.append(key, searchParams[key]);
+    // 將表格資料 append 到 form
+    for (const key in dgSearchParams.value) {
+      if (dgSearchParams.value[key]) {
+        form.append(key, dgSearchParams.value[key]);
       }
     }
-    UpdatePageParameter(datagrid, event, type, form)
-    getMngDatagrid('/PurchasingMng/PurchaseOrders', rowData, datagrid, form);
+    utilsStore.UpdatePageParameter(dg.value, event, type, form);
+    const resultList = await apiStore.getMngDatagrid('/PurchasingMng/PurchaseOrders',dg.value, form);
+    dgRowData.value = resultList.rows;
+    dg.value.totalRecords = resultList.total;
+    dg.value.key++;
   }
   const clear = () => {
-    for (const key in searchParams) {
-      searchParams[key] = '';
-    }
+    utilsStore.clearSearchParams(dgSearchParams.value);
     submit('', 'search');
-  }
-</script>
+  };
+  </script>
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
