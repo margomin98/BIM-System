@@ -511,8 +511,12 @@ const searchInventory = async (event, type) => {
 }
 // 刪除已沖項目
 const deleteFromList = (index, itemIndex) => {
-    itemData.value[index].WriteoffAssets.splice(itemIndex,1);
-    updateSelectedNumber()
+    if(itemData.value[index].WriteoffAssets[itemIndex].Deletable) {
+        itemData.value[index].WriteoffAssets.splice(itemIndex,1);
+        updateSelectedNumber()
+    } else {
+        alert('此資產已被本專案出庫使用，因此無法移除');
+    }
 }
 const addToList = (data) => {
     if(tempParams.SelectedNumber + data.selectNumber > tempParams.Number) {
