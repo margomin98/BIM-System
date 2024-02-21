@@ -185,17 +185,28 @@
                         <input type="text" class="form-control readonly_box" aria-label="Default" v-model="tab.itemSN" readonly>
                     </div>
                 </div>
-                <!-- 頁籤選購金額 -->
-                <div class="col">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">選購金額 :</div>
-                        NT$
-                        <input type="text" class="form-control readonly_box" aria-label="Default" v-model="tab.itemPrice" readonly>
+                <!-- 頁籤採購金額 -->
+                <div class="row g-0 purchase_amount">
+                  <div class="col-xl-6 col-lg-auto col-md-auto col-12">
+                    <div class="input-group mb-xl-3 mb-lg-3 mb-md-3">
+                      <div class="input-group-prepend">
+                                採購金額 :
+                            </div>
+                            <div class="amount_input">
+                              <span class="symbol">$</span> <input type="text" class="form-control readonly_box" aria-label="Default" v-model="tab.itemPrice" readonly>
                         <div>
-                          / 每包裝單位 <span v-show="tab.itemAssetType==='耗材'">(NT${{ (tab.itemPrice / tab.itemCount).toFixed(2) }}/每單位)</span>
+                        </div>
                         </div>
                     </div>
-                </div>
+                    </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                          <span class="note">/每包裝單位<span v-show="tab.itemAssetType==='耗材'">($<span class="purchase_total_amount">{{ (tab.itemPrice / tab.itemCount).toFixed(2)}}</span>/每單位)</span></span>
+                        </div>
+                        <!-- <p>
+                          / 每包裝單位 <p v-show="tab.itemAssetType==='耗材'">(NT${{ (tab.itemPrice / tab.itemCount).toFixed(2) }}/每單位)</p></p> -->
+                        </div>
+                   
+             
                 <!-- 頁籤 包裝數量 & 包裝單位 -->
                 <div class="row g-0 row_wrap">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -307,9 +318,38 @@ onUnmounted(()=>{
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
+  
+  .purchase_amount {
+                align-items: baseline;
+             
+                .input-group-prepend {
+                    margin-right: 10px;
+                }
+                .amount_input {
+                    display: flex;
+                    gap: 0 10px;
+                    margin-left: 0!important;
+                  
+                }
+                span {
+                    color: white !important;
+                }
+                span.symbol {
+                    font-size: 22px;
+                }
+                span.note {
+                    font-weight: 700;
+                    font-size: 18px;
+                }
+            }
   textarea {
     padding: 5px 10px 30px;
   }
+.purchase_amount{
+  p{
+    color: white;
+  }
+}
   .dropdown {
     #typeDropdown,
     #categoryDropdown,
@@ -448,6 +488,9 @@ onUnmounted(()=>{
               font-size: 14px;
               pointer-events: none;
             }
+          }
+          .tab-content{
+            border-radius: 0 10px 10px 10px;
           }
   @media only screen and (min-width: 1200px) {
     .main_section {
@@ -642,7 +685,6 @@ onUnmounted(()=>{
             }
             .form-control {
               height: 35px;
-              border-radius: 0;
             }
             .input-group-prepend {
               color: white;
@@ -855,7 +897,6 @@ onUnmounted(()=>{
             }
             .form-control {
               height: 35px;
-              border-radius: 0;
             }
             .input-group-prepend {
               color: white;
@@ -874,6 +915,9 @@ onUnmounted(()=>{
                 }
               }
             }
+          }
+          .purchase_amount {
+            flex-wrap: nowrap;
           }
         }
       }
@@ -1094,7 +1138,6 @@ onUnmounted(()=>{
             .form-control {
               height: 35px;
               width: 100%;
-              border-radius: 0;
               margin-left: unset !important;
               margin-top: 5px;
             }
@@ -1116,6 +1159,26 @@ onUnmounted(()=>{
               }
             }
           }
+          .purchase_amount {                .amount_input {
+                    display: flex;
+                    gap: 0 10px;
+                    font-size: 20px;
+                    align-items: center;
+                }
+                .input-group-prepend {
+                    margin-right: 10px;
+                }
+                span {
+                    color: white !important;
+                }
+                span.note {
+                    margin-top: 5px;
+                    margin-bottom: 16px;
+                    display: block;
+                    font-weight: 700;
+                    font-size: 18px;
+                }
+            }
         }
       }
     }

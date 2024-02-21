@@ -11,7 +11,7 @@
           <div class="col">
             <div class="input-group mb-3">
               <div class="modal-input-group-prepend">帳號：</div>
-              <input type="text" class="form-control" aria-label="Default" v-model="props.user.userName"/>
+              <input type="text" class="form-control" aria-label="Default" v-model="props.user.userName" />
             </div>
           </div>
           <div class="col">
@@ -22,7 +22,8 @@
           </div>
         </div>
         <div class="modal-footer m-auto">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="apiStore.validateUser(props.user)">驗證</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+            @click="apiStore.validateUser(props.user)">驗證</button>
         </div>
       </div>
     </div>
@@ -32,9 +33,9 @@
 import { useAPIStore } from '@/store';
 import { onUnmounted } from 'vue';
 
-const props = defineProps(['user','modal_id']);
+const props = defineProps(['user', 'modal_id']);
 const apiStore = useAPIStore();
-onUnmounted(()=>{
+onUnmounted(() => {
   apiStore.$dispose();
 })
 </script>
@@ -85,4 +86,9 @@ onUnmounted(()=>{
       margin: auto;
     }
   }
-}</style>
+
+  .modal-dialog {
+    padding: 0 !important
+  }
+}
+</style>

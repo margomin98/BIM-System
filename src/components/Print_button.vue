@@ -42,7 +42,7 @@ const printDataGrid = () => {
         <thead>
           <tr>
             <th style="border: 1px solid black; font-size: 12px;">項目</th>
-            <th style="border: 1px solid black; font-size:12px">資產編號</th>
+            <th style="border: 1px solid black; font-size:12px">序號</th>
             <th style="border: 1px solid black; font-size: 12px;">物品名稱</th>
             <th style="border: 1px solid black;font-size:12px">設備總類</th>
             <th style="border: 1px solid black;font-size:12px">設備分類</th>

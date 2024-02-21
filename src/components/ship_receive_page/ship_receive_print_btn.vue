@@ -89,8 +89,8 @@ const printDataGrid = () => {
       <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
         <thead>
           <tr>
+            <th style="border: 1px solid black; font-size: 12px;"></th>
             <th style="border: 1px solid black; font-size: 12px;">序號</th>
-            <th style="border: 1px solid black; font-size: 12px;">資產編號</th>
             <th style="border: 1px solid black;font-size:12px">物品名稱</th>
             <th style="border: 1px solid black;font-size:12px">廠商</th>
             <th style="border: 1px solid black;font-size:12px">型號</th>

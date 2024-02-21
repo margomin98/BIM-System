@@ -131,7 +131,7 @@
                 <div class="row  purchase_amount">
                     <div class="col-xl-6 col-lg-auto col-md-auto col-12">
                         <div class="input-group mb-xl-3 mb-lg-3 mb-md-3">
-                            <div class="input-group-prepend   ">
+                            <div class="input-group-prepend">
                                 採購金額：
                             </div>
                             <div class="amount_input">

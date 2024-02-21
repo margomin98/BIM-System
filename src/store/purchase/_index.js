@@ -27,7 +27,7 @@ export const usePurchaseStore = defineStore('Purchase', {
       Status: '',
 			ProjectCode: '',
 			ProjectName: '',
-			ProjectSelect: {Text: '--請選擇' , Value:''},
+			ProjectSelect: {Text: '--請選擇--' , Value:''},
 			Description: '',
 			Deadline: '',
       Requisitions: [],
