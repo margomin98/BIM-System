@@ -11,36 +11,36 @@
         </div>
         <div class="modal-body">
           <!-- <ag-charts-vue class="chart-container" :options="modalOptions"></ag-charts-vue>
-            <div class="amount_text">
-                    <p>總金額</p>
-                    <p class="amount">100</p>
-              </div>
-       <div class="chart_data_table mt-3">
-        <table>
-    <tbody>
-      <tr>
-        <td class="details_name">電腦設備類</td>
-        <td class="details_percentage">15%</td>
-        <td class="details_amount">1,202</td>
-      </tr>
-      <tr>
-        <td class="details_name">維修設備類</td>
-        <td class="details_percentage">32.5%</td>
-        <td class="details_amount">4,879</td>
-      </tr>
-      <tr>
-        <td class="details_name">電腦設備類</td>
-        <td class="details_percentage">5%</td>
-        <td class="details_amount">4,555</td>
-      </tr>
-      <tr>
-        <td class="details_name">耗材類</td>
-        <td class="details_percentage">42%</td>
-        <td class="details_amount">6,219</td>
-      </tr>
-    </tbody>
-    </table>
-       </div>   -->
+              <div class="amount_text">
+                      <p>總金額</p>
+                      <p class="amount">100</p>
+                </div>
+         <div class="chart_data_table mt-3">
+          <table>
+      <tbody>
+        <tr>
+          <td class="details_name">電腦設備類</td>
+          <td class="details_percentage">15%</td>
+          <td class="details_amount">1,202</td>
+        </tr>
+        <tr>
+          <td class="details_name">維修設備類</td>
+          <td class="details_percentage">32.5%</td>
+          <td class="details_amount">4,879</td>
+        </tr>
+        <tr>
+          <td class="details_name">電腦設備類</td>
+          <td class="details_percentage">5%</td>
+          <td class="details_amount">4,555</td>
+        </tr>
+        <tr>
+          <td class="details_name">耗材類</td>
+          <td class="details_percentage">42%</td>
+          <td class="details_amount">6,219</td>
+        </tr>
+      </tbody>
+      </table>
+         </div>   -->
           <div id="amount_pie" class="modal_pie"></div>
           <div class="amount_text d-flex">
             <p>總金額
@@ -63,36 +63,36 @@
         </div>
         <div class="modal-body">
           <!-- <ag-charts-vue class="chart-container" :options="modalOptions"></ag-charts-vue>
-            <div class="amount_text">
-                    <p>總件數</p>
-                    <p class="amount">100</p>
-              </div>
-       <div class="chart_data_table mt-3">
-        <table>
-    <tbody>
-      <tr>
-        <td class="details_name">電腦設備類</td>
-        <td class="details_percentage">15%</td>
-        <td class="details_amount">1,202</td>
-      </tr>
-      <tr>
-        <td class="details_name">維修設備類</td>
-        <td class="details_percentage">32.5%</td>
-        <td class="details_amount">4,879</td>
-      </tr>
-      <tr>
-        <td class="details_name">電腦設備類</td>
-        <td class="details_percentage">5%</td>
-        <td class="details_amount">4,555</td>
-      </tr>
-      <tr>
-        <td class="details_name">耗材類</td>
-        <td class="details_percentage">42%</td>
-        <td class="details_amount">6,219</td>
-      </tr>
-    </tbody>
-    </table>
-       </div>   -->
+              <div class="amount_text">
+                      <p>總件數</p>
+                      <p class="amount">100</p>
+                </div>
+         <div class="chart_data_table mt-3">
+          <table>
+      <tbody>
+        <tr>
+          <td class="details_name">電腦設備類</td>
+          <td class="details_percentage">15%</td>
+          <td class="details_amount">1,202</td>
+        </tr>
+        <tr>
+          <td class="details_name">維修設備類</td>
+          <td class="details_percentage">32.5%</td>
+          <td class="details_amount">4,879</td>
+        </tr>
+        <tr>
+          <td class="details_name">電腦設備類</td>
+          <td class="details_percentage">5%</td>
+          <td class="details_amount">4,555</td>
+        </tr>
+        <tr>
+          <td class="details_name">耗材類</td>
+          <td class="details_percentage">42%</td>
+          <td class="details_amount">6,219</td>
+        </tr>
+      </tbody>
+      </table>
+         </div>   -->
           <div id="case_pie" class="modal_pie"></div>
           <div class="amount_text d-flex">
             <p>總件數
@@ -172,43 +172,43 @@
       </div>
       <!-- 沒有代碼搜索框 -->
       <!-- <div class="code_search with_search_input">
-            <div class="search_result">
-              <perfect-scrollbar>
-                <div class="result_wrap">
-                  <p class="case_code d-flex">1234568</p>
-                  <p class="case_name">中興_台電離岸風力發電第一期XX</p>
-                </div>
-                <div class="result_wrap selected">
-                  <p class="case_code d-flex">1234568</p>
-                  <p class="case_name">中興_台電離岸風力發電第一期第三期</p>
-                </div>
-                <div class="result_wrap">
-                  <p class="case_code d-flex">1234568</p>
-                  <p class="case_name">中興_台電離岸風力發電第一期XX</p>
-                </div>
-                <div class="result_wrap">
-                  <p class="case_code d-flex">1234568</p>
-                  <p class="case_name">中興_台電離岸風力發電第一期XX</p>
-                </div>
-                <div class="result_wrap">
-                  <p class="case_code d-flex">1234568</p>
-                  <p class="case_name">中興_台電離岸風力發電第一期XX</p>
-                </div>
-                <div class="result_wrap">
-                  <p class="case_code d-flex">1234568</p>
-                  <p class="case_name">中興_台電離岸風力發電第一期XX</p>
-                </div>
-                <div class="result_wrap">
-                  <p class="case_code d-flex">148944568</p>
-                  <p class="case_name">中興_台電離岸風力發電第100000期XX</p>
-                </div>
-                <div class="result_wrap">
-                  <p class="case_code d-flex">1234568</p>
-                  <p class="case_name">中興_台電離岸風力發電第一期XX</p>
-                </div>
-              </perfect-scrollbar>
-            </div>
-          </div> -->
+              <div class="search_result">
+                <perfect-scrollbar>
+                  <div class="result_wrap">
+                    <p class="case_code d-flex">1234568</p>
+                    <p class="case_name">中興_台電離岸風力發電第一期XX</p>
+                  </div>
+                  <div class="result_wrap selected">
+                    <p class="case_code d-flex">1234568</p>
+                    <p class="case_name">中興_台電離岸風力發電第一期第三期</p>
+                  </div>
+                  <div class="result_wrap">
+                    <p class="case_code d-flex">1234568</p>
+                    <p class="case_name">中興_台電離岸風力發電第一期XX</p>
+                  </div>
+                  <div class="result_wrap">
+                    <p class="case_code d-flex">1234568</p>
+                    <p class="case_name">中興_台電離岸風力發電第一期XX</p>
+                  </div>
+                  <div class="result_wrap">
+                    <p class="case_code d-flex">1234568</p>
+                    <p class="case_name">中興_台電離岸風力發電第一期XX</p>
+                  </div>
+                  <div class="result_wrap">
+                    <p class="case_code d-flex">1234568</p>
+                    <p class="case_name">中興_台電離岸風力發電第一期XX</p>
+                  </div>
+                  <div class="result_wrap">
+                    <p class="case_code d-flex">148944568</p>
+                    <p class="case_name">中興_台電離岸風力發電第100000期XX</p>
+                  </div>
+                  <div class="result_wrap">
+                    <p class="case_code d-flex">1234568</p>
+                    <p class="case_name">中興_台電離岸風力發電第一期XX</p>
+                  </div>
+                </perfect-scrollbar>
+              </div>
+            </div> -->
     </div>
     <div class="col pt_center">
       <div class="datagrid_section">
@@ -237,47 +237,47 @@
               <div class="col">
                 <p>資產類型</p>
                 <select class="date-input form-select">
-                              <option value="" disabled selected>請選擇</option>
-                              <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
-                          </select> </div>
+                                <option value="" disabled selected>請選擇</option>
+                                <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
+                            </select> </div>
               <!-- 資產狀態 -->
               <div class="col">
                 <p>資產狀態</p>
                 <select class="form-select" id="statusDropdown">
-                          <option value="">請選擇</option>
-                          <!-- <option v-for="(item, index) in DropdownArray.Status" :key="index" :value="item">{{ item }}</option> -->
-                      </select>
+                            <option value="">請選擇</option>
+                            <!-- <option v-for="(item, index) in DropdownArray.Status" :key="index" :value="item">{{ item }}</option> -->
+                        </select>
               </div>
               <!-- 設備總類 -->
               <div class="col">
                 <p>設備總類</p>
                 <select class="date-input form-select">
-                              <option value="" disabled selected>請選擇</option>
-                              <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
-                          </select> </div>
+                                <option value="" disabled selected>請選擇</option>
+                                <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
+                            </select> </div>
               <!-- 設備分類 -->
               <div class="col">
                 <p>設備分類</p>
                 <select class="date-input form-select">
-                              <option value="" disabled selected>請選擇</option>
-                              <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
-                          </select>
+                                <option value="" disabled selected>請選擇</option>
+                                <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
+                            </select>
               </div>
               <!-- 儲位區域 -->
               <div class="col">
                 <p>儲位區域</p>
                 <select class="date-input form-select">
-                              <option value="" disabled selected>請選擇</option>
-                              <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
-                          </select>
+                                <option value="" disabled selected>請選擇</option>
+                                <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
+                            </select>
               </div>
               <!-- 儲位櫃位 -->
               <div class="col">
                 <p>儲位櫃位</p>
                 <select class="date-input form-select">
-                              <option value="" disabled selected>請選擇</option>
-                              <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
-                          </select>
+                                <option value="" disabled selected>請選擇</option>
+                                <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
+                            </select>
               </div>
             </div>
             <div class="button_wrap">
@@ -298,17 +298,17 @@
               <div class="col-xl-auto col-lg-auto col-md col-12">
                 <p>交貨期限(起)</p>
                 <select class="date-input form-select">
-                              <option value="" disabled selected>請選擇</option>
-                              <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
-                          </select>
+                                <option value="" disabled selected>請選擇</option>
+                                <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
+                            </select>
               </div>
               <!-- 交貨期限(訖) -->
               <div class="col-xl-auto col-lg-auto col-md col-12">
                 <p>交貨期限(訖)</p>
                 <select class="form-select" id="statusDropdown">
-                          <option value="">請選擇</option>
-                          <!-- <option v-for="(item, index) in DropdownArray.Status" :key="index" :value="item">{{ item }}</option> -->
-                      </select>
+                            <option value="">請選擇</option>
+                            <!-- <option v-for="(item, index) in DropdownArray.Status" :key="index" :value="item">{{ item }}</option> -->
+                        </select>
               </div>
               <div class="col-xl-auto col-lg-auto button_wrap">
                 <button class="reset_btn">重設</button>
@@ -338,40 +338,40 @@
               <div class="col">
                 <p>資產狀態</p>
                 <select class="form-select" id="statusDropdown">
-                          <option value="">請選擇</option>
-                          <!-- <option v-for="(item, index) in DropdownArray.Status" :key="index" :value="item">{{ item }}</option> -->
-                      </select>
+                            <option value="">請選擇</option>
+                            <!-- <option v-for="(item, index) in DropdownArray.Status" :key="index" :value="item">{{ item }}</option> -->
+                        </select>
               </div>
               <!-- 設備總類 -->
               <div class="col">
                 <p>設備總類</p>
                 <select class="date-input form-select">
-                              <option value="" disabled selected>請選擇</option>
-                              <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
-                          </select> </div>
+                                <option value="" disabled selected>請選擇</option>
+                                <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
+                            </select> </div>
               <!-- 設備分類 -->
               <div class="col">
                 <p>設備分類</p>
                 <select class="date-input form-select">
-                              <option value="" disabled selected>請選擇</option>
-                              <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
-                          </select>
+                                <option value="" disabled selected>請選擇</option>
+                                <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
+                            </select>
               </div>
               <!-- 儲位區域 -->
               <div class="col">
                 <p>儲位區域</p>
                 <select class="date-input form-select">
-                              <option value="" disabled selected>請選擇</option>
-                              <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
-                          </select>
+                                <option value="" disabled selected>請選擇</option>
+                                <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
+                            </select>
               </div>
               <!-- 儲位櫃位 -->
               <div class="col">
                 <p>儲位櫃位</p>
                 <select class="date-input form-select">
-                              <option value="" disabled selected>請選擇</option>
-                              <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
-                          </select>
+                                <option value="" disabled selected>請選擇</option>
+                                <!-- <option v-for="category in DropdownArray.DateCategory" :key="category" :value="category">{{ category }}</option> -->
+                            </select>
               </div>
               <!-- 資產編號 -->
               <div class="col">
@@ -638,18 +638,22 @@
           legend: {
             template: '%icon   %name    {%percentOfTotal:n1}%    %value',
             position: 'bottom',
-          },
+  cellSpacing:5,
+          },       
           defaultSeries: {
             type: 'pie',
             pointSelection: false,
           },
+    
           // defaultPoint_label_text: '<b>%name</b>',
           yAxis: {
             label_text: '金額',
             formatString: 'n'
           },
+      
           series: [{
             name: '占比',
+          
             points: [{
                 name: '電腦設備類',
                 y: 30
@@ -700,10 +704,18 @@
           legend: {
             template: '%icon   %name    {%percentOfTotal:n1}%    %value',
             position: 'bottom',
+            fontSize:20
+          },
+          point:{
+            selected:false
           },
           defaultSeries: {
             type: 'pie',
             pointSelection: false,
+          },
+          
+          pointMarker:{
+            visible:false
           },
           yAxis: {
             label_text: 'Cases',
@@ -722,17 +734,15 @@
           debug: false,
           fill: "#F4F4F4",
           box: {
-            radius: 20,
-                //  Pie後面的背景顏色
-                fill: "#F4F4F4"
-          }
-          ,
-          //  Pie後面的背景顏色
-          chartArea: {
-            fill: "#F4F4F4",
+            //  最後面的背景顏色
+            fill: "transparent",
           },
-          boxVisible: false,
- 
+          // 主要Pie後面的背景顏色/設計
+          chartArea: {
+            fill: "transparent",
+            height: 140,
+          },
+          //關閉legend圖示
           legend: {
             visible: false
           },
@@ -741,14 +751,14 @@
             pointSelection: false,
             seleted: false,
           },
-          series: [
-            {
-              // 開關hover要顯示的内容框
-              mouseTracking: false,
-              name: '',
-              points: amountWindowChartData,
-            },
-          ],
+          series: [{
+            // 開關hover要顯示的内容框
+            mouseTracking: false,
+            name: '',
+            points: amountWindowChartData,
+          }
+        ]
+          ,
         };
         this.amountWindowPieChart = JSC.Chart('amount_window_pie', amountWindowChartConfig);
       },
