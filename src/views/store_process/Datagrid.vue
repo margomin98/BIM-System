@@ -211,7 +211,7 @@
       const datagrid = createDatagrid();
       const datagridfield = [
         { header: "狀態", field: "Status", width: '100px' },
-        { header: "編號", field: "AI_ID", width: '150px' },
+        { header: "入庫單號", field: "AI_ID", width: '150px' },
         { header: "物流單號", field: "ShipmentNum", width: '150px' },
         { header: "設備總類", field: "EquipTypeName", width: '150px' },
         { header: "設備分類", field: "EquipCategoryName", width: '150px' },

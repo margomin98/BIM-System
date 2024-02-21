@@ -8,7 +8,7 @@
       <div class="content">
         <div class="row">
           <div class="col">
-            <p>單號</p>
+            <p>出庫單號</p>
             <input type="text" v-model="dgSearchParams.AO_ID" />
           </div>
           <div class="col">
@@ -110,7 +110,7 @@ const DropdownArray = reactive({
 });
 const datagridfield = [
   {header: "狀態",field: "Status",width: '160px'},
-  {header: "單號",field: "AO_ID",width: '150px'},
+  {header: "出庫單號",field: "AO_ID",width: '150px'},
   {header: "專案名稱",field: "ProjectName",width: '150px',max: '300px'},
   {header: "用途",field: "Use",width: '150px'},
   {header: "說明",field: "Description",width: '150px',max: '350px'},
