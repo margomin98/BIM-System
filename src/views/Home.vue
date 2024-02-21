@@ -1056,8 +1056,18 @@ const handleLineSwitch = async () => {
     height: 40px;
     width: 70px;
   }
+  @mixin search_btn {
+    background-color: #132238;
+    color: white;
+    font-weight: 700;
+    border-radius: 15px;
+    border: none;
+    font-size: 18px;
+    height: 40px;
+    width: 70px;
+  }
   .search_btn {
-          @include search_and_send_btn;
+          @include search_btn;
           &:hover {
             background-color: #5e7aa2;
           }
@@ -1152,6 +1162,7 @@ const handleLineSwitch = async () => {
       .button_wrap {
         display: flex;
         justify-content: center;
+        gap: 0 10px;
       }
     }
     .PurchaseList {
