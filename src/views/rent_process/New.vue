@@ -561,6 +561,11 @@
           header: "單位"
         },
         {
+          field: "AssetType",
+          width: '100px',
+          header: "類型"
+        },
+        {
           field: "AssetsId",
           width: '150px',
           header: "資產編號"
@@ -602,6 +607,7 @@
       onMounted(() => {
         getDetails();
         getApplicationInfo();
+        datagrid3.sortField = '';
         PreparedDate.value = getDate();
       });
       async function getEquipTypeName() {

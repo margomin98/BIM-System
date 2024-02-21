@@ -137,7 +137,7 @@ export const useAssetStore = defineStore('Asset', {
       utilsStore.UpdatePageParameter( this.datagrid, event, type, form);
       const response = await apiStore.getMngDatagrid('/InventoryMng/AssetsHistory', this.datagrid, form);
       this.rowData = response.rows;
-      this.datagrid.totalRecords = response.totals;
+      this.datagrid.totalRecords = response.total;
       this.datagrid.key++;
       console.log('rowData',this.rowData);
     }

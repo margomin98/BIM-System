@@ -105,12 +105,6 @@
                 </DataTable>
             </div>
             <div class="fixed_info_count">
-                <div>
-                <p>總出庫數量：個</p>
-                </div>
-                <div>
-                <p>已備數量：個</p>
-                </div>
             </div>
             <div v-show="Form.Status !== '快速出庫完成'" class="fourth_content">
                 <div class="fixed_info">
@@ -260,7 +254,7 @@
                 </div>
             </div>
             <div class="auth_section d-flex">
-                <p><span class="red_star">*</span>上傳人員</p> 
+                <p><span v-show="PageType==='ShipReceiveConfirm'" class="red_star">*</span>上傳人員</p> 
                 <input v-show="PageType === 'ShipReceiveConfirm'" type="text" class="" v-model="user1.resultName" readonly>
                 <input v-show="PageType === 'ShipReceiveView'" type="text" class="" v-model="Form.UploadPerson" readonly>
                 <button v-show="PageType === 'ShipReceiveConfirm'" data-bs-toggle="modal" data-bs-target="#auth_modal">驗證</button>
@@ -273,8 +267,8 @@
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Viewmodal from '@/components/view_modal.vue'
-import validate_modal from '../utils/validate_modal.vue';
-import asset_view_btn from '../utils/asset_view_btn.vue';
+import validate_modal from '@/components/utils/validate_modal.vue';
+import asset_view_btn from '@/components/utils/asset_view_btn.vue';
 import printBtn from '@/components/ship_receive_page/ship_receive_print_btn.vue'
 import { useAPIStore, useUtilsStore } from '@/store';
 import { useRentStore } from '@/store/rent/_index';

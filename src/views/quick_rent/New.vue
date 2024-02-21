@@ -1,6 +1,6 @@
 <template>
       <Navbar />
-    <ConfirmModal :function="quickrentStore.submit" :text="warningText"/>
+    <confirm_modal :id="'ConfirmModal'" @confirm="quickrentStore.submit" :text="warningText"/>
     <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -213,8 +213,8 @@
             </div>
             </div>
             <div class="col button_wrap">
-            <button class="back_btn" @click="goBack">回上一頁</button>
-      <button class="send_btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">送出</button>
+            <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
+      <button class="send_btn" data-bs-toggle="modal" data-bs-target="#ConfirmModal">送出</button>
       </div>
     </div>
 </template>
@@ -222,7 +222,7 @@
 <script setup>
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import ConfirmModal from '@/components/Confirm_modal.vue';
+import confirm_modal from '@/components/utils/confirm_modal.vue'
 import Navbar from '@/components/Navbar.vue';
 import AssetViewBtn from '@/components/utils/asset_view_btn.vue'
 import delete_btn from '@/components/utils/delete_btn.vue';

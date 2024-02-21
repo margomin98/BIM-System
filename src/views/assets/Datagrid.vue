@@ -9,92 +9,78 @@
         <div class="row">
           <div class="col">
             <p>設備總類</p>
-            <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                      {{ searchParams.EquipTypeName || '請選擇' }}
-                    </button>
-              <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item" @click="selectType(item)"> {{ item.Name }}</p>
-              </div>
-            </div>
+            <select class="form-select" v-model="dgSearchParams.EquipType_Id" @change="async()=>{DropdownArray.EquipCategory = await apiStore.getEquipCategory(dgSearchParams.EquipType_Id); dgSearchParams.Category_Id = '';}">
+              <option value="">--請選擇--</option>
+              <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name }}</option>
+            </select>
           </div>
           <div class="col">
             <p>設備分類</p>
-            <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!searchParams.EquipTypeName">
-                      {{ searchParams.EquipCategoryName || EquipCategoryInit }}
-                    </button>
-              <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item" @click="selectCategory(item)"> {{ item.Name }}</p>
-              </div>
-            </div>
+            <select class="form-select" v-model="dgSearchParams.Category_Id">
+              <option v-if="DropdownArray.EquipCategory.length == 0" value="">--請先選擇設備總類--</option>
+              <template v-else>
+                <option value="">--請選擇--</option>
+                <option v-for="option in DropdownArray.EquipCategory" :value="option.Id">{{ option.Name }}</option>
+              </template>
+            </select>
           </div>
           <!-- 專案代碼 -->
           <div class="col">
             <p>專案代碼</p>
-            <multiselect v-model="value" :options="options" :allow-empty="false" :max-height="300" placeholder="請選擇" label="name" :showLabels="false" track-by="name"></multiselect>
+            <multiselect v-model="dgSearchParams.ProjectSelect" :allow-empty="false" @select="utilsStore.onDGProjectSelect" :options="DropdownArray.ProjectCode" :max-height="300" placeholder="請選擇" label="Text" :showLabels="false" track-by="Text"></multiselect>
           </div>
           <div class="col">
             <p>資產編號</p>
-            <input type="text" v-model="searchParams.AssetsId" />
+            <input type="text" v-model="dgSearchParams.AssetsId" />
           </div>
           <div class="col">
             <p>資產名稱</p>
-            <input type="text" v-model="searchParams.AssetName" />
+            <input type="text" v-model="dgSearchParams.AssetName" />
           </div>
           <div class="col">
             <p>狀態</p>
-            <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ searchParams.Status || '請選擇' }}
-                      </button>
-              <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p v-for="(item, index) in DropdownArray.Status" :key="index" class="dropdown-item" @click="selectStatus(item)">{{ item }}</p>
-              </div>
-            </div>
+            <select class="form-select" v-model="dgSearchParams.Status">
+              <option value="">--請選擇--</option>
+              <option v-for="option in DropdownArray.Status" :value="option">{{ option }}</option>
+            </select>
           </div>
           <div class="col">
             <p>型號</p>
-            <input type="text" v-model="searchParams.ProductType" />
+            <input type="text" v-model="dgSearchParams.ProductType" />
           </div>
           <div class="col">
             <p>規格</p>
-            <input type="text" v-model="searchParams.ProductSpec" />
+            <input type="text" v-model="dgSearchParams.ProductSpec" />
           </div>
           <div class="col">
-            <p>區域</p>
-            <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
-                      {{ searchParams.AreaName || '請選擇' }}
-                    </button>
-              <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item" @click="selectArea(item)">{{ item.Name }}</p>
-              </div>
-            </div>
+            <p>儲位區域</p>
+            <select class="form-select" v-model="dgSearchParams.Area_Id" @change="async()=>{DropdownArray.Layer = await apiStore.getLayer(dgSearchParams.Area_Id); dgSearchParams.Layer_Id = '';}">
+              <option value="">--請選擇--</option>
+              <option v-for="option in DropdownArray.Area" :value="option.Id">{{ option.Name }}</option>
+            </select>
           </div>
           <div class="col">
-            <p>櫃位</p>
-            <div class="dropdown">
-              <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="!searchParams.AreaName">
-                      {{ searchParams.LayerName || LayerInit }}
-                    </button>
-              <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
-                <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item" @click="selectLayer(item)">{{ item.Name }}</p>
-              </div>
-            </div>
+            <p>儲位櫃位</p>
+            <select class="form-select" v-model="dgSearchParams.Layer_Id">
+              <option v-if="DropdownArray.Layer.length == 0" value="">--請先選擇儲位區域--</option>
+              <template v-else>
+                <option value="">--請選擇--</option>
+                <option v-for="option in DropdownArray.Layer" :value="option.Id">{{ option.Name }}</option>
+              </template>
+            </select>
           </div>
           <div class="col  flex-col">
             <p>入庫日期(起)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="searchParams.StartDate" class="date-input" @focus="showDatePicker = true" @blur="showDatePicker = false" />
+                <input type="date" v-model="dgSearchParams.StartDate" class="date-input"/>
               </div>
             </div>
           </div>
           <div class="col flex-col">
             <p>入庫日期(迄)</p>
             <div class="date-selector">
-              <input type="date" v-model="searchParams.EndDate" class="date-input" @focus="showDatePicker = true" @blur="showDatePicker = false" />
+              <input type="date" v-model="dgSearchParams.EndDate" class="date-input"/>
             </div>
           </div>
         </div>
@@ -111,13 +97,13 @@
       <input type="file" ref="inputfile" style="display: none;" @change="importExcel" accept=".xlsx,.csv,.xlsm">
     </div>
     <div class="dg-height mb-5">
-      <DataTable lazy :key="datagrid.key" :first="datagrid.first" :size="'small'" :loading="datagrid.loading" :value="rowData" :sort-field="datagrid.sortField" :sort-order="datagrid.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
-        scrollHeight="420px" @page="submit($event , 'page')" @sort="submit($event , 'sort')" paginator :rows="datagrid.rows" :totalRecords="datagrid.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+      <DataTable lazy :key="dg.key" :first="dg.first" :size="'small'" :loading="dg.loading" :value="dgRowData" :sort-field="dg.sortField" :sort-order="dg.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
+        scrollHeight="420px" @page="submit($event , 'page')" @sort="submit($event , 'sort')" paginator :rows="dg.rows" :totalRecords="dg.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <Column style="min-width: 60px;">
           <template #body="slotProps">
-                <Assets_return_button :params = "slotProps"/>
-</template>
+            <Assets_return_button :params = "slotProps"/>
+          </template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
       </DataTable>
@@ -143,350 +129,180 @@
   </loading>
 </template>
 
-<script>
-  import Multiselect from 'vue-multiselect'
-  import Loading from 'vue-loading-overlay';
-  import DataTable from 'primevue/datatable';
-  import Column from 'primevue/column';
-  import Assets_return_button from "@/components/Assets_return_button";
-  import Navbar from "@/components/Navbar.vue";
-  import {
-    onMounted,
-    reactive,
-    ref
-  } from "vue";
-  import {
-    Asset_StastusArraay
-  } from "@/assets/js/dropdown"
-  import {
-    getMngDatagrid,
-    getEquipType,
-    getEquipCategory,
-    getArea,
-    getLayer,
-  } from '@/assets/js/common_api'
-  import {
-    UpdatePageParameter,
-    createDatagrid,
-  } from '@/assets/js/common_fn';
-  import axios from 'axios';
-  export default {
-    components: {
-      Navbar,
-      DataTable,
-      Column,
-      Assets_return_button,
-      Loading,
-      Multiselect
-    },
-    data() {
-      return {
-        value: {
-          name: '請選擇',
-        },
-        options: [{
-            name: 'F489184964146142847'
-          },
-          {
-            name: 'D47F846'
-          },
-        ]
-      }
-    },
-    methods: {
-      nameWithLang({
-        name,
-        language
-      }) {
-        return `${name}`
-      }
-    },
-    setup() {
-      const searchParams = reactive({
-        EquipTypeName: '',
-        EquipType_Id: '',
-        EquipCategoryName: '',
-        Category_Id: '',
-        AssetsId: '',
-        AssetName: '',
-        Status: '',
-        ProductType: '',
-        ProductSpec: '',
-        AreaName: '',
-        Area_Id: '',
-        LayerName: '',
-        Layer_Id: '',
-        StartDate: '',
-        EndDate: '',
-      });
-      const DropdownArray = reactive({
-        Status: Asset_StastusArraay,
-        EquipType: [],
-        EquipCategory: [],
-        Area: [],
-        Layer: [],
-      });
-      const EquipCategoryInit = ref('請先選擇設備總類');
-      const LayerInit = ref('請先選擇區域');
-      const datagrid = createDatagrid();
-      const datagridfield = [{
-          field: "AssetsId",
-          width: '150px',
-          header: "資產編號"
-        },
-        {
-          field: "AssetName",
-          width: '150px',
-          header: "物品名稱"
-        },
-        {
-          field: "Status",
-          width: '150px',
-          header: "狀態"
-        },
-        {
-          field: "ProductType",
-          width: '150px',
-          header: "型號"
-        },
-        {
-          field: "ProductSpec",
-          width: '150px',
-          header: "規格"
-        },
-        {
-          field: "EquipTypeName",
-          width: '150px',
-          header: "設備總類"
-        },
-        {
-          field: "EquipCategoryName",
-          width: '150px',
-          header: "設備分類"
-        },
-        {
-          field: "AreaName",
-          width: '150px',
-          header: "區域"
-        },
-        {
-          field: "LayerName",
-          width: '150px',
-          header: "櫃位"
-        },
-        {
-          field: "InboundDate",
-          width: '150px',
-          header: "入庫日期"
-        },
-        {
-          field: "AssetsInOperator",
-          width: '150px',
-          header: "入庫人員"
-        },
-      ]
-      const rowData = ref([]);
-      const inputfile = ref(null);
-      const isLoading = ref(false);
-      onMounted(() => {
-        datagrid.sortField = 'AssetsId'
-        submit('', 'search');
-      });
-      async function submit(event, type) {
-        const form = new FormData();
-        //將表格資料append到 form
-        for (const key in searchParams) {
-          form.append(key, searchParams[key]);
+<script setup>
+import Multiselect from 'vue-multiselect'
+import Loading from 'vue-loading-overlay';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import Assets_return_button from "@/components/Assets_return_button";
+import Navbar from "@/components/Navbar.vue";
+import { onMounted, reactive, ref, onUnmounted } from "vue";
+import { Asset_StastusArray } from "@/assets/js/dropdown"
+import { useUtilsStore, useAPIStore } from '@/store'
+import { storeToRefs } from 'pinia';
+import axios from 'axios';
+const utilsStore = useUtilsStore();
+const apiStore = useAPIStore();
+const { dgSearchParams , dg , dgRowData } = storeToRefs(utilsStore);
+
+const searchParams = reactive({
+  EquipType_Id: '',
+  Category_Id: '',
+  AssetsId: '',
+  AssetName: '',
+  Status: '',
+  ProductType: '',
+  ProductSpec: '',
+  Area_Id: '',
+  Layer_Id: '',
+  StartDate: '',
+  EndDate: '',
+});
+const DropdownArray = reactive({
+  Status: Asset_StastusArray,
+  ProjectCode: [],
+  EquipType: [],
+  EquipCategory: [],
+  Area: [],
+  Layer: [],
+});
+const datagridfield = [
+  { field: "AssetsId", width: '150px', header: "資產編號" },
+  { field: "AssetName", width: '150px', header: "物品名稱" },
+  { field: "Status", width: '150px', header: "狀態" },
+  { field: "ProductType", width: '150px', header: "型號" },
+  { field: "ProductSpec", width: '150px', header: "規格" },
+  { field: "EquipTypeName", width: '150px', header: "設備總類" },
+  { field: "EquipCategoryName", width: '150px', header: "設備分類" },
+  { field: "AreaName", width: '150px', header: "區域" },
+  { field: "LayerName", width: '150px', header: "櫃位" },
+  { field: "InboundDate", width: '150px', header: "入庫日期" },
+  { field: "AssetsInOperator", width: '150px', header: "入庫人員" },
+];
+const inputfile = ref(null);
+const isLoading = ref(false);
+
+onMounted(async () => {
+  utilsStore.$reset();
+  for(const key in searchParams) {
+    dgSearchParams.value[key] = '';
+  }
+  dg.value.sortField = 'AssetsId'
+  submit('', 'search');
+  DropdownArray.EquipType = await apiStore.getEquipType();
+  DropdownArray.Area = await apiStore.getArea();
+  DropdownArray.ProjectCode = await apiStore.getFuzzyProject();
+});
+onUnmounted(()=>{
+  utilsStore.$dispose();
+})
+async function submit(event, type) {
+  const form = new FormData();
+  //將表格資料append到 form
+  for (const key in dgSearchParams.value) {
+    if (dgSearchParams.value[key]) {
+      form.append(key, dgSearchParams.value[key]);
+    }
+  }
+  utilsStore.UpdatePageParameter(dg.value, event, type, form);
+  const resultList = await apiStore.getMngDatagrid('/InventoryMng/Assets',dg.value, form);
+  dgRowData.value = resultList.rows;
+  dg.value.totalRecords = resultList.total;
+  dg.value.key++;
+}
+async function importExcel(event) {
+  const selectedFile = event.target.files[0];
+  if (selectedFile) {
+    const fileName = selectedFile.name;
+    // 檢查檔案大小
+    console.log('filesize', selectedFile.size);
+    const maxFileSize = 28 * 1024 * 1024; // 28MB
+    if (selectedFile.size > maxFileSize) {
+      alert('檔案' + selectedFile.name + '大於28MB，請重新選取');
+      return
+    }
+    // 檢查副檔名
+    // 以'.'切割字串並以pop取得最後一組。EX: demo.sss.xlsx => ['demo','sss','xlsx'] => pop出 'xlsx'並轉成小寫
+    const fileExtension = fileName.split('.').pop().toLowerCase();
+    if (fileExtension !== 'xlsx' && fileExtension !== 'csv' && fileExtension !== 'xlsm') {
+      alert('檔案格式不正確(.xlsx/.csv)，請重新選擇')
+      return
+    }
+    const form = new FormData();
+    form.append('file', selectedFile);
+    isLoading.value = true;
+    axios.post('http://192.168.0.177:7008/InventoryMng/ImportExcel', form)
+      .then((response) => {
+        const data = response.data;
+        if (data.state === 'success') {
+          // 匯入成功則清空條件並刷新datagrid
+          clear();
         }
-        UpdatePageParameter(datagrid, event, type, form)
-        getMngDatagrid('/InventoryMng/Assets', rowData, datagrid, form)
+        isLoading.value = false;
+        setTimeout(function() {
+          alert(data.messages);
+        }, 50); // 延遲alert，以先關閉loading動畫
+      })
+      .catch((error) => {
+        isLoading.value = false;
+        console.error(error);
+      })
+  }
+}
+async function exportExcel() {
+  const form = new FormData();
+  //將表格資料append到 form
+  for (const key in searchParams) {
+    form.append(key, searchParams[key]);
+  }
+  axios.post('http://192.168.0.177:7008/InventoryMng/ExportExcel', form, {
+      responseType: 'blob',
+    })
+    .then((response) => {
+      const data = response.data
+      const header = response.headers
+      console.log('content-disposition:', header['content-disposition']);
+      console.log('content-type:', header['content-type']);
+      if (header['content-type'].includes('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')) {
+        const url = window.URL.createObjectURL(data);
+        const a = document.createElement('a');
+        const fileName = createFileName();
+        console.log('filename:', fileName);
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
       }
-      async function getEquipTypeName() {
-        if (DropdownArray.EquipType.length == 0) {
-          getEquipType()
-            .then((data) => {
-              DropdownArray.EquipType = data;
-            })
-            .catch((error) => {
-              console.error(error);
-            })
-        }
-      }
-      async function getEquipCategoryName() {
-        getEquipCategory(searchParams.EquipType_Id)
-          .then((data) => {
-            DropdownArray.EquipCategory = data;
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-      }
-      async function getAreaName() {
-        if (DropdownArray.Area == 0) {
-          getArea()
-            .then((data) => {
-              DropdownArray.Area = data;
-            })
-            .catch((error) => {
-              console.error(error);
-            })
-        }
-      }
-      async function getLayerName() {
-        getLayer(searchParams.Area_Id)
-          .then((data) => {
-            DropdownArray.Layer = data;
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-      }
-      async function importExcel(event) {
-        const selectedFile = event.target.files[0];
-        if (selectedFile) {
-          const fileName = selectedFile.name;
-          // 檢查檔案大小
-          console.log('filesize', selectedFile.size);
-          const maxFileSize = 28 * 1024 * 1024; // 28MB
-          if (selectedFile.size > maxFileSize) {
-            alert('檔案' + selectedFile.name + '大於28MB，請重新選取');
-            return
-          }
-          // 檢查副檔名
-          // 以'.'切割字串並以pop取得最後一組。EX: demo.sss.xlsx => ['demo','sss','xlsx'] => pop出 'xlsx'並轉成小寫
-          const fileExtension = fileName.split('.').pop().toLowerCase();
-          if (fileExtension !== 'xlsx' && fileExtension !== 'csv' && fileExtension !== 'xlsm') {
-            alert('檔案格式不正確(.xlsx/.csv)，請重新選擇')
-            return
-          }
-          const form = new FormData();
-          form.append('file', selectedFile);
-          isLoading.value = true;
-          axios.post('http://192.168.0.177:7008/InventoryMng/ImportExcel', form)
-            .then((response) => {
-              const data = response.data;
-              if (data.state === 'success') {
-                // 匯入成功則清空條件並刷新datagrid
-                clear();
-              }
-              isLoading.value = false;
-              setTimeout(function() {
-                alert(data.messages);
-              }, 50); // 延遲alert，以先關閉loading動畫
-            })
-            .catch((error) => {
-              isLoading.value = false;
-              console.error(error);
-            })
-        }
-      }
-      async function exportExcel() {
-        const form = new FormData();
-        //將表格資料append到 form
-        for (const key in searchParams) {
-          form.append(key, searchParams[key]);
-        }
-        axios.post('http://192.168.0.177:7008/InventoryMng/ExportExcel', form, {
-            responseType: 'blob',
-          })
-          .then((response) => {
-            const data = response.data
-            const header = response.headers
-            console.log('content-disposition:', header['content-disposition']);
-            console.log('content-type:', header['content-type']);
-            if (header['content-type'].includes('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')) {
-              const url = window.URL.createObjectURL(data);
-              const a = document.createElement('a');
-              const fileName = createFileName();
-              console.log('filename:', fileName);
-              a.href = url;
-              a.download = fileName;
-              a.click();
-              a.remove();
-              window.URL.revokeObjectURL(url);
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-      }
-      function createFileName() {
-        // 创建一个新的Date对象来获取当前日期和时间
-        var currentDate = new Date();
-        // 获取年、月、日、小时、分钟和秒
-        var year = currentDate.getFullYear();
-        var month = currentDate.getMonth() + 1; // 月份是从0开始，所以需要加1
-        var day = currentDate.getDate();
-        var hours = currentDate.getHours();
-        var minutes = currentDate.getMinutes();
-        var seconds = currentDate.getSeconds();
-        // 创建一个格式化的时间字符串
-        var formattedTime = year + '' + addZero(month) + '' + addZero(day) + '' + addZero(hours) + '' + addZero(minutes) + '' + addZero(seconds) + '_資產報表.xlsx';
-        return formattedTime;
-      }
-      function addZero(value) {
-        return value < 10 ? '0' + value : value;
-      }
-      function selectType(item) {
-        searchParams.EquipTypeName = item.Name;
-        searchParams.EquipType_Id = item.Id;
-        searchParams.EquipCategoryName = '';
-        searchParams.Category_Id = '';
-        getEquipCategoryName();
-        EquipCategoryInit.value = '請選擇';
-      }
-      function selectCategory(item) {
-        searchParams.EquipCategoryName = item.Name;
-        searchParams.Category_Id = item.Id;
-      }
-      const selectStatus = (item) => {
-        searchParams.Status = item;
-      };
-      const selectArea = (item) => {
-        searchParams.AreaName = item.Name;
-        searchParams.Area_Id = item.Id;
-        searchParams.LayerName = '';
-        searchParams.Layer_Id = '';
-        //API function here
-        getLayerName();
-        LayerInit.value = '請選擇';
-      };
-      const selectLayer = (item) => {
-        searchParams.LayerName = item.Name;
-        searchParams.Layer_Id = item.Id;
-      };
-      function clear() {
-        for (const key in searchParams) {
-          searchParams[key] = '';
-        }
-        EquipCategoryInit.value = '請先選擇設備總類'
-        LayerInit.value = '請先選擇區域';
-        submit('', 'search');
-      }
-      return {
-        searchParams,
-        DropdownArray,
-        EquipCategoryInit,
-        LayerInit,
-        datagrid,
-        datagridfield,
-        rowData,
-        inputfile,
-        isLoading,
-        submit,
-        importExcel,
-        exportExcel,
-        getEquipTypeName,
-        getAreaName,
-        selectType,
-        selectCategory,
-        selectStatus,
-        selectArea,
-        selectLayer,
-        clear,
-      };
-    },
-  };
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+}
+function createFileName() {
+  // 创建一个新的Date对象来获取当前日期和时间
+  var currentDate = new Date();
+  // 获取年、月、日、小时、分钟和秒
+  var year = currentDate.getFullYear();
+  var month = currentDate.getMonth() + 1; // 月份是从0开始，所以需要加1
+  var day = currentDate.getDate();
+  var hours = currentDate.getHours();
+  var minutes = currentDate.getMinutes();
+  var seconds = currentDate.getSeconds();
+  // 创建一个格式化的时间字符串
+  var formattedTime = year + '' + addZero(month) + '' + addZero(day) + '' + addZero(hours) + '' + addZero(minutes) + '' + addZero(seconds) + '_資產報表.xlsx';
+  return formattedTime;
+}
+function addZero(value) {
+  return value < 10 ? '0' + value : value;
+}
+function clear() {
+  utilsStore.clearSearchParams(dgSearchParams.value);
+  DropdownArray.EquipCategory = [];
+  DropdownArray.Layer = [];
+  dgSearchParams.value.ProjectSelect = { Text: '--請選擇--',Value: '' };
+  submit('', 'search');
+}
 </script>
 
 <style lang="scss" scoped>

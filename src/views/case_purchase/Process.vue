@@ -1,5 +1,7 @@
 <template>
     <Navbar />
+    <validate_modal :modal_id="'auth_modal'" :user="user"></validate_modal>
+    <confirm_modal :id="'ConfirmModal'" @confirm="submit(true)" :text="warningText"/>
     <div class="modal fade" data-bs-backdrop="static" id="propertymodal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -8,17 +10,17 @@
                         <!-- 採購項目 -->
                         <div class='col'>
                             <p>採購項目</p>
-                            <input type="text" class="form-control text-center" />
+                            <input type="text" class="form-control text-center readonly_box" readonly v-model="tempParams.ItemName" />
                         </div>
                         <!-- 規格需求 -->
                         <div class='col'>
                             <p>規格需求</p>
-                            <input type="text" class="form-control text-center" />
+                            <input type="text" class="form-control text-center readonly_box" readonly v-model="tempParams.RequiredSpec" />
                         </div>
-                        <!-- 已選/待選數量 -->
+                        <!-- 已沖/待沖數量 -->
                         <div class='col'>
-                            <p>已選/待選數量</p>
-                            <input type="text" class="form-control text-center" />
+                            <p>已沖/待沖數量</p>
+                            <p class="form-control text-center readonly_box" style="color: black;">{{ tempCombine }}</p>
                         </div>
                     </div>
                     <div class="fixed_info">
@@ -32,63 +34,61 @@
                             <!-- 設備總類 -->
                             <div class='col'>
                                 <p>設備總類</p>
-                                <select class="form-select" v-model="selectedEquipType">
-                          <option value="">請選擇</option>
-                          <option value="equipType1">設備類型1</option>
-                          <option value="equipType2">設備類型2</option>
-                        </select>
+                                <select class="form-select" v-model="searchParams.EquipType_Id" @change="async()=>{DropdownArray.EquipCategory = await apiStore.getEquipCategory(searchParams.EquipType_Id); searchParams.Category_Id = '';}">
+                                  <option value="">--請選擇--</option>
+                                  <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name }}</option>
+                                </select>
                             </div>
                             <!-- 設備分類 -->
                             <div class='col'>
                                 <p>設備分類</p>
-                                <select class="form-select" v-model="selectedEquipCategory">
-                          <option value="">請選擇</option>
-                          <option value="equipCategory1">設備分類1</option>
-                          <option value="equipCategory2">設備分類2</option>
-                        </select>
+                                <select class="form-select" v-model="searchParams.Category_Id">
+                                  <option v-if="DropdownArray.EquipCategory.length == 0" value="">--請先選擇設備總類--</option>
+                                  <template v-else>
+                                    <option value="">--請選擇--</option>
+                                    <option v-for="option in DropdownArray.EquipCategory" :value="option.Id">{{ option.Name }}</option>
+                                  </template>
+                                </select>
                             </div>
                             <!-- 儲位區域 -->
                             <div class='col'>
                                 <p>儲位區域</p>
-                                <select class="form-select" v-model="selectedArea">
-                          <option value="">請選擇</option>
-                          <option value="area1">儲位區域1</option>
-                          <option value="area2">儲位區域2</option>
-                        </select>
+                                <select class="form-select" v-model="searchParams.Area_Id" @change="async()=>{DropdownArray.Layer = await apiStore.getLayer(searchParams.Area_Id); searchParams.Layer_Id = '';}">
+                                  <option value="">--請選擇--</option>
+                                  <option v-for="option in DropdownArray.Area" :value="option.Id">{{ option.Name }}</option>
+                                </select>
                             </div>
                             <!-- 儲位櫃位 -->
                             <div class='col'>
                                 <p>儲位櫃位</p>
-                                <select class="form-select" v-model="selectedCabinet">
-                          <option value="">請選擇</option>
-                          <option value="cabinet1">儲位櫃位1</option>
-                          <option value="cabinet2">儲位櫃位2</option>
-                        </select>
+                                <select class="form-select" v-model="searchParams.Layer_Id">
+                                  <option v-if="DropdownArray.Layer.length == 0" value="">--請先選擇儲位區域--</option>
+                                  <template v-else>
+                                    <option value="">--請選擇--</option>
+                                    <option v-for="option in DropdownArray.Layer" :value="option.Id">{{ option.Name }}</option>
+                                  </template>
+                                </select>
                             </div>
                             <!-- 專案代碼 -->
                             <div class='col'>
                                 <p>專案代碼</p>
-                                <select class="form-select" v-model="selectedCabinet">
-                          <option value="">請選擇</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                        </select>
+                                <multiselect v-model="searchParams.ProjectSelect" :allow-empty="false" @select="onProjectSelect" :options="DropdownArray.ProjectCode" :max-height="300" placeholder="請選擇" label="Text" :showLabels="false" track-by="Text"></multiselect>
                             </div>
                             <!-- 資產編號 -->
                             <div class='col'>
                                 <p>資產編號</p>
-                                <input type="text" class="form-control text-center" placeholder="(明確查詢)" v-model="itemName" />
+                                <input type="text" class="form-control text-center" placeholder="BFXXXXXXXX" v-model="searchParams.AssetsId" />
                             </div>
                             <!-- 物品名稱 -->
                             <div class='col'>
                                 <p>物品名稱</p>
-                                <input type="text" class="form-control text-center" placeholder="(模糊查詢)" v-model="itemName" />
+                                <input type="text" class="form-control text-center" placeholder="最多輸入20字" v-model="searchParams.AssetName" />
                             </div>
                         </div>
                         <div class='col d-flex justify-content-center'>
                             <button class="btn submit_btn" type="button" @click="searchInventory('','search')">搜尋</button>
                             <button class="btn submit_btn" style="margin-left: 0.5rem;" type="button" @click="clear">清空</button>
-                            <button class="btn add_btn" style="margin-left: 0.5rem;" type="button" data-bs-dismiss="modal" @click="addList">加入</button>
+                            <!-- <button class="btn add_btn" style="margin-left: 0.5rem;" type="button" data-bs-dismiss="modal" @click="addList">加入</button> -->
                         </div>
                     </div>
                 </div>
@@ -97,46 +97,28 @@
                         <p>目前資產庫存（請優先選擇存貨）</p>
                     </div>
                 </div>
-                <!-- <DataTable lazy :first="datagrid1.first" :size="'small'" :loading="datagrid1.loading" :value="rowData1" :sort-field="datagrid1.sortField" :sort-order="datagrid1.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="510px"
-                                        @page="searchInventory($event , 'page')" @sort="searchInventory($event , 'sort')" v-model:selection="datagrid1.selectedList" :selectAll="datagrid1.selectAll" @select-all-change="onSelectAll" @row-unselect="onRowUnselect" paginator :rows="10"
-                                        :totalRecords="datagrid1.totalRecords" paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
-                                        <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-                                        <Column style="min-width: 60px;">
-                                            <template #body="slotProps">
-                          <List_view_button :params="slotProps" />
-</template>
-              </Column>
-              <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
-              </DataTable> -->
+                <DataTable :key="datagrid.key" lazy :first="datagrid.first" :size="'small'" :loading="datagrid.loading" :value="rowData" :sort-field="datagrid.sortField" :sort-order="datagrid.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="510px"
+                @page="searchInventory($event , 'page')" @sort="searchInventory($event , 'sort')" v-model:selection="datagrid.selectedList" paginator :rows="10"
+                :totalRecords="datagrid.totalRecords" paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+                    <Column style="min-width: 60px;">
+                        <template #body="slotProps">
+                            <asset-view-btn :params="slotProps" />
+                        </template>
+                    </Column>
+                    <Column style="min-width: 60px" header="選擇">
+                        <template #body="slotProps">
+                            <case_purchase_add_btn :params="slotProps" @add-material="addToList" />
+                        </template>
+                    </Column>
+                    <Column style="min-width: 80px" header="數量">
+                        <template #body="slotProps">
+                        <Storage_number :params="slotProps" />
+                        </template>
+                    </Column>                
+                    <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+                </DataTable>
             </div>
           </div>
-        </div>
-    <div class="modal fade" id="auth_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel1">沖銷人員驗證</h5>
-                    <p class='m-0 close_icon' data-bs-dismiss="modal">X</p>
-                </div>
-                <div class="modal-body">
-                    <div class="col">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">帳號：</div>
-                            <input type="text" class="form-control" v />
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">密碼：</div>
-                            <input type="password" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer m-auto">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="validate(1)">驗證</button>
-                </div>
-            </div>
-        </div>
     </div>
     <div class="main_section">
         <div class="title col">
@@ -145,10 +127,10 @@
         <div class="info_wrap col">
             <div class="fixed_info">
                 <div>
-                    <p>申請人員：</p>
+                    <p>申請人員：{{ Form.Applicant }}</p>
                 </div>
                 <div>
-                    <p>申請日期：</p>
+                    <p>申請日期：{{ Form.ApplicationDate }}</p>
                 </div>
             </div>
             <div class="content">
@@ -156,31 +138,38 @@
                 <div class="col form_search_wrap">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend"> 單號：</div>
-                        <input type="text" class="form-control readonly_box" readonly />
+                        <input type="text" class="form-control readonly_box" readonly v-model="Form.PP_ID"/>
                     </div>
                 </div>
-                <!-- 專案 -->
+                <!-- 專案代碼 -->
                 <div class="col form_search_wrap">
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend"> 專案：</div>
-                        <input type="text" class="form-control readonly_box" readonly />
+                        <div class="input-group-prepend"> 專案代碼：</div>
+                        <input type="text" class="form-control readonly_box" readonly v-model="Form.ProjectCode"/>
+                    </div>
+                </div>
+                <!-- 專案名稱 -->
+                <div class="col form_search_wrap">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend"> 專案名稱：</div>
+                        <input type="text" class="form-control readonly_box" readonly v-model="Form.ProjectName"/>
                     </div>
                 </div>
                 <!-- 説明 -->
                 <div class="col">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend"> 説明：</div>
-                        <textarea style="height: 150px;" class="form-control readonly_box" readonly></textarea>
+                        <textarea style="height: 150px;" class="form-control readonly_box" readonly v-model="Form.Description"></textarea>
                     </div>
                 </div>
                 <!-- 交貨期限 -->
-                <div class="row">
+                <div class="row expire_date_wrap">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 交貨期限：
                             </div>
-                            <input type="date" class="form-control readonly_box" readonly>
+                            <input type="date" class="form-control readonly_box" readonly v-model="Form.Deadline">
                         </div>
                     </div>
                 </div>
@@ -190,7 +179,7 @@
             <div class="purchase_list" role="region" tabindex="0">
                 <div class="fixed_info">
                     <div>
-                        <p>待採購清單</p>
+                        <p>待沖銷清單</p>
                     </div>
                 </div>
                 <div class="purchase_table">
@@ -205,58 +194,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="table_content"><button class="writeoff_btn" data-bs-toggle="modal" data-bs-target="#propertymodal">沖銷</button></td>
+                            <tr v-for="(item, index) in itemData" :key="item.PI_ID">
+                                <td class="table_content"><button class="writeoff_btn" data-bs-toggle="modal" data-bs-target="#propertymodal" @click="updateSearchingModal(index)">沖銷</button></td>
                                 <td class="table_content">
                                     <div class="item_number_wrap">
-                                        <div class="item_number"><img src="@/assets/delete.png"><span>B05234311</span></div>
-                                        <div class="item_number"><img src="@/assets/delete.png"><span>B554111</span></div>
-                                        <div class="item_number"><img src="@/assets/delete.png"><span>B12123314311</span></div>
-                                        <div class="item_number"><img src="@/assets/delete.png"><span>B554111</span></div>
-                                        <div class="item_number"><img src="@/assets/delete.png"><span>B12123314311</span></div>
+                                        <div v-for="(asset, assetIndex) in item.WriteoffAssets" class="item_number"><img src="@/assets/delete.png" @click="deleteFromList(index, assetIndex)"><span>{{ asset.AssetsId}}&nbsp;&nbsp;&nbsp;&nbsp;*{{asset.Number}}</span></div>
                                     </div>
                                 </td>
-                                <td class="table_content">路由器</td>
-                                <td class="table_content">0/11</td>
-                                <td class="table_content">文字文字文字</td>
-                            </tr>
-                            <tr>
-                                <td class="table_content"><button class="writeoff_btn" data-bs-toggle="modal" data-bs-target="#propertymodal">沖銷</button></td>
-                                <td class="table_content">
-                                    <div class="item_number_wrap">
-                                    </div>
-                                </td>
-                                <td class="table_content">路由器</td>
-                                <td class="table_content">0/11</td>
-                                <td class="table_content">文字字文字字文字文字文字</td>
-                            </tr>
-                            <tr>
-                                <td class="table_content"><button class="writeoff_btn" data-bs-toggle="modal" data-bs-target="#propertymodal">沖銷</button></td>                                <td class="table_content">
-                                    <div class="item_number_wrap">
-                                    </div>
-                                </td>
-                                <td class="table_content">路由器</td>
-                                <td class="table_content">0/11</td>
-                                <td class="table_content">文字文字文字</td>
-                            </tr>
-                            <tr>
-                                <td class="table_content"><button class="writeoff_btn" data-bs-toggle="modal" data-bs-target="#propertymodal">沖銷</button></td>                                <td class="table_content">
-                                    <div class="item_number_wrap">
-                                    </div>
-                                </td>
-                                <td class="table_content">路由器</td>
-                                <td class="table_content">0/11</td>
-                                <td class="table_content">文字文字文字</td>
-                            </tr>
-                            <tr>
-                                <td class="table_content"><button class="writeoff_btn" data-bs-toggle="modal" data-bs-target="#propertymodal">沖銷</button></td>
-                                <td class="table_content">
-                                    <div class="item_number_wrap">
-                                    </div>
-                                </td>
-                                <td class="table_content">路由器</td>
-                                <td class="table_content">0/11</td>
-                                <td class="table_content">文字文字文字</td>
+                                <td class="table_content">{{ item.ItemName }}</td>
+                                <td class="table_content">{{ item.SelectedNumber }}/{{ item.Number }}</td>
+                                <td class="table_content">{{ item.RequiredSpec }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -275,14 +222,17 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend"><span>*</span>沖銷人員：</div>
-                            <input type="text" class="form-control readonly_box" readonly />
+                            <input type="text" class="form-control readonly_box" readonly v-model="user.resultName"/>
+                            <span class="icon-container">
+                                <img src="@/assets/accept.png" class="checkmark-icon" v-show="user.isValidate" />
+                            </span>
                             <button class="auth_btn" data-bs-toggle="modal" data-bs-target="#auth_modal">驗證</button>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">完成沖銷日期：</div>
-                            <input type="text" class="form-control readonly_box" readonly />
+                            <input type="text" class="form-control readonly_box" readonly v-model="utilsStore.today"/>
                         </div>
                     </div>
                 </div>
@@ -290,29 +240,319 @@
                 <div class="col">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend"> 沖銷備註：</div>
-                        <textarea style="height: 150px;" class="form-control" placeholder="最多輸入100字"></textarea>
+                        <textarea style="height: 150px;" class="form-control" placeholder="最多輸入100字" v-model="Form.WriteoffMemo"></textarea>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col button_wrap">
-            <button class="back_btn" @click="goBack">回上一頁</button>
-            <button class="save_btn" @click="temp">暫存</button>
-            <button class="send_btn" @click="submit">完成</button>
+            <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
+            <button class="save_btn" @click="submit(false)">暫存</button>
+            <button class="send_btn" :class="{'send_btn_disabled': !user.isValidate}" data-bs-toggle="modal" data-bs-target="#ConfirmModal" :disabled="!user.isValidate">完成</button>
         </div>
     </div>
 </template>
 
-<script>
-    import Navbar from '@/components/Navbar.vue';
-    export default {
-        components: {
-            Navbar
-        },
+<script setup>
+import Navbar from '@/components/Navbar.vue';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import AssetViewBtn from '@/components/utils/asset_view_btn.vue'
+import case_purchase_add_btn from '@/components/case_purchase_page/case_purchase_add_btn.vue'
+import Storage_number from "@/components/Storage_number_input"
+import confirm_modal from '@/components/utils/confirm_modal.vue'
+import validate_modal from '@/components/utils/validate_modal.vue';
+import Multiselect from 'vue-multiselect';
+import { usePurchaseStore } from '@/store/purchase/_index'
+import { useAPIStore, useUtilsStore } from '@/store';
+import { onMounted, onUnmounted, reactive, ref, computed } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useRoute } from 'vue-router';
+import { CasePurchase_Process } from '@/assets/js/enter_status'
+import axios from 'axios';
+import router from '@/router';
+import { createDadagridObject } from '@/assets/js/common_fn';
+const purchaseStore = usePurchaseStore();
+const utilsStore = useUtilsStore();
+const apiStore = useAPIStore();
+// 解構
+const { Form, DropdownArray } = storeToRefs(purchaseStore) ;
+
+const route = useRoute();
+const PP_ID = route.query.search_id;
+// datagrid 參數
+const datagrid = reactive(createDadagridObject(''));
+const rowData = ref([]);
+const datagridfield = [
+    { field: "OM_Unit",  width: '100px',  header: "單位" },
+    { field: "AssetType",  width: '60',  header: "類型" },
+    { field: "AssetsId", width: '150px', header: "資產編號" },
+    { field: "AssetName", width: '150px', header: "物品名稱" },
+    { field: "ProductType", width: '150px', header: "型號" },
+    { field: "ProductSpec", width: '150px', header: "規格" },
+    { field: "VendorName", width: '150px', header: "廠商" },
+    { field: "AreaName", width: '150px', header: "儲位區域" },
+    { field: "LayerName", width: '150px', header: "儲位櫃位" }
+]
+const warningText = "按下確認後將無法再次變更，請確認待沖銷清單是否沖銷正確";
+
+
+const itemData = ref([]);
+const testData = ref([
+    {
+        "PI_ID": "PP24020005_01",
+        "ItemName": "iphone 15",
+        "WriteoffAssets": [
+            {AssetsId: 'BF12345678' , Number: 1},
+            {AssetsId: 'BF98765321' , Number: 1},
+            {AssetsId: 'BF65417891' , Number: 1},
+            {AssetsId: 'BF98741235' , Number: 1},
+            {AssetsId: 'BF00001234' , Number: 1}
+        ],
+        "Number": 5,
+        "RequiredSpec": "玫瑰金"
+    },
+    {
+        "PI_ID": "PP24020005_02",
+        "ItemName": "行動充電器",
+        "WriteoffAssets": [
+            {AssetsId: 'BF56781234' , Number: 1},
+            {AssetsId: 'BF98765123' , Number: 1}
+        ],
+        "Number": 2,
+        "RequiredSpec": "小台的，至少20000mAh"
+    },
+    {
+        "PI_ID": "PP24020005_03",
+        "ItemName": "TypeC線",
+        "WriteoffAssets": [
+            {AssetsId: 'BF12345876' , Number: 2},
+            {AssetsId: 'BF98765231' , Number: 1},
+            {AssetsId: 'BF65417198' , Number: 2},
+            {AssetsId: 'BF00004321' , Number: 3}
+        ],
+        "Number": 8,
+        "RequiredSpec": "2米長"
     }
+])
+// 驗證資訊
+const user = reactive({
+    title: '沖銷人員',
+    userName: '',
+    userPassword: '',
+    resultName: '未驗證',
+    isValidate: false,
+    id: 'PP_Writeoff',
+});
+// 檢索上方顯示欄位
+const tempParams = reactive({
+    ItemName: '', // 採購項目
+    Number: 0, // 所需數量
+    SelectedNumber: 0, // 已選數量
+    RequiredSpec: '', // 規格需求
+    index: 0, // 採購清單index
+})
+// 檢索欄位
+const searchParams = reactive({
+    EquipType_Id: '',
+    Category_Id: '',
+    Area_Id: '',
+    Layer_Id: '',
+    ProjectCode: '',
+    ProjectSelect: {Text:'--請選擇--' ,Value: ''},
+    AssetsId: '',
+    AssetName: '',
+    WriteoffAssets: [],
+})
+// 檢索上方顯示欄位之一
+const tempCombine = computed(()=>{
+    return `${tempParams.SelectedNumber}/${tempParams.Number}`
+})
+onMounted(async() => {
+    purchaseStore.$reset();
+    await purchaseStore.getDetails(PP_ID, CasePurchase_Process);
+    itemData.value = [...Form.value.NotOrdered,...Form.value.Ordered];
+    DropdownArray.value.ProjectCode = [
+        { Text: "0000-1 資產管理系統開發-內部領用/借測", Value: "0000-1    " },
+        { Text: "0000-2 資產管理系統開發-出貨", Value: "0000-2    " },
+        { Text: "0000-3 資產管理系統開發-維修", Value: "0000-3    " },
+        { Text: "0000-4 資產管理系統開發-報廢", Value: "0000-4    " },
+        { Text: "0000-5 資產管理系統開發-退貨", Value: "0000-5    " }
+    ]
+    // DropdownArray.value.ProjectCode = await apiStore.getFuzzyProject();
+    DropdownArray.value.EquipType = await apiStore.getEquipType();
+    DropdownArray.value.Area = await apiStore.getArea();
+    updateSelectedNumber();
+
+});
+onUnmounted(()=>{
+  purchaseStore.$dispose();
+  utilsStore.$dispose();
+})
+
+const submit = async(isDone) =>{
+    // 檢查字數上限
+    const regexPattern = new RegExp(`^[\\s\\S]{0,100}$`);
+    if(!regexPattern.test(Form.value.WriteoffMemo)) {
+        alert(`沖銷備註不可輸入超過100字`);
+        return 
+    }
+    // 完成要檢查是否全部沖銷完畢
+    if(isDone) {
+        for(let i=0; i<itemData.value.length; i++)  {
+            let total = 0;
+            itemData.value[i].WriteoffAssets.forEach(item =>{
+                total += item.Number;
+            })
+            if(total !== itemData.value[i].Number) {
+                console.log(`${total}/${itemData.value[i].Number}`);
+                alert('請先將所有項目沖銷完畢');
+                return 
+            }
+        }
+    }
+    let requestData = {
+        PP_ID: PP_ID,
+        WriteoffPerson: user.resultName,
+        Memo: Form.value.WriteoffMemo,
+        WriteoffAssets: itemData.value,
+        Done: isDone
+    }
+    if(!isDone) {
+        delete requestData.WriteoffPerson;
+    }
+    console.log('requestData',requestData);
+    try {
+        const response = await axios.post('http://192.168.0.177:7008/PurchasingMng/ItemsWriteOff', requestData);
+        const data = response.data;
+        if(data.state === 'success') {
+            alert(data.messages+'\n'+data.resultList.PP_ID);
+            if(isDone) {
+                router.push({name: 'Case_Purchase_Datagrid'});
+            } else {
+                window.location.reload();
+            }
+        } else if(data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+        } else {
+            alert(data.messages);
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}
+// 清空檢索欄位(不包含已選項目)
+const clear = () => {
+    utilsStore.clearSearchParams(searchParams);
+    searchParams.ProjectSelect =  {Text:'--請選擇--' ,Value: ''};
+    DropdownArray.value.EquipCategory = [];
+    DropdownArray.value.Layer = [];
+    searchInventory('', 'search');
+}
+const onProjectSelect = (option) => {
+    searchParams.ProjectCode = option.Value;
+}
+// 點擊"沖銷"時將項目資訊帶入檢索上方(以及index =>用於新增項目時)
+const updateSearchingModal = (index) => {
+    updateSelectedNumber();
+    updateSelectedList();
+    tempParams.ItemName = itemData.value[index].ItemName
+    tempParams.Number = itemData.value[index].Number
+    tempParams.SelectedNumber = itemData.value[index].SelectedNumber
+    tempParams.RequiredSpec = itemData.value[index].RequiredSpec
+    tempParams.index = index
+    searchInventory('', 'search');
+}
+// 更新各採購項目的已沖數量
+const updateSelectedNumber = () => {
+    itemData.value.forEach(item => {
+        const total = item.WriteoffAssets.reduce((total,asset)=> total + asset.Number,0);
+        item.SelectedNumber = total;
+    })
+}
+// 更新搜尋時的AssetList清單
+const updateSelectedList = () => {
+    searchParams.WriteoffAssets = [];
+    itemData.value.forEach((item)=>{
+        item.WriteoffAssets.forEach((asset)=>{
+            searchParams.WriteoffAssets.push(asset);
+        })
+    })
+}
+// 搜尋
+const searchInventory = async (event, type) => {
+    //檢查字數
+    const regexPattern = new RegExp(`^[\\s\\S]{0,20}$`);
+    if(!regexPattern.test(searchParams.AssetName)) {
+        alert(`物品名稱不可輸入超過20字`);
+        return
+    }
+    try {
+        const form = new FormData();
+        // 將表格資料 append 到 form
+        for (const key in searchParams) {
+            if (searchParams[key] && key !== 'WriteoffAssets') {
+                form.append(key, searchParams[key]);
+            }
+        }
+        form.append('WriteoffAssets', JSON.stringify(searchParams.WriteoffAssets));
+        utilsStore.UpdatePageParameter(datagrid, event, type, form);
+        const resultList = await apiStore.getMngDatagrid('/PurchasingMng/SearchInventory',datagrid, form);
+        rowData.value = resultList.rows.map(item => ({
+          ...item,
+          selectNumber: item.OM_Number,
+        }));
+        datagrid.totalRecords = resultList.total;
+        datagrid.key++;
+    } catch (e) {
+        console.error(e);
+    }
+}
+// 刪除已沖項目
+const deleteFromList = (index, itemIndex) => {
+    itemData.value[index].WriteoffAssets.splice(itemIndex,1);
+    updateSelectedNumber()
+}
+const addToList = (data) => {
+    if(tempParams.SelectedNumber + data.selectNumber > tempParams.Number) {
+        alert('所選數量超過沖銷所需數量');
+        return
+    }
+    const index = tempParams.index;
+    let exist = false;
+    itemData.value[index].WriteoffAssets.forEach(item=>{
+        if(item.AssetsId === data.AssetsId) {
+            item.Number += data.selectNumber ;
+            exist = true;
+        }
+    })
+    if(!exist) {
+        itemData.value[index].WriteoffAssets.splice(0,0,{
+            AssetsId: data.AssetsId,
+            Number: data.selectNumber
+        })
+    }
+    updateSelectedNumber();
+    tempParams.SelectedNumber = itemData.value[index].SelectedNumber
+    updateSelectedList();
+    searchInventory('','');
+}
+
 </script>
 <style lang="scss" scoped>
     @import "@/assets/css/global.scss";
+    .readonly_box {
+        @include readonly_box;
+    }
+    .checkmark-icon {
+        position: absolute;
+        top: 10%;
+        left: 74%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+    }
     .modal .modal-body {
         padding: 0 !important;
     }
@@ -518,9 +758,6 @@
             font-weight: 600;
             @include title_color;
         }
-        .readonly_box {
-            @include readonly_box;
-        }
         .auth_btn {
             @include auth_btn;
             &:hover {
@@ -574,7 +811,7 @@
                 text-align: left;
                 .item_number {
                     background: #A7AFBB;
-                    width: min-content;
+                    // width: min-content;
                     border-radius: 10px;
                     padding: 5px 10px;
                     margin: 3px;
@@ -606,6 +843,13 @@
             @include search_and_send_btn;
             &:hover {
                 background-color: #5D85BD;
+            }
+        }
+        .send_btn_disabled {
+            background: #878787;
+
+            &:hover {
+                background: #878787;
             }
         }
         .save_btn {

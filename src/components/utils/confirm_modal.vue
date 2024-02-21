@@ -1,19 +1,19 @@
 <template>
     <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" :id="props.id" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">警示</h5>
                     <div class="close_icon">
-                        <p type="button" data-bs-dismiss="modal" aria-label="Close">X</p>
+                        <p type="button" data-bs-dismiss="modal" aria-label="Close" @click="cancel">X</p>
                     </div>
                 </div>
                 <div class="modal-body">
                     <p>{{ props.text }}</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn confirm" data-bs-dismiss="modal" @click="props.function(props.parameter1)">確認</button>
+                    <button type="button" class="btn confirm" data-bs-dismiss="modal" @click="confirm">確認</button>
                 </div>
             </div>
         </div>
@@ -21,7 +21,14 @@
 </template>
 
 <script setup>
-const props = defineProps(['function' , 'parameter1' , 'text']);
+const props = defineProps(['id', 'text']);
+const emit = defineEmits(['cancel', 'confirm']);
+const confirm = () =>{
+    emit('confirm');
+}
+const cancel = () =>{
+    emit('cancel');
+}
 </script>
 
 <style lang="scss" scoped>

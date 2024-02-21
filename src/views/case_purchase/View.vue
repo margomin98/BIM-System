@@ -4,184 +4,32 @@
         <div class="title col">
             <h1>檢視專案採購單</h1>
         </div>
-        <div class="info_wrap col">
-            <div class="fixed_info">
-                <div>
-                    <p>申請人員：</p>
-                </div>
-                <div>
-                    <p>申請日期：</p>
-                </div>
-            </div>
-            <div class="content">
-                <!-- 單號 -->
-                <div class="col form_search_wrap">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend"> 單號：</div>
-                        <input type="text" class="form-control readonly_box" readonly />
-                    </div>
-                </div>
-                <!-- 狀態 -->
-                <div class="row ">
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                狀態：
-                            </div>
-                            <input type="text" class="form-control readonly_box" readonly>
-                        </div>
-                    </div>
-                </div>
-                <!-- 專案 -->
-                <div class="col form_search_wrap">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend"> 專案：</div>
-                        <input type="text" class="form-control readonly_box" readonly />
-                    </div>
-                </div>
-                <!-- 説明 -->
-                <div class="col">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend"> 説明：</div>
-                        <textarea style="height: 150px;" class="form-control readonly_box" readonly></textarea>
-                    </div>
-                </div>
-                <!-- 採購人員/完成採購日期 -->
-                <div class="row">
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">採購人員：</div>
-                            <input type="text" class="form-control readonly_box" readonly />
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">完成採購日期：</div>
-                            <input type="text" class="form-control readonly_box" readonly />
-                        </div>
-                    </div>
-                </div>
-                <!-- 採購備註 -->
-                <div class="col">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend"> 採購備註：</div>
-                        <textarea style="height: 150px;" class="form-control readonly_box" readonly></textarea>
-                    </div>
-                </div>
-                <!-- 沖銷人員/完成沖銷日期 -->
-                <div class="row">
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">沖銷人員：</div>
-                            <input type="text" class="form-control readonly_box" readonly />
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">完成沖銷日期：</div>
-                            <input type="text" class="form-control readonly_box" readonly />
-                        </div>
-                    </div>
-                </div>
-                <!-- 沖銷備註 -->
-                <div class="col">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend"> 沖銷備註：</div>
-                        <textarea style="height: 150px;" class="form-control readonly_box" readonly></textarea>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="info_wrap mt-5">
-            <div class="purchase_list" role="region" tabindex="0">
-                <div class="fixed_info">
-                    <div>
-                        <p>採購清單</p>
-                    </div>
-                </div>
-                <div class="purchase_table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="edit_order"><span></span></th>
-                                <th class="check_col"><span>勾選<br>下訂</span></th>
-                                <th class="check_col">暫緩<br>採購<span></span></th>
-                                <th class="writeoff_property"><span>沖銷所選資產</span></th>
-                                <th class="item_col"><span>採購項目</span></th>
-                                <th class="amount_col"><span>已沖/待沖數量</span></th>
-                                <th><span>規格需求</span></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="table_content edit_order_btn"><button>編輯訂單</button></td>
-                                <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
-                                </td>
-                                <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
-                                </td>
-                                <td class="table_content">
-                                    <div class="item_number_wrap">
-                                        <div class="item_number"><span>B05234311</span></div>
-                                        <div class="item_number"><span>B232511</span></div>
-                                        <div class="item_number"><span>B98574311</span></div>
-                                    </div>
-                                </td>
-                                <td class="table_content">路由器</td>
-                                <td class="table_content">0/11</td>
-                                <td class="table_content">文字文字文字</td>
-                            </tr>
-                            <tr>
-                                <td class="table_content edit_order_btn"><button>編輯訂單</button></td>
-                                <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
-                                </td>
-                                <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
-                                </td>
-                                <td class="table_content">
-                                    <div class="item_number_wrap">
-                                    </div>
-                                </td>
-                                <td class="table_content">路由器</td>
-                                <td class="table_content">0/11</td>
-                                <td class="table_content">文字文字文字</td>
-                            </tr>
-                            <tr>
-                                <td class="table_content edit_order_btn"><button class="edit_order_btn_grey">編輯訂單</button></td>
-                                <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
-                                </td>
-                                <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
-                                </td>
-                                <td class="table_content">
-                                    <div class="item_number_wrap">
-                                        <div class="item_number"><span>B05234311</span></div>
-                                    </div>
-                                </td>
-                                <td class="table_content">路由器</td>
-                                <td class="table_content">0/11</td>
-                                <td class="table_content">文字文字文字</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        <case_purchase_view></case_purchase_view>
         <div class="col button_wrap">
-            <button class="back_btn" @click="goBack">回上一頁</button>
+            <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
         </div>
     </div>
 </template>
-<script>
-    import Navbar from '@/components/Navbar.vue';
-    export default {
-        components: {
-            Navbar
-        },
-    }
+<script setup>
+import Navbar from '@/components/Navbar.vue';
+import case_purchase_view from '@/components/case_purchase_page/case_purchase_view.vue';
+import { usePurchaseStore } from '@/store/purchase/_index'
+import { useUtilsStore } from '@/store';
+import { onMounted, onUnmounted } from 'vue';
+import { useRoute } from 'vue-router';
+const purchaseStore = usePurchaseStore();
+const utilsStore = useUtilsStore();
+const route = useRoute();
+const PP_ID = route.query.search_id;
+onMounted(async() => {
+  purchaseStore.$reset();
+  purchaseStore.PageType = 'view';
+  purchaseStore.getDetails(PP_ID);
+});
+onUnmounted(()=>{
+  purchaseStore.$dispose();
+  utilsStore.$dispose();
+})
 </script>
 
 <style lang="scss" scoped>

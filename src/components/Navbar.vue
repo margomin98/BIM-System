@@ -13,12 +13,14 @@
             <img src="../assets/navbar/store.png" alt="入庫管理"> 入庫管理
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <router-link to="/case_purchase_datagrid">專案採購管理</router-link>
+            <div class='dropdown-divider' style='border-color:white'></div>
             <router-link to="/order_datagrid">訂單管理</router-link>
             <div class='dropdown-divider' style='border-color:white'></div>
             <router-link to="/receive_new">新增收貨</router-link>
             <router-link to="/receive_datagrid">收貨管理</router-link>
             <div class='dropdown-divider' style='border-color:white'></div>
-            <router-link to="/quick_store_new" class="d-flex speed_icon" style="flex-direction: row" @mouseover="changeImage" @mouseout="resetImage">
+            <router-link v-if="roleId === 1 || roleId === 4" to="/quick_store_new" class="d-flex speed_icon" style="flex-direction: row" @mouseover="changeImage" @mouseout="resetImage">
               <img :src="speedIcon" alt="快速入庫">快速入庫
             </router-link>
             <router-link to="/store_new">新品入庫</router-link>
@@ -33,7 +35,7 @@
             <img src="../assets/navbar/deliver.png" alt="出庫管理"> 出庫管理
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <router-link to="/quick_rent_new" class="d-flex speed_icon" style="flex-direction: row" @mouseover="changeImage" @mouseout="resetImage">
+            <router-link v-if="roleId === 1 || roleId === 4" to="/quick_rent_new" class="d-flex speed_icon" style="flex-direction: row" @mouseover="changeImage" @mouseout="resetImage">
               <img :src="speedIcon" alt="快速出庫">快速出庫
             </router-link>
             <router-link to="/rent_datagrid">出庫填報管理</router-link>
@@ -88,15 +90,18 @@
 
 <script setup>
   import {
-    useUtilsStore
+    useUtilsStore , useAPIStore
   } from '@/store'
   import router from '@/router';
   import {
     onMounted,
+    onUnmounted,
     ref
   } from 'vue';
+  const roleId = ref('');
   const hovered = ref(false);
   const utilsStore = useUtilsStore();
+  const apiStore = useAPIStore();
   const emit = defineEmits(['username']);
   const speedIcon = ref(require('@/assets/navbar/speed.png')); // 快速的Icon
   const hoverImage = require('@/assets/navbar/speed_hover.png'); // 快速的Icon
@@ -131,10 +136,16 @@
   }
   onMounted(async() => {
     utilsStore.$reset();
-    await utilsStore.getUserName();
     utilsStore.getDate();
+    await utilsStore.getUserName();
+    roleId.value =  await apiStore.getRoleId('admin');
+    // roleId.value =  await apiStore.getRoleId(utilsStore.userName);
+    // console.log('roleId',roleId.value);
     emit('username', utilsStore.userName); //收貨、入庫填報 edit修改後再移除
   });
+  onUnmounted(()=>{
+    utilsStore.$dispose();
+  })
 </script>
 
 <style lang="scss" scoped>

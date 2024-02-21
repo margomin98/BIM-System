@@ -1,6 +1,9 @@
 // 單位
 export const UnitArray = ['個', '支', '枝', '隻', '根', '條', '顆']
 export const PackageUnitArray = ['個', '對', '箱', '包', '組', '台', '件']
+// 專案採購管理
+export const CasePurchase_StatusArray = ['待採購' , '採購中' , '沖銷中' , '已完成'];
+export const CasePurchase_DateCategory = ['申請日期' , '完成日期'];
 // 訂單管理
 export const Order_StatusArray = ['待收貨' , '已收貨']
 // 入庫管理
@@ -17,7 +20,7 @@ export const Rent_Review_StatusArray = ['待審核', '審核通過', '審核不�
 export const ShipReceive_StatusArray = ['尚未簽收' , '已簽收'];
 export const ShipReceive_DateCategory = ['申請日期' , '審核日期'];
 // 資產管理
-export const Asset_StastusArraay = ['在庫', '內部領用', '借測', '維修', '出貨', '報廢', '退貨', '無庫存', '已被設備整合']
+export const Asset_StastusArray = ['在庫', '內部領用', '借測', '維修', '出貨', '報廢', '退貨', '無庫存', '已被設備整合']
 export const HistoryAction = ['入庫', '歸還', '借測', '維修', '內部領用', '出貨', '報廢', '退貨' , '盤點平帳', '移出設備整合箱' , '加入設備整合箱','Excel匯入'];
 export const Asset_TypeArray = ['資產' , '存貨'];
 // 設備集成管理

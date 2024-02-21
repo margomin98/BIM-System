@@ -85,7 +85,7 @@
 import Column from 'primevue/column';
 import DataTable from 'primevue/datatable';
 import Multiselect from 'vue-multiselect';
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, onUnmounted } from 'vue';
 import ship_receive_btn from "@/components/ship_receive_page/ship_receive_btn.vue";
 import Navbar from "@/components/Navbar.vue";
 import { ShipReceive_StatusArray, ShipReceive_DateCategory } from "@/assets/js/dropdown";
@@ -104,7 +104,7 @@ const DropdownArray = reactive({
 const searchParams = reactive({
   AO_ID: '',
   ProjectName: '',
-  Status: '尚未簽收',
+  Status: '',
   DateCategory: '',
   StartDate: '',
   EndDate: '',
@@ -128,7 +128,9 @@ onMounted(async() => {
   submit('', 'search');
   DropdownArray.ProjectCode = await useAPIStore().getFuzzyProject();
 });
-
+onUnmounted(()=>{
+  utilsStore.$dispose();
+})
 async function submit(event, type) {
   const form = new FormData();
   // 將表格資料 append 到 form

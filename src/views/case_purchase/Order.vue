@@ -1,32 +1,7 @@
 <template>
     <Navbar />
-    <div class="modal fade" id="auth_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel1">採購人員驗證</h5>
-                    <p class='m-0 close_icon' data-bs-dismiss="modal">X</p>
-                </div>
-                <div class="modal-body">
-                    <div class="col">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">帳號：</div>
-                            <input type="text" class="form-control" v />
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">密碼：</div>
-                            <input type="password" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer m-auto">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="validate(1)">驗證</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <validate_modal :modal_id="'auth_modal'" :user="user"></validate_modal>
+    <confirm_modal :id="'ConfirmModal'" @confirm="submit" :text="warningText"/>
     <div class="main_section">
         <div class="title col">
             <h1>下訂作業</h1>
@@ -34,10 +9,10 @@
         <div class="info_wrap col">
             <div class="fixed_info">
                 <div>
-                    <p>申請人員：</p>
+                    <p>申請人員：{{ Form.Applicant }}</p>
                 </div>
                 <div>
-                    <p>申請日期：</p>
+                    <p>申請日期：{{ Form.ApplicationDate }}</p>
                 </div>
             </div>
             <div class="content">
@@ -45,21 +20,28 @@
                 <div class="col form_search_wrap">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend"> 單號：</div>
-                        <input type="text" class="form-control readonly_box" readonly />
+                        <input type="text" class="form-control readonly_box" readonly v-model="Form.PP_ID"/>
                     </div>
                 </div>
-                <!-- 專案 -->
+                <!-- 專案代碼 -->
                 <div class="col form_search_wrap">
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend"> 專案：</div>
-                        <input type="text" class="form-control readonly_box" readonly />
+                        <div class="input-group-prepend"> 專案代碼：</div>
+                        <input type="text" class="form-control readonly_box" readonly v-model="Form.ProjectCode"/>
+                    </div>
+                </div>
+                <!-- 專案名稱 -->
+                <div class="col form_search_wrap">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend"> 專案名稱：</div>
+                        <input type="text" class="form-control readonly_box" readonly v-model="Form.ProjectName"/>
                     </div>
                 </div>
                 <!-- 説明 -->
                 <div class="col">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend"> 説明：</div>
-                        <textarea style="height: 150px;" class="form-control readonly_box" readonly></textarea>
+                        <textarea style="height: 150px;" class="form-control readonly_box" readonly v-model="Form.Description"></textarea>
                     </div>
                 </div>
                 <!-- 交貨期限 -->
@@ -69,7 +51,7 @@
                             <div class="input-group-prepend">
                                 交貨期限：
                             </div>
-                            <input type="date" class="form-control readonly_box" readonly>
+                            <input type="date" class="form-control readonly_box" readonly v-model="Form.Deadline">
                         </div>
                     </div>
                 </div>
@@ -93,39 +75,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="true" id="flexCheckDefault" v-model="test">
-                                </td>
-                                  <td class="table_content">路由器</td>
-                                <td class="table_content">1</td>
-                                <td class="table_content">文字文字文字</td>
+                            <tr v-for="(item , index) in Form.NotOrdered" :key="item.PI_ID">
+                                <td><input class="form-check-input order_check" type="checkbox" value="true" v-model="NotOrderedList[index]"></td>
+                                <td class="table_content">{{item.ItemName}}</td>
+                                <td class="table_content">{{item.Number}}</td>
+                                <td class="table_content">{{ item.RequiredSpec}}</td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
-                                </td>
-                                <td class="table_content">電腦主機</td>
-                                <td class="table_content">2</td>
-                                <td class="table_content">文字文字文字文字文字文字</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
-                                </td>
-                               <td class="table_content">滑鼠</td>
-                                <td class="table_content">6</td>
-                                <td class="table_content">文字文字文字文字文字文字文字文字文字</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
-                                </td>
-                               <td class="table_content">電腦主機</td>
-                                <td class="table_content">4</td>
-                                <td class="table_content">文字文字文字</td>
-                            </tr>
-                         
                         </tbody>
                     </table>
                 </div>
@@ -134,7 +89,7 @@
                 <p>*可勾選多個採購項目後，合併新增訂單</p>
             </div>
             <div class="add_btn">
-                <button>新增訂單</button>
+                <button @click="submitOrder('NotOrdered')">新增訂單</button>
             </div>
         </div>
         <div class="info_wrap mb-5">
@@ -155,46 +110,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr v-for="(item , index) in Form.Ordered" :key="item.PI_ID">
                                 <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="true" id="flexCheckDefault" v-model="test">
+                                    <input class="form-check-input order_check" type="checkbox" value="true" v-model="OrderedList[index]">
                                 </td>
-                                  <td class="table_content">路由器</td>
-                                <td class="table_content">1</td>
-                                <td class="table_content">文字文字文字</td>
+                                  <td class="table_content">{{item.ItemName}}</td>
+                                <td class="table_content">{{item.Number}}</td>
+                                <td class="table_content">{{ item.RequiredSpec}}</td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
-                                </td>
-                                 <td class="table_content">電腦主機</td>
-                                <td class="table_content">2</td>
-                                <td class="table_content">文字文字文字文字文字文字</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
-                                </td>
-                                 <td class="table_content">滑鼠</td>
-                                <td class="table_content">6</td>
-                                <td class="table_content">文字文字文字文字文字文字文字文字文字</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="" id="flexCheckDefault">
-                                </td>
-                                  <td class="table_content">電腦主機</td>
-                                <td class="table_content">4</td>
-                                <td class="table_content">文字文字文字</td>
-                            </tr>
-                     
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="purchase_list_note cancel_note_wrap d-flex">
                 <p>*可勾選多個採購項目後，取消項目</p>
-                <button class="cancel_order_btn">取消訂購</button>
+                <button class="cancel_order_btn" @click="submitOrder('Ordered')">取消訂購</button>
             </div>
        
         </div>
@@ -210,14 +140,17 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend"><span>*</span>採購人員：</div>
-                            <input type="text" class="form-control readonly_box" readonly />
+                            <input type="text" class="form-control readonly_box" readonly v-model="user.resultName"/>
+                            <span class="icon-container">
+                                <img src="@/assets/accept.png" class="checkmark-icon" v-show="user.isValidate" />
+                            </span>
                             <button class="auth_btn" data-bs-toggle="modal" data-bs-target="#auth_modal">驗證</button>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">完成採購日期：</div>
-                            <input type="text" class="form-control readonly_box" readonly />
+                            <input type="text" class="form-control readonly_box" readonly v-model="utilsStore.today"/>
                         </div>
                     </div>
                 </div>
@@ -225,26 +158,151 @@
                 <div class="col">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend"> 説明：</div>
-                        <textarea style="height: 150px;" class="form-control" placeholder="最多輸入100字"></textarea>
+                        <textarea style="height: 150px;" class="form-control" placeholder="最多輸入100字" v-model="Form.PurchaseMemo"></textarea>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col button_wrap">
             <button class="back_btn" @click="goBack">回上一頁</button>
-            <button class="save_btn" @click="temp">暫存</button>
-            <button class="send_btn" @click="submit">完成</button>
+            <!-- <button class="save_btn" @click="temp">暫存</button> -->
+            <button class="send_btn" :class="{'send_btn_disabled': !user.isValidate}" data-bs-toggle="modal" data-bs-target="#ConfirmModal" :disabled="!user.isValidate">完成</button>
         </div>
     </div>
 </template>
 <script setup>
-    import Navbar from '@/components/Navbar.vue';
-    import { ref } from 'vue';
-    const test = ref(false);
+import Navbar from '@/components/Navbar.vue';
+import confirm_modal from '@/components/utils/confirm_modal.vue'
+import validate_modal from '@/components/utils/validate_modal.vue';
+import { usePurchaseStore } from '@/store/purchase/_index'
+import { useUtilsStore } from '@/store';
+import { onMounted, onUnmounted, reactive, ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useRoute } from 'vue-router';
+import { CasePurchase_Order } from '@/assets/js/enter_status'
+import axios from 'axios';
+import router from '@/router';
+const purchaseStore = usePurchaseStore();
+const utilsStore = useUtilsStore();
+// 解構
+const { Form } = storeToRefs(purchaseStore) ;
+
+const route = useRoute();
+const PP_ID = route.query.search_id;
+
+const user = reactive({
+    title: '採購人員',
+    userName: '',
+    userPassword: '',
+    resultName: '未驗證',
+    isValidate: false,
+    id: 'PP_Order',
+});
+const NotOrderedList = ref([]);
+const OrderedList = ref([]);
+const warningText = "按下確認後將無法再次變更，請確認是否正確新增訂購單項目";
+const submitOrder = async (type) => {
+    let array = [];
+    let url = '';
+    switch (type) {
+        case 'NotOrdered':
+            url='/OrderForRequisitionItems'
+            for(let i=0 ; i<Form.value.NotOrdered.length; i++) {
+                if(NotOrderedList.value[i]) {
+                    array.push(Form.value.NotOrdered[i].PI_ID);
+                }
+            }
+            break;
+        case 'Ordered':
+            url='/CancelForRequisitionItems'
+            for(let i=0 ; i<Form.value.Ordered.length; i++) {
+                if(OrderedList.value[i]) {
+                    array.push(Form.value.Ordered[i].PI_ID);
+                }
+            }
+            break;
+    }
+    if(array.length === 0 ) {
+        alert('請至少勾選一項項目');
+        return
+    }
+    // 下訂API
+    const form = new FormData ;
+    for(const item of array) {
+        // console.log(item);
+        form.append('RequisitionItems', item);
+    }
+    try {
+        const response = await axios.post('http://192.168.0.177:7008/PurchasingMng'+ url, form);
+        const data = response.data;
+        if(data.state === 'success') {
+            // 成功reset & refresh表格
+            await purchaseStore.getDetails(PP_ID, CasePurchase_Order);
+            switch (type) {
+                case 'NotOrdered':
+                    alert(data.messages+'\n'+data.resultList.PO_ID);
+                    NotOrderedList.value = Array(Form.value.NotOrdered.length).fill(false);
+                    break;
+                case 'Ordered':
+                    alert(data.messages);
+                    OrderedList.value = Array(Form.value.Ordered.length).fill(false);
+                    break;
+            }
+        } else if(data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+        } else {
+            alert(data.messages);
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}
+const submit = async() =>{
+    // 檢查字數上限
+    if(!utilsStore.checkMaxLetter(Form.value,purchaseStore.FormLetterCheckList)) return;
+    const form = new FormData;
+    form.append('PP_ID',PP_ID);
+    form.append('PurchasePerson', user.resultName);
+    form.append('Memo', Form.value.PurchaseMemo);
+    try {
+        const response = await axios.post('http://192.168.0.177:7008/PurchasingMng/PurchaseConfirmed',form);
+        const data = response.data;
+        if(data.state === 'success') {
+            alert(data.messages+'\n'+data.resultList.PP_ID);
+            router.push({name: 'Case_Purchase_Datagrid'});
+        } else if(data.state === 'account_error') {
+            alert(data.messages);
+            router.push('/');
+        } else {
+            alert(data.messages);
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}
+onMounted(async() => {
+  purchaseStore.$reset();
+  await purchaseStore.getDetails(PP_ID, CasePurchase_Order);
+  NotOrderedList.value = Array(Form.value.NotOrdered.length).fill(false);
+  OrderedList.value = Array(Form.value.Ordered.length).fill(false);
+});
+onUnmounted(()=>{
+  purchaseStore.$dispose();
+  utilsStore.$dispose();
+})
 </script>
 
 <style lang="scss" scoped>
     @import "@/assets/css/global.scss";
+    .checkmark-icon {
+        position: absolute;
+        top: 10%;
+        left: 74%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+    }
     .modal {
         button {
             background: #506b91;
@@ -343,8 +401,8 @@
         }
         .purchase_table {
             height: 250px;
-    overflow-y: scroll;
-    background: white;
+            overflow-y: scroll;
+            background: white;
         }
         .purchase_list {
             overflow: auto;
@@ -416,23 +474,30 @@
         justify-content: center;
         margin: 30px auto 5%;
         gap: 20px;
-        .back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-                background-color: #5d85bb;
-            }
+    }
+    .back_btn {
+        @include back_to_previous_btn;
+        &:hover {
+            background-color: #5d85bb;
         }
-        .send_btn {
-            @include search_and_send_btn;
-            &:hover {
-                background-color: #5D85BD;
-            }
+    }
+    .send_btn {
+        @include search_and_send_btn;
+        &:hover {
+            background-color: #5D85BD;
         }
-        .save_btn {
-            @include save_btn;
-            &:hover {
-                background-color: #5e7aa2;
-            }
+    }
+    .send_btn_disabled {
+        background: #878787;
+
+        &:hover {
+            background: #878787;
+        }
+    }
+    .save_btn {
+        @include save_btn;
+        &:hover {
+            background-color: #5e7aa2;
         }
     }
     @media only screen and (min-width: 1200px) {

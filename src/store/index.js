@@ -7,6 +7,7 @@ export const useUtilsStore = defineStore('Utils',{
   state: ()=>({
     isLoading: false,
     userName: '',
+    userRoleId: null,
     today: '',
     imgExtensions: ['jpg', 'jpeg', 'png', 'gif'],
     fileExtensions: ['doc', 'docx', 'pdf', 'jpg', 'jpeg', 'png', 'gif'],
@@ -401,12 +402,12 @@ export const useUtilsStore = defineStore('Utils',{
       });
     },
     // 檢查單號狀態是否可進入(編輯、交付、刪除等需要鎖定狀態的頁面)
-    canEnterPage(Status , Condition) {
-      if(!Condition.includes(Status)) {
+    canEnterPage(Status , Conditions) {
+      if(!Conditions.includes(Status)) {
         window.history.back();
       }
     },
-    // 清除搜尋內容
+    // 清除搜尋內容(string 和 number)
     clearSearchParams(searchParams) {
       for(const key in searchParams) {
         const type = typeof searchParams[key]
@@ -656,6 +657,27 @@ export const useAPIStore = defineStore('API',{
       } catch (error) {
         console.error(error);
       }
+    },
+    // 查詢User權限(0:訪客(無法登入系統) 1:系統管理員 2.設備工程師 3:倉管人員 4.主管 5.收貨人員)
+    async getRoleId(userName) {
+      return new Promise(async(resolve, reject)=>{
+        try {
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetRoleFromName?name=${userName}`);
+          const data = response.data;
+          // console.log('userName', this.userName);
+          // console.log('Applicant',Applicant);
+          if (data.state === 'success') {
+            resolve(data.resultList.role.Id);
+          } 
+          // 存取失敗
+          else {
+            reject(data.messages);
+          }
+        } catch (error) {
+          console.error(error);
+          reject(error);
+        }
+      });
     }
   }
 })
