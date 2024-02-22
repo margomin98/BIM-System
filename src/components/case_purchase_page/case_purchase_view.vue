@@ -95,6 +95,7 @@
             </div>
         </div>
         <div v-show="PageType==='delete'" class="info_wrap mt-5">
+        
                 <div class="purchase_list" role="region" tabindex="0">
                     <div class="fixed_info">
                         <div>

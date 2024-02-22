@@ -15,12 +15,14 @@
           <!-- 專案代碼 -->
           <div class="col">
             <p>專案代碼</p>
-            <multiselect v-model="dgSearchParams.ProjectSelect" :allow-empty="false" @select="utilsStore.onDGProjectSelect" :options="DropdownArray.ProjectCode" :max-height="300" placeholder="請選擇" label="Text" :showLabels="false" track-by="Text"></multiselect>
+            <multiselect v-model="dgSearchParams.ProjectSelect" :allow-empty="false"
+              @select="utilsStore.onDGProjectSelect" :options="DropdownArray.ProjectCode" :max-height="300"
+              placeholder="請選擇" label="Text" :showLabels="false" track-by="Text"></multiselect>
           </div>
           <!-- 專案名稱 -->
           <div class="col">
             <p>專案名稱</p>
-            <input type="text" v-model="dgSearchParams.ProjectName"/>
+            <input type="text" v-model="dgSearchParams.ProjectName" />
           </div>
           <!-- 狀態 -->
           <div class="col">
@@ -43,7 +45,8 @@
             <p>日期(起)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="dgSearchParams.StartDate" class="date-input" :disabled="!dgSearchParams.DateCategory" />
+                <input type="date" v-model="dgSearchParams.StartDate" class="date-input"
+                  :disabled="!dgSearchParams.DateCategory" />
               </div>
             </div>
           </div>
@@ -52,7 +55,8 @@
             <p>日期(迄)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="dgSearchParams.EndDate" class="date-input" :disabled="!dgSearchParams.DateCategory" />
+                <input type="date" v-model="dgSearchParams.EndDate" class="date-input"
+                  :disabled="!dgSearchParams.DateCategory" />
               </div>
             </div>
           </div>
@@ -69,21 +73,26 @@
     </div>
     <div class="col justify-content-center d-flex">
       <div class="button_wrap d-flex">
-        <button class="search_btn" @click="submit('','search')">檢索</button>
+        <button class="search_btn" @click="submit('', 'search')">檢索</button>
         <button class="empty_btn" @click="clear">清空</button>
         <!-- <button class="export_btn">匯出</button> -->
       </div>
     </div>
     <div class="dg-height mb-5">
-      <DataTable lazy :key="dg.key" :first="dg.first" :size="'small'" :loading="dg.loading" :value="dgRowData" :sort-field="dg.sortField" :sort-order="dg.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
-        scrollHeight="420px" @page="submit($event , 'page')" @sort="submit($event , 'sort')" paginator :rows="dg.rows" :totalRecords="dg.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-        :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+      <DataTable lazy :key="dg.key" :first="dg.first" :size="'small'" :loading="dg.loading" :value="dgRowData"
+        :sort-field="dg.sortField" :sort-order="dg.sortOrder" resizableColumns columnResizeMode="expand" showGridlines
+        scrollable scrollHeight="420px" @page="submit($event, 'page')" @sort="submit($event, 'sort')" paginator
+        :rows="dg.rows" :totalRecords="dg.totalRecords"
+        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        :rowsPerPageOptions="[10, 20, 30]"
+        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <Column style="min-width: 60px;">
           <template #body="slotProps">
-            <ship_receive_btn :params = "slotProps" />
+            <ship_receive_btn :params="slotProps" />
           </template>
         </Column>
-        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width , 'max-width': item.max}"></Column>
+        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable
+          :style="{ 'min-width': item.width, 'max-width': item.max }"></Column>
       </DataTable>
     </div>
   </div>
@@ -97,12 +106,12 @@ import { ref, reactive, onMounted, onUnmounted } from 'vue';
 import ship_receive_btn from "@/components/ship_receive_page/ship_receive_btn.vue";
 import Navbar from "@/components/Navbar.vue";
 import { ShipReceive_StatusArray, ShipReceive_DateCategory } from "@/assets/js/dropdown";
-import {  useUtilsStore, useAPIStore } from '@/store'
+import { useUtilsStore, useAPIStore } from '@/store'
 import { storeToRefs } from 'pinia';
 
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();
-const { dgSearchParams , dg , dgRowData } = storeToRefs(utilsStore);
+const { dgSearchParams, dg, dgRowData } = storeToRefs(utilsStore);
 const DropdownArray = reactive({
   ProjectCode: [],
   Status: ShipReceive_StatusArray,
@@ -130,16 +139,16 @@ const datagridfield = ref([
   { header: "審核日期", field: "VerifyDate", width: '170px' },
 ]);
 
-onMounted(async() => {
+onMounted(async () => {
   utilsStore.$reset();
-  for(const key in searchParams) {
+  for (const key in searchParams) {
     dgSearchParams.value[key] = '';
   }
   submit('', 'search');
   DropdownArray.Staff = await apiStore.getCustodian();
   DropdownArray.ProjectCode = await useAPIStore().getFuzzyProject();
 });
-onUnmounted(()=>{
+onUnmounted(() => {
   utilsStore.$dispose();
 })
 async function submit(event, type) {
@@ -151,7 +160,7 @@ async function submit(event, type) {
     }
   }
   utilsStore.UpdatePageParameter(dg.value, event, type, form);
-  const resultList = await apiStore.getMngDatagrid('/AssetsOutMng/SignaturesForShipment',dg.value, form);
+  const resultList = await apiStore.getMngDatagrid('/AssetsOutMng/SignaturesForShipment', dg.value, form);
   dgRowData.value = resultList.rows;
   dg.value.totalRecords = resultList.total;
   dg.value.key++;
@@ -159,279 +168,336 @@ async function submit(event, type) {
 
 const clear = () => {
   utilsStore.clearSearchParams(dgSearchParams.value);
-  dgSearchParams.value.ProjectSelect = { Text: '--請選擇--',Value: '' };
+  dgSearchParams.value.ProjectSelect = { Text: '--請選擇--', Value: '' };
   submit('', 'search');
 };
 </script>
 
 
 <style lang="scss" scoped>
-  @import "@/assets/css/global.scss";
-  .dg-height {
-    @include datagrid-height;
-  }
-  @media only screen and (min-width: 1200px) {
-    .main_section {
-      padding: 0 10%;
-      h1 {
-        margin: 50px 0 20px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .button_wrap {
-        margin-bottom: 25px;
-        gap: 20px;
-        .search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-        .empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-      }
-      .datagrid_section {
-        input,
-        select,
-        .multiselect {
-          width: 200px;
-        }
-        .content {
-          background: rgba(82, 136, 156, 0.8);
-          border-radius: 10px;
-          margin-bottom: 30px;
-          height: 250px;
-          align-items: center;
-          display: flex;
-          justify-content: center;
-        }
-        .row {
-          display: grid;
-          grid-template-rows: 1fr 1fr;
-          grid-template-columns: 1fr 1fr 1fr 1fr;
-          gap: 40px 5px;
-          .col-xl-2 {
-            margin: 0 3px;
-          }
-          p {
-            @include datagrid_title;
-          }
-          input {
-            @include dropdown_btn;
-            width: 200px;
-            height: 35px;
-          }
-          button {
-            border: none;
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-          }
-          .dropdown {
-            width: 200px;
-            height: 35px;
-            @include dropdown_btn;
-            .dropdown-toggle {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              border: none;
-            }
-            .dropdown-menu {
-              width: 100%;
-              transform: translate3d(-1px, 35px, 0px) !important;
-              max-height: 250px;
-              overflow-y: auto;
-              p {
-                font-size: 18px;
-                color: black;
-                font-weight: normal;
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-            }
-          }
+@import "@/assets/css/global.scss";
+
+.dg-height {
+  @include datagrid-height;
+}
+
+@media only screen and (min-width: 1200px) {
+  .main_section {
+    padding: 0 10%;
+
+    h1 {
+      margin: 50px 0 20px;
+      text-align: center;
+      font-size: 55px;
+      font-weight: 600;
+      @include title_color;
+    }
+
+    .button_wrap {
+      margin-bottom: 25px;
+      gap: 20px;
+
+      .search_btn {
+        @include search_and_send_btn;
+
+        &:hover {
+          background-color: #5e7aa2;
         }
       }
-      .datagrid-header-row {
-        background: var(--c-7, #1f4e5f);
-      }
-      .datagrid-header .datagrid-cell {
-        text-align: left !important;
+
+      .empty_btn {
+        @include empty_btn;
+
+        &:hover {
+          background-color: #5d85bd;
+        }
       }
     }
-  }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .main_section {
-      padding: 0 5%;
-      h1 {
-        margin-top: 30px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-        margin-bottom: 20px;
+
+    .datagrid_section {
+
+      input,
+      select,
+      .multiselect {
+        width: 200px;
       }
-      .button_wrap {
-        margin-bottom: 25px;
-        gap: 20px;
-        .search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-        .empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-      }
-      .datagrid_section {
-        // input,select,.multiselect{
-        //   width:calc(50% - -40%) !important;
-        // }
-        .row {
-          display: grid;
-          grid-template-rows: 1fr 1fr 1fr;
-          grid-template-columns: 1fr 1fr 1fr;
-          gap: 10px;
-          padding: 20px;
-          @include datagrid_bg;
-          p {
-            @include datagrid_title;
-          }
-          input {
-            @include dropdown_btn;
-            width: 100%;
-            height: 35px;
-          }
-          button {
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-            text-align: left;
-          }
-          .dropdown {
-            width: 100%;
-            height: 35px;
-            @include dropdown_btn;
-            .dropdown-toggle {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              border: none;
-            }
-            .dropdown-menu {
-              width: 100%;
-              transform: translate3d(-1px, 35px, 0px) !important;
-              p {
-                font-size: 18px;
-                color: black;
-                font-weight: normal;
-              }
-            }
-          }
-        }
-      }
-      .datagrid-header-row {
-        background: var(--c-7, #1f4e5f);
-      }
-      .datagrid-header .datagrid-cell {
-        text-align: left !important;
-      }
-    }
-  }
-  @media only screen and (max-width: 767px) {
-    .main_section {
-      padding: 5%;
-      h1 {
-        margin-top: 30px;
-        text-align: center;
-        font-size: 50px;
-        font-weight: 600;
-        @include title_color;
-        margin-bottom: 20px;
-      }
-      .button_wrap {
-        margin-bottom: 25px;
+
+      .content {
+        background: rgba(82, 136, 156, 0.8);
+        border-radius: 10px;
+        margin-bottom: 30px;
+        height: 250px;
+        align-items: center;
+        display: flex;
         justify-content: center;
-        gap: 20px;
-        .search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-        .empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
       }
-      .datagrid_section {
-        .row {
-          display: grid;
-          grid-template-rows: 1fr;
-          grid-template-columns: 1fr;
-          gap: 10px 0;
-          padding: 30px;
-          @include datagrid_bg;
-          p {
-            @include datagrid_title;
-            font-size: 18px;
+
+      .row {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 40px 5px;
+
+        .col-xl-2 {
+          margin: 0 3px;
+        }
+
+        p {
+          @include datagrid_title;
+        }
+
+        input {
+          @include dropdown_btn;
+          width: 200px;
+          height: 35px;
+        }
+
+        button {
+          border: none;
+          padding: 0;
+          width: 100%;
+          font-size: 18px;
+          height: 100%;
+        }
+
+        .dropdown {
+          width: 200px;
+          height: 35px;
+          @include dropdown_btn;
+
+          .dropdown-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: none;
           }
-          input {
-            @include dropdown_btn;
+
+          .dropdown-menu {
             width: 100%;
-            height: 35px;
-          }
-          button {
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-            text-align: left;
-          }
-          .dropdown {
-            width: 100%;
-            height: 35px;
-            @include dropdown_btn;
-            .dropdown-toggle {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              border: none;
-            }
-            .dropdown-menu {
-              width: 100%;
-              transform: translate3d(-1px, 35px, 0px) !important;
-              p {
-                font-size: 18px;
-                color: black;
-                font-weight: normal;
+            transform: translate3d(-1px, 35px, 0px) !important;
+            max-height: 250px;
+            overflow-y: auto;
+
+            p {
+              font-size: 18px;
+              color: black;
+              font-weight: normal;
+
+              &:hover {
+                cursor: pointer;
               }
             }
           }
         }
       }
-      .datagrid-header-row {
-        background: var(--c-7, #1f4e5f);
-      }
-      .datagrid-header .datagrid-cell {
-        text-align: left !important;
-      }
+    }
+
+    .datagrid-header-row {
+      background: var(--c-7, #1f4e5f);
+    }
+
+    .datagrid-header .datagrid-cell {
+      text-align: left !important;
     }
   }
-</style>
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  .main_section {
+    padding: 0 5%;
+
+    h1 {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 55px;
+      font-weight: 600;
+      @include title_color;
+      margin-bottom: 20px;
+    }
+
+    .button_wrap {
+      margin-bottom: 25px;
+      gap: 20px;
+
+      .search_btn {
+        @include search_and_send_btn;
+
+        &:hover {
+          background-color: #5e7aa2;
+        }
+      }
+
+      .empty_btn {
+        @include empty_btn;
+
+        &:hover {
+          background-color: #5d85bd;
+        }
+      }
+    }
+
+    .datagrid_section {
+
+      // input,select,.multiselect{
+      //   width:calc(50% - -40%) !important;
+      // }
+      .row {
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 10px;
+        padding: 20px;
+        @include datagrid_bg;
+
+        p {
+          @include datagrid_title;
+        }
+
+        input {
+          @include dropdown_btn;
+          width: 100%;
+          height: 35px;
+        }
+
+        button {
+          padding: 0;
+          width: 100%;
+          font-size: 18px;
+          height: 100%;
+          text-align: left;
+        }
+
+        .dropdown {
+          width: 100%;
+          height: 35px;
+          @include dropdown_btn;
+
+          .dropdown-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: none;
+          }
+
+          .dropdown-menu {
+            width: 100%;
+            transform: translate3d(-1px, 35px, 0px) !important;
+
+            p {
+              font-size: 18px;
+              color: black;
+              font-weight: normal;
+            }
+          }
+        }
+      }
+    }
+
+    .datagrid-header-row {
+      background: var(--c-7, #1f4e5f);
+    }
+
+    .datagrid-header .datagrid-cell {
+      text-align: left !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .main_section {
+    padding: 5%;
+
+    h1 {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 50px;
+      font-weight: 600;
+      @include title_color;
+      margin-bottom: 20px;
+    }
+
+    .button_wrap {
+      margin-bottom: 25px;
+      justify-content: center;
+      gap: 20px;
+
+      .search_btn {
+        @include search_and_send_btn;
+
+        &:hover {
+          background-color: #5e7aa2;
+        }
+      }
+
+      .empty_btn {
+        @include empty_btn;
+
+        &:hover {
+          background-color: #5d85bd;
+        }
+      }
+    }
+
+    .datagrid_section {
+      .row {
+        display: grid;
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr;
+        gap: 10px 0;
+        padding: 30px;
+        @include datagrid_bg;
+
+        p {
+          @include datagrid_title;
+          font-size: 18px;
+        }
+
+        input {
+          @include dropdown_btn;
+          width: 100%;
+          height: 35px;
+        }
+
+        button {
+          padding: 0;
+          width: 100%;
+          font-size: 18px;
+          height: 100%;
+          text-align: left;
+        }
+
+        .dropdown {
+          width: 100%;
+          height: 35px;
+          @include dropdown_btn;
+
+          .dropdown-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: none;
+          }
+
+          .dropdown-menu {
+            width: 100%;
+            transform: translate3d(-1px, 35px, 0px) !important;
+
+            p {
+              font-size: 18px;
+              color: black;
+              font-weight: normal;
+            }
+          }
+        }
+      }
+    }
+
+    .datagrid-header-row {
+      background: var(--c-7, #1f4e5f);
+    }
+
+    .datagrid-header .datagrid-cell {
+      text-align: left !important;
+    }
+  }
+}</style>

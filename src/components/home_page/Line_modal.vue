@@ -44,6 +44,7 @@ const confirm = () =>{
             p {
                 text-align: center;
                 font-weight: 800;
+                margin-bottom: 0;
             }
         }
         .modal-content {

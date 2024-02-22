@@ -1,7 +1,7 @@
 <template>
     <Navbar />
     <validate_modal :modal_id="'auth_modal'" :user="user"></validate_modal>
-    <confirm_modal :id="'ConfirmModal'" @confirm="submit(true)" :text="warningText"/>
+    <confirm_modal :id="'ConfirmModal'" @confirm="submit(true)" :text="warningText" />
     <div class="modal fade" data-bs-backdrop="static" id="propertymodal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -10,12 +10,14 @@
                         <!-- 採購項目 -->
                         <div class='col'>
                             <p>採購項目</p>
-                            <input type="text" class="form-control text-center readonly_box" readonly v-model="tempParams.ItemName" />
+                            <input type="text" class="form-control text-center readonly_box" readonly
+                                v-model="tempParams.ItemName" />
                         </div>
                         <!-- 規格需求 -->
                         <div class='col'>
                             <p>規格需求</p>
-                            <input type="text" class="form-control text-center readonly_box" readonly v-model="tempParams.RequiredSpec" />
+                            <input type="text" class="form-control text-center readonly_box" readonly
+                                v-model="tempParams.RequiredSpec" />
                         </div>
                         <!-- 已沖/待沖數量 -->
                         <div class='col'>
@@ -34,60 +36,71 @@
                             <!-- 設備總類 -->
                             <div class='col'>
                                 <p>設備總類</p>
-                                <select class="form-select" v-model="searchParams.EquipType_Id" @change="async()=>{DropdownArray.EquipCategory = await apiStore.getEquipCategory(searchParams.EquipType_Id); searchParams.Category_Id = '';}">
-                                  <option value="">--請選擇--</option>
-                                  <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name }}</option>
+                                <select class="form-select" v-model="searchParams.EquipType_Id"
+                                    @change="async () => { DropdownArray.EquipCategory = await apiStore.getEquipCategory(searchParams.EquipType_Id); searchParams.Category_Id = ''; }">
+                                    <option value="">--請選擇--</option>
+                                    <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name }}
+                                    </option>
                                 </select>
                             </div>
                             <!-- 設備分類 -->
                             <div class='col'>
                                 <p>設備分類</p>
                                 <select class="form-select" v-model="searchParams.Category_Id">
-                                  <option v-if="DropdownArray.EquipCategory.length == 0" value="">--請先選擇設備總類--</option>
-                                  <template v-else>
-                                    <option value="">--請選擇--</option>
-                                    <option v-for="option in DropdownArray.EquipCategory" :value="option.Id">{{ option.Name }}</option>
-                                  </template>
+                                    <option v-if="DropdownArray.EquipCategory.length == 0" value="">--請先選擇設備總類--</option>
+                                    <template v-else>
+                                        <option value="">--請選擇--</option>
+                                        <option v-for="option in DropdownArray.EquipCategory" :value="option.Id">{{
+                                            option.Name }}</option>
+                                    </template>
                                 </select>
                             </div>
                             <!-- 儲位區域 -->
                             <div class='col'>
                                 <p>儲位區域</p>
-                                <select class="form-select" v-model="searchParams.Area_Id" @change="async()=>{DropdownArray.Layer = await apiStore.getLayer(searchParams.Area_Id); searchParams.Layer_Id = '';}">
-                                  <option value="">--請選擇--</option>
-                                  <option v-for="option in DropdownArray.Area" :value="option.Id">{{ option.Name }}</option>
+                                <select class="form-select" v-model="searchParams.Area_Id"
+                                    @change="async () => { DropdownArray.Layer = await apiStore.getLayer(searchParams.Area_Id); searchParams.Layer_Id = ''; }">
+                                    <option value="">--請選擇--</option>
+                                    <option v-for="option in DropdownArray.Area" :value="option.Id">{{ option.Name }}
+                                    </option>
                                 </select>
                             </div>
                             <!-- 儲位櫃位 -->
                             <div class='col'>
                                 <p>儲位櫃位</p>
                                 <select class="form-select" v-model="searchParams.Layer_Id">
-                                  <option v-if="DropdownArray.Layer.length == 0" value="">--請先選擇儲位區域--</option>
-                                  <template v-else>
-                                    <option value="">--請選擇--</option>
-                                    <option v-for="option in DropdownArray.Layer" :value="option.Id">{{ option.Name }}</option>
-                                  </template>
+                                    <option v-if="DropdownArray.Layer.length == 0" value="">--請先選擇儲位區域--</option>
+                                    <template v-else>
+                                        <option value="">--請選擇--</option>
+                                        <option v-for="option in DropdownArray.Layer" :value="option.Id">{{ option.Name }}
+                                        </option>
+                                    </template>
                                 </select>
                             </div>
                             <!-- 專案代碼 -->
                             <div class='col'>
                                 <p>專案代碼</p>
-                                <multiselect v-model="searchParams.ProjectSelect" :allow-empty="false" @select="onProjectSelect" :options="DropdownArray.ProjectCode" :max-height="300" placeholder="請選擇" label="Text" :showLabels="false" track-by="Text"></multiselect>
+                                <multiselect v-model="searchParams.ProjectSelect" :allow-empty="false"
+                                    @select="onProjectSelect" :options="DropdownArray.ProjectCode" :max-height="300"
+                                    placeholder="請選擇" label="Text" :showLabels="false" track-by="Text"></multiselect>
                             </div>
                             <!-- 資產編號 -->
                             <div class='col'>
                                 <p>資產編號</p>
-                                <input type="text" class="form-control text-center" placeholder="BFXXXXXXXX" v-model="searchParams.AssetsId" />
+                                <input type="text" class="form-control text-center" placeholder="BFXXXXXXXX"
+                                    v-model="searchParams.AssetsId" />
                             </div>
                             <!-- 物品名稱 -->
                             <div class='col'>
                                 <p>物品名稱</p>
-                                <input type="text" class="form-control text-center" placeholder="最多輸入20字" v-model="searchParams.AssetName" />
+                                <input type="text" class="form-control text-center" placeholder="最多輸入20字"
+                                    v-model="searchParams.AssetName" />
                             </div>
                         </div>
                         <div class='col d-flex justify-content-center'>
-                            <button class="btn submit_btn" type="button" @click="searchInventory('','search')">搜尋</button>
-                            <button class="btn submit_btn" style="margin-left: 0.5rem;" type="button" @click="clear">清空</button>
+                            <button class="btn submit_btn" type="button" @click="searchInventory('', 'search')">搜尋</button>
+                            <button class="btn submit_btn" style="margin-left: 0.5rem;" type="button"
+                                @click="clear">清空</button>
                             <!-- <button class="btn add_btn" style="margin-left: 0.5rem;" type="button" data-bs-dismiss="modal" @click="addList">加入</button> -->
                         </div>
                     </div>
@@ -97,9 +110,13 @@
                         <p>目前資產庫存（請優先選擇存貨）</p>
                     </div>
                 </div>
-                <DataTable :key="datagrid.key" lazy :first="datagrid.first" :size="'small'" :loading="datagrid.loading" :value="rowData" :sort-field="datagrid.sortField" :sort-order="datagrid.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="510px"
-                @page="searchInventory($event , 'page')" @sort="searchInventory($event , 'sort')" v-model:selection="datagrid.selectedList" paginator :rows="10"
-                :totalRecords="datagrid.totalRecords" paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+                <DataTable :key="datagrid.key" lazy :first="datagrid.first" :size="'small'" :loading="datagrid.loading"
+                    :value="rowData" :sort-field="datagrid.sortField" :sort-order="datagrid.sortOrder" resizableColumns
+                    columnResizeMode="expand" showGridlines scrollable scrollHeight="510px"
+                    @page="searchInventory($event, 'page')" @sort="searchInventory($event, 'sort')"
+                    v-model:selection="datagrid.selectedList" paginator :rows="10" :totalRecords="datagrid.totalRecords"
+                    paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+                    currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
                     <Column style="min-width: 60px;">
                         <template #body="slotProps">
                             <asset-view-btn :params="slotProps" />
@@ -112,13 +129,14 @@
                     </Column>
                     <Column style="min-width: 80px" header="數量">
                         <template #body="slotProps">
-                        <Storage_number :params="slotProps" />
+                            <Storage_number :params="slotProps" />
                         </template>
-                    </Column>                
-                    <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+                    </Column>
+                    <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable
+                        :style="{ 'min-width': item.width }"></Column>
                 </DataTable>
             </div>
-          </div>
+        </div>
     </div>
     <div class="main_section">
         <div class="title col">
@@ -138,28 +156,29 @@
                 <div class="col form_search_wrap">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend"> 單號：</div>
-                        <input type="text" class="form-control readonly_box" readonly v-model="Form.PP_ID"/>
+                        <input type="text" class="form-control readonly_box" readonly v-model="Form.PP_ID" />
                     </div>
                 </div>
                 <!-- 專案代碼 -->
                 <div class="col form_search_wrap">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend"> 專案代碼：</div>
-                        <input type="text" class="form-control readonly_box" readonly v-model="Form.ProjectCode"/>
+                        <input type="text" class="form-control readonly_box" readonly v-model="Form.ProjectCode" />
                     </div>
                 </div>
                 <!-- 專案名稱 -->
                 <div class="col form_search_wrap">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend"> 專案名稱：</div>
-                        <input type="text" class="form-control readonly_box" readonly v-model="Form.ProjectName"/>
+                        <input type="text" class="form-control readonly_box" readonly v-model="Form.ProjectName" />
                     </div>
                 </div>
                 <!-- 説明 -->
                 <div class="col">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend"> 説明：</div>
-                        <textarea style="height: 150px;" class="form-control readonly_box" readonly v-model="Form.Description"></textarea>
+                        <textarea style="height: 150px;" class="form-control readonly_box" readonly
+                            v-model="Form.Description"></textarea>
                     </div>
                 </div>
                 <!-- 交貨期限 -->
@@ -195,7 +214,9 @@
                         </thead>
                         <tbody>
                             <tr v-for="(item, index) in itemData" :key="item.PI_ID">
-                                <td class="table_content"><button class="writeoff_btn" data-bs-toggle="modal" data-bs-target="#propertymodal" @click="updateSearchingModal(index)">沖銷</button></td>
+                                <td class="table_content"><button class="writeoff_btn" data-bs-toggle="modal"
+                                        data-bs-target="#propertymodal" @click="updateSearchingModal(index)">沖銷</button>
+                                </td>
                                 <td class="table_content">
                                     <div class="item_number_wrap">
                                         <div v-for="(asset, assetIndex) in item.AssetList" class="item_number"><img src="@/assets/delete.png" @click="deleteFromList(index, assetIndex)"><span>{{ asset.AssetsId}}&nbsp;&nbsp;&nbsp;&nbsp;*{{asset.Number}}</span></div>
@@ -222,7 +243,7 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend"><span>*</span>沖銷人員：</div>
-                            <input type="text" class="form-control readonly_box" readonly v-model="user.resultName"/>
+                            <input type="text" class="form-control readonly_box" readonly v-model="user.resultName" />
                             <span class="icon-container">
                                 <img src="@/assets/accept.png" class="checkmark-icon" v-show="user.isValidate" />
                             </span>
@@ -232,7 +253,7 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">完成沖銷日期：</div>
-                            <input type="text" class="form-control readonly_box" readonly v-model="utilsStore.today"/>
+                            <input type="text" class="form-control readonly_box" readonly v-model="utilsStore.today" />
                         </div>
                     </div>
                 </div>
@@ -240,7 +261,8 @@
                 <div class="col">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend"> 沖銷備註：</div>
-                        <textarea style="height: 150px;" class="form-control" placeholder="最多輸入100字" v-model="Form.WriteoffMemo"></textarea>
+                        <textarea style="height: 150px;" class="form-control" placeholder="最多輸入100字"
+                            v-model="Form.WriteoffMemo"></textarea>
                     </div>
                 </div>
             </div>
@@ -248,7 +270,8 @@
         <div class="col button_wrap">
             <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
             <button class="save_btn" @click="submit(false)">暫存</button>
-            <button class="send_btn" :class="{'send_btn_disabled': !user.isValidate}" data-bs-toggle="modal" data-bs-target="#ConfirmModal" :disabled="!user.isValidate">完成</button>
+            <button class="send_btn" :class="{ 'send_btn_disabled': !user.isValidate }" data-bs-toggle="modal"
+                data-bs-target="#ConfirmModal" :disabled="!user.isValidate">完成</button>
         </div>
     </div>
 </template>
@@ -276,7 +299,7 @@ const purchaseStore = usePurchaseStore();
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();
 // 解構
-const { Form, DropdownArray } = storeToRefs(purchaseStore) ;
+const { Form, DropdownArray } = storeToRefs(purchaseStore);
 
 const route = useRoute();
 const PP_ID = route.query.search_id;
@@ -284,8 +307,8 @@ const PP_ID = route.query.search_id;
 const datagrid = reactive(createDadagridObject(''));
 const rowData = ref([]);
 const datagridfield = [
-    { field: "OM_Unit",  width: '100px',  header: "單位" },
-    { field: "AssetType",  width: '60',  header: "類型" },
+    { field: "OM_Unit", width: '100px', header: "單位" },
+    { field: "AssetType", width: '60', header: "類型" },
     { field: "AssetsId", width: '150px', header: "資產編號" },
     { field: "AssetName", width: '150px', header: "物品名稱" },
     { field: "ProductType", width: '150px', header: "型號" },
@@ -359,16 +382,16 @@ const searchParams = reactive({
     Area_Id: '',
     Layer_Id: '',
     ProjectCode: '',
-    ProjectSelect: {Text:'--請選擇--' ,Value: ''},
+    ProjectSelect: { Text: '--請選擇--', Value: '' },
     AssetsId: '',
     AssetName: '',
     AssetList: [],
 })
 // 檢索上方顯示欄位之一
-const tempCombine = computed(()=>{
+const tempCombine = computed(() => {
     return `${tempParams.SelectedNumber}/${tempParams.Number}`
 })
-onMounted(async() => {
+onMounted(async () => {
     purchaseStore.$reset();
     await purchaseStore.getDetails(PP_ID, CasePurchase_Process);
     itemData.value = [...Form.value.NotOrdered,...Form.value.Ordered];
@@ -378,29 +401,29 @@ onMounted(async() => {
     updateSelectedNumber();
 
 });
-onUnmounted(()=>{
-  purchaseStore.$dispose();
-  utilsStore.$dispose();
+onUnmounted(() => {
+    purchaseStore.$dispose();
+    utilsStore.$dispose();
 })
 
-const submit = async(isDone) =>{
+const submit = async (isDone) => {
     // 檢查字數上限
     const regexPattern = new RegExp(`^[\\s\\S]{0,100}$`);
-    if(!regexPattern.test(Form.value.WriteoffMemo)) {
+    if (!regexPattern.test(Form.value.WriteoffMemo)) {
         alert(`沖銷備註不可輸入超過100字`);
-        return 
+        return
     }
     // 完成要檢查是否全部沖銷完畢
-    if(isDone) {
-        for(let i=0; i<itemData.value.length; i++)  {
+    if (isDone) {
+        for (let i = 0; i < itemData.value.length; i++) {
             let total = 0;
             itemData.value[i].AssetList.forEach(item =>{
                 total += item.Number;
             })
-            if(total !== itemData.value[i].Number) {
+            if (total !== itemData.value[i].Number) {
                 console.log(`${total}/${itemData.value[i].Number}`);
                 alert('請先將所有項目沖銷完畢');
-                return 
+                return
             }
         }
     }
@@ -411,21 +434,21 @@ const submit = async(isDone) =>{
         WriteoffAssets: itemData.value,
         Done: isDone
     }
-    if(!isDone) {
+    if (!isDone) {
         delete requestData.WriteoffPerson;
     }
-    console.log('requestData',requestData);
+    console.log('requestData', requestData);
     try {
         const response = await axios.post('http://192.168.0.177:7008/PurchasingMng/ItemsWriteOff', requestData);
         const data = response.data;
-        if(data.state === 'success') {
-            alert(data.messages+'\n'+data.resultList.PP_ID);
-            if(isDone) {
-                router.push({name: 'Case_Purchase_Datagrid'});
+        if (data.state === 'success') {
+            alert(data.messages + '\n' + data.resultList.PP_ID);
+            if (isDone) {
+                router.push({ name: 'Case_Purchase_Datagrid' });
             } else {
                 window.location.reload();
             }
-        } else if(data.state === 'account_error') {
+        } else if (data.state === 'account_error') {
             alert(data.messages);
             router.push('/');
         } else {
@@ -438,7 +461,7 @@ const submit = async(isDone) =>{
 // 清空檢索欄位(不包含已選項目)
 const clear = () => {
     utilsStore.clearSearchParams(searchParams);
-    searchParams.ProjectSelect =  {Text:'--請選擇--' ,Value: ''};
+    searchParams.ProjectSelect = { Text: '--請選擇--', Value: '' };
     DropdownArray.value.EquipCategory = [];
     DropdownArray.value.Layer = [];
     searchInventory('', 'search');
@@ -477,7 +500,7 @@ const updateSelectedList = () => {
 const searchInventory = async (event, type) => {
     //檢查字數
     const regexPattern = new RegExp(`^[\\s\\S]{0,20}$`);
-    if(!regexPattern.test(searchParams.AssetName)) {
+    if (!regexPattern.test(searchParams.AssetName)) {
         alert(`物品名稱不可輸入超過20字`);
         return
     }
@@ -493,10 +516,10 @@ const searchInventory = async (event, type) => {
         form.append('PP_ID', PP_ID);
         form.append('ItemList', JSON.stringify(searchParams.AssetList));
         utilsStore.UpdatePageParameter(datagrid, event, type, form);
-        const resultList = await apiStore.getMngDatagrid('/PurchasingMng/SearchInventory',datagrid, form);
+        const resultList = await apiStore.getMngDatagrid('/PurchasingMng/SearchInventory', datagrid, form);
         rowData.value = resultList.rows.map(item => ({
-          ...item,
-          selectNumber: item.OM_Number,
+            ...item,
+            selectNumber: item.OM_Number,
         }));
         datagrid.totalRecords = resultList.total;
         datagrid.key++;
@@ -514,7 +537,7 @@ const deleteFromList = (index, itemIndex) => {
     }
 }
 const addToList = (data) => {
-    if(tempParams.SelectedNumber + data.selectNumber > tempParams.Number) {
+    if (tempParams.SelectedNumber + data.selectNumber > tempParams.Number) {
         alert('所選數量超過沖銷所需數量');
         return
     }
@@ -536,443 +559,551 @@ const addToList = (data) => {
     updateSelectedNumber();
     tempParams.SelectedNumber = itemData.value[index].SelectedNumber
     updateSelectedList();
-    searchInventory('','');
+    searchInventory('', '');
 }
 
 </script>
 <style lang="scss" scoped>
-    @import "@/assets/css/global.scss";
-    .readonly_box {
-        @include readonly_box;
+@import "@/assets/css/global.scss";
+
+.readonly_box {
+    @include readonly_box;
+}
+
+.checkmark-icon {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    transform: translateY(-50%);
+}
+
+.modal .modal-body {
+    padding: 0 !important;
+}
+
+#propertymodal {
+    .fixed_item_info {
+        background: #528091;
+        display: grid;
+        border: 1px solid black;
+
+        p {
+            color: white;
+            text-align: center;
+            white-space: nowrap;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 5px
+        }
     }
+
+    padding: 0 5%;
+
+    .modal-content {
+        background: unset;
+        border: 0;
+    }
+
+    .fixed_info {
+        @include fixed_info;
+        background: #528091 !important;
+        border-radius: 0 !important;
+        border: 1px solid black;
+        padding: 0 10px;
+
+        div {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        p {
+            font-size: 20px;
+            margin-bottom: 0 !important
+        }
+
+        button {
+            border: none;
+            background: none;
+            color: white;
+            font-weight: 700;
+            font-size: 22px;
+        }
+    }
+
+    .list {
+        border-left: 1px solid black;
+        border-bottom: 1px solid black;
+        border-right: 1px solid black;
+    }
+
+    .second_content {
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        background: #D9D9D9;
+        padding: 20px;
+
+        p.content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: black;
+            background: white;
+            height: 35px;
+            border-radius: 5px;
+        }
+
+        .submit_btn {
+            margin-top: 20px;
+            background: #48658C;
+            color: white;
+            font-weight: 700;
+            width: 80px;
+            font-size: 20px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:hover {
+                background-color: #5d85bd;
+            }
+        }
+
+        .add_btn {
+            margin-top: 20px;
+            background: #132238;
+            color: white;
+            font-weight: 700;
+            width: 80px;
+            font-size: 20px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            border-radius: 7px;
+
+            &:hover {
+                background-color: #426497;
+            }
+        }
+
+        .wrap1 {
+            display: grid;
+
+            .input-number {
+                @include count_btn;
+            }
+
+            .number-input-box {
+                color: black;
+
+                .input-number {
+                    width: 100%;
+                }
+            }
+
+            .form-label {
+                white-space: nowrap;
+                font-weight: 800;
+                font-size: 18px;
+            }
+
+            div {
+                padding: 0 5px;
+
+                p {
+                    color: black;
+                    text-align: center;
+                    white-space: nowrap;
+                    font-size: 18px;
+                    font-weight: 700;
+                    margin-bottom: 5px;
+                }
+            }
+        }
+    }
+}
+
+#auth_modal {
+    button {
+        background: #506b91;
+        border: none;
+        font-weight: 700;
+        font-size: 18px;
+
+        &:hover {
+            background: #6d92b3;
+        }
+    }
+
+    .modal-body {
+        padding: 16px 16px 0;
+    }
+
+    .modal-content {
+        width: 400px;
+        margin: auto;
+    }
+
+    .input-group-prepend {
+        width: auto;
+    }
+
+    .modal-footer {
+        padding: 0 12px 12px;
+        border: none;
+    }
+
+    .modal-header {
+        h5 {
+            font-weight: 700;
+        }
+
+        background: #3D4E61;
+        color: white;
+
+        .close_icon {
+            cursor: pointer;
+        }
+    }
+}
+
+.writeoff_btn {
+    background: #79A8A9;
+    border: none;
+    border-radius: 10px;
+    width: 72px;
+    padding: 8px 0;
+    color: white;
+
+    &:hover {
+        background: #608485
+    }
+}
+
+.main_section {
+    .fixed_info {
+        @include fixed_info;
+
+        p {
+            font-size: 20px;
+            margin-bottom: 0;
+        }
+    }
+
+    .content {
+        @include content_bg;
+
+        span {
+            @include red_star
+        }
+
+        .input-group {
+            .input-number {
+                @include count_btn;
+            }
+
+            .form-control {
+                height: 35px;
+            }
+
+            .input-group-prepend {
+                color: white;
+                font-weight: 700;
+                font-size: 20px;
+            }
+        }
+    }
+
+    h1 {
+        margin-top: 50px;
+        text-align: center;
+        font-weight: 600;
+        @include title_color;
+    }
+
+    .auth_btn {
+        @include auth_btn;
+
+        &:hover {
+            background: #5a6d87;
+        }
+    }
+
+    .purchase_table {
+        height: 250px;
+        overflow-y: scroll;
+    }
+
+    .purchase_list {
+        overflow: auto;
+        width: 100%;
+
+        table {
+            border: 1px solid #000000;
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 1px;
+            text-align: center;
+        }
+
+        caption {
+            caption-side: top;
+            text-align: center;
+        }
+
+        th,
+        td {
+            border: 1px solid #000000;
+            background-color: #ffffff;
+            color: #000000;
+            padding: 5px;
+        }
+
+        td {
+            padding: 8px;
+        }
+
+        tbody tr {
+            height: 46px;
+        }
+
+        .check_col {
+            width: 90px
+        }
+
+        .to_buy_list {
+            width: 300px
+        }
+
+        .amount_col {
+            width: 130px
+        }
+
+        .item_col {
+            width: 160px
+        }
+
+        .table_content {
+            text-align: left;
+
+            .item_number {
+                background: #A7AFBB;
+                // width: min-content;
+                border-radius: 10px;
+                padding: 5px 10px;
+                margin: 3px;
+                display: inline-flex;
+                align-items: center;
+                gap: 0 8px;
+
+                img {
+                    cursor: pointer;
+                }
+            }
+        }
+
+        &:focus-visible {
+            outline: unset;
+        }
+    }
+}
+
+.button_wrap {
+    display: flex;
+    justify-content: center;
+    margin: 30px auto 5%;
+    gap: 20px;
+
+    .back_btn {
+        @include back_to_previous_btn;
+
+        &:hover {
+            background-color: #5d85bb;
+        }
+    }
+
+    .send_btn {
+        @include search_and_send_btn;
+
+        &:hover {
+            background-color: #5D85BD;
+        }
+    }
+
+    .send_btn_disabled {
+        background: #878787;
+
+        &:hover {
+            background: #878787;
+        }
+    }
+
+    .save_btn {
+        @include save_btn;
+
+        &:hover {
+            background-color: #5e7aa2;
+        }
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .fixed_item_info {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr;
+        gap: 30px;
+        padding: 20px 160px;
+    }
+
+    #propertymodal .second_content .wrap1 {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 15px;
+        padding: 10px 80px;
+    }
+
+    .main_section {
+        h1 {
+            font-size: 55px;
+        }
+
+        .info_wrap {
+            margin: auto;
+            width: 850px;
+
+            .content {
+                .input-group {
+                    .input-group-prepend {
+                        width: 140px;
+                        text-align: end;
+                    }
+                }
+            }
+        }
+    }
+
     .checkmark-icon {
-        position: absolute;
         top: 10%;
         left: 74%;
         transform: translateY(-50%);
-        width: 20px;
-        height: 20px;
-    }
-    .modal .modal-body {
-        padding: 0 !important;
-    }
-    #propertymodal {
-        .fixed_item_info {
-            background: #528091;
-            display: grid;
-            border: 1px solid black;
-            p {
-                color: white;
-                text-align: center;
-                white-space: nowrap;
-                font-size: 20px;
-                font-weight: 700;
-                margin-bottom: 5px
-            }
-        }
-        
-        padding: 0 5%;
-        .modal-content {
-            background: unset;
-            border: 0;
-        }
-        .fixed_info {
-            @include fixed_info;
-            background: #528091 !important;
-            border-radius: 0 !important;
-            border: 1px solid black;
-            padding: 0 10px;
-            div {
-                flex-grow: 1;
-                text-align: center;
-            }
-            p {
-                font-size: 20px;
-                margin-bottom: 0 !important
-            }
-            button {
-                border: none;
-                background: none;
-                color: white;
-                font-weight: 700;
-                font-size: 22px;
-            }
-        }
-        .list {
-            border-left: 1px solid black;
-            border-bottom: 1px solid black;
-            border-right: 1px solid black;
-        }
-        .second_content {
-            border-left: 1px solid black;
-            border-right: 1px solid black;
-            background: #D9D9D9;
-            padding: 20px;
-            p.content {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                color: black;
-                background: white;
-                height: 35px;
-                border-radius: 5px;
-            }
-            .submit_btn {
-                margin-top: 20px;
-                background: #48658C;
-                color: white;
-                font-weight: 700;
-                width: 80px;
-                font-size: 20px;
-                height: 30px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                &:hover {
-                    background-color: #5d85bd;
-                }
-            }
-            .add_btn {
-                margin-top: 20px;
-                background: #132238;
-                color: white;
-                font-weight: 700;
-                width: 80px;
-                font-size: 20px;
-                height: 30px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 0;
-                border-radius: 7px;
-                &:hover {
-                    background-color: #426497;
-                }
-            }
-            .wrap1 {
-                display: grid;
-                .input-number {
-                    @include count_btn;
-                }
-                .number-input-box {
-                    color: black;
-                    .input-number {
-                        width: 100%;
-                    }
-                }
-                .form-label {
-                    white-space: nowrap;
-                    font-weight: 800;
-                    font-size: 18px;
-                }
-                div {
-                    padding: 0 5px;
-                    p {
-                        color: black;
-                        text-align: center;
-                        white-space: nowrap;
-                        font-size: 18px;
-                        font-weight: 700;
-                        margin-bottom: 5px;
-                    }
-                }
-            }
-        }
-    }
-    #auth_modal {
-        button {
-            background: #506b91;
-            border: none;
-            font-weight: 700;
-            font-size: 18px;
-            &:hover {
-                background: #6d92b3;
-            }
-        }
-        .modal-body {
-            padding: 16px 16px 0;
-        }
-        .modal-content {
-            width: 400px;
-            margin: auto;
-        }
-        .input-group-prepend {
-            width: auto;
-        }
-        .modal-footer {
-            padding: 0 12px 12px;
-            border: none;
-        }
-        .modal-header {
-            h5 {
-                font-weight: 700;
-            }
-            background: #3D4E61;
-            color: white;
-            .close_icon {
-                cursor: pointer;
-            }
-        }
-    }
-    .writeoff_btn {
-        background: #79A8A9;
-        border: none;
-        border-radius: 10px;
-        width: 72px;
-        padding: 8px 0;
-        color: white;
-        &:hover {
-            background: #608485
-        }
-    }
-    .main_section {
-        .fixed_info {
-            @include fixed_info;
-            p {
-                font-size: 20px;
-                margin-bottom: 0;
-            }
-        }
-        .content {
-            @include content_bg;
-            span {
-                @include red_star
-            }
-            .input-group {
-                .input-number {
-                    @include count_btn;
-                }
-                .form-control {
-                    height: 35px;
-                }
-                .input-group-prepend {
-                    color: white;
-                    font-weight: 700;
-                    font-size: 20px;
-                }
-            }
-        }
-        h1 {
-            margin-top: 50px;
-            text-align: center;
-            font-weight: 600;
-            @include title_color;
-        }
-        .auth_btn {
-            @include auth_btn;
-            &:hover {
-                background: #5a6d87;
-            }
-        }
-        .purchase_table {
-            height: 250px;
-            overflow-y: scroll;
-        }
-        .purchase_list {
-            overflow: auto;
-            width: 100%;
-            table {
-                border: 1px solid #000000;
-                width: 100%;
-                border-collapse: collapse;
-                border-spacing: 1px;
-                text-align: center;
-            }
-            caption {
-                caption-side: top;
-                text-align: center;
-            }
-            th,
-            td {
-                border: 1px solid #000000;
-                background-color: #ffffff;
-                color: #000000;
-                padding: 5px;
-            }
-            td {
-                padding: 8px;
-            }
-            tbody tr {
-                height: 46px;
-            }
-            .check_col {
-                width: 90px
-            }
-            .to_buy_list {
-                width: 300px
-            }
-            .amount_col {
-                width: 130px
-            }
-            .item_col {
-                width: 160px
-            }
-            .table_content {
-                text-align: left;
-                .item_number {
-                    background: #A7AFBB;
-                    // width: min-content;
-                    border-radius: 10px;
-                    padding: 5px 10px;
-                    margin: 3px;
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 0 8px;
-                    img {
-                        cursor: pointer;
-                    }
-                }
-            }
-            &:focus-visible {
-                outline: unset;
-            }
-        }
-    }
-    .button_wrap {
-        display: flex;
-        justify-content: center;
-        margin: 30px auto 5%;
-        gap: 20px;
-        .back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-                background-color: #5d85bb;
-            }
-        }
-        .send_btn {
-            @include search_and_send_btn;
-            &:hover {
-                background-color: #5D85BD;
-            }
-        }
-        .send_btn_disabled {
-            background: #878787;
 
-            &:hover {
-                background: #878787;
-            }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .fixed_item_info {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr;
+        gap: 30px;
+        padding: 20px 50px;
+    }
+
+    .main_section {
+        h1 {
+            font-size: 55px;
         }
-        .save_btn {
-            @include save_btn;
-            &:hover {
-                background-color: #5e7aa2;
+
+        .info_wrap {
+            margin: auto;
+            width: 700px;
+
+            .content {
+                .input-group {
+                    .input-group-prepend {
+                        width: 140px;
+                        text-align: end;
+                    }
+                }
+            }
+
+            .purchase_list .table_content {
+                white-space: nowrap
             }
         }
     }
-    @media only screen and (min-width: 1200px) {
-        .fixed_item_info {
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-template-rows: 1fr;
-            gap: 30px;
-            padding: 20px 160px;
+
+    .checkmark-icon {
+        top: 10%;
+        left: 69%;
+
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .fixed_item_info {
+        gap: 10px 0;
+        padding: 20px
+    }
+
+    #propertymodal .second_content .wrap1 {
+        gap: 10px 0;
+    }
+
+    .modal {
+        .fixed_info {
+            height: unset !important;
         }
-        #propertymodal .second_content .wrap1 {
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            gap: 15px;
-            padding: 10px 80px;
-        }
-        .main_section {
-            h1 {
-                font-size: 55px;
-            }
-            .info_wrap {
-                margin: auto;
-                width: 850px;
-                .content {
-                    .input-group {
-                        .input-group-prepend {
-                            width: 140px;
-                            text-align: end;
-                        }
-                    }
-                }
-            }
+
+        .second_content .wrap1 {
+            gap: 10px;
+            padding: 5px;
         }
     }
-    @media only screen and (min-width: 768px) and (max-width: 1199px) {
-        .fixed_item_info {
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-template-rows: 1fr;
-            gap: 30px;
-            padding: 20px 50px;
+
+    .main_section {
+        h1 {
+            font-size: 50px;
         }
-        .main_section {
-            h1 {
-                font-size: 55px;
-            }
-            .info_wrap {
-                margin: auto;
-                width: 700px;
-                .content {
-                    .input-group {
-                        .input-group-prepend {
-                            width: 140px;
-                            text-align: end;
-                        }
-                    }
-                }
-                .purchase_list .table_content {
-                    white-space: nowrap
-                }
-            }
+
+        .fixed_info {
+            flex-direction: column;
+            height: unset;
+            padding: 10px
         }
-    }
-    @media only screen and (max-width: 767px) {
-        .fixed_item_info {
-            gap: 10px 0;
-            padding: 20px
-        }
-        #propertymodal .second_content .wrap1 {
-            gap: 10px 0;
-        }
-        .modal {
-            .fixed_info {
-                height: unset!important;
+
+        .info_wrap {
+            padding: 0 5%;
+
+            .purchase_list td {
+                white-space: nowrap
             }
-            .second_content .wrap1 {
-                gap: 10px;
-                padding: 5px;
-            }
-        }
-        .main_section {
-            h1 {
-                font-size: 50px;
-            }
-            .fixed_info {
-                flex-direction: column;
-                height: unset;
-                padding: 10px
-            }
-            .info_wrap {
-                padding: 0 5%;
-                .purchase_list td {
-                    white-space: nowrap
+
+            .purchase_list table {
+                display: block;
+                overflow-y: scroll;
+
+                input {
+                    width: 50%
                 }
-                .purchase_list table {
-                    display: block;
-                    overflow-y: scroll;
-                    input {
-                        width: 50%
-                    }
+            }
+
+            input,
+            textarea {
+                width: 100%;
+            }
+
+            .content {
+                .auth_btn {
+                    margin-top: 10px
                 }
-                input,
-                textarea {
-                    width: 100%;
+
+                .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+                    margin-left: unset;
+                    border-radius: 5px;
                 }
-                .content {
-                    .auth_btn {
-                        margin-top: 10px
-                    }
-                    .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-                        margin-left: unset;
-                        border-radius: 5px;
-                    }
-                    .input-group {
-                        flex-direction: column;
-                    }
+
+                .input-group {
+                    flex-direction: column;
                 }
             }
         }
     }
-</style>
+
+    .checkmark-icon {
+        top: 30%;
+        left: 96%;
+    }
+
+}</style>
