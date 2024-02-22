@@ -10,12 +10,14 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    <p v-show="props.isChecked">繼續完成LINE通知綁定</p>
-                    <p v-show="!props.isChecked">繼續<span style="color: red;">取消</span>LINE通知綁定</p>
+                    <!-- 綁定訊息 -->
+                    <p v-show="props.isChecked">完成LINE通知綁定</p>
+                    <!-- 取消訊息 -->
+                    <p v-show="!props.isChecked">取消LINE通知綁定</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn cancel" data-bs-dismiss="modal" @click="cancelChange">取消</button>
-                    <button type="button" class="btn confirm" data-bs-dismiss="modal" @click="confirm">繼續</button>
+                    <button type="button" class="btn confirm" data-bs-dismiss="modal" @click="confirm">確定</button>
                 </div>
             </div>
         </div>
@@ -42,6 +44,7 @@ const confirm = () =>{
             p {
                 text-align: center;
                 font-weight: 800;
+                margin-bottom: 0;
             }
         }
         .modal-content {

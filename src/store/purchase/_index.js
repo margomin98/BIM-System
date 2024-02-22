@@ -27,7 +27,7 @@ export const usePurchaseStore = defineStore('Purchase', {
       Status: '',
 			ProjectCode: '',
 			ProjectName: '',
-			ProjectSelect: {Text: '--請選擇' , Value:''},
+			ProjectSelect: {Text: '--請選擇--' , Value:''},
 			Description: '',
 			Deadline: '',
       Requisitions: [],
@@ -61,10 +61,6 @@ export const usePurchaseStore = defineStore('Purchase', {
 	}),
 	// computed
 	getters: {
-    Project(state) {
-      console.log(`${state.Form.ProjectCode.trim()} ${state.Form.ProjectName}`);
-      return `${state.Form.ProjectCode.trim()} ${state.Form.ProjectName}`
-    }
 	},
 	// method
   actions: {

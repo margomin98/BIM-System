@@ -1,7 +1,7 @@
 <template>
     <Navbar />
     <div class="main_section">
-        <ConfirmModal :function="quickprocessStore.editQuick" :parameter1="true" :text="warningText"/>
+        <confirm_modal :id="'ConfirmModal'" @confirm="quickprocessStore.editQuick(true)" :text="warningText"/>
         <div class="title col">
             <h1>
                 編輯快速入庫單
@@ -11,14 +11,14 @@
         <div class="col button_wrap">
             <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
             <button class="save_btn" @click="quickprocessStore.editQuick(false)">暫存</button>
-            <button class="send_btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">送出</button>
+            <button class="send_btn" data-bs-toggle="modal" data-bs-target="#ConfirmModal">送出</button>
         </div>
     </div>
 </template>
   
 <script setup>
 import Navbar from '@/components/Navbar.vue';
-import ConfirmModal from '@/components/Confirm_modal.vue'
+import confirm_modal from '@/components/utils/confirm_modal.vue'
 import quick_store_component from '@/components/quick_store_page/quick_store_component.vue';
 import { useStorageStore } from '@/store/storage/_index'
 import { useAPIStore, useUtilsStore } from '@/store';

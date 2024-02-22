@@ -1,6 +1,6 @@
 <template>
       <Navbar />
-    <ConfirmModal :function="quickrentStore.submit" :text="warningText"/>
+    <confirm_modal :id="'ConfirmModal'" @confirm="quickrentStore.submit" :text="warningText"/>
     <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -121,7 +121,7 @@
                 </div>
                 <div>
                     <p>
-                        申請入庫日期 : {{ utilsStore.today }}
+                        申請日期 : {{ utilsStore.today }}
                     </p>
                 </div>
             </div>
@@ -187,11 +187,7 @@
                         <span>*</span>資產出庫細項(請至少出庫一項)
                     </p>
                 </div>
-                <div class="prepare_amount">
-                    <p class="d-flex">
-                        已備數量：<p>6個</p>
-                    </p>
-                </div>
+         
             </div>
             <div class="content">
                 <DataTable :size="'small'" :value="Form.ItemList" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="510px"
@@ -213,8 +209,8 @@
             </div>
             </div>
             <div class="col button_wrap">
-            <button class="back_btn" @click="goBack">回上一頁</button>
-      <button class="send_btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">送出</button>
+            <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
+      <button class="send_btn" data-bs-toggle="modal" data-bs-target="#ConfirmModal">送出</button>
       </div>
     </div>
 </template>
@@ -222,7 +218,7 @@
 <script setup>
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import ConfirmModal from '@/components/Confirm_modal.vue';
+import confirm_modal from '@/components/utils/confirm_modal.vue'
 import Navbar from '@/components/Navbar.vue';
 import AssetViewBtn from '@/components/utils/asset_view_btn.vue'
 import delete_btn from '@/components/utils/delete_btn.vue';
@@ -242,7 +238,7 @@ const { Form , DropdownArray , searchParams, datagrid1, datagrid1field, rowData1
 
 const warningText = '按下確認後將無法再次變更，請確認是否正確填寫出庫項目';
 onMounted(async ()=>{
-    utilsStore.$reset();
+    // utilsStore.$reset();
     rentStore.$reset();
     // DropdownArray.value.ProjectCode = [
     //     {Text: '專案1', Value: '0001'},
@@ -286,6 +282,9 @@ const resetParams = ()=>{
 </script>
 <style lang="scss" scoped>
     @import '@/assets/css/global.scss';
+    .radio_wrap .form-check{
+gap: 0 5px;
+    }
     .modal .modal-body {
         padding: 0 !important;
     }
@@ -350,14 +349,8 @@ const resetParams = ()=>{
             background-color: #456ca7
         }
     }
-    .info_wrap:nth-child(4) .fixed_info {
-        position: relative;
-    }
-    .fixed_info .prepare_amount {
-        display: flex;
-        position: absolute;
-        right: 20px;
-    }
+   
+   
     .check_box_wrap {
         font-weight: 700;
         align-items: center;
@@ -381,7 +374,9 @@ const resetParams = ()=>{
             @include fixed_info;
             background: #528091 !important;
             border-radius: 0 !important;
-            border: 1px solid black;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-left: 1px solid black;
             padding: 0 10px;
             div {
                 flex-grow: 1;
@@ -405,6 +400,7 @@ const resetParams = ()=>{
             border-right: 1px solid black;
         }
         .second_content {
+            border-top:1px solid black;
             border-left: 1px solid black;
             border-right: 1px solid black;
             background: #D9D9D9;
@@ -483,9 +479,6 @@ const resetParams = ()=>{
     span {
         @include red_star
     } 
-    .fixed_info{
-        position: relative;
-    }
     @media only screen and (min-width: 1200px) {
         .modal .second_content .wrap1 {
             grid-template-columns: 1fr 1fr 1fr;
@@ -595,9 +588,7 @@ const resetParams = ()=>{
     }
     @media only screen and (max-width: 767px) {
         .modal {
-            .fixed_info {
-                height: unset!important;
-            }
+        
             .second_content .wrap1 {
                 gap: 10px;
                 padding: 5px;
@@ -646,9 +637,7 @@ const resetParams = ()=>{
                         font-size: 20px;
                         margin-bottom: 0;
                     }
-                    .prepare_amount {
-                        position: unset
-                    }
+               
                 }
                 .content {
                     @include content_bg;

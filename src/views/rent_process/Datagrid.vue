@@ -8,7 +8,7 @@
       <div class="content">
         <div class="row">
           <div class="col">
-            <p>單號</p>
+            <p>出庫單號</p>
             <input type="text" v-model="dgSearchParams.AO_ID" />
           </div>
           <div class="col">
@@ -55,6 +55,13 @@
                 <input type="date" v-model="dgSearchParams.EndDate" class="date-input" :disabled="!dgSearchParams.DateCategory" />
               </div>
             </div>
+          </div>
+          <div class="col">
+            <p>申請人員</p>
+            <select class="form-select" v-model="dgSearchParams.Applicant">
+              <option value="">--請選擇--</option>
+              <option v-for="item in DropdownArray.Staff" :key="item" :value="item">{{ item }}</option>
+            </select>
           </div>
         </div>
       </div>
@@ -108,16 +115,18 @@ const searchParams = reactive({
   DateCategory: '',
   StartDate: '',
   EndDate: '',
+  Applicant: '',
 })
 const DropdownArray = reactive({
   Use: Rent_UseArray,
   Status: Rent_StatusArray,
   DateCategory: Rent_Process_DateCategory,
   ProjectCode: [],
+  Staff: [],
 });
 const datagridfield = [
   { header: "狀態", field: "Status", width: '130px' },
-  { header: "單號", field: "AO_ID", width: '150px' },
+  { header: "出庫單號", field: "AO_ID", width: '150px' },
   { header: "專案名稱", field: "ProjectName", width: '170px', max: '300px' },
   { header: "用途", field: "Use", width: '130px' },
   { header: "說明", field: "Description", width: '150px', max: '350px' },
@@ -132,8 +141,9 @@ onMounted(async () => {
   for(const key in searchParams) {
     dgSearchParams.value[key] = '';
   }
-  dg.value.sortField = 'AO_ID'
+  dg.value.sortField = ''
   submit('', 'search');
+  DropdownArray.Staff = await apiStore.getCustodian();
   DropdownArray.ProjectCode = await apiStore.getFuzzyProject();
 });
 onUnmounted(()=>{

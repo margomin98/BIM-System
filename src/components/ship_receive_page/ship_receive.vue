@@ -19,8 +19,8 @@
                 <div class="row g-0">
                     <div class="col d-flex wrap column_section">
                         <label for="inputTitle1" class="form-label use">
-                                <p>用&ensp;&ensp;&ensp;&ensp;途</p>
-                            </label>
+                                        <p>用&ensp;&ensp;&ensp;&ensp;途</p>
+                                    </label>
                         <div class="option">
                             <div class='content'>
                                 <div class="form-check" v-for="(option, index) in DropdownArray.Use" :key="index">
@@ -34,26 +34,26 @@
                 <div class="row g-0 project_details">
                     <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
                         <label for="inputWithButton" class="form-label">
-                                <p>專案代碼</p>
-                            </label>
+                                        <p>專案代碼</p>
+                                    </label>
                         <div class="input-group" id="readonly_box">
                             <p class="readonly_box">{{ Form.ProjectCode }}</p>
                         </div>
                     </div>
                     <div class="col d-flex wrap">
-                        <label for="inputWithTitle" class="form-label project_name" id="project_name">
-                                <p>專案名稱</p>
-                            </label>
+                        <label for="inputWithTitle" class="form-label project_name">
+                                        <p>專案名稱</p>
+                                    </label>
                         <div class="input-group" id="readonly_box">
                             <p class="readonly_box" readonly> {{ Form.ProjectName }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="row g-0 ">
-                    <div class="col d-flex wrap" style="border: none">
+                    <div class="col d-flex wrap" >
                         <label for="inputTextarea" class="form-label">
-                                <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
-                            </label>
+                                        <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
+                                    </label>
                         <div class="input-group" id='readonly_box'>
                             <textarea class="form-control readonly_box" readonly v-model="Form.Description"></textarea>
                         </div>
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                     <div class="col-xl-8 col-lg-8 col-md-8 col-12 d-flex wrap">
-                        <label for="inputWithTitle" class="form-label project_name"><p>交付完成日期</p></label>
+                        <label for="inputWithTitle" class="form-label project_date"><p>交付完成日期</p></label>
                         <div class="input-group" id="readonly_box">
                             <p class="readonly_box"> {{ Form.DeliveryDate }}</p>
                         </div>
@@ -93,13 +93,13 @@
                 <DataTable :size="'small'" :value="Form.OM_List" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="600px">
                     <Column header="交付確認" class="datatable_checkbox">
                         <template style="min-width:50px; " #body="slotProps">
-                            <input type="checkbox" class="p-checkbox p-component" v-model="slotProps.data.OM_IsExecute" disabled>
-                        </template>
+                                    <input type="checkbox" class="p-checkbox p-component" v-model="slotProps.data.OM_IsExecute" disabled>
+</template>
                     </Column>
                     <Column>
-                        <template #body="slotProps">
-                            <asset_view_btn :params="slotProps" />
-                        </template>
+<template #body="slotProps">
+    <asset_view_btn :params="slotProps" />
+</template>
                     </Column>
                     <Column v-for="item in rentStore.OMList_field" :field="item.field" :header="item.header" :sortable="item.sortable" :style="{'min-width': item.width}"></Column>
                 </DataTable>
@@ -215,7 +215,7 @@
         <!-- 上傳簽收單 -->
         <div class="info_wrap upload_receive_section">
             <div class='content'>
-                <div class="d-flex">
+                <div class="d-flex content_wrap">
                     <p  v-show="PageType === 'ShipReceiveConfirm'"><span>*</span>上傳簽收單</p>
                     <div class="upload_wrap">
                         <button v-show="PageType === 'ShipReceiveConfirm'" @click="openFileExplorer(fileinput)">選擇檔案</button>
@@ -255,8 +255,8 @@
             </div>
             <div class="auth_section d-flex">
                 <p><span v-show="PageType==='ShipReceiveConfirm'" class="red_star">*</span>上傳人員</p> 
-                <input v-show="PageType === 'ShipReceiveConfirm'" type="text" class="" v-model="user1.resultName" readonly>
-                <input v-show="PageType === 'ShipReceiveView'" type="text" class="" v-model="Form.UploadPerson" readonly>
+                <input v-show="PageType === 'ShipReceiveConfirm'" type="text" class="readonly_box" v-model="user1.resultName" readonly>
+                <input v-show="PageType === 'ShipReceiveView'" type="text" class="readonly_box" v-model="Form.UploadPerson" readonly>
                 <button v-show="PageType === 'ShipReceiveConfirm'" data-bs-toggle="modal" data-bs-target="#auth_modal">驗證</button>
             </div>
         </div>
@@ -264,24 +264,38 @@
 </template>
 
 <script setup>
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
-import Viewmodal from '@/components/view_modal.vue'
-import validate_modal from '@/components/utils/validate_modal.vue';
-import asset_view_btn from '@/components/utils/asset_view_btn.vue';
-import printBtn from '@/components/ship_receive_page/ship_receive_print_btn.vue'
-import { useAPIStore, useUtilsStore } from '@/store';
-import { useRentStore } from '@/store/rent/_index';
-import { storeToRefs } from 'pinia';
-import { openFileExplorer } from '@/assets/js/common_fn';
-import { ref } from 'vue';
-
-const utilsStore = useUtilsStore();
-const rentStore = useRentStore();
-const apiStore = useAPIStore();
-const { Form , DropdownArray , PageType , user1 } = storeToRefs(rentStore)
-const fileinput = ref();
-
+    import DataTable from 'primevue/datatable';
+    import Column from 'primevue/column';
+    import Viewmodal from '@/components/view_modal.vue'
+    import validate_modal from '@/components/utils/validate_modal.vue';
+    import asset_view_btn from '@/components/utils/asset_view_btn.vue';
+    import printBtn from '@/components/ship_receive_page/ship_receive_print_btn.vue'
+    import {
+        useAPIStore,
+        useUtilsStore
+    } from '@/store';
+    import {
+        useRentStore
+    } from '@/store/rent/_index';
+    import {
+        storeToRefs
+    } from 'pinia';
+    import {
+        openFileExplorer
+    } from '@/assets/js/common_fn';
+    import {
+        ref
+    } from 'vue';
+    const utilsStore = useUtilsStore();
+    const rentStore = useRentStore();
+    const apiStore = useAPIStore();
+    const {
+        Form,
+        DropdownArray,
+        PageType,
+        user1
+    } = storeToRefs(rentStore)
+    const fileinput = ref();
 </script>
 <style lang="scss" scoped>
     @import "@/assets/css/global.scss";
@@ -301,18 +315,23 @@ const fileinput = ref();
     .auth_section {
         justify-content: center;
         align-items: center;
-        background: white;
-        padding: 5px 0;
+        background: #283344;
+        padding: 10px 0;
         border-radius: 0 0 10px 10px;
         gap: 0 10px;
         p {
             margin-bottom: 0;
-            color: black !important;
         }
         button {
             padding: 10px 17px;
             font-size: 18px;
             background: #3569AF;
+        }
+        .readonly_box {
+            cursor: not-allowed;
+            width: unset;
+            height: 35px;
+            border-radius: 5px;
         }
     }
     .selected_file {
@@ -383,6 +402,7 @@ const fileinput = ref();
         .content {
             border-radius: 10px 10px 0 0 !important;
             .upload_wrap {
+                margin-left: 20px;
                 button {
                     padding: 10px 25px;
                     background: #7CA6DD;
@@ -496,15 +516,17 @@ const fileinput = ref();
         width: 20px;
         height: 20px;
     }
-    .project_details #project_name {
+    .project_details .project_name {
         height: 100%;
     }
+  
     h1 {
         margin-top: 50px;
         text-align: center;
         font-weight: 600;
         @include title_color;
     }
+
     @media only screen and (min-width: 1200px) {
         .main_section {
             h1 {
@@ -536,10 +558,7 @@ const fileinput = ref();
                 .fixed_info:nth-child(5) {
                     border-top: unset;
                 }
-                .fixed_info:nth-child(3),
-                .fixed_info:nth-child(5) {
-                    border-bottom: 1px solid black;
-                }
+            
                 #readonly_box {
                     padding: 0;
                     background-color: #B4B4B4;
@@ -630,7 +649,6 @@ const fileinput = ref();
                     .form-control {
                         height: auto;
                         border-radius: 0;
-                        padding: 0;
                     }
                     #readonly_box {
                         background: #b4b4b4;
@@ -776,7 +794,7 @@ const fileinput = ref();
                     }
                     .wrap {
                         background: white;
-                        border-bottom: 0.5px solid black;
+                
                         align-items: center;
                         label.use {
                             border-right: 1px solid black;
@@ -794,6 +812,10 @@ const fileinput = ref();
                         .project_name {
                             border-left: 1px solid black;
                         }
+                      
+                    }
+                    .column_section,.project_details{
+                        border-bottom: 1px solid black;
                     }
                     .form-label {
                         font-weight: 700;
@@ -821,32 +843,13 @@ const fileinput = ref();
                     text-align: end;
                 }
             }
-            .button_wrap {
-                display: flex;
-                justify-content: space-between;
-                margin: 30px auto 5%;
-                width: 220px;
-                button {
-                    &:nth-child(1) {
-                        @include back_to_previous_btn;
-                        &:hover {
-                            background-color: #5d85bb;
-                        }
-                    }
-                }
-                .send_btn {
-                    @include search_and_send_btn;
-                    &:hover {
-                        background-color: #5e7aa2;
-                    }
-                }
-                .send_btn_disabled {
-                    background: #878787;
-                    &:hover {
-                        background: #878787;
-                    }
-                }
-            }
+          
+            .project_date{
+        border-left:1px solid black;
+        p{
+            width: 150px !important;
+        }
+    }
         }
     }
     @media only screen and (min-width: 768px) and (max-width: 1199px) {
@@ -974,7 +977,6 @@ const fileinput = ref();
                     .form-control {
                         height: auto;
                         border-radius: 0;
-                        padding: 0;
                     }
                     #readonly_box {
                         background: #b4b4b4;
@@ -1121,7 +1123,7 @@ const fileinput = ref();
                     }
                     .wrap {
                         background: white;
-                        border-bottom: 0.5px solid black;
+                
                         align-items: center;
                         label.use {
                             border-right: 1px solid black;
@@ -1139,6 +1141,10 @@ const fileinput = ref();
                         .project_name {
                             border-left: 1px solid black;
                         }
+                      
+                    }
+                    .column_section,.project_details{
+                        border-bottom: 1px solid black;
                     }
                     .form-label {
                         font-weight: 700;
@@ -1166,32 +1172,13 @@ const fileinput = ref();
                     text-align: end;
                 }
             }
-            .button_wrap {
-                display: flex;
-                justify-content: space-between;
-                margin: 30px auto 5%;
-                width: 220px;
-                button {
-                    &:nth-child(1) {
-                        @include back_to_previous_btn;
-                        &:hover {
-                            background-color: #5d85bb;
-                        }
-                    }
-                }
-                .send_btn {
-                    @include search_and_send_btn;
-                    &:hover {
-                        background-color: #5e7aa2;
-                    }
-                }
-                .send_btn_disabled {
-                    background: #878787;
-                    &:hover {
-                        background: #878787;
-                    }
-                }
-            }
+       
+            .project_date{
+        border-left:1px solid black;
+        p{
+            width: 150px !important;
+        }
+    }
         }
     }
     @media only screen and (max-width: 767px) {
@@ -1199,13 +1186,15 @@ const fileinput = ref();
             .readonly_box {
                 @include readonly_box;
             }
-            #readonly_box {
-                background: #b4b4b4;
-            }
+          
             .upload_receive_section .content {
                 flex-direction: column;
                 .upload_wrap {
+                    margin-left: unset;
                     margin-top: 10px;
+                }
+                .content_wrap {
+                    flex-direction: column;
                 }
             }
             h1 {
@@ -1236,10 +1225,7 @@ const fileinput = ref();
                 .fixed_info:nth-child(5) {
                     border-top: unset;
                 }
-                .fixed_info:nth-child(3),
-                .fixed_info:nth-child(5) {
-                    border-bottom: 1px solid black;
-                }
+             
                 .third_content {
                     .list {
                         border: 1px solid black;
@@ -1459,7 +1445,6 @@ const fileinput = ref();
                     }
                     .wrap {
                         background: white;
-                        border-bottom: 1px solid black;
                         align-items: center;
                         flex-direction: column;
                         label.use,
@@ -1491,6 +1476,9 @@ const fileinput = ref();
                             }
                         }
                     }
+                    .column_section,.project_details{
+                        border-bottom: 1px solid black;
+                    }
                     .form-label {
                         font-weight: 700;
                         font-size: 20px;
@@ -1509,6 +1497,11 @@ const fileinput = ref();
                         }
                     }
                 }
+                .auth_section .readonly_box {
+                    width: 100px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap
+                }
                 .input-group-prepend {
                     color: white;
                     font-weight: 700;
@@ -1517,32 +1510,7 @@ const fileinput = ref();
                     text-align: end;
                 }
             }
-            .button_wrap {
-                display: flex;
-                justify-content: space-between;
-                margin: 30px auto 5%;
-                width: 220px;
-                button {
-                    &:nth-child(1) {
-                        @include back_to_previous_btn;
-                        &:hover {
-                            background-color: #5d85bb;
-                        }
-                    }
-                }
-                .send_btn {
-                    @include search_and_send_btn;
-                    &:hover {
-                        background-color: #5e7aa2;
-                    }
-                }
-                .send_btn_disabled {
-                    background: #878787;
-                    &:hover {
-                        background: #878787;
-                    }
-                }
-            }
+          
         }
     }
 </style>

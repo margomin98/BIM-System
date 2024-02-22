@@ -17,7 +17,7 @@
 	body {
 		min-height: 100vh;
 	}
-	.multiselect .multiselect__tags,
+	
 	.multiselect__single {
 		overflow: hidden;
 		white-space: nowrap;

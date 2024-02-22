@@ -14,6 +14,11 @@
     <div class="container-fluid datagrid_section">
       <div class="content">
         <div class="row">
+          <!-- 單號 -->
+          <div class="col">
+            <p>單號</p>
+            <input type="text" v-model="dgSearchParams.PP_ID"/>
+          </div>
           <!-- 狀態 -->
           <div class="col">
             <p>狀態</p>
@@ -32,6 +37,11 @@
             <p>專案名稱</p>
             <input type="text" v-model="dgSearchParams.ProjectName"/>
           </div>
+          <!-- 說明 -->
+          <div class="col">
+            <p>說明</p>
+            <input type="text" v-model="dgSearchParams.Description"/>
+          </div>
           <!-- 日期類型 -->
           <div class="col">
             <p>日期類型</p>
@@ -45,7 +55,7 @@
             <p>時間(起)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="dgSearchParams.StartDate" class="date-input" />
+                <input type="date" v-model="dgSearchParams.StartDate" class="date-input" :disabled="!dgSearchParams.DateCategory"/>
               </div>
             </div>
           </div>
@@ -54,9 +64,25 @@
             <p>時間(迄)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="dgSearchParams.EndDate" class="date-input" />
+                <input type="date" v-model="dgSearchParams.EndDate" class="date-input" :disabled="!dgSearchParams.DateCategory"/>
               </div>
             </div>
+          </div>
+          <!-- 申請人員 -->
+          <div class="col">
+            <p>申請人員</p>
+            <select class="form-select" aria-label="Default select example" v-model="dgSearchParams.Applicant">
+              <option value="">--請選擇--</option>
+              <option v-for="option in DropdownArray.Staff" :value="option">{{ option }}</option>
+            </select>
+          </div>
+          <!-- 完成人員 -->
+          <div class="col">
+            <p>完成人員</p>
+            <select class="form-select" aria-label="Default select example" v-model="dgSearchParams.PurchasePerson">
+              <option value="">--請選擇--</option>
+              <option v-for="option in DropdownArray.Staff" :value="option">{{ option }}</option>
+            </select>
           </div>
         </div>
       </div>
@@ -104,11 +130,16 @@ const apiStore = useAPIStore();
 const { dgSearchParams , dg , dgRowData } = storeToRefs(utilsStore);
 const DropdownArray = reactive({
   ProjectCode: [],
+  Staff: [],
   Status: CasePurchase_StatusArray,
   DateCategory: CasePurchase_DateCategory
 })
 
 const searchParams = reactive({
+  PP_ID: '',
+  Description: '',
+  Applicant: '',
+  PurchasePerson: '',
   ProjectName: '',
   Status: '',
   DateCategory: '',
@@ -134,12 +165,8 @@ onMounted(async() => {
     dgSearchParams.value[key] = '';
   }
   submit('', 'search');
-  // DropdownArray.ProjectCode = [
-  //   {Text:'--請選擇--' , Value: ''},
-  //   {Text:'000-1  12345678901234567890' , Value: '0001'},
-  //   {Text:'000-2  asdasdasdwqweqwasdaw' , Value: '0002'},
-  // ]
-  DropdownArray.ProjectCode = await useAPIStore().getFuzzyProject();
+  DropdownArray.ProjectCode = await apiStore.getFuzzyProject();
+  DropdownArray.Staff = await apiStore.getCustodian();
 });
 onUnmounted(()=>{
   utilsStore.$dispose();

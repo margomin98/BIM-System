@@ -186,7 +186,7 @@
                <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="middleForm.itemSN">
            </div>
        </div>
-       <!-- 選購金額 -->
+       <!-- 採購金額 -->
        <div class="row  purchase_amount ">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-xl-3 mb-lg-3 mb-md-3">

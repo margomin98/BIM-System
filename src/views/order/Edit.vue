@@ -1,5 +1,5 @@
 <template>
-  <Navbar @username="getUserName"/>
+  <Navbar/>
   <div class="main_section">
     <div class="title col">
       <h1>
@@ -15,12 +15,12 @@
 </template>
 
 <script setup>
-  import { provide, reactive, ref, } from 'vue';
+  import { provide, reactive, ref, onMounted} from 'vue';
   import Navbar from '@/components/Navbar.vue';
   import Order_component from '@/components/order_page/Order_component.vue';
   import router from '@/router';
   import { goBack, checkRequire, checkMaxLetter, } from '@/assets/js/common_fn.js'
-  import { checkRole, getDetails , GetAntiForgeryToken } from '@/assets/js/common_api'
+  import { GetAntiForgeryToken } from '@/assets/js/common_api'
   import axios from 'axios'
   import { useRoute } from 'vue-router';
   const route = useRoute();
@@ -57,39 +57,34 @@
   const details = ref();
   provide("form",formParams);
   provide("file",fileParams);
-  // 從navbar取得使用者名稱並檢查是否能編輯(是否有權限 or 是否為為填寫人)
-  const getUserName = (async(name)=>{
+  onMounted(()=>{
+    getDetails();
+  })
+  const getDetails = async()=>{
     try {
-      const result = await checkRole(name); // true->權限可預覽 false->無，需檢查是否為填寫人
-      getDetails('/GetDBdata/PurchasingGetData?po_id=',PO_ID)
-      .then((r)=>{
-        details.value = r;
-        if (!result) {
-          if (name !== details.value.Executor) {
-            goBack();
+      const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/PurchasingGetData?po_id=${PO_ID}`);
+      const data = response.data ; 
+      details.value = data.resultList;
+      for(const key in details.value) {
+        // 文字部分
+        if(formParams.hasOwnProperty(key)) {
+          formParams[key] = details.value[key];
+        } else if(key == 'PO_PurchaseNum') {
+          formParams['PurchaseNum'] = details.value[key];
+        }
+        // 檔案部分
+        if(details.value.existDocument) {
+          fileParams.existDoc = details.value.existDocument;
+          for(const file of fileParams.existDoc) {
+            file.exist = true;
           }
         }
-        for(const key in details.value) {
-          // 文字部分
-          if(formParams.hasOwnProperty(key)) {
-            formParams[key] = details.value[key];
-          } else if(key == 'PO_PurchaseNum') {
-            formParams['PurchaseNum'] = details.value[key];
-          }
-          // 檔案部分
-          if(details.value.existDocument) {
-            fileParams.existDoc = details.value.existDocument;
-            for(const file of fileParams.existDoc) {
-              file.exist = true;
-            }
-          }
-          // fileParams.existDoc = [{"FileName": "20231226142509.png", "FileLink": "https://truth.bahamut.com.tw/s01/201909/9ede4b8227205d338399d2dfbb3e7938.JPG" , "exist": true}]
-        }
-      })
+        // fileParams.existDoc = [{"FileName": "20231226142509.png", "FileLink": "https://truth.bahamut.com.tw/s01/201909/9ede4b8227205d338399d2dfbb3e7938.JPG" , "exist": true}]
+      }
     } catch (error) {
       console.error(error);
     }
-  })
+  }
   // 送出-(含文字 & 檔案)
   const submit = (async ()=>{
     const RequireCheckList = ['PurchaseNum','PurchaseDate','Quantity'];

@@ -1,7 +1,7 @@
 <template>
   <Navbar />
   <div class="main_section">
-    <div class="title col"><h1>新增專案採購單</h1></div>
+    <div class="title col"><h1>新增專案待採購清單</h1></div>
     <case_purchase></case_purchase>
     <div class="col button_wrap">
       <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
@@ -80,7 +80,7 @@ onUnmounted(()=>{
 @media only screen and (max-width: 767px) {
   .title {
     h1 {
-      font-size: 50px;
+      font-size: 32px;
     }
   }
 }</style>
