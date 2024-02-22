@@ -100,7 +100,7 @@ export const useAssetStore = defineStore('Asset', {
       const apiStore = useAPIStore();
       const data = await apiStore.getAssetData(AssetsId);
       for(const key in data) {
-        if(data[key]) {
+        if(data[key] !== null && data[key] !== undefined) {
           switch (key) {
             case 'existFile':
               data.existFile.forEach(file => {

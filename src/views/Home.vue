@@ -101,45 +101,6 @@
           </perfect-scrollbar>
         </div>
       </div>
-      <!-- 沒有代碼搜索框 -->
-      <!-- <div class="code_search with_search_input">
-        <div class="search_result">
-          <perfect-scrollbar>
-            <div class="result_wrap">
-              <p class="case_code d-flex">1234568</p>
-              <p class="case_name">中興_台電離岸風力發電第一期XX</p>
-            </div>
-            <div class="result_wrap selected">
-              <p class="case_code d-flex">1234568</p>
-              <p class="case_name">中興_台電離岸風力發電第一期第三期</p>
-            </div>
-            <div class="result_wrap">
-              <p class="case_code d-flex">1234568</p>
-              <p class="case_name">中興_台電離岸風力發電第一期XX</p>
-            </div>
-            <div class="result_wrap">
-              <p class="case_code d-flex">1234568</p>
-              <p class="case_name">中興_台電離岸風力發電第一期XX</p>
-            </div>
-            <div class="result_wrap">
-              <p class="case_code d-flex">1234568</p>
-              <p class="case_name">中興_台電離岸風力發電第一期XX</p>
-            </div>
-            <div class="result_wrap">
-              <p class="case_code d-flex">1234568</p>
-              <p class="case_name">中興_台電離岸風力發電第一期XX</p>
-            </div>
-            <div class="result_wrap">
-              <p class="case_code d-flex">148944568</p>
-              <p class="case_name">中興_台電離岸風力發電第100000期XX</p>
-            </div>
-            <div class="result_wrap">
-              <p class="case_code d-flex">1234568</p>
-              <p class="case_name">中興_台電離岸風力發電第一期XX</p>
-            </div>
-          </perfect-scrollbar>
-        </div>
-      </div> -->
     </div>
     <div class="col pt_center">
       <div class="datagrid_section">
@@ -191,12 +152,12 @@
               <!-- 資產編號 -->
               <div class="col">
                 <p>資產編號</p>
-                <input type="text" placeholder="請輸入資產編號" v-model="CustodyAssets.searchParams.AssetsId" />
+                <input type="text" placeholder="請輸入資產編號" v-model="Warehouse.searchParams.AssetsId" />
               </div>
               <!-- 物品名稱 -->
               <div class="col">
                 <p>物品名稱</p>
-                <input type="text" placeholder="最多輸入20字" v-model="CustodyAssets.searchParams.AssetName" />
+                <input type="text" placeholder="請輸入物品名稱" v-model="Warehouse.searchParams.AssetName" />
               </div>
               <!-- 設備總類 -->
               <div class="col">
@@ -403,7 +364,7 @@
               <!-- 專案名稱 -->
               <div class="col">
                 <p>專案名稱</p>
-                <input type="text" placeholder="請輸入專案名稱" v-model="CustodyAssets.searchParams.AssetsId" />
+                <input type="text" placeholder="請輸入專案名稱" v-model="CustodyAssets.searchParams.ProjectName" />
               </div>
               <!-- 資產編號 -->
               <div class="col">
@@ -413,7 +374,7 @@
               <!-- 物品名稱 -->
               <div class="col">
                 <p>物品名稱</p>
-                <input type="text" placeholder="最多輸入20字" v-model="CustodyAssets.searchParams.AssetName" />
+                <input type="text" placeholder="請輸入物品名稱" v-model="CustodyAssets.searchParams.AssetName" />
               </div>
             </div>
             <div class="button_wrap">
@@ -448,7 +409,7 @@
       <div v-show="roleId === 1 || roleId === 4" class="warn_window">
         <div class="title">
           警示訊息
-          <button class="refresh_btn">刷新</button>
+          <button class="refresh_btn" @click="getAlertMsg">刷新</button>
         </div>
         <div class="content">
           <perfect-scrollbar>
@@ -579,6 +540,8 @@ const Warehouse = reactive({
   ],
   rowData: [],
   searchParams: {
+    AssetName: '',
+    AssetsId: '',
     EquipType_Id: '',
     Category_Id: '',
     Area_Id: '',
@@ -653,6 +616,7 @@ const CustodyAssets = reactive({
     Layer_Id: '',
     Status: '',
     Project_Id: '',
+    ProjectName: '',
   },
   DropdownArray: {
     Status: [],
@@ -918,21 +882,6 @@ onUnmounted(() => {
   apiStore.$dispose();
 })
 const submit = async (type = '', event, action = '') => {
-  // 檢查查詢欄位(如果有需要)
-  if (type === 'PurchasedItem') {
-    const regexPattern = new RegExp(`^[\\s\\S]{0,20}$`);
-    if (!regexPattern.test(PurchasedItem.searchParams.PurchasedItem)) {
-      alert(`採購項目不可輸入超過20字`);
-      return;
-    }
-  } else if (type === 'CustodyAssets') {
-    const regexPattern = new RegExp(`^[\\s\\S]{0,20}$`);
-    if (!regexPattern.test(CustodyAssets.searchParams.AssetName)) {
-      alert(`物品名稱不可輸入超過20字`);
-      return;
-    }
-
-  }
   const typeMappings = {
     // 總覽庫房包括 圓餅圖*2
     Warehouse: {
