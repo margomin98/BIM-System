@@ -30,13 +30,13 @@
   }
 
   function checkButton() {
-    if (!CasePurchase_Edit.includes(status) || props.params.data.canEdit) {
+    if (!CasePurchase_Edit.includes(status) || !props.params.data.canEdit) {
       isDisabled.edit = true;
     }
-    if (!CasePurchase_Order.includes(status) || props.params.data.canOrder) {
+    if (!CasePurchase_Order.includes(status) || !props.params.data.canOrder) {
       isDisabled.order = true;
     }
-    if (!CasePurchase_Process.includes(status) || props.params.data.canWritoff) {
+    if (!CasePurchase_Process.includes(status) || !props.params.data.canWritoff) {
       isDisabled.process = true;
     }
   }
