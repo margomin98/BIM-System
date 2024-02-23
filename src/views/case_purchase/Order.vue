@@ -168,7 +168,7 @@
             </div>
         </div>
         <div class="col button_wrap">
-            <button class="back_btn" @click="goBack">回上一頁</button>
+            <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
             <!-- <button class="save_btn" @click="temp">暫存</button> -->
             <button class="send_btn" :class="{ 'send_btn_disabled': !user.isValidate }" data-bs-toggle="modal"
                 data-bs-target="#ConfirmModal" :disabled="!user.isValidate">完成</button>
