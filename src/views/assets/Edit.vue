@@ -24,7 +24,7 @@ const apiStore = useAPIStore();
 const assetStore = useAssetStore();
 
 // 解構
-const { DropdownArray } = storeToRefs(assetStore) ;
+const { DropdownArray, Form } = storeToRefs(assetStore) ;
 const route = useRoute();
 const AssetsId = route.query.search_id ;
 
