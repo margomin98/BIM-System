@@ -15,38 +15,38 @@
       <div class="content">
         <div class="row">
           <!-- 報廢編號 -->
-          <div class="col-xl-12 col-md-6 col-12">
+          <div class="col">
             <p>報廢編號</p>
             <input type="text" v-model="dgSearchParams.ScrapId" />
           </div>
           <!-- 狀態 -->
-          <div class="col-xl-12 col-md-6 col-12">
+          <div class="col">
             <p>狀態</p>
             <select class="form-select" v-model="dgSearchParams.Status" id="statusDropdown">
-          <option value="" disabled selected>請選擇</option>
-          <option v-for="(item, index) in DropdownArray.Status" :key="index" :value="item">{{ item }}</option>
-      </select>
+            <option value="" disabled selected>請選擇</option>
+            <option v-for="(item, index) in DropdownArray.Status" :key="index" :value="item">{{ item }}</option>
+        </select>
           </div>
           <!-- 資產編號 -->
-          <div class="col-xl-12 col-md-6 col-12">
+          <div class="col">
             <p>資產編號</p>
             <input type="text" v-model="dgSearchParams.AssetsId" />
           </div>
           <!-- 物品名稱 -->
-          <div class="col-xl-12 col-md-6 col-12">
+          <div class="col">
             <p>物品名稱</p>
             <input type="text" v-model="dgSearchParams.AssetName" />
           </div>
           <!-- 日期類型 -->
-          <div class="col-xl-12 col-md-6 col-12">
+          <div class="col">
             <p>日期類型</p>
             <select class="form-select" v-model="dgSearchParams.DateCategory" id="dateCategoryDropdown">
-          <option value="" disabled selected>請選擇</option>
-          <option v-for="(item, index) in DropdownArray.DateCategory" :key="index" :value="item">{{ item }}</option>
-      </select>
+            <option value="" disabled selected>請選擇</option>
+            <option v-for="(item, index) in DropdownArray.DateCategory" :key="index" :value="item">{{ item }}</option>
+        </select>
           </div>
           <!-- 日期(起) -->
-          <div class="col-xl-12 col-md-6 col-12  flex-col">
+          <div class="col">
             <p>日期(起)</p>
             <div class="date-selector">
               <div class="input-container">
@@ -55,7 +55,7 @@
             </div>
           </div>
           <!-- 日期(迄) -->
-          <div class="col-xl-12 col-md-6 col-12 flex-col">
+          <div class="col">
             <p>日期(迄)</p>
             <div class="date-selector">
               <div class="input-container">
@@ -64,28 +64,28 @@
             </div>
           </div>
           <!-- 申請人員 -->
-          <div class="col-xl-12 col-md-6 col-12 flex-col">
+          <div class="col">
             <p>申請人員</p>
             <select class="form-select" v-model="dgSearchParams.Applicant">
-              <option value="">--請選擇--</option>
-              <option v-for="item in DropdownArray.Staff" :key="item" :value="item">{{ item }}</option>
-            </select>
+                <option value="">--請選擇--</option>
+                <option v-for="item in DropdownArray.Staff" :key="item" :value="item">{{ item }}</option>
+              </select>
           </div>
           <!-- 報廢人員 -->
-          <div class="col-xl-12 col-md-6 col-12 flex-col">
+          <div class="col">
             <p>報廢人員</p>
             <select class="form-select" v-model="dgSearchParams.ScrapPerson">
-              <option value="">--請選擇--</option>
-              <option v-for="item in DropdownArray.Staff" :key="item" :value="item">{{ item }}</option>
-            </select>
+                <option value="">--請選擇--</option>
+                <option v-for="item in DropdownArray.Staff" :key="item" :value="item">{{ item }}</option>
+              </select>
           </div>
           <!-- 審核人員 -->
-          <div class="col-xl-12 col-md-6 col-12 flex-col">
+          <div class="col">
             <p>審核人員</p>
             <select class="form-select" v-model="dgSearchParams.VerifyPerson">
-              <option value="">--請選擇--</option>
-              <option v-for="item in DropdownArray.Staff" :key="item" :value="item">{{ item }}</option>
-            </select>
+                <option value="">--請選擇--</option>
+                <option v-for="item in DropdownArray.Staff" :key="item" :value="item">{{ item }}</option>
+              </select>
           </div>
         </div>
       </div>
@@ -98,12 +98,11 @@
     </div>
     <div style="width: 100%;margin-bottom:3%" class="mb-5">
       <div class="dg-height">
-        <DataTable lazy :key="dg.key" :first="dg.first" :size="'small'" :loading="dg.loading" :value="dgRowData" :sort-field="dg.sortField" :sort-order="dg.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
-        scrollHeight="420px" @page="submit($event , 'page')" @sort="submit($event , 'sort')" paginator :rows="dg.rows" :totalRecords="dg.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-        :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+        <DataTable lazy :key="dg.key" :first="dg.first" :size="'small'" :loading="dg.loading" :value="dgRowData" :sort-field="dg.sortField" :sort-order="dg.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="420px" @page="submit($event , 'page')"
+          @sort="submit($event , 'sort')" paginator :rows="dg.rows" :totalRecords="dg.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
           <Column style="min-width: 60px;">
             <template #body="slotProps">
-                <Scrap_button :params = "slotProps"/>
+                  <Scrap_button :params = "slotProps"/>
 </template>
           </Column>
           <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
@@ -133,159 +132,185 @@
     Scrap_StatusArray,
     Scrap_DateCategory
   } from "@/assets/js/dropdown.js"
-  import { useUtilsStore, useAPIStore } from '@/store'
-import { storeToRefs } from 'pinia';
-const utilsStore = useUtilsStore();
-const apiStore = useAPIStore();
-const { dgSearchParams , dg , dgRowData } = storeToRefs(utilsStore);
-const searchParams = reactive({
-  ScrapId: '',
-  Status: '',
-  AssetsId: '',
-  AssetName: '',
-  DateCategory: '',
-  StartDate: '',
-  EndDate: '',
-  Applicant: '',
-  ScrapPerson: '',
-  VerifyPerson: '',
-});
-const DropdownArray = reactive({
-  Status: Scrap_StatusArray,
-  DateCategory: Scrap_DateCategory,
-  Staff: [],
-});
-const datagridfield = [
-  { header: "報廢編號", field: "ScrapId", width: '180px' },
-  { header: "狀態", field: "Status", width: '120px' },
-  { header: "資產編號", field: "AssetsId", width: '150px' },
-  { header: "物品名稱", field: "AssetName", width: '180px' },
-  { header: "申請日期", field: "ApplicationDate", width: '150px' },
-  { header: "申請人員", field: "Applicant", width: '120px' },
-  { header: "交付日期", field: "DeliveryDate", width: '150px' },
-  { header: "報廢人員", field: "ScrapPerson", width: '120px' },
-  { header: "審核日期", field: "VerifyDate", width: '150px' },
-  { header: "審核人員", field: "VerifyPerson", width: '120px' },
-]
-onMounted(async () => {
-  utilsStore.$reset();
-  for(const key in searchParams) {
-    dgSearchParams.value[key] = '';
-  }
-  dg.value.sortField = ''
-  submit('', 'search');
-  DropdownArray.Staff = await apiStore.getCustodian();
-});
-onUnmounted(()=>{
-  utilsStore.$dispose();
-})
-async function submit(event, type) {
-  const form = new FormData();
-  //將表格資料append到 form
-  for (const key in dgSearchParams.value) {
-    if (dgSearchParams.value[key]) {
-      form.append(key, dgSearchParams.value[key]);
+  import {
+    useUtilsStore,
+    useAPIStore
+  } from '@/store'
+  import {
+    storeToRefs
+  } from 'pinia';
+  const utilsStore = useUtilsStore();
+  const apiStore = useAPIStore();
+  const {
+    dgSearchParams,
+    dg,
+    dgRowData
+  } = storeToRefs(utilsStore);
+  const searchParams = reactive({
+    ScrapId: '',
+    Status: '',
+    AssetsId: '',
+    AssetName: '',
+    DateCategory: '',
+    StartDate: '',
+    EndDate: '',
+    Applicant: '',
+    ScrapPerson: '',
+    VerifyPerson: '',
+  });
+  const DropdownArray = reactive({
+    Status: Scrap_StatusArray,
+    DateCategory: Scrap_DateCategory,
+    Staff: [],
+  });
+  const datagridfield = [{
+      header: "報廢編號",
+      field: "ScrapId",
+      width: '180px'
+    },
+    {
+      header: "狀態",
+      field: "Status",
+      width: '120px'
+    },
+    {
+      header: "資產編號",
+      field: "AssetsId",
+      width: '150px'
+    },
+    {
+      header: "物品名稱",
+      field: "AssetName",
+      width: '180px'
+    },
+    {
+      header: "申請日期",
+      field: "ApplicationDate",
+      width: '150px'
+    },
+    {
+      header: "申請人員",
+      field: "Applicant",
+      width: '120px'
+    },
+    {
+      header: "交付日期",
+      field: "DeliveryDate",
+      width: '150px'
+    },
+    {
+      header: "報廢人員",
+      field: "ScrapPerson",
+      width: '120px'
+    },
+    {
+      header: "審核日期",
+      field: "VerifyDate",
+      width: '150px'
+    },
+    {
+      header: "審核人員",
+      field: "VerifyPerson",
+      width: '120px'
+    },
+  ]
+  onMounted(async() => {
+    utilsStore.$reset();
+    for (const key in searchParams) {
+      dgSearchParams.value[key] = '';
     }
+    dg.value.sortField = ''
+    submit('', 'search');
+    DropdownArray.Staff = await apiStore.getCustodian();
+  });
+  onUnmounted(() => {
+    utilsStore.$dispose();
+  })
+  async function submit(event, type) {
+    const form = new FormData();
+    //將表格資料append到 form
+    for (const key in dgSearchParams.value) {
+      if (dgSearchParams.value[key]) {
+        form.append(key, dgSearchParams.value[key]);
+      }
+    }
+    utilsStore.UpdatePageParameter(dg.value, event, type, form);
+    const resultList = await apiStore.getMngDatagrid('/ScrapMng/ScrapOrders', dg.value, form);
+    dgRowData.value = resultList.rows;
+    dg.value.totalRecords = resultList.total;
+    dg.value.key++;
   }
-  utilsStore.UpdatePageParameter(dg.value, event, type, form);
-  const resultList = await apiStore.getMngDatagrid('/ScrapMng/ScrapOrders',dg.value, form);
-  dgRowData.value = resultList.rows;
-  dg.value.totalRecords = resultList.total;
-  dg.value.key++;
-}
-const clear = () => {
-  utilsStore.clearSearchParams(dgSearchParams.value);
-  dgSearchParams.value.ProjectSelect = { Text: '--請選擇--',Value: '' };
-  submit('', 'search');
-};
+  const clear = () => {
+    utilsStore.clearSearchParams(dgSearchParams.value);
+    dgSearchParams.value.ProjectSelect = {
+      Text: '--請選擇--',
+      Value: ''
+    };
+    submit('', 'search');
+  };
 </script>
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-  .dg-height {
-    @include datagrid-height;
-  }
   .datagrid_section {
+    .row {
+      @include datagrid_bg;
+    }
     input,
     select {
       @include dropdown_btn;
       width: 100%;
       height: 35px;
     }
+    .content {
+      p {
+        @include datagrid_title;
+      }
+    }
+  }
+  .button_wrap {
+    margin-bottom: 25px;
+    gap: 20px;
+    .add_btn {
+      @include datagrid_button_no1;
+      width: 150px;
+      &:hover {
+        background-color: #537ebc;
+      }
+    }
+    .search_btn {
+      @include search_and_send_btn;
+      &:hover {
+        background-color: #5e7aa2;
+      }
+    }
+    .empty_btn {
+      @include empty_btn;
+      &:hover {
+        background-color: #5d85bd;
+      }
+    }
+  }
+  h1 {
+    text-align: center;
+    font-weight: 600;
+    @include title_color;
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
       padding: 0 10%;
       h1 {
         margin: 50px 0 20px;
-        text-align: center;
         font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .button_wrap {
-        margin-bottom: 25px;
-        gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          width: 150px;
-          &:hover {
-            background-color: #537ebc;
-          }
-        }
-        .search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-        .empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        } // .export_btn {
-        //   @include export_btn;
-        //   &:hover {
-        //     background-color: #274266;
-        //   }
-        // }
       }
       .datagrid_section {
-        .content {
-          background: rgba(82, 136, 156, 0.8);
-          border-radius: 10px;
-          margin-bottom: 30px;
-          height: 250px;
-          align-items: center;
-          display: flex;
-          justify-content: center;
-        }
         .row {
           display: grid;
           grid-template-rows: 1fr 1fr;
-          grid-template-columns: 1fr 1fr 1fr 1fr;
-          gap: 40px 5px;
-          .col-xl-2 {
-            margin: 0 3px;
-          }
-          p {
-            @include datagrid_title;
-          }
-          button {
-            border: none;
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-          }
+          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+          gap: 20px 5px;
+          padding: 2%;
         }
-      }
-      .datagrid-header-row {
-        background: var(--c-7, #1f4e5f);
-      }
-      .datagrid-header .datagrid-cell {
-        text-align: left !important;
       }
     }
   }
@@ -294,62 +319,17 @@ const clear = () => {
       padding: 0 5%;
       h1 {
         margin-top: 30px;
-        text-align: center;
         font-size: 55px;
-        font-weight: 600;
-        @include title_color;
         margin-bottom: 20px;
-      }
-      .button_wrap {
-        margin-bottom: 25px;
-        gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          width: 150px;
-          &:hover {
-            background-color: #537ebc;
-          }
-        } // .export_btn {
-        //   @include export_btn;
-        //   &:hover {
-        //     background-color: #274266;
-        //   }
-        // }
-        .search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-        .empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
       }
       .datagrid_section {
         .row {
-          gap: 10px 0;
-          padding: 30px;
-          @include datagrid_bg;
-          p {
-            @include datagrid_title;
-          }
-          button {
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-            text-align: left;
-          }
+          display: grid;
+          grid-template-rows: 1fr 1fr 1fr;
+          grid-template-columns: 1fr 1fr;
+          gap: 15px;
+          padding: 20px;
         }
-      }
-      .datagrid-header-row {
-        background: var(--c-7, #1f4e5f);
-      }
-      .datagrid-header .datagrid-cell {
-        text-align: left !important;
       }
     }
   }
@@ -358,94 +338,19 @@ const clear = () => {
       padding: 5%;
       h1 {
         margin-top: 30px;
-        text-align: center;
         font-size: 50px;
-        font-weight: 600;
-        @include title_color;
         margin-bottom: 20px;
-      }
-      .button_wrap {
-        margin-bottom: 25px;
-        justify-content: center;
-        gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
-          &:hover {
-            background-color: #537ebc;
-          }
-        } // .export_btn {
-        //   @include export_btn;
-        //   font-size: 18px;
-        //   width: 100%;
-        //   height: auto;
-        //   &:hover {
-        //     background-color: #274266;
-        //   }
-        // }
-        .search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-        .empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
       }
       .datagrid_section {
         .row {
+          display: flex;
+          flex-direction: column;
           gap: 10px 0;
           padding: 30px;
-          @include datagrid_bg;
           p {
-            @include datagrid_title;
             font-size: 18px;
-          }
-          input {
-            @include dropdown_btn;
-            width: 100%;
-            height: 35px;
-          }
-          button {
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-            text-align: left;
-          }
-          .dropdown {
-            width: 100%;
-            height: 35px;
-            @include dropdown_btn;
-            .dropdown-toggle {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              border: none;
-            }
-            .dropdown-menu {
-              width: 100%;
-              transform: translate3d(-1px, 35px, 0px) !important;
-              p {
-                font-size: 18px;
-                color: black;
-                font-weight: normal;
-              }
-            }
           }
         }
-      }
-      .datagrid-header-row {
-        background: var(--c-7, #1f4e5f);
-      }
-      .datagrid-header .datagrid-cell {
-        text-align: left !important;
       }
     }
   }

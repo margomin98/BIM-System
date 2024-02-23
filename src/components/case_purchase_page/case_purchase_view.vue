@@ -14,7 +14,7 @@
             <div class="col form_search_wrap">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend"> 單號：</div>
-                    <input type="text" class="form-control readonly_box" readonly v-model="Form.PP_ID"/>
+                    <input type="text" class="form-control readonly_box" readonly v-model="Form.PP_ID" />
                 </div>
             </div>
             <!-- 狀態 -->
@@ -54,13 +54,13 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">採購人員：</div>
-                        <input type="text" class="form-control readonly_box" readonly  v-model="Form.PurchasePerson"/>
+                        <input type="text" class="form-control readonly_box" readonly v-model="Form.PurchasePerson" />
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">完成採購日期：</div>
-                        <input type="text" class="form-control readonly_box" readonly  v-model="Form.PurchaseDate"/>
+                        <input type="text" class="form-control readonly_box" readonly v-model="Form.PurchaseDate" />
                     </div>
                 </div>
             </div>
@@ -76,13 +76,13 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">沖銷人員：</div>
-                        <input type="text" class="form-control readonly_box" readonly  v-model="Form.WriteoffPerson"/>
+                        <input type="text" class="form-control readonly_box" readonly v-model="Form.WriteoffPerson" />
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">完成沖銷日期：</div>
-                        <input type="text" class="form-control readonly_box" readonly  v-model="Form.WriteoffDate"/>
+                        <input type="text" class="form-control readonly_box" readonly v-model="Form.WriteoffDate" />
                     </div>
                 </div>
             </div>
@@ -95,14 +95,13 @@
             </div>
         </div>
         <div v-show="PageType==='delete'" class="info_wrap mt-5">
-        
-                <div class="purchase_list" role="region" tabindex="0">
-                    <div class="fixed_info">
-                        <div>
-                            <p>待採購清單</p>
-                        </div>
+            <div class="purchase_list" role="region" tabindex="0">
+                <div class="fixed_info">
+                    <div>
+                        <p>待採購清單</p>
                     </div>
-                    <div class="purchase_table">
+                </div>
+                <div class="purchase_table">
                     <table>
                         <thead>
                             <tr>
@@ -119,8 +118,8 @@
                             </tr>
                         </tbody>
                     </table>
-                    </div>
                 </div>
+            </div>
         </div>
     </div>
     <div v-show="PageType==='view'" class="info_wrap mt-5">
@@ -186,28 +185,44 @@
 </template>
 
 <script setup>
-import { useUtilsStore } from '@/store';
-import { usePurchaseStore } from '@/store/purchase/_index';
-import Delete_warn from '@/components/Delete_warn.vue';
-import { storeToRefs } from 'pinia';
-import { onMounted, onUnmounted, ref } from 'vue';
-import router from '@/router';
-
-const utilsStore = useUtilsStore();
-const purchaseStore = usePurchaseStore();
-const { Form , PageType } = storeToRefs(purchaseStore);
-const fullproject = ref('');
-fullproject.value = purchaseStore.Project;
-
-onUnmounted(()=> {
-    utilsStore.$dispose();
-    purchaseStore.$dispose();
-})
-const editOrder = (PO_ID) => {
-    if(PO_ID) {
-        router.push({name: 'Order_Edit', query:  { search_id: PO_ID }});
+    import {
+        useUtilsStore
+    } from '@/store';
+    import {
+        usePurchaseStore
+    } from '@/store/purchase/_index';
+    import Delete_warn from '@/components/Delete_warn.vue';
+    import {
+        storeToRefs
+    } from 'pinia';
+    import {
+        onMounted,
+        onUnmounted,
+        ref
+    } from 'vue';
+    import router from '@/router';
+    const utilsStore = useUtilsStore();
+    const purchaseStore = usePurchaseStore();
+    const {
+        Form,
+        PageType
+    } = storeToRefs(purchaseStore);
+    const fullproject = ref('');
+    fullproject.value = purchaseStore.Project;
+    onUnmounted(() => {
+        utilsStore.$dispose();
+        purchaseStore.$dispose();
+    })
+    const editOrder = (PO_ID) => {
+        if (PO_ID) {
+            router.push({
+                name: 'Order_Edit',
+                query: {
+                    search_id: PO_ID
+                }
+            });
+        }
     }
-}
 </script>
 
 <style lang="scss" scoped>
@@ -238,12 +253,6 @@ const editOrder = (PO_ID) => {
                     font-size: 20px;
                 }
             }
-        }
-        h1 {
-            margin-top: 50px;
-            text-align: center;
-            font-weight: 600;
-            @include title_color;
         }
         .readonly_box {
             @include readonly_box;
@@ -339,23 +348,8 @@ const editOrder = (PO_ID) => {
             }
         }
     }
-    .button_wrap {
-        display: flex;
-        justify-content: center;
-        margin: 30px auto 5%;
-        gap: 20px;
-        .back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-                background-color: #5d85bb;
-            }
-        }
-    }
     @media only screen and (min-width: 1200px) {
         .main_section {
-            h1 {
-                font-size: 55px;
-            }
             .info_wrap {
                 margin: auto;
                 .content {
@@ -371,7 +365,7 @@ const editOrder = (PO_ID) => {
                 width: 800px;
             }
             .info_wrap:nth-child(3) {
-                width: 1200px;
+                width: 1400px;
             }
             .purchase_list td {
                 padding: 8px
@@ -380,9 +374,6 @@ const editOrder = (PO_ID) => {
     }
     @media only screen and (min-width: 768px) and (max-width: 1199px) {
         .main_section {
-            h1 {
-                font-size: 55px;
-            }
             .info_wrap {
                 margin: auto;
                 .content {
@@ -401,7 +392,7 @@ const editOrder = (PO_ID) => {
                 width: 700px;
             }
             .info_wrap:nth-child(3) {
-                width: 750px;
+                width: 800px;
             }
             .purchase_list td {
                 padding: 8px
@@ -410,9 +401,6 @@ const editOrder = (PO_ID) => {
     }
     @media only screen and (max-width: 767px) {
         .main_section {
-            h1 {
-                font-size: 50px;
-            }
             .fixed_info {
                 flex-direction: column;
                 height: unset;

@@ -15,50 +15,50 @@
       <div class="content">
         <div class="row">
           <!-- 單號 -->
-          <div class="col-xl-auto col-lg-auto col-md-6 col-12">
+          <div class="col">
             <p>單號</p>
             <input type="text" v-model="dgSearchParams.PO_ID" />
           </div>
           <!-- 狀態 -->
-          <div class="col-xl-auto col-lg-auto col-md-6 col-12">
+          <div class="col">
             <p>狀態</p>
             <select class="form-select" v-model="dgSearchParams.Status">
-              <option value="">--請選擇--</option>
-              <option v-for="item in Order_StatusArray" :key="item" :value="item">{{ item }}</option>
-            </select>
-          </div>                 
+                <option value="">--請選擇--</option>
+                <option v-for="item in Order_StatusArray" :key="item" :value="item">{{ item }}</option>
+              </select>
+          </div>
           <!-- 使用專案 -->
-          <div class="col-xl-auto col-lg-auto col-md-6 col-12">
+          <div class="col">
             <p>使用專案</p>
             <input type="text" v-model="dgSearchParams.Use" />
           </div>
           <!-- 採購來源 -->
-          <div class="col-xl-auto col-lg-auto col-md-6 col-12">
+          <div class="col">
             <p>採購來源</p>
             <input type="text" v-model="dgSearchParams.Source" />
           </div>
           <!-- 訂購編號 -->
-          <div class="col-xl-auto col-lg-auto col-md-6 col-12">
+          <div class="col">
             <p>訂購編號</p>
             <input type="text" v-model="dgSearchParams.PurchaseNum" />
-          </div>   
+          </div>
           <!-- 下訂日期(起) -->
-          <div class="col-xl-auto col-lg-auto col-md-6 col-12">
+          <div class="col">
             <p>下訂日期(起)</p>
             <input type="date" class="date-input" v-model="dgSearchParams.StartDate" />
           </div>
           <!-- 下訂日期(迄) -->
-          <div class="col-xl-auto col-lg-auto col-md-6 col-12">
+          <div class="col">
             <p>下訂日期(迄)</p>
             <input type="date" class="date-input" v-model="dgSearchParams.EndDate" />
           </div>
           <!-- 承辦人員 -->
-          <div class="col-xl-auto col-lg-auto col-md-6 col-12">
+          <div class="col">
             <p>承辦人員</p>
             <select class="form-select" aria-label="Default select example" v-model="dgSearchParams.Executor">
-              <option value="">--請選擇--</option>
-              <option v-for="option in DropdownArray.Staff" :value="option">{{ option }}</option>
-            </select>
+                <option value="">--請選擇--</option>
+                <option v-for="option in DropdownArray.Staff" :value="option">{{ option }}</option>
+              </select>
           </div>
         </div>
       </div>
@@ -71,20 +71,19 @@
       </div>
     </div>
     <div class="dg-height mb-5">
-      <DataTable lazy :key="dg.key" :first="dg.first" :size="'small'" :loading="dg.loading" :value="dgRowData" :sort-field="dg.sortField" :sort-order="dg.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
-        scrollHeight="420px" @page="submit($event , 'page')" @sort="submit($event , 'sort')" paginator :rows="dg.rows" :totalRecords="dg.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-        :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+      <DataTable lazy :key="dg.key" :first="dg.first" :size="'small'" :loading="dg.loading" :value="dgRowData" :sort-field="dg.sortField" :sort-order="dg.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="420px" @page="submit($event, 'page')"
+        @sort="submit($event, 'sort')" paginator :rows="dg.rows" :totalRecords="dg.totalRecords" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <Column style="min-width: 60px;">
           <template #body="slotProps">
-            <Order_button :params="slotProps" />
-          </template>
+              <Order_button :params="slotProps" />
+</template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable
           :style="{ 'min-width': item.width }"></Column>
         <Column style="min-width: 60px;">
-          <template #body="slotProps">
-            <Delete :params="slotProps" />
-          </template>
+<template #body="slotProps">
+  <Delete :params="slotProps" />
+</template>
         </Column>
       </DataTable>
     </div>
@@ -109,13 +108,20 @@
   import {
     Order_StatusArray
   } from '@/assets/js/dropdown'
-  import {  useUtilsStore, useAPIStore } from '@/store'
-  import { storeToRefs } from 'pinia';
-
+  import {
+    useUtilsStore,
+    useAPIStore
+  } from '@/store'
+  import {
+    storeToRefs
+  } from 'pinia';
   const utilsStore = useUtilsStore();
   const apiStore = useAPIStore();
-  const { dgSearchParams , dg , dgRowData } = storeToRefs(utilsStore);
-
+  const {
+    dgSearchParams,
+    dg,
+    dgRowData
+  } = storeToRefs(utilsStore);
   const DropdownArray = reactive({
     Staff: [],
   })
@@ -129,25 +135,56 @@
     StartDate: '',
     EndDate: '',
   });
-  const datagridfield = [ 
-    { header: "單號",field: "PO_ID",width: '150px'},
-    { header: "狀態", field: "Status", width: '130px' },
-    { header: "訂單編號", field: "PurchaseNum", width: '150px' },
-    { header: "使用專案", field: "Use", width: '180px' },
-    { header: "採購來源", field: "Source", width: '150px' },
-    { header: "採購件數", field: "Quantity", width: '130px' },
-    { header: "下訂日期", field: "PurchaseDate", width: '130px' },
-    { header: "承辦人員", field: "Executor", width: '130px' },
+  const datagridfield = [{
+      header: "單號",
+      field: "PO_ID",
+      width: '150px'
+    },
+    {
+      header: "狀態",
+      field: "Status",
+      width: '130px'
+    },
+    {
+      header: "訂單編號",
+      field: "PurchaseNum",
+      width: '150px'
+    },
+    {
+      header: "使用專案",
+      field: "Use",
+      width: '180px'
+    },
+    {
+      header: "採購來源",
+      field: "Source",
+      width: '150px'
+    },
+    {
+      header: "採購件數",
+      field: "Quantity",
+      width: '130px'
+    },
+    {
+      header: "下訂日期",
+      field: "PurchaseDate",
+      width: '130px'
+    },
+    {
+      header: "承辦人員",
+      field: "Executor",
+      width: '130px'
+    },
   ]
   onMounted(async() => {
     utilsStore.$reset();
-    for(const key in searchParams) {
+    for (const key in searchParams) {
       dgSearchParams.value[key] = '';
     }
     submit('', 'search');
     DropdownArray.Staff = await apiStore.getCustodian();
   });
-  onUnmounted(()=>{
+  onUnmounted(() => {
     utilsStore.$dispose();
   })
   async function submit(event, type) {
@@ -159,7 +196,7 @@
       }
     }
     utilsStore.UpdatePageParameter(dg.value, event, type, form);
-    const resultList = await apiStore.getMngDatagrid('/PurchasingMng/PurchaseOrders',dg.value, form);
+    const resultList = await apiStore.getMngDatagrid('/PurchasingMng/PurchaseOrders', dg.value, form);
     dgRowData.value = resultList.rows;
     dg.value.totalRecords = resultList.total;
     dg.value.key++;
@@ -168,80 +205,67 @@
     utilsStore.clearSearchParams(dgSearchParams.value);
     submit('', 'search');
   };
-  </script>
+</script>
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
   .datagrid_section {
+    .row {
+      @include datagrid_bg;
+    }
     input,
     select {
       @include dropdown_btn;
       width: 100%;
       height: 35px;
     }
+    .content {
+      p {
+        @include datagrid_title;
+      }
+    }
+  }
+  .button_wrap {
+    margin-bottom: 25px;
+    gap: 20px;
+    .add_btn {
+      @include datagrid_button_no1;
+      &:hover {
+        background-color: #537ebc;
+      }
+    }
+    .search_btn {
+      @include search_and_send_btn;
+      &:hover {
+        background-color: #5e7aa2;
+      }
+    }
+    .empty_btn {
+      @include empty_btn;
+      &:hover {
+        background-color: #5d85bd;
+      }
+    }
+  }
+  h1 {
+    text-align: center;
+    font-weight: 600;
+    @include title_color;
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
       padding: 0 10%;
       h1 {
         margin: 50px 0 20px;
-        text-align: center;
         font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .button_wrap {
-        margin-bottom: 25px;
-        gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          &:hover {
-            background-color: #537ebc;
-          }
-        }
-        .search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-        .empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
       }
       .datagrid_section {
-        .content {
-          background: rgba(82, 136, 156, 0.8);
-          border-radius: 10px;
-          margin-bottom: 30px;
-          height: 240px;
-          align-items: center;
-          display: flex;
-          justify-content: center;
-        }
         .row {
           display: grid;
           grid-template-rows: 1fr 1fr;
-          grid-template-columns: 1fr 1fr 1fr;
-          gap: 40px 5px;
-          p {
-            @include datagrid_title;
-          }
-          input {
-            @include dropdown_btn;
-            width: 240px;
-            height: 35px;
-          }
-          button {
-            border: none;
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-          }
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+          gap: 20px 5px;
+          padding: 2% 10%;
         }
       }
     }
@@ -251,49 +275,16 @@
       padding: 0 5%;
       h1 {
         margin-top: 30px;
-        text-align: center;
         font-size: 55px;
-        font-weight: 600;
-        @include title_color;
         margin-bottom: 20px;
-      }
-      .button_wrap {
-        margin-bottom: 25px;
-        gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          &:hover {
-            background-color: #537ebc;
-          }
-        }
-        .search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-        .empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
       }
       .datagrid_section {
         .row {
-          gap: 10px 0;
-          padding: 30px;
-          @include datagrid_bg;
-          p {
-            @include datagrid_title;
-          }
-          button {
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-            text-align: left;
-          }
+          display: grid;
+          grid-template-rows: 1fr 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 15px;
+          padding: 20px;
         }
       }
     }
@@ -303,37 +294,8 @@
       padding: 5%;
       h1 {
         margin-top: 30px;
-        text-align: center;
         font-size: 50px;
-        font-weight: 600;
-        @include title_color;
         margin-bottom: 20px;
-      }
-      .button_wrap {
-        margin-bottom: 25px;
-        justify-content: center;
-        gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          font-size: 18px;
-          width: 100%;
-          height: auto;
-          &:hover {
-            background-color: #537ebc;
-          }
-        }
-        .search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-        .empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
       }
       .datagrid_section {
         .row {
@@ -341,17 +303,8 @@
           flex-direction: column;
           gap: 10px 0;
           padding: 30px;
-          @include datagrid_bg;
           p {
-            @include datagrid_title;
             font-size: 18px;
-          }
-          button {
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-            text-align: left;
           }
         }
       }

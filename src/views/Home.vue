@@ -1183,6 +1183,10 @@ $content_title_bg: #364E68;
 margin:auto;
 font-weight: 700;
 font-size: 24px;
+justify-content: center;
+P{
+  margin-bottom: 0;
+}
 }
 @mixin reset_btn {
   background-color: #364E68;
