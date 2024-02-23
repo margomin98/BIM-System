@@ -69,7 +69,7 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend"><span v-show="PageType==='edit'" class="red_star">*</span>設備總類：</div>
-                            <select class="form-select" :class="{'readonly_box': PageType==='view'}" :disabled="PageType==='view'" v-model="Form.EquipType_Id" @change="async()=>{Form.EquipCategoryArray = await apiStore.getEquipCategory(Form.EquipType_Id); Form.Category_Id = '';}">
+                            <select class="form-select" :class="{'readonly_box': PageType==='view'}" :disabled="PageType==='view'" v-model="Form.EquipType_Id" @change="async()=>{DropdownArray.EquipCategory = await apiStore.getEquipCategory(Form.EquipType_Id); Form.Category_Id = '';}">
                                 <option value="">--請選擇--</option>
                                 <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name }}</option>
                             </select>
