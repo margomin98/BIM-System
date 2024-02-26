@@ -148,9 +148,9 @@
                             <span v-show="Form.AssetType === '耗材'">
                                 <!-- 直接顯示 -->
                                 <span v-if="PageType === 'view'">(${{ Form.AmountPerUnit}}/每單位)</span> 
-                                <!-- 編輯使用initialNum來確定單位金額 -->
-                                <span v-else-if="PageType === 'edit' && Form.initialNum">(${{ (Form.AmountPerPackage/Form.initialNum).toFixed(2) }}/每單位)</span> 
-                                <span v-else="PageType === 'edit'">($/每單位)</span> 
+                                <!-- 編輯使用InitialNum來確定單位金額 -->
+                                <span v-else-if="PageType === 'edit' && Form.InitialNum">(${{ (Form.AmountPerPackage/Form.InitialNum).toFixed(2) }}/每單位)</span> 
+                                <span v-else>($/每單位)</span> 
                             </span>
                         </span>
                     </div>
