@@ -511,6 +511,18 @@
   .project_details #project_name {
     height: 100%;
   }
+  .send_btn {
+    @include search_and_send_btn;
+    &:hover {
+      background-color: #5e7aa2;
+    }
+  }
+  .send_btn_disabled {
+    background: #878787;
+    &:hover {
+      background: #878787;
+    }
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       h1 {
@@ -774,12 +786,6 @@
             &:hover {
               background-color: #5d85bb;
             }
-          }
-        }
-        .send_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
           }
         }
       }
@@ -1052,16 +1058,14 @@
             }
           }
         }
-        .send_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
       }
     }
   }
   @media only screen and (max-width: 767px) {
+    .send_btn_disabled {
+      width: 70px;
+      padding: 5px; 
+    }
     .main_section {
       .readonly_box {
         @include readonly_box;
@@ -1329,12 +1333,6 @@
             &:hover {
               background-color: #5d85bb;
             }
-          }
-        }
-        .send_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
           }
         }
       }

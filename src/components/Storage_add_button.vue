@@ -39,6 +39,7 @@
           item_id: props.params.data.item_id,
           AssetsId: props.params.data.AssetsId,
           OM_Number: props.params.data.selectNumber,
+          CI_ID: props.params.data.CI_ID // for 存貨耗材
         }
         try {
           const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/SubtractFromInventory', requestData);
