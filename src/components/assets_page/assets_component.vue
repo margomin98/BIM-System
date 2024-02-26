@@ -69,22 +69,24 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend"><span v-show="PageType==='edit'" class="red_star">*</span>設備總類：</div>
-                            <select class="form-select" :class="{'readonly_box': PageType==='view'}" :disabled="PageType==='view'" v-model="Form.EquipType_Id" @change="async()=>{DropdownArray.EquipCategory = await apiStore.getEquipCategory(Form.EquipType_Id); Form.Category_Id = '';}">
+                            <select v-if="PageType === 'edit'" class="form-select" v-model="Form.EquipType_Id" @change="async()=>{DropdownArray.EquipCategory = await apiStore.getEquipCategory(Form.EquipType_Id); Form.Category_Id = '';}">
                                 <option value="">--請選擇--</option>
                                 <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name }}</option>
                             </select>
+                            <input v-else-if="PageType === 'view'" type="text" class="form-control readonly_box" v-model="Form.EquipType_Id" readonly>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend"><span v-show="PageType==='edit'" class="red_star">*</span>設備分類：</div>
-                            <select class="form-select" :class="{'readonly_box': PageType==='view'}" :disabled="PageType==='view'" v-model="Form.Category_Id">
+                            <select v-if="PageType === 'edit'" class="form-select" v-model="Form.Category_Id">
                                     <option v-if="DropdownArray.EquipCategory.length == 0" value="">--請先選擇設備總類--</option>
                                     <template v-else>
                                         <option value="">--請選擇--</option>
                                         <option v-for="option in DropdownArray.EquipCategory" :value="option.Id">{{ option.Name }}</option>
                                     </template>
                             </select>
+                            <input v-else-if="PageType === 'view' " type="text" class="form-control readonly_box" v-model="Form.Category_Id" readonly>
                         </div>
                     </div>
                 </div>
@@ -164,23 +166,25 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">儲位區域：</div>
-                            <select class="form-select col" :class="{'readonly_box': PageType === 'view'}" v-model="Form.Area_Id" @change="async()=>{DropdownArray.Layer = await apiStore.getLayer(Form.Area_Id); Form.Layer_Id = '';}" :disabled="PageType === 'view'">
+                            <select v-if="PageType === 'edit'" class="form-select col" v-model="Form.Area_Id" @change="async()=>{DropdownArray.Layer = await apiStore.getLayer(Form.Area_Id); Form.Layer_Id = '';}">
                                 <option value="">--請選擇--</option>
                                 <option v-for="option in DropdownArray.Area" :value="option.Id">{{ option.Name }}</option>
                             </select>
+                            <input v-else-if="PageType === 'view' " type="text" class="form-control readonly_box" v-model="Form.Area_Id" readonly>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">儲位櫃位：</div>
-                            <select class="form-select col" :class="{'readonly_box': PageType === 'view'}" v-model="Form.Layer_Id" :disabled="PageType === 'view'">
+                            <select v-if="PageType === 'edit'" class="form-select col" v-model="Form.Layer_Id">
                                 <option v-if="DropdownArray.Layer.length == 0" value="">--請先選擇設備總類--</option>
-<template v-else>
-    <option value="">
-        --請選擇--</option>
-    <option v-for="option in DropdownArray.Layer" :value="option.Id">{{ option.Name }}</option>
-</template>
+                                <template v-else>
+                                    <option value="">
+                                        --請選擇--</option>
+                                    <option v-for="option in DropdownArray.Layer" :value="option.Id">{{ option.Name }}</option>
+                                </template>
                             </select>
+                            <input v-else-if="PageType === 'view' " type="text" class="form-control readonly_box" v-model="Form.Layer_Id" readonly>
                         </div>
                     </div>
                 </div>
@@ -218,10 +222,11 @@
                             <div class="input-group-prepend">
                                 保管人員：
                             </div>
-                            <select class="form-select" :class="{'readonly_box': PageType === 'view'}" v-model="Form.Custodian" :disabled="PageType === 'view'">
+                            <select v-if="PageType === 'edit'" class="form-select" v-model="Form.Custodian">
                                 <option value="">--請選擇--</option>
                                 <option v-for="option in DropdownArray.Custodian" :value="option">{{ option }}</option>
                             </select>
+                            <input v-else-if="PageType === 'view' " type="text" class="form-control readonly_box" v-model="Form.Custodian" readonly>
                         </div>
                     </div>
                 </div>

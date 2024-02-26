@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="modal-body">
-          <div v-show="amount_pie_data.length !== 0">
+          <div v-show="amount_pie_data.length == 0">
             <div id="amount_pie" class="modal_pie"></div>
             <div class="amount_text d-flex">
               <p>總金額
@@ -25,7 +25,7 @@
               </p>
             </div>
           </div>
-          <div v-show="amount_pie_data.length == 0">
+          <div v-show="amount_pie_data.length !== 0">
             <div class="empty_text d-flex">
               <p>無數據</p>
             </div>
@@ -1031,7 +1031,7 @@ const updatePie = () => {
     })
   }
   // 詳情modal圓餅
-  PieChartSetting('金額', 'amount_pie', amount_pie_data.value, false);
+  PieChartSetting('金額', 'amount_pie', fake_amount_data, false);
   PieChartSetting('件數', 'case_pie', case_pie_data.value, false);
   // 外側圓餅
   PieChartSetting('金額', 'amount_window_pie', amount_pie_data.value, true);
@@ -1197,7 +1197,10 @@ P{
 
 .modal {
   .modal_pie {
-    margin: auto
+    overflow-x: scroll;
+    margin: auto;
+    width: 100%;
+    height: 100%;
   }
 
   table {
@@ -1660,13 +1663,6 @@ P{
   .modal-dialog {
     width: 700px;
   }
-
- 
-  .modal_pie {
-    width: 100%;
-    height: 100%;
-  }
-
   .PurchaseList .button_wrap .total_amount p,
   .ProcessProperty .warn_text p {
     font-size: 24px;
@@ -1863,14 +1859,6 @@ P{
   .modal-dialog {
     width: 700px;
   }
-
-
-
-  .modal_pie {
-    width: 100%;
-    height: 100%
-  }
-
   .PurchaseList .button_wrap .total_amount p,
   .ProcessProperty .warn_text p {
     font-size: 24px;
@@ -2032,11 +2020,6 @@ P{
   .modal-dialog {
     width: 700px;
     padding: 0;
-  }
-
-  .modal_pie {
-    width: 100%;
-    height: 100%
   }
 
   .PurchaseList .button_wrap .total_amount p,
@@ -2207,10 +2190,6 @@ P{
 @media only screen and (max-width: 767px) {
   .modal-dialog {
     padding: 0;
-  }
-
-  .modal_pie {
-    overflow: scroll;
   }
 
   .home_section {
