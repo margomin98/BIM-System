@@ -63,13 +63,13 @@
               <option v-for="item in DropdownArray.Staff" :key="item" :value="item">{{ item }}</option>
             </select>
           </div>
-          <div class="col">
+          <!-- <div class="col">
             <p>審核人員</p>
             <select class="form-select" v-model="dgSearchParams.VerifyPerson">
               <option value="">--請選擇--</option>
               <option v-for="item in DropdownArray.Staff" :key="item" :value="item">{{ item }}</option>
             </select>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -173,24 +173,24 @@ const clear = () => {
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
   .datagrid_section {
-    input,
-    select {
-      @include dropdown_btn;
-      width: 100%;
-      height: 35px;
-    }
+.row{
+  @include datagrid_bg;
+}
+  input,
+  select {
+    @include dropdown_btn;
+    width: 100%;
+    height: 35px;
   }
-  @media only screen and (min-width: 1200px) {
-    .main_section {
-      padding: 0 10%;
-      h1 {
-        margin: 50px 0 20px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
+  .content{
+p {
+          @include datagrid_title;
+        }
+
       }
-      .button_wrap {
+
+}
+  .button_wrap {
         margin-bottom: 25px;
         gap: 20px;
         .search_btn {
@@ -206,27 +206,26 @@ const clear = () => {
           }
         }
       }
+  h1 {
+      text-align: center;
+      font-weight: 600;
+      @include title_color;
+    }
+  @media only screen and (min-width: 1200px) {
+    .main_section {
+      padding: 0 10%;
+      h1 {
+      margin: 50px 0 20px;
+      font-size: 55px;
+    }
+
       .datagrid_section {
-        input,select,.multiselect{
-          width:220px;
-                  }
-        .content {
-          background: rgba(82, 136, 156, 0.8);
-          border-radius: 10px;
-          margin-bottom: 30px;
-          height: 250px;
-          align-items: center;
-          display: flex;
-          justify-content: center;
-        }
         .row {
           display: grid;
           grid-template-rows: 1fr 1fr;
-          grid-template-columns: 1fr 1fr 1fr 1fr;
-          gap: 40px 5px;
-          p {
-            @include datagrid_title;
-          }
+          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+          gap: 20px 5px;
+       padding:2%;
           button {
             border: none;
             padding: 0;
@@ -242,29 +241,11 @@ const clear = () => {
     .main_section {
       padding: 0 5%;
       h1 {
-        margin-top: 30px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-        margin-bottom: 20px;
-      }
-      .button_wrap {
-        margin-bottom: 25px;
-        gap: 20px;
-        .search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-        .empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-      }
+      margin-top: 30px;
+      font-size: 55px;
+      margin-bottom: 20px;
+    }
+
       .datagrid_section {
         .row {
           display: grid;
@@ -272,10 +253,7 @@ const clear = () => {
           grid-template-columns: 1fr 1fr 1fr;
           gap: 10px 20px;
           padding: 20px;
-          @include datagrid_bg;
-          p {
-            @include datagrid_title;
-          }
+        
           button {
             padding: 0;
             width: 100%;
@@ -290,52 +268,33 @@ const clear = () => {
   @media only screen and (max-width: 767px) {
     .main_section {
       padding: 5%;
-      h1 {
-        margin-top: 30px;
-        text-align: center;
-        font-size: 50px;
-        font-weight: 600;
-        @include title_color;
-        margin-bottom: 20px;
-      }
-      .button_wrap {
-        margin-bottom: 25px;
-        justify-content: center;
-        gap: 20px;
-        .search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
+      
+    h1 {
+      margin-top: 30px;
+      font-size: 50px;
+      margin-bottom: 20px;
+    }
+
+    .datagrid_section {
+      .row {
+        display: flex;
+        flex-direction: column;
+        gap: 10px 0;
+        padding: 30px;
+
+        p {
+          font-size: 18px;
         }
-        .empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-      }
-      .datagrid_section {
-        .row {
-          display: grid;
-          grid-template-rows: 1fr;
-          grid-template-columns: 1fr;
-          gap: 10px 0;
-          padding: 30px;
-          @include datagrid_bg;
-          p {
-            @include datagrid_title;
-            font-size: 18px;
-          }
-          button {
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-            text-align: left;
-          }
+
+        button {
+          padding: 0;
+          width: 100%;
+          font-size: 18px;
+          height: 100%;
+          text-align: left;
         }
       }
+    }
     }
   }
 </style>
