@@ -130,7 +130,7 @@
                     </div>
                 </div>
                 <!-- 採購金額 -->
-                <div v-if="roleId === 1 || roleId === 4" class="row  purchase_amount">
+                <div v-if="isPermitted" class="row  purchase_amount">
                     <div class="col-xl-6 col-lg-auto col-md-auto col-12">
                         <div class="input-group mb-xl-3 mb-lg-3 mb-md-3">
                             <div class="input-group-prepend">
@@ -395,7 +395,6 @@
     }
     const modules = [Pagination]
     const fileInput = ref();
-    const roleId = ref();
     // 解構
     const {
         DropdownArray,
@@ -404,12 +403,11 @@
         PageType,
         datagrid,
         datagridField,
+        isPermitted,
         rowData
     } = storeToRefs(assetStore);
     onMounted(async () => {
         register(); 
-        roleId.value = await apiStore.getRoleId('admin');
-        // roleId.value = await apiStore.getRoleId(utilsStore.userName);
     })
     onUnmounted(()=>{
       apiStore.$dispose();

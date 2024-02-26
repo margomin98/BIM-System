@@ -24,7 +24,7 @@ const apiStore = useAPIStore();
 const assetStore = useAssetStore();
 
 // 解構
-const { DropdownArray } = storeToRefs(assetStore) ;
+const { DropdownArray, isPermitted } = storeToRefs(assetStore) ;
 const route = useRoute();
 const AssetsId = route.query.search_id ;
 
@@ -35,6 +35,10 @@ onMounted(async ()=>{
   DropdownArray.value.Custodian = await apiStore.getCustodian('');
   DropdownArray.value.Area = await apiStore.getArea();
   DropdownArray.value.EquipType = await apiStore.getEquipType();
+  utilsStore.getUserName();
+  const roleId = await apiStore.getRoleId('admin');
+  // const roleId = await apiStore.getRoleId(utilsStore.userName);
+  if(roleId === 1 || roleId === 3) isPermitted.value = true ;
   await assetStore.getDetails(AssetsId);
   assetStore.searchHistory('','search');
 })

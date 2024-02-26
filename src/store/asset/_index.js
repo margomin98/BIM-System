@@ -12,6 +12,8 @@ export const useAssetStore = defineStore('Asset', {
 	state: () => ({
 		// edit or view
 		PageType: '',
+    // 是否為主管或admin
+    isPermitted: false,
 		// 下拉選單
 		DropdownArray: {
 			EquipType: [],
