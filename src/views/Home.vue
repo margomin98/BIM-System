@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="modal-body">
-          <div v-show="amount_pie_data.length == 0">
+          <div v-show="amount_pie_data.length !== 0">
             <div id="amount_pie" class="modal_pie"></div>
             <div class="amount_text d-flex">
               <p>總金額
@@ -25,7 +25,7 @@
               </p>
             </div>
           </div>
-          <div v-show="amount_pie_data.length !== 0">
+          <div v-show="amount_pie_data.length == 0">
             <div class="empty_text d-flex">
               <p>無數據</p>
             </div>
@@ -1036,7 +1036,7 @@ const updatePie = () => {
     })
   }
   // 詳情modal圓餅
-  PieChartSetting('金額', 'amount_pie', fake_amount_data, false);
+  PieChartSetting('金額', 'amount_pie', amount_pie_data.value, false);
   PieChartSetting('件數', 'case_pie', case_pie_data.value, false);
   // 外側圓餅
   PieChartSetting('金額', 'amount_window_pie', amount_pie_data.value, true);

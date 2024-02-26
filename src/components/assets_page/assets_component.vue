@@ -130,19 +130,28 @@
                     </div>
                 </div>
                 <!-- 採購金額 -->
-                <div v-if="roleId === 1 || roleId === 4" class="row  purchase_amount">
+                <div v-if="isPermitted" class="row  purchase_amount">
                     <div class="col-xl-6 col-lg-auto col-md-auto col-12">
                         <div class="input-group mb-xl-3 mb-lg-3 mb-md-3">
                             <div class="input-group-prepend">
                                 採購金額：
                             </div>
                             <div class="amount_input">
-                                <span class="symbol">$</span><input type="text" class="form-control readonly_box" readonly v-model="Form.AmountPerPackage">
+                                <span class="symbol">$</span>
+                                <input type="number" class="form-control " :class="{'readonly_box': PageType === 'view'}" :readonly="PageType === 'view'" v-model="Form.AmountPerPackage">
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                        <span class="note">/每包裝單位<span v-show="Form.AssetType === '耗材'">($<span class="purchase_total_amount">{{ Form.AmountPerUnit}}</span>/每單位)</span>
+                        <span class="note">
+                            /每包裝單位
+                            <span v-show="Form.AssetType === '耗材'">
+                                <!-- 直接顯示 -->
+                                <span v-if="PageType === 'view'">(${{ Form.AmountPerUnit}}/每單位)</span> 
+                                <!-- 編輯使用InitialNum來確定單位金額 -->
+                                <span v-else-if="PageType === 'edit' && Form.InitialNum">(${{ (Form.AmountPerPackage/Form.InitialNum).toFixed(2) }}/每單位)</span> 
+                                <span v-else>($/每單位)</span> 
+                            </span>
                         </span>
                     </div>
                 </div>
@@ -386,7 +395,6 @@
     }
     const modules = [Pagination]
     const fileInput = ref();
-    const roleId = ref();
     // 解構
     const {
         DropdownArray,
@@ -395,12 +403,11 @@
         PageType,
         datagrid,
         datagridField,
+        isPermitted,
         rowData
     } = storeToRefs(assetStore);
     onMounted(async () => {
         register(); 
-        roleId.value = await apiStore.getRoleId('admin');
-        // roleId.value = await apiStore.getRoleId(utilsStore.userName);
     })
     onUnmounted(()=>{
       apiStore.$dispose();
