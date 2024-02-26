@@ -648,6 +648,13 @@ import axios from 'axios';
   .modal-body {
     padding: 0 !important;
   }
+  .item_wrap {
+  height: 350px;
+  overflow: auto;
+  display: grid;
+  gap: 20px 0;
+}
+
   @media only screen and (min-width: 1200px) {
     .main_section {
       .readonly_box {
@@ -790,12 +797,6 @@ import axios from 'axios';
         .item_wrap {
           height: 350px;
           overflow: auto;
-          .item {
-            background-color: #526F8E;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-          }
         }
       }
       .info_wrap:nth-child(3) {

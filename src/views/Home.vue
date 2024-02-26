@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="modal-body">
-          <div v-show="amount_pie_data.length == 0">
+          <div v-show="amount_pie_data.length !== 0">
             <div id="amount_pie" class="modal_pie"></div>
             <div class="amount_text d-flex">
               <p>總金額
@@ -25,7 +25,7 @@
               </p>
             </div>
           </div>
-          <div v-show="amount_pie_data.length !== 0">
+          <div v-show="amount_pie_data.length == 0">
             <div class="empty_text d-flex">
               <p>無數據</p>
             </div>
@@ -92,13 +92,13 @@
           <input type="text" placeholder="請輸入代碼或名稱" v-model="project.input">
         </div>
         <div class="search_result">
-          <perfect-scrollbar>
+          <!-- <perfect-scrollbar> -->
             <div v-for="option in filterProject" class="result_wrap"
               :class="{ 'selected': project.Project_Id === option.Value }" @click="selectProject(option)">
               <p class="case_code d-flex">{{ option.Value }}</p>
               <p class="case_name">{{ option.Text }}</p>
             </div>
-          </perfect-scrollbar>
+          <!-- </perfect-scrollbar> -->
         </div>
       </div>
     </div>
@@ -231,27 +231,30 @@
           <!-- 待採購清單 -->
           <div v-show="roleId === 1 || roleId === 4" class="tab-pane fade PurchaseList" id="PurchaseList" role="tabpanel"
             aria-labelledby="profile-tab">
+            <div class="purchase_list_wrap">
             <div class="row dg_search_wrap">
               <!-- 採購項目 -->
-              <div class="col-xl-auto col-lg-auto col-md col-12">
+              <div class="col">
                 <p>採購項目</p>
                 <input type="text" placeholder="最多輸入20字" v-model="PurchasedItem.searchParams.PurchasedItem" />
               </div>
               <!-- 交貨期限(起) -->
-              <div class="col-xl-auto col-lg-auto col-md col-12">
+              <div class="col">
                 <p>交貨期限(起)</p>
                 <input type="date" v-model="PurchasedItem.searchParams.StartDate">
               </div>
               <!-- 交貨期限(訖) -->
-              <div class="col-xl-auto col-lg-auto col-md col-12">
+              <div class="col">
                 <p>交貨期限(訖)</p>
                 <input type="date" v-model="PurchasedItem.searchParams.EndDate">
               </div>
-              <div class="col-xl-auto col-lg-auto button_wrap">
+              
+            </div>
+            <div class="button_wrap">
                 <button class="search_btn" @click="submit('PurchasedItem', '', 'search')">檢索</button>
                 <button class="reset_btn" @click="clear('PurchasedItem')">重設</button>
               </div>
-            </div>
+              </div>
             <div class="dg">
               <DataTable lazy :key="PurchasedItem.datagrid.key" :first="PurchasedItem.datagrid.first" :size="'small'"
                 :loading="PurchasedItem.datagrid.loading" :value="PurchasedItem.rowData"
@@ -1029,7 +1032,7 @@ const updatePie = () => {
     })
   }
   // 詳情modal圓餅
-  PieChartSetting('金額', 'amount_pie', fake_amount_data, false);
+  PieChartSetting('金額', 'amount_pie', amount_pie_data.value, false);
   PieChartSetting('件數', 'case_pie', case_pie_data.value, false);
   // 外側圓餅
   PieChartSetting('金額', 'amount_window_pie', amount_pie_data.value, true);
@@ -1277,7 +1280,7 @@ P{
 .dg {
   margin: 16px auto 0;
 .p-datatable{
-  display: inline-grid;
+  display: grid;
 }
 }
 
@@ -1628,7 +1631,7 @@ P{
   }
 
   .PurchaseList .dg_search_wrap {
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr ;
   }
 
   .pt_left {
@@ -1691,9 +1694,15 @@ P{
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
   }
-
+.PurchaseList .purchase_list_wrap{
+  display: flex;
+  .button_wrap{
+  margin-left: 20px;
+    margin-bottom: 16px;
+  }
+}
   .PurchaseList .dg_search_wrap {
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 
   .organizeProperty .dg_search_wrap {
@@ -1789,6 +1798,7 @@ P{
 
       .search_result {
         padding: 16px;
+        height: 518px;
 
         .result_wrap {
           padding: 10px;
@@ -1852,6 +1862,14 @@ P{
     }
   }
 }
+@media only screen and (min-width: 1000px)and (max-width: 1350px) {
+  .PurchaseList .purchase_list_wrap{
+    flex-direction: column;
+    .button_wrap{
+   justify-content: center;
+  }
+  }
+}
 
 @media only screen and (min-width: 1024px) and (max-width: 1199px) {
   .modal-dialog {
@@ -1875,6 +1893,15 @@ P{
         font-size: 18px
       }
     }
+  }
+  .PurchaseList .purchase_list_wrap{
+    .dg_search_wrap {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows:1fr
+  }
+  }
+  .button_wrap{
+    justify-content: center;
   }
 
   .code_search .ps {
@@ -2043,10 +2070,15 @@ P{
     grid-template-rows: 1fr 1fr;
   }
 
-  .PurchaseList .dg_search_wrap {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+  .PurchaseList .purchase_list_wrap{
+    .dg_search_wrap {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows:1fr
   }
-
+  .button_wrap{
+    justify-content: center;
+  }
+  }
   .organizeProperty .dg_search_wrap {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;

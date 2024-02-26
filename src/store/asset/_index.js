@@ -39,8 +39,9 @@ export const useAssetStore = defineStore('Asset', {
 			ProductSpec: '',
 			ProductType: '',
 			SN: '',
-			AmountPerPackage: null, //等等想
-			AmountPerUnit: null, //等等想
+			AmountPerPackage: null,
+			AmountPerUnit: null, 
+      initialNum: null, //原始數量，在編輯資產時顯示耗材單位金額使用
 			Number: 1,
 			Unit: '',
 			Area_Id: '',
