@@ -37,7 +37,6 @@ onMounted(async ()=>{
   DropdownArray.value.EquipType = await apiStore.getEquipType();
   await assetStore.getDetails(AssetsId);
   assetStore.searchHistory('','search');
-  console.log(DropdownArray.value);
 })
 
 onUnmounted(()=>{

@@ -137,12 +137,21 @@
                                 採購金額：
                             </div>
                             <div class="amount_input">
-                                <span class="symbol">$</span><input type="text" class="form-control readonly_box" readonly v-model="Form.AmountPerPackage">
+                                <span class="symbol">$</span>
+                                <input type="number" class="form-control " :class="{'readonly_box': PageType === 'view'}" :readonly="PageType === 'view'" v-model="Form.AmountPerPackage">
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                        <span class="note">/每包裝單位<span v-show="Form.AssetType === '耗材'">($<span class="purchase_total_amount">{{ Form.AmountPerUnit}}</span>/每單位)</span>
+                        <span class="note">
+                            /每包裝單位
+                            <span v-show="Form.AssetType === '耗材'">
+                                <!-- 直接顯示 -->
+                                <span v-if="PageType === 'view'">(${{ Form.AmountPerUnit}}/每單位)</span> 
+                                <!-- 編輯使用initialNum來確定單位金額 -->
+                                <span v-else-if="PageType === 'edit' && Form.initialNum">(${{ (Form.AmountPerPackage/Form.initialNum).toFixed(2) }}/每單位)</span> 
+                                <span v-else="PageType === 'edit'">($/每單位)</span> 
+                            </span>
                         </span>
                     </div>
                 </div>
