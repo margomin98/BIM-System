@@ -36,8 +36,7 @@ onMounted(async ()=>{
   DropdownArray.value.Area = await apiStore.getArea();
   DropdownArray.value.EquipType = await apiStore.getEquipType();
   utilsStore.getUserName();
-  const roleId = await apiStore.getRoleId('admin');
-  // const roleId = await apiStore.getRoleId(utilsStore.userName);
+  const roleId = await apiStore.getRoleId(utilsStore.userName);
   if(roleId === 1 || roleId === 3) isPermitted.value = true ;
   await assetStore.getDetails(AssetsId);
   assetStore.searchHistory('','search');
