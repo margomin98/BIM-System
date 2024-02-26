@@ -5,9 +5,7 @@
       <h1>刪除項目</h1>
     </div>
     <div class="info_wrap col">
-      <div class="warn">
-        <h4>確定刪除以下項目嗎？</h4>
-      </div>
+      <deleteModal />
       <div class="fixed_info">
         <div>
           <p>設備整合箱</p>
@@ -17,26 +15,30 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">產編：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.IntegrationId"/>
+            <input type="text" class="form-control readonly_box" aria-label="Default"
+              aria-describedby="inputGroup-sizing-default" readonly v-model="details.IntegrationId" />
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">名稱：</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.IntegrationName"/>
+            <input type="text" class="form-control readonly_box" aria-label="Default"
+              aria-describedby="inputGroup-sizing-default" readonly v-model="details.IntegrationName" />
           </div>
         </div>
         <div class="row">
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">儲位區域：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.AreaName"/>
+              <input type="text" class="form-control readonly_box" aria-label="Default"
+                aria-describedby="inputGroup-sizing-default" readonly v-model="details.AreaName" />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">儲位櫃位：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.LayerName"/>
+              <input type="text" class="form-control readonly_box" aria-label="Default"
+                aria-describedby="inputGroup-sizing-default" readonly v-model="details.LayerName" />
             </div>
           </div>
         </div>
@@ -44,7 +46,8 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">保管人員：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Custodian"/>
+              <input type="text" class="form-control readonly_box" aria-label="Default"
+                aria-describedby="inputGroup-sizing-default" readonly v-model="details.Custodian" />
             </div>
           </div>
         </div>
@@ -52,13 +55,15 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">整合人員：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.Integrator"/>
+              <input type="text" class="form-control readonly_box" aria-label="Default"
+                aria-describedby="inputGroup-sizing-default" readonly v-model="details.Integrator" />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">整合日期：</div>
-              <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly v-model="details.IntegrateDate"/>
+              <input type="text" class="form-control readonly_box" aria-label="Default"
+                aria-describedby="inputGroup-sizing-default" readonly v-model="details.IntegrateDate" />
             </div>
           </div>
         </div>
@@ -72,7 +77,8 @@
       </div>
       <div class="content">
         <div class="item_wrap">
-          <list-item v-for="(item, index) in details.AssetList" :key="index" :edit_btn="false" :delete_btn="false" :AssetData="item">
+          <list-item v-for="(item, index) in details.AssetList" :key="index" :edit_btn="false" :delete_btn="false"
+            :AssetData="item">
           </list-item>
         </div>
       </div>
@@ -84,29 +90,15 @@
         </div>
       </div>
       <div style="width: 100%" class="content">
-        <DataTable
-          lazy
-          :key="datagrid.key"
-          :first= "datagrid.first"
-          :size="'small'"
-          :loading="datagrid.loading"
-          :value="rowData" 
-          :sort-field="datagrid.sortField"
-          :sort-order="datagrid.sortOrder"
-          resizableColumns 
-          columnResizeMode="expand"
-          showGridlines 
-          scrollable 
-          scrollHeight="420px" 
-          @page="getHistory($event , 'page')" 
-          @sort="getHistory($event , 'sort')"
-          paginator 
-          :rows="datagrid.rows" 
-          :totalRecords="datagrid.totalRecords"
+        <DataTable lazy :key="datagrid.key" :first="datagrid.first" :size="'small'" :loading="datagrid.loading"
+          :value="rowData" :sort-field="datagrid.sortField" :sort-order="datagrid.sortOrder" resizableColumns
+          columnResizeMode="expand" showGridlines scrollable scrollHeight="420px" @page="getHistory($event, 'page')"
+          @sort="getHistory($event, 'sort')" paginator :rows="datagrid.rows" :totalRecords="datagrid.totalRecords"
           paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
           :rowsPerPageOptions="[10, 20, 30]"
           currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
-          <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+          <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable
+            :style="{ 'min-width': item.width }"></Column>
         </DataTable>
       </div>
       <div class="col button_wrap">
@@ -132,634 +124,521 @@
 </template>
 
 <script>
-  import DataTable from 'primevue/datatable';
-  import Column from 'primevue/column';
-  import Navbar from "@/components/Navbar.vue";
-  import ListItem from "@/components/Equipment/item.vue"
-  import {
-    onMounted,
-    ref
-  } from "vue";
-  import {
-    useRoute,
-    useRouter
-  } from "vue-router";
-  import {
-    getMngDatagrid,
-  } from '@/assets/js/common_api'
-  import { UpdatePageParameter, createDatagrid , goBack } from '@/assets/js/common_fn';
-  import axios from 'axios';
-  export default {
-    components: {
-      Navbar,
-      DataTable,
-      Column,
-      ListItem,
-    },
-    setup() {
-      const route = useRoute();
-      const router = useRouter();
-      const details = ref('');
-      const IntegrationId = route.query.search_id
-      const datagrid = createDatagrid();
-      const datagridfield = [
-        { field: "ExecutionDate", width: '150px', header: "記錄日期" },
-        { field: "Action", width: '50px', header: "記錄行為" },
-        { field: "EquipTypeName", width: '150px', header: "設備總類" },
-        { field: "EquipCategoryName", width: '150px', header: "設備分類" },
-        { field: "AssetsId", width: '150px', header: "資產編號" },
-        { field: "AssetName", width: '150px', header: "物品名稱" },
-        { field: "H_Number", width: '50px', header: "數量" },
-        { field: "Unit", width: '50px', header: "單位" },
-        { field: "ExecutionPerson", width: '150px', header: "作業人員" }
-      ]
-      const rowData = ref([]);
-      onMounted(() => { 
-        datagrid.sortField = 'ExecutionDate'
-        getDetails();
-        getHistory('','search');
-      });
-      async function getDetails() {
-        const baseUrl = 'http://192.168.0.177:7008'
-        let apiUrl = ''
-        apiUrl += baseUrl + '/GetDBdata/GetIntegrationBoxInfo?id=' + `${IntegrationId}`
-        try {
-          const response = await axios.get(`${apiUrl}`);
-          // console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log(data.resultList);
-            details.value = data.resultList;
-            console.log('details', details.value.AssetList);
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error(error);
+import deleteModal from '@/components/Delete_warn.vue'
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import Navbar from "@/components/Navbar.vue";
+import ListItem from "@/components/Equipment/item.vue"
+import {
+  onMounted,
+  ref
+} from "vue";
+import {
+  useRoute,
+  useRouter
+} from "vue-router";
+import {
+  getMngDatagrid,
+} from '@/assets/js/common_api'
+import { UpdatePageParameter, createDatagrid, goBack } from '@/assets/js/common_fn';
+import axios from 'axios';
+export default {
+  components: {
+    Navbar,
+    DataTable,
+    Column,
+    ListItem,
+    deleteModal
+  },
+  setup() {
+    const route = useRoute();
+    const router = useRouter();
+    const details = ref('');
+    const IntegrationId = route.query.search_id
+    const datagrid = createDatagrid();
+    const datagridfield = [
+      { field: "ExecutionDate", width: '150px', header: "記錄日期" },
+      { field: "Action", width: '50px', header: "記錄行為" },
+      { field: "EquipTypeName", width: '150px', header: "設備總類" },
+      { field: "EquipCategoryName", width: '150px', header: "設備分類" },
+      { field: "AssetsId", width: '150px', header: "資產編號" },
+      { field: "AssetName", width: '150px', header: "物品名稱" },
+      { field: "H_Number", width: '50px', header: "數量" },
+      { field: "Unit", width: '50px', header: "單位" },
+      { field: "ExecutionPerson", width: '150px', header: "作業人員" }
+    ]
+    const rowData = ref([]);
+    onMounted(() => {
+      datagrid.sortField = 'ExecutionDate'
+      getDetails();
+      getHistory('', 'search');
+    });
+    async function getDetails() {
+      const baseUrl = 'http://192.168.0.177:7008'
+      let apiUrl = ''
+      apiUrl += baseUrl + '/GetDBdata/GetIntegrationBoxInfo?id=' + `${IntegrationId}`
+      try {
+        const response = await axios.get(`${apiUrl}`);
+        // console.log(response);
+        const data = response.data;
+        if (data.state === 'success') {
+          console.log(data.resultList);
+          details.value = data.resultList;
+          console.log('details', details.value.AssetList);
+        } else if (data.state === 'error') {
+          alert(data.messages);
+        } else if (data.state === 'account_error') {
+          alert(data.messages);
+          router.push('/');
         }
+      } catch (error) {
+        console.error(error);
       }
-      async function getHistory(event, type) {
-        const form = new FormData();
-        form.append('IntegrationId' , IntegrationId);
-        UpdatePageParameter( datagrid , event , type , form)
-        getMngDatagrid('/IntegrationMng/IntegratedHistory',rowData,datagrid,form)
-      }
-      async function deleteData() {
-        const form = new FormData();
-        form.append('IntegrationId', IntegrationId);
-        const axios = require('axios');
-        const response = await axios.post(`http://192.168.0.177:7008/IntegrationMng/IntegrationDelete`, form);
-        try {
-          const data = response.data;
-          if (data.state === 'success') {
-            let msg = data.messages + '\n';
-            msg += '單號:' + data.resultList.B_Id;
-            alert(msg);
-            router.push({
-              name: 'Equipment_Datagrid'
-            });
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          }
-        } catch (error) {
-          console.error(error);
+    }
+    async function getHistory(event, type) {
+      const form = new FormData();
+      form.append('IntegrationId', IntegrationId);
+      UpdatePageParameter(datagrid, event, type, form)
+      getMngDatagrid('/IntegrationMng/IntegratedHistory', rowData, datagrid, form)
+    }
+    async function deleteData() {
+      const form = new FormData();
+      form.append('IntegrationId', IntegrationId);
+      const axios = require('axios');
+      const response = await axios.post(`http://192.168.0.177:7008/IntegrationMng/IntegrationDelete`, form);
+      try {
+        const data = response.data;
+        if (data.state === 'success') {
+          let msg = data.messages + '\n';
+          msg += '單號:' + data.resultList.B_Id;
+          alert(msg);
+          router.push({
+            name: 'Equipment_Datagrid'
+          });
+        } else if (data.state === 'error') {
+          alert(data.messages);
         }
+      } catch (error) {
+        console.error(error);
       }
-      return {
-        details,
-        datagrid,
-        datagridfield,
-        rowData,
-        deleteData,
-        getHistory,
-        goBack,
-      };
-    },
-  }
+    }
+    return {
+      details,
+      datagrid,
+      datagridfield,
+      rowData,
+      deleteData,
+      getHistory,
+      goBack,
+    };
+  },
+}
 </script>
 <style lang="scss" scoped>
-  @import "@/assets/css/global.scss";
-  span {
-    @include red_star
-  }
-  .delete_modal {
-    .modal-content {
-      border: solid 1px black;
-      border-radius: 0;
-      .modal-body {
-        background: #E94B4B;
-        text-align: center;
-        font-weight: 700;
+@import "@/assets/css/global.scss";
+
+span {
+  @include red_star;
+}
+
+.delete_modal {
+  .modal-content {
+    border: solid 1px black;
+    border-radius: 0;
+
+    .modal-body {
+      background: #e94b4b;
+      text-align: center;
+      font-weight: 700;
+      color: white;
+      border-bottom: solid 1px black;
+    }
+
+    .modal-footer {
+      margin: auto;
+      gap: 10px;
+
+      button:nth-child(1) {
+        background-color: #7e7e7e;
+        border: none;
         color: white;
-        border-bottom: solid 1px black;
-      }
-      .modal-footer {
-        margin: auto;
-        gap: 10px;
-        button:nth-child(1) {
-          background-color: #7E7E7E;
-          border: none;
-          color: white;
-          width: 50px;
-          font-weight: 700;
-          &:hover {
-            background-color: #464242;
-          }
+        width: 50px;
+        font-weight: 700;
+
+        &:hover {
+          background-color: #464242;
         }
-        button:nth-child(2) {
-          background-color: #E94B4B;
-          border: none;
-          color: white;
-          width: 50px;
-          font-weight: 700;
-          &:hover {
-            background-color: #a70e0e;
-          }
+      }
+
+      button:nth-child(2) {
+        background-color: #e94b4b;
+        border: none;
+        color: white;
+        width: 50px;
+        font-weight: 700;
+
+        &:hover {
+          background-color: #a70e0e;
         }
       }
     }
   }
-  .item_wrap {
+}
+
+.item_wrap {
   height: 350px;
   overflow: auto;
   display: grid;
   gap: 20px 0;
 }
 
-  @media only screen and (min-width: 1200px) {
-    .main_section {
-      .warn {
-        text-align: center;
-        padding: 10px 0;
-        background: #9f0000;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        h4 {
-          color: white;
-          margin-bottom: 0;
-          font-weight: 700;
-          &::before {
-            content: "\26A0";
-          }
-        }
-      }
-      .readonly_box {
-        @include readonly_box;
-      }
-      h1 {
-        margin-top: 80px;
-        margin-bottom: 40px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .info_wrap {
-        margin: auto;
-        width: 700px;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .fixed_title {
-          @include fixed_title;
-        }
-        .content {
-          @include content_bg;
-          p {
-            text-align: center;
-            white-space: nowrap;
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: white;
-          }
-          .dropdown {
-            width: 100%;
-            .dropdown-menu {
-              width: 100%;
-              p {
-                text-align: left;
-                padding: 0 10px
-              }
-            }
-            button {
-              @include dropdown-btn;
-              width: 100%;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
-          .input-group {
-            justify-content: right;
-            flex-wrap: nowrap;
-            .input-number {
-              @include count_btn;
-            }
-            .form-control {
-              height: 35px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              white-space: nowrap;
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              width: 100px;
-              text-align: end;
-            }
-          }
-          .item_wrap {
-            height: 350px;
-            overflow: auto;
-       
-          }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 28%;
-          margin-bottom: 5%;
-          gap: 20px;
-          .back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-          .delete_btn {
-            background: var(--c-5, #E94B4B);
-            justify-content: center;
-            align-items: center;
-            display: inline-flex;
-            border-radius: 10px;
-            height: 40px;
-            width: 90px;
-            color: #FFF;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 700;
-            border: none;
-            margin: 0 10px;
-            &:hover {
-              background-color: #a51e1e;
-            }
-          }
-        }
-        .dropdown {
-          width: calc(100% - 10%);
-          height: 35px;
-          @include dropdown_btn;
-          .dropdown-toggle {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: none;
-          }
-          .dropdown-menu {
-            width: 100%;
-            transform: translate3d(-1px, 35px, 0px) !important;
-            p {
-              font-size: 18px;
-              color: black;
-              font-weight: normal;
-            }
-          }
-        }
-      }
-      .info_wrap:nth-child(3) {
-        margin-top: 3%;
-        .count {
-          .input-group {
-            justify-content: left
-          }
-        }
-      }
-      .info_wrap:nth-child(4) {
-        margin-top: 3%;
-      }
-    }
-    .change_btn {
-      @include change_btn
+h1 {
+  text-align: center;
+  font-weight: 600;
+  @include title_color;
+}
+
+.readonly_box {
+  @include readonly_box;
+}
+
+.main_section {
+  .fixed_title {
+    @include fixed_title;
+  }
+
+  .fixed_info {
+    @include fixed_info;
+
+    p {
+      font-size: 20px;
+      margin-bottom: 0;
     }
   }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .main_section {
-      .warn {
-        text-align: center;
-        padding: 10px 0;
-        background: #9f0000;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        h4 {
-          color: white;
-          margin-bottom: 0;
+
+  .content {
+    @include content_bg;
+
+    .dropdown {
+      width: 100%;
+
+      .dropdown-menu {
+        width: 100%;
+      }
+
+      button {
+        @include dropdown-btn;
+        width: 100%;
+        color: black;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
+    .input-number {
+      @include count_btn;
+    }
+
+    .form-control {
+      height: 35px;
+      border-radius: 0;
+    }
+
+    .input-group-prepend {
+      color: white;
+      font-weight: 700;
+      font-size: 20px;
+    }
+  }
+  .info_wrap:nth-child(3),
+  .info_wrap:nth-child(4) {
+    margin-top: 3%;
+  }
+}
+
+.button_wrap {
+  display: flex;
+  margin-top: 30px;
+  justify-content: center;
+  padding: 0 15%;
+  margin-bottom: 5%;
+  gap: 10px;
+
+  .back_btn {
+    @include back_to_previous_btn;
+
+    &:hover {
+      background-color: #5d85bb;
+    }
+  }
+
+  .delete_btn {
+    background: var(--c-5, #e94b4b);
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
+    border-radius: 10px;
+    height: 40px;
+    width: 90px;
+    color: #fff;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    border: none;
+    margin: 0 10px;
+
+    &:hover {
+      background-color: #a51e1e;
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .main_section {
+    h1 {
+      margin-top: 80px;
+      margin-bottom: 40px;
+      font-size: 55px;
+    }
+
+    .info_wrap {
+      margin: auto;
+      width: 700px;
+
+      .content {
+        p {
+          text-align: center;
+          white-space: nowrap;
+          font-size: 20px;
           font-weight: 700;
-          &::before {
-            content: "\26A0";
-          }
+          margin-bottom: 5px;
+          color: white;
         }
-      }
-      .readonly_box {
-        @include readonly_box;
-      }
-      h1 {
-        margin-top: 80px;
-        margin-bottom: 40px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .info_wrap {
-        margin: auto;
-        padding: 0 5%;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .fixed_title {
-          @include fixed_title;
-        }
-        .content {
-          @include content_bg;
-          p {
-            text-align: center;
-            white-space: nowrap;
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: white;
-          }
-          .dropdown {
-            width: 100%;
-            .dropdown-menu {
-              width: 100%;
-              p {
-                text-align: left;
-                padding: 0 10px
-              }
-            }
-            button {
-              @include dropdown-btn;
-              width: 100%;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
-          .input-group {
-            justify-content: right;
-            flex-wrap: nowrap;
-            .input-number {
-              @include count_btn;
-            }
-            .form-control {
-              height: 35px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              white-space: nowrap;
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              width: 100px;
-              text-align: end;
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 28%;
-          margin-bottom: 5%;
-          gap: 20px;
-          .back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-          .delete_btn {
-            background: var(--c-5, #E94B4B);
-            justify-content: center;
-            align-items: center;
-            display: inline-flex;
-            border-radius: 10px;
-            height: 40px;
-            width: 90px;
-            color: #FFF;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 700;
-            border: none;
-            margin: 0 10px;
-            &:hover {
-              background-color: #a51e1e;
-            }
-          }
-        }
+
         .dropdown {
-          width: calc(100% - 10%);
-          height: 35px;
-          @include dropdown_btn;
-          .dropdown-toggle {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: none;
-          }
           .dropdown-menu {
-            width: 100%;
-            transform: translate3d(-1px, 35px, 0px) !important;
             p {
-              font-size: 18px;
-              color: black;
-              font-weight: normal;
+              text-align: left;
+              padding: 0 10px;
             }
           }
         }
+
+        .input-group {
+          justify-content: right;
+          flex-wrap: nowrap;
+
+          .input-group-prepend {
+            white-space: nowrap;
+            width: 100px;
+            text-align: end;
+          }
+        }
+
         .item_wrap {
           height: 350px;
           overflow: auto;
-          .item {
-            background-color: #526F8E;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-          }
         }
       }
-      .info_wrap:nth-child(3) {
-        margin-top: 3%;
-        .count {
-          .input-group {
-            justify-content: left
+
+      .dropdown {
+        width: calc(100% - 10%);
+        height: 35px;
+        @include dropdown_btn;
+
+        .dropdown-toggle {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border: none;
+        }
+
+        .dropdown-menu {
+          width: 100%;
+          transform: translate3d(-1px, 35px, 0px) !important;
+
+          p {
+            font-size: 18px;
+            color: black;
+            font-weight: normal;
           }
         }
-      }
-      .info_wrap:nth-child(4) {
-        margin-top: 3%;
       }
     }
-    .change_btn {
-      @include change_btn
+
+    .info_wrap:nth-child(3) {
+      .count {
+        .input-group {
+          justify-content: left;
+        }
+      }
     }
   }
-  @media only screen and (max-width: 767px) {
-    .main_section {
-      .warn {
-        text-align: center;
-        padding: 10px 0;
-        background: #9f0000;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        h4 {
-          color: white;
-          margin-bottom: 0;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  .main_section {
+    h1 {
+      margin-top: 80px;
+      margin-bottom: 40px;
+      font-size: 55px;
+    }
+
+    .info_wrap {
+      margin: auto;
+      padding: 0 5%;
+
+      .content {
+        p {
+          text-align: center;
+          white-space: nowrap;
+          font-size: 20px;
           font-weight: 700;
-          &::before {
-            content: "\26A0";
+          margin-bottom: 5px;
+          color: white;
+        }
+
+        .dropdown {
+          width: 100%;
+
+          .dropdown-menu {
+            width: 100%;
+
+            p {
+              text-align: left;
+              padding: 0 10px;
+            }
+          }
+        }
+
+        .input-group {
+          justify-content: right;
+          flex-wrap: nowrap;
+
+          .input-group-prepend {
+            white-space: nowrap;
+            width: 100px;
+            text-align: end;
           }
         }
       }
-      .readonly_box {
-        @include readonly_box;
-      }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 50px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .info_wrap {
-        padding: 1% 5% 0;
-        .fixed_title {
-          @include fixed_title;
-        }
-        .fixed_info {
-          @include fixed_info;
-          flex-direction: column;
-          height: unset;
-          padding: 10px;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .content {
-          @include content_bg;
-          .row {
-            gap: 10px 0;
-          }
-          .dropdown {
-            margin-left: unset !important;
-            .dropdown-menu {
-              width: 100%;
-            }
-            button {
-              @include dropdown-btn;
-              width: 100%;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
-          .input-group {
-            flex-direction: column;
-            .input-number {
-              @include count_btn;
-              width: 100%;
-            }
-            .form-control {
-              width: 100%;
-              height: 35px;
-              border-radius: 0;
-              margin-left: unset !important;
-            }
-            .input-group-prepend {
-              margin-bottom: 5px;
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-            }
-          }
-        }
-        .button_wrap {
+
+      .dropdown {
+        width: calc(100% - 10%);
+        height: 35px;
+        @include dropdown_btn;
+
+        .dropdown-toggle {
           display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 15%;
-          margin-bottom: 5%;
-          gap: 10px;
-          .back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-          .delete_btn {
-            background: var(--c-5, #E94B4B);
-            justify-content: center;
-            align-items: center;
-            display: inline-flex;
-            border-radius: 10px;
-            height: 40px;
-            width: 90px;
-            color: #FFF;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 700;
-            border: none;
-            margin: 0 10px;
-            &:hover {
-              background-color: #a51e1e;
-            }
-          }
+          justify-content: space-between;
+          align-items: center;
+          border: none;
         }
-        .item_wrap {
-          height: 350px;
-          overflow: auto;
-          .item {
-            background-color: #526F8E;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
+
+        .dropdown-menu {
+          transform: translate3d(-1px, 35px, 0px) !important;
+
+          p {
+            font-size: 18px;
+            color: black;
+            font-weight: normal;
           }
         }
       }
-      .info_wrap:nth-child(3) {
-        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+
+      .item_wrap {
+        height: 350px;
+        overflow: auto;
+
+        .item {
+          background-color: #526f8e;
+          border-radius: 10px;
+          padding: 20px;
+        }
+      }
+    }
+
+    .info_wrap:nth-child(3) {
+      .count {
+        .input-group {
+          justify-content: left;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .main_section {
+    h1 {
+      margin-top: 50px;
+      font-size: 50px;
+    }
+
+    .info_wrap {
+      padding: 1% 5% 0;
+
+      .content {
+        .row {
+          gap: 10px 0;
+        }
+
+        .dropdown {
           margin-left: unset !important;
-          border-radius: 5px;
-        }
-        margin-top: 3%;
-        .count {
-          .number-input-box {
+
+          .dropdown-menu {
             width: 100%;
+          }
+        }
+
+        .input-group {
+          flex-direction: column;
+
+          .input-number,
+          input {
+            width: 100%;
+          }
+
+          .form-control {
+            border-radius: 0;
             margin-left: unset !important;
+          }
+
+          .input-group-prepend {
+            margin-bottom: 5px;
           }
         }
       }
-      .info_wrap:nth-child(4) {
-        margin-top: 3%;
+
+      .item_wrap {
+        height: 350px;
+        overflow: auto;
+
+        .item {
+          background-color: #526f8e;
+          border-radius: 10px;
+          padding: 20px;
+        }
       }
     }
-    .change_btn {
-      @include change_btn
+
+    .info_wrap:nth-child(3) {
+      .input-group
+        > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+          .valid-feedback
+        ):not(.invalid-tooltip):not(.invalid-feedback) {
+        margin-left: unset !important;
+        border-radius: 5px;
+      }
+
+      .count {
+        .number-input-box {
+          width: 100%;
+          margin-left: unset !important;
+        }
+      }
     }
   }
+}
+
 </style>
