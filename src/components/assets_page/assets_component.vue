@@ -408,7 +408,6 @@
     } = storeToRefs(assetStore);
     onMounted(async () => {
         register(); 
-        // roleId.value = await apiStore.getRoleId('admin');
         roleId.value = await apiStore.getRoleId(utilsStore.userName);
     })
     onUnmounted(()=>{
