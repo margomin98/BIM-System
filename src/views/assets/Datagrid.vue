@@ -225,48 +225,6 @@ onMounted(async () => {
 onUnmounted(()=>{
   utilsStore.$dispose();
 })
-async function submit(event, type) {
-  const form = new FormData();
-  //將表格資料append到 form
-  for (const key in dgSearchParams.value) {
-    if (dgSearchParams.value[key]) {
-      form.append(key, dgSearchParams.value[key]);
-    }
-  }
-  utilsStore.UpdatePageParameter(dg.value, event, type, form);
-  const resultList = await apiStore.getMngDatagrid('/InventoryMng/Assets',dg.value, form);
-  dgRowData.value = resultList.rows;
-  dg.value.totalRecords = resultList.total;
-  dg.value.key++;
-}
-async function importExcel(event) {
-  const selectedFile = event.target.files[0];
-  if (selectedFile) {
-    const fileName = selectedFile.name;
-    // 檢查檔案大小
-    console.log('filesize', selectedFile.size);
-    const maxFileSize = 28 * 1024 * 1024; // 28MB
-    if (selectedFile.size > maxFileSize) {
-      alert('檔案' + selectedFile.name + '大於28MB，請重新選取');
-      return
-    }
-    // 檢查副檔名
-    // 以'.'切割字串並以pop取得最後一組。EX: demo.sss.xlsx => ['demo','sss','xlsx'] => pop出 'xlsx'並轉成小寫
-    const fileExtension = fileName.split('.').pop().toLowerCase();
-    if (fileExtension !== 'xlsx' && fileExtension !== 'csv' && fileExtension !== 'xlsm') {
-      alert('檔案格式不正確(.xlsx/.csv)，請重新選擇')
-      return
-    }
-    dg.value.sortField = 'AssetsId'
-    submit('', 'search');
-    DropdownArray.EquipType = await apiStore.getEquipType();
-    DropdownArray.Area = await apiStore.getArea();
-    DropdownArray.Staff = await apiStore.getCustodian();
-    DropdownArray.ProjectCode = await apiStore.getFuzzyProject();
-  });
-  onUnmounted(() => {
-    utilsStore.$dispose();
-  })
   async function submit(event, type) {
     const form = new FormData();
     //將表格資料append到 form
