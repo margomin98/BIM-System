@@ -92,11 +92,13 @@
           <input type="text" placeholder="請輸入代碼或名稱" v-model="project.input">
         </div>
         <div class="search_result">
+        <div class="search_result_wrap">
           <!-- <perfect-scrollbar> -->
             <div v-for="option in filterProject" class="result_wrap"
               :class="{ 'selected': project.Project_Id === option.Value }" @click="selectProject(option)">
               <p class="case_code d-flex">{{ option.Value }}</p>
               <p class="case_name">{{ option.Text }}</p>
+            </div>
             </div>
           <!-- </perfect-scrollbar> -->
         </div>
@@ -1430,6 +1432,9 @@ P{
 
 .search_result {
   border-radius: 0 0 20px 20px;
+  .search_result_wrap{
+    overflow-y: scroll;
+  }
 }
 
 .pt_left {
@@ -1501,7 +1506,10 @@ P{
 
     .search_result {
       background-color: $content_bg;
-
+.search_result_wrap{
+  display: grid;
+  gap:16px 0;
+}
       .result_wrap {
         background: #A7AFBB;
         border-radius: 10px;
@@ -1778,7 +1786,7 @@ P{
 
     .code_search {
       width: 320px;
-
+      height:588px;
       .search_section {
         padding: 10px 20px;
         height: 70px;
@@ -1800,9 +1808,11 @@ P{
 
       .search_result {
         padding: 16px;
-        height: 518px;
-
-        .result_wrap {
+        
+     
+.search_result_wrap{
+  height: 485px;
+}        .result_wrap {
           padding: 10px;
         }
       }
@@ -1985,6 +1995,9 @@ P{
 
       .search_result {
         padding: 16px;
+        .search_result_wrap{
+          height: 400px;
+        }
 
         .result_wrap {
           padding: 10px;
@@ -2161,7 +2174,9 @@ P{
 
       .search_result {
         padding: 16px;
-
+        .search_result_wrap{
+          height: 400px;
+        }
         .result_wrap {
           padding: 10px;
         }
@@ -2303,7 +2318,9 @@ P{
 
       .search_result {
         padding: 16px;
-
+        .search_result_wrap{
+          height: 400px;
+        }
         .result_wrap {
           padding: 10px;
         }
