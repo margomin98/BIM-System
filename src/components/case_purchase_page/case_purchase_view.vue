@@ -150,7 +150,7 @@
                             <td>
                                 <span v-if="Form.Status === '待採購'">尚未決定</span>
                                 <span v-else-if="Form.Status === '採購中'">暫緩採購</span>
-                                <span v-else-if="Form.Status === '沖銷中' && item.Number != item.selectNumber">沖銷中</span>
+                                <span v-else-if="Form.Status === '沖銷中'">沖銷中</span>
                                 <span v-else>已沖銷</span>
                             </td>
                             <td class="table_content">
@@ -164,11 +164,11 @@
                         </tr>
                         <!-- Ordered -->
                         <tr v-for="item in Form.Ordered">
-                            <td class="table_content edit_order_btn"><button :class="{'edit_order_btn_grey': !(Form.Status === '採購中'||(Form.Status == '沖銷中' && item.Number != item.selectNumber))}" @click="editOrder(item.PO_ID)" :disabled="!(Form.Status === '採購中'||(Form.Status == '沖銷中' && item.Number != item.selectNumber))">編輯訂單</button></td>
+                            <td class="table_content edit_order_btn"><button :class="{'edit_order_btn_grey': Form.Status !== '採購中' && Form.Status !== '沖銷中'}" @click="editOrder(item.PO_ID)" :disabled="Form.Status !== '採購中' && Form.Status !== '沖銷中'">編輯訂單</button></td>
                             <td><span>有</span></td>
                             <td>
                                 <span v-if="Form.Status === '採購中'">已採購</span>
-                                <span v-else-if="Form.Status === '沖銷中' && item.Number != item.selectNumber">沖銷中</span>
+                                <span v-else-if="Form.Status === '沖銷中'">沖銷中</span>
                                 <span v-else>已沖銷</span>
                             </td>
                             <td class="table_content">

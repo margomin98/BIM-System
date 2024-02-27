@@ -442,7 +442,7 @@ const submit = async (isDone) => {
         const response = await axios.post('http://192.168.0.177:7008/PurchasingMng/ItemsWriteOff', requestData);
         const data = response.data;
         if (data.state === 'success') {
-            alert(data.messages + '\n' + data.resultList.PP_ID);
+            alert(data.messages + '\n單號: ' + data.resultList.PP_ID);
             if (isDone) {
                 router.push({ name: 'Case_Purchase_Datagrid' });
             } else {
