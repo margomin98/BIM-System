@@ -501,10 +501,23 @@ export const useAPIStore = defineStore('API',{
         console.error('櫃位取得失敗:',error);
       }
     },
-    // 保管人員
+    // 員工列表-Enabled (現在在公司的員工)
     async getCustodian(name='') {
       try {
         const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchName?name=${name}`);
+        const data = response.data;
+        if (data.state === 'success') {
+          const filteredRoles = data.resultList.filter(role => role !== 'admin' && role !== 'guest');
+          return filteredRoles;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    // 員工列表-Not Enabled (包括已離職員工)
+    async getStaff() {
+      try {
+        const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetUsernames`);
         const data = response.data;
         if (data.state === 'success') {
           const filteredRoles = data.resultList.filter(role => role !== 'admin' && role !== 'guest');

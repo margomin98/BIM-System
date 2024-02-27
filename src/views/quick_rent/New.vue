@@ -67,7 +67,7 @@
                             <!-- 物品名稱 -->
                             <div class='col'>
                                 <p>物品名稱</p>
-                                <input type="text" class="form-control text-center" placeholder="最多輸入10字" v-model="searchParams.AssetName" />
+                                <input type="text" class="form-control text-center" placeholder="最多輸入10字" v-model="searchParams.ProductName" />
                             </div>
                         </div>
                         <div class='col d-flex justify-content-center'>

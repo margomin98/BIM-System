@@ -143,7 +143,7 @@ onMounted(async () => {
   }
   dg.value.sortField = 'AO_ID'
   submit('', 'search');
-  DropdownArray.Staff = await apiStore.getCustodian();
+  DropdownArray.Staff = await apiStore.getStaff();
   DropdownArray.ProjectCode = await apiStore.getFuzzyProject();
 });
 onUnmounted(()=>{

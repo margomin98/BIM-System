@@ -280,7 +280,7 @@
     submit('', 'search');
     DropdownArray.EquipType = await apiStore.getEquipType();
     DropdownArray.Area = await apiStore.getArea();
-    DropdownArray.Staff = await apiStore.getCustodian();
+    DropdownArray.Staff = await apiStore.getStaff();
     DropdownArray.ProjectCode = await apiStore.getFuzzyProject();
   });
   onUnmounted(() => {
