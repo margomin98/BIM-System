@@ -18,17 +18,17 @@
           <!-- 入庫單號 -->
           <div class="col">
             <p>入庫單號</p>
-            <input type="text" v-model="dgSearchParams.ShipmentNum" />
+            <input type="text" v-model="dgSearchParams.AI_ID"/>
           </div>
           <!-- 資產編號 -->
           <div class="col">
             <p>資產編號</p>
-            <input type="text" v-model="dgSearchParams.AssetsId" />
+            <input type="text" v-model="dgSearchParams.AssetsId"/>
           </div>
           <!-- 物品名稱 -->
           <div class="col">
             <p>物品名稱</p>
-            <input type="text" v-model="dgSearchParams.AssetName" />
+            <input type="text" v-model="dgSearchParams.AssetName"/>
           </div>
           <!-- 設備總類 -->
           <div class="col">
@@ -193,6 +193,7 @@
     Staff: [],
   })
   const searchParams = reactive({
+    AI_ID: '',
     ShipmentNum: '',
     EquipType_Id: '',
     Category_Id: '',
@@ -214,7 +215,7 @@
       width: '100px'
     },
     {
-      header: "編號",
+      header: "入庫單號",
       field: "AI_ID",
       width: '150px'
     },

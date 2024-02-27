@@ -16,7 +16,7 @@
         <div class="row">
           <div class="col">
             <p>收貨單號</p>
-            <input type="text" v-model="dgSearchParams.AR_ID" />
+            <input type="text" v-model="dgSearchParams.Show_AR_ID" />
           </div>
           <div class="col">
             <p>物流單號</p>
@@ -100,7 +100,7 @@
     Staff: [],
   })
   const searchParams = reactive({
-    AR_ID: '',
+    Show_AR_ID: '',
     Recipient: '',
     ShipmentNum: '',
     ShipmentCompany: '',
@@ -109,7 +109,7 @@
   });
   const datagridfield = [{
       header: "收貨單號",
-      field: "AR_ID",
+      field: "Show_AR_ID",
       width: '180px'
     },
     {

@@ -238,7 +238,7 @@
               <!-- 採購項目 -->
               <div class="col">
                 <p>採購項目</p>
-                <input type="text" placeholder="最多輸入20字" v-model="PurchasedItem.searchParams.PurchasedItem" />
+                <input type="text" v-model="PurchasedItem.searchParams.PurchasedItem" />
               </div>
               <!-- 交貨期限(起) -->
               <div class="col">
@@ -833,12 +833,12 @@ onMounted(async () => {
   util_Dropdown.EquipType = await apiStore.getEquipType();
   util_Dropdown.Area = await apiStore.getArea();
   // 4個dg搜尋
-  // submit('Warehouse','','search');
-  // submit('PurchasedItem','','search');
-  // submit('DeliveredItem','','search');
-  // submit('CustodyAssets','','search');
+  submit('Warehouse','','search');
+  submit('PurchasedItem','','search');
+  submit('DeliveredItem','','search');
+  submit('CustodyAssets','','search');
   // 警示訊息
-  // getAlertMsg();
+  getAlertMsg();
   updatePie();
 
   //測試data

@@ -152,12 +152,6 @@ import Authorized from "../views/Authorized";
 
 import axios from "axios";
 import { getApplication } from "@/assets/js/common_api";
-import { useAssetStore } from "@/store/asset/_index";
-import { useUtilsStore } from "@/store";
-import { useStorageStore } from "@/store/storage/_index";
-import { useRentStore } from "@/store/rent/_index";
-import { useQuickRentStore } from "@/store/rent/quick";
-import { useQuickProcessStore } from "@/store/storage/quick_process";
 const routes = [
   {
     path: "/test",
