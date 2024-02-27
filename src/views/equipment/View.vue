@@ -267,6 +267,19 @@ h1 {
   }
   .info_wrap:nth-child(4) {
       margin-top: 3%;
+      .btn_section {
+            margin-left: 10px;
+            .delete_btn {
+              display: flex;
+              align-items: center;
+              @include delete_button;
+              height: 100%;
+              padding: 5px;
+              &:hover {
+                background: #FF7272
+              }
+            }
+          }
     }
 }
 

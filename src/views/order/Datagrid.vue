@@ -37,9 +37,9 @@
             <p>採購來源</p>
             <input type="text" v-model="dgSearchParams.Source" />
           </div>
-          <!-- 訂購編號 -->
+          <!-- 訂單編號 -->
           <div class="col">
-            <p>訂購編號</p>
+            <p>訂單編號</p>
             <input type="text" v-model="dgSearchParams.PurchaseNum" />
           </div>
           <!-- 下訂日期(起) -->
