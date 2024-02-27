@@ -178,7 +178,7 @@
       dgSearchParams.value[key] = '';
     }
     submit('', 'search');
-    DropdownArray.Staff = await apiStore.getCustodian();
+    DropdownArray.Staff = await apiStore.getStaff();
     DropdownArray.ProjectCode = await useAPIStore().getFuzzyProject();
   });
   onUnmounted(() => {

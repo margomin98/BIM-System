@@ -94,7 +94,7 @@
                             <div class='col'>
                                 <p>物品名稱</p>
                                 <input type="text" class="form-control text-center" placeholder="最多輸入20字"
-                                    v-model="searchParams.AssetName" />
+                                    v-model="searchParams.ProductName" />
                             </div>
                         </div>
                         <div class='col d-flex justify-content-center'>
@@ -384,7 +384,7 @@ const searchParams = reactive({
     ProjectCode: '',
     ProjectSelect: { Text: '--請選擇--', Value: '' },
     AssetsId: '',
-    AssetName: '',
+    ProductName: '',
     AssetList: [],
 })
 // 檢索上方顯示欄位之一
@@ -442,7 +442,7 @@ const submit = async (isDone) => {
         const response = await axios.post('http://192.168.0.177:7008/PurchasingMng/ItemsWriteOff', requestData);
         const data = response.data;
         if (data.state === 'success') {
-            alert(data.messages + '\n' + data.resultList.PP_ID);
+            alert(data.messages + '\n單號: ' + data.resultList.PP_ID);
             if (isDone) {
                 router.push({ name: 'Case_Purchase_Datagrid' });
             } else {
@@ -500,7 +500,7 @@ const updateSelectedList = () => {
 const searchInventory = async (event, type) => {
     //檢查字數
     const regexPattern = new RegExp(`^[\\s\\S]{0,20}$`);
-    if (!regexPattern.test(searchParams.AssetName)) {
+    if (!regexPattern.test(searchParams.ProductName)) {
         alert(`物品名稱不可輸入超過20字`);
         return
     }

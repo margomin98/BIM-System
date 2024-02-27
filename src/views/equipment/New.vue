@@ -1343,10 +1343,10 @@ h1 {
 
     .second_content {
     
-
       .wrap1 {
         padding: 20px 20px 0;
-        flex-direction: column;
+
+flex-direction: column;
 
 
 

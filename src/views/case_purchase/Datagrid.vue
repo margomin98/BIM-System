@@ -79,7 +79,7 @@
           <!-- 採購人員 -->
           <div class="col">
             <p>採購人員</p>
-            <select class="form-select" aria-label="Default select example" v-model="dgSearchParams.Applicant">
+            <select class="form-select" aria-label="Default select example" v-model="dgSearchParams.PurchasePerson">
                 <option value="">--請選擇--</option>
                 <option v-for="option in DropdownArray.Staff" :value="option">{{ option }}</option>
               </select>
@@ -87,7 +87,7 @@
           <!-- 沖銷人員 -->
           <div class="col">
             <p>沖銷人員</p>
-            <select class="form-select" aria-label="Default select example" v-model="dgSearchParams.Applicant">
+            <select class="form-select" aria-label="Default select example" v-model="dgSearchParams.WriteOffPerson">
                 <option value="">--請選擇--</option>
                 <option v-for="option in DropdownArray.Staff" :value="option">{{ option }}</option>
               </select>
@@ -168,14 +168,15 @@
   })
   const searchParams = reactive({
     PP_ID: '',
-    Description: '',
-    Applicant: '',
-    PurchasePerson: '',
-    ProjectName: '',
     Status: '',
+    ProjectName: '',
+    Description: '',
     DateCategory: '',
     StartDate: '',
     EndDate: '',
+    Applicant: '',
+    PurchasePerson: '',
+    WriteOffPerson: '',
   });
   const datagridfield = ref([{
       header: "狀態",
@@ -221,7 +222,7 @@
     },
     {
       header: "完成日期",
-      field: "PurchaseDate",
+      field: "WriteOffDate",
       width: '170px'
     },
   ]);
@@ -232,7 +233,7 @@
     }
     submit('', 'search');
     DropdownArray.ProjectCode = await apiStore.getFuzzyProject();
-    DropdownArray.Staff = await apiStore.getCustodian();
+    DropdownArray.Staff = await apiStore.getStaff();
   });
   onUnmounted(() => {
     utilsStore.$dispose();

@@ -311,317 +311,229 @@ GetAntiForgeryToken,
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-  .dg-height {
-    @include datagrid-height;
+ 
+  .datagrid_section {
+  .row {
+    @include datagrid_bg;
   }
-  @media only screen and (min-width: 1200px) {
-    .main_section {
-      padding: 0 10%;
-      h1 {
-        margin: 50px 0 20px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .button_wrap {
-        margin-bottom: 25px;
-        gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          width: 150px;
-          &:hover {
-            background-color: #537ebc;
-          }
-        }
-        .search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-        .empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-        .export_btn {
-          @include export_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-      }
-      .datagrid_section {
-        .content {
-          background: rgba(82, 136, 156, 0.8);
-          border-radius: 10px;
-          margin-bottom: 30px;
-          height: 250px;
-          align-items: center;
-          display: flex;
-          justify-content: center;
-        }
-        .row {
-          display: grid;
-          grid-template-rows: 1fr 1fr;
-          grid-template-columns: 1fr 1fr 1fr 1fr;
-          gap: 40px 5px;
-          .col-xl-2 {
-            margin: 0 3px;
-          }
-          p {
-            @include datagrid_title;
-          }
-          input {
-            @include dropdown_btn;
-            width: 200px;
-            height: 35px;
-          }
-          button {
-            border: none;
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-          }
-          .dropdown {
-            width: 200px;
-            height: 35px;
-            @include dropdown_btn;
-            .dropdown-toggle {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              border: none;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-            }
-            .dropdown-menu {
-              width: 100%;
-              transform: translate3d(-1px, 35px, 0px) !important;
-              max-height: 250px;
-              overflow-y: auto;
-              p {
-                font-size: 18px;
-                color: black;
-                font-weight: normal;
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-            }
-          }
-        }
-      }
-      .datagrid-header-row {
-        background: var(--c-7, #1f4e5f);
-      }
-      .datagrid-header .datagrid-cell {
-        text-align: left !important;
-      }
+  input,
+  select {
+    @include dropdown_btn;
+    width: 100%;
+    height: 35px;
+  }
+  .content {
+    p {
+      @include datagrid_title;
     }
   }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .main_section {
-      padding: 0 5%;
-      h1 {
-        margin-top: 30px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-        margin-bottom: 20px;
-      }
-      .button_wrap {
-        margin-bottom: 25px;
-        gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          width: 150px;
-          &:hover {
-            background-color: #537ebc;
-          }
-        }
-        // .export_btn {
-        //   @include export_btn;
-        //   &:hover {
-        //     background-color: #274266;
-        //   }
-        // }
-        .search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-        .empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-      }
-      .datagrid_section {
-        .row {
-          gap: 10px 0;
-          padding: 30px;
-          @include datagrid_bg;
-          p {
-            @include datagrid_title;
-          }
-          input {
-            @include dropdown_btn;
-            width: 100%;
-            height: 35px;
-          }
-          button {
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-            text-align: left;
-          }
-          .dropdown {
-            width: 100%;
-            height: 35px;
-            @include dropdown_btn;
-            .dropdown-toggle {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              border: none;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-            }
-            .dropdown-menu {
-              width: 100%;
-              transform: translate3d(-1px, 35px, 0px) !important;
-              max-height: 250px;
-              overflow-y: auto;
-              p {
-                font-size: 18px;
-                color: black;
-                font-weight: normal;
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-            }
-          }
-        }
-      }
-      .datagrid-header-row {
-        background: var(--c-7, #1f4e5f);
-      }
-      .datagrid-header .datagrid-cell {
-        text-align: left !important;
-      }
+  .dropdown-toggle{
+    width: 100%;
+  }
+}
+.button_wrap {
+  margin-bottom: 25px;
+  gap: 20px;
+  .add_btn {
+    @include datagrid_button_no1;
+    width: 150px;
+    &:hover {
+      background-color: #537ebc;
     }
   }
-  @media only screen and (max-width: 767px) {
-    .main_section {
-      padding: 5%;
-      h1 {
-        margin-top: 30px;
-        text-align: center;
-        font-size: 50px;
-        font-weight: 600;
-        @include title_color;
-        margin-bottom: 20px;
-      }
-      .button_wrap {
-        margin-bottom: 25px;
-        justify-content: center;
-        gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          font-size: 18px;
+  .search_btn {
+    @include search_and_send_btn;
+    &:hover {
+      background-color: #5e7aa2;
+    }
+  }
+  .empty_btn {
+    @include empty_btn;
+    &:hover {
+      background-color: #5d85bd;
+    }
+  }
+  .export_btn {
+    @include export_btn;
+    &:hover {
+      background-color: #5e7aa2;
+    }
+  }
+}
+h1 {
+  text-align: center;
+  font-weight: 600;
+  @include title_color;
+}
+@media only screen and (min-width: 1200px) {
+  .main_section {
+    padding: 0 10%;
+    h1 {
+      margin-top: 30px;
+      font-size: 55px;
+      margin-bottom: 20px;
+    }
+
+    .datagrid_section {
+      .row {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 20px 5px;
+        padding: 2% 15%;
+
+        .dropdown {
           width: 100%;
-          height: auto;
-          &:hover {
-            background-color: #537ebc;
+          height: 35px;
+          @include dropdown_btn;
+          .dropdown-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
-        }
-        // .export_btn {
-        //   @include export_btn;
-        //   font-size: 18px;
-        //   width: 100%;
-        //   height: auto;
-        //   &:hover {
-        //     background-color: #274266;
-        //   }
-        // }
-        .search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-        .empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-      }
-      .datagrid_section {
-        .row {
-          gap: 10px 0;
-          padding: 30px;
-          @include datagrid_bg;
-          p {
-            @include datagrid_title;
-            font-size: 18px;
-          }
-          input {
-            @include dropdown_btn;
+          .dropdown-menu {
             width: 100%;
-            height: 35px;
-          }
-          button {
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-            text-align: left;
-          }
-          .dropdown {
-            width: 100%;
-            height: 35px;
-            @include dropdown_btn;
-            .dropdown-toggle {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              border: none;
-            }
-            .dropdown-menu {
-              width: 100%;
-              transform: translate3d(-1px, 35px, 0px) !important;
-              max-height: 250px;
-              overflow-y: auto;
-              p {
-                font-size: 18px;
-                color: black;
-                font-weight: normal;
-                &:hover {
-                  cursor: pointer;
-                }
+            transform: translate3d(-1px, 35px, 0px) !important;
+            max-height: 250px;
+            overflow-y: auto;
+            p {
+              font-size: 18px;
+              color: black;
+              font-weight: normal;
+              &:hover {
+                cursor: pointer;
               }
             }
           }
         }
       }
-      .datagrid-header-row {
-        background: var(--c-7, #1f4e5f);
-      }
-      .datagrid-header .datagrid-cell {
-        text-align: left !important;
-      }
+    }
+    .datagrid-header-row {
+      background: var(--c-7, #1f4e5f);
+    }
+    .datagrid-header .datagrid-cell {
+      text-align: left !important;
     }
   }
+}
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  .main_section {
+    padding: 0 5%;
+    h1 {
+      margin-top: 30px;
+      font-size: 55px;
+      margin-bottom: 20px;
+    }
+    .datagrid_section {
+      .row {
+        gap: 10px 0;
+        padding: 30px;
+
+        button {
+          padding: 0;
+          width: 100%;
+          font-size: 18px;
+          height: 100%;
+          text-align: left;
+        }
+        .dropdown {
+          width: 100%;
+          height: 35px;
+          @include dropdown_btn;
+          .dropdown-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+          .dropdown-menu {
+            width: 100%;
+            transform: translate3d(-1px, 35px, 0px) !important;
+            max-height: 250px;
+            overflow-y: auto;
+            p {
+              font-size: 18px;
+              color: black;
+              font-weight: normal;
+              &:hover {
+                cursor: pointer;
+              }
+            }
+          }
+        }
+      }
+    }
+    .datagrid-header-row {
+      background: var(--c-7, #1f4e5f);
+    }
+    .datagrid-header .datagrid-cell {
+      text-align: left !important;
+    }
+  }
+}
+@media only screen and (max-width: 767px) {
+  .main_section {
+    padding: 5%;
+    h1 {
+      margin-top: 30px;
+      font-size: 50px;
+      margin-bottom: 20px;
+    }
+
+    .datagrid_section {
+      .row {
+        gap: 10px 0;
+        padding: 30px;
+        @include datagrid_bg;
+
+        button {
+          padding: 0;
+          width: 100%;
+          font-size: 18px;
+          height: 100%;
+          text-align: left;
+        }
+        .dropdown {
+          width: 100%;
+          height: 35px;
+          @include dropdown_btn;
+          .dropdown-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: none;
+          }
+          .dropdown-menu {
+            width: 100%;
+            transform: translate3d(-1px, 35px, 0px) !important;
+            max-height: 250px;
+            overflow-y: auto;
+            p {
+              font-size: 18px;
+              color: black;
+              font-weight: normal;
+              &:hover {
+                cursor: pointer;
+              }
+            }
+          }
+        }
+      }
+    }
+    .datagrid-header-row {
+      background: var(--c-7, #1f4e5f);
+    }
+    .datagrid-header .datagrid-cell {
+      text-align: left !important;
+    }
+  }
+}
+
 </style>

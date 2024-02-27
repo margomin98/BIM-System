@@ -80,7 +80,7 @@ export const useRentStore = defineStore('Rent', {
       ProjectCode: '',
 			ProjectSelect: { Text: '--請選擇--',Value: '' },
       AssetsId: '',
-      AssetName: '',
+      ProductName: '',
     },
     datagrid1: createDadagridObject('AssetsId'),
     datagrid1field: [],

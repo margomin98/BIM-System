@@ -73,7 +73,7 @@
                                 <option value="">--請選擇--</option>
                                 <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name }}</option>
                             </select>
-                            <input v-else-if="PageType === 'view'" type="text" class="form-control readonly_box" v-model="Form.EquipType_Id" readonly>
+                            <input v-else-if="PageType === 'view'" type="text" class="form-control readonly_box" v-model="Form.EquipTypeName" readonly>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -86,7 +86,7 @@
                                         <option v-for="option in DropdownArray.EquipCategory" :value="option.Id">{{ option.Name }}</option>
                                     </template>
                             </select>
-                            <input v-else-if="PageType === 'view' " type="text" class="form-control readonly_box" v-model="Form.Category_Id" readonly>
+                            <input v-else-if="PageType === 'view' " type="text" class="form-control readonly_box" v-model="Form.EquipCategoryName" readonly>
                         </div>
                     </div>
                 </div>
@@ -179,7 +179,7 @@
                                 <option value="">--請選擇--</option>
                                 <option v-for="option in DropdownArray.Area" :value="option.Id">{{ option.Name }}</option>
                             </select>
-                            <input v-else-if="PageType === 'view' " type="text" class="form-control readonly_box" v-model="Form.Area_Id" readonly>
+                            <input v-else-if="PageType === 'view' " type="text" class="form-control readonly_box" v-model="Form.AreaName" readonly>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
@@ -193,7 +193,7 @@
                                     <option v-for="option in DropdownArray.Layer" :value="option.Id">{{ option.Name }}</option>
                                 </template>
                             </select>
-                            <input v-else-if="PageType === 'view' " type="text" class="form-control readonly_box" v-model="Form.Layer_Id" readonly>
+                            <input v-else-if="PageType === 'view' " type="text" class="form-control readonly_box" v-model="Form.LayerName" readonly>
                         </div>
                     </div>
                 </div>
