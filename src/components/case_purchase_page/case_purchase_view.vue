@@ -134,6 +134,7 @@
                     <thead>
                         <tr>
                             <th class="edit_order"><span></span></th>
+                            <th class="check_col"><span>新增訂單</span></th>
                             <th class="check_col"><span>採購狀態</span></th>
                             <th class="writeoff_property"><span>沖銷所選資產</span></th>
                             <th class="item_col"><span>採購項目</span></th>
@@ -145,11 +146,12 @@
                         <!-- NotOrdered -->
                         <tr v-for="item in Form.NotOrdered">
                             <td class="table_content edit_order_btn"><button class="edit_order_btn_grey">編輯訂單</button></td>
+                            <td><span>無</span></td>
                             <td>
-                                <p v-if="Form.Status === '待採購'">尚未決定</p>
-                                <p v-else-if="Form.Status === '採購中'">暫緩採購</p>
-                                <p v-else-if="Form.Status === '沖銷中' && item.Number != item.selectNumber">沖銷中</p>
-                                <p v-else>已沖銷</p>
+                                <span v-if="Form.Status === '待採購'">尚未決定</span>
+                                <span v-else-if="Form.Status === '採購中'">暫緩採購</span>
+                                <span v-else-if="Form.Status === '沖銷中' && item.Number != item.selectNumber">沖銷中</span>
+                                <span v-else>已沖銷</span>
                             </td>
                             <td class="table_content">
                                 <div class="item_number_wrap">
@@ -162,11 +164,12 @@
                         </tr>
                         <!-- Ordered -->
                         <tr v-for="item in Form.Ordered">
-                            <td class="table_content edit_order_btn"><button :class="{'edit_order_btn_grey': Form.Status !== '採購中'}" @click="editOrder(item.PO_ID)" :disabled="Form.Status !=='採購中'">編輯訂單</button></td>
+                            <td class="table_content edit_order_btn"><button :class="{'edit_order_btn_grey': !(Form.Status === '採購中'||(Form.Status == '沖銷中' && item.Number != item.selectNumber))}" @click="editOrder(item.PO_ID)" :disabled="!(Form.Status === '採購中'||(Form.Status == '沖銷中' && item.Number != item.selectNumber))">編輯訂單</button></td>
+                            <td><span>有</span></td>
                             <td>
-                                <p v-if="Form.Status === '採購中'">已採購</p>
-                                <p v-else-if="Form.Status === '沖銷中' && item.Number != item.selectNumber">沖銷中</p>
-                                <p v-else>已沖銷</p>
+                                <span v-if="Form.Status === '採購中'">已採購</span>
+                                <span v-else-if="Form.Status === '沖銷中' && item.Number != item.selectNumber">沖銷中</span>
+                                <span v-else>已沖銷</span>
                             </td>
                             <td class="table_content">
                                 <div class="item_number_wrap">
@@ -292,7 +295,7 @@
                 height: 46px;
             }
             .check_col {
-                width: 70px
+                width: 75px
             }
             .edit_order {
                 width: 120px
