@@ -264,7 +264,7 @@
             }
         }
         .purchase_table {
-            max-height: 250px;
+            max-height: 500px;
             overflow-y: scroll;
         }
         .purchase_list {

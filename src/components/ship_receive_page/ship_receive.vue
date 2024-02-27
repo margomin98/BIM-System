@@ -59,7 +59,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-show="Form.Status === '快速出庫完成'" class="row g-0">
+                <div v-show="Form.Status === '快速出庫完成'" class="row g-0 project_date_wrap">
                     <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
                         <label for="inputWithButton" class="form-label"><p>領用人員</p></label>
                         <div class="input-group" id="readonly_box">
@@ -558,6 +558,7 @@
                 .fixed_info:nth-child(5) {
                     border-top: unset;
                 }
+         
             
                 #readonly_box {
                     padding: 0;
@@ -843,13 +844,17 @@
                     text-align: end;
                 }
             }
-          
+            .project_date_wrap{
+                    border-top: 1px solid black;
+                    border-bottom: 1px solid black;
+               
             .project_date{
         border-left:1px solid black;
         p{
             width: 150px !important;
         }
     }
+ }
         }
     }
     @media only screen and (min-width: 768px) and (max-width: 1199px) {
@@ -1172,13 +1177,15 @@
                     text-align: end;
                 }
             }
-       
+            .project_date_wrap{
+                    border-top: 1px solid black;
+                    border-bottom: 1px solid black;
             .project_date{
         border-left:1px solid black;
         p{
             width: 150px !important;
         }
-    }
+    }}
         }
     }
     @media only screen and (max-width: 767px) {
@@ -1222,9 +1229,7 @@
                         margin-bottom: 0;
                     }
                 }
-                .fixed_info:nth-child(5) {
-                    border-top: unset;
-                }
+              
              
                 .third_content {
                     .list {
@@ -1510,7 +1515,10 @@
                     text-align: end;
                 }
             }
-          
+            .project_date_wrap,.project_name,.project_date{
+                    border-top: 1px solid black;
+               
+            }
         }
     }
 </style>
