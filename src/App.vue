@@ -7,6 +7,9 @@
 </script>
 
 <style lang="scss">
+nav .navbar-collapse{
+	z-index: 1;
+}
 	.datagrid_section .multiselect__tags {
 		min-height: 35px;
 		display: flex;
@@ -54,6 +57,9 @@
 			color: white !important;
 		}
 	}
+	.dropdown-item{
+  text-align: left;
+}
 	.ag-body .ag-cell {
 		border: 0;
 	}

@@ -620,9 +620,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
-
 span {
-  @include red_star
+  @include red_star;
 }
 
 .readonly_box {
@@ -639,7 +638,6 @@ span {
   display: grid;
   gap: 20px 0;
 }
-
 
 h1 {
   text-align: center;
@@ -686,7 +684,6 @@ h1 {
 
     .form-control {
       height: 35px;
-      border-radius: 0;
     }
 
     .input-group-prepend {
@@ -706,40 +703,37 @@ h1 {
       overflow: auto;
 
       .item {
-        background-color: #526F8E;
+        background-color: #526f8e;
         border-radius: 10px;
         padding: 20px;
         margin: 20px 0;
       }
 
       .failed_storage {
-        background-color: #8A2828;
+        background-color: #8a2828;
         border: 1px solid white;
       }
     }
   }
   .info_wrap:nth-child(3) {
+    .count {
+      .btn_section {
+        margin-left: 10px;
 
-.count {
+        .delete_btn {
+          display: flex;
+          align-items: center;
+          @include delete_button;
+          height: 100%;
+          padding: 5px;
 
-
-  .btn_section {
-    margin-left: 10px;
-
-    .delete_btn {
-      display: flex;
-      align-items: center;
-      @include delete_button;
-      height: 100%;
-      padding: 5px;
-
-      &:hover {
-        background: #FF7272
+          &:hover {
+            background: #ff7272;
+          }
+        }
       }
     }
   }
-}
-}
 }
 
 .button_wrap {
@@ -768,7 +762,7 @@ h1 {
 }
 
 .search_section {
-  background: #B5C9D0;
+  background: #b5c9d0;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -814,17 +808,15 @@ h1 {
     }
 
     p {
-      margin-bottom: 0 !important
+      margin-bottom: 0 !important;
     }
 
     button {
-
       border: none;
-    background: none;
-    color: white;
-    font-weight: 700;
-    font-size: 22px;
-
+      background: none;
+      color: white;
+      font-weight: 700;
+      font-size: 22px;
     }
   }
 
@@ -837,7 +829,7 @@ h1 {
   .second_content {
     border-left: 1px solid black;
     border-right: 1px solid black;
-    background: #D9D9D9;
+    background: #d9d9d9;
 
     p.content {
       display: flex;
@@ -851,7 +843,7 @@ h1 {
 
     .submit_btn {
       margin-bottom: 20px;
-      background: #48658C;
+      background: #48658c;
       color: white;
       font-weight: 700;
       width: 100px;
@@ -869,8 +861,6 @@ h1 {
     .wrap1 {
       display: flex;
       justify-content: space-evenly;
-
-
 
       .number-input-box {
         color: black;
@@ -919,7 +909,6 @@ h1 {
 }
 @media only screen and (min-width: 1200px) {
   .main_section {
-
     h1 {
       margin-top: 80px;
       margin-bottom: 40px;
@@ -930,11 +919,7 @@ h1 {
       margin: auto;
       width: 700px;
 
-
-
-
       .content {
-
         p {
           text-align: center;
           white-space: nowrap;
@@ -946,23 +931,16 @@ h1 {
 
         .dropdown {
           .dropdown-menu {
-
             p {
               text-align: left;
-              padding: 0 10px
+              padding: 0 10px;
             }
           }
-
-
         }
 
         .input-group {
           justify-content: right;
           flex-wrap: nowrap;
-
-
-
-
 
           .input-group-prepend {
             white-space: nowrap;
@@ -970,14 +948,10 @@ h1 {
             text-align: end;
           }
         }
-
-
       }
 
-
-
       .dropdown {
-        width: calc(100% - 10%);
+     
         height: 35px;
         @include dropdown_btn;
 
@@ -1005,52 +979,36 @@ h1 {
           }
         }
       }
-
-
     }
 
     .info_wrap:nth-child(3) {
-
       .count {
         .input-group {
-          justify-content: left
+          justify-content: left;
         }
-
-
       }
     }
   }
 
   .modal {
-
-
     .fixed_info {
       p {
         font-size: 20px;
-       }
+      }
 
       button {
- 
         font-size: 22px;
         align-self: start;
       }
     }
 
-  
-
     .second_content {
       border-left: 1px solid black;
       border-right: 1px solid black;
-      background: #D9D9D9;
-
- 
+      background: #d9d9d9;
 
       .wrap1 {
         padding: 10px 80px;
-
-
-
-   
 
         // .dropdown {
         //   button {
@@ -1068,7 +1026,6 @@ h1 {
         //     }
         //   }
         // }
-    
       }
     }
   }
@@ -1076,24 +1033,17 @@ h1 {
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
-
-
     h1 {
       margin-top: 80px;
       margin-bottom: 40px;
       font-size: 55px;
     }
 
-
     .info_wrap {
       margin: auto;
       padding: 0 5%;
 
-
-
-
       .content {
-
         p {
           text-align: center;
           white-space: nowrap;
@@ -1104,24 +1054,17 @@ h1 {
         }
 
         .dropdown {
-
           .dropdown-menu {
-
             p {
               text-align: left;
-              padding: 0 10px
+              padding: 0 10px;
             }
           }
-
-
         }
 
         .input-group {
           justify-content: right;
           flex-wrap: nowrap;
-
-
-
 
           .input-group-prepend {
             white-space: nowrap;
@@ -1129,14 +1072,9 @@ h1 {
             text-align: end;
           }
         }
-
-
       }
 
-
-
       .dropdown {
-        width: calc(100% - 10%);
         height: 35px;
         @include dropdown_btn;
 
@@ -1164,43 +1102,27 @@ h1 {
           }
         }
       }
-
-
     }
 
     .info_wrap:nth-child(3) {
-
       .count {
         .input-group {
-          justify-content: left
+          justify-content: left;
         }
-
-
       }
     }
   }
 
   .modal {
- 
-
     .fixed_info {
-   
-
       p {
         font-size: 20px;
       }
-
     }
 
-   
-
     .second_content {
-   
-  
       .wrap1 {
         padding: 10px 80px;
-
-
 
         // .dropdown {
         //   button {
@@ -1218,7 +1140,6 @@ h1 {
         //     }
         //   }
         // }
-      
       }
     }
   }
@@ -1226,29 +1147,22 @@ h1 {
 
 @media only screen and (max-width: 767px) {
   .main_section {
-
     h1 {
       margin-top: 50px;
       font-size: 50px;
     }
 
-
     .info_wrap {
       padding: 1% 5% 0;
 
-
-
-
       .content {
-        .row {
-          gap: 10px 0;
-        }
+
 
         .dropdown {
           margin-left: unset !important;
-
-
-
+          .dropdown-menu{
+            padding: 0 ;
+          }
         }
 
         .input-group {
@@ -1267,22 +1181,17 @@ h1 {
             margin-bottom: 5px;
           }
         }
-
-
       }
-
-
-
-
     }
 
     .info_wrap:nth-child(3) {
-      .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+      .input-group
+        > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+          .valid-feedback
+        ):not(.invalid-tooltip):not(.invalid-feedback) {
         margin-left: unset !important;
         border-radius: 5px;
       }
-
-
 
       .count {
         .number-input-box {
@@ -1291,13 +1200,9 @@ h1 {
         }
 
         .btn_section {
-
           .delete_btn {
-
             width: 80px;
             font-size: 18px;
-
-
           }
         }
       }
@@ -1307,10 +1212,7 @@ h1 {
   .modal {
     padding: 0 5%;
 
-  
     .fixed_info {
-    
-
       p {
         font-size: 18px;
       }
@@ -1328,20 +1230,11 @@ h1 {
       }
     }
 
- 
-
     .second_content {
-    
       .wrap1 {
         padding: 20px 20px 0;
 
-flex-direction: column;
-
-
-
-      
-
-    
+        flex-direction: column;
 
         // .dropdown {
         //   button {
@@ -1363,9 +1256,7 @@ flex-direction: column;
         // }
 
         div {
-          margin: 10px 0;
-
-        
+          margin:5px 0;
         }
       }
     }
@@ -1374,4 +1265,5 @@ flex-direction: column;
   .button_wrap {
     padding: unset;
   }
-}</style>
+}
+</style>

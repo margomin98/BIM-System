@@ -492,672 +492,316 @@
 </script>
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-  span {
-    @include red_star
+  .main_section {
+  input {
+    @include dropdown_btn;
+    height: 35px;
   }
-  #confirmModal {
-    .modal-content {
-      border-radius: 0;
-      border: 1px solid black;
-      .modal-body {
-        background: #528091;
-        color: white;
-        font-weight: 700;
-        text-align: center;
-        padding: 20px 10px;
-        border-bottom: 1px solid black;
-      }
-      .modal-footer {
-        padding: 10px;
-        gap: 5px;
-        background: white;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        border-radius: 0;
-        button:nth-child(1) {
-          font-weight: 700;
-          border: none;
-          &:hover {
-            background: #636260
-          }
-        }
-        button:nth-child(2) {
-          background: #132238;
-          font-weight: 700;
-          border: none;
-          &:hover {
-            background: #426497
-          }
-        }
-      }
-    }
+  h1 {
+    text-align: center;
+    font-weight: 600;
+    @include title_color;
   }
-  @media only screen and (min-width: 1200px) {
-    .modal-content {
-      width: 300px;
-      margin: auto;
+  .info_wrap {
+    margin: auto;
+    .fixed_info {
+      @include fixed_info;
+      p {
+        font-size: 20px;
+        margin-bottom: 0;
+      }
     }
-    .main_section {
-      input {
-        @include dropdown_btn;
-        height: 35px;
-      }
-      .readonly_box {
-        @include readonly_box;
-      }
-      h1 {
-        margin-top: 80px;
-        margin-bottom: 40px;
+    .fixed_title {
+      @include fixed_title;
+    }
+    .content {
+      @include content_bg;
+      p {
         text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .info_wrap {
-        margin: auto;
-        padding: 0 20%;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .fixed_title {
-          @include fixed_title;
-        }
-        .content {
-          @include content_bg;
-          p {
-            text-align: center;
-            white-space: nowrap;
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: white;
-          }
-          .dropdown {
-            width: 55%;
-            .dropdown-menu {
-              width: 100%;
-              p {
-                text-align: left;
-                padding: 0 10px
-              }
-            }
-            button {
-              @include dropdown-btn;
-              width: 100%;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
-          .input-group {
-            justify-content: right;
-            flex-wrap: nowrap;
-            .input-number {
-              @include count_btn;
-            }
-            .form-control {
-              height: 35px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              white-space: nowrap;
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              width: 162px;
-              text-align: end;
-            }
-          }
-          .check_section {
-            gap: 10px;
-            display: flex;
-            .form-check {
-              gap: 5px;
-              padding: 0;
-              input {
-                width: 15px;
-                padding: 0;
-                height: 15px;
-                border-radius: 50%;
-              }
-              label {
-                color: white;
-                font-weight: 600;
-              }
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 25%;
-          margin-bottom: 5%;
-          gap: 20px;
-          button.back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-          button.send_btn {
-            @include search_and_send_btn;
-            width: 120px;
-            padding: 10px;
-            &:hover {
-              background-color: #8eb2e3;
-            }
-          }
-        }
-        .dropdown {
-          width: calc(100% - 10%);
-          height: 35px;
-          @include dropdown_btn;
-          .dropdown-toggle {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: none;
-          }
-          .dropdown-menu {
-            width: 100%;
-            transform: translate3d(-1px, 35px, 0px) !important;
-            p {
-              font-size: 18px;
-              color: black;
-              font-weight: normal;
-            }
-          }
-        }
-        .item_wrap {
-          height: 350px;
-          overflow: auto;
-          .item {
-            background-color: #526F8E;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-          }
-        }
-      }
-      .info_wrap:nth-child(3) {
-        margin-top: 3%;
-      }
-    }
-    .search_wrap {
-      margin-bottom: 20px;
-      .title {
-        display: flex;
-        justify-content: space-around;
-        background: #3D4E61;
-        color: white;
-        font-size: 25px;
+        white-space: nowrap;
+        font-size: 20px;
         font-weight: 700;
-        align-items: center;
-        border-radius: 10px 10px 0px 0px;
-        height: 50px;
+        margin-bottom: 5px;
+        color: white;
       }
-      .content {
-        background-color: #C3D3DA !important
-      }
-      .button {
-        display: flex;
-        margin-top: 20px;
-        justify-content: center;
-        gap: 20px;
-        button.empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #244f86;
+      .dropdown {
+        width: 55%;
+        .dropdown-menu {
+          p {
+            text-align: left;
+            padding: 0 10px;
           }
         }
-        button.search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-      }
-      .search_section {
-        padding: 0 80px;
-        width: 100%;
-        input {
-          @include dropdown_btn;
+        button {
+          @include dropdown-btn;
           width: 100%;
-          height: 35px;
-        }
-      }
-    }
-  }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .modal-content {
-      width: 300px;
-      margin: auto;
-    }
-    .main_section {
-      input {
-        @include dropdown_btn;
-        height: 35px;
-      }
-      .readonly_box {
-        @include readonly_box;
-      }
-      h1 {
-        margin-top: 80px;
-        margin-bottom: 40px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .info_wrap {
-        margin: auto;
-        padding: 0 5%;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .fixed_title {
-          @include fixed_title;
-        }
-        .content {
-          @include content_bg;
-          p {
-            text-align: center;
-            white-space: nowrap;
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: white;
-          }
-          .dropdown {
-            width: 55%;
-            .dropdown-menu {
-              width: 100%;
-              p {
-                text-align: left;
-                padding: 0 10px
-              }
-            }
-            button {
-              @include dropdown-btn;
-              width: 100%;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
-          .input-group {
-            justify-content: right;
-            flex-wrap: nowrap;
-            .input-number {
-              @include count_btn;
-            }
-            .form-control {
-              height: 35px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              white-space: nowrap;
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              width: 162px;
-              text-align: end;
-            }
-          }
-          .check_section {
-            gap: 10px;
-            display: flex;
-            .form-check {
-              gap: 5px;
-              padding: 0;
-              input {
-                width: 15px;
-                padding: 0;
-                height: 15px;
-                border-radius: 50%;
-              }
-              label {
-                color: white;
-                font-weight: 600;
-              }
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 25%;
-          margin-bottom: 5%;
-          gap: 20px;
-          button.back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-          button.send_btn {
-            @include search_and_send_btn;
-            width: 120px;
-            padding: 10px;
-            &:hover {
-              background-color: #8eb2e3;
-            }
-          }
-        }
-        .dropdown {
-          width: calc(100% - 10%);
-          height: 35px;
-          @include dropdown_btn;
-          .dropdown-toggle {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: none;
-          }
-          .dropdown-menu {
-            width: 100%;
-            transform: translate3d(-1px, 35px, 0px) !important;
-            p {
-              font-size: 18px;
-              color: black;
-              font-weight: normal;
-            }
-          }
-        }
-        .item_wrap {
-          height: 350px;
-          overflow: auto;
-          .item {
-            background-color: #526F8E;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-          }
-        }
-      }
-      .info_wrap:nth-child(3) {
-        margin-top: 3%;
-      }
-    }
-    .search_wrap {
-      margin-bottom: 20px;
-      .title {
-        display: flex;
-        justify-content: space-around;
-        background: #3D4E61;
-        color: white;
-        font-size: 25px;
-        font-weight: 700;
-        align-items: center;
-        border-radius: 10px 10px 0px 0px;
-        height: 50px;
-      }
-      .content {
-        background-color: #C3D3DA !important
-      }
-      .button {
-        display: flex;
-        margin-top: 20px;
-        justify-content: center;
-        gap: 20px;
-        button.empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #244f86;
-          }
-        }
-        button.search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-      }
-      .search_section {
-        padding: 0 80px;
-        width: 100%;
-        input {
-          @include dropdown_btn;
-          width: 100%;
-          height: 35px;
-        }
-      }
-    }
-  }
-  @media only screen and (max-width: 767px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
-      }
-      input {
-        @include dropdown_btn;
-        height: 35px;
-        width: 100%
-      }
-      .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-        margin-left: 0 !important;
-        border-radius: 5px;
-      }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 40px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .info_wrap {
-        padding: 1% 5% 0;
-        .fixed_title {
-          @include fixed_title;
-        }
-        .fixed_info {
-          @include fixed_info;
-          flex-direction: column;
-          height: unset;
-          padding: 10px;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .add_btn {
-          display: inline-flex;
-          padding: 10px;
-          justify-content: center;
+          color: black;
+          justify-content: space-between;
           align-items: center;
-          border-radius: 9px;
-          background: #314F7A;
-          height: 50px;
-          width: 150px;
-          color: #FFF;
-          text-align: center;
-          font-size: 18px;
+        }
+      }
+      .input-group {
+        justify-content: right;
+        flex-wrap: nowrap;
+        .form-control {
+          height: 35px;
+          border-radius: 0;
+        }
+        .input-group-prepend {
+          white-space: nowrap;
+          color: white;
           font-weight: 700;
-          border: none;
-          margin-bottom: 15px;
-          &:hover {
-            background-color: #456ca7
-          }
+          font-size: 20px;
+          width: 162px;
+          text-align: end;
         }
-        .content {
-          @include content_bg;
-          .row {
-            gap: 10px 0;
+      }
+      .check_section {
+        .form-check {
+          gap: 5px;
+          padding: 0;
+          input {
+            width: 15px;
+            padding: 0;
+            height: 15px;
+            border-radius: 50%;
           }
-          .dropdown {
-            margin-left: unset !important;
-            .dropdown-menu {
-              width: 100%;
-            }
-            button {
-              @include dropdown-btn;
-              width: 100%;
-              color: black;
-              justify-content: space-between;
-              align-items: center;
-            }
-          }
-          .input-group {
-            flex-direction: column;
-            .input-number {
-              @include count_btn;
-              width: 100%;
-            }
-            .form-control {
-              width: 100%;
-              height: 35px;
-              border-radius: 0;
-              margin-left: unset !important;
-            }
-            .input-group-prepend {
-              margin-bottom: 5px;
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 5%;
-          margin-bottom: 5%;
-          gap: 20px;
-          button.back_btn {
-            @include back_to_previous_btn;
-            padding: 5px;
-            width: 120px;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-          button.send_btn {
-            @include search_and_send_btn;
-            width: 120px;
-            padding: 5px;
-            &:hover {
-              background-color: #8eb2e3;
-            }
-          }
-        }
-        .item_wrap {
-          height: 350px;
-          overflow: auto;
-          .item {
-            background-color: #526F8E;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
+          label {
+            color: white;
+            font-weight: 600;
           }
         }
       }
-      .info_wrap:nth-child(3) {
-        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-          margin-left: unset !important;
-          border-radius: 5px;
+    }
+    &:nth-child(3) {
+      margin-top: 3%;
+    }
+  }
+}
+.button_wrap {
+  display: flex;
+  margin-top: 30px;
+  justify-content: center;
+  padding: 0 25%;
+  margin-bottom: 5%;
+  gap: 20px;
+  button.back_btn {
+    @include back_to_previous_btn;
+    &:hover {
+      background-color: #5d85bb;
+    }
+  }
+  button.send_btn {
+    @include search_and_send_btn;
+    width: 120px;
+    padding: 10px;
+    &:hover {
+      background-color: #8eb2e3;
+    }
+  }
+}
+.search_wrap {
+  margin-bottom: 20px;
+  .title {
+    display: flex;
+    justify-content: space-around;
+    background: #3d4e61;
+    color: white;
+    font-size: 25px;
+    font-weight: 700;
+    align-items: center;
+    border-radius: 10px 10px 0px 0px;
+    height: 50px;
+  }
+  .content {
+    background-color: #c3d3da !important;
+  }
+  .button {
+    display: flex;
+    margin-top: 20px;
+    justify-content: center;
+    gap: 20px;
+    button.empty_btn {
+      @include empty_btn;
+      &:hover {
+        background-color: #244f86;
+      }
+    }
+    button.search_btn {
+      @include search_and_send_btn;
+      &:hover {
+        background-color: #5e7aa2;
+      }
+    }
+  }
+  .search_section {
+    width: 100%;
+    padding: 0 20%;
+    input {
+      @include dropdown_btn;
+      width: 100%;
+      height: 35px;
+    }
+  }
+}
+#confirmModal {
+  .modal-content {
+    border-radius: 0;
+    border: 1px solid black;
+    .modal-body {
+      background: #528091;
+      color: white;
+      font-weight: 700;
+      text-align: center;
+      padding: 20px 10px;
+      border-bottom: 1px solid black;
+    }
+    .modal-footer {
+      padding: 10px;
+      gap: 5px;
+      background: white;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      border-radius: 0;
+      button:nth-child(1) {
+        font-weight: 700;
+        border: none;
+        &:hover {
+          background: #636260;
         }
-        margin-top: 5%;
+      }
+      button:nth-child(2) {
+        background: #132238;
+        font-weight: 700;
+        border: none;
+        &:hover {
+          background: #426497;
+        }
+      }
+    }
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .modal-content {
+    width: 300px;
+    margin: auto;
+  }
+  .main_section {
+    h1 {
+      margin-top: 80px;
+      margin-bottom: 40px;
+      font-size: 55px;
+    }
+
+    .info_wrap {
+      margin: auto;
+      padding: 0 20%;
+      .check_section {
+        gap: 10px;
+        display: flex;
+      }
+    }
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  .modal-content {
+    width: 300px;
+    margin: auto;
+  }
+  .main_section {
+    h1 {
+      margin-top: 80px;
+      margin-bottom: 40px;
+      font-size: 55px;
+    }
+    .info_wrap {
+      margin: auto;
+      padding: 0 5%;
+      .check_section {
+        gap: 10px;
+        display: flex;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 767px) {
+  .main_section {
+    h1 {
+      margin-top: 50px;
+      font-size: 40px;
+    }
+    .info_wrap {
+      padding: 1% 5% 0;
+      .fixed_info {
+        flex-direction: column;
+        height: unset;
+        padding: 10px;
+      }
+      .add_btn {
+        display: inline-flex;
+        padding: 10px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 9px;
+        background: #314f7a;
+        height: 50px;
+        width: 150px;
+        color: #fff;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 700;
+        border: none;
+        margin-bottom: 15px;
+      }
+      .content {
+        .row {
+          gap: 10px 0;
+        }
+        .dropdown {
+          margin-left: unset !important;
+        }
+        .input-group {
+          flex-direction: column;
+          .form-control {
+            width: 100%;
+            margin-left: unset !important;
+          }
+          .input-group-prepend {
+            text-align: left;
+          }
+        }
+      }
+      &:nth-child(3) {
         .count {
           .number-input-box {
             width: 100%;
             margin-left: unset !important;
           }
-          .btn_section {
-            margin-left: 10px;
-            .delete_btn {
-              display: flex;
-              align-items: center;
-              @include delete_button;
-              height: 100%;
-              padding: 5px;
-              width: 80px;
-              font-size: 18px;
-              &:hover {
-                background: #FF7272
-              }
-            }
-          }
         }
       }
     }
-    .check_section {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      gap: 5px;
-      margin-left: 0 !important;
-      .form-check {
-        gap: 5px;
-        padding: 0;
-        input {
-          width: 15px;
-          padding: 0;
-          height: 15px;
-          border-radius: 50%;
-        }
-        label {
-          color: white;
-          font-weight: 600;
-        }
-      }
+    .button_wrap {
+      padding: 0 5%;
     }
-    .search_wrap {
-      margin-bottom: 20px;
-      .title {
-        display: flex;
-        justify-content: space-around;
-        background: #3D4E61;
-        color: white;
-        font-size: 25px;
-        font-weight: 700;
-        align-items: center;
-        border-radius: 10px 10px 0px 0px;
-        height: 50px;
-        p{
-          margin-bottom: 0;
-        }
-      }
-      .content {
-        background-color: #C3D3DA !important
-      }
-      .button {
-        display: flex;
-        margin-top: 20px;
-        justify-content: center;
-        gap: 20px;
-        button.empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #244f86;
-          }
-        }
-        button.search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-      }
-      .search_section {
-        width: 100%;
-        input {
-          @include dropdown_btn;
-          width: 100%;
-          height: 35px;
-        }
+  }
+  .check_section {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 5px;
+    margin-left: 0 !important;
+  }
+  .search_wrap {
+    .title {
+      p {
+        margin-bottom: 0;
       }
     }
   }
+  .search_section {
+    padding: unset !important;
+  }
+}
+
 </style>

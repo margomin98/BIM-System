@@ -14,32 +14,32 @@
     <div class="container-fluid datagrid_section">
       <div class="content">
         <div class="row">
-          <div class="col-xl-12 col-md-6 col-12">
+          <div class="col">
             <p>計畫編號</p>
             <input type="text" v-model="searchParams.PlanId" />
           </div>
-          <div class="col-xl-12 col-md-6 col-12">
+          <div class="col">
             <p>盤點類型</p>
             <select v-model="searchParams.PlanType" class="form-select" aria-label="Select Plan Type">
             <option value="" disabled selected>請選擇</option>
             <option v-for="(item, index) in DropdownArray.PlanType" :key="index" :value="item">{{ item }}</option>
         </select>
           </div>
-          <div class="col-xl-12 col-md-6 col-12">
+          <div class="col">
             <p>盤點狀態</p>
             <select class="form-select" v-model="searchParams.PlanStatus" @change="selectStatus">
                 <option value="" disabled selected>請選擇</option>
                 <option v-for="(item, index) in DropdownArray.PlanStatus" :key="index" :value="item">{{ item }}</option>
             </select>
           </div>
-          <div class="col-xl-12 col-md-6 col-12">
+          <div class="col">
             <p>日期類型</p>
             <select v-model="searchParams.DateCategory" id="dateCategorySelect" class="form-select">
             <option value="" disabled selected>請選擇</option>
             <option v-for="(item, index) in DropdownArray.PlanDateCategory" :key="index" :value="item">{{ item }}</option>
         </select>
           </div>
-          <div class="col-xl-12 col-md-6 col-12  flex-col">
+          <div class="col  flex-col">
             <p>日期(起)</p>
             <div class="date-selector">
               <div class="input-container">
@@ -47,7 +47,7 @@
               </div>
             </div>
           </div>
-          <div class="col-xl-12 col-md-6 col-12 flex-col">
+          <div class="col flex-col">
             <p>日期(迄)</p>
             <div class="date-selector">
               <div class="input-container">
@@ -251,277 +251,173 @@
 
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-  @import "@/assets/css/theme.css";
-  .modal {
-    .modal-body {
-      padding: 20px;
-      margin: auto;
-      p {
-        text-align: center;
-        font-weight: 800;
-      }
+  @import "@/assets/css/theme.css";.modal {
+  .modal-body {
+    padding: 20px;
+    margin: auto;
+    p {
+      text-align: center;
+      font-weight: 800;
     }
-    .modal-content {
-      margin: auto;
-    }
-    .modal-input-group-prepend {
-      width: auto;
-      font-weight: 700;
-      font-size: 20px;
-    }
-    .modal-footer {
-      padding: 0 12px 12px;
-      border: none;
-      justify-content: center;
-      .confirm {
-        color: white;
-        font-weight: 700;
-        background-color: #5d85bd;
-        &:hover {
-          background-color: #6d92b3;
-        }
-      }
-    }
-    .modal-header {
-      h5 {
-        font-weight: 700;
-      }
-      background: #3D4E61;
+  }
+  .modal-content {
+    margin: auto;
+  }
+  .modal-input-group-prepend {
+    width: auto;
+    font-weight: 700;
+    font-size: 20px;
+  }
+  .modal-footer {
+    padding: 0 12px 12px;
+    border: none;
+    justify-content: center;
+    .confirm {
       color: white;
-      display: flex;
+      font-weight: 700;
+      background-color: #5d85bd;
+      &:hover {
+        background-color: #6d92b3;
+      }
+    }
+  }
+  .modal-header {
+    h5 {
+      font-weight: 700;
+    }
+    background: #3d4e61;
+    color: white;
+    display: flex;
+    justify-content: center;
+    .close_icon {
+      cursor: pointer;
+      align-self: unset;
+    }
+    .modal-title {
+      margin: auto;
+    }
+  }
+}
+.datagrid_section {
+  .row {
+    @include datagrid_bg;
+  }
+  input,
+  select {
+    @include dropdown_btn;
+    width: 100%;
+    height: 35px;
+  }
+  .content {
+    p {
+      @include datagrid_title;
+    }
+  }
+}
+.button_wrap {
+  margin-bottom: 25px;
+  gap: 20px;
+  .add_btn {
+    @include datagrid_button_no1;
+    width: 170px;
+    &:hover {
+      background-color: #537ebc;
+    }
+  }
+  .search_btn {
+    @include search_and_send_btn;
+    &:hover {
+      background-color: #5e7aa2;
+    }
+  }
+  .empty_btn {
+    @include empty_btn;
+    &:hover {
+      background-color: #5d85bd;
+    }
+  } //  .export_btn {
+  //   @include export_btn;
+  //   &:hover {
+  //     background-color: #274266;
+  //   }
+  // }
+}
+h1 {
+  text-align: center;
+  font-weight: 600;
+  @include title_color;
+}
+@media only screen and (min-width: 1200px) {
+  .modal-content {
+    width: 300px;
+  }
+  .main_section {
+    padding: 0 10%;
+    h1 {
+      margin: 50px 0 20px;
+      font-size: 55px;
+    }
+
+    .datagrid_section {
+      .row {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 40px 5px;
+        padding: 2% 15%;
+      }
+    }
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  .modal-content {
+    width: 300px;
+  }
+  .main_section {
+    padding: 0 5%;
+    h1 {
+      margin-top: 30px;
+      font-size: 55px;
+      margin-bottom: 20px;
+    }
+
+    .datagrid_section {
+      .row {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px 5px;
+        padding: 5%;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 767px) {
+  .main_section {
+    .button_wrap {
       justify-content: center;
-      .close_icon {
-        cursor: pointer;
-        align-self: unset;
-      }
-      .modal-title {
-        margin: auto;
-      }
     }
-  }
-  .datagrid_section {
-    input,
-    select {
-      @include dropdown_btn;
-      width: 100%;
-      height: 35px;
+    padding: 5%;
+    h1 {
+      margin-top: 30px;
+      font-size: 50px;
+      margin-bottom: 20px;
     }
-  }
-  @media only screen and (min-width: 1200px) {
-    .modal-content {
-      width: 300px;
-    }
-    .main_section {
-      padding: 0 10%;
-      h1 {
-        margin: 50px 0 20px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .button_wrap {
-        margin-bottom: 25px;
-        gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          width: 170px;
-          &:hover {
-            background-color: #537ebc;
-          }
-        }
-        .search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-        .empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        } //  .export_btn {
-        //   @include export_btn;
-        //   &:hover {
-        //     background-color: #274266;
-        //   }
-        // }
-      }
-      .datagrid_section {
-        .content {
-          background: rgba(82, 136, 156, 0.8);
-          border-radius: 10px;
-          margin-bottom: 30px;
-          height: 250px;
-          align-items: center;
-          display: flex;
-          justify-content: center;
-        }
-        .row {
-          display: grid;
-          grid-template-rows: 1fr 1fr;
-          grid-template-columns: 1fr 1fr 1fr;
-          gap: 40px 5px;
-          .col-xl-2 {
-            margin: 0 3px;
-          }
-          p {
-            @include datagrid_title;
-          }
-          button {
-            border: none;
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-          }
-        }
-      }
-      .datagrid-header-row {
-        background: var(--c-7, #1f4e5f);
-      }
-      .datagrid-header .datagrid-cell {
-        text-align: left !important;
-      }
-    }
-  }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .modal-content {
-      width: 300px;
-    }
-    .main_section {
-      padding: 0 5%;
-      h1 {
-        margin-top: 30px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-        margin-bottom: 20px;
-      }
-      .button_wrap {
-        margin-bottom: 25px;
-        gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
-          width: 170px;
-          &:hover {
-            background-color: #537ebc;
-          }
-        } //    .export_btn {
-        //   @include export_btn;
-        //   &:hover {
-        //     background-color: #274266;
-        //   }
-        // }
-        .search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-        .empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-      }
-      .datagrid_section {
-        .row {
-          gap: 10px 0;
-          padding: 30px;
-          @include datagrid_bg;
-          p {
-            @include datagrid_title;
-          }
-          button {
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-            text-align: left;
-          }
-        }
-      }
-      .datagrid-header-row {
-        background: var(--c-7, #1f4e5f);
-      }
-      .datagrid-header .datagrid-cell {
-        text-align: left !important;
-      }
-    }
-  }
-  @media only screen and (max-width: 767px) {
-    .main_section {
-      padding: 5%;
-      h1 {
-        margin-top: 30px;
-        text-align: center;
-        font-size: 50px;
-        font-weight: 600;
-        @include title_color;
-        margin-bottom: 20px;
-      }
-      .button_wrap {
-        margin-bottom: 25px;
-        justify-content: center;
-        gap: 20px;
-        .add_btn {
-          @include datagrid_button_no1;
+
+    .datagrid_section {
+      .row {
+        display: grid;
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr;
+        gap: 20px 5px;
+        padding: 5%;
+
+        p {
           font-size: 18px;
-          width: 100%;
-          height: auto;
-          &:hover {
-            background-color: #537ebc;
-          }
-        } // .export_btn {
-        //     @include export_btn;
-        //     font-size: 18px;
-        //     width: 100%;
-        //     height: auto;
-        //     &:hover {
-        //       background-color: #274266;
-        //     }
-        //   }
-        .search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
         }
-        .empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-      }
-      .datagrid_section {
-        .row {
-          gap: 10px 0;
-          padding: 30px;
-          @include datagrid_bg;
-          p {
-            @include datagrid_title;
-            font-size: 18px;
-          }
-          button {
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-            text-align: left;
-          }
-        }
-      }
-      .datagrid-header-row {
-        background: var(--c-7, #1f4e5f);
-      }
-      .datagrid-header .datagrid-cell {
-        text-align: left !important;
       }
     }
   }
+}
+
 </style>
