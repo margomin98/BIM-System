@@ -14,20 +14,20 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">計畫編號：</div>
-            <input type="text" class="form-control readonly_box" v-model="details.PlanId" readonly/>
+            <input type="text" class="form-control readonly_box" v-model="details.PlanId" readonly />
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">標題：</div>
-            <input type="text" class="form-control readonly_box" v-model="details.PlanTitle" readonly/>
+            <input type="text" class="form-control readonly_box" v-model="details.PlanTitle" readonly />
           </div>
         </div>
         <div class="row g-0">
           <div class="col-xl-6 col-lg-6 col-md-12 col-12 d-flex">
             <div class="input-group mb-3">
               <div class="input-group-prepend">盤點人員：</div>
-              <input type="text" class="form-control readonly_box" v-model="details.InventoryStaffName" readonly/>
+              <input type="text" class="form-control readonly_box" v-model="details.InventoryStaffName" readonly />
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-12 col-12 d-flex">
@@ -62,19 +62,21 @@
         <div v-show="details.PlanType === '專案盤點'" class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">專案名稱 :</div>
-            <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.ProjectName" readonly>
+            <input type="text" class="form-control readonly_box" aria-label="Default"
+              aria-describedby="inputGroup-sizing-default" v-model="details.ProjectName" readonly>
           </div>
         </div>
         <div class="col">
           <div class="input-group" style="   justify-content: flex-start;">
             <div class="input-group-prepend">盤點類型：</div>
             <div class="check_section">
-              <template v-for="(item , index) in PlanType" :key="item">
-                  <div class="form-check d-flex align-items-center">
-                    <input type="radio" :id="`no${index}`" name="radio" :value="item" v-model="details.PlanType" :disabled="details.PlanType !== item" />
-                    <label :for="`no${index}`">{{ item }}</label>
-                  </div>
-</template>
+              <template v-for="(item, index) in PlanType" :key="item">
+                <div class="form-check d-flex align-items-center">
+                  <input type="radio" :id="`no${index}`" name="radio" :value="item" v-model="details.PlanType"
+                    :disabled="details.PlanType !== item" />
+                  <label :for="`no${index}`">{{ item }}</label>
+                </div>
+              </template>
             </div>
           </div>
         </div>
@@ -88,38 +90,25 @@
       </div>
       <div class="content">
         <div style="width: 100%">
-          <DataTable 
-            lazy 
-            :first= "datagrid.first"
-            :size="'small'"
-            :loading="datagrid.loading"
-            :value="rowData2" 
-            :sort-field="datagrid.sortField"
-            :sort-order="datagrid.sortOrder"
-            resizableColumns 
-            columnResizeMode="expand"
-            showGridlines 
-            scrollable 
-            scrollHeight="820px" 
-            @page="getRangeOfPlan($event , 'page')" 
-            @sort="getRangeOfPlan($event , 'sort')"
-            paginator 
-            :rows="20" 
-            :totalRecords="datagrid.totalRecords"
+          <DataTable lazy :first="datagrid.first" :size="'small'" :loading="datagrid.loading" :value="rowData2"
+            :sort-field="datagrid.sortField" :sort-order="datagrid.sortOrder" resizableColumns columnResizeMode="expand"
+            showGridlines scrollable scrollHeight="820px" @page="getRangeOfPlan($event, 'page')"
+            @sort="getRangeOfPlan($event, 'sort')" paginator :rows="20" :totalRecords="datagrid.totalRecords"
             paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
             currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
             <Column style="min-width: 50px;" header="項目">
-<template #body="slotProps">
-   {{ calculateIndex(slotProps) }}
-</template>
+              <template #body="slotProps">
+                {{ calculateIndex(slotProps) }}
+              </template>
             </Column>
             <Column style="min-width: 60px;">
-<template #body="slotProps">
-  <!-- Add the custom component here -->
-  <List_view_button :params="slotProps" />
-</template>
+              <template #body="slotProps">
+                <!-- Add the custom component here -->
+                <List_view_button :params="slotProps" />
+              </template>
             </Column>
-            <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+            <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable
+              :style="{ 'min-width': item.width }"></Column>
           </DataTable>
         </div>
       </div>
@@ -283,373 +272,205 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
   }
 </script>
 <style lang="scss" scoped>
-  @import "@/assets/css/global.scss";
-  span {
-    @include red_star
+@import "@/assets/css/global.scss";
+
+.main_section {
+  .readonly_box {
+    @include readonly_box;
   }
-  @media only screen and (min-width: 1200px) {
-    .main_section {
-      input {
-        @include dropdown_btn;
-        height: 35px;
-      }
-      .readonly_box {
-        @include readonly_box;
-      }
-      h1 {
-        margin-top: 80px;
-        margin-bottom: 40px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .info_wrap {
-        margin: auto;
-        width: 800px;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .fixed_title {
-          @include fixed_title;
-        }
-        .content {
-          @include content_bg;
-          p {
-            text-align: center;
-            white-space: nowrap;
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: white;
-          }
-          .input-group {
-            justify-content: right;
-            flex-wrap: nowrap;
-            .input-number {
-              @include count_btn;
-            }
-            .form-control {
-              height: 35px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              white-space: nowrap;
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              width: 162px;
-              text-align: end;
-            }
-          }
-          .check_section {
-            gap: 10px;
-            display: flex;
-            .form-check {
-              gap: 5px;
-              padding: 0;
-              input {
-                width: 15px;
-                padding: 0;
-                height: 15px;
-                border-radius: 50%;
-              }
-              label {
-                color: white;
-                font-weight: 600;
-              }
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 28%;
-          margin-bottom: 5%;
-          gap: 20px;
-          button.back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-        }
-        .item_wrap {
-          height: 350px;
-          overflow: auto;
-          .item {
-            background-color: #526F8E;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-          }
-        }
-      }
-      .info_wrap:nth-child(3) {
-        margin-top: 3%;
+
+  input {
+    @include dropdown_btn;
+    height: 35px;
+  }
+
+  h1 {
+    text-align: center;
+    font-weight: 600;
+    @include title_color;
+  }
+
+  .info_wrap {
+    .fixed_info {
+      @include fixed_info;
+
+      p {
+        font-size: 20px;
+        margin-bottom: 0;
       }
     }
-  }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .main_section {
-      input {
-        @include dropdown_btn;
-        height: 35px;
-      }
-      .readonly_box {
-        @include readonly_box;
-      }
-      h1 {
-        margin-top: 80px;
-        margin-bottom: 40px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .info_wrap {
-        margin: auto;
-        padding: 0 5%;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .fixed_title {
-          @include fixed_title;
-        }
-        .content {
-          @include content_bg;
-          p {
-            text-align: center;
-            white-space: nowrap;
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: white;
-          }
-          .input-group {
-            justify-content: right;
-            flex-wrap: nowrap;
-            .input-number {
-              @include count_btn;
-            }
-            .form-control {
-              height: 35px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              white-space: nowrap;
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              width: 162px;
-              text-align: end;
-            }
-          }
-          .check_section {
-            gap: 10px;
-            display: flex;
-            .form-check {
-              gap: 5px;
-              padding: 0;
-              input {
-                width: 15px;
-                padding: 0;
-                height: 15px;
-                border-radius: 50%;
-              }
-              label {
-                color: white;
-                font-weight: 600;
-              }
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 28%;
-          margin-bottom: 5%;
-          gap: 20px;
-          button.back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-        }
-        .item_wrap {
-          height: 350px;
-          overflow: auto;
-          .item {
-            background-color: #526F8E;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-          }
-        }
-      }
-      .info_wrap:nth-child(3) {
-        margin-top: 3%;
-      }
+
+    .fixed_title {
+      @include fixed_title;
     }
-  }
-  @media only screen and (max-width: 767px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
-      }
-      input {
-        @include dropdown_btn;
-        height: 35px;
-        width: 100%
-      }
-      h1 {
-        margin-top: 50px;
+
+    .content {
+      @include content_bg;
+
+      p {
         text-align: center;
-        font-size: 40px;
-        font-weight: 600;
-        @include title_color;
+        white-space: nowrap;
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 5px;
+        color: white;
       }
-      .info_wrap {
-        padding: 1% 5% 0;
-        .fixed_title {
-          @include fixed_title;
+
+      .input-group {
+        .input-number {
+          @include count_btn;
         }
-        .fixed_info {
-          @include fixed_info;
-          flex-direction: column;
-          height: unset;
-          padding: 10px;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
+
+        .form-control {
+          height: 35px;
+          border-radius: 0;
+        }
+        .check_section {
+          .form-check {
+            gap: 5px;
+            padding: 0;
+            input {
+              width: 15px;
+              padding: 0;
+              height: 15px;
+              border-radius: 50%;
+            }
+            label {
+              color: white;
+              font-weight: 600;
+            }
           }
         }
-        .add_btn {
-          display: inline-flex;
-          padding: 10px;
-          justify-content: center;
-          align-items: center;
-          border-radius: 9px;
-          background: #314F7A;
-          height: 50px;
-          width: 150px;
-          color: #FFF;
-          text-align: center;
-          font-size: 18px;
+        .input-group-prepend {
+          white-space: nowrap;
+          color: white;
           font-weight: 700;
-          border: none;
-          margin-bottom: 15px;
-          &:hover {
-            background-color: #456ca7
-          }
-        }
-        .content {
-          @include content_bg;
-          .row {
-            gap: 10px 0;
-          }
-          .input-group {
-            flex-direction: column;
-            .input-number {
-              @include count_btn;
-              width: 100%;
-            }
-            .form-control {
-              width: 100%;
-              height: 35px;
-              border-radius: 0;
-              margin-left: unset !important;
-            }
-            .input-group-prepend {
-              margin-bottom: 5px;
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 20%;
-          margin-bottom: 5%;
-          gap: 20px;
-          button.back_btn {
-            @include back_to_previous_btn;
-            padding: 5px;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-        }
-        .item_wrap {
-          height: 350px;
-          overflow: auto;
-          .item {
-            background-color: #526F8E;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-          }
+          font-size: 20px;
+          width: 162px;
+          text-align: end;
         }
       }
-      .info_wrap:nth-child(3) {
-        margin-top: 5%;
-        .count {
-          .number-input-box {
+    }
+
+    .button_wrap {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+      margin-bottom: 5%;
+      button.back_btn {
+        @include back_to_previous_btn;
+
+        &:hover {
+          background-color: #5d85bb;
+        }
+      }
+    }
+
+    .item_wrap {
+      height: 350px;
+      overflow: auto;
+
+      .item {
+        background-color: #526f8e;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px 0;
+      }
+    }
+  }
+  .info_wrap:nth-child(3) {
+    margin-top: 3%;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .main_section {
+    h1 {
+      margin-top: 80px;
+      margin-bottom: 40px;
+      font-size: 55px;
+    }
+
+    .info_wrap {
+      margin: auto;
+      width: 800px;
+      .check_section {
+        gap: 10px;
+        display: flex;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  .main_section {
+    h1 {
+      margin-top: 80px;
+      margin-bottom: 40px;
+      font-size: 55px;
+    }
+
+    .info_wrap {
+      margin: auto;
+      padding: 0 5%;
+      .check_section {
+        gap: 10px;
+        display: flex;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .main_section {
+    h1 {
+      margin-top: 50px;
+      font-size: 40px;
+    }
+
+    .info_wrap {
+      padding: 1% 5% 0;
+      .content {
+        .input-group {
+          flex-direction: column;
+          .form-control {
             width: 100%;
             margin-left: unset !important;
           }
-          .btn_section {
-            margin-left: 10px;
-            .delete_btn {
-              display: flex;
-              align-items: center;
-              @include delete_button;
-              height: 100%;
-              padding: 5px;
-              width: 80px;
-              font-size: 18px;
-              &:hover {
-                background: #FF7272
-              }
-            }
+          .input-group-prepend {
+            text-align: left;
           }
         }
       }
     }
-    .check_section {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
+
+    .button_wrap {
+      padding: 0 20%;
+    }
+  }
+
+  .check_section {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 5px;
+    margin-left: 0 !important;
+    .form-check {
       gap: 5px;
-      margin-left: 0 !important;
-      .form-check {
-        gap: 5px;
+      padding: 0;
+      input {
+        width: 15px;
         padding: 0;
-        input {
-          width: 15px;
-          padding: 0;
-          height: 15px;
-          border-radius: 50%;
-        }
-        label {
-          color: white;
-          font-weight: 600;
-        }
+        height: 15px;
+        border-radius: 50%;
+      }
+      label {
+        color: white;
+        font-weight: 600;
       }
     }
   }
+}
+
 </style>

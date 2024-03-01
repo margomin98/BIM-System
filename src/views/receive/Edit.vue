@@ -303,21 +303,18 @@ GetAntiForgeryToken,
   // 送出
   async function submit() {
     // 檢查必填項目、格式        
-    if (!details.value.ShipmentNum.trim() || !details.value.ShipmentCompany.trim() || details.value.GoodsNum < 1 || !details.value.ReceivedDate) {
+    if (!details.value.ShipmentNum || !details.value.ShipmentCompany || details.value.GoodsNum < 1 || !details.value.ReceivedDate) {
       alert('請輸入必填項目');
       return
     }
-    details.value.ShipmentNum = details.value.ShipmentNum.trim();
     if (details.value.ShipmentNum && !/^[\s\S]{1,20}$/.test(details.value.ShipmentNum)) {
       alert('物流單號不可輸入超過20字')
       return
     }
-    details.value.PurchaseNum = details.value.PurchaseNum.trim();
     if (details.value.PurchaseNum && !/^[\s\S]{1,20}$/.test(details.value.PurchaseNum)) {
       alert('訂購單號不可輸入超過20字')
       return
     }
-    details.value.ShipmentCompany = details.value.ShipmentCompany.trim();
     if (details.value.ShipmentCompany && !/^[\s\S]{1,20}$/.test(details.value.ShipmentCompany)) {
       alert('貨運公司不可輸入超過20字')
       return

@@ -178,53 +178,18 @@
     PurchasePerson: '',
     WriteOffPerson: '',
   });
-  const datagridfield = ref([{
-      header: "狀態",
-      field: "Status",
-      width: '130px'
-    },
-    {
-      header: "單號",
-      field: "PP_ID",
-      width: '150px'
-    },
-    {
-      header: "專案名稱",
-      field: "ProjectName",
-      width: '170px',
-      max: '300px'
-    },
-    {
-      header: "說明",
-      field: "Description",
-      width: '150px',
-      max: '350px'
-    },
-    {
-      header: "交貨期限",
-      field: "Deadline",
-      width: '170px'
-    },
-    {
-      header: "申請人員",
-      field: "Applicant",
-      width: '150px'
-    },
-    {
-      header: "申請日期",
-      field: "ApplicationDate",
-      width: '170px'
-    },
-    {
-      header: "完成人員",
-      field: "PurchasePerson",
-      width: '150px'
-    },
-    {
-      header: "完成日期",
-      field: "WriteOffDate",
-      width: '170px'
-    },
+  const datagridfield = ref([
+    { header: "狀態", field: "Status", width: '130px' },
+    { header: "單號", field: "PP_ID", width: '150px' },
+    { header: "專案名稱", field: "ProjectName", width: '170px', max: '300px' },
+    { header: "說明", field: "Description", width: '150px', max: '350px' },
+    { header: "交貨期限", field: "Deadline", width: '170px' },
+    { header: "申請人員", field: "Applicant", width: '150px' },
+    { header: "申請日期", field: "ApplicationDate", width: '170px' },
+    { header: "採購人員", field: "PurchasePerson", width: '150px' },
+    { header: "採購日期", field: "PurchaseDate", width: '170px' },
+    { header: "沖銷人員", field: "WriteOffPerson", width: '150px' },
+    { header: "沖銷日期", field: "WriteOffDate", width: '170px' },
   ]);
   onMounted(async() => {
     utilsStore.$reset();
@@ -346,6 +311,9 @@
     }
   }
   @media only screen and (max-width: 767px) {
+    .button_wrap{
+      justify-content: center;
+    }
     .main_section {
       padding: 5%;
       h1 {

@@ -479,6 +479,9 @@ h1 {
   }
 }
 @media only screen and (max-width: 767px) {
+  .button_wrap{
+      justify-content: center;
+    }
   .main_section {
     padding: 5%;
     h1 {
