@@ -171,338 +171,320 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 @import '@/assets/css/global.scss';
-
 .readonly_box {
-	@include readonly_box;
+  @include readonly_box;
 }
 
 .view_icon,
 .trash_icon {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .modal {
-	.modal-body {
-		padding: 20px;
-		margin: auto;
-	}
+  .modal-body {
+    padding: 20px;
+    margin: auto;
+  }
 
-	.modal-content {
-		margin: auto;
-	}
+  .modal-content {
+    margin: auto;
+  }
 
-	.modal-header {
-		h5 {
-			font-weight: 700;
-		}
+  .modal-header {
+    h5 {
+      font-weight: 700;
+    }
 
-		background: #528091;
-		color: white;
-		display: flex;
-		justify-content: center;
-	}
+    background: #528091;
+    color: white;
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .warn {
-	text-align: center;
-	padding: 10px 0;
-	background: #9f0000;
-	margin-bottom: 10px;
-	border-radius: 5px;
-	margin: 30px auto 20px;
+  text-align: center;
+  padding: 10px 0;
+  background: #9f0000;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  margin: 30px auto 20px;
 
-	h4 {
-		color: white;
-		margin-bottom: 0;
-		font-weight: 700;
+  h4 {
+    color: white;
+    margin-bottom: 0;
+    font-weight: 700;
 
-		&::before {
-			content: "\26A0";
-		}
-	}
+    &::before {
+      content: "\26A0";
+    }
+  }
 }
 
 .fixed_info {
-	@include fixed_info;
+  @include fixed_info;
 
-	p {
-		font-size: 20px;
-		margin-bottom: 0;
-	}
+  p {
+    font-size: 20px;
+    margin-bottom: 0;
+  }
 }
 
 .input-group-prepend {
-	color: white;
-	font-weight: 700;
-	font-size: 20px;
+  color: white;
+  font-weight: 700;
+  font-size: 20px;
 
-	span {
-		@include red_star
-	}
+  span {
+    @include red_star;
+  }
 }
 
 .file_wrap {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-	.choose_btn {
-		margin-bottom: 10px;
-		@include choose_file_btn;
+  .choose_btn {
+    margin-bottom: 10px;
+    @include choose_file_btn;
 
-		&:hover {
-			background: #3f608f;
-		}
-	}
+    &:hover {
+      background: #3f608f;
+    }
+  }
 }
 
 .selected_file {
-	.file_upload_box {
-		.file_upload_wrap {
-			margin-bottom: 0;
-			display: flex;
-			word-break: break-word;
+  .file_upload_box {
+    .file_upload_wrap {
+      margin-bottom: 0;
+      display: flex;
+      word-break: break-word;
 
-			img {
-				width: 25px;
-				height: 25px;
-			}
+      img {
+        width: 25px;
+        height: 25px;
+      }
 
-			p {
-				margin-bottom: 0;
-				font-weight: 700;
-				color: white;
+      p {
+        margin-bottom: 0;
+        font-weight: 700;
+        color: white;
 
-				&::before {
-					margin-right: 10px;
-					content: '·';
-					font-weight: 700;
-					color: white;
-				}
-			}
-		}
-	}
+        &::before {
+          margin-right: 10px;
+          content: "·";
+          font-weight: 700;
+          color: white;
+        }
+      }
+    }
+  }
 }
 
+.info_wrap {
+  margin: 30px auto 0;
+}
+
+.warn {
+  width: 800px;
+}
+
+.content {
+  @include content_bg;
+  padding: 35px 50px;
+}
+
+.input-group {
+  .num_wrap {
+    .number-input-box {
+      width: 200px;
+      input {
+        width: 100%;
+        @include count_btn;
+      }
+    }
+  }
+
+  .readonly_box {
+    height: 37px;
+  }
+
+  .form-control {
+    height: 37px;
+    border-radius: 0;
+  }
+
+  .date-selector {
+    width: 190px;
+    input {
+      width: 100%;
+      border: none;
+      height: 35px;
+      border-radius: 5px;
+      padding: 5px;
+    }
+  }
+
+  .input-group-prepend {
+    text-align: end;
+    width: 140px;
+  }
+
+  .selected_file {
+    .input-group {
+      flex-wrap: unset;
+    }
+    .input-group-prepend {
+      white-space: nowrap;
+    }
+  }
+}
+
+/* Media Queries */
 @media only screen and (min-width: 1200px) {
-	.info_wrap {
-		margin: 30px auto 0;
-		width: 800px;
-
-		.warn {
-			width: 800px;
-		}
-
-		.content {
-			@include content_bg;
-			padding: 35px 50px;
-
-			.input-group {
-				.num_wrap {
-					.number-input-box {
-						width: 200px;
-
-						.input-number {
-							width: 100%;
-							@include count_btn;
-						}
-					}
-				}
-
-				.readonly_box {
-					height: 37px;
-				}
-
-				.form-control {
-					height: 37px;
-					border-radius: 0;
-				}
-
-				.date-selector {
-					width: 190px;
-
-					input {
-						width: 100%;
-						border: none;
-						height: 35px;
-						border-radius: 5px;
-						padding: 5px;
-					}
-				}
-
-				.input-group-prepend {
-					text-align: end;
-					width: 140px;
-				}
-			}
-		}
-
-		.selected_file {
-			.input-group {
-				flex-wrap: unset;
-			}
-
-			.input-group-prepend {
-				white-space: nowrap;
-			}
-		}
-	}
+  .info_wrap {
+    width: 800px;
+    .warn {
+      width: 800px;
+    }
+  }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
-	.main_section {
-		h1 {
-			margin-top: 100px;
-			text-align: center;
-			font-size: 55px;
-			font-weight: 600;
-			@include title_color;
-		}
-
-		.info_wrap {
-			margin: 30px auto 0;
-			width: 750px;
-
-			.warn {
-				width: 750px;
-			}
-
-			.content {
-				@include content_bg;
-				padding: 35px 50px;
-
-				.input-group {
-					.num_wrap {
-						.number-input-box {
-							width: 175px;
-
-							.input-number {
-								width: 100%;
-								@include count_btn;
-							}
-						}
-					}
-
-					.readonly_box {
-						height: 35px;
-						margin-left: unset !important;
-					}
-
-					.form-control {
-						height: 37px;
-						border-radius: 0;
-					}
-
-					.date-selector {
-						width: 175px;
-
-						input {
-							width: 100%;
-							border: none;
-							height: 35px;
-							border-radius: 5px;
-							padding: 5px;
-						}
-					}
-
-					.input-group-prepend {
-						text-align: end;
-						width: 140px;
-					}
-				}
-			}
-
-			.selected_file {
-				.input-group {
-					flex-wrap: unset;
-				}
-
-				.input-group-prepend {
-					white-space: nowrap;
-				}
-			}
-		}
-	}
+  .main_section {
+    h1 {
+      margin-top: 100px;
+      text-align: center;
+      font-size: 55px;
+      font-weight: 600;
+      @include title_color;
+    }
+    .info_wrap {
+      width: 750px;
+      .warn {
+        width: 750px;
+      }
+      .content {
+        padding: 35px 50px;
+        .input-group {
+          .num_wrap {
+            .number-input-box {
+              width: 175px;
+              input {
+                width: 100%;
+                @include count_btn;
+              }
+            }
+          }
+          .readonly_box {
+            height: 35px;
+            margin-left: unset !important;
+          }
+          .form-control {
+            height: 37px;
+            border-radius: 0;
+          }
+          .date-selector {
+            width: 175px;
+            input {
+              width: 100%;
+              border: none;
+              height: 35px;
+              border-radius: 5px;
+              padding: 5px;
+            }
+          }
+          .input-group-prepend {
+            text-align: end;
+            width: 140px;
+          }
+        }
+      }
+      .selected_file {
+        .input-group {
+          flex-wrap: unset;
+        }
+        .input-group-prepend {
+          white-space: nowrap;
+        }
+      }
+    }
+  }
 }
 
 @media only screen and (max-width: 767px) {
-	.main_section {
-		.readonly_box {
-			height: 35px;
-			margin-left: unset !important;
-		}
-
-		h1 {
-			margin-top: 80px;
-			text-align: center;
-			font-size: 40px;
-			font-weight: 600;
-			@include title_color;
-		}
-
-		.info_wrap {
-			padding: 0 5%;
-
-			.fixed_info {
-				height: unset;
-				flex-direction: column;
-				padding: 10px;
-			}
-
-			.content {
-				@include content_bg;
-
-				.input-group {
-					flex-direction: column;
-
-					.input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-						margin-left: unset;
-						border-radius: 5px;
-						margin-top: 5px;
-						height: 35px;
-					}
-
-					.num_wrap {
-						margin-left: unset !important;
-
-						.number-input-box {
-							width: 100%;
-
-							input {
-								width: 100%;
-								@include count_btn;
-							}
-						}
-					}
-
-					.date-selector {
-						margin-left: unset !important;
-
-						input {
-							width: 100%;
-							border: none;
-							border-radius: 5px;
-							padding: 5px;
-						}
-					}
-
-					.form-control {
-						height: 35px;
-						width: 100%;
-						border-radius: 0;
-						margin-left: unset !important;
-					}
-
-					.input-group-prepend {
-						width: 100px;
-						white-space: nowrap;
-					}
-
-					.file_wrap {
-						margin-left: unset !important;
-					}
-				}
-			}
-		}
-	}
+  .main_section {
+    .readonly_box {
+      height: 35px;
+      margin-left: unset !important;
+    }
+    h1 {
+      margin-top: 80px;
+      text-align: center;
+      font-size: 40px;
+      font-weight: 600;
+      @include title_color;
+    }
+    .info_wrap {
+      padding: 0 5%;
+      .date-selector {
+        width: 100%;
+      }
+      .fixed_info {
+        height: unset;
+        flex-direction: column;
+        padding: 10px;
+      }
+      .content {
+        @include content_bg;
+        .input-group {
+          flex-direction: column;
+          .input-group
+            > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+              .valid-feedback
+            ):not(.invalid-tooltip):not(.invalid-feedback) {
+            margin-left: unset;
+            border-radius: 5px;
+            margin-top: 5px;
+            height: 35px;
+          }
+          .num_wrap {
+            margin-left: unset !important;
+            .number-input-box {
+              width: 100%;
+              input {
+                width: 100%;
+                @include count_btn;
+              }
+            }
+          }
+          .date-selector {
+            margin-left: unset !important;
+            input {
+              width: 100%;
+              border: none;
+              border-radius: 5px;
+              padding: 5px;
+            }
+          }
+          .form-control {
+            height: 35px;
+            width: 100%;
+            border-radius: 0;
+            margin-left: unset !important;
+          }
+          .input-group-prepend {
+            width: 100px;
+            white-space: nowrap;
+          }
+          .file_wrap {
+            margin-left: unset !important;
+          }
+        }
+      }
+    }
+  }
 }
+
 </style>
