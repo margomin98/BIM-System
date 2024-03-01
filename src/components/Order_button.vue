@@ -1,7 +1,7 @@
 <template>
   <div class='button_div'>
     <button @click="viewDetails()">檢視</button>
-    <button :class="{ disabled_btn: !canEdit, btn_edit: canEdit }"  :disabled="!canEdit" @click="viewEdit()">編輯</button>
+    <button class="btn_edit" @click="viewEdit()">編輯</button>
     <!-- <button class="btn_edit" @click="viewEdit()">編輯</button> -->
     <button class="btn_store" @click="viewReceive()">收貨</button>
   </div>

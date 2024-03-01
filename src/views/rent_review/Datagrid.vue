@@ -63,13 +63,13 @@
               <option v-for="item in DropdownArray.Staff" :key="item" :value="item">{{ item }}</option>
             </select>
           </div>
-          <!-- <div class="col">
+          <div class="col">
             <p>審核人員</p>
             <select class="form-select" v-model="dgSearchParams.VerifyPerson">
               <option value="">--請選擇--</option>
               <option v-for="item in DropdownArray.Staff" :key="item" :value="item">{{ item }}</option>
             </select>
-          </div> -->
+          </div>
         </div>
       </div>
     </div>
