@@ -1509,6 +1509,7 @@ P{
   gap:16px 0;
 }
       .result_wrap {
+        height: min-content;
         background: #A7AFBB;
         border-radius: 10px;
         border: 3px solid var(--home_hover, transparent);
