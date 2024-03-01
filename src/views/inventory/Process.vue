@@ -492,6 +492,9 @@
 </script>
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
+  .readonly_box {
+  @include readonly_box;
+}
   .main_section {
   input {
     @include dropdown_btn;

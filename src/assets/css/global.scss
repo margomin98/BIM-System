@@ -41,7 +41,7 @@
 
 
 @mixin readonly_box {
-    background: #B4B4B4;
+    background: #B4B4B4 !important;
     font-weight: 700;
     border: 0;
 }
