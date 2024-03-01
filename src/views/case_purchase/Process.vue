@@ -80,9 +80,7 @@
                             <!-- 專案代碼 -->
                             <div class='col'>
                                 <p>專案代碼</p>
-                                <multiselect v-model="searchParams.ProjectSelect" :allow-empty="false"
-                                    @select="onProjectSelect" :options="DropdownArray.ProjectCode" :max-height="300"
-                                    placeholder="請選擇" label="Text" :showLabels="false" track-by="Text"></multiselect>
+                                <p class="form-control readonly_box">{{ `${Form.ProjectCode}  ${Form.ProjectName}` }}</p>
                             </div>
                             <!-- 資產編號 -->
                             <div class='col'>
@@ -321,43 +319,6 @@ const warningText = "按下確認後將無法再次變更，請確認待沖銷�
 
 
 const itemData = ref([]);
-const testData = ref([
-    {
-        "PI_ID": "PP24020005_01",
-        "ItemName": "iphone 15",
-        "AssetList": [
-            {AssetsId: 'BF12345678' , Number: 1, Deletable: true},
-            {AssetsId: 'BF98765321' , Number: 1, Deletable: true},
-            {AssetsId: 'BF65417891' , Number: 1, Deletable: true},
-            {AssetsId: 'BF98741235' , Number: 1, Deletable: true},
-            {AssetsId: 'BF00001234' , Number: 1, Deletable: true}
-        ],
-        "Number": 5,
-        "RequiredSpec": "玫瑰金"
-    },
-    {
-        "PI_ID": "PP24020005_02",
-        "ItemName": "行動充電器",
-        "AssetList": [
-            {AssetsId: 'BF56781234' , Number: 1, Deletable: true},
-            {AssetsId: 'BF98765123' , Number: 1, Deletable: true}
-        ],
-        "Number": 2,
-        "RequiredSpec": "小台的，至少20000mAh"
-    },
-    {
-        "PI_ID": "PP24020005_03",
-        "ItemName": "TypeC線",
-        "AssetList": [
-            {AssetsId: 'BF12345876' , Number: 2, Deletable: true},
-            {AssetsId: 'BF98765231' , Number: 1, Deletable: true},
-            {AssetsId: 'BF65417198' , Number: 2, Deletable: true},
-            {AssetsId: 'BF00004321' , Number: 3, Deletable: true}
-        ],
-        "Number": 8,
-        "RequiredSpec": "2米長"
-    }
-])
 // 驗證資訊
 const user = reactive({
     title: '沖銷人員',
@@ -473,11 +434,12 @@ const onProjectSelect = (option) => {
 const updateSearchingModal = (index) => {
     updateSelectedNumber();
     updateSelectedList();
-    tempParams.ItemName = itemData.value[index].ItemName
-    tempParams.Number = itemData.value[index].Number
-    tempParams.SelectedNumber = itemData.value[index].SelectedNumber
-    tempParams.RequiredSpec = itemData.value[index].RequiredSpec
-    tempParams.index = index
+    tempParams.ItemName = itemData.value[index].ItemName;
+    tempParams.Number = itemData.value[index].Number;
+    tempParams.SelectedNumber = itemData.value[index].SelectedNumber;
+    tempParams.RequiredSpec = itemData.value[index].RequiredSpec;
+    tempParams.index = index;
+    searchParams.ProjectCode = Form.value.ProjectCode;
     searchInventory('', 'search');
 }
 // 更新各採購項目的已沖數量
