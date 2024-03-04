@@ -37,7 +37,7 @@ onMounted(async ()=>{
   DropdownArray.value.EquipType = await apiStore.getEquipType();
   utilsStore.getUserName();
   const roleId = await apiStore.getRoleId(utilsStore.userName);
-  if(roleId === 1 || roleId === 3) isPermitted.value = true ;
+  if(roleId === 1 || roleId === 4) isPermitted.value = true ;
   await assetStore.getDetails(AssetsId);
   assetStore.searchHistory('','search');
 })

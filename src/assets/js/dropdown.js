@@ -3,7 +3,7 @@ export const UnitArray = ['個', '支', '枝', '隻', '根', '條', '顆']
 export const PackageUnitArray = ['個', '對', '箱', '包', '組', '台', '件']
 // 專案採購管理
 export const CasePurchase_StatusArray = ['待採購' , '採購中' , '沖銷中' , '已完成'];
-export const CasePurchase_DateCategory = ['申請日期' , '沖銷日期', '交貨期限'];
+export const CasePurchase_DateCategory = ['申請日期' , '採購日期' , '沖銷日期' , '交貨期限'];
 // 訂單管理
 export const Order_StatusArray = ['待收貨' , '已收貨']
 // 入庫管理
