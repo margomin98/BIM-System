@@ -669,13 +669,12 @@ h1 {
     @include content_bg;
     .dropdown {
       width: 100%;
-
+      @include dropdown_btn;
       .dropdown-menu {
         width: 100%;
       }
 
       button {
-        @include dropdown-btn;
         width: 100%;
         color: black;
         justify-content: space-between;
@@ -909,7 +908,7 @@ h1 {
       .dropdown {
         width: calc(100% - 10%);
         height: 35px;
-        @include dropdown_btn;
+      
         .dropdown-toggle {
           display: flex;
           justify-content: space-between;
@@ -1131,8 +1130,6 @@ h1 {
           button {
             width: 100%;
             color: black;
-            justify-content: space-between;
-            align-items: center;
           }
         }
         .input-group {

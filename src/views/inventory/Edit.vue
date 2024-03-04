@@ -834,7 +834,6 @@ h1 {
       }
 
       button {
-        @include dropdown-btn;
         width: 100%;
         color: black;
         justify-content: space-between;
@@ -1040,6 +1039,7 @@ h1 {
 
       .dropdown {
         button {
+          padding: 5px 10px;
           background: white;
           width: 100%;
           border: none;
@@ -1055,7 +1055,6 @@ h1 {
         }
       }
       div {
-        padding: 0 5px;
 
         p {
           color: black;
@@ -1110,7 +1109,6 @@ h1 {
           }
 
           button {
-            @include dropdown-btn;
             width: 100%;
             color: black;
             justify-content: space-between;
@@ -1201,7 +1199,9 @@ h1 {
 
       .wrap1 {
         padding: 10px 80px;
-
+        div{
+          padding: 0 5px;
+        }
         // .dropdown {
         //   button {
         //     background: white;
@@ -1345,6 +1345,9 @@ h1 {
         grid-auto-columns: 1fr;
         grid-template-columns: 1fr 1fr 1fr;
         gap: 10px 0;
+        div{
+          padding: 0 5px;
+        }
         // .dropdown {
         //   button {
         //     background: white;

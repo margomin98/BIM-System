@@ -152,10 +152,10 @@
       </div>
       <div class="content">
         <div class="search_wrap col">
-          <div class="content">
+          <div class="content_inner">
             <div class="wrap row">
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-                <p>設備總類</p>
+                <p class="search_label">設備總類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
                     {{ searchParams.EquipTypeName || '請選擇' }}
@@ -166,7 +166,7 @@
                 </div>
               </div>
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-                <p>設備分類</p>
+                <p class="search_label">設備分類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
                     {{ searchParams.EquipCategoryName || EquipCategoryInit }}
@@ -177,15 +177,15 @@
                 </div>
               </div>
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-                <p>資產編號</p>
+                <p class="search_label">資產編號</p>
                 <input type="text" class="form-control text-center" placeholder="" v-model="searchParams.AssetsId" />
               </div>
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-                <p>物品名稱</p>
+                <p class="search_label">物品名稱</p>
                 <input type="text" class="form-control text-center" placeholder="最多輸入20字" v-model="searchParams.AssetName" />
               </div>
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-                <p>儲位區域</p>
+                <p class="search_label">儲位區域</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
                     {{ searchParams.AreaName || '請選擇' }}
@@ -196,7 +196,7 @@
                 </div>
               </div>
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-                <p>儲位櫃位</p>
+                <p class="search_label">儲位櫃位</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :disabled="searchParams.AreaName === ''">
                     {{ searchParams.LayerName || LayerInit }}
@@ -605,6 +605,10 @@
   }
   .info_wrap:nth-child(3) {
     margin-top: 3%;
+    p{
+      
+      font-weight: 700;
+    }
     .content {
       justify-content: space-around;
     }
@@ -630,9 +634,16 @@
           border-radius: 10px 10px 0px 0px;
           height: 50px;
         }
-        .content {
+        .content_inner {
+          padding: 2%;
           border-radius: 10px;
           background-color: #c3d3da !important;
+          .search_label{
+            font-weight: 700;
+          }
+          .dropdown{
+            margin-top: 5px;
+          }
         }
         .button {
           display: flex;
@@ -654,15 +665,7 @@
             }
           }
         }
-        .search_section {
-          padding: 0 80px;
-          width: 100%;
-          input {
-            @include dropdown_btn;
-            width: 100%;
-            height: 35px;
-          }
-        }
+       
       }
       .wrap {
         gap: 10px 0;
@@ -728,8 +731,7 @@
       text-align: center;
       white-space: nowrap;
       font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 5px;
+      margin-bottom: 0;
       color: white;
     }
   }
