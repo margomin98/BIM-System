@@ -22,7 +22,11 @@
           <div class="col-xl-6 col-lg-12 col-md-12 col-12 d-flex">
             <div class="input-group mb-3">
               <div class="input-group-prepend flex"><span>*</span>盤點人員：</div>
-              <div class="dropdown">
+              <select class="form-select" v-model="formParams.InventoryStaffName">
+                <option value="">--請選擇--</option>
+                <option v-for="option in DropdownArray.InventoryStaff" :value="option">{{ option }}</option>
+              </select>
+              <!-- <div class="dropdown">
                 <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                   {{ formParams.InventoryStaffName || '請選擇' }}
                 </button>
@@ -30,7 +34,7 @@
                   <p v-for="(item, index) in DropdownArray.InventoryStaff" :key="index" @click="selectStaff(item)">{{
                     item }}</p>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="col-xl-6 col-lg-12 col-md-12 col-12 d-flex">
