@@ -291,13 +291,12 @@
                                   <span>*</span>資產類型 :
                               </div>
                               <div class="d-flex align-items-center radio_wrap">
-<template v-for="(item, typeIndex) in DropdownArray.AssetType" :key="'radio' + (typeIndex + 1)">
-  <input type="radio" class="form-check-input check_box" :id="'radio_'+(index+1) + (typeIndex + 1)" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" :value="item" v-model="tab.itemAssetType" @change="storageStore.resetUnitCount('tab',index)"
-  />
-  <label class="form-check-label check_box" :for="'radio_'+(index+1) + (typeIndex + 1)" :data-toggle="typeIndex === 1 ? 'tooltip' : null" :data-placement="typeIndex === 1 ? 'top' : null" :title="typeIndex === 1 ? '註記此資產僅限特定專案出貨所使用' : null">
+                                <template v-for="(item, typeIndex) in DropdownArray.AssetType" :key="'radio' + (typeIndex + 1)">
+                                  <input type="radio" class="form-check-input check_box" :id="'radio_'+(index+1) + (typeIndex + 1)" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" :value="item" v-model="tab.itemAssetType" @change="storageStore.resetUnitCount('tab',index)"/>
+                                  <label class="form-check-label check_box" :for="'radio_'+(index+1) + (typeIndex + 1)" :data-toggle="typeIndex === 1 ? 'tooltip' : null" :data-placement="typeIndex === 1 ? 'top' : null" :title="typeIndex === 1 ? '註記此資產僅限特定專案出貨所使用' : null">
                                     {{ item }}
-                                    </label>
-</template>
+                                  </label>
+                                </template>
                               </div>
                           </div>
                       </div>
@@ -363,7 +362,7 @@
                   <div class="col">
                       <div class="input-group mb-3">
                           <div class="input-group-prepend">資產編號 :</div>
-                          <input type="text" class="form-control" placeholder="BFXXXXXXXX" v-model="tab.itemAssetsId">
+                          <input type="text" class="form-control" :class="{'readonly_box': Type === 1}" placeholder="BFXXXXXXXX" v-model="tab.itemAssetsId" :readonly="Type === 1">
                       </div>
                   </div>
                   <!-- 頁籤廠商 -->

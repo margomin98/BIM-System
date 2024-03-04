@@ -581,6 +581,7 @@
       async function temp() {
         var InputMessages = '';
         var InputError = false;
+        const BF_pattern = /^(BF\d{8})$/;
         // 只檢查 1.物品名稱必填 2.其他子項目是否超過字數限制(不額外寫function) 3.有填的專案代碼是否有效
         for (let i = 0; i < tabData.length; i++) {
           const form = tabData[i];
@@ -605,6 +606,11 @@
           if (!/^[\s\S]{0,20}$/.test(form.itemAssetName)) {
             InputError = true;
             InputMessages += '頁籤 ' + (i + 1) + ' :　物品名稱不可輸入超過20字' + '\n';
+          }
+          // 資產編號有填則需要符合格式
+          if (form.itemAssetsId && !BF_pattern.test(form.itemAssetsId)) {
+            InputError = true;
+            InputMessages += '頁籤 ' + (i + 1) + ' :　資產編號不符合格式' + '\n';
           }
           // 廠商、規格、型號、S/N、備註不可超過100/500字
           if (form.itemVendorName) {
@@ -680,11 +686,10 @@
             if (allSuccess) {
               alert('表單暫存成功\n單號為:' + AI_ID);
               window.location.reload();
-            } else {
-              alert('表單暫存失敗');
             }
           })
           .catch(error => {
+            alert('表單暫存失敗');
             console.error(error);
           })
       }
@@ -762,6 +767,7 @@
               }
             })
             .catch(error => {
+              alert('表單送出失敗');
               loading.value = false;
               console.error(error);
             })
