@@ -641,7 +641,7 @@
           .search_label{
             font-weight: 700;
           }
-          .dropdown{
+          .dropdown,input{
             margin-top: 5px;
           }
         }

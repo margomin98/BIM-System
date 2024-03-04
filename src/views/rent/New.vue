@@ -63,7 +63,7 @@
       <div class='second_content'>
         <div class='wrap d-flex first_row'>
           <div class='col-xl-3 col-lg-3 col-md-3 col-12' style='padding-left:0'>
-            <p><span>*</span>設備總類</p>
+            <p class="search_label"><span>*</span>設備總類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
                         {{ myForm.EquipTypeName || '請選擇' }}
@@ -74,7 +74,7 @@
             </div>
           </div>
           <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-            <p><span>*</span>設備分類</p>
+            <p class="search_label"><span>*</span>設備分類</p>
             <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(myForm.EquipTypeName !== '') }">
                         {{ myForm.EquipCategoryName || myForm.EquipCategoryInit }}
@@ -85,13 +85,13 @@
             </div>
           </div>
           <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-            <p><span>*</span>物品名稱</p>
+            <p class="search_label"><span>*</span>物品名稱</p>
             <div class="number-input-box">
               <input class="input-number" type="text" placeholder="最多輸入20字" v-model="myForm.ProductName" />
             </div>
           </div>
           <div class="col-xl-3 col-lg-3 col-md-3 col-12">
-            <p><span>*</span>數量 <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"></p>
+            <p class="search_label"><span>*</span>數量 <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"></p>
             <div class="number-input-box">
               <input class="input-number" type="number" v-model="myForm.Number" min="1" />
             </div>
@@ -395,6 +395,17 @@
   .project_details #project_name {
     height: 100%;
   }
+
+  .dropdown-toggle {
+  padding:5px 10px;
+  height: 35px;
+  }
+
+  .input-number{
+    border-radius: 5px;
+    border: none;
+    height: 35px;
+  }
   @media only screen and (min-width: 1200px) {
     .main_section {
       h1 {
@@ -562,9 +573,7 @@
         .input-group {
           height: 100%;
         }
-        .input-number {
-          @include count_btn;
-        }
+   
         .form-control {
           height: 100%;
           border-radius: 0;
@@ -762,9 +771,7 @@
         .input-group {
           height: 100%;
         }
-        .input-number {
-          @include count_btn;
-        }
+    
         .form-control {
           height: 100%;
           border-radius: 0;
@@ -893,7 +900,6 @@
                 text-align: center;
                 white-space: nowrap;
                 font-size: 18px;
-                font-weight: 700;
                 margin-bottom: 5px;
               }
             }
@@ -910,6 +916,9 @@
             .form-control {
               height: 150px
             }
+          }
+          .search_label{
+            font-weight: 700;
           }
         }
         .column_section {
@@ -973,9 +982,7 @@
             }
           }
         }
-        .input-number {
-          @include count_btn;
-        }
+     
       }
       .button_wrap {
         display: flex;

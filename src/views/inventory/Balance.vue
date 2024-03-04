@@ -215,7 +215,7 @@
           <div class="content">
             <div class="wrap row">
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-                <p>設備總類</p>
+                <p class="search_label">設備總類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
@@ -228,7 +228,7 @@
                 </div>
               </div>
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-                <p>設備分類</p>
+                <p class="search_label">設備分類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false"
@@ -242,7 +242,7 @@
                 </div>
               </div>
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-                <p>資產編號</p>
+                <p class="search_label">資產編號</p>
                 <input type="text" class="form-control text-center" placeholder="" v-model="searchParams.AssetsId" />
               </div>
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
@@ -251,7 +251,7 @@
                   v-model="searchParams.AssetName" />
               </div>
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-                <p>儲位區域</p>
+                <p class="search_label">儲位區域</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false" @click="getAreaName">
@@ -264,7 +264,7 @@
                 </div>
               </div>
               <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-                <p>儲位櫃位</p>
+                <p class="search_label">儲位櫃位</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false" :disabled="searchParams.AreaName === ''">
@@ -777,18 +777,25 @@ export default {
     margin-top: 3%;
     .content {
       justify-content: space-around;
+        p{
+        font-weight: 700;
+      }
     }
   }
   .info_wrap:nth-child(4) {
     margin-top: 3%;
     .content {
       border-radius: unset;
+    
     }
   }
   .info_wrap:nth-child(5) {
     .content {
       .search_wrap {
         margin-bottom: 20px;
+.search_label{
+  font-weight: 700;
+}
         .title {
           display: flex;
           justify-content: space-around;
@@ -898,7 +905,6 @@ export default {
       text-align: center;
       white-space: nowrap;
       font-size: 20px;
-      font-weight: 700;
       margin-bottom: 5px;
       color: white;
     }
