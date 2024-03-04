@@ -404,9 +404,6 @@ onUnmounted(()=>{
           grid-template-rows: 1fr 1fr;
           gap: 10px;
           padding: 2%;
-          input {
-            width: 100%;
-          }
           button {
             border: none;
             padding: 0;
