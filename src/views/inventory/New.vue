@@ -820,6 +820,7 @@ h1 {
       }
 
       button {
+        @include dropdown-btn;
         width: 100%;
         color: black;
         justify-content: space-between;
@@ -1026,23 +1027,23 @@ h1 {
       .dropdown {
         button {
           background: white;
-          padding: 5px 10px;
           width: 100%;
           border: none;
           display: flex;
           justify-content: space-between;
           align-items: center;
+              padding: 5px 10px;
         }
-
         .dropdown-menu {
-
+          width: 225px;
+          
           .dropdown-item {
             text-align: left;
           }
         }
       }
-
       div {
+        padding: 0 5px;
 
         p {
           color: black;
@@ -1089,7 +1090,6 @@ h1 {
 
           .dropdown-menu {
             width: 100%;
-            transform: translateY(-50%);
 
             p {
               text-align: left;
@@ -1098,6 +1098,7 @@ h1 {
           }
 
           button {
+            @include dropdown-btn;
             width: 100%;
             color: black;
             justify-content: space-between;
@@ -1144,6 +1145,7 @@ h1 {
         }
 
         .dropdown-menu {
+          transform: translate3d(-1px, 35px, 0px) !important;
           max-height: 250px;
           overflow-y: auto;
 
@@ -1187,7 +1189,6 @@ h1 {
 
       .wrap1 {
         padding: 10px 80px;
-        gap: 0 10px;
 
         // .dropdown {
         //   button {
@@ -1242,9 +1243,9 @@ h1 {
         }
 
         .dropdown {
-          width: 55%;
+          width: 73%;
+
           .dropdown-menu {
-        
             p {
               text-align: left;
               padding: 0 10px;
@@ -1252,6 +1253,7 @@ h1 {
           }
 
           button {
+            @include dropdown-btn;
             width: 100%;
             color: black;
             justify-content: space-between;
@@ -1297,6 +1299,7 @@ h1 {
 
         .dropdown-menu {
           width: 100%;
+          transform: translate3d(-1px, 35px, 0px) !important;
           max-height: 250px;
           overflow-y: auto;
 
@@ -1329,7 +1332,7 @@ h1 {
         display: grid;
         grid-auto-columns: 1fr;
         grid-template-columns: 1fr 1fr 1fr;
-        gap: 0 10px;
+        gap: 10px 0;
         // .dropdown {
         //   button {
         //     background: white;
@@ -1356,12 +1359,14 @@ h1 {
     input {
       width: 100%;
     }
-
     .button_wrap {
       padding: unset;
     }
 
-    .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    .input-group
+      > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+        .valid-feedback
+      ):not(.invalid-tooltip):not(.invalid-feedback) {
       margin-left: 0 !important;
       border-radius: 5px;
     }
@@ -1411,7 +1416,10 @@ h1 {
     }
 
     .info_wrap:nth-child(3) {
-      .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+      .input-group
+        > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+          .valid-feedback
+        ):not(.invalid-tooltip):not(.invalid-feedback) {
         margin-left: unset !important;
         border-radius: 5px;
       }
@@ -1483,4 +1491,5 @@ h1 {
     margin-left: 0 !important;
   }
 }
+
 </style>

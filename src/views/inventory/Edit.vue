@@ -27,14 +27,19 @@
           <div class="col-xl-6 col-lg-12 col-md-12 col-12 d-flex">
             <div class="input-group mb-3">
               <div class="input-group-prepend flex"><span>*</span>盤點人員：</div>
-              <div class="dropdown">
+              <select class="form-select" v-model="formParams.InventoryStaffName">
+                <option value="">--請選擇--</option>
+                <option v-for="option in DropdownArray.InventoryStaff" :value="option">{{ option }}</option>
+              </select>
+
+              <!-- <div class="dropdown">
                 <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                           {{ formParams.InventoryStaffName || '請選擇' }}
                         </button>
                 <div class="dropdown-menu">
                   <p v-for="(item , index) in DropdownArray.InventoryStaff" :key="index" @click="selectStaff(item)">{{ item }}</p>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="col-xl-6 col-lg-12 col-md-12 col-12 d-flex">
@@ -1048,7 +1053,6 @@ h1 {
           align-items: center;
         }
         .dropdown-menu {
-          width: 225px;
           .dropdown-item {
             text-align: left;
           }
@@ -1155,10 +1159,9 @@ h1 {
         }
 
         .dropdown-menu {
-          transform: translate3d(-1px, 35px, 0px) !important;
           max-height: 250px;
-          overflow-y: auto;
-
+    overflow-y: auto;
+    width: 100%;
           p {
             padding-top: 5px;
             text-align: left;
@@ -1199,9 +1202,7 @@ h1 {
 
       .wrap1 {
         padding: 10px 80px;
-        div{
-          padding: 0 5px;
-        }
+     gap:0 10px
         // .dropdown {
         //   button {
         //     background: white;
@@ -1255,7 +1256,7 @@ h1 {
         }
 
         .dropdown {
-          width: 73%;
+          // width: 73%;
 
           .dropdown-menu {
             p {
@@ -1311,7 +1312,7 @@ h1 {
 
         .dropdown-menu {
           width: 100%;
-          transform: translate3d(-1px, 35px, 0px) !important;
+          // transform: translate3d(-1px, 35px, 0px) !important;
           max-height: 250px;
           overflow-y: auto;
 
@@ -1344,10 +1345,8 @@ h1 {
         display: grid;
         grid-auto-columns: 1fr;
         grid-template-columns: 1fr 1fr 1fr;
-        gap: 10px 0;
-        div{
-          padding: 0 5px;
-        }
+        gap:5px 10px;
+      
         // .dropdown {
         //   button {
         //     background: white;
