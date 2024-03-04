@@ -647,17 +647,10 @@ const selectProject = (option) => {
   DeliveredItem.searchParams.Project_Id = value;
   CustodyAssets.searchParams.Project_Id = value;
   // 重新刷新4個datagrid
-<<<<<<< Updated upstream
-  // submit('Warehouse','','');
-  // submit('PurchasedItem','','');
-  // submit('DeliveredItem','','');
-  // submit('CustodyAssets','','');
-=======
   submit('Warehouse', '', '');
   submit('PurchasedItem', '', '');
   submit('DeliveredItem', '', '');
   submit('CustodyAssets', '', '');
->>>>>>> Stashed changes
 }
 // 模糊查詢左側專案代碼
 const filterProject = computed(() => {
@@ -830,12 +823,10 @@ onMounted(async () => {
   }
   await getLineNotificationStatus();
   // await project api, then handle "Text" part
-<<<<<<< Updated upstream
   // project.OriginOptions = await apiStore.getFuzzyProject();
-=======
   project.OriginOptions = await apiStore.getFuzzyProject();
   project.OriginOptions.splice(0, 1);
->>>>>>> Stashed changes
+
   project.OriginOptions = project.OriginOptions.map(option => {
     const newValue = option.Text.replace(option.Value.trim(), '');
     return { Text: newValue, Value: option.Value };
@@ -1035,25 +1026,15 @@ const PieChartSetting = (label_text = '', target_id = '', pie_data = [], isOuter
 const updatePie = () => {
   // 更新總金額
   total_amount.value = 0;
-<<<<<<< Updated upstream
-  if (fake_amount_data.length !== 0) {
-    fake_amount_data.forEach((item) => {
-=======
   if (amount_pie_data.value.length !== 0) {
     amount_pie_data.value.forEach((item) => {
->>>>>>> Stashed changes
       total_amount.value += item.y;
     })
   }
   // 更新總件數
   total_case.value = 0;
-<<<<<<< Updated upstream
-  if (fake_case_data.length !== 0) {
-    fake_case_data.forEach((item) => {
-=======
   if (case_pie_data.value.length !== 0) {
     case_pie_data.value.forEach((item) => {
->>>>>>> Stashed changes
       total_case.value += item.y;
     })
   }
