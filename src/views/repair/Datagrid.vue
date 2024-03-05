@@ -60,7 +60,7 @@
             <p>日期(迄)</p>
             <div class="date-selector">
               <div class="input-container">
-                <input type="date" v-model="searchParams.EndDate" class="date-input" :disabled="!searchParams.DateCategory" />
+                <input type="date" v-model="dgSearchParams.EndDate" class="date-input" :disabled="!dgSearchParams.DateCategory" />
               </div>
             </div>
           </div>
