@@ -16,7 +16,7 @@
           <div class="second_content">
             <div class="wrap1">
               <div class="col">
-                <p>設備總類</p>
+                <p class="search_label">設備總類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
                           {{ searchParams.EquipTypeName || '請選擇' }}
@@ -29,7 +29,7 @@
                 </div>
               </div>
               <div class="col">
-                <p>設備分類</p>
+                <p class="search_label">設備分類</p>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
                           {{ searchParams.EquipCategoryName || searchParams.EquipCategoryInit }}
@@ -42,19 +42,19 @@
                 </div>
               </div>
               <div class="col">
-                <p>物品名稱</p>
+                <p class="search_label">物品名稱</p>
                 <div class="number-input-box">
                   <input class="form-control" type="text" v-model="searchParams.ProductName" :placeholder="searchPlaceholder" />
                 </div>
               </div>
               <div class="col">
-                <p>資產編號</p>
+                <p class="search_label">資產編號</p>
                 <div class="number-input-box">
                   <input class="form-control" type="text" v-model="searchParams.AssetsId" placeholder="BFXXXXXXXX" />
                 </div>
               </div>
               <div class="col">
-                <p>
+                <p class="search_label">
                   已選/所需 數量
                   <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘" />
                 </p>
@@ -65,7 +65,7 @@
             </div>
             <div class="row g-0">
               <div class="col-12 d-flex wrap2">
-                <label for="inputTextarea" class="form-label"><p>規格需求：</p></label
+                <label for="inputTextarea" class="form-label"><p class="search_label">規格需求：</p></label
                       >
                       <div></div>
                       <textarea
@@ -908,6 +908,10 @@ GetAntiForgeryToken
   .project_details #project_name {
     height: 100%;
   }
+  .dropdown-toggle {
+  padding:5px 10px;
+  height: 35px;
+  }
   @media only screen and (min-width: 1200px) {
     .modal {
       padding: 0 5%;
@@ -998,7 +1002,7 @@ GetAntiForgeryToken
               align-items: center;
             }
             .dropdown-menu {
-              width: 225px;
+              width: 100%;
               max-height: 250px;
               overflow-y: auto;
               p {
@@ -1015,7 +1019,7 @@ GetAntiForgeryToken
             }
           }
           div {
-            padding: 0 5px;
+          
             p {
               text-align: center;
               white-space: nowrap;
@@ -1402,19 +1406,19 @@ GetAntiForgeryToken
               align-items: center;
             }
             .dropdown-menu {
-              width: 150px;
+              width: 100%;
               .dropdown-item {
                 text-align: left;
               }
             }
           }
           div {
-            padding: 0 5px;
+   
             p {
               text-align: center;
               white-space: nowrap;
+            
               font-size: 18px;
-              font-weight: 700;
               margin-bottom: 5px;
             }
           }
@@ -1426,6 +1430,9 @@ GetAntiForgeryToken
           grid-template-rows: 1fr 1fr;
           gap: 10px 10px;
           grid-template-areas: ". ." ". .";
+          .search_label{
+            font-weight: 700;
+          }
         }
       }
     }
@@ -1778,6 +1785,9 @@ GetAntiForgeryToken
         .wrap1 {
           justify-content: space-evenly;
           padding: 20px 20px 0;
+          .search_label{
+            font-weight: 700;
+          }
           .input-number {
             @include count_btn;
           }
@@ -1802,7 +1812,7 @@ GetAntiForgeryToken
               align-items: center;
             }
             .dropdown-menu {
-              width: 225px;
+              width:100%;
               .dropdown-item {
                 text-align: left;
               }
@@ -1813,7 +1823,6 @@ GetAntiForgeryToken
             p {
               white-space: nowrap;
               font-size: 18px;
-              font-weight: 700;
               margin-bottom: 5px;
             }
           }

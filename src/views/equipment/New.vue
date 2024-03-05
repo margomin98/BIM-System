@@ -61,16 +61,18 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">保管人員：</div>
-              <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown"
+                <select class="form-select" v-model="formParams.Custodian">
+                <option value="">--請選擇--</option>
+                <option v-for="option in DropdownArray.Custodian" :value="option">{{ option }}</option>
+              </select>
+                <!-- <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false">
                   {{ formParams.Custodian || '請選擇' }}
                 </button>
                 <div class="dropdown-menu">
                   <p v-for="(item, index) in DropdownArray.Custodian" :key="index" class="dropdown-item"
                     @click="selectAccount(item)">{{ item }}</p>
-                </div>
-              </div>
+                </div> -->
             </div>
           </div>
         </div>
@@ -675,13 +677,12 @@ h1 {
 
     .dropdown {
       width: 100%;
-
+      @include dropdown_btn;
       .dropdown-menu {
         width: 100%;
       }
 
       button {
-        @include dropdown-btn;
         width: 100%;
         color: black;
         justify-content: space-between;
@@ -689,6 +690,9 @@ h1 {
       }
     }
 
+    select {
+      width: 100%;
+    }
     .input-number {
       @include count_btn;
     }
@@ -871,7 +875,8 @@ h1 {
 
     .wrap1 {
       display: flex;
-      justify-content: space-evenly;
+      justify-content: center;
+border-top:1px solid black;
 
       .number-input-box {
         color: black;
@@ -886,7 +891,9 @@ h1 {
         font-weight: 800;
         font-size: 18px;
       }
-
+      .dropdown-toggle {
+        padding: 5px 10px;
+      }
       // .dropdown {
       //   button {
       //     background: white;
@@ -1002,26 +1009,19 @@ h1 {
   }
 
   .modal {
+    padding: 0 5%;
+
     .fixed_info {
       p {
         font-size: 20px;
       }
-
-      button {
-        font-size: 22px;
-        align-self: start;
-      }
     }
 
     .second_content {
-      border-left: 1px solid black;
-      border-right: 1px solid black;
-      background: #d9d9d9;
-
       .wrap1 {
         padding: 10px 80px;
 
-        // .dropdown {
+        //  .dropdown {
         //   button {
         //     background: white;
         //     width: 100%;
@@ -1167,7 +1167,9 @@ h1 {
       padding: 1% 5% 0;
 
       .content {
-
+        select {
+          margin-left: unset !important;
+        }
 
         .dropdown {
           margin-left: unset !important;
@@ -1244,7 +1246,6 @@ h1 {
     .second_content {
       .wrap1 {
         padding: 20px 20px 0;
-
         flex-direction: column;
 
         // .dropdown {

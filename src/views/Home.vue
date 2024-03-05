@@ -92,14 +92,14 @@
           <input type="text" placeholder="請輸入代碼或名稱" v-model="project.input">
         </div>
         <div class="search_result">
-        <div class="search_result_wrap">
-          <!-- <perfect-scrollbar> -->
+          <div class="search_result_wrap">
+            <!-- <perfect-scrollbar> -->
             <div v-for="option in filterProject" class="result_wrap"
               :class="{ 'selected': project.Project_Id === option.Value }" @click="selectProject(option)">
               <p class="case_code d-flex">{{ option.Value }}</p>
               <p class="case_name">{{ option.Text }}</p>
             </div>
-            </div>
+          </div>
           <!-- </perfect-scrollbar> -->
         </div>
       </div>
@@ -234,29 +234,29 @@
           <div v-show="roleId === 1 || roleId === 4" class="tab-pane fade PurchaseList" id="PurchaseList" role="tabpanel"
             aria-labelledby="profile-tab">
             <div class="purchase_list_wrap">
-            <div class="row dg_search_wrap">
-              <!-- 採購項目 -->
-              <div class="col">
-                <p>採購項目</p>
-                <input type="text" v-model="PurchasedItem.searchParams.PurchasedItem" />
+              <div class="row dg_search_wrap">
+                <!-- 採購項目 -->
+                <div class="col">
+                  <p>採購項目</p>
+                  <input type="text" v-model="PurchasedItem.searchParams.PurchasedItem" />
+                </div>
+                <!-- 交貨期限(起) -->
+                <div class="col">
+                  <p>交貨期限(起)</p>
+                  <input type="date" v-model="PurchasedItem.searchParams.StartDate">
+                </div>
+                <!-- 交貨期限(訖) -->
+                <div class="col">
+                  <p>交貨期限(訖)</p>
+                  <input type="date" v-model="PurchasedItem.searchParams.EndDate">
+                </div>
+
               </div>
-              <!-- 交貨期限(起) -->
-              <div class="col">
-                <p>交貨期限(起)</p>
-                <input type="date" v-model="PurchasedItem.searchParams.StartDate">
-              </div>
-              <!-- 交貨期限(訖) -->
-              <div class="col">
-                <p>交貨期限(訖)</p>
-                <input type="date" v-model="PurchasedItem.searchParams.EndDate">
-              </div>
-              
-            </div>
-            <div class="button_wrap">
+              <div class="button_wrap">
                 <button class="search_btn" @click="submit('PurchasedItem', '', 'search')">檢索</button>
                 <button class="reset_btn" @click="clear('PurchasedItem')">重設</button>
               </div>
-              </div>
+            </div>
             <div class="dg">
               <DataTable lazy :key="PurchasedItem.datagrid.key" :first="PurchasedItem.datagrid.first" :size="'small'"
                 :loading="PurchasedItem.datagrid.loading" :value="PurchasedItem.rowData"
@@ -834,10 +834,10 @@ onMounted(async () => {
   util_Dropdown.EquipType = await apiStore.getEquipType();
   util_Dropdown.Area = await apiStore.getArea();
   // 4個dg搜尋
-  submit('Warehouse','','search');
-  submit('PurchasedItem','','search');
-  submit('DeliveredItem','','search');
-  submit('CustodyAssets','','search');
+  submit('Warehouse', '', 'search');
+  submit('PurchasedItem', '', 'search');
+  submit('DeliveredItem', '', 'search');
+  submit('CustodyAssets', '', 'search');
   // 警示訊息
   getAlertMsg();
   updatePie();
@@ -1144,15 +1144,18 @@ $content_title_bg: #364E68;
   box-shadow: 3px 2px 3.9px 0px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
 }
+
 .empty_text {
-margin:auto;
-font-weight: 700;
-font-size: 24px;
-justify-content: center;
-P{
-  margin-bottom: 0;
+  margin: auto;
+  font-weight: 700;
+  font-size: 24px;
+  justify-content: center;
+
+  P {
+    margin-bottom: 0;
+  }
 }
-}
+
 @mixin reset_btn {
   background-color: #364E68;
   color: white;
@@ -1281,9 +1284,10 @@ P{
 
 .dg {
   margin: 16px auto 0;
-.p-datatable{
-  display: grid;
-}
+
+  .p-datatable {
+    display: grid;
+  }
 }
 
 .nav-tabs,
@@ -1402,6 +1406,7 @@ P{
 
   p {
     margin-bottom: 0;
+    overflow-wrap: break-word;
   }
 }
 
@@ -1430,7 +1435,8 @@ P{
 
 .search_result {
   border-radius: 0 0 20px 20px;
-  .search_result_wrap{
+
+  .search_result_wrap {
     overflow-y: scroll;
   }
 }
@@ -1475,6 +1481,8 @@ P{
   }
 
   .code_search {
+    background-color: #f4f4f4;
+
     .search_section {
       background-color: $content_title_bg;
       width: 100%;
@@ -1504,12 +1512,9 @@ P{
 
     .search_result {
       background-color: $content_bg;
-.search_result_wrap{
-  display: grid;
-  gap:16px 0;
-}
+
       .result_wrap {
-        height: min-content;
+        margin-bottom: 16px;
         background: #A7AFBB;
         border-radius: 10px;
         border: 3px solid var(--home_hover, transparent);
@@ -1640,7 +1645,7 @@ P{
   }
 
   .PurchaseList .dg_search_wrap {
-    grid-template-columns: 1fr 1fr 1fr ;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 
   .pt_left {
@@ -1673,6 +1678,7 @@ P{
   .modal-dialog {
     width: 700px;
   }
+
   .PurchaseList .button_wrap .total_amount p,
   .ProcessProperty .warn_text p {
     font-size: 24px;
@@ -1703,13 +1709,16 @@ P{
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
   }
-.PurchaseList .purchase_list_wrap{
-  display: flex;
-  .button_wrap{
-  margin-left: 20px;
-    margin-bottom: 16px;
+
+  .PurchaseList .purchase_list_wrap {
+    display: flex;
+
+    .button_wrap {
+      margin-left: 20px;
+      margin-bottom: 16px;
+    }
   }
-}
+
   .PurchaseList .dg_search_wrap {
     grid-template-columns: 1fr 1fr 1fr;
   }
@@ -1785,7 +1794,8 @@ P{
 
     .code_search {
       width: 320px;
-      height:588px;
+      height: 588px;
+
       .search_section {
         padding: 10px 20px;
         height: 70px;
@@ -1807,11 +1817,13 @@ P{
 
       .search_result {
         padding: 16px;
-        
-     
-.search_result_wrap{
-  height: 485px;
-}        .result_wrap {
+
+
+        .search_result_wrap {
+          height: 469px;
+        }
+
+        .result_wrap {
           padding: 10px;
         }
       }
@@ -1873,12 +1885,14 @@ P{
     }
   }
 }
+
 @media only screen and (min-width: 1000px)and (max-width: 1350px) {
-  .PurchaseList .purchase_list_wrap{
+  .PurchaseList .purchase_list_wrap {
     flex-direction: column;
-    .button_wrap{
-   justify-content: center;
-  }
+
+    .button_wrap {
+      justify-content: center;
+    }
   }
 }
 
@@ -1886,6 +1900,7 @@ P{
   .modal-dialog {
     width: 700px;
   }
+
   .PurchaseList .button_wrap .total_amount p,
   .ProcessProperty .warn_text p {
     font-size: 24px;
@@ -1905,13 +1920,15 @@ P{
       }
     }
   }
-  .PurchaseList .purchase_list_wrap{
+
+  .PurchaseList .purchase_list_wrap {
     .dg_search_wrap {
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows:1fr
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr
+    }
   }
-  }
-  .button_wrap{
+
+  .button_wrap {
     justify-content: center;
   }
 
@@ -1994,7 +2011,8 @@ P{
 
       .search_result {
         padding: 16px;
-        .search_result_wrap{
+
+        .search_result_wrap {
           height: 400px;
         }
 
@@ -2071,7 +2089,7 @@ P{
 
     .dg_search_wrap {
       margin-bottom: 16px;
-    
+
       gap: 10px 0;
 
       p {
@@ -2079,20 +2097,23 @@ P{
       }
     }
   }
+
   .TotalProperty .dg_search_wrap {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
   }
 
-  .PurchaseList .purchase_list_wrap{
+  .PurchaseList .purchase_list_wrap {
     .dg_search_wrap {
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows:1fr
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr
+    }
+
+    .button_wrap {
+      justify-content: center;
+    }
   }
-  .button_wrap{
-    justify-content: center;
-  }
-  }
+
   .organizeProperty .dg_search_wrap {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
@@ -2173,9 +2194,11 @@ P{
 
       .search_result {
         padding: 16px;
-        .search_result_wrap{
+
+        .search_result_wrap {
           height: 400px;
         }
+
         .result_wrap {
           padding: 10px;
         }
@@ -2317,9 +2340,11 @@ P{
 
       .search_result {
         padding: 16px;
-        .search_result_wrap{
+
+        .search_result_wrap {
           height: 400px;
         }
+
         .result_wrap {
           padding: 10px;
         }
@@ -2344,7 +2369,8 @@ P{
           }
         }
       }
-      .PurchaseList .button_wrap{
+
+      .PurchaseList .button_wrap {
         justify-content: center;
       }
     }
