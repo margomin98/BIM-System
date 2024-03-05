@@ -144,7 +144,7 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 					if (allSuccess) {
 						// 文字部分
 						try {
-							const result = await this.sendUpperForm(isDone, token);
+							const result = await this.sendUpperForm(isDone);
 							alert(`${result.messages}\n單號為:` + storageStore.upperForm.AI_ID);
 							if(isDone) {
 								router.push({
@@ -166,7 +166,7 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 				utilsStore.isLoading = false ;
 			}
 		},
-		async sendUpperForm(isDone , token) {
+		async sendUpperForm(isDone) {
 			const storageStore = useStorageStore();
 			return new Promise((resolve, reject) => {
 				const form = new FormData();
@@ -174,11 +174,7 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 				form.append('AI_ID', storageStore.upperForm.AI_ID);
 				form.append('AR_ID', storageStore.upperForm.AR_ID);
 				form.append('Memo', storageStore.upperForm.Memo);
-				axios.post('http://192.168.0.177:7008/AssetsInMng/ExpressEdit', form,{
-					headers: { 
-            'RequestVerificationToken': token,
-          }
-				})
+				axios.post('http://192.168.0.177:7008/AssetsInMng/ExpressEdit', form)
 					.then(response => {
 						const data = response.data;
 						if (data.state === 'success') {

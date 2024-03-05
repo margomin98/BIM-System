@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '@/axios/tokenInterceptor'
 import { defineStore } from 'pinia'
 import { useUtilsStore, useAPIStore } from '@/store'
 import { useStorageStore } from '@/store/storage/_index';
@@ -99,14 +99,13 @@ export const useApplyStore = defineStore('Apply', {
 			}
 			// 傳送upperForm
 			try {
-        const token = await apiStore.GetAntiForgeryToken();
-        const resultList = await this.sendUpperForm(type, token);
+        const resultList = await this.sendUpperForm(type);
 				console.log('上半部resultList', resultList);
 				// 再依照resultList將 下半部頁籤 單次分別上傳
 				const tabPromises = [];
 				storageStore.tabData.forEach((tab,index)=>{
 					const itemId = resultList.Tabs[index];
-					tabPromises.push(storageStore.sendImgForm(itemId, tab, index,token));
+					tabPromises.push(storageStore.sendImgForm(itemId, tab, index));
 				})
 				// 等待所有檔案上傳完成
 				await Promise.all(tabPromises)
@@ -128,7 +127,7 @@ export const useApplyStore = defineStore('Apply', {
 				alert(error);
 			}
 		},
-    async sendUpperForm(type, token) {
+    async sendUpperForm(type) {
 			const storageStore = useStorageStore();
 			return new Promise((resolve, reject) => {
 				const form = new FormData();
@@ -144,11 +143,7 @@ export const useApplyStore = defineStore('Apply', {
 				form.append('AR_ID', storageStore.upperForm.AR_ID);
 				form.append('tab_count', storageStore.tabData.length);
 				form.append('Memo', storageStore.upperForm.Memo);
-				axios.post(url, form,{
-          headers: { 
-            'RequestVerificationToken': token,
-          }
-        })
+				axios.post(url, form)
 					.then(response => {
 						const data = response.data;
 						if (data.state === 'success') {
