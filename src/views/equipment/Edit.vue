@@ -452,7 +452,6 @@ export default {
         alert('物品名稱不可輸入超過20字')
         return
       }
-      const axios = require('axios');
       try {
         const form = new FormData();
 
@@ -494,7 +493,6 @@ export default {
         alert('設備箱名稱不可輸入超過20字');
         return
       }
-      const axios = require('axios');
       let requestData = {
         IntegrationId: details.value.IntegrationId,
         IntegrationName: details.value.IntegrationName,
