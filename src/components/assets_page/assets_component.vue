@@ -612,7 +612,7 @@ span.red_star {
    flex-wrap: nowrap;
 
    .amount_input {
-    gap: 0 13px;
+    gap: 0 10px;
     margin-left: 0;
    }
  
