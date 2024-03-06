@@ -281,8 +281,8 @@ onUnmounted(()=>{
   async function exportExcel() {
     const form = new FormData();
     //將表格資料append到 form
-    for (const key in dgSearchParams) {
-      form.append(key, dgSearchParams[key]);
+    for (const key in dgSearchParams.value) {
+      form.append(key, dgSearchParams.value[key]);
     }
     axios.post('http://192.168.0.177:7008/InventoryMng/ExportExcel', form, {
         responseType: 'blob',
