@@ -544,13 +544,6 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
       #readonly_box {
         background-color: #B4B4B4;
       }
@@ -812,13 +805,6 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
       #readonly_box {
         background-color: #B4B4B4;
       }
@@ -1088,13 +1074,6 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
     .main_section {
       .readonly_box {
         @include readonly_box;
-      }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 40px;
-        font-weight: 600;
-        @include title_color;
       }
       .info_wrap {
         margin: auto;

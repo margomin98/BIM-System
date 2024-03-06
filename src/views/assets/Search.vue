@@ -89,11 +89,7 @@ onMounted,
   @media only screen and (min-width: 1200px) {
     .main_section {
       h1 {
-        margin-top: 180px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
+        margin-top: 180px  !important;
       }
       .info_wrap {
         margin: 30px auto 5%;
@@ -149,11 +145,7 @@ onMounted,
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
       h1 {
-        margin-top: 180px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
+        margin-top: 180px !important;
       }
       .info_wrap {
         margin: 30px auto 5%;
@@ -209,11 +201,7 @@ onMounted,
   @media only screen and (max-width: 767px) {
     .main_section {
       h1 {
-        margin-top: 80px;
-        text-align: center;
-        font-size: 40px;
-        font-weight: 600;
-        @include title_color;
+        margin-top: 80px !important;
       }
       .info_wrap {
         margin: 10px auto 5%;

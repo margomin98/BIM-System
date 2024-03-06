@@ -346,13 +346,6 @@
   .readonly_box {
     @include readonly_box;
   }
-  h1 {
-    margin-top: 100px;
-    text-align: center;
-    font-size: 55px;
-    font-weight: 600;
-    @include title_color;
-  }
   .info_wrap {
     margin: 30px auto 5%;
     .button_wrap {
@@ -564,11 +557,7 @@
         height: 35px;
         margin-left: unset !important;
       }
-      h1 {
-        margin-top: 80px;
-        font-size: 40px;
-      }
-      .info_wrap {
+           .info_wrap {
         padding: 0 5%;
         .fixed_info {
           @include fixed_info;

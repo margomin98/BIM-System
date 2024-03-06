@@ -308,13 +308,6 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           }
         }
       }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
       .info_wrap {
         margin: auto;
         width: 1000px;
@@ -430,13 +423,6 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
             content: "\26A0";
           }
         }
-      }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
       }
       .info_wrap {
         margin: auto;
@@ -556,13 +542,6 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
             content: "\26A0";
           }
         }
-      }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 40px;
-        font-weight: 600;
-        @include title_color;
       }
       .info_wrap {
         margin: auto;

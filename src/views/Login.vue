@@ -132,9 +132,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           white-space: nowrap;
           display: flex;
           justify-content: center;
-          font-weight: 700;
           margin-bottom: 40px;
-          text-align: center;
         }
         .form {
           margin: auto;
@@ -205,9 +203,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
         h1 {
           color: #132238;
           font-size: 50px;
-          font-weight: 700;
           margin-bottom: 40px;
-          text-align: center;
         }
         .form {
           margin: auto;
@@ -274,9 +270,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
         h1 {
           color: #132238;
           font-size: 40px;
-          font-weight: 700;
           margin-bottom: 20px;
-          text-align: center;
         }
         .form {
           margin: auto;

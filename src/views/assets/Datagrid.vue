@@ -281,8 +281,8 @@ onUnmounted(()=>{
   async function exportExcel() {
     const form = new FormData();
     //將表格資料append到 form
-    for (const key in searchParams) {
-      form.append(key, searchParams[key]);
+    for (const key in dgSearchParams) {
+      form.append(key, dgSearchParams[key]);
     }
     axios.post('http://192.168.0.177:7008/InventoryMng/ExportExcel', form, {
         responseType: 'blob',
@@ -385,18 +385,10 @@ onUnmounted(()=>{
       }
     }
   }
-  h1 {
-    text-align: center;
-    font-weight: 600;
-    @include title_color;
-  }
+
   @media only screen and (min-width: 1200px) {
     .main_section {
       padding: 0 10%;
-      h1 {
-        margin: 50px 0 20px;
-        font-size: 55px;
-      }
       .datagrid_section {
         .row {
           display: grid;
@@ -418,11 +410,7 @@ onUnmounted(()=>{
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
       padding: 0 5%;
-      h1 {
-        margin-top: 30px;
-        font-size: 55px;
-        margin-bottom: 20px;
-      }
+
       .datagrid_section {
         .row {
           display: grid;
@@ -447,11 +435,11 @@ onUnmounted(()=>{
   @media only screen and (max-width: 767px) {
     .main_section {
       padding: 5%;
-      h1 {
-        margin-top: 30px;
-        font-size: 50px;
-        margin-bottom: 20px;
-      }
+      .button_wrap{
+      display: grid;
+  grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+ }
       .datagrid_section {
         .row {
           display: flex;

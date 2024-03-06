@@ -267,6 +267,15 @@
  
   @media only screen and (max-width:993px) {
     nav {
+      
+      .navbar-nav .nav-link{
+        align-items: center;
+    gap: 0 5px;
+    padding:3px 5px;
+    img{
+      width:20px
+    }
+      }
       width: 100%;
       .logo_img {
         margin-top: 10px;
@@ -285,7 +294,6 @@
         }
       }
       .dropdown-menu {
-        margin-top: 15px;
         a {
           justify-content: left;
           margin: 10px 0;
@@ -296,6 +304,17 @@
   
   @media only screen and (max-width: 767px) {
     nav {
+      ul{
+        gap:10px 0
+      }
+      .navbar-nav .nav-link{
+        align-items: center;
+    gap: 0 5px;
+    padding:3px 5px;
+    img{
+      width:20px
+    }
+      }
       .logo_img {
         margin-top: 10px;
         width: 80%;
@@ -312,7 +331,6 @@
         }
       }
       .dropdown-menu {
-        margin-top: 15px;
         a {
           justify-content: left;
           margin: 10px 0;

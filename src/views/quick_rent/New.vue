@@ -288,12 +288,6 @@ gap: 0 5px;
     .modal .modal-body {
         padding: 0 !important;
     }
-    h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-weight: 600;
-        @include title_color;
-    }
     .button_wrap {
         display: flex;
         justify-content: space-between;
@@ -484,10 +478,7 @@ gap: 0 5px;
             padding: 10px 80px;
         }
         .main_section {
-            h1 {
-                font-size: 55px;
-            }
-            .info_wrap {
+           .info_wrap {
                 margin: auto;
                 .option_section {
                     width: 85%;
@@ -539,10 +530,7 @@ gap: 0 5px;
             padding: 10px 40px;
         }
         .main_section {
-            h1 {
-                font-size: 55px;
-            }
-            .info_wrap {
+              .info_wrap {
                 margin: auto;
                 width: 700px;
                 .option_section {
@@ -598,10 +586,7 @@ gap: 0 5px;
             }
         }
         .main_section {
-            h1 {
-                font-size: 50px;
-            }
-            .info_wrap {
+                   .info_wrap {
                 padding: 5%;
                 .input-group {
                     flex-direction: column;

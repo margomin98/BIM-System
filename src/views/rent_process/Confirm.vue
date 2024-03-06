@@ -675,13 +675,6 @@
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
       .modal-content {
         width: 400px;
         margin: auto;
@@ -1022,13 +1015,6 @@
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
       .modal-content {
         width: 400px;
         margin: auto;
@@ -1375,13 +1361,6 @@
       }
       #readonly_box {
         background: #b4b4b4;
-      }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 40px;
-        font-weight: 600;
-        @include title_color;
       }
       .info_wrap {
         margin: auto;

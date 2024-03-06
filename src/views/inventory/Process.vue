@@ -516,11 +516,7 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
     @include dropdown_btn;
     height: 35px;
   }
-  h1 {
-    text-align: center;
-    font-weight: 600;
-    @include title_color;
-  }
+
   .info_wrap {
     margin: auto;
     .fixed_info {
@@ -707,12 +703,6 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
     margin: auto;
   }
   .main_section {
-    h1 {
-      margin-top: 80px;
-      margin-bottom: 40px;
-      font-size: 55px;
-    }
-
     .info_wrap {
       margin: auto;
       padding: 0 20%;
@@ -729,11 +719,6 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
     margin: auto;
   }
   .main_section {
-    h1 {
-      margin-top: 80px;
-      margin-bottom: 40px;
-      font-size: 55px;
-    }
     .info_wrap {
       margin: auto;
       padding: 0 5%;
@@ -746,11 +731,7 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
 }
 @media only screen and (max-width: 767px) {
   .main_section {
-    h1 {
-      margin-top: 50px;
-      font-size: 40px;
-    }
-    .info_wrap {
+        .info_wrap {
       padding: 1% 5% 0;
       .fixed_info {
         flex-direction: column;

@@ -181,14 +181,7 @@
   @media only screen and (min-width: 1200px) {
     .main_section {
       padding: 0 10%;
-      h1 {
-        margin: 50px 0 20px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .button_wrap {
+         .button_wrap {
         margin-bottom: 25px;
         gap: 20px;
         .search_btn {
@@ -236,14 +229,6 @@
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
       padding: 0 5%;
-      h1 {
-        margin-top: 30px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-        margin-bottom: 20px;
-      }
       .button_wrap {
         margin-bottom: 25px;
         gap: 20px;
@@ -285,14 +270,6 @@
   @media only screen and (max-width: 767px) {
     .main_section {
       padding: 5%;
-      h1 {
-        margin-top: 30px;
-        text-align: center;
-        font-size: 50px;
-        font-weight: 600;
-        @include title_color;
-        margin-bottom: 20px;
-      }
       .button_wrap {
         margin-bottom: 25px;
         justify-content: center;

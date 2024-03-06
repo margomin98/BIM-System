@@ -360,19 +360,10 @@ GetAntiForgeryToken,
     }
   }
 }
-h1 {
-  text-align: center;
-  font-weight: 600;
-  @include title_color;
-}
+
 @media only screen and (min-width: 1200px) {
   .main_section {
     padding: 0 10%;
-    h1 {
-      margin-top: 30px;
-      font-size: 55px;
-      margin-bottom: 20px;
-    }
 
     .datagrid_section {
       .row {
@@ -423,11 +414,6 @@ h1 {
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
     padding: 0 5%;
-    h1 {
-      margin-top: 30px;
-      font-size: 55px;
-      margin-bottom: 20px;
-    }
     .datagrid_section {
       .row {
         gap: 10px 0;
@@ -484,11 +470,6 @@ h1 {
     }
   .main_section {
     padding: 5%;
-    h1 {
-      margin-top: 30px;
-      font-size: 50px;
-      margin-bottom: 20px;
-    }
 
     .datagrid_section {
       .row {

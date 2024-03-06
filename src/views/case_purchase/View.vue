@@ -44,12 +44,6 @@
 <style lang="scss" scoped>
     @import "@/assets/css/global.scss";
     .main_section {
-        h1 {
-            margin-top: 50px;
-            text-align: center;
-            font-weight: 600;
-            @include title_color;
-        }
     }
     .button_wrap {
         display: flex;
@@ -63,19 +57,5 @@
             }
         }
     }
-    @media only screen and (min-width: 1200px) {
-        h1 {
-            font-size: 55px;
-        }
-    }
-    @media only screen and (min-width: 768px) and (max-width: 1199px) {
-        h1 {
-            font-size: 40px;
-        }
-    }
-    @media only screen and (max-width: 767px) {
-        h1 {
-            font-size: 30px;
-        }
-    }
+
 </style>

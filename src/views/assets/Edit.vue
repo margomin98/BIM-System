@@ -50,15 +50,7 @@ onUnmounted(()=>{
 </script>
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
-.title {
-  h1 {
-    margin-top: 50px;
-    text-align: center;
-    font-size: 55px;
-    font-weight: 600;
-    color: #132238;
-  }
-}
+
 .button_wrap {
   display: flex;
   margin-top: 30px;

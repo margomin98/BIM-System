@@ -919,14 +919,6 @@ GetAntiForgeryToken
         }
       }
    
-      h1 {
-        margin-top: 80px;
-        margin-bottom: 40px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
       .info_wrap {
         margin: auto;
         width: 800px;
@@ -1064,7 +1056,6 @@ GetAntiForgeryToken
             }
             .form-control {
               height: 35px;
-              border-radius: 0;
             }
             .input-group-prepend {
               color: white;
@@ -1109,14 +1100,6 @@ GetAntiForgeryToken
         }
       }
    
-      h1 {
-        margin-top: 80px;
-        margin-bottom: 40px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
       .info_wrap {
         margin: auto;
         width: 750px;
@@ -1363,13 +1346,7 @@ GetAntiForgeryToken
         margin-left: 0 !important;
         border-radius: 5px;
       }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 40px;
-        font-weight: 600;
-        @include title_color;
-      }
+    
       .info_wrap {
         padding: 1% 5% 0;
         .fixed_info {
@@ -1396,7 +1373,6 @@ GetAntiForgeryToken
             .form-control {
               width: 100%;
               height: 35px;
-              border-radius: 0;
               margin-left: unset !important;
             }
             .input-group-prepend {
@@ -1556,7 +1532,6 @@ GetAntiForgeryToken
           .form-control {
             height: 35px;
             width: 100%;
-            border-radius: 0;
             margin-left: unset !important;
             margin-top: 5px;
           }

@@ -780,12 +780,6 @@ span {
   padding: 0 !important;
 }
 
-h1 {
-  text-align: center;
-  font-weight: 600;
-  @include title_color;
-}
-
 .readonly_box {
   @include readonly_box;
 }
@@ -1081,11 +1075,6 @@ h1 {
 
 @media only screen and (min-width: 1200px) {
   .main_section {
-    h1 {
-      margin-top: 80px;
-      margin-bottom: 40px;
-      font-size: 55px;
-    }
 
     .info_wrap {
       margin: auto;
@@ -1234,12 +1223,6 @@ h1 {
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
-    h1 {
-      margin-top: 80px;
-      margin-bottom: 40px;
-      font-size: 55px;
-    }
-
     .info_wrap {
       margin: auto;
       width: 700px;
@@ -1390,11 +1373,6 @@ h1 {
       ):not(.invalid-tooltip):not(.invalid-feedback) {
       margin-left: 0 !important;
       border-radius: 5px;
-    }
-
-    h1 {
-      margin-top: 50px;
-      font-size: 50px;
     }
 
     .info_wrap {

@@ -74,17 +74,6 @@ const submit = async () => {
 <style lang="scss" scoped>
 @import '@/assets/css/global.scss';
 
-.title {
-  h1 {
-
-    margin-top: 50px;
-    text-align: center;
-    font-size: 55px;
-    font-weight: 600;
-    color: #132238;
-  }
-}
-
 .button_wrap {
   display: flex;
   justify-content: space-between;
@@ -116,11 +105,4 @@ const submit = async () => {
     background: #878787;
   }
 }
-
-@media only screen and (max-width: 767px) {
-  .title {
-    h1 {
-      font-size: 50px;
-    }
-  }
-}</style>
+</style>

@@ -52,8 +52,8 @@ onMounted(async() => {
     DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();
     DropdownArray.value.Area = await apiStore.getArea();
     DropdownArray.value.Custodian = await apiStore.getCustodian('');
+    DropdownArray.value.ProjectCode = await apiStore.getFuzzyProject();
     await storageStore.getDetails(AI_ID, true, Store_Edit_Status, false);
-  DropdownArray.value.ProjectCode = await apiStore.getFuzzyProject();
 //   console.log(DropdownArray.value);
 });
 onUnmounted(()=>{
@@ -66,12 +66,7 @@ onUnmounted(()=>{
   
 <style lang="scss" scoped>
     @import '@/assets/css/global.scss';
-    h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-weight: 600;
-        @include title_color;
-    }
+
     .button_wrap {
         display: flex;
         justify-content: center;
@@ -96,25 +91,5 @@ onUnmounted(()=>{
             background-color: #5e7aa2;
         }
     }
-    @media only screen and (min-width: 1200px) {
-        .main_section {
-            h1 {
-                font-size: 55px;
-            }
-        }
-    }
-    @media only screen and (min-width: 768px) and (max-width: 1199px) {
-        .main_section {
-            h1 {
-                font-size: 55px;
-            }
-        }
-    }
-    @media only screen and (max-width: 767px) {
-        .main_section {
-            h1 {
-                font-size: 50px;
-            }
-        }
-    }
+
 </style>

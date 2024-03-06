@@ -134,7 +134,7 @@
                     <thead>
                         <tr>
                             <th class="edit_order"><span></span></th>
-                            <th class="check_col"><span>新增訂單</span></th>
+                            <th class="check_col"><span>訂購單號</span></th>
                             <th class="check_col"><span>採購狀態</span></th>
                             <th class="writeoff_property"><span>沖銷所選資產</span></th>
                             <th class="item_col"><span>採購項目</span></th>

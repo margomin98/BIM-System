@@ -493,13 +493,6 @@
           }
         }
       }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
       #readonly_box {
         padding: 0;
         background-color: #B4B4B4;
@@ -785,13 +778,6 @@
             content: "\26A0";
           }
         }
-      }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
       }
       #readonly_box {
         padding: 0;
@@ -1081,14 +1067,7 @@
       .readonly_box {
         @include readonly_box;
       }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 40px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .info_wrap {
+       .info_wrap {
         margin: auto;
         padding: 0 5%;
         .fixed_info {
@@ -1388,13 +1367,7 @@
           }
         }
       }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
+
       #readonly_box {
         padding: 0;
         background-color: #B4B4B4;
@@ -1700,13 +1673,6 @@
             content: "\26A0";
           }
         }
-      }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
       }
       #readonly_box {
         padding: 0;
