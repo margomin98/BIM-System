@@ -159,7 +159,6 @@ export const useStorageStore = defineStore('Storage', {
 			}
 			// console.log(this.tabData);
 			this.clear();
-			return newData.itemAssetsId;
 		},
 		// 刪除頁籤
 		deleteTabFn(index) {
