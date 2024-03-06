@@ -52,8 +52,8 @@ onMounted(async() => {
     DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();
     DropdownArray.value.Area = await apiStore.getArea();
     DropdownArray.value.Custodian = await apiStore.getCustodian('');
+    DropdownArray.value.ProjectCode = await apiStore.getFuzzyProject();
     await storageStore.getDetails(AI_ID, true, Store_Edit_Status, false);
-  DropdownArray.value.ProjectCode = await apiStore.getFuzzyProject();
 //   console.log(DropdownArray.value);
 });
 onUnmounted(()=>{
