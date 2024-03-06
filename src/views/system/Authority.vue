@@ -189,13 +189,6 @@
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
-      h1 {
-        margin-top: 180px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
       .info_wrap {
         margin: 30px auto 5%;
         width: 500px;
@@ -320,13 +313,6 @@
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
-      h1 {
-        margin-top: 180px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
       .info_wrap {
         margin: 30px auto 5%;
         width: 500px;

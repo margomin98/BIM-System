@@ -472,13 +472,6 @@
           padding: 40px 0;
         }
       }
-      h1 {
-        margin-top: 100px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
       h2 {
         margin-top: 50px;
         text-align: center;
@@ -614,13 +607,6 @@
           height: auto;
           padding: 40px 0;
         }
-      }
-      h1 {
-        margin-top: 100px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
       }
       h2 {
         margin-top: 50px;
@@ -773,13 +759,6 @@
           height: auto;
           padding: 40px;
         }
-      }
-      h1 {
-        margin-top: 80px;
-        text-align: center;
-        font-size: 40px;
-        font-weight: 600;
-        @include title_color;
       }
       h2 {
         margin-top: 50px;

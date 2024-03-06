@@ -1022,13 +1022,6 @@
         @include readonly_box;
         height: 100%;
       }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
       .info_wrap {
         margin: auto;
         width: 1000px;
@@ -1427,14 +1420,7 @@
         @include readonly_box;
         height: 100%;
       }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .info_wrap {
+        .info_wrap {
         margin: auto;
         padding: 0 5%;
         .input-group-prepend {
@@ -1834,13 +1820,6 @@
       }
       #readonly_box {
         background: #b4b4b4;
-      }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 40px;
-        font-weight: 600;
-        @include title_color;
       }
       .info_wrap {
         margin: auto;

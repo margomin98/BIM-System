@@ -411,13 +411,6 @@ import { Repair_Deliver_Status } from '@/assets/js/enter_status';
           padding: 40px 0;
         }
       }
-      h1 {
-        margin-top: 100px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
       h2 {
         margin-top: 50px;
         text-align: center;
@@ -574,13 +567,6 @@ import { Repair_Deliver_Status } from '@/assets/js/enter_status';
           height: auto;
           padding: 40px 0;
         }
-      }
-      h1 {
-        margin-top: 100px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
       }
       h2 {
         margin-top: 50px;
@@ -747,13 +733,6 @@ import { Repair_Deliver_Status } from '@/assets/js/enter_status';
           height: auto;
           padding: 40px;
         }
-      }
-      h1 {
-        margin-top: 80px;
-        text-align: center;
-        font-size: 40px;
-        font-weight: 600;
-        @include title_color;
       }
       h2 {
         margin-top: 50px;

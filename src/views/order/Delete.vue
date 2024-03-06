@@ -206,36 +206,4 @@ async function deleteData() {
     }
   }
 }
-
-h1 {
-  text-align: center;
-  font-weight: 600;
-  @include title_color;
-}
-
-@media only screen and (min-width: 1200px) {
-  .main_section {
-    h1 {
-      margin-top: 100px;
-      font-size: 55px;
-    }
-  }
-}
-
-@media only screen and (min-width: 768px) and (max-width: 1199px) {
-  .main_section {
-    h1 {
-      margin-top: 100px;
-      font-size: 55px;
-    }
-  }
-}
-
-@media only screen and (max-width: 767px) {
-  .main_section {
-    h1 {
-      margin-top: 80px;
-      font-size: 40px;
-    }
-  }
-}</style>
+</style>

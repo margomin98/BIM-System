@@ -621,7 +621,7 @@
                                             <div class="input-group-prepend check_box">
                                                 <span>*</span>入庫方式 :
                                             </div>
-                                            <div v-if="!quickprocessStore.editHidden" class="d-flex align-items-center radio_wrap">
+                                            <div v-if="!quickprocessStore.editHidden" class="d-flex align-items-center radio_wrap store_staff">
                                                 <template v-for="(item, InboundIndex) in DropdownArray.InboundWay" :key="'radio' + (InboundIndex + 1)">
                                                     <div class="form-check">
                                                         <input
@@ -636,7 +636,7 @@
                                                     </div>
                                                 </template>
                                             </div>
-                                            <div v-else-if="!quickprocessStore.createHidden" class="d-flex align-items-center radio_wrap">
+                                            <div v-else-if="!quickprocessStore.createHidden" class="d-flex align-items-center radio_wrap store_staff">
                                                 <template v-for="(item, InboundIndex) in DropdownArray.InboundWay" :key="'radio' + (InboundIndex + 1)">
                                                     <div class="form-check">
                                                         <input
@@ -1026,7 +1026,7 @@ textarea {
     }
     .content .option_section,
     .content .option_section .options-list {
-      width: 78.5%;
+      width: 100%;
     }
     .tab-content .option_section,
     .tab-content .option_section .options-list {
@@ -1245,7 +1245,7 @@ textarea {
     }
     .content .option_section,
     .content .option_section .options-list {
-      width: 80%;
+      width: 100%;
     }
     .tab-content .option_section,
     .tab-content .option_section .options-list {
@@ -1668,6 +1668,10 @@ textarea {
           font-weight: 700;
           color: white;
           font-size: 18px;
+          .store_staff{
+            flex-direction: column;
+          align-items: unset !important;
+          }
           .radio_wrap {
             gap: 0 10px;
             padding-left: 10px;

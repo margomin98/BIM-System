@@ -145,9 +145,7 @@
           white-space: nowrap;
           display: flex;
           justify-content: center;
-          font-weight: 700;
           margin-bottom: 40px;
-          text-align: center;
         }
         .form {
           margin: auto;
@@ -218,9 +216,7 @@
         h1 {
           color: #132238;
           font-size: 50px;
-          font-weight: 700;
           margin-bottom: 40px;
-          text-align: center;
         }
         .form {
           margin: auto;
@@ -287,9 +283,7 @@
         h1 {
           color: #132238;
           font-size: 40px;
-          font-weight: 700;
           margin-bottom: 20px;
-          text-align: center;
         }
         .form {
           margin: auto;

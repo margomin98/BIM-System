@@ -292,11 +292,6 @@ span {
   gap: 20px 0;
 }
 
-h1 {
-  text-align: center;
-  font-weight: 600;
-  @include title_color;
-}
 
 .readonly_box {
   @include readonly_box;
@@ -350,6 +345,7 @@ h1 {
       font-size: 20px;
     }
   }
+
   .info_wrap:nth-child(3),
   .info_wrap:nth-child(4) {
     margin-top: 3%;
@@ -395,12 +391,6 @@ h1 {
 
 @media only screen and (min-width: 1200px) {
   .main_section {
-    h1 {
-      margin-top: 80px;
-      margin-bottom: 40px;
-      font-size: 55px;
-    }
-
     .info_wrap {
       margin: auto;
       width: 700px;
@@ -478,12 +468,6 @@ h1 {
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
-    h1 {
-      margin-top: 80px;
-      margin-bottom: 40px;
-      font-size: 55px;
-    }
-
     .info_wrap {
       margin: auto;
       padding: 0 5%;
@@ -570,10 +554,6 @@ h1 {
 
 @media only screen and (max-width: 767px) {
   .main_section {
-    h1 {
-      margin-top: 50px;
-      font-size: 50px;
-    }
 
     .info_wrap {
       padding: 1% 5% 0;
@@ -623,10 +603,7 @@ h1 {
     }
 
     .info_wrap:nth-child(3) {
-      .input-group
-        > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
-          .valid-feedback
-        ):not(.invalid-tooltip):not(.invalid-feedback) {
+      .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
         margin-left: unset !important;
         border-radius: 5px;
       }
@@ -640,5 +617,4 @@ h1 {
     }
   }
 }
-
 </style>

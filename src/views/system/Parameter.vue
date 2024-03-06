@@ -833,13 +833,6 @@
       .ag-theme-alpine {
         height: 450px
       }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
       .info_wrap {
         margin: auto;
         width: 950px;
@@ -962,14 +955,7 @@
       height: 450px
     }
     .main_section {
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .info_wrap {
+            .info_wrap {
         padding: 0 5%;
         .button_wrap {
           display: flex;
@@ -1090,14 +1076,6 @@
       height: 250px !important
     }
     .main_section {
-      h1 {
-        margin-top: 50px;
-        margin-bottom: 20px;
-        text-align: center;
-        font-size: 50px;
-        font-weight: 600;
-        @include title_color;
-      }
       .info_wrap {
         padding: 0 5%;
         .button_wrap {

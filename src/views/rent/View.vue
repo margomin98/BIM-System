@@ -198,13 +198,6 @@
   }
   @media only screen and (min-width: 1200px) {
     .main_section {
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
       .info_wrap {
         margin: auto;
         width: 1000px;
@@ -293,13 +286,6 @@
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
       .info_wrap {
         margin: auto;
         padding: 0 5%;
@@ -388,13 +374,6 @@
   }
   @media only screen and (max-width: 767px) {
     .main_section {
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 40px;
-        font-weight: 600;
-        @include title_color;
-      }
       .info_wrap {
         margin: auto;
         padding: 0 5%;

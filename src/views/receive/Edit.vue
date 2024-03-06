@@ -753,14 +753,6 @@
       .readonly_box {
         @include readonly_box;
       }
-      h1 {
-        margin-top: 80px;
-        margin-bottom: 40px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
       .info_wrap {
         margin: auto;
         width: 800px;
@@ -868,16 +860,7 @@
       }
       .readonly_box {
         @include readonly_box;
-      }
-      h1 {
-        margin-top: 80px;
-        margin-bottom: 40px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .info_wrap {
+      }      .info_wrap {
         margin: auto;
         width: 650px;
         .fixed_info {
@@ -1002,15 +985,8 @@
         margin-left: 0 !important;
         border-radius: 5px;
       }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 40px;
-        font-weight: 600;
-        @include title_color;
-      }
       .info_wrap {
-        padding: 1% 5% 0;
+        padding:0 5%;
         .fixed_info {
           @include fixed_info;
           flex-direction: column;
@@ -1080,7 +1056,6 @@
           margin-left: unset !important;
           border-radius: 5px;
         }
-        margin-top: 11%
       }
     }
     .modal-dialog {

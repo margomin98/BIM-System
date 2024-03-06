@@ -342,22 +342,12 @@
   //   }
   // }
 }
-h1 {
-  text-align: center;
-  font-weight: 600;
-  @include title_color;
-}
 @media only screen and (min-width: 1200px) {
   .modal-content {
     width: 300px;
   }
   .main_section {
     padding: 0 10%;
-    h1 {
-      margin: 50px 0 20px;
-      font-size: 55px;
-    }
-
     .datagrid_section {
       .row {
         display: grid;
@@ -375,12 +365,6 @@ h1 {
   }
   .main_section {
     padding: 0 5%;
-    h1 {
-      margin-top: 30px;
-      font-size: 55px;
-      margin-bottom: 20px;
-    }
-
     .datagrid_section {
       .row {
         display: grid;
@@ -398,12 +382,7 @@ h1 {
       justify-content: center;
     }
     padding: 5%;
-    h1 {
-      margin-top: 30px;
-      font-size: 50px;
-      margin-bottom: 20px;
-    }
-
+  
     .datagrid_section {
       .row {
         display: grid;

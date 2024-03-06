@@ -446,13 +446,7 @@
       .form_search_btn {
         @include form_search_btn;
       }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
+      
       .info_wrap {
         width: 800px;
         margin: auto;
@@ -659,13 +653,6 @@
       }
       .form_search_btn {
         @include form_search_btn;
-      }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
       }
       .info_wrap {
         width: 750px;
@@ -886,13 +873,6 @@
         &:hover {
           background-color: #43546d;
         }
-      }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 50px;
-        font-weight: 600;
-        @include title_color;
       }
       .info_wrap {
         padding: 1% 5% 0;

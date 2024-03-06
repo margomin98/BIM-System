@@ -229,13 +229,6 @@ reactive,
       .ag-theme-alpine {
         height: 450px
       }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
       .info_wrap {
         padding: 1% 20% 0;
         .button_wrap {
@@ -396,13 +389,6 @@ reactive,
       height: 450px
     }
     .main_section {
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
       .info_wrap {
         padding: 0 5%;
         .button_wrap {
@@ -563,14 +549,6 @@ reactive,
       height: 250px !important
     }
     .main_section {
-      h1 {
-        margin-top: 50px;
-        margin-bottom: 20px;
-        text-align: center;
-        font-size: 50px;
-        font-weight: 600;
-        @include title_color;
-      }
       .info_wrap {
         padding: 0 5%;
         .button_wrap {

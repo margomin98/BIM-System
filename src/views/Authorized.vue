@@ -25,9 +25,6 @@
     .main_section {
       h1 {
         margin-top: 150px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
         color: #c92626
       }
     }
@@ -36,9 +33,6 @@
     .main_section {
       h1 {
         margin-top: 150px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
         color: #c92626
       }
     }
@@ -47,10 +41,7 @@
     .main_section {
       h1 {
         padding: 0 5%;
-        margin-top: 80px;
-        text-align: center;
         font-size: 40px;
-        font-weight: 600;
         color: #c92626
       }
     }

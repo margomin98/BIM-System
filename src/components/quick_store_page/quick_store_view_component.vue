@@ -316,7 +316,7 @@
                                             <div class="input-group-prepend check_box">
                                                 入庫方式 :
                                             </div>
-                                            <div class="d-flex align-items-center radio_wrap">
+                                            <div class="d-flex align-items-center radio_wrap store_staff">
                                                 <template v-for="(item, InboundIndex) in DropdownArray.InboundWay" :key="'radio' + (InboundIndex + 1)">
                                                     <div class="form-check">
                                                         <input
@@ -1150,7 +1150,7 @@ textarea {
         }
       }
     }
-    .form-select {
+    .form-select,.dropdown {
       width: 100%;
     }
     .form_search_btn {
@@ -1315,6 +1315,11 @@ textarea {
         background: #3e4e5f;
         padding: 50px 30px;
         position: relative;
+        .store_staff {
+            flex-direction: column;
+            align-items: unset !important;
+          }
+
         .selected_file {
           display: flex;
           align-items: center;

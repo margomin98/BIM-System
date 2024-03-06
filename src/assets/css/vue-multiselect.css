@@ -468,3 +468,9 @@ fieldset[disabled] .multiselect {
     transform: rotate(2turn);
   }
 }
+
+@media only screen and (max-width: 767px) {
+  .multiselect__single{
+    white-space:unset;
+  }
+}

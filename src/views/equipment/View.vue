@@ -215,11 +215,6 @@ span {
   @include readonly_box;
 }
 
-h1 {
-  text-align: center;
-  font-weight: 600;
-  @include title_color;
-}
 
 .main_section {
   .fixed_info {
@@ -302,13 +297,6 @@ h1 {
 
 @media only screen and (min-width: 1200px) {
   .main_section {
-
-
-    h1 {
-      margin-top: 80px;
-      margin-bottom: 40px;
-      font-size: 55px;
-    }
 
     .info_wrap {
       margin: auto;
@@ -402,12 +390,6 @@ h1 {
   .main_section {
 
 
-    h1 {
-      margin-top: 80px;
-      margin-bottom: 40px;
-      font-size: 55px;
-    }
-
     .info_wrap {
       margin: auto;
       padding: 0 5%;
@@ -481,12 +463,6 @@ h1 {
 
 @media only screen and (max-width: 767px) {
   .main_section {
-
-
-    h1 {
-      margin-top: 50px;
-      font-size: 50px;
-    }
 
     .info_wrap {
       padding: 1% 5% 0;

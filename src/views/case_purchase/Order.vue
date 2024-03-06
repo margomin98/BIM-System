@@ -409,12 +409,6 @@ onUnmounted(() => {
         }
     }
 
-    h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-weight: 600;
-        @include title_color;
-    }
 
     .readonly_box {
         @include readonly_box;
@@ -553,10 +547,7 @@ onUnmounted(() => {
 
 @media only screen and (min-width: 1200px) {
     .main_section {
-        h1 {
-            font-size: 55px;
-        }
-
+  
         .info_wrap {
             margin: auto;
             width: 850px;
@@ -587,9 +578,6 @@ onUnmounted(() => {
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
-        h1 {
-            font-size: 55px;
-        }
 
         .info_wrap {
             margin: auto;
@@ -621,10 +609,6 @@ onUnmounted(() => {
 
 @media only screen and (max-width: 767px) {
     .main_section {
-        h1 {
-            font-size: 50px;
-        }
-
         .fixed_info {
             flex-direction: column;
             height: unset;

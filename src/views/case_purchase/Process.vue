@@ -778,12 +778,6 @@ const addToList = (data) => {
         }
     }
 
-    h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-weight: 600;
-        @include title_color;
-    }
 
     .auth_btn {
         @include auth_btn;
@@ -927,9 +921,7 @@ const addToList = (data) => {
     }
 
     .main_section {
-        h1 {
-            font-size: 55px;
-        }
+    
 
         .info_wrap {
             margin: auto;
@@ -963,9 +955,7 @@ const addToList = (data) => {
     }
 
     .main_section {
-        h1 {
-            font-size: 55px;
-        }
+   
 
         .info_wrap {
             margin: auto;
@@ -1015,10 +1005,7 @@ const addToList = (data) => {
     }
 
     .main_section {
-        h1 {
-            font-size: 50px;
-        }
-
+   
         .fixed_info {
             flex-direction: column;
             height: unset;

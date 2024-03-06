@@ -641,12 +641,6 @@ span {
   gap: 20px 0;
 }
 
-h1 {
-  text-align: center;
-  font-weight: 600;
-  @include title_color;
-}
-
 .main_section {
   .fixed_info {
     @include fixed_info;
@@ -916,13 +910,7 @@ border-top:1px solid black;
 }
 @media only screen and (min-width: 1200px) {
   .main_section {
-    h1 {
-      margin-top: 80px;
-      margin-bottom: 40px;
-      font-size: 55px;
-    }
-
-    .info_wrap {
+        .info_wrap {
       margin: auto;
       width: 700px;
 
@@ -1033,12 +1021,6 @@ border-top:1px solid black;
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
-    h1 {
-      margin-top: 80px;
-      margin-bottom: 40px;
-      font-size: 55px;
-    }
-
     .info_wrap {
       margin: auto;
       padding: 0 5%;
@@ -1147,10 +1129,6 @@ border-top:1px solid black;
 
 @media only screen and (max-width: 767px) {
   .main_section {
-    h1 {
-      margin-top: 50px;
-      font-size: 50px;
-    }
 
     .info_wrap {
       padding: 1% 5% 0;

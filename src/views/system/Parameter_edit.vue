@@ -97,13 +97,6 @@
       .ag-theme-alpine {
         height: 450px
       }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
       .info_wrap {
         padding: 1% 20% 0;
         .fixed_info {
@@ -191,13 +184,6 @@
       .ag-theme-alpine {
         height: 450px
       }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
-      }
       .info_wrap {
         padding: 1% 5% 0;
         .fixed_info {
@@ -281,13 +267,6 @@
     .main_section {
       .ag-theme-alpine {
         height: 450px
-      }
-      h1 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-        @include title_color;
       }
       .info_wrap {
         padding: 1% 5% 0;
