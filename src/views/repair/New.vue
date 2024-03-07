@@ -398,6 +398,31 @@ GetAntiForgeryToken,
       justify-content: center;
     }
   }
+  
+  .button_wrap {
+          display: flex;
+          justify-content: space-between;
+          margin: 30px auto 5%;
+          width: 210px;
+            .back_btn {
+              @include back_to_previous_btn;
+              &:hover {
+                background-color: #5d85bb;
+              }
+            }
+          }
+          .send_btn {
+            @include search_and_send_btn;
+            &:hover {
+              background-color: #5e7aa2;
+            }
+          }
+          .send_btn_disabled {
+            background: #878787;
+            &:hover {
+              background: #878787;
+            }
+        }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .readonly_box {
@@ -479,32 +504,6 @@ GetAntiForgeryToken,
                   color: white;
                 }
               }
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          justify-content: space-between;
-          margin: 30px auto 5%;
-          width: 220px;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-          }
-          .send_btn {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
-          .send_btn_disabled {
-            background: #878787;
-            &:hover {
-              background: #878787;
             }
           }
         }
@@ -597,32 +596,6 @@ GetAntiForgeryToken,
             }
           }
         }
-        .button_wrap {
-          display: flex;
-          justify-content: space-between;
-          margin: 30px auto 5%;
-          width: 220px;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-          }
-          .send_btn {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
-          .send_btn_disabled {
-            background: #878787;
-            &:hover {
-              background: #878787;
-            }
-          }
-        }
       }
     }
   }
@@ -693,6 +666,7 @@ GetAntiForgeryToken,
               display: flex;
               flex-direction: column;
               margin-left: unset !important;
+              margin-top: 5px;
               .choose_btn {
                 margin-bottom: 10px;
                 @include choose_file_btn;
@@ -724,37 +698,6 @@ GetAntiForgeryToken,
                   color: white;
                 }
               }
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          justify-content: space-between;
-          margin: 30px auto 5%;
-          width: 190px;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              width: 100px;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-          }
-          .send_btn {
-            @include search_and_send_btn;
-            width: 70px;
-            padding: 5px;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
-          .send_btn_disabled {
-            background: #878787;
-            width: 70px;
-            padding: 5px;
-            &:hover {
-              background: #878787;
             }
           }
         }

@@ -1,20 +1,20 @@
 <template>
   <div class="item" :class="{ 'failed_storage': AssetData.Failed }">
     <div class="col" v-if="edit_btn">
-      <button class="change_btn" data-bs-toggle="modal" data-bs-target="#searchModal" @click="editBtn" >更換</button>
+      <button class="change_btn" data-bs-toggle="modal" data-bs-target="#searchModal" @click="editBtn">更換</button>
     </div>
     <div class="col">
       <div class="input-group mb-3">
         <div class="input-group-prepend">資產編號：</div>
-        <input type="text" class="form-control readonly_box " aria-label="Default" aria-describedby="inputGroup-sizing-default"
-          v-model="AssetData.AssetsId"  readonly/>
+        <input type="text" class="form-control readonly_box " aria-label="Default"
+          aria-describedby="inputGroup-sizing-default" v-model="AssetData.AssetsId" readonly />
       </div>
     </div>
     <div class="col">
       <div class="input-group mb-3">
         <div class="input-group-prepend">物品名稱：</div>
-        <input type="text" class="form-control readonly_box " aria-label="Default" aria-describedby="inputGroup-sizing-default"
-          v-model="AssetData.AssetName"  readonly/>
+        <input type="text" class="form-control readonly_box " aria-label="Default"
+          aria-describedby="inputGroup-sizing-default" v-model="AssetData.AssetName" readonly />
       </div>
     </div>
     <div class="col count d-flex">
@@ -22,7 +22,7 @@
         <div class="input-group-prepend">數量：</div>
         <div class="num_wrap d-flex ">
           <div class="number-input-box">
-            <input class="input-number readonly_box " type="text" v-model="AssetData.Number"  readonly/>
+            <input class="input-number readonly_box " type="text" v-model="AssetData.Number" readonly />
           </div>
           <div class="btn_section" v-if="delete_btn">
             <button class="delete_btn" @click="deleteBtn">刪除</button>
@@ -42,7 +42,7 @@ export default {
     failed: Boolean,
     AssetData: null,
   },
-  setup(props, {emit}) {
+  setup(props, { emit }) {
     function editBtn() {
       emit('editAction', props.AssetData)
     }
@@ -59,6 +59,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
+
 .main_section {
   .btn_section {
     display: flex;
@@ -66,6 +67,7 @@ export default {
     margin-left: 10px;
   }
 }
+
 .item_wrap {
   .item {
     background-color: #526f8e;
@@ -73,13 +75,15 @@ export default {
     padding: 20px;
     height: fit-content;
   }
+
   .failed_storage {
     background-color: #8a2828 !important;
     border: 1px solid white;
   }
 }
+
 .delete_btn {
-  @include delete_button;
+  @include content_delete_button;
 }
 
 .change_btn {
@@ -89,6 +93,7 @@ export default {
 .input-number {
   @include count_btn;
 }
+
 .input-group-prepend {
   white-space: nowrap;
   color: white;
@@ -97,6 +102,7 @@ export default {
   width: 100px;
   text-align: end;
 }
+
 .readonly_box {
   @include readonly_box;
 }
@@ -110,19 +116,16 @@ export default {
         }
 
         flex-direction: column;
+
         input,
         .number-input-box {
           width: 100%;
         }
       }
-      .input-group
-        > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
-          .valid-feedback
-        ):not(.invalid-tooltip):not(.invalid-feedback) {
+
+      .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
         margin-left: unset;
       }
     }
   }
-}
-
-</style>
+}</style>

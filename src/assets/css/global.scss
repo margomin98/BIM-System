@@ -60,7 +60,7 @@
     border: none;
 }
 
-@mixin delete_button {
+@mixin content_delete_button {
     border: none;
     border-radius: 7px;
     background: var(--c-5, #E94B4B);
@@ -211,6 +211,22 @@
 @mixin search_and_send_btn {
     border-radius: 10px;
     background: var(--c-4, #132238);
+    color: white;
+    height: 40px;
+    width: 90px;
+    color: #FFF;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    border: none;
+    display: flex;
+    padding: 10px 25px;
+    justify-content: center;
+    align-items: center;
+}
+@mixin delete_btn {
+    border-radius: 10px;
+    background: var(--c-4, #E94B4B);
     color: white;
     height: 40px;
     width: 90px;

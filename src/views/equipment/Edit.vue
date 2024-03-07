@@ -91,7 +91,7 @@
         </div>
       </div>
     </div>
-    <div class="info_wrap col">
+    <div class="info_wrap col mt-5">
       <div class="fixed_info">
         <div>
           <p><span>*</span>整合箱內容物(請至少新增一項)</p>
@@ -758,19 +758,13 @@ span {
     }
   }
 
-  .info_wrap:nth-child(3) {
-    margin-top: 3%;
-  }
 }
 
 .button_wrap {
   display: flex;
-  margin-top: 30px;
-  justify-content: center;
-  padding: 0 28%;
-  margin-bottom: 5%;
-  gap: 20px;
-
+            justify-content: space-between;
+            margin: 30px auto 5%;
+            width: 210px;
   button.back_btn {
     @include back_to_previous_btn;
 
@@ -1285,8 +1279,5 @@ p{
         }
       }
     }
-  }
-  .button_wrap{
-    padding: 0;
   }
 }</style>

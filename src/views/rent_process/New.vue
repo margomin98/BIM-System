@@ -1,7 +1,8 @@
 <template>
   <Navbar />
   <!-- Modal視窗 -->
-  <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-body">
@@ -10,19 +11,21 @@
               <p>檢索資產</p>
             </div>
             <button type="button" class="close" data-bs-dismiss="modal">
-                    x
-                  </button>
+              x
+            </button>
           </div>
           <div class="second_content">
             <div class="wrap1">
               <div class="col">
                 <p class="search_label">設備總類</p>
                 <div class="dropdown">
-                  <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                          {{ searchParams.EquipTypeName || '請選擇' }}
-                        </button>
+                  <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
+                    {{ searchParams.EquipTypeName || '請選擇' }}
+                  </button>
                   <div class="dropdown-menu" aria-labelledby="typeDropdown">
-                    <p v-for="(item, index) in searchParams.EquipTypeArray" :key="index" class="dropdown-item" @click="selectType(item)">
+                    <p v-for="(item, index) in searchParams.EquipTypeArray" :key="index" class="dropdown-item"
+                      @click="selectType(item)">
                       {{ item.Name }}
                     </p>
                   </div>
@@ -31,11 +34,14 @@
               <div class="col">
                 <p class="search_label">設備分類</p>
                 <div class="dropdown">
-                  <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
-                          {{ searchParams.EquipCategoryName || searchParams.EquipCategoryInit }}
-                        </button>
+                  <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"
+                    :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
+                    {{ searchParams.EquipCategoryName || searchParams.EquipCategoryInit }}
+                  </button>
                   <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                    <p v-for="(item, index) in searchParams.EquipCategoryArray" :key="index" class="dropdown-item" @click="selectCategory(item)">
+                    <p v-for="(item, index) in searchParams.EquipCategoryArray" :key="index" class="dropdown-item"
+                      @click="selectCategory(item)">
                       {{ item.Name }}
                     </p>
                   </div>
@@ -44,7 +50,8 @@
               <div class="col">
                 <p class="search_label">物品名稱</p>
                 <div class="number-input-box">
-                  <input class="form-control" type="text" v-model="searchParams.ProductName" :placeholder="searchPlaceholder" />
+                  <input class="form-control" type="text" v-model="searchParams.ProductName"
+                    :placeholder="searchPlaceholder" />
                 </div>
               </div>
               <div class="col">
@@ -56,86 +63,61 @@
               <div class="col">
                 <p class="search_label">
                   已選/所需 數量
-                  <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘" />
+                  <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="資產數量 ex: 3包螺絲釘" />
                 </p>
                 <div class="number-input-box">
-                  <input class="input-number readonly_box" readonly :value="searchParams.selectedNumber + ' / ' + searchParams.Number">
+                  <input class="input-number readonly_box" readonly
+                    :value="searchParams.selectedNumber + ' / ' + searchParams.Number">
                 </div>
               </div>
             </div>
             <div class="row g-0">
               <div class="col-12 d-flex wrap2">
-                <label for="inputTextarea" class="form-label"><p class="search_label">規格需求：</p></label
-                      >
-                      <div></div>
-                      <textarea
-                        class="form-control readonly_box"
-                        id="inputTextarea"
-                        rows="3"
-                        readonly
-                        >{{ searchParams.RequiredSpec }}</textarea
-                      >
-                    </div>
-                  </div>
-                  <div class="col d-flex justify-content-center">
-                    <button
-                      class="btn submit_btn"
-                      type="button"
-                      @click="searchInventory('','search');"
-                    >
-                      搜尋庫存
-                    </button>
-                  </div>
-                </div>
-                <div class="fixed_info">
-                  <div>
-                    <p>目前資產庫存（請優先選擇存貨）</p>
-                  </div>
-                </div>
-                <DataTable
-                  lazy
-                  :key="datagrid3.key"
-                  :first="datagrid3.first"
-                  :size="'small'"
-                  :loading="datagrid3.loading"
-                  :value="rowData3"
-                  :sort-field="datagrid3.sortField"
-                  :sort-order="datagrid3.sortOrder"
-                  resizableColumns
-                  columnResizeMode="expand"
-                  showGridlines
-                  scrollable
-                  scrollHeight="420px"
-                  @page="searchInventory($event , 'page')"
-                  @sort="searchInventory($event , 'sort')"
-                  paginator
-                  :rows="datagrid3.rows"
-                  :totalRecords="datagrid3.totalRecords"
-                  paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-                  currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}"
-                >
-                <Column style="min-width: 60px">
-                  <template #body="slotProps">
-                    <AssetsView :params="slotProps" />
-</template>
+                <label for="inputTextarea" class="form-label">
+                  <p class="search_label">規格需求：</p>
+                </label>
+                <div></div>
+                <textarea class="form-control readonly_box" id="inputTextarea" rows="3"
+                  readonly>{{ searchParams.RequiredSpec }}</textarea>
+              </div>
+            </div>
+            <div class="col d-flex justify-content-center">
+              <button class="btn submit_btn" type="button" @click="searchInventory('', 'search');">
+                搜尋庫存
+              </button>
+            </div>
+          </div>
+          <div class="fixed_info">
+            <div>
+              <p>目前資產庫存（請優先選擇存貨）</p>
+            </div>
+          </div>
+          <DataTable lazy :key="datagrid3.key" :first="datagrid3.first" :size="'small'" :loading="datagrid3.loading"
+            :value="rowData3" :sort-field="datagrid3.sortField" :sort-order="datagrid3.sortOrder" resizableColumns
+            columnResizeMode="expand" showGridlines scrollable scrollHeight="420px"
+            @page="searchInventory($event, 'page')" @sort="searchInventory($event, 'sort')" paginator
+            :rows="datagrid3.rows" :totalRecords="datagrid3.totalRecords"
+            paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+            currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+            <Column style="min-width: 60px">
+              <template #body="slotProps">
+                <AssetsView :params="slotProps" />
+              </template>
             </Column>
             <Column style="min-width: 60px" header="選擇">
-<template #body="slotProps">
-  <Storage_add :params="slotProps" :selectedNumber="searchParams.selectedNumber" :Number="searchParams.Number" @addMaterial="addMaterial" />
-</template>
+              <template #body="slotProps">
+                <Storage_add :params="slotProps" :selectedNumber="searchParams.selectedNumber"
+                  :Number="searchParams.Number" @addMaterial="addMaterial" />
+              </template>
             </Column>
             <Column style="min-width: 80px" header="數量">
-<template #body="slotProps">
-  <Storage_number :params="slotProps" />
-</template>
+              <template #body="slotProps">
+                <Storage_number :params="slotProps" />
+              </template>
             </Column>
-            <Column
-              v-for="item in datagrid3field"
-              :field="item.field"
-              :header="item.header"
-              sortable
-              :style="{'min-width': item.width}"
-            ></Column>
+            <Column v-for="item in datagrid3field" :field="item.field" :header="item.header" sortable
+              :style="{ 'min-width': item.width }"></Column>
           </DataTable>
         </div>
       </div>
@@ -148,41 +130,27 @@
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
-          <p>單號：{{ details.AO_ID}}</p>
+          <p>單號：{{ details.AO_ID }}</p>
         </div>
         <div>
-          <p>申請人員：{{ details.Applicant}}</p>
+          <p>申請人員：{{ details.Applicant }}</p>
         </div>
         <div>
-          <p>申請日期：{{ details.ApplicationDate}}</p>
+          <p>申請日期：{{ details.ApplicationDate }}</p>
         </div>
       </div>
       <form>
         <div class="row g-0">
           <div class="col d-flex wrap column_section">
-            <label for="inputTitle1" class="form-label use"
-              ><p>用&ensp;&ensp;&ensp;&ensp;途</p></label
-            >
+            <label for="inputTitle1" class="form-label use">
+              <p>用&ensp;&ensp;&ensp;&ensp;途</p>
+            </label>
             <div class="option">
               <div class="content">
-                <div
-                  class="form-check"
-                  v-for="(option, index) in options"
-                  :key="index"
-                >
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    :value="option"
-                    :id="'radio' + (index + 1)"
-                    v-model="details.Use"
-                    :disabled="option !== details.Use && details.Use !== ''"
-                  />
-                  <label
-                    class="form-check-label"
-                    :for="'radio' + (index + 1)"
-                    >{{ option }}</label
-                  >
+                <div class="form-check" v-for="(option, index) in options" :key="index">
+                  <input class="form-check-input" type="radio" :value="option" :id="'radio' + (index + 1)"
+                    v-model="details.Use" :disabled="option !== details.Use && details.Use !== ''" />
+                  <label class="form-check-label" :for="'radio' + (index + 1)">{{ option }}</label>
                 </div>
               </div>
             </div>
@@ -190,26 +158,27 @@
         </div>
         <div class="row g-0 project_details">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithButton" class="form-label"
-              ><p>專案代碼</p></label
-            >
+            <label for="inputWithButton" class="form-label">
+              <p>專案代碼</p>
+            </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>{{ details.ProjectCode }}</p>
             </div>
           </div>
           <div class="col d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name" id="project_name"
-              ><p>專案名稱</p></label
-            >
+            <label for="inputWithTitle" class="form-label project_name" id="project_name">
+              <p>專案名稱</p>
+            </label>
             <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly>{{ details.ProjectName}}</p>
+              <p class="readonly_box" readonly>{{ details.ProjectName }}</p>
             </div>
           </div>
         </div>
         <div class="row g-0">
           <div class="col d-flex wrap" style="border: none">
-            <label for="inputTextarea" class="form-label"
-              ><p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p></label>
+            <label for="inputTextarea" class="form-label">
+              <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
+            </label>
             <div class="input-group" id="readonly_box">
               <textarea class="form-control readonly_box" readonly v-model="details.Description"></textarea>
             </div>
@@ -222,27 +191,15 @@
             <p>資產出庫項目</p>
           </div>
         </div>
-        <DataTable
-          :size="'small'"
-          :value="rowData1"
-          resizableColumns
-          columnResizeMode="expand"
-          showGridlines
-          scrollable
-          scroll-height="600px"
-        >
+        <DataTable :size="'small'" :value="rowData1" resizableColumns columnResizeMode="expand" showGridlines scrollable
+          scroll-height="600px">
           <Column>
-<template style="min-width: 115px" #body="slotProps">
-  <Storage_button :params="slotProps" @searchList="searchList" />
-</template>
+            <template style="min-width: 115px" #body="slotProps">
+              <Storage_button :params="slotProps" @searchList="searchList" />
+            </template>
           </Column>
-          <Column
-            v-for="item in datagrid1field"
-            :field="item.field"
-            :header="item.header"
-            sortable
-            :style="{'min-width': item.width}"
-          ></Column>
+          <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable
+            :style="{ 'min-width': item.width }"></Column>
         </DataTable>
       </div>
 
@@ -253,40 +210,28 @@
             <p>資產出庫細項</p>
           </div>
         </div>
-        <DataTable
-          :size="'small'"
-          :value="rowData2"
-          resizableColumns
-          columnResizeMode="expand"
-          showGridlines
-          scrollable
-          scroll-height="600px"
-        >
+        <DataTable :size="'small'" :value="rowData2" resizableColumns columnResizeMode="expand" showGridlines scrollable
+          scroll-height="600px">
           <Column>
-<template style="min-width: 50px" #body="slotProps">
-  <Delete :params="slotProps" @deleteMaterial="deleteMaterial" />
-</template>
+            <template style="min-width: 50px" #body="slotProps">
+              <Delete :params="slotProps" @deleteMaterial="deleteMaterial" />
+            </template>
           </Column>
           <Column>
-<template #body="slotProps">
-  <AssetsView :params="slotProps" />
-</template>
+            <template #body="slotProps">
+              <AssetsView :params="slotProps" />
+            </template>
           </Column>
-          <Column
-            v-for="item in datagrid2field"
-            :field="item.field"
-            :header="item.header"
-            :sortable="item.sortable"
-            :style="{'min-width': item.width}"
-          ></Column>
+          <Column v-for="item in datagrid2field" :field="item.field" :header="item.header" :sortable="item.sortable"
+            :style="{ 'min-width': item.width }"></Column>
         </DataTable>
       </div>
       <div class="fixed_info_count">
         <div>
-          <p>總出庫數量：{{ totalNeed}}個</p>
+          <p>總出庫數量：{{ totalNeed }}個</p>
         </div>
         <div>
-          <p>已備數量：{{ totalSelect}}個</p>
+          <p>已備數量：{{ totalSelect }}個</p>
         </div>
       </div>
       <div class="fourth_content">
@@ -297,46 +242,29 @@
         </div>
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithButton" class="form-label"
-              ><p>備料人員</p></label
-            >
+            <label for="inputWithButton" class="form-label">
+              <p>備料人員</p>
+            </label>
             <div class="input-group">
-              <input
-                type="text"
-                class="form-control readonly_box"
-                id="inputWithButton"
-                readonly
-                v-model="PreparedPerson"
-              />
+              <input type="text" class="form-control readonly_box" id="inputWithButton" readonly
+                v-model="PreparedPerson" />
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name"
-              ><p>備料完成日期</p></label
-            >
+            <label for="inputWithTitle" class="form-label project_name">
+              <p>備料完成日期</p>
+            </label>
             <div class="input-group">
-              <input
-                type="text"
-                class="form-control readonly_box"
-                id="inputWithTitle"
-                readonly
-                v-model="PreparedDate"
-              />
+              <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly v-model="PreparedDate" />
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name"
-              ><p>備料備註</p></label
-            >
+            <label for="inputWithTitle" class="form-label project_name">
+              <p>備料備註</p>
+            </label>
             <div class="input-group">
-              <textarea
-                placeholder="最多輸入100字"
-                class="form-control"
-                id="inputTextarea"
-                style="height: 100%"
-                rows="1"
-                v-model="details.PrepareMemo"
-              ></textarea>
+              <textarea placeholder="最多輸入100字" class="form-control" id="inputTextarea" style="height: 100%" rows="1"
+                v-model="details.PrepareMemo"></textarea>
             </div>
           </div>
         </div>
@@ -344,11 +272,7 @@
     </div>
     <div class="col button_wrap">
       <button class="back_btn" @click="goBack">回上一頁</button>
-      <button
-        class="send_btn"
-        data-bs-toggle="modal"
-        data-bs-target="#confirmModal"
-      >
+      <button class="send_btn" data-bs-toggle="modal" data-bs-target="#confirmModal">
         送出
       </button>
     </div>
@@ -360,19 +284,10 @@
             按下確認後將無法再次進行備料作業，請確認資產出庫細項是否備料正確
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               取消
             </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-dismiss="modal"
-              @click="submit"
-            >
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="submit">
               確認
             </button>
           </div>
@@ -855,107 +770,274 @@ GetAntiForgeryToken
 </script>
 
 <style lang="scss" scoped>
-  @import "@/assets/css/global.scss";
-  .readonly_box {
-    @include readonly_box;
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    display: flex;
-    align-items: center;
+@import "@/assets/css/global.scss";
+
+.readonly_box {
+  @include readonly_box;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.input-group {
+  height: 100%;
+}
+
+#confirmModal {
+  .modal-content {
+    border-radius: 0;
+    border: 1px solid black;
+
+    .modal-body {
+      background: #528091;
+      color: white;
+      font-weight: 700;
+      text-align: center;
+      padding: 20px 10px;
+      border-bottom: 1px solid black;
+    }
+
+    .modal-footer {
+      padding: 10px;
+      gap: 5px;
+      background: white;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      border-radius: 0;
+
+      button:nth-child(1) {
+        font-weight: 700;
+        border: none;
+
+        &:hover {
+          background: #636260;
+        }
+      }
+
+      button:nth-child(2) {
+        background: #132238;
+        font-weight: 700;
+        border: none;
+
+        &:hover {
+          background: #426497;
+        }
+      }
+    }
   }
-  .input-group {
-    height: 100%;
+}
+
+.project_details #project_name {
+  height: 100%;
+}
+
+.dropdown-toggle {
+  padding: 5px 10px;
+  height: 35px;
+}
+.button_wrap {
+      display: flex;
+      justify-content: space-between;
+      margin: 30px auto 5%;
+      width: 210px;
+      .back_btn {
+  @include back_to_previous_btn;
+
+  &:hover {
+    background-color: #5d85bb;
   }
-  #confirmModal {
+}
+
+.send_btn {
+  @include search_and_send_btn;
+
+  &:hover {
+    background-color: #5D85BD;
+  }
+}
+    }
+
+@media only screen and (min-width: 1200px) {
+  .modal {
+    padding: 0 5%;
+
     .modal-content {
+      background-color: unset;
+      border: 0;
+    }
+
+    .confirm_modal .modal-content {
+      width: 300px;
+    }
+
+    .fixed_info {
+      @include fixed_info;
+      background: #528091;
       border-radius: 0;
       border: 1px solid black;
-      .modal-body {
-        background: #528091;
+      border-bottom: unset !important;
+      padding: 0 10px;
+
+      div {
+        flex-grow: 1;
+        text-align: center;
+      }
+
+      p {
+        font-size: 20px;
+        margin-bottom: 0 !important;
+      }
+
+      button {
+        border: none;
+        background: none;
         color: white;
         font-weight: 700;
-        text-align: center;
-        padding: 20px 10px;
-        border-bottom: 1px solid black;
+        font-size: 22px;
       }
-      .modal-footer {
-        padding: 10px;
-        gap: 5px;
-        background: white;
-        width: 100%;
+    }
+
+    .list {
+      border-left: 1px solid black;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
+    }
+
+    .second_content {
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+      border-top: 1px solid black;
+      background: #D9D9D9;
+
+      .submit_btn {
+        margin-bottom: 20px;
+        background: #48658C;
+        color: white;
+        font-weight: 700;
+        width: 100px;
+        font-size: 18px;
+        height: 30px;
         display: flex;
         justify-content: center;
-        border-radius: 0;
-        button:nth-child(1) {
-          font-weight: 700;
-          border: none;
-          &:hover {
-            background: #636260;
+        align-items: center;
+
+        &:hover {
+          background-color: #5d85bd;
+        }
+      }
+
+      .wrap2 {
+        display: flex;
+        justify-content: space-evenly;
+      }
+
+      .wrap1,
+      .wrap2 {
+        padding: 10px 80px;
+
+        .input-number {
+          @include count_btn;
+        }
+
+        .number-input-box {
+          color: black;
+
+          .input-number {
+            width: 100%;
           }
         }
-        button:nth-child(2) {
-          background: #132238;
-          font-weight: 700;
-          border: none;
-          &:hover {
-            background: #426497;
+
+        .form-label {
+          white-space: nowrap;
+          font-weight: 800;
+          font-size: 18px;
+        }
+
+        .dropdown {
+          button {
+            background: white;
+            width: 100%;
+            border: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+
+          .dropdown-menu {
+            width: 100%;
+            max-height: 250px;
+            overflow-y: auto;
+
+            p {
+              font-size: 18px;
+              color: black;
+              font-weight: normal;
+
+              &:hover {
+                cursor: pointer;
+              }
+            }
+
+            .dropdown-item {
+              text-align: left;
+            }
+          }
+        }
+
+        div {
+
+          p {
+            text-align: center;
+            white-space: nowrap;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 5px;
           }
         }
       }
     }
   }
-  .project_details #project_name {
-    height: 100%;
-  }
-  .dropdown-toggle {
-  padding:5px 10px;
-  height: 35px;
-  }
-  @media only screen and (min-width: 1200px) {
-    .modal {
-      padding: 0 5%;
-      .modal-content {
-        background-color: unset;
-        border: 0;
+
+  .main_section {
+    .readonly_box {
+      @include readonly_box;
+      height: 100%;
+    }
+
+    .info_wrap {
+      margin: auto;
+      width: 1000px;
+
+      .input-group-prepend {
+        width: 100% !important;
+        text-align: center !important;
       }
-      .confirm_modal .modal-content {
-        width: 300px;
-      }
+
       .fixed_info {
         @include fixed_info;
         background: #528091;
         border-radius: 0;
-        border: 1px solid black;
-        border-bottom: unset !important;
-        padding: 0 10px;
-        div {
-          flex-grow: 1;
-          text-align: center;
-        }
+        border-top: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+
         p {
           font-size: 20px;
-          margin-bottom: 0 !important;
-        }
-        button {
-          border: none;
-          background: none;
-          color: white;
-          font-weight: 700;
-          font-size: 22px;
-          align-self: start;
+          margin-bottom: 0;
         }
       }
-      .list {
-        border-left: 1px solid black;
-        border-bottom: 1px solid black;
-        border-right: 1px solid black;
+
+      #readonly_box {
+        background-color: #b4b4b4;
+        border-left: black 1px solid;
       }
+
       .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        border-top: 1px solid black;
         background: #D9D9D9;
+
         .submit_btn {
           margin-bottom: 20px;
           background: #48658C;
@@ -967,31 +1049,36 @@ GetAntiForgeryToken
           display: flex;
           justify-content: center;
           align-items: center;
+
           &:hover {
             background-color: #5d85bd;
           }
         }
+
+        .wrap1,
         .wrap2 {
           display: flex;
           justify-content: space-evenly;
-        }
-        .wrap1,
-        .wrap2 {
           padding: 10px 80px;
+
           .input-number {
             @include count_btn;
           }
+
           .number-input-box {
             color: black;
+
             .input-number {
               width: 100%;
             }
           }
+
           .form-label {
             white-space: nowrap;
             font-weight: 800;
             font-size: 18px;
           }
+
           .dropdown {
             button {
               background: white;
@@ -1001,25 +1088,31 @@ GetAntiForgeryToken
               justify-content: space-between;
               align-items: center;
             }
+
             .dropdown-menu {
-              width: 100%;
+              width: 225px;
               max-height: 250px;
               overflow-y: auto;
+
               p {
                 font-size: 18px;
                 color: black;
                 font-weight: normal;
+
                 &:hover {
                   cursor: pointer;
                 }
               }
+
               .dropdown-item {
                 text-align: left;
               }
             }
           }
+
           div {
-          
+            padding: 0 5px;
+
             p {
               text-align: center;
               white-space: nowrap;
@@ -1030,331 +1123,373 @@ GetAntiForgeryToken
           }
         }
       }
-    }
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
-        height: 100%;
-      }
-      .info_wrap {
-        margin: auto;
-        width: 1000px;
-        .input-group-prepend {
-          width: 100% !important;
-          text-align: center !important;
-        }
+
+      .third_content {
         .fixed_info {
-          @include fixed_info;
-          background: #528091;
-          border-radius: 0;
+          border-top: unset;
+        }
+
+        .list {
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        #readonly_box {
-          background-color: #b4b4b4;
-          border-left: black 1px solid;
-        }
-        .second_content {
-          background: #D9D9D9;
-          .submit_btn {
-            margin-bottom: 20px;
-            background: #48658C;
-            color: white;
-            font-weight: 700;
-            width: 100px;
-            font-size: 18px;
-            height: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+
+          button {
+            @include content_delete_button;
+
             &:hover {
-              background-color: #5d85bd;
-            }
-          }
-          .wrap1,
-          .wrap2 {
-            display: flex;
-            justify-content: space-evenly;
-            padding: 10px 80px;
-            .input-number {
-              @include count_btn;
-            }
-            .number-input-box {
-              color: black;
-              .input-number {
-                width: 100%;
-              }
-            }
-            .form-label {
-              white-space: nowrap;
-              font-weight: 800;
-              font-size: 18px;
-            }
-            .dropdown {
-              button {
-                background: white;
-                width: 100%;
-                border: none;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-              }
-              .dropdown-menu {
-                width: 225px;
-                max-height: 250px;
-                overflow-y: auto;
-                p {
-                  font-size: 18px;
-                  color: black;
-                  font-weight: normal;
-                  &:hover {
-                    cursor: pointer;
-                  }
-                }
-                .dropdown-item {
-                  text-align: left;
-                }
-              }
-            }
-            div {
-              padding: 0 5px;
-              p {
-                text-align: center;
-                white-space: nowrap;
-                font-size: 18px;
-                font-weight: 700;
-                margin-bottom: 5px;
-              }
+              background: #ff7272;
             }
           }
         }
-        .third_content {
-          .fixed_info {
-            border-top: unset;
-          }
-          .list {
-            border-top: 1px solid black;
-            border-left: 1px solid black;
-            border-right: 1px solid black;
-            button {
-              @include delete_button;
-              &:hover {
-                background: #ff7272;
-              }
-            }
-          }
+      }
+
+      .fixed_info_count {
+        display: flex;
+        background: #3d5c67;
+        color: white;
+        font-weight: 700;
+        align-items: center;
+        height: 40px;
+        border-radius: 0;
+        border-bottom: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        padding: 0 10px;
+        justify-content: right;
+        gap: 10px;
+
+        p {
+          font-size: 15px;
+          margin-bottom: 0;
         }
-        .fixed_info_count {
-          display: flex;
-          background: #3d5c67;
-          color: white;
-          font-weight: 700;
-          align-items: center;
-          height: 40px;
+      }
+
+      .fourth_content {
+        border-left: 1px solid black;
+        border-bottom: 1px solid black;
+        background: white;
+
+        .fixed_info {
+          border-top: none;
+          border-left: none;
+          border-right: 1px solid black;
+          border-bottom: 1px solid black;
+        }
+
+        .input-group {
+          border-left: 1px solid black;
+        }
+
+        .form-check {
+          margin-left: 10px;
+        }
+
+        .form-control {
+          height: auto;
           border-radius: 0;
-          border-bottom: 1px solid black;
-          border-left: 1px solid black;
           border-right: 1px solid black;
-          padding: 0 10px;
-          justify-content: right;
-          gap: 10px;
-          p {
-            font-size: 15px;
-            margin-bottom: 0;
-          }
         }
-        .fourth_content {
-          border-left: 1px solid black;
-          border-bottom: 1px solid black;
-          background: white;
-          .fixed_info {
-            border-top: none;
-            border-left: none;
-            border-right: 1px solid black;
-            border-bottom: 1px solid black;
-          }
-          .input-group {
-            border-left: 1px solid black;
-          }
-          .form-check {
-            margin-left: 10px;
-          }
-          .form-control {
-            height: auto;
-            border-radius: 0;
-            border-right: 1px solid black;
-          }
-          .wrap:nth-child(3) .input-group {
-            border-right: 1px solid black;
-            textarea {
-              padding: 0 6px;
-              border-bottom: 0;
-              border-right: 0;
-            }
-          }
-          .form-label {
-            font-weight: 700;
-            font-size: 20px;
-            white-space: nowrap;
-            height: 50px;
-            align-items: center;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            padding: 0 10px;
-            width: 150px;
-            p {
-              margin-bottom: 0;
-              text-align: center;
-            }
-          }
-        }
-        form {
-          border-top: 1px solid black;
-          border-left: 1px solid black;
+
+        .wrap:nth-child(3) .input-group {
           border-right: 1px solid black;
-          .row:nth-child(3) {
-            p {
-              justify-content: left;
-              padding: 5px 10px 0;
-              align-items: normal;
-            }
-          }
-          .form-check {
-            margin-left: 10px;
-          }
-          .form-control {
-            height: auto;
-            border-radius: 0;
-            padding: 5px;
-          }
-          .wrap {
-            border-bottom: 1px solid black;
-            background: white;
-            border-bottom: 0.5px solid black;
-            align-items: center;
-            label.use {
-              border-right: 1px solid black;
-            }
-            .option {
-              @include readonly_box;
-              height: 100%;
-              width: 100%;
-              align-items: center;
-              display: flex;
-              .content {
-                display: flex;
-              }
-            }
-            .project_name {
-              border-left: 1px solid black;
-            }
-          }
-          .form-label {
-            font-weight: 700;
-            font-size: 20px;
-            white-space: nowrap;
-            height: 50px;
-            align-items: center;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            padding: 0 30px;
-            p {
-              width: 100px;
-              margin-bottom: 0;
-              text-align: center;
-            }
+
+          textarea {
+            padding: 0 6px;
+            border-bottom: 0;
+            border-right: 0;
           }
         }
-        .input-group-prepend {
-          color: white;
+
+        .form-label {
           font-weight: 700;
           font-size: 20px;
-          width: 120px;
-          text-align: end;
+          white-space: nowrap;
+          height: 50px;
+          align-items: center;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          padding: 0 10px;
+          width: 150px;
+
+          p {
+            margin-bottom: 0;
+            text-align: center;
+          }
         }
+      }
+
+      form {
+        border-top: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+
+        .row:nth-child(3) {
+          p {
+            justify-content: left;
+            padding: 5px 10px 0;
+            align-items: normal;
+          }
+        }
+
+        .form-check {
+          margin-left: 10px;
+        }
+
+        .form-control {
+          height: auto;
+          border-radius: 0;
+          padding: 5px;
+        }
+
+        .wrap {
+          border-bottom: 1px solid black;
+          background: white;
+          border-bottom: 0.5px solid black;
+          align-items: center;
+
+          label.use {
+            border-right: 1px solid black;
+          }
+
+          .option {
+            @include readonly_box;
+            height: 100%;
+            width: 100%;
+            align-items: center;
+            display: flex;
+
+            .content {
+              display: flex;
+            }
+          }
+
+          .project_name {
+            border-left: 1px solid black;
+          }
+        }
+
+        .form-label {
+          font-weight: 700;
+          font-size: 20px;
+          white-space: nowrap;
+          height: 50px;
+          align-items: center;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          padding: 0 30px;
+
+          p {
+            width: 100px;
+            margin-bottom: 0;
+            text-align: center;
+          }
+        }
+      }
+
+      .input-group-prepend {
+        color: white;
+        font-weight: 700;
+        font-size: 20px;
+        width: 120px;
+        text-align: end;
+      }
+
+      .input-number {
+        @include count_btn;
+      }
+    }
+
+
+  }
+
+  .modal .second_content .wrap1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  .modal {
+    padding: 0 5%;
+
+    .modal-content {
+      background-color: unset;
+      border: 0;
+    }
+
+    .confirm_modal .modal-content {
+      width: 300px;
+    }
+
+    .fixed_info {
+      @include fixed_info;
+      background: #528091;
+      border-radius: 0;
+      border: 1px solid black;
+      border-bottom: unset !important;
+      padding: 0 10px;
+
+      div {
+        flex-grow: 1;
+        text-align: center;
+      }
+
+      p {
+        font-size: 20px;
+        margin-bottom: 0 !important;
+      }
+
+      button {
+        border: none;
+        background: none;
+        color: white;
+        font-weight: 700;
+        font-size: 22px;
+        ;
+      }
+    }
+
+    .list {
+      border-left: 1px solid black;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
+    }
+
+    .second_content {
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+      border-top: 1px solid black;
+      background: #D9D9D9;
+
+      .submit_btn {
+        margin-bottom: 20px;
+        background: #48658C;
+        color: white;
+        font-weight: 700;
+        width: 100px;
+        font-size: 18px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+          background-color: #5d85bd;
+        }
+      }
+
+      .wrap1,
+      .wrap2 {
+        display: flex;
+        justify-content: space-evenly;
+        padding: 10px 30px;
+
         .input-number {
           @include count_btn;
         }
-      }
-      .button_wrap {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px auto 5%;
-        width: 220px;
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
+
+        .number-input-box {
+          color: black;
+
+          .input-number {
+            width: 100%;
           }
-          &:nth-child(2) {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5d85bd;
+        }
+
+        .form-label {
+          white-space: nowrap;
+          font-weight: 800;
+          font-size: 18px;
+        }
+
+        .dropdown {
+          button {
+            background: white;
+            width: 100%;
+            border: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+
+          .dropdown-menu {
+            width: 100%;
+
+            .dropdown-item {
+              text-align: left;
             }
           }
         }
+
+        div {
+
+          p {
+            text-align: center;
+            white-space: nowrap;
+
+            font-size: 18px;
+            margin-bottom: 5px;
+          }
+        }
       }
-    }
-    .modal .second_content .wrap1 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      gap: 10px;
+
+      .wrap1 {
+        display: grid;
+        grid-auto-flow: column;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 10px 10px;
+        grid-template-areas: ". ." ". .";
+
+        .search_label {
+          font-weight: 700;
+        }
+      }
     }
   }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .modal {
+
+  .main_section {
+    .readonly_box {
+      @include readonly_box;
+      height: 100%;
+    }
+
+    .info_wrap {
+      margin: auto;
       padding: 0 5%;
-      .modal-content {
-        background-color: unset;
-        border: 0;
+
+      .input-group-prepend {
+        width: 100% !important;
+        text-align: center !important;
       }
-      .confirm_modal .modal-content {
-        width: 300px;
-      }
+
       .fixed_info {
         @include fixed_info;
         background: #528091;
         border-radius: 0;
-        border: 1px solid black;
-        border-bottom: unset !important;
-        padding: 0 10px;
-        div {
-          flex-grow: 1;
-          text-align: center;
-        }
+        border-top: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+
         p {
           font-size: 20px;
-          margin-bottom: 0 !important;
-        }
-        button {
-          border: none;
-          background: none;
-          color: white;
-          font-weight: 700;
-          font-size: 22px;
-          align-self: start;
+          margin-bottom: 0;
         }
       }
-      .list {
-        border-left: 1px solid black;
-        border-bottom: 1px solid black;
-        border-right: 1px solid black;
+
+      #readonly_box {
+        background-color: #b4b4b4;
+        border-left: black 1px solid;
       }
+
       .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        border-top: 1px solid black;
         background: #D9D9D9;
+
         .submit_btn {
           margin-bottom: 20px;
           background: #48658C;
@@ -1366,29 +1501,36 @@ GetAntiForgeryToken
           display: flex;
           justify-content: center;
           align-items: center;
+
           &:hover {
             background-color: #5d85bd;
           }
         }
+
         .wrap1,
         .wrap2 {
           display: flex;
           justify-content: space-evenly;
-          padding: 10px 30px;
+          padding: 10px 80px;
+
           .input-number {
             @include count_btn;
           }
+
           .number-input-box {
             color: black;
+
             .input-number {
               width: 100%;
             }
           }
+
           .form-label {
             white-space: nowrap;
             font-weight: 800;
             font-size: 18px;
           }
+
           .dropdown {
             button {
               background: white;
@@ -1398,364 +1540,411 @@ GetAntiForgeryToken
               justify-content: space-between;
               align-items: center;
             }
+
             .dropdown-menu {
-              width: 100%;
+              width: 225px;
+              max-height: 250px;
+              overflow-y: auto;
+
+              p {
+                font-size: 18px;
+                color: black;
+                font-weight: normal;
+
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+
               .dropdown-item {
                 text-align: left;
               }
             }
           }
+
           div {
-   
+            padding: 0 5px;
+
             p {
               text-align: center;
               white-space: nowrap;
-            
               font-size: 18px;
+              font-weight: 700;
               margin-bottom: 5px;
             }
           }
         }
-        .wrap1 {
-          display: grid;
-          grid-auto-flow: column;
-          grid-template-columns: 1fr 1fr;
-          grid-template-rows: 1fr 1fr;
-          gap: 10px 10px;
-          grid-template-areas: ". ." ". .";
-          .search_label{
-            font-weight: 700;
-          }
-        }
       }
-    }
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
-        height: 100%;
-      }
-        .info_wrap {
-        margin: auto;
-        padding: 0 5%;
-        .input-group-prepend {
-          width: 100% !important;
-          text-align: center !important;
-        }
+
+      .third_content {
         .fixed_info {
-          @include fixed_info;
-          background: #528091;
-          border-radius: 0;
+          border-top: unset;
+        }
+
+        .list {
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        #readonly_box {
-          background-color: #b4b4b4;
-          border-left: black 1px solid;
-        }
-        .second_content {
-          background: #D9D9D9;
-          .submit_btn {
-            margin-bottom: 20px;
-            background: #48658C;
-            color: white;
-            font-weight: 700;
-            width: 100px;
-            font-size: 18px;
-            height: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+
+          button {
+            @include content_delete_button;
+
             &:hover {
-              background-color: #5d85bd;
-            }
-          }
-          .wrap1,
-          .wrap2 {
-            display: flex;
-            justify-content: space-evenly;
-            padding: 10px 80px;
-            .input-number {
-              @include count_btn;
-            }
-            .number-input-box {
-              color: black;
-              .input-number {
-                width: 100%;
-              }
-            }
-            .form-label {
-              white-space: nowrap;
-              font-weight: 800;
-              font-size: 18px;
-            }
-            .dropdown {
-              button {
-                background: white;
-                width: 100%;
-                border: none;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-              }
-              .dropdown-menu {
-                width: 225px;
-                max-height: 250px;
-                overflow-y: auto;
-                p {
-                  font-size: 18px;
-                  color: black;
-                  font-weight: normal;
-                  &:hover {
-                    cursor: pointer;
-                  }
-                }
-                .dropdown-item {
-                  text-align: left;
-                }
-              }
-            }
-            div {
-              padding: 0 5px;
-              p {
-                text-align: center;
-                white-space: nowrap;
-                font-size: 18px;
-                font-weight: 700;
-                margin-bottom: 5px;
-              }
+              background: #ff7272;
             }
           }
         }
-        .third_content {
-          .fixed_info {
-            border-top: unset;
-          }
-          .list {
-            border-top: 1px solid black;
-            border-left: 1px solid black;
-            border-right: 1px solid black;
-            button {
-              @include delete_button;
-              &:hover {
-                background: #ff7272;
-              }
-            }
-          }
+      }
+
+      .fixed_info_count {
+        display: flex;
+        background: #3d5c67;
+        color: white;
+        font-weight: 700;
+        align-items: center;
+        height: 40px;
+        border-radius: 0;
+        border-bottom: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        padding: 0 10px;
+        justify-content: right;
+        gap: 10px;
+
+        p {
+          font-size: 15px;
+          margin-bottom: 0;
         }
-        .fixed_info_count {
-          display: flex;
-          background: #3d5c67;
-          color: white;
-          font-weight: 700;
-          align-items: center;
-          height: 40px;
+      }
+
+      .fourth_content {
+        border-left: 1px solid black;
+        border-bottom: 1px solid black;
+        background: white;
+
+        .fixed_info {
+          border-top: none;
+          border-left: none;
+          border-right: 1px solid black;
+          border-bottom: 1px solid black;
+        }
+
+        .input-group {
+          border-left: 1px solid black;
+        }
+
+        .form-check {
+          margin-left: 10px;
+        }
+
+        .form-control {
+          height: auto;
           border-radius: 0;
-          border-bottom: 1px solid black;
-          border-left: 1px solid black;
           border-right: 1px solid black;
-          padding: 0 10px;
-          justify-content: right;
-          gap: 10px;
-          p {
-            font-size: 15px;
-            margin-bottom: 0;
-          }
         }
-        .fourth_content {
-          border-left: 1px solid black;
-          border-bottom: 1px solid black;
-          background: white;
-          .fixed_info {
-            border-top: none;
-            border-left: none;
-            border-right: 1px solid black;
-            border-bottom: 1px solid black;
-          }
-          .input-group {
-            border-left: 1px solid black;
-          }
-          .form-check {
-            margin-left: 10px;
-          }
-          .form-control {
-            height: auto;
-            border-radius: 0;
-            border-right: 1px solid black;
-          }
-          .wrap:nth-child(3) .input-group {
-            border-right: 1px solid black;
-            textarea {
-              padding: 0 6px;
-              border-bottom: 0;
-              border-right: 0;
-            }
-          }
-          .form-label {
-            font-weight: 700;
-            font-size: 20px;
-            white-space: nowrap;
-            height: 50px;
-            align-items: center;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            padding: 0 10px;
-            width: 150px;
-            p {
-              margin-bottom: 0;
-              text-align: center;
-            }
-          }
-        }
-        form {
-          border-top: 1px solid black;
-          border-left: 1px solid black;
+
+        .wrap:nth-child(3) .input-group {
           border-right: 1px solid black;
-          .row:nth-child(3) {
-            p {
-              justify-content: left;
-              padding: 5px 10px 0;
-              align-items: normal;
-            }
-          }
-          .form-check {
-            margin-left: 10px;
-          }
-          .form-control {
-            height: auto;
-            border-radius: 0;
-            padding: 5px;
-          }
-          .wrap {
-            border-bottom: 1px solid black;
-            background: white;
-            border-bottom: 0.5px solid black;
-            align-items: center;
-            label.use {
-              border-right: 1px solid black;
-            }
-            .option {
-              @include readonly_box;
-              height: 100%;
-              width: 100%;
-              align-items: center;
-              display: flex;
-              .content {
-                display: flex;
-              }
-            }
-            .project_name {
-              border-left: 1px solid black;
-            }
-          }
-          .form-label {
-            font-weight: 700;
-            font-size: 20px;
-            white-space: nowrap;
-            height: 50px;
-            align-items: center;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            padding: 0 30px;
-            p {
-              width: 100px;
-              margin-bottom: 0;
-              text-align: center;
-            }
+
+          textarea {
+            padding: 0 6px;
+            border-bottom: 0;
+            border-right: 0;
           }
         }
-        .input-group-prepend {
-          color: white;
+
+        .form-label {
           font-weight: 700;
           font-size: 20px;
-          width: 120px;
-          text-align: end;
+          white-space: nowrap;
+          height: 50px;
+          align-items: center;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          padding: 0 10px;
+          width: 150px;
+
+          p {
+            margin-bottom: 0;
+            text-align: center;
+          }
         }
+      }
+
+      form {
+        border-top: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+
+        .row:nth-child(3) {
+          p {
+            justify-content: left;
+            padding: 5px 10px 0;
+            align-items: normal;
+          }
+        }
+
+        .form-check {
+          margin-left: 10px;
+        }
+
+        .form-control {
+          height: auto;
+          border-radius: 0;
+          padding: 5px;
+        }
+
+        .wrap {
+          border-bottom: 1px solid black;
+          background: white;
+          border-bottom: 0.5px solid black;
+          align-items: center;
+
+          label.use {
+            border-right: 1px solid black;
+          }
+
+          .option {
+            @include readonly_box;
+            height: 100%;
+            width: 100%;
+            align-items: center;
+            display: flex;
+
+            .content {
+              display: flex;
+            }
+          }
+
+          .project_name {
+            border-left: 1px solid black;
+          }
+        }
+
+        .form-label {
+          font-weight: 700;
+          font-size: 20px;
+          white-space: nowrap;
+          height: 50px;
+          align-items: center;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          padding: 0 30px;
+
+          p {
+            width: 100px;
+            margin-bottom: 0;
+            text-align: center;
+          }
+        }
+      }
+
+      .input-group-prepend {
+        color: white;
+        font-weight: 700;
+        font-size: 20px;
+        width: 120px;
+        text-align: end;
+      }
+
+      .input-number {
+        @include count_btn;
+      }
+    }
+
+  }
+
+  .modal .second_content .wrap1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .modal {
+    .modal-dialog {
+      padding: 0 5%;
+    }
+
+    .modal-content {
+      background-color: unset;
+      border: 0;
+    }
+
+    .fixed_info {
+      @include fixed_info;
+      background: #528091;
+      border-radius: 0;
+      border-bottom: unset !important;
+      border: 1px solid black;
+      padding: 0 10px;
+
+      div {
+        flex-grow: 1;
+        text-align: center;
+      }
+
+      p {
+        font-size: 18px;
+        margin-bottom: 0 !important;
+      }
+
+      button {
+        border: none;
+        background: none;
+        color: white;
+        font-weight: 700;
+        font-size: 22px;
+        padding: 0;
+      }
+    }
+
+    .list {
+      border-left: 1px solid black;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
+    }
+
+    .second_content {
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+      border-top: 1px solid black;
+      background: #D9D9D9;
+
+      .submit_btn {
+        margin-bottom: 20px;
+        background: #48658C;
+        color: white;
+        font-weight: 700;
+        width: 100px;
+        font-size: 18px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+          background-color: #5d85bd;
+        }
+      }
+
+      .wrap1 {
+        justify-content: space-evenly;
+        padding: 20px 20px 0;
+
+        .search_label {
+          font-weight: 700;
+        }
+
         .input-number {
           @include count_btn;
         }
-      }
-      .button_wrap {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px auto 5%;
-        width: 220px;
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
+
+        .number-input-box {
+          color: black;
+
+          .input-number {
+            width: 100%;
           }
-          &:nth-child(2) {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5d85bd;
+        }
+
+        .form-label {
+          white-space: nowrap;
+          font-weight: 800;
+          font-size: 18px;
+        }
+
+        .dropdown {
+          button {
+            background: white;
+            width: 100%;
+            border: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+
+          .dropdown-menu {
+            width: 100%;
+
+            .dropdown-item {
+              text-align: left;
             }
           }
         }
+
+        div {
+          margin: 10px 0;
+
+          p {
+            white-space: nowrap;
+            font-size: 18px;
+            margin-bottom: 5px;
+          }
+        }
       }
-    }
-    .modal .second_content .wrap1 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      gap: 10px;
+
+      .wrap2 {
+        flex-direction: column;
+        padding: 0 20px;
+        margin-bottom: 20px;
+
+        p {
+          margin-bottom: 0;
+        }
+
+        .form-label {
+          white-space: nowrap;
+          font-weight: 800;
+          font-size: 18px;
+        }
+      }
     }
   }
-  @media only screen and (max-width: 767px) {
-    .modal {
-      .modal-dialog {
-        padding: 0 5%;
+
+  .main_section {
+    .readonly_box {
+      @include readonly_box;
+    }
+
+    #readonly_box {
+      background: #b4b4b4;
+    }
+
+    .info_wrap {
+      margin: auto;
+      padding: 0 5%;
+
+      .input-group-prepend {
+        width: 100% !important;
+        text-align: center !important;
       }
-      .modal-content {
-        background-color: unset;
-        border: 0;
-      }
+
       .fixed_info {
         @include fixed_info;
         background: #528091;
         border-radius: 0;
-        border-bottom: unset !important;
-        border: 1px solid black;
-        padding: 0 10px;
-        div {
-          flex-grow: 1;
-          text-align: center;
-        }
+        border-top: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        flex-direction: column;
+        height: unset;
+        padding: 10px;
+
         p {
           font-size: 18px;
-          margin-bottom: 0 !important;
-        }
-        button {
-          border: none;
-          background: none;
-          color: white;
-          font-weight: 700;
-          font-size: 22px;
-          align-self: start;
-          padding: 0;
+          margin-bottom: 0;
         }
       }
-      .list {
-        border-left: 1px solid black;
-        border-bottom: 1px solid black;
-        border-right: 1px solid black;
-      }
+
       .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        border-top: 1px solid black;
-        background: #D9D9D9;
         .submit_btn {
           margin-bottom: 20px;
-          background: #48658C;
+          background: #48658c;
           color: white;
           font-weight: 700;
           width: 100px;
@@ -1764,30 +1953,34 @@ GetAntiForgeryToken
           display: flex;
           justify-content: center;
           align-items: center;
+
           &:hover {
             background-color: #5d85bd;
           }
         }
+
         .wrap1 {
           justify-content: space-evenly;
           padding: 20px 20px 0;
-          .search_label{
-            font-weight: 700;
-          }
+
           .input-number {
             @include count_btn;
           }
+
           .number-input-box {
             color: black;
+
             .input-number {
               width: 100%;
             }
           }
+
           .form-label {
             white-space: nowrap;
             font-weight: 800;
             font-size: 18px;
           }
+
           .dropdown {
             button {
               background: white;
@@ -1797,29 +1990,37 @@ GetAntiForgeryToken
               justify-content: space-between;
               align-items: center;
             }
+
             .dropdown-menu {
-              width:100%;
+              width: 225px;
+
               .dropdown-item {
                 text-align: left;
               }
             }
           }
+
           div {
             margin: 10px 0;
+
             p {
               white-space: nowrap;
               font-size: 18px;
+              font-weight: 700;
               margin-bottom: 5px;
             }
           }
         }
+
         .wrap2 {
           flex-direction: column;
           padding: 0 20px;
           margin-bottom: 20px;
+
           p {
             margin-bottom: 0;
           }
+
           .form-label {
             white-space: nowrap;
             font-weight: 800;
@@ -1827,290 +2028,196 @@ GetAntiForgeryToken
           }
         }
       }
-    }
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
-      }
-      #readonly_box {
-        background: #b4b4b4;
-      }
-      .info_wrap {
-        margin: auto;
-        padding: 0 5%;
-        .input-group-prepend {
-          width: 100% !important;
-          text-align: center !important;
-        }
+
+      .third_content {
         .fixed_info {
-          @include fixed_info;
-          background: #528091;
-          border-radius: 0;
-          border-top: 1px solid black;
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          flex-direction: column;
-          height: unset;
-          padding: 10px;
-          p {
-            font-size: 18px;
-            margin-bottom: 0;
-          }
+          border-top: unset;
         }
-        .second_content {
-          .submit_btn {
-            margin-bottom: 20px;
-            background: #48658c;
-            color: white;
-            font-weight: 700;
-            width: 100px;
-            font-size: 18px;
-            height: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+
+        .list {
+          border: 1px solid black;
+
+          button {
+            @include content_delete_button;
+
             &:hover {
-              background-color: #5d85bd;
-            }
-          }
-          .wrap1 {
-            justify-content: space-evenly;
-            padding: 20px 20px 0;
-            .input-number {
-              @include count_btn;
-            }
-            .number-input-box {
-              color: black;
-              .input-number {
-                width: 100%;
-              }
-            }
-            .form-label {
-              white-space: nowrap;
-              font-weight: 800;
-              font-size: 18px;
-            }
-            .dropdown {
-              button {
-                background: white;
-                width: 100%;
-                border: none;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-              }
-              .dropdown-menu {
-                width: 225px;
-                .dropdown-item {
-                  text-align: left;
-                }
-              }
-            }
-            div {
-              margin: 10px 0;
-              p {
-                white-space: nowrap;
-                font-size: 18px;
-                font-weight: 700;
-                margin-bottom: 5px;
-              }
-            }
-          }
-          .wrap2 {
-            flex-direction: column;
-            padding: 0 20px;
-            margin-bottom: 20px;
-            p {
-              margin-bottom: 0;
-            }
-            .form-label {
-              white-space: nowrap;
-              font-weight: 800;
-              font-size: 18px;
+              background: #ff7272;
             }
           }
         }
-        .third_content {
-          .fixed_info {
-            border-top: unset;
-          }
-          .list {
-            border: 1px solid black;
-            button {
-              @include delete_button;
-              &:hover {
-                background: #ff7272;
-              }
-            }
-          }
+      }
+
+      .fixed_info_count {
+        display: flex;
+        background: #3d5c67;
+        color: white;
+        font-weight: 700;
+        align-items: center;
+        height: 40px;
+        border-radius: 0;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        border-bottom: 1px solid black;
+        padding: 0 10px;
+        justify-content: right;
+        gap: 10px;
+
+        p {
+          font-size: 15px;
+          margin-bottom: 0;
         }
-        .fixed_info_count {
-          display: flex;
-          background: #3d5c67;
-          color: white;
-          font-weight: 700;
-          align-items: center;
-          height: 40px;
-          border-radius: 0;
-          border-left: 1px solid black;
-          border-right: 1px solid black;
+      }
+
+      .fourth_content {
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        background: white;
+
+        .fixed_info {
           border-bottom: 1px solid black;
-          padding: 0 10px;
-          justify-content: right;
-          gap: 10px;
-          p {
-            font-size: 15px;
-            margin-bottom: 0;
-          }
+          border-top: none;
+          border-left: none;
+          border-right: none;
         }
-        .fourth_content {
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          background: white;
-          .fixed_info {
-            border-bottom: 1px solid black;
-            border-top: none;
-            border-left: none;
-            border-right: none;
-          }
-          .row {
-            flex-direction: column;
-            .wrap {
-              flex-direction: column;
-            }
-          }
-          .form-check {
-            margin-left: 10px;
-          }
-          .wrap:nth-child(1) .form-control,
-          .wrap:nth-child(2) .form-control {
-            height: auto;
-            border-radius: 0;
-            border-bottom: 1px solid black;
-          }
-          .wrap:nth-child(3) .form-control {
-            height: auto;
-            border-radius: 0;
-            border-bottom: 1px solid black;
-          }
-          .form-label {
-            border-bottom: 1px solid black;
-            font-weight: 700;
-            font-size: 20px;
-            white-space: nowrap;
-            align-items: center;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            p {
-              font-size: 18px;
-              margin-bottom: 0;
-              text-align: center;
-            }
-          }
-        }
-        form {
-          border-top: 1px solid black;
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          .row:nth-child(3) {
-            p {
-              justify-content: left;
-              padding: 5px 10px 0;
-              align-items: normal;
-            }
-          }
-          .form-check {
-            margin-left: 10px;
-            font-size: 18px;
-          }
-          .form-control {
-            height: auto;
-            border-radius: 0;
-          }
+
+        .row {
+          flex-direction: column;
+
           .wrap {
-            background: white;
-            border-bottom: 1px solid black;
-            align-items: center;
             flex-direction: column;
-            label.use,
-            .form-label {
-              border-bottom: 1px solid black;
-              width: 100%;
-              height: 30px;
-              justify-content: space-evenly;
-            }
-            .option {
-              height: 100%;
-              width: 100%;
-              font-size: 18px;
-              background: #b4b4b4;
-              font-weight: 700;
-              .content {
-                padding: 5px;
-                display: grid;
-                grid-template-columns: 1fr 1fr 1fr;
-                grid-template-rows: 1fr 1fr;
-                gap: 0px 0px;
-                grid-auto-flow: row;
-                grid-template-areas: ". . ." ". . .";
-                white-space: nowrap;
-                justify-items: center;
-                div {
-                  width: 90px;
-                }
-              }
-            }
-          }
-          .form-label {
-            font-weight: 700;
-            font-size: 20px;
-            white-space: nowrap;
-            height: 50px;
-            align-items: center;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            padding: 0 30px;
-            p {
-              width: 100px;
-              font-size: 18px;
-              margin-bottom: 0;
-              text-align: center;
-            }
           }
         }
-        .input-group-prepend {
-          color: white;
+
+        .form-check {
+          margin-left: 10px;
+        }
+
+        .wrap:nth-child(1) .form-control,
+        .wrap:nth-child(2) .form-control {
+          height: auto;
+          border-radius: 0;
+          border-bottom: 1px solid black;
+        }
+
+        .wrap:nth-child(3) .form-control {
+          height: auto;
+          border-radius: 0;
+          border-bottom: 1px solid black;
+        }
+
+        .form-label {
+          border-bottom: 1px solid black;
           font-weight: 700;
           font-size: 20px;
-          width: 120px;
-          text-align: end;
-        }
-        .input-number {
-          @include count_btn;
+          white-space: nowrap;
+          align-items: center;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+
+          p {
+            font-size: 18px;
+            margin-bottom: 0;
+            text-align: center;
+          }
         }
       }
-      .button_wrap {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px auto 5%;
-        width: 220px;
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
+
+      form {
+        border-top: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+
+        .row:nth-child(3) {
+          p {
+            justify-content: left;
+            padding: 5px 10px 0;
+            align-items: normal;
           }
-          &:nth-child(2) {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5d85bd;
+        }
+
+        .form-check {
+          margin-left: 10px;
+          font-size: 18px;
+        }
+
+        .form-control {
+          height: auto;
+          border-radius: 0;
+        }
+
+        .wrap {
+          background: white;
+          border-bottom: 1px solid black;
+          align-items: center;
+          flex-direction: column;
+
+          label.use,
+          .form-label {
+            border-bottom: 1px solid black;
+            width: 100%;
+            height: 30px;
+            justify-content: space-evenly;
+          }
+
+          .option {
+            height: 100%;
+            width: 100%;
+            font-size: 18px;
+            background: #b4b4b4;
+            font-weight: 700;
+
+            .content {
+              padding: 5px;
+              display: grid;
+              grid-template-columns: 1fr 1fr 1fr;
+              grid-template-rows: 1fr 1fr;
+              gap: 0px 0px;
+              grid-auto-flow: row;
+              grid-template-areas: ". . ." ". . .";
+              white-space: nowrap;
+              justify-items: center;
+
+              div {
+                width: 90px;
+              }
             }
           }
         }
+
+        .form-label {
+          font-weight: 700;
+          font-size: 20px;
+          white-space: nowrap;
+          height: 50px;
+          align-items: center;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          padding: 0 30px;
+
+          p {
+            width: 100px;
+            font-size: 18px;
+            margin-bottom: 0;
+            text-align: center;
+          }
+        }
+      }
+
+      .input-group-prepend {
+        color: white;
+        font-weight: 700;
+        font-size: 20px;
+        width: 120px;
+        text-align: end;
+      }
+
+      .input-number {
+        @include count_btn;
       }
     }
+
   }
+}
 </style>

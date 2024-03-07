@@ -358,6 +358,19 @@
       justify-content: center;
     }
   }
+  
+  .button_wrap {
+          display: flex;
+          justify-content: center;
+          margin: 30px auto 5%;
+          width: 220px;
+          .back_btn {
+  @include back_to_previous_btn;
+  &:hover {
+    background-color: #5d85bb;
+  }
+}
+        }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .readonly_box {
@@ -445,32 +458,6 @@
                   }
                 }
               }
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          justify-content: center;
-          margin: 30px auto 5%;
-          width: 220px;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-          }
-          .send_btn {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
-          .send_btn_disabled {
-            background: #878787;
-            &:hover {
-              background: #878787;
             }
           }
         }
@@ -581,32 +568,6 @@
             width: 54%;
           }
         }
-        .button_wrap {
-          display: flex;
-          justify-content: center;
-          margin: 30px auto 5%;
-          width: 220px;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-          }
-          .send_btn {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
-          .send_btn_disabled {
-            background: #878787;
-            &:hover {
-              background: #878787;
-            }
-          }
-        }
       }
     }
   }
@@ -699,36 +660,6 @@
                   color: white;
                 }
               }
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          justify-content: center;
-          margin: 30px auto 5%;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              width: 100px;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-          }
-          .send_btn {
-            @include search_and_send_btn;
-            width: 70px;
-            padding: 5px;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
-          .send_btn_disabled {
-            background: #878787;
-            width: 70px;
-            padding: 5px;
-            &:hover {
-              background: #878787;
             }
           }
         }

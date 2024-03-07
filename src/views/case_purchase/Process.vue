@@ -422,6 +422,7 @@ const submit = async (isDone) => {
 // 清空檢索欄位(不包含已選項目)
 const clear = () => {
     utilsStore.clearSearchParams(searchParams);
+    searchParams.ProjectCode = Form.value.ProjectCode;
     searchParams.ProjectSelect = { Text: '--請選擇--', Value: '' };
     DropdownArray.value.EquipCategory = [];
     DropdownArray.value.Layer = [];
@@ -867,10 +868,10 @@ const addToList = (data) => {
 }
 
 .button_wrap {
-    display: flex;
-    justify-content: center;
-    margin: 30px auto 5%;
-    gap: 20px;
+   display: flex;
+  justify-content: space-between;
+  margin: 30px auto 5%;
+  width: 320px;
 
     .back_btn {
         @include back_to_previous_btn;

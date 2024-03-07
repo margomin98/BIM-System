@@ -68,9 +68,8 @@ onUnmounted(()=>{
   display: flex;
   justify-content: space-between;
   margin: 30px auto 5%;
-  width: 220px;
+  width: 210px;
 }
-
 
 .back_btn {
   @include back_to_previous_btn;

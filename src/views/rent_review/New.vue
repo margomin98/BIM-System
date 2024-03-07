@@ -530,6 +530,17 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
   .project_details #project_name {
     height: 100%;
   }
+  .button_wrap {
+        display: flex;
+        justify-content: space-between;
+        margin: 30px auto 5%;
+        width: 210px;
+        .back_btn {
+            @include back_to_previous_btn;
+            &:hover {
+                background-color: #5d85bb;
+            }
+        }
   .send_btn {
     @include search_and_send_btn;
     &:hover {
@@ -542,6 +553,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
       background: #878787;
     }
   }
+      }
   @media only screen and (min-width: 1200px) {
     .main_section {
       #readonly_box {
@@ -785,20 +797,6 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           font-size: 20px;
           width: 120px;
           text-align: end;
-        }
-      }
-      .button_wrap {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px auto 5%;
-        width: 220px;
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
         }
       }
     }
@@ -1048,20 +1046,6 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           font-size: 20px;
           width: 120px;
           text-align: end;
-        }
-      }
-      .button_wrap {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px auto 5%;
-        width: 220px;
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
         }
       }
     }
@@ -1318,20 +1302,6 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           font-size: 20px;
           width: 120px;
           text-align: end;
-        }
-      }
-      .button_wrap {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px auto 5%;
-        width: 220px;
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
         }
       }
     }

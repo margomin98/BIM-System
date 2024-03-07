@@ -853,12 +853,7 @@ GetAntiForgeryToken
     font-weight: 700;
     color: white;
   }
-  button.send_btn {
-    @include search_and_send_btn;
-    &:hover {
-      background-color: #5e7aa2;
-    }
-  }
+  
   .custom-slide {
     display: flex;
     align-self: center;
@@ -867,7 +862,25 @@ GetAntiForgeryToken
         @include readonly_box;
       }
 
-  
+      .button_wrap { 
+        display: flex;
+  justify-content: space-between;
+  margin: 30px auto 5%;
+  width: 210px;
+ }
+          button.back_btn {
+            @include back_to_previous_btn;
+            &:hover {
+              background-color: #5d85bb;
+            }
+          }
+          button.send_btn {
+    @include search_and_send_btn;
+    &:hover {
+      background-color: #5e7aa2;
+    }
+  }
+       
             .search_section {
             position: relative;
             display: flex;
@@ -961,20 +974,6 @@ GetAntiForgeryToken
               height: 35px;
               border-radius: 5px;
               padding: 5px;
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 28%;
-          margin-bottom: 5%;
-          gap: 20px;
-          button.back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
             }
           }
         }
@@ -1146,20 +1145,6 @@ GetAntiForgeryToken
                 border-radius: 5px;
                 padding: 5px;
               }
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 28%;
-          margin-bottom: 5%;
-          gap: 20px;
-          button.back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
             }
           }
         }
@@ -1389,21 +1374,6 @@ GetAntiForgeryToken
               height: 35px;
               border-radius: 5px;
               padding: 5px;
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 15%;
-          margin-bottom: 5%;
-          gap: 20px;
-          button.back_btn {
-            @include back_to_previous_btn;
-            padding: 5px;
-            &:hover {
-              background-color: #5d85bb;
             }
           }
         }

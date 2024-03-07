@@ -61,11 +61,11 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">保管人員：</div>
-                <select class="form-select" v-model="formParams.Custodian">
+              <select class="form-select" v-model="formParams.Custodian">
                 <option value="">--請選擇--</option>
                 <option v-for="option in DropdownArray.Custodian" :value="option">{{ option }}</option>
               </select>
-                <!-- <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown"
+              <!-- <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false">
                   {{ formParams.Custodian || '請選擇' }}
                 </button>
@@ -633,6 +633,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
+
 span {
   @include red_star;
 }
@@ -672,6 +673,7 @@ span {
     .dropdown {
       width: 100%;
       @include dropdown_btn;
+
       .dropdown-menu {
         width: 100%;
       }
@@ -687,6 +689,7 @@ span {
     select {
       width: 100%;
     }
+
     .input-number {
       @include count_btn;
     }
@@ -724,6 +727,7 @@ span {
       }
     }
   }
+
   .info_wrap:nth-child(3) {
     .count {
       .btn_section {
@@ -732,7 +736,7 @@ span {
         .delete_btn {
           display: flex;
           align-items: center;
-          @include delete_button;
+          @include content_delete_button;
           height: 100%;
           padding: 5px;
 
@@ -747,11 +751,9 @@ span {
 
 .button_wrap {
   display: flex;
-  margin-top: 30px;
-  justify-content: center;
-  padding: 0 28%;
-  margin-bottom: 5%;
-  gap: 20px;
+  justify-content: space-between;
+  margin: 30px auto 5%;
+  width: 210px;
 
   button.back_btn {
     @include back_to_previous_btn;
@@ -795,6 +797,7 @@ span {
     }
   }
 }
+
 .modal {
   padding: 0 5%;
 
@@ -870,7 +873,7 @@ span {
     .wrap1 {
       display: flex;
       justify-content: center;
-border-top:1px solid black;
+      border-top: 1px solid black;
 
       .number-input-box {
         color: black;
@@ -885,9 +888,11 @@ border-top:1px solid black;
         font-weight: 800;
         font-size: 18px;
       }
+
       .dropdown-toggle {
         padding: 5px 10px;
       }
+
       // .dropdown {
       //   button {
       //     background: white;
@@ -919,9 +924,10 @@ border-top:1px solid black;
     }
   }
 }
+
 @media only screen and (min-width: 1200px) {
   .main_section {
-        .info_wrap {
+    .info_wrap {
       margin: auto;
       width: 700px;
 
@@ -957,7 +963,7 @@ border-top:1px solid black;
       }
 
       .dropdown {
-     
+
         height: 35px;
         @include dropdown_btn;
 
@@ -1151,8 +1157,10 @@ border-top:1px solid black;
 
         .dropdown {
           margin-left: unset !important;
-          .dropdown-menu{
-            padding: 0 ;
+
+          .dropdown-menu {
+            padding: 0;
+            transform: translate3d(0, 35px, 0px) !important;
           }
         }
 
@@ -1176,10 +1184,7 @@ border-top:1px solid black;
     }
 
     .info_wrap:nth-child(3) {
-      .input-group
-        > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
-          .valid-feedback
-        ):not(.invalid-tooltip):not(.invalid-feedback) {
+      .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
         margin-left: unset !important;
         border-radius: 5px;
       }
@@ -1246,14 +1251,11 @@ border-top:1px solid black;
         // }
 
         div {
-          margin:5px 0;
+          margin: 5px 0;
         }
       }
     }
   }
 
-  .button_wrap {
-    padding: unset;
-  }
 }
 </style>

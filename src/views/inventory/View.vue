@@ -347,10 +347,9 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
 
     .button_wrap {
       display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 30px;
-      margin-bottom: 5%;
+        justify-content: center;
+        margin: 30px auto 5%;
+        width: 220px;
       button.back_btn {
         @include back_to_previous_btn;
 
@@ -419,10 +418,6 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
           }
         }
       }
-    }
-
-    .button_wrap {
-      padding: 0 20%;
     }
   }
 

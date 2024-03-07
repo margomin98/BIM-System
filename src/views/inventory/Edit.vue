@@ -93,7 +93,7 @@
         <div class="col">
           <div class="input-group" style="   justify-content: flex-start;">
             <div class="input-group-prepend"><span>*</span>盤點類型：</div>
-            <div class="check_section d-flex">
+            <div class="check_section">
               <template v-for="(item , index) in PlanType" :key="item">
                 <div class="form-check d-flex align-items-center">
                   <input type="radio" :id="`no${index}`" name="radio" :value="item" v-model="formParams.PlanType" />
@@ -912,12 +912,9 @@ watch,
 
 .button_wrap {
   display: flex;
-  margin-top: 30px;
-  justify-content: center;
-  padding: 0 28%;
-  margin-bottom: 5%;
-  gap: 20px;
-
+            justify-content: space-between;
+            margin: 30px auto 5%;
+            width: 210px;
   button.back_btn {
     @include back_to_previous_btn;
 
@@ -1374,13 +1371,9 @@ watch,
 
 @media only screen and (max-width: 767px) {
   .main_section {
-    input {
+    input,select{
       width: 100%;
     }
-    .button_wrap {
-      padding: unset;
-    }
-
     .input-group
       > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
         .valid-feedback

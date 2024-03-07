@@ -43,13 +43,10 @@
 
 <style lang="scss" scoped>
     @import "@/assets/css/global.scss";
-    .main_section {
-    }
     .button_wrap {
         display: flex;
         justify-content: center;
         margin: 30px auto 5%;
-        gap: 20px;
         .back_btn {
             @include back_to_previous_btn;
             &:hover {

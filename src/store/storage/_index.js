@@ -108,7 +108,7 @@ export const useStorageStore = defineStore('Storage', {
 	// method
 	actions: {
 		// 插入頁籤(以及取得每個頁籤所需下拉)
-		async insertTab(isQuick = false, detailsData={}) {
+		async insertTab(isQuick = false, detailsData) {
 			const dropdownStore = useAPIStore();
 			const utilsStore = useUtilsStore();
 			// 檢查必填 & 字數
@@ -137,7 +137,8 @@ export const useStorageStore = defineStore('Storage', {
 				}
 			}
 			// detailsData: 無 -> 填寫欄位新增的，有 -> getDetails讀取進來的資料 (不用檢查欄位)
-			const newData = _.cloneDeep(detailsData || this.middleForm);
+			let newData = detailsData || _.cloneDeep(this.middleForm);
+			// console.log('newData',newData);
 			if(!detailsData) {
 				if(!utilsStore.checkRequired(newData,RequireCheckList)) return;
 				if(!utilsStore.checkMaxLetter(newData,this.TabLetterCheckList)) return;

@@ -416,6 +416,25 @@ GetAntiForgeryToken
     border: none;
     height: 35px;
   }
+  .button_wrap {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px auto 5%;
+            width: 210px;
+            .back_btn {
+  @include back_to_previous_btn;
+  &:hover {
+    background-color: #5d85bb;
+  }
+}
+
+.send_btn {
+  @include search_and_send_btn;
+  &:hover {
+    background-color: #5D85BD;
+  }
+}
+      }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .info_wrap {
@@ -580,26 +599,6 @@ GetAntiForgeryToken
         .form-control {
           height: 100%;
           border-radius: 0;
-        }
-      }
-      .button_wrap {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px auto 5%;
-        width: 220px;
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-          &:nth-child(2) {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5D85BD;
-            }
-          }
         }
       }
     }
@@ -771,26 +770,6 @@ GetAntiForgeryToken
         .form-control {
           height: 100%;
           border-radius: 0;
-        }
-      }
-      .button_wrap {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px auto 5%;
-        width: 220px;
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-          &:nth-child(2) {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5D85BD;
-            }
-          }
         }
       }
     }
@@ -972,26 +951,6 @@ GetAntiForgeryToken
           }
         }
      
-      }
-      .button_wrap {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px auto 5%;
-        width: 220px;
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-          &:nth-child(2) {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5D85BD;
-            }
-          }
-        }
       }
     }
   }

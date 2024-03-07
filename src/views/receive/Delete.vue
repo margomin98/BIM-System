@@ -402,6 +402,27 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
     display: flex;
     align-self: center;
   }
+
+  
+  .button_wrap {
+      
+  display: flex;
+  justify-content: space-between;
+  margin: 30px auto 5%;
+  width: 210px;
+          button.back_btn {
+            @include back_to_previous_btn;
+            &:hover {
+              background-color: #5d85bb;
+            }
+          }
+          button.delete_btn {
+            @include back_to_previous_btn;
+            &:hover {
+              background-color: #a51e1e;
+            }
+          }
+        }
   @media only screen and (min-width: 1200px) {
     .main_section {
       input {
@@ -467,38 +488,6 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
               font-size: 20px;
               width: 135px;
               text-align: end;
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 28%;
-          margin-bottom: 5%;
-          gap: 20px;
-          button.back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-          .delete_btn {
-            background: var(--c-5, #E94B4B);
-            justify-content: center;
-            align-items: center;
-            display: inline-flex;
-            border-radius: 10px;
-            height: 40px;
-            width: 90px;
-            color: #FFF;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 700;
-            border: none;
-            margin: 0 10px;
-            &:hover {
-              background-color: #a51e1e;
             }
           }
         }
@@ -577,38 +566,6 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
               font-size: 20px;
               width: 170px;
               text-align: end;
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 28%;
-          margin-bottom: 5%;
-          gap: 20px;
-          button.back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-          .delete_btn {
-            background: var(--c-5, #E94B4B);
-            justify-content: center;
-            align-items: center;
-            display: inline-flex;
-            border-radius: 10px;
-            height: 40px;
-            width: 90px;
-            color: #FFF;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 700;
-            border: none;
-            margin: 0 10px;
-            &:hover {
-              background-color: #a51e1e;
             }
           }
         }
@@ -745,39 +702,6 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
               color: white;
               font-weight: 700;
               font-size: 20px;
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 10%;
-          margin-bottom: 5%;
-          gap: 20px;
-          button.back_btn {
-            @include back_to_previous_btn;
-            padding: 5px;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-          .delete_btn {
-            background: var(--c-5, #E94B4B);
-            justify-content: center;
-            align-items: center;
-            display: inline-flex;
-            border-radius: 10px;
-            height: 40px;
-            width: 90px;
-            color: #FFF;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 700;
-            border: none;
-            margin: 0 10px;
-            &:hover {
-              background-color: #a51e1e;
             }
           }
         }

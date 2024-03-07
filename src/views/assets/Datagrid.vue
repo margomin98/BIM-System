@@ -18,20 +18,21 @@
           <!-- 設備總類 -->
           <div class="col">
             <p>設備總類</p>
-            <select class="form-select" v-model="dgSearchParams.EquipType_Id" @change="async () => { DropdownArray.EquipCategory = await apiStore.getEquipCategory(dgSearchParams.EquipType_Id); dgSearchParams.Category_Id = ''; }">
-                <option value="">--請選擇--</option>
-                <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name }}</option>
-              </select>
+            <select class="form-select" v-model="dgSearchParams.EquipType_Id"
+              @change="async () => { DropdownArray.EquipCategory = await apiStore.getEquipCategory(dgSearchParams.EquipType_Id); dgSearchParams.Category_Id = ''; }">
+              <option value="">--請選擇--</option>
+              <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name }}</option>
+            </select>
           </div>
           <!-- 設備分類 -->
           <div class="col">
             <p>設備分類</p>
             <select class="form-select" v-model="dgSearchParams.Category_Id">
-                <option v-if="DropdownArray.EquipCategory.length == 0" value="">--請先選擇設備總類--</option>
-                <template v-else>
-                  <option value="">--請選擇--</option>
-                  <option v-for="option in DropdownArray.EquipCategory" :value="option.Id">{{ option.Name }}</option>
-</template>
+              <option v-if="DropdownArray.EquipCategory.length == 0" value="">--請先選擇設備總類--</option>
+              <template v-else>
+                <option value="">--請選擇--</option>
+                <option v-for="option in DropdownArray.EquipCategory" :value="option.Id">{{ option.Name }}</option>
+              </template>
             </select>
           </div>
           <!-- 儲位區域 -->
@@ -141,9 +142,9 @@
         :rowsPerPageOptions="[10, 20, 30]"
         currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
         <Column style="min-width: 60px;">
-<template #body="slotProps">
-  <Assets_return_button :params="slotProps" />
-</template>
+          <template #body="slotProps">
+            <Assets_return_button :params="slotProps" />
+          </template>
         </Column>
         <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable
           :style="{ 'min-width': item.width }"></Column>
@@ -358,126 +359,147 @@ onUnmounted(()=>{
 </script>
 
 <style lang="scss" scoped>
-  @import "@/assets/css/global.scss";
-  @import "@/assets/css/loading.css";
-  .datagrid_section {
-    .row {
-      @include datagrid_bg;
-    }
-    input,
-    select {
-      @include dropdown_btn;
-      width: 100%;
-      height: 35px;
-    }
-    .content {
-      p {
-        @include datagrid_title;
-      }
+@import "@/assets/css/global.scss";
+@import "@/assets/css/loading.css";
+
+.datagrid_section {
+  .row {
+    @include datagrid_bg;
+  }
+
+  input,
+  select {
+    @include dropdown_btn;
+    width: 100%;
+    height: 35px;
+  }
+
+  .content {
+    p {
+      @include datagrid_title;
     }
   }
-  .button_wrap {
-    display: flex;
-    margin-bottom: 25px;
-    gap: 20px;
-    .search_btn {
-      @include search_and_send_btn;
-      &:hover {
-        background-color: #5e7aa2;
-      }
-    }
-    .empty_btn {
-      @include empty_btn;
-      &:hover {
-        background-color: #5d85bd;
-      }
-    }
-    .export_btn {
-      @include export_btn;
-      &:hover {
-        background-color: #5e7aa2;
-      }
-    }
-    .import_btn {
-      @include import_btn;
-      &:hover {
-        background-color: #7e9ecb;
-      }
+}
+
+.button_wrap {
+  display: flex;
+  margin-bottom: 25px;
+  gap: 20px;
+
+  .search_btn {
+    @include search_and_send_btn;
+
+    &:hover {
+      background-color: #5e7aa2;
     }
   }
 
-  @media only screen and (min-width: 1200px) {
-    .main_section {
-      padding: 0 10%;
-      .datagrid_section {
-        .row {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-          grid-template-rows: 1fr 1fr;
-          gap: 10px;
-          padding: 2%;
-          button {
-            border: none;
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-          }
+  .empty_btn {
+    @include empty_btn;
+
+    &:hover {
+      background-color: #5d85bd;
+    }
+  }
+
+  .export_btn {
+    @include export_btn;
+
+    &:hover {
+      background-color: #5e7aa2;
+    }
+  }
+
+  .import_btn {
+    @include import_btn;
+
+    &:hover {
+      background-color: #7e9ecb;
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .main_section {
+    padding: 0 10%;
+
+    .datagrid_section {
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 10px;
+        padding: 2%;
+
+        button {
+          border: none;
+          padding: 0;
+          width: 100%;
+          font-size: 18px;
+          height: 100%;
         }
       }
     }
   }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .main_section {
-      padding: 0 5%;
+}
 
-      .datagrid_section {
-        .row {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
-          grid-template-rows: 1fr 1fr 1fr;
-          gap: 15px;
-          padding: 20px;
-          input {
-            height: 35px;
-          }
-          button {
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-            text-align: left;
-          }
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  .main_section {
+    padding: 0 5%;
+
+    .datagrid_section {
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        gap: 15px;
+        padding: 20px;
+
+        input {
+          height: 35px;
+        }
+
+        button {
+          padding: 0;
+          width: 100%;
+          font-size: 18px;
+          height: 100%;
+          text-align: left;
         }
       }
     }
   }
-  @media only screen and (max-width: 767px) {
-    .main_section {
-      padding: 5%;
-      .button_wrap{
+}
+
+@media only screen and (max-width: 767px) {
+  .main_section {
+    padding: 5%;
+
+    .button_wrap {
       display: grid;
-  grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
- }
-      .datagrid_section {
-        .row {
-          display: flex;
-          flex-direction: column;
-          gap: 10px 0;
-          padding: 30px;
-          p {
-            font-size: 18px;
-          }
-          button {
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-            text-align: left;
-          }
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+    }
+
+    .datagrid_section {
+      .row {
+        display: flex;
+        flex-direction: column;
+        gap: 10px 0;
+        padding: 30px;
+
+        p {
+          font-size: 18px;
+        }
+
+        button {
+          padding: 0;
+          width: 100%;
+          font-size: 18px;
+          height: 100%;
+          text-align: left;
         }
       }
     }
   }
-</style>
+}</style>

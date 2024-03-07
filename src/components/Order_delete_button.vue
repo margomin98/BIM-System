@@ -1,6 +1,7 @@
 <template>
   <div class='button_div'>
-    <button :class="{ disabled_btn: isDisabled, btn: !isDisabled}" @click="viewDelete()" :disabled="isDisabled">刪除</button>
+    <button :class="{ disabled_btn: isDisabled, btn: !isDisabled }" @click="viewDelete()"
+      :disabled="isDisabled">刪除</button>
   </div>
 </template>
 
@@ -40,7 +41,7 @@ function checkButton() {
   align-items: center;
 
   .btn {
-    @include delete_button;
+    @include content_delete_button;
     height: 25px;
 
     &:hover {
@@ -52,7 +53,8 @@ function checkButton() {
     @include disabled_btn;
     height: 25px;
     width: 50px;
-    &:hover{
+
+    &:hover {
       @include disabled_btn;
       height: 25px;
       width: 50px;

@@ -7,10 +7,10 @@
 <script>
 export default {
   props: ['params'],
-  setup(props,{emit}) {
+  setup(props, { emit }) {
     function deleteRow() {
       console.log(props.params.data);
-      emit('deleteFromData',props.params.data);
+      emit('deleteFromData', props.params.data);
     }
     return {
       deleteRow
@@ -29,8 +29,9 @@ export default {
   justify-content: center;
 
   .btn {
-    @include delete_button;
+    @include content_delete_button;
     height: 25px;
+
     &:hover {
       background: #FF7272
     }
@@ -45,4 +46,5 @@ export default {
       width: 50px;
     }
   }
-}</style>
+}
+</style>

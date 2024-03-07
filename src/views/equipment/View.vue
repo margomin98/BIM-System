@@ -69,7 +69,7 @@
 
       </div>
     </div>
-    <div class="info_wrap col">
+    <div class="info_wrap my-5 col">
       <div class="fixed_info">
         <div>
           <p>整合箱內容物</p>
@@ -260,32 +260,31 @@ span {
       font-size: 20px;
     }
   }
+
   .info_wrap:nth-child(4) {
-      margin-top: 3%;
-      .btn_section {
-            margin-left: 10px;
-            .delete_btn {
-              display: flex;
-              align-items: center;
-              @include delete_button;
-              height: 100%;
-              padding: 5px;
-              &:hover {
-                background: #FF7272
-              }
-            }
-          }
+    .btn_section {
+      margin-left: 10px;
+
+      .delete_btn {
+        display: flex;
+        align-items: center;
+        @include content_delete_button;
+        height: 100%;
+        padding: 5px;
+
+        &:hover {
+          background: #FF7272
+        }
+      }
     }
+  }
 }
 
 .button_wrap {
   display: flex;
-  margin-top: 30px;
-  justify-content: center;
-  padding: 0 28%;
-  margin-bottom: 5%;
-  gap: 20px;
-
+        justify-content: center;
+        margin: 30px auto 5%;
+        width: 220px;
   button.back_btn {
     @include back_to_previous_btn;
 
@@ -371,7 +370,6 @@ span {
     }
 
     .info_wrap:nth-child(3) {
-      margin-top: 3%;
 
       .count {
         .input-group {
@@ -380,7 +378,7 @@ span {
       }
     }
 
-   
+
   }
 
 
@@ -446,8 +444,6 @@ span {
     }
 
     .info_wrap:nth-child(3) {
-      margin-top: 3%;
-
       .count {
         .input-group {
           justify-content: left
@@ -455,7 +451,7 @@ span {
       }
     }
 
- 
+
   }
 
 
@@ -506,7 +502,6 @@ span {
         border-radius: 5px;
       }
 
-      margin-top: 3%;
 
       .count {
         .number-input-box {
@@ -516,9 +511,8 @@ span {
       }
     }
 
-  
+
   }
 
- 
-}
-</style>
+
+}</style>

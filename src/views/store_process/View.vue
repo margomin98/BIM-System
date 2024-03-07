@@ -464,6 +464,17 @@
       }
     }
   }
+  .button_wrap {
+    display: flex;
+    justify-content: center;
+    margin: 30px auto 5%;
+    .back_btn {
+  @include back_to_previous_btn;
+  &:hover {
+    background-color: #5d85bb;
+  }
+}
+        }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .readonly_box {
@@ -499,51 +510,6 @@
               width: 125px;
               text-align: end;
               white-space: nowrap;
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          gap: 20px;
-          margin-bottom: 5%;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-            &:nth-child(2) {
-              @include empty_btn;
-              &:hover {
-                background-color: #5e7aa2;
-              }
-            }
-            &:nth-child(3) {
-              display: inline-flex;
-              padding: 10px 10px;
-              justify-content: center;
-              align-items: center;
-              border-radius: 10px;
-              background: #385E96;
-              height: 40px;
-              width: 90px;
-              color: #FFF;
-              text-align: center;
-              font-size: 20px;
-              font-weight: 700;
-              border: none;
-              &:hover {
-                background-color: #57677c;
-              }
-            }
-            &:nth-child(4) {
-              @include search_and_send_btn;
-              &:hover {
-                background-color: #5e7aa2;
-              }
             }
           }
         }
@@ -673,51 +639,6 @@
             }
           }
         }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          gap: 20px;
-          margin-bottom: 5%;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-            &:nth-child(2) {
-              @include empty_btn;
-              &:hover {
-                background-color: #5e7aa2;
-              }
-            }
-            &:nth-child(3) {
-              display: inline-flex;
-              padding: 10px 10px;
-              justify-content: center;
-              align-items: center;
-              border-radius: 10px;
-              background: #385E96;
-              height: 40px;
-              width: 90px;
-              color: #FFF;
-              text-align: center;
-              font-size: 20px;
-              font-weight: 700;
-              border: none;
-              &:hover {
-                background-color: #57677c;
-              }
-            }
-            &:nth-child(4) {
-              @include search_and_send_btn;
-              &:hover {
-                background-color: #5e7aa2;
-              }
-            }
-          }
-        }
         .tab_section {
           .nav {
             overflow-x: auto;
@@ -807,6 +728,10 @@
   }
   @media only screen and (max-width: 767px) {
     .main_section {
+      .input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    margin-left: unset !important;
+    border-radius: 5px;
+}
       .readonly_box {
         @include readonly_box;
       }
@@ -861,55 +786,6 @@
             display: flex;
             flex-direction: row-reverse;
             justify-content: flex-end;
-          }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          gap: 20px;
-          margin-bottom: 5%;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              padding: 10px;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-            &:nth-child(2) {
-              @include empty_btn;
-              padding: 10px;
-              &:hover {
-                background-color: #5e7aa2;
-              }
-            }
-            &:nth-child(3) {
-              display: inline-flex;
-              padding: 10px 10px;
-              justify-content: center;
-              align-items: center;
-              border-radius: 10px;
-              background: #385E96;
-              height: 40px;
-              width: 90px;
-              color: #FFF;
-              text-align: center;
-              font-size: 20px;
-              font-weight: 700;
-              border: none;
-              padding: 10px;
-              &:hover {
-                background-color: #57677c;
-              }
-            }
-            &:nth-child(4) {
-              @include search_and_send_btn;
-              padding: 10px;
-              &:hover {
-                background-color: #5e7aa2;
-              }
-            }
           }
         }
         .tab_section {

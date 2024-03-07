@@ -17,7 +17,7 @@ h1 {
 }
 
 nav .navbar-collapse {
-    z-index: 1;
+    z-index: 999;
 }
 
 .datagrid_section .multiselect__tags {

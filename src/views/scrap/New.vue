@@ -470,30 +470,30 @@ GetAntiForgeryToken,
       margin: 30px auto 5%;
       .button_wrap {
         display: flex;
-        justify-content: space-between;
-        margin: 30px auto 5%;
-        width: 220px;
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-        }
-        .send_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
+  justify-content: space-between;
+  margin: 30px auto 5%;
+  width: 210px;
+}
+
+.back_btn {
+  @include back_to_previous_btn;
+  &:hover {
+    background-color: #5d85bb;
+  }
+}
+
+.send_btn {
+  @include search_and_send_btn;
+  &:hover {
+    background-color: #5D85BD;
+  }
+}
         .send_btn_disabled {
           background: #878787;
           &:hover {
             background: #878787;
           }
         }
-      }
     }
   }
   @media only screen and (min-width: 1200px) {
@@ -559,7 +559,6 @@ GetAntiForgeryToken,
             }
           }
         }
-        .button_wrap {}
       }
     }
   }
@@ -606,7 +605,7 @@ GetAntiForgeryToken,
             }
           }
         }
-        .button_wrap {}
+
       }
     }
   }
@@ -687,13 +686,6 @@ GetAntiForgeryToken,
                 @include red_star
               }
             }
-          }
-        }
-        .button_wrap {
-          width: 200px;
-          .send_btn {
-            width: 70px;
-            padding: 5px;
           }
         }
       }

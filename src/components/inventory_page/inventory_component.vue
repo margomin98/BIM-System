@@ -1068,7 +1068,6 @@ h1 {
 
       .add_btn {
         padding: 10px;
-
         margin-bottom: 15px;
       }
 

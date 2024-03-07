@@ -54,14 +54,14 @@
         <!-- 專案代碼 -->
         <div v-show="details.PlanType === '專案盤點'" class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend">專案代碼 :</div>
+            <div class="input-group-prepend">專案代碼：</div>
             <input type="text" class="form-control readonly_box" v-model="details.ProjectCode" readonly>
           </div>
         </div>
         <!-- 專案名稱 -->
         <div v-show="details.PlanType === '專案盤點'" class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend">專案名稱 :</div>
+            <div class="input-group-prepend">專案名稱：</div>
             <input type="text" class="form-control readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" v-model="details.ProjectName" readonly>
           </div>
         </div>
@@ -80,7 +80,7 @@
         </div>
       </div>
     </div>
-    <div class="info_wrap col">
+    <div class="info_wrap col my-5">
       <div class="fixed_info">
         <div>
           <p>盤點結果</p>
@@ -619,11 +619,8 @@ GetAntiForgeryToken
       justify-content: space-around;
     }
   }
-  .info_wrap:nth-child(4) {
-    margin-top: 3%;
-    .content {
-      border-radius: unset;
-    }
+  .info_wrap:nth-child(4){
+    border-radius: 10px 10px 0 0;
   }
   .info_wrap:nth-child(5) {
     .content {
@@ -641,7 +638,6 @@ GetAntiForgeryToken
           height: 50px;
         }
         .content_inner {
-          padding: 2%;
           border-radius: 10px;
           background-color: #c3d3da !important;
           .search_label{
@@ -740,29 +736,13 @@ GetAntiForgeryToken
 }
 .button_wrap {
   display: flex;
-  margin-top: 30px;
-  justify-content: center;
-  padding: 0 25%;
-  margin-bottom: 5%;
-  gap: 20px;
+        justify-content: center;
+        margin: 30px auto 5%;
+        width: 220px;
   button.back_btn {
     @include back_to_previous_btn;
     &:hover {
       background-color: #5d85bb;
-    }
-  }
-  button.send_btn {
-    @include search_and_send_btn;
-    width: 120px;
-    padding: 10px;
-    &:hover {
-      background-color: #8eb2e3;
-    }
-  }
-  button.send_btn_disabled {
-    background: #878787;
-    &:hover {
-      background: #878787;
     }
   }
 }
@@ -874,7 +854,11 @@ GetAntiForgeryToken
           width: 162px;
           text-align: end;
         }
+        .content_inner {
+          padding: 2%;
       }
+      }
+      
       .bottom_fixed {
         padding: 0 30%;
       }
@@ -901,6 +885,9 @@ GetAntiForgeryToken
             text-align: end;
           }
         }
+        .content_inner {
+          padding: 2%;
+      }
       }
       .bottom_fixed {
         padding: 0 30%;
@@ -910,10 +897,7 @@ GetAntiForgeryToken
 }
 
 @media only screen and (max-width: 767px) {
-  .button_wrap {
-    padding: unset;
-  }
-  .main_section {
+    .main_section {
     .info_wrap {
       padding: 1% 5% 0;
       .check_section {
@@ -922,6 +906,7 @@ GetAntiForgeryToken
         grid-template-rows: 1fr 1fr;
         gap: 5px;
         margin-left: 0 !important;
+        width: 100%;
         .form-check {
           gap: 5px;
           padding: 0;
@@ -960,6 +945,9 @@ GetAntiForgeryToken
         flex-direction: column;
         align-items: flex-start;
       }
+    }
+    .content_inner {
+          padding: 5%;
     }
   }
 }

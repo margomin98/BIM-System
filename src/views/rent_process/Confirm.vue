@@ -7,23 +7,26 @@
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
-          <p>單號：{{ details.AO_ID}}</p>
+          <p>單號：{{ details.AO_ID }}</p>
         </div>
         <div>
-          <p>申請人員：{{ details.Applicant}}</p>
+          <p>申請人員：{{ details.Applicant }}</p>
         </div>
         <div>
-          <p>申請日期：{{ details.ApplicationDate}}</p>
+          <p>申請日期：{{ details.ApplicationDate }}</p>
         </div>
       </div>
       <form>
         <div class="row g-0">
           <div class="col d-flex wrap column_section">
-            <label for="inputTitle1" class="form-label use"><p>用&ensp;&ensp;&ensp;&ensp;途</p></label>
+            <label for="inputTitle1" class="form-label use">
+              <p>用&ensp;&ensp;&ensp;&ensp;途</p>
+            </label>
             <div class="option">
               <div class='content'>
                 <div class="form-check" v-for="(option, index) in options" :key="index">
-                  <input class="form-check-input" type="radio" :value="option" :id="'radio' + (index + 1)" v-model="details.Use" :disabled="option !== details.Use && details.Use !== ''">
+                  <input class="form-check-input" type="radio" :value="option" :id="'radio' + (index + 1)"
+                    v-model="details.Use" :disabled="option !== details.Use && details.Use !== ''">
                   <label class="form-check-label" :for="'radio' + (index + 1)">{{ option }}</label>
                 </div>
               </div>
@@ -32,13 +35,17 @@
         </div>
         <div class="row g-0 project_details">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithButton" class="form-label"><p>專案代碼</p></label>
+            <label for="inputWithButton" class="form-label">
+              <p>專案代碼</p>
+            </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>{{ details.ProjectCode }}</p>
             </div>
           </div>
           <div class="col d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name" id="project_name"><p>專案名稱</p></label>
+            <label for="inputWithTitle" class="form-label project_name" id="project_name">
+              <p>專案名稱</p>
+            </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>{{ details.ProjectName }}</p>
             </div>
@@ -46,7 +53,9 @@
         </div>
         <div class="row g-0">
           <div class="col d-flex wrap" style="border: none">
-            <label for="inputTextarea" class="form-label"><p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p></label>
+            <label for="inputTextarea" class="form-label">
+              <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
+            </label>
             <div class="input-group" id='readonly_box'>
               <textarea class="form-control readonly_box" readonly v-model="details.Description"></textarea>
             </div>
@@ -59,8 +68,10 @@
         </div>
       </div>
       <div class="second_content">
-        <DataTable :size="'small'" :value="rowData1" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="420px">
-          <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+        <DataTable :size="'small'" :value="rowData1" resizableColumns columnResizeMode="expand" showGridlines scrollable
+          scroll-height="420px">
+          <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable
+            :style="{ 'min-width': item.width }"></Column>
         </DataTable>
       </div>
       <div class="fixed_info">
@@ -69,18 +80,20 @@
         </div>
       </div>
       <div class="third_content">
-        <DataTable :size="'small'" :value="rowData2" resizableColumns columnResizeMode="expand" showGridlines scrollable scroll-height="600px" :row-style="({ OM_IsExecute }) => !OM_IsExecute ? 'background-color: #CEE4EB;': null ">
+        <DataTable :size="'small'" :value="rowData2" resizableColumns columnResizeMode="expand" showGridlines scrollable
+          scroll-height="600px" :row-style="({ OM_IsExecute }) => !OM_IsExecute ? 'background-color: #CEE4EB;' : null">
           <Column header="交付確認" class="datatable_checkbox">
             <template style="min-width:50px; " #body="slotProps">
-                  <input type="checkbox" class="p-checkbox p-component" v-model="slotProps.data.OM_IsExecute">
-</template>
+              <input type="checkbox" class="p-checkbox p-component" v-model="slotProps.data.OM_IsExecute">
+            </template>
           </Column>
           <Column>
-<template #body="slotProps">
-  <AssetsView :params="slotProps" />
-</template>
+            <template #body="slotProps">
+              <AssetsView :params="slotProps" />
+            </template>
           </Column>
-        <Column v-for="item in datagrid2field" :field="item.field" :header="item.header" :sortable="item.sortable" :style="{'min-width': item.width}"></Column>
+          <Column v-for="item in datagrid2field" :field="item.field" :header="item.header" :sortable="item.sortable"
+            :style="{ 'min-width': item.width }"></Column>
         </DataTable>
       </div>
       <div class="fixed_info_count">
@@ -99,19 +112,25 @@
         </div>
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithButton" class="form-label"><p>備料人員</p></label>
+            <label for="inputWithButton" class="form-label">
+              <p>備料人員</p>
+            </label>
             <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly>{{ details.PreparedPerson}}</p>
+              <p class="readonly_box" readonly>{{ details.PreparedPerson }}</p>
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name"><p>備料完成日期</p></label>
+            <label for="inputWithTitle" class="form-label project_name">
+              <p>備料完成日期</p>
+            </label>
             <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly>{{ details.PrepareDate}}</p>
+              <p class="readonly_box" readonly>{{ details.PrepareDate }}</p>
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name"><p>備料備註</p></label>
+            <label for="inputWithTitle" class="form-label project_name">
+              <p>備料備註</p>
+            </label>
             <div class="input-group" id='readonly_box'>
               <textarea class="form-control readonly_box" readonly v-model="details.PrepareMemo"></textarea>
             </div>
@@ -126,21 +145,27 @@
         </div>
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithButton" class="form-label"><p>審核人員</p></label>
+            <label for="inputWithButton" class="form-label">
+              <p>審核人員</p>
+            </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly> {{ details.VerifyPerson }}</p>
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name"><p>審核結果</p></label>
-            
-      
-          <div class="input-group" id="readonly_box">
+            <label for="inputWithTitle" class="form-label project_name">
+              <p>審核結果</p>
+            </label>
+
+
+            <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly style="margin-bottom: 0;"> {{ details.VerifyResult }}</p>
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithTitle" class="form-label project_name"><p>審核日期</p></label>
+            <label for="inputWithTitle" class="form-label project_name">
+              <p>審核日期</p>
+            </label>
             <div class="input-group" id="readonly_box">
               <p class="readonly_box" readonly>{{ details.VerifyDate }}</p>
             </div>
@@ -148,7 +173,9 @@
         </div>
         <div class="row g-0">
           <div class="col d-flex wrap">
-            <label for="inputWithButton" class="form-label"><p>審核意見</p></label>
+            <label for="inputWithButton" class="form-label">
+              <p>審核意見</p>
+            </label>
             <div class="input-group" id="readonly_box">
               <textarea class="readonly_box form-control" readonly>{{ details.VerifyMemo }}</textarea>
             </div>
@@ -158,57 +185,64 @@
       <div class="six_content">
         <div class="fixed_info">
           <div class="six_content_title">
-            <p>交付簽章</p> </div>
-            <div class="six_content_date">
-            <p> {{ DeliveryDate}}</p>
-         </div>
+            <p>交付簽章</p>
+          </div>
+          <div class="six_content_date">
+            <p> {{ DeliveryDate }}</p>
+          </div>
         </div>
         <div class="row g-0">
-<template v-for="(item,index) in validation" :key="item.title">
-  <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-    <label for="inputWithButton" class="form-label "><span v-if="index !== 1">*</span><p>{{ item.title }}</p></label>
-    <div class="input-group use_acc input-with-icon" id="readonly_box">
-      <p class="readonly_box" readonly>{{ item.resultName }}</p>
-      <span class="icon-container">
-                      <img src="@/assets/accept.png" class="checkmark-icon" v-show="item.isValidate" />
-                    </span>
-    </div>
-    <button type="button" data-bs-toggle="modal" :data-bs-target="`#userConfirm-${index}`">驗證</button>
-  </div>
-  <!-- Modal Start -->
-  <div class="modal fade" :id="`userConfirm-${index}`" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content ">
-        <div class="modal-header">
-          <h5 class="modal-title">{{ item.title }}驗證</h5>
-          <p class='m-0 close_icon' data-bs-dismiss="modal">X</p>
-        </div>
-        <div class="modal-body">
-          <div class="col">
-            <div class="input-group mb-3">
-              <div class="modal-input-group-prepend">帳號：</div>
-              <input type="text" class="form-control" aria-label="Default" v-model="item.account" />
+          <template v-for="(item, index) in validation" :key="item.title">
+            <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
+              <label for="inputWithButton" class="form-label "><span v-if="index !== 1">*</span>
+                <p>{{ item.title }}</p>
+              </label>
+              <div class="input-group use_acc input-with-icon" id="readonly_box">
+                <p class="readonly_box" readonly>{{ item.resultName }}</p>
+                <span class="icon-container">
+                  <img src="@/assets/accept.png" class="checkmark-icon" v-show="item.isValidate" />
+                </span>
+              </div>
+              <button type="button" data-bs-toggle="modal" :data-bs-target="`#userConfirm-${index}`">驗證</button>
             </div>
-          </div>
-          <div class="col">
-            <div class="input-group mb-3">
-              <div class="modal-input-group-prepend">密碼：</div>
-              <input type="password" class="form-control" aria-label="Default" v-model="item.password" />
+            <!-- Modal Start -->
+            <div class="modal fade" :id="`userConfirm-${index}`" data-bs-backdrop="static" data-bs-keyboard="false"
+              tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content ">
+                  <div class="modal-header">
+                    <h5 class="modal-title">{{ item.title }}驗證</h5>
+                    <p class='m-0 close_icon' data-bs-dismiss="modal">X</p>
+                  </div>
+                  <div class="modal-body">
+                    <div class="col">
+                      <div class="input-group mb-3">
+                        <div class="modal-input-group-prepend">帳號：</div>
+                        <input type="text" class="form-control" aria-label="Default" v-model="item.account" />
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="input-group mb-3">
+                        <div class="modal-input-group-prepend">密碼：</div>
+                        <input type="password" class="form-control" aria-label="Default" v-model="item.password" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer m-auto">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                      @click="validate(index)">驗證</button>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="modal-footer m-auto">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="validate(index)">驗證</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Modal End -->
-</template>
+            <!-- Modal End -->
+          </template>
         </div>
         <div class="row g-0">
           <div class="col d-flex wrap">
-            <label for="inputWithButton" class="form-label" id="memo"><p>交付備註</p></label>
+            <label for="inputWithButton" class="form-label" id="memo">
+              <p>交付備註</p>
+            </label>
             <div class="input-group" id="memo_input">
               <textarea class="form-control" placeholder="最多輸入100字" v-model="DeliveryMemo"></textarea>
             </div>
@@ -218,7 +252,8 @@
     </div>
     <div class="col button_wrap">
       <button class="back_btn" @click="goBack">回上一頁</button>
-      <button class="send_btn" :disabled="!canSubmit" :class="{ send_btn_disabled: !canSubmit }" data-bs-toggle="modal" data-bs-target="#confirmModal">送出</button>
+      <button class="send_btn" :disabled="!canSubmit" :class="{ send_btn_disabled: !canSubmit }" data-bs-toggle="modal"
+        data-bs-target="#confirmModal">送出</button>
     </div>
     <!-- confirmModal -->
     <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
@@ -553,1141 +588,1294 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "@/assets/css/global.scss";
-  .six_content .fixed_info {
-    position: relative;
-    .six_content_title,
-    .six_content_date {
-      position: absolute;
-    }
-    .six_content_date {
-      right: 10px;
-      p {
-        font-size: 16px !important
-      }
+@import "@/assets/css/global.scss";
+
+.six_content .fixed_info {
+  position: relative;
+
+  .six_content_title,
+  .six_content_date {
+    position: absolute;
+  }
+
+  .six_content_date {
+    right: 10px;
+
+    p {
+      font-size: 16px !important
     }
   }
-  .readonly_box {
-    @include readonly_box;
-    width: 100%;
-    height: 100%;
-    justify-content: center;
+}
+
+.readonly_box {
+  @include readonly_box;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.input-group {
+  height: 100%;
+}
+
+.option {
+  @include readonly_box;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+}
+
+span {
+  @include red_star;
+}
+
+.modal {
+  .modal-body {
+    padding: 16px 16px 0;
+  }
+
+  button {
+    background: #506b91;
+    border: none;
+    font-weight: 700;
+    font-size: 18px;
+
+    &:hover {
+      background: #6d92b3;
+    }
+  }
+
+  .modal-input-group-prepend {
+    width: auto;
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .modal-footer {
+    padding: 0 12px 12px;
+    border: none;
+  }
+
+  .modal-header {
+    h5 {
+      font-weight: 700;
+    }
+
+    background: #3D4E61;
+    color: white;
     display: flex;
-    align-items: center;
+    justify-content: center;
+
+    .close_icon {
+      cursor: pointer;
+    }
+
+    .modal-title {
+      margin: auto;
+    }
   }
-  .input-group {
-    height: 100%;
-  }
-  .option {
-    @include readonly_box;
-    height: 100%;
-    width: 100%;
-    align-items: center;
-  }
-  span {
-    @include red_star;
-  }
-  .modal {
+}
+
+#confirmModal {
+  .modal-content {
+    border-radius: 0;
+    border: 1px solid black;
+
     .modal-body {
-      padding: 16px 16px 0;
-    }
-    button {
-      background: #506b91;
-      border: none;
-      font-weight: 700;
-      font-size: 18px;
-      &:hover {
-        background: #6d92b3;
-      }
-    }
-    .modal-input-group-prepend {
-      width: auto;
-      font-weight: 700;
-      font-size: 20px;
-    }
-    .modal-footer {
-      padding: 0 12px 12px;
-      border: none;
-    }
-    .modal-header {
-      h5 {
-        font-weight: 700;
-      }
-      background: #3D4E61;
+      background: #528091;
       color: white;
-      display: flex;
-      justify-content: center;
-      .close_icon {
-        cursor: pointer;
+      font-weight: 700;
+      text-align: center;
+      height: 80px;
+      border-bottom: 1px solid black;
+    }
+
+    .modal-footer {
+      margin: auto;
+      padding: 10px;
+      gap: 5px;
+
+      button:nth-child(1) {
+        font-weight: 700;
+        border: none;
+
+        &:hover {
+          background: #636260
+        }
       }
-      .modal-title {
-        margin: auto;
+
+      button:nth-child(2) {
+        background: #132238;
+        font-weight: 700;
+        border: none;
+
+        &:hover {
+          background: #426497
+        }
       }
     }
   }
-  #confirmModal {
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.checkmark-icon {
+  position: absolute;
+  top: 10%;
+  left: 93%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+}
+
+.project_details #project_name {
+  height: 100%;
+}
+
+.button_wrap {
+      display: flex;
+      justify-content: space-between;
+      margin: 30px auto 5%;
+      width: 210px;
+      .back_btn {
+  @include back_to_previous_btn;
+  &:hover {
+    background-color: #5d85bb;
+  }
+}
+
+.send_btn {
+    @include search_and_send_btn;
+  &:hover {
+    background-color: #5D85BD;
+  }
+}
+      .send_btn_disabled {
+        background: #878787;
+
+        &:hover {
+          background: #878787;
+        }
+      }
+    }
+@media only screen and (min-width: 1200px) {
+  .main_section {
     .modal-content {
-      border-radius: 0;
-      border: 1px solid black;
-      .modal-body {
+      width: 400px;
+      margin: auto;
+    }
+
+    .info_wrap {
+      margin: auto;
+      width: 1000px;
+
+      .input-group-prepend {
+        width: 100% !important;
+        text-align: center !important;
+      }
+
+      .fixed_info {
+        @include fixed_info;
         background: #528091;
+        border-radius: 0;
+        border-top: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+
+        p {
+          font-size: 20px;
+          margin-bottom: 0;
+        }
+      }
+
+      .fixed_info:nth-child(5) {
+        border-top: unset;
+      }
+
+      #readonly_box {
+        padding: 0;
+        background-color: #B4B4B4;
+        border-left: black 1px solid;
+      }
+
+      .third_content {
+        .list {
+          border-top: 1px solid black;
+          border-left: 1px solid black;
+          border-right: 1px solid black;
+
+          button {
+            @include content_delete_button;
+
+            &:hover {
+              background: #ff7272;
+            }
+          }
+        }
+      }
+
+      .fixed_info_count {
+        display: flex;
+        background: #3d5c67;
         color: white;
         font-weight: 700;
-        text-align: center;
-        height: 80px;
+        align-items: center;
+        height: 40px;
+        border-radius: 0;
         border-bottom: 1px solid black;
-      }
-      .modal-footer {
-        margin: auto;
-        padding: 10px;
-        gap: 5px;
-        button:nth-child(1) {
-          font-weight: 700;
-          border: none;
-          &:hover {
-            background: #636260
-          }
-        }
-        button:nth-child(2) {
-          background: #132238;
-          font-weight: 700;
-          border: none;
-          &:hover {
-            background: #426497
-          }
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        padding: 0 10px;
+        justify-content: right;
+        gap: 10px;
+
+        p {
+          font-size: 15px;
+          margin-bottom: 0;
         }
       }
-    }
-  }
-  .input-with-icon {
-    position: relative;
-  }
-  .checkmark-icon {
-    position: absolute;
-    top: 10%;
-    left: 93%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-  }
-  .project_details #project_name {
-    height: 100%;
-  }
-  @media only screen and (min-width: 1200px) {
-    .main_section {
-      .modal-content {
-        width: 400px;
-        margin: auto;
-      }
-      .info_wrap {
-        margin: auto;
-        width: 1000px;
-        .input-group-prepend {
-          width: 100% !important;
-          text-align: center !important;
-        }
+
+      .fourth_content {
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        background: white;
+
         .fixed_info {
-          @include fixed_info;
-          background: #528091;
+          border: none;
+          border-bottom: 1px solid black;
+        }
+
+        .form-check {
+          margin-left: 10px;
+        }
+
+        .form-control {
+          height: auto;
           border-radius: 0;
-          border-top: 1px solid black;
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .fixed_info:nth-child(5) {
-          border-top: unset;
-        }
-        #readonly_box {
           padding: 0;
-          background-color: #B4B4B4;
-          border-left: black 1px solid;
         }
-        .third_content {
-          .list {
-            border-top: 1px solid black;
-            border-left: 1px solid black;
-            border-right: 1px solid black;
-            button {
-              @include delete_button;
-              &:hover {
-                background: #ff7272;
-              }
-            }
-          }
-        }
-        .fixed_info_count {
-          display: flex;
-          background: #3d5c67;
-          color: white;
-          font-weight: 700;
-          align-items: center;
-          height: 40px;
-          border-radius: 0;
-          border-bottom: 1px solid black;
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          padding: 0 10px;
-          justify-content: right;
-          gap: 10px;
-          p {
-            font-size: 15px;
-            margin-bottom: 0;
-          }
-        }
-        .fourth_content {
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          background: white;
-          .fixed_info {
-            border: none;
-            border-bottom: 1px solid black;
-          }
-          .form-check {
-            margin-left: 10px;
-          }
-          .form-control {
-            height: auto;
-            border-radius: 0;
-            padding: 0;
-          }
-          .form-label {
-            font-weight: 700;
-            font-size: 20px;
-            white-space: nowrap;
-            height: 50px;
-            align-items: center;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            padding: 0 10px;
-            width: 150px;
-            p {
-              margin-bottom: 0;
-              text-align: center;
-            }
-          }
-          #readonly_box {
-            border-right: 1px solid black;
-          }
-          .wrap:nth-child(3) #readonly_box {
-            border-right: none;
-          }
-        }
-        .five_content {
-          border-left: 1px solid black;
-          border-bottom: 1px solid black;
-          .fixed_info {
-            border: none;
-            border-top: 1px solid black;
-            border-right: 1px solid black;
-          }
-          .form-check {
-            margin-left: 10px;
-          }
-          .form-control {
-            height: auto;
-            border-radius: 0;
-            padding: 0;
-          }
-          #readonly_box {
-            background: #b4b4b4;
-            font-weight: 700;
-          }
-          .wrap {
-            background: white;
-            border-top: 1px solid black;
-            align-items: center;
-          }
-          .form-label {
-            font-weight: 700;
-            font-size: 20px;
-            white-space: nowrap;
-            height: 50px;
-            align-items: center;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            padding: 0 16px;
-            width: 120px;
-            p {
-              margin-bottom: 0;
-              text-align: center;
-            }
-          }
-          .wrap:nth-child(1) #readonly_box,
-          .wrap:nth-child(3) #readonly_box {
-            border-right: 1px solid black;
-          }
-          .wrap:nth-child(2) {
-            label {
-              width: 205px;
-            }
-            .input-group {
-              border-left: 1px solid black;
-              border-right: 1px solid black;
-              display: flex;
-              justify-content: center;
-              align-content: center;
-              gap: 5px;
-            }
-          }
-        }
-        .six_content {
-          border-left: 1px solid black;
-          background: white;
-          border-bottom: 1px solid black;
-          span {
-            @include red_star;
-          }
-          .fixed_info {
-            border-left: none;
-            border-top: none;
-            border-right: 1px solid black;
-          }
-          .form-check {
-            margin-left: 10px;
-          }
-          .form-control {
-            height: auto;
-            border-radius: 0;
-            padding: 5px 10px 0;
-          }
-          .wrap {
-            background: white;
-            border-top: 1px solid black;
-            align-items: center;
-            border-right: 1px solid black;
-            button {
-              margin: 0 10px;
-              border-radius: 7px;
-              height: 30px;
-              width: 100px;
-              border: none;
-              background: #48658c;
-              color: white;
-              font-weight: 700;
-              font-size: 18px;
-              &:hover {
-                background-color: #5d85bd;
-              }
-            }
-          }
-          .form-label {
-            font-weight: 700;
-            font-size: 20px;
-            white-space: nowrap;
-            height: 50px;
-            align-items: center;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            padding: 0 10px;
-            width: 135px;
-            p {
-              margin-bottom: 0;
-              text-align: center;
-            }
-          }
-          .wrap:nth-child(2) {
-            border-right: 1px solid black;
-            label {
-              width: 80%;
-            }
-            #readonly_box {
-              border-right: 1px solid black;
-            }
-          }
-          .wrap:nth-child(3) {
-            border-right: 1px solid black;
-          }
-          .wrap:nth-child(1) {
-            border-right: 1px solid black;
-            textarea {
-              border-bottom: 0;
-            }
-            #memo {
-              width: 120px;
-              border: none
-            }
-          }
-          #memo_input {
-            border-left: 1px solid black;
-          }
-          .use_acc {
-            border-right: 1px solid black;
-          }
-        }
-        form {
-          border-top: 1px solid black;
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          .row:nth-child(3) {
-            textarea {
-              padding: 5px 10px 0;
-            }
-          }
-          .form-check {
-            margin-left: 10px;
-          }
-          .form-control {
-            height: auto;
-            border-radius: 0;
-            padding: 0;
-          }
-          .wrap {
-            background: white;
-            border-bottom: 0.5px solid black;
-            align-items: center;
-            label.use {
-              border-right: 1px solid black;
-            }
-            .option {
-              @include readonly_box;
-              height: 100%;
-              width: 100%;
-              align-items: center;
-              display: flex;
-              .content {
-                display: flex;
-              }
-            }
-            .project_name {
-              border-left: 1px solid black;
-            }
-          }
-          .form-label {
-            font-weight: 700;
-            font-size: 20px;
-            white-space: nowrap;
-            height: 50px;
-            align-items: center;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            padding: 0 20px;
-            width: 150px;
-            p {
-              width: 100px;
-              margin-bottom: 0;
-              text-align: center;
-            }
-          }
-        }
-        .input-group-prepend {
-          color: white;
+
+        .form-label {
           font-weight: 700;
           font-size: 20px;
-          width: 120px;
-          text-align: end;
-        }
-      }
-      .button_wrap {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px auto 5%;
-        width: 220px;
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-        }
-        .send_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-        .send_btn_disabled {
-          background: #878787;
-          &:hover {
-            background: #878787;
-          }
-        }
-      }
-    }
-  }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .main_section {
-      .modal-content {
-        width: 400px;
-        margin: auto;
-      }
-      .info_wrap {
-        margin: auto;
-        padding: 0 5%;
-        .input-group-prepend {
-          width: 100% !important;
-          text-align: center !important;
-        }
-        .fixed_info {
-          @include fixed_info;
-          background: #528091;
-          border-radius: 0;
-          border-top: 1px solid black;
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .fixed_info:nth-child(5) {
-          border-top: unset;
-        }
-        #readonly_box {
-          padding: 0;
-          background-color: #B4B4B4;
-          border-left: black 1px solid;
-        }
-        .third_content {
-          .list {
-            border-top: 1px solid black;
-            border-left: 1px solid black;
-            border-right: 1px solid black;
-            button {
-              @include delete_button;
-              &:hover {
-                background: #ff7272;
-              }
-            }
-          }
-        }
-        .fixed_info_count {
-          display: flex;
-          background: #3d5c67;
-          color: white;
-          font-weight: 700;
+          white-space: nowrap;
+          height: 50px;
           align-items: center;
-          height: 40px;
-          border-radius: 0;
-          border-bottom: 1px solid black;
-          border-left: 1px solid black;
-          border-right: 1px solid black;
+          margin: 0;
+          display: flex;
+          justify-content: center;
           padding: 0 10px;
-          justify-content: right;
-          gap: 10px;
+          width: 150px;
+
           p {
-            font-size: 15px;
             margin-bottom: 0;
+            text-align: center;
           }
         }
-        .fourth_content {
-          border-left: 1px solid black;
+
+        #readonly_box {
           border-right: 1px solid black;
-          background: white;
-          .fixed_info {
-            border: none;
-            border-bottom: 1px solid black;
-          }
-          .form-check {
-            margin-left: 10px;
-          }
-          .form-control {
-            height: auto;
-            border-radius: 0;
-            padding: 0;
-          }
-          .form-label {
-            font-weight: 700;
-            font-size: 20px;
-            white-space: nowrap;
-            height: 50px;
-            align-items: center;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            padding: 0 10px;
-            width: 150px;
-            p {
-              margin-bottom: 0;
-              text-align: center;
-            }
-          }
-          #readonly_box {
-            border-right: 1px solid black;
-          }
-          .wrap:nth-child(3) #readonly_box {
-            border-right: none;
-          }
         }
-        .five_content {
-          border-left: 1px solid black;
-          border-bottom: 1px solid black;
-          .fixed_info {
-            border: none;
-            border-top: 1px solid black;
-            border-right: 1px solid black;
-          }
-          .form-check {
-            margin-left: 10px;
-          }
-          .form-control {
-            height: auto;
-            border-radius: 0;
-            padding: 0;
-          }
-          #readonly_box {
-            background: #b4b4b4;
-            font-weight: 700;
-          }
-          .wrap {
-            background: white;
-            border-top: 1px solid black;
-            align-items: center;
-          }
-          .form-label {
-            font-weight: 700;
-            font-size: 20px;
-            white-space: nowrap;
-            height: 50px;
-            align-items: center;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            padding: 0 16px;
-            width: 120px;
-            p {
-              margin-bottom: 0;
-              text-align: center;
-            }
-          }
-          .wrap:nth-child(1) #readonly_box,
-          .wrap:nth-child(3) #readonly_box {
-            border-right: 1px solid black;
-          }
-          .wrap:nth-child(2) {
-            label {
-              width: 205px;
-            }
-            .input-group {
-              border-left: 1px solid black;
-              border-right: 1px solid black;
-              display: flex;
-              justify-content: center;
-              align-content: center;
-              width: 280px;
-            }
-          }
+
+        .wrap:nth-child(3) #readonly_box {
+          border-right: none;
         }
-        .six_content {
-          border-left: 1px solid black;
-          background: white;
-          border-bottom: 1px solid black;
-          span {
-            @include red_star;
-          }
-          .fixed_info {
-            border-left: none;
-            border-top: none;
-            border-right: 1px solid black;
-          }
-          .form-check {
-            margin-left: 10px;
-          }
-          .form-control {
-            height: auto;
-            border-radius: 0;
-            padding: 5px 10px 0;
-          }
-          .wrap {
-            background: white;
-            border-top: 1px solid black;
-            align-items: center;
-            border-right: 1px solid black;
-            button {
-              margin: 0 10px;
-              border-radius: 7px;
-              height: 30px;
-              width: 70px;
-              border: none;
-              background: #48658c;
-              color: white;
-              font-weight: 700;
-              font-size: 18px;
-              &:hover {
-                background-color: #5d85bd;
-              }
-            }
-          }
-          .form-label {
-            font-weight: 700;
-            font-size: 20px;
-            white-space: nowrap;
-            height: 50px;
-            align-items: center;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            padding: 0 10px;
-            width: 135px;
-            p {
-              margin-bottom: 0;
-              text-align: center;
-            }
-          }
-          .wrap:nth-child(2) {
-            border-right: 1px solid black;
-            label {
-              width: 80%;
-            }
-            #readonly_box {
-              border-right: 1px solid black;
-            }
-          }
-          .wrap:nth-child(3) {
-            border-right: 1px solid black;
-          }
-          .wrap:nth-child(1) {
-            border-right: 1px solid black;
-            textarea {
-              border-bottom: 0;
-            }
-            #memo {
-              width: 123px;
-              border: none
-            }
-          }
-          #memo_input {
-            border-left: 1px solid black;
-          }
-          .use_acc {
-            border-right: 1px solid black;
-            width: 100px;
-          }
-        }
-        form {
+      }
+
+      .five_content {
+        border-left: 1px solid black;
+        border-bottom: 1px solid black;
+
+        .fixed_info {
+          border: none;
           border-top: 1px solid black;
-          border-left: 1px solid black;
           border-right: 1px solid black;
-          .row:nth-child(3) {
-            textarea {
-              padding: 5px 10px 0;
-            }
-          }
-          .form-check {
-            margin-left: 10px;
-          }
-          .form-control {
-            height: auto;
-            border-radius: 0;
-            padding: 0;
-          }
-          .wrap {
-            background: white;
-            border-bottom: 0.5px solid black;
-            align-items: center;
-            label.use {
-              border-right: 1px solid black;
-            }
-            .option {
-              @include readonly_box;
-              height: 100%;
-              width: 100%;
-              align-items: center;
-              display: flex;
-              .content {
-                display: flex;
-              }
-            }
-            .project_name {
-              border-left: 1px solid black;
-            }
-          }
-          .form-label {
-            font-weight: 700;
-            font-size: 20px;
-            white-space: nowrap;
-            height: 50px;
-            align-items: center;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            padding: 0 20px;
-            width: 150px;
-            p {
-              width: 100px;
-              margin-bottom: 0;
-              text-align: center;
-            }
-          }
         }
-        .input-group-prepend {
-          color: white;
+
+        .form-check {
+          margin-left: 10px;
+        }
+
+        .form-control {
+          height: auto;
+          border-radius: 0;
+          padding: 0;
+        }
+
+        #readonly_box {
+          background: #b4b4b4;
+          font-weight: 700;
+        }
+
+        .wrap {
+          background: white;
+          border-top: 1px solid black;
+          align-items: center;
+        }
+
+        .form-label {
           font-weight: 700;
           font-size: 20px;
-          width: 120px;
-          text-align: end;
-        }
-      }
-      .button_wrap {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px auto 5%;
-        width: 220px;
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-        }
-        .send_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-        .send_btn_disabled {
-          background: #878787;
-          &:hover {
-            background: #878787;
-          }
-        }
-      }
-    }
-  }
-  @media only screen and (max-width: 767px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
-      }
-      #readonly_box {
-        background: #b4b4b4;
-      }
-      .info_wrap {
-        margin: auto;
-        padding: 0 5%;
-        .input-group-prepend {
-          width: 100% !important;
-          text-align: center !important;
-        }
-        .fixed_info {
-          @include fixed_info;
-          background: #528091;
-          border-radius: 0;
-          border-top: 1px solid black;
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          flex-direction: column;
-          height: unset;
-          padding: 10px;
-          p {
-            font-size: 18px;
-            margin-bottom: 0;
-          }
-        }
-        .fixed_info:nth-child(5) {
-          border-top: unset;
-        }
-        .third_content {
-          .list {
-            border: 1px solid black;
-            button {
-              @include delete_button;
-              &:hover {
-                background: #ff7272;
-              }
-            }
-          }
-        }
-        .fixed_info_count {
-          display: flex;
-          background: #3d5c67;
-          color: white;
-          font-weight: 700;
+          white-space: nowrap;
+          height: 50px;
           align-items: center;
-          height: 40px;
-          border-radius: 0;
-          border-bottom: 1px solid black;
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          padding: 0 10px;
-          justify-content: right;
-          gap: 10px;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          padding: 0 16px;
+          width: 120px;
+
           p {
-            font-size: 15px;
             margin-bottom: 0;
+            text-align: center;
           }
         }
-        .fourth_content {
-          border-bottom: 1px solid black;
-          border-left: 1px solid black;
+
+        .wrap:nth-child(1) #readonly_box,
+        .wrap:nth-child(3) #readonly_box {
           border-right: 1px solid black;
-          .fixed_info {
-            border: none;
-          }
-          .form-check {
-            margin-left: 10px;
-          }
-          .form-control {
-            height: auto;
-            border-radius: 0;
-          }
-          .wrap {
-            background: white;
-            border-top: 1px solid black;
-            align-items: center;
-            flex-direction: column;
-            .option {
-              display: flex;
-            }
-          }
-          .form-label {
-            font-weight: 700;
-            font-size: 20px;
-            white-space: nowrap;
-            align-items: center;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            height: 30px;
-            border-bottom: 1px solid black;
-            p {
-              font-size: 18px;
-              margin-bottom: 0;
-              text-align: center;
-            }
-          }
         }
-        .five_content {
-          border-bottom: 1px solid black;
-          border-left: 1px solid black;
-          border-right: 1px solid black;
-          .fixed_info {
-            border: none;
+
+        .wrap:nth-child(2) {
+          label {
+            width: 205px;
           }
-          #readonly_box {
-            background: #b4b4b4;
-            font-weight: 700;
+
+          .input-group {
+            border-left: 1px solid black;
+            border-right: 1px solid black;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-content: center;
             gap: 5px;
-            padding: 5px;
           }
-          .form-check {
-            margin-left: 10px;
-          }
-          .form-control {
-            height: auto;
-            border-radius: 0;
-          }
-          .wrap {
-            background: white;
-            border-top: 1px solid black;
-            align-items: center;
-            flex-direction: column;
-            .option {
-              display: flex;
-            }
-          }
-          .form-label {
-            border-bottom: 1px solid black;
-            font-weight: 700;
-            font-size: 20px;
-            white-space: nowrap;
-            height: 50px;
-            align-items: center;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            width: 100%;
+        }
+      }
+
+      .six_content {
+        border-left: 1px solid black;
+        background: white;
+        border-bottom: 1px solid black;
+
+        span {
+          @include red_star;
+        }
+
+        .fixed_info {
+          border-left: none;
+          border-top: none;
+          border-right: 1px solid black;
+        }
+
+        .form-check {
+          margin-left: 10px;
+        }
+
+        .form-control {
+          height: auto;
+          border-radius: 0;
+          padding: 5px 10px 0;
+        }
+
+        .wrap {
+          background: white;
+          border-top: 1px solid black;
+          align-items: center;
+          border-right: 1px solid black;
+
+          button {
+            margin: 0 10px;
+            border-radius: 7px;
             height: 30px;
-            p {
-              font-size: 18px;
-              margin-bottom: 0;
-              text-align: center;
+            width: 100px;
+            border: none;
+            background: #48658c;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+
+            &:hover {
+              background-color: #5d85bd;
             }
           }
         }
-        .six_content {
-          border-bottom: 1px solid black;
-          border-left: 1px solid black;
-          .fixed_info {
-            height: 47px;
-            border: none;
-            border-bottom: 1px solid black;
+
+        .form-label {
+          font-weight: 700;
+          font-size: 20px;
+          white-space: nowrap;
+          height: 50px;
+          align-items: center;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          padding: 0 10px;
+          width: 135px;
+
+          p {
+            margin-bottom: 0;
+            text-align: center;
+          }
+        }
+
+        .wrap:nth-child(2) {
+          border-right: 1px solid black;
+
+          label {
+            width: 80%;
+          }
+
+          #readonly_box {
             border-right: 1px solid black;
           }
-          .form-check {
-            margin-left: 10px;
+        }
+
+        .wrap:nth-child(3) {
+          border-right: 1px solid black;
+        }
+
+        .wrap:nth-child(1) {
+          border-right: 1px solid black;
+
+          textarea {
+            border-bottom: 0;
           }
-          .form-control {
-            height: auto;
-            border-radius: 0;
+
+          #memo {
+            width: 120px;
             border: none
           }
-          #readonly_box {
-            background: #b4b4b4;
-            font-weight: 700;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-            padding: 5px;
-            border-bottom: 1px solid black;
-          }
-          .wrap {
-            background: white;
-            align-items: center;
-            flex-direction: column;
-            button {
-              margin: 10px;
-              border-radius: 7px;
-              height: 30px;
-              width: 100px;
-              border: none;
-              background: #48658c;
-              color: white;
-              font-weight: 700;
-              font-size: 18px;
-              &:hover {
-                background-color: #5d85bd;
-              }
-            }
-          }
-          .form-label {
-            border-bottom: 1px solid black;
-            font-weight: 700;
-            font-size: 20px;
-            white-space: nowrap;
-            align-items: center;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            height: 30px;
-            p {
-              font-size: 18px;
-              margin-bottom: 0;
-              text-align: center;
-            }
-          }
-          .wrap:nth-child(1) {
-            border-right: 1px solid black;
-          }
-          .wrap:nth-child(2) {
-            border-top: 1px solid black;
-            border-right: 1px solid black;
-          }
-          .wrap:nth-child(3),
-          .wrap:nth-child(4) {
-            border-right: 1px solid black;
-            border-top: 1px solid black;
-          }
-          .wrap:nth-child(5) {
-            border-bottom: 1px solid black;
-            border-right: 1px solid black;
-            border-top: 1px solid black;
+        }
+
+        #memo_input {
+          border-left: 1px solid black;
+        }
+
+        .use_acc {
+          border-right: 1px solid black;
+        }
+      }
+
+      form {
+        border-top: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+
+        .row:nth-child(3) {
+          textarea {
+            padding: 5px 10px 0;
           }
         }
-        form {
+
+        .form-check {
+          margin-left: 10px;
+        }
+
+        .form-control {
+          height: auto;
+          border-radius: 0;
+          padding: 0;
+        }
+
+        .wrap {
+          background: white;
+          border-bottom: 0.5px solid black;
+          align-items: center;
+
+          label.use {
+            border-right: 1px solid black;
+          }
+
+          .option {
+            @include readonly_box;
+            height: 100%;
+            width: 100%;
+            align-items: center;
+            display: flex;
+
+            .content {
+              display: flex;
+            }
+          }
+
+          .project_name {
+            border-left: 1px solid black;
+          }
+        }
+
+        .form-label {
+          font-weight: 700;
+          font-size: 20px;
+          white-space: nowrap;
+          height: 50px;
+          align-items: center;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          padding: 0 20px;
+          width: 150px;
+
+          p {
+            width: 100px;
+            margin-bottom: 0;
+            text-align: center;
+          }
+        }
+      }
+
+      .input-group-prepend {
+        color: white;
+        font-weight: 700;
+        font-size: 20px;
+        width: 120px;
+        text-align: end;
+      }
+    }
+
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  .main_section {
+    .modal-content {
+      width: 400px;
+      margin: auto;
+    }
+
+    .info_wrap {
+      margin: auto;
+      padding: 0 5%;
+
+      .input-group-prepend {
+        width: 100% !important;
+        text-align: center !important;
+      }
+
+      .fixed_info {
+        @include fixed_info;
+        background: #528091;
+        border-radius: 0;
+        border-top: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+
+        p {
+          font-size: 20px;
+          margin-bottom: 0;
+        }
+      }
+
+      .fixed_info:nth-child(5) {
+        border-top: unset;
+      }
+
+      #readonly_box {
+        padding: 0;
+        background-color: #B4B4B4;
+        border-left: black 1px solid;
+      }
+
+      .third_content {
+        .list {
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
-          .form-check {
-            margin-left: 10px;
-            font-size: 18px;
-          }
-          .form-control {
-            height: auto;
-            border-radius: 0;
-          }
-          .wrap {
-            background: white;
-            border-bottom: 1px solid black;
-            align-items: center;
-            flex-direction: column;
-            label.use,
-            .form-label {
-              border-bottom: 1px solid black;
-              width: 100%;
-              height: 30px;
-              justify-content: space-evenly;
-            }
-            .option {
-              height: 100%;
-              width: 100%;
-              font-size: 18px;
-              background: #b4b4b4;
-              font-weight: 700;
-              .content {
-                padding: 5px;
-                display: grid;
-                grid-template-columns: 1fr 1fr 1fr;
-                grid-template-rows: 1fr 1fr;
-                gap: 0px 0px;
-                grid-auto-flow: row;
-                grid-template-areas: ". . ." ". . .";
-                white-space: nowrap;
-                justify-items: center;
-                div {
-                  width: 90px;
-                }
-              }
+
+          button {
+            @include content_delete_button;
+
+            &:hover {
+              background: #ff7272;
             }
           }
-          .form-label {
-            font-weight: 700;
-            font-size: 20px;
-            white-space: nowrap;
-            height: 50px;
-            align-items: center;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            padding: 0 30px;
-            p {
-              width: 100px;
-              font-size: 18px;
-              margin-bottom: 0;
-              text-align: center;
-            }
-          }
-        }
-        .input-group-prepend {
-          color: white;
-          font-weight: 700;
-          font-size: 20px;
-          width: 120px;
-          text-align: end;
         }
       }
-      .button_wrap {
+
+      .fixed_info_count {
         display: flex;
-        justify-content: space-between;
-        margin: 30px auto 5%;
-        width: 220px;
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
+        background: #3d5c67;
+        color: white;
+        font-weight: 700;
+        align-items: center;
+        height: 40px;
+        border-radius: 0;
+        border-bottom: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        padding: 0 10px;
+        justify-content: right;
+        gap: 10px;
+
+        p {
+          font-size: 15px;
+          margin-bottom: 0;
+        }
+      }
+
+      .fourth_content {
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        background: white;
+
+        .fixed_info {
+          border: none;
+          border-bottom: 1px solid black;
+        }
+
+        .form-check {
+          margin-left: 10px;
+        }
+
+        .form-control {
+          height: auto;
+          border-radius: 0;
+          padding: 0;
+        }
+
+        .form-label {
+          font-weight: 700;
+          font-size: 20px;
+          white-space: nowrap;
+          height: 50px;
+          align-items: center;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          padding: 0 10px;
+          width: 150px;
+
+          p {
+            margin-bottom: 0;
+            text-align: center;
+          }
+        }
+
+        #readonly_box {
+          border-right: 1px solid black;
+        }
+
+        .wrap:nth-child(3) #readonly_box {
+          border-right: none;
+        }
+      }
+
+      .five_content {
+        border-left: 1px solid black;
+        border-bottom: 1px solid black;
+
+        .fixed_info {
+          border: none;
+          border-top: 1px solid black;
+          border-right: 1px solid black;
+        }
+
+        .form-check {
+          margin-left: 10px;
+        }
+
+        .form-control {
+          height: auto;
+          border-radius: 0;
+          padding: 0;
+        }
+
+        #readonly_box {
+          background: #b4b4b4;
+          font-weight: 700;
+        }
+
+        .wrap {
+          background: white;
+          border-top: 1px solid black;
+          align-items: center;
+        }
+
+        .form-label {
+          font-weight: 700;
+          font-size: 20px;
+          white-space: nowrap;
+          height: 50px;
+          align-items: center;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          padding: 0 16px;
+          width: 120px;
+
+          p {
+            margin-bottom: 0;
+            text-align: center;
+          }
+        }
+
+        .wrap:nth-child(1) #readonly_box,
+        .wrap:nth-child(3) #readonly_box {
+          border-right: 1px solid black;
+        }
+
+        .wrap:nth-child(2) {
+          label {
+            width: 205px;
+          }
+
+          .input-group {
+            border-left: 1px solid black;
+            border-right: 1px solid black;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            width: 280px;
+          }
+        }
+      }
+
+      .six_content {
+        border-left: 1px solid black;
+        background: white;
+        border-bottom: 1px solid black;
+
+        span {
+          @include red_star;
+        }
+
+        .fixed_info {
+          border-left: none;
+          border-top: none;
+          border-right: 1px solid black;
+        }
+
+        .form-check {
+          margin-left: 10px;
+        }
+
+        .form-control {
+          height: auto;
+          border-radius: 0;
+          padding: 5px 10px 0;
+        }
+
+        .wrap {
+          background: white;
+          border-top: 1px solid black;
+          align-items: center;
+          border-right: 1px solid black;
+
+          button {
+            margin: 0 10px;
+            border-radius: 7px;
+            height: 30px;
+            width: 70px;
+            border: none;
+            background: #48658c;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+
             &:hover {
-              background-color: #5d85bb;
+              background-color: #5d85bd;
             }
           }
         }
-        .send_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
+
+        .form-label {
+          font-weight: 700;
+          font-size: 20px;
+          white-space: nowrap;
+          height: 50px;
+          align-items: center;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          padding: 0 10px;
+          width: 135px;
+
+          p {
+            margin-bottom: 0;
+            text-align: center;
           }
         }
-        .send_btn_disabled {
-          background: #878787;
-          &:hover {
-            background: #878787;
+
+        .wrap:nth-child(2) {
+          border-right: 1px solid black;
+
+          label {
+            width: 80%;
+          }
+
+          #readonly_box {
+            border-right: 1px solid black;
           }
         }
+
+        .wrap:nth-child(3) {
+          border-right: 1px solid black;
+        }
+
+        .wrap:nth-child(1) {
+          border-right: 1px solid black;
+
+          textarea {
+            border-bottom: 0;
+          }
+
+          #memo {
+            width: 123px;
+            border: none
+          }
+        }
+
+        #memo_input {
+          border-left: 1px solid black;
+        }
+
+        .use_acc {
+          border-right: 1px solid black;
+          width: 100px;
+        }
+      }
+
+      form {
+        border-top: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+
+        .row:nth-child(3) {
+          textarea {
+            padding: 5px 10px 0;
+          }
+        }
+
+        .form-check {
+          margin-left: 10px;
+        }
+
+        .form-control {
+          height: auto;
+          border-radius: 0;
+          padding: 0;
+        }
+
+        .wrap {
+          background: white;
+          border-bottom: 0.5px solid black;
+          align-items: center;
+
+          label.use {
+            border-right: 1px solid black;
+          }
+
+          .option {
+            @include readonly_box;
+            height: 100%;
+            width: 100%;
+            align-items: center;
+            display: flex;
+
+            .content {
+              display: flex;
+            }
+          }
+
+          .project_name {
+            border-left: 1px solid black;
+          }
+        }
+
+        .form-label {
+          font-weight: 700;
+          font-size: 20px;
+          white-space: nowrap;
+          height: 50px;
+          align-items: center;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          padding: 0 20px;
+          width: 150px;
+
+          p {
+            width: 100px;
+            margin-bottom: 0;
+            text-align: center;
+          }
+        }
+      }
+
+      .input-group-prepend {
+        color: white;
+        font-weight: 700;
+        font-size: 20px;
+        width: 120px;
+        text-align: end;
       }
     }
   }
-</style>
+}
+
+@media only screen and (max-width: 767px) {
+  .main_section {
+    .readonly_box {
+      @include readonly_box;
+    }
+
+    #readonly_box {
+      background: #b4b4b4;
+    }
+
+    .info_wrap {
+      margin: auto;
+      padding: 0 5%;
+
+      .input-group-prepend {
+        width: 100% !important;
+        text-align: center !important;
+      }
+
+      .fixed_info {
+        @include fixed_info;
+        background: #528091;
+        border-radius: 0;
+        border-top: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        flex-direction: column;
+        height: unset;
+        padding: 10px;
+
+        p {
+          font-size: 18px;
+          margin-bottom: 0;
+        }
+      }
+
+      .fixed_info:nth-child(5) {
+        border-top: unset;
+      }
+
+      .third_content {
+        .list {
+          border: 1px solid black;
+
+          button {
+            @include content_delete_button;
+
+            &:hover {
+              background: #ff7272;
+            }
+          }
+        }
+      }
+
+      .fixed_info_count {
+        display: flex;
+        background: #3d5c67;
+        color: white;
+        font-weight: 700;
+        align-items: center;
+        height: 40px;
+        border-radius: 0;
+        border-bottom: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        padding: 0 10px;
+        justify-content: right;
+        gap: 10px;
+
+        p {
+          font-size: 15px;
+          margin-bottom: 0;
+        }
+      }
+
+      .fourth_content {
+        border-bottom: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+
+        .fixed_info {
+          border: none;
+        }
+
+        .form-check {
+          margin-left: 10px;
+        }
+
+        .form-control {
+          height: auto;
+          border-radius: 0;
+        }
+
+        .wrap {
+          background: white;
+          border-top: 1px solid black;
+          align-items: center;
+          flex-direction: column;
+
+          .option {
+            display: flex;
+          }
+        }
+
+        .form-label {
+          font-weight: 700;
+          font-size: 20px;
+          white-space: nowrap;
+          align-items: center;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          width: 100%;
+          height: 30px;
+          border-bottom: 1px solid black;
+
+          p {
+            font-size: 18px;
+            margin-bottom: 0;
+            text-align: center;
+          }
+        }
+      }
+
+      .five_content {
+        border-bottom: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+
+        .fixed_info {
+          border: none;
+        }
+
+        #readonly_box {
+          background: #b4b4b4;
+          font-weight: 700;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 5px;
+          padding: 5px;
+        }
+
+        .form-check {
+          margin-left: 10px;
+        }
+
+        .form-control {
+          height: auto;
+          border-radius: 0;
+        }
+
+        .wrap {
+          background: white;
+          border-top: 1px solid black;
+          align-items: center;
+          flex-direction: column;
+
+          .option {
+            display: flex;
+          }
+        }
+
+        .form-label {
+          border-bottom: 1px solid black;
+          font-weight: 700;
+          font-size: 20px;
+          white-space: nowrap;
+          height: 50px;
+          align-items: center;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          width: 100%;
+          height: 30px;
+
+          p {
+            font-size: 18px;
+            margin-bottom: 0;
+            text-align: center;
+          }
+        }
+      }
+
+      .six_content {
+        border-bottom: 1px solid black;
+        border-left: 1px solid black;
+
+        .fixed_info {
+          height: 47px;
+          border: none;
+          border-bottom: 1px solid black;
+          border-right: 1px solid black;
+        }
+
+        .form-check {
+          margin-left: 10px;
+        }
+
+        .form-control {
+          height: auto;
+          border-radius: 0;
+        }
+
+        #readonly_box {
+          background: #b4b4b4;
+          font-weight: 700;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 5px;
+          padding: 5px;
+          border-bottom: 1px solid black;
+        }
+
+        .wrap {
+          background: white;
+          align-items: center;
+          flex-direction: column;
+
+          button {
+            margin: 10px;
+            border-radius: 7px;
+            height: 30px;
+            width: 100px;
+            border: none;
+            background: #48658c;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+
+            &:hover {
+              background-color: #5d85bd;
+            }
+          }
+        }
+
+        .form-label {
+          border-bottom: 1px solid black;
+          font-weight: 700;
+          font-size: 20px;
+          white-space: nowrap;
+          align-items: center;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          width: 100%;
+          height: 30px;
+
+          p {
+            font-size: 18px;
+            margin-bottom: 0;
+            text-align: center;
+          }
+        }
+
+        .wrap:nth-child(1) {
+          border-right: 1px solid black;
+        }
+
+        .wrap:nth-child(2) {
+          border-top: 1px solid black;
+          border-right: 1px solid black;
+        }
+
+        .wrap:nth-child(3),
+        .wrap:nth-child(4) {
+          border-right: 1px solid black;
+          border-top: 1px solid black;
+        }
+
+        .wrap:nth-child(5) {
+          border-bottom: 1px solid black;
+          border-right: 1px solid black;
+          border-top: 1px solid black;
+        }
+      }
+
+      form {
+        border-top: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+
+        .form-check {
+          margin-left: 10px;
+          font-size: 18px;
+        }
+
+        .form-control {
+          height: auto;
+          border-radius: 0;
+        }
+
+        .wrap {
+          background: white;
+          border-bottom: 1px solid black;
+          align-items: center;
+          flex-direction: column;
+
+          label.use,
+          .form-label {
+            border-bottom: 1px solid black;
+            width: 100%;
+            height: 30px;
+            justify-content: space-evenly;
+          }
+
+          .option {
+            height: 100%;
+            width: 100%;
+            font-size: 18px;
+            background: #b4b4b4;
+            font-weight: 700;
+
+            .content {
+              padding: 5px;
+              display: grid;
+              grid-template-columns: 1fr 1fr 1fr;
+              grid-template-rows: 1fr 1fr;
+              gap: 0px 0px;
+              grid-auto-flow: row;
+              grid-template-areas: ". . ." ". . .";
+              white-space: nowrap;
+              justify-items: center;
+
+              div {
+                width: 90px;
+              }
+            }
+          }
+        }
+
+        .form-label {
+          font-weight: 700;
+          font-size: 20px;
+          white-space: nowrap;
+          height: 50px;
+          align-items: center;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          padding: 0 30px;
+
+          p {
+            width: 100px;
+            font-size: 18px;
+            margin-bottom: 0;
+            text-align: center;
+          }
+        }
+      }
+
+      .input-group-prepend {
+        color: white;
+        font-weight: 700;
+        font-size: 20px;
+        width: 120px;
+        text-align: end;
+      }
+    }
+
+  }
+}</style>

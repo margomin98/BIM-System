@@ -303,6 +303,17 @@
     .project_details #project_name {
       height: 100%;
     }
+    .button_wrap {
+        display: flex;
+        justify-content: center;
+        margin: 30px auto 5%;
+        .back_btn {
+            @include back_to_previous_btn;
+            &:hover {
+                background-color: #5d85bb;
+            }
+        }
+    }
     @media only screen and (min-width: 1200px) {
       .main_section {
         .info_wrap {
@@ -553,20 +564,6 @@
                 width: 100px;
                 margin-bottom: 0;
                 text-align: center;
-              }
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          justify-content: center;
-          margin: 30px auto 5%;
-          width: 220px;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
               }
             }
           }
@@ -827,26 +824,6 @@
             }
           }
         }
-        .button_wrap {
-          display: flex;
-          justify-content: center;
-          margin: 30px auto 5%;
-          width: 220px;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-            &:nth-child(2) {
-              @include search_and_send_btn;
-              &:hover {
-                background-color: #5d85bd;
-              }
-            }
-          }
-        }
       }
     }
     @media only screen and (max-width: 767px) {
@@ -1101,26 +1078,6 @@
                 font-size: 18px;
                 margin-bottom: 0;
                 text-align: center;
-              }
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          justify-content: center;
-          margin: 30px auto 5%;
-          width: 220px;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-            &:nth-child(2) {
-              @include search_and_send_btn;
-              &:hover {
-                background-color: #5d85bd;
               }
             }
           }

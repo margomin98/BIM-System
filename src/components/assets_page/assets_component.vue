@@ -282,7 +282,7 @@
                 <button class='zoom_img' data-bs-toggle="modal" data-bs-target="#viewFile_modal" @click="utilsStore.viewImgFile(file)">
                   <img src="@/assets/zoom.png">
                 </button>
-                <span v-show="PageType==='edit'" @click="utilsStore.deleteImgFile2(file, Form, index)">x</span>
+                <span class="remove_img" v-show="PageType==='edit'" @click="utilsStore.deleteImgFile2(file, Form, index)">x</span>
               </swiper-slide>
             </swiper-container>
             <div class="swiper_pagination"></div>
@@ -423,6 +423,22 @@
 
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
+
+.remove_img{
+    display: flex;
+    background: red;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: wheat;
+    align-items: self-start;
+    justify-content: center;
+    font-weight: 700;
+    position: absolute;
+    top: 3%;
+    right: 2%;
+    z-index: 5;
+}
 .form-select:disabled {
     background-color: #B4B4B4;
 }
