@@ -157,140 +157,80 @@
 </template>
 
 <script setup>
-  import Multiselect from 'vue-multiselect'
-  import Loading from 'vue-loading-overlay';
-  import DataTable from 'primevue/datatable';
-  import Column from 'primevue/column';
-  import Assets_return_button from "@/components/Assets_return_button";
-  import Navbar from "@/components/Navbar.vue";
-  import {
-    onMounted,
-    reactive,
-    ref,
-    onUnmounted
-  } from "vue";
-  import {
-    Asset_StastusArray
-  } from "@/assets/js/dropdown"
-  import {
-    useUtilsStore,
-    useAPIStore
-  } from '@/store'
-  import {
-    storeToRefs
-  } from 'pinia';
-  import axios from 'axios';
-  const utilsStore = useUtilsStore();
-  const apiStore = useAPIStore();
-  const {
-    dgSearchParams,
-    dg,
-    dgRowData
-  } = storeToRefs(utilsStore);
-  const searchParams = reactive({
-    EquipType_Id: '',
-    Category_Id: '',
-    AssetsId: '',
-    AssetName: '',
-    Status: '',
-    ProductType: '',
-    ProductSpec: '',
-    ProjectName: '',
-    Area_Id: '',
-    Layer_Id: '',
-    StartDate: '',
-    EndDate: '',
-    EndDate: '',
-    AssetsInOperator: '',
-    Custodian: '',
-  });
-  const DropdownArray = reactive({
-    Status: Asset_StastusArray,
-    ProjectCode: [],
-    EquipType: [],
-    EquipCategory: [],
-    Area: [],
-    Layer: [],
-    Staff: [],
-  });
-  const datagridfield = [{
-      field: "AssetsId",
-      width: '150px',
-      header: "資產編號"
-    },
-    {
-      field: "AssetName",
-      width: '150px',
-      header: "物品名稱"
-    },
-    {
-      field: "Status",
-      width: '150px',
-      header: "狀態"
-    },
-    {
-      field: "Custodian",
-      width: '150px',
-      header: "保管人員"
-    },
-    {
-      field: "ProductType",
-      width: '150px',
-      header: "型號"
-    },
-    {
-      field: "ProductSpec",
-      width: '150px',
-      header: "規格"
-    },
-    {
-      field: "EquipTypeName",
-      width: '150px',
-      header: "設備總類"
-    },
-    {
-      field: "EquipCategoryName",
-      width: '150px',
-      header: "設備分類"
-    },
-    {
-      field: "AreaName",
-      width: '150px',
-      header: "區域"
-    },
-    {
-      field: "LayerName",
-      width: '150px',
-      header: "櫃位"
-    },
-    {
-      field: "InboundDate",
-      width: '150px',
-      header: "入庫日期"
-    },
-    {
-      field: "AssetsInOperator",
-      width: '150px',
-      header: "入庫人員"
-    },
-  ];
-  const inputfile = ref(null);
-  const isLoading = ref(false);
-  onMounted(async() => {
-    utilsStore.$reset();
-    for (const key in searchParams) {
-      dgSearchParams.value[key] = '';
-    }
-    dg.value.sortField = 'AssetsId'
-    submit('', 'search');
-    DropdownArray.EquipType = await apiStore.getEquipType();
-    DropdownArray.Area = await apiStore.getArea();
-    DropdownArray.Staff = await apiStore.getStaff();
-    DropdownArray.ProjectCode = await apiStore.getFuzzyProject();
-  });
-  onUnmounted(() => {
-    utilsStore.$dispose();
-  })
+import Multiselect from 'vue-multiselect'
+import Loading from 'vue-loading-overlay';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import Assets_return_button from "@/components/Assets_return_button";
+import Navbar from "@/components/Navbar.vue";
+import { onMounted, reactive, ref, onUnmounted } from "vue";
+import { Asset_StastusArray } from "@/assets/js/dropdown"
+import { useUtilsStore, useAPIStore } from '@/store'
+import { storeToRefs } from 'pinia';
+import axios from 'axios';
+const utilsStore = useUtilsStore();
+const apiStore = useAPIStore();
+const { dgSearchParams , dg , dgRowData } = storeToRefs(utilsStore);
+
+const searchParams = reactive({
+  EquipType_Id: '',
+  Category_Id: '',
+  AssetsId: '',
+  AssetName: '',
+  Status: '',
+  ProductType: '',
+  ProductSpec: '',
+  ProjectName: '',
+  Area_Id: '',
+  Layer_Id: '',
+  StartDate: '',
+  EndDate: '',
+  EndDate: '',
+  AssetsInOperator: '',
+  Custodian: '',
+});
+const DropdownArray = reactive({
+  Status: Asset_StastusArray,
+  ProjectCode: [],
+  EquipType: [],
+  EquipCategory: [],
+  Area: [],
+  Layer: [],
+  Staff: [],
+});
+const datagridfield = [
+  { field: "AssetsId", width: '150px', header: "資產編號" },
+  { field: "AssetName", width: '150px', header: "物品名稱" },
+  { field: "Status", width: '150px', header: "狀態" },
+  { field: "Custodian", width: '150px', header: "保管人員" },
+  { field: "ProjectName", width: '150px', header: "專案名稱" },
+  { field: "ProductType", width: '150px', header: "型號" },
+  { field: "ProductSpec", width: '150px', header: "規格" },
+  { field: "EquipTypeName", width: '150px', header: "設備總類" },
+  { field: "EquipCategoryName", width: '150px', header: "設備分類" },
+  { field: "AreaName", width: '150px', header: "區域" },
+  { field: "LayerName", width: '150px', header: "櫃位" },
+  { field: "InboundDate", width: '150px', header: "入庫日期" },
+  { field: "AssetsInOperator", width: '150px', header: "入庫人員" },
+];
+const inputfile = ref(null);
+const isLoading = ref(false);
+
+onMounted(async () => {
+  utilsStore.$reset();
+  for(const key in searchParams) {
+    dgSearchParams.value[key] = '';
+  }
+  dg.value.sortField = 'AssetsId'
+  submit('', 'search');
+  DropdownArray.EquipType = await apiStore.getEquipType();
+  DropdownArray.Area = await apiStore.getArea();
+  DropdownArray.Staff = await apiStore.getCustodian();
+  DropdownArray.ProjectCode = await apiStore.getFuzzyProject();
+});
+onUnmounted(()=>{
+  utilsStore.$dispose();
+})
   async function submit(event, type) {
     const form = new FormData();
     //將表格資料append到 form
