@@ -203,6 +203,7 @@ const datagridfield = [
   { field: "AssetName", width: '150px', header: "物品名稱" },
   { field: "Status", width: '150px', header: "狀態" },
   { field: "Custodian", width: '150px', header: "保管人員" },
+  { field: "ProjectName", width: '150px', header: "專案名稱" },
   { field: "ProductType", width: '150px', header: "型號" },
   { field: "ProductSpec", width: '150px', header: "規格" },
   { field: "EquipTypeName", width: '150px', header: "設備總類" },
