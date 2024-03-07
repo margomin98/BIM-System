@@ -422,6 +422,7 @@ const submit = async (isDone) => {
 // 清空檢索欄位(不包含已選項目)
 const clear = () => {
     utilsStore.clearSearchParams(searchParams);
+    searchParams.ProjectCode = Form.value.ProjectCode;
     searchParams.ProjectSelect = { Text: '--請選擇--', Value: '' };
     DropdownArray.value.EquipCategory = [];
     DropdownArray.value.Layer = [];
