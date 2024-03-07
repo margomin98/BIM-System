@@ -32,6 +32,10 @@
               placeholder="請選擇" label="Text" :showLabels="false" track-by="Text"></multiselect>
           </div>
           <div class="col">
+            <p>專案名稱</p>
+            <input type="text" v-model="dgSearchParams.ProjectName" />
+          </div>
+          <div class="col">
             <p>資產編號</p>
             <input type="text" v-model="dgSearchParams.AssetsId" />
           </div>
@@ -176,6 +180,7 @@ const searchParams = reactive({
   Status: '',
   ProductType: '',
   ProductSpec: '',
+  ProjectName: '',
   Area_Id: '',
   Layer_Id: '',
   StartDate: '',
