@@ -7,6 +7,15 @@
     <div class="container-fluid datagrid_section">
       <div class="content">
         <div class="row">
+          <!-- 狀態 -->
+          <div class="col">
+            <p>狀態</p>
+            <select class="form-select" v-model="dgSearchParams.Status">
+              <option value="">--請選擇--</option>
+              <option v-for="option in DropdownArray.Status" :value="option">{{ option }}</option>
+            </select>
+          </div>
+          <!-- 設備總類 -->
           <div class="col">
             <p>設備總類</p>
             <select class="form-select" v-model="dgSearchParams.EquipType_Id" @change="async () => { DropdownArray.EquipCategory = await apiStore.getEquipCategory(dgSearchParams.EquipType_Id); dgSearchParams.Category_Id = ''; }">
@@ -14,6 +23,7 @@
                 <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name }}</option>
               </select>
           </div>
+          <!-- 設備分類 -->
           <div class="col">
             <p>設備分類</p>
             <select class="form-select" v-model="dgSearchParams.Category_Id">
@@ -24,40 +34,7 @@
 </template>
             </select>
           </div>
-          <!-- 專案代碼 -->
-          <div class="col">
-            <p>專案代碼</p>
-            <multiselect v-model="dgSearchParams.ProjectSelect" :allow-empty="false"
-              @select="utilsStore.onDGProjectSelect" :options="DropdownArray.ProjectCode" :max-height="300"
-              placeholder="請選擇" label="Text" :showLabels="false" track-by="Text"></multiselect>
-          </div>
-          <div class="col">
-            <p>專案名稱</p>
-            <input type="text" v-model="dgSearchParams.ProjectName" />
-          </div>
-          <div class="col">
-            <p>資產編號</p>
-            <input type="text" v-model="dgSearchParams.AssetsId" />
-          </div>
-          <div class="col">
-            <p>資產名稱</p>
-            <input type="text" v-model="dgSearchParams.AssetName" />
-          </div>
-          <div class="col">
-            <p>狀態</p>
-            <select class="form-select" v-model="dgSearchParams.Status">
-              <option value="">--請選擇--</option>
-              <option v-for="option in DropdownArray.Status" :value="option">{{ option }}</option>
-            </select>
-          </div>
-          <div class="col">
-            <p>型號</p>
-            <input type="text" v-model="dgSearchParams.ProductType" />
-          </div>
-          <div class="col">
-            <p>規格</p>
-            <input type="text" v-model="dgSearchParams.ProductSpec" />
-          </div>
+          <!-- 儲位區域 -->
           <div class="col">
             <p>儲位區域</p>
             <select class="form-select" v-model="dgSearchParams.Area_Id"
@@ -66,18 +43,52 @@
               <option v-for="option in DropdownArray.Area" :value="option.Id">{{ option.Name }}</option>
             </select>
           </div>
+          <!-- 儲位櫃位 -->
           <div class="col">
             <p>儲位櫃位</p>
             <select class="form-select" v-model="dgSearchParams.Layer_Id">
               <option v-if="DropdownArray.Layer.length == 0" value="">--請先選擇儲位區域--</option>
-<template v-else>
-  <option value="">
-    --請選擇--</option>
-  <option v-for="option in DropdownArray.Layer" :value="option.Id">{{ option.Name }}</option>
-</template>
+              <template v-else>
+                <option value="">
+                  --請選擇--</option>
+                <option v-for="option in DropdownArray.Layer" :value="option.Id">{{ option.Name }}</option>
+              </template>
             </select>
           </div>
-          <div class="col  flex-col">
+          <!-- 專案代碼 -->
+          <div class="col">
+            <p>專案代碼</p>
+            <multiselect v-model="dgSearchParams.ProjectSelect" :allow-empty="false"
+              @select="utilsStore.onDGProjectSelect" :options="DropdownArray.ProjectCode" :max-height="300"
+              placeholder="請選擇" label="Text" :showLabels="false" track-by="Text"></multiselect>
+          </div>
+          <!-- 資產編號 -->
+          <div class="col">
+            <p>資產編號</p>
+            <input type="text" v-model="dgSearchParams.AssetsId" />
+          </div>
+          <!-- 物品名稱 -->
+          <div class="col">
+            <p>物品名稱</p>
+            <input type="text" v-model="dgSearchParams.AssetName" />
+          </div>
+          <!-- 型號 -->
+          <div class="col">
+            <p>型號</p>
+            <input type="text" v-model="dgSearchParams.ProductType" />
+          </div>
+          <!-- 規格 -->
+          <div class="col">
+            <p>規格</p>
+            <input type="text" v-model="dgSearchParams.ProductSpec" />
+          </div>
+          <!-- 專案名稱 -->
+          <div class="col">
+            <p>專案名稱</p>
+            <input type="text" v-model="dgSearchParams.ProjectName" />
+          </div>
+          <!-- 入庫日期(起) -->
+          <div class="col">
             <p>入庫日期(起)</p>
             <div class="date-selector">
               <div class="input-container">
@@ -85,12 +96,14 @@
               </div>
             </div>
           </div>
+          <!-- 入庫日期(迄) -->
           <div class="col">
             <p>入庫日期(迄)</p>
             <div class="date-selector">
               <input type="date" v-model="dgSearchParams.EndDate" class="date-input" />
             </div>
           </div>
+          <!-- 保管人員 -->
           <div class="col">
             <p>保管人員</p>
             <select class="form-select" v-model="dgSearchParams.Custodian">
@@ -98,6 +111,7 @@
               <option v-for="item in DropdownArray.Staff" :key="item" :value="item">{{ item }}</option>
             </select>
           </div>
+          <!-- 入庫人員 -->
           <div class="col">
             <p>入庫人員</p>
             <select class="form-select" v-model="dgSearchParams.AssetsInOperator">
