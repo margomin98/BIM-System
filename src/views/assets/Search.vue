@@ -83,9 +83,27 @@ onMounted,
 </script>
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-  span {
-    @include red_star;
+
+  .button_wrap {
+    display: flex;
+            justify-content: space-between;
+            margin: 30px auto 5%;
+            width: 210px;
+          .back_btn {
+  @include back_to_previous_btn;
+  &:hover {
+    background-color: #5d85bb;
   }
+}
+
+.send_btn {
+  @include search_and_send_btn;
+
+  &:hover {
+    background-color: #5D85BD;
+  }
+}
+        }
   @media only screen and (min-width: 1200px) {
     .main_section {
       h1 {
@@ -117,27 +135,6 @@ onMounted,
             height: 35px;
           }
          
-        }
-        .button_wrap {
-          display: flex;
-          justify-content: center;
-          margin: 30px auto 5%;
-          width: 250px;
-          gap: 10px;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-            &:nth-child(2) {
-              @include search_and_send_btn;
-              &:hover {
-                background-color: #5d85bd;
-              }
-            }
-          }
         }
       }
     }
@@ -174,27 +171,6 @@ onMounted,
           }
          
         }
-        .button_wrap {
-          display: flex;
-          justify-content: center;
-          margin: 30px auto 5%;
-          width: 250px;
-          gap: 10px;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-            &:nth-child(2) {
-              @include search_and_send_btn;
-              &:hover {
-                background-color: #5d85bd;
-              }
-            }
-          }
-        }
       }
     }
   }
@@ -227,27 +203,6 @@ onMounted,
             height: 35px;
           }
          
-        }
-        .button_wrap {
-          display: flex;
-          justify-content: center;
-          margin: 30px auto 5%;
-          width: 250px;
-          gap: 10px;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-            &:nth-child(2) {
-              @include search_and_send_btn;
-              &:hover {
-                background-color: #5d85bd;
-              }
-            }
-          }
         }
       }
     }

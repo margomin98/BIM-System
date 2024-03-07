@@ -992,6 +992,7 @@
                     .tab-content {
                         background: #3E4E5F;
                         padding: 50px 30px;
+                        border-radius: 0 0 10px 10px;
                         .storage_dropdown {
                             display: flex;
                             flex-direction: column;

@@ -70,7 +70,7 @@
         <div v-show="formParams.PlanType === '專案盤點'" class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span>*</span>專案代碼 :
+              <span>*</span>專案代碼：
             </div>
             <input type="text" class="form-control" placeholder="最多輸入10字" v-model="formParams.ProjectCode">
             <button class="form_search_btn" @click="getProjectName('upperForm')">搜尋</button>
@@ -80,7 +80,7 @@
         <div v-show="formParams.PlanType === '專案盤點'" class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              專案名稱 :
+              專案名稱：
             </div>
             <input type="text" class="form-control readonly_box" aria-label="Default"
               aria-describedby="inputGroup-sizing-default" v-model="formParams.ProjectName" readonly>
@@ -119,7 +119,7 @@
                 <div class='second_content'>
                   <div class='wrap1'>
                     <div class='col'>
-                      <p>設備總類</p>
+                      <p class="search_label">設備總類</p>
                       <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
@@ -132,7 +132,7 @@
                       </div>
                     </div>
                     <div class='col'>
-                      <p>設備分類</p>
+                      <p class="search_label">設備分類</p>
                       <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false"
@@ -146,12 +146,12 @@
                       </div>
                     </div>
                     <div class='col'>
-                      <p>物品名稱</p>
+                      <p class="search_label">物品名稱</p>
                       <input type="text" class="form-control text-center" placeholder="最多輸入20字"
                         v-model="searchParams.AssetName" />
                     </div>
                     <div class='col'>
-                      <p>儲位區域</p>
+                      <p class="search_label">儲位區域</p>
                       <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false" @click="getAreaName">
@@ -164,7 +164,7 @@
                       </div>
                     </div>
                     <div class='col'>
-                      <p>儲位櫃位</p>
+                      <p class="search_label">儲位櫃位</p>
                       <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false" :disabled="searchParams.AreaName === ''">
@@ -177,7 +177,7 @@
                       </div>
                     </div>
                     <div v-show="formParams.PlanType === '專案盤點'" class='col'>
-                      <p>專案代碼</p>
+                      <p class="search_label">專案代碼</p>
                       <input type="text" class="form-control text-center" placeholder="最多輸入10字"
                         v-model="searchParams.ProjectCode" />
                     </div>
@@ -873,11 +873,9 @@ span {
 
 .button_wrap {
   display: flex;
-  margin-top: 30px;
-  justify-content: center;
-  padding: 0 28%;
-  margin-bottom: 5%;
-  gap: 20px;
+  justify-content: space-between;
+  margin: 30px auto 5%;
+  width: 210px;
 
   button.back_btn {
     @include back_to_previous_btn;
@@ -1012,10 +1010,8 @@ span {
         }
       }
 
-      .form-label {
-        white-space: nowrap;
-        font-weight: 800;
-        font-size: 18px;
+      .search_label {
+        font-weight: 700;
       }
 
       .dropdown {
@@ -1026,25 +1022,25 @@ span {
           display: flex;
           justify-content: space-between;
           align-items: center;
-              padding: 5px 10px;
+          padding: 5px 10px;
         }
+
         .dropdown-menu {
-          width: 225px;
-          
+          width: 100%;
+
           .dropdown-item {
             text-align: left;
           }
         }
       }
+
       div {
-        padding: 0 5px;
 
         p {
           color: black;
           text-align: center;
           white-space: nowrap;
           font-size: 18px;
-          font-weight: 700;
           margin-bottom: 5px;
         }
       }
@@ -1177,23 +1173,12 @@ span {
       background: #d9d9d9;
 
       .wrap1 {
-        padding: 10px 80px;
+        padding: 20px 80px;
+        display: grid;
+        gap: 20px 10px;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
 
-        // .dropdown {
-        //   button {
-        //     background: white;
-        //     width: 100%;
-        //     border: none;
-        //     display: flex;
-        //     justify-content: space-between;
-        //     align-items: center;
-        //   }
-        //   .dropdown-menu {
-        //     width: 225px;
-        //     .dropdown-item {
-        //       text-align: left;
-        //     }
-        //   }
         // }
       }
     }
@@ -1315,7 +1300,7 @@ span {
         display: grid;
         grid-auto-columns: 1fr;
         grid-template-columns: 1fr 1fr 1fr;
-        gap: 10px 0;
+        gap: 10px;
         // .dropdown {
         //   button {
         //     background: white;
@@ -1339,17 +1324,17 @@ span {
 
 @media only screen and (max-width: 767px) {
   .main_section {
-    input {
+
+    input,
+    select {
       width: 100%;
     }
-    .button_wrap {
-      padding: unset;
+
+    .form_search_btn {
+      margin-top: 10px;
     }
 
-    .input-group
-      > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
-        .valid-feedback
-      ):not(.invalid-tooltip):not(.invalid-feedback) {
+    .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
       margin-left: 0 !important;
       border-radius: 5px;
     }
@@ -1394,10 +1379,7 @@ span {
     }
 
     .info_wrap:nth-child(3) {
-      .input-group
-        > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
-          .valid-feedback
-        ):not(.invalid-tooltip):not(.invalid-feedback) {
+      .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
         margin-left: unset !important;
         border-radius: 5px;
       }
@@ -1431,9 +1413,14 @@ span {
 
     .second_content {
       .wrap1 {
-        padding: 20px 20px 0;
-
+        padding: 20px;
+        display: flex;
+        gap: 10px 0;
         flex-direction: column;
+
+        .dropdown-menu {
+          font-weight: normal;
+        }
 
         // .dropdown {
         //   button {
@@ -1454,9 +1441,6 @@ span {
         //   }
         // }
 
-        div {
-          margin: 10px 0;
-        }
       }
     }
   }
@@ -1469,5 +1453,4 @@ span {
     margin-left: 0 !important;
   }
 }
-
 </style>

@@ -579,11 +579,9 @@
 }
 .button_wrap {
   display: flex;
-  margin-top: 30px;
-  justify-content: center;
-  padding: 0 25%;
-  margin-bottom: 5%;
-  gap: 20px;
+            justify-content: space-between;
+            margin: 30px auto 5%;
+            width: 240px;
   button.back_btn {
     @include back_to_previous_btn;
     &:hover {
@@ -764,9 +762,6 @@
           }
         }
       }
-    }
-    .button_wrap {
-      padding: 0 5%;
     }
   }
   .check_section {

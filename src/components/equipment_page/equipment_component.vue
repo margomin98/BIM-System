@@ -24,9 +24,10 @@
             <div class="input-group mb-3">
               <div class="input-group-prepend flex">儲位區域：</div>
               <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName">
-                                {{ '請選擇' }}
-                            </button>
+                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false" @click="getAreaName">
+                  {{ '請選擇' }}
+                </button>
                 <div class="dropdown-menu" aria-labelledby="areaDropdown">
                   <!-- <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item"
                                     @click="selectArea(item)">{{ item.Name }}</p> -->
@@ -254,63 +255,75 @@
       </div>
 
     </div>
-    </div>
+  </div>
 </template>
 
 <script>
-  import ListItem from "@/components/Equipment/item.vue"
-  export default {
-    components: {
-      ListItem,
-    }
+import ListItem from "@/components/Equipment/item.vue"
+export default {
+  components: {
+    ListItem,
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  @import "@/assets/css/global.scss";
-  .item_wrap {
+@import "@/assets/css/global.scss";
+
+.item_wrap {
   height: 350px;
   overflow: auto;
   display: grid;
   gap: 20px 0;
 }
+
 span {
   @include red_star;
 }
+
 .modal-body {
   padding: 0 !important;
 }
+
 .info_wrap:nth-child(1) {
   margin-bottom: 3% !important;
 }
+
 .readonly_box {
   @include readonly_box;
 }
+
 h1 {
   text-align: center;
   font-weight: 600;
   @include title_color;
 }
+
 .fixed_title {
   @include fixed_title;
 }
+
 .item_wrap {
   height: 350px;
   overflow: auto;
+
   .item {
     background-color: #526f8e;
     border-radius: 10px;
     padding: 20px;
     margin: 20px 0;
   }
+
   .failed_storage {
     background-color: #8a2828;
     border: 1px solid white;
   }
 }
+
 .main_section {
   .fixed_info {
     @include fixed_info;
+
     p {
       font-size: 20px;
       margin-bottom: 0;
@@ -319,8 +332,10 @@ h1 {
 
   .content {
     @include content_bg;
+
     .dropdown {
       width: 100%;
+
       .dropdown-menu {
         width: 100%;
       }
@@ -333,33 +348,41 @@ h1 {
         align-items: center;
       }
     }
+
     .input-number {
       @include count_btn;
     }
+
     .form-control {
       height: 35px;
       border-radius: 0;
     }
+
     .input-group-prepend {
       color: white;
       font-weight: 700;
       font-size: 20px;
     }
+
     .search_section {
       background: #b5c9d0;
       padding: 20px;
       border-radius: 10px;
       margin-bottom: 20px;
+
       .input-group-prepend {
         color: black;
       }
+
       .btn_section {
         display: flex;
         justify-content: center;
+
         button.send_btn {
           @include search_and_send_btn;
           font-size: 18px;
           padding: 5px;
+
           &:hover {
             background-color: #5e7aa2;
           }
@@ -367,19 +390,23 @@ h1 {
       }
     }
   }
+
   .info_wrap:nth-child(3) {
     margin-top: 3%;
+
     .count {
       .btn_section {
         margin-left: 10px;
+
         .delete_btn {
           display: flex;
           align-items: center;
-          @include delete_button;
+          @include content_delete_button;
           height: 100%;
           padding: 5px;
           width: 80px;
           font-size: 18px;
+
           &:hover {
             background: #ff7272;
           }
@@ -388,12 +415,15 @@ h1 {
     }
   }
 }
+
 .modal {
   padding: 0 5%;
+
   .modal-content {
     background-color: unset;
     border: 0;
   }
+
   .fixed_info {
     @include fixed_info;
     background: #528091 !important;
@@ -401,14 +431,17 @@ h1 {
     border: 1px solid black;
     border-bottom: unset !important;
     padding: 0 10px;
+
     div {
       flex-grow: 1;
       text-align: center;
     }
+
     p {
       font-size: 18px;
       margin-bottom: 0 !important;
     }
+
     button {
       border: none;
       background: none;
@@ -417,15 +450,18 @@ h1 {
       font-size: 22px;
     }
   }
+
   .list {
     border-left: 1px solid black;
     border-bottom: 1px solid black;
     border-right: 1px solid black;
   }
+
   .second_content {
     border-left: 1px solid black;
     border-right: 1px solid black;
     background: #d9d9d9;
+
     .submit_btn {
       margin-bottom: 20px;
       background: #48658c;
@@ -437,13 +473,16 @@ h1 {
       display: flex;
       justify-content: center;
       align-items: center;
+
       &:hover {
         background-color: #5d85bd;
       }
     }
+
     .wrap1 {
       justify-content: space-evenly;
       padding: 20px 20px 0;
+
       p.content {
         display: flex;
         justify-content: center;
@@ -453,20 +492,25 @@ h1 {
         height: 35px;
         border-radius: 5px;
       }
+
       .input-number {
         @include count_btn;
       }
+
       .number-input-box {
         color: black;
+
         .input-number {
           width: 100%;
         }
       }
+
       .form-label {
         white-space: nowrap;
         font-weight: 800;
         font-size: 18px;
       }
+
       .dropdown {
         button {
           background: white;
@@ -476,15 +520,19 @@ h1 {
           justify-content: space-between;
           align-items: center;
         }
+
         .dropdown-menu {
           width: 100%;
+
           .dropdown-item {
             text-align: left;
           }
         }
       }
+
       div {
         margin: 10px 0;
+
         p {
           white-space: nowrap;
           font-size: 18px;
@@ -495,12 +543,14 @@ h1 {
     }
   }
 }
+
 @media only screen and (min-width: 1200px) {
   .main_section {
     h1 {
       margin: 50px 0 20px;
       font-size: 55px;
     }
+
     .info_wrap {
       margin: auto;
       width: 700px;
@@ -514,15 +564,18 @@ h1 {
           margin-bottom: 5px;
           color: white;
         }
+
         .dropdown {
           .dropdown-menu {
             width: 100%;
+
             p {
               text-align: left;
               padding: 0 10px;
             }
           }
         }
+
         .input-group {
           justify-content: right;
           flex-wrap: nowrap;
@@ -534,25 +587,30 @@ h1 {
           }
         }
       }
+
       .dropdown {
         width: calc(100% - 10%);
         height: 35px;
         @include dropdown_btn;
+
         .dropdown-toggle {
           display: flex;
           justify-content: space-between;
           align-items: center;
           border: none;
         }
+
         .dropdown-menu {
           width: 100%;
           transform: translate3d(-1px, 35px, 0px) !important;
           max-height: 250px;
           overflow-y: auto;
+
           p {
             font-size: 18px;
             color: black;
             font-weight: normal;
+
             &:hover {
               cursor: pointer;
             }
@@ -560,6 +618,7 @@ h1 {
         }
       }
     }
+
     .info_wrap:nth-child(3) {
       .count {
         .input-group {
@@ -569,6 +628,7 @@ h1 {
     }
   }
 }
+
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
     h1 {
@@ -576,6 +636,7 @@ h1 {
       font-size: 55px;
       margin-bottom: 20px;
     }
+
     .info_wrap {
       margin: auto;
       padding: 0 5%;
@@ -589,6 +650,7 @@ h1 {
           margin-bottom: 5px;
           color: white;
         }
+
         .dropdown {
           .dropdown-menu {
             text-align: left;
@@ -596,6 +658,7 @@ h1 {
           }
         }
       }
+
       .input-group {
         justify-content: right;
         flex-wrap: nowrap;
@@ -607,16 +670,19 @@ h1 {
         }
       }
     }
+
     .dropdown {
       width: calc(100% - 10%);
       height: 35px;
       @include dropdown_btn;
+
       .dropdown-toggle {
         display: flex;
         justify-content: space-between;
         align-items: center;
         border: none;
       }
+
       .dropdown-menu {
         transform: translate3d(-1px, 35px, 0px) !important;
         max-height: 250px;
@@ -633,6 +699,7 @@ h1 {
     }
   }
 }
+
 @media only screen and (max-width: 767px) {
   .main_section {
     h1 {
@@ -640,6 +707,7 @@ h1 {
       font-size: 50px;
       margin-bottom: 20px;
     }
+
     .info_wrap {
       padding: 1% 5% 0;
 
@@ -648,33 +716,37 @@ h1 {
         height: unset;
         padding: 10px;
       }
+
       .content {
         .row {
           gap: 10px 0;
         }
+
         .dropdown {
           margin-left: unset !important;
         }
+
         .input-group {
           flex-direction: column;
+
           .input-number {
             width: 100%;
           }
+
           .form-control {
             width: 100%;
             margin-left: unset !important;
           }
+
           .input-group-prepend {
             margin-bottom: 5px;
           }
         }
       }
     }
+
     .info_wrap:nth-child(3) {
-      .input-group
-        > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
-          .valid-feedback
-        ):not(.invalid-tooltip):not(.invalid-feedback) {
+      .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
         margin-left: unset !important;
         border-radius: 5px;
       }
@@ -687,6 +759,7 @@ h1 {
       }
     }
   }
+
   .modal {
     .fixed_info {
       button {
@@ -698,6 +771,4 @@ h1 {
       }
     }
   }
-}
-
-</style>
+}</style>

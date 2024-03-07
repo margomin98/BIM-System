@@ -1024,9 +1024,12 @@ textarea {
         padding: 40px 0;
       }
     }
-    .content .option_section,
-    .content .option_section .options-list {
-      width: 100%;
+   .content .option_section .options-list {
+      width: 78.5%;
+    }
+
+    .content .option_section{
+      width:100%;
     }
     .tab-content .option_section,
     .tab-content .option_section .options-list {
@@ -1458,7 +1461,7 @@ textarea {
 }
 @media only screen and (max-width: 767px) {
   .main_section {
-    .form-select {
+    .form-select,textarea {
       width: 100%;
     }
     .purchase_amount {

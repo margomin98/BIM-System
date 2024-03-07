@@ -2378,6 +2378,9 @@ $content_title_bg: #364E68;
       .PurchaseList .button_wrap {
         justify-content: center;
       }
+      .button_wrap{
+        margin-top: 20px;
+      }
     }
   }
 

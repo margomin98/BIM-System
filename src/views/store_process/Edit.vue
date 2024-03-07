@@ -1230,6 +1230,32 @@
       border: none;
     }
   }
+  .button_wrap {
+        display: flex;
+        justify-content: space-between;
+        margin: 30px auto 5%;
+        width: 320px;
+        .back_btn {
+  @include back_to_previous_btn;
+
+  &:hover {
+    background-color: #5d85bb;
+  }
+}
+.save_btn{
+  @include empty_btn;
+              &:hover {
+                background-color: #5e7aa2;
+              }
+}
+.send_btn {
+  @include search_and_send_btn;
+
+  &:hover {
+    background-color: #5D85BD;
+  }
+}
+        }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .readonly_box {
@@ -1285,33 +1311,7 @@
             }
           }
         }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          gap: 20px;
-          margin-bottom: 5%;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-            &:nth-child(2) {
-              @include empty_btn;
-              &:hover {
-                background-color: #5e7aa2;
-              }
-            }
-            &:nth-child(3) {
-              @include search_and_send_btn;
-              &:hover {
-                background-color: #5e7aa2;
-              }
-            }
-          }
-        }
+
         .tab_section {
           .nav {
             overflow-x: auto;
@@ -1349,7 +1349,6 @@
               .col:nth-child(1),
               .col:nth-child(2) {
                 .dropdown {
-                  width: 180px;
                   button {
                     overflow: hidden;
                     text-overflow: ellipsis;
@@ -1547,33 +1546,6 @@
             }
           }
         }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          gap: 20px;
-          margin-bottom: 5%;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-            &:nth-child(2) {
-              @include empty_btn;
-              &:hover {
-                background-color: #5e7aa2;
-              }
-            }
-            &:nth-child(3) {
-              @include search_and_send_btn;
-              &:hover {
-                background-color: #5e7aa2;
-              }
-            }
-          }
-        }
         .tab_section {
           .nav {
             overflow-x: auto;
@@ -1611,7 +1583,6 @@
               .col:nth-child(1),
               .col:nth-child(2) {
                 .dropdown {
-                  width: 150px;
                   button {
                     overflow: hidden;
                     text-overflow: ellipsis;
@@ -1804,36 +1775,6 @@
             justify-content: flex-end;
           }
         }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          gap: 20px;
-          margin-bottom: 5%;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              padding: 10px;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-            &:nth-child(2) {
-              @include empty_btn;
-              padding: 10px;
-              &:hover {
-                background-color: #5e7aa2;
-              }
-            }
-            &:nth-child(3) {
-              @include search_and_send_btn;
-              padding: 10px;
-              &:hover {
-                background-color: #5e7aa2;
-              }
-            }
-          }
-        }
         .tab_section {
           .nav {
             overflow-x: auto;
@@ -1869,6 +1810,7 @@
           .tab-content {
             background: #3E4E5F;
             padding: 50px 30px;
+            border-radius: 0 0 10px 10px;
             .storage_dropdown {
               display: flex;
               flex-direction: column;

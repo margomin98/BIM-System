@@ -54,11 +54,10 @@ onUnmounted(()=>{
 <style lang="scss" scoped>
     @import '@/assets/css/global.scss';
 
-    .button_wrap {
-  display: flex;
-  justify-content:center;
-  margin: 30px auto 5%;
-  width: 220px;
+.button_wrap {
+      display: flex;
+    justify-content: center;
+    margin: 30px auto 5%;
 }
 
 

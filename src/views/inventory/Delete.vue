@@ -445,11 +445,9 @@ export default {
 
     .button_wrap {
       display: flex;
-      margin-top: 30px;
-      justify-content: center;
-      padding: 0 28%;
-      margin-bottom: 5%;
-      gap: 10px;
+            justify-content: space-between;
+            margin: 30px auto 5%;
+            width: 210px;
 
       button.back_btn {
         @include back_to_previous_btn;
@@ -460,20 +458,7 @@ export default {
       }
 
       .delete_btn {
-        background: var(--c-5, #e94b4b);
-        justify-content: center;
-        align-items: center;
-        display: inline-flex;
-        border-radius: 10px;
-        height: 40px;
-        width: 90px;
-        color: #fff;
-        text-align: center;
-        font-size: 20px;
-        font-weight: 700;
-        border: none;
-        margin: 0 10px;
-
+   @include delete_btn;
         &:hover {
           background-color: #a51e1e;
         }
@@ -576,11 +561,6 @@ export default {
      .info_wrap {
       margin: auto;
       width: 800px;
-
-      .button_wrap {
-        padding: 0 28%;
-      }
-
       .check_section {
         display: flex;
       }
@@ -594,10 +574,6 @@ export default {
     .info_wrap {
       margin: auto;
       padding: 0 5%;
-
-      .button_wrap {
-        padding: 0 28%;
-      }
 
       .check_section {
         display: flex;
@@ -651,9 +627,6 @@ export default {
         }
       }
 
-      .button_wrap {
-        padding: 0 15%;
-      }
     }
   }
 }

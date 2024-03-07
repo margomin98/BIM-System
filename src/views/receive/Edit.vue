@@ -717,6 +717,24 @@
     display: flex;
     align-self: center;
   }
+  .button_wrap {
+    display: flex;
+  justify-content: space-between;
+  margin: 30px auto 5%;
+  width: 210px;
+          button.back_btn {
+            @include back_to_previous_btn;
+            &:hover {
+              background-color: #5d85bb;
+            }
+          }
+          button.send_btn {
+            @include search_and_send_btn;
+            &:hover {
+              background-color: #5e7aa2;
+            }
+          }
+        }
   @media only screen and (min-width: 1200px) {
     .main_section {
       .multi_user_select {
@@ -793,26 +811,6 @@
             width: 200px;
             input {
               width: 109%
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 28%;
-          margin-bottom: 5%;
-          gap: 20px;
-          button.back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-          button.send_btn {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5e7aa2;
             }
           }
         }
@@ -898,26 +896,6 @@
             }
             .date-input {
               width: 103%;
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 28%;
-          margin-bottom: 5%;
-          gap: 20px;
-          button.back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-          button.send_btn {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5e7aa2;
             }
           }
         }
@@ -1025,28 +1003,6 @@
               color: white;
               font-weight: 700;
               font-size: 20px;
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 20%;
-          margin-bottom: 5%;
-          gap: 20px;
-          button.back_btn {
-            @include back_to_previous_btn;
-            padding: 5px;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-          button.send_btn {
-            @include search_and_send_btn;
-            padding: 5px;
-            &:hover {
-              background-color: #5e7aa2;
             }
           }
         }

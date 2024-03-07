@@ -66,16 +66,4 @@ onUnmounted(()=>{
     background-color: #5d85bb;
   }
 }
-.empty_btn {
-  @include empty_btn;
-  &:hover {
-    background-color: #244f86;
-  }
-}
-.search_btn {
-  @include search_and_send_btn;
-  &:hover {
-    background-color: #5e7aa2;
-  }
-}
 </style>

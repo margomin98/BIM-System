@@ -3,27 +3,29 @@
 </template>
 
 <script setup>
-  const props = defineProps(['function' , 'parameter1'])
+const props = defineProps(['function', 'parameter1'])
 </script>
 
 
 <style lang="scss" scoped>
-  @import '@/assets/css/global.scss';
-.btn{
-  @include delete_button;
-  height: 25px;
-   &:hover {
-      background: #FF7272
-    }
+@import '@/assets/css/global.scss';
 
-.disabled_btn{
-  @include disabled_btn;
+.btn {
+  @include content_delete_button;
   height: 25px;
-  width: 50px;
-  &:hover{
-      @include disabled_btn;
-  width: 50px;
+
+  &:hover {
+    background: #FF7272
   }
-}
-}
-</style>
+
+  .disabled_btn {
+    @include disabled_btn;
+    height: 25px;
+    width: 50px;
+
+    &:hover {
+      @include disabled_btn;
+      width: 50px;
+    }
+  }
+}</style>

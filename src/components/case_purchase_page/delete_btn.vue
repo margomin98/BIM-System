@@ -45,7 +45,7 @@ function checkButton() {
   align-items: center;
 
   .btn {
-    @include delete_button;
+    @include content_delete_button;
     height: 25px;
 
     &:hover {
@@ -62,4 +62,5 @@ function checkButton() {
       width: 50px;
     }
   }
-}</style>
+}
+</style>

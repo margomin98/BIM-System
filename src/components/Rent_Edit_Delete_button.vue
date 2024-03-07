@@ -7,15 +7,15 @@
 <script>
 export default {
   props: ['params', 'parentRef'],
-  setup(props,{emit}) {
+  setup(props, { emit }) {
     function deleteRow() {
       console.log(props.params.data);
       const data = props.params.data;
-      if(data.hasOwnProperty('item_id')) {
-        emit('updateDeleteList',data);
+      if (data.hasOwnProperty('item_id')) {
+        emit('updateDeleteList', data);
       }
       else {
-        emit('updateItemList',data);
+        emit('updateItemList', data);
       }
     }
     return {
@@ -31,12 +31,13 @@ export default {
 
 .button_div {
   display: flex;
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  justify-content: center;
 
   .btn {
-    @include delete_button;
+    @include content_delete_button;
     height: 25px;
+
     &:hover {
       background: #FF7272
     }
@@ -51,4 +52,5 @@ export default {
       width: 50px;
     }
   }
-}</style>
+}
+</style>

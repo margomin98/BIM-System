@@ -187,8 +187,32 @@
   span {
     @include red_star;
   }
+  
+  .button_wrap {
+    display: flex;
+  justify-content: space-between;
+  margin: 30px auto 5%;
+  width: 210px;
+}
+
+.back_btn {
+  @include back_to_previous_btn;
+  &:hover {
+    background-color: #5d85bb;
+  }
+}
+
+.send_btn {
+  @include search_and_send_btn;
+  &:hover {
+    background-color: #5D85BD;
+  }
+        }
   @media only screen and (min-width: 1200px) {
     .main_section {
+      h1 {
+        margin-top: 180px !important;
+      }
       .info_wrap {
         margin: 30px auto 5%;
         width: 500px;
@@ -284,27 +308,6 @@
               font-weight: 700;
               font-size: 20px;
               text-align: end;
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          justify-content: center;
-          margin: 30px auto 5%;
-          width: 250px;
-          gap: 10px;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-            &:nth-child(2) {
-              @include search_and_send_btn;
-              &:hover {
-                background-color: #5d85bd;
-              }
             }
           }
         }
@@ -313,6 +316,9 @@
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
+      h1 {
+        margin-top: 180px !important;
+      }
       .info_wrap {
         margin: 30px auto 5%;
         width: 500px;
@@ -408,27 +414,6 @@
               font-weight: 700;
               font-size: 20px;
               text-align: end;
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          justify-content: center;
-          margin: 30px auto 5%;
-          width: 250px;
-          gap: 10px;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-            &:nth-child(2) {
-              @include search_and_send_btn;
-              &:hover {
-                background-color: #5d85bd;
-              }
             }
           }
         }
@@ -438,11 +423,7 @@
   @media only screen and (max-width: 767px) {
     .main_section {
       h1 {
-        margin-top: 80px;
-        text-align: center;
-        font-size: 40px;
-        font-weight: 600;
-        @include title_color;
+        margin-top: 80px !important;
       }
       .info_wrap {
         margin: 10px auto 5%;
@@ -545,27 +526,6 @@
               font-weight: 700;
               font-size: 20px;
               margin-bottom: 5px;
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          justify-content: center;
-          margin: 30px auto 5%;
-          width: 250px;
-          gap: 10px;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-            &:nth-child(2) {
-              @include search_and_send_btn;
-              &:hover {
-                background-color: #5d85bd;
-              }
             }
           }
         }

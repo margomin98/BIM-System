@@ -48,12 +48,9 @@ onUnmounted(()=>{
 
 .button_wrap {
   display: flex;
-  justify-content: center;
-  margin: 30px auto 5%;
-  width: 220px;
+    justify-content: center;
+    margin: 30px auto 5%;
 }
-
-
 .back_btn {
   @include back_to_previous_btn;
 
@@ -62,11 +59,4 @@ onUnmounted(()=>{
   }
 }
 
-.send_btn {
-  @include search_and_send_btn;
-
-  &:hover {
-    background-color: #5D85BD;
-  }
-}
 </style>

@@ -867,10 +867,10 @@ const addToList = (data) => {
 }
 
 .button_wrap {
-    display: flex;
-    justify-content: center;
-    margin: 30px auto 5%;
-    gap: 20px;
+   display: flex;
+  justify-content: space-between;
+  margin: 30px auto 5%;
+  width: 320px;
 
     .back_btn {
         @include back_to_previous_btn;

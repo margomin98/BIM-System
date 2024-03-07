@@ -69,9 +69,9 @@ onUnmounted(()=>{
 
     .button_wrap {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         margin: 30px auto 5%;
-        gap: 20px;
+        width: 320px;
     }
     .back_btn {
         @include back_to_previous_btn;

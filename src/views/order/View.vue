@@ -84,7 +84,6 @@
     display: flex;
     justify-content: center;
     margin: 30px auto 5%;
-    width: 220px;
     button {
       &:nth-child(1) {
         @include back_to_previous_btn;

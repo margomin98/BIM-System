@@ -337,6 +337,17 @@
     display: flex;
     align-self: center;
   }
+  .button_wrap {
+    display: flex;
+    justify-content: center;
+    margin: 30px auto 5%;
+          button.back_btn {
+            @include back_to_previous_btn;
+            &:hover {
+              background-color: #5d85bb;
+            }
+          }
+        }
   @media only screen and (min-width: 1200px) {
     .main_section {
       input {
@@ -387,20 +398,6 @@
               font-size: 20px;
               width: 135px;
               text-align: end;
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 28%;
-          margin-bottom: 5%;
-          gap: 20px;
-          button.back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
             }
           }
         }
@@ -463,20 +460,6 @@
               font-size: 20px;
               width: 170px;
               text-align: end;
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 28%;
-          margin-bottom: 5%;
-          gap: 20px;
-          button.back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
             }
           }
         }
@@ -598,21 +581,6 @@
               color: white;
               font-weight: 700;
               font-size: 20px;
-            }
-          }
-        }
-        .button_wrap {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-          padding: 0 20%;
-          margin-bottom: 5%;
-          gap: 20px;
-          button.back_btn {
-            @include back_to_previous_btn;
-            padding: 5px;
-            &:hover {
-              background-color: #5d85bb;
             }
           }
         }

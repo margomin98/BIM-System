@@ -69,7 +69,7 @@
         </div>
       </div>
     </div>
-    <div class="info_wrap col">
+    <div class="info_wrap my-5 col">
       <div class="fixed_info">
         <div>
           <p>整合箱內容物</p>
@@ -346,19 +346,13 @@ span {
     }
   }
 
-  .info_wrap:nth-child(3),
-  .info_wrap:nth-child(4) {
-    margin-top: 3%;
-  }
 }
 
 .button_wrap {
   display: flex;
-  margin-top: 30px;
-  justify-content: center;
-  padding: 0 15%;
-  margin-bottom: 5%;
-  gap: 10px;
+            justify-content: space-between;
+            margin: 30px auto 5%;
+            width: 210px;
 
   .back_btn {
     @include back_to_previous_btn;

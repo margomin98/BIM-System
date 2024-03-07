@@ -5,67 +5,69 @@
 </template>
 
 <script>
-  export default {
-    props: ['params'],
-    setup(props, {emit}) {
-      function Delete() {
-        // API將物品還回去之後，扣除已備料數量
+export default {
+  props: ['params'],
+  setup(props, { emit }) {
+    function Delete() {
+      // API將物品還回去之後，扣除已備料數量
 
-        //API here
-        AddToInventory();
+      //API here
+      AddToInventory();
+    }
+    async function AddToInventory() {
+      const axios = require('axios');
+      const requestData = {
+        OM_id: props.params.data.OM_id,
+        AssetsId: props.params.data.AssetsId,
+        OM_Number: props.params.data.OM_Number,
       }
-      async function AddToInventory() {
-        const axios = require('axios');
-        const requestData = {
-          OM_id: props.params.data.OM_id,
-          AssetsId: props.params.data.AssetsId,
-          OM_Number: props.params.data.OM_Number,
+      try {
+        const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/AddToInventory', requestData);
+        const data = response.data;
+        if (data.state === 'success') {
+          console.log('刪除暫存結果:' + data);
+          // props.params.deleteMaterial(props.params.data)
+          emit('deleteMaterial', props.params.data);
         }
-        try {
-          const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/AddToInventory', requestData);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('刪除暫存結果:' +data);
-            // props.params.deleteMaterial(props.params.data)
-            emit('deleteMaterial',props.params.data);
-          }
-          else {
-            alert(data.messages);
-          }
-        } catch (error) {
-          console.error(error);
+        else {
+          alert(data.messages);
         }
-      }
-      return {
-        Delete,
+      } catch (error) {
+        console.error(error);
       }
     }
+    return {
+      Delete,
+    }
   }
+}
 </script>
 
 
 <style lang="scss" scoped>
-  @import '@/assets/css/global.scss';
-.button_div{
-   display:flex;
-  align-items:center;
+@import '@/assets/css/global.scss';
 
-.btn{
-  @include delete_button;
-  height: 25px;
-   &:hover {
+.button_div {
+  display: flex;
+  align-items: center;
+
+  .btn {
+    @include content_delete_button;
+    height: 25px;
+
+    &:hover {
       background: #FF7272
     }
-}
-
-.disabled_btn{
-  @include disabled_btn;
-  height: 25px;
-  width: 50px;
-  &:hover{
-      @include disabled_btn;
-  width: 50px;
   }
-}
-}
-</style>
+
+  .disabled_btn {
+    @include disabled_btn;
+    height: 25px;
+    width: 50px;
+
+    &:hover {
+      @include disabled_btn;
+      width: 50px;
+    }
+  }
+}</style>

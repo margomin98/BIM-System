@@ -1150,7 +1150,7 @@ textarea {
         }
       }
     }
-    .form-select,.dropdown {
+    .form-select,.dropdown ,textarea{
       width: 100%;
     }
     .form_search_btn {

@@ -192,9 +192,9 @@
   @import '@/assets/css/global.scss';
   .button_wrap {
     display: flex;
-    justify-content: space-between;
-    margin: 30px auto 5%;
-    width: 220px;
+  justify-content: space-between;
+  margin: 30px auto 5%;
+  width: 210px;
     button {
       &:nth-child(1) {
         @include back_to_previous_btn;

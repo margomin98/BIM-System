@@ -78,7 +78,7 @@ const submit = async () => {
   display: flex;
   justify-content: space-between;
   margin: 30px auto 5%;
-  width: 200px;
+  width: 210px;
 }
 
 

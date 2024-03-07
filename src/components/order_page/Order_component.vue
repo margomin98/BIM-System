@@ -208,8 +208,6 @@ onMounted(() => {
   background: #9f0000;
   margin-bottom: 10px;
   border-radius: 5px;
-  margin: 30px auto 20px;
-
   h4 {
     color: white;
     margin-bottom: 0;
@@ -283,12 +281,10 @@ onMounted(() => {
 }
 
 .info_wrap {
-  margin: 30px auto 0;
+  margin: 0 auto;
 }
 
-.warn {
-  width: 800px;
-}
+
 
 .content {
   @include content_bg;

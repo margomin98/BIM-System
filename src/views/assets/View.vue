@@ -7,7 +7,7 @@
     <assets_component></assets_component>
   </div>
   <div class="col button_wrap">
-      <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
+    <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
   </div>
 </template>
 <script setup>
@@ -24,11 +24,11 @@ const apiStore = useAPIStore();
 const assetStore = useAssetStore();
 
 // 解構
-const { DropdownArray, isPermitted } = storeToRefs(assetStore) ;
+const { DropdownArray, isPermitted } = storeToRefs(assetStore);
 const route = useRoute();
-const AssetsId = route.query.search_id ;
+const AssetsId = route.query.search_id;
 
-onMounted(async ()=>{
+onMounted(async () => {
   utilsStore.$reset();
   assetStore.$reset();
   assetStore.PageType = 'view';
@@ -38,11 +38,11 @@ onMounted(async ()=>{
   utilsStore.getUserName();
   const roleId = await apiStore.getRoleId('admin');
   // const roleId = await apiStore.getRoleId(utilsStore.userName);
-  if(roleId === 1 || roleId === 4) isPermitted.value = true ;
+  if (roleId === 1 || roleId === 4) isPermitted.value = true;
   await assetStore.getDetails(AssetsId);
-  assetStore.searchHistory('','search');
+  assetStore.searchHistory('', 'search');
 })
-onUnmounted(()=>{
+onUnmounted(() => {
   utilsStore.$dispose();
   assetStore.$dispose();
   apiStore.$dispose();
@@ -52,30 +52,19 @@ onUnmounted(()=>{
 
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
+
 .button_wrap {
   display: flex;
-  margin-top: 30px;
   justify-content: center;
-  padding: 0 28%;
-  margin-bottom: 5%;
-  gap: 20px;
+  margin: 30px auto 5%;
+  width: 220px;
 }
+
 .back_btn {
   @include back_to_previous_btn;
+
   &:hover {
     background-color: #5d85bb;
-  }
-}
-.empty_btn {
-  @include empty_btn;
-  &:hover {
-    background-color: #244f86;
-  }
-}
-.search_btn {
-  @include search_and_send_btn;
-  &:hover {
-    background-color: #5e7aa2;
   }
 }
 </style>

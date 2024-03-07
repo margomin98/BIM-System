@@ -2,8 +2,10 @@
   <div class='button_wrap'>
     <!-- <button @click="viewEdit()">編輯</button> -->
 
-    <button :class="{'disabled_btn_nomargin': disabled, 'edit_btn' : !disabled }" :disabled="disabled" data-bs-toggle="modal" data-bs-target="#editModal" @click="viewEdit()">編輯</button>
-    <button :class="{'disabled_btn': disabled, 'delete_btn' : !disabled }" :disabled="disabled" data-bs-toggle="modal" data-bs-target="#editModal2" @click="viewDelete()">刪除</button>
+    <button :class="{ 'disabled_btn_nomargin': disabled, 'edit_btn': !disabled }" :disabled="disabled"
+      data-bs-toggle="modal" data-bs-target="#editModal" @click="viewEdit()">編輯</button>
+    <button :class="{ 'disabled_btn': disabled, 'delete_btn': !disabled }" :disabled="disabled" data-bs-toggle="modal"
+      data-bs-target="#editModal2" @click="viewDelete()">刪除</button>
 
   </div>
 </template>
@@ -13,8 +15,8 @@ import { onMounted, ref } from 'vue';
 const props = defineProps(['params']);
 const data = props.params.data;
 const disabled = ref(false);
-onMounted(()=>{
-  if(data.Id === 'A0000' || data.Id === 'L0000') {
+onMounted(() => {
+  if (data.Id === 'A0000' || data.Id === 'L0000') {
     disabled.value = true
   }
 })
@@ -35,6 +37,7 @@ function viewEdit() {
   display: flex;
 
 }
+
 .edit_btn {
   @include search_and_send_btn;
   width: 50px;
@@ -49,7 +52,7 @@ function viewEdit() {
 }
 
 .delete_btn {
-  @include delete_button;
+  @include content_delete_button;
 
   &:hover {
     background: #FF7272;
@@ -57,19 +60,21 @@ function viewEdit() {
   }
 }
 
-.disabled_btn{
+.disabled_btn {
   @include disabled_btn;
   width: 50px;
-  &:hover{
+
+  &:hover {
     width: 50px;
   }
 }
-.disabled_btn_nomargin{
+
+.disabled_btn_nomargin {
   @include disabled_btn;
   margin: 0;
   width: 50px;
-  &:hover{
+
+  &:hover {
     width: 50px;
   }
-}
-</style>
+}</style>

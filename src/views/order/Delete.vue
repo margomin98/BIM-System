@@ -172,11 +172,9 @@ async function deleteData() {
 
 .button_wrap {
   display: flex;
-  margin-top: 30px;
-  justify-content: center;
-  padding: 0 28%;
-  margin-bottom: 5%;
-  gap: 20px;
+  justify-content: space-between;
+  margin: 30px auto 5%;
+  width: 210px;
 
   button.back_btn {
     @include back_to_previous_btn;
@@ -187,19 +185,7 @@ async function deleteData() {
   }
 
   .delete_btn {
-    background: var(--c-5, #E94B4B);
-    justify-content: center;
-    align-items: center;
-    display: inline-flex;
-    border-radius: 10px;
-    height: 40px;
-    width: 90px;
-    color: #FFF;
-    text-align: center;
-    font-size: 20px;
-    font-weight: 700;
-    border: none;
-    margin: 0 10px;
+    @include delete_btn;
 
     &:hover {
       background-color: #a51e1e;

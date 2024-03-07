@@ -53,7 +53,7 @@ onUnmounted(()=>{
   display: flex;
   justify-content: space-between;
   margin: 30px auto 5%;
-  width: 220px;
+  width: 210px;
 }
 
 
@@ -66,28 +66,9 @@ onUnmounted(()=>{
 }
 
 .delete_btn {
-  background: var(--c-5, #E94B4B);
-  justify-content: center;
-  align-items: center;
-  display: inline-flex;
-  border-radius: 10px;
-  height: 40px;
-  width: 90px;
-  color: #FFF;
-  text-align: center;
-  font-size: 20px;
-  font-weight: 700;
-  border: none;
-  margin: 0 10px;
+  @include delete_btn;
   &:hover {
     background-color: #a51e1e;
-  }
-}
-.send_btn {
-  @include search_and_send_btn;
-
-  &:hover {
-    background-color: #5D85BD;
   }
 }
 </style>
