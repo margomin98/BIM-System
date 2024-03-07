@@ -108,7 +108,7 @@ export const useStorageStore = defineStore('Storage', {
 	// method
 	actions: {
 		// 插入頁籤(以及取得每個頁籤所需下拉)
-		async insertTab(isQuick = false) {
+		async insertTab(isQuick = false, detailsData={}) {
 			const dropdownStore = useAPIStore();
 			const utilsStore = useUtilsStore();
 			// 檢查必填 & 字數
@@ -122,6 +122,7 @@ export const useStorageStore = defineStore('Storage', {
 					RequireCheckList.push('itemUnit');
 					break;
 			}
+			// 快速入庫新增頁籤額外檢查欄位
 			if(isQuick) {
 				RequireCheckList.push('itemInboundWay');
 				switch (this.middleForm.itemInboundWay) {
@@ -135,10 +136,12 @@ export const useStorageStore = defineStore('Storage', {
 						break;
 				}
 			}
-			if(!utilsStore.checkRequired(this.middleForm,RequireCheckList)) return;
-			if(!utilsStore.checkMaxLetter(this.middleForm,this.TabLetterCheckList)) return;
-
-			const newData = _.cloneDeep(this.middleForm);
+			// detailsData: 無 -> 填寫欄位新增的，有 -> getDetails讀取進來的資料 (不用檢查欄位)
+			const newData = _.cloneDeep(detailsData || this.middleForm);
+			if(!detailsData) {
+				if(!utilsStore.checkRequired(newData,RequireCheckList)) return;
+				if(!utilsStore.checkMaxLetter(newData,this.TabLetterCheckList)) return;
+			}
 			newData.EquipCategoryArray = await dropdownStore.getEquipCategory(newData.itemEquipType_Id);
 			if(isQuick) {
 				// 取得櫃位下拉
@@ -147,6 +150,7 @@ export const useStorageStore = defineStore('Storage', {
 			}
 			// 取得要增加的頁籤數量
 			const newTabCount = _.cloneDeep(newData.itemPackageNum);
+			// console.log('newData',newTabCount);
 			newData.itemPackageNum = 1;
 			for(let i = 0 ; i <  newTabCount ; i++) {
 				newData.itemProjectSelect.index = this.tabData ? this.tabData.length : 0;
@@ -295,19 +299,18 @@ export const useStorageStore = defineStore('Storage', {
 					console.log('upperForm',this.upperForm);
 					console.log('Tabs:',data.resultList);
 					// 塞入頁籤(資料本身就有existFile)
-					data.resultList.Tabs.forEach(tab=>{
-						// console.log('tab',tab);
-						Object.keys(this.middleForm).forEach(key=>{
-							if(tab[key]) {
-								this.middleForm[key] = tab[key];
-								if(key === 'itemProjectCode' && isQuick) {
-									this.middleForm.itemProjectSelect = {Text:`${tab.itemProjectCode.trim()} ${tab.itemProjectName}` , Value: tab.itemProjectCode};
+					for (const tab of data.resultList.Tabs) {
+						let tempData = _.cloneDeep(this.middleForm);
+						Object.keys(this.middleForm).forEach(key => {
+								if (tab[key]) {
+										tempData[key] = tab[key];
+										if (key === 'itemProjectCode' && isQuick) {
+												tempData.itemProjectSelect = { Text: `${tab.itemProjectCode.trim()} ${tab.itemProjectName}`, Value: tab.itemProjectCode };
+										}
 								}
-							}
-						})
-						// console.log('middle',this.middleForm);
-						this.insertTab(isQuick);
-					})
+						});
+						const res = await this.insertTab(isQuick, tempData);
+					}
 					console.log('tab',this.tabData);
 				}
 			}

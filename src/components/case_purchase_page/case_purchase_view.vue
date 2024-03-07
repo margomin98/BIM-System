@@ -134,7 +134,7 @@
                     <thead>
                         <tr>
                             <th class="edit_order"><span></span></th>
-                            <th class="check_col"><span>新增訂單</span></th>
+                            <th class="check_col"><span>訂購單號</span></th>
                             <th class="check_col"><span>採購狀態</span></th>
                             <th class="writeoff_property"><span>沖銷所選資產</span></th>
                             <th class="item_col"><span>採購項目</span></th>
@@ -165,7 +165,7 @@
                         <!-- Ordered -->
                         <tr v-for="item in Form.Ordered">
                             <td class="table_content edit_order_btn"><button :class="{'edit_order_btn_grey': Form.Status !== '採購中' && Form.Status !== '沖銷中'}" @click="editOrder(item.PO_ID)" :disabled="Form.Status !== '採購中' && Form.Status !== '沖銷中'">編輯訂單</button></td>
-                            <td><span>有</span></td>
+                            <td><span>{{ item.PO_ID }}</span></td>
                             <td>
                                 <span v-if="Form.Status === '採購中'">已採購</span>
                                 <span v-else-if="Form.Status === '沖銷中'">沖銷中</span>
