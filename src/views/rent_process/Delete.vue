@@ -260,6 +260,7 @@ import {
 import {
   RentProcess_Delete_Status
 } from "@/assets/js/enter_status";
+import axios from '@/axios/tokenInterceptor'
 export default {
   components: {
     Navbar,
@@ -372,7 +373,6 @@ export default {
       getDetails();
     });
     async function getDetails() {
-      const axios = require('axios');
       try {
         const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
         const data = response.data;
@@ -403,7 +403,6 @@ export default {
     async function deleteData() {
       const form = new FormData();
       form.append('AO_ID', AO_ID);
-      const axios = require('axios');
       const response = await axios.post(`http://192.168.0.177:7008/AssetsOutMng/ApplicationDelete`, form);
       try {
         const data = response.data;

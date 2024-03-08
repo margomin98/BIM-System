@@ -212,7 +212,7 @@ import {
   goBack,
   viewImgFile
 } from '@/assets/js/common_fn.js'
-import axios from 'axios';
+import axios from '@/axios/tokenInterceptor'
 import {
   useRoute
 } from 'vue-router';
@@ -278,7 +278,6 @@ export default {
     async function deleteData() {
       const form = new FormData();
       form.append('ScrapId', ScrapId);
-      const axios = require('axios');
       const response = await axios.post(`http://192.168.0.177:7008/ScrapMng/DeleteScrap`, form);
       try {
         const data = response.data;

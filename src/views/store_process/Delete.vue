@@ -290,6 +290,7 @@ import {
 import {
   StoreProcess_Delete_Status
 } from '@/assets/js/enter_status'
+import axios from '@/axios/tokenInterceptor'
 export default {
   components: {
     Navbar,
@@ -311,7 +312,6 @@ export default {
     const details = ref({});
     //依照單號取得資料並生成tab資料
     async function getDetails() {
-      const axios = require('axios');
       try {
         const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
         console.log(response);
@@ -351,7 +351,6 @@ export default {
     async function deleteData() {
       const form = new FormData();
       form.append('AI_ID', AI_ID);
-      const axios = require('axios');
       const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/ApplicationDelete', form);
       try {
         const data = response.data;

@@ -313,7 +313,7 @@
   import {
     goBack,
   } from "@/assets/js/common_fn"
-  import axios from 'axios';
+  import axios from '@/axios/tokenInterceptor'
   register();
   const pagination = { clickable: true, }
   const modules = [Pagination]
