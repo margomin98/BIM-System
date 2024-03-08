@@ -362,7 +362,6 @@
       // 在这里发送上半部分表单数据的请求
       // 成功时，调用 resolve 并传递 AR_ID
       // 失败时，调用 reject 并传递错误信息
-      const axios = require('axios');
       const form = new FormData();
       const formParams = {
         AR_ID: AR_ID,
