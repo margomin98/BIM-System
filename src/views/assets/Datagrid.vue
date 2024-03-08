@@ -185,7 +185,7 @@ import { storeToRefs } from 'pinia';
 import axios from 'axios';
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();
-const { dgSearchParams , dg , dgRowData } = storeToRefs(utilsStore);
+const { dgSearchParams, dg, dgRowData } = storeToRefs(utilsStore);
 
 const searchParams = reactive({
   EquipType_Id: '',
@@ -233,7 +233,7 @@ const isLoading = ref(false);
 
 onMounted(async () => {
   utilsStore.$reset();
-  for(const key in searchParams) {
+  for (const key in searchParams) {
     dgSearchParams.value[key] = '';
   }
   dg.value.sortField = 'AssetsId'
@@ -241,30 +241,6 @@ onMounted(async () => {
   DropdownArray.EquipType = await apiStore.getEquipType();
   DropdownArray.Area = await apiStore.getArea();
   DropdownArray.Staff = await apiStore.getCustodian();
-  DropdownArray.ProjectCode = await apiStore.getFuzzyProject();
-});
-onUnmounted(()=>{
-  utilsStore.$dispose();
-})
-  async function submit(event, type) {
-    const form = new FormData();
-    //將表格資料append到 form
-    for (const key in dgSearchParams.value) {
-      if (dgSearchParams.value[key]) {
-        form.append(key, dgSearchParams.value[key]);
-      }
-    }
-    utilsStore.UpdatePageParameter(dg.value, event, type, form);
-    const resultList = await apiStore.getMngDatagrid('/InventoryMng/Assets', dg.value, form);
-    dgRowData.value = resultList.rows;
-    dg.value.totalRecords = resultList.total;
-    dg.value.key++;
-  }
-  dg.value.sortField = 'AssetsId'
-  submit('', 'search');
-  DropdownArray.EquipType = await apiStore.getEquipType();
-  DropdownArray.Area = await apiStore.getArea();
-  DropdownArray.Staff = await apiStore.getStaff();
   DropdownArray.ProjectCode = await apiStore.getFuzzyProject();
 });
 onUnmounted(() => {
@@ -278,11 +254,22 @@ async function submit(event, type) {
       form.append(key, dgSearchParams.value[key]);
     }
   }
-  async function exportExcel() {
-    const form = new FormData();
-    //將表格資料append到 form
-    for (const key in dgSearchParams.value) {
-      form.append(key, dgSearchParams.value[key]);
+  utilsStore.UpdatePageParameter(dg.value, event, type, form);
+  const resultList = await apiStore.getMngDatagrid('/InventoryMng/Assets', dg.value, form);
+  dgRowData.value = resultList.rows;
+  dg.value.totalRecords = resultList.total;
+  dg.value.key++;
+}
+async function importExcel(event) {
+  const selectedFile = event.target.files[0];
+  if (selectedFile) {
+    const fileName = selectedFile.name;
+    // 檢查檔案大小
+    console.log('filesize', selectedFile.size);
+    const maxFileSize = 28 * 1024 * 1024; // 28MB
+    if (selectedFile.size > maxFileSize) {
+      alert('檔案' + selectedFile.name + '大於28MB，請重新選取');
+      return
     }
     // 檢查副檔名
     // 以'.'切割字串並以pop取得最後一組。EX: demo.sss.xlsx => ['demo','sss','xlsx'] => pop出 'xlsx'並轉成小寫
@@ -315,8 +302,8 @@ async function submit(event, type) {
 async function exportExcel() {
   const form = new FormData();
   //將表格資料append到 form
-  for (const key in searchParams) {
-    form.append(key, searchParams[key]);
+  for (const key in dgSearchParams.value) {
+    form.append(key, dgSearchParams.value[key]);
   }
   axios.post('http://192.168.0.177:7008/InventoryMng/ExportExcel', form, {
     responseType: 'blob',
@@ -515,4 +502,5 @@ function clear() {
       }
     }
   }
-}</style>
+}
+</style>

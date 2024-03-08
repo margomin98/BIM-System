@@ -42,17 +42,6 @@ onUnmounted(()=>{
 <style lang="scss" scoped>
 @import '@/assets/css/global.scss';
 
-.title {
-  h1 {
-
-    margin-top: 50px;
-    text-align: center;
-    font-size: 55px;
-    font-weight: 600;
-    color: #132238;
-  }
-}
-
 .button_wrap {
   display: flex;
   justify-content: space-between;
@@ -76,10 +65,4 @@ onUnmounted(()=>{
   }
 }
 
-@media only screen and (max-width: 767px) {
-  .title {
-    h1 {
-      font-size: 32px;
-    }
-  }
-}</style>
+</style>
