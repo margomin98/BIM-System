@@ -432,7 +432,7 @@
   function handleDocumentFile(event) {
     console.log('DocumentFiles:', event.target.files);
     const files = event.target.files;
-    const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx'];
+    const imageExtensions = ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx'];
     const maxFileSize = 28 * 1024 * 1024; // 28MB
     // 檢查副檔名 &檔案大小
     for (let i = 0; i < files.length; i++) {
@@ -494,7 +494,7 @@
   function handlePictureFile(event) {
     console.log('PictureFiles:', event.target.files);
     const files = event.target.files;
-    const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+    const imageExtensions = ['jpg', 'jpeg', 'png'];
     const maxFileSize = 28 * 1024 * 1024; // 28MB
     //檢查副檔名
     for (let i = 0; i < files.length; i++) {

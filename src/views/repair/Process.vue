@@ -458,7 +458,7 @@
                 resolve(data.state)
               } else {
                 // 如果状态不是 "success"，调用 reject 并传递错误信息
-                console.error(type + '上傳失敗，' + response.data.messages);
+                console.error(`第${index+1}個檔案上傳失敗，` + response.data.messages);
                 reject(new Error('文件表單提交失败'));
               }
             })

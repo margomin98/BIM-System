@@ -1047,7 +1047,7 @@
       // 處理選擇的照片
       function handleFileChange(index, event) {
         const files = event.target.files;
-        const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        const imageExtensions = ['jpg', 'jpeg', 'png'];
         //檢查檔名
         for (let i = 0; i < files.length; i++) {
           const fileName = files[i].name;
