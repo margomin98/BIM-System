@@ -7,11 +7,7 @@
       </h1>
     </div>
     <div class="info_wrap col">
-      <div class="warn">
-        <h4>
-          確定刪除以下項目嗎？
-        </h4>
-      </div>
+     <warn/>
       <!-- 維修編號，申請人員，申請日期 -->
       <div class="fixed_info">
         <div>
@@ -266,6 +262,7 @@
     useRoute
   } from 'vue-router'
   import axios from 'axios';
+  import warn from "@/components/Delete_warn.vue"
   import Navbar from '@/components/Navbar.vue';
   import router from '@/router';
   import {
@@ -284,7 +281,8 @@
   register();
   export default {
     components: {
-      Navbar
+      Navbar,
+      warn
     },
     setup() {
       const route = useRoute();
@@ -386,21 +384,6 @@
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
-  .warn {
-    text-align: center;
-    padding: 10px 0;
-    background: #9f0000;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    h4 {
-      color: white;
-      margin-bottom: 0;
-      font-weight: 700;
-      &::before {
-        content: "\26A0";
-      }
-    }
-  }
   .delete_modal {
     .modal-content {
       border: solid 1px black;

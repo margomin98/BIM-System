@@ -7,11 +7,7 @@
       </h1>
     </div>
     <div class="info_wrap col">
-      <div class="warn">
-        <h4>
-          確定刪除以下項目嗎？
-        </h4>
-      </div>
+   <warn/>
       <!-- 報廢編號，申請人員，申請日期 -->
       <div class="fixed_info">
         <div>
@@ -200,6 +196,7 @@
     reactive,
     onMounted
   } from 'vue';
+  import warn from "@/components/Delete_warn.vue"
   import Navbar from '@/components/Navbar.vue';
   import router from '@/router';
   import {
@@ -222,7 +219,8 @@
   } from '@/assets/js/dropdown';
   export default {
     components: {
-      Navbar
+      Navbar,
+      warn
     },
     setup() {
       const route = useRoute();
@@ -334,21 +332,6 @@
         color: white;
         font-size: 20px;
         font-weight: 600;
-      }
-    }
-  }
-  .warn {
-    text-align: center;
-    padding: 10px 0;
-    background: #9f0000;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    h4 {
-      color: white;
-      margin-bottom: 0;
-      font-weight: 700;
-      &::before {
-        content: "\26A0";
       }
     }
   }
