@@ -5,11 +5,7 @@
       <h1>刪除項目</h1>
     </div>
     <div class="info_wrap col">
-      <div class="warn">
-        <h4>
-          確定刪除以下項目嗎？
-        </h4>
-      </div>
+      <warn/>
       <div class="fixed_info">
         <div>
           <p>計畫內容</p>
@@ -139,6 +135,7 @@
 </template>
 
 <script>
+import warn from '@/components/Delete_warn.vue'
 import List_view_button from "@/components/Inventory_view_button";
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -168,6 +165,7 @@ export default {
     DataTable,
     Column,
     Navbar,
+    warn,
     List_view_button,
   },
   setup() {
@@ -330,23 +328,6 @@ export default {
     height: 35px;
   }
 
-  .warn {
-    text-align: center;
-    padding: 10px 0;
-    background: #9f0000;
-    margin-bottom: 10px;
-    border-radius: 5px;
-
-    h4 {
-      color: white;
-      margin-bottom: 0;
-      font-weight: 700;
-
-      &::before {
-        content: "\26A0";
-      }
-    }
-  }
 
 
   .info_wrap {

@@ -9,8 +9,8 @@ export const useUtilsStore = defineStore('Utils',{
     userName: '',
     userRoleId: null,
     today: '',
-    imgExtensions: ['jpg', 'jpeg', 'png', 'gif'],
-    fileExtensions: ['doc', 'docx', 'pdf', 'jpg', 'jpeg', 'png', 'gif'],
+    imgExtensions: ['jpg', 'jpeg', 'png'],
+    fileExtensions: ['doc', 'docx', 'pdf', 'jpg', 'jpeg', 'png'],
     BF_pattern: /^(BF\d{8})$/,
     imgId: 1,
     modalParams:{

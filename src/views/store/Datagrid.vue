@@ -251,32 +251,10 @@
         background-color: #537ebc;
       }
     }
-    .search_btn {
-      @include search_and_send_btn;
-      &:hover {
-        background-color: #5e7aa2;
-      }
-    }
-    .empty_btn {
-      @include empty_btn;
-      &:hover {
-        background-color: #5d85bd;
-      }
-    }
-  }
-  .button_wrap {
-    margin-bottom: 25px;
-    gap: 20px;
-    .add_btn {
-      @include datagrid_button_no1;
-      &:hover {
-        background-color: #537ebc;
-      }
-    }
-    .return_btn {
+    .return_btn{
       @include datagrid_button_no2;
       &:hover {
-        background-color: #708fba;
+        background-color: #26426a;
       }
     }
     .search_btn {
@@ -321,9 +299,6 @@
     }
   }
   @media only screen and (max-width: 767px) {
-    .button_wrap{
-      justify-content: center;
-    }
     .main_section {
       padding: 5%;
     .datagrid_section {
@@ -337,6 +312,9 @@
           }
         }
       }
+      .button_wrap{
+    justify-content: center;
+}
     }
   }
 </style>

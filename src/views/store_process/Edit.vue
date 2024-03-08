@@ -1062,7 +1062,7 @@ GetAntiForgeryToken
       // 處理選擇的照片
       function handleFileChange(index, event) {
         const files = event.target.files;
-        const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        const imageExtensions = ['jpg', 'jpeg', 'png'];
         //檢查檔名
         for (let i = 0; i < files.length; i++) {
           const fileName = files[i].name;
@@ -1191,7 +1191,7 @@ GetAntiForgeryToken
   }
   .apply_btn {
     border: none;
-    width: 80px;
+    width: 110px;
     height: 35px;
     background: #132238;
     border-radius: 10px;

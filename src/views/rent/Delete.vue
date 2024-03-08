@@ -7,11 +7,7 @@
       </h1>
     </div>
     <div class="info_wrap col">
-      <div class="warn">
-        <h4>
-          確定刪除以下項目嗎？
-        </h4>
-      </div>
+   <warn/>
       <div class="fixed_info">
         <div>
           <p>單號：{{ details.AO_ID }}</p>
@@ -103,6 +99,7 @@
   import Navbar from '@/components/Navbar.vue';
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
+  import warn from '@/components/Delete_warn.vue'
   import {
     Rent_UseArray
   } from "@/assets/js/dropdown";
@@ -122,6 +119,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
   export default {
     components: {
       Navbar,
+      warn,
       Column,
       DataTable,
     },
@@ -312,21 +310,6 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
       }
   @media only screen and (min-width: 1200px) {
     .main_section {
-      .warn {
-        text-align: center;
-        padding: 10px 0;
-        background: #9f0000;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        h4 {
-          color: white;
-          margin-bottom: 0;
-          font-weight: 700;
-          &::before {
-            content: "\26A0";
-          }
-        }
-      }
       .info_wrap {
         margin: auto;
         width: 1000px;
@@ -398,21 +381,6 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
   }
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
-      .warn {
-        text-align: center;
-        padding: 10px 0;
-        background: #9f0000;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        h4 {
-          color: white;
-          margin-bottom: 0;
-          font-weight: 700;
-          &::before {
-            content: "\26A0";
-          }
-        }
-      }
       .info_wrap {
         margin: auto;
         padding: 0 5%;
@@ -487,22 +455,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
   }
   @media only screen and (max-width: 767px) {
     .main_section {
-      .warn {
-        text-align: center;
-        padding: 10px 0;
-        background: #9f0000;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        h4 {
-          color: white;
-          margin-bottom: 0;
-          font-weight: 700;
-          &::before {
-            content: "\26A0";
-          }
-        }
-      }
-      .info_wrap {
+            .info_wrap {
         margin: auto;
         padding: 0 5%;
         .fixed_info {

@@ -5,9 +5,7 @@
       <h1>刪除項目</h1>
     </div>
     <div class="info_wrap col">
-      <div class="warn">
-        <h4>確定刪除以下項目嗎？</h4>
-      </div>
+   <warn/>
       <div class="fixed_info">
         <div>
           <p>單號：{{ details.AO_ID }}</p>
@@ -236,215 +234,211 @@
 </template>
 
 <script>
-  import DataTable from 'primevue/datatable';
-  import Column from 'primevue/column';
-  import {
-    useRoute,
-    useRouter
-  } from 'vue-router';
-  import Storage_add from "@/components/Storage_add_button";
-  import AssetsView from '@/components/Rent_process_new_view_button'
-  import Navbar from "@/components/Navbar.vue";
-  import {
-    Rent_UseArray
-  } from "@/assets/js/dropdown";
-  import {
-    onMounted,
-    ref
-  } from "vue";
-  import {
-    goBack
-  } from "@/assets/js/common_fn"
-  import {
-    canEnterPage
-  } from "@/assets/js/common_fn";
-  import {
-    RentProcess_Delete_Status
-  } from "@/assets/js/enter_status";
-import { GetAntiForgeryToken } from '@/assets/js/common_api';
-  export default {
-    components: {
-      Navbar,
-      Column,
-      DataTable,
-      AssetsView,
-      Storage_add,
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import {
+  useRoute,
+  useRouter
+} from 'vue-router';
+import warn from "@/components/Delete_warn.vue"
+import Storage_add from "@/components/Storage_add_button";
+import AssetsView from '@/components/Rent_process_new_view_button'
+import Navbar from "@/components/Navbar.vue";
+import {
+  Rent_UseArray
+} from "@/assets/js/dropdown";
+import {
+  onMounted,
+  ref
+} from "vue";
+import {
+  goBack
+} from "@/assets/js/common_fn"
+import {
+  canEnterPage
+} from "@/assets/js/common_fn";
+import {
+  RentProcess_Delete_Status
+} from "@/assets/js/enter_status";
+export default {
+  components: {
+    Navbar,
+    warn,
+    Column,
+    DataTable,
+    AssetsView,
+    Storage_add,
+  },
+  setup() {
+    const route = useRoute();
+    const router = useRouter();
+    const AO_ID = route.query.search_id;
+    const totalNeed = ref(0); //總所需數量
+    const totalSelect = ref(0); //總已備數量
+    const details = ref({});
+    const options = Rent_UseArray;
+    // 資產出庫項目
+    const datagrid1field = [{
+      field: "EquipTypeName",
+      width: '150px',
+      header: "設備總類"
     },
-    setup() {
-      const route = useRoute();
-      const router = useRouter();
-      const AO_ID = route.query.search_id;
-      const totalNeed = ref(0); //總所需數量
-      const totalSelect = ref(0); //總已備數量
-      const details = ref({});
-      const options = Rent_UseArray;
-      // 資產出庫項目
-      const datagrid1field = [{
-          field: "EquipTypeName",
-          width: '150px',
-          header: "設備總類"
-        },
-        {
-          field: "EquipCategoryName",
-          width: '150px',
-          header: "設備分類"
-        },
-        {
-          field: "ProductName",
-          width: '150px',
-          header: "物品名稱"
-        },
-        {
-          field: "Number",
-          width: '100px',
-          header: "數量"
-        },
-        {
-          field: "RequiredSpec",
-          width: '250px',
-          header: "規格需求"
-        },
-      ]
-      // 資產出庫細項
-      const datagrid2field = [{
-          field: "OM_List_id",
-          width: '50px',
-          header: "需求項目",
-          sortable: false,
-        },
-        {
-          field: "OM_Number",
-          width: '30px',
-          header: "數量",
-          sortable: false,
-        },
-        {
-          field: "OM_Unit",
-          width: '30px',
-          header: "單位",
-          sortable: false,
-        },
-        {
-          field: "AssetsId",
-          width: '150px',
-          header: "資產編號",
-          sortable: true,
-        },
-        {
-          field: "AssetName",
-          width: '150px',
-          header: "物品名稱",
-          sortable: true,
-        },
-        {
-          field: "AreaName",
-          width: '150px',
-          header: "儲位區域",
-          sortable: true,
-        },
-        {
-          field: "LayerName",
-          width: '150px',
-          header: "儲位櫃位",
-          sortable: true,
-        },
-        {
-          field: "VendorName",
-          width: '150px',
-          header: "廠商",
-          sortable: true,
-        },
-        {
-          field: "ProductType",
-          width: '150px',
-          header: "型號",
-          sortable: true,
-        },
-        {
-          field: "ProductSpec",
-          width: '150px',
-          header: "規格",
-          sortable: true,
-        },
-      ]
-      const rowData1 = ref([]);
-      const rowData2 = ref([]);
-      onMounted(() => {
-        getDetails();
-      });
-      async function getDetails() {
-        const axios = require('axios');
-        try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
-          const data = response.data;
-          if (data.state === 'success') {
-            canEnterPage(data.resultList.Status, RentProcess_Delete_Status)
-            console.log('Details Get成功 資料如下\n', data.resultList);
-            details.value = data.resultList;
-            rowData1.value = data.resultList.ItemList;
-            rowData2.value = data.resultList.OM_List;
-            totalNeed.value = 0;
-            rowData1.value.forEach(item => {
-              totalNeed.value += item.Number;
-            });
-            totalSelect.value = 0;
-            rowData2.value.forEach(item => {
-              totalSelect.value += item.OM_Number;
-            });
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
-      async function deleteData() {
-        const form = new FormData();
-        form.append('AO_ID', AO_ID);
-        const axios = require('axios');
-        try {
-          const token = await GetAntiForgeryToken();
-          const response = await axios.post(`http://192.168.0.177:7008/AssetsOutMng/ApplicationDelete`, form,{
-            headers:{
-              'RequestVerificationToken': token,
-            }
+    {
+      field: "EquipCategoryName",
+      width: '150px',
+      header: "設備分類"
+    },
+    {
+      field: "ProductName",
+      width: '150px',
+      header: "物品名稱"
+    },
+    {
+      field: "Number",
+      width: '100px',
+      header: "數量"
+    },
+    {
+      field: "RequiredSpec",
+      width: '250px',
+      header: "規格需求"
+    },
+    ]
+    // 資產出庫細項
+    const datagrid2field = [{
+      field: "OM_List_id",
+      width: '50px',
+      header: "需求項目",
+      sortable: false,
+    },
+    {
+      field: "OM_Number",
+      width: '30px',
+      header: "數量",
+      sortable: false,
+    },
+    {
+      field: "OM_Unit",
+      width: '30px',
+      header: "單位",
+      sortable: false,
+    },
+    {
+      field: "AssetsId",
+      width: '150px',
+      header: "資產編號",
+      sortable: true,
+    },
+    {
+      field: "AssetName",
+      width: '150px',
+      header: "物品名稱",
+      sortable: true,
+    },
+    {
+      field: "AreaName",
+      width: '150px',
+      header: "儲位區域",
+      sortable: true,
+    },
+    {
+      field: "LayerName",
+      width: '150px',
+      header: "儲位櫃位",
+      sortable: true,
+    },
+    {
+      field: "VendorName",
+      width: '150px',
+      header: "廠商",
+      sortable: true,
+    },
+    {
+      field: "ProductType",
+      width: '150px',
+      header: "型號",
+      sortable: true,
+    },
+    {
+      field: "ProductSpec",
+      width: '150px',
+      header: "規格",
+      sortable: true,
+    },
+    ]
+    const rowData1 = ref([]);
+    const rowData2 = ref([]);
+    onMounted(() => {
+      getDetails();
+    });
+    async function getDetails() {
+      const axios = require('axios');
+      try {
+        const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
+        const data = response.data;
+        if (data.state === 'success') {
+          canEnterPage(data.resultList.Status, RentProcess_Delete_Status)
+          console.log('Details Get成功 資料如下\n', data.resultList);
+          details.value = data.resultList;
+          rowData1.value = data.resultList.ItemList;
+          rowData2.value = data.resultList.OM_List;
+          totalNeed.value = 0;
+          rowData1.value.forEach(item => {
+            totalNeed.value += item.Number;
           });
-          const data = response.data;
-          if (data.state === 'success') {
-            let msg = data.messages + '\n';
-            msg += '單號:' + data.resultList.AO_ID;
-            alert(msg);
-            router.push({
-              name: 'Rent_Datagrid'
-            });
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          }
-        } catch (error) {
-          console.error(error);
+          totalSelect.value = 0;
+          rowData2.value.forEach(item => {
+            totalSelect.value += item.OM_Number;
+          });
+        } else if (data.state === 'error') {
+          alert(data.messages);
+        } else if (data.state === 'account_error') {
+          alert(data.messages);
+          router.push('/');
         }
+      } catch (error) {
+        console.error(error);
       }
-      function calculateIndex(slotProps) {
-        return String(slotProps.index + 1).padStart(2, '0');
+    }
+    async function deleteData() {
+      const form = new FormData();
+      form.append('AO_ID', AO_ID);
+      const axios = require('axios');
+      const response = await axios.post(`http://192.168.0.177:7008/AssetsOutMng/ApplicationDelete`, form);
+      try {
+        const data = response.data;
+        if (data.state === 'success') {
+          let msg = data.messages + '\n';
+          msg += '單號:' + data.resultList.AO_ID;
+          alert(msg);
+          router.push({
+            name: 'Rent_Datagrid'
+          });
+        } else if (data.state === 'error') {
+          alert(data.messages);
+        }
+      } catch (error) {
+        console.error(error);
       }
-      return {
-        datagrid1field,
-        datagrid2field,
-        totalNeed,
-        totalSelect,
-        details,
-        options,
-        rowData1,
-        rowData2,
-        deleteData,
-        calculateIndex,
-        goBack,
-      };
-    },
-  };
+    }
+    function calculateIndex(slotProps) {
+      return String(slotProps.index + 1).padStart(2, '0');
+    }
+    return {
+      datagrid1field,
+      datagrid2field,
+      totalNeed,
+      totalSelect,
+      details,
+      options,
+      rowData1,
+      rowData2,
+      deleteData,
+      calculateIndex,
+      goBack,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -530,7 +524,7 @@ span {
   display: flex;
   justify-content: space-between;
   margin: 30px auto 5%;
-  width: 220px;
+  width: 210px;
 }
 
 .delete_btn {
@@ -548,23 +542,6 @@ span {
 }
 @media only screen and (min-width: 1200px) {
   .main_section {
-    .warn {
-      text-align: center;
-      padding: 10px 0;
-      background: #9f0000;
-      margin-bottom: 10px;
-      border-radius: 5px;
-
-      h4 {
-        color: white;
-        margin-bottom: 0;
-        font-weight: 700;
-
-        &::before {
-          content: "\26A0";
-        }
-      }
-    }
 
     .info_wrap {
       margin: auto;
@@ -901,24 +878,6 @@ span {
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
-    .warn {
-      text-align: center;
-      padding: 10px 0;
-      background: #9f0000;
-      margin-bottom: 10px;
-      border-radius: 5px;
-
-      h4 {
-        color: white;
-        margin-bottom: 0;
-        font-weight: 700;
-
-        &::before {
-          content: "\26A0";
-        }
-      }
-    }
-
     .info_wrap {
       margin: auto;
       padding: 0 5%;
@@ -1255,23 +1214,6 @@ span {
 
 @media only screen and (max-width: 767px) {
   .main_section {
-    .warn {
-      text-align: center;
-      padding: 10px 0;
-      background: #9f0000;
-      margin-bottom: 10px;
-      border-radius: 5px;
-
-      h4 {
-        color: white;
-        margin-bottom: 0;
-        font-weight: 700;
-
-        &::before {
-          content: "\26A0";
-        }
-      }
-    }
 
     .readonly_box {
       @include readonly_box;

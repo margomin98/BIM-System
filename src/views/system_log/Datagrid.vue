@@ -8,12 +8,12 @@
       <div class="content">
         <div class="row">
           <!-- 使用者帳號 -->
-          <div class="col-xl-auto col-lg-auto col-md-auto col-12">
+          <div class="col">
             <p>使用者帳號</p>
             <input type="text" v-model="searchParams.Account_Id" />
           </div>
           <!-- 執行動作 -->
-          <div class="col-xl-auto col-lg-auto col-md-auto col-12">
+          <div class="col">
             <p>執行動作</p>
             <select v-model="searchParams.Active" class="form-select">
             <option value="" disabled selected>請選擇</option>
@@ -21,17 +21,17 @@
         </select>
           </div>
           <!-- 訊息 -->
-          <div class="col-xl-auto col-lg-auto col-md-auto col-12">
+          <div class="col">
             <p>訊息</p>
             <input type="text" v-model="searchParams.Message" />
           </div>
           <!-- 日期（起） -->
-          <div class="col-xl-auto col-lg-auto col-md-auto col-12">
+          <div class="col">
             <p>執行時間(起)</p>
             <input type="datetime-local" class="date-input" v-model="searchParams.StartDate" />
           </div>
           <!-- 日期(迄) -->
-          <div class="col-xl-auto col-lg-auto col-md-auto col-12">
+          <div class="col">
             <p>執行時間(迄)</p>
             <input type="datetime-local" class="date-input" v-model="searchParams.EndDate" />
           </div>
@@ -166,147 +166,94 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "@/assets/css/global.scss";
-  .dg-height {
-    @include datagrid-height;
+  @import "@/assets/css/global.scss";.datagrid_section {
+  .row {
+    @include datagrid_bg;
   }
-  .datagrid_section {
-    input,
-    select {
-      @include dropdown_btn;
-      width: 100%;
-      height: 35px;
+
+  input,
+  select {
+    @include dropdown_btn;
+    width: 100%;
+    height: 35px;
+  }
+
+  .content {
+    p {
+      @include datagrid_title;
     }
   }
-  @media only screen and (min-width: 1200px) {
-    .main_section {
-      padding: 0 10%;
-         .button_wrap {
-        margin-bottom: 25px;
-        gap: 20px;
-        .search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-        .empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-      }
-      .datagrid_section {
-        .content {
-          background: rgba(82, 136, 156, 0.8);
-          border-radius: 10px;
-          margin-bottom: 30px;
-          height: 240px;
-          align-items: center;
-          display: flex;
-          justify-content: center;
-        }
-        .row {
-          display: grid;
-          grid-template-rows: 1fr 1fr;
-          grid-template-columns: 1fr 1fr 1fr;
-          gap: 40px 5px;
-          p {
-            @include datagrid_title;
-          }
-          button {
-            border: none;
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-          }
-        }
+}
+
+.button_wrap {
+  margin-bottom: 25px;
+  gap: 20px;
+
+  .search_btn {
+    @include search_and_send_btn;
+
+    &:hover {
+      background-color: #5e7aa2;
+    }
+  }
+
+  .empty_btn {
+    @include empty_btn;
+
+    &:hover {
+      background-color: #5d85bd;
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .main_section {
+    padding: 0 10%;
+
+    .datagrid_section {
+      .row {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 20px 5px;
+        padding: 2% 10%;
       }
     }
   }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .main_section {
-      padding: 0 5%;
-      .button_wrap {
-        margin-bottom: 25px;
-        gap: 20px;
-        .search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-        .empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  .main_section {
+    padding: 0 5%;
+
+    .datagrid_section {
+      .row {
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        padding: 20px;
       }
-      .datagrid_section {
-        .row {
-          display: grid;
-          grid-template-rows: 1fr 1fr;
-          grid-template-columns: 1fr 1fr;
-          gap: 40px 5px;
-          padding: 5%;
-          @include datagrid_bg;
-          p {
-            @include datagrid_title;
-          }
-          button {
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-            text-align: left;
-          }
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .main_section {
+    padding: 5%;
+
+    .datagrid_section {
+      .row {
+        display: flex;
+        flex-direction: column;
+        gap: 10px 0;
+        padding: 30px;
+
+        p {
+          font-size: 18px;
         }
       }
     }
   }
-  @media only screen and (max-width: 767px) {
-    .main_section {
-      padding: 5%;
-      .button_wrap {
-        margin-bottom: 25px;
-        justify-content: center;
-        gap: 20px;
-        .search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-        .empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-      }
-      .datagrid_section {
-        .row {
-          display: flex;
-          flex-direction: column;
-          gap: 10px 0;
-          padding: 30px;
-          @include datagrid_bg;
-          p {
-            @include datagrid_title;
-            font-size: 18px;
-          }
-          button {
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-            text-align: left;
-          }
-        }
-      }
-    }
-  }
+}
 </style>

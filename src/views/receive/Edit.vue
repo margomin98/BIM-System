@@ -15,15 +15,17 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">收貨單號：</div>
-            <input type="text" class="form-control text-center readonly_box" v-model="details.Show_AR_ID" readonly/>
+            <input type="text" class="form-control text-center readonly_box" v-model="details.Show_AR_ID" readonly />
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">訂購單號：</div>
-            <input @input="details.PO_ID = '';getPurchaseNum()" placeholder="最多輸入20字" class="form-control" @focus="showOptions = true;" @blur="closeOption()" v-model="details.PurchaseNum" />
+            <input @input="details.PO_ID = ''; getPurchaseNum()" placeholder="最多輸入20字" class="form-control"
+              @focus="showOptions = true;" @blur="closeOption()" v-model="details.PurchaseNum" />
             <ul v-if="showOptions" class="options-list">
-              <li v-for="(option, index) in DropdownArray.PurchaseNum" :key="index" @click="selectPurchaseNum(option)">{{ option.PurchaseNum }}
+              <li v-for="(option, index) in DropdownArray.PurchaseNum" :key="index" @click="selectPurchaseNum(option)">{{
+                option.PurchaseNum }}
               </li>
             </ul>
             <view-order :id="details.PO_ID"></view-order>
@@ -74,7 +76,9 @@
             <div class="input-group-prepend">通知對象：</div>
             <div class="multi_user_select">
               <!-- :taggable="true"可以直接新增新的一個資料，@tag="tagFn"  -->
-              <VueMultiselect v-model="details.InformedPersons" :options="DropdownArray.InformedPersons" :multiple="true" :close-on-select="false" :show-labels="false" :taggable="false" placeholder="輸入名字尋找對象" label="name" track-by="name" />
+              <VueMultiselect v-model="details.InformedPersons" :options="DropdownArray.InformedPersons" :multiple="true"
+                :close-on-select="false" :show-labels="false" :taggable="false" placeholder="輸入名字尋找對象" label="name"
+                track-by="name" />
             </div>
           </div>
         </div>
@@ -82,7 +86,8 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">備註：</div>
-            <textarea class="form-control " style="height: 250px;" placeholder="最多輸入500字" v-model="details.Memo"></textarea>
+            <textarea class="form-control " style="height: 250px;" placeholder="最多輸入500字"
+              v-model="details.Memo"></textarea>
           </div>
         </div>
       </div>
@@ -97,7 +102,8 @@
       <div class="content row g-0">
         <div class="col-xl-2 col-lg-2 col-md-2 col-12">
           <button class="upload_file_pt1" @click="openFileInput(0)">選擇檔案</button>
-          <input type="file" id="fileInput" ref="fileInput1" style="display: none" @change="handleDocumentFile($event)" multiple />
+          <input type="file" id="fileInput" ref="fileInput1" style="display: none" @change="handleDocumentFile($event)"
+            multiple />
         </div>
         <div class="d-flex selected_file col-12">
           <!-- 已上傳文件 -->
@@ -105,7 +111,7 @@
           <div class="icon" v-for="(file, index) in details.existDocument" :key="index">
             <p class="uploded_file_name">{{ file.FileName }}
               <img src="@/assets/view.png" @click="handlePreview(file)">
-              <img class="close_icon" src="@/assets/trash.png" @click="deleteFile('document',index , file)">
+              <img class="close_icon" src="@/assets/trash.png" @click="deleteFile('document', index, file)">
             </p>
           </div>
           <!-- 新上傳檔案 -->
@@ -113,13 +119,14 @@
           <div class="icon" v-for="(file, index) in fileParams.viewDoc" :key="index">
             <p class="uploded_file_name">{{ file.FileName }}
               <img src="@/assets/view.png" @click="handlePreview(file)">
-              <img class="close_icon" src="@/assets/trash.png" @click="deleteFile('document',index , file)">
+              <img class="close_icon" src="@/assets/trash.png" @click="deleteFile('document', index, file)">
             </p>
           </div>
           <!-- doc/docx download hidden Link -->
           <a href="" style="display: none;" id="download-link"></a>
           <!-- Modal Trigger -->
-          <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#photoModal"></button>
+          <button type="button" style="display: none" id="openModal" data-bs-toggle="modal"
+            data-bs-target="#photoModal"></button>
           <!-- Photo Modal -->
           <div class="modal fade" id="photoModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -148,14 +155,17 @@
       </div>
       <div class="content">
         <button class="upload_file_pt2" @click="openFileInput(1)">選擇檔案</button>
-        <input type="file" id="fileInput2" ref="fileInput2" style="display: none" @change="handlePictureFile($event)" multiple />
-        <swiper-container :autoHeight="true" class='swiper_section' :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
-          <swiper-slide v-for="(file , index) in fileParams.viewPic" :key="index" class="custom-slide">
-            <img class="swiper_bottom_img"  :src="file.FileLink" alt="">
+        <input type="file" id="fileInput2" ref="fileInput2" style="display: none" @change="handlePictureFile($event)"
+          multiple />
+        <swiper-container :autoHeight="true" class='swiper_section' :space-between="40" :pagination="pagination"
+          :modules="modules"
+          :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
+          <swiper-slide v-for="(file, index) in fileParams.viewPic" :key="index" class="custom-slide">
+            <img class="swiper_bottom_img" :src="file.FileLink" alt="">
             <button class='zoom_img' @click="handlePreview(file)">
               <img src="@/assets/zoom.png">
             </button>
-            <span @click="deleteFile('picture' , index , file)">x</span>
+            <span class="remove_img" @click="deleteFile('picture', index, file)">x</span>
           </swiper-slide>
         </swiper-container>
         <div class="swiper_pagination">
@@ -180,7 +190,6 @@
   import {
     getAccount,
     checkRole,
-GetAntiForgeryToken,
   } from '@/assets/js/common_api'
   import {
     goBack
@@ -321,15 +330,14 @@ GetAntiForgeryToken,
     }
     try {
       // 先編輯表單上半部內容
-      const token = await GetAntiForgeryToken();
-      const ShipmentNum = await sendUpperForm(token);
+      const ShipmentNum = await sendUpperForm();
       // 再依照AR_ID將 中間部分物流文件 & 下半部照片 單次檔案上傳
       const filePromises = [];
       for (let i = 0; i < fileParams.newDoc.length; i++) {
-        filePromises.push(sendFileForm(AR_ID, 'Document', fileParams.newDoc[i], i, token));
+        filePromises.push(sendFileForm(AR_ID, 'Document', fileParams.newDoc[i], i ));
       }
       for (let i = 0; i < fileParams.newPic.length; i++) {
-        filePromises.push(sendFileForm(AR_ID, 'File', fileParams.newPic[i], i, token));
+        filePromises.push(sendFileForm(AR_ID, 'File', fileParams.newPic[i], i));
       }
       // 等待所有檔案上傳完成
       await Promise.all(filePromises)
@@ -349,7 +357,7 @@ GetAntiForgeryToken,
     }
   }
   // 上半部表單
-  function sendUpperForm(token) {
+  function sendUpperForm() {
     return new Promise((resolve, reject) => {
       // 在这里发送上半部分表单数据的请求
       // 成功时，调用 resolve 并传递 AR_ID
@@ -392,11 +400,7 @@ GetAntiForgeryToken,
           form.append('deleteFile', item)
         }
       }
-      axios.post('http://192.168.0.177:7008/ReceivingMng/EditReceipt', form,{
-        headers: {
-          'RequestVerificationToken': token,
-        },
-      })
+      axios.post('http://192.168.0.177:7008/ReceivingMng/EditReceipt', form)
         .then(response => {
           const data = response.data;
           if (data.state === 'success') {
@@ -413,18 +417,13 @@ GetAntiForgeryToken,
     });
   }
   // 中、下上傳檔案部分
-  function sendFileForm(AR_ID, type, fileData, index,token) {
+  function sendFileForm(AR_ID, type, fileData, index) {
     return new Promise((resolve, reject) => {
       const form = new FormData();
       form.append('AR_ID', AR_ID);
       form.append('num', index);
       form.append(type, fileData);
-      const axios = require('axios');
-      axios.post('http://192.168.0.177:7008/ReceivingMng/UploadFile', form,{
-        headers: {
-          'RequestVerificationToken': token,
-        },        
-      })
+      axios.post('http://192.168.0.177:7008/ReceivingMng/UploadFile', form)
         .then((response) => {
           const data = response.data;
           if (data.state === 'success') {
@@ -639,398 +638,406 @@ GetAntiForgeryToken,
     })
   })
 </script>
-<style src="@/assets/css/vue-multiselect.css">
-
-</style>
+<style src="@/assets/css/vue-multiselect.css"></style>
 <style lang="scss" scoped>
-  @import "@/assets/css/global.scss";
-  span {
-    @include red_star
+@import "@/assets/css/global.scss";
+.remove_img {
+  display: flex;
+  background: red;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: wheat;
+  align-items: self-start;
+  justify-content: center;
+  font-weight: 700;
+  position: absolute;
+  top: 3%;
+  right: 2%;
+  z-index: 5;
+}
+
+span {
+  @include red_star
+}
+
+.input-number {
+  @include count_btn;
+}
+
+.readonly_box {
+  @include readonly_box;
+}
+
+.main_section {
+  input {
+    @include dropdown_btn;
+    height: 35px;
   }
-  .options-list {
-    position: absolute;
-    z-index: 99;
-    background-color: white;
-    border: 1px solid #ccc;
-    max-height: 200px;
-    overflow-y: auto;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    top: 0;
-    top: 40px;
-    border-radius: 5px;
-    li {
-      padding: 10px 10px 0;
-      font-size: 18px;
-      cursor: pointer;
+
+  .swiper_section swiper-slide {
+    span {
+      top: 25px;
+      right: 27px;
     }
-  }
-  .selected_file {
-    flex-direction: column;
-    .uploaded_file {
-      font-weight: 700;
-      color: white;
-    }
-    p.uploded_file_name::before {
-      margin-right: 10px;
-      content: '·';
-      font-weight: 700;
-      color: white;
-    }
-    .icon {
-      margin: 0 10px;
-      gap: 5px;
-      display: flex;
+
+    img {
       width: 100%;
-      img {
-        cursor: pointer;
-        margin: 0 5px
-      }
-      .close_icon {
-        scale: 1.5
-      }
+      height: auto;
     }
   }
-  .upload_file_pt1,
-  .upload_file_pt2 {
-    width: 100px;
-    text-align: center;
-    font-weight: 700;
-    border: none;
-    display: flex;
-    padding: 10px;
-    background: #314F7A;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    color: white;
-    &:hover {
-      background: #586d8b
+
+  .info_wrap {
+    .fixed_info {
+      @include fixed_info;
+
+      p {
+        font-size: 20px;
+        margin-bottom: 0;
+      }
     }
-  }
-  .modal {
-    .modal-body {
-      padding: 20px;
-      margin: auto;
-    }
-    .modal-content {
-      margin: auto;
-    }
-    .modal-header {
-      h5 {
+
+    .content {
+      @include content_bg;
+
+      p.uploded_file_name {
         font-weight: 700;
+        margin-bottom: 5px;
+        color: white;
+        word-break: break-word;
       }
-      background: #528091;
-      color: white;
-      display: flex;
-      justify-content: center;
+
+      .input-group {
+        .input-group-prepend {
+          color: white;
+          font-weight: 700;
+          font-size: 20px;
+        }
+      }
     }
   }
-  .custom-slide {
-    display: flex;
-    align-self: center;
+}
+
+.options-list {
+  position: absolute;
+  z-index: 99;
+  background-color: white;
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  top: 40px;
+
+  li {
+    padding: 10px 10px 0;
+    font-size: 18px;
+    cursor: pointer;
   }
-  .button_wrap {
+}
+
+.selected_file {
+  flex-direction: column;
+
+  .uploaded_file {
+    font-weight: 700;
+    color: white;
+  }
+
+  p.uploded_file_name::before {
+    margin-right: 10px;
+    content: '·';
+    font-weight: 700;
+    color: white;
+  }
+
+  .icon {
+    margin: 0 10px;
+    gap: 5px;
     display: flex;
+    width: 100%;
+
+    img {
+      cursor: pointer;
+      margin: 0 5px
+    }
+
+    .close_icon {
+      scale: 1.5
+    }
+  }
+}
+
+.upload_file_pt1,
+.upload_file_pt2 {
+  width: 100px;
+  text-align: center;
+  font-weight: 700;
+  border: none;
+  display: flex;
+  padding: 10px;
+  background: #314F7A;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  color: white;
+
+  &:hover {
+    background: #586d8b
+  }
+}
+
+.modal {
+  .modal-body {
+    padding: 20px;
+    margin: auto;
+  }
+
+  .modal-content {
+    margin: auto;
+  }
+
+  .modal-header {
+    h5 {
+      font-weight: 700;
+    }
+
+    background: #528091;
+    color: white;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.custom-slide {
+  display: flex;
+  align-self: center;
+}
+
+.button_wrap {
+  display: flex;
   justify-content: space-between;
   margin: 30px auto 5%;
   width: 210px;
-          button.back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-          button.send_btn {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
-        }
-  @media only screen and (min-width: 1200px) {
-    .main_section {
-      .multi_user_select {
-        width: 80%
-      }
-      input {
-        @include dropdown_btn;
-        height: 35px;
-      }
-      .swiper_section {
-        swiper-slide {
-          span {
-            cursor: pointer;
-            position: absolute;
-            top: 25px;
-            right: -14px;
-            background: #E94B4B;
-            height: 30px;
-            width: 30px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-weight: 700;
-          }
-        }
-        swiper-slide img {
-          width: 100%;
-          height: auto;
-          padding: 40px 0;
-        }
-      }
-      .readonly_box {
-        @include readonly_box;
-      }
-      .info_wrap {
-        margin: auto;
-        width: 800px;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .content {
-          @include content_bg;
-          p.uploded_file_name {
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: white;
-            word-break: break-word;
-          }
-          .input-group {
-            flex-wrap: nowrap;
-            .input-number {
-              @include count_btn;
-            }
-            .form-control {
-              height: 35px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              white-space: nowrap;
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              width: 152px;
-              text-align: end;
-            }
-          }
-          .date-selector {
-            width: 200px;
-            input {
-              width: 109%
-            }
-          }
-        }
-      }
-      .info_wrap:nth-child(3) {
-        margin-top: 3%;
-      }
+
+  button.back_btn {
+    @include back_to_previous_btn;
+
+    &:hover {
+      background-color: #5d85bb;
     }
   }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .main_section {
-      .multi_user_select {
-        width: 80%
-      }
-      input {
-        @include dropdown_btn;
-        height: 35px;
-      }
-      .readonly_box {
-        width: 100px !important;
-      }
-      .swiper_section {
-        swiper-slide {
-          span {
-            cursor: pointer;
-            position: absolute;
-            top: 25px;
-            right: -14px;
-            background: #E94B4B;
-            height: 30px;
-            width: 30px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-weight: 700;
-          }
-        }
-        swiper-slide img {
-          width: 100%;
-          height: auto;
-          padding: 40px 0;
-        }
-      }
-      .readonly_box {
-        @include readonly_box;
-      }      .info_wrap {
-        margin: auto;
-        width: 650px;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .content {
-          @include content_bg;
-          p.uploded_file_name {
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: white;
-            word-break: break-word;
-          }
-          .input-group {
-            flex-wrap: nowrap;
-            .input-number {
-              @include count_btn;
-              width: 80%
-            }
-            .form-control {
-              height: 35px;
-              width: 55%;
-            }
-            .input-group-prepend {
-              white-space: nowrap;
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              width: 120px;
-              text-align: end;
-            }
-            .date-input {
-              width: 103%;
-            }
-          }
-        }
-      }
-      .info_wrap:nth-child(3) {
-        margin-top: 5%;
-      }
-    }
-    .modal-dialog {
-      padding: 0 10%
+
+  button.send_btn {
+    @include search_and_send_btn;
+
+    &:hover {
+      background-color: #5e7aa2;
     }
   }
-  @media only screen and (max-width: 767px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
-      }
-      .selected_file {
-        margin-top: 10px;
-        color: white;
-        align-items: flex-start;
-        font-weight: 700;
-        flex-direction: column;
-        .icon {
-          margin: 0 10px;
-          gap: 5px;
-          display: flex;
-          align-items: flex-start;
-          img {
-            margin: 0 5px;
-          }
-        }
-      }
-      .number-input-box {
-        width: 100%
-      }
-      input {
-        @include dropdown_btn;
-        height: 35px;
-        width: 100%
-      }
-      .swiper_section swiper-slide {
+}
+
+@media only screen and (min-width: 1200px) {
+  .main_section {
+    .options-list {
+      left: 20%;
+      top: 98%;
+      width: 69.5%;
+    }
+
+    .multi_user_select {
+      width: 80%
+    }
+
+    .swiper_section {
+      swiper-slide {
         span {
-          cursor: pointer;
-          position: absolute;
           top: 25px;
-          right: 27px;
-          background: #E94B4B;
-          height: 30px;
-          width: 30px;
-          border-radius: 50%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          color: white;
-          font-weight: 700;
-        }
-        img {
-          width: 100%;
-          height: auto;
-          padding: 40px;
+          right: -14px;
         }
       }
+
+      swiper-slide img {
+        padding: 40px 0;
+      }
+    }
+
+    .info_wrap {
+      margin: auto;
+      width: 800px;
+
+      .content {
+        .input-group {
+          flex-wrap: nowrap;
+
+          .input-group-prepend {
+            white-space: nowrap;
+            width: 152px;
+            text-align: end;
+          }
+        }
+
+        .date-selector {
+          width: 200px;
+
+          input {
+            width: 109%
+          }
+        }
+      }
+    }
+
+    .info_wrap:nth-child(3) {
+      margin-top: 3%;
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  .main_section {
+    .options-list {
+      left: 19.5%;
+      top: 98%;
+      width: 67.5%;
+    }
+
+    .multi_user_select {
+      width: 80%
+    }
+
+    .readonly_box {
+      width: 100px !important;
+    }
+
+    .swiper_section {
+      swiper-slide {
+        span {
+          top: 25px;
+          right: -14px;
+        }
+      }
+
+      swiper-slide img {
+        padding: 40px 0;
+      }
+    }
+
+    .info_wrap {
+      margin: auto;
+      width: 650px;
+
+      .content {
+        .input-group {
+          flex-wrap: nowrap;
+
+          .input-number {
+            width: 80%
+          }
+
+          .form-control {
+            width: 55%;
+          }
+
+          .input-group-prepend {
+            white-space: nowrap;
+            width: 120px;
+            text-align: end;
+          }
+
+          .date-input {
+            width: 103%;
+          }
+        }
+      }
+    }
+
+    .info_wrap:nth-child(3) {
+      margin-top: 5%;
+    }
+  }
+
+  .modal-dialog {
+    padding: 0 10%
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .main_section {
+    .options-list {
+      top: 62%;
+      width: 100%;
+    }
+
+    .selected_file {
+      margin-top: 10px;
+      color: white;
+      align-items: flex-start;
+      font-weight: 700;
+      flex-direction: column;
+
+      .icon {
+        align-items: flex-start;
+      }
+    }
+
+    .number-input-box,
+    input {
+      width: 100%
+    }
+
+    .swiper_section swiper-slide {
+      span {
+        top: 25px;
+        right: 27px;
+      }
+
+      img {
+        padding: 40px;
+      }
+    }
+
+    .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+      margin-left: 0 !important;
+      border-radius: 5px;
+    }
+
+    .info_wrap {
+      padding: 0 5%;
+
+      .content {
+        .row {
+          gap: 10px 0;
+        }
+
+        .input-group {
+          flex-direction: column;
+
+          .input-number {
+            width: 100%;
+          }
+
+          .form-control {
+            width: 100%;
+            margin-left: unset !important;
+          }
+
+          .input-group-prepend {
+            margin-bottom: 5px;
+          }
+        }
+      }
+    }
+
+    .info_wrap:nth-child(3) {
       .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-        margin-left: 0 !important;
+        margin-left: unset !important;
         border-radius: 5px;
       }
-      .info_wrap {
-        padding:0 5%;
-        .fixed_info {
-          @include fixed_info;
-          flex-direction: column;
-          height: unset;
-          padding: 10px;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .content {
-          @include content_bg;
-          p.uploded_file_name {
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: white;
-            word-break: break-word;
-          }
-          .row {
-            gap: 10px 0;
-          }
-          .input-group {
-            flex-direction: column;
-            .input-number {
-              @include count_btn;
-              width: 100%;
-            }
-            .form-control {
-              width: 100%;
-              height: 35px;
-              border-radius: 0;
-              margin-left: unset !important;
-            }
-            .input-group-prepend {
-              margin-bottom: 5px;
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-            }
-          }
-        }
-      }
-      .info_wrap:nth-child(3) {
-        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-          margin-left: unset !important;
-          border-radius: 5px;
-        }
-      }
-    }
-    .modal-dialog {
-      padding: 0 10%
     }
   }
-</style>
+
+  .modal-dialog {
+    padding: 0 10%
+  }
+}</style>

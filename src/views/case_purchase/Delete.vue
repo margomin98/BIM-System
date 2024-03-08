@@ -41,24 +41,23 @@ onUnmounted(()=>{
 
 .button_wrap {
   display: flex;
-  justify-content: space-between;
-  margin: 30px auto 5%;
-  width: 220px;
-}
+            justify-content: space-between;
+            margin: 30px auto 5%;
+            width: 210px;
+  .back_btn{
+          @include back_to_previous_btn;
 
-.delete_btn {
-@include delete_btn;
-  &:hover {
-    background-color: #a51e1e;
-  }
-}
-.back_btn {
-  @include back_to_previous_btn;
+          &:hover {
+            background-color: #5d85bb;
+          }
+        }
 
-  &:hover {
-    background-color: #5d85bb;
-  }
-}
-
+    .delete_btn {
+     @include delete_btn;
+          &:hover {
+            background-color: #a51e1e;
+        }
+      }
+    }
 
 </style>

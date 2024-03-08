@@ -173,63 +173,65 @@ const clear = () => {
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
   .datagrid_section {
-.row{
-  @include datagrid_bg;
-}
-  input,
-  select {
-    @include dropdown_btn;
-    width: 100%;
-    height: 35px;
+    .row {
+      @include datagrid_bg;
+    }
+
+    input,
+    select {
+      @include dropdown_btn;
+      width: 100%;
+      height: 35px;
+    }
+
+    .content {
+      p {
+        @include datagrid_title;
+      }
+    }
   }
-  .content{
-p {
-          @include datagrid_title;
-        }
 
-      }
-
-}
   .button_wrap {
-        margin-bottom: 25px;
-        gap: 20px;
-        .search_btn {
-          @include search_and_send_btn;
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-        .empty_btn {
-          @include empty_btn;
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
+    margin-bottom: 25px;
+    gap: 20px;
+
+    .search_btn {
+      @include search_and_send_btn;
+
+      &:hover {
+        background-color: #5e7aa2;
       }
+    }
+
+    .empty_btn {
+      @include empty_btn;
+
+      &:hover {
+        background-color: #5d85bd;
+      }
+    }
+  }
+
   @media only screen and (min-width: 1200px) {
     .main_section {
       padding: 0 10%;
+
       .datagrid_section {
         .row {
           display: grid;
           grid-template-rows: 1fr 1fr;
           grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
           gap: 20px 5px;
-       padding:2%;
-          button {
-            border: none;
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-          }
+          padding: 2%;
         }
       }
     }
   }
+
   @media only screen and (min-width: 768px) and (max-width: 1199px) {
     .main_section {
       padding: 0 5%;
+
       .datagrid_section {
         .row {
           display: grid;
@@ -237,43 +239,27 @@ p {
           grid-template-columns: 1fr 1fr 1fr;
           gap: 10px 20px;
           padding: 20px;
-        
-          button {
-            padding: 0;
-            width: 100%;
-            font-size: 18px;
-            height: 100%;
-            text-align: left;
-          }
         }
       }
     }
   }
+
   @media only screen and (max-width: 767px) {
     .main_section {
       padding: 5%;
-      
- 
-    .datagrid_section {
-      .row {
-        display: flex;
-        flex-direction: column;
-        gap: 10px 0;
-        padding: 30px;
 
-        p {
-          font-size: 18px;
-        }
+      .datagrid_section {
+        .row {
+          display: flex;
+          flex-direction: column;
+          gap: 10px 0;
+          padding: 30px;
 
-        button {
-          padding: 0;
-          width: 100%;
-          font-size: 18px;
-          height: 100%;
-          text-align: left;
+          p {
+            font-size: 18px;
+          }
         }
       }
-    }
     }
   }
 </style>

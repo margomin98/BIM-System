@@ -1029,7 +1029,7 @@ textarea {
     }
 
     .content .option_section{
-      width:100%;
+      width:78.4%;
     }
     .tab-content .option_section,
     .tab-content .option_section .options-list {
@@ -1248,7 +1248,7 @@ textarea {
     }
     .content .option_section,
     .content .option_section .options-list {
-      width: 100%;
+      width: 80.5%;
     }
     .tab-content .option_section,
     .tab-content .option_section .options-list {

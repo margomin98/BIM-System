@@ -5,11 +5,7 @@
       <h1>刪除項目</h1>
     </div>
     <div class="info_wrap col">
-      <div class="warn">
-        <h4>
-          確定刪除以下項目嗎？
-        </h4>
-      </div>
+<warn/>
       <div class="fixed_info">
         <div>
           <p>單號：{{ details.AO_ID }}</p>
@@ -195,6 +191,7 @@ import {
   useRoute,
   useRouter
 } from 'vue-router';
+import warn from "@/components/Delete_warn.vue"
 import Storage_add from "@/components/Storage_add_button";
 import Navbar from "@/components/Navbar.vue";
 import {
@@ -208,6 +205,7 @@ export default {
   components: {
     Navbar,
     AgGridVue,
+    warn,
     Storage_add
   },
   data() {
@@ -519,26 +517,29 @@ export default {
   display: flex;
   align-items: center;
 }
+.button_wrap {
+  display: flex;
+            justify-content: space-between;
+            margin: 30px auto 5%;
+            width: 210px;
+  .back_btn{
+          @include back_to_previous_btn;
 
-@media only screen and (min-width: 1200px) {
-  .main_section {
-    .warn {
-      text-align: center;
-      padding: 10px 0;
-      background: #9f0000;
-      margin-bottom: 10px;
-      border-radius: 5px;
+          &:hover {
+            background-color: #5d85bb;
+          }
+        }
 
-      h4 {
-        color: white;
-        margin-bottom: 0;
-        font-weight: 700;
-
-        &::before {
-          content: "\26A0";
+    .delete_btn {
+     @include delete_btn;
+          &:hover {
+            background-color: #a51e1e;
         }
       }
     }
+@media only screen and (min-width: 1200px) {
+  .main_section {
+
 
     #readonly_box {
       padding: 0;
@@ -822,64 +823,12 @@ export default {
       }
     }
 
-    .button_wrap {
-      display: flex;
-      justify-content: center;
-      margin: 30px auto 5%;
-      width: 220px;
-
-      button {
-        &:nth-child(1) {
-          @include back_to_previous_btn;
-
-          &:hover {
-            background-color: #5d85bb;
-          }
-        }
-
-        &:nth-child(2) {
-          background: var(--c-5, #E94B4B);
-          justify-content: center;
-          align-items: center;
-          display: inline-flex;
-          border-radius: 10px;
-          height: 40px;
-          width: 90px;
-          color: #FFF;
-          text-align: center;
-          font-size: 20px;
-          font-weight: 700;
-          border: none;
-          margin: 0 10px;
-
-          &:hover {
-            background-color: #a51e1e;
-          }
-        }
-      }
-    }
   }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
-    .warn {
-      text-align: center;
-      padding: 10px 0;
-      background: #9f0000;
-      margin-bottom: 10px;
-      border-radius: 5px;
-
-      h4 {
-        color: white;
-        margin-bottom: 0;
-        font-weight: 700;
-
-        &::before {
-          content: "\26A0";
-        }
-      }
-    }
+   
 
     #readonly_box {
       padding: 0;
@@ -1162,64 +1111,12 @@ export default {
       }
     }
 
-    .button_wrap {
-      display: flex;
-      justify-content: center;
-      margin: 30px auto 5%;
-      width: 220px;
-
-      button {
-        &:nth-child(1) {
-          @include back_to_previous_btn;
-
-          &:hover {
-            background-color: #5d85bb;
-          }
-        }
-
-        &:nth-child(2) {
-          background: var(--c-5, #E94B4B);
-          justify-content: center;
-          align-items: center;
-          display: inline-flex;
-          border-radius: 10px;
-          height: 40px;
-          width: 90px;
-          color: #FFF;
-          text-align: center;
-          font-size: 20px;
-          font-weight: 700;
-          border: none;
-          margin: 0 10px;
-
-          &:hover {
-            background-color: #a51e1e;
-          }
-        }
-      }
-    }
   }
 }
 
 @media only screen and (max-width: 767px) {
   .main_section {
-    .warn {
-      text-align: center;
-      padding: 10px 0;
-      background: #9f0000;
-      margin-bottom: 10px;
-      border-radius: 5px;
-
-      h4 {
-        color: white;
-        margin-bottom: 0;
-        font-weight: 700;
-
-        &::before {
-          content: "\26A0";
-        }
-      }
-    }
+ 
 
     .readonly_box {
       @include readonly_box;
@@ -1500,41 +1397,6 @@ export default {
       }
     }
 
-    .button_wrap {
-      display: flex;
-      justify-content: center;
-      margin: 30px auto 5%;
-      width: 220px;
-
-      button {
-        &:nth-child(1) {
-          @include back_to_previous_btn;
-
-          &:hover {
-            background-color: #5d85bb;
-          }
-        }
-
-        &:nth-child(2) {
-          background: var(--c-5, #E94B4B);
-          justify-content: center;
-          align-items: center;
-          display: inline-flex;
-          border-radius: 10px;
-          height: 40px;
-          width: 90px;
-          color: #FFF;
-          text-align: center;
-          font-size: 20px;
-          font-weight: 700;
-          border: none;
-          margin: 0 10px;
-
-          &:hover {
-            background-color: #a51e1e;
-          }
-        }
-      }
-    }
+    
   }
 }</style>

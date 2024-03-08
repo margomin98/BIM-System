@@ -388,7 +388,7 @@
     }
     .apply_btn {
         border: none;
-        width: 80px;
+        width: 110px;
         height: 35px;
         background: #132238;
         border-radius: 10px;
