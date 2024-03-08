@@ -1,5 +1,5 @@
 <template>
-  <Navbar/>
+  <Navbar />
   <div class="main_section">
     <div class="title col">
       <h1>
@@ -7,7 +7,7 @@
       </h1>
     </div>
     <div class="info_wrap col">
-   <warn/>
+      <warn />
       <!-- 報廢編號，申請人員，申請日期 -->
       <div class="fixed_info">
         <div>
@@ -34,7 +34,8 @@
               <div class="input-group-prepend">
                 報廢人員：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.ScrapPerson">
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly
+                v-model="details.ScrapPerson">
             </div>
           </div>
           <!-- 交付日期 -->
@@ -43,7 +44,8 @@
               <div class="input-group-prepend">
                 交付日期：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.DeliveryDate">
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly
+                v-model="details.DeliveryDate">
             </div>
           </div>
         </div>
@@ -54,7 +56,8 @@
               <div class="input-group-prepend">
                 審核人員：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.VerifyPerson">
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly
+                v-model="details.VerifyPerson">
             </div>
           </div>
           <!-- 審核結果 -->
@@ -63,7 +66,8 @@
               <div class="input-group-prepend">
                 審核結果：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.VerifyResult">
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly
+                v-model="details.VerifyResult">
             </div>
           </div>
         </div>
@@ -95,21 +99,22 @@
           </div>
         </div>
         <!-- 報廢方式 -->
-        <div v-show="Assets.Type==='耗材'" class="col-12">
+        <div v-show="Assets.Type === '耗材'" class="col-12">
           <div class="input-group mb-3">
             <div class="input-group-prepend">報廢方式：</div>
             <div class="check_section d-flex">
-              <template v-for="(item,index) in Scrap_TypeArray" :key="item">
-                  <div class="form-check d-flex align-items-center">
-                    <input type="radio" :id="'no'+index" name="radio" :value="item" v-model="details.ConsumableScrap" :disabled="details.ConsumableScrap !== item"/>
-                    <label :for="'no'+index">{{ item }}</label>
-                  </div>
-</template>
+              <template v-for="(item, index) in Scrap_TypeArray" :key="item">
+                <div class="form-check d-flex align-items-center">
+                  <input type="radio" :id="'no' + index" name="radio" :value="item" v-model="details.ConsumableScrap"
+                    :disabled="details.ConsumableScrap !== item" />
+                  <label :for="'no' + index">{{ item }}</label>
+                </div>
+              </template>
             </div>
           </div>
         </div>
         <!-- scrap_hint -->
-        <div v-show="Assets.Type==='耗材'" class="col-12">
+        <div v-show="Assets.Type === '耗材'" class="col-12">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
             </div>
@@ -118,12 +123,12 @@
           </div>
         </div>
         <!-- 報廢數量 -->
-        <div v-show="Assets.Type==='耗材'" class="col-12">
+        <div v-show="Assets.Type === '耗材'" class="col-12">
           <div class="input-group  mb-3">
             <div class="input-group-prepend">報廢數量：</div>
             <div class="num_wrap d-flex ">
               <div class="number-input-box">
-                <input class="input-number readonly_box" type="number" readonly v-model="details.ConsumableNum"/>
+                <input class="input-number readonly_box" type="number" readonly v-model="details.ConsumableNum" />
                 <span class="scrap_quantity">{{ Assets.Unit }}</span>
                 <!-- <span class="scrap_quantity_storage">（總庫存量 {{ Assets.Max }}）</span> -->
               </div>
@@ -136,7 +141,8 @@
             <div class="input-group-prepend">
               報廢原因：
             </div>
-            <textarea style="height: 200px;" class="form-control readonly_box" readonly v-model="details.Reason"></textarea>
+            <textarea style="height: 200px;" class="form-control readonly_box" readonly
+              v-model="details.Reason"></textarea>
           </div>
         </div>
         <!-- 已上傳檔案 -->
@@ -144,9 +150,11 @@
           <div class="input-group mt-3">
             <div class="input-group-prepend">已上傳檔案：</div>
             <div class="d-flex  flex-column">
-              <div v-for="(file , index) in details.existFile" :key="index" class="file_upload_wrap">
-                <p  class='file_name'>{{ file.FileName }}
-                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"  @click="viewImgFile(index,details,modalParams,'exist')" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+              <div v-for="(file, index) in details.existFile" :key="index" class="file_upload_wrap">
+                <p class='file_name'>{{ file.FileName }}
+                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"
+                    @click="viewImgFile(index, details, modalParams, 'exist')" data-bs-toggle="modal"
+                    data-bs-target="#viewFile_modal">
                 </p>
               </div>
             </div>
@@ -154,7 +162,7 @@
         </div>
         <!-- ViewFile Modal -->
         <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" >
+          <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">{{ modalParams.title }}</h5>
@@ -165,13 +173,13 @@
               </div>
             </div>
           </div>
-        </div>        
+        </div>
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
         <!-- Modal Trigger -->
         <button class="delete_btn" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>
-     </div>
+      </div>
       <!-- delete Modal -->
       <div class="modal fade delete_modal" id="deleteModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-sm">
@@ -191,643 +199,615 @@
 </template>
 
 <script>
-  import {
-    ref,
-    reactive,
-    onMounted
-  } from 'vue';
-  import warn from "@/components/Delete_warn.vue"
-  import Navbar from '@/components/Navbar.vue';
-  import router from '@/router';
-  import {
-    canEnterPage,
-    goBack,
-    viewImgFile
-  } from '@/assets/js/common_fn.js'
-  import axios from 'axios';
-  import {
-    useRoute
-  } from 'vue-router';
-  import {
-    Scrap_Delete_Status
-  } from '@/assets/js/enter_status';
-  import {
-    getAssets
-  } from '@/assets/js/common_api';
-  import {
-    Scrap_TypeArray
-  } from '@/assets/js/dropdown';
-  export default {
-    components: {
-      Navbar,
-      warn
-    },
-    setup() {
-      const route = useRoute();
-      const ScrapId = route.query.search_id;
-      const details = ref({});
-      const Assets = reactive({
-        Name: '',
-        Type: '',
-        Status: '',
-        Unit: '',
-        Max: 1,
-      });
-      const modalParams = reactive({
-        title: '',
-        src: '',
-      });
-      onMounted(() => {
-        getDetails()
-      });
-      async function getDetails() {
-        axios.get(`http://192.168.0.177:7008/GetDBdata/GetScrapInfo?s_id=${ScrapId}`)
-          .then((response) => {
-            const data = response.data
-            if (data.state === 'success') {
-              canEnterPage(data.resultList.Status, Scrap_Delete_Status)
-              details.value = data.resultList;
-              getAssets(details.value.AssetsId)
-                .then((data) => {
-                  Assets.Type = data.AssetType;
-                  Assets.Unit = data.Unit;
-                  Assets.Max = data.Number;
-                })
-                .catch((error) => {
-                  console.error(error);
-                })
-            } else if (data.state === 'account_error') {
-              alert(data.messages)
-              router.push('/');
-            } else {
-              alert(data.messages)
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-      }
-      async function deleteData() {
-        const form = new FormData();
-        form.append('ScrapId', ScrapId);
-        const axios = require('axios');
-        const response = await axios.post(`http://192.168.0.177:7008/ScrapMng/DeleteScrap`, form);
-        try {
-          const data = response.data;
+import {
+  ref,
+  reactive,
+  onMounted
+} from 'vue';
+import warn from "@/components/Delete_warn.vue"
+import Navbar from '@/components/Navbar.vue';
+import router from '@/router';
+import {
+  canEnterPage,
+  goBack,
+  viewImgFile
+} from '@/assets/js/common_fn.js'
+import axios from 'axios';
+import {
+  useRoute
+} from 'vue-router';
+import {
+  Scrap_Delete_Status
+} from '@/assets/js/enter_status';
+import {
+  getAssets
+} from '@/assets/js/common_api';
+import {
+  Scrap_TypeArray
+} from '@/assets/js/dropdown';
+export default {
+  components: {
+    Navbar,
+    warn
+  },
+  setup() {
+    const route = useRoute();
+    const ScrapId = route.query.search_id;
+    const details = ref({});
+    const Assets = reactive({
+      Name: '',
+      Type: '',
+      Status: '',
+      Unit: '',
+      Max: 1,
+    });
+    const modalParams = reactive({
+      title: '',
+      src: '',
+    });
+    onMounted(() => {
+      getDetails()
+    });
+    async function getDetails() {
+      axios.get(`http://192.168.0.177:7008/GetDBdata/GetScrapInfo?s_id=${ScrapId}`)
+        .then((response) => {
+          const data = response.data
           if (data.state === 'success') {
-            let msg = data.messages + '\n';
-            msg += '單號:' + data.resultList.S_ID;
-            alert(msg);
-            router.push({
-              name: 'Scrap_Datagrid'
-            });
-          } else if (data.state === 'error') {
-            alert(data.messages);
+            canEnterPage(data.resultList.Status, Scrap_Delete_Status)
+            details.value = data.resultList;
+            getAssets(details.value.AssetsId)
+              .then((data) => {
+                Assets.Type = data.AssetType;
+                Assets.Unit = data.Unit;
+                Assets.Max = data.Number;
+              })
+              .catch((error) => {
+                console.error(error);
+              })
+          } else if (data.state === 'account_error') {
+            alert(data.messages)
+            router.push('/');
+          } else {
+            alert(data.messages)
           }
-        } catch (error) {
+        })
+        .catch((error) => {
           console.error(error);
+        })
+    }
+    async function deleteData() {
+      const form = new FormData();
+      form.append('ScrapId', ScrapId);
+      const axios = require('axios');
+      const response = await axios.post(`http://192.168.0.177:7008/ScrapMng/DeleteScrap`, form);
+      try {
+        const data = response.data;
+        if (data.state === 'success') {
+          let msg = data.messages + '\n';
+          msg += '單號:' + data.resultList.S_ID;
+          alert(msg);
+          router.push({
+            name: 'Scrap_Datagrid'
+          });
+        } else if (data.state === 'error') {
+          alert(data.messages);
         }
+      } catch (error) {
+        console.error(error);
       }
-      return {
-        details,
-        modalParams,
-        Scrap_TypeArray,
-        Assets,
-        viewImgFile,
-        goBack,
-        deleteData,
-      }
-    },
-  };
+    }
+    return {
+      details,
+      modalParams,
+      Scrap_TypeArray,
+      Assets,
+      viewImgFile,
+      goBack,
+      deleteData,
+    }
+  },
+};
 </script>
 
 
 <style lang="scss" scoped>
-  @import '@/assets/css/global.scss';
-  .scrap_quantity,
-  .scrap_quantity_storage {
-    font-size: 20px;
-    color: white;
-    font-weight: 700;
-    margin-left: 10px;
-  }
-  .scrap_hint {
-    font-weight: 700;
-    color: #00438B;
-    font-size: 18px;
-  }
-  .check_section {
-    gap: 10px;
-    .form-check {
-      gap: 5px;
+@import '@/assets/css/global.scss';
+
+.scrap_quantity,
+.scrap_quantity_storage {
+  font-size: 20px;
+  color: white;
+  font-weight: 700;
+  margin-left: 10px;
+}
+
+.scrap_hint {
+  font-weight: 700;
+  color: #00438B;
+  font-size: 18px;
+}
+
+.check_section {
+  gap: 10px;
+
+  .form-check {
+    gap: 5px;
+    padding: 0;
+    margin: 0;
+
+    input {
+      width: 15px;
       padding: 0;
-      margin: 0;
-      input {
-        width: 15px;
-        padding: 0;
-        height: 15px;
-        border-radius: 50%;
-      }
-      label {
-        color: white;
-        font-size: 20px;
-        font-weight: 600;
-      }
+      height: 15px;
+      border-radius: 50%;
     }
-  }
-  .modal {
-    .modal-body {
-      padding: 20px;
-      margin: auto;
-    }
-    .modal-content {
-      margin: auto;
-    }
-    .modal-header {
-      h5 {
-        font-weight: 700;
-      }
-      background: #528091;
+
+    label {
       color: white;
-      display: flex;
-      justify-content: center;
+      font-size: 20px;
+      font-weight: 600;
     }
   }
-  .file_wrap {
+}
+
+.modal {
+  .modal-body {
+    padding: 20px;
+    margin: auto;
+  }
+
+  .modal-content {
+    margin: auto;
+  }
+
+  .modal-header {
+    h5 {
+      font-weight: 700;
+    }
+
+    background: #528091;
+    color: white;
     display: flex;
-    flex-direction: column;
-    .choose_btn {
-      margin-bottom: 10px;
-      @include choose_file_btn;
-      &:hover {
-        background: #3f608f;
-      }
+    justify-content: center;
+  }
+}
+
+.file_wrap {
+  display: flex;
+  flex-direction: column;
+
+  .choose_btn {
+    margin-bottom: 10px;
+    @include choose_file_btn;
+
+    &:hover {
+      background: #3f608f;
     }
   }
-  .file_name::before {
-    margin-right: 5px;
-    content: '·';
+}
+
+.file_name::before {
+  margin-right: 5px;
+  content: '·';
+  font-weight: 700;
+  color: white;
+}
+
+.selected_file {
+  p {
+    margin-bottom: 5px;
     font-weight: 700;
     color: white;
   }
-  .selected_file {
-    p {
-      margin-bottom: 5px;
+
+  .file_upload_box {
+    .file_upload_wrap {
+      margin-bottom: 0;
+      display: flex;
+      word-break: break-word;
+
+      img {
+        width: 25px;
+        height: 25px;
+      }
+    }
+  }
+}
+
+#deleteModal {
+  .modal-content {
+    border: solid 1px black;
+    border-radius: 0;
+
+    .modal-body {
+      background: #E94B4B;
+      text-align: center;
       font-weight: 700;
+      width: 100%;
       color: white;
+      border-bottom: solid 1px black;
     }
-    .file_upload_box {
-      .file_upload_wrap {
-        margin-bottom: 0;
-        display: flex;
-        word-break: break-word;
-        img {
-          width: 25px;
-          height: 25px;
-        }
-      }
-    }
-  }
-  #deleteModal {
-    .modal-content {
-      border: solid 1px black;
-      border-radius: 0;
-      .modal-body {
-        background: #E94B4B;
-        text-align: center;
-        font-weight: 700;
-        width: 100%;
+
+    .modal-footer {
+      margin: auto;
+      gap: 10px;
+
+      button:nth-child(1) {
+        background-color: #7E7E7E;
+        border: none;
         color: white;
-        border-bottom: solid 1px black;
-      }
-      .modal-footer {
-        margin: auto;
-        gap: 10px;
-        button:nth-child(1) {
-          background-color: #7E7E7E;
-          border: none;
-          color: white;
-          width: 50px;
-          font-weight: 700;
-          &:hover {
-            background-color: #464242;
-          }
+        width: 50px;
+        font-weight: 700;
+
+        &:hover {
+          background-color: #464242;
         }
-        button:nth-child(2) {
-          background-color: #E94B4B;
-          border: none;
-          color: white;
-          width: 50px;
-          font-weight: 700;
-          &:hover {
-            background-color: #a70e0e;
+      }
+
+      button:nth-child(2) {
+        background-color: #E94B4B;
+        border: none;
+        color: white;
+        width: 50px;
+        font-weight: 700;
+
+        &:hover {
+          background-color: #a70e0e;
+        }
+      }
+    }
+  }
+}
+
+.button_wrap {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px auto 5%;
+  width: 210px;
+
+  .back_btn {
+    @include back_to_previous_btn;
+
+    &:hover {
+      background-color: #5d85bb;
+    }
+  }
+
+  .delete_btn {
+    @include delete_btn;
+
+    &:hover {
+      background-color: #a51e1e;
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .main_section {
+    .readonly_box {
+      @include readonly_box;
+    }
+
+    .info_wrap {
+      margin: 30px auto 5%;
+      width: 750px;
+
+      .fixed_info {
+        @include fixed_info;
+
+        p {
+          font-size: 20px;
+          margin-bottom: 0;
+        }
+      }
+
+      .content {
+        @include content_bg;
+
+        .input-group {
+          .input-number {
+            @include count_btn;
+          }
+
+          .readonly_box {
+            height: 37px;
+          }
+
+          .form-control {
+            height: 37px;
+            border-radius: 0;
+          }
+
+          .input-group-prepend {
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            text-align: end;
+            width: 155px;
+
+            span {
+              @include red_star
+            }
+          }
+
+          .selected_file {
+            margin-left: 20px;
+
+            p.title {
+              font-weight: 700;
+              color: white;
+              margin-bottom: 5px;
+            }
+
+            .file_upload_wrap {
+              margin-bottom: 0;
+              display: flex;
+
+              img {
+                width: 25px;
+                height: 25px;
+              }
+
+              p {
+                margin-bottom: 0;
+                font-weight: 700;
+                color: white;
+
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
+                  font-weight: 700;
+                  color: white;
+                }
+              }
+            }
+          }
+
+          .file_wrap {
+            display: flex;
+            flex-direction: column;
+
+            .choose_btn {
+              margin-bottom: 10px;
+              @include choose_file_btn;
+
+              &:hover {
+                background: #3f608f;
+              }
+            }
           }
         }
       }
     }
   }
-  @media only screen and (min-width: 1200px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
-      }
-      .info_wrap {
-        margin: 30px auto 5%;
-        width: 750px;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  .main_section {
+    .readonly_box {
+      @include readonly_box;
+    }
+
+    .info_wrap {
+      margin: 30px auto 5%;
+      padding: 0 5%;
+
+      .fixed_info {
+        @include fixed_info;
+
+        p {
+          font-size: 20px;
+          margin-bottom: 0;
         }
-        .content {
-          @include content_bg;
-          .input-group {
+      }
+
+      .content {
+        @include content_bg;
+
+        .input-group {
+          width: 100%;
+          white-space: nowrap;
+          flex-wrap: nowrap;
+
+          .num_wrap {
             .input-number {
+              width: 50%;
               @include count_btn;
             }
-            .readonly_box {
-              height: 37px;
-            }
-            .form-control {
-              height: 37px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              text-align: end;
-              width: 155px;
-              span {
-                @include red_star
-              }
-            }
-            .selected_file {
-              margin-left: 20px;
-              p.title {
-                font-weight: 700;
-                color: white;
-                margin-bottom: 5px;
-              }
-              .file_upload_wrap {
-                margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  margin-bottom: 0;
-                  font-weight: 700;
-                  color: white;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
-                }
-              }
-            }
-            .file_wrap {
-              display: flex;
-              flex-direction: column;
-              .choose_btn {
-                margin-bottom: 10px;
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
-                }
-              }
-            }
           }
-        }
-        .button_wrap {
-          display: flex;
-          justify-content: space-between;
-          margin: 30px auto 5%;
-          width: 220px;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-            &:nth-child(2) {
-              background: var(--c-5, #E94B4B);
-              justify-content: center;
-              align-items: center;
-              display: inline-flex;
-              border-radius: 10px;
-              height: 40px;
-              width: 90px;
-              color: #FFF;
-              text-align: center;
-              font-size: 20px;
-              font-weight: 700;
-              border: none;
-              &:hover {
-                background-color: #a51e1e;
-              }
-            }
-          }
-          .send_btn {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
-          .send_btn_disabled {
-            background: #878787;
-            &:hover {
-              background: #878787;
-            }
-          }
-        }
-      }
-    }
-  }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
-      }
-      .info_wrap {
-        margin: 30px auto 5%;
-        padding: 0 5%;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .content {
-          @include content_bg;
-          .input-group {
+
+          .readonly_box {
+            height: 37px;
             width: 100%;
-            white-space: nowrap;
-            flex-wrap: nowrap;
-            .num_wrap {
-              .input-number {
-                width: 50%;
-                @include count_btn;
-              }
-            }
-            .readonly_box {
-              height: 37px;
-              width: 100%;
-            }
-            .form-control {
-              height: 37px;
-              width: 65%;
-            }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              text-align: end;
-              width: 150px;
-              span {
-                @include red_star
-              }
-            }
           }
-          .repair_photo_section {
-            .selected_file {
-              margin-left: 20px;
-              p.title {
-                font-weight: 700;
-                color: white;
-                margin-bottom: 5px;
-              }
-              .file_upload_wrap {
-                margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  margin-bottom: 0;
-                  font-weight: 700;
-                  color: white;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
-                }
-              }
-            }
-            .file_wrap {
-              display: flex;
-              flex-direction: column;
-              .choose_btn {
-                margin-bottom: 10px;
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
-                }
-              }
-            }
+
+          .form-control {
+            height: 37px;
+            width: 65%;
           }
-        }
-        .button_wrap {
-          display: flex;
-          justify-content: space-between;
-          margin: 30px auto 5%;
-          width: 220px;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
-            &:nth-child(2) {
-              background: var(--c-5, #E94B4B);
-              justify-content: center;
-              align-items: center;
-              display: inline-flex;
-              border-radius: 10px;
-              height: 40px;
-              width: 90px;
-              color: #FFF;
-              text-align: center;
-              font-size: 20px;
-              font-weight: 700;
-              border: none;
-              &:hover {
-                background-color: #a51e1e;
-              }
-            }
-          }
-          .send_btn {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
-          .send_btn_disabled {
-            background: #878787;
-            &:hover {
-              background: #878787;
-            }
-          }
-        }
-      }
-    }
-  }
-  @media only screen and (max-width: 767px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
-        height: 35px;
-        margin-left: unset !important;
-      }
-      .info_wrap {
-        padding: 0 5%;
-        .fixed_info {
-          @include fixed_info;
-          height: unset;
-          flex-direction: column;
-          padding: 10px;
-          p {
+
+          .input-group-prepend {
+            color: white;
+            font-weight: 700;
             font-size: 20px;
-            margin-bottom: 0;
+            text-align: end;
+            width: 150px;
+
+            span {
+              @include red_star
+            }
           }
         }
-        .content {
-          @include content_bg;
-          .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-            margin-left: unset;
-            border-radius: 5px;
-            margin-top: 5px;
-            height: 35px;
-          }
-          .input-group {
-            flex-direction: column;
-            .num_wrap {
-              margin-left: unset !important;
-              .number-input-box {
-                width: 100%;
-                .input-number {
-                  @include count_btn;
-                  width: 20%;
-                }
-              }
-            }
-            .form-control {
-              height: 35px;
-              width: 100%;
-              border-radius: 0;
-              margin-left: unset !important;
-            }
-            .input-group-prepend {
-              color: white;
+
+        .repair_photo_section {
+          .selected_file {
+            margin-left: 20px;
+
+            p.title {
               font-weight: 700;
-              font-size: 20px;
-              width: 100px;
-              white-space: nowrap;
-              span {
-                @include red_star
-              }
+              color: white;
+              margin-bottom: 5px;
             }
-            .selected_file {
-              p.title {
+
+            .file_upload_wrap {
+              margin-bottom: 0;
+              display: flex;
+
+              img {
+                width: 25px;
+                height: 25px;
+              }
+
+              p {
+                margin-bottom: 0;
                 font-weight: 700;
                 color: white;
-                margin-bottom: 5px;
-              }
-              .file_upload_wrap {
-                margin-bottom: 0;
-                display: flex;
-                img {
-                  width: 25px;
-                  height: 25px;
-                }
-                p {
-                  margin-bottom: 0;
+
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
                   font-weight: 700;
                   color: white;
-                  &::before {
-                    margin-right: 10px;
-                    content: '·';
-                    font-weight: 700;
-                    color: white;
-                  }
-                }
-              }
-            }
-            .file_wrap {
-              display: flex;
-              flex-direction: column;
-              margin-left: unset !important;
-              .choose_btn {
-                margin-top: 5px;
-                margin-bottom: 10px;
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
                 }
               }
             }
           }
-        }
-        .button_wrap {
-          display: flex;
-          justify-content: space-between;
-          margin: 30px auto 5%;
-          width: 200px;
-          button {
-            &:nth-child(1) {
-              @include back_to_previous_btn;
-              width: 100px;
+
+          .file_wrap {
+            display: flex;
+            flex-direction: column;
+
+            .choose_btn {
+              margin-bottom: 10px;
+              @include choose_file_btn;
+
               &:hover {
-                background-color: #5d85bb;
+                background: #3f608f;
               }
-            }
-            &:nth-child(2) {
-              background: var(--c-5, #E94B4B);
-              justify-content: center;
-              align-items: center;
-              display: inline-flex;
-              border-radius: 10px;
-              height: 40px;
-              width: 90px;
-              color: #FFF;
-              text-align: center;
-              font-size: 20px;
-              font-weight: 700;
-              border: none;
-              &:hover {
-                background-color: #a51e1e;
-              }
-            }
-          }
-          .send_btn {
-            @include search_and_send_btn;
-            width: 70px;
-            padding: 5px;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
-          .send_btn_disabled {
-            background: #878787;
-            width: 70px;
-            padding: 5px;
-            &:hover {
-              background: #878787;
             }
           }
         }
       }
     }
   }
-</style>
+}
+
+@media only screen and (max-width: 767px) {
+  .main_section {
+    .readonly_box {
+      @include readonly_box;
+      height: 35px;
+      margin-left: unset !important;
+    }
+
+    .info_wrap {
+      padding: 0 5%;
+
+      .fixed_info {
+        @include fixed_info;
+        height: unset;
+        flex-direction: column;
+        padding: 10px;
+
+        p {
+          font-size: 20px;
+          margin-bottom: 0;
+        }
+      }
+
+      .content {
+        @include content_bg;
+
+        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+          margin-left: unset;
+          border-radius: 5px;
+          margin-top: 5px;
+          height: 35px;
+        }
+
+        .input-group {
+          flex-direction: column;
+
+          .num_wrap {
+            margin-left: unset !important;
+
+            .number-input-box {
+              width: 100%;
+
+              .input-number {
+                @include count_btn;
+                width: 20%;
+              }
+            }
+          }
+
+          .form-control {
+            height: 35px;
+            width: 100%;
+            border-radius: 0;
+            margin-left: unset !important;
+          }
+
+          .input-group-prepend {
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            width: 100px;
+            white-space: nowrap;
+
+            span {
+              @include red_star
+            }
+          }
+
+          .selected_file {
+            p.title {
+              font-weight: 700;
+              color: white;
+              margin-bottom: 5px;
+            }
+
+            .file_upload_wrap {
+              margin-bottom: 0;
+              display: flex;
+
+              img {
+                width: 25px;
+                height: 25px;
+              }
+
+              p {
+                margin-bottom: 0;
+                font-weight: 700;
+                color: white;
+
+                &::before {
+                  margin-right: 10px;
+                  content: '·';
+                  font-weight: 700;
+                  color: white;
+                }
+              }
+            }
+          }
+
+          .file_wrap {
+            display: flex;
+            flex-direction: column;
+            margin-left: unset !important;
+
+            .choose_btn {
+              margin-top: 5px;
+              margin-bottom: 10px;
+              @include choose_file_btn;
+
+              &:hover {
+                background: #3f608f;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}</style>

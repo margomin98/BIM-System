@@ -425,17 +425,24 @@ span {
 
 .button_wrap {
   display: flex;
-  justify-content: center;
-  margin: 30px auto 5%;
+            justify-content: space-between;
+            margin: 30px auto 5%;
+            width: 210px;
+  .back_btn{
+          @include back_to_previous_btn;
 
-  button.back_btn {
-    @include back_to_previous_btn;
+          &:hover {
+            background-color: #5d85bb;
+          }
+        }
 
-    &:hover {
-      background-color: #5d85bb;
+    .delete_btn {
+     @include delete_btn;
+          &:hover {
+            background-color: #a51e1e;
+        }
+      }
     }
-  }
-}
 
 @media only screen and (min-width: 1200px) {
   .main_section {

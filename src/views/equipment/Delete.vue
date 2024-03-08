@@ -353,35 +353,21 @@ span {
             justify-content: space-between;
             margin: 30px auto 5%;
             width: 210px;
+  .back_btn{
+          @include back_to_previous_btn;
 
-  .back_btn {
-    @include back_to_previous_btn;
+          &:hover {
+            background-color: #5d85bb;
+          }
+        }
 
-    &:hover {
-      background-color: #5d85bb;
+    .delete_btn {
+     @include delete_btn;
+          &:hover {
+            background-color: #a51e1e;
+        }
+      }
     }
-  }
-
-  .delete_btn {
-    background: var(--c-5, #e94b4b);
-    justify-content: center;
-    align-items: center;
-    display: inline-flex;
-    border-radius: 10px;
-    height: 40px;
-    width: 90px;
-    color: #fff;
-    text-align: center;
-    font-size: 20px;
-    font-weight: 700;
-    border: none;
-    margin: 0 10px;
-
-    &:hover {
-      background-color: #a51e1e;
-    }
-  }
-}
 
 @media only screen and (min-width: 1200px) {
   .main_section {

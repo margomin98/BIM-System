@@ -517,7 +517,26 @@ export default {
   display: flex;
   align-items: center;
 }
+.button_wrap {
+  display: flex;
+            justify-content: space-between;
+            margin: 30px auto 5%;
+            width: 210px;
+  .back_btn{
+          @include back_to_previous_btn;
 
+          &:hover {
+            background-color: #5d85bb;
+          }
+        }
+
+    .delete_btn {
+     @include delete_btn;
+          &:hover {
+            background-color: #a51e1e;
+        }
+      }
+    }
 @media only screen and (min-width: 1200px) {
   .main_section {
 
@@ -804,42 +823,6 @@ export default {
       }
     }
 
-    .button_wrap {
-      display: flex;
-      justify-content: center;
-      margin: 30px auto 5%;
-      width: 220px;
-
-      button {
-        &:nth-child(1) {
-          @include back_to_previous_btn;
-
-          &:hover {
-            background-color: #5d85bb;
-          }
-        }
-
-        &:nth-child(2) {
-          background: var(--c-5, #E94B4B);
-          justify-content: center;
-          align-items: center;
-          display: inline-flex;
-          border-radius: 10px;
-          height: 40px;
-          width: 90px;
-          color: #FFF;
-          text-align: center;
-          font-size: 20px;
-          font-weight: 700;
-          border: none;
-          margin: 0 10px;
-
-          &:hover {
-            background-color: #a51e1e;
-          }
-        }
-      }
-    }
   }
 }
 
@@ -1128,42 +1111,6 @@ export default {
       }
     }
 
-    .button_wrap {
-      display: flex;
-      justify-content: center;
-      margin: 30px auto 5%;
-      width: 220px;
-
-      button {
-        &:nth-child(1) {
-          @include back_to_previous_btn;
-
-          &:hover {
-            background-color: #5d85bb;
-          }
-        }
-
-        &:nth-child(2) {
-          background: var(--c-5, #E94B4B);
-          justify-content: center;
-          align-items: center;
-          display: inline-flex;
-          border-radius: 10px;
-          height: 40px;
-          width: 90px;
-          color: #FFF;
-          text-align: center;
-          font-size: 20px;
-          font-weight: 700;
-          border: none;
-          margin: 0 10px;
-
-          &:hover {
-            background-color: #a51e1e;
-          }
-        }
-      }
-    }
   }
 }
 
@@ -1450,41 +1397,6 @@ export default {
       }
     }
 
-    .button_wrap {
-      display: flex;
-      justify-content: center;
-      margin: 30px auto 5%;
-      width: 220px;
-
-      button {
-        &:nth-child(1) {
-          @include back_to_previous_btn;
-
-          &:hover {
-            background-color: #5d85bb;
-          }
-        }
-
-        &:nth-child(2) {
-          background: var(--c-5, #E94B4B);
-          justify-content: center;
-          align-items: center;
-          display: inline-flex;
-          border-radius: 10px;
-          height: 40px;
-          width: 90px;
-          color: #FFF;
-          text-align: center;
-          font-size: 20px;
-          font-weight: 700;
-          border: none;
-          margin: 0 10px;
-
-          &:hover {
-            background-color: #a51e1e;
-          }
-        }
-      }
-    }
+    
   }
 }</style>

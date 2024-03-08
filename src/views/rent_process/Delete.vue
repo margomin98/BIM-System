@@ -524,7 +524,7 @@ span {
   display: flex;
   justify-content: space-between;
   margin: 30px auto 5%;
-  width: 220px;
+  width: 210px;
 }
 
 .delete_btn {
