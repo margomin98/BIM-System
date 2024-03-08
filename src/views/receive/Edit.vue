@@ -323,13 +323,24 @@ async function submit() {
     alert('貨運公司不可輸入超過20字')
     return
   }
-  try {
-    // 先編輯表單上半部內容
-    const ShipmentNum = await sendUpperForm();
-    // 再依照AR_ID將 中間部分物流文件 & 下半部照片 單次檔案上傳
-    const filePromises = [];
-    for (let i = 0; i < fileParams.newDoc.length; i++) {
-      filePromises.push(sendFileForm(AR_ID, 'Document', fileParams.newDoc[i], i));
+  // 處理中間物流文件
+  function handleDocumentFile(event) {
+    console.log('DocumentFiles:', event.target.files);
+    const files = event.target.files;
+    const imageExtensions = ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx'];
+    const maxFileSize = 28 * 1024 * 1024; // 28MB
+    // 檢查副檔名 &檔案大小
+    for (let i = 0; i < files.length; i++) {
+      const fileName = files[i].name;
+      const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
+      if (!imageExtensions.includes(fileExtension.toLowerCase())) {
+        alert(fileExtension + '不在允許的格式範圍內，請重新選取');
+        return;
+      }
+      if (files[i].size > maxFileSize) {
+        alert('檔案' + fileName + '大於28MB，請重新選取');
+        return;
+      }
     }
     for (let i = 0; i < fileParams.newPic.length; i++) {
       filePromises.push(sendFileForm(AR_ID, 'File', fileParams.newPic[i], i));
@@ -350,28 +361,23 @@ async function submit() {
   } catch (error) {
     console.error(error);
   }
-}
-// 上半部表單
-function sendUpperForm() {
-  return new Promise((resolve, reject) => {
-    // 在这里发送上半部分表单数据的请求
-    // 成功时，调用 resolve 并传递 AR_ID
-    // 失败时，调用 reject 并传递错误信息
-    const axios = require('axios');
-    const form = new FormData();
-    const formParams = {
-      AR_ID: AR_ID,
-      ShipmentNum: details.value.ShipmentNum,
-      ShipmentCompany: details.value.ShipmentCompany,
-      GoodsNum: details.value.GoodsNum,
-      ReceivedDate: details.value.ReceivedDate,
-      PO_ID: details.value.PO_ID,
-      Memo: details.value.Memo,
-    };
-    for (const key in formParams) {
-      // Memo可能為空
-      if (formParams[key]) {
-        form.append(key, formParams[key]);
+  // 處理下半部照片
+  function handlePictureFile(event) {
+    console.log('PictureFiles:', event.target.files);
+    const files = event.target.files;
+    const imageExtensions = ['jpg', 'jpeg', 'png'];
+    const maxFileSize = 28 * 1024 * 1024; // 28MB
+    //檢查副檔名
+    for (let i = 0; i < files.length; i++) {
+      const fileName = files[i].name;
+      const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
+      if (!imageExtensions.includes(fileExtension.toLowerCase())) {
+        alert(fileExtension + '不在允許的格式範圍內，請重新選取');
+        return;
+      }
+      if (files[i].size > maxFileSize) {
+        alert('檔案' + fileName + '大於28MB，請重新選取');
+        return;
       }
     }
     // 如果有通知對象則處理資料格式，無值則append空陣列

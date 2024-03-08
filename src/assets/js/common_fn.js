@@ -128,7 +128,7 @@ export const checkFileSize = ((files,selectedFiles,exception)=>{
 // 圖片上傳
 export const handleFileChange = ((event,formParams) => {
   const files = event.target.files;
-  const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+  const imageExtensions = ['jpg', 'jpeg', 'png'];
   //檢查檔名
   for (let i = 0; i < files.length; i++) {
     const fileName = files[i].name;
@@ -201,7 +201,7 @@ export const openFileExplorer = ((fileInputs) => {
 export const handleDocumentFile =((event,fileParams) => {
   console.log('DocumentFiles:', event.target.files);
   const files = event.target.files;
-  const acceptExtensions = ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx'];
+  const acceptExtensions = ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx'];
   const maxFileSize = 28 * 1024 * 1024; // 28MB
   // 檢查副檔名 &檔案大小
   for (let i = 0; i < files.length; i++) {

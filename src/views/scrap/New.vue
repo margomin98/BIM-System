@@ -286,7 +286,8 @@
             if (Assets.Type === '耗材') {
               wrongStatus.value = false;
               canSubmit.value = true;
-              alertMsg.value = ''
+              alertMsg.value = '';
+              Assets.Max = data.ScrapNum; // 耗材數量上限要將 "存貨"與 "非存貨" 分開，只能報廢非存貨數量上限 (data.Number為兩者相加)
             } else {
               // 檢查資產狀態(只有非耗材才會檢查)
               const Status = Assets.Status

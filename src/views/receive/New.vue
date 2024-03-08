@@ -390,22 +390,24 @@ function handleDocumentFile(event) {
       return;
     }
   }
-  // 處理檔案
-  const imgArray = fileParams.newDoc;
-  const previewUrl = fileParams.viewDoc;
-  for (let i = 0; i < files.length; i++) {
-    // 依據檔案格式 分為 1.圖片(壓縮、可預覽) 2.pdf(可預覽) 3. doc/docx(可下載)
-    const fileName = files[i].name;
-    const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
-    const reader = new FileReader();
-    // .pdf
-    if (fileExtension === 'pdf') {
-      imgArray.push(files[i]);
-      previewUrl.push({
-        name: files[i].name,
-        link: URL.createObjectURL(files[i]),
-        type: fileExtension,
-      });
+  // 處理物流文件
+  function handleDocumentFile(event) {
+    console.log('DocumentFiles:', event.target.files);
+    const files = event.target.files;
+    const imageExtensions = ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx'];
+    const maxFileSize = 28 * 1024 * 1024; // 28MB
+    // 檢查副檔名 &檔案大小
+    for (let i = 0; i < files.length; i++) {
+      const fileName = files[i].name;
+      const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
+      if (!imageExtensions.includes(fileExtension.toLowerCase())) {
+        alert(fileExtension + '不在允許的格式範圍內，請重新選取');
+        return;
+      }
+      if (files[i].size > maxFileSize) {
+        alert('檔案' + fileName + '大於28MB，請重新選取');
+        return;
+      }
     }
     // .doc/.docx
     else if (fileExtension === 'doc' || fileExtension == 'docx') {
@@ -416,8 +418,33 @@ function handleDocumentFile(event) {
         type: fileExtension,
       });
     }
-    // 圖片
-    else {
+    console.log('uploaded viewDoc:', fileParams.viewDoc);
+    console.log('uploaded newDoc:', fileParams.newDoc);
+  }
+  // 處理照片
+  function handlePictureFile(event) {
+    console.log('PictureFiles:', event.target.files);
+    const files = event.target.files;
+    const imageExtensions = ['jpg', 'jpeg', 'png'];
+    const maxFileSize = 28 * 1024 * 1024; // 28MB
+    //檢查副檔名
+    for (let i = 0; i < files.length; i++) {
+      const fileName = files[i].name;
+      const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
+      if (!imageExtensions.includes(fileExtension.toLowerCase())) {
+        alert(fileExtension + '不在允許的格式範圍內，請重新選取');
+        return;
+      }
+      if (files[i].size > maxFileSize) {
+        alert('檔案' + fileName + '大於28MB，請重新選取');
+        return;
+      }
+    }
+    const imgArray = fileParams.newPic;
+    const previewUrl = fileParams.viewPic;
+    for (let i = 0; i < files.length; i++) {
+      const reader = new FileReader();
+      const file = files[i]; // 保持原始文件
       reader.onload = (e) => {
         const file = files[i]; // 保持原始文件
         imgArray.push(file);
