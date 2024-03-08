@@ -180,104 +180,109 @@
 </template>
 
 <script setup>
-import { register } from 'swiper/element/bundle';
-import { Pagination } from 'swiper/modules';
-import Navbar from "@/components/Navbar.vue";
-import viewOrder from "@/components/receive_page/order_view_btn.vue"
-import { onMounted, ref, reactive, } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import VueMultiselect from 'vue-multiselect'
-import { getAccount, checkRole, } from '@/assets/js/common_api'
-import { goBack } from "@/assets/js/common_fn"
-import axios from 'axios';
-register();
-const pagination = { clickable: true, }
-const modules = [Pagination]
-const route = useRoute();
-const router = useRouter();
-const AR_ID = route.query.search_id;
-const details = ref({});
-const DropdownArray = reactive({
-  InformedPersons: [],
-  PurchaseNum: [],
-})
-const previewParams = reactive({
-  title: '',
-  src: '',
-})
-const fileParams = reactive({
-  deleteDoc: [], //將刪除的 已上傳物流文件記錄於此
-  newDoc: [],
-  viewDoc: [],
-  deletePic: [], //將刪除的 已上傳照片記錄於此
-  newPic: [],
-  viewPic: [],
-})
-const checkname = ref(''); //檢查編輯者是否為同一人
-// 控制按鈕
-const fileInput1 = ref();
-const fileInput2 = ref();
-const showOptions = ref(false);
-onMounted(() => {
-  // getDetails();
-  getAccountName();
-  getPurchaseNum();
-})
-// 通知對象dropdown
-async function getAccountName() {
-  getAccount('')
-    .then((data) => {
-      data.forEach((Name) => {
-        DropdownArray.InformedPersons.push({
-          name: Name,
-        })
-      });
-    })
-    .catch((error) => {
-      console.error(error);
-    })
-}
-// 取得已有資料
-async function getDetails() {
-  checkRole(checkname.value)
+  import { register } from 'swiper/element/bundle';
+  import { Pagination } from 'swiper/modules';
+  import Navbar from "@/components/Navbar.vue";
+  import viewOrder from "@/components/receive_page/order_view_btn.vue"
+  import { onMounted, ref, reactive, } from "vue";
+  import { useRoute, useRouter } from "vue-router";
+  import VueMultiselect from 'vue-multiselect'
+  import {
+    getAccount,
+    checkRole,
+  } from '@/assets/js/common_api'
+  import {
+    goBack
+  } from "@/assets/js/common_fn"
+  import axios from 'axios';
+  register();
+  const pagination = { clickable: true, }
+  const modules = [Pagination]
+  const route = useRoute();
+  const router = useRouter();
+  const AR_ID = route.query.search_id;
+  const details = ref({});
+  const DropdownArray = reactive({
+    InformedPersons: [],
+    PurchaseNum: [],
+  })
+  const previewParams = reactive({
+    title: '',
+    src: '',
+  })
+  const fileParams = reactive({
+    deleteDoc: [], //將刪除的 已上傳物流文件記錄於此
+    newDoc: [],
+    viewDoc: [],
+    deletePic: [], //將刪除的 已上傳照片記錄於此
+    newPic: [],
+    viewPic: [],
+  })
+  const checkname = ref(''); //檢查編輯者是否為同一人
+  // 控制按鈕
+  const fileInput1 = ref();
+  const fileInput2 = ref();
+  const showOptions = ref(false);
+  onMounted(() => {
+    // getDetails();
+    getAccountName();
+    getPurchaseNum();
+  })
+  // 通知對象dropdown
+  async function getAccountName() {
+    getAccount('')
+      .then((data) => {
+        data.forEach((Name) => {
+          DropdownArray.InformedPersons.push({
+            name: Name,
+          })
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+  }
+  // 取得已有資料
+  async function getDetails() {
+    checkRole(checkname.value)
     .then(result => {
 
       axios.get(`http://192.168.0.177:7008/GetDBdata/ReceivingGetData?ar_id=${AR_ID}`)
-        .then((response) => {
-          const data = response.data;
-          if (data.state === 'success') {
-            details.value = data.resultList;
-            console.log(('flag result:' + result));
-            if (!result) {
-              // false則檢查是否為填寫人(收件人員)
-              if (checkname.value !== details.value.Recipient) {
-                goBack();
-              }
+      .then((response)=>{
+        const data = response.data;
+        if (data.state === 'success') {
+          details.value = data.resultList;
+          console.log(('flag result:'+ result));
+          if (!result) {
+            // false則檢查是否為填寫人(收件人員)
+            if (checkname.value !== details.value.Recipient) {
+              goBack();
             }
-            console.log('單筆資料如下\n', details.value);
-            if (details.value.InformedPersons) {
-              details.value.InformedPersons = details.value.InformedPersons.map((name) => ({
-                name
-              }))
-            }
-            if (details.value.ReceivedDate) {
-              details.value.ReceivedDate = details.value.ReceivedDate.replace(/\//g, '-');
-            }
-            // 若有已上傳的物流文件 則新增key值 exist: true
-            if (details.value.existDocument) {
-              details.value.existDocument.forEach(item => {
-                item.exist = true;
-              });
-            }
-            // 若有已上傳的相片 則新增key值 exist: true
-            if (details.value.existFile) {
-              details.value.existFile.forEach(item => {
-                item.exist = true;
-                item.type = 'pic';
-              });
-              // 處理完後將existFile加入fileParams.viewPic
-              fileParams.viewPic = details.value.existFile
-            }
+          }
+          console.log('單筆資料如下\n', details.value);
+        if (details.value.InformedPersons) {
+          details.value.InformedPersons = details.value.InformedPersons.map((name) => ({
+            name
+          }))
+        }
+        if (details.value.ReceivedDate) {
+          details.value.ReceivedDate = details.value.ReceivedDate.replace(/\//g, '-');
+        }
+        // 若有已上傳的物流文件 則新增key值 exist: true
+        if (details.value.existDocument) {
+          details.value.existDocument.forEach(item => {
+            item.exist = true;
+          });
+        }
+        // 若有已上傳的相片 則新增key值 exist: true
+        if (details.value.existFile) {
+          details.value.existFile.forEach(item => {
+            item.exist = true;
+            item.type = 'pic';
+          });
+          // 處理完後將existFile加入fileParams.viewPic
+          fileParams.viewPic = details.value.existFile
+        }
           } else if (data.state === 'error') {
             alert(data.messages);
           } else if (data.state === 'account_error') {
@@ -285,49 +290,163 @@ async function getDetails() {
             router.push('/');
           }
         })
-        .catch((error) => {
-          console.error(error);
-        })
+      .catch((error)=> {
+        console.error(error);
+      })
     })
     .catch(error => {
       console.error(error);
     })
-}
-// 控制 "選擇檔案"按鈕
-const openFileInput = (index) => {
-  switch (index) {
-    case 0:
-      fileInput1.value.click();
-      break;
-    case 1:
-      fileInput2.value.click();
-      break;
   }
-}
-// 送出
-async function submit() {
-  // 檢查必填項目、格式        
-  if (!details.value.ShipmentNum || !details.value.ShipmentCompany || details.value.GoodsNum < 1 || !details.value.ReceivedDate) {
-    alert('請輸入必填項目');
-    return
+  // 控制 "選擇檔案"按鈕
+  const openFileInput = (index) => {
+    switch (index) {
+      case 0:
+        fileInput1.value.click();
+        break;
+      case 1:
+        fileInput2.value.click();
+        break;
+    }
   }
-  if (details.value.ShipmentNum && !/^[\s\S]{1,20}$/.test(details.value.ShipmentNum)) {
-    alert('物流單號不可輸入超過20字')
-    return
+  // 送出
+  async function submit() {
+    // 檢查必填項目、格式        
+    if (!details.value.ShipmentNum || !details.value.ShipmentCompany || details.value.GoodsNum < 1 || !details.value.ReceivedDate) {
+      alert('請輸入必填項目');
+      return
+    }
+    if (details.value.ShipmentNum && !/^[\s\S]{1,20}$/.test(details.value.ShipmentNum)) {
+      alert('物流單號不可輸入超過20字')
+      return
+    }
+    if (details.value.PurchaseNum && !/^[\s\S]{1,20}$/.test(details.value.PurchaseNum)) {
+      alert('訂購單號不可輸入超過20字')
+      return
+    }
+    if (details.value.ShipmentCompany && !/^[\s\S]{1,20}$/.test(details.value.ShipmentCompany)) {
+      alert('貨運公司不可輸入超過20字')
+      return
+    }
+    try {
+      // 先編輯表單上半部內容
+      const ShipmentNum = await sendUpperForm();
+      // 再依照AR_ID將 中間部分物流文件 & 下半部照片 單次檔案上傳
+      const filePromises = [];
+      for (let i = 0; i < fileParams.newDoc.length; i++) {
+        filePromises.push(sendFileForm(AR_ID, 'Document', fileParams.newDoc[i], i ));
+      }
+      for (let i = 0; i < fileParams.newPic.length; i++) {
+        filePromises.push(sendFileForm(AR_ID, 'File', fileParams.newPic[i], i));
+      }
+      // 等待所有檔案上傳完成
+      await Promise.all(filePromises)
+        .then(result => {
+          const allSuccess = result.every(result => result === 'success')
+          if (allSuccess) {
+            alert('編輯收貨單成功\n單號為:' + ShipmentNum);
+            router.push({
+              name: 'Receive_Datagrid'
+            });
+          } else {
+            alert('編輯收貨單失敗')
+          }
+        })
+    } catch (error) {
+      console.error(error);
+    }
   }
-  if (details.value.PurchaseNum && !/^[\s\S]{1,20}$/.test(details.value.PurchaseNum)) {
-    alert('訂購單號不可輸入超過20字')
-    return
+  // 上半部表單
+  function sendUpperForm() {
+    return new Promise((resolve, reject) => {
+      // 在这里发送上半部分表单数据的请求
+      // 成功时，调用 resolve 并传递 AR_ID
+      // 失败时，调用 reject 并传递错误信息
+      const axios = require('axios');
+      const form = new FormData();
+      const formParams = {
+        AR_ID: AR_ID,
+        ShipmentNum: details.value.ShipmentNum,
+        ShipmentCompany: details.value.ShipmentCompany,
+        GoodsNum: details.value.GoodsNum,
+        ReceivedDate: details.value.ReceivedDate,
+        PO_ID: details.value.PO_ID,
+        Memo: details.value.Memo,
+      };
+      for (const key in formParams) {
+        // Memo可能為空
+        if(formParams[key]) {
+          form.append(key, formParams[key]);
+        }
+      }
+      // 如果有通知對象則處理資料格式，無值則append空陣列
+      if (details.value.InformedPersons) {
+        const InformedArray = details.value.InformedPersons.map((x) => x.name);
+        InformedArray.forEach((item) => {
+          form.append('InformedPersons', item);
+        })
+      } else {
+        form.append('InformedPersons', []);
+      }
+      // 欲刪除文件
+      if (fileParams.deleteDoc.length > 0) {
+        for (const item of fileParams.deleteDoc) {
+          form.append('deleteDocument', item)
+        }
+      }
+      // 欲刪除檔案
+      if (fileParams.deletePic.length > 0) {
+        for (const item of fileParams.deletePic) {
+          form.append('deleteFile', item)
+        }
+      }
+      axios.post('http://192.168.0.177:7008/ReceivingMng/EditReceipt', form)
+        .then(response => {
+          const data = response.data;
+          if (data.state === 'success') {
+            const ShipmentNum = response.data.resultList.ShipmentNum;
+            console.log('編輯上半部表單成功Show_AR_ID:', ShipmentNum);
+            resolve(ShipmentNum);
+          } else {
+            reject(data.messages);
+          }
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
   }
-  if (details.value.ShipmentCompany && !/^[\s\S]{1,20}$/.test(details.value.ShipmentCompany)) {
-    alert('貨運公司不可輸入超過20字')
-    return
+  // 中、下上傳檔案部分
+  function sendFileForm(AR_ID, type, fileData, index) {
+    return new Promise((resolve, reject) => {
+      const form = new FormData();
+      form.append('AR_ID', AR_ID);
+      form.append('num', index);
+      form.append(type, fileData);
+      axios.post('http://192.168.0.177:7008/ReceivingMng/UploadFile', form)
+        .then((response) => {
+          const data = response.data;
+          if (data.state === 'success') {
+            // 文件表单提交成功，继续执行
+            console.log(`第${index+1}個${type}檔案上傳成功`);
+            resolve(data.state)
+          } else {
+            // 如果状态不是 "success"，调用 reject 并传递错误信息
+            console.error(type + '上傳失敗，' + response.data.messages);
+            reject(new Error('文件表单提交失败'));
+          }
+        })
+        .catch(error => {
+          // 如果提交失败，调用 reject 并传递错误信息
+          reject(error);
+        });
+    });
   }
   // 處理中間物流文件
   function handleDocumentFile(event) {
     console.log('DocumentFiles:', event.target.files);
     const files = event.target.files;
-    const imageExtensions = ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx'];
+    const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx'];
     const maxFileSize = 28 * 1024 * 1024; // 28MB
     // 檢查副檔名 &檔案大小
     for (let i = 0; i < files.length; i++) {
@@ -342,30 +461,54 @@ async function submit() {
         return;
       }
     }
-    for (let i = 0; i < fileParams.newPic.length; i++) {
-      filePromises.push(sendFileForm(AR_ID, 'File', fileParams.newPic[i], i));
-    }
-    // 等待所有檔案上傳完成
-    await Promise.all(filePromises)
-      .then(result => {
-        const allSuccess = result.every(result => result === 'success')
-        if (allSuccess) {
-          alert('編輯收貨單成功\n單號為:' + ShipmentNum);
-          router.push({
-            name: 'Receive_Datagrid'
+    // 處理檔案
+    const imgArray = fileParams.newDoc;
+    const previewUrl = fileParams.viewDoc;
+    for (let i = 0; i < files.length; i++) {
+      // 依據檔案格式 分為 1.圖片(壓縮、可預覽) 2.pdf(可預覽) 3. doc/docx(可下載)
+      const fileName = files[i].name;
+      const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
+      const reader = new FileReader();
+      // .pdf
+      if (fileExtension === 'pdf') {
+        imgArray.push(files[i]);
+        previewUrl.push({
+          FileName: files[i].name,
+          FileLink: URL.createObjectURL(files[i]),
+          type: fileExtension,
+        });
+      }
+      // .doc/.docx
+      else if (fileExtension === 'doc' || fileExtension == 'docx') {
+        imgArray.push(files[i]);
+        previewUrl.push({
+          FileName: files[i].name,
+          FileLink: URL.createObjectURL(files[i]),
+          type: fileExtension,
+        });
+      }
+      // 圖片
+      else {
+        reader.onload = (e) => {
+          const file = files[i]; // 保持原始文件
+          imgArray.push(file);
+          previewUrl.push({
+            FileName: file.name,
+            FileLink: URL.createObjectURL(file),
+            type: 'pic'
           });
-        } else {
-          alert('編輯收貨單失敗')
-        }
-      })
-  } catch (error) {
-    console.error(error);
+        };
+      }
+      reader.readAsDataURL(files[i]);
+    }
+    console.log('uploaded viewDoc:', fileParams.viewDoc);
+    console.log('uploaded newDoc:', fileParams.newDoc);
   }
   // 處理下半部照片
   function handlePictureFile(event) {
     console.log('PictureFiles:', event.target.files);
     const files = event.target.files;
-    const imageExtensions = ['jpg', 'jpeg', 'png'];
+    const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
     const maxFileSize = 28 * 1024 * 1024; // 28MB
     //檢查副檔名
     for (let i = 0; i < files.length; i++) {
@@ -380,265 +523,120 @@ async function submit() {
         return;
       }
     }
-    // 如果有通知對象則處理資料格式，無值則append空陣列
-    if (details.value.InformedPersons) {
-      const InformedArray = details.value.InformedPersons.map((x) => x.name);
-      InformedArray.forEach((item) => {
-        form.append('InformedPersons', item);
-      })
-    } else {
-      form.append('InformedPersons', []);
-    }
-    // 欲刪除文件
-    if (fileParams.deleteDoc.length > 0) {
-      for (const item of fileParams.deleteDoc) {
-        form.append('deleteDocument', item)
-      }
-    }
-    // 欲刪除檔案
-    if (fileParams.deletePic.length > 0) {
-      for (const item of fileParams.deletePic) {
-        form.append('deleteFile', item)
-      }
-    }
-    axios.post('http://192.168.0.177:7008/ReceivingMng/EditReceipt', form)
-      .then(response => {
-        const data = response.data;
-        if (data.state === 'success') {
-          const ShipmentNum = response.data.resultList.ShipmentNum;
-          console.log('編輯上半部表單成功Show_AR_ID:', ShipmentNum);
-          resolve(ShipmentNum);
-        } else {
-          reject(data.messages);
-        }
-      })
-      .catch(error => {
-        reject(error);
-      });
-  });
-}
-// 中、下上傳檔案部分
-function sendFileForm(AR_ID, type, fileData, index) {
-  return new Promise((resolve, reject) => {
-    const form = new FormData();
-    form.append('AR_ID', AR_ID);
-    form.append('num', index);
-    form.append(type, fileData);
-    const axios = require('axios');
-    axios.post('http://192.168.0.177:7008/ReceivingMng/UploadFile', form)
-      .then((response) => {
-        const data = response.data;
-        if (data.state === 'success') {
-          // 文件表单提交成功，继续执行
-          console.log(`第${index + 1}個${type}檔案上傳成功`);
-          resolve(data.state)
-        } else {
-          // 如果状态不是 "success"，调用 reject 并传递错误信息
-          console.error(type + '上傳失敗，' + response.data.messages);
-          reject(new Error('文件表单提交失败'));
-        }
-      })
-      .catch(error => {
-        // 如果提交失败，调用 reject 并传递错误信息
-        reject(error);
-      });
-  });
-}
-// 處理中間物流文件
-function handleDocumentFile(event) {
-  console.log('DocumentFiles:', event.target.files);
-  const files = event.target.files;
-  const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx'];
-  const maxFileSize = 28 * 1024 * 1024; // 28MB
-  // 檢查副檔名 &檔案大小
-  for (let i = 0; i < files.length; i++) {
-    const fileName = files[i].name;
-    const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
-    if (!imageExtensions.includes(fileExtension.toLowerCase())) {
-      alert(fileExtension + '不在允許的格式範圍內，請重新選取');
-      return;
-    }
-    if (files[i].size > maxFileSize) {
-      alert('檔案' + fileName + '大於28MB，請重新選取');
-      return;
-    }
-  }
-  // 處理檔案
-  const imgArray = fileParams.newDoc;
-  const previewUrl = fileParams.viewDoc;
-  for (let i = 0; i < files.length; i++) {
-    // 依據檔案格式 分為 1.圖片(壓縮、可預覽) 2.pdf(可預覽) 3. doc/docx(可下載)
-    const fileName = files[i].name;
-    const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
-    const reader = new FileReader();
-    // .pdf
-    if (fileExtension === 'pdf') {
-      imgArray.push(files[i]);
-      previewUrl.push({
-        FileName: files[i].name,
-        FileLink: URL.createObjectURL(files[i]),
-        type: fileExtension,
-      });
-    }
-    // .doc/.docx
-    else if (fileExtension === 'doc' || fileExtension == 'docx') {
-      imgArray.push(files[i]);
-      previewUrl.push({
-        FileName: files[i].name,
-        FileLink: URL.createObjectURL(files[i]),
-        type: fileExtension,
-      });
-    }
-    // 圖片
-    else {
+    const imgArray = fileParams.newPic;
+    const previewUrl = fileParams.viewPic;
+    for (let i = 0; i < files.length; i++) {
+      const reader = new FileReader();
       reader.onload = (e) => {
-        const file = files[i]; // 保持原始文件
-        imgArray.push(file);
-        previewUrl.push({
-          FileName: file.name,
-          FileLink: URL.createObjectURL(file),
-          type: 'pic'
-        });
-      };
-    }
-    reader.readAsDataURL(files[i]);
-  }
-  console.log('uploaded viewDoc:', fileParams.viewDoc);
-  console.log('uploaded newDoc:', fileParams.newDoc);
-}
-// 處理下半部照片
-function handlePictureFile(event) {
-  console.log('PictureFiles:', event.target.files);
-  const files = event.target.files;
-  const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-  const maxFileSize = 28 * 1024 * 1024; // 28MB
-  //檢查副檔名
-  for (let i = 0; i < files.length; i++) {
-    const fileName = files[i].name;
-    const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2); //得到副檔名
-    if (!imageExtensions.includes(fileExtension.toLowerCase())) {
-      alert(fileExtension + '不在允許的格式範圍內，請重新選取');
-      return;
-    }
-    if (files[i].size > maxFileSize) {
-      alert('檔案' + fileName + '大於28MB，請重新選取');
-      return;
+          const file = files[i]; // 保持原始文件
+          imgArray.push(file);
+          previewUrl.push({
+            FileName: file.name,
+            FileLink: URL.createObjectURL(file),
+            type: 'pic'
+          });
+        };
+      reader.readAsDataURL(files[i]);
     }
   }
-  const imgArray = fileParams.newPic;
-  const previewUrl = fileParams.viewPic;
-  for (let i = 0; i < files.length; i++) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const file = files[i]; // 保持原始文件
-      imgArray.push(file);
-      previewUrl.push({
-        FileName: file.name,
-        FileLink: URL.createObjectURL(file),
-        type: 'pic'
-      });
-    };
-    reader.readAsDataURL(files[i]);
+  // 預覽文件
+  function handlePreview(file) {
+    // 先提取副檔名
+    // 以"."為基準分割字串
+    const part = file.FileName.split(".");
+    let extension = '';
+    // 如果part長度大於1表示xxxx.aaa => ['xxxx','aaa']
+    if (part.length > 1) {
+      extension = part[part.length - 1];
+    }
+    // 1. pdf 2. word 3. picture
+    switch (extension) {
+      case 'pdf':
+        window.open(file.FileLink)
+        break;
+      case 'doc':
+      case 'docx':
+        const downloadElement = document.getElementById('download-link');
+        downloadElement.href = file.FileLink;
+        downloadElement.download = file.FileName;
+        downloadElement.click();
+        break;
+      default:
+        previewParams.title = file.FileName;
+        previewParams.src = file.FileLink;
+        const modal = document.querySelector('#openModal');
+        modal.click();
+        break;
+    }
   }
-}
-// 預覽文件
-function handlePreview(file) {
-  // 先提取副檔名
-  // 以"."為基準分割字串
-  const part = file.FileName.split(".");
-  let extension = '';
-  // 如果part長度大於1表示xxxx.aaa => ['xxxx','aaa']
-  if (part.length > 1) {
-    extension = part[part.length - 1];
+  // 刪除 分為 
+  // 1.已上傳文件 (從details刪除 並加入fileParams.deleteDoc) 
+  // 2.新選擇檔案 (直接從fileParams的newDoc viewDoc刪除)
+  // 3.已上傳照片 (從輪播刪掉 並加入fileParams.deletePic)
+  // 4.新選擇照片 (從輪播刪掉 從fileParams.newPic刪除)
+  function deleteFile(type, index, file) {
+    switch (type) {
+      case 'document':
+        // 1.
+        if (file.exist) {
+          fileParams.deleteDoc.push(file.FileName);
+          details.value.existDocument.splice(index, 1);
+          console.log('已加入的deleteDoc:', fileParams.deleteDoc);
+        }
+        // 2.
+        else {
+          fileParams.newDoc.splice(index, 1);
+          fileParams.viewDoc.splice(index, 1);
+          console.log('剩餘newDoc:', fileParams.newDoc);
+        }
+        break;
+      case 'picture':
+        // 3.
+        if (file.exist) {
+          fileParams.deletePic.push(file.FileName);
+          console.log('已加入的deletePic:', fileParams.deletePic);
+        }
+        // 4.
+        else {
+          fileParams.newPic.splice(index, 1);
+          console.log('剩餘newPic:', fileParams.newPic);
+        }
+        fileParams.viewPic.splice(index, 1);
+        break;
+    }
   }
-  // 1. pdf 2. word 3. picture
-  switch (extension) {
-    case 'pdf':
-      window.open(file.FileLink)
-      break;
-    case 'doc':
-    case 'docx':
-      const downloadElement = document.getElementById('download-link');
-      downloadElement.href = file.FileLink;
-      downloadElement.download = file.FileName;
-      downloadElement.click();
-      break;
-    default:
-      previewParams.title = file.FileName;
-      previewParams.src = file.FileLink;
-      const modal = document.querySelector('#openModal');
-      modal.click();
-      break;
+  function setUsername(name) {
+    checkname.value = name;
+    console.log('username:', checkname.value);
+    getDetails();
   }
-}
-// 刪除 分為 
-// 1.已上傳文件 (從details刪除 並加入fileParams.deleteDoc) 
-// 2.新選擇檔案 (直接從fileParams的newDoc viewDoc刪除)
-// 3.已上傳照片 (從輪播刪掉 並加入fileParams.deletePic)
-// 4.新選擇照片 (從輪播刪掉 從fileParams.newPic刪除)
-function deleteFile(type, index, file) {
-  switch (type) {
-    case 'document':
-      // 1.
-      if (file.exist) {
-        fileParams.deleteDoc.push(file.FileName);
-        details.value.existDocument.splice(index, 1);
-        console.log('已加入的deleteDoc:', fileParams.deleteDoc);
-      }
-      // 2.
-      else {
-        fileParams.newDoc.splice(index, 1);
-        fileParams.viewDoc.splice(index, 1);
-        console.log('剩餘newDoc:', fileParams.newDoc);
-      }
-      break;
-    case 'picture':
-      // 3.
-      if (file.exist) {
-        fileParams.deletePic.push(file.FileName);
-        console.log('已加入的deletePic:', fileParams.deletePic);
-      }
-      // 4.
-      else {
-        fileParams.newPic.splice(index, 1);
-        console.log('剩餘newPic:', fileParams.newPic);
-      }
-      fileParams.viewPic.splice(index, 1);
-      break;
+  // -------訂購單號 function
+  // close option(模糊搜尋使用, EX: 物流單號、訂購單號)
+  const closeOption = () => {
+    setTimeout(() => {
+      showOptions.value = false;
+    }, 100);
   }
-}
-function setUsername(name) {
-  checkname.value = name;
-  console.log('username:', checkname.value);
-  getDetails();
-}
-// -------訂購單號 function
-// close option(模糊搜尋使用, EX: 物流單號、訂購單號)
-const closeOption = () => {
-  setTimeout(() => {
-    showOptions.value = false;
-  }, 100);
-}
-// 選擇
-const selectPurchaseNum = ((option) => {
-  details.value.PurchaseNum = option.PurchaseNum;
-  details.value.PO_ID = option.PO_ID;
-});
-// 取得訂購單號 下拉
-const getPurchaseNum = (() => {
-  const value = details.value.PurchaseNum || '';
-  axios.get(`http://192.168.0.177:7008/GetDBdata/SearchPurchaseOrderID?id=${value}`)
-    .then((r) => {
+  // 選擇
+  const selectPurchaseNum = ((option)=>{
+    details.value.PurchaseNum = option.PurchaseNum;
+    details.value.PO_ID = option.PO_ID;
+  });  
+  // 取得訂購單號 下拉
+  const getPurchaseNum = (() => {
+    const value = details.value.PurchaseNum || '';
+    axios.get(`http://192.168.0.177:7008/GetDBdata/SearchPurchaseOrderID?id=${value}`)
+    .then((r)=>{
       const data = r.data;
-      if (data.state === 'success') {
+      if(data.state === 'success') {
         console.log(data.resultList);
         DropdownArray.PurchaseNum = data.resultList;
       }
     })
-    .catch((e) => {
+    .catch((e)=>{
       console.error(e);
     })
-})
+  })
 </script>
 <style src="@/assets/css/vue-multiselect.css"></style>
 <style lang="scss" scoped>

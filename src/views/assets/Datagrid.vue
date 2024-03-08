@@ -182,10 +182,10 @@ import { onMounted, reactive, ref, onUnmounted } from "vue";
 import { Asset_StastusArray } from "@/assets/js/dropdown"
 import { useUtilsStore, useAPIStore } from '@/store'
 import { storeToRefs } from 'pinia';
-import axios from 'axios';
+import axios from 'axios'
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();
-const { dgSearchParams, dg, dgRowData } = storeToRefs(utilsStore);
+const { dgSearchParams , dg , dgRowData } = storeToRefs(utilsStore);
 
 const searchParams = reactive({
   EquipType_Id: '',
@@ -233,7 +233,7 @@ const isLoading = ref(false);
 
 onMounted(async () => {
   utilsStore.$reset();
-  for (const key in searchParams) {
+  for(const key in searchParams) {
     dgSearchParams.value[key] = '';
   }
   dg.value.sortField = 'AssetsId'
@@ -299,22 +299,11 @@ onUnmounted(()=>{
         })
     }
   }
-  utilsStore.UpdatePageParameter(dg.value, event, type, form);
-  const resultList = await apiStore.getMngDatagrid('/InventoryMng/Assets', dg.value, form);
-  dgRowData.value = resultList.rows;
-  dg.value.totalRecords = resultList.total;
-  dg.value.key++;
-}
-async function importExcel(event) {
-  const selectedFile = event.target.files[0];
-  if (selectedFile) {
-    const fileName = selectedFile.name;
-    // 檢查檔案大小
-    console.log('filesize', selectedFile.size);
-    const maxFileSize = 28 * 1024 * 1024; // 28MB
-    if (selectedFile.size > maxFileSize) {
-      alert('檔案' + selectedFile.name + '大於28MB，請重新選取');
-      return
+  async function exportExcel() {
+    const form = new FormData();
+    //將表格資料append到 form
+    for (const key in dgSearchParams.value) {
+      form.append(key, dgSearchParams.value[key]);
     }
     axios.post('http://192.168.0.177:7008/InventoryMng/ExportExcel', form, {
         responseType: 'blob',
