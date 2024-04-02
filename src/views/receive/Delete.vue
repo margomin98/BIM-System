@@ -533,39 +533,7 @@ span {
     }
   }
 
-  // .modal {
-  //   padding: 0 5%;
-  //   .modal-content {
-  //     background: unset;
-  //     border: 0;
-  //     .modal-body {
-  //       padding: 0;
-  //     }
-  //   }
-  //   .fixed_info {
-  //     @include fixed_info;
-  //     background: #528091 !important;
-  //     border-radius: 0 !important;
-  //     border: 1px solid black;
-  //     padding: 0 10px;
-  //     div {
-  //       flex-grow: 1;
-  //       text-align: center;
-  //     }
-  //     p {
-  //       font-size: 20px;
-  //       margin-bottom: 0;
-  //     }
-  //     button {
-  //       border: none;
-  //       background: none;
-  //       color: white;
-  //       font-weight: 700;
-  //       font-size: 22px;
-  //       align-self: start;
-  //     }
-  //   }
-  // }
+
 }
 
 @media only screen and (max-width: 767px) {
@@ -642,39 +610,5 @@ span {
     }
   }
 
-  // .modal {
-  //   padding: 0 5%;
-  //   .modal-content {
-  //     background-color: unset;
-  //     border: 0;
-  //     .modal-body {
-  //       padding: 0;
-  //     }
-  //   }
-  //   .fixed_info {
-  //     @include fixed_info;
-  //     background: #528091 !important;
-  //     border-radius: 0 !important;
-  //     border: 1px solid black;
-  //     padding: 0 10px;
-  //     div {
-  //       flex-grow: 1;
-  //       text-align: center;
-  //     }
-  //     p {
-  //       font-size: 18px;
-  //       margin-bottom: 0;
-  //     }
-  //     button {
-  //       border: none;
-  //       background: none;
-  //       color: white;
-  //       font-weight: 700;
-  //       font-size: 22px;
-  //       position: absolute;
-  //       right: 3%;
-  //     }
-  //   }
-  // }
 }
 </style>

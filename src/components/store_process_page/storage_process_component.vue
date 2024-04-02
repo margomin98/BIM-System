@@ -84,9 +84,10 @@
                 <nav>
                     <!-- 標頭 -->
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <button :key="tab" class="nav-link" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab" :aria-selected="tab === 0">
-                                                              {{ tab }}
-                                                            </button>
+                        <button :key="tab" class="nav-link" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)"
+                            type="button" role="tab" :aria-selected="tab === 0">
+                            {{ tab }}
+                        </button>
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
@@ -99,11 +100,18 @@
                                         專案類型 :
                                     </div>
                                     <div class="d-flex align-items-center radio_wrap">
-                                        <input type="radio" class='form-check-input check_box' id="radio1" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="資產" @change="resetUnitCount(index)" />
+                                        <input type="radio" class='form-check-input check_box' id="radio1"
+                                            style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"
+                                            value="資產" @change="resetUnitCount(index)" />
                                         <label class="form-check-label check_box" for='radio1'>資產</label>
-                                        <input type="radio" class='form-check-input check_box ' id="radio2" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="存貨" @change="resetUnitCount(index)" />
-                                        <label class="form-check-label check_box" for='radio2' data-toggle="tooltip" data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
-                                        <input type="radio" class='form-check-input check_box' id="radio3" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="耗材" />
+                                        <input type="radio" class='form-check-input check_box ' id="radio2"
+                                            style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"
+                                            value="存貨" @change="resetUnitCount(index)" />
+                                        <label class="form-check-label check_box" for='radio2' data-toggle="tooltip"
+                                            data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
+                                        <input type="radio" class='form-check-input check_box' id="radio3"
+                                            style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"
+                                            value="耗材" />
                                         <label class="form-check-label check_box" for='radio3'>耗材</label>
                                     </div>
                                 </div>
@@ -115,7 +123,8 @@
                                 <div class="input-group-prepend">
                                     <span>*</span>專案代碼 :
                                 </div>
-                                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                <input type="text" class="form-control" aria-label="Default"
+                                    aria-describedby="inputGroup-sizing-default">
                                 <button class="form_search_btn" @click="getProjectName(index)">搜尋</button>
                             </div>
                         </div>
@@ -123,7 +132,7 @@
                         <div class="col">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">專案名稱 :</div>
-                                <input type="text" class="form-control readonly_box" aria-label="Default" readonly/>
+                                <input type="text" class="form-control readonly_box" aria-label="Default" readonly />
                             </div>
                         </div>
                         <!-- 頁籤 設備總類 & 設備分類-->
@@ -132,9 +141,11 @@
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend"><span>*</span>設備總類 :</div>
                                     <div class="dropdown">
-                                        <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
-                                                                      <!-- {{ tab.itemEquipTypeName || '請選擇' }} --> 請選擇
-                                                                    </button>
+                                        <button class="btn dropdown-toggle" type="button" id="typeDropdown"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                            @click="getEquipTypeName">
+                                            <!-- {{ tab.itemEquipTypeName || '請選擇' }} --> 請選擇
+                                        </button>
                                         <div class="dropdown-menu" aria-labelledby="typeDropdown">
                                             <!-- <p v-for="item in DropdownArray.EquipType" class="dropdown-item" @click="selectType(item , index)">{{ item.Name }}</p> -->
                                         </div>
@@ -145,9 +156,10 @@
                                 <div class="input-group mb-3 justify-content-end">
                                     <div class="input-group-prepend"><span>*</span>設備分類 :</div>
                                     <div class="dropdown">
-                                        <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                      <!-- {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }} 請選擇 -->
-                                                                    </button>
+                                        <button class="btn dropdown-toggle" type="button" id="categoryDropdown"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <!-- {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }} 請選擇 -->
+                                        </button>
                                         <div class="dropdown-menu" aria-labelledby="categoryDropdown">
                                             <!-- <p v-for="item in tab.EquipCategoryArray" class="dropdown-item" @click="selectCategory(item , index)">{{ item.Name }}</p> -->
                                         </div>
@@ -161,9 +173,11 @@
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend"><span>*</span>儲位區域 :</div>
                                     <div class="dropdown">
-                                        <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="getAreaName(index)">
-                                                                        <!-- {{ tab.itemAreaName || '請選擇' }}  -->請選擇
-                                                                      </button>
+                                        <button class="btn dropdown-toggle" type="button" id="areaDropdown"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                            @click="getAreaName(index)">
+                                            <!-- {{ tab.itemAreaName || '請選擇' }}  -->請選擇
+                                        </button>
                                         <div class="dropdown-menu" aria-labelledby="areaDropdown">
                                             <!-- <p v-for="(item, area_index) in DropdownArray.Area" :key="area_index" class="dropdown-item" @click="selectArea(index, item)">{{ item.Name }}</p> -->
                                         </div>
@@ -174,14 +188,16 @@
                                 <div class="input-group mb-3 justify-content-end">
                                     <div class="input-group-prepend"><span>*</span>儲位櫃位 :</div>
                                     <div class="dropdown">
-                                        <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                        <!-- {{ tab.itemLayerName || tab.LayerInit }} --> 請選擇
-                                                                      </button>
+                                        <button class="btn dropdown-toggle" type="button" id="cabinetDropdown"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <!-- {{ tab.itemLayerName || tab.LayerInit }} --> 請選擇
+                                        </button>
                                         <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
                                             <!-- <p v-for="(item, layer_index) in tab.LayerArray" :key="layer_index" class="dropdown-item" @click="selectLayer(index, item)">{{ item.Name }}</p> -->
                                         </div>
                                     </div>
-                                    <button class="apply_btn" data-bs-toggle="modal" data-bs-target="#apply_storage_modal" @click="updateIndex(index)">套用儲位</button>
+                                    <button class="apply_btn" data-bs-toggle="modal"
+                                        data-bs-target="#apply_storage_modal" @click="updateIndex(index)">套用儲位</button>
                                     <!-- <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" /> -->
                                 </div>
                             </div>
@@ -233,19 +249,25 @@
                             <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend info">
-                                        <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"> 包裝數量 :<img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block"
-                                            src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
+                                        <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none"
+                                            src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="資產數量 ex: 3包螺絲釘"> 包裝數量 :<img
+                                            class="info_icon d-xl-none d-lg-none d-md-none d-inline-block"
+                                            src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="資產數量 ex: 3包螺絲釘">
                                     </div>
-                                    <input type="number" class="input-number readonly_box" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly/>
+                                    <input type="number" class="input-number readonly_box" aria-label="Default"
+                                        aria-describedby="inputGroup-sizing-default" readonly />
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                                 <div class="input-group mb-3 justify-content-end">
                                     <div class="input-group-prepend"><span>*</span>包裝單位 :</div>
                                     <div class="dropdown">
-                                        <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                      <!-- {{ tab.itemPackageUnit || '請選擇' }}  -->請選擇
-                                                                    </button>
+                                        <button class="btn dropdown-toggle" type="button" id="areaDropdown"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <!-- {{ tab.itemPackageUnit || '請選擇' }}  -->請選擇
+                                        </button>
                                         <div class="dropdown-menu" aria-labelledby="areaDropdown">
                                             <!-- <p v-for="item in DropdownArray.PackageUnit" class="dropdown-item" @click="selectPackageUnit(item , index)">{{ item }}</p> -->
                                         </div>
@@ -258,8 +280,13 @@
                             <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend info">
-                                        <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
-                                        <span>*</span>數量 :<img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
+                                        <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none"
+                                            src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
+                                        <span>*</span>數量 :<img
+                                            class="info_icon d-xl-none d-lg-none d-md-none d-inline-block"
+                                            src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
                                     </div>
                                     <input class="input-number" type="number" min="1">
                                     <!-- <input v-else class="input-number readonly_box" type="number" v-model="tab.itemPackageNum" min="1" readonly> -->
@@ -269,9 +296,10 @@
                                 <div class="input-group mb-3 justify-content-end">
                                     <div class="input-group-prepend"><span>*</span>單位 :</div>
                                     <div class="dropdown">
-                                        <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    請選擇
-                                                                      </button>
+                                        <button class="btn dropdown-toggle" type="button" id="areaDropdown"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            請選擇
+                                        </button>
                                         <div class="dropdown-menu" aria-labelledby="areaDropdown">
                                             <!-- <p v-for="item in DropdownArray.Unit" class="dropdown-item" @click="selectUnit(item , index)">{{ item }}</p> -->
                                         </div>
@@ -321,7 +349,8 @@
                                 <div class="input-group-prepend">資產照片 :</div>
                                 <div class="mb-3 file_wrap">
                                     <button class='choose_btn' @click="openFileExplorer(index)">選擇檔案</button>
-                                    <input type="file" accept="image/*" ref="fileInputs" style="display: none;" multiple @change="handleFileChange(index , $event)" />
+                                    <input type="file" accept="image/*" ref="fileInputs" style="display: none;" multiple
+                                        @change="handleFileChange(index, $event)" />
                                 </div>
                             </div>
                         </div>
@@ -331,8 +360,12 @@
                                 <div class="selected_file_wrap">
                                     <div class="file_upload_wrap">
                                         <p>
-                                            <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="viewImgFile('new',index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
-                                            <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('new',index,file_index)"></p>
+                                            <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"
+                                                @click="viewImgFile('new', index, file_index)" data-bs-toggle="modal"
+                                                data-bs-target="#viewFile_modal">
+                                            <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;"
+                                                @click="deleteFileFunction('new', index, file_index)">
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -344,8 +377,12 @@
                                 <div class='selected_file_wrap'>
                                     <div class="file_upload_wrap">
                                         <p>
-                                            <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="viewImgFile('exist',index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
-                                            <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFileFunction('exist',index,file_index)"></p>
+                                            <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"
+                                                @click="viewImgFile('exist', index, file_index)" data-bs-toggle="modal"
+                                                data-bs-target="#viewFile_modal">
+                                            <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;"
+                                                @click="deleteFileFunction('exist', index, file_index)">
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -366,733 +403,466 @@
                                         </div>
                                       </div>
                                     </div> -->
-                <view_modal/>
+                <view_modal />
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import view_modal from "@/components/View_modal.vue"
-    export default {
-        components: {
-            view_modal
-        }
+import view_modal from "@/components/View_modal.vue"
+export default {
+    components: {
+        view_modal
     }
+}
 </script>
 
 <style lang="scss" scoped>
-    @import "@/assets/css/global.scss";
-    textarea {
-        padding: 5px 10px 30px;
+@import "@/assets/css/global.scss";
+textarea {
+  padding: 5px 10px 30px;
+}
+
+.apply_btn {
+  border: none;
+  width: 110px;
+  height: 35px;
+  background: #132238;
+  border-radius: 10px;
+  color: white;
+  font-weight: 700;
+
+  &:hover {
+    background: #5980b9;
+  }
+}
+
+.dropdown-toggle {
+  height: 35px;
+}
+
+#categoryDropdown {
+  justify-content: right;
+}
+
+.dropdown-toggle::after {
+  margin-left: auto;
+}
+
+.view_icon,
+.trash_icon {
+  cursor: pointer;
+}
+
+.modal {
+  .modal-header {
+    background: #528091;
+    color: white;
+
+    .close_icon {
+      color: white;
+      font-weight: 700;
+      margin-bottom: 0;
     }
-    .apply_btn {
-        border: none;
-        width: 110px;
-        height: 35px;
-        background: #132238;
-        border-radius: 10px;
+  }
+}
+
+#apply_storage_modal {
+  p {
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  .modal-header {
+    margin-bottom: 10px;
+  }
+
+  button {
+    color: white;
+    background-color: #132238;
+
+    &:hover {
+      background-color: #426497;
+    }
+  }
+
+  .modal-footer {
+    border: none;
+  }
+}
+
+.readonly_box {
+  @include readonly_box;
+}
+
+.form_search_btn {
+  @include form_search_btn;
+}
+
+.input-number {
+  @include count_btn;
+}
+
+.info_wrap {
+  margin: auto;
+
+  .file_wrap {
+    display: flex;
+    flex-direction: column;
+
+    .choose_btn {
+      margin-bottom: 10px;
+      @include choose_file_btn;
+
+      &:hover {
+        background: #3f608f;
+      }
+    }
+  }
+
+  .input-group-prepend {
+    color: white;
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .fixed_info {
+    @include fixed_info;
+
+    p {
+      font-size: 20px;
+      margin-bottom: 0;
+    }
+  }
+
+  .dropdown {
+    .dropdown-menu {
+      width: 100%;
+
+      p {
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    button {
+      @include dropdown-btn;
+      width: 187px;
+      color: black;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .content {
+    @include content_bg;
+
+    .input-group {
+      .input-group-prepend {
         color: white;
         font-weight: 700;
-        &:hover {
-            background: #5980b9;
-        }
+        font-size: 20px;
+      }
     }
-    .dropdown-toggle {
-        height: 35px;
+  }
+
+  .tab_section {
+    .nav {
+      overflow-x: auto;
+      overflow-y: hidden;
+      flex-wrap: nowrap;
+      border: none;
+
+      ::-webkit-scrollbar {
+        height: 6px;
+        border: 1px solid rgb(219, 218, 218);
+        border-radius: 5px;
+        width: 8px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        display: block;
+        border-radius: 5px;
+        background-color: rgb(176, 175, 175);
+        border: 1px solid rgb(86, 85, 85);
+      }
     }
-    #categoryDropdown {
-        justify-content: right
+
+    .nav-tabs {
+      button {
+        @include tab_section_num;
+        background: #5c7897;
+      }
+
+      .active {
+        @include tab_section_num;
+        background: #3e4e5f;
+      }
     }
-    .dropdown-toggle::after {
-        margin-left: auto;
-    }
-    .view_icon,
-    .trash_icon {
-        cursor: pointer
-    }
-    .modal {
-        .modal-header {
-            background: #528091;
+
+    .tab-content {
+      background: #3e4e5f;
+      border-radius: 0 0 20px 20px;
+
+      .selected_file {
+        .file_upload_wrap {
+          margin-bottom: 0;
+          display: flex;
+
+          img {
+            width: 25px;
+            height: 25px;
+          }
+
+          p {
+            font-weight: 700;
+            margin-bottom: 5px;
             color: white;
-            .close_icon {
-                color: white;
-                font-weight: 700;
-                margin-bottom: 0;
+            word-break: break-word;
+
+            &::before {
+              margin-right: 10px;
+              content: "·";
+              font-weight: 700;
+              color: white;
             }
+          }
         }
+      }
     }
-    #apply_storage_modal {
-        p {
-            font-weight: 800;
-            text-align: center;
-            margin-bottom: 0;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .main_section {
+    .info_wrap {
+      width: 800px;
+
+      .content {
+        .input-group {
+          .input-group-prepend {
+            width: 125px;
+            text-align: end;
+            white-space: nowrap;
+          }
         }
-        .modal-header {
-            margin-bottom: 10px;
-        }
-        button {
+      }
+      .tab_section {
+        .tab-content {
+          padding: 50px 30px;
+          .storage_dropdown {
+            .col:nth-child(1),
+            .col:nth-child(2) {
+              .dropdown {
+                width: 180px;
+                button {
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                }
+              }
+            }
+          }
+          .selected_file {
+            display: flex;
+            align-items: center;
+          }
+
+          .check_box_wrap {
+            font-weight: 700;
+            align-items: center;
             color: white;
-            background-color: #132238;
-            &:hover {
-                background-color: #426497
+            font-size: 18px;
+            div:nth-child(2) {
+              gap: 0 10px;
             }
+          }
+          .dropdown {
+            width: 60%;
+            .dropdown-menu {
+              max-height: 250px;
+              overflow-y: auto;
+            }
+          }
+          .input-group {
+            flex-wrap: nowrap;
+            .input-number {
+              width: 62%;
+            }
+
+            .input-group-prepend {
+              width: 120px;
+              text-align: end;
+              white-space: nowrap;
+            }
+          }
         }
-        .modal-footer {
-            border: none;
-        }
+      }
     }
-    @media only screen and (min-width: 1200px) {
-        .main_section {
-            .readonly_box {
-                @include readonly_box;
-            }
-            .form_search_btn {
-                @include form_search_btn;
-            }
-            .info_wrap {
-                width: 800px;
-                margin: auto;
-                .fixed_info {
-                    @include fixed_info;
-                    p {
-                        font-size: 20px;
-                        margin-bottom: 0;
-                    }
-                }
-                .content {
-                    @include content_bg;
-                    .dropdown {
-                        .dropdown-menu {
-                            width: 100%;
-                            p {
-                                &:hover {
-                                    cursor: pointer;
-                                }
-                            }
-                        }
-                        button {
-                            @include dropdown-btn;
-                            width: 187px;
-                            color: black;
-                            justify-content: space-between;
-                            align-items: center;
-                        }
-                    }
-                    .input-group {
-                        .input-number {
-                            @include count_btn;
-                        }
-                        .form-control {
-                            height: 35px;
-                        }
-                        .input-group-prepend {
-                            color: white;
-                            font-weight: 700;
-                            font-size: 20px;
-                            width: 125px;
-                            text-align: end;
-                            white-space: nowrap;
-                        }
-                    }
-                }
-                .tab_section {
-                    .nav {
-                        overflow-x: auto;
-                        overflow-y: hidden;
-                        flex-wrap: nowrap;
-                        border: none;
-                         ::-webkit-scrollbar {
-                            height: 6px;
-                            border: 1px solid rgb(219, 218, 218);
-                            border-radius: 5px;
-                            width: 8px;
-                        }
-                         ::-webkit-scrollbar-thumb {
-                            display: block;
-                            border-radius: 5px;
-                            background-color: rgb(176, 175, 175);
-                            border: 1px solid rgb(86, 85, 85);
-                        }
-                    }
-                    .nav-tabs {
-                        button {
-                            @include tab_section_num;
-                            background: #5C7897;
-                        }
-                        .active {
-                            @include tab_section_num;
-                            background: #3E4E5F;
-                        }
-                    }
-                    .tab-content {
-                        background: #3E4E5F;
-                        padding: 50px 30px;
-                        border-radius: 0 0 10px 10px;
-                        .storage_dropdown {
-                            .col:nth-child(1),
-                            .col:nth-child(2) {
-                                .dropdown {
-                                    width: 180px;
-                                    button {
-                                        overflow: hidden;
-                                        text-overflow: ellipsis;
-                                    }
-                                }
-                            }
-                        }
-                        .selected_file {
-                            display: flex;
-                            align-items: center;
-                            .selected_file_wrap {
-                                flex-direction: column;
-                                .file_upload_wrap {
-                                    margin-bottom: 0;
-                                    display: flex;
-                                    img {
-                                        width: 25px;
-                                        height: 25px;
-                                    }
-                                    p {
-                                        font-weight: 700;
-                                        margin-bottom: 5px;
-                                        color: white;
-                                        word-break: break-word;
-                                        &::before {
-                                            margin-right: 10px;
-                                            content: '·';
-                                            font-weight: 700;
-                                            color: white;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        .file_upload_wrap {
-                            margin-bottom: 0;
-                            display: flex;
-                            img {
-                                width: 25px;
-                                height: 25px;
-                            }
-                            p {
-                                font-weight: 700;
-                                margin-bottom: 5px;
-                                color: white;
-                                word-break: break-word;
-                                &::before {
-                                    margin-right: 10px;
-                                    content: '·';
-                                    font-weight: 700;
-                                    color: white;
-                                }
-                            }
-                        }
-                        .check_box_wrap {
-                            font-weight: 700;
-                            align-items: center;
-                            color: white;
-                            font-size: 18px;
-                            div:nth-child(2) {
-                                gap: 0 10px;
-                            }
-                        }
-                        .dropdown {
-                            width: 60%;
-                            .dropdown-menu {
-                                width: 100%;
-                                max-height: 250px;
-                                overflow-y: auto;
-                                p {
-                                    &:hover {
-                                        cursor: pointer;
-                                    }
-                                }
-                            }
-                            button {
-                                @include dropdown-btn;
-                                width: 100%;
-                                color: black;
-                                justify-content: space-between;
-                                align-items: center;
-                            }
-                        }
-                        .input-group {
-                            flex-wrap: nowrap;
-                            .input-number {
-                                width: 62%;
-                            }
-                            span {
-                                @include red_star
-                            }
-                            .file_upload_wrap {
-                                margin-bottom: 0;
-                                display: flex;
-                                img {
-                                    width: 25px;
-                                    height: 25px;
-                                }
-                                p {
-                                    margin-bottom: 0;
-                                    font-weight: 700;
-                                    color: white;
-                                    &::before {
-                                        margin-right: 10px;
-                                        content: '·';
-                                        font-weight: 700;
-                                        color: white;
-                                    }
-                                }
-                            }
-                            .input-number {
-                                @include count_btn;
-                            }
-                            .form-control {
-                                height: 35px;
-                            }
-                            .input-group-prepend {
-                                color: white;
-                                font-weight: 700;
-                                font-size: 20px;
-                                width: 120px;
-                                text-align: end;
-                                white-space: nowrap;
-                            }
-                            .file_wrap {
-                                display: flex;
-                                flex-direction: column;
-                            }
-                            .choose_btn {
-                                margin-bottom: 10px;
-                                @include choose_file_btn;
-                                &:hover {
-                                    background: #3f608f;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  .main_section {
+    .info_wrap {
+      width: 700px;
+
+      .content {
+        .input-group {
+          .input-group-prepend {
+            width: 125px;
+            text-align: end;
+            white-space: nowrap;
+          }
         }
-    }
-    @media only screen and (min-width: 768px) and (max-width: 1199px) {
-        .main_section {
-            .readonly_box {
-                @include readonly_box;
-            }
-            .form_search_btn {
-                @include form_search_btn;
-            }
-            .info_wrap {
-                width: 700px;
-                margin: auto;
-                .fixed_info {
-                    @include fixed_info;
-                    p {
-                        font-size: 20px;
-                        margin-bottom: 0;
-                    }
+      }
+      .tab_section {
+        .tab-content {
+          padding: 25px;
+          .storage_dropdown {
+            .col:nth-child(1),
+            .col:nth-child(2) {
+              .dropdown {
+                width: 150px;
+                button {
+                  overflow: hidden;
+                  text-overflow: ellipsis;
                 }
-                .content {
-                    @include content_bg;
-                    .dropdown {
-                        .dropdown-menu {
-                            width: 100%;
-                            p {
-                                &:hover {
-                                    cursor: pointer;
-                                }
-                            }
-                        }
-                        button {
-                            @include dropdown-btn;
-                            width: 187px;
-                            color: black;
-                            justify-content: space-between;
-                            align-items: center;
-                        }
-                    }
-                    .input-group {
-                        .input-number {
-                            @include count_btn;
-                        }
-                        .form-control {
-                            height: 35px;
-                        }
-                        .input-group-prepend {
-                            color: white;
-                            font-weight: 700;
-                            font-size: 20px;
-                            width: 125px;
-                            text-align: end;
-                            white-space: nowrap;
-                        }
-                    }
-                }
-                .tab_section {
-                    .nav {
-                        overflow-x: auto;
-                        overflow-y: hidden;
-                        flex-wrap: nowrap;
-                        border: none;
-                         ::-webkit-scrollbar {
-                            height: 6px;
-                            border: 1px solid rgb(219, 218, 218);
-                            border-radius: 5px;
-                            width: 8px;
-                        }
-                         ::-webkit-scrollbar-thumb {
-                            display: block;
-                            border-radius: 5px;
-                            background-color: rgb(176, 175, 175);
-                            border: 1px solid rgb(86, 85, 85);
-                        }
-                    }
-                    .nav-tabs {
-                        button {
-                            @include tab_section_num;
-                            background: #5C7897;
-                        }
-                        .active {
-                            @include tab_section_num;
-                            background: #3E4E5F;
-                        }
-                    }
-                    .tab-content {
-                        background: #3E4E5F;
-                        padding: 25px;
-                        border-radius: 0 0 10px 10px;
-                        .storage_dropdown {
-                            .col:nth-child(1),
-                            .col:nth-child(2) {
-                                .dropdown {
-                                    width: 150px;
-                                    button {
-                                        overflow: hidden;
-                                        text-overflow: ellipsis;
-                                    }
-                                }
-                            }
-                        }
-                        .selected_file {
-                            display: flex;
-                            align-items: center;
-                            .selected_file_wrap {
-                                flex-direction: column;
-                                .file_upload_wrap {
-                                    margin-bottom: 0;
-                                    display: flex;
-                                    img {
-                                        width: 25px;
-                                        height: 25px;
-                                    }
-                                    p {
-                                        font-weight: 700;
-                                        margin-bottom: 5px;
-                                        color: white;
-                                        word-break: break-word;
-                                        &::before {
-                                            margin-right: 10px;
-                                            content: '·';
-                                            font-weight: 700;
-                                            color: white;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        .check_box_wrap {
-                            font-weight: 700;
-                            align-items: center;
-                            color: white;
-                            font-size: 18px;
-                            div:nth-child(2) {
-                                gap: 0 10px;
-                            }
-                        }
-                        .dropdown {
-                            width: 60%;
-                            .dropdown-menu {
-                                width: 100%;
-                                max-height: 250px;
-                                overflow-y: auto;
-                                p {
-                                    &:hover {
-                                        cursor: pointer;
-                                    }
-                                }
-                            }
-                            button {
-                                @include dropdown-btn;
-                                width: 100%;
-                                color: black;
-                                justify-content: space-between;
-                                align-items: center;
-                            }
-                        }
-                        .input-group {
-                            flex-wrap: nowrap;
-                            .input-number {
-                                width: 56.5%;
-                            }
-                            span {
-                                @include red_star
-                            }
-                            .file_upload_wrap {
-                                margin-bottom: 0;
-                                display: flex;
-                                img {
-                                    width: 25px;
-                                    height: 25px;
-                                }
-                                p {
-                                    margin-bottom: 0;
-                                    font-weight: 700;
-                                    color: white;
-                                    &::before {
-                                        margin-right: 10px;
-                                        content: '·';
-                                        font-weight: 700;
-                                        color: white;
-                                    }
-                                }
-                            }
-                            .input-number {
-                                @include count_btn;
-                            }
-                            .form-control {
-                                height: 35px;
-                            }
-                            .input-group-prepend {
-                                color: white;
-                                font-weight: 700;
-                                font-size: 20px;
-                                width: 119px;
-                                text-align: end;
-                                white-space: nowrap;
-                            }
-                            .file_wrap {
-                                display: flex;
-                                flex-direction: column;
-                                .choose_btn {
-                                    margin-bottom: 10px;
-                                    @include choose_file_btn;
-                                    &:hover {
-                                        background: #3f608f;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+              }
             }
+          }
+          .selected_file {
+            display: flex;
+            align-items: center;
+            .selected_file_wrap {
+              flex-direction: column;
+            }
+          }
+          .check_box_wrap {
+            font-weight: 700;
+            align-items: center;
+            color: white;
+            font-size: 18px;
+            div:nth-child(2) {
+              gap: 0 10px;
+            }
+          }
+          .dropdown {
+            width: 60%;
+            .dropdown-menu {
+              max-height: 250px;
+              overflow-y: auto;
+            }
+          }
+          .input-group {
+            flex-wrap: nowrap;
+            .input-number {
+              width: 56.5%;
+            }
+
+            .input-group-prepend {
+              width: 119px;
+              text-align: end;
+              white-space: nowrap;
+            }
+          }
         }
+      }
     }
-    @media only screen and (max-width: 767px) {
-        .main_section {
-            .readonly_box {
-                @include readonly_box;
-            }
-            .form_search_btn {
-                border: none;
-                color: white;
-                width: 60px;
-                height: 35px;
-                margin-top: 10px;
-                font-weight: 700;
-                padding: 0 10px;
-                margin-left: unset !important;
-                background-color: #132238;
-                &:hover {
-                    background-color: #43546d;
-                }
-            }
-            .info_wrap {
-                padding: 1% 5% 0;
-                .fixed_info {
-                    @include fixed_info;
-                    flex-direction: column;
-                    padding: 10px;
-                    height: unset;
-                    p {
-                        font-size: 20px;
-                        margin-bottom: 0;
-                    }
-                }
-                .content {
-                    @include content_bg;
-                    .dropdown {
-                        .dropdown-menu {
-                            width: 100%;
-                        }
-                        button {
-                            @include dropdown-btn;
-                            width: 187px;
-                            color: black;
-                            justify-content: space-between;
-                            align-items: center;
-                        }
-                    }
-                    .input-group {
-                        flex-direction: column;
-                        .input-number {
-                            @include count_btn;
-                        }
-                        .form-control {
-                            height: 35px;
-                            width: 100%;
-                            margin-top: 5px;
-                            margin-left: unset !important;
-                        }
-                        .input-group-prepend {
-                            color: white;
-                            font-weight: 700;
-                            font-size: 20px;
-                            width: 100%;
-                        }
-                    }
-                    .info {
-                        display: flex;
-                        flex-direction: row-reverse;
-                        justify-content: flex-end;
-                    }
-                }
-                .tab_section {
-                    .nav {
-                        overflow-x: auto;
-                        overflow-y: hidden;
-                        flex-wrap: nowrap;
-                        border: none;
-                         ::-webkit-scrollbar {
-                            height: 6px;
-                            border: 1px solid rgb(219, 218, 218);
-                            border-radius: 5px;
-                            width: 8px;
-                        }
-                         ::-webkit-scrollbar-thumb {
-                            display: block;
-                            border-radius: 5px;
-                            background-color: rgb(176, 175, 175);
-                            border: 1px solid rgb(86, 85, 85);
-                        }
-                    }
-                    .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-                        margin-left: unset !important;
-                    }
-                    .nav-tabs {
-                        button {
-                            @include tab_section_num;
-                            background: #5C7897;
-                        }
-                        .active {
-                            @include tab_section_num;
-                            background: #3E4E5F;
-                        }
-                    }
-                    .tab-content {
-                        background: #3E4E5F;
-                        padding: 50px 30px;
-                        border-radius: 0 0 10px 10px;
-                        .storage_dropdown {
-                            display: flex;
-                            flex-direction: column;
-                            .apply_btn {
-                                margin-top: 10px;
-                            }
-                        }
-                        .selected_file {
-                            display: flex;
-                            align-items: center;
-                            .input-group {
-                                flex-direction: column;
-                            }
-                            .file_upload_wrap {
-                                margin-bottom: 0;
-                                display: flex;
-                                img {
-                                    width: 25px;
-                                    height: 25px;
-                                }
-                                p {
-                                    font-weight: 700;
-                                    margin-bottom: 5px;
-                                    color: white;
-                                    word-break: break-word;
-                                    &::before {
-                                        margin-right: 10px;
-                                        content: '·';
-                                        font-weight: 700;
-                                        color: white;
-                                    }
-                                }
-                            }
-                        }
-                        .check_box_wrap {
-                            font-weight: 700;
-                            color: white;
-                            font-size: 18px;
-                            div:nth-child(2) {
-                                gap: 0 10px;
-                                display: flex;
-                            }
-                        }
-                        .dropdown {
-                            margin-left: unset !important;
-                            margin-top: 5px;
-                            .dropdown-menu {
-                                width: 100%;
-                                max-height: 250px;
-                                overflow-y: auto;
-                                p {
-                                    &:hover {
-                                        cursor: pointer;
-                                    }
-                                }
-                            }
-                            button {
-                                @include dropdown-btn;
-                                width: 100%;
-                                color: black;
-                                justify-content: space-between;
-                                align-items: center;
-                            }
-                        }
-                        .input-group {
-                            flex-direction: column;
-                            span {
-                                @include red_star
-                            }
-                            .input-number {
-                                @include count_btn;
-                            }
-                            .form-control {
-                                height: 35px;
-                                width: 100%;
-                                margin-left: unset !important;
-                                margin-top: 5px;
-                            }
-                            .input-group-prepend {
-                                color: white;
-                                font-weight: 700;
-                                font-size: 20px;
-                                width: 100%;
-                            }
-                            .file_wrap {
-                                display: flex;
-                                flex-direction: column;
-                                .choose_btn {
-                                    margin-top: 5px;
-                                    margin-bottom: 10px;
-                                    @include choose_file_btn;
-                                    &:hover {
-                                        background: #3f608f;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+  }
+}
+@media only screen and (max-width: 767px) {
+  .main_section {
+    .info_wrap {
+      padding: 1% 5% 0;
+      .fixed_info {
+        height: unset !important;
+        padding: 10px;
+        flex-direction: column;
+      }
+      .content {
+        .input-group {
+          flex-direction: column;
+
+          .form-control {
+            height: 35px;
+            width: 100%;
+            margin-top: 5px;
+            margin-left: unset !important;
+          }
+          .input-group-prepend {
+            width: 100%;
+          }
         }
+        .info {
+          display: flex;
+          flex-direction: row-reverse;
+          justify-content: flex-end;
+        }
+      }
+      .tab_section {
+        .input-group
+          > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+            .valid-feedback
+          ):not(.invalid-tooltip):not(.invalid-feedback) {
+          margin-left: unset !important;
+        }
+
+        .tab-content {
+          padding: 50px 30px;
+          .storage_dropdown {
+            display: flex;
+            flex-direction: column;
+            .apply_btn {
+              margin-top: 10px;
+            }
+          }
+          .selected_file {
+            display: flex;
+            align-items: center;
+            .input-group {
+              flex-direction: column;
+            }
+          }
+          .check_box_wrap {
+            font-weight: 700;
+            color: white;
+            font-size: 18px;
+            div:nth-child(2) {
+              gap: 0 10px;
+              display: flex;
+            }
+          }
+          .dropdown {
+            margin-left: unset !important;
+            margin-top: 5px;
+            .dropdown-menu {
+              max-height: 250px;
+              overflow-y: auto;
+            }
+          }
+          .input-group {
+            flex-direction: column;
+
+            .form-control {
+              width: 100%;
+              margin-left: unset !important;
+              margin-top: 5px;
+            }
+            .input-group-prepend {
+              width: 100%;
+            }
+            .file_wrap {
+              .choose_btn {
+                margin-top: 5px;
+              }
+            }
+          }
+        }
+      }
     }
+  }
+}
+
 </style>

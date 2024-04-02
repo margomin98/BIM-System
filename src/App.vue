@@ -13,7 +13,7 @@ h1 {
     margin-top: 40px !important;
     text-align: center;
     font-weight: 700 !important;
-    @include title_color
+    color: #132238 !important;
 }
 
 nav .navbar-collapse {

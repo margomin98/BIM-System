@@ -1413,6 +1413,9 @@ $content_title_bg: #364E68;
     margin-bottom: 0;
     overflow-wrap: break-word;
   }
+  .amount_chart,.case_chart{
+    white-space: nowrap
+  }
 }
 
 .form-check-input:focus,
@@ -1866,7 +1869,8 @@ $content_title_bg: #364E68;
 
     .amount_text,
     .case_text {
-      width: 80px;
+      position: relative;
+    right: 7%;
     }
 
     .amount_chart,
@@ -2257,6 +2261,10 @@ $content_title_bg: #364E68;
       .content {
         justify-content: center;
       }
+    }
+    .amount_text,.case_text{
+      position: relative;
+    right: 8%;
     }
   }
 }
