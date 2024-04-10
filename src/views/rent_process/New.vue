@@ -255,7 +255,8 @@
               <p>備料完成日期</p>
             </label>
             <div class="input-group">
-              <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly v-model="PreparedDate" />
+              <input type="text" class="form-control readonly_box" id="inputWithTitle" readonly
+                v-model="PreparedDate" />
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
@@ -757,7 +758,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
-
 .readonly_box {
   @include readonly_box;
   width: 100%;
@@ -765,10 +765,6 @@ export default {
   justify-content: center;
   display: flex;
   align-items: center;
-}
-
-.input-group {
-  height: 100%;
 }
 
 #confirmModal {
@@ -816,7 +812,8 @@ export default {
   }
 }
 
-.project_details #project_name {
+.project_details #project_name,
+.input-group {
   height: 100%;
 }
 
@@ -824,83 +821,177 @@ export default {
   padding: 5px 10px;
   height: 35px;
 }
+
 .button_wrap {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px auto 5%;
+  width: 210px;
+
+  .back_btn {
+    @include back_to_previous_btn;
+
+    &:hover {
+      background-color: #5d85bb;
+    }
+  }
+
+  .send_btn {
+    @include search_and_send_btn;
+
+    &:hover {
+      background-color: #5d85bd;
+    }
+  }
+}
+
+.input-number {
+  @include count_btn;
+}
+.number-input-box {
+  color: black;
+
+  .input-number {
+    width: 100%;
+  }
+}
+.form-label {
+  white-space: nowrap;
+  font-weight: 800;
+  font-size: 18px;
+}
+.dropdown {
+  button {
+    background: white;
+    width: 100%;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .dropdown-menu {
+    p {
+      font-size: 18px;
+      color: black;
+      font-weight: normal;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .dropdown-item {
+      text-align: left;
+    }
+  }
+}
+.modal {
+  padding: 0 5%;
+
+  .modal-content {
+    background-color: unset;
+    border: 0;
+  }
+
+  .fixed_info {
+    @include fixed_info;
+    background: #528091;
+    border-radius: 0;
+    border: 1px solid black;
+    border-bottom: unset !important;
+    padding: 0 10px;
+
+    div {
+      flex-grow: 1;
+      text-align: center;
+    }
+
+    p {
+      margin-bottom: 0 !important;
+    }
+
+    button {
+      border: none;
+      background: none;
+      color: white;
+      font-weight: 700;
+      font-size: 22px;
+    }
+  }
+
+  .list {
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+  }
+
+  .second_content {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    background: #d9d9d9;
+
+    .submit_btn {
+      margin-bottom: 20px;
+      background: #48658c;
+      color: white;
+      font-weight: 700;
+      width: 100px;
+      font-size: 18px;
+      height: 30px;
       display: flex;
-      justify-content: space-between;
-      margin: 30px auto 5%;
-      width: 210px;
-      .back_btn {
-  @include back_to_previous_btn;
+      justify-content: center;
+      align-items: center;
 
-  &:hover {
-    background-color: #5d85bb;
+      &:hover {
+        background-color: #5d85bd;
+      }
+    }
+
+    .wrap1,
+    .wrap2 {
+      padding: 10px 80px;
+
+      div {
+        p {
+          text-align: center;
+          white-space: nowrap;
+          font-size: 18px;
+          font-weight: 700;
+          margin-bottom: 5px;
+        }
+      }
+    }
   }
 }
 
-.send_btn {
-  @include search_and_send_btn;
-
-  &:hover {
-    background-color: #5D85BD;
-  }
-}
+.main_section {
+  .info_wrap {
+    margin: auto;
+    .input-group-prepend {
+      width: 100% !important;
+      text-align: center !important;
     }
-
-@media only screen and (min-width: 1200px) {
-  .modal {
-    padding: 0 5%;
-
-    .modal-content {
-      background-color: unset;
-      border: 0;
-    }
-
-    .confirm_modal .modal-content {
-      width: 300px;
-    }
-
     .fixed_info {
       @include fixed_info;
       background: #528091;
       border-radius: 0;
-      border: 1px solid black;
-      border-bottom: unset !important;
-      padding: 0 10px;
-
-      div {
-        flex-grow: 1;
-        text-align: center;
-      }
+      border-top: 1px solid black;
+      border-left: 1px solid black;
+      border-right: 1px solid black;
 
       p {
-        font-size: 20px;
-        margin-bottom: 0 !important;
-      }
-
-      button {
-        border: none;
-        background: none;
-        color: white;
-        font-weight: 700;
-        font-size: 22px;
+        margin-bottom: 0;
+        font-size:20px
       }
     }
-
-    .list {
-      border-left: 1px solid black;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
-    }
-
     .second_content {
-      border-left: 1px solid black;
-      border-right: 1px solid black;
-      border-top: 1px solid black;
-      background: #D9D9D9;
+      background: #d9d9d9;
 
       .submit_btn {
         margin-bottom: 20px;
-        background: #48658C;
+        background: #48658c;
         color: white;
         font-weight: 700;
         width: 100px;
@@ -915,65 +1006,10 @@ export default {
         }
       }
 
-      .wrap2 {
-        display: flex;
-        justify-content: space-evenly;
-      }
-
       .wrap1,
       .wrap2 {
-        padding: 10px 80px;
-
-        .input-number {
-          @include count_btn;
-        }
-
-        .number-input-box {
-          color: black;
-
-          .input-number {
-            width: 100%;
-          }
-        }
-
-        .form-label {
-          white-space: nowrap;
-          font-weight: 800;
-          font-size: 18px;
-        }
-
-        .dropdown {
-          button {
-            background: white;
-            width: 100%;
-            border: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          }
-
-          .dropdown-menu {
-            width: 100%;
-            max-height: 250px;
-            overflow-y: auto;
-
-            p {
-              font-size: 18px;
-              color: black;
-              font-weight: normal;
-
-              &:hover {
-                cursor: pointer;
-              }
-            }
-
-            .dropdown-item {
-              text-align: left;
-            }
-          }
-        }
-
         div {
+          padding: 0 5px;
 
           p {
             text-align: center;
@@ -985,36 +1021,172 @@ export default {
         }
       }
     }
+    .third_content {
+      .fixed_info {
+        border-top: unset;
+      }
+
+      .list {
+        button {
+          @include content_delete_button;
+
+          &:hover {
+            background: #ff7272;
+          }
+        }
+      }
+    }
+    .fixed_info_count {
+      display: flex;
+      background: #3d5c67;
+      color: white;
+      font-weight: 700;
+      align-items: center;
+      height: 40px;
+      border-radius: 0;
+      border-bottom: 1px solid black;
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+      padding: 0 10px;
+      justify-content: right;
+      gap: 10px;
+
+      p {
+        font-size: 15px;
+        margin-bottom: 0;
+      }
+    }
+    .fourth_content {
+      border-left: 1px solid black;
+      background: white;
+
+      .fixed_info {
+        border-top: none;
+        border-left: none;
+        border-bottom: 1px solid black;
+      }
+
+      .form-check {
+        margin-left: 10px;
+      }
+
+      .form-label {
+        font-weight: 700;
+        font-size: 20px;
+        white-space: nowrap;
+        align-items: center;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+
+        p {
+          margin-bottom: 0;
+          text-align: center;
+        }
+      }
+    }
+    form {
+      border-top: 1px solid black;
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+
+      .row:nth-child(3) {
+        p {
+          justify-content: left;
+          padding: 5px 10px 0;
+          align-items: normal;
+        }
+      }
+
+      .form-check {
+        margin-left: 10px;
+      }
+
+      .form-control {
+        height: auto;
+        border-radius: 0;
+      }
+
+      .wrap {
+        background: white;
+        border-bottom: 1px solid black;
+        align-items: center;
+
+        .option {
+          height: 100%;
+          width: 100%;
+        }
+      }
+
+      .form-label {
+        font-weight: 700;
+        font-size: 20px;
+        white-space: nowrap;
+        height: 50px;
+        align-items: center;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        padding: 0 30px;
+
+        p {
+          width: 100px;
+          margin-bottom: 0;
+          text-align: center;
+        }
+      }
+    }
+    .input-group-prepend {
+      color: white;
+      font-weight: 700;
+      font-size: 20px;
+      width: 120px;
+      text-align: end;
+    }
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .modal {
+    .confirm_modal .modal-content {
+      width: 300px;
+    }
+
+    .fixed_info {
+      p {
+        font-size: 20px;
+      }
+    }
+
+    .second_content {
+      .wrap2 {
+        display: flex;
+        justify-content: space-evenly;
+      }
+
+      .wrap1,
+      .wrap2 {
+        padding: 10px 80px;
+
+        .dropdown {
+          .dropdown-menu {
+            max-height: 250px;
+            overflow-y: auto;
+          }
+        }
+      }
+      .wrap1 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 10px;
+      }
+    }
   }
 
   .main_section {
-    .readonly_box {
-      @include readonly_box;
-      height: 100%;
-    }
-
     .info_wrap {
-      margin: auto;
       width: 1000px;
 
-      .input-group-prepend {
-        width: 100% !important;
-        text-align: center !important;
-      }
-
-      .fixed_info {
-        @include fixed_info;
-        background: #528091;
-        border-radius: 0;
-        border-top: 1px solid black;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-      }
 
       #readonly_box {
         background-color: #b4b4b4;
@@ -1022,48 +1194,13 @@ export default {
       }
 
       .second_content {
-        background: #D9D9D9;
-
-        .submit_btn {
-          margin-bottom: 20px;
-          background: #48658C;
-          color: white;
-          font-weight: 700;
-          width: 100px;
-          font-size: 18px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
+        background: #d9d9d9;
 
         .wrap1,
         .wrap2 {
           display: flex;
           justify-content: space-evenly;
           padding: 10px 80px;
-
-          .input-number {
-            @include count_btn;
-          }
-
-          .number-input-box {
-            color: black;
-
-            .input-number {
-              width: 100%;
-            }
-          }
-
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
-          }
 
           .dropdown {
             button {
@@ -1084,91 +1221,33 @@ export default {
                 font-size: 18px;
                 color: black;
                 font-weight: normal;
-
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-
-              .dropdown-item {
-                text-align: left;
               }
             }
           }
 
           div {
             padding: 0 5px;
-
-            p {
-              text-align: center;
-              white-space: nowrap;
-              font-size: 18px;
-              font-weight: 700;
-              margin-bottom: 5px;
-            }
           }
         }
       }
 
       .third_content {
-        .fixed_info {
-          border-top: unset;
-        }
-
         .list {
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
-
-          button {
-            @include content_delete_button;
-
-            &:hover {
-              background: #ff7272;
-            }
-          }
-        }
-      }
-
-      .fixed_info_count {
-        display: flex;
-        background: #3d5c67;
-        color: white;
-        font-weight: 700;
-        align-items: center;
-        height: 40px;
-        border-radius: 0;
-        border-bottom: 1px solid black;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        padding: 0 10px;
-        justify-content: right;
-        gap: 10px;
-
-        p {
-          font-size: 15px;
-          margin-bottom: 0;
         }
       }
 
       .fourth_content {
-        border-left: 1px solid black;
         border-bottom: 1px solid black;
-        background: white;
 
         .fixed_info {
-          border-top: none;
-          border-left: none;
           border-right: 1px solid black;
-          border-bottom: 1px solid black;
         }
 
         .input-group {
           border-left: 1px solid black;
-        }
-
-        .form-check {
-          margin-left: 10px;
         }
 
         .form-control {
@@ -1188,61 +1267,23 @@ export default {
         }
 
         .form-label {
-          font-weight: 700;
-          font-size: 20px;
-          white-space: nowrap;
           height: 50px;
-          align-items: center;
-          margin: 0;
-          display: flex;
-          justify-content: center;
           padding: 0 10px;
           width: 150px;
-
-          p {
-            margin-bottom: 0;
-            text-align: center;
-          }
         }
       }
 
       form {
-        border-top: 1px solid black;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-
-        .row:nth-child(3) {
-          p {
-            justify-content: left;
-            padding: 5px 10px 0;
-            align-items: normal;
-          }
-        }
-
-        .form-check {
-          margin-left: 10px;
-        }
-
         .form-control {
-          height: auto;
-          border-radius: 0;
           padding: 5px;
         }
 
         .wrap {
-          border-bottom: 1px solid black;
-          background: white;
-          border-bottom: 0.5px solid black;
-          align-items: center;
-
           label.use {
             border-right: 1px solid black;
           }
 
           .option {
-            @include readonly_box;
-            height: 100%;
-            width: 100%;
             align-items: center;
             display: flex;
 
@@ -1255,40 +1296,8 @@ export default {
             border-left: 1px solid black;
           }
         }
-
-        .form-label {
-          font-weight: 700;
-          font-size: 20px;
-          white-space: nowrap;
-          height: 50px;
-          align-items: center;
-          margin: 0;
-          display: flex;
-          justify-content: center;
-          padding: 0 30px;
-
-          p {
-            width: 100px;
-            margin-bottom: 0;
-            text-align: center;
-          }
-        }
-      }
-
-      .input-group-prepend {
-        color: white;
-        font-weight: 700;
-        font-size: 20px;
-        width: 120px;
-        text-align: end;
-      }
-
-      .input-number {
-        @include count_btn;
       }
     }
-
-
   }
 
   .modal .second_content .wrap1 {
@@ -1301,127 +1310,22 @@ export default {
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .modal {
-    padding: 0 5%;
-
-    .modal-content {
-      background-color: unset;
-      border: 0;
-    }
-
     .confirm_modal .modal-content {
       width: 300px;
     }
 
     .fixed_info {
-      @include fixed_info;
-      background: #528091;
-      border-radius: 0;
-      border: 1px solid black;
-      border-bottom: unset !important;
-      padding: 0 10px;
-
-      div {
-        flex-grow: 1;
-        text-align: center;
-      }
-
       p {
         font-size: 20px;
-        margin-bottom: 0 !important;
       }
-
-      button {
-        border: none;
-        background: none;
-        color: white;
-        font-weight: 700;
-        font-size: 22px;
-        ;
-      }
-    }
-
-    .list {
-      border-left: 1px solid black;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
     }
 
     .second_content {
-      border-left: 1px solid black;
-      border-right: 1px solid black;
-      border-top: 1px solid black;
-      background: #D9D9D9;
-
-      .submit_btn {
-        margin-bottom: 20px;
-        background: #48658C;
-        color: white;
-        font-weight: 700;
-        width: 100px;
-        font-size: 18px;
-        height: 30px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        &:hover {
-          background-color: #5d85bd;
-        }
-      }
-
       .wrap1,
       .wrap2 {
         display: flex;
         justify-content: space-evenly;
         padding: 10px 30px;
-
-        .input-number {
-          @include count_btn;
-        }
-
-        .number-input-box {
-          color: black;
-
-          .input-number {
-            width: 100%;
-          }
-        }
-
-        .form-label {
-          white-space: nowrap;
-          font-weight: 800;
-          font-size: 18px;
-        }
-
-        .dropdown {
-          button {
-            background: white;
-            width: 100%;
-            border: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          }
-
-          .dropdown-menu {
-            width: 100%;
-
-            .dropdown-item {
-              text-align: left;
-            }
-          }
-        }
-
-        div {
-
-          p {
-            text-align: center;
-            white-space: nowrap;
-
-            font-size: 18px;
-            margin-bottom: 5px;
-          }
-        }
       }
 
       .wrap1 {
@@ -1440,31 +1344,12 @@ export default {
   }
 
   .main_section {
-    .readonly_box {
-      @include readonly_box;
-      height: 100%;
-    }
-
     .info_wrap {
-      margin: auto;
       padding: 0 5%;
 
-      .input-group-prepend {
-        width: 100% !important;
-        text-align: center !important;
-      }
-
       .fixed_info {
-        @include fixed_info;
-        background: #528091;
-        border-radius: 0;
-        border-top: 1px solid black;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-
         p {
           font-size: 20px;
-          margin-bottom: 0;
         }
       }
 
@@ -1474,24 +1359,7 @@ export default {
       }
 
       .second_content {
-        background: #D9D9D9;
-
-        .submit_btn {
-          margin-bottom: 20px;
-          background: #48658C;
-          color: white;
-          font-weight: 700;
-          width: 100px;
-          font-size: 18px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
+        background: #d9d9d9;
 
         .wrap1,
         .wrap2 {
@@ -1499,34 +1367,7 @@ export default {
           justify-content: space-evenly;
           padding: 10px 80px;
 
-          .input-number {
-            @include count_btn;
-          }
-
-          .number-input-box {
-            color: black;
-
-            .input-number {
-              width: 100%;
-            }
-          }
-
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
-          }
-
           .dropdown {
-            button {
-              background: white;
-              width: 100%;
-              border: none;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            }
-
             .dropdown-menu {
               width: 225px;
               max-height: 250px;
@@ -1536,91 +1377,33 @@ export default {
                 font-size: 18px;
                 color: black;
                 font-weight: normal;
-
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-
-              .dropdown-item {
-                text-align: left;
               }
             }
           }
 
           div {
             padding: 0 5px;
-
-            p {
-              text-align: center;
-              white-space: nowrap;
-              font-size: 18px;
-              font-weight: 700;
-              margin-bottom: 5px;
-            }
           }
         }
       }
 
       .third_content {
-        .fixed_info {
-          border-top: unset;
-        }
-
         .list {
           border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
-
-          button {
-            @include content_delete_button;
-
-            &:hover {
-              background: #ff7272;
-            }
-          }
-        }
-      }
-
-      .fixed_info_count {
-        display: flex;
-        background: #3d5c67;
-        color: white;
-        font-weight: 700;
-        align-items: center;
-        height: 40px;
-        border-radius: 0;
-        border-bottom: 1px solid black;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        padding: 0 10px;
-        justify-content: right;
-        gap: 10px;
-
-        p {
-          font-size: 15px;
-          margin-bottom: 0;
         }
       }
 
       .fourth_content {
-        border-left: 1px solid black;
         border-bottom: 1px solid black;
-        background: white;
 
         .fixed_info {
-          border-top: none;
-          border-left: none;
           border-right: 1px solid black;
-          border-bottom: 1px solid black;
         }
 
         .input-group {
           border-left: 1px solid black;
-        }
-
-        .form-check {
-          margin-left: 10px;
         }
 
         .form-control {
@@ -1640,61 +1423,23 @@ export default {
         }
 
         .form-label {
-          font-weight: 700;
-          font-size: 20px;
-          white-space: nowrap;
           height: 50px;
-          align-items: center;
-          margin: 0;
-          display: flex;
-          justify-content: center;
           padding: 0 10px;
           width: 150px;
-
-          p {
-            margin-bottom: 0;
-            text-align: center;
-          }
         }
       }
 
       form {
-        border-top: 1px solid black;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-
-        .row:nth-child(3) {
-          p {
-            justify-content: left;
-            padding: 5px 10px 0;
-            align-items: normal;
-          }
-        }
-
-        .form-check {
-          margin-left: 10px;
-        }
-
         .form-control {
-          height: auto;
-          border-radius: 0;
           padding: 5px;
         }
 
         .wrap {
-          border-bottom: 1px solid black;
-          background: white;
-          border-bottom: 0.5px solid black;
-          align-items: center;
-
           label.use {
             border-right: 1px solid black;
           }
 
           .option {
-            @include readonly_box;
-            height: 100%;
-            width: 100%;
             align-items: center;
             display: flex;
 
@@ -1707,156 +1452,30 @@ export default {
             border-left: 1px solid black;
           }
         }
-
-        .form-label {
-          font-weight: 700;
-          font-size: 20px;
-          white-space: nowrap;
-          height: 50px;
-          align-items: center;
-          margin: 0;
-          display: flex;
-          justify-content: center;
-          padding: 0 30px;
-
-          p {
-            width: 100px;
-            margin-bottom: 0;
-            text-align: center;
-          }
-        }
-      }
-
-      .input-group-prepend {
-        color: white;
-        font-weight: 700;
-        font-size: 20px;
-        width: 120px;
-        text-align: end;
-      }
-
-      .input-number {
-        @include count_btn;
       }
     }
-
-  }
-
-  .modal .second_content .wrap1 {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 10px;
   }
 }
 
 @media only screen and (max-width: 767px) {
   .modal {
-    .modal-dialog {
-      padding: 0 5%;
-    }
-
-    .modal-content {
-      background-color: unset;
-      border: 0;
-    }
-
     .fixed_info {
-      @include fixed_info;
-      background: #528091;
-      border-radius: 0;
-      border-bottom: unset !important;
-      border: 1px solid black;
-      padding: 0 10px;
-
-      div {
-        flex-grow: 1;
-        text-align: center;
-      }
-
       p {
         font-size: 18px;
-        margin-bottom: 0 !important;
       }
 
       button {
-        border: none;
-        background: none;
-        color: white;
-        font-weight: 700;
-        font-size: 22px;
         padding: 0;
       }
     }
 
-    .list {
-      border-left: 1px solid black;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
-    }
-
     .second_content {
-      border-left: 1px solid black;
-      border-right: 1px solid black;
-      border-top: 1px solid black;
-      background: #D9D9D9;
-
-      .submit_btn {
-        margin-bottom: 20px;
-        background: #48658C;
-        color: white;
-        font-weight: 700;
-        width: 100px;
-        font-size: 18px;
-        height: 30px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        &:hover {
-          background-color: #5d85bd;
-        }
-      }
-
       .wrap1 {
         justify-content: space-evenly;
         padding: 20px 20px 0;
 
-        .search_label {
-          font-weight: 700;
-        }
-
-        .input-number {
-          @include count_btn;
-        }
-
-        .number-input-box {
-          color: black;
-
-          .input-number {
-            width: 100%;
-          }
-        }
-
-        .form-label {
-          white-space: nowrap;
-          font-weight: 800;
-          font-size: 18px;
-        }
-
         .dropdown {
-          button {
-            background: white;
-            width: 100%;
-            border: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          }
-
           .dropdown-menu {
-            width: 100%;
-
             .dropdown-item {
               text-align: left;
             }
@@ -1865,12 +1484,6 @@ export default {
 
         div {
           margin: 10px 0;
-
-          p {
-            white-space: nowrap;
-            font-size: 18px;
-            margin-bottom: 5px;
-          }
         }
       }
 
@@ -1893,108 +1506,32 @@ export default {
   }
 
   .main_section {
-    .readonly_box {
-      @include readonly_box;
-    }
-
-    #readonly_box {
-      background: #b4b4b4;
-    }
-
     .info_wrap {
-      margin: auto;
       padding: 0 5%;
 
-      .input-group-prepend {
-        width: 100% !important;
-        text-align: center !important;
-      }
-
       .fixed_info {
-        @include fixed_info;
-        background: #528091;
-        border-radius: 0;
-        border-top: 1px solid black;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
         flex-direction: column;
         height: unset;
         padding: 10px;
 
         p {
           font-size: 18px;
-          margin-bottom: 0;
         }
       }
 
       .second_content {
-        .submit_btn {
-          margin-bottom: 20px;
-          background: #48658c;
-          color: white;
-          font-weight: 700;
-          width: 100px;
-          font-size: 18px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          &:hover {
-            background-color: #5d85bd;
-          }
-        }
-
         .wrap1 {
           justify-content: space-evenly;
           padding: 20px 20px 0;
 
-          .input-number {
-            @include count_btn;
-          }
-
-          .number-input-box {
-            color: black;
-
-            .input-number {
-              width: 100%;
-            }
-          }
-
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
-          }
-
           .dropdown {
-            button {
-              background: white;
-              width: 100%;
-              border: none;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            }
-
             .dropdown-menu {
               width: 225px;
-
-              .dropdown-item {
-                text-align: left;
-              }
             }
           }
 
           div {
             margin: 10px 0;
-
-            p {
-              white-space: nowrap;
-              font-size: 18px;
-              font-weight: 700;
-              margin-bottom: 5px;
-            }
           }
         }
 
@@ -2006,63 +1543,20 @@ export default {
           p {
             margin-bottom: 0;
           }
-
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
-          }
         }
       }
 
       .third_content {
-        .fixed_info {
-          border-top: unset;
-        }
-
         .list {
           border: 1px solid black;
-
-          button {
-            @include content_delete_button;
-
-            &:hover {
-              background: #ff7272;
-            }
-          }
-        }
-      }
-
-      .fixed_info_count {
-        display: flex;
-        background: #3d5c67;
-        color: white;
-        font-weight: 700;
-        align-items: center;
-        height: 40px;
-        border-radius: 0;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        border-bottom: 1px solid black;
-        padding: 0 10px;
-        justify-content: right;
-        gap: 10px;
-
-        p {
-          font-size: 15px;
-          margin-bottom: 0;
         }
       }
 
       .fourth_content {
-        border-left: 1px solid black;
         border-right: 1px solid black;
-        background: white;
 
         .fixed_info {
           border-bottom: 1px solid black;
-          border-top: none;
-          border-left: none;
           border-right: none;
         }
 
@@ -2072,10 +1566,6 @@ export default {
           .wrap {
             flex-direction: column;
           }
-        }
-
-        .form-check {
-          margin-left: 10px;
         }
 
         .wrap:nth-child(1) .form-control,
@@ -2093,49 +1583,19 @@ export default {
 
         .form-label {
           border-bottom: 1px solid black;
-          font-weight: 700;
-          font-size: 20px;
-          white-space: nowrap;
-          align-items: center;
-          margin: 0;
-          display: flex;
-          justify-content: center;
 
           p {
             font-size: 18px;
-            margin-bottom: 0;
-            text-align: center;
           }
         }
       }
 
       form {
-        border-top: 1px solid black;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-
-        .row:nth-child(3) {
-          p {
-            justify-content: left;
-            padding: 5px 10px 0;
-            align-items: normal;
-          }
-        }
-
         .form-check {
-          margin-left: 10px;
           font-size: 18px;
         }
 
-        .form-control {
-          height: auto;
-          border-radius: 0;
-        }
-
         .wrap {
-          background: white;
-          border-bottom: 1px solid black;
-          align-items: center;
           flex-direction: column;
 
           label.use,
@@ -2147,12 +1607,6 @@ export default {
           }
 
           .option {
-            height: 100%;
-            width: 100%;
-            font-size: 18px;
-            background: #b4b4b4;
-            font-weight: 700;
-
             .content {
               padding: 5px;
               display: grid;
@@ -2172,38 +1626,13 @@ export default {
         }
 
         .form-label {
-          font-weight: 700;
-          font-size: 20px;
-          white-space: nowrap;
-          height: 50px;
-          align-items: center;
-          margin: 0;
-          display: flex;
-          justify-content: center;
-          padding: 0 30px;
-
           p {
-            width: 100px;
             font-size: 18px;
-            margin-bottom: 0;
-            text-align: center;
           }
         }
       }
-
-      .input-group-prepend {
-        color: white;
-        font-weight: 700;
-        font-size: 20px;
-        width: 120px;
-        text-align: end;
-      }
-
-      .input-number {
-        @include count_btn;
-      }
     }
-
   }
 }
+
 </style>
