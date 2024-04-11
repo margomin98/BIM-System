@@ -362,340 +362,246 @@
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
   .view_icon,
-  .trash_icon {
-    cursor: pointer;
+.trash_icon {
+  cursor: pointer;
+}
+.modal {
+  .modal-body {
+    padding: 20px;
+    margin: auto;
   }
-  .modal {
-    .modal-body {
-      padding: 20px;
-      margin: auto;
-    }
-    .modal-content {
-      margin: auto;
-    }
-    .modal-input-group-prepend {
-      width: auto;
+  .modal-content {
+    margin: auto;
+  }
+  .modal-input-group-prepend {
+    width: auto;
+    font-weight: 700;
+    font-size: 20px;
+  }
+  .modal-footer {
+    padding: 0 12px 12px;
+    border: none;
+  }
+  .modal-header {
+    h5 {
       font-weight: 700;
-      font-size: 20px;
     }
-    .modal-footer {
-      padding: 0 12px 12px;
-      border: none;
-    }
-    .modal-header {
-      h5 {
-        font-weight: 700;
+    background: #528091;
+    color: white;
+    display: flex;
+    justify-content: center;
+  }
+}
+.readonly_box {
+  @include readonly_box;
+}
+.form_search_btn {
+  @include form_search_btn;
+}
+.input-number {
+  @include count_btn;
+}
+span {
+  @include red_star;
+}
+.main_section {
+  .info_wrap {
+    .fixed_info {
+      @include fixed_info;
+      p {
+        font-size: 20px;
+        margin-bottom: 0;
       }
-      background: #528091;
-      color: white;
-      display: flex;
-      justify-content: center;
+    }
+    .content {
+      @include content_bg;
+      .input-group {
+        .form-control,
+        .readonly_box {
+          height: 37px;
+          border-radius: 0;
+        }
+        .input-group-prepend {
+          color: white;
+          font-weight: 700;
+          font-size: 20px;
+          width: 140px;
+        }
+        .file_wrap {
+          display: flex;
+          flex-direction: column;
+          .choose_btn {
+            margin-bottom: 10px;
+            @include choose_file_btn;
+            &:hover {
+              background: #3f608f;
+            }
+          }
+        }
+      }
+    }
+    .selected_file {
+      .file_upload_box {
+        .file_upload_wrap {
+          margin-bottom: 0;
+          display: flex;
+          word-break: break-word;
+          img {
+            width: 25px;
+            height: 25px;
+          }
+          p {
+            margin-bottom: 0;
+            font-weight: 700;
+            color: white;
+            &::before {
+              margin-right: 10px;
+              content: "·";
+              font-weight: 700;
+              color: white;
+            }
+          }
+        }
+      }
     }
   }
-  
-  .button_wrap {
-          display: flex;
-          justify-content: space-between;
-          margin: 30px auto 5%;
-          width: 210px;
-            .back_btn {
-              @include back_to_previous_btn;
-              &:hover {
-                background-color: #5d85bb;
-              }
-            }
+}
+.button_wrap {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px auto 5%;
+  width: 210px;
+  .back_btn {
+    @include back_to_previous_btn;
+    &:hover {
+      background-color: #5d85bb;
+    }
+  }
+}
+.send_btn {
+  @include search_and_send_btn;
+  &:hover {
+    background-color: #5e7aa2;
+  }
+}
+.send_btn_disabled {
+  background: #878787;
+  &:hover {
+    background: #878787;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .main_section {
+    .info_wrap {
+      margin: 30px auto 5%;
+      width: 800px;
+
+      .content {
+        .input-group {
+          .input-group-prepend {
+            text-align: end;
+            width: 140px;
           }
-          .send_btn {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
-          .send_btn_disabled {
-            background: #878787;
-            &:hover {
-              background: #878787;
-            }
         }
-  @media only screen and (min-width: 1200px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
       }
-      .form_search_btn {
-        @include form_search_btn;
+      .selected_file {
+        .input-group {
+          flex-wrap: unset;
+        }
+        .input-group-prepend {
+          white-space: nowrap;
+        }
       }
-      .info_wrap {
-        margin: 30px auto 5%;
-        width: 800px;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
+    }
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  .main_section {
+    .info_wrap {
+      margin: 30px auto 5%;
+      width: 750px;
+
+      .content {
+        .input-group {
+          .readonly_box,
+          .input-number {
+            width: 100%;
           }
-        }
-        .content {
-          @include content_bg;
-          .input-group {
-            .input-number {
-              @include count_btn;
-            }
-            .readonly_box {
-              height: 37px;
-            }
-            .form-control {
-              height: 37px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              text-align: end;
-              width: 140px;
-              span {
-                @include red_star
-              }
-            }
-            .file_wrap {
-              display: flex;
-              flex-direction: column;
-              .choose_btn {
-                margin-bottom: 10px;
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
-                }
-              }
-            }
-          }
-        }
-        .selected_file {
-          .input-group {
-            flex-wrap: unset;
+          .form-control {
+            width: 65%;
           }
           .input-group-prepend {
-            white-space: nowrap;
+            text-align: end;
+            width: 140px;
           }
-          .file_upload_box {
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-              word-break: break-word;
-              img {
-                width: 25px;
-                height: 25px;
-              }
-              p {
-                margin-bottom: 0;
-                font-weight: 700;
-                color: white;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
-          }
+        }
+      }
+      .selected_file {
+        .input-group {
+          flex-wrap: unset;
+        }
+        .input-group-prepend {
+          white-space: nowrap;
         }
       }
     }
   }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
+}
+@media only screen and (max-width: 767px) {
+  .main_section {
+    .readonly_box,
+.input-number,
+.form-control,
+.file_wrap {
+  margin-left: unset !important;
+}
+    .form_search_btn {
+      border: none;
+      color: white;
+      width: 60px;
+      height: 35px;
+      margin-left: unset !important;
+      margin-top: 10px;
+      font-weight: 700;
+      padding: 0 10px;
+      background-color: #132238;
+      &:hover {
+        background-color: #43546d;
       }
-      .form_search_btn {
-        @include form_search_btn;
+    }
+    .info_wrap {
+      padding: 0 5%;
+      .fixed_info {
+        height: unset;
+        flex-direction: column;
+        padding: 10px;
       }
-      .info_wrap {
-        margin: 30px auto 5%;
-        width: 750px;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
+      .content {
+        .input-group {
+          flex-direction: column;
+          .input-group
+            > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+              .valid-feedback
+            ):not(.invalid-tooltip):not(.invalid-feedback) {
+            margin-left: unset;
+            border-radius: 5px;
+            margin-top: 5px;
+            height: 35px;
           }
-        }
-        .content {
-          @include content_bg;
-          .input-group {
-            .input-number {
-              width: 100%;
-              @include count_btn;
-            }
-            .readonly_box {
-              height: 37px;
-              width: 100%;
-            }
-            .form-control {
-              height: 37px;
-              width: 65%;
-            }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              text-align: end;
-              width: 140px;
-              span {
-                @include red_star
-              }
-            }
+          .form-control {
+            width: 100%;
+          }
+          .input-group-prepend {
+            width: 100px;
+            white-space: nowrap;
           }
           .file_wrap {
-            display: flex;
-            flex-direction: column;
-            .choose_btn {
-              margin-bottom: 10px;
-              @include choose_file_btn;
-              &:hover {
-                background: #3f608f;
-              }
-            }
-          }
-        }
-        .selected_file {
-          .input-group {
-            flex-wrap: unset;
-          }
-          .input-group-prepend {
-            white-space: nowrap;
-          }
-          .file_upload_box {
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-              word-break: break-word;
-              img {
-                width: 25px;
-                height: 25px;
-              }
-              p {
-                margin-bottom: 0;
-                font-weight: 700;
-                color: white;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
+            margin-top: 5px;
           }
         }
       }
     }
   }
-  @media only screen and (max-width: 767px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
-        height: 35px;
-        margin-left: unset !important;
-      }
-      .form_search_btn {
-        border: none;
-        color: white;
-        width: 60px;
-        height: 35px;
-        margin-left: unset !important;
-        margin-top: 10px;
-        font-weight: 700;
-        padding: 0 10px;
-        background-color: #132238;
-        &:hover {
-          background-color: #43546d;
-        }
-      }
-      .info_wrap {
-        padding: 0 5%;
-        .fixed_info {
-          @include fixed_info;
-          height: unset;
-          flex-direction: column;
-          padding: 10px;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .content {
-          @include content_bg;
-          .input-group {
-            flex-direction: column;
-            .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-              margin-left: unset;
-              border-radius: 5px;
-              margin-top: 5px;
-              height: 35px;
-            }
-            .input-number {
-              @include count_btn;
-              margin-left: unset !important;
-            }
-            .form-control {
-              height: 35px;
-              width: 100%;
-              border-radius: 0;
-              margin-left: unset !important;
-            }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              width: 100px;
-              white-space: nowrap;
-              span {
-                @include red_star
-              }
-            }
-            .file_wrap {
-              display: flex;
-              flex-direction: column;
-              margin-left: unset !important;
-              margin-top: 5px;
-              .choose_btn {
-                margin-bottom: 10px;
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
-                }
-              }
-            }
-          }
-        }
-        .selected_file {
-          .file_upload_box {
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-              word-break: break-word;
-              img {
-                width: 25px;
-                height: 25px;
-              }
-              p {
-                margin-bottom: 0;
-                font-weight: 700;
-                color: white;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+}
+
 </style>

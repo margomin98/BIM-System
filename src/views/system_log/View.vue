@@ -126,180 +126,148 @@
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
   textarea {
-    resize: none;
+  resize: none;
+}
+.button_wrap {
+  display: flex;
+  justify-content: center;
+  margin: 30px auto 5%;
+  .back_btn {
+    @include back_to_previous_btn;
+    &:hover {
+      background-color: #5d85bb;
+    }
   }
-  .button_wrap {
-        display: flex;
-        justify-content: center;
-        margin: 30px auto 5%;
-        .back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-                background-color: #5d85bb;
-            }
+}
+.readonly_box {
+  @include readonly_box;
+}
+
+.main_section {
+  input {
+    @include dropdown_btn;
+    height: 35px;
+  }
+  .info_wrap {
+    margin: auto;
+    .fixed_info {
+      @include fixed_info;
+      p {
+        font-size: 20px;
+        margin-bottom: 0;
+      }
+    }
+    .content {
+      @include content_bg;
+
+      .input-group {
+        .form-control {
+          height: 35px;
         }
+        .input-group-prepend {
+          white-space: nowrap;
+          color: white;
+          font-weight: 700;
+          font-size: 20px;
+          text-align: end;
+        }
+      }
+    }
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .main_section {
+    .info_wrap {
+      width: 800px;
+
+      .content {
+        p {
+          text-align: center;
+          white-space: nowrap;
+          font-size: 20px;
+          font-weight: 700;
+          margin-bottom: 5px;
+          color: white;
+        }
+
+        .input-group {
+          flex-wrap: nowrap;
+
+          .input-group-prepend {
+            width: 135px;
+          }
+        }
+      }
+    }
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  .main_section {
+    .readonly_box {
+      width: 150px !important;
     }
 
-  @media only screen and (min-width: 1200px) {
-    .main_section {
-      input {
-        @include dropdown_btn;
-        height: 35px;
-      }
-    
-      .readonly_box {
-        @include readonly_box;
-      }
-      .info_wrap {
-        margin: auto;
-        width: 800px;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
+    .info_wrap {
+      width: 700px;
+
+      .content {
+        p {
+          text-align: center;
+          white-space: nowrap;
+          font-size: 20px;
+          font-weight: 700;
+          margin-bottom: 5px;
+          color: white;
+        }
+
+        .input-group {
+          flex-wrap: nowrap;
+          .form-control {
+            width: 55%;
+          }
+          .input-group-prepend {
+            width: 170px;
           }
         }
-      
-        .content {
-          @include content_bg;
-          p {
-            text-align: center;
-            white-space: nowrap;
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: white;
-          }
-         
-          .input-group {
-            flex-wrap: nowrap;
-            .form-control {
-              height: 35px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              white-space: nowrap;
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              width: 135px;
-              text-align: end;
-            }
-          }
-         
-        }
-        
       }
-     
     }
   }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .main_section {
-      input {
-        @include dropdown_btn;
-        height: 35px;
-      }
-      .readonly_box {
-        width: 150px !important;
-      }
-   
-      .readonly_box {
-        @include readonly_box;
-      }
-      .info_wrap {
-        margin: auto;
-        width: 700px;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-       
-        .content {
-          @include content_bg;
-          p {
-            text-align: center;
-            white-space: nowrap;
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: white;
-          }
-      
-          .input-group {
-            flex-wrap: nowrap;
-            .form-control {
-              height: 35px;
-              width: 55%;
-            }
-            .input-group-prepend {
-              white-space: nowrap;
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              width: 170px;
-              text-align: end;
-            }
-          }
-        }
-      }
-   
+}
+@media only screen and (max-width: 767px) {
+  .main_section {
+    input {
+      width: 100%;
     }
-  
-  }
-  @media only screen and (max-width: 767px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
+    .input-group
+      > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+        .valid-feedback
+      ):not(.invalid-tooltip):not(.invalid-feedback) {
+      margin-left: 0 !important;
+      border-radius: 5px;
+    }
+    .info_wrap {
+      padding: 1% 5% 0;
+      .fixed_info {
+        flex-direction: column;
+        height: unset;
+        padding: 10px;
       }
-      
-   
-      input {
-        @include dropdown_btn;
-        height: 35px;
-        width: 100%
-      }
-      .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-        margin-left: 0 !important;
-        border-radius: 5px;
-      }
-      .info_wrap {
-        padding: 1% 5% 0;
-        .fixed_info {
-          @include fixed_info;
+
+      .content {
+        .input-group {
           flex-direction: column;
-          height: unset;
-          padding: 10px;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
+          .form-control {
+            width: 100%;
+            margin-left: unset !important;
           }
-        }
-     
-        .content {
-          @include content_bg;
-      
-          .input-group {
-            flex-direction: column;
-            .form-control {
-              width: 100%;
-              height: 35px;
-              border-radius: 0;
-              margin-left: unset !important;
-            }
-            .input-group-prepend {
-              margin-bottom: 5px;
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-            }
+          .input-group-prepend {
+            margin-bottom: 5px;
+            text-align: left;
           }
         }
       }
     }
-   
   }
+}
+
 </style>

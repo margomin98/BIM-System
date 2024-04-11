@@ -111,7 +111,7 @@
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">驗證</button>
                 <!-- 交付人員驗證Modal -->
                 <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-dialog modal-sm modal-dialog-centered">
                     <div class="modal-content ">
                       <div class="modal-header">
                         <h5 class="modal-title">交付人員驗證</h5>
@@ -152,7 +152,7 @@
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">驗證</button>
                 <!-- 送修人員驗證Modal -->
                 <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-dialog modal-sm modal-dialog-centered">
                     <div class="modal-content ">
                       <div class="modal-header">
                         <h5 class="modal-title" id="staticBackdropLabel2">送修人員驗證</h5>
@@ -395,444 +395,286 @@ import { Repair_Deliver_Status } from '@/assets/js/enter_status';
 
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
-  .custom-slide {
-    display: flex;
-    align-self: center;
-  }
-  .button_wrap {
-          display: flex;
-          justify-content: space-between;
-          margin: 30px auto 5%;
-          width: 210px;
-          .back_btn {
-  @include back_to_previous_btn;
+  @import "@/assets/css/global.scss";
 
-  &:hover {
-    background-color: #5d85bb;
+.readonly_box {
+  @include readonly_box;
+}
+.input-number {
+  @include count_btn;
+}
+span {
+  @include red_star;
+}
+.button_wrap {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px auto 5%;
+  width: 210px;
+  .back_btn {
+    @include back_to_previous_btn;
+
+    &:hover {
+      background-color: #5d85bb;
+    }
+  }
+  .send_btn {
+    @include search_and_send_btn;
+    &:hover {
+      background-color: #5e7aa2;
+    }
+  }
+  .send_btn_disabled {
+    background: #878787;
+    &:hover {
+      background: #878787;
+    }
   }
 }
-          .send_btn {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
-          .send_btn_disabled {
-            background: #878787;
-            &:hover {
-              background: #878787;
-            }
-          }
-        }
-  @media only screen and (min-width: 1200px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
+.main_section {
+  .info_wrap {
+    h2{
+      margin-top: 50px;
+    text-align: center;
+    font-size: 35px;
+    font-weight: 600;
+    color: #132238;
+    }
+    .fixed_info {
+      @include fixed_info;
+      p {
+        font-size: 20px;
+        margin-bottom: 0;
       }
-      .swiper_section {
-        swiper-slide img {
-          width: 100%;
-          height: auto;
-          padding: 40px 0;
+    }
+
+    .content {
+      @include content_bg;
+      .input-group {
+        .form-control,
+        .readonly_box {
+          height: 37px;
+          border-radius: 0;
+        }
+        .input-group-prepend {
+          color: white;
+          font-weight: 700;
+          font-size: 20px;
         }
       }
-      h2 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 35px;
-        font-weight: 600;
-        @include title_color;
+    }
+    .confirm_section {
+      .auth {
+        border-radius: 0 0 10px 10px;
+        background: white;
+        .input-group {
+          display: flex;
+          white-space: nowrap;
+          flex-wrap: nowrap;
+        }
+        button {
+          @include auth_btn;
+          &:hover {
+            background: #5a6d87;
+          }
+        }
+        .form-control {
+          margin-right: 5px;
+        }
+        .input-group-prepend {
+          font-weight: 700;
+          font-size: 20px;
+          text-align: end;
+          position: relative;
+          span {
+            position: absolute;
+          }
+        }
+        .input-container,
+        .input-with-icon {
+          position: relative;
+        }
+
+        .checkmark-icon {
+          position: absolute;
+          top: 10%;
+          transform: translateY(-50%);
+          width: 20px;
+          height: 20px;
+        }
       }
-      .info_wrap {
-        margin: 30px auto 5%;
-        width: 750px;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
+      .modal {
+        .modal-body {
+          padding: 16px 16px 0;
         }
-        .content {
-          @include content_bg;
-          .input-group {
-            .input-number {
-              @include count_btn;
-            }
-            .readonly_box {
-              height: 37px;
-            }
-            .form-control {
-              height: 37px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              text-align: end;
-              width: 155px;
-              span {
-                @include red_star
-              }
-            }
-          }
+        .modal-content {
+          margin: auto;
         }
-        .confirm_section {
-          .auth {
-            border-radius: 0 0 10px 10px;
-            background: white;
-            height: 80px;
-            padding: 20px;
-            .input-group {
-              display: flex;
-              white-space: nowrap;
-              flex-wrap: nowrap;
-              justify-content: center;
-            }
-            button {
-              @include auth_btn;
-              &:hover {
-                background: #5a6d87;
-              }
-            }
-            .form-control {
-              height: 35px;
-              width: 150px;
-              margin-right: 5px;
-            }
-            .input-group-prepend {
-              font-weight: 700;
-              font-size: 20px;
-              text-align: end;
-              position: relative;
-              span {
-                position: absolute;
-              }
-            }
-            .input-container {
-              position: relative;
-            }
-            .input-with-icon {
-              position: relative;
-            }
-            .checkmark-icon {
-              position: absolute;
-              top: 10%;
-              left: 89%;
-              transform: translateY(-50%);
-              width: 20px;
-              height: 20px;
-            }
+        .input-group-prepend {
+          width: auto;
+        }
+        .modal-footer {
+          padding: 0 12px 12px;
+          border: none;
+        }
+        .modal-header {
+          h5 {
+            font-weight: 700;
           }
-          .modal {
-            .modal-body {
-              padding: 16px 16px 0;
-            }
-            .modal-content {
-              width: 400px;
-              margin: auto;
-            }
-            .input-group-prepend {
-              width: auto;
-            }
-            .modal-footer {
-              padding: 0 12px 12px;
-              border: none;
-            }
-            .modal-header {
-              h5 {
-                font-weight: 700;
-              }
-              background: #3D4E61;
-              color: white;
-              .close_icon {
-                cursor: pointer;
-              }
-            }
+          background: #3d4e61;
+          color: white;
+          .close_icon {
+            cursor: pointer;
           }
         }
       }
     }
   }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
-      }
-      .swiper_section {
-        swiper-slide img {
-          width: 100%;
-          height: auto;
-          padding: 40px 0;
-        }
-      }
-      h2 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 35px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .info_wrap {
-        margin: 30px auto 5%;
-        padding: 0 5%;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
+}
+@media only screen and (min-width: 1200px) {
+  .main_section {
+    .info_wrap {
+      margin: 30px auto 5%;
+      width: 750px;
+
+      .content {
+        .input-group {
+          .input-group-prepend {
+            text-align: end;
+            width: 155px;
           }
         }
-        .content {
-          @include content_bg;
+      }
+      .confirm_section {
+        .auth {
+          height: 80px;
+          padding: 20px;
           .input-group {
+            justify-content: center;
+          }
+
+          .form-control {
+            width: 150px;
+          }
+
+          .checkmark-icon {
+            left: 89%;
+          }
+        }
+      }
+    }
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  .main_section {
+    .info_wrap {
+      margin: 30px auto 5%;
+      padding: 0 5%;
+
+      .content {
+        .input-group {
+          width: 100%;
+          white-space: nowrap;
+          flex-wrap: nowrap;
+          .input-number,
+          .readonly_box {
             width: 100%;
-            white-space: nowrap;
-            flex-wrap: nowrap;
-            .input-number {
-              width: 100%;
-              @include count_btn;
-            }
-            .readonly_box {
-              height: 37px;
-              width: 100%;
-            }
-            .form-control {
-              height: 37px;
-              width: 65%;
-            }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              text-align: end;
-              width: 128px;
-              span {
-                @include red_star
-              }
-            }
+          }
+
+          .form-control {
+            height: 37px;
+            width: 65%;
+          }
+          .input-group-prepend {
+            text-align: end;
+            width: 128px;
           }
         }
-        .confirm_section {
-          .auth {
-            border-radius: 0 0 10px 10px;
-            background: white;
-            height: 80px;
-            padding: 20px;
-            .input-group {
-              display: flex;
-              white-space: nowrap;
-              flex-wrap: nowrap;
-            }
-            button {
-              @include auth_btn;
-              &:hover {
-                background: #5a6d87;
-              }
-            }
-            .form-control {
-              height: 35px;
-              margin-right: 5px;
-            }
-            .input-group-prepend {
-              font-weight: 700;
-              font-size: 20px;
-              width: 120px;
-              text-align: end;
-              position: relative;
-              span {
-                position: absolute;
-              }
-            }
-            .deliver_member {
-              margin-left: 10px;
-            }
-            .input-container {
-              position: relative;
-            }
-            .input-with-icon {
-              position: relative;
-            }
-            .checkmark-icon {
-              position: absolute;
-              top: 10%;
-              left: 93%;
-              transform: translateY(-50%);
-              width: 20px;
-              height: 20px;
-            }
+      }
+      .confirm_section {
+        .auth {
+          height: 80px;
+          padding: 20px;
+
+          .form-control {
+            height: 35px;
           }
-          .modal {
-            .modal-body {
-              padding: 16px 16px 0;
-            }
-            .modal-content {
-              width: 400px;
-              margin: auto;
-            }
-            .input-group-prepend {
-              width: auto;
-            }
-            .modal-footer {
-              padding: 0 12px 12px;
-              border: none;
-            }
-            .modal-header {
-              h5 {
-                font-weight: 700;
-              }
-              background: #3D4E61;
-              color: white;
-              .close_icon {
-                cursor: pointer;
-              }
-            }
+          .input-group-prepend {
+            width: 120px;
+          }
+          .deliver_member {
+            margin-left: 10px;
+          }
+
+          .checkmark-icon {
+            left: 93%;
           }
         }
       }
     }
   }
-  @media only screen and (max-width: 767px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
-        height: 35px;
-        margin-left: unset !important;
+}
+@media only screen and (max-width: 767px) {
+  .main_section {
+    .readonly_box,
+    .input-number,
+    .form-control,
+    .modal {
+      margin-left: unset !important;
+    }
+    .modal{
+     modal-dialog{
+  padding:unset !important
+} 
+    }
+    .info_wrap {
+      padding: 0 5%;
+      .fixed_info {
+        height: unset;
+        flex-direction: column;
+        padding: 10px;
       }
-      .swiper_section swiper-slide {
-        img {
-          width: 100%;
-          height: auto;
-          padding: 40px;
-        }
-      }
-      h2 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 35px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .info_wrap {
-        padding: 0 5%;
-        .fixed_info {
-          @include fixed_info;
-          height: unset;
+      .content {
+        .input-group {
           flex-direction: column;
+          .input-group
+            > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+              .valid-feedback
+            ):not(.invalid-tooltip):not(.invalid-feedback) {
+            margin-left: unset;
+            border-radius: 5px;
+            margin-top: 5px;
+            height: 35px;
+          }
+
+          .form-control {
+            width: 100%;
+          }
+          .input-group-prepend {
+            width: 100px;
+            white-space: nowrap;
+          }
+        }
+      }
+      .confirm_section {
+        .auth {
           padding: 10px;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .content {
-          @include content_bg;
           .input-group {
-            flex-direction: column;
-            .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-              margin-left: unset;
-              border-radius: 5px;
-              margin-top: 5px;
-              height: 35px;
-            }
-            .input-number {
-              @include count_btn;
-              margin-left: unset !important;
-            }
-            .form-control {
-              height: 35px;
-              width: 100%;
-              border-radius: 0;
-              margin-left: unset !important;
-            }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              width: 100px;
-              white-space: nowrap;
-              span {
-                @include red_star
-              }
-            }
+            justify-content: center;
+            margin: 5px 0;
           }
-        }
-        .confirm_section {
-          .auth {
-            border-radius: 0 0 10px 10px;
-            background: white;
-            padding: 10px;
-            .input-group {
-              display: flex;
-              white-space: nowrap;
-              flex-wrap: nowrap;
-              justify-content: center;
-              margin: 5px 0;
-            }
-            button {
-              @include auth_btn;
-              &:hover {
-                background: #5a6d87;
-              }
-            }
-            .form-control {
-              height: 35px;
-              margin-right: 5px;
-            }
-            .input-group-prepend {
-              font-weight: 700;
-              font-size: 20px;
-              width: 120px;
-              text-align: end;
-              position: relative;
-              span {
-                position: absolute;
-              }
-            }
-            .input-container {
-              position: relative;
-            }
-            .input-with-icon {
-              position: relative;
-            }
-            .checkmark-icon {
-              position: absolute;
-              top: 10%;
-              left: 89%;
-              transform: translateY(-50%);
-              width: 20px;
-              height: 20px;
-            }
+
+          .form-control {
+            height: 35px;
           }
-          .modal {
-            .modal-body {
-              padding: 16px 16px 0;
-            }
-            .modal-content {
-              width: 400px;
-              margin: auto;
-            }
-            .input-group-prepend {
-              width: auto;
-            }
-            .modal-footer {
-              padding: 0 12px 12px;
-              border: none;
-            }
-            .modal-header {
-              h5 {
-                font-weight: 700;
-              }
-              background: #3D4E61;
-              color: white;
-              .close_icon {
-                cursor: pointer;
-              }
-            }
+
+          .checkmark-icon {
+            left: 89%;
           }
         }
       }
     }
   }
+}
+
 </style>

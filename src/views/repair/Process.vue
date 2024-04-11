@@ -201,9 +201,9 @@
         <div class="col selected_file">
           <div class="input-group">
             <div class="input-group-prepend mb-xl-3 mb-lg-3 mb-md-3">已選擇檔案 :</div>
-            <div class='selected_file_wrap'>
+            <div class='file_upload_box col'>
               <div v-for="(file, index) in formParams.viewDoc" :key="index" class="file_upload_wrap">
-                <p>{{ file.FileName}}
+                <p class='file_name'>{{ file.FileName}}
                   <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
                   <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)"></p>
               </div>
@@ -232,20 +232,19 @@
           </div>
         </div>
         <!-- 已上傳文件 -->
-        <div class="col-12 selected_file">
-          <div class="input-group d-flex">
-            <div class="input-group-prepend">
-              已上傳文件 :
-            </div>
-            <div class='selected_file_wrap'>
-              <div v-for="(file, index) in details.existDocument" :key="index" class="file_upload_wrap">
-                <p>{{ file.FileName}}
-                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
-                  <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)"></p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div class="col selected_file">
+  <div class="input-group">
+    <div class="input-group-prepend">已上傳文件 :</div>
+  <div class="selected_file_wrap col">
+        <div v-for="(file, index) in details.existDocument" :key="index" class="file_upload_wrap">
+        <p>{{ file.FileName}}
+          <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(file)">
+          <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteFile(index , file)"></p>
+      </div>
+      </div> 
+       
+</div>
+  </div>
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
@@ -601,382 +600,269 @@
 <style lang="scss" scoped>
   @import '@/assets/css/global.scss';
   span {
-    @include red_star
+  @include red_star
+}
+.input-number {
+  @include count_btn;
+}
+.readonly_box {
+  @include readonly_box;
+}
+.form-check-input {
+  align-self: center
+}
+.view_icon,
+.trash_icon {
+  cursor: pointer
+}
+.modal {
+  .modal-body {
+    padding: 20px;
+    margin: auto;
   }
-  .form-check-input {
-    align-self: center
+  .modal-content {
+    margin: auto;
   }
-  .view_icon,
-  .trash_icon {
-    cursor: pointer
+  .modal-input-group-prepend {
+    width: auto;
+    font-weight: 700;
+    font-size: 20px;
   }
-  .modal {
-    .modal-body {
-      padding: 20px;
-      margin: auto;
-    }
-    .modal-content {
-      margin: auto;
-    }
-    .modal-input-group-prepend {
-      width: auto;
+  .modal-footer {
+    padding: 0 12px 12px;
+    border: none;
+  }
+  .modal-header {
+    h5 {
       font-weight: 700;
-      font-size: 20px;
     }
-    .modal-footer {
-      padding: 0 12px 12px;
-      border: none;
-    }
-    .modal-header {
-      h5 {
-        font-weight: 700;
-      }
-      background: #528091;
-      color: white;
-      display: flex;
-      justify-content: center;
-      .close_icon {
-        cursor: pointer;
-      }
-    }
-  }
-  .custom-slide {
+    background: #528091;
+    color: white;
     display: flex;
-    align-self: center;
-  }
-  .view_icon,
-  .trash_icon {
-    cursor: pointer;
-  }
-  
-  .button_wrap {
-          display: flex;
-          justify-content: space-between;
-          margin: 30px auto 5%;
-          width: 210px;
-          .back_btn {
-  @include back_to_previous_btn;
-
-  &:hover {
-    background-color: #5d85bb;
+    justify-content: center;
+    .close_icon {
+      cursor: pointer;
+    }
   }
 }
-          .send_btn {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
-        }
-  @media only screen and (min-width: 1200px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
-      }
-      .swiper_section {
-        swiper-slide img {
-          width: 100%;
-          height: auto;
-          padding: 40px 0;
-        }
-      }
-      h2 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 35px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .info_wrap {
+.custom-slide {
+  display: flex;
+  align-self: center;
+}
+.button_wrap {
+        display: flex;
+        justify-content: space-between;
         margin: 30px auto 5%;
-        width: 800px;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
+        width: 210px;
+        .back_btn {
+@include back_to_previous_btn;
+
+&:hover {
+  background-color: #5d85bb;
+}
+}
+        .send_btn {
+          @include search_and_send_btn;
+          &:hover {
+            background-color: #5e7aa2;
           }
         }
-        .content {
-          @include content_bg;
-          .input-group {
-            flex-wrap: nowrap;
-            .input-number {
-              @include count_btn;
-            }
-            .readonly_box {
-              height: 37px;
-            }
-            .form-control {
-              height: 37px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              text-align: end;
-              width: 155px;
+      }
+      .main_section{
+    
+        .info_wrap{
+          .swiper_section {
+            swiper-slide img {
+              width: 100%;
+              height: auto;
+              padding: 40px 0;
             }
           }
-          .selected_file {
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-              width: 590px;
-              img {
-                width: 25px;
-                height: 25px;
-              }
+        
+            .fixed_info {
+              @include fixed_info;
               p {
-                font-weight: 700;
-                margin-bottom: 5px;
-                color: white;
-                word-break: break-word;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
+                font-size: 20px;
+                margin-bottom: 0;
+              }
+            }
+            .content {
+              @include content_bg;
+              .input-group {  
+                .readonly_box ,.form-control{
+                  height: 35px;
+                  border-radius: 0;
+                }
+               
+                .input-group-prepend {
                   color: white;
+                  font-weight: 700;
+                  font-size: 20px;
+                }
+              }
+              .selected_file {
+                 .file_upload_wrap {
+                  margin-bottom: 0;
+                  display: flex;
+                  img {
+                    width: 25px;
+                    height: 25px;
+                  }
+                  p {
+                    font-weight: 700;
+                    margin-bottom: 5px;
+                    color: white;
+                    word-break: break-word;
+                    &::before {
+                      margin-right: 10px;
+                      content: '·';
+                      font-weight: 700;
+                      color: white;
+                    }
+                  }
+                }
+              }
+              .file_wrap {
+                display: flex;
+                flex-direction: column;
+                .choose_btn {
+                  margin-bottom: 10px;
+                  @include choose_file_btn;
+                  &:hover {
+                    background: #3f608f;
+                  }
                 }
               }
             }
-          }
-          .file_wrap {
-            display: flex;
-            flex-direction: column;
-            .choose_btn {
-              margin-bottom: 10px;
-              @include choose_file_btn;
-              &:hover {
-                background: #3f608f;
-              }
-            }
-          }
+          
+      
         }
+      }
+@media only screen and (min-width: 1200px) {
+  .main_section {
+ 
+    .swiper_section {
+      swiper-slide img {
+        padding: 40px 0;
       }
     }
-  }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
-      }
-      .swiper_section {
-        swiper-slide img {
-          width: 100%;
-          height: auto;
-          padding: 40px 0;
-        }
-      }
-      h2 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 35px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .info_wrap {
-        margin: 30px auto 5%;
-        padding: 0 5%;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .content {
-          @include content_bg;
-          .input-group {
-            width: 100%;
-            flex-wrap: nowrap;
-            .input-number {
-              width: 100%;
-              @include count_btn;
-            }
-            .readonly_box {
-              height: 37px;
-              width: 100%;
-            }
-            .form-control {
-              height: 37px;
-              width: 54%;
-            }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              text-align: end;
-              width: 145px;
-            }
-          }
-          .selected_file {
-            .file_upload_wrap {
-              margin-bottom: 0;
-              width: 480px;
-              display: flex;
-              img {
-                width: 25px;
-                height: 25px;
-              }
-              p {
-                font-weight: 700;
-                margin-bottom: 5px;
-                color: white;
-                word-break: break-word;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
-          }
-          .file_wrap {
-            display: flex;
-            flex-direction: column;
-            .choose_btn {
-              margin-bottom: 10px;
-              @include choose_file_btn;
-              &:hover {
-                background: #3f608f;
-              }
-            }
-          }
-        }
-        .content:nth-child(4) {
+ 
+    .info_wrap {
+      margin: 30px auto 5%;
+      width: 800px;
+     
+      .content {
+        .input-group {
+          flex-wrap: nowrap;
+        
+         
+      
           .input-group-prepend {
-            width: 160px;
+            text-align: end;
+            width: 155px;
           }
-          .input-group .form-control {
-            width: 50%;
+        }
+  
+        
+      }
+    }
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  .main_section {
+  
+    .swiper_section {
+      swiper-slide img {
+        padding: 40px 0;
+      }
+    }
+   
+    .info_wrap {
+      margin: 30px auto 5%;
+      padding: 0 5%;
+     
+      .content {
+        .input-group {
+          width: 100%;
+          flex-wrap: nowrap;
+          .input-number,.readonly_box{
+            width: 100%;
+           }
+          .form-control {
+            width: 54%;
           }
+          .input-group-prepend {
+            text-align: end;
+            width: 145px;
+          }
+        }
+      
+       
+      }
+      .content:nth-child(4) {
+        .input-group-prepend {
+          width: 160px;
+        }
+        .input-group .form-control {
+          width: 50%;
         }
       }
     }
   }
-  @media only screen and (max-width: 767px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
-        height: 35px;
-        margin-left: unset !important;
+}
+@media only screen and (max-width: 767px) {
+  .main_section {
+    .readonly_box, .form-control,.input-number {
+      margin-left: unset !important;
+    }
+    .swiper_section {
+      swiper-slide img {
+        padding: 40px;
       }
-      .swiper_section swiper-slide {
-        img {
-          width: 100%;
-          height: auto;
-          padding: 40px;
-        }
+    }
+   
+    .info_wrap {
+      padding: 0 5%;
+      .fixed_info {
+       height: unset;
+        flex-direction: column;
+        padding: 10px;
+      
       }
-      h2 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 35px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .info_wrap {
-        padding: 0 5%;
-        .fixed_info {
-          @include fixed_info;
-          height: unset;
+      .content {
+        .input-group {
           flex-direction: column;
-          padding: 10px;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
+          .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+            margin-left: unset;
+            border-radius: 5px;
+            margin-top: 5px;
+            height: 35px;
+          }
+        
+          .form-control {
+            width: 100%;
+           }
+          .input-group-prepend {
+            width: 100px;
+            white-space: nowrap;
           }
         }
-        .content {
-          @include content_bg;
+        .selected_file {
           .input-group {
             flex-direction: column;
-            .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-              margin-left: unset;
-              border-radius: 5px;
-              margin-top: 5px;
-              height: 35px;
-            }
-            .input-number {
-              @include count_btn;
-              margin-left: unset !important;
-            }
-            .form-control {
-              height: 35px;
-              width: 100%;
-              border-radius: 0;
-              margin-left: unset !important;
-            }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              width: 100px;
-              white-space: nowrap;
-            }
           }
-          .selected_file {
-            .input-group {
-              flex-direction: column;
-            }
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-              img {
-                width: 25px;
-                height: 25px;
-              }
-              p {
-                font-weight: 700;
-                margin-bottom: 5px;
-                color: white;
-                word-break: break-word;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
-          }
-          .file_upload_wrap {
-            margin-bottom: 0;
-            display: flex;
-            img {
-              width: 25px;
-              height: 25px;
-            }
-            p {
-              margin-bottom: 0;
-              font-weight: 700;
-              color: white;
-              &::before {
-                margin-right: 10px;
-                content: '·';
-                font-weight: 700;
-                color: white;
-              }
-            }
-          }
-          .file_wrap {
-            display: flex;
-            flex-direction: column;
-            margin-left: unset !important;
-            .choose_btn {
-              margin-top: 5px;
-              margin-bottom: 10px;
-              @include choose_file_btn;
-              &:hover {
-                background: #3f608f;
-              }
-            }
+         
+        }
+     
+        .file_wrap {
+          margin-left: unset !important;
+          .choose_btn {
+            margin-top: 5px;
+         
           }
         }
       }
     }
   }
+}
 </style>
