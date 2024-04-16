@@ -682,6 +682,7 @@ textarea {
         height: unset !important;
       }
       .input-group-prepend {
+        margin-bottom: 5px;
         display: flex;
         width: auto !important;
         text-align: left;

@@ -140,7 +140,7 @@
         <div class="col d-flex">
           <div class="input-group">
             <div class="input-group-prepend">認列人員：</div>
-            <input type="text" class="form-control text-center readonly_box" readonly v-model="validation.VerifyPerson" />
+            <input type="text" class="form-control text-center readonly_box authorize_user" readonly v-model="validation.VerifyPerson" />
             <span class="icon-container">
               <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.isVerified" />
             </span>
@@ -1090,8 +1090,11 @@ export default {
 
 @media only screen and (max-width: 767px) {
   .main_section {
-      .info_wrap {
+    .info_wrap {
       padding: 1% 5% 0;
+      .input-group-prepend {
+        margin-bottom: 5px;
+      }
       .check_section {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
@@ -1113,18 +1116,25 @@ export default {
           }
         }
       }
-
       .input-group {
-        .form-control {
+        flex-direction: column;
+        input {
           width: 100%;
+        }
+
+        .form-control {
           margin-left: unset !important;
         }
       }
       .bottom_fixed {
-        padding: 10px;
-        .form-control {
-          width: 1%;
+        padding: 10px 16%;
+        .input-group {
+          flex-direction: row;
+          input {
+            width: 1%;
+          }
         }
+
         button {
           margin-left: unset;
         }
@@ -1139,5 +1149,6 @@ export default {
     }
   }
 }
+
 
 </style>

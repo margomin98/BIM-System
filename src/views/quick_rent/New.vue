@@ -83,7 +83,7 @@
                         <div class='col d-flex justify-content-center'>
                             <button class="btn submit_btn" type="button"
                                 @click="quickrentStore.searchInventory('', 'search')">搜尋</button>
-                            <button class="btn submit_btn" style="margin-left: 0.5rem;" type="button"
+                            <button class="btn empty_btn" style="margin-left: 0.5rem;" type="button"
                                 @click="resetParams">清空</button>
                         </div>
                     </div>
@@ -455,7 +455,7 @@ const resetParams = () => {
 
     .submit_btn {
       margin-top: 20px;
-      background: #48658c;
+      background: #132238;;
       color: white;
       font-weight: 700;
       width: 80px;
@@ -466,13 +466,13 @@ const resetParams = () => {
       align-items: center;
 
       &:hover {
-        background-color: #5d85bd;
+        background: #5980b9;
       }
     }
 
-    .add_btn {
+    .empty_btn {
       margin-top: 20px;
-      background: #132238;
+      background: #48658C;
       color: white;
       font-weight: 700;
       width: 80px;
@@ -485,7 +485,7 @@ const resetParams = () => {
       border-radius: 7px;
 
       &:hover {
-        background-color: #426497;
+      background-color: #5e7aa2;
       }
     }
 

@@ -462,6 +462,7 @@ export default {
 }
 
 .input-number {
+  width: 100%;
   border-radius: 5px;
   border: none;
   height: 35px;

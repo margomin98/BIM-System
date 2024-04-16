@@ -134,8 +134,8 @@
                     <div class='col'>
                       <p class="search_label">設備分類</p>
                       <div class="dropdown">
-                        <button class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false"
+                        <button class="btn dropdown-toggle" type="button" id="categoryDropdown"
+                          data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                           :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
                           {{ searchParams.EquipCategoryName || EquipCategoryInit }}
                         </button>
@@ -229,9 +229,10 @@
         </div>
         <div v-else style="height: 100%;">
           <DataTable lazy :first="datagrid2.first" :size="'small'" :loading="datagrid2.loading" :value="rowData2"
-            :sort-field="datagrid2.sortField" :sort-order="datagrid2.sortOrder" resizableColumns columnResizeMode="expand"
-            showGridlines scrollable scrollHeight="820px" @page="getRangeOfPlan($event, 'page')"
-            @sort="getRangeOfPlan($event, 'sort')" paginator :rows="20" :totalRecords="datagrid2.totalRecords"
+            :sort-field="datagrid2.sortField" :sort-order="datagrid2.sortOrder" resizableColumns
+            columnResizeMode="expand" showGridlines scrollable scrollHeight="820px"
+            @page="getRangeOfPlan($event, 'page')" @sort="getRangeOfPlan($event, 'sort')" paginator :rows="20"
+            :totalRecords="datagrid2.totalRecords"
             paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
             currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
             <Column style="min-width: 60px;">
@@ -1399,10 +1400,12 @@ span {
     .fixed_info {
       p {
         font-size: 18px;
+        position: relative;
       }
 
       button {
-        padding: 0;
+        position: absolute;
+        right: 10px;
         border: none;
         background: none;
         color: white;

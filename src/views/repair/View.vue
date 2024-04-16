@@ -550,6 +550,7 @@ span {
           }
           .input-group-prepend {
             width: 100px;
+            margin-bottom: 5px;
             white-space: nowrap;
           }
         }

@@ -94,7 +94,7 @@
                 </div>
             </div>
         </div>
-        <div v-show="PageType==='delete'" class="info_wrap mt-5">
+        <div v-show="PageType==='delete'" class="mt-5">
             <div class="purchase_list" role="region" tabindex="0">
                 <div class="fixed_info">
                     <div>
@@ -267,8 +267,9 @@
             }
         }
         .purchase_table {
-            max-height: 500px;
-            overflow-y: scroll;
+            height: 300px;
+    overflow-y: scroll;
+    background: white;
         }
         .purchase_list {
             overflow: auto;
@@ -291,9 +292,9 @@
                 color: #000000;
                 padding: 5px;
             }
-            tbody tr {
-                height: 46px;
-            }
+            // tbody tr {
+            //     height: 46px;
+            // }
             .check_col {
                 width: 75px
             }
@@ -414,10 +415,6 @@
                 .purchase_list td {
                     white-space: nowrap
                 }
-                .purchase_list table {
-                    display: block;
-                    overflow-y: scroll;
-                }
                 input,
                 textarea {
                     width: 100%;
@@ -432,6 +429,9 @@
                     }
                     .input-group {
                         flex-direction: column;
+                    }
+                    .input-group-prepend{
+                        margin-bottom: 5px;
                     }
                 }
             }

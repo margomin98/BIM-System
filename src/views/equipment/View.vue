@@ -199,9 +199,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
-
 span {
-  @include red_star
+  @include red_star;
 }
 
 .item_wrap {
@@ -214,7 +213,6 @@ span {
 .readonly_box {
   @include readonly_box;
 }
-
 
 .main_section {
   .fixed_info {
@@ -273,7 +271,7 @@ span {
         padding: 5px;
 
         &:hover {
-          background: #FF7272
+          background: #ff7272;
         }
       }
     }
@@ -282,9 +280,9 @@ span {
 
 .button_wrap {
   display: flex;
-        justify-content: center;
-        margin: 30px auto 5%;
-        width: 220px;
+  justify-content: center;
+  margin: 30px auto 5%;
+  width: 220px;
   button.back_btn {
     @include back_to_previous_btn;
 
@@ -296,15 +294,11 @@ span {
 
 @media only screen and (min-width: 1200px) {
   .main_section {
-
     .info_wrap {
       margin: auto;
       width: 700px;
 
-
-
       .content {
-
         p {
           text-align: center;
           white-space: nowrap;
@@ -316,22 +310,16 @@ span {
 
         .dropdown {
           .dropdown-menu {
-
             p {
               text-align: left;
-              padding: 0 10px
+              padding: 0 10px;
             }
           }
-
-
         }
 
         .input-group {
           justify-content: right;
           flex-wrap: nowrap;
-
-
-
 
           .input-group-prepend {
             white-space: nowrap;
@@ -339,10 +327,7 @@ span {
             text-align: right;
           }
         }
-
       }
-
-
 
       .dropdown {
         width: calc(100% - 10%);
@@ -370,31 +355,22 @@ span {
     }
 
     .info_wrap:nth-child(3) {
-
       .count {
         .input-group {
-          justify-content: left
+          justify-content: left;
         }
       }
     }
-
-
   }
-
-
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
-
-
     .info_wrap {
       margin: auto;
       padding: 0 5%;
 
-
       .content {
-
         p {
           text-align: center;
           white-space: nowrap;
@@ -403,7 +379,6 @@ span {
           margin-bottom: 5px;
           color: white;
         }
-
 
         .input-group {
           justify-content: right;
@@ -416,7 +391,6 @@ span {
           }
         }
       }
-
 
       .dropdown {
         width: calc(100% - 10%);
@@ -440,68 +414,54 @@ span {
           }
         }
       }
-
     }
 
     .info_wrap:nth-child(3) {
       .count {
         .input-group {
-          justify-content: left
+          justify-content: left;
         }
       }
     }
-
-
   }
-
-
 }
 
 @media only screen and (max-width: 767px) {
   .main_section {
-
     .info_wrap {
       padding: 1% 5% 0;
 
-
-
-
       .content {
-
         .row {
           gap: 10px 0;
         }
 
         .dropdown {
           margin-left: unset !important;
-
-
         }
 
         .input-group {
           flex-direction: column;
 
-
-
+          .input-group-prepend {
+            margin-bottom: 5px;
+          }
           .form-control {
             width: 100%;
             margin-left: unset !important;
           }
-
-
         }
       }
-
-
-
     }
 
     .info_wrap:nth-child(3) {
-      .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+      .input-group
+        > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+          .valid-feedback
+        ):not(.invalid-tooltip):not(.invalid-feedback) {
         margin-left: unset !important;
         border-radius: 5px;
       }
-
 
       .count {
         .number-input-box {
@@ -510,9 +470,6 @@ span {
         }
       }
     }
-
-
   }
-
-
-}</style>
+}
+</style>

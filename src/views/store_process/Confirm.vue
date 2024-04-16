@@ -1021,6 +1021,7 @@ h2 {
       }
 
       .input-group-prepend {
+        margin-bottom: 5px;
         display: flex;
         width: auto !important;
         text-align: left;
@@ -1048,6 +1049,7 @@ h2 {
 
           .radio_wrap {
             gap: 0 10px;
+            align-self: start;
           }
 
           .input-group-prepend {

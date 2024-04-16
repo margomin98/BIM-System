@@ -103,7 +103,7 @@
                     尚未新增待採購項目
                 </div>
                 <div v-else class="purchase_table">
-                    <div class="table_wrap">
+                    <div class="purchase_table_wrap">
                         <table>
                             <thead>
                                 <tr>
@@ -115,7 +115,8 @@
                             </thead>
                             <tbody>
                                 <tr v-for="(item, index) in Form.Requisitions" :key="item.RequiredSpec">
-                                    <td @click="purchaseStore.deleteItem(index)"><img class="table_delete_icon" src='@/assets/delete.png'></td>
+                                    <td @click="purchaseStore.deleteItem(index)"><img class="table_delete_icon"
+                                            src='@/assets/delete.png'></td>
                                     <td class="table_content">{{ item.ItemName }}</td>
                                     <td class="table_content">{{ item.Number }}</td>
                                     <td class="table_content">{{ item.RequiredSpec }}</td>
@@ -123,6 +124,7 @@
                             </tbody>
                         </table>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -239,71 +241,77 @@ onUnmounted(() => {
         }
     }
 
-  
+
 
     .purchase_list {
         overflow: auto;
         width: 100%;
+
         .purchase_table {
-
-padding: 20px;
-background: rgba(82, 136, 156, 0.8);
-border-radius: 0 0 10px 10px;
-
-.table_wrap {
-    max-height: 250px;
-    overflow-y: scroll; 
-     table thead tr{ height: 46px;
-    background-color:#1F4E5F;
-    color:white;
-
-    
-}
+            padding: 20px;
+            background: rgba(82, 136, 156, 0.8);
+            border-radius: 0 0 10px 10px;
 
 
-}
-        table {
-            border: 1px solid #000000;
-            height: 100%;
-            width: 100%;
-            border-collapse: collapse;
-            border-spacing: 1px;
-            text-align: center;
-            tbody tr{
-                height: 45px;
+
+            table thead tr {
+                height: 46px;
+                background-color: #1F4E5F;
+                color: white;
+
+
+            }
+
+            .purchase_table_wrap {
+                background: white;
+                height: 300px;
+                overflow-y: scroll;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                border-spacing: 1px;
+                text-align: center;
+
+            }
+
+            // tbody tr {
+            //     height: 45px;
+            // }
+
+            caption {
+                caption-side: top;
+                text-align: center;
+            }
+
+            th {
+                border: 1px solid #000000;
+            }
+
+            td {
+                border: 1px solid #000000;
+                background-color: #ffffff;
+                color: #000000;
+                padding: 5px;
+            }
+
+
+            .delete_col,
+            .amount_col {
+                width: 70px
+            }
+
+            .item_col {
+                width: 160px
+            }
+
+            .table_content {
+                text-align: left;
             }
         }
-
-        caption {
-            caption-side: top;
-            text-align: center;
-        }
-th{
-    border: 1px solid #000000;
-}
-        
-        td {
-            border: 1px solid #000000;
-            background-color: #ffffff;
-            color: #000000;
-            padding: 5px;
-        }
-
-    
-        .delete_col,
-        .amount_col {
-            width: 70px
-        }
-
-        .item_col {
-            width: 160px
-        }
-
-        .table_content {
-            text-align: left;
-        }
     }
-}
+
     .readonly_box {
         @include readonly_box;
     }
@@ -350,6 +358,10 @@ th{
             margin: auto;
 
             .content {
+                .date_note {
+                    white-space: nowrap;
+                }
+
                 .option_section {
                     width: 80%;
 
@@ -368,6 +380,7 @@ th{
         }
     }
 }
+
 
 @media only screen and (max-width: 767px) {
     .main_section {
@@ -407,10 +420,15 @@ th{
                     border-radius: 5px;
                 }
 
+                .input-group-prepend {
+                    margin-bottom: 5px;
+                }
+
                 .input-group {
                     flex-direction: column;
                 }
             }
         }
     }
-}</style>
+}
+</style>

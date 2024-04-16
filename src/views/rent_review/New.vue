@@ -528,6 +528,9 @@ export default {
 .project_details #project_name {
   height: 100%;
 }
+span{
+  @include red_star
+}
 
 .readonly_box {
   @include readonly_box;
