@@ -592,6 +592,7 @@ span {
             width: 100%;
           }
           .input-group-prepend {
+            margin-bottom: 5px;
             width: 100px;
             white-space: nowrap;
           }

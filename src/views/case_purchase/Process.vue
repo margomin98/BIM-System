@@ -789,6 +789,7 @@ const addToList = (data) => {
     }
 
     .purchase_table {
+        background: white;
         height: 250px;
         overflow-y: scroll;
     }
@@ -1046,6 +1047,9 @@ const addToList = (data) => {
 
                 .input-group {
                     flex-direction: column;
+                } 
+                .input-group-prepend{
+                    margin-bottom: 5px;
                 }
             }
         }

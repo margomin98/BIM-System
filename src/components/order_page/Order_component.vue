@@ -428,6 +428,7 @@ onMounted(() => {
           }
 
           .input-group-prepend {
+            margin-bottom: 5px;
             white-space: nowrap;
             text-align: left;
           }

@@ -750,6 +750,7 @@
             margin-left: unset !important;
           }
           .input-group-prepend {
+            margin-bottom: 5px;
             text-align: left;
           }
         }
