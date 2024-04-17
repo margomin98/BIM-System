@@ -144,7 +144,7 @@
     roleId.value =  await apiStore.getRoleId(utilsStore.userName);
     // console.log('roleId',roleId.value);
     emit('username', utilsStore.userName); //收貨、入庫填報 edit修改後再移除
-    // showQuickRent.value = await apiStore.checkPermission('AO_Fast');
+    showQuickRent.value = await apiStore.checkPermission('AO_Fast');
   });
   onUnmounted(()=>{
     utilsStore.$dispose();
