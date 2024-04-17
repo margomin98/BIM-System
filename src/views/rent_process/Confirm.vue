@@ -256,7 +256,7 @@ import {
 import {
   RentProcess_Confirm_Status
 } from "@/assets/js/enter_status";
-import axios from 'axios';
+import axios from '@/axios/tokenInterceptor'
 const rentStore = useRentStore();
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();

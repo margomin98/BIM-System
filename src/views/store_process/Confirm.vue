@@ -308,7 +308,7 @@
   import {
     StoreProcess_Confirm_Status
   } from "@/assets/js/enter_status"
-  import axios from "axios";
+  import axios from '@/axios/tokenInterceptor'
   const storageStore = useStorageStore();
   const applyStore = useApplyStore();
   const utilsStore = useUtilsStore();
