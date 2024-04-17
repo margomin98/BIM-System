@@ -27,7 +27,7 @@ export const useRentStore = defineStore('Rent', {
 			EquipCategory: [],
 			Area: [],
 			Layer: [],
-			Recipient: [],
+			Recipient: [], // 領用人員
 			ProjectCode: [], // api原本資料
 			formProjectCode: [], // 處理陣列
 			AssetType: ['資產','存貨','耗材'],
@@ -44,7 +44,6 @@ export const useRentStore = defineStore('Rent', {
 			DeliveryMemo: '',
 			DeliveryOperator: '',
       // ----
-			Description: '',
 			ItemList: [], // 出庫項目 <-需求 or 快速出庫出庫細項 <-實際資產
 			OM_List: [], // 出庫細項 <-實際資產
       // 備料
@@ -55,6 +54,7 @@ export const useRentStore = defineStore('Rent', {
 			ProjectCode: '',
 			ProjectName: '',
 			ProjectSelect: { Text: '--請選擇--',Value: '' },
+			Description: '',
 			Recipient: '', // 領用人員
 			Status: '',
 			Use: '',
@@ -131,12 +131,20 @@ export const useRentStore = defineStore('Rent', {
     onSearchProjectSelect(option) {
 			this.searchParams.ProjectCode = option.Value;
 		},
-		// 取得資料單
-		async getDetails(AO_ID) {
+		/**
+		 * 取得資料單，有給能進入頁面的Status Array就檢查此資料單狀態是否符合Conditions
+		 * @param {string} AO_ID 單號
+		 * @param {array} Conditions 能進入頁面的資料單Status Array
+		 */
+		async getDetails(AO_ID, Conditions = []) {
+			const utilsStore = useUtilsStore();
 			try {
 				const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`)
 				const data = response.data ;
 				if(data.state === 'success') {
+					if(Conditions) {
+						utilsStore.canEnterPage(data.resultList.Status, Conditions);
+					}
 					console.log('出庫單資料', data.resultList);
 					// 塞入上半部資訊
 					Object.keys(this.Form).forEach(key=>{
@@ -144,6 +152,11 @@ export const useRentStore = defineStore('Rent', {
 							this.Form[key] = data.resultList[key];
 						}
 					})
+				} else if (data.state === 'error') {
+					alert(data.messages);
+				} else if (data.state === 'account_error') {
+					alert(data.messages);
+					router.push('/');
 				}
 			}
 			catch(e) {
