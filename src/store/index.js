@@ -28,6 +28,9 @@ export const useUtilsStore = defineStore('Utils',{
   getters: {
   },
   actions: {
+    /**
+     * 更新使用者名稱
+     */
     async getUserName() {
       try {
         const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
@@ -431,6 +434,10 @@ export const useAPIStore = defineStore('API',{
   },
   actions: {
     // 設備總類&櫃位、儲位區域&櫃位
+    /**
+     * 取得設備總類
+     * @returns {Promise<Array<{Text: string, Value: string}>>} 返回設備總類Array
+     */
     async getEquipType() {
       try {
         const response = await axios.get('http://192.168.0.177:7008/GetParameter/EquipTypeParameter');
@@ -448,6 +455,11 @@ export const useAPIStore = defineStore('API',{
         console.error('總類取得失敗:',error);
       }
     },
+    /**
+     * 取得設備分類
+     * @param {string} EquipType_Id 設備總類Id
+     * @returns {Promise<Array<{Text: string, Value: string}>>} 返回設備分類Array
+     */
     async getEquipCategory(EquipType_Id) {
       if(!EquipType_Id) { return []}
       try {
@@ -466,6 +478,10 @@ export const useAPIStore = defineStore('API',{
         console.error('分類取得失敗:',error);
       }
     },
+    /**
+     * 取得儲位區域
+     * @returns {Promise<Array<{Text: string, Value: string}>>} 返回儲位區域Array
+     */
     async getArea() {
       try {
         const response = await axios.get('http://192.168.0.177:7008/GetParameter/AreaParameter');
@@ -483,6 +499,11 @@ export const useAPIStore = defineStore('API',{
         console.error('區域取得失敗:',error);
       }
     },
+    /**
+     * 取得儲位櫃位
+     * @param {string} Area_Id 儲位區域Id
+     * @returns {Promise<Array<{Text: string, Value: string}>>} 返回儲位櫃位Array
+     */
     async getLayer(Area_Id) {
       if(!Area_Id) { return []}
       try {
@@ -501,7 +522,11 @@ export const useAPIStore = defineStore('API',{
         console.error('櫃位取得失敗:',error);
       }
     },
-    // 員工列表-Enabled (現在在公司的員工)
+    /**
+     * 取得員工列表-Enabled (現在在公司的員工)
+     * @param {string} name 權限管理模糊搜尋使用，空字串帶入時為全在職員工列表
+     * @returns {Promise<string[]>} 返回員工列表Array
+     */
     async getCustodian(name='') {
       try {
         const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchName?name=${name}`);
@@ -514,7 +539,10 @@ export const useAPIStore = defineStore('API',{
         console.error(error);
       }
     },
-    // 員工列表-Not Enabled (包括已離職員工)
+    /**
+     * 取得員工列表-Not Enabled (包括已離職員工)
+     * @returns {string[]} 返回員工列表Array
+     */
     async getStaff() {
       try {
         const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetUsernames`);
@@ -527,7 +555,11 @@ export const useAPIStore = defineStore('API',{
         console.error(error);
       }
     },
-    // 專案代碼 精準查詢
+    /**
+     * 精準查詢專案名稱
+     * @param {string} projectCode 專案代碼
+     * @returns {Promise<string>} 專案名稱 or 無此專案代碼
+     */    
     async getProject(projectCode) {
       const form = new FormData();
       form.append('projectCode', projectCode);
@@ -547,7 +579,10 @@ export const useAPIStore = defineStore('API',{
         console.error('專案名稱取得失敗:',error);
       }
     },
-    // 專案代碼 (權限下可看的所有代碼下拉選單)
+    /**
+     * 取得權限下可看的專案下拉選單
+     * @returns {Promise<Array<{Text: string, Value: string}>>} 返回專案列表Array
+     */        
     async getFuzzyProject() {
       try {
         const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetProjects`);
@@ -563,7 +598,11 @@ export const useAPIStore = defineStore('API',{
         console.error(error);
       }
     },
-    // 檢查專案代碼是否與資料庫重複
+    /**
+     * 檢查專案代碼是否與資料庫重複
+     * @param {Array} projectCodeList 要檢查的專案代碼Array
+     * @returns {Promise<string>} "success" | error_message
+     */   
     async checkProjectCode(projectCodeList) {
       return new Promise((resolve, reject) => {
         axios.post('http://192.168.0.177:7008/GetDBdata/CheckProjectCode', projectCodeList)
@@ -580,7 +619,11 @@ export const useAPIStore = defineStore('API',{
           });
       });
     },
-    // 物流單號相關
+    /**
+     * 取得物流單號列表
+     * @param {string} ShipmentNum 可查詢單一結果
+     * @returns {Promise<Array<{Text: string, Value: string}>>} 返回物流單號列表Array
+     */   
     async getShipmentNum(ShipmentNum = '') {
       const axios = require('axios');
       const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchShipmentNum?id=${ShipmentNum}`);
@@ -600,7 +643,13 @@ export const useAPIStore = defineStore('API',{
         console.error(error);
       }
     },
-    // 取得Datagrid
+    /**
+     * 取得Datagrid
+     * @param {string} url 查詢的api url
+     * @param {object} datagrid 用來決定datagrid loading開關
+     * @param {string} form 查詢的條件
+     * @returns {Promise<Array<object>>} 返回Datagrid
+     */   
     async getMngDatagrid(url, datagrid, form) {
       datagrid.loading = true;
       const baseUrl = 'http://192.168.0.177:7008';
@@ -629,7 +678,11 @@ export const useAPIStore = defineStore('API',{
         datagrid.loading = false;
       }
     },
-    // 取得資產資料
+    /**
+     * 取得資產資料
+     * @param {string} AssetsId 資產ID
+     * @returns {Promise<Object>} 返回資產資料Object
+     */       
     async getAssetData(AssetsId) {
       try {
         const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetAssetInfo?id=${AssetsId}`);
@@ -647,7 +700,18 @@ export const useAPIStore = defineStore('API',{
         console.error(e);
       }
     },
-    // 驗證人員(正常情況)
+    /**
+     * @typedef userObject 驗證之使用者
+     * @property {string} userName 使用者名稱
+     * @property {string} userPassword 使用者密碼
+     * @property {string} resultName 驗證結果
+     * @property {boolean} isValidate 是否驗證成功
+     */
+
+    /**
+     * 驗證人員(除了出庫情況)，並改變user驗證結果
+     * @param {userObject} user 使用者Obejct
+     */        
     async validateUser(user) {
       const requestData = {
         userName: user.userName,
@@ -674,7 +738,11 @@ export const useAPIStore = defineStore('API',{
         console.error(error);
       }
     },
-    // 查詢User權限(0:訪客(無法登入系統) 1:系統管理員 2.設備工程師 3:倉管人員 4.主管 5.收貨人員)
+    /**
+     * 查詢User權限Id(0:訪客(無法登入系統) 1:系統管理員 2.設備工程師 3:倉管人員 4.主管 5.收貨人員)
+     * @param {string} userName 使用者名稱
+     * @returns {Promise<number | string>} 成功返回roleId, 失敗返回異常訊息
+     */   
     async getRoleId(userName) {
       return new Promise(async(resolve, reject)=>{
         try {
@@ -692,6 +760,25 @@ export const useAPIStore = defineStore('API',{
         } catch (error) {
           console.error(error);
           reject(error);
+        }
+      });
+    },
+    /**
+     * 檢查使用者在指定頁面是否有瀏覽權限
+     * @param {string} permissionName 權限名稱(資料庫)
+     * @returns {Promise<boolean | string> } 成功: 返回boolean，失敗: 返回error_massage
+     */
+    async checkPermission(permissionName) {
+      return new Promise(async(resolve, reject)=>{
+        try {
+          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/HasPermission?id=${permissionName}`);
+          const data = response.data;
+          if (data.state === 'success') {
+            return data.resultList ;
+          } 
+        } catch(e) {
+          console.error(e);
+          return false ;
         }
       });
     }

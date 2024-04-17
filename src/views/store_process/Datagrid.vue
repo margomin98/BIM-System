@@ -157,8 +157,8 @@
 <script setup>
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
-  import Storage_process_button from "@/components/Storage_process_button";
-  import Delete from "@/components/Storage_process_delete_button";
+  import Storage_process_button from "@/components/store_process_page/Storage_process_button";
+  import Delete from "@/components/store_process_page/Storage_process_delete_button";
   import Navbar from "@/components/Navbar.vue";
   import {
     onMounted,

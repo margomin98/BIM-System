@@ -114,8 +114,8 @@
     onUnmounted,
     reactive
   } from "vue";
-  import Storage_return_button from "@/components/Storage_return_button";
-  import Delete from "@/components/Storage_delete_button";
+  import Storage_return_button from "@/components/store_page/Storage_return_button";
+  import Delete from "@/components/store_page/Storage_delete_button";
   import {
     Store_StatusArray
   } from "@/assets/js/dropdown";
