@@ -578,6 +578,7 @@ export default {
           }
 
           .input-group-prepend {
+            margin-bottom: 5px;
             text-align: left;
           }
         }

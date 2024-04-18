@@ -900,6 +900,9 @@ GetAntiForgeryToken
     .main_section {
     .info_wrap {
       padding: 1% 5% 0;
+      .input-group-prepend{
+                    margin-bottom: 5px;
+                }
       .check_section {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;

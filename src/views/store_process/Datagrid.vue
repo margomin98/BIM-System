@@ -375,7 +375,7 @@
           grid-template-rows: 1fr 1fr;
           grid-template-columns: 1fr 1fr 1fr;
           gap: 20px 5px;
-          padding: 2% 5%;
+          padding:5%;
         }
       }
     }

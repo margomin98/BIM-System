@@ -83,128 +83,100 @@ onMounted,
 </script>
 <style lang="scss" scoped>
   @import "@/assets/css/global.scss";
-
   .button_wrap {
-    display: flex;
-            justify-content: space-between;
-            margin: 30px auto 5%;
-            width: 210px;
-          .back_btn {
-  @include back_to_previous_btn;
-  &:hover {
-    background-color: #5d85bb;
+  display: flex;
+  justify-content: space-between;
+  margin: 30px auto 5%;
+  width: 210px;
+  .back_btn {
+    @include back_to_previous_btn;
+    &:hover {
+      background-color: #5d85bb;
+    }
+  }
+
+  .send_btn {
+    @include search_and_send_btn;
+
+    &:hover {
+      background-color: #5d85bd;
+    }
+  }
+}
+.main_section {
+  .info_wrap {
+    .fixed_info {
+      @include fixed_info;
+      p {
+        font-size: 20px;
+        margin-bottom: 0;
+      }
+    }
+    .content {
+      @include content_bg;
+      .search_section {
+        width: 100%;
+      }
+      input {
+        @include dropdown_btn;
+        width: 100%;
+        height: 35px;
+      }
+    }
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .main_section {
+    h1 {
+      margin-top: 180px !important;
+    }
+    .info_wrap {
+      margin: 30px auto 5%;
+      width: 500px;
+
+      .content {
+        padding: 30px;
+        .search_section {
+          position: relative;
+        }
+      }
+    }
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  .main_section {
+    h1 {
+      margin-top: 180px !important;
+    }
+    .info_wrap {
+      margin: 30px auto 5%;
+      width: 500px;
+
+      .content {
+        padding: 30px;
+        .search_section {
+          position: relative;
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 767px) {
+  .main_section {
+    h1 {
+      margin-top: 80px !important;
+    }
+    .info_wrap {
+      margin: 10px auto 5%;
+      padding: 0 5%;
+
+      .content {
+        .search_section {
+          width: 100%;
+        }
+      }
+    }
   }
 }
 
-.send_btn {
-  @include search_and_send_btn;
-
-  &:hover {
-    background-color: #5D85BD;
-  }
-}
-        }
-  @media only screen and (min-width: 1200px) {
-    .main_section {
-      h1 {
-        margin-top: 180px  !important;
-      }
-      .info_wrap {
-        margin: 30px auto 5%;
-        width: 500px;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .content {
-          @include content_bg;
-          padding: 30px;
-          .search_section {
-            position: relative;
-            width: 100%;
-        
-           
-          }
-     
-          input {
-            @include dropdown_btn;
-            width: 100%;
-            height: 35px;
-          }
-         
-        }
-      }
-    }
-  }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .main_section {
-      h1 {
-        margin-top: 180px !important;
-      }
-      .info_wrap {
-        margin: 30px auto 5%;
-        width: 500px;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .content {
-          @include content_bg;
-          padding: 30px;
-          .search_section {
-            position: relative;
-            width: 100%;
-        
-           
-          }
-     
-          input {
-            @include dropdown_btn;
-            width: 100%;
-            height: 35px;
-          }
-         
-        }
-      }
-    }
-  }
-  @media only screen and (max-width: 767px) {
-    .main_section {
-      h1 {
-        margin-top: 80px !important;
-      }
-      .info_wrap {
-        margin: 10px auto 5%;
-        padding: 0 5%;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .content {
-          @include content_bg;
-          .search_section {
-            width: 100%;
-           
-         
-          }
-        
-          input {
-            @include dropdown_btn;
-            width: 100%;
-            height: 35px;
-          }
-         
-        }
-      }
-    }
-  }
 </style>

@@ -645,7 +645,9 @@ onUnmounted(() => {
                 .input-group {
                     flex-direction: column;
                 }
-
+                .input-group-prepend{
+                    margin-bottom: 5px;
+                }
             }
 
             .cancel_note_wrap {

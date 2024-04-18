@@ -76,18 +76,19 @@
                     資產類型 :
                   </div>
                   <div class="d-flex align-items-center radio_wrap">
-                    <div class="form-check ">
-                      <input type="radio" class='form-check-input check_box' id="radio1" value="資產" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='資產'" />
-                      <label class="form-check-label check_box" for='radio1'>資產</label>
-                    </div>
-                    <div class="form-check ">
-                      <input type="radio" class='form-check-input check_box ' id="radio2" value="存貨" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='存貨'" />
-                      <label class="form-check-label check_box" for='radio2' data-toggle="tooltip" data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
-                    </div>
-                    <div class="form-check ">
-                      <input type="radio" class='form-check-input check_box' id="radio3" value="耗材" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='耗材'" />
-                      <label class="form-check-label check_box" for='radio3'>耗材</label>
-                    </div>
+                    <input type="radio" class='form-check-input check_box' id="radio1" value="資產"
+                      v-model="tab.itemAssetType" :disabled="tab.itemAssetType !== '資產'"
+                      style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" />
+                    <label class="form-check-label check_box" for='radio1'>資產</label>
+                    <input type="radio" class='form-check-input check_box ' id="radio2" value="存貨"
+                      v-model="tab.itemAssetType" :disabled="tab.itemAssetType !== '存貨'"
+                      style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" />
+                    <label class="form-check-label check_box" for='radio2' data-toggle="tooltip" data-placement="top"
+                      title="註記此資產僅限特定專案出貨所使用">存貨</label>
+                    <input type="radio" class='form-check-input check_box' id="radio3" value="耗材"
+                      v-model="tab.itemAssetType" :disabled="tab.itemAssetType !== '耗材'"
+                      style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" />
+                    <label class="form-check-label check_box" for='radio3'>耗材</label>
                   </div>
                 </div>
               </div>
@@ -174,10 +175,12 @@
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3" id='number'>
                   <div class="input-group-prepend info  d-xl-block d-lg-block d-md-block d-none">
-                    <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">包裝數量 :
+                    <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top"
+                      title="資產數量 ex: 3包螺絲釘">包裝數量 :
                   </div>
                   <div class="input-group-prepend info  d-xl-none d-lg-none d-md-none d-block">
-                    包裝數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
+                    包裝數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip"
+                      data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
                   </div>
                   <input type="text" class="input-number readonly_box" v-model="tab.itemPackageNum" readonly>
                 </div>
@@ -196,10 +199,12 @@
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3" id='number'>
                   <div class="input-group-prepend d-xl-block d-lg-block d-md-block d-none">
-                    <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">數量 :
+                    <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top"
+                      title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">數量 :
                   </div>
                   <div class="input-group-prepend d-xl-none d-lg-none d-md-none d-block">
-                    數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
+                    數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top"
+                      title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
                   </div>
                   <input type="text" class="input-number readonly_box" v-model="tab.itemCount" readonly>
                 </div>
@@ -373,769 +378,476 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "@/assets/css/global.scss";
-  
-  .button_wrap {
-            display: flex;
-            justify-content: space-between;
-            margin: 30px auto 5%;
-            width: 210px;
-          button.back_btn {
-            @include back_to_previous_btn;
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-          button.send_btn {
-            @include search_and_send_btn;
-            &:hover {
-              background-color: #5e7aa2;
-            }
-          }
-          button.send_btn_disabled {
-            background: #878787;
-            &:hover {
-              background: #878787;
-            }
-          }
-        }
-  @media only screen and (min-width: 1200px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
-      }
-      .form_search_btn {
-        @include form_search_btn;
-      }
-      h2 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 35px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .info_wrap {
-        margin: auto;
-        width: 800px;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .content {
-          @include content_bg;
-          .input-group {
-            .input-number {
-              @include count_btn;
-            }
-            .form-control {
-              height: 35px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              width: 120px;
-              text-align: end;
-              white-space: nowrap;
-            }
-          }
-        }
-        .confirm_section {
-          .auth {
-            border-radius: 0 0 10px 10px;
-            background: white;
-            height: 80px;
-            padding: 20px;
-            .input-group {
-              display: flex;
-              white-space: nowrap;
-              flex-wrap: nowrap;
-              justify-content: center;
-            }
-            button {
-              @include auth_btn;
-              &:hover {
-                background: #5a6d87;
-              }
-            }
-            .form-control {
-              height: 35px;
-              width: 150px;
-              margin-right: 5px;
-            }
-            .input-group-prepend {
-              font-weight: 700;
-              font-size: 20px;
-              text-align: end;
-              position: relative;
-              span {
-                position: absolute;
-              }
-            }
-            .input-container {
-              position: relative;
-              align-self: center;
-            }
-            .input-with-icon {
-              position: relative;
-            }
-            .checkmark-icon {
-              position: absolute;
-              top: 10%;
-              left: 93%;
-              transform: translateY(-50%);
-              width: 20px;
-              height: 20px;
-            }
-          }
-          .modal {
-            button {
-              background: #506b91;
-              border: none;
-              font-weight: 700;
-              font-size: 18px;
-              &:hover {
-                background: #6d92b3;
-              }
-            }
-            .modal-body {
-              padding: 16px 16px 0;
-            }
-            .modal-content {
-              width: 400px;
-              margin: auto;
-            }
-            .input-group-prepend {
-              width: auto;
-            }
-            .modal-footer {
-              padding: 0 12px 12px;
-              border: none;
-            }
-            .modal-header {
-              h5 {
-                font-weight: 700;
-              }
-              background: #3D4E61;
-              color: white;
-              .close_icon {
-                cursor: pointer;
-              }
-            }
-          }
-        }
-      }
-      .tab_section {
-        .nav {
-          overflow-x: auto;
-          overflow-y: hidden;
-          flex-wrap: nowrap;
-          border: none;
-        }
-         ::-webkit-scrollbar {
-          height: 6px;
-          border: 1px solid rgb(219, 218, 218);
-          border-radius: 5px;
-          width: 8px;
-        }
-         ::-webkit-scrollbar-thumb {
-          display: block;
-          border-radius: 5px;
-          background-color: rgb(176, 175, 175);
-          border: 1px solid rgb(86, 85, 85);
-        }
-        .nav-tabs {
-          button {
-            @include tab_section_num;
-            background: #5C7897;
-          }
-          .active {
-            @include tab_section_num;
-            background: #3E4E5F;
-          }
-        }
-        .tab-content {
-          background: #3E4E5F;
-          padding: 50px 30px;
-          border-radius: 0 0 10px 10px;
-          .check_box_wrap {
-            font-weight: 700;
-            align-items: center;
-            color: white;
-            label {
-              font-size: 18px;
-            }
-            div:nth-child(2) {
-              gap: 0 10px;
-            }
-          }
-          .modal {
-            button {
-              background: #506b91;
-              border: none;
-              font-weight: 700;
-              font-size: 18px;
-              &:hover {
-                background: #6d92b3;
-              }
-            }
-            .modal-header {
-              background: #3D4E61;
-              color: white;
-              .close_icon {
-                color: white;
-                font-weight: 700;
-                margin-bottom: 0;
-              }
-            }
-          }
-          .input-group {
-            flex-wrap: nowrap;
-            span {
-              @include red_star
-            }
-            .input-number {
-              width: 65%;
-            }
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-              img {
-                width: 25px;
-                height: 25px;
-              }
-              p {
-                margin-bottom: 0;
-                font-weight: 700;
-                color: white;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
-            .input-number {
-              @include count_btn;
-            }
-            .form-control {
-              height: 35px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              width: 120px;
-              text-align: end;
-            }
-          }
-        }
-      }
+@import "@/assets/css/global.scss";
+
+h2 {
+  margin-top: 50px;
+  text-align: center;
+  font-size: 35px;
+  font-weight: 600;
+  @include title_color;
+}
+
+.button_wrap {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px auto 5%;
+  width: 210px;
+
+  button.back_btn {
+    @include back_to_previous_btn;
+
+    &:hover {
+      background-color: #5d85bb;
     }
   }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
-      }
-      .form_search_btn {
-        @include form_search_btn;
-      }
-      h2 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 35px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .info_wrap {
-        margin: auto;
-        width: 750px;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .content {
-          @include content_bg;
-          .input-group {
-            .input-number {
-              @include count_btn;
-            }
-            .form-control {
-              height: 35px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              width: 120px;
-              text-align: end;
-              white-space: nowrap;
-            }
-          }
-        }
-        .confirm_section {
-          .auth {
-            border-radius: 0 0 10px 10px;
-            background: white;
-            height: 80px;
-            padding: 20px;
-            .input-group {
-              display: flex;
-              white-space: nowrap;
-              flex-wrap: nowrap;
-            }
-            button {
-              @include auth_btn;
-              &:hover {
-                background: #5a6d87;
-              }
-            }
-            button:nth-child(3) {
-              margin-right: 10px;
-            }
-            .form-control {
-              height: 35px;
-              margin-right: 5px;
-            }
-            .input-group-prepend {
-              font-weight: 700;
-              font-size: 20px;
-              width: 120px;
-              text-align: end;
-              position: relative;
-              span {
-                position: absolute;
-              }
-            }
-            .input-container {
-              position: relative;
-              align-self: center;
-            }
-            .input-with-icon {
-              position: relative;
-            }
-            .checkmark-icon {
-              position: absolute;
-              top: 10%;
-              left: 93%;
-              transform: translateY(-50%);
-              width: 20px;
-              height: 20px;
-            }
-          }
-          .modal {
-            button {
-              background: #506b91;
-              border: none;
-              font-weight: 700;
-              font-size: 18px;
-              &:hover {
-                background: #6d92b3;
-              }
-            }
-            .modal-body {
-              padding: 16px 16px 0;
-            }
-            .modal-content {
-              width: 400px;
-              margin: auto;
-            }
-            .input-group-prepend {
-              width: auto;
-            }
-            .modal-footer {
-              padding: 0 12px 12px;
-              border: none;
-            }
-            .modal-header {
-              h5 {
-                font-weight: 700;
-              }
-              background: #3D4E61;
-              color: white;
-              .close_icon {
-                cursor: pointer;
-              }
-            }
-          }
-        }
-      }
-      .tab_section {
-        .nav {
-          overflow-x: auto;
-          overflow-y: hidden;
-          flex-wrap: nowrap;
-          border: none;
-        }
-         ::-webkit-scrollbar {
-          height: 6px;
-          border: 1px solid rgb(219, 218, 218);
-          border-radius: 5px;
-          width: 8px;
-        }
-         ::-webkit-scrollbar-thumb {
-          display: block;
-          border-radius: 5px;
-          background-color: rgb(176, 175, 175);
-          border: 1px solid rgb(86, 85, 85);
-        }
-        .nav-tabs {
-          button {
-            @include tab_section_num;
-            background: #5C7897;
-          }
-          .active {
-            @include tab_section_num;
-            background: #3E4E5F;
-          }
-        }
-        .tab-content {
-          background: #3E4E5F;
-          padding: 50px 30px;
-          border-radius: 0 0 10px 10px;
-          .check_box_wrap {
-            font-weight: 700;
-            align-items: center;
-            color: white;
-            label {
-              font-size: 18px;
-            }
-            div:nth-child(2) {
-              gap: 0 10px;
-            }
-          }
-          .modal {
-            button {
-              background: #506b91;
-              border: none;
-              font-weight: 700;
-              font-size: 18px;
-              &:hover {
-                background: #6d92b3;
-              }
-            }
-            .modal-header {
-              background: #3D4E61;
-              color: white;
-              .close_icon {
-                color: white;
-                font-weight: 700;
-                margin-bottom: 0;
-              }
-            }
-          }
-          .input-group {
-            flex-wrap: nowrap;
-            span {
-              @include red_star
-            }
-            .input-number {
-              width: 62%;
-            }
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-              img {
-                width: 25px;
-                height: 25px;
-              }
-              p {
-                margin-bottom: 0;
-                font-weight: 700;
-                color: white;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
-            .input-number {
-              @include count_btn;
-            }
-            .form-control {
-              height: 35px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              width: 120px;
-              text-align: end;
-            }
-          }
-        }
-      }
+
+  button.send_btn {
+    @include search_and_send_btn;
+
+    &:hover {
+      background-color: #5e7aa2;
     }
   }
-  @media only screen and (max-width: 767px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
-        margin-top: 5px;
+
+  button.send_btn_disabled {
+    background: #878787;
+
+    &:hover {
+      background: #878787;
+    }
+  }
+}
+
+.readonly_box {
+  @include readonly_box;
+}
+
+.form_search_btn {
+  @include form_search_btn;
+}
+
+.info_wrap {
+  margin: auto;
+
+  .input-group {
+    .input-group-prepend {
+      color: white;
+      font-weight: 700;
+      font-size: 20px;
+      text-align: end;
+    }
+  }
+
+  .fixed_info {
+    @include fixed_info;
+
+    p {
+      font-size: 20px;
+      margin-bottom: 0;
+    }
+  }
+
+  .content {
+    @include content_bg;
+
+    .input-number {
+      @include count_btn;
+    }
+  }
+
+  .tab_section {
+    .nav {
+      overflow-x: auto;
+      overflow-y: hidden;
+      flex-wrap: nowrap;
+      border: none;
+    }
+
+    ::-webkit-scrollbar {
+      height: 6px;
+      border: 1px solid rgb(219, 218, 218);
+      border-radius: 5px;
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      display: block;
+      border-radius: 5px;
+      background-color: rgb(176, 175, 175);
+      border: 1px solid rgb(86, 85, 85);
+    }
+
+    .nav-tabs {
+      button {
+        @include tab_section_num;
+        background: #5c7897;
       }
-      .form_search_btn {
-        border: none;
-        color: white;
-        width: 60px;
-        height: 35px;
-        margin-top: 10px;
-        font-weight: 700;
-        padding: 0 10px;
-        background-color: #132238;
-        &:hover {
-          background-color: #43546d;
-        }
+
+      .active {
+        @include tab_section_num;
+        background: #3e4e5f;
       }
-      h2 {
-        margin-top: 50px;
-        text-align: center;
-        font-size: 35px;
-        font-weight: 600;
-        @include title_color;
-      }
-      .info_wrap {
-        padding: 1% 5% 0;
-        .fixed_info {
-          @include fixed_info;
+    }
+
+    .tab-content {
+      background: #3e4e5f;
+      border-radius: 0 0 20px 20px;
+
+      .selected_file {
+        .selected_file_wrap {
           flex-direction: column;
-          height: unset;
-          padding: 10px;
-          p {
-            font-size: 20px;
+
+          .file_upload_wrap {
             margin-bottom: 0;
-          }
-        }
-        .content {
-          @include content_bg;
-          .form_search_wrap {
-            .input-group {
-              button {
-                margin-left: unset !important
-              }
+            display: flex;
+
+            img {
+              width: 25px;
+              height: 25px;
             }
-          }
-          .input-group {
-            flex-direction: column;
-            .input-number {
-              @include count_btn;
-            }
-            .form-control {
-              width: 100%;
-              height: 35px;
-              border-radius: 0;
-              margin-left: unset !important;
-            }
-            .input-group-prepend {
+
+            p {
+              font-weight: 700;
               margin-bottom: 5px;
-              display: flex;
-              flex-direction: row-reverse;
-              justify-content: flex-end;
               color: white;
-              font-weight: 700;
-              font-size: 20px;
-            }
-          }
-        }
-        .confirm_section {
-          .auth {
-            border-radius: 0 0 10px 10px;
-            background: white;
-            padding: 10px;
-            .input-group {
-              display: flex;
-              white-space: nowrap;
-              flex-wrap: nowrap;
-              justify-content: center;
-              margin: 5px 0;
-            }
-            button {
-              @include auth_btn;
-              &:hover {
-                background: #5a6d87;
-              }
-            }
-            .form-control {
-              height: 35px;
-              margin-right: 5px;
-            }
-            .input-group-prepend {
-              font-weight: 700;
-              font-size: 20px;
-              width: 120px;
-              text-align: end;
-              position: relative;
-              span {
-                position: absolute;
-              }
-            }
-            .input-container {
-              position: relative;
-              align-self: center;
-            }
-            .input-with-icon {
-              position: relative;
-            }
-            .checkmark-icon {
-              position: absolute;
-              top: 10%;
-              left: 93%;
-              transform: translateY(-50%);
-              width: 20px;
-              height: 20px;
-            }
-          }
-          .modal {
-            .modal-body {
-              padding: 16px 16px 0;
-            }
-            .modal-content {
-              width: 400px;
-              margin: auto;
-            }
-            .input-group-prepend {
-              width: auto;
-            }
-            .modal-footer {
-              padding: 0 12px 12px;
-              border: none;
-            }
-            .modal-header {
-              h5 {
+              word-break: break-word;
+
+              &::before {
+                margin-right: 10px;
+                content: "·";
                 font-weight: 700;
-              }
-              background: #3D4E61;
-              color: white;
-              .close_icon {
-                cursor: pointer;
+                color: white;
               }
             }
           }
         }
       }
+
+
+
+      .input-group {
+        flex-wrap: nowrap;
+
+        .input-number {
+          @include count_btn;
+        }
+
+        .form-control {
+          height: 35px;
+          border-radius: 0;
+        }
+      }
+    }
+  }
+}
+
+.check_box_wrap {
+  font-weight: 700;
+  align-items: center;
+  color: white;
+  label {
+              font-size: 18px;
+            }
+
+
+}
+
+.confirm_section {
+  .auth {
+    border-radius: 0 0 10px 10px;
+    background: white;
+    padding: 20px;
+
+    .input-group {
+      display: flex;
+      white-space: nowrap;
+      flex-wrap: nowrap;
+      justify-content: center;
+    }
+
+    button {
+      @include auth_btn;
+
+      &:hover {
+        background: #5a6d87;
+      }
+    }
+
+    .form-control {
+      height: 35px;
+      margin-right: 5px;
+    }
+
+    .input-group-prepend {
+      font-weight: 700;
+      font-size: 20px;
+      text-align: end;
+      position: relative;
+      color: black;
+
+      span {
+        position: absolute;
+      }
+    }
+
+    .input-container {
+      position: relative;
+      align-self: center;
+   
+    }
+
+    .input-with-icon {
+      position: relative;
+
+    }
+
+    .checkmark-icon {
+      position: absolute;
+      top: 10%;
+      left: 93%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .modal {
+    button {
+      background: #506b91;
+      border: none;
+      font-weight: 700;
+      font-size: 18px;
+
+      &:hover {
+        background: #6d92b3;
+      }
+    }
+
+    .modal-body {
+      padding: 16px 16px 0;
+    }
+
+    .modal-content {
+      width: 400px;
+      margin: auto;
+    }
+
+    .input-group-prepend {
+      width: auto;
+    }
+
+    .modal-footer {
+      padding: 0 12px 12px;
+      border: none;
+    }
+
+    .modal-header {
+      h5 {
+        font-weight: 700;
+      }
+
+      background: #3D4E61;
+      color: white;
+
+      .close_icon {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .main_section {
+    .auth {
+      height: 80px;
+      .input-with-icon{
+        width:180px
+      }
+    }
+
+    .info_wrap {
+      width: 850px;
+
+      .content {
+        .input-group-prepend {
+          width: 100px;
+        }
+      }
+
       .tab_section {
-        .nav {
-          overflow-x: auto;
-          overflow-y: hidden;
-          flex-wrap: nowrap;
-          border: none;
-        }
-         ::-webkit-scrollbar {
-          height: 6px;
-          border: 1px solid rgb(219, 218, 218);
-          border-radius: 5px;
-          width: 8px;
-        }
-         ::-webkit-scrollbar-thumb {
-          display: block;
-          border-radius: 5px;
-          background-color: rgb(176, 175, 175);
-          border: 1px solid rgb(86, 85, 85);
-        }
-        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-          margin-left: unset !important;
-        }
-        .nav-tabs {
-          button {
-            @include tab_section_num;
-            background: #5C7897;
-          }
-          .active {
-            @include tab_section_num;
-            background: #3E4E5F;
-          }
-        }
         .tab-content {
-          background: #3E4E5F;
           padding: 50px 30px;
-          border-radius: 0 0 10px 10px;
-          .check_box_wrap {
-            flex-direction: column;
-            font-weight: 700;
-            color: white;
-            label {
-              font-size: 18px;
-            }
-            .radio_wrap {
-              gap: 0 10px;
-              padding-left: 10px;
-            }
-            .input-group-prepend {
-              width: auto !important;
-              align-self: self-start;
+
+          .selected_file {
+            .selected_file_wrap {
+              flex-direction: column;
             }
           }
-          .modal {
-            button {
-              background: #506b91;
-              border: none;
-              font-weight: 700;
-              font-size: 18px;
-              &:hover {
-                background: #6d92b3;
-              }
-            }
-            .modal-header {
-              background: #3D4E61;
-              color: white;
-              .close_icon {
-                color: white;
-                font-weight: 700;
-                margin-bottom: 0;
-              }
+
+          .check_box {
+            margin-right: 10px;
+          }
+
+          .input-group-prepend {
+            width: 135px;
+          }
+
+          .readonly_box {
+            width: 63%;
+          }
+
+          .input-group {
+            flex-wrap: nowrap;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  .main_section {
+    .auth {
+      height: 80px;
+      .input-with-icon{
+        width:150px
+      }
+    }
+
+    .info_wrap {
+      width: 750px;
+
+      .content {
+        .input-group {
+          .selected_file {
+            .selected_file_wrap {
+              flex-direction: column;
             }
           }
+
+          .input-group-prepend {
+            width: 125px;
+            white-space: nowrap;
+          }
+        }
+      }
+
+      .tab_section {
+        .tab-content {
+          padding: 50px 30px;
+
+          .check_box {
+            margin-right: 10px;
+          }
+
+          .input-group-prepend {
+            width: 115px;
+          }
+
+          .readonly_box {
+            width: 63%;
+          }
+
+          .input-group {
+            flex-wrap: nowrap;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .main_section {
+
+    .auth {
+      .input-group {
+        margin: 5px 0;
+        gap: 0 10px;
+      }
+    }
+
+    .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+      margin-left: unset !important;
+      border-radius: 5px;
+    }
+
+    .form_search_btn {
+      border: none;
+      color: white;
+      width: 60px;
+      height: 35px;
+      margin-top: 10px;
+      font-weight: 700;
+      padding: 0 10px;
+      margin-left: unset !important;
+      background-color: #132238;
+
+      &:hover {
+        background-color: #43546d;
+      }
+    }
+
+    .info_wrap {
+      padding: 1% 5% 0;
+
+      .fixed_info {
+        flex-direction: column;
+        padding: 10px;
+        height: unset !important;
+      }
+
+      .input-group-prepend {
+        margin-bottom: 5px;
+        display: flex;
+        width: auto !important;
+        text-align: left;
+      }
+
+      .content {
+        .input-group {
+          flex-direction: column;
+
+          .form-control {
+            width: 100%;
+            margin-left: unset !important;
+          }
+        }
+
+        .info {
+          display: flex;
+          flex-direction: row-reverse;
+          justify-content: flex-end;
+        }
+      }
+
+      .tab_section {
+        .check_box_wrap {
+
+          .radio_wrap {
+            gap: 0 10px;
+            align-self: start;
+          }
+
+          .input-group-prepend {
+            width: auto !important;
+            align-self: self-start;
+          }
+        }
+
+        .tab-content {
+          padding: 50px 30px;
+
           .input-group {
             flex-direction: column;
-            span {
-              @include red_star
-            }
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-              img {
-                width: 25px;
-                height: 25px;
-              }
-              p {
-                margin-bottom: 0;
-                font-weight: 700;
-                color: white;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
-            .input-number {
-              @include count_btn;
-            }
+
             .form-control {
-              height: 35px;
-              width: 100%;
-              border-radius: 0;
               margin-left: unset !important;
-              margin-top: 5px;
             }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
+
+            input,
+            textarea {
               width: 100%;
             }
           }
@@ -1143,4 +855,5 @@
       }
     }
   }
+}
 </style>

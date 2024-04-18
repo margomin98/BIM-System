@@ -209,10 +209,16 @@ const routes = [
     meta: {auth: true, request: 'AI_Edit'},
   },
   {
-    path: "/quick_store_View",
+    path: "/quick_store_view",// 檢視快速入庫單(入庫填報管理datagrid)
     name: "Quick_Store_View",
     component: Quick_Store_View,
-    meta: {auth: true, request: 'AI_Create'},
+    meta: {auth: true, request: 'AI_Detail'},
+  },
+  {
+    path: "/quick_store_process_view", // 檢視快速入庫單(for 入庫作業管理datagrid & 資產-歷史紀錄)，因為不同的權限
+    name: "Quick_Store_Process_View",
+    component: Quick_Store_View,
+    meta: {auth: true, request: 'AIP_Detail'},
   },
   {
     path: "/store_new",

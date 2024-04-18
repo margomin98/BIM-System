@@ -42,7 +42,7 @@
         <div class="col form_search_wrap">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              物流單號 :
+              物流單號：
             </div>
             <input type="text" class="form-control readonly_box" v-model="details.ShipmentNum" readonly>
             <button class="form_search_btn" @click="viewReceive">檢視</button>
@@ -467,37 +467,166 @@ textarea {
     }
   }
 }
+.readonly_box {
+  @include readonly_box;
+}
 
-@media only screen and (min-width: 1200px) {
-  .main_section {
-    .readonly_box {
-      @include readonly_box;
+.form_search_btn {
+  @include form_search_btn;
+}
+.input-number {
+  @include count_btn;
+}
+
+.main_section{
+  .info_wrap{
+    margin: auto;
+    .fixed_info {
+      @include fixed_info;
+
+      p {
+        font-size: 20px;
+        margin-bottom: 0;
+      }
     }
-
-    .form_search_btn {
-      @include form_search_btn;
+    .input-group-prepend {
+        color: white;
+        font-weight: 700;
+        font-size: 20px;
+      }
+    .content {
+      @include content_bg;
+    
     }
+    .tab_section {
+      .nav {
+        overflow-x: auto;
+        overflow-y: hidden;
+        flex-wrap: nowrap;
+        border: none;
+      }
 
-    .info_wrap {
-      width: 800px;
-      margin: auto;
+      ::-webkit-scrollbar {
+        height: 6px;
+        border: 1px solid rgb(219, 218, 218);
+        border-radius: 5px;
+        width: 8px;
+      }
 
-      .fixed_info {
-        @include fixed_info;
+      ::-webkit-scrollbar-thumb {
+        display: block;
+        border-radius: 5px;
+        background-color: rgb(176, 175, 175);
+        border: 1px solid rgb(86, 85, 85);
+      }
 
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
+      .nav-tabs {
+        button {
+          @include tab_section_num;
+          background: #5C7897;
+        }
+
+        .active {
+          @include tab_section_num;
+          background: #3E4E5F;
         }
       }
 
-      .content {
-        @include content_bg;
+      .tab-content {
+        background: #3E4E5F;
+        border-radius: 0 0 20px 20px;
+
+
+        .selected_file {
+          display: flex;
+          align-items: center;
+
+          .input-group {
+            flex-direction: column;
+          }
+
+          .file_upload_wrap {
+            margin-bottom: 0;
+            display: flex;
+
+            img {
+              width: 25px;
+              height: 25px;
+            }
+
+            p {
+              font-weight: 700;
+              margin-bottom: 5px;
+              color: white;
+              word-break: break-word;
+
+              &::before {
+                margin-right: 10px;
+                content: '·';
+                font-weight: 700;
+                color: white;
+              }
+            }
+          }
+        }
+
+        .check_box_wrap {
+          font-weight: 700;
+          align-items: center;
+          color: white;
+
+         
+        }
+
+     
 
         .input-group {
-          .input-number {
-            @include count_btn;
+          .file_upload_wrap {
+            margin-bottom: 0;
+            display: flex;
+
+            img {
+              width: 25px;
+              height: 25px;
+            }
+
+            p {
+              margin-bottom: 0;
+              font-weight: 700;
+              color: white;
+
+              &::before {
+                margin-right: 10px;
+                content: '·';
+                font-weight: 700;
+                color: white;
+              }
+            }
           }
+
+        
+
+
+          .input-group-prepend {
+            text-align: end;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .main_section {
+    
+
+    .info_wrap {
+      width: 800px;
+
+
+      .content {
+        .input-group {
+ 
 
           .form-control {
             height: 35px;
@@ -505,9 +634,6 @@ textarea {
           }
 
           .input-group-prepend {
-            color: white;
-            font-weight: 700;
-            font-size: 20px;
             width: 125px;
             text-align: end;
           }
@@ -515,85 +641,18 @@ textarea {
       }
 
       .tab_section {
-        .nav {
-          overflow-x: auto;
-          overflow-y: hidden;
-          flex-wrap: nowrap;
-          border: none;
-        }
-
-        ::-webkit-scrollbar {
-          height: 6px;
-          border: 1px solid rgb(219, 218, 218);
-          border-radius: 5px;
-          width: 8px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-          display: block;
-          border-radius: 5px;
-          background-color: rgb(176, 175, 175);
-          border: 1px solid rgb(86, 85, 85);
-        }
-
-        .nav-tabs {
-          button {
-            @include tab_section_num;
-            background: #5C7897;
-          }
-
-          .active {
-            @include tab_section_num;
-            background: #3E4E5F;
-          }
-        }
+  
 
         .tab-content {
-          background: #3E4E5F;
           padding: 50px 30px;
-          border-radius: 0 0 10px 10px;
 
           .input-number {
             width: 64%
           }
 
-          .selected_file {
-            display: flex;
-            align-items: center;
-
-            .input-group {
-              flex-direction: column;
-            }
-
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-
-              img {
-                width: 25px;
-                height: 25px;
-              }
-
-              p {
-                font-weight: 700;
-                margin-bottom: 5px;
-                color: white;
-                word-break: break-word;
-
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
-          }
+        
 
           .check_box_wrap {
-            font-weight: 700;
-            align-items: center;
-            color: white;
 
             label {
               font-size: 18px;
@@ -604,56 +663,15 @@ textarea {
             }
           }
 
-          .modal {
-            .modal-header {
-              background: #3D4E61;
-              color: white;
-
-              .close_icon {
-                color: white;
-                font-weight: 700;
-                margin-bottom: 0;
-              }
-            }
-          }
+        
 
           .input-group {
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
+        
 
-              img {
-                width: 25px;
-                height: 25px;
-              }
+          
 
-              p {
-                margin-bottom: 0;
-                font-weight: 700;
-                color: white;
-
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
-
-            .input-number {
-              @include count_btn;
-            }
-
-            .form-control {
-              height: 35px;
-              border-radius: 0;
-            }
 
             .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
               width: 120px;
               text-align: end;
             }
@@ -666,34 +684,16 @@ textarea {
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
-    .readonly_box {
-      @include readonly_box;
-    }
-
-    .form_search_btn {
-      @include form_search_btn;
-    }
+ 
 
     .info_wrap {
       width: 750px;
-      margin: auto;
-
-      .fixed_info {
-        @include fixed_info;
-
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-      }
+  
 
       .content {
-        @include content_bg;
 
         .input-group {
-          .input-number {
-            @include count_btn;
-          }
+      
 
           .form-control {
             height: 35px;
@@ -701,9 +701,6 @@ textarea {
           }
 
           .input-group-prepend {
-            color: white;
-            font-weight: 700;
-            font-size: 20px;
             width: 125px;
             text-align: end;
           }
@@ -711,87 +708,18 @@ textarea {
       }
 
       .tab_section {
-        .nav {
-          overflow-x: auto;
-          overflow-y: hidden;
-          flex-wrap: nowrap;
-          border: none;
-        }
+        
 
-        ::-webkit-scrollbar {
-          height: 6px;
-          border: 1px solid rgb(219, 218, 218);
-          border-radius: 5px;
-          width: 8px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-          display: block;
-          border-radius: 5px;
-          background-color: rgb(176, 175, 175);
-          border: 1px solid rgb(86, 85, 85);
-        }
-
-        .nav-tabs {
-          button {
-            @include tab_section_num;
-            background: #5C7897;
-          }
-
-          .active {
-            @include tab_section_num;
-            background: #3E4E5F;
-          }
-        }
-
-        .tab-content {
-          background: #3E4E5F;
+        .tab-content {   
           padding: 50px 30px;
-          border-radius: 0 0 10px 10px;
 
           .input-number {
             width: 62%
           }
 
-          .selected_file {
-            display: flex;
-            align-items: center;
-
-            .input-group {
-              flex-direction: column;
-            }
-
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-
-              img {
-                width: 25px;
-                height: 25px;
-              }
-
-              p {
-                font-weight: 700;
-                margin-bottom: 5px;
-                color: white;
-                word-break: break-word;
-
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
-          }
-
+      
           .check_box_wrap {
-            font-weight: 700;
-            align-items: center;
-            color: white;
-
-            label {
+             label {
               font-size: 18px;
             }
 
@@ -801,56 +729,12 @@ textarea {
             }
           }
 
-          .modal {
-            .modal-header {
-              background: #3D4E61;
-              color: white;
-
-              .close_icon {
-                color: white;
-                font-weight: 700;
-                margin-bottom: 0;
-              }
-            }
-          }
-
+        
           .input-group {
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
+            
 
-              img {
-                width: 25px;
-                height: 25px;
-              }
-
-              p {
-                margin-bottom: 0;
-                font-weight: 700;
-                color: white;
-
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
-
-            .input-number {
-              @include count_btn;
-            }
-
-            .form-control {
-              height: 35px;
-              border-radius: 0;
-            }
 
             .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
               width: 120px;
               text-align: end;
             }
@@ -865,43 +749,32 @@ textarea {
   .main_section {
     .readonly_box {
       margin-top: 5px;
-      @include readonly_box;
+   
     }
+    
 
     .form_search_btn {
-      border: none;
-      color: white;
-      width: 60px;
-      height: 35px;
       margin-top: 10px;
-      font-weight: 700;
-      padding: 0 10px;
       margin-left: unset !important;
-      background-color: #132238;
-
-      &:hover {
-        background-color: #43546d;
-      }
     }
 
     .info_wrap {
       padding: 1% 5% 0;
-
+ .input-group-prepend {
+            width: 100%;
+            display: flex;  
+            justify-content: left;
+            text-align: start !important;
+          }
       .fixed_info {
-        @include fixed_info;
         flex-direction: column;
         padding: 10px;
-        height: unset;
+        height: unset !important;
 
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
+     
       }
 
       .content {
-        @include content_bg;
-
         .info {
           display: flex;
           flex-direction: row-reverse;
@@ -911,108 +784,31 @@ textarea {
         .input-group {
           flex-direction: column;
 
-          .input-number {
-            @include count_btn;
-          }
+      
 
           .form-control {
-            height: 35px;
-            border-radius: 0;
             width: 100%;
             margin-top: 5px;
             margin-left: unset !important;
           }
 
-          .input-group-prepend {
-            color: white;
-            font-weight: 700;
-            font-size: 20px;
-            width: 100%;
-          }
+         
         }
       }
 
       .tab_section {
-        .nav {
-          overflow-x: auto;
-          overflow-y: hidden;
-          flex-wrap: nowrap;
-          border: none;
-        }
-
-        ::-webkit-scrollbar {
-          height: 6px;
-          border: 1px solid rgb(219, 218, 218);
-          border-radius: 5px;
-          width: 8px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-          display: block;
-          border-radius: 5px;
-          background-color: rgb(176, 175, 175);
-          border: 1px solid rgb(86, 85, 85);
-        }
-
-        .nav-tabs {
-          button {
-            @include tab_section_num;
-            background: #5C7897;
-          }
-
-          .active {
-            @include tab_section_num;
-            background: #3E4E5F;
-          }
-        }
+   
 
         .tab-content {
-          background: #3E4E5F;
           padding: 50px 30px;
-          border-radius: 0 0 10px 10px;
-
-          .selected_file {
-            display: flex;
-            align-items: center;
-
-            .input-group {
-              flex-direction: column;
-            }
-
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-
-              img {
-                width: 25px;
-                height: 25px;
-              }
-
-              p {
-                font-weight: 700;
-                margin-bottom: 5px;
-                color: white;
-                word-break: break-word;
-
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
-          }
-
+       
+        
           .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
             margin-left: unset;
           }
 
           .check_box_wrap {
-            flex-direction: column;
-            font-weight: 700;
-            color: white;
-
+          
             label {
               font-size: 18px;
             }
@@ -1027,48 +823,11 @@ textarea {
             }
           }
 
-          .modal {
-            .modal-header {
-              background: #3D4E61;
-              color: white;
-
-              .close_icon {
-                color: white;
-                font-weight: 700;
-                margin-bottom: 0;
-              }
-            }
-          }
-
+          
           .input-group {
             flex-direction: column;
-
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-
-              img {
-                width: 25px;
-                height: 25px;
-              }
-
-              p {
-                margin-bottom: 0;
-                font-weight: 700;
-                color: white;
-
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
-
-            .input-number {
-              @include count_btn;
-            }
+    align-content: start;
+            
 
             .form-control {
               height: 35px;
@@ -1079,9 +838,6 @@ textarea {
             }
 
             .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
               width: 100%;
             }
           }

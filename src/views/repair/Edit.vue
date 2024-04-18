@@ -470,329 +470,182 @@ GetAntiForgeryToken,
             }
           }
         }
-  @media only screen and (min-width: 1200px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
-      }
-      .form_search_btn {
-        @include form_search_btn;
-      }
-
-      .info_wrap {
-        margin: 30px auto 5%;
-        width: 800px;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
-        }
-        .content {
-          @include content_bg;
-          .input-group {
-            .input-number {
-              @include count_btn;
-            }
-            .readonly_box {
-              height: 37px;
-            }
-            .form-control {
-              height: 37px;
-              border-radius: 0;
-            }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              text-align: end;
-              width: 140px;
-              span {
-                @include red_star
-              }
-            }
-            .file_wrap {
-              display: flex;
-              flex-direction: column;
-              .choose_btn {
-                margin-bottom: 10px;
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
-                }
-              }
-            }
-          }
-        }
-        .selected_file {
-          .input-group {
-            flex-wrap: unset;
-          }
-          .input-group-prepend {
-            white-space: nowrap;
-          }
-          p {
-            margin-bottom: 0;
-            font-weight: 700;
-            color: white;
-            &::before {
-              margin-right: 10px;
-              content: '·';
-              font-weight: 700;
-              color: white;
-            }
-          }
-          .file_upload_box {
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-              word-break: break-word;
-              img {
-                width: 25px;
-                height: 25px;
-              }
-            }
-          }
-        }
+        .main_section {
+  .info_wrap {
+    .fixed_info {
+      @include fixed_info;
+      p {
+        font-size: 20px;
+        margin-bottom: 0;
       }
     }
-  }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
-      }
-      .form_search_btn {
-        @include form_search_btn;
-      }
-      .info_wrap {
-        margin: 30px auto 5%;
-        width: 750px;
-        .fixed_info {
-          @include fixed_info;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
-          }
+    .content {
+      @include content_bg;
+      .input-group {
+        .form-control,
+        .readonly_box {
+          height: 37px;
+          border-radius: 0;
         }
-        .content {
-          @include content_bg;
-          .input-group {
-            width: 100%;
-            flex-wrap: nowrap;
-            .input-number {
-              width: 100%;
-              @include count_btn;
-            }
-            .readonly_box {
-              height: 37px;
-              width: 100%;
-            }
-            .form-control {
-              height: 37px;
-              width: 65%;
-            }
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              text-align: end;
-              width: 140px;
-              span {
-                @include red_star
-              }
-            }
-          }
-          .repair_photo_section {
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-              img {
-                width: 25px;
-                height: 25px;
-              }
-              p {
-                margin-bottom: 0;
-                font-weight: 700;
-                color: white;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
-            .file_wrap {
-              display: flex;
-              flex-direction: column;
-              .choose_btn {
-                margin-bottom: 10px;
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
-                }
-              }
-            }
-          }
+        .input-group-prepend {
+          color: white;
+          font-weight: 700;
+          font-size: 20px;
+          width: 140px;
         }
-        .selected_file {
-          .input-group {
-            flex-wrap: unset;
-          }
-          .input-group-prepend {
-            white-space: nowrap;
-          }
-          p {
-            margin-bottom: 0;
-            font-weight: 700;
-            color: white;
-            &::before {
-              margin-right: 10px;
-              content: '·';
-              font-weight: 700;
-              color: white;
-            }
-          }
-          .file_upload_box {
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-              word-break: break-word;
-              img {
-                width: 25px;
-                height: 25px;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  @media only screen and (max-width: 767px) {
-    .main_section {
-      .readonly_box {
-        @include readonly_box;
-        height: 35px;
-        margin-left: unset !important;
-      }
-      .form_search_btn {
-        border: none;
-        color: white;
-        width: 60px;
-        height: 35px;
-        margin-left: unset !important;
-        margin-top: 10px;
-        font-weight: 700;
-        padding: 0 10px;
-        background-color: #132238;
-        &:hover {
-          background-color: #43546d;
-        }
-      }
-      .info_wrap {
-        padding: 0 5%;
-        .fixed_info {
-          @include fixed_info;
-          height: unset;
+        .file_wrap {
+          display: flex;
           flex-direction: column;
-          padding: 10px;
-          p {
-            font-size: 20px;
-            margin-bottom: 0;
+          .choose_btn {
+            margin-bottom: 10px;
+            @include choose_file_btn;
+            &:hover {
+              background: #3f608f;
+            }
           }
         }
-        .content {
-          @include content_bg;
-          .selected_file {
-            .input-group {
-              flex-direction: column;
-            }
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-              img {
-                width: 25px;
-                height: 25px;
-              }
-              p {
-                font-weight: 700;
-                margin-bottom: 5px;
-                color: white;
-                word-break: break-word;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
+      }
+    }
+    .selected_file {
+      .file_upload_box {
+        .file_upload_wrap {
+          margin-bottom: 0;
+          display: flex;
+          word-break: break-word;
+          img {
+            width: 25px;
+            height: 25px;
           }
-          .input-group {
-            flex-direction: column;
-            .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-              margin-left: unset;
-              border-radius: 5px;
-              margin-top: 5px;
-              height: 35px;
-            }
-            .input-number {
-              @include count_btn;
-              margin-left: unset !important;
-            }
-            .form-control {
-              height: 35px;
-              width: 100%;
-              border-radius: 0;
-              margin-left: unset !important;
-            }
-            .input-group-prepend {
-              color: white;
+          p {
+            margin-bottom: 0;
+            font-weight: 700;
+            color: white;
+            &::before {
+              margin-right: 10px;
+              content: "·";
               font-weight: 700;
-              font-size: 20px;
-              width: 100px;
-              white-space: nowrap;
-              span {
-                @include red_star
-              }
-            }
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-              img {
-                width: 25px;
-                height: 25px;
-              }
-              p {
-                margin-bottom: 0;
-                font-weight: 700;
-                color: white;
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
-            .file_wrap {
-              display: flex;
-              flex-direction: column;
-              margin-left: unset !important;
-              .choose_btn {
-                margin-top: 5px;
-                margin-bottom: 10px;
-                @include choose_file_btn;
-                &:hover {
-                  background: #3f608f;
-                }
-              }
+              color: white;
             }
           }
         }
       }
     }
   }
+}
+
+@media only screen and (min-width: 1200px) {
+  .main_section {
+    .info_wrap {
+      margin: 30px auto 5%;
+      width: 800px;
+
+      .content {
+        .input-group {
+          .input-group-prepend {
+            text-align: end;
+            width: 140px;
+          }
+        }
+      }
+      .selected_file {
+        .input-group {
+          flex-wrap: unset;
+        }
+        .input-group-prepend {
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  .main_section {
+    .info_wrap {
+      margin: 30px auto 5%;
+      width: 750px;
+
+      .content {
+        .input-group {
+          .readonly_box,
+          .input-number {
+            width: 100%;
+          }
+          .form-control {
+            width: 65%;
+          }
+          .input-group-prepend {
+            text-align: end;
+            width: 140px;
+          }
+        }
+      }
+      .selected_file {
+        .input-group {
+          flex-wrap: unset;
+        }
+        .input-group-prepend {
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 767px) {
+  .main_section {
+    .readonly_box,
+.input-number,
+.form-control,
+.file_wrap {
+  margin-left: unset !important;
+}
+    .form_search_btn {
+      border: none;
+      color: white;
+      width: 60px;
+      height: 35px;
+      margin-left: unset !important;
+      margin-top: 10px;
+      font-weight: 700;
+      padding: 0 10px;
+      background-color: #132238;
+      &:hover {
+        background-color: #43546d;
+      }
+    }
+    .info_wrap {
+      padding: 0 5%;
+      .fixed_info {
+        height: unset;
+        flex-direction: column;
+        padding: 10px;
+      }
+      .content {
+        .input-group {
+          flex-direction: column;
+          .input-group
+            > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+              .valid-feedback
+            ):not(.invalid-tooltip):not(.invalid-feedback) {
+            margin-left: unset;
+            border-radius: 5px;
+            margin-top: 5px;
+            height: 35px;
+          }
+          .form-control {
+            width: 100%;
+          }
+          .input-group-prepend {
+            margin-bottom: 5px;
+            width: 100px;
+            white-space: nowrap;
+          }
+          .file_wrap {
+            margin-top: 5px;
+          }
+        }
+      }
+    }
+  }
+}
+
 </style>

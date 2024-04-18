@@ -889,6 +889,112 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
   padding: 0 !important;
 }
 
+.main_section{
+  .info_wrap{
+    .tab_section {
+      .nav-tabs {
+        button {
+          @include tab_section_num;
+          background: #5C7897;
+          height: 50px;
+          width: 100px;
+        }
+
+        .active {
+          @include tab_section_num;
+          background: #3E4E5F;
+          width: 100px;
+          height: 50px;
+        }
+      }
+
+      .tab-content {
+        background: #3E4E5F;
+        padding: 20px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border-top-right-radius: 10px;
+
+        .grid {
+          padding: 30px;
+          border-top-left-radius: 5px;
+          border-bottom-left-radius: 5px;
+          background: #7B8799;
+
+          .search_dropdown {
+            color: #FFF;
+    font-size: 20px;
+    font-weight: 700;
+    white-space: nowrap;
+            background: #132238;
+            padding: 10px;
+            align-items: center;
+            gap: 0 20px;
+
+            p {
+              margin-bottom: 0;
+            }
+
+            .dropdown {
+              width: 200px;
+              height: 35px;
+              @include dropdown_btn;
+              margin-bottom: 0;
+
+              .dropdown-toggle {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border: none;
+                width: 100%;
+                padding: 0;
+                color: black;
+              }
+
+              .dropdown-menu {
+                width: 100%;
+                transform: translate3d(-1px, 35px, 0px) !important;
+
+                p {
+                  font-size: 18px;
+                  color: black;
+                  font-weight: normal;
+                }
+              }
+            }
+          }
+        }
+
+        .submit_section {
+          background: #132238;
+          border-top-right-radius: 5px;
+          border-bottom-right-radius: 5px;
+
+          button {
+            @include datagrid_edit_button;
+           width: 70px;
+            font-size: 18px;
+
+            &:hover {
+              background: #3B6162;
+              color: white;
+            }
+          }
+
+          p {
+            color: white;
+            font-weight: 800;
+            font-size: 20px;
+          }
+
+         
+        }
+
+      }
+    }
+      
+  }
+}
 @media only screen and (min-width: 1200px) {
   .main_section {
     .ag-theme-alpine {
@@ -900,100 +1006,21 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
       width: 950px;
 
       .tab_section {
-        .nav-tabs {
-          button {
-            @include tab_section_num;
-            background: #5C7897;
-            width: 100px;
-            height: 50px;
-          }
-
-          .active {
-            @include tab_section_num;
-            background: #3E4E5F;
-            width: 100px;
-            height: 50px;
-          }
-        }
-
+     
+       
         .tab-content {
-          background: #3E4E5F;
-          padding: 20px;
-          border-bottom-left-radius: 10px;
-          border-bottom-right-radius: 10px;
-          border-top-right-radius: 10px;
 
-          .grid {
-            padding: 30px;
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
-            background: #7B8799;
-
-            .search_dropdown {
-              @include datagrid_title;
-              background: #132238;
-              padding: 10px;
-              align-items: center;
-              gap: 0 20px;
-
-              p {
-                margin-bottom: 0;
-              }
-
-              .dropdown {
-                width: 200px;
-                height: 35px;
-                @include dropdown_btn;
-                margin-bottom: 0;
-
-                .dropdown-toggle {
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                  border: none;
-                  width: 100%;
-                  padding: 0;
-                  color: black;
-                }
-
-                .dropdown-menu {
-                  width: 100%;
-                  transform: translate3d(-1px, 35px, 0px) !important;
-
-                  p {
-                    font-size: 18px;
-                    color: black;
-                    font-weight: normal;
-                  }
-                }
-              }
-            }
-          }
 
           .submit_section {
-            background: #132238;
             padding: 30px;
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
-
             button {
-              @include datagrid_edit_button;
               height: 35px;
               margin-left: 25px;
-              width: 70px;
-              font-size: 18px;
-
-              &:hover {
-                background: #3B6162;
-                color: white;
-              }
+          
+              
             }
 
-            p {
-              color: white;
-              font-weight: 800;
-              font-size: 20px;
-            }
+     
 
             .form-control {
               height: 35px;
@@ -1001,7 +1028,6 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
             }
           }
 
-          .modal {}
         }
       }
     }
@@ -1019,112 +1045,33 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
 
 
       .tab_section {
-        .nav-tabs {
-          button {
-            @include tab_section_num;
-            background: #5C7897;
-            width: 100px;
-            height: 50px;
-          }
 
-          .active {
-            @include tab_section_num;
-            background: #3E4E5F;
-            width: 100px;
-            height: 50px;
-          }
-        }
-
+   
+       
         .tab-content {
-          background: #3E4E5F;
-          padding: 20px;
-          border-bottom-left-radius: 10px;
-          border-bottom-right-radius: 10px;
-          border-top-right-radius: 10px;
-
-          .grid {
-            padding: 20px;
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
-            background: #7B8799;
-
-            .search_dropdown {
-              @include datagrid_title;
-              background: #132238;
-              padding: 10px;
-              align-items: center;
-              gap: 0 20px;
-
-              p {
-                margin-bottom: 0;
-              }
-
-              .dropdown {
-                width: 200px;
-                height: 35px;
-                @include dropdown_btn;
-                margin-bottom: 0;
-
-                .dropdown-toggle {
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                  border: none;
-                  width: 100%;
-                  padding: 0;
-                  color: black;
-                }
-
-                .dropdown-menu {
-                  width: 100%;
-                  transform: translate3d(-1px, 35px, 0px) !important;
-
-                  p {
-                    font-size: 18px;
-                    color: black;
-                    font-weight: normal;
-                  }
-                }
-              }
-            }
-          }
+        
 
           .submit_section {
-            background: #132238;
             padding: 20px;
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
 
             button {
-              @include datagrid_edit_button;
               height: 35px;
               margin-left: 10px;
               width: 90px;
-              font-size: 18px;
 
-              &:hover {
-                background: #3B6162;
-                color: white;
-              }
             }
 
-            p {
-              color: white;
-              font-weight: 800;
-              font-size: 20px;
-            }
-
+          
             .form-control {
               height: 35px;
               width: 400px;
             }
-          }
-
-          .modal {}
+          
         }
       }
     }
   }
+}
 }
 
 @media only screen and (max-width: 767px) {
@@ -1139,109 +1086,36 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
       .tab_section {
         .nav-tabs {
           button {
-            @include tab_section_num;
-            background: #5C7897;
             width: auto;
-            height: 50px;
             padding: 5px;
             white-space: nowrap;
           }
 
-          .active {
-            @include tab_section_num;
-            background: #3E4E5F;
-            width: 100px;
-            height: 50px;
-          }
+          
         }
 
         .tab-content {
-          background: #3E4E5F;
-          padding: 20px;
-          border-bottom-left-radius: 10px;
-          border-bottom-right-radius: 10px;
-          border-top-right-radius: 10px;
 
-          .grid {
-            padding: 20px;
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
-            background: #7B8799;
-
-            .search_dropdown {
-              @include datagrid_title;
-              background: #132238;
-              padding: 10px;
-              align-items: center;
-              gap: 0 20px;
-
-              p {
-                margin-bottom: 0;
-              }
-
-              .dropdown {
-                width: 200px;
-                height: 35px;
-                @include dropdown_btn;
-                margin-bottom: 0;
-
-                .dropdown-toggle {
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                  border: none;
-                  width: 100%;
-                  padding: 0;
-                  color: black;
-                }
-
-                .dropdown-menu {
-                  width: 100%;
-                  transform: translate3d(-1px, 35px, 0px) !important;
-
-                  p {
-                    font-size: 18px;
-                    color: black;
-                    font-weight: normal;
-                  }
-                }
-              }
-            }
-          }
+      
 
           .submit_section {
-            background: #132238;
             padding: 20px;
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
-
-            .search_wrap {
-              flex-direction: column;
-            }
+            // .search_wrap {
+            //   flex-direction: column;
+            // }
 
             button {
-              @include datagrid_edit_button;
-              height: 35px;
               width: 90px;
-              font-size: 18px;
-              margin: 10px auto 0;
-
-              &:hover {
-                background: #3B6162;
-                color: white;
-              }
+    margin: 0 10px 0;
+    height: auto;
+            
             }
 
-            p {
-              color: white;
-              font-weight: 800;
-              font-size: 20px;
-            }
           }
 
-          .modal {}
         }
       }
     }
   }
-}</style>
+}
+</style>

@@ -521,7 +521,6 @@
    @include datagrid_title;
   }
   input {
-   display: flex;
    border: none;
    border-radius: 5px;
    background-color: white;
@@ -722,6 +721,9 @@ span.red_star {
       font-weight: normal;
      }
     }
+   }
+   .date-selector input {
+    width: 100%;
    }
   }
   .info_wrap:nth-child(4) .info_wrap {

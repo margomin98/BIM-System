@@ -47,7 +47,7 @@ export default {
           break;
         // 入庫(快速入庫完成)
         case 7:
-          linkName.value = 'Quick_Store_View';
+          linkName.value = 'Quick_Store_Process_View';
           break;
         // 快速出庫(可能是借測、內部領用、出貨)
         case 8:

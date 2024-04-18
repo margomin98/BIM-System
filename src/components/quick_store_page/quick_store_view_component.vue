@@ -261,7 +261,7 @@
                             <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        保固期限：
+                                        保固期限 :
                                     </div>
                                     <input type="text" class="form-control readonly_box" v-model="tab.itemWarranty" readonly>
                                 </div>
@@ -271,13 +271,13 @@
                         <div v-show="!quickprocessStore.createHidden" class="row">
                             <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                                 <div class="input-group mb-3">
-                                    <div class="input-group-prepend">保固開始日：</div>
+                                    <div class="input-group-prepend">保固開始日 :</div>
                                     <input type="date" class="form-control readonly_box" v-model="tab.itemWarrantyStartDate" readonly/>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                                 <div class="input-group mb-3">
-                                    <div class="input-group-prepend">保固到期日：</div>
+                                    <div class="input-group-prepend">保固到期日 :</div>
                                     <input type="date" class="form-control readonly_box" v-model="tab.itemWarrantyEndDate" readonly/>
                                 </div>
                             </div>
@@ -292,7 +292,7 @@
                         <!-- 已上傳檔案 -->
                         <div class="selected_file col">
                             <div class="input-group my-3">
-                                <div class="input-group-prepend">已上傳檔案：</div>
+                                <div class="input-group-prepend">已上傳檔案 :</div>
                                 <div class="selected_file_wrap">
                                     <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap">
                                     <p>
@@ -377,14 +377,14 @@
                                 <!-- 儲位區域/儲位櫃位 -->
                                 <div v-show="tab.itemInboundWay === '直接入庫'" class="store_location row g-xl-0 g-lg-0 g-md-0">
                                     <div class="col row">
-                                        <label for="inputPassword" class="col col-form-label">儲位區域：</label>
+                                        <label for="inputPassword" class="col col-form-label">儲位區域 :</label>
                                         <select class="form-select col" v-model="tab.itemArea_Id" disabled>
                                             <option value=""> </option>
                                             <option v-for="option in DropdownArray.Area" :value="option.Id">{{ option.Name }}</option>
                                         </select>
                                     </div>
                                     <div class="col row">
-                                        <label for="inputPassword" class="col col-form-label">儲位櫃位：</label>
+                                        <label for="inputPassword" class="col col-form-label">儲位櫃位 :</label>
                                         <select class="form-select col" v-model="tab.itemLayer_Id" disabled>
                                             <option v-if="tab.LayerArray.length == 0" value="">--請先選擇設備總類--</option>
                                             <template v-else>
@@ -661,7 +661,7 @@ textarea {
   }
 }
 .tab-content {
-  border-radius: 0 10px 0 0;
+  border-radius: 0 0 20px 20px;
 }
 
 .purchase_amount {
@@ -1150,7 +1150,9 @@ textarea {
         }
       }
     }
-    .form-select,.dropdown ,textarea{
+    .form-select,
+    .dropdown,
+    textarea {
       width: 100%;
     }
     .form_search_btn {
@@ -1316,9 +1318,9 @@ textarea {
         padding: 50px 30px;
         position: relative;
         .store_staff {
-            flex-direction: column;
-            align-items: unset !important;
-          }
+          flex-direction: column;
+          align-items: unset !important;
+        }
 
         .selected_file {
           display: flex;
@@ -1419,5 +1421,6 @@ textarea {
     }
   }
 }
+
 
 </style>

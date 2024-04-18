@@ -444,7 +444,6 @@ GetAntiForgeryToken
 
 <style lang="scss" scoped>
 @import '@/assets/css/global.scss';
-
 .readonly_box {
   @include readonly_box;
   width: 100%;
@@ -464,6 +463,7 @@ GetAntiForgeryToken
 }
 
 .input-number {
+  width: 100%;
   border-radius: 5px;
   border: none;
   height: 35px;
@@ -474,7 +474,6 @@ GetAntiForgeryToken
   margin: 30px auto 5%;
   width: 210px;
 }
-
 
 .back_btn {
   @include back_to_previous_btn;
@@ -488,25 +487,65 @@ GetAntiForgeryToken
   @include search_and_send_btn;
 
   &:hover {
-    background-color: #5D85BD;
+    background-color: #5d85bd;
   }
 }
-@media only screen and (min-width: 1200px) {
-  .main_section {
+.main_section {
+  .info_wrap {
+    margin: auto;
+    .code_search {
+      background: #48658c;
+      color: white;
+      font-weight: 800;
+      height: 30px;
+      width: 60px;
+      margin-right: 10px;
+      display: flex;
+      align-self: center;
+      align-items: center;
 
-    .info_wrap {
-      margin: auto;
-      width: 1000px;
+      &:hover {
+        background-color: #5d85bd;
+      }
+    }
+    span {
+      @include red_star;
+    }
 
-      .code_search {
-        background: #48658C;
+    .fixed_info {
+      @include fixed_info;
+      background: #528091;
+      border-radius: 0;
+      border-top: 1px solid black;
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+
+      p {
+        font-size: 20px;
+        margin-bottom: 0;
+      }
+    }
+    .form-control {
+      border-radius: 0;
+    }
+    .second_content {
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+      border-top: 1px solid black;
+      background: #d9d9d9;
+      .form-control {
+        border-radius: var(--bs-border-radius) !important;
+      }
+
+      .submit_btn {
+        background: #48658c;
         color: white;
-        font-weight: 800;
+        font-weight: 700;
+        width: 80px;
+        font-size: 18px;
         height: 30px;
-        width: 60px;
-        margin-right: 10px;
         display: flex;
-        align-self: center;
+        justify-content: center;
         align-items: center;
 
         &:hover {
@@ -514,113 +553,126 @@ GetAntiForgeryToken
         }
       }
 
+      .wrap {
+        .number-input-box {
+          color: black;
+
+          .input-number {
+            width: 100%;
+          }
+        }
+
+        .form-label {
+          white-space: nowrap;
+          font-weight: 800;
+          font-size: 18px;
+        }
+
+        .dropdown {
+          button {
+            background: white;
+            width: 100%;
+            border: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+
+          .dropdown-menu {
+            p {
+              font-size: 18px;
+              color: black;
+              font-weight: normal;
+
+              &:hover {
+                cursor: pointer;
+              }
+            }
+
+            .dropdown-item {
+              text-align: left;
+            }
+          }
+        }
+
+        div {
+          p {
+            text-align: center;
+            white-space: nowrap;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 5px;
+          }
+        }
+      }
+    }
+    form {
+      border-top: 1px solid black;
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+
+      .form-check {
+        margin-left: 10px;
+      }
+
+      .wrap {
+        background: white;
+        border-bottom: 0.5px solid black;
+        align-items: center;
+      }
+
+      .form-label {
+        font-weight: 700;
+        font-size: 20px;
+        white-space: nowrap;
+        height: 50px;
+        align-items: center;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+
+        p {
+          width: 100px;
+          margin-bottom: 0;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .main_section {
+    .info_wrap {
+      width: 1000px;
+
       #readonly_box {
         border-left: black 1px solid;
       }
 
-      span {
-        @include red_star
-      }
-
-      .fixed_info {
-        @include fixed_info;
-        background: #528091;
-        border-radius: 0;
-        border-top: 1px solid black;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-      }
-
       .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        border-top: 1px solid black;
-        background: #D9D9D9;
-
         .submit_btn {
           margin-bottom: 20px;
-          background: #48658C;
-          color: white;
-          font-weight: 700;
-          width: 80px;
-          font-size: 18px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          &:hover {
-            background-color: #5d85bd;
-          }
         }
 
         .wrap {
           justify-content: space-evenly;
           padding: 10px 80px;
 
-          .number-input-box {
-            color: black;
-
-            .input-number {
-              width: 100%;
-            }
-          }
-
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
+          #project_name,
+          #project_id {
+            border-left: 1px solid black;
           }
 
           .dropdown {
-            button {
-              background: white;
-              width: 100%;
-              border: none;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            }
-
             .dropdown-menu {
               width: 100%;
               max-height: 250px;
               overflow-y: auto;
-
-              p {
-                font-size: 18px;
-                color: black;
-                font-weight: normal;
-
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-
-              .dropdown-item {
-                text-align: left;
-              }
-            }
-          }
-
-          div {
-            p {
-              text-align: center;
-              white-space: nowrap;
-              font-size: 18px;
-              font-weight: 700;
-              margin-bottom: 5px;
             }
           }
         }
 
         .first_row {
-
           div:nth-child(1),
           div:nth-child(3) {
             padding: 0 5px;
@@ -629,30 +681,18 @@ GetAntiForgeryToken
       }
 
       form {
-        border-top: 1px solid black;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-
-        .form-check {
-          margin-left: 10px;
-        }
-
         .form-control {
           border-left: 1px solid black;
         }
 
         .wrap {
-          background: white;
-          border-bottom: 0.5px solid black;
-          align-items: center;
-
           label.use,
           #project_id {
             border-right: 1px solid black;
           }
 
           .option {
-            display: flex
+            display: flex;
           }
 
           #project_name,
@@ -662,21 +702,7 @@ GetAntiForgeryToken
         }
 
         .form-label {
-          font-weight: 700;
-          font-size: 20px;
-          white-space: nowrap;
-          height: 50px;
-          align-items: center;
-          margin: 0;
-          display: flex;
-          justify-content: center;
           padding: 0 30px;
-
-          p {
-            width: 100px;
-            margin-bottom: 0;
-            text-align: center;
-          }
         }
       }
 
@@ -686,135 +712,41 @@ GetAntiForgeryToken
 
       .form-control {
         height: 100%;
-        border-radius: 0;
       }
     }
-
   }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
-
     .info_wrap {
-      margin: auto;
       padding: 0 5%;
-
-      .code_search {
-        background: #48658C;
-        color: white;
-        font-weight: 800;
-        height: 30px;
-        width: 60px;
-        margin-right: 10px;
-        display: flex;
-        align-self: center;
-        align-items: center;
-
-        &:hover {
-          background-color: #5d85bd;
-        }
-      }
 
       #readonly_box {
         border-left: 1px solid black;
       }
 
-      span {
-        @include red_star
-      }
-
-      .fixed_info {
-        @include fixed_info;
-        background: #528091;
-        border-radius: 0;
-        border-top: 1px solid black;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-      }
-
       .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        border-top: 1px solid black;
-        background: #D9D9D9;
-
         .submit_btn {
           margin-bottom: 20px;
-          background: #48658C;
-          color: white;
-          font-weight: 700;
-          width: 80px;
-          font-size: 18px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          &:hover {
-            background-color: #5d85bd;
-          }
         }
 
         .wrap {
           justify-content: space-evenly;
           padding: 10px 80px;
-
-          .number-input-box {
-            color: black;
-
-            .input-number {
-              width: 100%;
-            }
-          }
-
-          .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
+          #project_name,
+          #project_id {
+            border-left: 1px solid black;
           }
 
           .dropdown {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-
-            button {
-              background: white;
-              width: 100%;
-              border: none;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            }
-
-            .dropdown-menu {
-              width: 100%;
-
-              .dropdown-item {
-                text-align: left;
-              }
-            }
-          }
-
-          div {
-            p {
-              text-align: center;
-              white-space: nowrap;
-              font-size: 18px;
-              font-weight: 700;
-              margin-bottom: 5px;
-            }
           }
         }
 
         .first_row {
-
           div:nth-child(1),
           div:nth-child(3) {
             padding: 0 5px;
@@ -823,14 +755,6 @@ GetAntiForgeryToken
       }
 
       form {
-        border-top: 1px solid black;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-
-        .form-check {
-          margin-left: 10px;
-        }
-
         .form-control {
           border-left: 1px solid black;
         }
@@ -846,30 +770,16 @@ GetAntiForgeryToken
           }
 
           .option {
-            display: flex
+            display: flex;
           }
 
           #project_name {
-            border-left: 1px solid black
+            border-left: 1px solid black;
           }
         }
 
         .form-label {
-          font-weight: 700;
-          font-size: 20px;
-          white-space: nowrap;
-          height: 50px;
-          align-items: center;
-          margin: 0;
-          display: flex;
-          justify-content: center;
           padding: 0 10px;
-
-          p {
-            width: 100px;
-            margin-bottom: 0;
-            text-align: center;
-          }
         }
       }
 
@@ -879,7 +789,6 @@ GetAntiForgeryToken
 
       .form-control {
         height: 100%;
-        border-radius: 0;
       }
     }
   }
@@ -887,124 +796,36 @@ GetAntiForgeryToken
 
 @media only screen and (max-width: 767px) {
   .main_section {
-
     .info_wrap {
-      margin: auto;
       padding: 0 5%;
 
-      .code_search {
-        background: #48658C;
-        color: white;
-        font-weight: 800;
-        height: 30px;
-        width: 60px;
-        margin-right: 10px;
-        display: flex;
-        align-self: center;
-        align-items: center;
-
-        &:hover {
-          background-color: #5d85bd;
-        }
-      }
-
-      span {
-        @include red_star
-      }
-
       .fixed_info {
-        @include fixed_info;
-        background: #528091;
-        border-radius: 0;
-        border-top: 1px solid black;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
         flex-direction: column;
         height: unset;
         padding: 10px;
-
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
       }
 
       .second_content {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        border-top: 1px solid black;
-        background: #D9D9D9;
-
         input {
-          width: 100%
+          width: 100%;
         }
 
         .submit_btn {
           margin: 20px 0;
-          background: #48658C;
-          color: white;
-          font-weight: 700;
-          width: 80px;
-          font-size: 18px;
-          height: 30px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          &:hover {
-            background-color: #5d85bd;
-          }
         }
 
         .wrap {
           padding: 20px 20px 0;
           flex-direction: column;
 
-          .number-input-box {
-            color: black;
-
-            .input-number {
-              width: 100%;
-            }
-          }
-
           .form-label {
-            white-space: nowrap;
-            font-weight: 800;
-            font-size: 18px;
             margin-bottom: 0;
-          }
-
-          .dropdown {
-            button {
-              background: white;
-              width: 100%;
-              border: none;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            }
-
-            .dropdown-menu {
-              width: 100%;
-
-              .dropdown-item {
-                text-align: left;
-              }
-            }
           }
 
           div {
             margin-bottom: 5px;
-
-            p {
-              text-align: center;
-              white-space: nowrap;
-              font-size: 18px;
-              margin-bottom: 5px;
-            }
           }
-          .search_label{
+          .search_label {
             font-weight: 700;
           }
         }
@@ -1018,11 +839,11 @@ GetAntiForgeryToken
 
           p {
             margin-bottom: 0;
-            padding-bottom: 5px
+            padding-bottom: 5px;
           }
 
           .form-control {
-            height: 150px
+            height: 150px;
           }
         }
       }
@@ -1036,24 +857,15 @@ GetAntiForgeryToken
       }
 
       form {
-        border-top: 1px solid black;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-
         .form-check {
-          margin-left: 10px;
           font-size: 18px;
         }
 
         .form-control {
           height: 50px;
-          border-radius: 0;
         }
 
         .wrap {
-          background: white;
-          border-bottom: 0.5px solid black;
-          align-items: center;
           flex-direction: column;
 
           label.use,
@@ -1081,28 +893,12 @@ GetAntiForgeryToken
           }
 
           #project_id {
-            border-right: black solid 1px
-          }
-        }
-
-        .form-label {
-          font-weight: 700;
-          font-size: 20px;
-          white-space: nowrap;
-          height: 50px;
-          align-items: center;
-          margin: 0;
-          display: flex;
-          justify-content: center;
-
-          p {
-            width: 100px;
-            margin-bottom: 0;
-            text-align: center;
+            border-right: black solid 1px;
           }
         }
       }
     }
-
   }
-}</style>
+}
+
+</style>

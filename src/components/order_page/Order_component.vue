@@ -83,18 +83,18 @@
           <div v-show="!hidden.div.selected_btn" class="col-12 repair_photo_section">
             <div class="input-group ">
               <div class="input-group-prepend"> <span>*</span>文件上傳：</div>
-              <div class="mb-3 file_wrap">
+              <div class="file_wrap">
                 <button type="button" class="choose_btn" @click="openFileExplorer(fileInputs)">選擇檔案</button>
                 <input type="file" ref="fileInputs" accept="image/*,.doc,.docx,.pdf" multiple style="display: none;"
                   @change="handleDocumentFile($event, fileParams)">
               </div>
             </div>
           </div>
-          <!-- 已選擇的檔案 -->
-          <div v-show="!hidden.div.selected_file" class="col-12 selected_file">
-            <div class="input-group">
-              <div class="input-group-prepend">已選擇檔案：</div>
-              <div class="file_upload_box">
+          <div v-show="!hidden.div.selected_file" class="col selected_file">
+  <div class="input-group">
+    <div class="input-group-prepend">已選擇檔案：</div>
+  <div class="selected_file col">
+      <div class="file_upload_box">
                 <div v-for="(item, index) in fileParams.viewDoc" :key="index" class="file_upload_wrap">
                   <p>{{ item.FileName }}
                     <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"
@@ -104,8 +104,9 @@
                   </p>
                 </div>
               </div>
-            </div>
-          </div>
+      </div>
+  </div>
+  </div>
           <!-- 已上傳的檔案 -->
           <div v-show="!hidden.div.existFile" class="col-12 selected_file">
             <div class="input-group">
@@ -427,6 +428,7 @@ onMounted(() => {
           }
 
           .input-group-prepend {
+            margin-bottom: 5px;
             white-space: nowrap;
             text-align: left;
           }

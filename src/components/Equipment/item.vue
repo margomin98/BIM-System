@@ -113,6 +113,7 @@ export default {
       .input-group {
         .input-group-prepend {
           text-align: left;
+          margin-bottom: 5px;
         }
 
         flex-direction: column;
