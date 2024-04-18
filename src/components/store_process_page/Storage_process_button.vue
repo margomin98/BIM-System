@@ -37,7 +37,7 @@
       function routeTo(view) {
         switch (view) {
           case '檢視':
-            let route_name = Quick_Store_Status.includes(status) ? 'Quick_Store_View' : 'Store_Process_View'
+            let route_name = Quick_Store_Status.includes(status) ? 'Quick_Store_Process_View' : 'Store_Process_View'
             router.push({
               name: route_name,
               query: {

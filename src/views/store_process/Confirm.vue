@@ -8,12 +8,12 @@
       <div class="fixed_info">
         <div>
           <p>
-            申請人員 : {{ details.Applicant }}
+            申請人員 : {{ upperForm.Applicant }}
           </p>
         </div>
         <div>
           <p>
-            申請入庫日期 : {{ details.ApplicationDate }}
+            申請入庫日期 : {{ upperForm.ApplicationDate }}
           </p>
         </div>
       </div>
@@ -23,7 +23,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">單號：</div>
-            <input type="text" class="form-control readonly_box" v-model="AI_ID" readonly />
+            <input type="text" class="form-control readonly_box" v-model="upperForm.AI_ID" readonly />
           </div>
         </div>
         <!-- 狀態 -->
@@ -33,7 +33,7 @@
               <div class="input-group-prepend">
                 狀態：
               </div>
-              <input type="text" class="form-control readonly_box" readonly v-model="details.Status">
+              <input type="text" class="form-control readonly_box" readonly v-model="upperForm.Status">
             </div>
           </div>
         </div>
@@ -43,27 +43,31 @@
             <div class="input-group-prepend">
               物流單號 :
             </div>
-            <input type="text" class="form-control readonly_box" v-model="details.ShipmentNum" readonly>
-            <button class="form_search_btn" @click="viewReceive">檢視</button>
+            <input type="text" class="form-control readonly_box" v-model="upperForm.ShipmentNum" readonly>
+            <button class="form_search_btn" @click="storageStore.viewReceive(upperForm)">檢視</button>
             <!-- 隱藏跳轉按鈕 -->
-            <router-link :to="{ name: 'Receive_View', query: { search_id: details.AR_ID } }" target="_blank"
-              id="view-receive" style="display: none;"></router-link>
+            <router-link :to="{name: 'Receive_View' , query:{ search_id : upperForm.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
+          </div>
+        </div>
+        <!-- 備註 -->
+        <div class="col mb-3">
+          <div class="input-group">
+            <div class="input-group-prepend">備註 :</div>
+            <textarea style="height: 200px;" class="form-control readonly_box" aria-label="With textarea" v-model="upperForm.Memo" disabled></textarea>
           </div>
         </div>
       </div>
       <!-- 頁籤部分 -->
-      <div v-show="details.Tabs" class="tab_section mt-5">
+      <div v-show="tabData.length > 0" class="tab_section mt-5">
         <!-- tab頂端頁籤 -->
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button v-for="tab in parseInt(tabNumber)" :key="tab" :class="['nav-link', { active: tab === 1 }]"
-              data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab">{{ tab }}</button>
+            <button v-for="tab in parseInt(tabData.length)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab">{{ tab }}</button>
           </div>
         </nav>
         <!-- tab內容 -->
         <div class="tab-content" id="nav-tabContent">
-          <div v-for="(tab, index) in details.Tabs" :key="index"
-            :class="['tab-pane', 'fade', { 'show active': index === 0 }]" :id="'tab' + (index + 1)" role="tabpanel">
+          <div v-for="(tab, index) in tabData" :key="index" :class="['tab-pane', 'fade', { 'show active': index === 0 }]" :id="'tab' + (index + 1)" role="tabpanel">
             <!-- 頁籤資產類型 -->
             <div class="row">
               <div class="col-12">
@@ -226,25 +230,14 @@
               <div class="input-group">
                 <div class="input-group-prepend">已上傳檔案 :</div>
                 <div class="selected_file" style="display: flex;align-items:center">
-                  <div v-for="(file, file_index) in tab.existFile" :key="file_index" class="file_upload_wrap"
-                    style="cursor: pointer;">
-                    <p @click="viewImgFile(index, file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
-                      {{ file.FileName }}</p>
+                  <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap">
+                    <p>
+                      {{ file.FileName }}
+                      <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="utilsStore.viewImgFile(file, file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+                    </p>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <!-- view Modal -->
-        <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">{{ modalParams.title }}</h5>
-                <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
-              </div>
-              <img :src="modalParams.src" alt="Uploaded Image" class="w-100" />
             </div>
           </div>
         </div>
@@ -256,50 +249,18 @@
         <div class='final'>
           <div class="fixed_info">
             <div>
-              <p>交付日期 : {{ deliveryDate }}</p>
+              <p>交付日期 : {{ utilsStore.today }}</p>
             </div>
           </div>
           <div class="row auth g-0">
             <div class="col-xl-6 col-lg-6 col-md-6 col-12 input-container">
               <div class="input-group">
-                <div class="input-group-prepend">交付人員：</div>
+                <div class="input-group-prepend"><span>*</span>交付人員：</div>
                 <div class="input-with-icon">
-                  <input type="text" class="form-control readonly_box" aria-label="Default"
-                    aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(1)" />
-                  <span class="icon-container">
-                    <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user1.isValidate" />
-                  </span>
-                </div>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                  data-bs-target="#staticBackdrop1">驗證</button>
-                <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false"
-                  tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content ">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel1">交付人員驗證</h5>
-                        <p class='m-0 close_icon' data-bs-dismiss="modal">X</p>
-                      </div>
-                      <div class="modal-body">
-                        <div class="col">
-                          <div class="input-group mb-3">
-                            <div class="input-group-prepend">帳號：</div>
-                            <input type="text" class="form-control" v-model="validation.user1.account" />
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="input-group mb-3">
-                            <div class="input-group-prepend">密碼：</div>
-                            <input type="password" class="form-control" v-model="validation.user1.password" />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="modal-footer m-auto">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                          @click="validate(1)">驗證</button>
-                      </div>
-                    </div>
-                  </div>
+                  <select class="form-select" name="" id="" v-model="requestData.DeliveryOperator">
+                    <option value="">--請選擇--</option>
+                    <option v-for="option in DropdownArray.Custodian" :key="option" :value="option">{{ option }}</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -307,42 +268,7 @@
               <div class="input-group">
                 <div class="input-group-prepend">入庫人員：</div>
                 <div class="input-with-icon">
-                  <input type="text" class="form-control readonly_box" aria-label="Default"
-                    aria-describedby="inputGroup-sizing-default" readonly :value="validationStatus(2)" />
-                  <span class="icon-container">
-                    <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.user2.isValidate" />
-                  </span>
-                </div>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                  data-bs-target="#staticBackdrop2">驗證</button>
-                <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false"
-                  tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content ">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel2">入庫人員驗證</h5>
-                        <p class='m-0 close_icon' data-bs-dismiss="modal">X</p>
-                      </div>
-                      <div class="modal-body">
-                        <div class="col">
-                          <div class="input-group mb-3">
-                            <div class="input-group-prepend">帳號：</div>
-                            <input type="text" class="form-control" v-model="validation.user2.account" />
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="input-group mb-3">
-                            <div class="input-group-prepend">密碼：</div>
-                            <input type="password" class="form-control" v-model="validation.user2.password" />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="modal-footer m-auto">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                          @click="validate(2)">驗證</button>
-                      </div>
-                    </div>
-                  </div>
+                  <input type="text" class="form-control readonly_box" v-model="utilsStore.userName" readonly/>
                 </div>
               </div>
             </div>
@@ -350,253 +276,105 @@
         </div>
       </div>
       <div class="col button_wrap">
-        <button class="back_btn" @click="goBack">回上一頁</button>
-        <button class="send_btn" @click="submit" :disabled="!canSubmit()"
-          :class="{ send_btn_disabled: !canSubmit() }">送出</button>
+        <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
+        <button class="send_btn" @click="submit" :disabled="!requestData.DeliveryOperator" :class="{ send_btn_disabled: !requestData.DeliveryOperator }">送出</button>
       </div>
     </div>
   </div>
+  <view_modal/>
 </template>
 
-<script>
-import Navbar from "@/components/Navbar.vue";
-import {
-  onMounted,
-  ref,
-  reactive
-} from "vue";
-import {
-  useRoute,
-  useRouter
-} from "vue-router";
-import {
-  goBack,
-  canEnterPage
-} from "@/assets/js/common_fn";
-import {
-  StoreProcess_Confirm_Status
-} from "@/assets/js/enter_status"
-export default {
-  components: {
-    Navbar,
-  },
-  setup() {
-    const route = useRoute();
-    const router = useRouter();
-    const AI_ID = route.query.search_id;
-    const deliveryDate = ref('');
-    const details = ref({});
-    const tabNumber = ref(1);
-    // Modal Params
-    const modalParams = reactive({
-      title: '',
-      src: '',
-    })
-    const validation = ref({
-      user1: {
-        account: '',
-        password: '',
-        isValidate: false,
-        resultName: '',
-      },
-      user2: {
-        account: '',
-        password: '',
-        isValidate: false,
-        resultName: '',
-      },
-    });
-    // 帶入資料
-    async function getDetails() {
-      const axios = require('axios');
-      try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
-        const data = response.data;
-        if (data.state === 'success') {
-          // 檢查是否為可交付
-          canEnterPage(data.resultList.Status, StoreProcess_Confirm_Status);
-          console.log('Details Get成功 資料如下\n', data.resultList);
-          details.value = data.resultList;
-          if (details.value.WarrantyStartDate) {
-            details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
-          }
-          if (details.value.WarrantyEndDate) {
-            details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
-          }
-          if (details.value.AssetsInDate) {
-            details.value.AssetsInDate = details.value.AssetsInDate.replace(/-/g, '/');
-          }
-          if (details.value.DeliveryDate) {
-            details.value.DeliveryDate = details.value.DeliveryDate.replace(/-/g, '/');
-          }
-          if (details.value.ApplicationDate) {
-            details.value.ApplicationDate = details.value.ApplicationDate.replace(/-/g, '/');
-          }
-          tabNumber.value = details.value.Tabs.length
-        } else if (data.state === 'error') {
-          alert(data.messages);
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
-        }
-      } catch (error) {
-        console.error(error);
-      }
+<script setup>
+  import view_modal from "@/components/view_modal.vue"
+  import Navbar from "@/components/Navbar.vue";
+  import {
+    onMounted,
+    onUnmounted,
+    ref,
+    reactive
+  } from "vue";
+  import {
+    useRoute,
+    useRouter
+  } from "vue-router";
+  import {
+    useUtilsStore,
+    useAPIStore
+  } from '@/store'
+  import {
+    useApplyStore
+  } from '@/store/storage/apply.js'
+  import {
+    useStorageStore
+  } from '@/store/storage/_index'
+  import {
+    storeToRefs
+  } from "pinia";
+  import {
+    StoreProcess_Confirm_Status
+  } from "@/assets/js/enter_status"
+  import axios from "axios";
+  const storageStore = useStorageStore();
+  const applyStore = useApplyStore();
+  const utilsStore = useUtilsStore();
+  const apiStore = useAPIStore();
+  const {
+    DropdownArray,
+    upperForm,
+    tabData,
+  } = storeToRefs(storageStore);
+  const route = useRoute();
+  const router = useRouter();
+  const AI_ID = route.query.search_id;
+  const requestData = reactive({
+    DeliveryOperator: '',
+  })
+  onMounted(async() => {
+    DropdownArray.value.Custodian = await apiStore.getCustodian('');
+    await storageStore.getDetails(AI_ID, false, StoreProcess_Confirm_Status);
+    await utilsStore.getUserName(); // 重新拿使用者名稱
+    requestData.DeliveryOperator = upperForm.value.Applicant;
+  });
+  onUnmounted(()=>{
+    applyStore.$dispose();
+    storageStore.$dispose();
+    utilsStore.$dispose();
+    apiStore.$dispose();
+  })
+  /**
+   * 提交交付內容
+   */
+  async function submit() {
+    const formData = new FormData();
+    const formFields = {
+      'AI_ID': AI_ID,
+      'DeliveryOperator': requestData.DeliveryOperator,
+      'AssetsInOperator': utilsStore.userName,
+    };
+    //將表格資料append到 formData
+    for (const fieldName in formFields) {
+      formData.append(fieldName, formFields[fieldName]);
+      console.log(formData.get(`${fieldName}`));
     }
-    // 查看收貨單
-    function viewReceive() {
-      if (details.value.AR_ID) {
-        const link = document.getElementById('view-receive');
-        link.click();
-      }
-    }
-    // 查看已上傳相片
-    function viewImgFile(index, file_index) {
-      modalParams.title = details.value.Tabs[index].existFile[file_index].FileName;
-      modalParams.src = details.value.Tabs[index].existFile[file_index].FileLink;
-      console.log('modalParams', modalParams);
-    }
-    //分別使用帳號密碼驗證、改變驗證狀態 user1為交付人員 user2為入庫人員
-    async function validate(user) {
-      if (user === 1) {
-        const axios = require('axios');
-        const formData = new FormData();
-        const formFields = {
-          'userName': validation.value.user1.account,
-          'userPassword': validation.value.user1.password,
-          'id': 'AIP_ReceivedDelivery',
-        };
-        //將表格資料append到 formData
-        for (const fieldName in formFields) {
-          formData.append(fieldName, formFields[fieldName]);
-          console.log(formData.get(`${fieldName}`));
-        }
-        const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+    const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/Delivery', formData);
+    try {
+      const data = response.data;
+      console.log(data);
+      if (data.state === 'success') {
+        let msg = data.messages;
+        msg += '\n單號:' + data.resultList.AI_ID;
+        alert(msg);
+        router.push({
+          name: 'Store_Process_Datagrid'
         });
-        try {
-          const data = response.data;
-          console.log(data);
-          if (data.state === 'success') {
-            validation.value.user1.isValidate = true;
-            validation.value.user1.resultName = validation.value.user1.account;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-            validation.value.user1.isValidate = false;
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      } else if (user === 2) {
-        const axios = require('axios');
-        const formData = new FormData();
-        const formFields = {
-          'userName': validation.value.user2.account,
-          'userPassword': validation.value.user2.password,
-          'id': 'AIP_InboundDelivery',
-        };
-        //將表格資料append到 formData
-        for (const fieldName in formFields) {
-          formData.append(fieldName, formFields[fieldName]);
-          console.log(formData.get(`${fieldName}`));
-        }
-        const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-        try {
-          const data = response.data;
-          console.log(data);
-          if (data.state === 'success') {
-            validation.value.user2.isValidate = true;
-            validation.value.user2.resultName = validation.value.user2.account;
-          } else if (data.state === 'error') {
-            alert(data.messages);
-            validation.value.user2.isValidate = false;
-          }
-        } catch (error) {
-          console.error(error);
-        }
+      } else if (data.state === 'error') {
+        alert(data.messages);
+        console.log('error state', response);
       }
+    } catch (error) {
+      console.error(error);
     }
-    function validationStatus(user) {
-      if (user === 1) {
-        return validation.value.user1.isValidate ? validation.value.user1.resultName : '未驗證'
-      } else if (user === 2) {
-        return validation.value.user2.isValidate ? validation.value.user2.resultName : '未驗證'
-      }
-    }
-    function canSubmit() {
-      return validation.value.user1.isValidate && validation.value.user2.isValidate;
-    }
-    async function submit() {
-      const axios = require('axios');
-      const formData = new FormData();
-      const formFields = {
-        'AI_ID': details.value.AI_ID,
-        'DeliveryOperator': validation.value.user1.resultName,
-        'AssetsInOperator': validation.value.user2.resultName,
-      };
-      //將表格資料append到 formData
-      for (const fieldName in formFields) {
-        formData.append(fieldName, formFields[fieldName]);
-        console.log(formData.get(`${fieldName}`));
-      }
-      const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/Delivery', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      try {
-        const data = response.data;
-        console.log(data);
-        if (data.state === 'success') {
-          let msg = data.messages;
-          msg += '\n單號:' + data.resultList.AI_ID;
-          alert(msg);
-          router.push({
-            name: 'Store_Process_Datagrid'
-          });
-        } else if (data.state === 'error') {
-          alert(data.messages);
-          console.log('error state', response);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    function getDate() {
-      const today = new Date();
-      var date = '';
-      date += (today.getFullYear() + '/');
-      date += ((today.getMonth() + 1).toString().padStart(2, '0') + '/');
-      date += ((today.getDate()).toString().padStart(2, '0'));
-      return date;
-    }
-    onMounted(() => {
-      getDetails();
-      deliveryDate.value = getDate();
-    });
-    return {
-      AI_ID,
-      tabNumber,
-      modalParams,
-      validation,
-      viewReceive,
-      viewImgFile,
-      validate,
-      validationStatus,
-      canSubmit,
-      submit,
-      goBack,
-      deliveryDate,
-      details,
-    }
-  },
-};
+  }
 </script>
 
 <style lang="scss" scoped>

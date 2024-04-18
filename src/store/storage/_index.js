@@ -37,6 +37,7 @@ export const useStorageStore = defineStore('Storage', {
 			ApplicationDate: '',
 			ShipmentNum: '',
 			ShipmentSelect: {ShipmentNum:'--請選擇--' , AR_ID: ''},
+			Status: '',
 			AR_ID: '',
 			AI_ID: '',
 			Memo: '',

@@ -7,13 +7,13 @@
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
-          <p>單號：{{ details.AO_ID }}</p>
+          <p>單號：{{ Form.AO_ID }}</p>
         </div>
         <div>
-          <p>申請人員：{{ details.Applicant }}</p>
+          <p>申請人員：{{ Form.Applicant }}</p>
         </div>
         <div>
-          <p>申請日期：{{ details.ApplicationDate }}</p>
+          <p>申請日期：{{ Form.ApplicationDate }}</p>
         </div>
       </div>
       <form>
@@ -26,7 +26,7 @@
               <div class='content'>
                 <div class="form-check" v-for="(option, index) in options" :key="index">
                   <input class="form-check-input" type="radio" :value="option" :id="'radio' + (index + 1)"
-                    v-model="details.Use" :disabled="option !== details.Use && details.Use !== ''">
+                    v-model="Form.Use" :disabled="option !== Form.Use && Form.Use !== ''">
                   <label class="form-check-label" :for="'radio' + (index + 1)">{{ option }}</label>
                 </div>
               </div>
@@ -39,7 +39,7 @@
               <p>專案代碼</p>
             </label>
             <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly>{{ details.ProjectCode }}</p>
+              <p class="readonly_box" readonly>{{ Form.ProjectCode }}</p>
             </div>
           </div>
           <div class="col d-flex wrap">
@@ -47,7 +47,7 @@
               <p>專案名稱</p>
             </label>
             <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly>{{ details.ProjectName }}</p>
+              <p class="readonly_box" readonly>{{ Form.ProjectName }}</p>
             </div>
           </div>
         </div>
@@ -57,7 +57,7 @@
               <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
             </label>
             <div class="input-group" id='readonly_box'>
-              <textarea class="form-control readonly_box" readonly v-model="details.Description"></textarea>
+              <textarea class="form-control readonly_box" readonly v-model="Form.Description"></textarea>
             </div>
           </div>
         </div>
@@ -68,9 +68,9 @@
         </div>
       </div>
       <div class="second_content">
-        <DataTable :size="'small'" :value="rowData1" resizableColumns columnResizeMode="expand" showGridlines scrollable
+        <DataTable :size="'small'" :value="Form.ItemList" resizableColumns columnResizeMode="expand" showGridlines scrollable
           scroll-height="420px">
-          <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable
+          <Column v-for="item in rentStore.ItemList_field" :key="item.field" :field="item.field" :header="item.header" sortable
             :style="{ 'min-width': item.width }"></Column>
         </DataTable>
       </div>
@@ -80,10 +80,10 @@
         </div>
       </div>
       <div class="third_content">
-        <DataTable :size="'small'" :value="rowData2" resizableColumns columnResizeMode="expand" showGridlines scrollable
+        <DataTable :size="'small'" :value="Form.OM_List" resizableColumns columnResizeMode="expand" showGridlines scrollable
           scroll-height="600px" :row-style="({ OM_IsExecute }) => !OM_IsExecute ? 'background-color: #CEE4EB;' : null">
           <Column header="交付確認" class="datatable_checkbox">
-            <template style="min-width:50px; " #body="slotProps">
+            <template #body="slotProps">
               <input type="checkbox" class="p-checkbox p-component" v-model="slotProps.data.OM_IsExecute">
             </template>
           </Column>
@@ -92,7 +92,7 @@
               <AssetsView :params="slotProps" />
             </template>
           </Column>
-          <Column v-for="item in datagrid2field" :field="item.field" :header="item.header" :sortable="item.sortable"
+          <Column v-for="item in rentStore.OMList_field" :key="item.field" :field="item.field" :header="item.header" :sortable="item.sortable"
             :style="{ 'min-width': item.width }"></Column>
         </DataTable>
       </div>
@@ -116,7 +116,7 @@
               <p>備料人員</p>
             </label>
             <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly>{{ details.PreparedPerson }}</p>
+              <p class="readonly_box" readonly>{{ Form.PreparedPerson }}</p>
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
@@ -124,7 +124,7 @@
               <p>備料完成日期</p>
             </label>
             <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly>{{ details.PrepareDate }}</p>
+              <p class="readonly_box" readonly>{{ Form.PrepareDate }}</p>
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
@@ -132,7 +132,7 @@
               <p>備料備註</p>
             </label>
             <div class="input-group" id='readonly_box'>
-              <textarea class="form-control readonly_box" readonly v-model="details.PrepareMemo"></textarea>
+              <textarea class="form-control readonly_box" readonly v-model="Form.PrepareMemo"></textarea>
             </div>
           </div>
         </div>
@@ -149,17 +149,15 @@
               <p>審核人員</p>
             </label>
             <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly> {{ details.VerifyPerson }}</p>
+              <p class="readonly_box" readonly> {{ Form.VerifyPerson }}</p>
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
               <p>審核結果</p>
             </label>
-
-
             <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly style="margin-bottom: 0;"> {{ details.VerifyResult }}</p>
+              <p class="readonly_box" readonly style="margin-bottom: 0;"> {{ Form.VerifyResult }}</p>
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
@@ -167,7 +165,7 @@
               <p>審核日期</p>
             </label>
             <div class="input-group" id="readonly_box">
-              <p class="readonly_box" readonly>{{ details.VerifyDate }}</p>
+              <p class="readonly_box" readonly>{{ Form.VerifyDate }}</p>
             </div>
           </div>
         </div>
@@ -177,7 +175,7 @@
               <p>審核意見</p>
             </label>
             <div class="input-group" id="readonly_box">
-              <textarea class="readonly_box form-control" readonly>{{ details.VerifyMemo }}</textarea>
+              <textarea class="readonly_box form-control" readonly v-model="Form.VerifyMemo"></textarea>
             </div>
           </div>
         </div>
@@ -188,55 +186,29 @@
             <p>交付簽章</p>
           </div>
           <div class="six_content_date">
-            <p> {{ DeliveryDate }}</p>
+            <p> {{ utilsStore.today }}</p>
           </div>
         </div>
         <div class="row g-0">
-          <template v-for="(item, index) in validation" :key="item.title">
-            <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-              <label for="inputWithButton" class="form-label "><span v-if="index !== 1">*</span>
-                <p>{{ item.title }}</p>
-              </label>
-              <div class="input-group use_acc input-with-icon" id="readonly_box">
-                <p class="readonly_box" readonly>{{ item.resultName }}</p>
-                <span class="icon-container">
-                  <img src="@/assets/accept.png" class="checkmark-icon" v-show="item.isValidate" />
-                </span>
-              </div>
-              <button type="button" data-bs-toggle="modal" :data-bs-target="`#userConfirm-${index}`">驗證</button>
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
+            <label for="inputWithButton" class="form-label "><span>*</span>
+              <p>領用人員</p>
+            </label>
+            <div class="input-group use_acc input-with-icon" id="readonly_box">
+              <select name="" id="" class="form-select" v-model="Form.Recipient">
+                <option value="">--請選擇--</option>
+                <option v-for="option in DropdownArray.Recipient" :key="option" :value="option">{{ option }}</option>
+              </select>
             </div>
-            <!-- Modal Start -->
-            <div class="modal fade" :id="`userConfirm-${index}`" data-bs-backdrop="static" data-bs-keyboard="false"
-              tabindex="-1" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content ">
-                  <div class="modal-header">
-                    <h5 class="modal-title">{{ item.title }}驗證</h5>
-                    <p class='m-0 close_icon' data-bs-dismiss="modal">X</p>
-                  </div>
-                  <div class="modal-body">
-                    <div class="col">
-                      <div class="input-group mb-3">
-                        <div class="modal-input-group-prepend">帳號：</div>
-                        <input type="text" class="form-control" aria-label="Default" v-model="item.account" />
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="input-group mb-3">
-                        <div class="modal-input-group-prepend">密碼：</div>
-                        <input type="password" class="form-control" aria-label="Default" v-model="item.password" />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal-footer m-auto">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                      @click="validate(index)">驗證</button>
-                  </div>
-                </div>
-              </div>
+          </div>
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
+            <label for="inputWithButton" class="form-label ">
+              <p>交付人員</p>
+            </label>
+            <div class="input-group use_acc input-with-icon" id="readonly_box">
+              <p class="readonly_box" readonly>{{ utilsStore.userName }}</p>
             </div>
-            <!-- Modal End -->
-          </template>
+          </div>
         </div>
         <div class="row g-0">
           <div class="col d-flex wrap">
@@ -251,24 +223,12 @@
       </div>
     </div>
     <div class="col button_wrap">
-      <button class="back_btn" @click="goBack">回上一頁</button>
-      <button class="send_btn" :disabled="!canSubmit" :class="{ send_btn_disabled: !canSubmit }" data-bs-toggle="modal"
-        data-bs-target="#confirmModal">送出</button>
+      <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
+      <button class="send_btn" :disabled="!Form.Recipient" :class="{ send_btn_disabled: !Form.Recipient }" data-bs-toggle="modal"
+        data-bs-target="#ConfirmModal">送出</button>
     </div>
     <!-- confirmModal -->
-    <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-body">
-            按下確認後將無法再次變更交付項目，請確認資產出庫細項是否交付正確
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="submit">確認</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <confirm_modal :id="'ConfirmModal'" @confirm="submit()" :text="warningText" />
   </div>
 </template>
 
@@ -281,252 +241,69 @@ import {
   useRouter
 } from 'vue-router';
 import Navbar from "@/components/Navbar.vue";
-import {
-  canEnterPage,
-  goBack,
-  getDate
-} from "@/assets/js/common_fn"
+import { useRentStore } from '@/store/rent/_index';
+import confirm_modal from '@/components/utils/confirm_modal.vue'
+import { useAPIStore, useUtilsStore } from '@/store';
+import { storeToRefs } from 'pinia';
 import {
   Rent_UseArray
 } from "@/assets/js/dropdown";
 import {
   onMounted,
+  onUnmounted,
   ref,
-  reactive,
-  computed,
 } from "vue";
 import {
   RentProcess_Confirm_Status
 } from "@/assets/js/enter_status";
 import axios from 'axios';
+const rentStore = useRentStore();
+const utilsStore = useUtilsStore();
+const apiStore = useAPIStore();
 const route = useRoute();
 const router = useRouter();
-const AO_ID = route.query.search_id;
+const AO_ID = route.query.search_id; // 單號
 const totalNeed = ref(0); //總所需數量
 const totalSelect = ref(0); //總已備數量
-const details = ref({});
-const options = Rent_UseArray;
-const DeliveryMemo = ref('');
-const DeliveryDate = ref('');
-const loading = ref(false);
-const validation = reactive([{
-  title: '申請人員',
-  account: '',
-  password: '',
-  isValidate: false,
-  resultName: '未驗證',
-},
-{
-  title: '領用人員',
-  account: '',
-  password: '',
-  isValidate: false,
-  resultName: '未驗證',
-},
-{
-  title: '交付人員',
-  account: '',
-  password: '',
-  isValidate: false,
-  resultName: '未驗證',
-  id: 'AOP_OutboundDelivery',
-},
-]);
-// 資產出庫項目
-const datagrid1field = [{
-  field: "id",
-  width: '50px',
-  header: "項目"
-},
-{
-  field: "EquipTypeName",
-  width: '150px',
-  header: "設備總類"
-},
-{
-  field: "EquipCategoryName",
-  width: '150px',
-  header: "設備分類"
-},
-{
-  field: "ProductName",
-  width: '150px',
-  header: "物品名稱"
-},
-{
-  field: "Number",
-  width: '100px',
-  header: "數量"
-},
-{
-  field: "RequiredSpec",
-  width: '250px',
-  header: "規格需求"
-},
-]
-// 資產出庫細項
-const datagrid2field = [{
-  field: "OM_List_id",
-  width: '50px',
-  header: "需求項目",
-  sortable: false,
-},
-{
-  field: "OM_Number",
-  width: '30px',
-  header: "數量",
-  sortable: false,
-},
-{
-  field: "OM_Unit",
-  width: '30px',
-  header: "單位",
-  sortable: false,
-},
-{
-  field: "AssetsId",
-  width: '150px',
-  header: "資產編號",
-  sortable: true,
-},
-{
-  field: "AssetName",
-  width: '150px',
-  header: "物品名稱",
-  sortable: true,
-},
-{
-  field: "ProductType",
-  width: '150px',
-  header: "型號",
-  sortable: true,
-},
-{
-  field: "ProductSpec",
-  width: '150px',
-  header: "規格",
-  sortable: true,
-},
-{
-  field: "VendorName",
-  width: '150px',
-  header: "廠商",
-  sortable: true,
-},
-{
-  field: "AreaName",
-  width: '150px',
-  header: "儲位區域",
-  sortable: true,
-},
-{
-  field: "LayerName",
-  width: '150px',
-  header: "儲位櫃位",
-  sortable: true,
-},
-]
-const rowData1 = ref([]);
-const rowData2 = ref([]);
-onMounted(() => {
-  getDetails();
-  DeliveryDate.value = getDate();
+const options = Rent_UseArray; // 用途。Array for input[radio]
+const DeliveryMemo = ref(''); // 交付備註
+const loading = ref(false); // 防止提交過程中再次提交
+const { Form, DropdownArray } = storeToRefs(rentStore);
+const warningText = ref('按下確認後將無法再次變更交付項目，請確認資產出庫細項是否交付正確')
+onMounted(async() => {
+  rentStore.$reset();
+  apiStore.$reset();
+  DropdownArray.value.Recipient = await apiStore.getCustodian('');
+  await rentStore.getDetails(AO_ID, RentProcess_Confirm_Status);
+  await utilsStore.getUserName(); // 重新拿使用者名稱
+  setData();
 });
-async function getDetails() {
-  const axios = require('axios');
-  try {
-    const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
-    const data = response.data;
-    if (data.state === 'success') {
-      canEnterPage(data.resultList.Status, RentProcess_Confirm_Status)
-      console.log('Details Get成功 資料如下\n', data.resultList);
-      details.value = data.resultList;
-      rowData1.value = data.resultList.ItemList;
-      rowData2.value = data.resultList.OM_List;
-      totalNeed.value = 0;
-      rowData1.value.forEach(item => {
-        totalNeed.value += item.Number;
-      });
-      totalSelect.value = 0;
-      rowData2.value.forEach(item => {
-        totalSelect.value += item.OM_Number;
-      });
-    } else if (data.state === 'error') {
-      alert(data.messages);
-    } else if (data.state === 'account_error') {
-      alert(data.messages);
-      router.push('/');
-    }
-  } catch (error) {
-    console.error(error);
-  }
-}
-//分別使用帳號密碼驗證、改變驗證狀態 user1為領用人員 user2為交付人員
-async function validate(index) {
-  // 領用/交付人員驗證
-  const formData = new FormData();
-  let formFields = {};
-  let url = '';
-  switch (index) {
-    // 申請
-    case 0:
-      formFields = {
-        'userName': validation[index].account,
-        'userPassword': validation[index].password,
-        'ao_id': AO_ID,
-      };
-      url = 'http://192.168.0.177:7008/AssetsOutMng/AO_ApplicantOrReceivedValidation'
-      break
-    // 領用
-    case 1:
-      formFields = {
-        'userName': validation[index].account,
-        'userPassword': validation[index].password,
-      };
-      url = 'http://192.168.0.177:7008/AssetsOutMng/AO_ApplicantOrReceivedValidation'
-      break
-    // 交付
-    case 2:
-      formFields = {
-        'userName': validation[index].account,
-        'userPassword': validation[index].password,
-        'id': validation[index].id,
-      };
-      url = 'http://192.168.0.177:7008/Account/IdentityValidation'
-      break
-  }
-  for (const key in formFields) {
-    formData.append(key, formFields[key]);
-  }
-  try {
-    const response = await axios.post(url, formData);
-    const data = response.data;
-    if (data.state === 'success') {
-      validation[index].isValidate = true;
-      validation[index].resultName = validation[index].account;
-    } else if (data.state === 'error') {
-      alert(data.messages);
-      validation[index].isValidate = false;
-      validation[index].resultName = '未驗證';
-    }
-  } catch (error) {
-    console.error(error);
-  }
-}
-const canSubmit = computed(() => {
-  // 至少一項交付
-  let atLeastOne = false;
-  for (let i = 0; i < rowData2.value.length; i++) {
-    if (rowData2.value[i].OM_IsExecute) {
-      atLeastOne = true;
-      break;
-    }
-  }
-  // 申請人員、交付人員驗證
-  const isValidate = validation[0].isValidate && validation[2].isValidate
-  return isValidate && atLeastOne
+onUnmounted(() => {
+  rentStore.$dispose();
+  apiStore.$dispose();
 })
+/**
+ * 取完資料單後做變數處理
+ */
+function setData() {
+  // 總出庫數量
+  totalNeed.value = 0;
+  Form.value.ItemList.forEach(item => {
+    totalNeed.value += item.Number;
+  });
+  // 已備數量
+  totalSelect.value = 0;
+  Form.value.OM_List.forEach(item => {
+    totalSelect.value += item.OM_Number;
+  });
+  // 預帶入領用人員為申請人員
+  Form.value.Recipient = Form.value.Applicant
+}
+/**
+ * 提交交付內容
+ */
 async function submit() {
+  utilsStore.checkMaxLetter()
   if (DeliveryMemo.value) {
     DeliveryMemo.value = DeliveryMemo.value.trim();
   }
@@ -537,22 +314,20 @@ async function submit() {
   if (!loading.value) {
     loading.value = true;
     let OM_List = [];
-    rowData2.value.forEach(item => {
+    Form.value.OM_List.forEach(item => {
       OM_List.push({
         OM_id: item.OM_id,
         OM_IsExecute: item.OM_IsExecute,
       });
     });
-    console.log('OM_List', OM_List);
-    const axios = require('axios');
-    const Recipient = validation[1].resultName === '未驗證' ? '' : validation[1].resultName;
     const requestData = {
-      AO_ID: details.value.AO_ID,
-      Recipient: Recipient,
-      DeliveryOperator: validation[2].resultName,
+      AO_ID: AO_ID,
+      Recipient: Form.value.Recipient,
+      DeliveryOperator: utilsStore.userName,
       DeliveryMemo: DeliveryMemo.value,
       OM_List: OM_List,
     };
+    console.log('requestData', requestData);
     try {
       const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/Delivery', requestData);
       const data = response.data;
@@ -566,11 +341,11 @@ async function submit() {
         });
       } else {
         alert(data.messages);
-        loading.value = false;
       }
     } catch (error) {
-      loading.value = false;
       console.error(error);
+    } finally {
+      loading.value = false;
     }
   }
 }

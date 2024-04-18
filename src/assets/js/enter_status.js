@@ -7,7 +7,7 @@ export const CasePurchase_Delete = ['待採購'];
 // 訂購: 刪除
 export const Order_Delete = ['待收貨']
 // 入庫填報: 編輯、刪除 
-export const Store_Edit_Status = ['可交付','申請入庫','申請歸還','待補資料'];
+export const Store_Edit_Status = ['可交付','申請入庫','申請歸還','待補資料','快速入庫完成'];
 export const Store_Delete_Status = ['可交付','申請入庫','申請歸還'];
 // 快速入庫: 編輯、檢視
 export const Quick_Store_Status = ['待補資料', '快速入庫完成'];
