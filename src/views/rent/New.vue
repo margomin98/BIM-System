@@ -174,6 +174,7 @@ import {
   getDate,
   goBack
 } from "@/assets/js/common_fn";
+import axios from '@/axios/tokenInterceptor';
 export default {
   components: {
     Navbar,
@@ -312,7 +313,6 @@ export default {
       };
       console.log('requestData:', requestData);
       try {
-        const axios = require('axios');
         const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/NewAssetsOut', requestData);
         const data = response.data;
         if (data.state === 'success') {

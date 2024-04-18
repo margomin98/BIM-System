@@ -455,7 +455,7 @@ import {
   useRoute
 } from 'vue-router';
 import router from '@/router';
-import axios from 'axios';
+import axios from '@/axios/tokenInterceptor';
 import {
   UnitArray,
   PackageUnitArray
@@ -511,7 +511,6 @@ export default {
     });
     //依照單號取得資料並生成tab資料
     async function getDetails() {
-      const axios = require('axios');
       try {
         const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`);
         const data = response.data;
@@ -856,7 +855,6 @@ export default {
         for (let i = 0; i < tabData.deleteFile.length; i++) {
           form.append('deleteFile', tabData.deleteFile[i]);
         }
-        const axios = require('axios');
         axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form)
           .then((response) => {
             const data = response.data;
@@ -897,7 +895,6 @@ export default {
       for (let i = 0; i < tabData.length; i++) {
         repeatForm.append('assetsIds', myForm[i]);
       }
-      const axios = require('axios');
       const response = await axios.post('http://192.168.0.177:7008/GetDBdata/CheckAssetsInID', repeatForm);
       try {
         const data = response.data;

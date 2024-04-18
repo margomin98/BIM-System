@@ -238,6 +238,7 @@ import {
 } from "@/assets/js/enter_status";
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import axios from '@/axios/tokenInterceptor';
 export default {
   components: {
     Navbar,
@@ -352,7 +353,6 @@ export default {
     const rowData1 = ref([]);
     const rowData2 = ref([]);
     async function getDetails() {
-      const axios = require('axios');
       try {
         const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
         const data = response.data;
@@ -385,7 +385,6 @@ export default {
       VerifyDate.value = getDate();
     });
     async function validate() {
-      const axios = require('axios');
       const formData = new FormData();
       const formFields = {
         'userName': validation.account,
@@ -424,7 +423,6 @@ export default {
         alert('審核意見不可輸入超過100字')
         return
       }
-      const axios = require('axios');
       const formData = new FormData();
       validation.VerifyOption = validation.VerifyOption === 'true'
       const formFields = {
