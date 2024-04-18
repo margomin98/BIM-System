@@ -3,7 +3,7 @@
   <div class="main_section">
     <!-- 放大Swiper圖片 -->
     <div class="zoom_img_modal modal fade" id="zoomImg" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-dialog modal-sm modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">{{ previewParams.title }}</h5>
@@ -466,8 +466,6 @@ span {
 
       .checkmark-icon {
         position: absolute;
-        top: 10%;
-        left: 89%;
         transform: translateY(-50%);
         width: 20px;
         height: 20px;
@@ -571,6 +569,10 @@ span {
           .input-group {
             justify-content: center;
           }
+          .checkmark-icon {
+            top: 10%;
+            left: 89%;
+          }
 
           .form-control {
             height: 35px;
@@ -631,6 +633,10 @@ span {
 
           .input-group {
             justify-content: center;
+          }
+          .checkmark-icon {
+            top: 10%;
+            left: 89%;
           }
 
           .form-control {
@@ -712,7 +718,10 @@ span {
             justify-content: left;
             margin: 5px 0;
           }
-
+          .checkmark-icon {
+            top: 10%;
+            left: 93%;
+          }
           .review_result {
             .form-check {
               .form-check-label {

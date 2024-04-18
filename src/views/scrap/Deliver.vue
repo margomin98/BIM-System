@@ -1082,7 +1082,7 @@
             .checkmark-icon {
               position: absolute;
               top: 10%;
-              left: 89%;
+              left: 94%;
               transform: translateY(-50%);
               width: 20px;
               height: 20px;
