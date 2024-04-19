@@ -139,18 +139,19 @@
           </div>
         </div>
         <!-- 已上傳檔案 -->
-        <div class="selected_file col-12">
-          <div class="input-group mt-3">
-            <div class="input-group-prepend">已上傳檔案：</div>
-            <div class="d-flex  flex-column">
-              <div v-for="(file , index) in details.existFile" :key="index" class="file_upload_wrap">
-                <p class='file_name'>{{ file.FileName }}
-                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"  @click="viewImgFile(index,details,modalParams,'exist')" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
-                </p>
-              </div>
-            </div>
+    <!-- 已上傳檔案 -->
+    <div class="selected_file col-12">
+      <div class="input-group mt-3">
+        <div class="input-group-prepend">已上傳檔案：</div>
+        <div class="d-flex  flex-column selected_file_wrap">
+          <div v-for="(file , index) in details.existFile" :key="index" class="file_upload_wrap">
+            <p class='file_name'>{{ file.FileName }}
+              <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"  @click="viewImgFile(index,details,modalParams,'exist')" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+            </p>
           </div>
         </div>
+      </div>
+    </div>
         <!-- ViewFile Modal -->
         <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" >
@@ -323,31 +324,49 @@
     color: white;
   }
   .selected_file {
-    p {
-      margin-bottom: 5px;
-      font-weight: 700;
-      color: white;
-    }
-    .file_upload_box {
-      .file_upload_wrap {
-        margin-bottom: 0;
         display: flex;
-        word-break: break-word;
-        img {
-          width: 25px;
-          height: 25px;
+        align-items: center;
+
+        .selected_file_wrap {
+          flex-direction: column;
+
+          .file_upload_wrap {
+            margin-bottom: 0;
+            display: flex;
+
+            img {
+              width: 25px;
+              height: 25px;
+            }
+
+            p {
+              font-weight: 700;
+              margin-bottom: 5px;
+              color: white;
+              word-break: break-word;
+
+              &::before {
+                margin-right: 10px;
+                content: '·';
+                font-weight: 700;
+                color: white;
+              }
+            }
+          }
         }
       }
-       
-            
-    }
-  }
   .main_section {
   .readonly_box {
     @include readonly_box;
   }
   .info_wrap {
     margin: 30px auto 5%;
+    .input-group{
+    flex-wrap: nowrap;
+      .input-group-prepend{
+        white-space: nowrap;
+      }
+    }
     .button_wrap {
       display: flex;
       justify-content: center;
@@ -397,7 +416,7 @@
               font-weight: 700;
               font-size: 20px;
               text-align: end;
-              width: 155px;
+              width: 120px;
               span {
                 @include red_star
               }
@@ -471,9 +490,7 @@
           @include content_bg;
           .input-group {
             width: 100%;
-            white-space: nowrap;
-            flex-wrap: nowrap;
-            .num_wrap {
+              .num_wrap {
               .input-number {
                 width: 50%;
                 @include count_btn;
@@ -575,7 +592,6 @@
             margin-left: unset;
             border-radius: 5px;
             margin-top: 5px;
-            height: 35px;
           }
           .input-group {
             flex-direction: column;

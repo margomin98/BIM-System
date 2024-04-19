@@ -77,7 +77,8 @@
             <div class="input-group-prepend">
               審核日期：
             </div>
-            <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.VerifyDate">
+            <input ref="inputElement" type="text" class="form-control readonly_box" readonly
+              v-model="details.VerifyDate">
           </div>
         </div>
         <!-- 資產編號 -->
@@ -95,7 +96,8 @@
             <div class="input-group-prepend">
               物品名稱：
             </div>
-            <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="details.AssetName">
+            <input ref="inputElement" type="text" class="form-control readonly_box" readonly
+              v-model="details.AssetName">
           </div>
         </div>
         <!-- 報廢方式 -->
@@ -149,13 +151,11 @@
         <div class="selected_file col-12">
           <div class="input-group mt-3">
             <div class="input-group-prepend">已上傳檔案：</div>
-            <div class="d-flex  flex-column">
-              <div v-for="(file, index) in details.existFile" :key="index" class="file_upload_wrap">
+            <div class="d-flex  flex-column selected_file_wrap">
+              <div v-for="(file , index) in details.existFile" :key="index" class="file_upload_wrap">
                 <p class='file_name'>{{ file.FileName }}
-                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"
-                    @click="viewImgFile(index, details, modalParams, 'exist')" data-bs-toggle="modal"
-                    data-bs-target="#viewFile_modal">
-                </p>
+          <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"  @click="viewImgFile(index,details,modalParams,'exist')" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+        </p>
               </div>
             </div>
           </div>
@@ -189,7 +189,8 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">否</button>
-              <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" @click="deleteData">是</button>
+              <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"
+                @click="deleteData">是</button>
             </div>
           </div>
         </div>
@@ -394,21 +395,33 @@ export default {
 }
 
 .selected_file {
-  p {
-    margin-bottom: 5px;
-    font-weight: 700;
-    color: white;
-  }
+  display: flex;
+  align-items: center;
 
-  .file_upload_box {
+  .selected_file_wrap {
+    flex-direction: column;
+
     .file_upload_wrap {
       margin-bottom: 0;
       display: flex;
-      word-break: break-word;
 
       img {
         width: 25px;
         height: 25px;
+      }
+
+      p {
+        font-weight: 700;
+        margin-bottom: 5px;
+        color: white;
+        word-break: break-word;
+
+        &::before {
+          margin-right: 10px;
+          content: '·';
+          font-weight: 700;
+          color: white;
+        }
       }
     }
   }
@@ -455,6 +468,16 @@ export default {
           background-color: #a70e0e;
         }
       }
+    }
+  }
+}
+
+.main_section {
+  .input-group {
+    flex-wrap: nowrap;
+
+    .input-group-prepend {
+      white-space: nowrap;
     }
   }
 }
@@ -523,7 +546,7 @@ export default {
             font-weight: 700;
             font-size: 20px;
             text-align: end;
-            width: 155px;
+            width: 120px;
 
             span {
               @include red_star
@@ -606,8 +629,6 @@ export default {
 
         .input-group {
           width: 100%;
-          white-space: nowrap;
-          flex-wrap: nowrap;
 
           .num_wrap {
             .input-number {
@@ -631,7 +652,7 @@ export default {
             font-weight: 700;
             font-size: 20px;
             text-align: end;
-            width: 150px;
+            width: 110px;
 
             span {
               @include red_star
@@ -810,4 +831,5 @@ export default {
       }
     }
   }
-}</style>
+}
+</style>
