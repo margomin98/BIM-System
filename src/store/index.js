@@ -110,6 +110,13 @@ export const useUtilsStore = defineStore('Utils',{
       return ErrorMessages ;
     },
     // 表單必填
+    /**
+     * 
+     * @param {object} formParams Object that need to checked.
+     * @param {string[]} checkList key list to check.
+     * @param {object} fileParams if exists, then check.
+     * @returns {boolean} Pass: true , Invalid: false
+     */
     checkRequired(formParams = {}, checkList = [], fileParams) {
       let result = true;
       for(const key of checkList) {
@@ -764,6 +771,49 @@ export const useAPIStore = defineStore('API',{
       });
     },
     /**
+     * 查詢User權限名稱
+     * @param {string} userName 使用者名稱
+     * @returns {Promise<number | string>} 成功返回roleId, 失敗返回異常訊息
+     */   
+    async getRoleName(userName) {
+      return new Promise(async(resolve, reject)=>{
+        try {
+          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetRoleFromName?name=${userName}`);
+          const data = response.data;
+          // console.log('userName', this.userName);
+          // console.log('Applicant',Applicant);
+          if (data.state === 'success') {
+            resolve(data.resultList.role.Name);
+          } 
+          // 存取失敗
+          else {
+            reject(data.messages);
+          }
+        } catch (error) {
+          console.error(error);
+          reject(error);
+        }
+      });
+    },
+    /**
+     * 取得權限的下拉選單(全部的)
+     * @returns {Promise<string[]>} 返回所有帳號權限種類Array
+     */
+    async getRoleOption() {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetRoles');
+          const data = response.data ;
+          if(data.state === 'success') {
+            console.log(data.resultList.RoleList);
+            resolve (data.resultList.RoleList);
+          }
+        } catch(e) {
+          console.error(e);
+        }
+      });
+    },
+    /**
      * 檢查使用者在指定頁面是否有瀏覽權限
      * @param {string} permissionName 權限名稱(資料庫)
      * @returns {Promise<boolean | string> } 成功: 返回boolean，失敗: 返回error_massage
@@ -774,13 +824,14 @@ export const useAPIStore = defineStore('API',{
           const response = await axios.get(`http://192.168.0.177:7008/GetParameter/HasPermission?id=${permissionName}`);
           const data = response.data;
           if (data.state === 'success') {
-            return data.resultList ;
+            resolve (data.resultList) ;
           } 
         } catch(e) {
           console.error(e);
-          return false ;
+          resolve (false) ;
         }
       });
-    }
+    },
+
   }
 })

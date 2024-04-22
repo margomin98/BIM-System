@@ -1,10 +1,8 @@
 <template>
   <div class='button_wrap'>
-    <button :class="{ 'disabled_btn_nomargin': disabled, 'edit_btn': !disabled }" :disabled="disabled"
-      data-bs-toggle="modal" data-bs-target="#editModal" @click="viewEdit()">編輯</button>
+    <button class="edit_btn" data-bs-toggle="modal" data-bs-target="#EditModal" @click="props.params.updatePermission(data)">編輯</button>
     <button :class="{ 'disabled_btn': disabled, 'delete_btn': !disabled }" :disabled="disabled" data-bs-toggle="modal"
-      data-bs-target="#editModal2" @click="viewDelete()">刪除</button>
-
+      data-bs-target="#DeleteModal" @click="props.params.updatePermission(data)">刪除</button>
   </div>
 </template>
 
@@ -14,20 +12,15 @@ const props = defineProps(['params']);
 const data = props.params.data;
 const disabled = ref(false);
 onMounted(() => {
-  if (data.Id === 'A0000' || data.Id === 'L0000') {
+  // 有幾個特定的權限不能被刪除
+  let excludeId = [0,1,3,4];
+  if (excludeId.includes(props.params.data.Id)) {
     disabled.value = true
   }
 })
-function viewDelete() {
-  props.params.updateDeleteType(data);
-}
-function viewEdit() {
-  console.log(data);
-  props.params.updateEditType(data);
-}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '@/assets/css/global.scss';
 
 .button_wrap {
