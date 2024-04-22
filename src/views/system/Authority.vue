@@ -134,7 +134,7 @@
               <!-- 選擇權限名稱 -->
               <div class="d-flex mb-3 content_wrap">
                 <p class='text_title'>請先選擇權限名稱</p>
-                <select class="form-select">
+                <select class="form-select" @change="getPagePermission(roleChoice)" v-model="roleChoice">
                     <option selected value="">--請選擇--</option>
                     <option v-for="option in DropdownArray.role" :key="option" :value="option.Id">{{ option.Name }}</option>
                   </select>
@@ -146,15 +146,18 @@
                   </div>
                 </div>
                 <div class="accordion authority_accordion" id="authority_accordion">
-                  <div v-for="main in permissionList.Data" :key="main.TitleName" class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
-                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                        <input class="form-check-input" type="checkbox" value="" :id="main.id" :checked="main.checked"> {{ main.TitleName }} </button>
+                  <div v-for="(main ,main_index) in permissionList" :key="main.TitleName" class="accordion-item">
+                    <h2 class="accordion-header" >
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#body_'+main.id" aria-expanded="true">
+                        <input class="form-check-input" type="checkbox" value="" :id="main.id" v-model="main.checked" @click="checkAll(main_index, !main.checked)">
+                        <label :for="main.id">{{ main.TitleName }}</label>
+                      </button>
                     </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#authority_accordion">
+                    <div :id="'body_'+main.id" class="accordion-collapse show" aria-labelledby="headingOne" data-bs-parent="#authority_accordion">
                       <div class="accordion-body">
                         <div v-for="sub in main.List" :key="sub.TitleName" class="check_wrap">
-                          <input class="inner_form_check" type="checkbox" value="" :id="sub.id" :checked="sub.checked">{{ sub.TitleName }}
+                          <input class="inner_form_check" type="checkbox" value="" :id="sub.id" v-model="sub.checked">
+                          <label :for="sub.id">{{ sub.TitleName }}</label>
                         </div>
                       </div>
                     </div>
@@ -163,8 +166,8 @@
               </div>
             </div>
             <div class="button_wrap">
-              <button class='confirm_btn' type="button">確認</button>
-              <button class='cancel_btn' type="button">取消</button>
+              <button class='confirm_btn' type="button" @click="saveRolePermission">確認</button>
+              <button class='cancel_btn' type="button" @click="getPagePermission(roleChoice)">取消</button>
             </div>
           </div>
         </div>
@@ -191,7 +194,7 @@ import axios from "axios";
 import allPermission from "@/assets/json/permission.json"
   const apiStore = useAPIStore();
   const utilsStore = useUtilsStore();
-  const permissionList = ref(allPermission);
+  const permissionList = ref(allPermission.Data);
   /**
    * 頁面所需下拉選單
    */
@@ -245,7 +248,7 @@ import allPermission from "@/assets/json/permission.json"
    */
   const grid = ref();
   /**
-   * "UpdateModal" & "DeleteModal"的參數，變更權限名稱使用
+   * "UpdateModal" & "DeleteModal"的參數，變更/刪除 權限名稱使用
    */
   const permissionParams = reactive({
     input: '',
@@ -255,20 +258,29 @@ import allPermission from "@/assets/json/permission.json"
    * 新增權限名稱input
    */
   const newPermission = ref('');
+  // ----- "權限設定"頁籤 -----
+  /**
+   * 權限設定的role下拉選單綁定
+   */
+  const roleChoice = ref('');
   onMounted(async () => {
     DropdownArray.role = await apiStore.getRoleOption();
     DropdownArray.account = await apiStore.getCustodian('');
     rowData.value = DropdownArray.role;
-    setPermissionJson();
   })
   onUnmounted(()=>{
     apiStore.$dispose();
   })
   /**
-   * 
+   * 將此大選單全選或全不選
+   * @param {number} index 第幾個大選單
+   * @param {boolean} checked 選/不選
    */
-  const setPermissionJson = async () => {
-    
+  const checkAll = (index, checked) => {
+    console.log(permissionList.value);
+    permissionList.value[index].List.forEach((item)=>{
+      item.checked = checked;
+    })
   }
   /**
    * 取得選擇的使用者目前的權限名稱
@@ -303,6 +315,7 @@ import allPermission from "@/assets/json/permission.json"
   const dataApi = (params) => {
     grid.value = params.api;
   };
+  // ----- 變更人員權限 -----
   /**
    * 儲存選擇的使用者權限
    */
@@ -336,20 +349,21 @@ import allPermission from "@/assets/json/permission.json"
       case 'Create':
         url = '/AuthorityMng/CreateRole'
         requestData = {
-          NewRoleName: newPermission.value,
+          RoleName: newPermission.value, // 新增的權限名稱
+          Index: DropdownArray.role.length, // 新增的權限Index為最後一個(Index+1)，等同於現在的array.length
         }
         break;
       case 'Update':
         url = '/AuthorityMng/EditRoleName'
         requestData = {
-          RoleId: permissionParams.id,
-          NewRoleName: permissionParams.input,
+          RoleId: permissionParams.id, // 欲編輯的權限id
+          RoleName: permissionParams.input, // 欲編輯的內容
         }
         break;
       case 'Delete':
         url = '/AuthorityMng/DeleteRole'
         requestData = {
-          RoleId: permissionParams.id,
+          RoleId: permissionParams.id, // 欲刪除的權限id
         }
         break;
       case 'IndexEdit':
@@ -375,6 +389,72 @@ import allPermission from "@/assets/json/permission.json"
       }
     } catch (error) {
       console.error(error);
+    }
+  }
+  // ----- 權限設定 -----
+  /**
+   * 取得所選的人員權限的各業面權限選單
+   * @param {number} Id 權限id
+   */
+  const getPagePermission = async (Id) => {
+    // Id 為number且可為0
+    if (Id === undefined || Id === null || Id === '') return
+    try {
+      const response = await axios.get('http://192.168.0.177:7008/AuthorityMng/GetRoleSettingById');
+      const data = response.data ;
+      if(data.state === 'success') {
+        console.log(data.messages);
+        setPagePermission(data.resultList);
+      }
+    } catch(e) {
+      console.error(e);
+    }
+  }
+  /**
+   * 處理API return結果並更新頁面權限手風琴
+   * @param {object} newPermissionList API return
+   */
+  const setPagePermission = (newPermissionList) => {
+    // 更新各個權限的check boolean
+    const updatedData = permissionList.value.map(dataItem => {
+      const updatedList = dataItem.List.map(listItem => {
+        if(newPermissionList.hasOwnProperty(listItem.id)){
+          return {...listItem, checked: newPermissionList[listItem.id]}
+        } else {
+          return listItem
+        }
+      });
+      return {...dataItem, List: updatedList};
+    });
+    permissionList.value = updatedData;
+  }
+  /**
+   * 儲存勾選的設定內容(tab-權限設定)
+   */
+  const saveRolePermission = async () => {
+    let submitPermissionList = {};
+    permissionList.value.forEach((dataList)=>{
+      dataList.List.forEach((itemList)=>{
+        submitPermissionList[itemList.id] = itemList.checked;
+      })
+    })
+    // console.log('submitPermissionList', submitPermissionList);
+    const role = DropdownArray.role.find(role => role.Id === roleChoice.value);
+    let requestData = {
+      ...submitPermissionList,
+      Id: role.Id,
+      RoleName: role.Name
+    }
+    try {
+      const reseponse = await axios.post('http://192.168.0.177:7008/AuthorityMng/AccoutChangeRole', requestData);
+      const data = reseponse.data;
+      if (data.state === 'success') {
+        alert(data.messages);
+      } else {
+        console.error('error', data.messages);
+      }
+    } catch (e) {
+      console.error(e);
     }
   }
 </script>
