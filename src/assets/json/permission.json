@@ -1,0 +1,478 @@
+{
+  "Data":   [
+    {
+      "TitleName": "專案採購管理",
+      "id": "PurchaseMng",
+      "checked": false,
+      "List": [
+        {
+          "TitleName": "檢視專案採購管理",
+          "id": "PP_Mgr",
+          "checked": false
+        },
+        {
+          "TitleName": "檢視專案採購單",
+          "id": "PP_Detail",
+          "checked": false
+        },
+        {
+          "TitleName": "新增專案採購單",
+          "id": "PP_Create",
+          "checked": false
+        },
+        {
+          "TitleName": "編輯專案採購單",
+          "id": "PP_Edit",
+          "checked": false
+        },
+        {
+          "TitleName": "下訂作業",
+          "id": "PP_Order",
+          "checked": false
+        },
+        {
+          "TitleName": "沖銷作業",
+          "id": "PP_Writeoff",
+          "checked": false
+        },
+        {
+          "TitleName": "刪除專案採購單",
+          "id": "PP_Delete",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "TitleName": "訂單管理",
+      "id": "PurchaseMng",
+      "checked": false,
+      "List": [
+        {
+          "TitleName": "檢視訂購管理",
+          "id": "PO_Mgr",
+          "checked": false
+        },
+        {
+          "TitleName": "檢視訂購單",
+          "id": "PO_Detail",
+          "checked": false
+        },
+        {
+          "TitleName": "新增訂購單",
+          "id": "PO_Create",
+          "checked": false
+        },
+        {
+          "TitleName": "編輯訂購單",
+          "id": "PO_Edit",
+          "checked": false
+        },
+        {
+          "TitleName": "刪除訂購單",
+          "id": "PO_Delete",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "TitleName": "收貨管理",
+      "id": "PurchaseMng",
+      "checked": false,
+      "List": [
+        {
+          "TitleName": "檢視收貨管理",
+          "id": "AR_Mgr",
+          "checked": false
+        },
+        {
+          "TitleName": "檢視收貨單",
+          "id": "AR_Detail",
+          "checked": false
+        },
+        {
+          "TitleName": "新增收貨單",
+          "id": "AR_Create",
+          "checked": false
+        },
+        {
+          "TitleName": "編輯收貨單",
+          "id": "AR_Edit",
+          "checked": false
+        },
+        {
+          "TitleName": "刪除收貨單",
+          "id": "AR_Delete",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "TitleName": "快速入庫",
+      "id": "PurchaseMng",
+      "checked": false,
+      "List": [
+        {
+          "TitleName": "快速入庫",
+          "id": "AI_Fast",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "TitleName": "入庫填報管理",
+      "id": "PurchaseMng",
+      "checked": false,
+      "List": [
+        {
+          "TitleName": "檢視入庫填報管理",
+          "id": "AI_Detail",
+          "checked": false
+        },
+        {
+          "TitleName": "新品入庫",
+          "id": "AI_Create",
+          "checked": false
+        },
+        {
+          "TitleName": "編輯入庫填報單",
+          "id": "AI_Edit",
+          "checked": false
+        },
+        {
+          "TitleName": "刪除入庫填報單",
+          "id": "AI_Delete",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "TitleName": "入庫作業管理",
+      "id": "PurchaseMng",
+      "checked": false,
+      "List": [
+        {
+          "TitleName": "檢視入庫作業管理",
+          "id": "AIP_Detail",
+          "checked": false
+        },
+        {
+          "TitleName": "入庫交付作業",
+          "id": "AIP_ReceivedDelivery",
+          "checked": false
+        },
+        {
+          "TitleName": "入庫作業",
+          "id": "AIP_Edit",
+          "checked": false
+        },
+        {
+          "TitleName": "刪除入庫作業單",
+          "id": "AIP_Delete",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "TitleName": "快速出庫",
+      "id": "PurchaseMng",
+      "checked": false,
+      "List": [
+        {
+          "TitleName": "快速出庫",
+          "id": "AO_Fast",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "TitleName": "出庫填報管理",
+      "id": "PurchaseMng",
+      "checked": false,
+      "List": [
+        {
+          "TitleName": "檢視出庫填報管理",
+          "id": "AO_Detail",
+          "checked": false
+        },
+        {
+          "TitleName": "新增出庫填報單",
+          "id": "AO_Create",
+          "checked": false
+        },
+        {
+          "TitleName": "編輯出庫填報單",
+          "id": "AO_Edit",
+          "checked": false
+        },
+        {
+          "TitleName": "刪除出庫填報單",
+          "id": "AO_Delete",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "TitleName": "出庫作業管理",
+      "id": "PurchaseMng",
+      "checked": false,
+      "List": [
+        {
+          "TitleName": "檢視出庫作業管理",
+          "id": "AOP_Detail",
+          "checked": false
+        },
+        {
+          "TitleName": "出庫備料作業",
+          "id": "AOP_PreparedProcess",
+          "checked": false
+        },
+        {
+          "TitleName": "出庫交付作業",
+          "id": "AOP_ReceivedDelivery",
+          "checked": false
+        },
+        {
+          "TitleName": "刪除出庫作業單",
+          "id": "AOP_Delete",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "TitleName": "出庫審核管理",
+      "id": "PurchaseMng",
+      "checked": false,
+      "List": [
+        {
+          "TitleName": "檢視出庫審核管理",
+          "id": "AOV_Detail",
+          "checked": false
+        },
+        {
+          "TitleName": "出庫審核作業",
+          "id": "AOV_Verify",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "TitleName": "資產管理",
+      "id": "PurchaseMng",
+      "checked": false,
+      "List": [
+        {
+          "TitleName": "檢視資產管理",
+          "id": "AssetMgr",
+          "checked": false
+        },
+        {
+          "TitleName": "檢視資產",
+          "id": "AssetMgr_Detail",
+          "checked": false
+        },
+        {
+          "TitleName": "編輯資產",
+          "id": "AssetMgr_Edit",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "TitleName": "出貨簽收管理",
+      "id": "PurchaseMng",
+      "checked": false,
+      "List": [
+        {
+          "TitleName": "檢視出貨簽收管理",
+          "id": "SR_Mgr",
+          "checked": false
+        },
+        {
+          "TitleName": "檢視出貨簽收單",
+          "id": "SR_Detail",
+          "checked": false
+        },
+        {
+          "TitleName": "上傳出貨簽收單",
+          "id": "SR_Upload",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "TitleName": "設備整合管理",
+      "id": "PurchaseMng",
+      "checked": false,
+      "List": [
+        {
+          "TitleName": "檢視設備整合管理",
+          "id": "EI_Detail",
+          "checked": false
+        },
+        {
+          "TitleName": "整合設備",
+          "id": "EI_Create",
+          "checked": false
+        },
+        {
+          "TitleName": "更換設備",
+          "id": "EI_Change",
+          "checked": false
+        },
+        {
+          "TitleName": "刪除設備整合單",
+          "id": "EI_Delete",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "TitleName": "盤點管理",
+      "id": "PurchaseMng",
+      "checked": false,
+      "List": [
+        {
+          "TitleName": "檢視盤點管理",
+          "id": "IP_Detail",
+          "checked": false
+        },
+        {
+          "TitleName": "新增盤點計畫",
+          "id": "IP_Create",
+          "checked": false
+        },
+        {
+          "TitleName": "編輯盤點計畫",
+          "id": "IP_Edit",
+          "checked": false
+        },
+        {
+          "TitleName": "刪除盤點計畫",
+          "id": "IP_Delete",
+          "checked": false
+        },
+        {
+          "TitleName": "盤點作業",
+          "id": "IP_InventoryProcess",
+          "checked": false
+        },
+        {
+          "TitleName": "平帳作業",
+          "id": "IP_FlatProcess",
+          "checked": false
+        },
+        {
+          "TitleName": "檢視盤點結果",
+          "id": "IP_InventoryResult",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "TitleName": "維修管理",
+      "id": "PurchaseMng",
+      "checked": false,
+      "List": [
+        {
+          "TitleName": "檢視維修管理",
+          "id": "R_Detail",
+          "checked": false
+        },
+        {
+          "TitleName": "新增維修單",
+          "id": "R_Create",
+          "checked": false
+        },
+        {
+          "TitleName": "編輯維修單",
+          "id": "R_Edit",
+          "checked": false
+        },
+        {
+          "TitleName": "刪除維修單",
+          "id": "R_Delete",
+          "checked": false
+        },
+        {
+          "TitleName": "交付維修作業",
+          "id": "R_ReceivedDelivery",
+          "checked": false
+        },
+        {
+          "TitleName": "審核維修作業",
+          "id": "R_Verify",
+          "checked": false
+        },
+        {
+          "TitleName": "送修作業",
+          "id": "R_Repair",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "TitleName": "報廢管理",
+      "id": "PurchaseMng",
+      "checked": false,
+      "List": [
+        {
+          "TitleName": "檢視報廢管理",
+          "id": "S_Detail",
+          "checked": false
+        },
+        {
+          "TitleName": "新增報廢單",
+          "id": "S_Create",
+          "checked": false
+        },
+        {
+          "TitleName": "編輯報廢單",
+          "id": "S_Edit",
+          "checked": false
+        },
+        {
+          "TitleName": "刪除報廢單",
+          "id": "S_Delete",
+          "checked": false
+        },
+        {
+          "TitleName": "交付報廢作業",
+          "id": "S_ReceivedDelivery",
+          "checked": false
+        },
+        {
+          "TitleName": "審核報廢作業",
+          "id": "S_Verify",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "TitleName": "系統管理",
+      "id": "PurchaseMng",
+      "checked": false,
+      "List": [
+        {
+          "TitleName": "權限管理",
+          "id": "RolesMgr",
+          "checked": false
+        },
+        {
+          "TitleName": "參數管理",
+          "id": "ParamMgr",
+          "checked": false
+        },
+        {
+          "TitleName": "系統日誌管理",
+          "id": "SystemLog",
+          "checked": false
+        },
+        {
+          "TitleName": "LINE權限管理",
+          "id": "LineMgr",
+          "checked": false
+        }
+      ]
+    }
+  ]
+}

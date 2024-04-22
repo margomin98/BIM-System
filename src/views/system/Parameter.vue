@@ -188,7 +188,6 @@ import {
 } from "ag-grid-vue3";
 import Navbar from "@/components/Navbar.vue";
 import Parameter_button from "@/components/Parameter_button";
-import Edit_pen from "@/components/Edit_pen";
 import {
   onMounted,
   reactive,
@@ -199,7 +198,6 @@ export default {
     Navbar,
     AgGridVue,
     Parameter_button,
-    Edit_pen,
   },
   setup() {
     const newParams = reactive({
