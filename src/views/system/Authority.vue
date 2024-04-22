@@ -335,7 +335,9 @@ import allPermission from "@/assets/json/permission.json"
       const data = reseponse.data;
       if (data.state === 'success') {
           let msg = data.messages + '\n';
-          msg += `${User.name}　變更為　${User.selectPermission}`
+          let currentSelect = DropdownArray.role.find(role => role.Id === User.selectPermission)
+          msg += `${User.name}　變更為　${currentSelect.Name}`
+          getCurrentPermission();
           alert(msg);
         } else {
           console.error('error', data.messages);
