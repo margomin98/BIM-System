@@ -103,8 +103,8 @@
     onMounted,
     onUnmounted
   } from "vue";
-  import Rent_button from "@/components/Rent_button";
-  import Delete from "@/components/Rent_delete_button.vue";
+  import Rent_button from "@/components/rent_page/Rent_button";
+  import Delete from "@/components/rent_page/Rent_delete_button.vue";
   import Navbar from "@/components/Navbar.vue";
   import {
     Rent_UseArray,
