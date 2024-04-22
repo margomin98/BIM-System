@@ -342,12 +342,12 @@ export default {
           formData.append(fieldName, formFields[fieldName]);
           console.log(formData.get(`${fieldName}`));
         }
-        const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
         try {
+          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
           const data = response.data;
           console.log(data);
           if (data.state === 'success') {
@@ -372,12 +372,12 @@ export default {
           formData.append(fieldName, formFields[fieldName]);
           console.log(formData.get(`${fieldName}`));
         }
-        const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
         try {
+          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
           const data = response.data;
           console.log(data);
           if (data.state === 'success') {
