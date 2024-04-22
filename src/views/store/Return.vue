@@ -94,7 +94,7 @@ import {
 } from 'vue';
 import Navbar from '@/components/Navbar.vue';
 import router from '@/router';
-import axios from 'axios';
+import axios from '@/axios/tokenInterceptor';
 export default {
   components: {
     Navbar

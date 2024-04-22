@@ -250,7 +250,7 @@ import {
   viewImgFile,
   canEnterPage
 } from '@/assets/js/common_fn.js'
-import axios from 'axios';
+import axios from '@/axios/tokenInterceptor';
 import {
   useRoute
 } from 'vue-router';

@@ -246,7 +246,7 @@ import {
   goBack
 } from '@/assets/js/common_fn.js'
 import Navbar from '@/components/Navbar.vue';
-import axios from 'axios';
+import axios from '@/axios/tokenInterceptor';
 import router from '@/router';
 import {
   register

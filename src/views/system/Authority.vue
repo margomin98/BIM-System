@@ -190,7 +190,7 @@ import {
   ref
 } from 'vue';
 import { useAPIStore, useUtilsStore } from "@/store";
-import axios from "axios";
+import axios from '@/axios/tokenInterceptor';
 import allPermission from "@/assets/json/permission.json"
   const apiStore = useAPIStore();
   const utilsStore = useUtilsStore();
