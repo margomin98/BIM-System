@@ -384,7 +384,8 @@ import allPermission from "@/assets/json/permission.json"
       if(data.state === 'success') {
         if(type === 'create') { newPermission.value = '' };
         DropdownArray.role = await apiStore.getRoleOption();
-        setRowData
+        rowData.value = DropdownArray.role;
+        grid.value.setRowData(rowData.value);
       } else if (data.state === 'account_error') {
         router.push('/');
       }
@@ -449,7 +450,7 @@ import allPermission from "@/assets/json/permission.json"
       RoleName: role.Name
     }
     try {
-      const reseponse = await axios.post('http://192.168.0.177:7008/AuthorityMng/AccoutChangeRole', requestData);
+      const reseponse = await axios.post('http://192.168.0.177:7008/AuthorityMng/SetRoleSettingById', requestData);
       const data = reseponse.data;
       if (data.state === 'success') {
         alert(data.messages);
