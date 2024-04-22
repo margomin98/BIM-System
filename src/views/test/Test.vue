@@ -1,7 +1,7 @@
 <template>
   <Navbar />
   <div class="main_section">
-    <div class="title col">
+    <!-- <div class="title col">
       <h1>PrimeVue資產管理</h1>
     </div>
     <div class="container-fluid datagrid_section">
@@ -217,16 +217,10 @@
         :rowsPerPageOptions="[10, 20, 30]"
         currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}"
       >
-        <!-- <template #header>
-              <div>
-                <button class="btn btn-primary" label="Export" @click="exportCSV()" style="margin-right: 1rem;">exportCSV</button>
-                <button @click="add" type="button" class="btn btn-primary">increase totalRecords</button>
-              </div>
-</template>-->
+       
         <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
         <Column style="width: 100vw">
           <template #body="slotProps">
-            <!-- Add the custom component here -->
             <test
               :params="slotProps"
               :msg="'hi'"
@@ -244,9 +238,9 @@
         ></Column>
       </DataTable>
     </div>
-  </div>
+  </div> -->
   <!-- 加載動畫 -->
-  <loading :active.sync="isLoading">
+  <!-- <loading :active.sync="isLoading">
     <div class="loadingio-spinner-ellipsis-kfs3u9hd8sa">
       <div class="ldio-gxxoh6igtkw">
         <div></div>
@@ -262,12 +256,89 @@
       <span class="dot-two"> .</span>
       <span class="dot-three"> .</span>
     </p>
-  </loading>
+  </loading> -->
+  </div>
+  <div id="app">
+  <div class="accordion">
+    <div class="accordion-header">
+      <ul>
+        <li>
+          <label>
+            <input type="checkbox" :checked="isAllSelected" @click="selectAllitems"> Select All
+          </label>  
+          <span class="accordion-toggle" @click="toggleAccordion(1)"> 
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon icon-tabler icon-tabler-chevron-down"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" />
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </span>
+        </li>
+      </ul>
+    </div>
+    <div v-if="isOpen === 1" class="accordion-body" id="accordion-body-1">
+      <ul>
+        <li v-for="item in items" :key="item.id">
+          <label>
+            <input type="checkbox" v-model="selecteditemIds" :value="item.id"> {{ item.name }}
+          </label>
+        </li>
+      </ul>
+    </div>
+    <div class="accordion-header">
+      <ul>
+        <li>
+          <label>
+            <input type="checkbox" :checked="isAllSelected2" @click="selectAllitems2"> Select All
+          </label>  
+          <span class="accordion-toggle" @click="toggleAccordion(2)">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon icon-tabler icon-tabler-chevron-down"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" />
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </span>
+        </li>
+      </ul>
+    </div>
+    <div v-if="isOpen === 2" class="accordion-body" id="accordion-body-2">
+      <ul>
+        <li v-for="item in items" :key="item.id + '2'">
+          <label>
+            <input type="checkbox" v-model="selecteditemIds2" :value="item.id"> {{ item.name }}
+          </label>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
 </template>
 
 <script>
 import Loading from 'vue-loading-overlay';
 import {
+  computed,
   ref,
   reactive,
   onMounted
@@ -301,6 +372,44 @@ export default {
     Loading
   },
   setup() {
+    
+//全選的script,這裡開始
+
+    const items = ref([
+      { id: 1, name: 'Fluffy' },
+      { id: 2, name: 'Whiskers' },
+      { id: 3, name: 'Mittens' },
+    ]);
+
+    const selecteditemIds = ref([]);
+    const selecteditemIds2 = ref([]);
+    const isOpen = ref(false);
+
+    const isAllSelected = computed(() => selecteditemIds.value.length === items.value.length);
+    const isAllSelected2 = computed(() => selecteditemIds2.value.length === items.value.length);
+
+    const selectAllitems = (event) => {
+      if (event.target.checked) {
+        selecteditemIds.value = items.value.map(item => item.id);
+      } else {
+        selecteditemIds.value = [];
+      }
+    };
+
+    const selectAllitems2 = (event) => {
+      if (event.target.checked) {
+        selecteditemIds2.value = items.value.map(item => item.id);
+      } else {
+        selecteditemIds2.value = [];
+      }
+    };
+
+    const toggleAccordion = (accordionNumber) => {
+      isOpen.value = isOpen.value === accordionNumber ? 0 : accordionNumber;
+    };
+
+//全選的script，這裡結束
+
     const home = ref(null);
     const searchParams = reactive({
       EquipTypeName: '',
@@ -549,6 +658,17 @@ export default {
       // alert(data)
     }
     return {
+      //全選的script,這裡開始
+      items,
+      selecteditemIds,
+      selecteditemIds2,
+      isOpen,
+      isAllSelected,
+      isAllSelected2,
+      selectAllitems,
+      selectAllitems2,
+      toggleAccordion,
+      //全選的script,這裡結束
       home,
       dt,
       searchParams,
@@ -581,6 +701,15 @@ export default {
 @import "@/assets/css/global.scss";
 @import "@/assets/css/theme.css";
 @import "@/assets/css/loading.css";
+
+.accordion ul{
+  padding-left:0;
+  padding: 10px;
+  margin-bottom: 0;
+   li{
+  list-style-type:none;
+}
+}
 
 @media only screen and (min-width: 1200px) {
   .main_section {
