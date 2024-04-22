@@ -152,10 +152,12 @@
           <div class="input-group mt-3">
             <div class="input-group-prepend">已上傳檔案：</div>
             <div class="d-flex  flex-column selected_file_wrap">
-              <div v-for="(file , index) in details.existFile" :key="index" class="file_upload_wrap">
+              <div v-for="(file, index) in details.existFile" :key="index" class="file_upload_wrap">
                 <p class='file_name'>{{ file.FileName }}
-          <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"  @click="viewImgFile(index,details,modalParams,'exist')" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
-        </p>
+                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"
+                    @click="viewImgFile(index, details, modalParams, 'exist')" data-bs-toggle="modal"
+                    data-bs-target="#viewFile_modal">
+                </p>
               </div>
             </div>
           </div>
@@ -314,6 +316,18 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/css/global.scss';
 
+.readonly_box {
+  @include readonly_box;
+}
+
+.input-number {
+  @include count_btn;
+}
+
+span {
+  @include red_star;
+}
+
 .scrap_quantity,
 .scrap_quantity_storage {
   font-size: 20px;
@@ -324,7 +338,7 @@ export default {
 
 .scrap_hint {
   font-weight: 700;
-  color: #00438B;
+  color: #00438b;
   font-size: 18px;
 }
 
@@ -389,7 +403,7 @@ export default {
 
 .file_name::before {
   margin-right: 5px;
-  content: '·';
+  content: "·";
   font-weight: 700;
   color: white;
 }
@@ -418,7 +432,7 @@ export default {
 
         &::before {
           margin-right: 10px;
-          content: '·';
+          content: "·";
           font-weight: 700;
           color: white;
         }
@@ -433,7 +447,7 @@ export default {
     border-radius: 0;
 
     .modal-body {
-      background: #E94B4B;
+      background: #e94b4b;
       text-align: center;
       font-weight: 700;
       width: 100%;
@@ -446,7 +460,7 @@ export default {
       gap: 10px;
 
       button:nth-child(1) {
-        background-color: #7E7E7E;
+        background-color: #7e7e7e;
         border: none;
         color: white;
         width: 50px;
@@ -458,7 +472,7 @@ export default {
       }
 
       button:nth-child(2) {
-        background-color: #E94B4B;
+        background-color: #e94b4b;
         border: none;
         color: white;
         width: 50px;
@@ -468,16 +482,6 @@ export default {
           background-color: #a70e0e;
         }
       }
-    }
-  }
-}
-
-.main_section {
-  .input-group {
-    flex-wrap: nowrap;
-
-    .input-group-prepend {
-      white-space: nowrap;
     }
   }
 }
@@ -505,99 +509,45 @@ export default {
   }
 }
 
+.main_section {
+  .fixed_info {
+    @include fixed_info;
+
+    p {
+      font-size: 20px;
+      margin-bottom: 0;
+    }
+  }
+  .content {
+    @include content_bg;
+    .input-group {
+      flex-wrap: nowrap;
+      .readonly_box,
+      .form-control {
+        height: 37px;
+      }
+
+      .input-group-prepend {
+        color: white;
+        font-weight: 700;
+        font-size: 20px;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
 @media only screen and (min-width: 1200px) {
   .main_section {
-    .readonly_box {
-      @include readonly_box;
-    }
-
     .info_wrap {
       margin: 30px auto 5%;
       width: 750px;
 
-      .fixed_info {
-        @include fixed_info;
-
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-      }
-
       .content {
-        @include content_bg;
-
         .input-group {
-          .input-number {
-            @include count_btn;
-          }
-
-          .readonly_box {
-            height: 37px;
-          }
-
-          .form-control {
-            height: 37px;
-            border-radius: 0;
-          }
-
           .input-group-prepend {
-            color: white;
-            font-weight: 700;
-            font-size: 20px;
             text-align: end;
             width: 120px;
-
-            span {
-              @include red_star
-            }
-          }
-
-          .selected_file {
-            margin-left: 20px;
-
-            p.title {
-              font-weight: 700;
-              color: white;
-              margin-bottom: 5px;
-            }
-
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-
-              img {
-                width: 25px;
-                height: 25px;
-              }
-
-              p {
-                margin-bottom: 0;
-                font-weight: 700;
-                color: white;
-
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
-          }
-
-          .file_wrap {
-            display: flex;
-            flex-direction: column;
-
-            .choose_btn {
-              margin-bottom: 10px;
-              @include choose_file_btn;
-
-              &:hover {
-                background: #3f608f;
-              }
-            }
           }
         }
       }
@@ -607,105 +557,31 @@ export default {
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
-    .readonly_box {
-      @include readonly_box;
-    }
-
     .info_wrap {
       margin: 30px auto 5%;
       padding: 0 5%;
 
-      .fixed_info {
-        @include fixed_info;
-
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-      }
-
       .content {
-        @include content_bg;
-
         .input-group {
           width: 100%;
 
           .num_wrap {
             .input-number {
               width: 50%;
-              @include count_btn;
             }
           }
 
           .readonly_box {
-            height: 37px;
             width: 100%;
           }
 
           .form-control {
-            height: 37px;
             width: 65%;
           }
 
           .input-group-prepend {
-            color: white;
-            font-weight: 700;
-            font-size: 20px;
             text-align: end;
             width: 110px;
-
-            span {
-              @include red_star
-            }
-          }
-        }
-
-        .repair_photo_section {
-          .selected_file {
-            margin-left: 20px;
-
-            p.title {
-              font-weight: 700;
-              color: white;
-              margin-bottom: 5px;
-            }
-
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-
-              img {
-                width: 25px;
-                height: 25px;
-              }
-
-              p {
-                margin-bottom: 0;
-                font-weight: 700;
-                color: white;
-
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
-          }
-
-          .file_wrap {
-            display: flex;
-            flex-direction: column;
-
-            .choose_btn {
-              margin-bottom: 10px;
-              @include choose_file_btn;
-
-              &:hover {
-                background: #3f608f;
-              }
-            }
           }
         }
       }
@@ -715,121 +591,53 @@ export default {
 
 @media only screen and (max-width: 767px) {
   .main_section {
-    .readonly_box {
-      @include readonly_box;
-      height: 35px;
+    .readonly_box,
+    .input-group .num_wrap,
+    .form-control {
       margin-left: unset !important;
     }
-
+    .form-control,
+    .input-number,
+    .num_wrap .number-input-box {
+      width: 100%;
+    }
     .info_wrap {
       padding: 0 5%;
 
       .fixed_info {
-        @include fixed_info;
         height: unset;
         flex-direction: column;
         padding: 10px;
-
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
       }
 
       .content {
-        @include content_bg;
-
-        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+        .input-group
+          > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+            .valid-feedback
+          ):not(.invalid-tooltip):not(.invalid-feedback) {
           margin-left: unset;
           border-radius: 5px;
           margin-top: 5px;
-          height: 35px;
         }
 
         .input-group {
           flex-direction: column;
 
           .num_wrap {
-            margin-left: unset !important;
-
             .number-input-box {
-              width: 100%;
-
               .input-number {
-                @include count_btn;
                 width: 20%;
               }
             }
           }
 
-          .form-control {
-            height: 35px;
-            width: 100%;
-            border-radius: 0;
-            margin-left: unset !important;
-          }
-
           .input-group-prepend {
-            color: white;
-            font-weight: 700;
-            font-size: 20px;
-            width: 100px;
             white-space: nowrap;
-
-            span {
-              @include red_star
-            }
-          }
-
-          .selected_file {
-            p.title {
-              font-weight: 700;
-              color: white;
-              margin-bottom: 5px;
-            }
-
-            .file_upload_wrap {
-              margin-bottom: 0;
-              display: flex;
-
-              img {
-                width: 25px;
-                height: 25px;
-              }
-
-              p {
-                margin-bottom: 0;
-                font-weight: 700;
-                color: white;
-
-                &::before {
-                  margin-right: 10px;
-                  content: '·';
-                  font-weight: 700;
-                  color: white;
-                }
-              }
-            }
-          }
-
-          .file_wrap {
-            display: flex;
-            flex-direction: column;
-            margin-left: unset !important;
-
-            .choose_btn {
-              margin-top: 5px;
-              margin-bottom: 10px;
-              @include choose_file_btn;
-
-              &:hover {
-                background: #3f608f;
-              }
-            }
           }
         }
       }
     }
   }
 }
+
 </style>

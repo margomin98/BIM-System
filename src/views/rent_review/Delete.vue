@@ -1117,11 +1117,6 @@ export default {
 @media only screen and (max-width: 767px) {
   .main_section {
  
-
-    .readonly_box {
-      @include readonly_box;
-    }
-
     .info_wrap {
       margin: auto;
       padding: 0 5%;

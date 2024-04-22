@@ -397,13 +397,20 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/css/global.scss';
-
 span {
-  @include red_star
+  @include red_star;
+}
+
+.input-number {
+  @include count_btn;
+}
+
+.readonly_box {
+  @include readonly_box;
 }
 
 .form-check-input {
-  align-self: center
+  align-self: center;
 }
 
 .scrap_quantity,
@@ -416,7 +423,7 @@ span {
 
 .scrap_hint {
   font-weight: 700;
-  color: #00438B;
+  color: #00438b;
   font-size: 18px;
 }
 
@@ -480,7 +487,7 @@ span {
 
 .file_name::before {
   margin-right: 5px;
-  content: '·';
+  content: "·";
   font-weight: 700;
   color: white;
 }
@@ -509,7 +516,7 @@ span {
 
         &::before {
           margin-right: 10px;
-          content: '·';
+          content: "·";
           font-weight: 700;
           color: white;
         }
@@ -517,37 +524,48 @@ span {
     }
   }
 }
+.button_wrap {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px auto 5%;
+  width: 220px;
 
-.input-group {
-  flex-wrap: nowrap;
+  button {
+    &:nth-child(1) {
+      @include back_to_previous_btn;
 
-  .input-group-prepend {
-    color: white;
-    font-weight: 700;
-    font-size: 20px;
-    white-space: nowrap;
+      &:hover {
+        background-color: #5d85bb;
+      }
+    }
   }
 
+  .send_btn {
+    @include search_and_send_btn;
+
+    &:hover {
+      background-color: #5e7aa2;
+    }
+  }
+
+  .send_btn_disabled {
+    background: #878787;
+
+    &:hover {
+      background: #878787;
+    }
+  }
 }
 
-@media only screen and (min-width: 1200px) {
-  .main_section {
-    .readonly_box {
-      @include readonly_box;
+.main_section {
+  .swiper_section {
+    swiper-slide img {
+      width: 100%;
+      height: auto;
     }
+  }
 
-    .swiper_section {
-      swiper-slide {
-        align-self: baseline;
-      }
-
-      swiper-slide img {
-        width: 100%;
-        height: auto;
-        padding: 40px 0;
-      }
-    }
-
+  .info_wrap {
     h2 {
       margin-top: 50px;
       text-align: center;
@@ -555,74 +573,29 @@ span {
       font-weight: 600;
       @include title_color;
     }
+    .fixed_info {
+      @include fixed_info;
 
-    .info_wrap {
-      margin: 30px auto 5%;
-      width: 750px;
+      p {
+        font-size: 20px;
+        margin-bottom: 0;
+      }
+    }
+    .content {
+      @include content_bg;
 
-      .fixed_info {
-        @include fixed_info;
+      .input-group {
+        flex-wrap: nowrap;
 
-        p {
+        .form-control,
+        .readonly_box {
+          height: 37px;
+        }
+        .input-group-prepend {
+          color: white;
+          font-weight: 700;
           font-size: 20px;
-          margin-bottom: 0;
-        }
-      }
-
-      .content {
-        @include content_bg;
-
-        .input-group {
-          .input-number {
-            @include count_btn;
-          }
-
-          .readonly_box {
-            height: 37px;
-          }
-
-          .form-control {
-            height: 37px;
-            border-radius: 0;
-          }
-
-          .input-group-prepend {
-            text-align: end;
-            width: 120px;
-          }
-        }
-      }
-
-      .button_wrap {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px auto 5%;
-        width: 220px;
-
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-        }
-
-        .send_btn {
-          @include search_and_send_btn;
-
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-
-        .send_btn_disabled {
-          background: #878787;
-
-          &:hover {
-            background: #878787;
-          }
+          white-space: nowrap;
         }
       }
 
@@ -630,14 +603,11 @@ span {
         .auth {
           border-radius: 0 0 10px 10px;
           background: white;
-          height: 80px;
-          padding: 20px;
 
           .input-group {
             display: flex;
             white-space: nowrap;
             flex-wrap: nowrap;
-            justify-content: center;
           }
 
           button {
@@ -646,18 +616,6 @@ span {
             &:hover {
               background: #5a6d87;
             }
-          }
-
-          .form-control {
-            height: 35px;
-            width: 150px;
-            margin-right: 5px;
-          }
-
-          .input-group-prepend {
-            font-weight: 700;
-            font-size: 20px;
-            text-align: end;
           }
 
           .input-container {
@@ -730,12 +688,55 @@ span {
               font-weight: 700;
             }
 
-            background: #3D4E61;
+            background: #3d4e61;
             color: white;
 
             .close_icon {
               cursor: pointer;
             }
+          }
+        }
+      }
+    }
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .main_section {
+    .swiper_section {
+      swiper-slide {
+        align-self: baseline;
+      }
+
+      swiper-slide img {
+        padding: 40px 0;
+      }
+    }
+
+    .info_wrap {
+      margin: 30px auto 5%;
+      width: 750px;
+
+      .content {
+        .input-group {
+          .input-group-prepend {
+            text-align: end;
+            width: 120px;
+          }
+        }
+      }
+
+      .confirm_section {
+        .auth {
+          height: 80px;
+          padding: 20px;
+
+          .input-group {
+            justify-content: center;
+          }
+
+          .form-control {
+            width: 150px;
+            margin-right: 5px;
           }
         }
       }
@@ -745,218 +746,56 @@ span {
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
-    .readonly_box {
-      @include readonly_box;
-    }
-
     .swiper_section {
       swiper-slide {
         align-self: baseline;
       }
 
       swiper-slide img {
-        width: 100%;
-        height: auto;
         padding: 40px 0;
       }
-    }
-
-    h2 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 35px;
-      font-weight: 600;
-      @include title_color;
     }
 
     .info_wrap {
       margin: 30px auto 5%;
       padding: 0 5%;
 
-      .fixed_info {
-        @include fixed_info;
-
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-      }
-
       .content {
-        @include content_bg;
-
         .input-group {
           width: 100%;
 
           .num_wrap {
             .input-number {
               width: 50%;
-              @include count_btn;
             }
-          }
 
-          .readonly_box {
-            height: 37px;
-            width: 100%;
-          }
+            .readonly_box {
+              width: 100%;
+            }
 
-          .form-control {
-            height: 37px;
-            width: 65%;
-          }
+            .form-control {
+              width: 65%;
+            }
 
-          .input-group-prepend {
-            color: white;
-            font-weight: 700;
-            font-size: 20px;
-            text-align: end;
-            width: 108px;
-          }
-        }
-      }
-
-      .button_wrap {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px auto 5%;
-        width: 220px;
-
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-
-            &:hover {
-              background-color: #5d85bb;
+            .input-group-prepend {
+              text-align: end;
+              width: 108px;
             }
           }
         }
 
-        .send_btn {
-          @include search_and_send_btn;
+        .confirm_section {
+          .auth {
+            height: 80px;
+            padding: 20px;
 
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-
-        .send_btn_disabled {
-          background: #878787;
-
-          &:hover {
-            background: #878787;
-          }
-        }
-      }
-
-      .confirm_section {
-        .auth {
-          border-radius: 0 0 10px 10px;
-          background: white;
-          height: 80px;
-          padding: 20px;
-
-          .input-group {
-            display: flex;
-            white-space: nowrap;
-            flex-wrap: nowrap;
-            justify-content: center;
-          }
-
-          button {
-            @include auth_btn;
-
-            &:hover {
-              background: #5a6d87;
-            }
-          }
-
-          .form-control {
-            height: 35px;
-            width: 150px;
-            margin-right: 5px;
-          }
-
-          .input-group-prepend {
-            font-weight: 700;
-            font-size: 20px;
-            text-align: end;
-          }
-
-          .input-container {
-            position: relative;
-            align-self: center;
-          }
-
-          .input-with-icon {
-            position: relative;
-          }
-
-          .checkmark-icon {
-            position: absolute;
-            top: 10%;
-            left: 89%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-          }
-
-          .review_result {
-            gap: 0 10px;
-            align-items: center;
-
-            .form-check {
-              display: flex;
-              gap: 0 5px;
-              margin-bottom: 0;
-
-              .form-check-label {
-                font-weight: 700;
-                font-size: 20px;
-              }
-            }
-          }
-        }
-
-        .modal {
-          button {
-            background: #506b91;
-            border: none;
-            font-weight: 700;
-            font-size: 18px;
-
-            &:hover {
-              background: #6d92b3;
-            }
-          }
-
-          .modal-body {
-            padding: 16px 16px 0;
-          }
-
-          .modal-content {
-            width: 400px;
-            margin: auto;
-          }
-
-          .input-group-prepend {
-            width: auto;
-          }
-
-          .modal-footer {
-            padding: 0 12px 12px;
-            border: none;
-          }
-
-          .modal-header {
-            h5 {
-              font-weight: 700;
+            .input-group {
+              justify-content: center;
             }
 
-            background: #3D4E61;
-            color: white;
-
-            .close_icon {
-              cursor: pointer;
+            .form-control {
+              width: 150px;
+              margin-right: 5px;
             }
           }
         }
@@ -967,47 +806,35 @@ span {
 
 @media only screen and (max-width: 767px) {
   .main_section {
-    .readonly_box {
-      @include readonly_box;
-      height: 35px;
+    .readonly_box,
+    .input-group .num_wrap,
+    .form-control {
       margin-left: unset !important;
     }
-
+    .num_wrap .number-input-box,
+    .form-control {
+      width: 100%;
+    }
     .swiper_section swiper-slide {
       img {
-        width: 100%;
-        height: auto;
         padding: 40px;
       }
-    }
-
-    h2 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 35px;
-      font-weight: 600;
-      @include title_color;
     }
 
     .info_wrap {
       padding: 0 5%;
 
       .fixed_info {
-        @include fixed_info;
         height: unset;
         flex-direction: column;
         padding: 10px;
-
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
       }
 
       .content {
-        @include content_bg;
-
-        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+        .input-group
+          > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+            .valid-feedback
+          ):not(.invalid-tooltip):not(.invalid-feedback) {
           margin-left: unset;
           border-radius: 5px;
           margin-top: 5px;
@@ -1017,183 +844,34 @@ span {
           flex-direction: column;
 
           .num_wrap {
-            margin-left: unset !important;
-
             .number-input-box {
-              width: 100%;
-
               .input-number {
-                @include count_btn;
                 width: 20%;
               }
             }
           }
 
-          .form-control {
-            height: 35px;
-            width: 100%;
-            border-radius: 0;
-            margin-left: unset !important;
-          }
-
           .input-group-prepend {
-            color: white;
-            font-weight: 700;
-            font-size: 20px;
             width: 100px;
             white-space: nowrap;
           }
         }
-      }
 
-      .button_wrap {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px auto 5%;
-        width: 220px;
+        .confirm_section {
+          .auth {
+            padding: 10px 20px;
 
-        button {
-          &:nth-child(1) {
-            @include back_to_previous_btn;
-            width: 100px;
-
-            &:hover {
-              background-color: #5d85bb;
-            }
-          }
-        }
-
-        .send_btn {
-          @include search_and_send_btn;
-          width: 70px;
-          padding: 5px;
-
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-
-        .send_btn_disabled {
-          background: #878787;
-          width: 70px;
-          padding: 5px;
-
-          &:hover {
-            background: #878787;
-          }
-        }
-      }
-
-      .confirm_section {
-        .auth {
-          border-radius: 0 0 10px 10px;
-          background: white;
-          padding: 10px 20px;
-
-          .input-group {
-            display: flex;
-            white-space: nowrap;
-            flex-wrap: nowrap;
-            justify-content: left;
-            margin: 5px 0;
-          }
-
-          button {
-            @include auth_btn;
-
-            &:hover {
-              background: #5a6d87;
-            }
-          }
-
-          .form-control {
-            height: 35px;
-            margin-right: 5px;
-          }
-
-          .input-group-prepend {
-            font-weight: 700;
-            font-size: 20px;
-            width: 100px;
-            text-align: end;
-            color: black;
-          }
-
-          .input-container {
-            position: relative;
-            align-self: center;
-          }
-
-          .input-with-icon {
-            position: relative;
-          }
-
-          .checkmark-icon {
-            position: absolute;
-            top: 10%;
-            left: 89%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-          }
-
-          .review_result {
-            gap: 0 10px;
-            align-items: center;
-
-            .form-check {
-              display: flex;
-              gap: 0 5px;
-              margin-bottom: 0;
-
-              .form-check-label {
-                font-weight: 700;
-                font-size: 18px;
-              }
-            }
-          }
-        }
-
-        .modal {
-          button {
-            background: #506b91;
-            border: none;
-            font-weight: 700;
-            font-size: 18px;
-
-            &:hover {
-              background: #6d92b3;
-            }
-          }
-
-          .modal-body {
-            padding: 16px 16px 0;
-          }
-
-          .modal-content {
-            width: 400px;
-            margin: auto;
-          }
-
-          .input-group-prepend {
-            width: auto;
-          }
-
-          .modal-footer {
-            padding: 0 12px 12px;
-            border: none;
-          }
-
-          .modal-header {
-            h5 {
-              font-weight: 700;
+            .input-group {
+              justify-content: left;
+              margin: 5px 0;
             }
 
-            background: #3D4E61;
-            color: white;
+            .form-control {
+              margin-right: 5px;
+            }
 
-            .close_icon {
-              cursor: pointer;
+            .input-group-prepend {
+              color: black;
             }
           }
         }
@@ -1201,4 +879,6 @@ span {
     }
   }
 }
+
+
 </style>
