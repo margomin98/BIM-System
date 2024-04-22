@@ -49,17 +49,17 @@
     <div class="info_wrap">
       <ul class="nav nav-tabs" id="Tab" role="tablist">
         <li class="nav-item" role="presentation">
-          <button class="nav-link" id="change-tab" data-bs-toggle="tab" data-bs-target="#change" type="button" role="tab">變更人員權限</button>
+          <button class="nav-link active" id="change-tab" data-bs-toggle="tab" data-bs-target="#change" type="button" role="tab">變更人員權限</button>
         </li>
         <li class="nav-item" role="presentation">
           <button class="nav-link" id="name-tab" data-bs-toggle="tab" data-bs-target="#name" type="button" role="tab">權限名稱</button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="setting-tab" data-bs-toggle="tab" data-bs-target="#setting" type="button" role="tab">權限設定</button>
+          <button class="nav-link" id="setting-tab" data-bs-toggle="tab" data-bs-target="#setting" type="button" role="tab">權限設定</button>
         </li>
       </ul>
       <div class="tab-content" id="authorityTab">
-        <div class="tab-pane fade" id="change" role="tabpanel">
+        <div class="tab-pane fade show active" id="change" role="tabpanel">
           <div class="tab-pane_wrap">
             <div class="fixed_info">
               <div>
@@ -123,7 +123,7 @@
             </div>
           </div>
         </div>
-        <div class="tab-pane fade setting_tab show active" id="setting" role="tabpanel">
+        <div class="tab-pane fade setting_tab" id="setting" role="tabpanel">
           <div class="tab-pane_wrap">
             <div class="fixed_info ">
               <div>
@@ -447,7 +447,8 @@ import allPermission from "@/assets/json/permission.json"
     let requestData = {
       ...submitPermissionList,
       Id: role.Id,
-      RoleName: role.Name
+      RoleName: role.Name,
+      isEnable: true // 不加的話。會因為接收ViewModel的關係讓所選帳號變成停用(消失在DropdownList)
     }
     try {
       const reseponse = await axios.post('http://192.168.0.177:7008/AuthorityMng/SetRoleSettingById', requestData);
