@@ -427,11 +427,13 @@ h1 {
         }
 
         button {
-          @include dropdown-btn;
-          width: 100%;
-          color: black;
-          justify-content: space-between;
-          align-items: center;
+          border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    width: 100%;
+    color: black;
+    justify-content: space-between;
+    align-items: center;
         }
       }
 
@@ -713,12 +715,15 @@ h1 {
 
   .input-group {
     height: auto;
+    input{
+      width: 100% !important;
+    }
   }
 
   .input-group-prepend {
     font-size: 20px;
     margin-bottom: 0;
-    color: black;
+    color: black !important;
   }
 
   button {
@@ -1089,8 +1094,8 @@ h1 {
         }
 
         .input-group {
-          flex-direction: column;
-
+        flex-direction: column;
+    
           .input-number {
             width: 100%;
           }
@@ -1103,7 +1108,14 @@ h1 {
 
           .input-group-prepend {
             margin-bottom: 5px;
+            white-space: nowrap;
           }
+        }
+      }
+      .auth_section{
+        .input-group{
+          flex-direction: unset;
+          flex-wrap: nowrap;
         }
       }
 
@@ -1118,12 +1130,16 @@ h1 {
           margin: 20px 0;
         }
       }
+      .dropdown {
+        height: 35px;
+        @include dropdown_btn;
+      }
       .button_wrap,
       .search_wrap .search_section {
         padding: unset;
       }
       .bottom_fixed {
-        padding: 5px;
+        padding:0 10px;
       }
     }
   }
