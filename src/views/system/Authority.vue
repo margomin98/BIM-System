@@ -329,7 +329,7 @@ import allPermission from "@/assets/json/permission.json"
       const data = reseponse.data;
       if (data.state === 'success') {
           let msg = data.messages + '\n';
-          msg += `${inputValue.value}　變更為　${selectedRole.value}`
+          msg += `${User.name}　變更為　${User.selectPermission}`
           alert(msg);
         } else {
           console.error('error', data.messages);
@@ -357,7 +357,7 @@ import allPermission from "@/assets/json/permission.json"
         url = '/AuthorityMng/EditRoleName'
         requestData = {
           RoleId: permissionParams.id, // 欲編輯的權限id
-          RoleName: permissionParams.input, // 欲編輯的內容
+          NewRoleName: permissionParams.input, // 欲編輯的內容
         }
         break;
       case 'Delete':
@@ -369,12 +369,12 @@ import allPermission from "@/assets/json/permission.json"
       case 'IndexEdit':
         url = '/AuthorityMng/EditRolesIndex'
         // 加上Property "Index"
-        const RoleList = rowData.value.map(function(item, index) {
+        const RolesList = rowData.value.map(function(item, index) {
           item.Index = index;
           return item
         });
         requestData = {
-          RoleList: RoleList
+          RolesList: RolesList
         }
     }
     try {
@@ -384,6 +384,7 @@ import allPermission from "@/assets/json/permission.json"
       if(data.state === 'success') {
         if(type === 'create') { newPermission.value = '' };
         DropdownArray.role = await apiStore.getRoleOption();
+        setRowData
       } else if (data.state === 'account_error') {
         router.push('/');
       }
@@ -399,8 +400,10 @@ import allPermission from "@/assets/json/permission.json"
   const getPagePermission = async (Id) => {
     // Id 為number且可為0
     if (Id === undefined || Id === null || Id === '') return
+    const form = new FormData();
+    form.append('Id',Id);
     try {
-      const response = await axios.get('http://192.168.0.177:7008/AuthorityMng/GetRoleSettingById');
+      const response = await axios.post('http://192.168.0.177:7008/AuthorityMng/GetRoleSettingById',form);
       const data = response.data ;
       if(data.state === 'success') {
         console.log(data.messages);
