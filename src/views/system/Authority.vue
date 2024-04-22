@@ -448,7 +448,7 @@ import allPermission from "@/assets/json/permission.json"
       ...submitPermissionList,
       Id: role.Id,
       RoleName: role.Name,
-      isEnable: true // 不加的話。會因為接收ViewModel的關係讓所選帳號變成停用(消失在DropdownList)
+      IsEnable: true // 不加的話。會因為接收ViewModel的關係讓所選帳號變成停用(消失在DropdownList)
     }
     try {
       const reseponse = await axios.post('http://192.168.0.177:7008/AuthorityMng/SetRoleSettingById', requestData);
