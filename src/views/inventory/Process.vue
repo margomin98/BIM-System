@@ -736,22 +736,6 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
         height: unset;
         padding: 10px;
       }
-      .add_btn {
-        display: inline-flex;
-        padding: 10px;
-        justify-content: center;
-        align-items: center;
-        border-radius: 9px;
-        background: #314f7a;
-        height: 50px;
-        width: 150px;
-        color: #fff;
-        text-align: center;
-        font-size: 18px;
-        font-weight: 700;
-        border: none;
-        margin-bottom: 15px;
-      }
       .content {
         .row {
           gap: 10px 0;

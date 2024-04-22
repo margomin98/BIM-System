@@ -575,6 +575,9 @@ span {
 }
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
+    .modal .modal-dialog{
+  padding:unset !important
+    }
     .info_wrap {
       margin: 30px auto 5%;
       padding: 0 5%;
@@ -606,6 +609,7 @@ span {
 
           .form-control {
             height: 35px;
+            width: 100%;
           }
           .input-group-prepend {
             width: 120px;
@@ -678,7 +682,7 @@ span {
           }
 
           .checkmark-icon {
-            left: 89%;
+            left: 94%;
           }
         }
       }

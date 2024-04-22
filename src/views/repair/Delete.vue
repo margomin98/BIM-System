@@ -593,11 +593,11 @@ span {
             width: 100%;
           }
           .form-control {
-            width: 65%;
+            width: 55%;
           }
           .input-group-prepend {
             text-align: end;
-            width: 115px;
+            width:140px;
           }
         }
         .repair_photo_section {

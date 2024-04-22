@@ -14,7 +14,7 @@ import {
 import {
   useRouter
 } from 'vue-router';
-import { Rent_Delete_Status } from '@/assets/js/enter_status';
+import { RentProcess_Delete_Status } from '@/assets/js/enter_status';
 export default {
   props: ['params'],
   setup(props) {
@@ -28,7 +28,7 @@ export default {
       // console.log(props.params.data.search_id);
       if (search_id !== '') {
         router.push({
-          name: 'Rent_Delete',
+          name: 'Rent_Process_Delete',
           query: {
             search_id
           }
@@ -37,7 +37,7 @@ export default {
     }
     function checkButton() {
       const disabledStatus = props.params.data.Status;
-      if (!Rent_Delete_Status.includes(disabledStatus)) {
+      if (!RentProcess_Delete_Status.includes(disabledStatus) || !props.params.data.canDelete) {
         isDisabled.value = true;
       }
     }

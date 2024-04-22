@@ -1614,8 +1614,7 @@ textarea {
           }
    
           .input-group {
-            flex-wrap: nowrap;
-            .input-number {
+             .input-number {
               width: 60%;
             }
         
@@ -1701,8 +1700,7 @@ textarea {
           }
         
           .input-group {
-            flex-wrap: nowrap;
-            .input-number {
+           .input-number {
               width: 60%;
             }
             
@@ -1771,9 +1769,7 @@ textarea {
       .content {
       
         .input-group {
-          flex-direction: column;
-          
-          .form-control {
+             .form-control {
             width: 100%;
             margin-left: unset !important;
           }

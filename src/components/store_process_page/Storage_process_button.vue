@@ -86,10 +86,10 @@
         if(!StoreProcess_NotifyConfirm_Status.includes(status)) {
           isDisabled.value.deliveryNotify = true;
         }
-        if(!StoreProcess_Confirm_Status.includes(status)) {
+        if(!StoreProcess_Confirm_Status.includes(status) || !props.params.data.canDelivery) {
           isDisabled.value.delivery = true;
         }
-        if(!StoreProcess_Edit_Status.includes(status)) {
+        if(!StoreProcess_Edit_Status.includes(status) || !props.params.data.canInBound) {
           isDisabled.value.edit = true;
         }
       }

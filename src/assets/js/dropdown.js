@@ -1,3 +1,4 @@
+// 各管理模組常用之固定下拉選單
 // 單位
 export const UnitArray = ['個', '支', '枝', '隻', '根', '條', '顆']
 export const PackageUnitArray = ['個', '對', '箱', '包', '組', '台', '件']

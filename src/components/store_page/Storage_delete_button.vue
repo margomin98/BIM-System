@@ -32,7 +32,7 @@ export default {
     }
     function checkButton() {
       const disabledStatus = props.params.data.Status;
-      if (!Store_Delete_Status.includes(disabledStatus)) {
+      if (!Store_Delete_Status.includes(disabledStatus)|| !props.params.data.canDelete) {
         isDisabled.value = true;
       }
     }

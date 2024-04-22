@@ -139,11 +139,11 @@
             </label>
             <div class="input-group input-with-icon" id="readonly_box">
               <p class="readonly_box" readonly>{{ validationStatus() }} </p>
-              <span class="icon-container">
+                 <span class="icon-container">
                 <img src="@/assets/accept.png" class="checkmark-icon" v-show="validation.isVerified" />
               </span>
             </div>
-            <button type="button" data-bs-toggle="modal" data-bs-target="#verifyModal">驗證</button>
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#verifyModal">驗證</button>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
             <label for="inputWithTitle" class="form-label project_name">
@@ -671,26 +671,29 @@ span{
       }
 
       .wrap {
-        background: white;
-
-        align-items: center;
-
-        button {
-          margin: 0 5px;
-          border-radius: 7px;
-          height: 30px;
-          width: 150px;
-          border: none;
-          background: #48658c;
-          color: white;
-          font-weight: 700;
-          font-size: 18px;
-
-          &:hover {
-            background-color: #5d85bd;
+  background: white;
+  align-items: center;
+    position: relative;
+    img{
+      position: absolute;
+      height: 20px;
           }
-        }
+   button {
+      margin: 0 5px;
+      border-radius: 7px;
+      height: 30px;
+      width: 150px;
+      border: none;
+      background: #48658c;
+      color: white;
+      font-weight: 700;
+      font-size: 18px;
+      &:hover {
+        background-color: #5d85bd;
       }
+    }
+}
+
 
       .form-label {
         font-weight: 700;
@@ -831,6 +834,10 @@ span{
           #readonly_box {
             border-right: 1px solid black;
           }
+          img{
+            right: -8px;
+    top: -8px;
+          }
         }
         .form-control {
           height: auto;
@@ -962,6 +969,10 @@ span{
           border-top: 1px solid black;
           #readonly_box {
             border-right: 1px solid black;
+          }
+          img{
+            right: -3px;
+            top: -8px;
           }
         }
         .form-control {
@@ -1116,8 +1127,12 @@ span{
           .project_name {
             border-top: 1px solid black;
           }
-
           flex-direction: column;
+          img{
+            right: -8px;
+            top: -7px;
+            height: 30px;
+          }
         }
 
         .form-label {

@@ -2,7 +2,7 @@
   <Navbar />
   <div class="main_section">
     <!-- 編輯權限名稱 Modal  -->
-    <div class="modal fade editModal" id="editModal" tabindex="-1">
+    <div class="modal fade editModal" id="EditModal" tabindex="-1">
       <div class="modal-dialog  modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-body">
@@ -11,11 +11,11 @@
                 <p>修改名稱</p>
               </div>
               <div class="content">
-                <input type="text" id="editInput" placeholder="最多輸入10字">
+                <input type="text" id="editInput" placeholder="最多輸入10字" v-model="permissionParams.input">
               </div>
               <div class="button_section">
                 <button type="button" class="btn" data-bs-dismiss="modal">關閉</button>
-                <button type="button" class="btn" data-bs-dismiss="modal" @click="editType">儲存</button>
+                <button type="button" class="btn" data-bs-dismiss="modal" @click="permissionCUDI('Update')">儲存</button>
               </div>
             </div>
           </div>
@@ -23,7 +23,7 @@
       </div>
     </div>
     <!-- 刪除權限名稱 Modal  -->
-    <div class="modal fade editModal2" id="editModal2" tabindex="-1">
+    <div class="modal fade editModal2" id="DeleteModal" tabindex="-1">
       <div class="modal-dialog  modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-body">
@@ -32,11 +32,11 @@
                 <p>確定刪除參數嗎?</p>
               </div>
               <div class="content">
-                <span style="font-weight: 700;"></span>
+                <span style="font-weight: 700;"> {{ permissionParams.input }} </span>
               </div>
               <div class="button_section">
                 <button type="button" class="btn" data-bs-dismiss="modal">取消</button>
-                <button type="button" class="btn" data-bs-dismiss="modal" @click="deleteType">確定</button>
+                <button type="button" class="btn" data-bs-dismiss="modal" @click="permissionCUDI('Delete')">確定</button>
               </div>
             </div>
           </div>
@@ -46,11 +46,6 @@
     <div class="title col">
       <h1>權限管理</h1>
     </div>
-    <!--
-        <div class="info_wrap col"><div class="fixed_info"><div><p>變更權限</p></div><div><p>目前權限 : {{ roleSearchResult }}</p></div></div><div class="content"><div class="col"><div class="input-group mb-4 first"><div class="input-group-prepend"><span>*</span>帳號：</div><div class="search_section"><div class="input-wrapper"><input @input="searchFunction" @focus="showOptions = true;" @blur="handleBlur" v-model="inputValue" /></div><ul v-if="showOptions" class="options-list"><li v-for="(option, index) in dropdownOptions" :key="index" @click="selectAccount(option)">{{ option }}
-                </li></ul></div></div></div><div class="col authority"><div class="input-group-prepend"><span>*</span>權限：</div><div class="dropdown"><button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ selectedRole || "請選擇" }}
-              </button><div class="dropdown-menu" aria-labelledby="statusDropdown"><p v-for="(item, index) in roleArray" :key="index" class="dropdown-item" @click="selectRole(item)">{{ item.Name }}</p></div></div></div></div><div class="col button_wrap"><button class="back_btn" @click="goBack">回上一頁</button><button class="send_btn" @click="submit">送出</button></div></div>-->
     <div class="info_wrap">
       <ul class="nav nav-tabs" id="Tab" role="tablist">
         <li class="nav-item" role="presentation">
@@ -72,24 +67,23 @@
               </div>
             </div>
             <div class="content">
-              <!-- 賬號 -->
+              <!-- 帳號 -->
               <div class="d-flex mb-3 content_wrap">
                 <div class="input-group-prepend">
                   <span class="red_star">*</span>帳號：
                 </div>
                 <div class="select_wrap">
-                  <select class="form-select">
-                    <option selected>請選擇</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
+                  <select class="form-select" v-model="User.name" @change="getCurrentPermission">
+                    <option selected value="">--請選擇--</option>
+                    <option v-for="option in DropdownArray.account" :key="option" :value="option">{{ option }}</option>
                   </select>
-                  <p class="warn_note">請先選擇帳號</p>
+                  <p class="warn_note" v-show="!User.name">請先選擇帳號</p>
                 </div>
               </div>
               <!-- 目前權限 -->
               <div class="d-flex mb-3 content_wrap">
                 <div class="input-group-prepend"> 目前權限： </div>
-                <input type="text" class="form-control readonly_box" readonly>
+                <input type="text" class="form-control readonly_box" v-model="User.currentPermission" readonly>
               </div>
               <!-- 變更權限 -->
               <div class="d-flex content_wrap">
@@ -97,15 +91,14 @@
                   <span class="red_star">*</span>變更權限：
                 </div>
                 <div class="select_wrap">
-                  <select class="form-select">
-                    <option selected>請選擇</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
+                  <select class="form-select" v-model="User.selectPermission">
+                    <option selected value="">--請選擇--</option>
+                    <option v-for="option in DropdownArray.role" :key="option" :value="option.Id">{{ option.Name }}</option>
                   </select>
                 </div>
               </div>
             </div>
-            <button class='submit_btn' type="button">確認變更</button>
+            <button class='submit_btn' type="button" @click="saveUserRole">確認變更</button>
           </div>
         </div>
         <div class="tab-pane fade name_tab" id="name" role="tabpanel">
@@ -119,13 +112,13 @@
               <!-- 輸入框 -->
               <div class="d-flex mb-3 content_wrap">
                 <div class="select_wrap">
-                  <input type="text" class="form-control" placeholder="最長可輸入10字">
+                  <input type="text" class="form-control" placeholder="最長可輸入10字" v-model.trim="newPermission" maxlength="10">
                   <p class="warn_note">類型命名條件....</p>
                 </div>
-                <button class="add_btn" type="button">+ 新增</button>
+                <button class="add_btn" type="button" @click="permissionCUDI('Create')">+ 新增</button>
               </div>
               <div class="name_dg">
-                <ag-grid-vue :headerHeight="0" @rowDragEnd="onRowDragEnd('LayerName', $event)" :rowDragManaged="true" :animateRows="true" :suppressMoveWhenRowDragging="true" :rowData="rowData" :columnDefs="colDefs" style="height: 425px" class="ag-theme-alpine"></ag-grid-vue>
+                <ag-grid-vue :headerHeight="0" @grid-ready="dataApi" @rowDragEnd="onRowDragEnd($event)" :rowDragManaged="true" :animateRows="true" :suppressMoveWhenRowDragging="true" :rowData="rowData" :columnDefs="colDefs" style="height: 425px" class="ag-theme-alpine"></ag-grid-vue>
               </div>
             </div>
           </div>
@@ -141,11 +134,10 @@
               <!-- 選擇權限名稱 -->
               <div class="d-flex mb-3 content_wrap">
                 <p class='text_title'>請先選擇權限名稱</p>
-                <select class="form-select">
-                  <option selected>請選擇</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                </select>
+                <select class="form-select" @change="getPagePermission(roleChoice)" v-model="roleChoice">
+                    <option selected value="">--請選擇--</option>
+                    <option v-for="option in DropdownArray.role" :key="option" :value="option.Id">{{ option.Name }}</option>
+                  </select>
               </div>
               <div class="dropdown_section">
                 <div class="fixed_info">
@@ -154,130 +146,18 @@
                   </div>
                 </div>
                 <div class="accordion authority_accordion" id="authority_accordion">
-                  <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
-                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                        <input class="form-check-input" type="checkbox" value="" id="authority_check"> 專案採購管理 </button>
+                  <div v-for="(main ,main_index) in permissionList" :key="main.TitleName" class="accordion-item">
+                    <h2 class="accordion-header" >
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#body_'+main.id" aria-expanded="true">
+                        <input class="form-check-input" type="checkbox" value="" :id="main.id" v-model="main.checked" @click="checkAll(main_index, !main.checked)">
+                        <label :for="main.id">{{ main.TitleName }}</label>
+                      </button>
                     </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#authority_accordion">
+                    <div :id="'body_'+main.id" class="accordion-collapse show" aria-labelledby="headingOne" data-bs-parent="#authority_accordion">
                       <div class="accordion-body">
-                        <div class="check_wrap">
-                          <input class="inner_form_check" type="checkbox" value="" id="authority_check">檢視專案採購管理
-                        </div>
-                        <div class="check_wrap">
-                          <input class="inner_form_check" type="checkbox" value="" id="authority_check">檢視專案採購單
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingTwo">
-                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
-                        <input class="form-check-input" type="checkbox" value="" id="authority_check"> 訂單管理 </button>
-                    </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#authority_accordion">
-                      <div class="accordion-body">
-                        <div class="check_wrap">
-                          <input class="inner_form_check" type="checkbox" value="" id="authority_check">檢視訂單管理
-                        </div>
-                        <div class="check_wrap">
-                          <input class="inner_form_check" type="checkbox" value="" id="authority_check">檢視訂購單
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingThree">
-                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
-                        <input class="form-check-input" type="checkbox" value="" id="authority_check_three"> 項目三 </button>
-                    </h2>
-                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#authority_accordion">
-                      <div class="accordion-body">
-                        <div class="check_wrap">
-                          <input class="inner_form_check" type="checkbox" value="" id="inner_form_check_three_1">項目三選項一
-                        </div>
-                        <div class="check_wrap">
-                          <input class="inner_form_check" type="checkbox" value="" id="inner_form_check_three_2">項目三選項二
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingFour">
-                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour">
-                        <input class="form-check-input" type="checkbox" value="" id="authority_check_four"> 項目四 </button>
-                    </h2>
-                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#authority_accordion">
-                      <div class="accordion-body">
-                        <div class="check_wrap">
-                          <input class="inner_form_check" type="checkbox" value="" id="inner_form_check_four_1">項目四選項一
-                        </div>
-                        <div class="check_wrap">
-                          <input class="inner_form_check" type="checkbox" value="" id="inner_form_check_four_2">項目四選項二
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingFive">
-                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive">
-                        <input class="form-check-input" type="checkbox" value="" id="authority_check_five"> 項目五 </button>
-                    </h2>
-                    <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#authority_accordion">
-                      <div class="accordion-body">
-                        <div class="check_wrap">
-                          <input class="inner_form_check" type="checkbox" value="" id="inner_form_check_five_1">項目五選項一
-                        </div>
-                        <div class="check_wrap">
-                          <input class="inner_form_check" type="checkbox" value="" id="inner_form_check_five_2">項目五選項二
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingSix">
-                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix">
-                        <input class="form-check-input" type="checkbox" value="" id="authority_check_six"> 項目六 </button>
-                    </h2>
-                    <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#authority_accordion">
-                      <div class="accordion-body">
-                        <div class="check_wrap">
-                          <input class="inner_form_check" type="checkbox" value="" id="inner_form_check_six_1">項目六選項一
-                        </div>
-                        <div class="check_wrap">
-                          <input class="inner_form_check" type="checkbox" value="" id="inner_form_check_six_2">項目六選項二
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingSeven">
-                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven">
-                        <input class="form-check-input" type="checkbox" value="" id="authority_check_seven"> 項目七 </button>
-                    </h2>
-                    <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#authority_accordion">
-                      <div class="accordion-body">
-                        <div class="check_wrap">
-                          <input class="inner_form_check" type="checkbox" value="" id="inner_form_check_seven_1">項目七選項一
-                        </div>
-                        <div class="check_wrap">
-                          <input class="inner_form_check" type="checkbox" value="" id="inner_form_check_seven_2">項目七選項二
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingEight">
-                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight">
-                        <input class="form-check-input" type="checkbox" value="" id="authority_check_eight"> 項目八 </button>
-                    </h2>
-                    <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#authority_accordion">
-                      <div class="accordion-body">
-                        <div class="check_wrap">
-                          <input class="inner_form_check" type="checkbox" value="" id="inner_form_check_eight_1">項目八選項一
-                        </div>
-                        <div class="check_wrap">
-                          <input class="inner_form_check" type="checkbox" value="" id="inner_form_check_eight_2">項目八選項二
+                        <div v-for="sub in main.List" :key="sub.TitleName" class="check_wrap">
+                          <input class="inner_form_check" type="checkbox" value="" :id="sub.id" v-model="sub.checked">
+                          <label :for="sub.id">{{ sub.TitleName }}</label>
                         </div>
                       </div>
                     </div>
@@ -286,8 +166,8 @@
               </div>
             </div>
             <div class="button_wrap">
-              <button class='confirm_btn' type="button">確認</button>
-              <button class='cancel_btn' type="button">取消</button>
+              <button class='confirm_btn' type="button" @click="saveRolePermission">確認</button>
+              <button class='cancel_btn' type="button" @click="getPagePermission(roleChoice)">取消</button>
             </div>
           </div>
         </div>
@@ -296,170 +176,287 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import {
   AgGridVue
 } from "ag-grid-vue3";
 import Navbar from "@/components/Navbar.vue";
-import Parameter_button from "@/components/Parameter_button";
-import Edit_pen from "@/components/Edit_pen";
-// import router from "@/router";
-// import {
-//   getRoleOption
-// } from "@/assets/js/common_api";
-// import {
-//   goBack
-// } from "@/assets/js/common_fn";
+import Parameter_button from "@/components/system_page/Permission_Parameter_button.vue";
+import router from "@/router";
 import {
   onMounted,
+  onUnmounted,
   reactive,
   ref
 } from 'vue';
-export default {
-  components: {
-    Navbar,
-    AgGridVue,
-    Parameter_button,
-    Edit_pen,
-  },
-  setup() {
-    const rowData = ref([
-      { make: "Tesla" },
-      { make: "Ford" },
-      { make: "Toyota" },
-    ]);
-    const colDefs = [{
+import { useAPIStore, useUtilsStore } from "@/store";
+import axios from "axios";
+import allPermission from "@/assets/json/permission.json"
+  const apiStore = useAPIStore();
+  const utilsStore = useUtilsStore();
+  const permissionList = ref(allPermission.Data);
+  /**
+   * 頁面所需下拉選單
+   */
+  const DropdownArray = reactive({
+    account: [], // 在職員工下拉選單
+    role: [], // 權限下拉選單
+  })
+
+  // ----- "變更人員權限"頁籤 -----
+  /**
+   * "變更人員權限"的使用者資訊
+   */
+  const User = reactive({
+    name: '',
+    currentPermission: '',
+    selectPermission: '',
+  })
+  // ----- "權限名稱"頁籤 -----
+  /**
+   * 將彈出視窗資訊更新為所選的data(宣告在colDefs上方，否則會出現error)
+   * @param {object} data 選中的該行資料
+   */  
+  const updatePermission = (data) => {
+    permissionParams.input = data.Name;
+    permissionParams.id = data.Id;
+  }
+  /**
+   * AGgrid 資料內容
+   */
+  const rowData = ref();
+  /**
+   * AGgrid Header、Column設定
+   */
+  const colDefs = [
+    {
       rowDrag: true,
-       cellRenderer: 'Parameter_button',
+      field: "",
+      cellRenderer: Parameter_button,
+      cellRendererParams: {
+        updatePermission: updatePermission,
+      },
       width:170
-
-     
     },
-  {
-    field: "make",
-        flex: 1,
-  }];
-
-    return {
-      rowData,
-      colDefs,
-    };
-  },
-  // setup() {
-  //   const inputValue = ref(''); //帳號
-  //   const dropdownOptions = ref([]); //帳號搜尋結果(選項)
-  //   const filteredOptions = ref(dropdownOptions);
-  //   const roleSearchResult = ref('');
-  //   const selectedRole = ref(''); //權限名稱(顯示
-  //   const selectedRoleId = ref(''); //權限id
-  //   const roleArray = ref() //權限選項
-  //   const showOptions = ref(false); //控制搜尋選單出現與否
-  //   onMounted(() => {
-  //     searchFunction();
-  //     getRoleOption(roleArray);
-  //   });
-  //   function searchAccount() {
-  //     return new Promise(async (resolve, reject) => {
-  //       try {
-  //         const axios = require('axios');
-  //         const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchName?name=${inputValue.value}`);
-  //         const data = response.data;
-  //         if (data.state === 'success') {
-  //           // const filteredRoles = data.resultList.filter(role => role !== 'admin' && role !== 'guest');
-  //           resolve(data.resultList);
-  //         } else {
-  //           reject(new Error('Search account failed.'));
-  //         }
-  //       } catch (error) {
-  //         reject(error);
-  //       }
-  //     });
-  //   }
-  //   function searchRole() {
-  //     return new Promise(async (resolve, reject) => {
-  //       try {
-  //         const axios = require('axios');
-  //         const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetRoleFromName?name=${inputValue.value}`);
-  //         const data = response.data;
-  //         if (data.state === 'success') {
-  //           resolve(data.resultList.role.Name);
-  //         } else {
-  //           resolve(''); // Resolve with empty value when role search fails
-  //         }
-  //       } catch (error) {
-  //         console.error(error);
-  //         reject(error);
-  //       }
-  //     });
-  //   }
-  //   async function searchFunction() {
-  //     try {
-  //       const accountResult = await searchAccount();
-  //       dropdownOptions.value = accountResult;
-  //       const roleResult = await searchRole();
-  //       roleSearchResult.value = roleResult;
-  //     } catch (error) {
-  //       console.error(error);
-  //       // Handle error
-  //     }
-  //   }
-  //   async function submit() {
-  //     if (!inputValue.value || !selectedRoleId.value) {
-  //       alert('請輸入必填項目');
-  //       return
-  //     }
-  //     const axios = require('axios');
-  //     const form = new FormData();
-  //     form.append('userName', inputValue.value);
-  //     form.append('role', parseInt(selectedRoleId.value));
-  //     const response = await axios.post('http://192.168.0.177:7008/AuthorityMng/AccoutChangeRole', form);
-  //     try {
-  //       const data = response.data;
-  //       if (data.state === 'success') {
-  //         let msg = data.messages + '\n';
-  //         msg += `${inputValue.value}　變更為　${selectedRole.value}`
-  //         alert(msg);
-  //         router.push('/change');
-  //       } else {
-  //         alert(data.messages);
-  //         console.log('error', data);
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   }
-  //   function selectAccount(item) {
-  //     inputValue.value = item;
-  //     searchFunction();
-  //     showOptions.value = false;
-  //   }
-  //   function selectRole(item) {
-  //     selectedRole.value = item.Name;
-  //     selectedRoleId.value = item.Id;
-  //   }
-  //   function handleBlur() {
-  //     setTimeout(() => {
-  //       showOptions.value = false;
-  //     }, 100);
-  //   }
-  //   return {
-  //     inputValue,
-  //     dropdownOptions,
-  //     filteredOptions,
-  //     roleSearchResult,
-  //     selectedRole,
-  //     selectedRoleId,
-  //     roleArray,
-  //     showOptions,
-  //     searchFunction,
-  //     submit,
-  //     selectAccount,
-  //     selectRole,
-  //     handleBlur,
-  //     goBack,
-  //   };
-  // }
-};
+    {
+      field: "Name",
+      flex: 1,
+    },
+  ];
+  /**
+   * AGgridAPI 更新datagrid用
+   */
+  const grid = ref();
+  /**
+   * "UpdateModal" & "DeleteModal"的參數，變更/刪除 權限名稱使用
+   */
+  const permissionParams = reactive({
+    input: '',
+    id: '',
+  });
+  /**
+   * 新增權限名稱input
+   */
+  const newPermission = ref('');
+  // ----- "權限設定"頁籤 -----
+  /**
+   * 權限設定的role下拉選單綁定
+   */
+  const roleChoice = ref('');
+  onMounted(async () => {
+    DropdownArray.role = await apiStore.getRoleOption();
+    DropdownArray.account = await apiStore.getCustodian('');
+    rowData.value = DropdownArray.role;
+  })
+  onUnmounted(()=>{
+    apiStore.$dispose();
+  })
+  /**
+   * 將此大選單全選或全不選
+   * @param {number} index 第幾個大選單
+   * @param {boolean} checked 選/不選
+   */
+  const checkAll = (index, checked) => {
+    console.log(permissionList.value);
+    permissionList.value[index].List.forEach((item)=>{
+      item.checked = checked;
+    })
+  }
+  /**
+   * 取得選擇的使用者目前的權限名稱
+   */
+  const getCurrentPermission = async () => { 
+    User.currentPermission = User.name ? await apiStore.getRoleName(User.name): "";
+  }
+  /**
+   * 完成拖曳後 1.更新rowData 2.更新Datagrid 3.打API變更實際資料庫順序
+   * @param {Event} e 拖曳事件
+   */
+  const onRowDragEnd = async (e) =>{
+    const newRowIndex = e.overIndex;
+    const draggedData = e.node.data;
+    let originalIndex = -1;
+    originalIndex = rowData.value.findIndex(item => item.Id === draggedData.Id);
+    // 1.
+    rowData.value.splice(originalIndex, 1);
+    rowData.value.splice(newRowIndex, 0, draggedData);
+    // 2.
+    setTimeout(()=>{
+      grid.value.setRowData(rowData.value);
+    },50);
+    console.log('rowData',rowData.value);
+    // 3.
+    permissionCUDI('IndexEdit');
+  }
+  /**
+   * AGgrid 完成創建時將grid api綁定到ref
+   * @param {*} params 
+   */
+  const dataApi = (params) => {
+    grid.value = params.api;
+  };
+  // ----- 變更人員權限 -----
+  /**
+   * 儲存選擇的使用者權限
+   */
+  const saveUserRole = async () => {
+    if(!utilsStore.checkRequired(User,['name','selectPermission'])) return;
+    const form = new FormData();
+    form.append('userName', User.name);
+    form.append('role', User.selectPermission);
+    try {
+      const reseponse = await axios.post('http://192.168.0.177:7008/AuthorityMng/AccoutChangeRole', form);
+      const data = reseponse.data;
+      if (data.state === 'success') {
+          let msg = data.messages + '\n';
+          msg += `${inputValue.value}　變更為　${selectedRole.value}`
+          alert(msg);
+        } else {
+          console.error('error', data.messages);
+        }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+  /**
+   * 權限的新增/更新名稱/刪除/改變順序
+   * @param {string} type determine Create/Update/Delete/IndexEdit
+   */
+  const permissionCUDI = async (type) => {
+    let url = ''
+    let requestData = {};
+    switch (type) {
+      case 'Create':
+        url = '/AuthorityMng/CreateRole'
+        requestData = {
+          RoleName: newPermission.value, // 新增的權限名稱
+          Index: DropdownArray.role.length, // 新增的權限Index為最後一個(Index+1)，等同於現在的array.length
+        }
+        break;
+      case 'Update':
+        url = '/AuthorityMng/EditRoleName'
+        requestData = {
+          RoleId: permissionParams.id, // 欲編輯的權限id
+          RoleName: permissionParams.input, // 欲編輯的內容
+        }
+        break;
+      case 'Delete':
+        url = '/AuthorityMng/DeleteRole'
+        requestData = {
+          RoleId: permissionParams.id, // 欲刪除的權限id
+        }
+        break;
+      case 'IndexEdit':
+        url = '/AuthorityMng/EditRolesIndex'
+        // 加上Property "Index"
+        const RoleList = rowData.value.map(function(item, index) {
+          item.Index = index;
+          return item
+        });
+        requestData = {
+          RoleList: RoleList
+        }
+    }
+    try {
+      const response = await axios.post(url, requestData);
+      const data = response.data;
+      alert(data.messages);
+      if(data.state === 'success') {
+        if(type === 'create') { newPermission.value = '' };
+        DropdownArray.role = await apiStore.getRoleOption();
+      } else if (data.state === 'account_error') {
+        router.push('/');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  // ----- 權限設定 -----
+  /**
+   * 取得所選的人員權限的各業面權限選單
+   * @param {number} Id 權限id
+   */
+  const getPagePermission = async (Id) => {
+    // Id 為number且可為0
+    if (Id === undefined || Id === null || Id === '') return
+    try {
+      const response = await axios.get('http://192.168.0.177:7008/AuthorityMng/GetRoleSettingById');
+      const data = response.data ;
+      if(data.state === 'success') {
+        console.log(data.messages);
+        setPagePermission(data.resultList);
+      }
+    } catch(e) {
+      console.error(e);
+    }
+  }
+  /**
+   * 處理API return結果並更新頁面權限手風琴
+   * @param {object} newPermissionList API return
+   */
+  const setPagePermission = (newPermissionList) => {
+    // 更新各個權限的check boolean
+    const updatedData = permissionList.value.map(dataItem => {
+      const updatedList = dataItem.List.map(listItem => {
+        if(newPermissionList.hasOwnProperty(listItem.id)){
+          return {...listItem, checked: newPermissionList[listItem.id]}
+        } else {
+          return listItem
+        }
+      });
+      return {...dataItem, List: updatedList};
+    });
+    permissionList.value = updatedData;
+  }
+  /**
+   * 儲存勾選的設定內容(tab-權限設定)
+   */
+  const saveRolePermission = async () => {
+    let submitPermissionList = {};
+    permissionList.value.forEach((dataList)=>{
+      dataList.List.forEach((itemList)=>{
+        submitPermissionList[itemList.id] = itemList.checked;
+      })
+    })
+    // console.log('submitPermissionList', submitPermissionList);
+    const role = DropdownArray.role.find(role => role.Id === roleChoice.value);
+    let requestData = {
+      ...submitPermissionList,
+      Id: role.Id,
+      RoleName: role.Name
+    }
+    try {
+      const reseponse = await axios.post('http://192.168.0.177:7008/AuthorityMng/AccoutChangeRole', requestData);
+      const data = reseponse.data;
+      if (data.state === 'success') {
+        alert(data.messages);
+      } else {
+        console.error('error', data.messages);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
 </script>
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
