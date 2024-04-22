@@ -186,7 +186,7 @@
             <p>交付簽章</p>
           </div>
           <div class="six_content_date">
-            <p> {{ utilsStore.today }}</p>
+            <p>交付完成日期： {{ utilsStore.today }}</p>
           </div>
         </div>
         <div class="row g-0">
@@ -194,7 +194,7 @@
             <label for="inputWithButton" class="form-label "><span>*</span>
               <p>領用人員</p>
             </label>
-            <div class="input-group use_acc input-with-icon" id="readonly_box">
+            <div class="input-group user_acc input-with-icon" >
               <select name="" id="" class="form-select" v-model="Form.Recipient">
                 <option value="">--請選擇--</option>
                 <option v-for="option in DropdownArray.Recipient" :key="option" :value="option">{{ option }}</option>
@@ -205,7 +205,7 @@
             <label for="inputWithButton" class="form-label ">
               <p>交付人員</p>
             </label>
-            <div class="input-group use_acc input-with-icon" id="readonly_box">
+            <div class="input-group user_acc input-with-icon" id="readonly_box">
               <p class="readonly_box" readonly>{{ utilsStore.userName }}</p>
             </div>
           </div>
@@ -516,6 +516,9 @@ span {
       width: 100% !important;
       text-align: center !important;
     }
+    .form-select{
+      border-radius: 0
+    }
     .fixed_info {
       @include fixed_info;
       background: #528091;
@@ -643,10 +646,6 @@ span {
       .fixed_info {
         position: relative;
         border-right: 1px solid black;
-        .six_content_title,
-        .six_content_date {
-          position: absolute;
-        }
         .six_content_date {
           right: 10px;
 
@@ -666,7 +665,6 @@ span {
       }
 
       .wrap {
-        border-right: 1px solid black;
         background: white;
         align-items: center;
         button {
@@ -752,192 +750,195 @@ span {
 }
 @media only screen and (min-width: 1200px) {
   .main_section {
-    .modal-content {
-      width: 400px;
-      margin: auto;
+  .modal-content {
+    width: 400px;
+    margin: auto;
+  }
+
+  .info_wrap {
+    width: 1000px;
+
+    .option {
+      display: flex;
     }
 
-    .info_wrap {
-      width: 1000px;
+    .fixed_info {
+      p {
+        font-size: 20px;
+      }
+    }
 
-      .option {
-        display: flex;
+    #readonly_box {
+      padding: 0;
+      border-left: black 1px solid;
+    }
+
+    .third_content {
+      .list {
+        border-top: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+      }
+    }
+
+    .fourth_content {
+      .fixed_info {
+        border-bottom: 1px solid black;
       }
 
-      .fixed_info {
-        p {
-          font-size: 20px;
-        }
+      .form-control {
+        padding: 0;
+      }
+
+      .form-label {
+        height: 50px;
+        padding: 0 10px;
+        width: 150px;
       }
 
       #readonly_box {
+        border-right: 1px solid black;
+      }
+
+      .wrap:nth-child(3) #readonly_box {
+        border-right: none;
+      }
+    }
+
+    .five_content {
+      .fixed_info {
+        border-top: 1px solid black;
+        border-right: 1px solid black;
+      }
+
+      .form-control {
         padding: 0;
-        border-left: black 1px solid;
       }
 
-      .third_content {
-        .list {
-          border-top: 1px solid black;
+      .form-label {
+        height: 50px;
+        padding: 0 16px;
+        width: 120px;
+      }
+
+      .wrap:nth-child(1) #readonly_box,
+      .wrap:nth-child(3) #readonly_box {
+        border-right: 1px solid black;
+      }
+
+      .wrap:nth-child(2) {
+        label {
+          width: 205px;
+        }
+
+        .input-group {
           border-left: 1px solid black;
           border-right: 1px solid black;
-        }
-      }
-
-      .fourth_content {
-        .fixed_info {
-          border-bottom: 1px solid black;
-        }
-
-        .form-control {
-          padding: 0;
-        }
-
-        .form-label {
-          height: 50px;
-          padding: 0 10px;
-          width: 150px;
-        }
-
-        #readonly_box {
-          border-right: 1px solid black;
-        }
-
-        .wrap:nth-child(3) #readonly_box {
-          border-right: none;
-        }
-      }
-
-      .five_content {
-        .fixed_info {
-          border-top: 1px solid black;
-          border-right: 1px solid black;
-        }
-
-        .form-control {
-          padding: 0;
-        }
-
-        .form-label {
-          height: 50px;
-          padding: 0 16px;
-          width: 120px;
-        }
-
-        .wrap:nth-child(1) #readonly_box,
-        .wrap:nth-child(3) #readonly_box {
-          border-right: 1px solid black;
-        }
-
-        .wrap:nth-child(2) {
-          label {
-            width: 205px;
-          }
-
-          .input-group {
-            border-left: 1px solid black;
-            border-right: 1px solid black;
-            display: flex;
-            justify-content: center;
-            align-content: center;
-            gap: 5px;
-          }
-        }
-      }
-
-      .six_content {
-        .fixed_info {
-          border-left: none;
-          border-top: none;
-        }
-
-        .form-control {
-          padding: 5px 10px 0;
-        }
-
-        .wrap {
-          border-top: 1px solid black;
-
-          button {
-            margin: 0 10px;
-            border-radius: 7px;
-            height: 30px;
-            width: 100px;
-          }
-        }
-
-        .form-label {
-          height: 50px;
-          padding: 0 10px;
-          width: 135px;
-        }
-
-        .wrap:nth-child(2) {
-          label {
-            width: 80%;
-          }
-
-          #readonly_box {
-            border-right: 1px solid black;
-          }
-        }
-
-        .wrap:nth-child(1) {
-          textarea {
-            border-bottom: 0;
-          }
-
-          #memo {
-            width: 120px;
-            border: none;
-          }
-        }
-
-        #memo_input {
-          border-left: 1px solid black;
-        }
-
-        .use_acc,
-        .wrap:nth-child(1),
-        .wrap:nth-child(2),
-        .wrap:nth-child(3) {
-          border-right: 1px solid black;
-        }
-      }
-
-      form {
-        .row:nth-child(3) {
-          textarea {
-            padding: 5px 10px 0;
-          }
-        }
-
-        .form-control {
-          padding: 0;
-        }
-
-        .wrap {
-          label.use {
-            border-right: 1px solid black;
-          }
-
-          .option {
-            .content {
-              display: flex;
-            }
-          }
-
-          .project_name {
-            border-left: 1px solid black;
-          }
-        }
-
-        .form-label {
-          padding: 0 20px;
-          width: 150px;
+          display: flex;
+          justify-content: center;
+          align-content: center;
+          gap: 5px;
         }
       }
     }
+
+    .six_content {
+      .fixed_info {
+        .six_content_title,
+        .six_content_date {
+          position: absolute;
+        }
+        border-left: none;
+        border-top: none;
+      }
+
+      .form-control {
+        padding: 5px 10px 0;
+      }
+      .row:nth-child(2) {
+        border-right: 1px solid black;
+        border-top: 1px solid black;
+      }
+      .row:nth-child(3) {
+        border-top: 1px solid black;
+      }
+      .wrap {
+        button {
+          margin: 0 10px;
+          border-radius: 7px;
+          height: 30px;
+          width: 100px;
+        }
+      }
+
+      .form-label {
+        height: 50px;
+        padding: 0 10px;
+        width: 135px;
+      }
+
+      .wrap:nth-child(2) {
+        label {
+          width: 80%;
+        }
+      }
+
+      .wrap:nth-child(1) {
+        textarea {
+          border-bottom: 0;
+        }
+
+        #memo {
+          width: 120px;
+          border: none;
+        }
+      }
+
+      #memo_input,.user_acc select {
+        border-left: 1px solid black;
+      }
+
+      .wrap:nth-child(1),
+      .wrap:nth-child(2) {
+        border-right: 1px solid black;
+      }
+    }
+
+    form {
+      .row:nth-child(3) {
+        textarea {
+          padding: 5px 10px 0;
+        }
+      }
+
+      .form-control {
+        padding: 0;
+      }
+
+      .wrap {
+        label.use {
+          border-right: 1px solid black;
+        }
+
+        .option {
+          .content {
+            display: flex;
+          }
+        }
+
+        .project_name {
+          border-left: 1px solid black;
+        }
+      }
+
+      .form-label {
+        padding: 0 20px;
+        width: 150px;
+      }
+    }
   }
+}
+
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
@@ -964,6 +965,7 @@ span {
       #readonly_box {
         padding: 0;
         border-left: black 1px solid;
+        width: 100%;
       }
 
       .third_content {
@@ -1043,6 +1045,10 @@ span {
 
       .six_content {
         .fixed_info {
+          .six_content_title,
+        .six_content_date {
+          position: absolute;
+        }
           border-left: none;
           border-top: none;
         }
@@ -1050,11 +1056,15 @@ span {
         .form-control {
           padding: 5px 10px 0;
         }
-
+        .row:nth-child(2) {
+        border-right: 1px solid black;
+        border-top: 1px solid black;
+      }
+      .row:nth-child(3) {
+        border-top: 1px solid black;
+      }
         .wrap {
-          border-top: 1px solid black;
-
-          button {
+           button {
             margin: 0 10px;
             height: 30px;
             width: 70px;
@@ -1088,17 +1098,11 @@ span {
           }
         }
 
-        #memo_input {
+        #memo_input,.user_acc {
           border-left: 1px solid black;
         }
 
-        .use_acc {
-          width: 100px;
-        }
-        .use_acc,
-        .wrap:nth-child(1),
-        .wrap:nth-child(2),
-        .wrap:nth-child(3) {
+        .wrap:nth-child(1){
           border-right: 1px solid black;
         }
       }
@@ -1225,7 +1229,6 @@ span {
 
       .six_content {
         .fixed_info {
-          height: 47px;
           border: none;
           border-bottom: 1px solid black;
           border-right: 1px solid black;
@@ -1241,7 +1244,9 @@ span {
           padding: 5px;
           border-bottom: 1px solid black;
         }
-
+.row{
+  border-right: 1px solid black;
+}
         .wrap {
           flex-direction: column;
 

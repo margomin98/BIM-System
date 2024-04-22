@@ -255,7 +255,7 @@
           <div class="row auth g-0">
             <div class="col-xl-6 col-lg-6 col-md-6 col-12 input-container">
               <div class="input-group">
-                <div class="input-group-prepend"><span>*</span>交付人員：</div>
+                <div class="input-group-prepend"><span class='red_star'>*</span>交付人員：</div>
                 <div class="input-with-icon">
                   <select class="form-select" name="" id="" v-model="requestData.DeliveryOperator">
                     <option value="">--請選擇--</option>
@@ -426,7 +426,9 @@ h2 {
 .form_search_btn {
   @include form_search_btn;
 }
-
+span {
+  @include red_star;
+}
 .info_wrap {
   margin: auto;
 
@@ -583,33 +585,27 @@ h2 {
       font-weight: 700;
       font-size: 20px;
       text-align: end;
-      position: relative;
       color: black;
-
-      span {
-        position: absolute;
-      }
     }
 
     .input-container {
-      position: relative;
+      // position: relative;
       align-self: center;
-   
     }
 
-    .input-with-icon {
-      position: relative;
+    // .input-with-icon {
+    //   position: relative;
 
-    }
+    // }
 
-    .checkmark-icon {
-      position: absolute;
-      top: 10%;
-      left: 93%;
-      transform: translateY(-50%);
-      width: 20px;
-      height: 20px;
-    }
+    // .checkmark-icon {
+    //   position: absolute;
+    //   top: 10%;
+    //   left: 93%;
+    //   transform: translateY(-50%);
+    //   width: 20px;
+    //   height: 20px;
+    // }
   }
 
   .modal {
@@ -852,6 +848,10 @@ h2 {
             }
           }
         }
+      }
+      .confirm_section .auth .input-group{
+        flex-direction: column;
+        
       }
     }
   }
