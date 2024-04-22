@@ -289,10 +289,11 @@ import allPermission from "@/assets/json/permission.json"
     User.currentPermission = User.name ? await apiStore.getRoleName(User.name): "";
   }
   /**
-   * 完成拖曳後 1.更新rowData 2.更新Datagrid 3.打API變更實際資料庫順序
+   * 完成拖曳後 1.更新rowData 1.5更新Index 2.更新Datagrid 3.打API變更實際資料庫順序
    * @param {Event} e 拖曳事件
    */
   const onRowDragEnd = async (e) =>{
+    // TODO
     const newRowIndex = e.overIndex;
     const draggedData = e.node.data;
     let originalIndex = -1;
@@ -300,11 +301,16 @@ import allPermission from "@/assets/json/permission.json"
     // 1.
     rowData.value.splice(originalIndex, 1);
     rowData.value.splice(newRowIndex, 0, draggedData);
+    // 1.5
+    rowData.value.forEach((role, index)=>{
+      role.Index = index;
+    })
     // 2.
     setTimeout(()=>{
       grid.value.setRowData(rowData.value);
     },50);
     console.log('rowData',rowData.value);
+
     // 3.
     permissionCUDI('IndexEdit');
   }
@@ -347,34 +353,34 @@ import allPermission from "@/assets/json/permission.json"
     let requestData = {};
     switch (type) {
       case 'Create':
-        url = '/AuthorityMng/CreateRole'
+        url = '/AuthorityMng/CreateRole';
+        // Find Max Index
+        let maxIndex = -1;
+        DropdownArray.role.forEach((role)=>{
+          if(role.Index > maxIndex) maxIndex = role.Index;
+        })
         requestData = {
           RoleName: newPermission.value, // 新增的權限名稱
-          Index: DropdownArray.role.length, // 新增的權限Index為最後一個(Index+1)，等同於現在的array.length
+          Index: maxIndex + 1, // 新增的權限Index為最後一個(Index+1)，等同於現在的array.length
         }
         break;
       case 'Update':
-        url = '/AuthorityMng/EditRoleName'
+        url = '/AuthorityMng/EditRoleName';
         requestData = {
           RoleId: permissionParams.id, // 欲編輯的權限id
           NewRoleName: permissionParams.input, // 欲編輯的內容
         }
         break;
       case 'Delete':
-        url = '/AuthorityMng/DeleteRole'
+        url = '/AuthorityMng/DeleteRole';
         requestData = {
           RoleId: permissionParams.id, // 欲刪除的權限id
         }
         break;
       case 'IndexEdit':
-        url = '/AuthorityMng/EditRolesIndex'
-        // 加上Property "Index"
-        const RolesList = rowData.value.map(function(item, index) {
-          item.Index = index;
-          return item
-        });
+        url = '/AuthorityMng/EditRolesIndex';
         requestData = {
-          RolesList: RolesList
+          RolesList: rowData.value
         }
     }
     try {
@@ -448,6 +454,7 @@ import allPermission from "@/assets/json/permission.json"
       ...submitPermissionList,
       Id: role.Id,
       RoleName: role.Name,
+      Index: role.Index,
       IsEnable: true // 不加的話。會因為接收ViewModel的關係讓所選帳號變成停用(消失在DropdownList)
     }
     try {
