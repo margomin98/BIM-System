@@ -146,41 +146,20 @@
                   </div>
                 </div>
                 <div class="accordion authority_accordion" id="authority_accordion">
-                  <div v-for="(main, mainIndex) in permissionList" :key="main.id">
-                    <div class="accordion-header">
-                      <ul>
-                        <li>
-                          <label :for="'#header_'+main.id">
-                            <input type="checkbox" v-model="main.checked" :id="'header_'+main.id" @click="selectAllitems($event, mainIndex)"> {{ main.TitleName }}
-                          </label>  
-                          <span class="accordion-toggle" @click="toggleAccordion(mainIndex)"> 
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              class="icon icon-tabler icon-tabler-chevron-down"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              stroke-width="2"
-                              stroke="currentColor"
-                              fill="none"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            >
-                              <path stroke="none" d="M0 0h24v24H0z" />
-                              <polyline points="6 9 12 15 18 9" />
-                            </svg>
-                          </span>
-                        </li>
-                      </ul>
-                    </div>
-                    <div v-show="isOpen.includes(mainIndex)" class="accordion-body" id="accordion-body-1">
-                      <ul>
-                        <li v-for="sub in main.List" :key="sub.id">
-                          <label :for="`#${sub.id}`">
-                            <input type="checkbox" :id="sub.id" v-model="sub.checked" @change="isAllSelected(mainIndex)"> {{ sub.TitleName }}
-                          </label>
-                        </li>
-                      </ul>
+                  <div v-for="(main ,main_index) in permissionList" :key="main.TitleName" class="accordion-item">
+                    <h2 class="accordion-header" >
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#body_'+main.id" aria-expanded="true">
+                        <input class="form-check-input" type="checkbox" value="" :id="main.id" v-model="main.checked" @click="checkAll(main_index, !main.checked)">
+                        <label :for="main.id">{{ main.TitleName }}</label>
+                      </button>
+                    </h2>
+                    <div :id="'body_'+main.id" class="accordion-collapse show" aria-labelledby="headingOne" data-bs-parent="#authority_accordion">
+                      <div class="accordion-body">
+                        <div v-for="sub in main.List" :key="sub.TitleName" class="check_wrap">
+                          <input class="inner_form_check" type="checkbox" value="" :id="sub.id" v-model="sub.checked">
+                          <label :for="sub.id">{{ sub.TitleName }}</label>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
