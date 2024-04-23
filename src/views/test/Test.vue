@@ -1,6 +1,9 @@
 <template>
   <Navbar />
   <div class="main_section">
+    <div class="info_wrap">
+      <rent />
+    </div>
     <!-- <div class="title col">
       <h1>PrimeVue資產管理</h1>
     </div>
@@ -228,19 +231,14 @@
               v-show="slotProps.data.AssetsId"
             />
           </template>
-        </Column>
-        <Column
-          v-for="item in datagridfield"
-          :field="item.field"
-          :header="item.header"
-          sortable
-          :style="{'min-width': item.width}"
-        ></Column>
-      </DataTable>
-    </div>
-  </div> -->
-  <!-- 加載動畫 -->
-  <!-- <loading :active.sync="isLoading">
+</Column>
+<Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable
+  :style="{'min-width': item.width}"></Column>
+</DataTable>
+</div>
+</div> -->
+    <!-- 加載動畫 -->
+    <!-- <loading :active.sync="isLoading">
     <div class="loadingio-spinner-ellipsis-kfs3u9hd8sa">
       <div class="ldio-gxxoh6igtkw">
         <div></div>
@@ -259,79 +257,49 @@
   </loading> -->
   </div>
   <div id="app">
-  <div class="accordion">
-    <div class="accordion-header">
-      <ul>
-        <li>
-          <label>
-            <input type="checkbox" :checked="isAllSelected" @click="selectAllitems"> Select All
-          </label>  
-          <span class="accordion-toggle" @click="toggleAccordion(1)"> 
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="icon icon-tabler icon-tabler-chevron-down"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              stroke-width="2"
-              stroke="currentColor"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" />
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </span>
-        </li>
-      </ul>
-    </div>
-    <div v-if="isOpen === 1" class="accordion-body" id="accordion-body-1">
-      <ul>
-        <li v-for="item in items" :key="item.id">
-          <label>
-            <input type="checkbox" v-model="selecteditemIds" :value="item.id"> {{ item.name }}
-          </label>
-        </li>
-      </ul>
-    </div>
-    <div class="accordion-header">
-      <ul>
-        <li>
-          <label>
-            <input type="checkbox" :checked="isAllSelected2" @click="selectAllitems2"> Select All
-          </label>  
-          <span class="accordion-toggle" @click="toggleAccordion(2)">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="icon icon-tabler icon-tabler-chevron-down"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              stroke-width="2"
-              stroke="currentColor"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" />
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </span>
-        </li>
-      </ul>
-    </div>
-    <div v-if="isOpen === 2" class="accordion-body" id="accordion-body-2">
-      <ul>
-        <li v-for="item in items" :key="item.id + '2'">
-          <label>
-            <input type="checkbox" v-model="selecteditemIds2" :value="item.id"> {{ item.name }}
-          </label>
-        </li>
-      </ul>
+    <div class=" setting_tab">
+      <div class="accordion-header">
+        <ul class="header_wrap">
+          <li>
+            <label>
+              <input type="checkbox" :checked="isAllSelected" @click="selectAllitems"> 專案採購管理
+            </label>
+            <img class='icon' src="@/assets/accordion_arrow.png" @click="toggleAccordion(1)">
+          </li>
+        </ul>
+      </div>
+      <div v-if="isOpen === 1" class="accordion-body" id="accordion-body-1">
+        <ul>
+          <li v-for="item in items" class='check_wrap' :key="item.id">
+            <label>
+              <input type="checkbox" class="inner_form_check" v-model="selecteditemIds" :value="item.id"> {{ item.name
+              }}
+            </label>
+          </li>
+        </ul>
+      </div>
+      <div class="accordion-header">
+        <ul class="header_wrap">
+          <li>
+            <label>
+              <input type="checkbox" :checked="isAllSelected" @click="selectAllitems"> 專案採購管理
+            </label>
+            <img class='icon' src="@/assets/accordion_arrow.png" @click="toggleAccordion(2)">
+          </li>
+        </ul>
+      </div>
+      <div v-if="isOpen === 2" class="accordion-body" id="accordion-body-2">
+        <ul>
+          <li v-for="item in items" class='check_wrap' :key="item.id + '2'">
+            <label>
+              <input type="checkbox" class="inner_form_check" v-model="selecteditemIds2" :value="item.id"> {{ item.name
+              }}
+            </label>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
 
 </template>
 
@@ -372,8 +340,8 @@ export default {
     Loading
   },
   setup() {
-    
-//全選的script,這裡開始
+
+    //全選的script,這裡開始
 
     const items = ref([
       { id: 1, name: 'Fluffy' },
@@ -408,7 +376,7 @@ export default {
       isOpen.value = isOpen.value === accordionNumber ? 0 : accordionNumber;
     };
 
-//全選的script，這裡結束
+    //全選的script，這裡結束
 
     const home = ref(null);
     const searchParams = reactive({
@@ -448,50 +416,50 @@ export default {
       selectAll: false, //不一定要
     })
     const datagridfield = [{
-        field: 'AssetsId',
-        header: '資產編號',
-        width: '150px',
-      },
-      {
-        field: 'AssetName',
-        header: '物品名稱',
-        width: '350px',
-      },
-      {
-        field: 'EquipTypeName',
-        header: '設備總類',
-        width: '350px',
-      },
-      {
-        field: 'EquipCategoryName',
-        header: '設備分類',
-        width: '350px',
-      },
-      {
-        field: 'AreaName',
-        header: '區域',
-        width: '130px',
-      },
-      {
-        field: 'LayerName',
-        header: '櫃位',
-        width: '130px',
-      },
-      {
-        field: 'Status',
-        header: '狀態',
-        width: '130px',
-      },
-      {
-        field: 'InboundDate',
-        header: '入庫日期',
-        width: '150px',
-      },
-      {
-        field: 'AssetsInOperator',
-        header: '入庫人員',
-        width: '150px',
-      },
+      field: 'AssetsId',
+      header: '資產編號',
+      width: '150px',
+    },
+    {
+      field: 'AssetName',
+      header: '物品名稱',
+      width: '350px',
+    },
+    {
+      field: 'EquipTypeName',
+      header: '設備總類',
+      width: '350px',
+    },
+    {
+      field: 'EquipCategoryName',
+      header: '設備分類',
+      width: '350px',
+    },
+    {
+      field: 'AreaName',
+      header: '區域',
+      width: '130px',
+    },
+    {
+      field: 'LayerName',
+      header: '櫃位',
+      width: '130px',
+    },
+    {
+      field: 'Status',
+      header: '狀態',
+      width: '130px',
+    },
+    {
+      field: 'InboundDate',
+      header: '入庫日期',
+      width: '150px',
+    },
+    {
+      field: 'AssetsInOperator',
+      header: '入庫人員',
+      width: '150px',
+    },
     ];
     const dt = ref();
     onMounted(() => {
@@ -702,47 +670,118 @@ export default {
 @import "@/assets/css/theme.css";
 @import "@/assets/css/loading.css";
 
-.accordion ul{
-  padding-left:0;
-  padding: 10px;
-  margin-bottom: 0;
-   li{
-  list-style-type:none;
-}
+
+.setting_tab {
+  width: 400px;
+
+  li,
+  ul {
+    padding-left: 0;
+    list-style-type: none;
+  }
+
+  .inner_form_check,
+  .header_wrap input {
+    margin-right: 8px;
+  }
+
+  .header_wrap {
+
+    padding: 10px;
+    height: 38px;
+    margin-bottom: 0;
+    align-content: center;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .icon {
+      height: 10px;
+      width: 15px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      transform: rotate(180deg);
+    }
+
+    .icon:hover {
+      transform: rotate(0deg);
+    }
+  }
+
+  .accordion-header {
+    background-color: #86abb0;
+    font-weight: 700;
+    color: white;
+  }
+
+  .accordion-body {
+    background: #dedede;
+    padding: 16px;
+
+    ul {
+      margin-bottom: 0;
+
+      .check_wrap {
+        display: flex;
+        font-size: 15px;
+        font-weight: 700;
+        color: black;
+
+        input {
+          border: none
+        }
+
+      }
+    }
+  }
+
 }
 
 @media only screen and (min-width: 1200px) {
   .main_section {
     padding: 0 10%;
+
     .button_wrap {
       margin-bottom: 25px;
       gap: 20px;
+
       .add_btn {
         @include datagrid_button_no1;
         width: 195px;
+
         &:hover {
           background-color: #537ebc;
         }
       }
+
       .search_btn {
         @include search_and_send_btn;
+
         &:hover {
           background-color: #5e7aa2;
         }
       }
+
       .empty_btn {
         @include empty_btn;
+
         &:hover {
           background-color: #5d85bd;
         }
       }
+
       .export_btn {
         @include export_btn;
+
         &:hover {
           background-color: #274266;
         }
       }
     }
+
     .datagrid_section {
       .content {
         background: rgba(82, 136, 156, 0.8);
@@ -754,17 +793,21 @@ export default {
         justify-content: center;
         padding: 0 2%;
       }
+
       .row {
         gap: 20px 30px;
         padding: 40px;
+
         p {
           @include datagrid_title;
         }
+
         input {
           @include dropdown_btn;
           width: calc(100% - 10%);
           height: 35px;
         }
+
         button {
           border: none;
           padding: 0;
@@ -772,10 +815,12 @@ export default {
           font-size: 18px;
           height: 100%;
         }
+
         .dropdown {
           width: calc(100% - 10%);
           height: 35px;
           @include dropdown_btn;
+
           .dropdown-toggle {
             display: flex;
             justify-content: space-between;
@@ -785,15 +830,18 @@ export default {
             text-overflow: ellipsis;
             white-space: nowrap;
           }
+
           .dropdown-menu {
             width: 100%;
             transform: translate3d(-1px, 35px, 0px) !important;
             max-height: 250px;
             overflow-y: auto;
+
             p {
               font-size: 18px;
               color: black;
               font-weight: normal;
+
               &:hover {
                 cursor: pointer;
               }
@@ -802,59 +850,75 @@ export default {
         }
       }
     }
+
     .datagrid-header-row {
       background: var(--c-7, #1f4e5f);
     }
+
     .datagrid-header .datagrid-cell {
       text-align: left !important;
     }
   }
 }
+
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
     padding: 0 5%;
+
     .button_wrap {
       margin-bottom: 25px;
       gap: 20px;
+
       .add_btn {
         @include datagrid_button_no1;
         width: 190px;
+
         &:hover {
           background-color: #537ebc;
         }
       }
+
       .export_btn {
         @include export_btn;
+
         &:hover {
           background-color: #274266;
         }
       }
+
       .search_btn {
         @include search_and_send_btn;
+
         &:hover {
           background-color: #5e7aa2;
         }
       }
+
       .empty_btn {
         @include empty_btn;
+
         &:hover {
           background-color: #5d85bd;
         }
       }
     }
+
     .datagrid_section {
       .row {
         gap: 10px 0;
         padding: 30px;
         @include datagrid_bg;
+
         p {
           @include datagrid_title;
         }
+
         input {
           @include dropdown_btn;
           width: 100%;
           height: 35px;
         }
+
         button {
           padding: 0;
           width: 100%;
@@ -862,10 +926,12 @@ export default {
           height: 100%;
           text-align: left;
         }
+
         .dropdown {
           width: 100%;
           height: 35px;
           @include dropdown_btn;
+
           .dropdown-toggle {
             display: flex;
             justify-content: space-between;
@@ -875,9 +941,11 @@ export default {
             text-overflow: ellipsis;
             white-space: nowrap;
           }
+
           .dropdown-menu {
             width: 100%;
             transform: translate3d(-1px, 35px, 0px) !important;
+
             p {
               font-size: 18px;
               color: black;
@@ -887,72 +955,88 @@ export default {
         }
       }
     }
+
     .datagrid-header-row {
       background: var(--c-7, #1f4e5f);
     }
+
     .datagrid-header .datagrid-cell {
       text-align: left !important;
     }
   }
 }
+
 @media only screen and (max-width: 767px) {
   .main_section {
     padding: 5%;
+
     .button_wrap {
       margin-bottom: 25px;
       justify-content: center;
       gap: 20px;
+
       .add_btn {
         @include datagrid_button_no1;
         font-size: 18px;
         width: 100%;
         height: auto;
+
         &:hover {
           background-color: #537ebc;
         }
       }
+
       .export_btn {
         @include export_btn;
         font-size: 18px;
         width: 100%;
         height: auto;
+
         &:hover {
           background-color: #274266;
         }
       }
+
       .search_btn {
         @include search_and_send_btn;
         font-size: 18px;
         width: 100%;
         height: auto;
+
         &:hover {
           background-color: #5e7aa2;
         }
       }
+
       .empty_btn {
         @include empty_btn;
         font-size: 18px;
         width: 100%;
         height: auto;
+
         &:hover {
           background-color: #5d85bd;
         }
       }
     }
+
     .datagrid_section {
       .row {
         gap: 10px 0;
         padding: 30px;
         @include datagrid_bg;
+
         p {
           @include datagrid_title;
           font-size: 18px;
         }
+
         input {
           @include dropdown_btn;
           width: 100%;
           height: 35px;
         }
+
         button {
           padding: 0;
           width: 100%;
@@ -960,19 +1044,23 @@ export default {
           height: 100%;
           text-align: left;
         }
+
         .dropdown {
           width: 100%;
           height: 35px;
           @include dropdown_btn;
+
           .dropdown-toggle {
             display: flex;
             justify-content: space-between;
             align-items: center;
             border: none;
           }
+
           .dropdown-menu {
             width: 100%;
             transform: translate3d(-1px, 35px, 0px) !important;
+
             p {
               font-size: 18px;
               color: black;
@@ -982,9 +1070,11 @@ export default {
         }
       }
     }
+
     .datagrid-header-row {
       background: var(--c-7, #1f4e5f);
     }
+
     .datagrid-header .datagrid-cell {
       text-align: left !important;
     }
