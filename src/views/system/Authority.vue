@@ -11,7 +11,7 @@
                 <p>修改名稱</p>
               </div>
               <div class="content">
-                <input type="text" id="editInput" placeholder="最多輸入10字" v-model="permissionParams.input">
+                <input type="text" id="editInput" placeholder="最多輸入10字" v-model="permissionParams.input" maxlength="10">
               </div>
               <div class="button_section">
                 <button type="button" class="btn" data-bs-dismiss="modal">關閉</button>

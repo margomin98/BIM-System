@@ -606,6 +606,25 @@ export const useAPIStore = defineStore('API',{
       }
     },
     /**
+     * 取得所有的專案下拉選單(僅快速出庫-新增可用)
+     * @returns {Promise<Array<{Text: string, Value: string}>>} 返回專案列表Array
+     */        
+    async getFuzzyProjectAll() {
+      try {
+        const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetProjects?all=true`);
+        let data = response.data;
+        console.log(data);
+        if (data.state === 'success') {
+          data.resultList.ProjList.splice(0,0,{Text:'--請選擇--' , Value: ''});
+          return data.resultList.ProjList;
+        } else {
+          return [{Text:'--請選擇--' , Value: ''}]
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    /**
      * 檢查專案代碼是否與資料庫重複
      * @param {Array} projectCodeList 要檢查的專案代碼Array
      * @returns {Promise<string>} "success" | error_message
