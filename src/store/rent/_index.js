@@ -71,7 +71,9 @@ export const useRentStore = defineStore('Rent', {
 			deleteFile: [],
 			existFile: [],
 		},
-    // 搜尋表單參數
+    /**
+		 * 搜尋表單參數(出庫備料檢索)
+		 */
     searchParams: {
       EquipType_Id: '',
       Category_Id: '',
@@ -82,6 +84,16 @@ export const useRentStore = defineStore('Rent', {
       AssetsId: '',
       ProductName: '',
     },
+		/**
+		 * 搜尋表單參數(填報需求)
+		 */
+		requirementParams: {
+			EquipType_Id: '',
+      Category_Id: '',
+      ProductName: '',
+			Number: 1,
+			RequiredSpec: '',
+		},
     datagrid1: createDadagridObject('AssetsId'),
     datagrid1field: [],
     rowData1: [],
@@ -131,6 +143,7 @@ export const useRentStore = defineStore('Rent', {
     onSearchProjectSelect(option) {
 			this.searchParams.ProjectCode = option.Value;
 		},
+
 		/**
 		 * 取得資料單，有給能進入頁面的Status Array就檢查此資料單狀態是否符合Conditions
 		 * @param {string} AO_ID 單號
