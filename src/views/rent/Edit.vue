@@ -249,6 +249,15 @@ GetAntiForgeryToken
           })
       }
     }
+    async function getEquipCategoryName() {
+      getEquipCategory(myForm.EquipType_Id)
+        .then((data) => {
+          myForm.EquipCategoryArray = data;
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+    }
       async function getProjectName() {
         if (!/^(?![ 　]{10}$)[\s\S]{1,10}$/.test(details.value.ProjectCode)) {
           alert('專案代碼格式錯誤');
