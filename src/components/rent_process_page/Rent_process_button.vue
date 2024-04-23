@@ -78,13 +78,13 @@
         }
       }
       function checkButton() {
-        if (!RentProcess_New_Status.includes(status)) {
+        if (!RentProcess_New_Status.includes(status) || !props.params.data.canPrepare) {
           isDisabled.new = true;
         }
         if (!RentProcess_NotifyConfirm_Status.includes(status)) {
           isDisabled.deliveryNotify = true;
         }
-        if (!RentProcess_Confirm_Status.includes(status)) {
+        if (!RentProcess_Confirm_Status.includes(status) || !props.params.data.canDelivery) {
           isDisabled.delivery = true;
         }
       }

@@ -94,6 +94,7 @@ import {
 } from 'vue';
 import Navbar from '@/components/Navbar.vue';
 import router from '@/router';
+import axios from 'axios';
 export default {
   components: {
     Navbar
@@ -130,7 +131,6 @@ export default {
       return date;
     }
     async function getApplicationInfo() {
-      const axios = require('axios');
       try {
         const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
         const data = response.data;
@@ -149,67 +149,7 @@ export default {
         console.error(error);
       }
     }
-    async function getAssetsUnit() {
-      // const axios = require('axios');
-      // try {
-      //   const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetAssetInfo?id=${formParams.AssetsId}`);
-      //   const data = response.data;
-      //   if (data.state === 'success') {
-      //     console.log('資產資料', data.resultList);
-      //     formParams.Unit = data.resultList.Unit;
-      //     formParams.Status = data.resultList.Status;
-      //     // 如為非耗材 1.資產數量為一，且不可更改 2.Status不對，不能提交
-      //     if(data.resultList.AssetType !== '耗材') {
-      //       // 1.
-      //       canEdit.value =false;
-      //       formParams.Count = 1;
-      //       // 2.
-      //       wrongStatus.value = true;
-      //       canSubmit.value = false;
-      //       switch (data.resultList.Status) {
-      //         case '在庫':
-      //           alertMsg.value = '此資產已在庫，無法重複歸還。'
-      //           break;
-      //         case '出貨':
-      //           alertMsg.value = '此資產已被出貨，無法進行歸還作業。'
-      //           break;
-      //         case '報廢':
-      //           alertMsg.value = '此資產已被報廢，無法進行歸還作業。'
-      //           break;
-      //         case '退貨':
-      //           alertMsg.value = '此資產已被退貨，無法進行歸還作業。'
-      //           break;
-      //         case '已被設備整合':
-      //           alertMsg.value = '此資產已被整合進設備整合箱，無法進行歸還作業。'
-      //           break;
-      //         default:
-      //           canSubmit.value = true;
-      //           wrongStatus.value = false;
-      //           break;
-      //       }
-      //     }
-      //     //如為耗材
-      //     else {
-      //       canSubmit.value = true;
-      //     }
-      //   } else if (data.state === 'error') {
-      //     console.log(data.messages);
-      //     canEdit.value =true;
-      //     canSubmit.value = false;
-      //     wrongStatus.value = false;
-      //     formParams.Unit = '';
-      //     formParams.Status = '';
-      //   } else if (data.state === 'account_error') {
-      //     formParams.Unit = '';
-      //     alert(data.messages);
-      //     router.push('/');
-      //   }
-      // } catch (error) {
-      //   console.error(error);
-      // }
-    }
     async function submit() {
-      const axios = require('axios');
       try {
         // 檢查必填 & 限制項目
         if (!formParams.AssetsId || formParams.Count < 1) {
@@ -246,7 +186,6 @@ export default {
       }
     }
     watch(() => formParams.AssetsId, async (newValue, oldValue) => {
-      const axios = require('axios');
       try {
         const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetAssetInfo?id=${newValue}`);
         const data = response.data;
@@ -315,7 +254,6 @@ export default {
       wrongStatus,
       alertMsg,
       formParams,
-      getAssetsUnit,
       submit,
       getDate,
       goBack,

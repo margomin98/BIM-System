@@ -117,7 +117,7 @@
                             <Storage_number :params="slotProps" />
                         </template>
                     </Column>
-                    <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable
+                    <Column v-for="item in datagrid1field" :key="item.field" :field="item.field" :header="item.header" sortable
                         :style="{ 'min-width': item.width }"></Column>
                 </DataTable>
             </div>
@@ -171,7 +171,7 @@
                         <div class="input-group-prepend"> <span>*</span>領用人員 :</div>
                         <select class="form-select" v-model="Form.Recipient">
                             <option value="">--請選擇--</option>
-                            <option v-for="option in DropdownArray.Recipient" :value="option">{{ option }}</option>
+                            <option v-for="option in DropdownArray.Recipient" :key="option" :value="option">{{ option }}</option>
                         </select>
                     </div>
                 </div>
@@ -230,7 +230,7 @@
                         </template>
                     </Column>
                     <Column field="OM_Number" header="選擇數量" sortable style="{'min-width': '100px';}"></Column>
-                    <Column v-for="item in datagrid1field" :field="item.field" :header="item.header" sortable
+                    <Column v-for="item in datagrid1field" :key="item.field" :field="item.field" :header="item.header" sortable
                         :style="{ 'min-width': item.width }"></Column>
                 </DataTable>
             </div>
@@ -277,7 +277,7 @@ onMounted(async () => {
     DropdownArray.value.Recipient = await apiStore.getCustodian('');
     DropdownArray.value.EquipType = await apiStore.getEquipType();
     DropdownArray.value.Area = await apiStore.getArea();
-    DropdownArray.value.ProjectCode = await apiStore.getFuzzyProject();
+    DropdownArray.value.ProjectCode = await apiStore.getFuzzyProjectAll();
     datagrid1.value.sortField = ''
     datagrid1field.value = [
         { field: "OM_Unit", width: '100px', header: "單位" },

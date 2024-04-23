@@ -331,7 +331,6 @@ export default {
     //分別使用帳號密碼驗證、改變驗證狀態 user1為交付人員 user2為報廢人員
     async function validate(user) {
       if (user === 1) {
-        const axios = require('axios');
         const formData = new FormData();
         const formFields = {
           'userName': validation.value.user1.account,
@@ -343,12 +342,12 @@ export default {
           formData.append(fieldName, formFields[fieldName]);
           console.log(formData.get(`${fieldName}`));
         }
-        const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
         try {
+          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
           const data = response.data;
           console.log(data);
           if (data.state === 'success') {
@@ -362,7 +361,6 @@ export default {
           console.error(error);
         }
       } else if (user === 2) {
-        const axios = require('axios');
         const formData = new FormData();
         const formFields = {
           'userName': validation.value.user2.account,
@@ -374,12 +372,12 @@ export default {
           formData.append(fieldName, formFields[fieldName]);
           console.log(formData.get(`${fieldName}`));
         }
-        const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
         try {
+          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
           const data = response.data;
           console.log(data);
           if (data.state === 'success') {

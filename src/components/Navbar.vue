@@ -20,7 +20,7 @@
             <router-link to="/receive_new">新增收貨</router-link>
             <router-link to="/receive_datagrid">收貨管理</router-link>
             <div class='dropdown-divider' style='border-color:white'></div>
-            <router-link v-show="roleId === 1 || roleId === 4" to="/quick_store_new" class="speed_icon" style="flex-direction: row" @mouseover="changeImage" @mouseout="resetImage">
+            <router-link v-show="showQuickStore" to="/quick_store_new" class="speed_icon" style="flex-direction: row" @mouseover="changeImage" @mouseout="resetImage">
               <img :src="speedIcon" alt="快速入庫">快速入庫
             </router-link>
             <router-link to="/store_new">新品入庫</router-link>
@@ -73,7 +73,7 @@
             <router-link to="/authority">權限管理</router-link>
             <router-link to="/system_parameter">參數管理</router-link>
             <router-link to="/system_log_datagrid">系統日誌管理</router-link>
-            <router-link to="/LineBot/LineNotifyManagement">LINE授權管理</router-link>
+            <a href="/LineBot/LineNotifyManagement">LINE授權管理</a>
           </div>
         </li>
       </ul>
@@ -107,6 +107,7 @@
   const speedIcon = ref(require('@/assets/navbar/speed.png')); // 快速的Icon
   const hoverImage = require('@/assets/navbar/speed_hover.png'); // 快速的Icon
   const showQuickRent = ref(true);
+  const showQuickStore = ref(true);
   // Hover effect functions
   function changeImage() {
     speedIcon.value = hoverImage;
@@ -145,6 +146,7 @@
     // console.log('roleId',roleId.value);
     emit('username', utilsStore.userName); //收貨、入庫填報 edit修改後再移除
     // showQuickRent.value = await apiStore.checkPermission('AO_Fast');
+    // showQuickStore.value = await apiStore.checkPermission('AI_Fast');
   });
   onUnmounted(()=>{
     utilsStore.$dispose();

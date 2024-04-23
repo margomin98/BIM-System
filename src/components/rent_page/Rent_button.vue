@@ -39,7 +39,7 @@ export default {
     }
 
     function checkButton() {
-      if(!Rent_Edit_Status.includes(status)) {
+      if(!Rent_Edit_Status.includes(status) || !props.params.data.canEdit) {
         isDisabled.value = true;
       }
     }

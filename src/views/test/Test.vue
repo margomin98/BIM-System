@@ -1,299 +1,41 @@
 <template>
   <Navbar />
   <div class="main_section">
-    <div class="info_wrap">
-      <rent />
-    </div>
-    <!-- <div class="title col">
-      <h1>PrimeVue資產管理</h1>
-    </div>
-    <div class="container-fluid datagrid_section">
-      <div class="content">
-        <div class="row">
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-            <p>設備總類</p>
-            <div class="dropdown">
-              <button
-                class="btn dropdown-toggle"
-                type="button"
-                id="areaDropdown"
-                data-bs-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                @click="getEquipTypeName"
-              >
-                {{ searchParams.EquipTypeName || '請選擇' }}
-              </button>
-              <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                <p
-                  v-for="(item, index) in DropdownArray.EquipType"
-                  :key="index"
-                  class="dropdown-item"
-                  @click="selectType(item)"
-                >
-                  {{ item.Name }}
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-            <p>設備分類</p>
-            <div class="dropdown">
-              <button
-                class="btn dropdown-toggle"
-                type="button"
-                id="areaDropdown"
-                data-bs-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                :disabled="!searchParams.EquipTypeName"
-              >
-                {{ searchParams.EquipCategoryName || EquipCategoryInit }}
-              </button>
-              <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                <p
-                  v-for="(item, index) in DropdownArray.EquipCategory"
-                  :key="index"
-                  class="dropdown-item"
-                  @click="selectCategory(item)"
-                >
-                  {{ item.Name }}
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-            <p>資產編號</p>
-            <input type="text" v-model="searchParams.AssetsId" />
-          </div>
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-            <p>資產名稱</p>
-            <input type="text" v-model="searchParams.AssetName" />
-          </div>
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-            <p>狀態</p>
-            <div class="dropdown">
-              <button
-                class="btn dropdown-toggle"
-                type="button"
-                id="statusDropdown"
-                data-bs-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                {{ searchParams.Status || '請選擇' }}
-              </button>
-              <div class="dropdown-menu" aria-labelledby="statusDropdown">
-                <p
-                  v-for="(item, index) in DropdownArray.Status"
-                  :key="index"
-                  class="dropdown-item"
-                  @click="selectStatus(item)"
-                >
-                  {{ item }}
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-            <p>區域</p>
-            <div class="dropdown">
-              <button
-                class="btn dropdown-toggle"
-                type="button"
-                id="areaDropdown"
-                data-bs-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                @click="getAreaName"
-              >
-                {{ searchParams.AreaName || '請選擇' }}
-              </button>
-              <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                <p
-                  v-for="(item, index) in DropdownArray.Area"
-                  :key="index"
-                  class="dropdown-item"
-                  @click="selectArea(item)"
-                >
-                  {{ item.Name }}
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12">
-            <p>櫃位</p>
-            <div class="dropdown">
-              <button
-                class="btn dropdown-toggle"
-                type="button"
-                id="cabinetDropdown"
-                data-bs-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                :disabled="!searchParams.AreaName"
-              >
-                {{ searchParams.LayerName || LayerInit }}
-              </button>
-              <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
-                <p
-                  v-for="(item, index) in DropdownArray.Layer"
-                  :key="index"
-                  class="dropdown-item"
-                  @click="selectLayer(item)"
-                >
-                  {{ item.Name }}
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12 flex-col">
-            <p>入庫日期(起)</p>
-            <div class="date-selector">
-              <div class="input-container">
-                <input
-                  type="date"
-                  v-model="searchParams.StartDate"
-                  class="date-input"
-                  @focus="showDatePicker = true"
-                  @blur="showDatePicker = false"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-2 col-lg-2 col-md-6 col-12 flex-col">
-            <p>入庫日期(迄)</p>
-            <div class="date-selector">
-              <input
-                type="date"
-                v-model="searchParams.EndDate"
-                class="date-input"
-                @focus="showDatePicker = true"
-                @blur="showDatePicker = false"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col justify-content-center d-flex">
-      <div class="button_wrap d-flex">
-        <button class="search_btn" @click="submit('' , 'search')">檢索</button>
-        <button class="empty_btn" @click="clear">清空</button>
-        <router-link to="/home" style="display: none"
-          ><button ref="home"></button
-        ></router-link>
-      </div>
-    </div>
-    <div>
-      <span
-        v-for="item in selectedProduct"
-        style="margin-right: 1rem"
-        >{{ item.AssetsId }}</span
-      >
-    </div>
-    <div class="datagrid_section mb-3">
-      <DataTable
-        ref="dt"
-        v-model:selection="selectedProduct"
-        lazy
-        :first="datagridSetting.first"
-        :size="'small'"
-        :loading="datagridSetting.loading"
-        :value="rowData"
-        :sort-field="datagridSetting.sortField"
-        :sort-order="datagridSetting.sortOrder"
-        resizableColumns
-        columnResizeMode="expand"
-        scrollable
-        scrollHeight="490px"
-        @page="submit($event , 'page')"
-        @sort="submit($event , 'sort')"
-        :selectAll="datagridSetting.selectAll"
-        @select-all-change="onSelectAllChange"
-        table-style="min-width: 50rem"
-        paginator
-        :rows="10"
-        :row-style="({ AssetsId }) => AssetsId === 'BF00000005' ? 'background-color: #933b3b; color:white;font-weight: 700;font-size: 18px;': null "
-        :totalRecords="datagridSetting.totalRecords"
-        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-        :rowsPerPageOptions="[10, 20, 30]"
-        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}"
-      >
-       
-        <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-        <Column style="width: 100vw">
-          <template #body="slotProps">
-            <test
-              :params="slotProps"
-              :msg="'hi'"
-              @msg="handlemsg"
-              v-show="slotProps.data.AssetsId"
-            />
-          </template>
-</Column>
-<Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable
-  :style="{'min-width': item.width}"></Column>
-</DataTable>
-</div>
-</div> -->
-    <!-- 加載動畫 -->
-    <!-- <loading :active.sync="isLoading">
-    <div class="loadingio-spinner-ellipsis-kfs3u9hd8sa">
-      <div class="ldio-gxxoh6igtkw">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-    </div>
-    <p class="upload_text">
-      上傳中
-      <span class="dot-one"> .</span>
-      <span class="dot-two"> .</span>
-      <span class="dot-three"> .</span>
-    </p>
-  </loading> -->
   </div>
   <div id="app">
-    <div class=" setting_tab">
+  <div class="accordion">
+    <div v-for="(main, main_index) in permissionList" :key="main.id">
       <div class="accordion-header">
-        <ul class="header_wrap">
-          <li>
-            <label>
-              <input type="checkbox" :checked="isAllSelected" @click="selectAllitems"> 專案採購管理
-            </label>
-            <img class='icon' src="@/assets/accordion_arrow.png" @click="toggleAccordion(1)">
-          </li>
-        </ul>
-      </div>
-      <div v-if="isOpen === 1" class="accordion-body" id="accordion-body-1">
         <ul>
-          <li v-for="item in items" class='check_wrap' :key="item.id">
-            <label>
-              <input type="checkbox" class="inner_form_check" v-model="selecteditemIds" :value="item.id"> {{ item.name
-              }}
-            </label>
-          </li>
-        </ul>
-      </div>
-      <div class="accordion-header">
-        <ul class="header_wrap">
           <li>
-            <label>
-              <input type="checkbox" :checked="isAllSelected" @click="selectAllitems"> 專案採購管理
-            </label>
-            <img class='icon' src="@/assets/accordion_arrow.png" @click="toggleAccordion(2)">
+            <label :for="'#header_'+main.id">
+              <input type="checkbox" v-model="main.checked" :id="'header_'+main.id" @click="selectAllitems($event, main_index)"> {{ main.TitleName }}
+            </label>  
+            <span class="accordion-toggle" @click="toggleAccordion(main_index)"> 
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="icon icon-tabler icon-tabler-chevron-down"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke="currentColor"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" />
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </span>
           </li>
         </ul>
       </div>
-      <div v-if="isOpen === 2" class="accordion-body" id="accordion-body-2">
+      <div v-show="isOpen.includes(main_index)" class="accordion-body" id="accordion-body-1">
         <ul>
-          <li v-for="item in items" class='check_wrap' :key="item.id + '2'">
-            <label>
-              <input type="checkbox" class="inner_form_check" v-model="selecteditemIds2" :value="item.id"> {{ item.name
-              }}
+          <li v-for="sub in main.List" :key="sub.id">
+            <label :for="`#${sub.id}`">
+              <input type="checkbox" :id="sub.id" v-model="sub.checked" @change="isAllSelected(main_index)"> {{ sub.TitleName }}
             </label>
           </li>
         </ul>
@@ -303,8 +45,7 @@
 
 </template>
 
-<script>
-import Loading from 'vue-loading-overlay';
+<script setup>
 import {
   computed,
   ref,
@@ -312,357 +53,50 @@ import {
   onMounted
 } from 'vue';
 import Navbar from "@/components/Navbar.vue";
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
-import test from "@/components/test";
-import axios from 'axios';
-import {
-  Asset_StastusArraay
-} from "@/assets/js/dropdown"
-import {
-  getEquipType,
-  getEquipCategory,
-  getArea,
-  getLayer
-} from '@/assets/js/common_api'
-export default {
-  name: 'App',
-  data() {
-    return {
-      isLoading: true,
-    }
-  },
-  components: {
-    DataTable,
-    Column,
-    Navbar,
-    test,
-    Loading
-  },
-  setup() {
+import allPermission from "@/assets/json/permission.json"
+  const permissionList = ref(allPermission.Data);
+  const items = ref([
+    { id: 1, name: 'Fluffy' },
+    { id: 2, name: 'Whiskers' },
+    { id: 3, name: 'Mittens' },
+  ]);
 
-    //全選的script,這裡開始
+  const selecteditemIds = ref([]);
+  const selecteditemIds2 = ref([]);
+  const isOpen = ref([]);
 
-    const items = ref([
-      { id: 1, name: 'Fluffy' },
-      { id: 2, name: 'Whiskers' },
-      { id: 3, name: 'Mittens' },
-    ]);
-
-    const selecteditemIds = ref([]);
-    const selecteditemIds2 = ref([]);
-    const isOpen = ref(false);
-
-    const isAllSelected = computed(() => selecteditemIds.value.length === items.value.length);
-    const isAllSelected2 = computed(() => selecteditemIds2.value.length === items.value.length);
-
-    const selectAllitems = (event) => {
-      if (event.target.checked) {
-        selecteditemIds.value = items.value.map(item => item.id);
-      } else {
-        selecteditemIds.value = [];
-      }
-    };
-
-    const selectAllitems2 = (event) => {
-      if (event.target.checked) {
-        selecteditemIds2.value = items.value.map(item => item.id);
-      } else {
-        selecteditemIds2.value = [];
-      }
-    };
-
-    const toggleAccordion = (accordionNumber) => {
-      isOpen.value = isOpen.value === accordionNumber ? 0 : accordionNumber;
-    };
-
-    //全選的script，這裡結束
-
-    const home = ref(null);
-    const searchParams = reactive({
-      EquipTypeName: '',
-      EquipType_Id: '',
-      EquipCategoryName: '',
-      Category_Id: '',
-      AssetsId: '',
-      AssetName: '',
-      Status: '',
-      AreaName: '',
-      Area_Id: '',
-      LayerName: '',
-      Layer_Id: '',
-      StartDate: '',
-      EndDate: '',
-    });
-    const DropdownArray = reactive({
-      Status: Asset_StastusArraay,
-      EquipType: [],
-      EquipCategory: [],
-      Area: [],
-      Layer: [],
-    });
-    const EquipCategoryInit = ref('請先選擇設備總類');
-    const LayerInit = ref('請先選擇區域');
-    const rowData = ref([]);
-    const selectedProduct = ref();
-    const datagridSetting = reactive({
-      totalRecords: 0,
-      first: 0,
-      rows: 10,
-      currentPage: 1,
-      sortField: 'AssetsId',
-      sortOrder: -1,
-      loading: false,
-      selectAll: false, //不一定要
+  const isAllSelected = (main_index) => {
+    // return List.every(sub => sub.checked);
+    // console.log(permissionList.value[main_index].List);
+    const allSeleted = permissionList.value[main_index].List.every(sub => sub.checked);
+    permissionList.value[main_index].checked = allSeleted;
+    // return true;
+  };
+  const isAllSelected2 = computed(() => selecteditemIds2.value.length === items.value.length);
+  onMounted(() => {
+  });
+  const selectAllitems = (event, main_index) => {
+    permissionList.value[main_index].List.forEach((item)=>{
+      item.checked = event.target.checked;
     })
-    const datagridfield = [{
-      field: 'AssetsId',
-      header: '資產編號',
-      width: '150px',
-    },
-    {
-      field: 'AssetName',
-      header: '物品名稱',
-      width: '350px',
-    },
-    {
-      field: 'EquipTypeName',
-      header: '設備總類',
-      width: '350px',
-    },
-    {
-      field: 'EquipCategoryName',
-      header: '設備分類',
-      width: '350px',
-    },
-    {
-      field: 'AreaName',
-      header: '區域',
-      width: '130px',
-    },
-    {
-      field: 'LayerName',
-      header: '櫃位',
-      width: '130px',
-    },
-    {
-      field: 'Status',
-      header: '狀態',
-      width: '130px',
-    },
-    {
-      field: 'InboundDate',
-      header: '入庫日期',
-      width: '150px',
-    },
-    {
-      field: 'AssetsInOperator',
-      header: '入庫人員',
-      width: '150px',
-    },
-    ];
-    const dt = ref();
-    onMounted(() => {
-      submit('', 'search');
-    });
-    function add() {
-      // datagridSetting.totalRecords++;
-      datagridSetting.selectAll = !datagridSetting.selectAll
+  };
+
+  const selectAllitems2 = (event) => {
+    if (event.target.checked) {
+      selecteditemIds2.value = items.value.map(item => item.id);
+    } else {
+      selecteditemIds2.value = [];
     }
-    function exportCSV() {
-      dt.value.exportCSV();
+  };
+
+  const toggleAccordion = (accordionNumber) => {
+    const indexToRemove = isOpen.value.findIndex(number => number === accordionNumber);
+    if(indexToRemove !== -1) {
+      isOpen.value.splice(indexToRemove, 1);
+    } else {
+      isOpen.value.push(accordionNumber);
     }
-    async function submit(event, type) {
-      datagridSetting.loading = true;
-      const formData = new FormData();
-      // 將切頁資訊append到 formData
-      // console.log(event);
-      // type為sort或page =>更新datagrid參數，submit則回到第一頁
-      switch (type) {
-        case 'sort':
-          datagridSetting.currentPage = 1;
-          datagridSetting.sortField = event.sortField;
-          datagridSetting.sortOrder = event.sortOrder;
-          datagridSetting.first = event.first;
-          break;
-        case 'page':
-          datagridSetting.currentPage = (event.page + 1);
-          datagridSetting.rows = event.rows;
-          datagridSetting.first = event.first;
-          break
-        case 'search':
-          datagridSetting.currentPage = 1;
-          datagridSetting.first = 0;
-          break
-      }
-      const order = datagridSetting.sortOrder === 1 ? 'asc' : 'desc'
-      // console.log('first:', datagridSetting.first);
-      // console.log('rows:', datagridSetting.rows);
-      // console.log('page:', datagridSetting.currentPage);
-      // console.log('sort:', datagridSetting.sortField);
-      // console.log('order:', order);
-      // console.log('-----------------------------');
-      // 將表格資料append到 formData
-      for (const key in searchParams) {
-        formData.append(key, searchParams[key]);
-      }
-      formData.append('rows', datagridSetting.rows);
-      formData.append('page', datagridSetting.currentPage);
-      formData.append('sort', datagridSetting.sortField);
-      formData.append('order', order);
-      try {
-        const response = await axios.post('http://192.168.0.177:7008/InventoryMng/Assets', formData);
-        const data = response.data;
-        console.log('response content-type:', response.headers['content-type']);
-        console.log('response header:', response.headers);
-        console.log('response :', response);
-        if (data.state === 'success') {
-          //取得datagrid成功
-          // console.log('資產datagrid:', data.resultList);
-          datagridSetting.totalRecords = data.resultList.total;
-          rowData.value = data.resultList.rows;
-          if (selectedProduct.selectAll) {
-            selectedProduct.value = data.resultList.rows;
-          }
-        } else if (data.state === 'account_error') {
-          //尚未登入
-          alert(data.messages);
-          router.push('/');
-        } else {
-          alert(data.messages);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-      datagridSetting.loading = false;
-    }
-    async function getEquipTypeName() {
-      if (DropdownArray.EquipType.length == 0) {
-        getEquipType()
-          .then((data) => {
-            DropdownArray.EquipType = data;
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-      }
-    }
-    async function getEquipCategoryName() {
-      getEquipCategory(searchParams.EquipType_Id)
-        .then((data) => {
-          DropdownArray.EquipCategory = data;
-        })
-        .catch((error) => {
-          console.error(error);
-        })
-    }
-    async function getAreaName() {
-      if (DropdownArray.Area == 0) {
-        getArea()
-          .then((data) => {
-            DropdownArray.Area = data;
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-      }
-    }
-    async function getLayerName() {
-      getLayer(searchParams.Area_Id)
-        .then((data) => {
-          DropdownArray.Layer = data;
-        })
-        .catch((error) => {
-          console.error(error);
-        })
-    }
-    function onSelectAllChange(event) {
-      console.log(event);
-      datagridSetting.selectAll = event.checked;
-      if (datagridSetting.selectAll) {
-        selectedProduct.value = rowData.value
-      } else {
-        selectedProduct.value = []
-      }
-    }
-    function selectType(item) {
-      searchParams.EquipTypeName = item.Name;
-      searchParams.EquipType_Id = item.Id;
-      searchParams.EquipCategoryName = '';
-      searchParams.Category_Id = '';
-      getEquipCategoryName();
-      EquipCategoryInit.value = '請選擇';
-    }
-    function selectCategory(item) {
-      searchParams.EquipCategoryName = item.Name;
-      searchParams.Category_Id = item.Id;
-    }
-    const selectStatus = (item) => {
-      searchParams.Status = item;
-    };
-    const selectArea = (item) => {
-      searchParams.AreaName = item.Name;
-      searchParams.Area_Id = item.Id;
-      searchParams.LayerName = '';
-      searchParams.Layer_Id = '';
-      //API function here
-      getLayerName();
-      LayerInit.value = '請選擇';
-    };
-    const selectLayer = (item) => {
-      searchParams.LayerName = item.Name;
-      searchParams.Layer_Id = item.Id;
-    };
-    function clear() {
-      for (const key in searchParams) {
-        searchParams[key] = '';
-      }
-      EquipCategoryInit.value = '請先選擇設備總類'
-      LayerInit.value = '請先選擇區域';
-      submit('', 'search')
-    }
-    function handlemsg(data) {
-      home.value.click();
-      // alert(data)
-    }
-    return {
-      //全選的script,這裡開始
-      items,
-      selecteditemIds,
-      selecteditemIds2,
-      isOpen,
-      isAllSelected,
-      isAllSelected2,
-      selectAllitems,
-      selectAllitems2,
-      toggleAccordion,
-      //全選的script,這裡結束
-      home,
-      dt,
-      searchParams,
-      DropdownArray,
-      EquipCategoryInit,
-      LayerInit,
-      rowData,
-      selectedProduct,
-      datagridSetting,
-      datagridfield,
-      add,
-      exportCSV,
-      onSelectAllChange,
-      submit,
-      getEquipTypeName,
-      getAreaName,
-      selectType,
-      selectCategory,
-      selectStatus,
-      selectArea,
-      selectLayer,
-      clear,
-      handlemsg,
-    }
-  },
-}
+  };
 </script>
 
 <style lang="scss" scoped>

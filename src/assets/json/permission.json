@@ -44,7 +44,7 @@
     },
     {
       "TitleName": "訂單管理",
-      "id": "PurchaseMng",
+      "id": "PurchaseOrderMng",
       "checked": false,
       "List": [
         {
@@ -76,7 +76,7 @@
     },
     {
       "TitleName": "收貨管理",
-      "id": "PurchaseMng",
+      "id": "AssetsReceivedMng",
       "checked": false,
       "List": [
         {
@@ -108,7 +108,7 @@
     },
     {
       "TitleName": "快速入庫",
-      "id": "PurchaseMng",
+      "id": "QuickAssetInboundMng",
       "checked": false,
       "List": [
         {
@@ -120,7 +120,7 @@
     },
     {
       "TitleName": "入庫填報管理",
-      "id": "PurchaseMng",
+      "id": "AssetsInboundMng",
       "checked": false,
       "List": [
         {
@@ -147,7 +147,7 @@
     },
     {
       "TitleName": "入庫作業管理",
-      "id": "PurchaseMng",
+      "id": "AssetsInboundProcessMng",
       "checked": false,
       "List": [
         {
@@ -174,7 +174,7 @@
     },
     {
       "TitleName": "快速出庫",
-      "id": "PurchaseMng",
+      "id": "QuickAssetsOutboundMng",
       "checked": false,
       "List": [
         {
@@ -186,7 +186,7 @@
     },
     {
       "TitleName": "出庫填報管理",
-      "id": "PurchaseMng",
+      "id": "AssetsOutboundMng",
       "checked": false,
       "List": [
         {
@@ -213,7 +213,7 @@
     },
     {
       "TitleName": "出庫作業管理",
-      "id": "PurchaseMng",
+      "id": "AssetsOutboundProcessMng",
       "checked": false,
       "List": [
         {
@@ -240,7 +240,7 @@
     },
     {
       "TitleName": "出庫審核管理",
-      "id": "PurchaseMng",
+      "id": "AssetsOutboundVerifyMng",
       "checked": false,
       "List": [
         {
@@ -257,7 +257,7 @@
     },
     {
       "TitleName": "資產管理",
-      "id": "PurchaseMng",
+      "id": "AssetsMng",
       "checked": false,
       "List": [
         {
@@ -279,7 +279,7 @@
     },
     {
       "TitleName": "出貨簽收管理",
-      "id": "PurchaseMng",
+      "id": "SignReceivedMng",
       "checked": false,
       "List": [
         {
@@ -301,7 +301,7 @@
     },
     {
       "TitleName": "設備整合管理",
-      "id": "PurchaseMng",
+      "id": "EquipmentMng",
       "checked": false,
       "List": [
         {
@@ -328,7 +328,7 @@
     },
     {
       "TitleName": "盤點管理",
-      "id": "PurchaseMng",
+      "id": "InventoryMng",
       "checked": false,
       "List": [
         {
@@ -370,7 +370,7 @@
     },
     {
       "TitleName": "維修管理",
-      "id": "PurchaseMng",
+      "id": "RepairMng",
       "checked": false,
       "List": [
         {
@@ -412,7 +412,7 @@
     },
     {
       "TitleName": "報廢管理",
-      "id": "PurchaseMng",
+      "id": "ScrapMng",
       "checked": false,
       "List": [
         {
@@ -449,7 +449,7 @@
     },
     {
       "TitleName": "系統管理",
-      "id": "PurchaseMng",
+      "id": "SystemMng",
       "checked": false,
       "List": [
         {
