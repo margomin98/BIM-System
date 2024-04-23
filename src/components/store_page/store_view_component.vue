@@ -318,7 +318,15 @@ onUnmounted(()=>{
 
 <style lang="scss" scoped>
  @import "@/assets/css/global.scss";
-
+ .form_search_btn {
+  @include form_search_btn;
+}
+.readonly_box {
+  @include readonly_box;
+}
+span {
+  @include red_star;
+}
 .purchase_amount {
   align-items: baseline;
 
@@ -330,7 +338,8 @@ onUnmounted(()=>{
     gap: 0 10px;
     margin-left: 0 !important;
   }
-  span {
+  span,
+  p {
     color: white !important;
   }
   span.symbol {
@@ -344,11 +353,7 @@ onUnmounted(()=>{
 textarea {
   padding: 5px 10px 30px;
 }
-.purchase_amount {
-  p {
-    color: white;
-  }
-}
+
 .dropdown {
   #typeDropdown,
   #categoryDropdown,
@@ -457,20 +462,16 @@ textarea {
   margin: 0;
   width: 100%;
   top: 40px;
-}
-.options-list li {
-  padding: 10px 10px 0;
-  font-size: 18px;
-  cursor: pointer; // &:hover {
-  //   // background: #7893b7;
-  //   // color: white;
-  //   font-weight: 700;
-  // }
+  li {
+    padding: 10px 10px 0;
+    font-size: 18px;
+    cursor: pointer;
+  }
 }
 .search_section {
   position: relative;
   display: flex;
-  flex: 1 1 auto; // width: 100%;
+  flex: 1 1 auto;
 
   input {
     height: 35px;
@@ -488,65 +489,182 @@ textarea {
     pointer-events: none;
   }
 }
-.tab-content {
-  border-radius: 0 10px 10px 10px;
-}
-@media only screen and (min-width: 1200px) {
-  .main_section {
-    h1 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 55px;
-      font-weight: 600;
-      @include title_color;
+.main_section {
+  .info_wrap {
+    margin: auto;
+    .input-group-prepend {
+      color: white;
+      font-weight: 700;
+      font-size: 20px;
+      white-space: nowrap;
     }
-    .form_search_btn {
-      @include form_search_btn;
-    }
-    .readonly_box {
-      @include readonly_box;
-    }
-    .info_wrap {
-      margin: auto;
-      width: 800px;
-
-      .input-group-prepend {
-        color: white;
-        font-weight: 700;
+    .fixed_info {
+      @include fixed_info;
+      p {
         font-size: 20px;
-        width: calc(100px + 6%);
-        text-align: end;
-        white-space: nowrap;
-        span {
-          @include red_star;
+        margin-bottom: 0;
+      }
+      span {
+        @include red_star;
+      }
+    }
+    .content {
+      @include content_bg;
+      .check_box_wrap {
+        font-weight: 700;
+        align-items: center;
+        color: white;
+        font-size: 18px;
+      }
+      .dropdown {
+        .dropdown-menu {
+          width: 100%;
+          p {
+            &:hover {
+              cursor: pointer;
+            }
+          }
+        }
+        .dropdown-toggle {
+          width: 100%;
+          @include dropdown-btn;
+          color: black;
+          justify-content: space-between;
+          align-items: center;
         }
       }
-      .input-number {
-        @include count_btn;
-        width: 57%;
-      }
-      .fixed_info {
-        @include fixed_info;
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
+    }
+    .tab_section {
+      .nav {
+        overflow-x: auto;
+        overflow-y: hidden;
+        flex-wrap: nowrap;
+        border: none;
+        ::-webkit-scrollbar {
+          height: 6px;
+          border: 1px solid rgb(219, 218, 218);
+          border-radius: 5px;
+          width: 8px;
         }
-        span {
-          @include red_star;
+        ::-webkit-scrollbar-thumb {
+          display: block;
+          border-radius: 5px;
+          background-color: rgb(176, 175, 175);
+          border: 1px solid rgb(86, 85, 85);
         }
       }
-      .content {
-        @include content_bg;
-
-        .input-group-prepend {
-          width: 150px;
-          white-space: nowrap;
+      .nav-tabs {
+        button {
+          @include tab_section_num;
+          background: #5c7897;
+        }
+        .active {
+          @include tab_section_num;
+          background: #3e4e5f;
+        }
+      }
+      .tab-content {
+        border-radius: 0 10px 10px 10px;
+        background: #3e4e5f;
+        position: relative;
+        .selected_file {
+          display: flex;
+          align-items: center;
+          .file_upload_wrap {
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            img {
+              width: 25px;
+              height: 25px;
+            }
+            p {
+              font-weight: 700;
+              margin-bottom: 0;
+              color: white;
+              word-break: break-word;
+              &::before {
+                margin-right: 10px;
+                content: "·";
+                font-weight: 700;
+                color: white;
+              }
+            }
+          }
         }
         .check_box_wrap {
           font-weight: 700;
           align-items: center;
           color: white;
           font-size: 18px;
+        }
+        .dropdown {
+          .dropdown-menu {
+            width: 100%;
+            max-height: 250px;
+            overflow-y: auto;
+            p {
+              &:hover {
+                cursor: pointer;
+              }
+            }
+          }
+          .dropdown-toggle {
+            width: 100%;
+            @include dropdown-btn;
+            color: black;
+            justify-content: space-between;
+            align-items: center;
+          }
+        }
+
+        .input-group {
+          flex-wrap: nowrap;
+          span {
+            @include red_star;
+          }
+          .input-number {
+            @include count_btn;
+          }
+          .form-control {
+            height: 35px;
+          }
+
+          .file_wrap {
+            display: flex;
+            flex-direction: column;
+            .choose_btn {
+              @include choose_file_btn;
+              &:hover {
+                background: #3f608f;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .main_section {
+    .info_wrap {
+      width: 800px;
+
+      .input-group-prepend {
+        width: calc(100px + 6%);
+        text-align: end;
+      }
+      .input-number {
+        width: 57%;
+      }
+
+      .content {
+        .input-group-prepend {
+          width: 150px;
+          white-space: nowrap;
+        }
+        .check_box_wrap {
           div:nth-child(2) {
             gap: 0 10px;
             display: flex;
@@ -563,144 +681,32 @@ textarea {
         .dropdown {
           width: 218px;
           .dropdown-menu {
-            width: 100%;
             max-height: 250px;
             overflow-y: auto;
-            p {
-              &:hover {
-                cursor: pointer;
-              }
-            }
-          }
-          .dropdown-toggle {
-            width: 100%;
-            @include dropdown-btn;
-            color: black;
-            justify-content: space-between;
-            align-items: center;
           }
         }
       }
     }
     .tab_section {
-      .nav {
-        overflow-x: auto;
-        overflow-y: hidden;
-        flex-wrap: nowrap;
-        border: none;
-        ::-webkit-scrollbar {
-          height: 6px;
-          border: 1px solid rgb(219, 218, 218);
-          border-radius: 5px;
-          width: 8px;
-        }
-        ::-webkit-scrollbar-thumb {
-          display: block;
-          border-radius: 5px;
-          background-color: rgb(176, 175, 175);
-          border: 1px solid rgb(86, 85, 85);
-        }
-      }
-      .nav-tabs {
-        button {
-          @include tab_section_num;
-          background: #5c7897;
-        }
-        .active {
-          @include tab_section_num;
-          background: #3e4e5f;
-        }
-      }
       .tab-content {
-        background: #3e4e5f;
         padding: 50px 20px;
-        position: relative;
-        .selected_file {
-          display: flex;
-          align-items: center;
-          .file_upload_wrap {
-            margin-bottom: 0;
-            display: flex;
-            align-items: center;
-            img {
-              width: 25px;
-              height: 25px;
-            }
-            p {
-              font-weight: 700;
-              margin-bottom: 0;
-              color: white;
-              word-break: break-word;
-              &::before {
-                margin-right: 10px;
-                content: "·";
-                font-weight: 700;
-                color: white;
-              }
-            }
-          }
-        }
+
         .input-number {
           width: 62.5%;
         }
         .check_box_wrap {
-          font-weight: 700;
-          align-items: center;
-          color: white;
-          font-size: 18px;
           div:nth-child(2) {
             gap: 0 10px;
             display: flex;
           }
         }
-        .dropdown {
-          width: 240px;
-          .dropdown-menu {
-            width: 100%;
-            max-height: 250px;
-            overflow-y: auto;
-            p {
-              &:hover {
-                cursor: pointer;
-              }
-            }
-          }
-          .dropdown-toggle {
-            width: 100%;
-            @include dropdown-btn;
-            color: black;
-            justify-content: space-between;
-            align-items: center;
-          }
-        }
 
         .input-group {
           flex-wrap: nowrap;
-          span {
-            @include red_star;
-          }
-          .input-number {
-            @include count_btn;
-          }
-          .form-control {
-            height: 35px;
-          }
+
           .input-group-prepend {
-            color: white;
-            font-weight: 700;
-            font-size: 20px;
             width: 130px;
             text-align: end;
-          }
-          .file_wrap {
-            display: flex;
-            flex-direction: column;
-            .choose_btn {
-              @include choose_file_btn;
-              &:hover {
-                background: #3f608f;
-              }
-            }
           }
         }
       }
@@ -709,50 +715,18 @@ textarea {
 }
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
-    h1 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 55px;
-      font-weight: 600;
-      @include title_color;
-    }
-    .form_search_btn {
-      @include form_search_btn;
-    }
-    .readonly_box {
-      @include readonly_box;
-    }
     .info_wrap {
-      margin: auto;
       width: 700px;
 
       .input-group-prepend {
-        color: white;
-        font-weight: 700;
-        font-size: 20px;
         width: calc(100px + 6%);
         text-align: end;
-        white-space: nowrap;
-        span {
-          @include red_star;
-        }
       }
       .input-number {
-        @include count_btn;
         width: 62%;
       }
-      .fixed_info {
-        @include fixed_info;
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-        span {
-          @include red_star;
-        }
-      }
+
       .content {
-        @include content_bg;
         padding: 17px;
 
         .input-group-prepend {
@@ -760,10 +734,6 @@ textarea {
           white-space: nowrap;
         }
         .check_box_wrap {
-          font-weight: 700;
-          align-items: center;
-          color: white;
-          font-size: 18px;
           div:nth-child(2) {
             gap: 0 10px;
             display: flex;
@@ -780,86 +750,19 @@ textarea {
         .dropdown {
           width: 205px;
           .dropdown-menu {
-            width: 100%;
             max-height: 250px;
             overflow-y: auto;
-            p {
-              &:hover {
-                cursor: pointer;
-              }
-            }
-          }
-          .dropdown-toggle {
-            width: 100%;
-            @include dropdown-btn;
-            color: black;
-            justify-content: space-between;
-            align-items: center;
           }
         }
       }
     }
     .tab_section {
-      .nav {
-        overflow-x: auto;
-        overflow-y: hidden;
-        flex-wrap: nowrap;
-        border: none;
-        ::-webkit-scrollbar {
-          height: 6px;
-          border: 1px solid rgb(219, 218, 218);
-          border-radius: 5px;
-          width: 8px;
-        }
-        ::-webkit-scrollbar-thumb {
-          display: block;
-          border-radius: 5px;
-          background-color: rgb(176, 175, 175);
-          border: 1px solid rgb(86, 85, 85);
-        }
-      }
-      .file_upload_wrap {
-        margin-bottom: 0;
-        display: flex;
-        img {
-          width: 25px;
-          height: 25px;
-        }
-        p {
-          font-weight: 700;
-          margin-bottom: 0;
-          color: white;
-          word-break: break-word;
-          &::before {
-            margin-right: 5px;
-            content: "·";
-            font-weight: 700;
-            color: white;
-          }
-        }
-      }
-      .nav-tabs {
-        button {
-          @include tab_section_num;
-          background: #5c7897;
-        }
-        .active {
-          @include tab_section_num;
-          background: #3e4e5f;
-        }
-      }
       .tab-content {
-        background: #3e4e5f;
         padding: 50px 20px;
-        position: relative;
         .input-number {
           width: 59%;
         }
         .check_box_wrap {
-          font-weight: 700;
-          align-items: center;
-          color: white;
-          font-size: 18px;
           div:nth-child(2) {
             gap: 0 10px;
             display: flex;
@@ -867,52 +770,14 @@ textarea {
         }
         .dropdown {
           width: 190px;
-          .dropdown-menu {
-            width: 100%;
-            max-height: 250px;
-            overflow-y: auto;
-            p {
-              &:hover {
-                cursor: pointer;
-              }
-            }
-          }
-          .dropdown-toggle {
-            width: 100%;
-            @include dropdown-btn;
-            color: black;
-            justify-content: space-between;
-            align-items: center;
-          }
         }
 
         .input-group {
           flex-wrap: nowrap;
-          span {
-            @include red_star;
-          }
-          .input-number {
-            @include count_btn;
-          }
-          .form-control {
-            height: 35px;
-          }
+
           .input-group-prepend {
-            color: white;
-            font-weight: 700;
-            font-size: 20px;
             width: 130px;
             text-align: end;
-          }
-          .file_wrap {
-            display: flex;
-            flex-direction: column;
-            .choose_btn {
-              @include choose_file_btn;
-              &:hover {
-                background: #3f608f;
-              }
-            }
           }
         }
         .purchase_amount {
@@ -924,13 +789,6 @@ textarea {
 }
 @media only screen and (max-width: 767px) {
   .main_section {
-    h1 {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 50px;
-      font-weight: 600;
-      @include title_color;
-    }
     .form_search_btn {
       border: none;
       color: white;
@@ -944,54 +802,21 @@ textarea {
         background-color: #43546d;
       }
     }
-    .readonly_box {
-      @include readonly_box;
-    }
+
     .info_wrap {
-      margin: auto;
       padding: 0 5%;
       .fixed_info {
-        @include fixed_info;
         height: unset;
         flex-direction: column;
         padding: 10px;
-        p {
-          font-size: 20px;
-          margin-bottom: 0;
-        }
-        span {
-          @include red_star;
-        }
       }
       .content {
-        @include content_bg;
         .check_box_wrap {
-          flex-direction: row;
-          font-weight: 700;
-          color: white;
-          font-size: 18px;
           .check_box {
             margin-right: 10px;
           }
         }
 
-        .dropdown {
-          .dropdown-menu {
-            width: 100%;
-            p {
-              &:hover {
-                cursor: pointer;
-              }
-            }
-          }
-          button {
-            @include dropdown-btn;
-            width: 100%;
-            color: black;
-            justify-content: space-between;
-            align-items: center;
-          }
-        }
         .input-group
           > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
             .valid-feedback
@@ -1003,22 +828,14 @@ textarea {
           flex-direction: column;
           .input-number {
             width: 100%;
-            @include count_btn;
           }
           .form-control {
             height: 35px;
             width: 100%;
           }
           .input-group-prepend {
-            color: white;
-            font-weight: 700;
-            font-size: 20px;
             margin-bottom: 5px;
             margin-right: 10px;
-            white-space: nowrap;
-            span {
-              @include red_star;
-            }
           }
         }
         .info {
@@ -1029,77 +846,21 @@ textarea {
       }
     }
     .tab_section {
-      .nav {
-        overflow-x: auto;
-        overflow-y: hidden;
-        flex-wrap: nowrap;
-        border: none;
-        ::-webkit-scrollbar {
-          height: 6px;
-          border: 1px solid rgb(219, 218, 218);
-          border-radius: 5px;
-          width: 8px;
-        }
-        ::-webkit-scrollbar-thumb {
-          display: block;
-          border-radius: 5px;
-          background-color: rgb(176, 175, 175);
-          border: 1px solid rgb(86, 85, 85);
-        }
-      }
       .input-group
         > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
           .valid-feedback
         ):not(.invalid-tooltip):not(.invalid-feedback) {
         margin-left: unset !important;
       }
-      .nav-tabs {
-        button {
-          @include tab_section_num;
-          background: #5c7897;
-        }
-        .active {
-          @include tab_section_num;
-          background: #3e4e5f;
-        }
-      }
+
       .tab-content {
-        background: #3e4e5f;
         padding: 50px 30px;
-        position: relative;
         .selected_file {
-          display: flex;
-          align-items: center;
           .input-group {
             flex-direction: column;
           }
-          .file_upload_wrap {
-            margin-bottom: 0;
-            display: flex;
-            align-items: center;
-            img {
-              width: 25px;
-              height: 25px;
-            }
-            p {
-              font-weight: 700;
-              margin-bottom: 0;
-              color: white;
-              word-break: break-word;
-              &::before {
-                margin-right: 10px;
-                content: "·";
-                font-weight: 700;
-                color: white;
-              }
-            }
-          }
         }
         .check_box_wrap {
-          flex-direction: column;
-          font-weight: 700;
-          color: white;
-          font-size: 18px;
           .radio_wrap {
             gap: 0 10px;
             padding-left: 10px;
@@ -1113,75 +874,34 @@ textarea {
         .dropdown {
           margin-left: unset !important;
           margin-top: 5px;
-          .dropdown-menu {
-            width: 100%;
-            max-height: 250px;
-            overflow-y: auto;
-            p {
-              &:hover {
-                cursor: pointer;
-              }
-            }
-          }
-          button {
-            @include dropdown-btn;
-            width: 100%;
-            color: black;
-            justify-content: space-between;
-            align-items: center;
-          }
         }
         .input-group {
           flex-direction: column;
-          span {
-            @include red_star;
-          }
-          .input-number {
-            @include count_btn;
-          }
+
           .form-control {
-            height: 35px;
             width: 100%;
             margin-left: unset !important;
             margin-top: 5px;
           }
           .input-group-prepend {
-            color: white;
-            font-weight: 700;
-            font-size: 20px;
             width: 100%;
           }
           .file_wrap {
-            display: flex;
-            flex-direction: column;
             .choose_btn {
               margin-top: 5px;
-              @include choose_file_btn;
-              &:hover {
-                background: #3f608f;
-              }
             }
           }
         }
         .purchase_amount {
           .amount_input {
-            display: flex;
-            gap: 0 10px;
             font-size: 20px;
             align-items: center;
           }
-          .input-group-prepend {
-            margin-right: 10px;
-          }
-          span {
-            color: white !important;
-          }
+
           span.note {
             margin-top: 5px;
             margin-bottom: 16px;
             display: block;
-            font-weight: 700;
-            font-size: 18px;
           }
         }
       }
