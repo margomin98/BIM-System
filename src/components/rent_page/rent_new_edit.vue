@@ -3,10 +3,10 @@
         <div class="info_wrap col">
             <div class="fixed_info">
                 <div>
-                    <p>申請人員：</p>
+                    <p>申請人員：{{ Form.Applicant || utilsStore.userName }}</p>
                 </div>
                 <div>
-                    <p>申請日期：</p>
+                    <p>申請日期： {{ Form.ApplicationDate || utilsStore.today }}</p>
                 </div>
             </div>
             <form>
@@ -16,13 +16,10 @@
                             <p><span>*</span>用&ensp;&ensp;&ensp;&ensp;途</p>
                         </label>
                         <div class="option">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" id="radio1">
-                                <label class="form-check-label" for="radio1">内部領用</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" id="radio2">
-                                <label class="form-check-label" for="radio2">借測</label>
+                            <div class="form-check" v-for="(option, index) in useOptions" :key="option">
+                                <input class="form-check-input" type="radio" :value="option" :id="'radio' + (index + 1)"
+                                v-model="Form.Use">
+                                <label class="form-check-label" :for="'radio' + (index + 1)">{{ option }}</label>
                             </div>
                         </div>
                     </div>
@@ -33,8 +30,8 @@
                             <p><span>*</span>專案代碼</p>
                         </label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="project_id" placeholder="最多輸入10字">
-                            <button class="btn code_search" type="button" onclick="getProjectName()">搜尋</button>
+                            <input type="text" class="form-control" id="project_id" v-model="Form.ProjectCode" maxlength="10" placeholder="最多輸入10字">
+                            <button class="btn code_search" type="button" onclick="()=>{ Form.ProjectName = await apiStore.getProject(Form.ProjectCode); }">搜尋</button>
                         </div>
                     </div>
                     <div class="col d-flex wrap">
@@ -42,7 +39,7 @@
                             <p>專案名稱</p>
                         </label>
                         <div class="input-group" id='readonly_box'>
-                            <p class='readonly_box' readonly>D2564658</p>
+                            <p class='readonly_box' readonly>{{ Form.ProjectName }}</p>
                         </div>
                     </div>
                 </div>
@@ -51,7 +48,7 @@
                         <label for="inputTextarea" class="form-label">
                             <p>&nbsp;&nbsp;說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
                         </label>
-                        <textarea class="form-control" id="inputTextarea" placeholder='最多輸入100字'></textarea>
+                        <textarea class="form-control" id="inputTextarea" v-model="Form.Description" maxlength="100" placeholder='最多輸入100字'></textarea>
                     </div>
                 </div>
             </form>
@@ -65,38 +62,39 @@
                     <div class='col-xl-3 col-lg-3 col-md-3 col-12' style='padding-left:0'>
                         <p><span>*</span>設備總類</p>
                         <div class="dropdown">
-                            <button class="btn dropdown-toggle" type="button" id="typeDropdown"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                請選擇
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="typeDropdown">
-                                <!-- <p v-for="(item, index) in myForm.EquipTypeArray" :key="index" class="dropdown-item">{{ item.Name }}</p> -->
+                            <div class="dropdown">
+                                <select class="form-select" id="floatingSelect" v-model="requirementParams.EquipType_Id" @change="async()=>{DropdownArray.EquipCategory = await apiStore.getEquipCategory(requirementParams.EquipType_Id); requirementParams.Category_Id = '';}">
+                                    <option value="">--請選擇--</option>
+                                    <option v-for="option in DropdownArray.EquipType" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                     <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
                         <p><span>*</span>設備分類</p>
                         <div class="dropdown">
-                            <button class="btn dropdown-toggle" type="button" id="categoryDropdown"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                請選擇
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                                <!-- <p v-for="(item, index) in myForm.EquipCategoryArray" :key="index" class="dropdown-item">{{ item.Name }}</p> -->
-                            </div>
+                            <select class="form-select" id="floatingSelect" v-model="requirementParams.Category_Id">
+                                <option v-if="DropdownArray.EquipCategory.length == 0" value="">--請先選擇設備總類--</option>
+                                <template v-else>
+                                    <option value="">--請選擇--</option>
+                                    <option v-for="option in DropdownArray.EquipCategory" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
+                                </template>
+                            </select>
                         </div>
                     </div>
                     <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
                         <p><span>*</span>物品名稱</p>
                         <div class="number-input-box">
-                            <input type="text" class="form-control" placeholder="最多輸入20字" />
+                            <input type="text" class="form-control" maxlength="20" placeholder="最多輸入20字" v-model="requirementParams.ProductName"/>
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-3 col-12">
-                        <p><span>*</span>數量 <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="資產數量 ex: 3包螺絲釘"></p>
+                        <p>
+                            <span>*</span>數量 
+                            <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
+                        </p>
                         <div class="number-input-box">
-                            <input class="input-number" type="number" min="1" />
+                            <input class="input-number" type="number" min="1" v-model="requirementParams.Number"/>
                         </div>
                     </div>
                 </div>
@@ -107,7 +105,7 @@
                         </label>
                         <div>
                         </div>
-                        <textarea class="form-control" id="inputTextarea" placeholder='最多輸入100字'></textarea>
+                        <textarea class="form-control" id="inputTextarea" v-model="requirementParams.RequiredSpec" maxlength="100" placeholder='最多輸入100字'></textarea>
                     </div>
                 </div>
                 <div class='col d-flex justify-content-center'>
@@ -134,6 +132,29 @@
         </div>
     </div>
 </template>
+
+<script setup>
+import { Rent_UseArray } from "@/assets/js/dropdown";
+import { useAPIStore, useUtilsStore } from "@/store";
+import { useRentStore } from "@/store/rent/_index";
+import { storeToRefs } from "pinia";
+import { onUnmounted } from "vue";
+
+const utilsStore = useUtilsStore();
+const apiStore = useAPIStore();
+const rentStore = useRentStore();
+
+const { Form, requirementParams, DropdownArray } = storeToRefs(rentStore);
+
+/**
+ * 用途Array(for radio box)
+ */
+const useOptions = ref(Rent_UseArray);
+onUnmounted(()=>{
+    rentStore.$dispose();
+    apiStore.$dispose();
+})
+</script>
 
 <style lang="scss" scoped>
 @import '@/assets/css/global.scss';

@@ -343,7 +343,9 @@ import allPermission from "@/assets/json/permission.json"
    * 儲存選擇的使用者權限
    */
   const saveUserRole = async () => {
-    if(!utilsStore.checkRequired(User,['name','selectPermission'])) return;
+    if(!utilsStore.checkRequired(User,['name'])) return;
+    // selectPermission可能為整數0 要拆開判斷
+    if(User.selectPermission === '' || User.selectPermission === null || User.selectPermission === undefined) { alert('請輸入必填項目') ;return}
     const form = new FormData();
     form.append('userName', User.name);
     form.append('role', User.selectPermission);
