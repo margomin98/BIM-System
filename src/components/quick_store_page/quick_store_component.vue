@@ -106,7 +106,7 @@
                 <select class="form-select" id="floatingSelect" v-model="middleForm.itemEquipType_Id"
                   @change="async () => { DropdownArray.EquipCategory = await apiStore.getEquipCategory(middleForm.itemEquipType_Id); middleForm.itemCategory_Id = ''; }">
                   <option value="">--請選擇--</option>
-                  <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name }}</option>
+                  <option v-for="option in DropdownArray.EquipType" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
                 </select>
               </div>
             </div>
@@ -121,7 +121,7 @@
                   <option v-if="DropdownArray.EquipCategory.length == 0" value="">--請先選擇設備總類--</option>
                   <template v-else>
                     <option value="">--請選擇--</option>
-                    <option v-for="option in DropdownArray.EquipCategory" :value="option.Id">{{ option.Name }}</option>
+                    <option v-for="option in DropdownArray.EquipCategory" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
                   </template>
                 </select>
               </div>
@@ -158,7 +158,7 @@
               <div class="dropdown">
                 <select class="form-select" id="floatingSelect" v-model="middleForm.itemPackageUnit">
                   <option value="">--請選擇--</option>
-                  <option v-for="option in DropdownArray.PackageUnit" :value="option">{{ option }}</option>
+                  <option v-for="option in DropdownArray.PackageUnit" :key="option" :value="option">{{ option }}</option>
                 </select>
               </div>
             </div>
@@ -190,7 +190,7 @@
               <div v-if="middleForm.itemAssetType === '耗材'" class="dropdown">
                 <select class="form-select" id="floatingSelect" v-model="middleForm.itemUnit">
                   <option value="">--請選擇--</option>
-                  <option v-for="option in DropdownArray.Unit" :value="option">{{ option }}</option>
+                  <option v-for="option in DropdownArray.Unit" :key="option" :value="option">{{ option }}</option>
                 </select>
               </div>
               <input v-else class="input-number readonly_box" type="text" v-model="middleForm.itemPackageUnit" min="1"
@@ -258,7 +258,7 @@
               <div class="input-group-prepend"> <span>*</span>保管人員 :</div>
               <select class="form-select" v-model="middleForm.itemCustodian">
                 <option value="">--請選擇--</option>
-                <option v-for="option in DropdownArray.Custodian" :value="option">{{ option }}</option>
+                <option v-for="option in DropdownArray.Custodian" :key="option" :value="option">{{ option }}</option>
               </select>
             </div>
           </div>
@@ -269,7 +269,7 @@
               <select class="form-select col" v-model="middleForm.itemArea_Id"
                 @change="async () => { DropdownArray.Layer = await apiStore.getLayer(middleForm.itemArea_Id); middleForm.itemLayer_Id = ''; }">
                 <option value="">--請選擇--</option>
-                <option v-for="option in DropdownArray.Area" :value="option.Id">{{ option.Name }}</option>
+                <option v-for="option in DropdownArray.Area" :key="option" :value="option.Id">{{ option.Name }}</option>
               </select>
             </div>
             <div class="col row">
@@ -278,7 +278,7 @@
                 <option v-if="DropdownArray.Layer.length == 0" value="">--請先選擇儲位區域--</option>
                 <template v-else>
                   <option value="">--請選擇--</option>
-                  <option v-for="option in DropdownArray.Layer" :value="option.Id">{{ option.Name }}</option>
+                  <option v-for="option in DropdownArray.Layer" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
                 </template>
               </select>
             </div>
@@ -372,7 +372,7 @@
                     <select class="form-select" id="floatingSelect" v-model="tab.itemEquipType_Id"
                       @change="async () => { tab.EquipCategoryArray = await apiStore.getEquipCategory(tab.itemEquipType_Id); tab.itemCategory_Id = ''; }">
                       <option value="">--請選擇--</option>
-                      <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name }}</option>
+                      <option v-for="option in DropdownArray.EquipType" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
                     </select>
                   </div>
                 </div>
@@ -387,7 +387,7 @@
                       <option v-if="tab.EquipCategoryArray.length == 0" value="">--請先選擇設備總類--</option>
                       <template v-else>
                         <option value="">--請選擇--</option>
-                        <option v-for="option in tab.EquipCategoryArray" :value="option.Id">{{ option.Name }}</option>
+                        <option v-for="option in tab.EquipCategoryArray" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
                       </template>
                     </select>
                   </div>
@@ -489,7 +489,7 @@
                   <div class="dropdown">
                     <select class="form-select" id="floatingSelect" v-model="tab.itemPackageUnit">
                       <option value="">--請選擇--</option>
-                      <option v-for="option in DropdownArray.PackageUnit" :value="option">{{ option }}</option>
+                      <option v-for="option in DropdownArray.PackageUnit" :key="option" :value="option">{{ option }}</option>
                     </select>
                   </div>
                 </div>
@@ -524,7 +524,7 @@
                     <div v-if="tab.itemAssetType === '耗材'" class="dropdown">
                       <select class="form-select" id="floatingSelect" v-model="tab.itemUnit">
                         <option value="">--請選擇--</option>
-                        <option v-for="option in DropdownArray.Unit" :value="option">{{ option }}</option>
+                        <option v-for="option in DropdownArray.Unit" :key="option" :value="option">{{ option }}</option>
                       </select>
                     </div>
                     <input v-else class="form-select readonly_box" type="text" v-model="tab.itemPackageUnit" min="1"
@@ -680,7 +680,7 @@
                     <div class="input-group-prepend"> <span>*</span>保管人員 :</div>
                     <select class="form-select" v-model="tab.itemCustodian">
                       <option value="">--請選擇--</option>
-                      <option v-for="option in DropdownArray.Custodian" :value="option">{{ option }}</option>
+                      <option v-for="option in DropdownArray.Custodian" :key="option" :value="option">{{ option }}</option>
                     </select>
                   </div>
                 </div>
@@ -691,7 +691,7 @@
                     <select class="form-select col" v-model="tab.itemArea_Id"
                       @change="async () => { tab.LayerArray = await apiStore.getLayer(tab.itemArea_Id); tab.itemLayer_Id = ''; }">
                       <option value="">--請選擇--</option>
-                      <option v-for="option in DropdownArray.Area" :value="option.Id">{{ option.Name }}</option>
+                      <option v-for="option in DropdownArray.Area" :key="option" :value="option.Id">{{ option.Name }}</option>
                     </select>
                   </div>
                   <div class="col row">
@@ -700,7 +700,7 @@
                       <option v-if="tab.LayerArray.length == 0" value="">--請先選擇設備總類--</option>
                       <template v-else>
                         <option value="">--請選擇--</option>
-                        <option v-for="option in tab.LayerArray" :value="option.Id">{{ option.Name }}</option>
+                        <option v-for="option in tab.LayerArray" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
                       </template>
                     </select>
                   </div>

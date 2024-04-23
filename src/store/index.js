@@ -622,7 +622,7 @@ export const useAPIStore = defineStore('API',{
       }
     },
     /**
-     * 取得所有的專案下拉選單(僅快速出庫-新增可用)
+     * 取得所有的專案下拉選單(僅快速入庫-新增&編輯、快速出庫-新增可用)
      * @returns {Promise<Array<{Text: string, Value: string}>>} 返回專案列表Array
      */        
     async getFuzzyProjectAll() {
