@@ -146,20 +146,41 @@
                   </div>
                 </div>
                 <div class="accordion authority_accordion" id="authority_accordion">
-                  <div v-for="(main ,main_index) in permissionList" :key="main.TitleName" class="accordion-item">
-                    <h2 class="accordion-header" >
-                      <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#body_'+main.id" aria-expanded="true">
-                        <input class="form-check-input" type="checkbox" value="" :id="main.id" v-model="main.checked" @click="checkAll(main_index, !main.checked)">
-                        <label :for="main.id">{{ main.TitleName }}</label>
-                      </button>
-                    </h2>
-                    <div :id="'body_'+main.id" class="accordion-collapse show" aria-labelledby="headingOne" data-bs-parent="#authority_accordion">
-                      <div class="accordion-body">
-                        <div v-for="sub in main.List" :key="sub.TitleName" class="check_wrap">
-                          <input class="inner_form_check" type="checkbox" value="" :id="sub.id" v-model="sub.checked">
-                          <label :for="sub.id">{{ sub.TitleName }}</label>
-                        </div>
-                      </div>
+                  <div v-for="(main, mainIndex) in permissionList" :key="main.id">
+                    <div class="accordion-header">
+                      <ul>
+                        <li>
+                          <label :for="'#header_'+main.id">
+                            <input type="checkbox" v-model="main.checked" :id="'header_'+main.id" @click="selectAllitems($event, mainIndex)"> {{ main.TitleName }}
+                          </label>  
+                          <span class="accordion-toggle" @click="toggleAccordion(mainIndex)"> 
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="icon icon-tabler icon-tabler-chevron-down"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              stroke-width="2"
+                              stroke="currentColor"
+                              fill="none"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            >
+                              <path stroke="none" d="M0 0h24v24H0z" />
+                              <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div v-show="isOpen.includes(mainIndex)" class="accordion-body" id="accordion-body-1">
+                      <ul>
+                        <li v-for="sub in main.List" :key="sub.id">
+                          <label :for="`#${sub.id}`">
+                            <input type="checkbox" :id="sub.id" v-model="sub.checked" @change="isAllSelected(mainIndex)"> {{ sub.TitleName }}
+                          </label>
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 </div>
@@ -263,10 +284,18 @@ import allPermission from "@/assets/json/permission.json"
    * 權限設定的role下拉選單綁定
    */
   const roleChoice = ref('');
+  /**
+   * 決定哪些手風琴選單為展開的Array
+   */
+  const isOpen = ref([]);
   onMounted(async () => {
     DropdownArray.role = await apiStore.getRoleOption();
     DropdownArray.account = await apiStore.getCustodian('');
     rowData.value = DropdownArray.role;
+    // 預設全開
+    permissionList.value.forEach((item, index)=>{
+      isOpen.value.push(index);
+    })
   })
   onUnmounted(()=>{
     apiStore.$dispose();
@@ -403,6 +432,37 @@ import allPermission from "@/assets/json/permission.json"
   }
   // ----- 權限設定 -----
   /**
+   * 勾選子選項時檢查是否為全選(顯示用)
+   * @param {number} mainIndex 要控制的大選單index
+   */
+  const isAllSelected = (mainIndex) => {
+    const allSeleted = permissionList.value[mainIndex].List.every(sub => sub.checked);
+    permissionList.value[mainIndex].checked = allSeleted;
+  };
+  /**
+   * 勾選大選單時改變其相關子選單(全選/全不選)
+   * @param {event} event 事件，檢查target.checked
+   * @param {number} mainIndex 要控制的大選單index
+   */
+  const selectAllitems = (event, mainIndex) => {
+    permissionList.value[mainIndex].List.forEach((item)=>{
+      item.checked = event.target.checked;
+    })
+  };
+  /**
+   * 開關手風琴選單
+   * @param {number} mainIndex 要控制的大選單index
+   */
+  const toggleAccordion = (mainIndex) => {
+    const indexToRemove = isOpen.value.findIndex(number => number === mainIndex);
+    // 已存在(index!==-1)->移除，不存在->加入
+    if(indexToRemove !== -1) {
+      isOpen.value.splice(indexToRemove, 1);
+    } else {
+      isOpen.value.push(mainIndex);
+    }
+  };
+  /**
    * 取得所選的人員權限的各業面權限選單
    * @param {number} Id 權限id
    */
@@ -439,6 +499,10 @@ import allPermission from "@/assets/json/permission.json"
       return {...dataItem, List: updatedList};
     });
     permissionList.value = updatedData;
+    // 重新檢查是否每個都是全選
+    permissionList.value.forEach((item, index)=>{
+      isAllSelected(index);
+    })
   }
   /**
    * 儲存勾選的設定內容(tab-權限設定)
