@@ -267,7 +267,7 @@ const routes = [
     path: "/store_process_confirm",
     name: "Store_Process_Confirm",
     component: Store_Process_Confirm,
-    meta: {auth: true, request: 'AIP_InboundDelivery'},
+    meta: {auth: true, request: 'AIP_ReceivedDelivery'},
   },
   {
     path: "/store_process_edit",
@@ -671,7 +671,7 @@ const routes = [
     path: "/rent_process_confirm",
     name: "Rent_Process_Confirm",
     component: Rent_Process_Confirm,
-    meta: {auth: true, request: 'AOP_OutboundDelivery'},
+    meta: {auth: true, request: 'AOP_ReceivedDelivery'},
   },
   {
     path: "/rent_process_view",
