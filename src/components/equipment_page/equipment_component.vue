@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <div class="info_wrap col">
+   <div class="info_wrap col">
       <div class="fixed_info">
         <div>
           <p>設備整合箱</p>
@@ -255,7 +254,6 @@
       </div>
 
     </div>
-  </div>
 </template>
 
 <script>
@@ -269,28 +267,14 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
-
-.item_wrap {
-  height: 350px;
-  overflow: auto;
-  display: grid;
-  gap: 20px 0;
-}
-
 span {
   @include red_star;
 }
-
-.modal-body {
-  padding: 0 !important;
-}
-
-.info_wrap:nth-child(1) {
-  margin-bottom: 3% !important;
-}
-
 .readonly_box {
   @include readonly_box;
+}
+.input-number {
+  @include count_btn;
 }
 
 h1 {
@@ -301,6 +285,20 @@ h1 {
 
 .fixed_title {
   @include fixed_title;
+}
+.item_wrap {
+  height: 350px;
+  overflow: auto;
+  display: grid;
+  gap: 20px 0;
+}
+
+.modal-body {
+  padding: 0 !important;
+}
+
+.info_wrap:nth-child(1) {
+  margin-bottom: 3% !important;
 }
 
 .item_wrap {
@@ -317,102 +315,6 @@ h1 {
   .failed_storage {
     background-color: #8a2828;
     border: 1px solid white;
-  }
-}
-
-.main_section {
-  .fixed_info {
-    @include fixed_info;
-
-    p {
-      font-size: 20px;
-      margin-bottom: 0;
-    }
-  }
-
-  .content {
-    @include content_bg;
-
-    .dropdown {
-      width: 100%;
-
-      .dropdown-menu {
-        width: 100%;
-      }
-
-      button {
-        @include dropdown-btn;
-        width: 100%;
-        color: black;
-        justify-content: space-between;
-        align-items: center;
-      }
-    }
-
-    .input-number {
-      @include count_btn;
-    }
-
-    .form-control {
-      height: 35px;
-      border-radius: 0;
-    }
-
-    .input-group-prepend {
-      color: white;
-      font-weight: 700;
-      font-size: 20px;
-    }
-
-    .search_section {
-      background: #b5c9d0;
-      padding: 20px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-
-      .input-group-prepend {
-        color: black;
-      }
-
-      .btn_section {
-        display: flex;
-        justify-content: center;
-
-        button.send_btn {
-          @include search_and_send_btn;
-          font-size: 18px;
-          padding: 5px;
-
-          &:hover {
-            background-color: #5e7aa2;
-          }
-        }
-      }
-    }
-  }
-
-  .info_wrap:nth-child(3) {
-    margin-top: 3%;
-
-    .count {
-      .btn_section {
-        margin-left: 10px;
-
-        .delete_btn {
-          display: flex;
-          align-items: center;
-          @include content_delete_button;
-          height: 100%;
-          padding: 5px;
-          width: 80px;
-          font-size: 18px;
-
-          &:hover {
-            background: #ff7272;
-          }
-        }
-      }
-    }
   }
 }
 
@@ -543,7 +445,100 @@ h1 {
     }
   }
 }
+.main_section {
+  .info_wrap {
+    margin: auto;
+    .fixed_info {
+      @include fixed_info;
 
+      p {
+        font-size: 20px;
+        margin-bottom: 0;
+      }
+    }
+
+    .content {
+      @include content_bg;
+
+      .dropdown {
+        width: 100%;
+        background: white;
+
+        .dropdown-menu {
+          width: 100%;
+        }
+
+        button {
+          @include dropdown-btn;
+          width: 100%;
+          color: black;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+
+      .form-control,
+      .dropdown {
+        height: 35px;
+      }
+
+      .input-group-prepend {
+        color: white;
+        font-weight: 700;
+        font-size: 20px;
+      }
+
+      .search_section {
+        background: #b5c9d0;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+
+        .input-group-prepend {
+          color: black;
+        }
+
+        .btn_section {
+          display: flex;
+          justify-content: center;
+
+          button.send_btn {
+            @include search_and_send_btn;
+            font-size: 18px;
+            padding: 5px;
+
+            &:hover {
+              background-color: #5e7aa2;
+            }
+          }
+        }
+      }
+    }
+  }
+  .info_wrap:nth-child(3) {
+    margin-top: 3%;
+
+    .count {
+      .btn_section {
+        margin-left: 10px;
+
+        .delete_btn {
+          display: flex;
+          align-items: center;
+          @include content_delete_button;
+          height: 100%;
+          padding: 5px;
+          width: 80px;
+          font-size: 18px;
+
+          &:hover {
+            background: #ff7272;
+          }
+        }
+      }
+    }
+  }
+}
 @media only screen and (min-width: 1200px) {
   .main_section {
     h1 {
@@ -552,7 +547,6 @@ h1 {
     }
 
     .info_wrap {
-      margin: auto;
       width: 700px;
 
       .content {
@@ -591,12 +585,9 @@ h1 {
       .dropdown {
         width: calc(100% - 10%);
         height: 35px;
-        @include dropdown_btn;
 
         .dropdown-toggle {
           display: flex;
-          justify-content: space-between;
-          align-items: center;
           border: none;
         }
 
@@ -638,7 +629,6 @@ h1 {
     }
 
     .info_wrap {
-      margin: auto;
       padding: 0 5%;
 
       .content {
@@ -674,12 +664,9 @@ h1 {
     .dropdown {
       width: calc(100% - 10%);
       height: 35px;
-      @include dropdown_btn;
 
       .dropdown-toggle {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
         border: none;
       }
 
@@ -704,10 +691,23 @@ h1 {
   .main_section {
     h1 {
       margin-top: 30px;
-      font-size: 50px;
       margin-bottom: 20px;
     }
 
+    .dropdown,
+    .form-control,
+    .count .number-input-box,
+    .input-group
+      > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+        .valid-feedback
+      ):not(.invalid-tooltip):not(.invalid-feedback) {
+      margin-left: unset !important;
+    }
+    .input-number,
+    .form-control,
+    .count .number-input-box {
+      width: 100%;
+    }
     .info_wrap {
       padding: 1% 5% 0;
 
@@ -722,22 +722,8 @@ h1 {
           gap: 10px 0;
         }
 
-        .dropdown {
-          margin-left: unset !important;
-        }
-
         .input-group {
           flex-direction: column;
-
-          .input-number {
-            width: 100%;
-          }
-
-          .form-control {
-            width: 100%;
-            margin-left: unset !important;
-          }
-
           .input-group-prepend {
             margin-bottom: 5px;
           }
@@ -746,16 +732,11 @@ h1 {
     }
 
     .info_wrap:nth-child(3) {
-      .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-        margin-left: unset !important;
+      .input-group
+        > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+          .valid-feedback
+        ):not(.invalid-tooltip):not(.invalid-feedback) {
         border-radius: 5px;
-      }
-
-      .count {
-        .number-input-box {
-          width: 100%;
-          margin-left: unset !important;
-        }
       }
     }
   }
@@ -771,4 +752,6 @@ h1 {
       }
     }
   }
-}</style>
+}
+
+</style>
