@@ -142,34 +142,21 @@
               <div class="dropdown_section">
                 <div class="fixed_info">
                   <div>
-                    <p> 權限設定 </p>
+                    <p> 權限選單 </p>
                   </div>
                 </div>
+                <PerfectScrollbar>
                 <div class="accordion authority_accordion" id="authority_accordion">
                   <div v-for="(main, mainIndex) in permissionList" :key="main.id">
                     <div class="accordion-header">
                       <ul>
                         <li>
-                          <label :for="'#header_'+main.id">
-                            <input type="checkbox" v-model="main.checked" :id="'header_'+main.id" @click="selectAllitems($event, mainIndex)"> {{ main.TitleName }}
-                          </label>  
-                          <span class="accordion-toggle" @click="toggleAccordion(mainIndex)"> 
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              class="icon icon-tabler icon-tabler-chevron-down"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              stroke-width="2"
-                              stroke="currentColor"
-                              fill="none"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            >
-                              <path stroke="none" d="M0 0h24v24H0z" />
-                              <polyline points="6 9 12 15 18 9" />
-                            </svg>
-                          </span>
+                          <label :for="'#header_' + main.id">
+                            <input type="checkbox" v-model="main.checked" :id="'header_' + main.id"
+                              @click="selectAllitems($event, mainIndex)"> {{ main.TitleName }}
+                          </label>
+                          <img class="accordion-toggle" @click="toggleAccordion(mainIndex)"
+                            src="@/assets/accordion_arrow.png" alt="">
                         </li>
                       </ul>
                     </div>
@@ -184,6 +171,7 @@
                     </div>
                   </div>
                 </div>
+                </PerfectScrollbar>
               </div>
             </div>
             <div class="button_wrap">
@@ -373,8 +361,8 @@ import allPermission from "@/assets/json/permission.json"
         }
     } catch (e) {
       console.error(e);
-    }
   }
+}
   /**
    * 權限的新增/更新名稱/刪除/改變順序
    * @param {string} type determine Create/Update/Delete/IndexEdit
@@ -425,11 +413,11 @@ import allPermission from "@/assets/json/permission.json"
         grid.value.setRowData(rowData.value);
       } else if (data.state === 'account_error') {
         router.push('/');
-      }
-    } catch (error) {
-      console.error(error);
     }
+  } catch (error) {
+    console.error(error);
   }
+}
   // ----- 權限設定 -----
   /**
    * 勾選子選項時檢查是否為全選(顯示用)
@@ -480,8 +468,8 @@ import allPermission from "@/assets/json/permission.json"
       }
     } catch(e) {
       console.error(e);
-    }
   }
+}
   /**
    * 處理API return結果並更新頁面權限手風琴
    * @param {object} newPermissionList API return
@@ -533,8 +521,8 @@ import allPermission from "@/assets/json/permission.json"
       }
     } catch (e) {
       console.error(e);
-    }
   }
+}
 </script>
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
@@ -610,6 +598,7 @@ import allPermission from "@/assets/json/permission.json"
     }
   }
 }
+
 .editModal2 {
   .modal-content {
     border-radius: 0;
@@ -683,6 +672,7 @@ import allPermission from "@/assets/json/permission.json"
     }
   }
 }
+
 .modal .modal-body {
   padding: 0 !important;
 }
@@ -817,16 +807,35 @@ p {
       }
 
       .accordion {
+        font-size: 16px;
         .accordion-item {
           background: #dedede;
           border: 0;
+        }
+        .accordion-header {
+          li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+          .accordion-toggle {
+            height: 10px;
+            width: 15px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            transform: rotate(180deg);
+          }
+
+          .accordion-toggle:hover {
+            transform: rotate(0deg);
+          }
         }
 
         .accordion-header,
         .accordion-button:not(.collapsed),
         button {
           background-color: #86abb0;
-          box-shadow:unset
+          box-shadow: unset;
         }
 
         .form-check-input {
@@ -853,6 +862,7 @@ p {
 
         .accordion-body {
           padding: 16px;
+
           .check_wrap {
             display: flex;
             font-size: 15px;
@@ -865,9 +875,23 @@ p {
       }
 
       .authority_accordion {
-        height: 345px;
-        overflow-y: scroll;
         background: #86abb0;
+
+        ul {
+          list-style: none;
+          margin-bottom: 0;
+          padding: 5px 10px;
+        }
+
+        .accordion-body {
+          background: #dedede;
+          padding: 10px;
+          color: black;
+        }
+      }
+      .ps{
+           height: 345px;
+        overflow-y: scroll;
       }
     }
   }
