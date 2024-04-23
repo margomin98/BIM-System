@@ -3,10 +3,10 @@
         <div class="info_wrap col">
             <div class="fixed_info">
                 <div>
-                    <p>申請人員：</p>
+                    <p>申請人員：{{ Form.Applicant || utilsStore.userName }}</p>
                 </div>
                 <div>
-                    <p>申請日期：</p>
+                    <p>申請日期： {{ Form.ApplicationDate || utilsStore.today }}</p>
                 </div>
             </div>
             <form>
@@ -16,13 +16,10 @@
                                             <p><span>*</span>用&ensp;&ensp;&ensp;&ensp;途</p>
                                         </label>
                         <div class="option">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" id="radio1">
-                                <label class="form-check-label" for="radio1">内部領用</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" id="radio2">
-                                <label class="form-check-label" for="radio2">借測</label>
+                            <div class="form-check" v-for="(option, index) in useOptions" :key="option">
+                                <input class="form-check-input" type="radio" :value="option" :id="'radio' + (index + 1)"
+                                v-model="Form.Use">
+                                <label class="form-check-label" :for="'radio' + (index + 1)">{{ option }}</label>
                             </div>
                         </div>
                     </div>
@@ -31,7 +28,7 @@
                     <div class="col-xl-5 col-lg-5 col-md-5 col-12 d-flex wrap column_section">
                         <label for="inputWithButton" class="form-label"><p><span>*</span>專案代碼</p></label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="project_id" placeholder="最多輸入10字">
+                            <input type="text" class="form-control" id="project_id" v-model="Form.ProjectCode" maxlength="10" placeholder="最多輸入10字">
                             <button class="btn code_search" type="button" onclick="getProjectName()">搜尋</button>
                         </div>
                     </div>
@@ -128,6 +125,29 @@
         </div>
     </div>
 </template>
+
+<script setup>
+import { Rent_UseArray } from "@/assets/js/dropdown";
+import { useAPIStore, useUtilsStore } from "@/store";
+import { useRentStore } from "@/store/rent/_index";
+import { storeToRefs } from "pinia";
+import { onUnmounted } from "vue";
+
+const utilsStore = useUtilsStore();
+const apiStore = useAPIStore();
+const rentStore = useRentStore();
+
+const { Form, searchParams, DropdownArray } = storeToRefs(rentStore);
+
+/**
+ * 用途Array(for radio box)
+ */
+const useOptions = ref(Rent_UseArray);
+onUnmounted(()=>{
+    rentStore.$dispose();
+    apiStore.$dispose();
+})
+</script>
 
 <style lang="scss" scoped>
     @import '@/assets/css/global.scss';
