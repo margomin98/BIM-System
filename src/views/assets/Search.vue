@@ -131,7 +131,7 @@ onMounted,
       margin-top: 180px !important;
     }
     .info_wrap {
-      margin: 30px auto 5%;
+      margin: 8px auto 5%;
       width: 500px;
 
       .content {
@@ -149,7 +149,7 @@ onMounted,
       margin-top: 180px !important;
     }
     .info_wrap {
-      margin: 30px auto 5%;
+      margin: 8px auto 5%;
       width: 500px;
 
       .content {

@@ -118,25 +118,25 @@
         </div>
         <!-- 已選擇的檔案 -->
         <div class="col selected_file">
-  <div class="input-group">
-    <div class="input-group-prepend">已選擇檔案：</div>
-  <div class="selected_file col">
-    <div class="pt-2">
-      <div class="file_upload_box">
-        <div v-for="(item, index) in formParams.viewFile" :key="index" class="file_upload_wrap">
-                <p class='file_name'>{{ item.FileName }}
-                  <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"
-                    @click="viewImgFile(index, formParams, modalParams, 'new')" data-bs-toggle="modal"
-                    data-bs-target="#viewFile_modal">
-                  <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;"
-                    @click="deleteFile(index, formParams, 'new')">
-                </p>
+          <div class="input-group">
+            <div class="input-group-prepend">已選擇檔案：</div>
+            <div class="selected_file col">
+              <div class="pt-2">
+                <div class="file_upload_box">
+                  <div v-for="(item, index) in formParams.viewFile" :key="index" class="file_upload_wrap">
+                    <p class='file_name'>{{ item.FileName }}
+                      <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"
+                        @click="viewImgFile(index, formParams, modalParams, 'new')" data-bs-toggle="modal"
+                        data-bs-target="#viewFile_modal">
+                      <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;"
+                        @click="deleteFile(index, formParams, 'new')">
+                    </p>
+                  </div>
+                </div>
               </div>
-      </div>
-      </div> 
-       </div>
-  </div>
-  </div>
+            </div>
+          </div>
+        </div>
         <!-- ViewFile Modal -->
         <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
@@ -379,6 +379,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/css/global.scss';
+
 .scrap_quantity,
 .scrap_quantity_storage {
   font-size: 20px;
@@ -471,6 +472,7 @@ export default {
     font-weight: 700;
     color: white;
   }
+
   .input-group {
     padding-bottom: 2% !important;
     border-radius: 0 0 10px 10px;
@@ -512,7 +514,7 @@ span {
   }
 
   .info_wrap {
-    margin: 30px auto 5%;
+    margin: 8px auto 5%;
 
     .fixed_info {
       @include fixed_info;
@@ -657,6 +659,7 @@ span {
   .main_section {
     .info_wrap {
       width: 700px;
+
       .content {
         .input-group {
           .num_wrap {
@@ -686,6 +689,7 @@ span {
 @media only screen and (max-width: 767px) {
   .main_section {
     .error_hint .input-group {
+
       .input-group-prepend,
       .form-control {
         display: none;
@@ -727,10 +731,7 @@ span {
       }
 
       .content {
-        .input-group
-          > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
-            .valid-feedback
-          ):not(.invalid-tooltip):not(.invalid-feedback) {
+        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
           margin-left: unset;
           border-radius: 5px;
           margin-top: 5px;
@@ -765,5 +766,4 @@ span {
     }
   }
 }
-
 </style>
