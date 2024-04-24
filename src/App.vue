@@ -304,6 +304,10 @@ a {
 //放大Swiper圖片
 @media only screen and (min-width: 1200px) {
 
+    .main_button_wrap {
+        justify-content: left !important;
+    }
+
     h1 {
         font-size: 55px;
     }
@@ -330,6 +334,10 @@ a {
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .main_button_wrap {
+        justify-content: left !important;
+    }
+
     h1 {
         font-size: 55px;
     }
@@ -378,4 +386,5 @@ a {
     .main_section .dropdown-item {
         font-size: 16px !important;
     }
-}</style>
+}
+</style>

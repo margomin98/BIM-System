@@ -5,7 +5,7 @@
       <h1>維修管理</h1>
     </div>
     <div class="col">
-      <div class="button_wrap d-flex">
+      <div class="button_wrap main_button_wrap d-flex">
         <router-link to="/repair_new">
           <button class="add_btn">新增報修單</button>
         </router-link>
