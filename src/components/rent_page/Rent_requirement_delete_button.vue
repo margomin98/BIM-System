@@ -9,8 +9,9 @@ export default {
   props: ['params'],
   setup(props, { emit }) {
     function deleteRow() {
-      console.log(props.params.data);
-      emit('deleteFromData', props.params.data);
+      // console.log(props.params.data);
+      const type = props.params.data.item_id ? 'edit' : 'new'
+      emit('deleteFromItemList', props.params.data, type);
     }
     return {
       deleteRow
