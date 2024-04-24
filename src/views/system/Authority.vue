@@ -893,7 +893,6 @@ p {
       }
       .ps{
            height: 345px;
-        overflow-y: scroll;
       }
     }
   }
