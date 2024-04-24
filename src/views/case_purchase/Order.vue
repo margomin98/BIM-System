@@ -66,25 +66,27 @@
                     </div>
                 </div>
                 <div class="purchase_table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="check_col"><span>勾選<br>下訂</span></th>
-                                <th class="item_col"><span>採購項目</span></th>
-                                <th class="amount_col"><span>數量</span></th>
-                                <th><span>規格需求</span></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(item, index) in Form.NotOrdered" :key="item.PI_ID">
-                                <td><input class="form-check-input order_check" type="checkbox" value="true"
-                                        v-model="NotOrderedList[index]"></td>
-                                <td class="table_content">{{ item.ItemName }}</td>
-                                <td class="table_content">{{ item.Number }}</td>
-                                <td class="table_content">{{ item.RequiredSpec }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <PerfectScrollbar>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="check_col"><span>勾選<br>下訂</span></th>
+                                    <th class="item_col"><span>採購項目</span></th>
+                                    <th class="amount_col"><span>數量</span></th>
+                                    <th><span>規格需求</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(item, index) in Form.NotOrdered" :key="item.PI_ID">
+                                    <td><input class="form-check-input order_check" type="checkbox" value="true"
+                                            v-model="NotOrderedList[index]"></td>
+                                    <td class="table_content">{{ item.ItemName }}</td>
+                                    <td class="table_content">{{ item.Number }}</td>
+                                    <td class="table_content">{{ item.RequiredSpec }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </PerfectScrollbar>
                 </div>
             </div>
             <div class="purchase_list_note">
@@ -102,27 +104,29 @@
                     </div>
                 </div>
                 <div class="purchase_table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="check_col"><span>取消<br>下訂</span></th>
-                                <th class="item_col"><span>採購項目</span></th>
-                                <th class="amount_col"><span>數量</span></th>
-                                <th><span>規格需求</span></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(item, index) in Form.Ordered" :key="item.PI_ID">
-                                <td>
-                                    <input class="form-check-input order_check" type="checkbox" value="true"
-                                        v-model="OrderedList[index]">
-                                </td>
-                                <td class="table_content">{{ item.ItemName }}</td>
-                                <td class="table_content">{{ item.Number }}</td>
-                                <td class="table_content">{{ item.RequiredSpec }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <PerfectScrollbar>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="check_col"><span>取消<br>下訂</span></th>
+                                    <th class="item_col"><span>採購項目</span></th>
+                                    <th class="amount_col"><span>數量</span></th>
+                                    <th><span>規格需求</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(item, index) in Form.Ordered" :key="item.PI_ID">
+                                    <td>
+                                        <input class="form-check-input order_check" type="checkbox" value="true"
+                                            v-model="OrderedList[index]">
+                                    </td>
+                                    <td class="table_content">{{ item.ItemName }}</td>
+                                    <td class="table_content">{{ item.Number }}</td>
+                                    <td class="table_content">{{ item.RequiredSpec }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </PerfectScrollbar>
                 </div>
             </div>
             <div class="purchase_list_note cancel_note_wrap d-flex">
@@ -423,9 +427,11 @@ onUnmounted(() => {
     }
 
     .purchase_table {
-        height: 250px;
-        overflow-y: scroll;
         background: white;
+    }
+
+    .ps {
+        height: 250px;
     }
 
     .purchase_list {
@@ -508,9 +514,9 @@ onUnmounted(() => {
 
 .button_wrap {
     display: flex;
-  justify-content: space-between;
-  margin: 30px auto 5%;
-  width: 210px;
+    justify-content: space-between;
+    margin: 30px auto 5%;
+    width: 210px;
 }
 
 .back_btn {
@@ -547,7 +553,7 @@ onUnmounted(() => {
 
 @media only screen and (min-width: 1200px) {
     .main_section {
-  
+
         .info_wrap {
             margin: auto;
             width: 850px;
@@ -645,7 +651,8 @@ onUnmounted(() => {
                 .input-group {
                     flex-direction: column;
                 }
-                .input-group-prepend{
+
+                .input-group-prepend {
                     margin-bottom: 5px;
                 }
             }

@@ -529,7 +529,7 @@ span {
   }
 
   .info_wrap {
-    margin: 30px auto 5%;
+    margin: 8px auto 5%;
     .content {
       @include content_bg;
       .input-group{

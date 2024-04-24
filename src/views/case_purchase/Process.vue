@@ -200,6 +200,7 @@
                     </div>
                 </div>
                 <div class="purchase_table">
+                    <PerfectScrollbar>
                     <table>
                         <thead>
                             <tr>
@@ -226,6 +227,7 @@
                             </tr>
                         </tbody>
                     </table>
+                    </PerfectScrollbar>
                 </div>
             </div>
         </div>
@@ -790,8 +792,9 @@ const addToList = (data) => {
 
     .purchase_table {
         background: white;
+    }
+    .ps{
         height: 250px;
-        overflow-y: scroll;
     }
 
     .purchase_list {
