@@ -169,38 +169,6 @@ export default {
           console.error(error);
         })
     }
-    // async function getAssetsInfo() {
-    //   getAssets(formParams.AssetsId)
-    //     .then((data)=>{
-    //       Assets.Name = data.AssetName;
-    //       Assets.Type = data.AssetType;
-    //       Assets.Status = data.Status;
-    //       // 檢查資產類型
-    //       if(Assets.Type === '耗材') {
-    //         wrongStatus.value = true;
-    //         canSubmit.value = false;
-    //         alertMsg.value = '僅提供資產類型為非耗材的物品進行維修'
-    //       }
-    //       // 檢查資產狀態(只有非耗材才會有這個Status)
-    //       else if(Assets.Status === '已被設備整合') {
-    //         wrongStatus.value = true;
-    //         canSubmit.value = false;
-    //         alertMsg.value = '此資產已被設備整合，請先移出設備箱'
-    //       }
-    //       // 可報修
-    //       else {
-    //         wrongStatus.value = false;
-    //         canSubmit.value = true;
-    //         alertMsg.value = ''
-    //       }
-    //     })
-    //     .catch((error) =>{
-    //       wrongStatus.value = true;
-    //       canSubmit.value = false;
-    //       Assets.Name = '';
-    //       alertMsg.value = '請輸入正確的資產編號'
-    //     })
-    // }
     async function submit() {
       const pattern = /^(BF\d{8})$/;
       // 檢查必填項目、格式        
@@ -352,7 +320,6 @@ export default {
       wrongStatus,
       canSubmit,
       fileInputs,
-      // getAssetsInfo,
       submit,
       openFileExplorer,
       handleFileChange,

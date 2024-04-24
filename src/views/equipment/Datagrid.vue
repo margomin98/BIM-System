@@ -102,7 +102,7 @@
             <Equipment_button :params="slotProps" />
           </template>
         </Column>
-        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable
+        <Column v-for="item in datagridfield" :key="item.field" :field="item.field" :header="item.header" sortable
           :style="{ 'min-width': item.width }"></Column>
         <Column style="min-width: 60px;">
           <template #body="slotProps">
