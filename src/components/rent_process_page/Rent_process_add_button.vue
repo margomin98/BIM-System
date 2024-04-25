@@ -9,11 +9,13 @@
     props: ['params','selectedNumber','Number'],
     setup(props,{emit}) {
       function add() {
+        // 目前已選擇數量
         const selectedNumber = props.selectedNumber;
+        // 所需數量
         const Number = props.Number;
         if (numberIsValid(selectedNumber , Number)) {
           // API將物品從資料庫扣除後，更新rowData
-          SubtractFromInventory();
+          emit('SubtractFromInventory', props.params.data);
         } else {
           if (!props.params.data.selectNumber) {
             alert('所選數量不得為零')
@@ -22,39 +24,21 @@
           }
         }
       }
+      /**
+       * 檢查選擇數量是否正常
+       * @param {number} selectedNumber 已選擇數量
+       * @param {number} Number 所需數量
+       * @returns {boolean} 不正常:false / 正常: true
+       */
       const numberIsValid = (selectedNumber,Number) => {
         const data = props.params.data
-        // 檢查選擇數量是否正常 1.超過 2.為零 3.正常執行
+        //  1.超過 2.為零 3.正常執行
         if ((data.selectNumber + selectedNumber) > Number || !data.selectNumber ) {
           // 1. || 2.
           return false;
         }
         // 2. 正常執行
         return true;
-      }
-      async function SubtractFromInventory() {
-        console.log(props.params.data);
-        const axios = require('axios');
-        const requestData = {
-          item_id: props.params.data.item_id,
-          AssetsId: props.params.data.AssetsId,
-          OM_Number: props.params.data.selectNumber,
-          CI_ID: props.params.data.CI_ID // for 存貨耗材
-        }
-        try {
-          const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/SubtractFromInventory', requestData);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('暫存結果:' +data);
-            // props.params.addMaterial(props.params.data);
-            emit('addMaterial',props.params.data)
-          }
-          else {
-            alert(data.messages);
-          }
-        } catch (error) {
-          console.error(error);
-        }
       }
       return {
         add,
