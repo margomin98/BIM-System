@@ -437,7 +437,7 @@ span {
   .main_section {
  
     .info_wrap {
-      margin: 30px auto 5%;
+      margin: 8px auto 5%;
       width: 800px;
 
       .content {
@@ -468,7 +468,7 @@ span {
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
     .info_wrap {
-      margin: 30px auto 5%;
+      margin:8px auto 5%;
       width: 750px;
 
       .content {

@@ -5,7 +5,7 @@
       <h1>入庫填報管理</h1>
     </div>
     <div class="col">
-      <div class="button_wrap d-flex">
+      <div class="button_wrap main_button_wrap d-flex">
         <router-link to="/store_new">
           <button class="add_btn">新品入庫</button>
         </router-link>

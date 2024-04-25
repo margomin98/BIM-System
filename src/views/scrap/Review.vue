@@ -397,6 +397,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/css/global.scss';
+
 span {
   @include red_star;
 }
@@ -524,6 +525,7 @@ span {
     }
   }
 }
+
 .button_wrap {
   display: flex;
   justify-content: space-between;
@@ -573,6 +575,7 @@ span {
       font-weight: 600;
       @include title_color;
     }
+
     .fixed_info {
       @include fixed_info;
 
@@ -581,6 +584,7 @@ span {
         margin-bottom: 0;
       }
     }
+
     .content {
       @include content_bg;
 
@@ -591,6 +595,7 @@ span {
         .readonly_box {
           height: 37px;
         }
+
         .input-group-prepend {
           color: white;
           font-weight: 700;
@@ -599,107 +604,116 @@ span {
         }
       }
 
-      .confirm_section {
-        .auth {
-          border-radius: 0 0 10px 10px;
-          background: white;
 
-          .input-group {
-            display: flex;
-            white-space: nowrap;
-            flex-wrap: nowrap;
-          }
+    }
 
-          button {
-            @include auth_btn;
+    .confirm_section {
+      .auth {
+        border-radius: 0 0 10px 10px;
+        background: white;
 
-            &:hover {
-              background: #5a6d87;
-            }
-          }
+        .input-group {
+          display: flex;
+          white-space: nowrap;
+          flex-wrap: nowrap;
 
-          .input-container {
-            position: relative;
-            align-self: center;
-          }
-
-          .input-with-icon {
-            position: relative;
-          }
-
-          .checkmark-icon {
-            position: absolute;
-            top: 10%;
-            left: 89%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-          }
-
-          .review_result {
-            gap: 0 10px;
-            align-items: center;
-
-            .form-check {
-              display: flex;
-              gap: 0 5px;
-              margin-bottom: 0;
-
-              .form-check-label {
-                font-weight: 700;
-                font-size: 20px;
-              }
-            }
+          .input-group-prepend {
+            font-weight: 800;
+            align-content: center;
+            font-size: 18px;
           }
         }
 
-        .modal {
-          button {
-            background: #506b91;
-            border: none;
-            font-weight: 700;
-            font-size: 18px;
+        button {
+          @include auth_btn;
 
-            &:hover {
-              background: #6d92b3;
-            }
+          &:hover {
+            background: #5a6d87;
           }
+        }
 
-          .modal-body {
-            padding: 16px 16px 0;
-          }
+        .input-container {
+          position: relative;
+          align-self: center;
+        }
 
-          .modal-content {
-            width: 400px;
-            margin: auto;
-          }
+        .input-with-icon {
+          position: relative;
+        }
 
-          .input-group-prepend {
-            width: auto;
-          }
+        .checkmark-icon {
+          position: absolute;
+          top: 10%;
+          left: 89%;
+          transform: translateY(-50%);
+          width: 20px;
+          height: 20px;
+        }
 
-          .modal-footer {
-            padding: 0 12px 12px;
-            border: none;
-          }
+        .review_result {
+          gap: 0 10px;
+          align-items: center;
 
-          .modal-header {
-            h5 {
+          .form-check {
+            display: flex;
+            gap: 0 5px;
+            margin-bottom: 0;
+
+            .form-check-label {
               font-weight: 700;
+              font-size: 20px;
             }
+          }
+        }
+      }
 
-            background: #3d4e61;
-            color: white;
+      .modal {
+        button {
+          background: #506b91;
+          border: none;
+          font-weight: 700;
+          font-size: 18px;
 
-            .close_icon {
-              cursor: pointer;
-            }
+          &:hover {
+            background: #6d92b3;
+          }
+        }
+
+        .modal-body {
+          padding: 16px 16px 0;
+        }
+
+        .modal-content {
+          width: 400px;
+          margin: auto;
+        }
+
+        .input-group-prepend {
+          width: auto;
+        }
+
+        .modal-footer {
+          padding: 0 12px 12px;
+          border: none;
+        }
+
+        .modal-header {
+          h5 {
+            font-weight: 700;
+          }
+
+          background: #3d4e61;
+          color: white;
+
+          .close_icon {
+            cursor: pointer;
           }
         }
       }
     }
   }
 }
+
 @media only screen and (min-width: 1200px) {
   .main_section {
     .swiper_section {
@@ -713,7 +727,7 @@ span {
     }
 
     .info_wrap {
-      margin: 30px auto 5%;
+      margin: 8px auto 5%;
       width: 750px;
 
       .content {
@@ -757,7 +771,7 @@ span {
     }
 
     .info_wrap {
-      margin: 30px auto 5%;
+      margin: 8px auto 5%;
       padding: 0 5%;
 
       .content {
@@ -784,19 +798,21 @@ span {
           }
         }
 
-        .confirm_section {
-          .auth {
-            height: 80px;
-            padding: 20px;
 
-            .input-group {
-              justify-content: center;
-            }
+      }
 
-            .form-control {
-              width: 150px;
-              margin-right: 5px;
-            }
+      .confirm_section {
+        .auth {
+          height: 80px;
+          padding: 20px;
+
+          .input-group {
+            justify-content: center;
+          }
+
+          .form-control {
+            width: 150px;
+            margin-right: 5px;
           }
         }
       }
@@ -806,15 +822,18 @@ span {
 
 @media only screen and (max-width: 767px) {
   .main_section {
+
     .readonly_box,
     .input-group .num_wrap,
     .form-control {
       margin-left: unset !important;
     }
+
     .num_wrap .number-input-box,
     .form-control {
       width: 100%;
     }
+
     .swiper_section swiper-slide {
       img {
         padding: 40px;
@@ -831,10 +850,7 @@ span {
       }
 
       .content {
-        .input-group
-          > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
-            .valid-feedback
-          ):not(.invalid-tooltip):not(.invalid-feedback) {
+        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
           margin-left: unset;
           border-radius: 5px;
           margin-top: 5px;
@@ -856,29 +872,27 @@ span {
             white-space: nowrap;
           }
         }
+      }
 
-        .confirm_section {
-          .auth {
-            padding: 10px 20px;
+      .confirm_section {
+        .auth {
+          padding: 10px 20px;
 
-            .input-group {
-              justify-content: left;
-              margin: 5px 0;
-            }
+          .input-group {
+            justify-content: left;
+            margin: 5px 0;
+          }
 
-            .form-control {
-              margin-right: 5px;
-            }
+          .form-control {
+            margin-right: 5px;
+          }
 
-            .input-group-prepend {
-              color: black;
-            }
+          .input-group-prepend {
+            color: black;
           }
         }
       }
     }
   }
 }
-
-
 </style>

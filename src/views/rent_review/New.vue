@@ -1133,6 +1133,9 @@ span{
             top: -7px;
             height: 30px;
           }
+          button{
+            width: 80px;
+          }
         }
 
         .form-label {

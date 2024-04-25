@@ -111,20 +111,20 @@ export const useUtilsStore = defineStore('Utils',{
     },
     // 表單必填
     /**
-     * 
+     * 表單必填(**此函數不能檢查值為number 0之欄位，會視為未填**)
      * @param {object} formParams Object that need to checked.
-     * @param {string[]} checkList key list to check.
+     * @param {string[]} checkList key string array to check.
      * @param {object} fileParams if exists, then check.
      * @returns {boolean} Pass: true , Invalid: false
      */
     checkRequired(formParams = {}, checkList = [], fileParams) {
       let result = true;
       for(const key of checkList) {
-        if(!formParams[key]) {
+        if (Array.isArray(formParams[key]) ? formParams[key].length === 0 : !formParams[key]) {
           console.log(key);
-          alert('請輸入必填項目')
-          result =  false;
-          break
+          alert('請輸入必填項目');
+          result = false;
+          break;
         }
       }
       if(fileParams) {
@@ -411,7 +411,12 @@ export const useUtilsStore = defineStore('Utils',{
         }
       });
     },
-    // 檢查單號狀態是否可進入(編輯、交付、刪除等需要鎖定狀態的頁面)
+    /**
+     * 檢查單號狀態是否可進入(編輯、交付、刪除等需要鎖定狀態的頁面)
+     * @param {string} Status 資料單的狀態
+     * @param {string[]} Conditions 可進入的狀態Array
+     * @returns window.history.back()
+     */
     canEnterPage(Status , Conditions) {
       if(!Conditions.includes(Status)) {
         window.history.back();

@@ -104,6 +104,7 @@
                 </div>
                 <div v-else class="purchase_table">
                     <div class="purchase_table_wrap">
+                        <PerfectScrollbar>
                         <table>
                             <thead>
                                 <tr>
@@ -123,6 +124,7 @@
                                 </tr>
                             </tbody>
                         </table>
+                        </PerfectScrollbar>
                     </div>
 
                 </div>
@@ -264,8 +266,9 @@ onUnmounted(() => {
 
             .purchase_table_wrap {
                 background: white;
+            }
+            .ps{
                 height: 300px;
-                overflow-y: scroll;
             }
 
             table {

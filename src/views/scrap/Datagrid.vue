@@ -5,7 +5,7 @@
       <h1>報廢管理</h1>
     </div>
     <div class="col">
-      <div class="button_wrap d-flex">
+      <div class="button_wrap main_button_wrap d-flex">
         <router-link to="/scrap_new">
           <button class="add_btn">新增報廢單</button>
         </router-link>
@@ -294,6 +294,9 @@
   @media only screen and (min-width: 1200px) {
     .main_section {
       padding: 0 10%;
+      .main_button_wrap{
+        justify-content: left;
+      }
       .datagrid_section {
         .row {
           display: grid;
