@@ -55,6 +55,7 @@ async function submit() {
   if(!utilsStore.checkRequired(Form.value, checkList)) return
   if(!utilsStore.checkMaxLetter(Form.value, FormLetterCheckList.value)) return
   const requestData = {
+    AO_ID: AO_ID,
     Use: Form.value.Use,
     ProjectCode: Form.value.ProjectCode,
     Description: Form.value.Description,
