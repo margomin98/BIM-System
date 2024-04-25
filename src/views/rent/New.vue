@@ -26,7 +26,7 @@ import router from "@/router";
 import { useRentStore } from '@/store/rent/_index';
 import { useAPIStore, useUtilsStore } from '@/store';
 import { storeToRefs } from 'pinia';
-import axios from 'axios';
+import axios from '@/axios/tokenInterceptor'
 const rentStore = useRentStore();
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();

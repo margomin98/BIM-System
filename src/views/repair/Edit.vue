@@ -144,7 +144,7 @@ import {
 } from 'vue-router'
 import Navbar from '@/components/Navbar.vue';
 import router from '@/router';
-import axios from 'axios';
+import axios from '@/axios/tokenInterceptor';
 import {
   goBack,
   canEnterPage,

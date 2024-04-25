@@ -129,7 +129,7 @@ import {
   getApplication,
   getAssets
 } from '@/assets/js/common_api.js'
-import axios from 'axios'
+import axios from '@/axios/tokenInterceptor';
 export default {
   components: {
     Navbar
