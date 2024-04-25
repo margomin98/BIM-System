@@ -236,6 +236,7 @@ export const useRentStore = defineStore('Rent', {
 							this.Form[key] = data.resultList[key];
 						}
 					})
+					this.increaseId = this.Form.ItemList.length ++;
 				} else if (data.state === 'error') {
 					alert(data.messages);
 				} else if (data.state === 'account_error') {
