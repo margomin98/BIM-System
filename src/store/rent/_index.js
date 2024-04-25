@@ -73,7 +73,7 @@ export const useRentStore = defineStore('Rent', {
 			deleteFile: [],
 			existFile: [],
 		},
-		increaseId: 0, // delete primary key (因為顯示和提交的Array不同)
+		increaseId: 1, // delete primary key (因為顯示和提交的Array不同)
     /**
 		 * 搜尋表單參數(出庫備料檢索)
 		 */

@@ -8,12 +8,12 @@
       <button class="delete_btn" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>
     </div>
   </div>
-  <delete_modal :delete="storageStore.deleteData" :id="AI_ID"></delete_modal>
+  <delete_modal @delete="storageStore.deleteData(AI_ID)"></delete_modal>
 </template>
 
 <script setup>
 import Store_View_Component from '@/components/store_page/store_view_component';
-import delete_modal from '@/components/delete_modal.vue';
+import delete_modal from '@/components/utils/delete_modal.vue';
 import Navbar from '@/components/Navbar.vue';
 import { useStorageStore } from '@/store/storage/_index'
 import { useAPIStore, useUtilsStore } from '@/store';

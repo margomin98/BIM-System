@@ -8,13 +8,13 @@
       <button class="delete_btn" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>
     </div>
   </div>
-  <delete_modal :delete="purchaseStore.deleteData" :id="PP_ID"></delete_modal>
+  <delete_modal @delete="purchaseStore.deleteData(PP_ID)"></delete_modal>
 </template>
 
 <script setup>
 import Navbar from '@/components/Navbar.vue';
 import case_purchase_view from '@/components/case_purchase_page/case_purchase_view.vue';
-import delete_modal from '@/components/delete_modal.vue';
+import delete_modal from '@/components/utils/delete_modal.vue';
 import { usePurchaseStore } from '@/store/purchase/_index'
 import { useUtilsStore } from '@/store';
 import { onMounted, onUnmounted } from 'vue';
