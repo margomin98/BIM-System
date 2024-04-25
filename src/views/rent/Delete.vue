@@ -23,7 +23,7 @@ import {
   onMounted,
   onUnmounted,
 } from 'vue';
-import axios from 'axios';
+import axios from '@/axios/tokenInterceptor'
 import { storeToRefs } from 'pinia';
 import { useRentStore } from '@/store/rent/_index';
 import { useAPIStore, useUtilsStore } from '@/store';

@@ -27,7 +27,7 @@ import { useRentStore } from '@/store/rent/_index';
 import { useAPIStore, useUtilsStore } from '@/store';
 import { storeToRefs } from 'pinia';
 import { Rent_Edit_Status } from '@/assets/js/enter_status';
-import axios from 'axios';
+import axios from '@/axios/tokenInterceptor'
 import { useRoute } from 'vue-router';
 const rentStore = useRentStore();
 const utilsStore = useUtilsStore();
