@@ -1,116 +1,107 @@
 <template>
-  <Navbar />
-  <div class="main_section">
-    <div class="title col">
-      <h1>
-        刪除項目
-      </h1>
+  <div class="info_wrap col">
+    <warn v-show="PageType === 'delete'"></warn>
+    <div class="fixed_info">
+      <div>
+        <p>單號：{{ Form.AO_ID }}</p>
+      </div>
+      <div>
+        <p>申請人員：{{ Form.Applicant }}</p>
+      </div>
+      <div>
+        <p>申請日期：{{ Form.ApplicationDate }}</p>
+      </div>
     </div>
-    <rent_view_component></rent_view_component>
-    <div class="col button_wrap">
-      <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
-      <button class="delete_btn" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>
+    <form>
+      <div class="row g-0">
+        <div class="col d-flex wrap column_section">
+          <label for="inputTitle1" class="form-label use">
+            <p>用&ensp;&ensp;&ensp;&ensp;途</p>
+          </label>
+          <div class="option">
+            <div class='content'>
+              <div class="form-check" v-for="(option, index) in useOptions" :key="option">
+                <input class="form-check-input" type="radio" :value="option" :id="'radio' + (index + 1)"
+                  v-model="Form.Use" :disabled="option !== Form.Use && Form.Use !== ''">
+                <label class="form-check-label" :for="'radio' + (index + 1)">{{ option }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row g-0 project_details">
+        <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
+          <label for="inputWithButton" class="form-label">
+            <p>專案代碼</p>
+          </label>
+          <div class="input-group" id='readonly_box'>
+            <p class='readonly_box' readonly>{{ Form.ProjectCode }}</p>
+          </div>
+        </div>
+        <div class="col d-flex wrap ">
+          <label for="inputWithTitle" class="form-label" id='project_name'>
+            <p>專案名稱</p>
+          </label>
+          <div class="input-group" id='readonly_box'>
+            <p class='readonly_box' readonly>{{ Form.ProjectName }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="row g-0">
+        <div class="col d-flex wrap" style='border:none'>
+          <label for="inputTextarea" class="form-label">
+            <p>説&ensp;&ensp;&ensp;&ensp;明</p>
+          </label>
+          <textarea id='readonly_box' class='readonly_box' readonly>{{ Form.Description }}</textarea>
+        </div>
+      </div>
+    </form>
+    <div class="fixed_info">
+      <div>
+        <p>資產出庫項目</p>
+      </div>
+    </div>
+    <div class='third_content'>
+      <DataTable :size="'small'" :value="Form.ItemList" resizableColumns columnResizeMode="expand" showGridlines scrollable
+        scrollHeight="420px" paginator :rows="20"
+        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+        <Column v-for="item in ItemList_field" :key="item.field" :field="item.field" :header="item.header" sortable :style="{ 'min-width': item.width }"></Column>
+      </DataTable>
     </div>
   </div>
-  <delete_modal @delete="deleteData"></delete_modal>
 </template>
 
 <script setup>
-import Navbar from '@/components/Navbar.vue';
-import delete_modal from '@/components/utils/delete_modal.vue';
-import rent_view_component from '@/components/rent_page/rent_view_component.vue';
-import {
-  onMounted,
-  onUnmounted,
-} from 'vue';
-import axios from 'axios';
-import { storeToRefs } from 'pinia';
-import { useRentStore } from '@/store/rent/_index';
-import { useAPIStore, useUtilsStore } from '@/store';
-import { useRoute, useRouter } from 'vue-router';
-const rentStore = useRentStore();
-const utilsStore = useUtilsStore();
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import warn from '@/components/Delete_warn.vue'
+import { Rent_UseArray } from "@/assets/js/dropdown";
+import { useAPIStore } from "@/store";
+import { useRentStore } from "@/store/rent/_index";
+import { storeToRefs } from "pinia";
+import { onUnmounted, ref } from "vue";
+
 const apiStore = useAPIStore();
+const rentStore = useRentStore();
 
-const { PageType } = storeToRefs(rentStore);
+const { Form, requirementParams, DropdownArray, ItemList_field, PageType } = storeToRefs(rentStore);
+/**
+ * 用途Array(for radio box)
+ */
+const useOptions = ref(Rent_UseArray);
 
-const route = useRoute();
-const router = useRouter();
-const AO_ID = route.query.search_id;
-onMounted(async () => {
-  rentStore.$reset();
-  utilsStore.getUserName();
-  utilsStore.getDate();
-  PageType.value = 'delete';
-  await rentStore.getDetails(AO_ID);
-});
-onUnmounted(() => {
+onUnmounted(()=>{
   rentStore.$dispose();
   apiStore.$dispose();
+
 })
-async function deleteData() {
-  const form = new FormData();
-  form.append('AO_ID', AO_ID);
-  try {
-    const response = await axios.post(`http://192.168.0.177:7008/AssetsOutMng/ApplicationDelete`, form);
-    const data = response.data;
-    if (data.state === 'success') {
-      let msg = data.messages + '\n';
-      msg += '單號:' + data.resultList.AO_ID;
-      alert(msg);
-      router.push({
-        name: 'Rent_Datagrid'
-      });
-    } else if (data.state === 'error') {
-      alert(data.messages);
-    }
-  } catch (error) {
-    console.error(error);
-  }
-}
 </script>
 
 <style lang="scss" scoped>
  @import "@/assets/css/global.scss";
 textarea {
   padding: 5px 10px 0;
-}
-.delete_modal {
-  .modal-content {
-    border: solid 1px black;
-    border-radius: 0;
-    .modal-body {
-      background: #e94b4b;
-      text-align: center;
-      font-weight: 700;
-      color: white;
-      border-bottom: solid 1px black;
-    }
-    .modal-footer {
-      margin: auto;
-      gap: 10px;
-      button:nth-child(1) {
-        background-color: #7e7e7e;
-        border: none;
-        color: white;
-        width: 50px;
-        font-weight: 700;
-        &:hover {
-          background-color: #464242;
-        }
-      }
-      button:nth-child(2) {
-        background-color: #e94b4b;
-        border: none;
-        color: white;
-        width: 50px;
-        font-weight: 700;
-        &:hover {
-          background-color: #a70e0e;
-        }
-      }
-    }
-  }
 }
 
 .button_wrap {

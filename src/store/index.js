@@ -695,7 +695,7 @@ export const useAPIStore = defineStore('API',{
      * @param {string} url 查詢的api url
      * @param {object} datagrid 用來決定datagrid loading開關
      * @param {string} form 查詢的條件
-     * @returns {Promise<Array<object>>} 返回Datagrid
+     * @returns {Promise<object>} 返回{total: number, rows: []}
      */   
     async getMngDatagrid(url, datagrid, form) {
       datagrid.loading = true;

@@ -73,9 +73,9 @@ export const useRentStore = defineStore('Rent', {
 			deleteFile: [],
 			existFile: [],
 		},
-		increaseId: 0, // delete primary key (因為顯示和提交的Array不同)
+		increaseId: 1, // delete primary key (因為顯示和提交的Array不同)
     /**
-		 * 搜尋表單參數(出庫備料檢索)
+		 * 搜尋表單參數(快速出庫資產檢索)
 		 */
     searchParams: {
       EquipType_Id: '',
@@ -103,7 +103,9 @@ export const useRentStore = defineStore('Rent', {
     datagrid2: createDadagridObject('AssetsId'),
     datagrid2field: [],
     rowData2: [],
-		// 出庫項目field
+		/**
+		 * 出庫項目field(需求)
+		 */
 		ItemList_field: [
 			{ field: "id", width: '50px', header: "項目" },
 			{ field: "EquipTypeName", width: '150px', header: "設備總類" },
@@ -112,7 +114,9 @@ export const useRentStore = defineStore('Rent', {
 			{ field: "Number", width: '100px', header: "數量" },
 			{ field: "RequiredSpec", width: '250px', header: "規格需求" }
 		],
-		// 出庫細項field
+		/**
+		 * 出庫細項field(實際出庫資產)
+		 */
 		OMList_field: [
 			{ field: "OM_List_id", width: '50px', header: "需求項目", sortable: false },
 			{ field: "OM_Number", width: '30px', header: "數量", sortable: false },

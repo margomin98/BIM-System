@@ -21,9 +21,9 @@
           <p class="mt-3">密碼</p>
           <input class="text_input" type="password" @keyup.enter="login" v-model="formParams.userPassword">
           <span style="color: rgb(243, 22, 22);">{{ errorHint }}</span>
-          <div class="tick">
-            <input type="checkbox" v-model="formParams.RememberMe">記住我
-          </div>
+          <label class="tick" for="RememberMe">
+            <input type="checkbox" v-model="formParams.RememberMe" id="RememberMe">記住我
+          </label>
         </div>
         <div class="login_btn">
           <button @click="login">登錄</button>

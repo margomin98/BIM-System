@@ -6,193 +6,39 @@
         檢視出庫填報
       </h1>
     </div>
-    <div class="info_wrap col">
-      <div class="fixed_info">
-        <div>
-          <p>單號：{{ details.AO_ID }}</p>
-        </div>
-        <div>
-          <p>申請人員：{{ details.Applicant }}</p>
-        </div>
-        <div>
-          <p>申請日期：{{ details.ApplicationDate }}</p>
-        </div>
-      </div>
-      <form>
-        <div class="row g-0">
-          <div class="col d-flex wrap column_section">
-            <label for="inputTitle1" class="form-label use">
-              <p>用&ensp;&ensp;&ensp;&ensp;途</p>
-            </label>
-            <div class="option">
-              <div class='content'>
-                <div class="form-check" v-for="(option, index) in options" :key="index">
-                  <input class="form-check-input" type="radio" :value="option" :id="'radio' + (index + 1)"
-                    v-model="details.Use" :disabled="option !== details.Use && details.Use !== ''">
-                  <label class="form-check-label" :for="'radio' + (index + 1)">{{ option }}</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row g-0 project_details">
-          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithButton" class="form-label">
-              <p>專案代碼</p>
-            </label>
-            <div class="input-group" id='readonly_box'>
-              <p class='readonly_box' readonly>{{ details.ProjectCode }}</p>
-            </div>
-          </div>
-          <div class="col d-flex wrap ">
-            <label for="inputWithTitle" class="form-label" id='project_name'>
-              <p>專案名稱</p>
-            </label>
-            <div class="input-group" id='readonly_box'>
-              <p class='readonly_box' readonly>{{ details.ProjectName }}</p>
-            </div>
-          </div>
-        </div>
-        <div class="row g-0">
-          <div class="col d-flex wrap" style='border:none'>
-            <label for="inputTextarea" class="form-label">
-              <p>説&ensp;&ensp;&ensp;&ensp;明</p>
-            </label>
-            <textarea id='readonly_box' class='readonly_box' readonly>{{ details.Description }}</textarea>
-          </div>
-        </div>
-      </form>
-      <div class="fixed_info">
-        <div>
-          <p>資產出庫項目</p>
-        </div>
-      </div>
-      <div class='third_content'>
-        <DataTable :size="'small'" :value="rowData" resizableColumns columnResizeMode="expand" showGridlines scrollable
-          scrollHeight="420px" paginator :rows="20" @page="updatePage"
-          paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-          currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
-          <Column style="min-width:50px;" header="項目">
-            <template #body="slotProps">
-              {{ calculateIndex(slotProps) }}
-            </template>
-          </Column>
-          <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable
-            :style="{ 'min-width': item.width }"></Column>
-        </DataTable>
-      </div>
-    </div>
+    <rent_view_component></rent_view_component>
     <div class="col button_wrap">
-      <button class="back_btn" @click="goBack">回上一頁</button>
+      <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
     </div>
   </div>
 </template>
 
-<script>
-import {
-  useRoute,
-  useRouter
-} from 'vue-router';
+<script setup>
 import Navbar from '@/components/Navbar.vue';
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
-import {
-  Rent_UseArray
-} from "@/assets/js/dropdown";
-import {
-  goBack,
-  createDatagrid
-} from "@/assets/js/common_fn";
+import rent_view_component from '@/components/rent_page/rent_view_component.vue';
 import {
   onMounted,
-  ref
+  onUnmounted,
 } from 'vue';
-export default {
-  components: {
-    Navbar,
-    Column,
-    DataTable,
-  },
-  setup() {
-    const datagrid = createDatagrid();
-    const datagridfield = [{
-      field: 'EquipTypeName',
-      header: '設備總類',
-      width: '150px'
-    },
-    {
-      field: 'EquipCategoryName',
-      header: '設備分類',
-      width: '150px'
-    },
-    {
-      field: 'ProductName',
-      header: '物品名稱',
-      width: '150px'
-    },
-    {
-      field: 'Number',
-      header: '數量',
-      width: '100px'
-    },
-    {
-      field: 'RequiredSpec',
-      header: '規格需求',
-      width: '250px'
-    },
-    ]
-    const rowData = ref([]);
-    const route = useRoute();
-    const router = useRouter();
-    const AO_ID = route.query.search_id;
-    const details = ref({});
-    const options = Rent_UseArray;
-    onMounted(() => {
-      getDetails();
-    });
-    async function getDetails() {
-      const axios = require('axios');
-      try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
-        console.log(response);
-        const data = response.data;
-        if (data.state === 'success') {
-          console.log('Details Get成功 資料如下\n', data.resultList);
-          details.value = data.resultList;
-          rowData.value = data.resultList.ItemList;
-        } else if (data.state === 'error') {
-          alert(data.messages);
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    function updatePage(event) {
-      datagrid.first = event.first;
-    }
-    function calculateIndex(slotProps) {
-      return String(datagrid.first + slotProps.index + 1).padStart(2, '0');
-    }
-    return {
-      datagridfield,
-      rowData,
-      details,
-      options,
-      updatePage,
-      calculateIndex,
-      goBack,
-    };
-  },
-  data() {
-    return {
-      rowHeight: 35,
-      pageSize: 15
-    };
-  }
-};
+import { useRentStore } from '@/store/rent/_index';
+import { useAPIStore, useUtilsStore } from '@/store';
+import { useRoute } from 'vue-router';
+const rentStore = useRentStore();
+const utilsStore = useUtilsStore();
+const apiStore = useAPIStore();
+
+const route = useRoute();
+const AO_ID = route.query.search_id;
+onMounted(async () => {
+  rentStore.$reset();
+  utilsStore.getUserName();
+  utilsStore.getDate();
+  await rentStore.getDetails(AO_ID);
+});
+onUnmounted(() => {
+  rentStore.$dispose();
+  apiStore.$dispose();
+})
 </script>
 
 <style lang="scss" scoped>

@@ -7,8 +7,8 @@
           確定刪除這筆項目嗎？
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">否</button>
-          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" @click="props.delete(props.id)">是</button>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" @click="$emit('cancel')">否</button>
+          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" @click="$emit('delete')">是</button>
         </div>
       </div>
     </div>
@@ -16,7 +16,8 @@
 </template>
 
 <script setup>
-const props = defineProps(['delete','id']);
+// 刪除資料單的確認Modal。 僅傳送 是/否 。其他動畫由父組件完成
+const emits = defineEmits(['delete','cancel']);
 </script>
 
 <style lang="scss" scoped>

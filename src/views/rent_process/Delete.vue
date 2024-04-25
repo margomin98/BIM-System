@@ -241,7 +241,6 @@ import {
   useRouter
 } from 'vue-router';
 import warn from "@/components/Delete_warn.vue"
-import Storage_add from "@/components/Storage_add_button";
 import AssetsView from '@/components/Rent_process_new_view_button'
 import Navbar from "@/components/Navbar.vue";
 import {
@@ -268,7 +267,6 @@ export default {
     Column,
     DataTable,
     AssetsView,
-    Storage_add,
   },
   setup() {
     const route = useRoute();

@@ -192,7 +192,6 @@ import {
   useRouter
 } from 'vue-router';
 import warn from "@/components/Delete_warn.vue"
-import Storage_add from "@/components/Storage_add_button";
 import Navbar from "@/components/Navbar.vue";
 import {
   Rent_UseArray
@@ -206,7 +205,6 @@ export default {
     Navbar,
     AgGridVue,
     warn,
-    Storage_add
   },
   data() {
     return {
