@@ -186,6 +186,7 @@
 import {
   AgGridVue
 } from "ag-grid-vue3";
+import axios from '@/axios/tokenInterceptor'
 import Navbar from "@/components/Navbar.vue";
 import Parameter_button from "@/components/Parameter_button";
 import {
@@ -265,7 +266,6 @@ export default {
     async function getDataGrid(type) {
       let apiUrl = '';
       const baseUrl = 'http://192.168.0.177:7008';
-      const axios = require('axios');
       switch (type) {
         case 'EquipTypeName':
           apiUrl += baseUrl + '/GetParameter/EquipTypeParameter'
@@ -374,7 +374,6 @@ export default {
       }
       let apiUrl = '';
       const baseUrl = 'http://192.168.0.177:7008';
-      const axios = require('axios');
       let requestData = {};
       switch (type) {
         case 'EquipTypeName':
@@ -428,7 +427,6 @@ export default {
       const type = editParams.type;
       const input = editParams.input.trim();
       const id = editParams.id;
-      const axios = require('axios');
       const baseUrl = 'http://192.168.0.177:7008'
       let apiUrl = ''
       // 檢查輸入是否符合格式 1. 不為全空白 2. 字數<=10 
@@ -490,7 +488,6 @@ export default {
     async function insertNewType(type) {
       let apiUrl = '';
       const baseUrl = 'http://192.168.0.177:7008';
-      const axios = require('axios');
       let requestData = {};
       switch (type) {
         case 'EquipTypeName':
@@ -608,7 +605,6 @@ export default {
       const id = deleteParams.id;
       let apiUrl = '';
       const baseUrl = 'http://192.168.0.177:7008';
-      const axios = require('axios');
       switch (type) {
         case 'EquipTypeName':
           apiUrl = baseUrl + '/ParameterMng/DeleteEquipmentType'
