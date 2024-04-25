@@ -51,7 +51,7 @@ onUnmounted(() => {
 })
 
 async function submit() {
-  const checkList = ['Use', 'ProjectCode','newItemList'];
+  const checkList = ['Use', 'ProjectCode','ItemList'];
   if(!utilsStore.checkRequired(Form.value, checkList)) return
   if(!utilsStore.checkMaxLetter(Form.value, FormLetterCheckList.value)) return
   const requestData = {
@@ -59,11 +59,11 @@ async function submit() {
     ProjectCode: Form.value.ProjectCode,
     Description: Form.value.Description,
     ItemList: Form.value.newItemList,
-    deleteList: Form.value.deleteFile,
+    deleteList: Form.value.deleteItemList,
   };
   console.log('requestData:', requestData);
   try {
-    const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/NewAssetsOut', requestData);
+    const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/ApplicationEdit', requestData);
     const data = response.data;
     if (data.state === 'success') {
       let msg = data.messages + '\n';

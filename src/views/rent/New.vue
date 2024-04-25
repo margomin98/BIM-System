@@ -44,7 +44,7 @@ onUnmounted(() => {
   apiStore.$dispose();
 })
 async function submit() {
-  const checkList = ['Use', 'ProjectCode','newItemList'];
+  const checkList = ['Use', 'ProjectCode','ItemList'];
   if(!utilsStore.checkRequired(Form.value, checkList)) return
   if(!utilsStore.checkMaxLetter(Form.value, FormLetterCheckList.value)) return
   const requestData = {
