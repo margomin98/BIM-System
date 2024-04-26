@@ -52,7 +52,7 @@
           <label for="inputTextarea" class="form-label">
             <p>説&ensp;&ensp;&ensp;&ensp;明</p>
           </label>
-          <textarea id='readonly_box' class='readonly_box' readonly>{{ Form.Description }}</textarea>
+          <textarea id='readonly_box' class='readonly_box' v-model="Form.Description" readonly></textarea>
         </div>
       </div>
     </form>
@@ -75,7 +75,7 @@
 <script setup>
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import warn from '@/components/Delete_warn.vue'
+import warn from '@/components/utils/warn_title.vue'
 import { Rent_UseArray } from "@/assets/js/dropdown";
 import { useAPIStore } from "@/store";
 import { useRentStore } from "@/store/rent/_index";

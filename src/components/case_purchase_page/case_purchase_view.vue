@@ -1,6 +1,6 @@
 <template>
     <div class="info_wrap col">
-        <Delete_warn v-show="PageType === 'delete'"></Delete_warn>
+        <warn_title v-show="PageType === 'delete'"></warn_title>
         <div class="fixed_info">
             <div>
                 <p>申請人員：{{ Form.Applicant }}</p>
@@ -209,7 +209,7 @@ import {
 import {
     usePurchaseStore
 } from '@/store/purchase/_index';
-import Delete_warn from '@/components/Delete_warn.vue';
+import warn_title from '@/components/utils/warn_title.vue';
 import {
     storeToRefs
 } from 'pinia';

@@ -1,7 +1,7 @@
 <template>
     <div class="main_section">
         <div class="info_wrap col">
-            <deletewarn/>
+            <warn/>
             <div class="fixed_info">
                 <div>
                     <p>單號：</p>
@@ -89,10 +89,10 @@
 </template>
 
 <script>
-    import deletewarn from '@/components/Delete_warn.vue';
+    import warn from '@/components/utils/warn_title.vue';
     export default {
         components: {
-            deletewarn
+            warn
         }
     }
 </script>

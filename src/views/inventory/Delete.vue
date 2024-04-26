@@ -135,7 +135,7 @@
 </template>
 
 <script>
-import warn from '@/components/Delete_warn.vue'
+import warn from '@/components/utils/warn_title.vue'
 import List_view_button from "@/components/Inventory_view_button";
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';

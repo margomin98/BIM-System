@@ -278,7 +278,7 @@ import {
   reactive
 } from 'vue';
 import Navbar from "@/components/Navbar.vue";
-import warn from "@/components/Delete_warn.vue"
+import warn from "@/components/utils/warn_title.vue"
 import {
   useRoute
 } from 'vue-router';

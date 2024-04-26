@@ -5,7 +5,7 @@
       <h1>刪除項目</h1>
     </div>
     <div class="info_wrap col">
-      <deleteModal />
+      <warn />
       <div class="fixed_info">
         <div>
           <p>設備整合箱</p>
@@ -124,108 +124,103 @@
 </template>
 
 <script>
-  import DataTable from 'primevue/datatable';
-  import Column from 'primevue/column';
-  import Navbar from "@/components/Navbar.vue";
-  import ListItem from "@/components/Equipment/item.vue"
-  import {
-    onMounted,
-    ref
-  } from "vue";
-  import {
-    useRoute,
-    useRouter
-  } from "vue-router";
-  import {
-GetAntiForgeryToken,
-    getMngDatagrid,
-  } from '@/assets/js/common_api'
-  import { UpdatePageParameter, createDatagrid , goBack } from '@/assets/js/common_fn';
-  import axios from 'axios';
-  export default {
-    components: {
-      Navbar,
-      DataTable,
-      Column,
-      ListItem,
-    },
-    setup() {
-      const route = useRoute();
-      const router = useRouter();
-      const details = ref('');
-      const IntegrationId = route.query.search_id
-      const datagrid = createDatagrid();
-      const datagridfield = [
-        { field: "ExecutionDate", width: '150px', header: "記錄日期" },
-        { field: "Action", width: '50px', header: "記錄行為" },
-        { field: "EquipTypeName", width: '150px', header: "設備總類" },
-        { field: "EquipCategoryName", width: '150px', header: "設備分類" },
-        { field: "AssetsId", width: '150px', header: "資產編號" },
-        { field: "AssetName", width: '150px', header: "物品名稱" },
-        { field: "H_Number", width: '50px', header: "數量" },
-        { field: "Unit", width: '50px', header: "單位" },
-        { field: "ExecutionPerson", width: '150px', header: "作業人員" }
-      ]
-      const rowData = ref([]);
-      onMounted(() => { 
-        datagrid.sortField = 'ExecutionDate'
-        getDetails();
-        getHistory('','search');
-      });
-      async function getDetails() {
-        const baseUrl = 'http://192.168.0.177:7008'
-        let apiUrl = ''
-        apiUrl += baseUrl + '/GetDBdata/GetIntegrationBoxInfo?id=' + `${IntegrationId}`
-        try {
-          const response = await axios.get(`${apiUrl}`);
-          // console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log(data.resultList);
-            details.value = data.resultList;
-            console.log('details', details.value.AssetList);
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
-          }
-        } catch (error) {
-          console.error(error);
+import warn from '@/components/utils/warn_title.vue'
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import Navbar from "@/components/Navbar.vue";
+import ListItem from "@/components/Equipment/item.vue"
+import {
+  onMounted,
+  ref
+} from "vue";
+import {
+  useRoute,
+  useRouter
+} from "vue-router";
+import {
+  getMngDatagrid,
+} from '@/assets/js/common_api'
+import { UpdatePageParameter, createDatagrid, goBack } from '@/assets/js/common_fn';
+import axios from 'axios';
+export default {
+  components: {
+    Navbar,
+    DataTable,
+    Column,
+    ListItem,
+    warn
+  },
+  setup() {
+    const route = useRoute();
+    const router = useRouter();
+    const details = ref('');
+    const IntegrationId = route.query.search_id
+    const datagrid = createDatagrid();
+    const datagridfield = [
+      { field: "ExecutionDate", width: '150px', header: "記錄日期" },
+      { field: "Action", width: '50px', header: "記錄行為" },
+      { field: "EquipTypeName", width: '150px', header: "設備總類" },
+      { field: "EquipCategoryName", width: '150px', header: "設備分類" },
+      { field: "AssetsId", width: '150px', header: "資產編號" },
+      { field: "AssetName", width: '150px', header: "物品名稱" },
+      { field: "H_Number", width: '50px', header: "數量" },
+      { field: "Unit", width: '50px', header: "單位" },
+      { field: "ExecutionPerson", width: '150px', header: "作業人員" }
+    ]
+    const rowData = ref([]);
+    onMounted(() => {
+      datagrid.sortField = 'ExecutionDate'
+      getDetails();
+      getHistory('', 'search');
+    });
+    async function getDetails() {
+      const baseUrl = 'http://192.168.0.177:7008'
+      let apiUrl = ''
+      apiUrl += baseUrl + '/GetDBdata/GetIntegrationBoxInfo?id=' + `${IntegrationId}`
+      try {
+        const response = await axios.get(`${apiUrl}`);
+        // console.log(response);
+        const data = response.data;
+        if (data.state === 'success') {
+          console.log(data.resultList);
+          details.value = data.resultList;
+          console.log('details', details.value.AssetList);
+        } else if (data.state === 'error') {
+          alert(data.messages);
+        } else if (data.state === 'account_error') {
+          alert(data.messages);
+          router.push('/');
         }
+      } catch (error) {
+        console.error(error);
       }
-      async function getHistory(event, type) {
-        const form = new FormData();
-        form.append('IntegrationId' , IntegrationId);
-        UpdatePageParameter( datagrid , event , type , form)
-        getMngDatagrid('/IntegrationMng/IntegratedHistory',rowData,datagrid,form)
-      }
-      async function deleteData() {
-        const form = new FormData();
-        form.append('IntegrationId', IntegrationId);
-        const axios = require('axios');
-        try {
-          const token = await GetAntiForgeryToken();
-          const response = await axios.post(`http://192.168.0.177:7008/IntegrationMng/IntegrationDelete`, form,{
-            headers:{
-              'RequestVerificationToken': token,
-            }
+    }
+    async function getHistory(event, type) {
+      const form = new FormData();
+      form.append('IntegrationId', IntegrationId);
+      UpdatePageParameter(datagrid, event, type, form)
+      getMngDatagrid('/IntegrationMng/IntegratedHistory', rowData, datagrid, form)
+    }
+    async function deleteData() {
+      const form = new FormData();
+      form.append('IntegrationId', IntegrationId);
+      const response = await axios.post(`http://192.168.0.177:7008/IntegrationMng/IntegrationDelete`, form);
+      try {
+        const data = response.data;
+        if (data.state === 'success') {
+          let msg = data.messages + '\n';
+          msg += '單號:' + data.resultList.B_Id;
+          alert(msg);
+          router.push({
+            name: 'Equipment_Datagrid'
           });
-          const data = response.data;
-          if (data.state === 'success') {
-            let msg = data.messages + '\n';
-            msg += '單號:' + data.resultList.B_Id;
-            alert(msg);
-            router.push({
-              name: 'Equipment_Datagrid'
-            });
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          }
-        } catch (error) {
-          console.error(error);
+        } else if (data.state === 'error') {
+          alert(data.messages);
         }
+      } catch (error) {
+        console.error(error);
       }
+    }
     return {
       details,
       datagrid,
