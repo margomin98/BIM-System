@@ -204,7 +204,6 @@ export default {
     async function deleteData() {
       const form = new FormData();
       form.append('IntegrationId', IntegrationId);
-      const axios = require('axios');
       const response = await axios.post(`http://192.168.0.177:7008/IntegrationMng/IntegrationDelete`, form);
       try {
         const data = response.data;
