@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="info_wrap col mb-5">
-        <Delete_warn v-show="!hidden"></Delete_warn>
+        <warn_title v-show="!hidden"></warn_title>
         <div class="fixed_info">
           <div>
             <p>
@@ -295,7 +295,7 @@
 <script setup>
 // component
 import view_modal from "@/components/view_modal.vue"
-import Delete_warn from '@/components/Delete_warn.vue';
+import warn_title from '@/components/utils/warn_title.vue';
 
 // pinia
 import { useUtilsStore } from '@/store'

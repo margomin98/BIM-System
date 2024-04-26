@@ -262,7 +262,7 @@
     useRoute
   } from 'vue-router'
   import axios from 'axios';
-  import warn from "@/components/Delete_warn.vue"
+  import warn from "@/components/utils/warn_title.vue"
   import Navbar from '@/components/Navbar.vue';
   import router from '@/router';
   import {

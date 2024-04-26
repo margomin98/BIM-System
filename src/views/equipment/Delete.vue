@@ -5,7 +5,7 @@
       <h1>刪除項目</h1>
     </div>
     <div class="info_wrap col">
-      <deleteModal />
+      <warn />
       <div class="fixed_info">
         <div>
           <p>設備整合箱</p>
@@ -124,7 +124,7 @@
 </template>
 
 <script>
-import deleteModal from '@/components/Delete_warn.vue'
+import warn from '@/components/utils/warn_title.vue'
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Navbar from "@/components/Navbar.vue";
@@ -148,7 +148,7 @@ export default {
     DataTable,
     Column,
     ListItem,
-    deleteModal
+    warn
   },
   setup() {
     const route = useRoute();

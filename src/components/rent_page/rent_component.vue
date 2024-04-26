@@ -1,130 +1,127 @@
 <template>
   <div class="info_wrap col">
-      <div class="fixed_info">
-          <div>
-              <p>申請人員：{{ Form.Applicant || utilsStore.userName }}</p>
-          </div>
-          <div>
-              <p>申請日期： {{ Form.ApplicationDate || utilsStore.today }}</p>
-          </div>
-      </div>
-      <form>
-          <div class="row g-0">
-              <div class="col d-flex wrap column_section">
-                  <label for="inputTitle1" class="form-label use">
-                      <p><span>*</span>用&ensp;&ensp;&ensp;&ensp;途</p>
-                  </label>
-                  <div class="option">
-                      <div class="form-check" v-for="(option, index) in useOptions" :key="option">
-                          <input class="form-check-input" type="radio" :value="option" :id="'radio' + (index + 1)"
-                          v-model="Form.Use">
-                          <label class="form-check-label" :for="'radio' + (index + 1)">{{ option }}</label>
-                      </div>
+    <div class="fixed_info">
+        <div>
+          <p>申請人員：{{ Form.Applicant || utilsStore.userName }}</p>
+        </div>
+        <div>
+          <p>申請日期： {{ Form.ApplicationDate || utilsStore.today }}</p>
+        </div>
+    </div>
+    <form>
+        <div class="row g-0">
+            <div class="col d-flex wrap column_section">
+                <label for="inputTitle1" class="form-label use">
+                  <p><span>*</span>用&ensp;&ensp;&ensp;&ensp;途</p>
+                </label>
+                <div class="option">
+                  <div class="form-check" v-for="(option, index) in useOptions" :key="option">
+                    <input class="form-check-input" type="radio" :value="option" :id="'radio' + (index + 1)" v-model="Form.Use">
+                    <label class="form-check-label" :for="'radio' + (index + 1)">{{ option }}</label>
                   </div>
-              </div>
-          </div>
-          <div class="row g-0 project_details">
-              <div class="col-xl-5 col-lg-5 col-md-5 col-12 d-flex wrap column_section">
-                  <label for="inputWithButton" class="form-label">
-                      <p><span>*</span>專案代碼</p>
-                  </label>
-                  <div class="input-group">
-                      <input type="text" class="form-control" id="project_id" v-model="Form.ProjectCode" maxlength="10" placeholder="最多輸入10字">
-                      <button class="btn code_search" type="button" @click="async ()=>{ Form.ProjectName = await apiStore.getProject(Form.ProjectCode); }">搜尋</button>
-                  </div>
-              </div>
-              <div class="col d-flex wrap">
-                  <label for="inputWithTitle" class="form-label" id='project_name'>
-                      <p>專案名稱</p>
-                  </label>
-                  <div class="input-group" id='readonly_box'>
-                      <p class='readonly_box' readonly>{{ Form.ProjectName }}</p>
-                  </div>
-              </div>
-          </div>
-          <div class="row g-0">
-              <div class="col d-flex wrap column_section" style='border:none'>
-                  <label for="inputTextarea" class="form-label">
-                      <p>&nbsp;&nbsp;說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
-                  </label>
-                  <textarea class="form-control" id="inputTextarea" v-model="Form.Description" maxlength="100" placeholder='最多輸入100字'></textarea>
-              </div>
-          </div>
-      </form>
-      <div class="fixed_info">
-          <div>
-              <p>填寫項目 填寫需求</p>
-          </div>
-      </div>
-      <div class='second_content'>
-          <div class='wrap d-flex first_row'>
-              <div class='col-xl-3 col-lg-3 col-md-3 col-12' style='padding-left:0'>
-                  <p><span>*</span>設備總類</p>
-                  <div class="dropdown">
-                    <select class="form-select" id="floatingSelect" v-model="requirementParams.EquipType_Id" @change="async()=>{DropdownArray.EquipCategory = await apiStore.getEquipCategory(requirementParams.EquipType_Id); requirementParams.Category_Id = '';}">
-                      <option value="">--請選擇--</option>
-                      <option v-for="option in DropdownArray.EquipType" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
-                    </select>
-                  </div>
-              </div>
-              <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-                  <p><span>*</span>設備分類</p>
-                  <div class="dropdown">
-                    <select class="form-select" id="floatingSelect" v-model="requirementParams.Category_Id">
-                      <option v-if="DropdownArray.EquipCategory.length == 0" value="">--請先選擇設備總類--</option>
-                      <template v-else>
-                        <option value="">--請選擇--</option>
-                        <option v-for="option in DropdownArray.EquipCategory" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
-                      </template>
-                    </select>
-                  </div>
-              </div>
-              <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-                  <p><span>*</span>物品名稱</p>
-                  <div class="number-input-box">
-                      <input type="text" class="form-control" maxlength="20" placeholder="最多輸入20字" v-model="requirementParams.ProductName"/>
-                  </div>
-              </div>
-              <div class="col-xl-3 col-lg-3 col-md-3 col-12">
-                  <p>
-                      <span>*</span>數量 
-                      <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
-                  </p>
-                  <div class="number-input-box">
-                      <input class="input-number" type="number" min="1" v-model="requirementParams.Number"/>
-                  </div>
-              </div>
-          </div>
-          <div class="row g-0">
-              <div class="col-12 d-flex wrap text_input">
-                  <label for="inputTextarea" class="form-label">
-                      <p>規格需求：</p>
-                  </label>
-                  <div>
-                  </div>
-                  <textarea class="form-control" id="inputTextarea" v-model="requirementParams.RequiredSpec" maxlength="100" placeholder='最多輸入100字'></textarea>
-              </div>
-          </div>
-          <div class='col d-flex justify-content-center'>
-              <button class="btn submit_btn" type="button" @click="rentStore.insertNewItemList">新增</button>
-          </div>
-      </div>
-      <div class='third_content'>
-          <div class="fixed_info">
-            <div>
-              <p><span>*</span>資產出庫項目(請至少新增一項)</p>
+                </div>
+            </div>
+        </div>
+        <div class="row g-0 project_details">
+            <div class="col-xl-5 col-lg-5 col-md-5 col-12 d-flex wrap column_section">
+                <label for="inputWithButton" class="form-label">
+                  <p><span>*</span>專案代碼</p>
+                </label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="project_id" v-model="Form.ProjectCode" maxlength="10" placeholder="最多輸入10字">
+                  <button class="btn code_search" type="button" @click="async ()=>{ Form.ProjectName = await apiStore.getProject(Form.ProjectCode); }">搜尋</button>
+                </div>
+            </div>
+            <div class="col d-flex wrap">
+                <label for="inputWithTitle" class="form-label" id='project_name'>
+                  <p>專案名稱</p>
+                </label>
+                <div class="input-group" id='readonly_box'>
+                  <p class='readonly_box' readonly>{{ Form.ProjectName }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="row g-0">
+            <div class="col d-flex wrap column_section" style='border:none'>
+                <label for="inputTextarea" class="form-label">
+                  <p>&nbsp;&nbsp;說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
+                </label>
+                <textarea class="form-control" id="inputTextarea" v-model="Form.Description" maxlength="100" placeholder='最多輸入100字'></textarea>
+            </div>
+        </div>
+    </form>
+    <div class="fixed_info">
+        <div>
+          <p>填寫項目 填寫需求</p>
+        </div>
+    </div>
+    <div class='second_content'>
+        <div class='wrap d-flex first_row'>
+          <div class='col-xl-3 col-lg-3 col-md-3 col-12' style='padding-left:0'>
+            <p><span>*</span>設備總類</p>
+            <div class="dropdown">
+              <select class="form-select" id="floatingSelect" v-model="requirementParams.EquipType_Id" @change="async()=>{DropdownArray.EquipCategory = await apiStore.getEquipCategory(requirementParams.EquipType_Id); requirementParams.Category_Id = '';}">
+                <option value="">--請選擇--</option>
+                <option v-for="option in DropdownArray.EquipType" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
+              </select>
             </div>
           </div>
-          <DataTable :size="'small'" :value="Form.ItemList" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="420px" paginator :rows="10" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-            :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
-          <Column style="min-width:80px;" class="datatable_checkbox">
-            <template #body="slotProps">
-              <Delete :params = "slotProps" @deleteFromItemList="rentStore.deleteFromItemList" />
-            </template>
-          </Column>
-          <Column v-for="item in ItemList_field" :key="item.field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
-          </DataTable>
+          <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
+              <p><span>*</span>設備分類</p>
+              <div class="dropdown">
+                <select class="form-select" id="floatingSelect" v-model="requirementParams.Category_Id">
+                  <option v-if="DropdownArray.EquipCategory.length == 0" value="">--請先選擇設備總類--</option>
+                  <template v-else>
+                    <option value="">--請選擇--</option>
+                    <option v-for="option in DropdownArray.EquipCategory" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
+                  </template>
+                </select>
+              </div>
+          </div>
+          <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
+              <p><span>*</span>物品名稱</p>
+              <div class="number-input-box">
+                  <input type="text" class="form-control" maxlength="20" placeholder="最多輸入20字" v-model="requirementParams.ProductName"/>
+              </div>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-3 col-12">
+              <p>
+                  <span>*</span>數量 
+                  <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
+              </p>
+              <div class="number-input-box">
+                  <input class="input-number" type="number" min="1" v-model="requirementParams.Number"/>
+              </div>
+          </div>
+        </div>
+        <div class="row g-0">
+          <div class="col-12 d-flex wrap text_input">
+              <label for="inputTextarea" class="form-label">
+                <p>規格需求：</p>
+              </label>
+              <textarea class="form-control" id="inputTextarea" v-model="requirementParams.RequiredSpec" maxlength="100" placeholder='最多輸入100字'></textarea>
+          </div>
+        </div>
+        <div class='col d-flex justify-content-center'>
+          <button class="btn submit_btn" type="button" @click="rentStore.insertNewItemList">新增</button>
+        </div>
+    </div>
+    <div class='third_content'>
+      <div class="fixed_info">
+        <div>
+          <p><span>*</span>資產出庫項目(請至少新增一項)</p>
+        </div>
       </div>
+      <DataTable :size="'small'" :value="Form.ItemList" resizableColumns columnResizeMode="expand" showGridlines scrollable scrollHeight="420px" paginator :rows="10" paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        :rowsPerPageOptions="[10, 20, 30]" currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
+        <Column style="min-width:80px;" class="datatable_checkbox">
+          <template #body="slotProps">
+            <Delete :params = "slotProps" @deleteFromItemList="rentStore.deleteFromItemList" />
+          </template>
+        </Column>
+        <Column v-for="item in ItemList_field" :key="item.field" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
+      </DataTable>
+    </div>
   </div>
 </template>
 

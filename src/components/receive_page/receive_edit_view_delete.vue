@@ -2,7 +2,7 @@
     <viewmodal/>
     <div class="main_section">
         <div class="info_wrap col">
-            <deletewarn/>
+            <warn/>
             <div class="fixed_info">
                 <div>
                     <p>收貨資訊</p>
@@ -151,12 +151,12 @@
 <script>
     import Multiselect from 'vue-multiselect';
     import viewmodal from '@/components/view_modal.vue';
-    import deletewarn from '@/components/Delete_warn.vue';
+    import warn from '@/components/utils/warn_title.vue';
     export default {
         components: {
             Multiselect,
             viewmodal,
-            deletewarn
+            warn
         },
         data() {
             return {

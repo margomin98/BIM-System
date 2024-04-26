@@ -166,7 +166,7 @@
     Pagination
   } from 'swiper/modules';
   register();
-  import warn from '@/components/Delete_warn.vue'
+  import warn from '@/components/utils/warn_title.vue'
   import Navbar from "@/components/Navbar.vue";
   import viewOrder from "@/components/receive_page/order_view_btn.vue"
   import {

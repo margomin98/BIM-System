@@ -191,7 +191,7 @@ import {
   useRoute,
   useRouter
 } from 'vue-router';
-import warn from "@/components/Delete_warn.vue"
+import warn from "@/components/utils/warn_title.vue"
 import Navbar from "@/components/Navbar.vue";
 import {
   Rent_UseArray

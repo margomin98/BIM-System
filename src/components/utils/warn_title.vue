@@ -1,4 +1,5 @@
 <template>
+    <!-- 刪除頁的警世Title -->
     <div class="warn">
         <h4>
             確定刪除以下項目嗎？
