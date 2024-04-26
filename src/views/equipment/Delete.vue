@@ -141,7 +141,7 @@ import {
   getMngDatagrid,
 } from '@/assets/js/common_api'
 import { UpdatePageParameter, createDatagrid, goBack } from '@/assets/js/common_fn';
-import axios from 'axios';
+import axios from '@/axios/tokenInterceptor'
 export default {
   components: {
     Navbar,

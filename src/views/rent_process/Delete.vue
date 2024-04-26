@@ -35,7 +35,7 @@ import {
   onUnmounted,
   ref,
 } from "vue";
-import axios from 'axios';
+import axios from '@/axios/tokenInterceptor'
 const rentStore = useRentStore();
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();
