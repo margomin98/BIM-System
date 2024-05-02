@@ -414,7 +414,7 @@ import {
   useRoute
 } from 'vue-router';
 import router from '@/router';
-import axios from 'axios';
+import axios from '@/axios/tokenInterceptor'
 import {
   StoreProcess_Edit_Status
 } from '@/assets/js/enter_status'
