@@ -1,421 +1,318 @@
 <template>
-    <div>
-        <div class="info_wrap col mb-5">
-            <div class="fixed_info">
-                <div>
-                    <p>申請人員 : </p>
-                </div>
-                <div>
-                    <p>申請入庫日期 : </p>
-                </div>
-            </div>
-            <!-- 上半部表單 -->
-            <div class="content">
-                <!-- 單號 -->
-                <div class="col">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">單號 :</div>
-                        <input type="text" class="form-control readonly_box" readonly />
-                    </div>
-                </div>
-                <!-- 狀態 -->
-                <div class="row">
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                狀態 :
-                            </div>
-                            <input type="text" class="form-control readonly_box" readonly />
-                        </div>
-                    </div>
-                </div>
-                <!-- 物流單號 -->
-                <div class="col form_search_wrap">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            物流單號 :
-                        </div>
-                        <input type="text" class="form-control readonly_box" readonly>
-                        <button class="form_search_btn">檢視</button>
-                        <!-- 隱藏跳轉按鈕 -->
-                        <a href="#view-receive" target="_blank" id="view-receive" style="display: none;"></a>
-                    </div>
-                </div>
-                <!-- 交付 人員&日期 -->
-                <div class="row">
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                交付人員 :
-                            </div>
-                            <input type="text" class="form-control readonly_box" readonly />
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                交付日期 :
-                            </div>
-                            <input type="text" class="form-control readonly_box" readonly />
-                        </div>
-                    </div>
-                </div>
-                <!-- 入庫 人員&日期 -->
-                <div class="row">
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                入庫人員 :
-                            </div>
-                            <input type="text" class="form-control readonly_box" readonly />
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                入庫日期 :
-                            </div>
-                            <input type="text" class="form-control readonly_box" readonly />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab_section mt-5">
-                <nav>
-                    <!-- 標頭 -->
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <button :key="tab" class="nav-link" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)"
-                            type="button" role="tab" :aria-selected="tab === 0">
-                            {{ tab }}
-                        </button>
-                    </div>
-                </nav>
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="" role="tabpanel">
-                        <!-- 頁籤專案類型 -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="input-group mb-3 check_box_wrap">
-                                    <div class="input-group-prepend check_box">
-                                        專案類型 :
-                                    </div>
-                                    <div class="d-flex align-items-center radio_wrap">
-                                        <input type="radio" class='form-check-input check_box' id="radio1"
-                                            style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"
-                                            value="資產" @change="resetUnitCount(index)" />
-                                        <label class="form-check-label check_box" for='radio1'>資產</label>
-                                        <input type="radio" class='form-check-input check_box ' id="radio2"
-                                            style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"
-                                            value="存貨" @change="resetUnitCount(index)" />
-                                        <label class="form-check-label check_box" for='radio2' data-toggle="tooltip"
-                                            data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
-                                        <input type="radio" class='form-check-input check_box' id="radio3"
-                                            style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"
-                                            value="耗材" />
-                                        <label class="form-check-label check_box" for='radio3'>耗材</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- 頁籤專案代碼 -->
-                        <div class="col form_search_wrap">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span>*</span>專案代碼 :
-                                </div>
-                                <input type="text" class="form-control" aria-label="Default"
-                                    aria-describedby="inputGroup-sizing-default">
-                                <button class="form_search_btn" @click="getProjectName(index)">搜尋</button>
-                            </div>
-                        </div>
-                        <!-- 頁籤專案名稱 -->
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">專案名稱 :</div>
-                                <input type="text" class="form-control readonly_box" aria-label="Default" readonly />
-                            </div>
-                        </div>
-                        <!-- 頁籤 設備總類 & 設備分類-->
-                        <div class="row g-0">
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend"><span>*</span>設備總類 :</div>
-                                    <div class="dropdown">
-                                        <button class="btn dropdown-toggle" type="button" id="typeDropdown"
-                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                            @click="getEquipTypeName">
-                                            <!-- {{ tab.itemEquipTypeName || '請選擇' }} --> 請選擇
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="typeDropdown">
-                                            <!-- <p v-for="item in DropdownArray.EquipType" class="dropdown-item" @click="selectType(item , index)">{{ item.Name }}</p> -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                                <div class="input-group mb-3 justify-content-end">
-                                    <div class="input-group-prepend"><span>*</span>設備分類 :</div>
-                                    <div class="dropdown">
-                                        <button class="btn dropdown-toggle" type="button" id="categoryDropdown"
-                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <!-- {{ tab.itemEquipCategoryName || tab.EquipCategoryInit }} 請選擇 -->
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                                            <!-- <p v-for="item in tab.EquipCategoryArray" class="dropdown-item" @click="selectCategory(item , index)">{{ item.Name }}</p> -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- 頁籤儲位 區域&櫃位 -->
-                        <div class="row g-0 storage_dropdown">
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend"><span>*</span>儲位區域 :</div>
-                                    <div class="dropdown">
-                                        <button class="btn dropdown-toggle" type="button" id="areaDropdown"
-                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                            @click="getAreaName(index)">
-                                            <!-- {{ tab.itemAreaName || '請選擇' }}  -->請選擇
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                                            <!-- <p v-for="(item, area_index) in DropdownArray.Area" :key="area_index" class="dropdown-item" @click="selectArea(index, item)">{{ item.Name }}</p> -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="input-group mb-3 justify-content-end">
-                                    <div class="input-group-prepend"><span>*</span>儲位櫃位 :</div>
-                                    <div class="dropdown">
-                                        <button class="btn dropdown-toggle" type="button" id="cabinetDropdown"
-                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <!-- {{ tab.itemLayerName || tab.LayerInit }} --> 請選擇
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="cabinetDropdown">
-                                            <!-- <p v-for="(item, layer_index) in tab.LayerArray" :key="layer_index" class="dropdown-item" @click="selectLayer(index, item)">{{ item.Name }}</p> -->
-                                        </div>
-                                    </div>
-                                    <button class="apply_btn" data-bs-toggle="modal"
-                                        data-bs-target="#apply_storage_modal" @click="updateIndex(index)">套用儲位</button>
-                                    <!-- <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" /> -->
-                                </div>
-                            </div>
-                        </div>
-                        <!-- 頁籤物品名稱 -->
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend"><span>*</span>物品名稱 :</div>
-                                <input type="text" class="form-control" placeholder="最多輸入20字" />
-                            </div>
-                        </div>
-                        <!-- 頁籤資產編號 -->
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend"><span>*</span>資產編號 :</div>
-                                <input type="text" class="form-control" placeholder="BFXXXXXXXX" />
-                            </div>
-                        </div>
-                        <!-- 頁籤廠商 -->
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">廠商 :</div>
-                                <input type="text" class="form-control " aria-label="Default" placeholder="最多輸入100字" />
-                            </div>
-                        </div>
-                        <!-- 頁籤規格 -->
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">規格 :</div>
-                                <input type="text" class="form-control " aria-label="Default" placeholder="最多輸入100字" />
-                            </div>
-                        </div>
-                        <!-- 頁籤型號 -->
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">型號 :</div>
-                                <input type="text" class="form-control " aria-label="Default" placeholder="最多輸入100字" />
-                            </div>
-                        </div>
-                        <!-- 頁籤S/N -->
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">S/N :</div>
-                                <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" />
-                            </div>
-                        </div>
-                        <!-- 頁籤 包裝數量 & 包裝單位 -->
-                        <div class="row g-0">
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend info">
-                                        <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none"
-                                            src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            title="資產數量 ex: 3包螺絲釘"> 包裝數量 :<img
-                                            class="info_icon d-xl-none d-lg-none d-md-none d-inline-block"
-                                            src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            title="資產數量 ex: 3包螺絲釘">
-                                    </div>
-                                    <input type="number" class="input-number readonly_box" aria-label="Default"
-                                        aria-describedby="inputGroup-sizing-default" readonly />
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                                <div class="input-group mb-3 justify-content-end">
-                                    <div class="input-group-prepend"><span>*</span>包裝單位 :</div>
-                                    <div class="dropdown">
-                                        <button class="btn dropdown-toggle" type="button" id="areaDropdown"
-                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <!-- {{ tab.itemPackageUnit || '請選擇' }}  -->請選擇
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                                            <!-- <p v-for="item in DropdownArray.PackageUnit" class="dropdown-item" @click="selectPackageUnit(item , index)">{{ item }}</p> -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- 頁籤 數量 & 單位 -->
-                        <div class="row g-0">
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend info">
-                                        <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none"
-                                            src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
-                                        <span>*</span>數量 :<img
-                                            class="info_icon d-xl-none d-lg-none d-md-none d-inline-block"
-                                            src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
-                                    </div>
-                                    <input class="input-number" type="number" min="1">
-                                    <!-- <input v-else class="input-number readonly_box" type="number" v-model="tab.itemPackageNum" min="1" readonly> -->
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                                <div class="input-group mb-3 justify-content-end">
-                                    <div class="input-group-prepend"><span>*</span>單位 :</div>
-                                    <div class="dropdown">
-                                        <button class="btn dropdown-toggle" type="button" id="areaDropdown"
-                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            請選擇
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                                            <!-- <p v-for="item in DropdownArray.Unit" class="dropdown-item" @click="selectUnit(item , index)">{{ item }}</p> -->
-                                        </div>
-                                    </div>
-                                    <!-- <input v-else class="input-number readonly_box" type="text" v-model="tab.itemPackageUnit" min="1" readonly> -->
-                                </div>
-                            </div>
-                        </div>
-                        <!-- 頁籤保固期限 -->
-                        <div class="row">
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        保固期限 :
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="最多輸入10字">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- 頁籤 保固 開始&結束 -->
-                        <div class="row">
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">保固開始日 :</div>
-                                    <input type="date" class="form-control " />
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">保固到期日 :</div>
-                                    <input type="date" class="form-control " />
-                                </div>
-                            </div>
-                        </div>
-                        <!-- 頁籤備註 -->
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    備註 :
-                                </div>
-                                <textarea class="col" rows="5" placeholder="最多輸入500字"></textarea>
-                            </div>
-                        </div>
-                        <!-- 頁籤選擇檔案 -->
-                        <div class="col">
-                            <div class="input-group">
-                                <div class="input-group-prepend">資產照片 :</div>
-                                <div class="mb-3 file_wrap">
-                                    <button class='choose_btn' @click="openFileExplorer(index)">選擇檔案</button>
-                                    <input type="file" accept="image/*" ref="fileInputs" style="display: none;" multiple
-                                        @change="handleFileChange(index, $event)" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="selected_file col">
-                            <div class="input-group">
-                                <div class="input-group-prepend">已選擇檔案 :</div>
-                                <div class="selected_file_wrap">
-                                    <div class="file_upload_wrap">
-                                        <p>
-                                            <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"
-                                                @click="viewImgFile('new', index, file_index)" data-bs-toggle="modal"
-                                                data-bs-target="#viewFile_modal">
-                                            <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;"
-                                                @click="deleteFileFunction('new', index, file_index)">
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- 頁籤已上傳檔案 -->
-                        <div class="col selected_file">
-                            <div class="input-group mt-3">
-                                <div class="input-group-prepend">已上傳檔案 :</div>
-                                <div class='selected_file_wrap'>
-                                    <div class="file_upload_wrap">
-                                        <p>
-                                            <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"
-                                                @click="viewImgFile('exist', index, file_index)" data-bs-toggle="modal"
-                                                data-bs-target="#viewFile_modal">
-                                            <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;"
-                                                @click="deleteFileFunction('exist', index, file_index)">
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- ViewFile Modal -->
-                <!-- <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
-                                      <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                          <div class="modal-header">
-                                            <h5 class="modal-title">{{ modalParams.title }}</h5>
-                                            <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
-                                          </div>
-                                          <div v-show="tabData" class="modal-body">
-                                            <img :src="modalParams.src" alt="Uploaded Image" class="w-100" />
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div> -->
-                <view_modal />
-            </div>
-        </div>
+  <div class="info_wrap col mb-5">
+    <div class="fixed_info">
+      <div>
+        <p>
+          申請人員 : {{ details.Applicant }}
+        </p>
+      </div>
+      <div>
+        <p>
+          申請入庫日期 : {{ details.ApplicationDate }}
+        </p>
+      </div>
     </div>
+    <!-- 上半部表單 -->
+    <div class="content">
+      <!-- 單號 -->
+      <div class="col">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">單號 :</div>
+          <input type="text" class="form-control readonly_box" v-model="AI_ID" readonly />
+        </div>
+      </div>
+      <!-- 狀態 -->
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              狀態 :
+            </div>
+            <input type="text" class="form-control readonly_box" readonly v-model="details.Status">
+          </div>
+        </div>
+      </div>
+      <!-- 物流單號 -->
+      <div class="col form_search_wrap">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            物流單號 :
+          </div>
+          <input type="text" class="form-control readonly_box" v-model="details.ShipmentNum" readonly>
+          <button class="form_search_btn" @click="viewReceive">檢視</button>
+          <!-- 隱藏跳轉按鈕 -->
+          <router-link :to="{name: 'Receive_View' , query:{ search_id : details.AR_ID}}" target="_blank" id="view-receive" style="display: none;"></router-link>
+        </div>
+      </div>
+      <!-- 交付 人員&日期 -->
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              交付人員 :
+            </div>
+            <input type="text" class="form-control readonly_box" readonly v-model="details.DeliveryOperator">
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              交付日期 :
+            </div>
+            <input type="text" class="form-control readonly_box" readonly v-model="details.DeliveryDate">
+          </div>
+        </div>
+      </div>
+      <!-- 入庫 人員&日期 -->
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              入庫人員 :
+            </div>
+            <input type="text" class="form-control readonly_box" readonly v-model="details.AssetsInOperator">
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              入庫日期 :
+            </div>
+            <input type="text" class="form-control readonly_box" readonly v-model="details.AssetsInDate">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 頁籤部分 -->
+    <div v-show="details.Tabs" class="tab_section mt-5">
+      <!-- tab頂端頁籤 -->
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <button v-for="tab in parseInt(tabNumber)" :key="tab" :class="['nav-link', { active: tab === 1 }]" data-bs-toggle="tab" :data-bs-target="'#tab' + (tab)" type="button" role="tab">{{ tab }}</button>
+        </div>
+      </nav>
+      <!-- tab內容 -->
+      <div class="tab-content" id="nav-tabContent">
+        <div v-for="(tab, index) in details.Tabs" :key="index" :class="['tab-pane', 'fade', { 'show active': index === 0 }]" :id="'tab' + (index + 1)" role="tabpanel">
+          <!-- 頁籤資產類型 -->
+          <div class="row">
+            <div class="col">
+              <div class="input-group mb-3 check_box_wrap">
+                <div class="input-group-prepend check_box">
+                  資產類型 :
+                </div>
+                <div class="d-flex align-items-center radio_wrap">
+                    <input type="radio" class='form-check-input check_box' id="radio1" value="資產" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='資產'"   style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" />
+                    <label class="form-check-label check_box" for='radio1'>資產</label>
+                    <input type="radio" class='form-check-input check_box ' id="radio2" value="存貨" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='存貨'"   style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" />
+                    <label class="form-check-label check_box" for='radio2' data-toggle="tooltip" data-placement="top" title="註記此資產僅限特定專案出貨所使用">存貨</label>
+                    <input type="radio" class='form-check-input check_box' id="radio3" value="耗材" v-model="tab.itemAssetType" :disabled="tab.itemAssetType!=='耗材'"    style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"/>
+                    <label class="form-check-label check_box" for='radio3'>耗材</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 頁籤專案代碼 -->
+          <div class="col form_search_wrap">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">專案代碼 :</div>
+              <input type="text" class="form-control readonly_box" v-model="tab.itemProjectCode" readonly>
+            </div>
+          </div>
+          <!-- 頁籤專案名稱 -->
+          <div class="col">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">專案名稱 :</div>
+              <input type="text" class="form-control readonly_box" v-model="tab.itemProjectName" readonly>
+            </div>
+          </div>
+          <!-- 頁籤設備 總類&分類 -->
+          <div class="row g-0 row_wrap">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend equipment_wrap">設備總類 :</div>
+                <input type="text" class="form-control readonly_box" v-model="tab.itemEquipTypeName" readonly>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">設備分類 :</div>
+                <input type="text" class="form-control readonly_box" v-model="tab.itemEquipCategoryName" readonly>
+              </div>
+            </div>
+          </div>
+          <!-- 頁籤儲位 區域&櫃位 -->
+          <div class="row g-0 row_wrap">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend equipment_wrap">儲位區域 :</div>
+                <input type="text" class="form-control readonly_box" v-model="tab.itemAreaName" readonly>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">儲位櫃位 :</div>
+                <input type="text" class="form-control readonly_box" v-model="tab.itemLayerName" readonly>
+              </div>
+            </div>
+          </div>
+          <!-- 頁籤物品名稱 -->
+          <div class="col">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">物品名稱 :</div>
+              <input type="text" class="form-control readonly_box" v-model="tab.itemAssetName" readonly>
+            </div>
+          </div>
+          <!-- 頁籤資產編號 -->
+          <div class="col">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">資產編號 :</div>
+              <input type="text" class="form-control readonly_box" v-model="tab.itemAssetsId" readonly>
+            </div>
+          </div>
+          <!-- 頁籤廠商 -->
+          <div class="col">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">廠商 :</div>
+              <input type="text" class="form-control readonly_box" v-model="tab.itemVendorName" readonly>
+            </div>
+          </div>
+          <!-- 頁籤規格 -->
+          <div class="col">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                規格 :
+              </div>
+              <input type="text" class="form-control readonly_box" v-model="tab.itemProductSpec" readonly>
+            </div>
+          </div>
+          <!--頁籤型號 -->
+          <div class="col">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                型號 :
+              </div>
+              <input type="text" class="form-control readonly_box" v-model="tab.itemProductType" readonly>
+            </div>
+          </div>
+          <!-- 頁籤S/N -->
+          <div class="col">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">S/N :</div>
+              <input type="text" class="form-control readonly_box" v-model="tab.itemSN" readonly>
+            </div>
+          </div>
+          <!-- 頁籤 包裝數量 & 包裝單位 -->
+          <div class="row g-0 row_wrap">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+              <div class="input-group mb-3" id='number'>
+                <div class="input-group-prepend info  d-xl-block d-lg-block d-md-block d-none">
+                  <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">包裝數量 :
+                </div>
+                <div class="input-group-prepend info  d-xl-none d-lg-none d-md-none d-block">
+                  包裝數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
+                </div>
+                <input type="text" class="input-number readonly_box" v-model="tab.itemPackageNum" readonly>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+              <div class="input-group mb-3" id='unit'>
+                <div class="input-group-prepend">
+                  包裝單位 :
+                </div>
+                <input type="text" class="input-number readonly_box" v-model="tab.itemPackageUnit" readonly>
+              </div>
+            </div>
+          </div>
+          <!-- 頁籤 數量 & 單位 (only耗材) -->
+          <div class="row g-0 row_wrap">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+              <div class="input-group mb-3" id='number'>
+                <div class="input-group-prepend d-xl-block d-lg-block d-md-block d-none">
+                  <img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">數量 :
+                </div>
+                <div class="input-group-prepend d-xl-none d-lg-none d-md-none d-block">
+                  數量 :<img class="info_icon" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
+                </div>
+                <input type="text" class="input-number readonly_box" v-model="tab.itemCount" readonly>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+              <div class="input-group mb-3" id='unit'>
+                <div class="input-group-prepend">
+                  單位 :
+                </div>
+                <input type="text" class="input-number readonly_box" v-model="tab.itemUnit" readonly>
+              </div>
+            </div>
+          </div>
+          <!-- 頁籤保固期限 -->
+          <div class="row g-0">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  保固期限 :
+                </div>
+                <input type="text" class="form-control readonly_box" v-model="tab.itemWarranty" readonly>
+              </div>
+            </div>
+          </div>
+          <!-- 頁籤 保固 開始&結束 -->
+          <div class="row g-0">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">保固開始日 :</div>
+                <input type="text" class="form-control readonly_box" v-model="tab.itemWarrantyStartDate" readonly/>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">保固到期日 :</div>
+                <input type="text" class="form-control readonly_box" v-model="tab.itemWarrantyEndDate" readonly/>
+              </div>
+            </div>
+          </div>
+          <!-- 頁籤備註 -->
+          <div class="col">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">備註 :</div>
+              <textarea class="col readonly_box" rows="5" v-model="tab.itemMemo" readonly></textarea>
+            </div>
+          </div>
+          <!-- 頁籤上傳檔案部分 -->
+          <div class="col selected_file">
+            <div class="input-group">
+              <div class="input-group-prepend">已上傳檔案 :</div>
+              <div class='selected_file_wrap'>
+                <div v-for="(file , file_index) in tab.existFile" :key="fprepile_index" class="file_upload_wrap">
+                  <p>{{ file.FileName }}
+                    <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="viewImgFile(index , file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- view Modal -->
+      <div class="modal fade" id="viewFile_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">{{ modalParams.title }}</h5>
+              <p data-bs-dismiss="modal" class='close_icon' style="cursor: pointer;">X</p>
+            </div>
+            <img :src="modalParams.src" alt="Uploaded Image" class="w-100" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
-<script>
-import view_modal from "@/components/View_modal.vue"
-export default {
-    components: {
-        view_modal
-    }
-}
+<script setup>
+import view_modal from "@/components/view_modal.vue"
+
 </script>
 
 <style lang="scss" scoped>
