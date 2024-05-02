@@ -135,16 +135,16 @@
                   <div class="d-flex align-items-center radio_wrap">
                     <input type="radio" class='form-check-input check_box' id="radio1"
                       style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="資產"
-                      v-model="tab.itemAssetType" @change="storageStore.resetUnitCount('tab',index)" />
+                      v-model="tab.itemAssetType"/>
                     <label class="form-check-label check_box" for='radio1'>資產</label>
                     <input type="radio" class='form-check-input check_box ' id="radio2"
                       style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="存貨"
-                      v-model="tab.itemAssetType" @change="storageStore.resetUnitCount('tab',index)" />
+                      v-model="tab.itemAssetType"/>
                     <label class="form-check-label check_box" for='radio2' data-toggle="tooltip" data-placement="top"
                       title="註記此資產僅限特定專案出貨所使用">存貨</label>
                     <input type="radio" class='form-check-input check_box' id="radio3"
                       style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" value="耗材"
-                      v-model="tab.itemAssetType" />
+                      v-model="tab.itemAssetType" @change="storageStore.resetUnitCount('tab',index)"/>
                     <label class="form-check-label check_box" for='radio3'>耗材</label>
                   </div>
                 </div>
@@ -468,9 +468,17 @@ import { storeToRefs } from 'pinia';
             itemAssetType: '資產類型',
             itemEquipType_Id: '設備總類',
             itemCategory_Id: '設備分類',
+            itemArea_Id: '儲位區域',
+            itemLayer_Id: '儲位櫃位',
             itemAssetName: '物品名稱',
+            itemAssetsId: '資產編號',
             itemPackageUnit: '包裝單位',
-            itemPackageNum: '包裝數量',
+          }
+          if(tab.itemAssetType === '存貨') {
+            RequireCheckList.itemProjectCode = '專案代碼'
+          } else if(tab.itemAssetType === '耗材') {
+            RequireCheckList.itemCount = '數量'
+            RequireCheckList.itemUnit = '單位'
           }
           break;
       }
@@ -503,16 +511,15 @@ import { storeToRefs } from 'pinia';
       } catch (error) {
         console.error(error);
         InputErrorMessages += error;
-      } finally {
-        // 所有內容檢查完 若有不合格字串則alert並返回false
-        if(InputErrorMessages) {
-          alert(InputErrorMessages);
-          return false;
-        }
-        // 無不合格，返回true
-        return true;
       }
     }
+    // 所有內容檢查完 若有不合格字串則alert並返回false
+    if(InputErrorMessages) {
+      alert(InputErrorMessages);
+      return false;
+    }
+    // 無不合格，返回true
+    return true;
   }
   // 暫存
   async function temp() {
@@ -539,6 +546,7 @@ import { storeToRefs } from 'pinia';
   // 送出
   async function submit() {
     if(!await checkTabContent('submit')) return
+    return
     //若是新品入庫 檢查資產編號是否有重複
     if (Type.value === 0) {
       if(await storageStore.checkAssetsIdRepeat()) return;

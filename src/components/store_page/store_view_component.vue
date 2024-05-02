@@ -93,7 +93,7 @@
                 <div class="col form_search_wrap">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                          <span v-show="tab.itemAssetType === '存貨'">*</span>專案代碼 :
+                          專案代碼 :
                         </div>
                         <input type="text" class="form-control readonly_box" v-model="tab.itemProjectCode" readonly>
                     </div>
