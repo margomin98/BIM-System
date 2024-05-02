@@ -9,11 +9,21 @@ import _ from "lodash"
 export const useStorageStore = defineStore('Storage', {
 	// data
 	state: () => ({
-		// 隱藏欄位(這頁只有已上傳需要特別處理)
+		/**
+		 * 'new', 'edit'等協助判斷component v-show使用
+		 */
+		PageType: '',
+		/**
+		 * 隱藏欄位
+		 */
 		hidden: false,
-		// 入庫單類型: 0-新品, 1-歸還, 2-快速入庫
+		/**
+		 * 入庫單類型: 0-新品, 1-歸還, 2-快速入庫 (拿資料單時會更新)
+		 */
 		Type: 0,
-		// 下拉選單
+		/**
+		 * 下拉選單
+		 */
 		DropdownArray: {
 			ShipmentNum: [], //api原本資料
 			formShipmentNum: [], // 處理陣列
@@ -31,7 +41,9 @@ export const useStorageStore = defineStore('Storage', {
 			Unit: UnitArray,
 			PackageUnit: PackageUnitArray,
 		},
-		// 上方表格
+		/**
+		 * 資料單上方表單區域
+		 */
 		upperForm: {
 			Applicant: '',
 			ApplicationDate: '',
@@ -41,8 +53,14 @@ export const useStorageStore = defineStore('Storage', {
 			AR_ID: '',
 			AI_ID: '',
 			Memo: '',
+			DeliveryOperator: '',
+			DeliveryDate: '',
+			AssetsInOperator: '',
+			AssetsInDate: '',
 		},
-		// 中間填寫表格
+		/**
+		 * 資料單中間填寫區域[新增-填報、編輯]會用到。以及insertTab()
+		 */
 		middleForm: {
 			itemId: '', //編輯
 			itemAssetType: '',
@@ -70,6 +88,11 @@ export const useStorageStore = defineStore('Storage', {
 			viewFile: [],
 			deleteFile: [],
 			existFile:[],
+			// 檢視頁面使用
+			itemEquipTypeName: '',
+			itemEquipCategoryName: '',
+			itemAreaName: '',
+			itemLayerName: '',
 			// 快速入庫才有的欄位
 			AreaArray:[],
 			LayerArray:[],
@@ -81,13 +104,17 @@ export const useStorageStore = defineStore('Storage', {
 			itemArea_Id: '',
 			itemLayer_Id: '',
 		},
-		// 下方頁籤資料
+		/**
+		 * 頁籤內容
+		 */
 		tabData: [],
-		// 欲刪除的已存在頁籤數組
+		/**
+		 * 欲刪除的已存在頁籤數組
+		 */
 		deleteTab: [],
-		// 控制物流單號選單 boolean
-		showOptions: false,
-		// 字數上限(固定)
+		/**
+		 * 頁籤字數上限Object(固定)
+		 */
 		TabLetterCheckList: {
 			itemProjectCode: {field: '專案代碼', max: 10},
 			itemAssetName: {field: '物品名稱 ', max: 20},
@@ -98,6 +125,9 @@ export const useStorageStore = defineStore('Storage', {
 			itemWarranty: {field: '保固期限', max: 10},
 			itemMemo: {field: '備註', max: 500},
 		},
+		/**
+		 * 表單字數上限Object(固定)
+		 */
 		FormLetterCheckList: {
 			Memo: {field: '備註', max: 500},
 		},
@@ -145,16 +175,16 @@ export const useStorageStore = defineStore('Storage', {
 				if(!utilsStore.checkMaxLetter(newData,this.TabLetterCheckList)) return;
 			}
 			newData.EquipCategoryArray = await dropdownStore.getEquipCategory(newData.itemEquipType_Id);
-			if(isQuick) {
+			if(isQuick || newData.itemArea_Id) {
 				// 取得櫃位下拉
 				newData.LayerArray = await dropdownStore.getLayer(newData.itemArea_Id);
-				// 整理Vue MultiSelect option資訊
 			}
 			// 取得要增加的頁籤數量
 			const newTabCount = _.cloneDeep(newData.itemPackageNum);
 			// console.log('newData',newTabCount);
 			newData.itemPackageNum = 1;
 			for(let i = 0 ; i <  newTabCount ; i++) {
+				// 整理Vue MultiSelect option資訊
 				newData.itemProjectSelect.index = this.tabData ? this.tabData.length : 0;
 				newData.tabProjectCode = this.DropdownArray.ProjectCode.map(option =>({...option, index: this.tabData.length}))
 				this.tabData.push(_.cloneDeep(newData));
@@ -180,7 +210,11 @@ export const useStorageStore = defineStore('Storage', {
 				tabContents[index - 1].classList.add('show', 'active');
 			}
 		},
-		// 變更資產類型時reset單位、數量(表單、頁籤)
+		/**
+		 * 變更資產類型時reset單位、數量(表單、頁籤)
+		 * @param {string} type 'tab' or 'middleForm' 兩種
+		 * @param {number} index type為 'tab'時需要傳入index來重置
+		 */
 		resetUnitCount(type, index) {
 			switch (type) {
 				case 'middleForm':
@@ -191,8 +225,6 @@ export const useStorageStore = defineStore('Storage', {
 					this.tabData[index].itemUnit = '';
 					this.tabData[index].itemCount = 1;
 					break;
-				default:
-					break ;
 			}
 		},
 		// 變更入庫方式(for 新增快速入庫)時 reset參數
@@ -298,8 +330,8 @@ export const useStorageStore = defineStore('Storage', {
 							this.upperForm[key] = data.resultList[key];
 						}
 					})
-					console.log('upperForm',this.upperForm);
-					console.log('Tabs:',data.resultList);
+					// console.log('upperForm',this.upperForm);
+					console.log('入庫資料單',data.resultList);
 					// 塞入頁籤(資料本身就有existFile)
 					for (const tab of data.resultList.Tabs) {
 						let tempData = _.cloneDeep(this.middleForm);
@@ -313,7 +345,7 @@ export const useStorageStore = defineStore('Storage', {
 						});
 						const res = await this.insertTab(isQuick, tempData);
 					}
-					console.log('tab',this.tabData);
+					// console.log('tab',this.tabData);
 				}
 			}
 			catch(e) {
@@ -340,41 +372,42 @@ export const useStorageStore = defineStore('Storage', {
 				console.error(error);
 			}
 		},
-		// 檢查 1. itemAssetsId之間是否重複 2. itemAseetsId比對資料庫是否重複
+		/**
+		 * 檢查 1. itemAssetsId之間是否重複 2. itemAseetsId比對資料庫是否重複
+		 * @returns { boolean|Promise<boolean> } 有重複: true / 無重複: false
+		 */
 		async checkAssetsIdRepeat() {
-			let myForm = [];
-			for (let i = 0; i < this.tabData.length; i++) {
-				const form = this.tabData[i];
-				myForm.push(form.itemAssetsId);
-			}
-			console.log(myForm);
+			let assetsId_List = this.tabData.map((tab)=>{ return tab.itemAssetsId});
+			let listSet = new Set(assetsId_List);
 			//1.
-			let seen = {};
-			for (const value of myForm) {
-				if (seen[value]) {
-					alert('頁籤內資產編號不可重複，請再次確認資產編號欄位')
-					return false
-				}
-				seen[value] = true;
+			if(listSet.size !== assetsId_List.length) {
+				alert('頁籤內資產編號不可重複，請再次確認資產編號欄位');
+				return true;
 			}
 			//2.
-			const repeatForm = new FormData();
-			for (let i = 0; i < this.tabData.length; i++) {
-				repeatForm.append('assetsIds', myForm[i]);
+			const form = new FormData();
+			for (let i = 0; i < assetsId_List.length; i++) {
+				form.append('assetsIds', assetsId_List[i]);
 			}
-			const response = await axios.post('http://192.168.0.177:7008/GetDBdata/CheckAssetsInID', repeatForm);
 			try {
+				const response = await axios.post('http://192.168.0.177:7008/GetDBdata/CheckAssetsInID', form);
 				const data = response.data;
 				if (data.state === 'error') {
 					alert(data.messages);
-					return false;
+					return true;
 				}
 			} catch (error) {
 				console.error(error);
 			}
-			return true;
+			return false;
 		},
-		// 頁籤儲存 [填報-新增、編輯] [快速入庫-編輯] [入庫作業]
+		/**
+		 * 單個頁籤儲存 [填報-新增、編輯] [快速入庫-編輯] [入庫作業]
+		 * @param {*} itemId 頁籤的itemId(PK)
+		 * @param {*} tab 頁籤內容
+		 * @param {*} index 頁籤index
+		 * @returns {Promise<string>} 'success' or error_messages
+		 */
 		async sendImgForm(itemId, tab, index) {
 			const storageStore = useStorageStore();
 			return new Promise((resolve, reject) => {

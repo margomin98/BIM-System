@@ -61,214 +61,193 @@
               </div>
               <div class="d-flex align-items-center radio_wrap">
                 <template v-for="(item, index) in DropdownArray.AssetType" :key="'radio' + (index + 1)">
-                         <input
-                           type="radio"
-                           class="form-check-input check_box"
-                           :id="'radio' + (index + 1)"
-                           style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;"
-                           :value="item"
-                           v-model="middleForm.itemAssetType"
-                           @change="storageStore.resetUnitCount('middleForm')"
-                         />
-                         <label
-                           class="form-check-label check_box"
-                           :for="'radio' + (index + 1)"
-                           :data-toggle="index === 1 ? 'tooltip' : null"
-                           :data-placement="index === 1 ? 'top' : null"
-                           :title="index === 1 ? '註記此資產僅限特定專案出貨所使用' : null"
-                         >
-                         {{ item }}
-                         </label>
-</template>
-                   </div>
-               </div>
-           </div>
-       </div>
+                  <input type="radio" class="form-check-input check_box" :id="'radio' + (index + 1)" style="border-radius: 100%; width: 16px; height: 16px; margin-top: 0;" :value="item"
+                    v-model="middleForm.itemAssetType" @change="storageStore.resetUnitCount('middleForm')"/>
+                  <label class="form-check-label check_box" :for="'radio' + (index + 1)" :data-toggle="index === 1 ? 'tooltip' : null" :data-placement="index === 1 ? 'top' : null"
+                    :title="index === 1 ? '註記此資產僅限特定專案出貨所使用' : null">
+                    {{ item }}
+                  </label>
+                </template>
+              </div>
+            </div>
+          </div>
+        </div>
        <!-- 專案代碼 -->
-       <div class="col form_search_wrap">
-           <div class="input-group mb-3">
-               <div class="input-group-prepend">
-                 <span v-show="middleForm.itemAssetType === '存貨'">*</span>專案代碼 :
-               </div>
-               <input type="text" class="form-control" placeholder="最多輸入10字" v-model="middleForm.itemProjectCode">
-               <button class="form_search_btn" @click="async()=>{ middleForm.itemProjectName = await apiStore.getProject(middleForm.itemProjectCode)}">搜尋</button>
-           </div>
-       </div>
-       <!-- 專案名稱 -->
-       <div class="col">
-           <div class="input-group mb-3">
-               <div class="input-group-prepend">
-                 專案名稱 :
-               </div>
-               <input type="text" class="form-control readonly_box" v-model="middleForm.itemProjectName" readonly>
-           </div>
-       </div>
-       <!-- 設備 總類&分類 -->
-       <div class="row row_wrap g-0">
-         <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-           <div class="input-group mb-3">
-               <div class="input-group-prepend equipment_wrap">
-                 <span>*</span>設備總類 :
-               </div>
-               <div class="dropdown">
-                 <select class="form-select" id="floatingSelect" v-model="middleForm.itemEquipType_Id" @change="async()=>{DropdownArray.EquipCategory = await apiStore.getEquipCategory(middleForm.itemEquipType_Id); middleForm.itemCategory_Id = '';}">
-                   <option value="">--請選擇--</option>
-                   <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name }}</option>
-                 </select>
-               </div>
-           </div>
-         </div>
-         <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-           <div class="input-group mb-3">
-             <div class="input-group-prepend">
-               <span>*</span>設備分類 :
-             </div>
-             <div class="dropdown">
-               <select class="form-select" id="floatingSelect" v-model="middleForm.itemCategory_Id">
-                 <option v-if="DropdownArray.EquipCategory.length == 0" value="">--請先選擇設備總類--</option>
-<template v-else>
-  <option value="">
-    --請選擇--</option>
-  <option v-for="option in DropdownArray.EquipCategory" :value="option.Id">{{ option.Name }}</option>
-</template>
-               </select>
-             </div>
-           </div>
-         </div>
-       </div>
-       <!-- 物品名稱 -->
-       <div class="col">
-         <div class="input-group mb-3">
-             <div class="input-group-prepend">
-                 <span>*</span>物品名稱 :
-             </div>
-             <input type="text" class="form-control" placeholder="最多輸入20字" v-model="middleForm.itemAssetName">
-         </div>
-       </div>
-       <!-- 資產編號 -->
-       <div class="col">
-           <div class="input-group mb-3">
-               <div class="input-group-prepend">資產編號 :</div>
-               <input type="text" class="form-control" placeholder="BFXXXXXXXX" v-model="middleForm.itemAssetsId">
-           </div>
-       </div>
-       <!-- 廠商 -->
-       <div class="col">
-           <div class="input-group mb-3">
-               <div class="input-group-prepend">
-                   廠商 :
-               </div>
-               <input type="text" class="form-control" placeholder="最多輸入100字" v-model="middleForm.itemVendorName">
-           </div>
-       </div>
-       <!-- 規格 -->
-       <div class="col">
-           <div class="input-group mb-3">
-               <div class="input-group-prepend">
-                   規格 :
-               </div>
-               <input type="text" class="form-control" placeholder="最多輸入100字" v-model="middleForm.itemProductSpec">
-           </div>
-       </div>
-       <!-- 型號 -->
-       <div class="col">
-           <div class="input-group mb-3">
-               <div class="input-group-prepend">
-                   型號 :
-               </div>
-               <input type="text" class="form-control" placeholder="最多輸入100字" v-model="middleForm.itemProductType">
-           </div>
-       </div>
-       <!-- S/N -->
-       <div class="col">
-           <div class="input-group mb-3">
-               <div class="input-group-prepend">S/N :</div>
-               <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="middleForm.itemSN">
-           </div>
-       </div>
-       <!-- 採購金額 -->
-       <div class="row  purchase_amount ">
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                        <div class="input-group mb-xl-3 mb-lg-3 mb-md-3">
-                            <div class="input-group-prepend">
-                                採購金額 :
-                            </div>
-                            <div class="amount_input">
-                                <span class="symbol">$</span>
-                                <input type="number" class="form-control"  v-model="middleForm.itemPrice"> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                        <span class="note">/每包裝單位<span v-show="middleForm.itemAssetType==='耗材'">($<span class="purchase_total_amount">{{ (middleForm.itemPrice / middleForm.itemCount).toFixed(2) }}</span>/每單位)</span>
-                        </span>
-                    </div>
-                </div>
-       <!-- 包裝數量 & 包裝單位 -->
-       <div class="row g-0 row_wrap">
-           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-               <div class="input-group mb-3" id='number'>
-                   <div class="input-group-prepend info  ">
-                     <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
-                     <span>*</span>包裝數量 :<img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
-                   </div>
-                   <input class="input-number" type="number" min="1" v-model="middleForm.itemPackageNum">
-               </div>
-           </div>
-           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-               <div class="input-group mb-3" id='unit'>
-                   <div class="input-group-prepend">
-                       <span>*</span>包裝單位 :
-                   </div>
-                   <div class="dropdown">
-                     <select class="form-select" id="floatingSelect" v-model="middleForm.itemPackageUnit">
-                       <option value="">--請選擇--</option>
-                       <option v-for="option in DropdownArray.PackageUnit" :value="option">{{ option }}</option>
-                     </select>
-                   </div>
-               </div>
-           </div>
-       </div>
-       <!-- 數量 & 單位 (only耗材) -->
-       <div class="row g-0 row_wrap">
-           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-               <div class="input-group mb-3" id='number'>
-                   <div class="input-group-prepend">
-                     <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘">
-                     <span v-show="middleForm.itemAssetType === '耗材'">*</span>數量 :
-                     <img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘">
-                   </div>
-                   <input v-if="middleForm.itemAssetType === '耗材'" class="input-number" type="number" v-model="middleForm.itemCount" min="1">
-                   <input v-else class="input-number readonly_box" type="number" v-model="middleForm.itemCount" min="1" readonly>
-               </div>
-           </div>
-           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-               <div class="input-group mb-3" id='unit'>
-                   <div class="input-group-prepend">
-                     <span v-show="middleForm.itemAssetType === '耗材'">*</span>單位 :
-                   </div>
-                   <div v-if="middleForm.itemAssetType === '耗材'" class="dropdown">
-                     <select class="form-select" id="floatingSelect" v-model="middleForm.itemUnit">
-                       <option value="">--請選擇--</option>
-                       <option v-for="option in DropdownArray.Unit" :value="option">{{ option }}</option>
-                     </select>
-                   </div>
-                   <input v-else class="input-number readonly_box" type="text" v-model="middleForm.itemPackageUnit" min="1" readonly>
-               </div>
-           </div>
-       </div>
-       <!-- 備註 -->
-       <div class="col">
-           <div class="input-group mb-3">
-               <div class="input-group-prepend">
-                   備註 :
-               </div>
-               <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="middleForm.itemMemo"></textarea>
-           </div>
-       </div>
-       <div class="d-flex justify-content-center">
-           <button class="send_btn" @click="storageStore.insertTab()">新增</button>
-       </div>
+        <div class="col form_search_wrap">
+          <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span v-show="middleForm.itemAssetType === '存貨'">*</span>專案代碼 :
+              </div>
+              <input type="text" class="form-control" placeholder="最多輸入10字" v-model="middleForm.itemProjectCode">
+              <button class="form_search_btn" @click="async()=>{ middleForm.itemProjectName = await apiStore.getProject(middleForm.itemProjectCode)}">搜尋</button>
+          </div>
+        </div>
+        <!-- 專案名稱 -->
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              專案名稱 :
+            </div>
+            <input type="text" class="form-control readonly_box" v-model="middleForm.itemProjectName" readonly>
+          </div>
+        </div>
+        <!-- 設備 總類&分類 -->
+        <div class="row row_wrap g-0">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend equipment_wrap">
+                <span>*</span>設備總類 :
+              </div>
+              <div class="dropdown">
+                <select class="form-select" id="floatingSelect" v-model="middleForm.itemEquipType_Id" @change="async()=>{DropdownArray.EquipCategory = await apiStore.getEquipCategory(middleForm.itemEquipType_Id); middleForm.itemCategory_Id = '';}">
+                  <option value="">--請選擇--</option>
+                  <option v-for="option in DropdownArray.EquipType" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span>*</span>設備分類 :
+              </div>
+              <div class="dropdown">
+                <select class="form-select" id="floatingSelect" v-model="middleForm.itemCategory_Id">
+                  <option v-if="DropdownArray.EquipCategory.length == 0" value="">--請先選擇設備總類--</option>
+                  <template v-else>
+                    <option value="">--請選擇--</option>
+                    <option v-for="option in DropdownArray.EquipCategory" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
+                  </template>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 物品名稱 -->
+        <div class="col">
+          <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                  <span>*</span>物品名稱 :
+              </div>
+              <input type="text" class="form-control" placeholder="最多輸入20字" v-model="middleForm.itemAssetName">
+          </div>
+        </div>
+        <!-- 資產編號 -->
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">資產編號 :</div>
+            <input type="text" class="form-control" placeholder="BFXXXXXXXX" v-model="middleForm.itemAssetsId">
+          </div>
+        </div>
+        <!-- 廠商 -->
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">廠商 :</div>
+            <input type="text" class="form-control" placeholder="最多輸入100字" v-model="middleForm.itemVendorName">
+          </div>
+        </div>
+        <!-- 規格 -->
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">規格 :</div>
+            <input type="text" class="form-control" placeholder="最多輸入100字" v-model="middleForm.itemProductSpec">
+          </div>
+        </div>
+        <!-- 型號 -->
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">型號 :</div>
+            <input type="text" class="form-control" placeholder="最多輸入100字" v-model="middleForm.itemProductType">
+          </div>
+        </div>
+        <!-- S/N -->
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">S/N :</div>
+            <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="middleForm.itemSN">
+          </div>
+        </div>
+        <!-- 採購金額 -->
+        <div class="row  purchase_amount ">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-xl-3 mb-lg-3 mb-md-3">
+              <div class="input-group-prepend">採購金額 :</div>
+              <div class="amount_input">
+                <span class="symbol">$</span>
+                <input type="number" class="form-control"  v-model="middleForm.itemPrice"> 
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <span class="note">
+              /每包裝單位
+              <span v-show="middleForm.itemAssetType==='耗材'">($<span class="purchase_total_amount">{{ (middleForm.itemPrice / middleForm.itemCount).toFixed(2) }}</span>/每單位)</span>
+            </span>
+          </div>
+        </div>
+        <!-- 包裝數量 & 包裝單位 -->
+        <div class="row g-0 row_wrap">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3" id='number'>
+              <div class="input-group-prepend info  ">
+                <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
+                <span>*</span>包裝數量 :<img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
+              </div>
+              <input class="input-number" type="number" min="1" v-model="middleForm.itemPackageNum">
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3" id='unit'>
+              <div class="input-group-prepend">
+                <span>*</span>包裝單位 :
+              </div>
+              <div class="dropdown">
+                <select class="form-select" id="floatingSelect" v-model="middleForm.itemPackageUnit">
+                  <option value="">--請選擇--</option>
+                  <option v-for="option in DropdownArray.PackageUnit" :key="option" :value="option">{{ option }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 數量 & 單位 (only耗材) -->
+        <div class="row g-0 row_wrap">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3" id='number'>
+              <div class="input-group-prepend">
+                <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘">
+                <span v-show="middleForm.itemAssetType === '耗材'">*</span>數量 :
+                <img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block" src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘">
+              </div>
+              <input v-if="middleForm.itemAssetType === '耗材'" class="input-number" type="number" v-model="middleForm.itemCount" min="1">
+              <input v-else class="input-number readonly_box" type="number" v-model="middleForm.itemCount" min="1" readonly>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+            <div class="input-group mb-3" id='unit'>
+              <div class="input-group-prepend">
+                <span v-show="middleForm.itemAssetType === '耗材'">*</span>單位 :
+              </div>
+              <div v-if="middleForm.itemAssetType === '耗材'" class="dropdown">
+                <select class="form-select" id="floatingSelect" v-model="middleForm.itemUnit">
+                  <option value="">--請選擇--</option>
+                  <option v-for="option in DropdownArray.Unit" :key="option" :value="option">{{ option }}</option>
+                </select>
+              </div>
+              <input v-else class="input-number readonly_box" type="text" v-model="middleForm.itemPackageUnit" min="1" readonly>
+            </div>
+          </div>
+        </div>
+        <!-- 備註 -->
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">備註 :</div>
+            <textarea style="height: 200px;" class="form-control" aria-label="With textarea" placeholder="最多輸入500字" v-model="middleForm.itemMemo"></textarea>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <button class="send_btn" @click="storageStore.insertTab()">新增</button>
+        </div>
       </div>
       <!-- 頁籤部分 -->
       <div v-show="tabData.length > 0" class="tab_section mt-5">
@@ -328,7 +307,7 @@
                               <div class="dropdown">
                                 <select class="form-select" id="floatingSelect" v-model="tab.itemEquipType_Id" @change="async()=>{tab.EquipCategoryArray = await apiStore.getEquipCategory(tab.itemEquipType_Id); tab.itemCategory_Id = '';}">
                                   <option value="">--請選擇--</option>
-                                  <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name }}</option>
+                                  <option v-for="option in DropdownArray.EquipType" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
                                 </select>
                               </div>
                           </div>
@@ -342,9 +321,8 @@
                                 <select class="form-select" id="floatingSelect" v-model="tab.itemCategory_Id">
                                   <option v-if="tab.EquipCategoryArray.length == 0" value="">--請先選擇設備總類--</option>
                                   <template v-else>
-                                    <option value="">
-                                      --請選擇--</option>
-                                    <option v-for="option in tab.EquipCategoryArray" :value="option.Id">{{ option.Name }}</option>
+                                    <option value="">--請選擇--</option>
+                                    <option v-for="option in tab.EquipCategoryArray" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
                                   </template>
                                 </select>
                               </div>
@@ -355,7 +333,7 @@
                   <div class="col">
                       <div class="input-group mb-3">
                           <div class="input-group-prepend"><span>*</span>物品名稱 :</div>
-                          <input type="text" class="form-control" placeholder="最多輸入20字" v-model="tab.itemAssetName">
+                          <input type="text" class="form-control" placeholder="最多輸入20字" maxlength="20" v-model="tab.itemAssetName">
                       </div>
                   </div>
                   <!-- 頁籤資產編號 -->
@@ -371,7 +349,7 @@
                           <div class="input-group-prepend">
                               廠商 :
                           </div>
-                          <input type="text" class="form-control" placeholder="最多輸入100字" v-model="tab.itemVendorName">
+                          <input type="text" class="form-control" placeholder="最多輸入100字" maxlength="100" v-model="tab.itemVendorName">
                       </div>
                   </div>
                   <!-- 頁籤規格 -->
@@ -380,7 +358,7 @@
                           <div class="input-group-prepend">
                               規格 :
                           </div>
-                          <input type="text" class="form-control" placeholder="最多輸入100字" v-model="tab.itemProductSpec">
+                          <input type="text" class="form-control" placeholder="最多輸入100字" maxlength="100" v-model="tab.itemProductSpec">
                       </div>
                   </div>
                   <!--頁籤型號 -->
@@ -389,14 +367,14 @@
                           <div class="input-group-prepend">
                               型號 :
                           </div>
-                          <input type="text" class="form-control" placeholder="最多輸入100字" v-model="tab.itemProductType">
+                          <input type="text" class="form-control" placeholder="最多輸入100字" maxlength="100" v-model="tab.itemProductType">
                       </div>
                   </div>
                   <!-- 頁籤S/N -->
                   <div class="col">
                       <div class="input-group mb-3">
                           <div class="input-group-prepend">S/N :</div>
-                          <input type="text" class="form-control" aria-label="Default" placeholder="最多輸入100字" v-model="tab.itemSN">
+                          <input type="text" class="form-control" placeholder="最多輸入100字" maxlength="100" v-model="tab.itemSN">
                       </div>
                   </div>
                   <!-- 頁籤選購金額 -->
@@ -437,7 +415,7 @@
                               <div class="dropdown">
                                 <select class="form-select" id="floatingSelect" v-model="tab.itemPackageUnit">
                                   <option value="">--請選擇--</option>
-                                  <option v-for="option in DropdownArray.PackageUnit" :value="option">{{ option }}</option>
+                                  <option v-for="option in DropdownArray.PackageUnit" :key="option" :value="option">{{ option }}</option>
                                 </select>
                               </div>
                           </div>
@@ -467,7 +445,7 @@
                                 <div v-if="tab.itemAssetType === '耗材'" class="dropdown">
                                   <select class="form-select" id="floatingSelect" v-model="tab.itemUnit">
                                     <option value="">--請選擇--</option>
-                                    <option v-for="option in DropdownArray.Unit" :value="option">{{ option }}</option>
+                                    <option v-for="option in DropdownArray.Unit" :key="option" :value="option">{{ option }}</option>
                                   </select>
                                 </div>
                                 <input v-else class="form-select readonly_box" type="text" v-model="tab.itemPackageUnit" min="1" readonly>
@@ -481,7 +459,7 @@
                   <div class="col">
                       <div class="input-group mb-3">
                           <div class="input-group-prepend">備註 :</div>
-                          <textarea class="col" rows="5" placeholder="最多輸入500字"  v-model="tab.itemMemo"></textarea>
+                          <textarea class="col" rows="5" placeholder="最多輸入500字" maxlength="500" v-model="tab.itemMemo"></textarea>
                       </div>
                   </div>
                   <!-- 頁籤上傳檔案部分 -->
@@ -490,8 +468,7 @@
                           <div class="input-group-prepend">資產照片 :</div>
                           <div class="file_wrap">
                             <button class='choose_btn' @click="storageStore.chooseFile(index)">選擇檔案</button>
-                            <input type="file" accept="image/*"  style="display: none;" multiple 
-                            @change="utilsStore.handleImgChange($event, tab)" />
+                            <input type="file" accept="image/*"  style="display: none;" multiple @change="utilsStore.handleImgChange($event, tab)" />
                           </div>
                       </div>
                   </div>
@@ -502,7 +479,7 @@
                           <div class="store_new_file">
                             <div v-for="(file , file_index) in tab.viewFile" :key="file_index" class="file_upload_wrap">
                               <p>{{ file.FileName }}
-                                <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="utilsStore.viewImgFile(file, file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+                                <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="utilsStore.viewImgFile(file)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
                                 <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="utilsStore.deleteImgFile('new', tab, file_index)">
                               </p>
                             </div>
@@ -516,7 +493,7 @@
                       <div class="store_new_file">
                         <div v-for="(file , file_index) in tab.existFile" :key="file_index" class="file_upload_wrap">
                           <p>{{ file.FileName }}
-                            <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="utilsStore.viewImgFile(file, file_index)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
+                            <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="utilsStore.viewImgFile(file)" data-bs-toggle="modal" data-bs-target="#viewFile_modal">
                             <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="utilsStore.deleteImgFile('exist', tab, file_index)"></p>
                         </div>
                       </div>
@@ -526,8 +503,8 @@
           </div>
       </div>
         <view_modal/>
-       </div>
-     </div>
+    </div>
+  </div>
 </template>
    
 <script setup>

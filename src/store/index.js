@@ -87,17 +87,33 @@ export const useUtilsStore = defineStore('Utils',{
       form.append('sort',datagrid.sortField);
       form.append('order',order);
     },
-    // 檢查頁籤必填
+    /**
+     * 檢查單個頁籤必填
+     * @param {object} tab 頁籤內容
+     * @param {object} checkList {"key1": "name1", "key2": "name2"}
+     * @param {number} index tab index
+     * @returns {string} 頁籤必填的不合格字串
+     */
     checkTabRequired(tab = {}, checkList = {}, index) {
       let ErrorMessages = '';
       for(const key in checkList) {
-        if(!tab[key]) {
+        if(Array.isArray(tab[key]) && tab[key].length === 0) {
           ErrorMessages += `頁籤${index+1} :　${checkList[key]}必填\n`;
+        } else { 
+          if(!tab[key]) {
+            ErrorMessages += `頁籤${index+1} :　${checkList[key]}必填\n`;
+          }
         }
       }
       return ErrorMessages ;
     },
-    // 檢查頁籤字數上限
+    /**
+     * 檢查單個頁籤字數上限
+     * @param {object} tab 頁籤內容
+     * @param {object} maxLengthList {"key1": {"field1": "name1", max: maxLength }}
+     * @param {number} index tab index
+     * @returns {string} 頁籤字數上限的不合格字串
+     */
     checkTabMaxLetter(tab = {}, maxLengthList = {}, index) {
       let ErrorMessages = '';
       for(const key in maxLengthList) {
@@ -630,7 +646,7 @@ export const useAPIStore = defineStore('API',{
       }
     },
     /**
-     * 檢查專案代碼是否與資料庫重複
+     * 檢查專案代碼是否有效
      * @param {Array} projectCodeList 要檢查的專案代碼Array
      * @returns {Promise<string>} "success" | error_message
      */   
@@ -656,7 +672,6 @@ export const useAPIStore = defineStore('API',{
      * @returns {Promise<Array<{Text: string, Value: string}>>} 返回物流單號列表Array
      */   
     async getShipmentNum(ShipmentNum = '') {
-      const axios = require('axios');
       const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchShipmentNum?id=${ShipmentNum}`);
       try {
         let data = response.data;
