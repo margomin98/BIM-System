@@ -220,8 +220,7 @@
                       </template>
                     </select>
                   </div>
-                  <button v-show="tab.itemLayerName" class="apply_btn" data-bs-toggle="modal" data-bs-target="#apply_storage_modal" @click="updateIndex(index)">套用儲位</button>
-                  <!-- <input type="text" class="form-control " aria-label="Default" aria-describedby="inputGroup-sizing-default" /> -->
+                  <button v-show="tab.itemLayer_Id" class="apply_btn" data-bs-toggle="modal" data-bs-target="#apply_storage_modal" @click="updateIndex(index)">套用儲位</button>
                 </div>
               </div>
             </div>
@@ -546,7 +545,6 @@ import { storeToRefs } from 'pinia';
   // 送出
   async function submit() {
     if(!await checkTabContent('submit')) return
-    return
     //若是新品入庫 檢查資產編號是否有重複
     if (Type.value === 0) {
       if(await storageStore.checkAssetsIdRepeat()) return;
