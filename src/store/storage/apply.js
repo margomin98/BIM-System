@@ -13,7 +13,10 @@ export const useApplyStore = defineStore('Apply', {
 	}),
 	// method
 	actions: {
-		// 檢查表單內容
+		/**
+		 * 檢查表單內容
+		 * @returns {boolean} true: 通過 / false: 不通過
+		 */
 		checkFormContent() {
 			const utilsStore = useUtilsStore();
 			const storageStore = useStorageStore();
@@ -21,7 +24,10 @@ export const useApplyStore = defineStore('Apply', {
 			if(!utilsStore.checkMaxLetter(storageStore.upperForm, storageStore.FormLetterCheckList)) return false;
 			return true ;
 		},
-		// 檢查頁籤內容
+		/**
+		 * 檢查頁籤內容
+		 * @returns {boolean} true: 通過 / false: 不通過
+		 */
 		checkTabContent() {
 			const utilsStore = useUtilsStore();
 			const storageStore = useStorageStore();
@@ -60,7 +66,10 @@ export const useApplyStore = defineStore('Apply', {
 			}
 			return true;
 		},
-		// 送出表單(create: 新增, edit: 編輯)
+		/**
+		 * 送出表單(先傳送非頁籤部分，再依序傳送頁籤)
+		 * @param {string} type 'create' [填報-新增] or 'edit' [填報-編輯]
+		 */
 		async submit(type) {
 			const apiStore = useAPIStore();
 			const storageStore = useStorageStore();
@@ -127,6 +136,11 @@ export const useApplyStore = defineStore('Apply', {
 				alert(error);
 			}
 		},
+		/**
+		 * 送出非頁籤部分的表單
+		 * @param {string} type 'create' or 'edit'
+		 * @returns {Promise<object>|string} 回傳有itemId的Array {AI_ID: "", Tabs: number[]} or error_message string
+		 */
 		async sendUpperForm(type) {
 			const storageStore = useStorageStore();
 			return new Promise((resolve, reject) => {

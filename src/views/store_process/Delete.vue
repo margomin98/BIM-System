@@ -11,33 +11,20 @@
       <button class="back_btn" @click="goBack">回上一頁</button>
       <button class="delete_btn" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>
     </div>
-    <div class="modal fade delete_modal" id="deleteModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-          <div class="modal-body">
-            確定刪除這筆項目嗎？
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">否</button>
-            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" @click="deleteData">是</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <delete_modal @delete="storageStore.deleteData(AI_ID)"></delete_modal>
   </div>
 </template>
 
 <script setup>
 import storage_process_view from '@/components/store_process_page/storage_process_view_component.vue';
+import delete_modal from '@/components/utils/delete_modal.vue';
 import Navbar from '@/components/Navbar.vue';
 import { useStorageStore } from '@/store/storage/_index'
 import { useAPIStore, useUtilsStore } from '@/store';
-import { useApplyStore } from '@/store/storage/apply'
 import { onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
 const storageStore = useStorageStore();
-const applyStore = useApplyStore();
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();
 const { PageType } = storeToRefs(storageStore);
@@ -45,15 +32,13 @@ const { PageType } = storeToRefs(storageStore);
 const route = useRoute();
 const AI_ID = route.query.search_id ;
 onMounted(async()=>{
-  PageType.value = 'delete';
-  applyStore.$reset();
   storageStore.$reset();
+  PageType.value = 'delete';
   await storageStore.getDetails(AI_ID, false);
 })
 onUnmounted(()=>{
   utilsStore.$dispose();
   storageStore.$dispose();
-  applyStore.$dispose();
   apiStore.$dispose();
 })
 </script>

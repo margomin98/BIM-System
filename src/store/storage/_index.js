@@ -138,8 +138,16 @@ export const useStorageStore = defineStore('Storage', {
 	},
 	// method
 	actions: {
-		// 插入頁籤(以及取得每個頁籤所需下拉)
+		/**
+		 * 插入頁籤並取得每個頁籤所需下拉(設備分類 or 儲位櫃位)。
+		 * @param {boolean} isQuick 是否為快速入庫，影響"檢查的欄位"和"需取得的下拉選單"
+		 * @param {object} detailsData getDetails()讀取進來的資料，影響newData為 "detailsData" or "middleForm"
+		 * @returns 
+		 */
 		async insertTab(isQuick = false, detailsData) {
+			// 插入頁籤會有 1. 快速入庫 or 一般入庫 2. 資料為 讀取插入 or 填寫插入 共4種情況
+			// 填寫欄位新增的資料會在middleForm，getDetails()讀取的資料會放在 detailsData參數欄位。
+			// 讀取插入不用檢查欄位
 			const dropdownStore = useAPIStore();
 			const utilsStore = useUtilsStore();
 			// 檢查必填 & 字數
@@ -175,8 +183,8 @@ export const useStorageStore = defineStore('Storage', {
 				if(!utilsStore.checkMaxLetter(newData,this.TabLetterCheckList)) return;
 			}
 			newData.EquipCategoryArray = await dropdownStore.getEquipCategory(newData.itemEquipType_Id);
+			// [快速入庫-編輯]、[入庫作業-入庫]取得櫃位下拉
 			if(isQuick || newData.itemArea_Id) {
-				// 取得櫃位下拉
 				newData.LayerArray = await dropdownStore.getLayer(newData.itemArea_Id);
 			}
 			// 取得要增加的頁籤數量
@@ -192,7 +200,10 @@ export const useStorageStore = defineStore('Storage', {
 			// console.log(this.tabData);
 			this.clear();
 		},
-		// 刪除頁籤
+		/**
+		 * 刪除頁籤
+		 * @param {number} index 
+		 */
 		deleteTabFn(index) {
 			// 將已存在頁籤加入deleteTab中(編輯)
 			if(this.tabData[index].itemId) {
@@ -227,7 +238,11 @@ export const useStorageStore = defineStore('Storage', {
 					break;
 			}
 		},
-		// 變更入庫方式(for 新增快速入庫)時 reset參數
+		/**
+		 * [快速入庫-新增]變更入庫方式時 reset參數
+		 * @param {string} type 'tab' or 'middleForm' 兩種
+		 * @param {number} index type為 'tab'時需要傳入index來重置
+		 */
 		changeInboundWay(type,index) {
 			switch (type) {
 				case 'middleForm':
@@ -247,7 +262,9 @@ export const useStorageStore = defineStore('Storage', {
 			}
 
 		},
-		// 新增頁籤後清除表單資料
+		/**
+		 * 新增頁籤後清除表單資料
+		 */
 		clear() {
 			for (const key in this.middleForm) {
 				const type = typeof this.middleForm[key]
@@ -260,7 +277,10 @@ export const useStorageStore = defineStore('Storage', {
 			this.middleForm.itemProjectSelect = { Text: '--請選擇--',Value: '' };
 			this.DropdownArray.EquipCategory = [];
 		},
-		// 查看收貨單(如果有)
+		/**
+		 * 查看收貨單(如果有formParams.AR_ID)則取得 #view-recieve按鈕並click()
+		 * @param {object} formParams 
+		 */
 		viewReceive(formParams) {
 			if (formParams.AR_ID) {
 				const link = document.getElementById('view-receive');
@@ -268,7 +288,10 @@ export const useStorageStore = defineStore('Storage', {
 			}
 		},
 		// ----圖片相關function
-		// 選擇檔案
+		/**
+		 * 選擇檔案
+		 * @param {number} index 第index個頁籤的input file
+		 */
 		chooseFile(index) {
 			const fileInput = document.querySelectorAll('input[type="file"]')[index];
 			fileInput.click();
@@ -304,7 +327,14 @@ export const useStorageStore = defineStore('Storage', {
 				this.upperForm.ShipmentSelect = {};
 			} 
 		},
-		// 取得入庫填報資料(單號, 是否為快速入庫, 檢查狀態是否可以進入頁面, 是否需要檢查權限)
+		/**
+		 * 取得入庫填報資料(如果有提供Conditions => 檢查資料單狀態是否可進入頁面)
+		 * @param {string} AI_ID 單號
+		 * @param {boolean} isQuick 是否為快速入庫
+		 * @param {string[]} Conditions 可進入頁面的Status array
+		 * @param {boolean} needCheckRole 是否需要檢查權限
+		 * @returns 
+		 */
 		async getDetails(AI_ID, isQuick = false, Conditions = null, needCheckRole =false) {
 			const utilsStore = useUtilsStore()
 			try {
@@ -352,7 +382,10 @@ export const useStorageStore = defineStore('Storage', {
 				console.error(e);
 			}
 		},
-		// 刪除此單
+		/**
+		 * 刪除入庫單
+		 * @param {string} AI_ID 
+		 */
 		async deleteData(AI_ID) {
 			const form = new FormData();
 			form.append('AI_ID', AI_ID);
@@ -457,7 +490,11 @@ export const useStorageStore = defineStore('Storage', {
 					});
 			});
 		},
-		// 入庫
+		/**
+		 * 入庫，將資料單轉狀態
+		 * @param {string} AI_ID 資料單單號
+		 * @param {boolean} isQuick true: [快速入庫-新增] / false: [入庫作業-入庫]
+		 */
 		async FinishStorageProcess(AI_ID = '', isQuick = false) {
 			const utilsStore = useUtilsStore();
 			const form = new FormData();
