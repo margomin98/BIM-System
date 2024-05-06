@@ -12,7 +12,7 @@
             <p>狀態</p>
             <select class="form-select" v-model="dgSearchParams.Status">
               <option value="">--請選擇--</option>
-              <option v-for="option in DropdownArray.Status" :value="option">{{ option }}</option>
+              <option v-for="option in DropdownArray.Status" :key="option" :value="option">{{ option }}</option>
             </select>
           </div>
           <!-- 設備總類 -->
@@ -21,7 +21,7 @@
             <select class="form-select" v-model="dgSearchParams.EquipType_Id"
               @change="async () => { DropdownArray.EquipCategory = await apiStore.getEquipCategory(dgSearchParams.EquipType_Id); dgSearchParams.Category_Id = ''; }">
               <option value="">--請選擇--</option>
-              <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name }}</option>
+              <option v-for="option in DropdownArray.EquipType" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
             </select>
           </div>
           <!-- 設備分類 -->
@@ -31,7 +31,7 @@
               <option v-if="DropdownArray.EquipCategory.length == 0" value="">--請先選擇設備總類--</option>
               <template v-else>
                 <option value="">--請選擇--</option>
-                <option v-for="option in DropdownArray.EquipCategory" :value="option.Id">{{ option.Name }}</option>
+                <option v-for="option in DropdownArray.EquipCategory" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
               </template>
             </select>
           </div>
@@ -41,7 +41,7 @@
             <select class="form-select" v-model="dgSearchParams.Area_Id"
               @change="async () => { DropdownArray.Layer = await apiStore.getLayer(dgSearchParams.Area_Id); dgSearchParams.Layer_Id = ''; }">
               <option value="">--請選擇--</option>
-              <option v-for="option in DropdownArray.Area" :value="option.Id">{{ option.Name }}</option>
+              <option v-for="option in DropdownArray.Area" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
             </select>
           </div>
           <!-- 儲位櫃位 -->
@@ -52,7 +52,7 @@
               <template v-else>
                 <option value="">
                   --請選擇--</option>
-                <option v-for="option in DropdownArray.Layer" :value="option.Id">{{ option.Name }}</option>
+                <option v-for="option in DropdownArray.Layer" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
               </template>
             </select>
           </div>
@@ -146,7 +146,7 @@
             <Assets_return_button :params="slotProps" />
           </template>
         </Column>
-        <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable
+        <Column v-for="item in datagridfield" :key="item.field" :field="item.field" :header="item.header" sortable
           :style="{ 'min-width': item.width }"></Column>
       </DataTable>
     </div>
@@ -180,12 +180,14 @@ import Assets_return_button from "@/components/Assets_return_button";
 import Navbar from "@/components/Navbar.vue";
 import { onMounted, reactive, ref, onUnmounted } from "vue";
 import { Asset_StastusArray } from "@/assets/js/dropdown"
-import { useUtilsStore, useAPIStore } from '@/store'
+import { useUtilsStore, useAPIStore, useTempSearchStore } from '@/store'
 import { storeToRefs } from 'pinia';
 import axios from 'axios'
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();
+const tempSearchStore = useTempSearchStore();
 const { dgSearchParams , dg , dgRowData } = storeToRefs(utilsStore);
+const { tempData, tempDg } = storeToRefs(tempSearchStore);
 
 const searchParams = reactive({
   EquipType_Id: '',
@@ -236,8 +238,19 @@ onMounted(async () => {
   for(const key in searchParams) {
     dgSearchParams.value[key] = '';
   }
-  dg.value.sortField = 'AssetsId'
-  submit('', 'search');
+  dg.value.sortField = 'AssetsId';
+  // if tempData & tempDg
+  if(tempData.value) {
+    dgSearchParams.value = tempData.value;
+    console.log('dgSearchParams.value.EquipType_Id',dgSearchParams.value.EquipType_Id);
+    if(dgSearchParams.value.EquipType_Id) DropdownArray.EquipCategory = await apiStore.getEquipCategory(dgSearchParams.value.EquipType_Id);
+    if(dgSearchParams.value.Area_Id) DropdownArray.Layer = await apiStore.getEquipCategory(dgSearchParams.value.Area_Id);
+  }
+  if(tempDg.value) {
+    dg.value = tempDg.value;
+  }
+  // console.log('dg.value', dg.value);
+  submit('', '');
   DropdownArray.EquipType = await apiStore.getEquipType();
   DropdownArray.Area = await apiStore.getArea();
   DropdownArray.Staff = await apiStore.getCustodian();
@@ -255,10 +268,14 @@ onUnmounted(()=>{
       }
     }
     utilsStore.UpdatePageParameter(dg.value, event, type, form);
+    // update pinia tempSearch
+    tempData.value = dgSearchParams.value ;
     const resultList = await apiStore.getMngDatagrid('/InventoryMng/Assets', dg.value, form);
     dgRowData.value = resultList.rows;
     dg.value.totalRecords = resultList.total;
     dg.value.key++;
+    tempDg.value = dg.value;
+    // console.log('tempDg.value', tempDg.value);
   }
   async function importExcel(event) {
     const selectedFile = event.target.files[0];

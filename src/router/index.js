@@ -152,6 +152,8 @@ import Authorized from "../views/Authorized";
 
 import axios from "axios";
 import { getApplication } from "@/assets/js/common_api";
+import { useTempSearchStore } from "@/store";
+
 const routes = [
   {
     path: "/test",
@@ -728,8 +730,20 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+router.beforeEach((to, from, next)=>{
+  const TempSearchStore = useTempSearchStore();
+  if (to.name !== 'Assets_Edit' && to.name !== 'Assets_View' && to.name !== 'Assets_Datagrid') {
+    TempSearchStore.$reset();
+  }
+  next();
+})
 
 // router.beforeEach(async (to, from, next) => {
+//   const TempSearchStore = useTempSearchStore();
+//   if (to.name !== 'Assets_Edit' && to.name !== 'Assets_View' && to.name !== 'Assets_Datagrid') {
+//     TempSearchStore.$reset();
+//   }
+//   next();
 //   if (to.meta.auth) {
 //     try {
 //       const request = to.meta.request
