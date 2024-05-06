@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "postbuild": "powershell.exe -File ./ERP_modify.ps1",
     "postinstall": "patch-package"
   },
   "dependencies": {

@@ -585,7 +585,7 @@ export const useAPIStore = defineStore('API',{
     },
     /**
      * 取得員工列表-Not Enabled (包括已離職員工)
-     * @returns {string[]} 返回員工列表Array
+     * @returns {Promise<string[]>} 返回員工列表Array
      */
     async getStaff() {
       try {
@@ -889,4 +889,16 @@ export const useAPIStore = defineStore('API',{
     },
 
   }
+})
+export const useTempSearchStore = defineStore('TempSearch',{
+  state: () => ({
+    /**
+     * 暫存的Datagrid 檢索條件
+     */
+    tempData: null,
+    /**
+     * datagrid object 包含頁數、總筆數等
+     */
+    tempDg: null,
+  }),
 })
