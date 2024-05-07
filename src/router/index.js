@@ -743,13 +743,11 @@ router.beforeEach((to, from, next)=>{
 //   if (to.name !== 'Assets_Edit' && to.name !== 'Assets_View' && to.name !== 'Assets_Datagrid') {
 //     TempSearchStore.$reset();
 //   }
-//   next();
 //   if (to.meta.auth) {
 //     try {
 //       const request = to.meta.request
 //       const response = await axios.get(`/GetParameter/HasPermission?id=${request}`);
 //       const data = response.data;
-
 //       if (data.state === 'success') {
 //         if(data.resultList === true) {
 //           next();
