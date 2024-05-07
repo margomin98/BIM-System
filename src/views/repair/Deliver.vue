@@ -263,7 +263,7 @@ export default {
     });
     // 取得單筆資料
     async function getDetails() {
-      axios.get(`http://192.168.0.177:7008/GetDBdata/GetRepairInfo?r_id=${RepairId}`)
+      axios.get(`http://192.168.0.117:7008/GetDBdata/GetRepairInfo?r_id=${RepairId}`)
         .then((response) => {
           const data = response.data;
           if (data.state === 'success') {
@@ -294,7 +294,7 @@ export default {
           formData.append(fieldName, formFields[fieldName]);
           console.log(formData.get(`${fieldName}`));
         }
-        const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
+        const response = await axios.post('http://192.168.0.117:7008/Account/IdentityValidation', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -324,7 +324,7 @@ export default {
           formData.append(fieldName, formFields[fieldName]);
           console.log(formData.get(`${fieldName}`));
         }
-        const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
+        const response = await axios.post('http://192.168.0.117:7008/Account/IdentityValidation', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -360,7 +360,7 @@ export default {
         DeliveryOperator: validation.value.user1.resultName,
         RepairPerson: validation.value.user2.resultName,
       }
-      axios.post('http://192.168.0.177:7008/RepairMng/Delivery', requestData)
+      axios.post('http://192.168.0.117:7008/RepairMng/Delivery', requestData)
         .then((response) => {
           const data = response.data
           if (data.state === 'success') {

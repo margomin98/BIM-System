@@ -436,7 +436,7 @@ export default {
         form.append('ProductName', searchParams.ProductName);
         form.append('AssetList', JSON.stringify(formParams.AssetList));
         UpdatePageParameter(datagrid, event, type, form);
-        const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/SearchInventory', form);
+        const response = await axios.post('http://192.168.0.117:7008/IntegrationMng/SearchInventory', form);
         const data = response.data;
         if (data.state === 'success') {
           // 取得資料
@@ -485,7 +485,7 @@ export default {
           requestData[keyname] = formParams[keyname]
         }
       }
-      const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/Integrate', requestData);
+      const response = await axios.post('http://192.168.0.117:7008/IntegrationMng/Integrate', requestData);
       const data = response.data;
       try {
         console.log(data);
@@ -526,7 +526,7 @@ export default {
       const repeatForm = new FormData();
       repeatForm.append('assetsIds', formParams.IntegrationId);
       const axios = require('axios');
-      const response = await axios.post('http://192.168.0.177:7008/GetDBdata/CheckAssetsInID', repeatForm);
+      const response = await axios.post('http://192.168.0.117:7008/GetDBdata/CheckAssetsInID', repeatForm);
       try {
         const data = response.data;
         if (data.state === 'error') {

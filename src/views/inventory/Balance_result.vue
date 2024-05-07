@@ -391,7 +391,7 @@
   async function getDetails() {
     const axios = require('axios');
     try {
-      const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetInventoryResult?id=${IP_ID}`);
+      const response = await axios.get(`http://192.168.0.117:7008/GetDBdata/GetInventoryResult?id=${IP_ID}`);
       const data = response.data;
       if (data.state === 'success') {
         // 檢查資料狀態是否可編輯
@@ -425,7 +425,7 @@
     }
     UpdatePageParameter(datagrid2,event,type,form)
     try {
-      const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryResult', form);
+      const response = await axios.post('http://192.168.0.117:7008/StocktakingMng/InventoryResult', form);
       const data = response.data;
       if (data.state === 'success') {
         console.log('下半部datagrid\n', data.resultList);

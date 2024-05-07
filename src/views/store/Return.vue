@@ -132,7 +132,7 @@ export default {
     }
     async function getApplicationInfo() {
       try {
-        const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
+        const response = await axios.get('http://192.168.0.117:7008/GetDBdata/GetApplicant');
         const data = response.data;
         if (data.state === 'success') {
           console.log('申請人名稱:', data.resultList.Applicant);
@@ -165,7 +165,7 @@ export default {
           Count: formParams.Count,
           Memo: formParams.Memo,
         };
-        const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/OldAssetsIn', requestData);
+        const response = await axios.post('http://192.168.0.117:7008/AssetsInMng/OldAssetsIn', requestData);
         console.log(response);
         const data = response.data;
         if (data.state === 'success') {
@@ -187,7 +187,7 @@ export default {
     }
     watch(() => formParams.AssetsId, async (newValue, oldValue) => {
       try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetAssetInfo?id=${newValue}`);
+        const response = await axios.get(`http://192.168.0.117:7008/GetDBdata/GetAssetInfo?id=${newValue}`);
         const data = response.data;
         if (data.state === 'success') {
           console.log('資產資料', data.resultList);

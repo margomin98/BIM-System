@@ -145,14 +145,14 @@ export const useApplyStore = defineStore('Apply', {
 			const storageStore = useStorageStore();
 			return new Promise((resolve, reject) => {
 				const form = new FormData();
-				let url = 'http://192.168.0.177:7008/AssetsInMng/NewAssetsIn'
+				let url = 'http://192.168.0.117:7008/AssetsInMng/NewAssetsIn'
 				if(type === 'edit') {
 					// 入庫單號
 					form.append('AI_ID',storageStore.upperForm.AI_ID);
 					storageStore.deleteTab.forEach(itemId=>{
 						form.append('deleteTab', itemId);
 					})
-					url = 'http://192.168.0.177:7008/AssetsInMng/ApplicationEdit'
+					url = 'http://192.168.0.117:7008/AssetsInMng/ApplicationEdit'
 				}
 				form.append('AR_ID', storageStore.upperForm.AR_ID);
 				form.append('tab_count', storageStore.tabData.length);

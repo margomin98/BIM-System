@@ -126,7 +126,7 @@
   async function logout() {
     const axios = require('axios');
     try {
-      const response = await axios.post('http://192.168.0.177:7008/Account/LogOff');
+      const response = await axios.post('http://192.168.0.117:7008/Account/LogOff');
       if (response.status === 200) {
         //登出成功，跳轉至首頁
         router.push('/');

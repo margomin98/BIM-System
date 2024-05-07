@@ -78,7 +78,7 @@ function setData() {
 async function deleteData() {
   const form = new FormData();
   form.append('AO_ID', AO_ID);
-  const response = await axios.post(`http://192.168.0.177:7008/AssetsOutMng/ApplicationDelete`, form);
+  const response = await axios.post(`http://192.168.0.117:7008/AssetsOutMng/ApplicationDelete`, form);
   try {
     const data = response.data;
     if (data.state === 'success') {

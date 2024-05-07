@@ -310,7 +310,7 @@
       });
       // 取得單筆資料
       async function getDetails() {
-        axios.get(`http://192.168.0.177:7008/GetDBdata/GetRepairInfo?r_id=${RepairId}`)
+        axios.get(`http://192.168.0.117:7008/GetDBdata/GetRepairInfo?r_id=${RepairId}`)
           .then((response) => {
             const data = response.data;
             if (data.state === 'success') {
@@ -424,7 +424,7 @@
             }
           }
           console.log('上半部資料(含刪除):\n', msg);
-          axios.post('http://192.168.0.177:7008/RepairMng/SendingForRepair', form)
+          axios.post('http://192.168.0.117:7008/RepairMng/SendingForRepair', form)
             .then(response => {
               const data = response.data;
               if (data.state === 'success') {
@@ -448,7 +448,7 @@
           form.append('num', index);
           form.append('Document', fileData);
           const axios = require('axios');
-          axios.post('http://192.168.0.177:7008/RepairMng/UploadDoc', form)
+          axios.post('http://192.168.0.117:7008/RepairMng/UploadDoc', form)
             .then((response) => {
               const data = response.data;
               if (data.state === 'success') {

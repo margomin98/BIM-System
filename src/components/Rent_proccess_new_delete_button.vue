@@ -22,7 +22,7 @@ export default {
         OM_Number: props.params.data.OM_Number,
       }
       try {
-        const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/AddToInventory', requestData);
+        const response = await axios.post('http://192.168.0.117:7008/AssetsOutMng/AddToInventory', requestData);
         const data = response.data;
         if (data.state === 'success') {
           console.log('刪除暫存結果:' + data);

@@ -109,7 +109,7 @@
           form.append(key, formParams[key]);
         }
       }
-      axios.post('http://192.168.0.177:7008/PurchasingMng/CreateOrder', form)
+      axios.post('http://192.168.0.117:7008/PurchasingMng/CreateOrder', form)
         .then(response => {
           const data = response.data;
           if (data.state === 'success') {
@@ -132,7 +132,7 @@
           form.append('num', index);
           form.append('Document', file);
           const axios = require('axios');
-          axios.post('http://192.168.0.177:7008/PurchasingMng/UploadFile', form)
+          axios.post('http://192.168.0.117:7008/PurchasingMng/UploadFile', form)
             .then((response) => {
               const data = response.data;
               if (data.state === 'success') {

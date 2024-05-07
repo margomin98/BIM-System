@@ -55,7 +55,7 @@ async function submit() {
   };
   console.log('requestData:', requestData);
   try {
-    const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/NewAssetsOut', requestData);
+    const response = await axios.post('http://192.168.0.117:7008/AssetsOutMng/NewAssetsOut', requestData);
     const data = response.data;
     if (data.state === 'success') {
       let msg = data.messages + '\n';

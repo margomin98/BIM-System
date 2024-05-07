@@ -223,7 +223,7 @@ export const useRentStore = defineStore('Rent', {
 		async getDetails(AO_ID, Conditions = []) {
 			const utilsStore = useUtilsStore();
 			try {
-				const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`)
+				const response = await axios.get(`http://192.168.0.117:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`)
 				const data = response.data ;
 				if(data.state === 'success') {
 					if(Conditions.length > 0) {

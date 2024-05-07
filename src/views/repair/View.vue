@@ -273,7 +273,7 @@
       });
       // 取得單筆資料
       async function getDetails() {
-        axios.get(`http://192.168.0.177:7008/GetDBdata/GetRepairInfo?r_id=${RepairId}`)
+        axios.get(`http://192.168.0.117:7008/GetDBdata/GetRepairInfo?r_id=${RepairId}`)
           .then((response) => {
             const data = response.data;
             if (data.state === 'success') {

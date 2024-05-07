@@ -96,7 +96,7 @@
       })
       async function getDetails() {
         try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetSystemLog?id=${ID}`);
+          const response = await axios.get(`http://192.168.0.117:7008/GetDBdata/GetSystemLog?id=${ID}`);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {

@@ -159,7 +159,7 @@ export default {
       getHistory('', 'search');
     });
     async function getDetails() {
-      const baseUrl = 'http://192.168.0.177:7008'
+      const baseUrl = 'http://192.168.0.117:7008'
       let apiUrl = ''
       apiUrl += baseUrl + '/GetDBdata/GetIntegrationBoxInfo?id=' + `${IntegrationId}`
       try {

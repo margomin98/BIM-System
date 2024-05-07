@@ -242,7 +242,7 @@ const submitOrder = async (type) => {
         form.append('RequisitionItems', item);
     }
     try {
-        const response = await axios.post('http://192.168.0.177:7008/PurchasingMng' + url, form);
+        const response = await axios.post('http://192.168.0.117:7008/PurchasingMng' + url, form);
         const data = response.data;
         if (data.state === 'success') {
             // 成功reset & refresh表格
@@ -275,7 +275,7 @@ const submit = async () => {
     form.append('PurchasePerson', user.resultName);
     form.append('Memo', Form.value.PurchaseMemo);
     try {
-        const response = await axios.post('http://192.168.0.177:7008/PurchasingMng/PurchaseConfirmed', form);
+        const response = await axios.post('http://192.168.0.117:7008/PurchasingMng/PurchaseConfirmed', form);
         const data = response.data;
         if (data.state === 'success') {
             alert(data.messages + '\n' + data.resultList.PP_ID);

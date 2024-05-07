@@ -475,7 +475,7 @@ export default {
       }
       console.log('requestData:', requestData);
       try {
-        const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/BalanceAsset', requestData);
+        const response = await axios.post('http://192.168.0.117:7008/StocktakingMng/BalanceAsset', requestData);
         const data = response.data;
         if (data.state === 'success') {
           let msg = data.messages;
@@ -506,7 +506,7 @@ export default {
       for (const fieldName in formFields) {
         formData.append(fieldName, formFields[fieldName]);
       }
-      const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData);
+      const response = await axios.post('http://192.168.0.117:7008/Account/IdentityValidation', formData);
       try {
         const data = response.data;
         console.log(data);
@@ -526,7 +526,7 @@ export default {
     async function getDetails() {
       const axios = require('axios');
       try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetInventoryResult?id=${IP_ID}`);
+        const response = await axios.get(`http://192.168.0.117:7008/GetDBdata/GetInventoryResult?id=${IP_ID}`);
         const data = response.data;
         if (data.state === 'success') {
           // 檢查資料狀態是否可平帳
@@ -560,7 +560,7 @@ export default {
       }
       UpdatePageParameter(datagrid2, event, type, form)
       try {
-        const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryResult', form);
+        const response = await axios.post('http://192.168.0.117:7008/StocktakingMng/InventoryResult', form);
         const data = response.data;
         if (data.state === 'success') {
           console.log('下半部datagrid\n', data.resultList);

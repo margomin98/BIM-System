@@ -95,7 +95,7 @@ async function deleteData() {
   const form = new FormData();
   form.append('PO_ID', PO_ID);
   try {
-    const response = await axios.post(`http://192.168.0.177:7008/PurchasingMng/DeleteOrder`, form);
+    const response = await axios.post(`http://192.168.0.117:7008/PurchasingMng/DeleteOrder`, form);
     const data = response.data;
     if (data.state === 'success') {
       alert(data.messages + '\n單號:' + data.resultList.PO_ID);

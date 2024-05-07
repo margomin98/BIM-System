@@ -61,7 +61,7 @@
   })
   const getDetails = async()=>{
     try {
-      const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/PurchasingGetData?po_id=${PO_ID}`);
+      const response = await axios.get(`http://192.168.0.117:7008/GetDBdata/PurchasingGetData?po_id=${PO_ID}`);
       const data = response.data ; 
       details.value = data.resultList;
       for(const key in details.value) {
@@ -145,7 +145,7 @@
           form.append('deleteDocument', fileName);
         })
       }
-      axios.post('http://192.168.0.177:7008/PurchasingMng/EditOrder', form)
+      axios.post('http://192.168.0.117:7008/PurchasingMng/EditOrder', form)
         .then(response => {
           const data = response.data;
           if (data.state === 'success') {
@@ -169,7 +169,7 @@
           form.append('num', index);
           form.append('Document', file);
           const axios = require('axios');
-          axios.post('http://192.168.0.177:7008/PurchasingMng/UploadFile', form)
+          axios.post('http://192.168.0.117:7008/PurchasingMng/UploadFile', form)
             .then((response) => {
               const data = response.data;
               if (data.state === 'success') {

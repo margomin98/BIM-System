@@ -208,7 +208,7 @@ export default {
     async function getDetails() {
       const axios = require('axios');
       try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetInventoryPlanInfo?id=${IP_ID}`);
+        const response = await axios.get(`http://192.168.0.117:7008/GetDBdata/GetInventoryPlanInfo?id=${IP_ID}`);
         const data = response.data;
         if (data.state === 'success') {
           console.log('Details Get成功 資料如下\n', data.resultList);
@@ -237,7 +237,7 @@ export default {
         }
       }
       UpdatePageParameter(datagrid, event, type, form)
-      axios.post('http://192.168.0.177:7008/StocktakingMng/RangeOfPlan', form)
+      axios.post('http://192.168.0.117:7008/StocktakingMng/RangeOfPlan', form)
         .then((response) => {
           const data = response.data
           if (data.state === 'success') {

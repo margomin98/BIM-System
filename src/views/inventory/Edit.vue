@@ -395,7 +395,7 @@ watch,
       async function getDetails() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetInventoryPlanInfo?id=${IP_ID}`);
+          const response = await axios.get(`http://192.168.0.117:7008/GetDBdata/GetInventoryPlanInfo?id=${IP_ID}`);
           const data = response.data;
           if (data.state === 'success') {
             // 檢查資料狀態是否可編輯
@@ -453,7 +453,7 @@ watch,
         }
         console.log('requestData:', requestData);
         try {
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/EditPlan', requestData);
+          const response = await axios.post('http://192.168.0.117:7008/StocktakingMng/EditPlan', requestData);
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages;
@@ -500,7 +500,7 @@ watch,
         UpdatePageParameter(datagrid1, event, type, form)
         const axios = require('axios');
         try {
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/SearchInventory', form);
+          const response = await axios.post('http://192.168.0.117:7008/StocktakingMng/SearchInventory', form);
           const data = response.data;
           if (data.state === 'success') {
             console.log('搜尋結果', data.resultList);
@@ -535,7 +535,7 @@ watch,
           }
         }
         UpdatePageParameter(datagrid2, event, type, form)
-        axios.post('http://192.168.0.177:7008/StocktakingMng/RangeOfPlan', form)
+        axios.post('http://192.168.0.117:7008/StocktakingMng/RangeOfPlan', form)
           .then((response) => {
             const data = response.data
             if (data.state === 'success') {
@@ -659,7 +659,7 @@ watch,
               form.append('AssetList', item)
             }
           }
-          axios.post('http://192.168.0.177:7008/StocktakingMng/SelectAllGrid', form)
+          axios.post('http://192.168.0.117:7008/StocktakingMng/SelectAllGrid', form)
             .then((response) => {
               const data = response.data
               if (data.state === 'success') {

@@ -775,7 +775,7 @@ router.beforeEach((to, from, next)=>{
 //     if(to.meta.checkLogin) {
 //       // 檢查是否有登入
 //       try {
-//         const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
+//         const response = await axios.get('http://192.168.0.117:7008/GetDBdata/GetApplicant');
 //         const data = response.data;
 //         if (data.state === 'success') {
 //           next();

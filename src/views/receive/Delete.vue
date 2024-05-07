@@ -199,7 +199,7 @@
       async function getDetails() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/ReceivingGetData?ar_id=${AR_ID}`);
+          const response = await axios.get(`http://192.168.0.117:7008/GetDBdata/ReceivingGetData?ar_id=${AR_ID}`);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -229,7 +229,7 @@
         const form = new FormData();
         form.append('AR_ID', AR_ID);
         const axios = require('axios');
-        const response = await axios.post(`http://192.168.0.177:7008/ReceivingMng/DeleteReceipt`, form);
+        const response = await axios.post(`http://192.168.0.117:7008/ReceivingMng/DeleteReceipt`, form);
         try {
           const data = response.data;
           if (data.state === 'success') {

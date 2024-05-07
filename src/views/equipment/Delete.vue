@@ -174,7 +174,7 @@ export default {
       getHistory('', 'search');
     });
     async function getDetails() {
-      const baseUrl = 'http://192.168.0.177:7008'
+      const baseUrl = 'http://192.168.0.117:7008'
       let apiUrl = ''
       apiUrl += baseUrl + '/GetDBdata/GetIntegrationBoxInfo?id=' + `${IntegrationId}`
       try {
@@ -204,7 +204,7 @@ export default {
     async function deleteData() {
       const form = new FormData();
       form.append('IntegrationId', IntegrationId);
-      const response = await axios.post(`http://192.168.0.177:7008/IntegrationMng/IntegrationDelete`, form);
+      const response = await axios.post(`http://192.168.0.117:7008/IntegrationMng/IntegrationDelete`, form);
       try {
         const data = response.data;
         if (data.state === 'success') {

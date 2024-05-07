@@ -297,7 +297,7 @@
       });
       // 取得單筆資料
       async function getDetails() {
-        axios.get(`http://192.168.0.177:7008/GetDBdata/GetRepairInfo?r_id=${RepairId}`)
+        axios.get(`http://192.168.0.117:7008/GetDBdata/GetRepairInfo?r_id=${RepairId}`)
           .then((response) => {
             const data = response.data;
             if (data.state === 'success') {
@@ -319,7 +319,7 @@
         const form = new FormData();
         form.append('RepairId', RepairId);
         const axios = require('axios');
-        const response = await axios.post(`http://192.168.0.177:7008/RepairMng/DeleteReceipt`, form);
+        const response = await axios.post(`http://192.168.0.117:7008/RepairMng/DeleteReceipt`, form);
         try {
           const data = response.data;
           if (data.state === 'success') {

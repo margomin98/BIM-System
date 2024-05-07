@@ -303,7 +303,7 @@
       async function confirmItem() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.177:7008/StocktakingMng/GetSystemInventoryItems?id=${IP_ID}`);
+          const response = await axios.get(`http://192.168.0.117:7008/StocktakingMng/GetSystemInventoryItems?id=${IP_ID}`);
           const data = response.data;
           if (data.state === 'success') {
             console.log(data.messages);
@@ -324,7 +324,7 @@
       async function getDetails() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetInventoryResult?id=${IP_ID}`);
+          const response = await axios.get(`http://192.168.0.117:7008/GetDBdata/GetInventoryResult?id=${IP_ID}`);
           const data = response.data;
           if (data.state === 'success') {
             // 檢查資料狀態是否可編盤點
@@ -356,7 +356,7 @@
         form.append('PlanId', IP_ID)
         UpdatePageParameter(datagrid1, event, type, form)
         try {
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/PlanItems', form);
+          const response = await axios.post('http://192.168.0.117:7008/StocktakingMng/PlanItems', form);
           const data = response.data;
           if (data.state === 'success') {
             console.log('下半部datagrid 資料如下\n', data.resultList);
@@ -392,7 +392,7 @@
             requestData[keyname] = inventoryParams[keyname]
         }
         console.log('單項盤點requestData:', requestData);
-        const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/TakeInventory', requestData);
+        const response = await axios.post('http://192.168.0.117:7008/StocktakingMng/TakeInventory', requestData);
         const data = response.data;
         try {
           console.log(data);
@@ -417,7 +417,7 @@
         console.log('submit requestData', requestData);
         try {
           const axios = require('axios');
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryCompleted', requestData);
+          const response = await axios.post('http://192.168.0.117:7008/StocktakingMng/InventoryCompleted', requestData);
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages + '\n';

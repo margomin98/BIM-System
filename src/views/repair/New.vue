@@ -193,7 +193,7 @@ export default {
       for (let i = 0; i < formParams.newFile.length; i++) {
         form.append('newFile', formParams.newFile[i]);
       }
-      axios.post('http://192.168.0.177:7008/RepairMng/CreateOrder', form)
+      axios.post('http://192.168.0.117:7008/RepairMng/CreateOrder', form)
         .then((response) => {
           const data = response.data;
           if (data.state === 'success') {

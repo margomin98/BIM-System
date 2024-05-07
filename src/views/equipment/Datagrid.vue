@@ -183,7 +183,7 @@ export default {
       for (const key in searchParams) {
         form.append(key, searchParams[key]);
       }
-      axios.post('http://192.168.0.177:7008/IntegrationMng/ExportExcel', form, {
+      axios.post('http://192.168.0.117:7008/IntegrationMng/ExportExcel', form, {
         responseType: 'blob',
       })
         .then((response) => {

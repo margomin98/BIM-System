@@ -83,7 +83,7 @@ export const useQuickRentStore = defineStore('QuickRent', {
         return
       }
       try {
-        const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/ExpressAssetsOut',rentStore.Form);
+        const response = await axios.post('http://192.168.0.117:7008/AssetsOutMng/ExpressAssetsOut',rentStore.Form);
         const data = response.data ; 
         if(data.state === 'success') {
           alert(`${data.messages}\n單號:${data.resultList.AO_ID}`);

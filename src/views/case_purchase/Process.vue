@@ -402,7 +402,7 @@ const submit = async (isDone) => {
     }
     console.log('requestData', requestData);
     try {
-        const response = await axios.post('http://192.168.0.177:7008/PurchasingMng/ItemsWriteOff', requestData);
+        const response = await axios.post('http://192.168.0.117:7008/PurchasingMng/ItemsWriteOff', requestData);
         const data = response.data;
         if (data.state === 'success') {
             alert(data.messages + '\n單號: ' + data.resultList.PP_ID);

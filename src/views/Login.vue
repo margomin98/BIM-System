@@ -63,7 +63,7 @@
         const axios = require('axios');
         try {
           const token = await getToken();
-          const response = await axios.post('http://192.168.0.177:7008/Account/Login', form,{
+          const response = await axios.post('http://192.168.0.117:7008/Account/Login', form,{
             withCredentials: true,
             headers:{
               'RequestVerificationToken': token,
@@ -86,7 +86,7 @@
       }
       async function checkCookieIsExist() {
         try {
-          const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
+          const response = await axios.get('http://192.168.0.117:7008/GetDBdata/GetApplicant');
           const data = response.data;
           if (data.state === 'success') {
             console.log('申請人名稱:', data.resultList.Applicant);
@@ -98,7 +98,7 @@
       }
       const getToken = () => {
         return new Promise((resolve, reject) => {
-          axios.post('http://192.168.0.177:7008/Manage/GetAntiForgeryToken')
+          axios.post('http://192.168.0.117:7008/Manage/GetAntiForgeryToken')
             .then((r) => {
               console.log(r.data);
               resolve(r.data);

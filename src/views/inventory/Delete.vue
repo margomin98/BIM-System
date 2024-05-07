@@ -228,7 +228,7 @@ export default {
       const form = new FormData();
       form.append('PlanId', IP_ID);
       const axios = require('axios');
-      const response = await axios.post(`http://192.168.0.177:7008/StocktakingMng/DeletePlan`, form);
+      const response = await axios.post(`http://192.168.0.117:7008/StocktakingMng/DeletePlan`, form);
       try {
         const data = response.data;
         if (data.state === 'success') {
@@ -249,7 +249,7 @@ export default {
     async function getDetails() {
       const axios = require('axios');
       try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetInventoryPlanInfo?id=${IP_ID}`);
+        const response = await axios.get(`http://192.168.0.117:7008/GetDBdata/GetInventoryPlanInfo?id=${IP_ID}`);
         const data = response.data;
         if (data.state === 'success') {
           // canEnterPage(data.resultList.Status, Inventory_Delete_Status);
@@ -279,7 +279,7 @@ export default {
         }
       }
       UpdatePageParameter(datagrid, event, type, form)
-      axios.post('http://192.168.0.177:7008/StocktakingMng/RangeOfPlan', form)
+      axios.post('http://192.168.0.117:7008/StocktakingMng/RangeOfPlan', form)
         .then((response) => {
           const data = response.data
           if (data.state === 'success') {

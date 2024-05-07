@@ -338,7 +338,7 @@ export const useStorageStore = defineStore('Storage', {
 		async getDetails(AI_ID, isQuick = false, Conditions = null, needCheckRole =false) {
 			const utilsStore = useUtilsStore()
 			try {
-				const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`)
+				const response = await axios.get(`http://192.168.0.117:7008/GetDBdata/AssetsInGetData?ai_id=${AI_ID}`)
 				const data = response.data ;
 				if(data.state === 'success') {
 					if(Conditions) {
@@ -390,7 +390,7 @@ export const useStorageStore = defineStore('Storage', {
 			const form = new FormData();
 			form.append('AI_ID', AI_ID);
 			try {
-				const response = await axios.post(`http://192.168.0.177:7008/AssetsInMng/ApplicationDelete`, form);
+				const response = await axios.post(`http://192.168.0.117:7008/AssetsInMng/ApplicationDelete`, form);
 				const data = response.data;
 				if (data.state === 'success') {
 					let msg = data.messages + '\n單號:'+ data.resultList.AI_ID;
@@ -423,7 +423,7 @@ export const useStorageStore = defineStore('Storage', {
 				form.append('assetsIds', assetsId_List[i]);
 			}
 			try {
-				const response = await axios.post('http://192.168.0.177:7008/GetDBdata/CheckAssetsInID', form);
+				const response = await axios.post('http://192.168.0.117:7008/GetDBdata/CheckAssetsInID', form);
 				const data = response.data;
 				if (data.state === 'error') {
 					alert(data.messages);
@@ -475,7 +475,7 @@ export const useStorageStore = defineStore('Storage', {
 				for (let i = 0; i < tab.deleteFile.length; i++) {
 					form.append('deleteFile', tab.deleteFile[i]);
 				}
-				axios.post('http://192.168.0.177:7008/AssetsInMng/ItemEdit', form)
+				axios.post('http://192.168.0.117:7008/AssetsInMng/ItemEdit', form)
 					.then((response) => {
 						const data = response.data;
 						if (data.state === 'success') {
@@ -499,7 +499,7 @@ export const useStorageStore = defineStore('Storage', {
 			const utilsStore = useUtilsStore();
 			const form = new FormData();
 			form.append('AI_ID', AI_ID);
-			axios.post('http://192.168.0.177:7008/AssetsInMng/AssetsIn', form)
+			axios.post('http://192.168.0.117:7008/AssetsInMng/AssetsIn', form)
 				.then((response) => {
 					utilsStore.isLoading = false;
 					const data = response.data

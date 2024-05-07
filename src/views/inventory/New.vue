@@ -425,7 +425,7 @@ export default {
       }
       console.log('requestData:', requestData);
       try {
-        const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/CreatePlan', requestData);
+        const response = await axios.post('http://192.168.0.117:7008/StocktakingMng/CreatePlan', requestData);
         const data = response.data;
         console.log(data);
         if (data.state === 'success') {
@@ -473,7 +473,7 @@ export default {
       UpdatePageParameter(datagrid1, event, type, form)
       const axios = require('axios');
       try {
-        const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/SearchInventory', form);
+        const response = await axios.post('http://192.168.0.117:7008/StocktakingMng/SearchInventory', form);
         const data = response.data;
         if (data.state === 'success') {
           console.log('搜尋結果', data.resultList);
@@ -507,7 +507,7 @@ export default {
         }
       }
       UpdatePageParameter(datagrid2, event, type, form)
-      axios.post('http://192.168.0.177:7008/StocktakingMng/RangeOfPlan', form)
+      axios.post('http://192.168.0.117:7008/StocktakingMng/RangeOfPlan', form)
         .then((response) => {
           const data = response.data
           if (data.state === 'success') {
@@ -648,7 +648,7 @@ export default {
             form.append('AssetList', item)
           }
         }
-        axios.post('http://192.168.0.177:7008/StocktakingMng/SelectAllGrid', form)
+        axios.post('http://192.168.0.117:7008/StocktakingMng/SelectAllGrid', form)
           .then((response) => {
             const data = response.data
             if (data.state === 'success') {

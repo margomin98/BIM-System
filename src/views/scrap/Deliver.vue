@@ -302,7 +302,7 @@ export default {
       deliveryDate.value = getDate();
     });
     async function getDetails() {
-      axios.get(`http://192.168.0.177:7008/GetDBdata/GetScrapInfo?s_id=${ScrapId}`)
+      axios.get(`http://192.168.0.117:7008/GetDBdata/GetScrapInfo?s_id=${ScrapId}`)
         .then((response) => {
           const data = response.data
           if (data.state === 'success') {
@@ -343,7 +343,7 @@ export default {
           console.log(formData.get(`${fieldName}`));
         }
         try {
-          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
+          const response = await axios.post('http://192.168.0.117:7008/Account/IdentityValidation', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
@@ -373,7 +373,7 @@ export default {
           console.log(formData.get(`${fieldName}`));
         }
         try {
-          const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData, {
+          const response = await axios.post('http://192.168.0.117:7008/Account/IdentityValidation', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
@@ -408,7 +408,7 @@ export default {
         DeliveryOperator: validation.value.user1.resultName,
         ScrapPerson: validation.value.user2.resultName,
       }
-      axios.post('http://192.168.0.177:7008/ScrapMng/Delivery', requestData)
+      axios.post('http://192.168.0.117:7008/ScrapMng/Delivery', requestData)
         .then((response) => {
           const data = response.data
           if (data.state === 'success') {

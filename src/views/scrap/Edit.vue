@@ -231,7 +231,7 @@
         getDetails()
       });
       async function getDetails() {
-        axios.get(`http://192.168.0.177:7008/GetDBdata/GetScrapInfo?s_id=${ScrapId}`)
+        axios.get(`http://192.168.0.117:7008/GetDBdata/GetScrapInfo?s_id=${ScrapId}`)
           .then((response) => {
             const data = response.data
             if (data.state === 'success') {
@@ -299,7 +299,7 @@
         for (let i = 0; i < formParams.deleteFile.length; i++) {
           form.append('deleteFile', formParams.deleteFile[i]);
         }
-        axios.post('http://192.168.0.177:7008/ScrapMng/ScrapEdit', form)
+        axios.post('http://192.168.0.117:7008/ScrapMng/ScrapEdit', form)
           .then((response) => {
             const data = response.data;
             if (data.state === 'success') {
