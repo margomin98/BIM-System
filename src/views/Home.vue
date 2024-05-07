@@ -919,7 +919,7 @@ const submit = async (type = '', event, action = '') => {
 }
 const getAlertMsg = async () => {
   try {
-    const response = await axios.post('http://192.168.0.177:7008/HomePage/GetAlertMessage', '');
+    const response = await axios.post('https://localhost:44302/HomePage/GetAlertMessage', '');
     const data = response.data;
     if (data.state === 'success') {
       alertMsgArray.value = data.resultList.MsgArray;
@@ -1054,7 +1054,7 @@ const changeIsExcute = async (itemData) => {
   console.groupEnd();
 
   try {
-    const response = await axios.post('http://192.168.0.177:7008/HomePage/SetExecuteOfDeliveredItem', { OM_ID: itemData.OM_ID, IsExecute: itemData.IsExecute });
+    const response = await axios.post('https://localhost:44302/HomePage/SetExecuteOfDeliveredItem', { OM_ID: itemData.OM_ID, IsExecute: itemData.IsExecute });
     const data = response.data;
     if (data.state === 'account_error') {
       alert(data.messages);
@@ -1071,7 +1071,7 @@ const changeIsExcute = async (itemData) => {
 // LineAPI相關
 const getLineNotificationStatus = async () => {
   try {
-    const response = await axios.post('http://192.168.0.177:7008/HomePage/GetLineSetting', '');
+    const response = await axios.post('https://localhost:44302/HomePage/GetLineSetting', '');
     const data = response.data;
     if (data.state === 'success') {
       // 有開啟
@@ -1101,7 +1101,7 @@ const clickLineSwitch = () => {
 const handleLineSwitch = async () => {
   // console.log('isChecked', lineSwitch.value.checked);
   try {
-    const response = await axios.post('http://192.168.0.177:7008/HomePage/SetLineSetting', { isOpen: lineSwitch.value.checked });
+    const response = await axios.post('https://localhost:44302/HomePage/SetLineSetting', { isOpen: lineSwitch.value.checked });
     const data = response.data;
     if (data.state === 'success') {
       switch (data.resultList.ResponseState) {

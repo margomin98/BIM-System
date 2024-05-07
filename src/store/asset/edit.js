@@ -49,7 +49,7 @@ export const useEditStore = defineStore('Edit', {
       }
       try {
         const token = await apiStore.GetAntiForgeryToken();
-        const response = await axios.post('http://192.168.0.177:7008/InventoryMng/AssetEdit', form,{
+        const response = await axios.post('https://localhost:44302/InventoryMng/AssetEdit', form,{
           headers: { 
             'RequestVerificationToken': token,
           }

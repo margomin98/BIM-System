@@ -200,7 +200,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
       async function getDetails() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/ReceivingGetData?ar_id=${AR_ID}`);
+          const response = await axios.get(`https://localhost:44302/GetDBdata/ReceivingGetData?ar_id=${AR_ID}`);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -232,7 +232,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
         const axios = require('axios');
         try {
           const token = await GetAntiForgeryToken();
-          const response = await axios.post(`http://192.168.0.177:7008/ReceivingMng/DeleteReceipt`, form , {
+          const response = await axios.post(`https://localhost:44302/ReceivingMng/DeleteReceipt`, form , {
             headers:{
               'RequestVerificationToken': token,
             }

@@ -368,7 +368,7 @@ export default {
     });
     async function getDetails() {
       try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetIntegrationBoxInfo?id=${Integration.IntegrationId}`);
+        const response = await axios.get(`https://localhost:44302/GetDBdata/GetIntegrationBoxInfo?id=${Integration.IntegrationId}`);
         // console.log(response);
         const data = response.data;
         if (data.state === 'success') {
@@ -461,7 +461,7 @@ export default {
         form.append('ProductName', searchParams.ProductName);
         form.append('AssetList', JSON.stringify(formParams.AssetList));
         UpdatePageParameter(datagrid, event, type, form);
-        const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/SearchInventory', form);
+        const response = await axios.post('https://localhost:44302/IntegrationMng/SearchInventory', form);
         const data = response.data;
         if (data.state === 'success') {
           // console.log('資產搜尋成功 資料如下\n', data.resultList);
@@ -501,7 +501,7 @@ export default {
         Custodian: details.value.Custodian,
         AssetList: formParams.AssetList,
       };
-      const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/ChangeEquipment', requestData);
+      const response = await axios.post('https://localhost:44302/IntegrationMng/ChangeEquipment', requestData);
       const data = response.data;
       try {
         console.log(data);

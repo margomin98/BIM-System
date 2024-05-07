@@ -427,7 +427,7 @@
         console.log('requestData:', requestData);
         try {
           const token = await GetAntiForgeryToken();
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/CreatePlan', requestData,{
+          const response = await axios.post('https://localhost:44302/StocktakingMng/CreatePlan', requestData,{
             headers:{
               'RequestVerificationToken': token,
             }
@@ -480,7 +480,7 @@
         const axios = require('axios');
         try {
           const token = await GetAntiForgeryToken();
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/SearchInventory', form,{
+          const response = await axios.post('https://localhost:44302/StocktakingMng/SearchInventory', form,{
             headers:{
               'RequestVerificationToken': token,
             }
@@ -519,7 +519,7 @@
         }
         UpdatePageParameter(datagrid2, event, type, form)
         const token = await GetAntiForgeryToken();
-        axios.post('http://192.168.0.177:7008/StocktakingMng/RangeOfPlan', form,{
+        axios.post('https://localhost:44302/StocktakingMng/RangeOfPlan', form,{
           headers:{
             'RequestVerificationToken': token,
           }
@@ -665,7 +665,7 @@
             }
           }
           const token = await GetAntiForgeryToken();
-          axios.post('http://192.168.0.177:7008/StocktakingMng/SelectAllGrid', form,{
+          axios.post('https://localhost:44302/StocktakingMng/SelectAllGrid', form,{
             headers:{
               'RequestVerificationToken': token,
             }

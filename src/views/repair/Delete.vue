@@ -298,7 +298,7 @@
       });
       // 取得單筆資料
       async function getDetails() {
-        axios.get(`http://192.168.0.177:7008/GetDBdata/GetRepairInfo?r_id=${RepairId}`)
+        axios.get(`https://localhost:44302/GetDBdata/GetRepairInfo?r_id=${RepairId}`)
           .then((response) => {
             const data = response.data;
             if (data.state === 'success') {
@@ -322,7 +322,7 @@
         const axios = require('axios');
         try {
           const token = await GetAntiForgeryToken();
-          const response = await axios.post(`http://192.168.0.177:7008/RepairMng/DeleteReceipt`, form,{
+          const response = await axios.post(`https://localhost:44302/RepairMng/DeleteReceipt`, form,{
             headers:{
               'RequestVerificationToken': token,
             }

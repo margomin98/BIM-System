@@ -396,7 +396,7 @@ watch,
       async function getDetails() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetInventoryPlanInfo?id=${IP_ID}`);
+          const response = await axios.get(`https://localhost:44302/GetDBdata/GetInventoryPlanInfo?id=${IP_ID}`);
           const data = response.data;
           if (data.state === 'success') {
             // 檢查資料狀態是否可編輯
@@ -455,7 +455,7 @@ watch,
         console.log('requestData:', requestData);
         try {
           const token = await GetAntiForgeryToken();
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/EditPlan', requestData,{
+          const response = await axios.post('https://localhost:44302/StocktakingMng/EditPlan', requestData,{
             headers:{
               'RequestVerificationToken': token,
             }
@@ -507,7 +507,7 @@ watch,
         const axios = require('axios');
         try {
           const token = await GetAntiForgeryToken();
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/SearchInventory', form,{
+          const response = await axios.post('https://localhost:44302/StocktakingMng/SearchInventory', form,{
             headers:{
               'RequestVerificationToken': token,
             }
@@ -547,7 +547,7 @@ watch,
         }
         UpdatePageParameter(datagrid2, event, type, form)
           const token = await GetAntiForgeryToken();
-        axios.post('http://192.168.0.177:7008/StocktakingMng/RangeOfPlan', form,{
+        axios.post('https://localhost:44302/StocktakingMng/RangeOfPlan', form,{
           headers:{
             'RequestVerificationToken': token,
           }
@@ -676,7 +676,7 @@ watch,
             }
           }
           const token = await GetAntiForgeryToken();
-          axios.post('http://192.168.0.177:7008/StocktakingMng/SelectAllGrid', form,{
+          axios.post('https://localhost:44302/StocktakingMng/SelectAllGrid', form,{
             headers:{
               'RequestVerificationToken': token,
             }

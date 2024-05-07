@@ -40,8 +40,7 @@
     ref
   } from 'vue'
   import router from '@/router';
-  import axios from 'axios';
-import { GetAntiForgeryToken } from '@/assets/js/common_api';
+  import axios from '@/axios/tokenInterceptor'
   export default {
     name: 'Login',
     setup() {
@@ -53,7 +52,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
       const errorHint = ref('');
       onMounted(()=>{
         // 檢查是否有已登入(有cookie)
-        checkCookieIsExist();
+        // checkCookieIsExist();
       });
       // 登入
       async function login() {
@@ -61,14 +60,8 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
         for(const key in formParams) {
           form.append(key, formParams[key]);
         }
-        const axios = require('axios');
         try {
-          const token = await GetAntiForgeryToken();
-          const response = await axios.post('http://192.168.0.177:7008/Account/Login', form,{
-            headers: {
-              'RequestVerificationToken': token,
-            }
-          });
+          const response = await axios.post('https://localhost:44302/Account/Login', form);
           console.log(response);
           const data = response.data;
           if (data.state === 'success') {
@@ -86,7 +79,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
       }
       async function checkCookieIsExist() {
         try {
-          const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
+          const response = await axios.get('https://localhost:44302/GetDBdata/GetApplicant');
           const data = response.data;
           if (data.state === 'success') {
             console.log('申請人名稱:', data.resultList.Applicant);

@@ -356,7 +356,7 @@ export default {
     async function getDetails() {
       const axios = require('axios');
       try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
+        const response = await axios.get(`https://localhost:44302/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
         console.log(response);
         const data = response.data;
         if (data.state === 'success') {

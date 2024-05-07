@@ -126,7 +126,7 @@
   //登出function 沒有回傳值，正確直接回登入頁面
   async function logout() {
     try {
-      const response = await axios.post('http://192.168.0.177:7008/Account/LogOff','');
+      const response = await axios.post('https://localhost:44302/Account/LogOff','');
       if (response.status === 200) {
         //登出成功，跳轉至首頁
         router.push('/');

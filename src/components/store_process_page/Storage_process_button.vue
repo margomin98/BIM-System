@@ -67,7 +67,7 @@
       async function changeStatus() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.177:7008/AssetsInMng/DeliveryNotification?id=${search_id}`);
+          const response = await axios.get(`https://localhost:44302/AssetsInMng/DeliveryNotification?id=${search_id}`);
           const data = response.data;
           if (data.state === 'success') {
             deliveryNotify.value = props.params.data.Status === '可交付';

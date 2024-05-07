@@ -265,7 +265,7 @@ export default {
     // 讀取
     async function getDataGrid(type) {
       let apiUrl = '';
-      const baseUrl = 'http://192.168.0.177:7008';
+      const baseUrl = 'https://localhost:44302';
       switch (type) {
         case 'EquipTypeName':
           apiUrl += baseUrl + '/GetParameter/EquipTypeParameter'
@@ -373,7 +373,7 @@ export default {
           break;
       }
       let apiUrl = '';
-      const baseUrl = 'http://192.168.0.177:7008';
+      const baseUrl = 'https://localhost:44302';
       let requestData = {};
       switch (type) {
         case 'EquipTypeName':
@@ -427,7 +427,7 @@ export default {
       const type = editParams.type;
       const input = editParams.input.trim();
       const id = editParams.id;
-      const baseUrl = 'http://192.168.0.177:7008'
+      const baseUrl = 'https://localhost:44302'
       let apiUrl = ''
       // 檢查輸入是否符合格式 1. 不為全空白 2. 字數<=10 
       if (!input) {
@@ -487,7 +487,7 @@ export default {
     // 新增
     async function insertNewType(type) {
       let apiUrl = '';
-      const baseUrl = 'http://192.168.0.177:7008';
+      const baseUrl = 'https://localhost:44302';
       let requestData = {};
       switch (type) {
         case 'EquipTypeName':
@@ -604,7 +604,7 @@ export default {
       const type = deleteParams.type;
       const id = deleteParams.id;
       let apiUrl = '';
-      const baseUrl = 'http://192.168.0.177:7008';
+      const baseUrl = 'https://localhost:44302';
       switch (type) {
         case 'EquipTypeName':
           apiUrl = baseUrl + '/ParameterMng/DeleteEquipmentType'

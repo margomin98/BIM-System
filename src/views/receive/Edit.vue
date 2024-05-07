@@ -247,7 +247,7 @@
     checkRole(checkname.value)
     .then(result => {
 
-      axios.get(`http://192.168.0.177:7008/GetDBdata/ReceivingGetData?ar_id=${AR_ID}`)
+      axios.get(`https://localhost:44302/GetDBdata/ReceivingGetData?ar_id=${AR_ID}`)
       .then((response)=>{
         const data = response.data;
         if (data.state === 'success') {
@@ -399,7 +399,7 @@
           form.append('deleteFile', item)
         }
       }
-      axios.post('http://192.168.0.177:7008/ReceivingMng/EditReceipt', form)
+      axios.post('https://localhost:44302/ReceivingMng/EditReceipt', form)
         .then(response => {
           const data = response.data;
           if (data.state === 'success') {
@@ -422,7 +422,7 @@
       form.append('AR_ID', AR_ID);
       form.append('num', index);
       form.append(type, fileData);
-      axios.post('http://192.168.0.177:7008/ReceivingMng/UploadFile', form)
+      axios.post('https://localhost:44302/ReceivingMng/UploadFile', form)
         .then((response) => {
           const data = response.data;
           if (data.state === 'success') {
@@ -624,7 +624,7 @@
   // 取得訂購單號 下拉
   const getPurchaseNum = (() => {
     const value = details.value.PurchaseNum || '';
-    axios.get(`http://192.168.0.177:7008/GetDBdata/SearchPurchaseOrderID?id=${value}`)
+    axios.get(`https://localhost:44302/GetDBdata/SearchPurchaseOrderID?id=${value}`)
     .then((r)=>{
       const data = r.data;
       if(data.state === 'success') {

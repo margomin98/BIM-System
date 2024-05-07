@@ -217,7 +217,7 @@
         getDetails()
       });
       async function getDetails() {
-        axios.get(`http://192.168.0.177:7008/GetDBdata/GetScrapInfo?s_id=${ScrapId}`)
+        axios.get(`https://localhost:44302/GetDBdata/GetScrapInfo?s_id=${ScrapId}`)
           .then((response) => {
             const data = response.data
             if (data.state === 'success') {

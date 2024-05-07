@@ -99,7 +99,7 @@ export const usePurchaseStore = defineStore('Purchase', {
       // output內容差不多 type決定api URL
       const url= type === 'edit' ? '/PurchasingMng/EditRequisition' : '/PurchasingMng/CreateRequisition'
       try {
-        const response = await axios.post('http://192.168.0.177:7008'+url,this.Form);
+        const response = await axios.post('https://localhost:44302'+url,this.Form);
         const data = response.data
         if(data.state === 'success') {
           alert(data.messages + '\n單號:' + data.resultList.PP_ID);
@@ -117,7 +117,7 @@ export const usePurchaseStore = defineStore('Purchase', {
     // 取得採購單資料
     async getDetails(PP_ID, Conditions) {
 			try {
-				const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/ProjectPurchasingGetData?pp_id=${PP_ID}`)
+				const response = await axios.get(`https://localhost:44302/GetDBdata/ProjectPurchasingGetData?pp_id=${PP_ID}`)
 				const data = response.data ;
 				if(data.state === 'success') {
           if(Conditions) {
@@ -148,7 +148,7 @@ export const usePurchaseStore = defineStore('Purchase', {
 			const form = new FormData();
 			form.append('PP_ID', PP_ID);
 			try {
-				const response = await axios.post(`http://192.168.0.177:7008/PurchasingMng/DeleteRequisition`, form);
+				const response = await axios.post(`https://localhost:44302/PurchasingMng/DeleteRequisition`, form);
 				const data = response.data;
 				if (data.state === 'success') {
 					let msg = data.messages + '\n單號:'+ data.resultList.PP_ID;

@@ -105,7 +105,7 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 					Memo: storageStore.upperForm.Memo,
 					Tabs: modifiedTabData
 				}
-				const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/ExpressAssetsIn', requestData);
+				const response = await axios.post('https://localhost:44302/AssetsInMng/ExpressAssetsIn', requestData);
 				const data = response.data;
 				if(data.state === 'success') {
 					// 轉狀態
@@ -174,7 +174,7 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 				form.append('AI_ID', storageStore.upperForm.AI_ID);
 				form.append('AR_ID', storageStore.upperForm.AR_ID);
 				form.append('Memo', storageStore.upperForm.Memo);
-				axios.post('http://192.168.0.177:7008/AssetsInMng/ExpressEdit', form)
+				axios.post('https://localhost:44302/AssetsInMng/ExpressEdit', form)
 					.then(response => {
 						const data = response.data;
 						if (data.state === 'success') {

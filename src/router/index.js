@@ -730,69 +730,69 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
-router.beforeEach((to, from, next)=>{
-  const TempSearchStore = useTempSearchStore();
-  if (to.name !== 'Assets_Edit' && to.name !== 'Assets_View' && to.name !== 'Assets_Datagrid') {
-    TempSearchStore.$reset();
-  }
-  next();
-})
-
-// router.beforeEach(async (to, from, next) => {
+// router.beforeEach((to, from, next)=>{
 //   const TempSearchStore = useTempSearchStore();
 //   if (to.name !== 'Assets_Edit' && to.name !== 'Assets_View' && to.name !== 'Assets_Datagrid') {
 //     TempSearchStore.$reset();
 //   }
-//   if (to.meta.auth) {
-//     try {
-//       const request = to.meta.request
-//       const response = await axios.get(`/GetParameter/HasPermission?id=${request}`);
-//       const data = response.data;
-//       if (data.state === 'success') {
-//         if(data.resultList === true) {
-//           next();
-//         }
-//         else {
-//           next({ name: 'authorized' });
-//         }
-//       } 
-//       else if(data.state === 'account_error') {
-//         alert(data.messages);
-//         next({ name: 'login' });
-//       }
-//       else {
-//         alert(data.messages);
-//         next(false);
-//       }
-//     } catch (error) {
-//       // 处理请求错误
-//       console.error('Error checking permission:', error);
-//       next(false); // 阻止导航继续
-//     }
-//   } else {
-//     if(to.meta.checkLogin) {
-//       // 檢查是否有登入
-//       try {
-//         const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
-//         const data = response.data;
-//         if (data.state === 'success') {
-//           next();
-//         } 
-//         else if(data.state === 'account_error') {
-//           alert(data.messages);
-//           next({ name: 'login' });
-//         }
-//         else {
-//           alert(data.messages);
-//           next(false);
-//         }
-//       } catch (error) {
-//         // 处理请求错误
-//         console.error('Error checking permission:', error);
-//         next(false); // 阻止导航继续
-//       }
-//     }
-//     next();
-//   }
-// });
+//   next();
+// })
+
+router.beforeEach(async (to, from, next) => {
+  const TempSearchStore = useTempSearchStore();
+  if (to.name !== 'Assets_Edit' && to.name !== 'Assets_View' && to.name !== 'Assets_Datagrid') {
+    TempSearchStore.$reset();
+  }
+  if (to.meta.auth) {
+    try {
+      const request = to.meta.request
+      const response = await axios.get(`https://localhost:44302/GetParameter/HasPermission?id=${request}`);
+      const data = response.data;
+      if (data.state === 'success') {
+        if(data.resultList === true) {
+          next();
+        }
+        else {
+          next({ name: 'authorized' });
+        }
+      } 
+      else if(data.state === 'account_error') {
+        alert(data.messages);
+        next({ name: 'login' });
+      }
+      else {
+        alert(data.messages);
+        next(false);
+      }
+    } catch (error) {
+      // 处理请求错误
+      console.error('Error checking permission:', error);
+      next(false); // 阻止导航继续
+    }
+  } else {
+    if(to.meta.checkLogin) {
+      // 檢查是否有登入
+      try {
+        const response = await axios.get('https://localhost:44302/GetDBdata/GetApplicant');
+        const data = response.data;
+        if (data.state === 'success') {
+          next();
+        } 
+        else if(data.state === 'account_error') {
+          alert(data.messages);
+          next({ name: 'login' });
+        }
+        else {
+          alert(data.messages);
+          next(false);
+        }
+      } catch (error) {
+        // 处理请求错误
+        console.error('Error checking permission:', error);
+        next(false); // 阻止导航继续
+      }
+    }
+    next();
+  }
+});
 export default router;

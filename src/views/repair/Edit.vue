@@ -191,7 +191,7 @@ export default {
     });
     // 取得單筆資料
     async function getDetails() {
-      axios.get(`http://192.168.0.177:7008/GetDBdata/GetRepairInfo?r_id=${RepairId}`)
+      axios.get(`https://localhost:44302/GetDBdata/GetRepairInfo?r_id=${RepairId}`)
         .then((response) => {
           const data = response.data;
           if (data.state === 'success') {
@@ -252,7 +252,7 @@ export default {
       for (let i = 0; i < formParams.deleteFile.length; i++) {
         form.append('deleteFile', formParams.deleteFile[i]);
       }
-      axios.post('http://192.168.0.177:7008/RepairMng/RepairEdit', form)
+      axios.post('https://localhost:44302/RepairMng/RepairEdit', form)
         .then((response) => {
           const data = response.data;
           if (data.state === 'success') {

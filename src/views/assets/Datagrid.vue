@@ -298,7 +298,7 @@ onUnmounted(()=>{
       const form = new FormData();
       form.append('file', selectedFile);
       isLoading.value = true;
-      axios.post('http://192.168.0.177:7008/InventoryMng/ImportExcel', form)
+      axios.post('https://localhost:44302/InventoryMng/ImportExcel', form)
         .then((response) => {
           const data = response.data;
           if (data.state === 'success') {
@@ -322,7 +322,7 @@ onUnmounted(()=>{
     for (const key in dgSearchParams.value) {
       form.append(key, dgSearchParams.value[key]);
     }
-    axios.post('http://192.168.0.177:7008/InventoryMng/ExportExcel', form, {
+    axios.post('https://localhost:44302/InventoryMng/ExportExcel', form, {
         responseType: 'blob',
       })
       .then((response) => {

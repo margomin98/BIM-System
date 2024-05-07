@@ -252,7 +252,7 @@ export default {
       getDetails()
     });
     async function getDetails() {
-      axios.get(`http://192.168.0.177:7008/GetDBdata/GetScrapInfo?s_id=${ScrapId}`)
+      axios.get(`https://localhost:44302/GetDBdata/GetScrapInfo?s_id=${ScrapId}`)
         .then((response) => {
           const data = response.data
           if (data.state === 'success') {
@@ -281,7 +281,7 @@ export default {
     async function deleteData() {
       const form = new FormData();
       form.append('ScrapId', ScrapId);
-      const response = await axios.post(`http://192.168.0.177:7008/ScrapMng/DeleteScrap`, form);
+      const response = await axios.post(`https://localhost:44302/ScrapMng/DeleteScrap`, form);
       try {
         const data = response.data;
         if (data.state === 'success') {

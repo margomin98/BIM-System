@@ -354,7 +354,7 @@ export default {
     const rowData2 = ref([]);
     async function getDetails() {
       try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
+        const response = await axios.get(`https://localhost:44302/GetDBdata/AssetsOutGetData?ao_id=${AO_ID}`);
         const data = response.data;
         if (data.state === 'success') {
           canEnterPage(data.resultList.Status, RentReview_New_Status)
@@ -396,7 +396,7 @@ export default {
         formData.append(fieldName, formFields[fieldName]);
         console.log(formData.get(`${fieldName}`));
       }
-      const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', formData);
+      const response = await axios.post('https://localhost:44302/Account/IdentityValidation', formData);
       try {
         const data = response.data;
         console.log(data);
@@ -436,7 +436,7 @@ export default {
         formData.append(fieldName, formFields[fieldName]);
         console.log(formData.get(`${fieldName}`));
       }
-      const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/Verify', formData);
+      const response = await axios.post('https://localhost:44302/AssetsOutMng/Verify', formData);
       try {
         const data = response.data;
         console.log(data);

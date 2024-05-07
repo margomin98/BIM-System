@@ -111,7 +111,7 @@
           form.append(key, formParams[key]);
         }
       }
-      axios.post('http://192.168.0.177:7008/PurchasingMng/CreateOrder', form,{
+      axios.post('https://localhost:44302/PurchasingMng/CreateOrder', form,{
         headers: { 
           'RequestVerificationToken': token,
         }
@@ -138,7 +138,7 @@
           form.append('num', index);
           form.append('Document', file);
           const axios = require('axios');
-          axios.post('http://192.168.0.177:7008/PurchasingMng/UploadFile', form,{
+          axios.post('https://localhost:44302/PurchasingMng/UploadFile', form,{
             headers: { 
               'RequestVerificationToken': token,
             }

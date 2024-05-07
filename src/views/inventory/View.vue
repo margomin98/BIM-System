@@ -203,7 +203,7 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
       async function getDetails() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetInventoryPlanInfo?id=${IP_ID}`);
+          const response = await axios.get(`https://localhost:44302/GetDBdata/GetInventoryPlanInfo?id=${IP_ID}`);
           const data = response.data;
           if (data.state === 'success') {
             console.log('Details Get成功 資料如下\n', data.resultList);
@@ -233,7 +233,7 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
         }
         UpdatePageParameter(datagrid,event,type,form)
         const token = await GetAntiForgeryToken();
-        axios.post('http://192.168.0.177:7008/StocktakingMng/RangeOfPlan',form,{
+        axios.post('https://localhost:44302/StocktakingMng/RangeOfPlan',form,{
           headers:{
             'RequestVerificationToken': token,
           }

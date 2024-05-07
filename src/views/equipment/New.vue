@@ -438,7 +438,7 @@ export default {
         form.append('AssetList', JSON.stringify(formParams.AssetList));
         UpdatePageParameter(datagrid, event, type, form);
         const token = await GetAntiForgeryToken();
-        const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/SearchInventory', form,{
+        const response = await axios.post('https://localhost:44302/IntegrationMng/SearchInventory', form,{
           headers:{
             'RequestVerificationToken': token,
           }
@@ -493,7 +493,7 @@ export default {
       }
       try {
         const token = await GetAntiForgeryToken();
-        const response = await axios.post('http://192.168.0.177:7008/IntegrationMng/Integrate', requestData,{
+        const response = await axios.post('https://localhost:44302/IntegrationMng/Integrate', requestData,{
           headers:{
             'RequestVerificationToken': token,
           }
@@ -537,7 +537,7 @@ export default {
       const repeatForm = new FormData();
       repeatForm.append('assetsIds', formParams.IntegrationId);
       const axios = require('axios');
-      const response = await axios.post('http://192.168.0.177:7008/GetDBdata/CheckAssetsInID', repeatForm);
+      const response = await axios.post('https://localhost:44302/GetDBdata/CheckAssetsInID', repeatForm);
       try {
         const data = response.data;
         if (data.state === 'error') {

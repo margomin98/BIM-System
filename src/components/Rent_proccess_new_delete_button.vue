@@ -25,7 +25,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
         }
         try {
           const token = await GetAntiForgeryToken();
-          const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/AddToInventory', requestData , {
+          const response = await axios.post('https://localhost:44302/AssetsOutMng/AddToInventory', requestData , {
             headers:{
               'RequestVerificationToken': token,
             }

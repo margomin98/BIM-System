@@ -96,7 +96,7 @@ async function deleteData() {
   form.append('PO_ID', PO_ID);
   try {
     const token =  await GetAntiForgeryToken();
-    const response = await axios.post(`http://192.168.0.177:7008/PurchasingMng/DeleteOrder`, form,{
+    const response = await axios.post(`https://localhost:44302/PurchasingMng/DeleteOrder`, form,{
       headers: { 
         'RequestVerificationToken': token,
       }

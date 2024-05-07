@@ -312,7 +312,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
       });
       // 取得單筆資料
       async function getDetails() {
-        axios.get(`http://192.168.0.177:7008/GetDBdata/GetRepairInfo?r_id=${RepairId}`)
+        axios.get(`https://localhost:44302/GetDBdata/GetRepairInfo?r_id=${RepairId}`)
           .then((response) => {
             const data = response.data;
             if (data.state === 'success') {
@@ -427,7 +427,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
             }
           }
           console.log('上半部資料(含刪除):\n', msg);
-          axios.post('http://192.168.0.177:7008/RepairMng/SendingForRepair', form,{
+          axios.post('https://localhost:44302/RepairMng/SendingForRepair', form,{
             headers: { 
               'RequestVerificationToken': token.value,
             }
@@ -455,7 +455,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           form.append('num', index);
           form.append('Document', fileData);
           const axios = require('axios');
-          axios.post('http://192.168.0.177:7008/RepairMng/UploadDoc', form,{
+          axios.post('https://localhost:44302/RepairMng/UploadDoc', form,{
             headers: { 
               'RequestVerificationToken': token.value,
             }

@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axios from '@/axios/tokenInterceptor'
 import router from '@/router';
 // 取得 AntiForgery Token
 export const GetAntiForgeryToken = async () => {
   try {
-    const response = await axios.post('/Manage/GetAntiForgeryToken');
+    const response = await axios.post('https://localhost:44302/Manage/GetAntiForgeryToken');
     if(response.data.state === 'account_error') {
       alert(response.data.messages);
       router.push('/');
@@ -16,7 +16,7 @@ export const GetAntiForgeryToken = async () => {
 };
 // 取得資料單
 export const getDetails = (async (url,id)=>{
-  const response = await axios.get(`http://192.168.0.177:7008${url}${id}`);
+  const response = await axios.get(`https://localhost:44302${url}${id}`);
   try {
     const data = response.data;
     if (data.state === 'success') {
@@ -32,7 +32,7 @@ export const getMngDatagrid = (async (url , rowData, datagrid,form)=>{
   datagrid.loading = true;
   try {
     const token = await GetAntiForgeryToken();
-    const baseUrl = 'http://192.168.0.177:7008'
+    const baseUrl = 'https://localhost:44302'
     let apiurl = baseUrl + url
     axios.post(`${apiurl}`, form ,{
       headers:{
@@ -67,7 +67,7 @@ export const getMngDatagrid = (async (url , rowData, datagrid,form)=>{
 // 申請人名稱 & Navbar 名稱
 export const getApplication = (async ()=> {
   try {
-    const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
+    const response = await axios.get('https://localhost:44302/GetDBdata/GetApplicant');
     const data = response.data;
     if (data.state === 'success') {
       console.log('申請人名稱:', data.resultList.Applicant);
@@ -85,7 +85,7 @@ export const getApplication = (async ()=> {
 // 設備總類
 export const getEquipType = (async ()=> {
   try {
-    const response = await axios.get('http://192.168.0.177:7008/GetParameter/EquipTypeParameter');
+    const response = await axios.get('https://localhost:44302/GetParameter/EquipTypeParameter');
     const data = response.data;
     if (data.state === 'success') {
       // console.log('設備總類options:\n', data.resultList.TypeList);
@@ -103,7 +103,7 @@ export const getEquipType = (async ()=> {
 // 設備分類
 export const getEquipCategory = (async (EquipType_Id) => {
   try {
-    const response = await axios.get(`http://192.168.0.177:7008/GetParameter/EquipCategoryParameter?id=${EquipType_Id}`);
+    const response = await axios.get(`https://localhost:44302/GetParameter/EquipCategoryParameter?id=${EquipType_Id}`);
     const data = response.data;
     if (data.state === 'success') {
       // console.log('設備分類options:\n', data.resultList.CategoryList);
@@ -121,7 +121,7 @@ export const getEquipCategory = (async (EquipType_Id) => {
 // 儲位區域
 export const getArea = (async () => {
   try {
-    const response = await axios.get('http://192.168.0.177:7008/GetParameter/AreaParameter');
+    const response = await axios.get('https://localhost:44302/GetParameter/AreaParameter');
     const data = response.data;
     if (data.state === 'success') {
       // console.log('儲位區域options:\n', data.resultList.AreaList);
@@ -139,7 +139,7 @@ export const getArea = (async () => {
 // 儲位櫃位
 export const getLayer = (async (Area_Id)=> {
   try {
-    const response = await axios.get(`http://192.168.0.177:7008/GetParameter/LayerParameter?id=${Area_Id}`);
+    const response = await axios.get(`https://localhost:44302/GetParameter/LayerParameter?id=${Area_Id}`);
     const data = response.data;
     if (data.state === 'success') {
       // console.log('儲位櫃位options:\n', data.resultList.LayerList);
@@ -156,7 +156,7 @@ export const getLayer = (async (Area_Id)=> {
 }) 
 // 取得人員List
 export const getAccount = (async (name) => {
-  const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchName?name=${name}`);
+  const response = await axios.get(`https://localhost:44302/GetDBdata/SearchName?name=${name}`);
   try {
     const data = response.data;
     if (data.state === 'success') {
@@ -171,7 +171,7 @@ export const getAccount = (async (name) => {
 export const getProject = (async (projectCode) => {
   const form = new FormData();
   form.append('projectCode', projectCode);
-  const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchProjectName', form);
+  const response = await axios.post('https://localhost:44302/GetDBdata/SearchProjectName', form);
   try {
     const data = response.data;
     if (data.state === 'success') {
@@ -190,7 +190,7 @@ export const getProject = (async (projectCode) => {
 // 檢視單筆資產資訊
 export const getAssets = (async (AssetsId)=> {
   try {
-    const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetAssetInfo?id=${AssetsId}`);
+    const response = await axios.get(`https://localhost:44302/GetDBdata/GetAssetInfo?id=${AssetsId}`);
     const data = response.data;
     if (data.state === 'success') {
       console.log('資產資料:\n', data.resultList);
@@ -207,7 +207,7 @@ export const getAssets = (async (AssetsId)=> {
   }
 })
 export const getRoleOption = (array)=> {
-  axios.get('http://192.168.0.177:7008/GetParameter/GetRoles')
+  axios.get('https://localhost:44302/GetParameter/GetRoles')
   .then((response)=>{
     const data = response.data;
     if (data.state === 'success') {
@@ -223,7 +223,7 @@ export const getRoleOption = (array)=> {
 export const checkRole = (username) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetRoleFromName?name=${username}`);
+      const response = await axios.get(`https://localhost:44302/GetDBdata/GetRoleFromName?name=${username}`);
       const data = response.data;
 
       if (data.state === 'success') {

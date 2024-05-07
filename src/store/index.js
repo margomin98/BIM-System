@@ -33,7 +33,7 @@ export const useUtilsStore = defineStore('Utils',{
      */
     async getUserName() {
       try {
-        const response = await axios.get('http://192.168.0.177:7008/GetDBdata/GetApplicant');
+        const response = await axios.get('https://localhost:44302/GetDBdata/GetApplicant');
         const data = response.data;
         if (data.state === 'success') {
           // console.log('申請人名稱:', data.resultList.Applicant);
@@ -398,7 +398,7 @@ export const useUtilsStore = defineStore('Utils',{
     checkRole(Applicant) {
       return new Promise(async(resolve, reject)=>{
         try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetRoleFromName?name=${this.userName}`);
+          const response = await axios.get(`https://localhost:44302/GetDBdata/GetRoleFromName?name=${this.userName}`);
           const data = response.data;
           // console.log('userName', this.userName);
           // console.log('Applicant',Applicant);
@@ -467,7 +467,7 @@ export const useAPIStore = defineStore('API',{
      */
     async GetAntiForgeryToken() {
       try {
-        const response = await axios.post('/Manage/GetAntiForgeryToken');
+        const response = await axios.post('https://localhost:44302/Manage/GetAntiForgeryToken');
         if(response.data.state === 'account_error') {
           alert(response.data.messages);
           router.push('/');
@@ -484,7 +484,7 @@ export const useAPIStore = defineStore('API',{
      */
     async getEquipType() {
       try {
-        const response = await axios.get('http://192.168.0.177:7008/GetParameter/EquipTypeParameter');
+        const response = await axios.get('https://localhost:44302/GetParameter/EquipTypeParameter');
         const data = response.data;
         if (data.state === 'success') {
           // console.log('設備總類options:\n', data.resultList.TypeList);
@@ -507,7 +507,7 @@ export const useAPIStore = defineStore('API',{
     async getEquipCategory(EquipType_Id) {
       if(!EquipType_Id) { return []}
       try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetParameter/EquipCategoryParameter?id=${EquipType_Id}`);
+        const response = await axios.get(`https://localhost:44302/GetParameter/EquipCategoryParameter?id=${EquipType_Id}`);
         const data = response.data;
         if (data.state === 'success') {
           // console.log('設備總類options:\n', data.resultList.TypeList);
@@ -528,7 +528,7 @@ export const useAPIStore = defineStore('API',{
      */
     async getArea() {
       try {
-        const response = await axios.get('http://192.168.0.177:7008/GetParameter/AreaParameter');
+        const response = await axios.get('https://localhost:44302/GetParameter/AreaParameter');
         const data = response.data;
         if (data.state === 'success') {
           // console.log('儲位區域options:\n', data.resultList.AreaList);
@@ -551,7 +551,7 @@ export const useAPIStore = defineStore('API',{
     async getLayer(Area_Id) {
       if(!Area_Id) { return []}
       try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetParameter/LayerParameter?id=${Area_Id}`);
+        const response = await axios.get(`https://localhost:44302/GetParameter/LayerParameter?id=${Area_Id}`);
         const data = response.data;
         if (data.state === 'success') {
           // console.log('儲位櫃位options:\n', data.resultList.LayerList);
@@ -573,7 +573,7 @@ export const useAPIStore = defineStore('API',{
      */
     async getCustodian(name='') {
       try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchName?name=${name}`);
+        const response = await axios.get(`https://localhost:44302/GetDBdata/SearchName?name=${name}`);
         const data = response.data;
         if (data.state === 'success') {
           const filteredRoles = data.resultList.filter(role => role !== 'admin' && role !== 'guest');
@@ -589,7 +589,7 @@ export const useAPIStore = defineStore('API',{
      */
     async getStaff() {
       try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetUsernames`);
+        const response = await axios.get(`https://localhost:44302/GetParameter/GetUsernames`);
         const data = response.data;
         if (data.state === 'success') {
           const filteredRoles = data.resultList.filter(role => role !== 'admin' && role !== 'guest');
@@ -608,7 +608,7 @@ export const useAPIStore = defineStore('API',{
       const form = new FormData();
       form.append('projectCode', projectCode);
       try {
-        const response = await axios.post('http://192.168.0.177:7008/GetDBdata/SearchProjectName', form);
+        const response = await axios.post('https://localhost:44302/GetDBdata/SearchProjectName', form);
         const data = response.data;
         if (data.state === 'success') {
           return data.resultList;
@@ -629,7 +629,7 @@ export const useAPIStore = defineStore('API',{
      */        
     async getFuzzyProject() {
       try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetProjects`);
+        const response = await axios.get(`https://localhost:44302/GetParameter/GetProjects`);
         let data = response.data;
         console.log(data);
         if (data.state === 'success') {
@@ -648,7 +648,7 @@ export const useAPIStore = defineStore('API',{
      */        
     async getFuzzyProjectAll() {
       try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetParameter/GetProjects?all=true`);
+        const response = await axios.get(`https://localhost:44302/GetParameter/GetProjects?all=true`);
         let data = response.data;
         console.log(data);
         if (data.state === 'success') {
@@ -668,7 +668,7 @@ export const useAPIStore = defineStore('API',{
      */   
     async checkProjectCode(projectCodeList) {
       return new Promise((resolve, reject) => {
-        axios.post('http://192.168.0.177:7008/GetDBdata/CheckProjectCode', projectCodeList)
+        axios.post('https://localhost:44302/GetDBdata/CheckProjectCode', projectCodeList)
           .then(response => {
             const data = response.data;
             if (data.state === 'success') {
@@ -688,7 +688,7 @@ export const useAPIStore = defineStore('API',{
      * @returns {Promise<Array<{Text: string, Value: string}>>} 返回物流單號列表Array
      */   
     async getShipmentNum(ShipmentNum = '') {
-      const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/SearchShipmentNum?id=${ShipmentNum}`);
+      const response = await axios.get(`https://localhost:44302/GetDBdata/SearchShipmentNum?id=${ShipmentNum}`);
       try {
         let data = response.data;
         if (data.state === 'success') {
@@ -714,7 +714,7 @@ export const useAPIStore = defineStore('API',{
      */   
     async getMngDatagrid(url, datagrid, form) {
       datagrid.loading = true;
-      const baseUrl = 'http://192.168.0.177:7008';
+      const baseUrl = 'https://localhost:44302';
       let apiurl = baseUrl + url;
       try {
         const token = await this.GetAntiForgeryToken();
@@ -747,7 +747,7 @@ export const useAPIStore = defineStore('API',{
      */       
     async getAssetData(AssetsId) {
       try {
-        const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetAssetInfo?id=${AssetsId}`);
+        const response = await axios.get(`https://localhost:44302/GetDBdata/GetAssetInfo?id=${AssetsId}`);
         const data = response.data;
         if (data.state === 'success') {
           console.log('資產資料:\n', data.resultList);
@@ -786,7 +786,7 @@ export const useAPIStore = defineStore('API',{
       }
       //
       try {
-        const response = await axios.post('http://192.168.0.177:7008/Account/IdentityValidation', form);
+        const response = await axios.post('https://localhost:44302/Account/IdentityValidation', form);
         const data = response.data;
         if (data.state === 'success') {
           user.isValidate = true;
@@ -808,7 +808,7 @@ export const useAPIStore = defineStore('API',{
     async getRoleId(userName) {
       return new Promise(async(resolve, reject)=>{
         try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetRoleFromName?name=${userName}`);
+          const response = await axios.get(`https://localhost:44302/GetDBdata/GetRoleFromName?name=${userName}`);
           const data = response.data;
           // console.log('userName', this.userName);
           // console.log('Applicant',Applicant);
@@ -833,7 +833,7 @@ export const useAPIStore = defineStore('API',{
     async getRoleName(userName) {
       return new Promise(async(resolve, reject)=>{
         try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetRoleFromName?name=${userName}`);
+          const response = await axios.get(`https://localhost:44302/GetDBdata/GetRoleFromName?name=${userName}`);
           const data = response.data;
           // console.log('userName', this.userName);
           // console.log('Applicant',Applicant);
@@ -857,7 +857,7 @@ export const useAPIStore = defineStore('API',{
     async getRoleOption() {
       return new Promise(async (resolve, reject) => {
         try {
-          const response = await axios.get('http://192.168.0.177:7008/GetParameter/GetRoles');
+          const response = await axios.get('https://localhost:44302/GetParameter/GetRoles');
           const data = response.data ;
           if(data.state === 'success') {
             console.log(data.resultList.RoleList);
@@ -876,7 +876,7 @@ export const useAPIStore = defineStore('API',{
     async checkPermission(permissionName) {
       return new Promise(async(resolve, reject)=>{
         try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetParameter/HasPermission?id=${permissionName}`);
+          const response = await axios.get(`https://localhost:44302/GetParameter/HasPermission?id=${permissionName}`);
           const data = response.data;
           if (data.state === 'success') {
             resolve (data.resultList) ;

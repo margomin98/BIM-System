@@ -442,7 +442,7 @@ async function submit() {
     PrepareMemo: PrepareMemo.value,
   };
   try {
-    const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/MaterialPreparation', requestData);
+    const response = await axios.post('https://localhost:44302/AssetsOutMng/MaterialPreparation', requestData);
     const data = response.data;
     if (data.state === 'success') {
       let msg = data.messages + '\n';
@@ -486,7 +486,7 @@ async function SubtractFromInventory(itemData) {
     CI_ID: itemData.CI_ID // for 存貨耗材
   }
   try {
-    const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/SubtractFromInventory', requestData);
+    const response = await axios.post('https://localhost:44302/AssetsOutMng/SubtractFromInventory', requestData);
     const data = response.data;
     if (data.state === 'success') {
       addMaterial(itemData);

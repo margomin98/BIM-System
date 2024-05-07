@@ -329,7 +329,7 @@ async function submit() {
     };
     console.log('requestData', requestData);
     try {
-      const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/Delivery', requestData);
+      const response = await axios.post('https://localhost:44302/AssetsOutMng/Delivery', requestData);
       const data = response.data;
       console.log(data);
       if (data.state === 'success') {

@@ -123,7 +123,7 @@
       formData.append(fieldName, formFields[fieldName]);
       console.log(formData.get(`${fieldName}`));
     }
-    const response = await axios.post('http://192.168.0.177:7008/AssetsInMng/Delivery', formData);
+    const response = await axios.post('https://localhost:44302/AssetsInMng/Delivery', formData);
     try {
       const data = response.data;
       console.log(data);

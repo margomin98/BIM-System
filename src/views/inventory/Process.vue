@@ -304,7 +304,7 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
       async function confirmItem() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.177:7008/StocktakingMng/GetSystemInventoryItems?id=${IP_ID}`);
+          const response = await axios.get(`https://localhost:44302/StocktakingMng/GetSystemInventoryItems?id=${IP_ID}`);
           const data = response.data;
           if (data.state === 'success') {
             console.log(data.messages);
@@ -325,7 +325,7 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
       async function getDetails() {
         const axios = require('axios');
         try {
-          const response = await axios.get(`http://192.168.0.177:7008/GetDBdata/GetInventoryResult?id=${IP_ID}`);
+          const response = await axios.get(`https://localhost:44302/GetDBdata/GetInventoryResult?id=${IP_ID}`);
           const data = response.data;
           if (data.state === 'success') {
             // 檢查資料狀態是否可編盤點
@@ -358,7 +358,7 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
         UpdatePageParameter(datagrid1, event, type, form)
         try {
           const token = await GetAntiForgeryToken();
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/PlanItems', form,{
+          const response = await axios.post('https://localhost:44302/StocktakingMng/PlanItems', form,{
             headers:{
               'RequestVerificationToken': token,
             }
@@ -400,7 +400,7 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
         console.log('單項盤點requestData:', requestData);
         try {
           const token = await GetAntiForgeryToken();
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/TakeInventory', requestData,{
+          const response = await axios.post('https://localhost:44302/StocktakingMng/TakeInventory', requestData,{
             headers:{
               'RequestVerificationToken': token,
             }
@@ -429,7 +429,7 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
         try {
           const axios = require('axios');
           const token = await GetAntiForgeryToken();
-          const response = await axios.post('http://192.168.0.177:7008/StocktakingMng/InventoryCompleted', requestData,{
+          const response = await axios.post('https://localhost:44302/StocktakingMng/InventoryCompleted', requestData,{
             headers:{
               'RequestVerificationToken': token,
             }

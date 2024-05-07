@@ -359,7 +359,7 @@ const saveUserRole = async () => {
   form.append('userName', User.name);
   form.append('role', User.selectPermission);
   try {
-    const reseponse = await axios.post('http://192.168.0.177:7008/AuthorityMng/AccoutChangeRole', form);
+    const reseponse = await axios.post('https://localhost:44302/AuthorityMng/AccoutChangeRole', form);
     const data = reseponse.data;
     if (data.state === 'success') {
       let msg = data.messages + '\n';
@@ -471,7 +471,7 @@ const getPagePermission = async (Id) => {
   const form = new FormData();
   form.append('Id', Id);
   try {
-    const response = await axios.post('http://192.168.0.177:7008/AuthorityMng/GetRoleSettingById', form);
+    const response = await axios.post('https://localhost:44302/AuthorityMng/GetRoleSettingById', form);
     const data = response.data;
     if (data.state === 'success') {
       console.log(data.messages);
@@ -523,7 +523,7 @@ const saveRolePermission = async () => {
     IsEnable: true // 不加的話。會因為接收ViewModel的關係讓所選帳號變成停用(消失在DropdownList)
   }
   try {
-    const reseponse = await axios.post('http://192.168.0.177:7008/AuthorityMng/SetRoleSettingById', requestData);
+    const reseponse = await axios.post('https://localhost:44302/AuthorityMng/SetRoleSettingById', requestData);
     const data = reseponse.data;
     if (data.state === 'success') {
       alert(data.messages);

@@ -51,7 +51,7 @@ onMounted,
       });
       // 搜尋資產
       async function searchAssets() {
-        axios.get(`http://192.168.0.177:7008/GetDBdata/GetAssetInfo?id=${AssetsId.value}`)
+        axios.get(`https://localhost:44302/GetDBdata/GetAssetInfo?id=${AssetsId.value}`)
         .then((response) => {
           const data = response.data;
           if(data.state === 'success') {

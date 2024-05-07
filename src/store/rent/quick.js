@@ -84,7 +84,7 @@ export const useQuickRentStore = defineStore('QuickRent', {
       }
       try {
         const token = await apiStore.GetAntiForgeryToken();
-        const response = await axios.post('http://192.168.0.177:7008/AssetsOutMng/ExpressAssetsOut',rentStore.Form,{
+        const response = await axios.post('https://localhost:44302/AssetsOutMng/ExpressAssetsOut',rentStore.Form,{
           headers: { 
             'RequestVerificationToken': token,
           }
