@@ -244,7 +244,7 @@ onMounted(async () => {
     dgSearchParams.value = tempData.value;
     console.log('dgSearchParams.value.EquipType_Id',dgSearchParams.value.EquipType_Id);
     if(dgSearchParams.value.EquipType_Id) DropdownArray.EquipCategory = await apiStore.getEquipCategory(dgSearchParams.value.EquipType_Id);
-    if(dgSearchParams.value.Area_Id) DropdownArray.Layer = await apiStore.getEquipCategory(dgSearchParams.value.Area_Id);
+    if(dgSearchParams.value.Area_Id) DropdownArray.Layer = await apiStore.getLayer(dgSearchParams.value.Area_Id);
   }
   if(tempDg.value) {
     dg.value = tempDg.value;
