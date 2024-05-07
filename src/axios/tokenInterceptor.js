@@ -1,4 +1,5 @@
 import { GetAntiForgeryToken } from '@/assets/js/common_api';
+import router from '@/router';
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;
@@ -22,4 +23,12 @@ axios.interceptors.request.use(
   }
 );
 
+// axios.interceptors.response.use(
+//   async response => {
+//     if(response.data.state === 'account_error') {
+//       alert(response.data.messages);
+//       router.push('/');
+//     }
+//   }
+// )
 export default axios;

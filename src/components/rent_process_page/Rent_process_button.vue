@@ -23,6 +23,7 @@
     RentProcess_Confirm_Status, 
     Quick_Rent_Status
   } from '@/assets/js/enter_status';
+  import axios from '@/axios/tokenInterceptor';
   export default {
     props: ["params", "refresh"],
     setup(props,{emit}) {
@@ -60,7 +61,6 @@
         }
       }
       async function changeStatus() {
-        const axios = require("axios");
         const response = await axios.get(`https://localhost:44302/AssetsOutMng/DeliveryNotification?ao_id=${search_id}`);
         try {
           const data = response.data;

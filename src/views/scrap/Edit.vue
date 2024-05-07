@@ -179,8 +179,8 @@
     deleteFile,
     openFileExplorer,
    } from '@/assets/js/common_fn.js'
-  import { GetAntiForgeryToken, getAssets } from '@/assets/js/common_api.js'
-  import axios from 'axios';
+  import { getAssets } from '@/assets/js/common_api.js'
+  import axios from '@/axios/tokenInterceptor';
   import {
     useRoute
   } from 'vue-router';
@@ -297,12 +297,7 @@
         for (let i = 0; i < formParams.deleteFile.length; i++) {
           form.append('deleteFile', formParams.deleteFile[i]);
         }
-        const token = await GetAntiForgeryToken();
-        axios.post('https://localhost:44302/ScrapMng/ScrapEdit',form,{
-          headers:{
-            'RequestVerificationToken': token,
-          }
-        })
+        axios.post('https://localhost:44302/ScrapMng/ScrapEdit',form)
           .then((response) => {
             const data = response.data;
             if (data.state === 'success') {

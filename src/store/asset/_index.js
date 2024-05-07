@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { defineStore } from 'pinia'
 import {  useUtilsStore, useAPIStore } from '@/store'
 import { UnitArray, PackageUnitArray, HistoryAction } from '@/assets/js/dropdown'

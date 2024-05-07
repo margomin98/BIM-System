@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '@/axios/tokenInterceptor';
 import { defineStore } from 'pinia'
 import {  useUtilsStore, useAPIStore } from '@/store'
 import router from '@/router';
@@ -83,12 +83,7 @@ export const useQuickRentStore = defineStore('QuickRent', {
         return
       }
       try {
-        const token = await apiStore.GetAntiForgeryToken();
-        const response = await axios.post('https://localhost:44302/AssetsOutMng/ExpressAssetsOut',rentStore.Form,{
-          headers: { 
-            'RequestVerificationToken': token,
-          }
-        });
+        const response = await axios.post('https://localhost:44302/AssetsOutMng/ExpressAssetsOut',rentStore.Form);
         const data = response.data ; 
         if(data.state === 'success') {
           alert(`${data.messages}\n單號:${data.resultList.AO_ID}`);

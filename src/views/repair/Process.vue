@@ -263,7 +263,7 @@
   import {
     useRoute
   } from 'vue-router'
-  import axios from 'axios';
+  import axios from '@/axios/tokenInterceptor';
   import Navbar from '@/components/Navbar.vue';
   import router from '@/router';
   import {
@@ -279,7 +279,6 @@
   import {
     Repair_Process_Status
   } from '@/assets/js/enter_status';
-import { GetAntiForgeryToken } from '@/assets/js/common_api';
   register();
   export default {
     components: {
@@ -289,7 +288,6 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
       const route = useRoute();
       const RepairId = route.query.search_id;
       const details = ref({});
-      const token = ref('');
       const fileInput = ref(null);
       const previewParams = reactive({
         title: '',
@@ -378,7 +376,6 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           return
         }
         try {
-          token.value = await GetAntiForgeryToken();
           // 先編輯表單上半部內容
           await sendUpperForm();
           // 再依照R_ID將 文件 單次檔案上傳
@@ -409,7 +406,6 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           // 在这里发送上半部分表单数据的请求
           // 成功时，调用 resolve 并传递 R_ID
           // 失败时，调用 reject 并传递错误信息
-          const axios = require('axios');
           const form = new FormData();
           let msg = ''
           for (const key in formParams) {
@@ -427,11 +423,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
             }
           }
           console.log('上半部資料(含刪除):\n', msg);
-          axios.post('https://localhost:44302/RepairMng/SendingForRepair', form,{
-            headers: { 
-              'RequestVerificationToken': token.value,
-            }
-          })
+          axios.post('https://localhost:44302/RepairMng/SendingForRepair', form)
             .then(response => {
               const data = response.data;
               if (data.state === 'success') {
@@ -454,12 +446,7 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
           form.append('RepairId', RepairId);
           form.append('num', index);
           form.append('Document', fileData);
-          const axios = require('axios');
-          axios.post('https://localhost:44302/RepairMng/UploadDoc', form,{
-            headers: { 
-              'RequestVerificationToken': token.value,
-            }
-          })
+          axios.post('https://localhost:44302/RepairMng/UploadDoc', form)
             .then((response) => {
               const data = response.data;
               if (data.state === 'success') {

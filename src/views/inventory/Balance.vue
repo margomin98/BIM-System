@@ -332,7 +332,6 @@
     getEquipCategory,
     getArea,
     getLayer,
-GetAntiForgeryToken
   } from '@/assets/js/common_api'
   import {
     goBack,
@@ -346,7 +345,7 @@ GetAntiForgeryToken
   import {
     Inventory_Balance_Status
   } from '@/assets/js/enter_status'
-  import axios from 'axios';
+  import axios from '@/axios/tokenInterceptor';
   export default {
     components: {
       Navbar,
@@ -476,12 +475,7 @@ GetAntiForgeryToken
         }
         console.log('requestData:', requestData);
         try {
-          const token = await GetAntiForgeryToken();
-          const response = await axios.post('https://localhost:44302/StocktakingMng/BalanceAsset', requestData,{
-            headers:{
-              'RequestVerificationToken': token,
-            }
-          });
+          const response = await axios.post('https://localhost:44302/StocktakingMng/BalanceAsset', requestData);
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages;
@@ -501,7 +495,6 @@ GetAntiForgeryToken
         }
       }
       async function validate() {
-        const axios = require('axios');
         const formData = new FormData();
         const formFields = {
           'userName': validation.account,
@@ -512,12 +505,7 @@ GetAntiForgeryToken
         for (const fieldName in formFields) {
           formData.append(fieldName, formFields[fieldName]);
         }
-        const token = await GetAntiForgeryToken();
-        const response = await axios.post('https://localhost:44302/Account/IdentityValidation', formData,{
-          headers:{
-            'RequestVerificationToken': token,
-          }
-        });
+        const response = await axios.post('https://localhost:44302/Account/IdentityValidation', formData);
         try {
           const data = response.data;
           console.log(data);
@@ -535,7 +523,6 @@ GetAntiForgeryToken
       }
       // 上半部資料 + 差異細項Datagrid
       async function getDetails() {
-        const axios = require('axios');
         try {
           const response = await axios.get(`https://localhost:44302/GetDBdata/GetInventoryResult?id=${IP_ID}`);
           const data = response.data;
@@ -571,12 +558,7 @@ GetAntiForgeryToken
         }
         UpdatePageParameter(datagrid2, event, type, form)
         try {
-          const token = await GetAntiForgeryToken();
-          const response = await axios.post('https://localhost:44302/StocktakingMng/InventoryResult', form,{
-            headers:{
-              'RequestVerificationToken': token,
-            }
-          });
+          const response = await axios.post('https://localhost:44302/StocktakingMng/InventoryResult', form);
           const data = response.data;
           if (data.state === 'success') {
             console.log('下半部datagrid\n', data.resultList);

@@ -133,7 +133,6 @@ import {
 import {
   useRouter
 } from "vue-router";
-import axios from "axios";
 import {
   getMngDatagrid
 } from '@/assets/js/common_api';

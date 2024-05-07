@@ -261,7 +261,7 @@
   import {
     useRoute
   } from 'vue-router'
-  import axios from 'axios';
+  import axios from '@/axios/tokenInterceptor';
   import warn from "@/components/utils/warn_title.vue"
   import Navbar from '@/components/Navbar.vue';
   import router from '@/router';
@@ -278,7 +278,6 @@
   import {
     Repair_Delete_Status
   } from '@/assets/js/enter_status';
-  import { GetAntiForgeryToken } from '@/assets/js/common_api.js'
   register();
   export default {
     components: {
@@ -319,14 +318,8 @@
       async function deleteData() {
         const form = new FormData();
         form.append('RepairId', RepairId);
-        const axios = require('axios');
         try {
-          const token = await GetAntiForgeryToken();
-          const response = await axios.post(`https://localhost:44302/RepairMng/DeleteReceipt`, form,{
-            headers:{
-              'RequestVerificationToken': token,
-            }
-          });
+          const response = await axios.post(`https://localhost:44302/RepairMng/DeleteReceipt`, form);
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages + '\n';

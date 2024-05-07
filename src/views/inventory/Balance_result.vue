@@ -290,7 +290,7 @@ GetAntiForgeryToken
   import {
     PlanType
   } from '@/assets/js/dropdown';
-  import axios from 'axios';
+  import axios from '@/axios/tokenInterceptor';
   const route = useRoute();
   const router = useRouter();
   const IP_ID = route.query.search_id;
@@ -390,7 +390,6 @@ GetAntiForgeryToken
   async function force() {}
   // 上半部資料 + 差異細項Datagrid
   async function getDetails() {
-    const axios = require('axios');
     try {
       const response = await axios.get(`https://localhost:44302/GetDBdata/GetInventoryResult?id=${IP_ID}`);
       const data = response.data;
@@ -426,12 +425,7 @@ GetAntiForgeryToken
     }
     UpdatePageParameter(datagrid2,event,type,form)
     try {
-      const token = await GetAntiForgeryToken();
-      const response = await axios.post('https://localhost:44302/StocktakingMng/InventoryResult', form,{
-        headers:{
-          'RequestVerificationToken': token,
-        }
-      });
+      const response = await axios.post('https://localhost:44302/StocktakingMng/InventoryResult', form);
       const data = response.data;
       if (data.state === 'success') {
         console.log('下半部datagrid\n', data.resultList);

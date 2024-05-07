@@ -20,8 +20,7 @@
   import Order_component from '@/components/order_page/Order_component.vue';
   import router from '@/router';
   import { goBack, checkRequire, checkMaxLetter, } from '@/assets/js/common_fn.js'
-  import { GetAntiForgeryToken } from '@/assets/js/common_api.js'
-  import axios from 'axios'
+  import axios from '@/axios/tokenInterceptor';
 	const formParams = reactive({
 		PO_ID: '',
 		PurchaseNum: '',
@@ -71,12 +70,11 @@
     if(!checkMaxLetter(FormLetterCheckList,formParams)) { return }
     loading.value = true;
     try {
-      const token =  await GetAntiForgeryToken();
       // 先用文字部分建立訂購單，再用訂購單ID(PO_ID)將檔案上傳
-      const PO_ID = await sendTextForm(token);
+      const PO_ID = await sendTextForm();
       let filePromises = [];
       fileParams.newDoc.forEach((file,index)=>{
-        filePromises.push(sendFileForm(PO_ID, file, index,token));
+        filePromises.push(sendFileForm(PO_ID, file, index));
       })
       await Promise.all(filePromises)
       .then((result)=>{
@@ -103,7 +101,7 @@
     // console.log('form',formParams);
     // console.log('file',fileParams.newDoc);
   })
-  const sendTextForm = ((token)=>{
+  const sendTextForm = (()=>{
     return new Promise((resolve, reject) => {
       const form = new FormData();
       for (const key in formParams) {
@@ -111,11 +109,7 @@
           form.append(key, formParams[key]);
         }
       }
-      axios.post('https://localhost:44302/PurchasingMng/CreateOrder', form,{
-        headers: { 
-          'RequestVerificationToken': token,
-        }
-      })
+      axios.post('https://localhost:44302/PurchasingMng/CreateOrder', form)
         .then(response => {
           const data = response.data;
           if (data.state === 'success') {
@@ -131,18 +125,13 @@
         });
     });
   })
-  const sendFileForm = (( PO_ID , file , index , token)=>{
+  const sendFileForm = (( PO_ID , file , index)=>{
     return new Promise((resolve, reject) => {
           const form = new FormData();
           form.append('PO_ID', PO_ID);
           form.append('num', index);
           form.append('Document', file);
-          const axios = require('axios');
-          axios.post('https://localhost:44302/PurchasingMng/UploadFile', form,{
-            headers: { 
-              'RequestVerificationToken': token,
-            }
-          })
+          axios.post('https://localhost:44302/PurchasingMng/UploadFile', form)
             .then((response) => {
               const data = response.data;
               if (data.state === 'success') {

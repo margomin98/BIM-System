@@ -161,7 +161,6 @@ import {
   getApplication,
   getAssets
 } from '@/assets/js/common_api.js'
-import axios from 'axios';
 const props = defineProps(['hidden', 'placeholder', 'disabled']);
 const ApplicationDate = ref('');
 const modalParams = reactive({

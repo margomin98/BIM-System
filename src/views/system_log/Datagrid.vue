@@ -80,7 +80,6 @@
   import {
     SystemLog_ActiveArray
   } from '@/assets/js/dropdown';
-  import axios from 'axios';
   export default {
     components: {
       Navbar,

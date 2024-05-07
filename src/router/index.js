@@ -150,8 +150,7 @@ import System_Log_View from "../views/system_log/View"
 import Authorized from "../views/Authorized";
 //權限不足
 
-import axios from "axios";
-import { getApplication } from "@/assets/js/common_api";
+import axios from '@/axios/tokenInterceptor'
 import { useTempSearchStore } from "@/store";
 
 const routes = [
@@ -730,13 +729,6 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
-// router.beforeEach((to, from, next)=>{
-//   const TempSearchStore = useTempSearchStore();
-//   if (to.name !== 'Assets_Edit' && to.name !== 'Assets_View' && to.name !== 'Assets_Datagrid') {
-//     TempSearchStore.$reset();
-//   }
-//   next();
-// })
 
 router.beforeEach(async (to, from, next) => {
   const TempSearchStore = useTempSearchStore();
@@ -747,6 +739,7 @@ router.beforeEach(async (to, from, next) => {
     try {
       const request = to.meta.request
       const response = await axios.get(`https://localhost:44302/GetParameter/HasPermission?id=${request}`);
+      console.log('data',response);
       const data = response.data;
       if (data.state === 'success') {
         if(data.resultList === true) {

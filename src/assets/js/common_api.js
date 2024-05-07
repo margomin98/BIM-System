@@ -31,14 +31,9 @@ export const getDetails = (async (url,id)=>{
 export const getMngDatagrid = (async (url , rowData, datagrid,form)=>{
   datagrid.loading = true;
   try {
-    const token = await GetAntiForgeryToken();
     const baseUrl = 'https://localhost:44302'
     let apiurl = baseUrl + url
-    axios.post(`${apiurl}`, form ,{
-      headers:{
-        'RequestVerificationToken': token,
-      }
-    })
+    axios.post(`${apiurl}`, form)
     .then((response)=>{
       const data = response.data;
       if (data.state === 'success') {

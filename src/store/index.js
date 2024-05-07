@@ -1,4 +1,4 @@
-import axios from '@/axios/tokenInterceptor'
+import axios from '@/axios/tokenInterceptor';
 import { defineStore } from 'pinia'
 import router from '@/router';
 import { createDadagridObject } from '@/assets/js/common_fn';
@@ -462,23 +462,6 @@ export const useAPIStore = defineStore('API',{
   },
   actions: {
     /**
-     * 取得AntiForegeory Token
-     * @returns {Promise<string>>} 返回AntiForegeory Token
-     */
-    async GetAntiForgeryToken() {
-      try {
-        const response = await axios.post('https://localhost:44302/Manage/GetAntiForgeryToken');
-        if(response.data.state === 'account_error') {
-          alert(response.data.messages);
-          router.push('/');
-        }
-        return response.data;
-      } catch (error) {
-        console.error(error);
-        throw error;
-      }
-    },
-    /**
      * 取得設備總類
      * @returns {Promise<Array<{Text: string, Value: string}>>} 返回設備總類Array
      */
@@ -717,7 +700,6 @@ export const useAPIStore = defineStore('API',{
       const baseUrl = 'https://localhost:44302';
       let apiurl = baseUrl + url;
       try {
-        const token = await this.GetAntiForgeryToken();
         const response = await axios.post(apiurl, form);
         const data = response.data;
         if (data.state === 'success') {

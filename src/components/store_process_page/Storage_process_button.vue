@@ -22,6 +22,7 @@
     StoreProcess_Edit_Status, 
     Quick_Store_Status,
   } from '@/assets/js/enter_status';
+  import axios from '@/axios/tokenInterceptor';
   export default {
     props: ['params'],
     setup(props,{emit}) {
@@ -65,7 +66,6 @@
       }
       //改變狀態 通知交付or暫停交付
       async function changeStatus() {
-        const axios = require('axios');
         try {
           const response = await axios.get(`https://localhost:44302/AssetsInMng/DeliveryNotification?id=${search_id}`);
           const data = response.data;

@@ -179,6 +179,7 @@ import {
   useRoute,
   useRouter
 } from "vue-router";
+import axios from '@/axios/tokenInterceptor';
 export default {
   components: {
     Navbar,
@@ -197,7 +198,6 @@ export default {
       getDetails();
     })
     async function getDetails() {
-      const axios = require('axios');
       try {
         const response = await axios.get(`https://localhost:44302/GetDBdata/ReceivingGetData?ar_id=${AR_ID}`);
         console.log(response);

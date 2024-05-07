@@ -252,7 +252,6 @@ import {
   getLayer,
   getApplication,
   getAccount,
-GetAntiForgeryToken
 } from '@/assets/js/common_api'
 import {
   UpdatePageParameter,
@@ -268,6 +267,7 @@ import {
 import {
   useRouter
 } from "vue-router";
+import axios from '@/axios/tokenInterceptor';
 export default {
   components: {
     Navbar,
@@ -429,7 +429,6 @@ export default {
         alert('物品名稱不可輸入超過20字')
         return
       }
-      const axios = require('axios');
       try {
         const form = new FormData();
         form.append('EquipType_Id', searchParams.EquipType_Id);
@@ -437,12 +436,7 @@ export default {
         form.append('ProductName', searchParams.ProductName);
         form.append('AssetList', JSON.stringify(formParams.AssetList));
         UpdatePageParameter(datagrid, event, type, form);
-        const token = await GetAntiForgeryToken();
-        const response = await axios.post('https://localhost:44302/IntegrationMng/SearchInventory', form,{
-          headers:{
-            'RequestVerificationToken': token,
-          }
-        });
+        const response = await axios.post('https://localhost:44302/IntegrationMng/SearchInventory', form);
         const data = response.data;
         if (data.state === 'success') {
           // 取得資料
@@ -484,7 +478,6 @@ export default {
         return
       }
       // 送出
-      const axios = require('axios');
       let requestData = {};
       for (const keyname in formParams) {
         if (formParams[keyname]) {
@@ -492,12 +485,7 @@ export default {
         }
       }
       try {
-        const token = await GetAntiForgeryToken();
-        const response = await axios.post('https://localhost:44302/IntegrationMng/Integrate', requestData,{
-          headers:{
-            'RequestVerificationToken': token,
-          }
-        });
+        const response = await axios.post('https://localhost:44302/IntegrationMng/Integrate', requestData);
         const data = response.data;
         console.log(data);
         if (data.state === 'success') {
@@ -536,7 +524,6 @@ export default {
     async function checkAssetsIdRepeat() {
       const repeatForm = new FormData();
       repeatForm.append('assetsIds', formParams.IntegrationId);
-      const axios = require('axios');
       const response = await axios.post('https://localhost:44302/GetDBdata/CheckAssetsInID', repeatForm);
       try {
         const data = response.data;

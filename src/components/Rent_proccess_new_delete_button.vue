@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { GetAntiForgeryToken } from '@/assets/js/common_api';
+import axios from '@/axios/tokenInterceptor';
 
   export default {
     props: ['params'],
@@ -17,19 +17,13 @@ import { GetAntiForgeryToken } from '@/assets/js/common_api';
         AddToInventory();
       }
       async function AddToInventory() {
-        const axios = require('axios');
         const requestData = {
           OM_id: props.params.data.OM_id,
           AssetsId: props.params.data.AssetsId,
           OM_Number: props.params.data.OM_Number,
         }
         try {
-          const token = await GetAntiForgeryToken();
-          const response = await axios.post('https://localhost:44302/AssetsOutMng/AddToInventory', requestData , {
-            headers:{
-              'RequestVerificationToken': token,
-            }
-          });
+          const response = await axios.post('https://localhost:44302/AssetsOutMng/AddToInventory', requestData);
           const data = response.data;
           if (data.state === 'success') {
             console.log('刪除暫存結果:' +data);

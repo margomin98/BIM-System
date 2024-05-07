@@ -133,10 +133,9 @@
     useRoute,
     useRouter
   } from "vue-router";
-  import axios from "axios";
+  import axios from '@/axios/tokenInterceptor';
   import { PlanType } from "@/assets/js/dropdown";
   import { UpdatePageParameter, createDatagrid, goBack } from "@/assets/js/common_fn";
-import { GetAntiForgeryToken } from "@/assets/js/common_api";
   export default {
     components: {
       DataTable,
@@ -201,7 +200,6 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
       });
       // 帶入資料
       async function getDetails() {
-        const axios = require('axios');
         try {
           const response = await axios.get(`https://localhost:44302/GetDBdata/GetInventoryPlanInfo?id=${IP_ID}`);
           const data = response.data;
@@ -232,12 +230,7 @@ import { GetAntiForgeryToken } from "@/assets/js/common_api";
           }
         }
         UpdatePageParameter(datagrid,event,type,form)
-        const token = await GetAntiForgeryToken();
-        axios.post('https://localhost:44302/StocktakingMng/RangeOfPlan',form,{
-          headers:{
-            'RequestVerificationToken': token,
-          }
-        })
+        axios.post('https://localhost:44302/StocktakingMng/RangeOfPlan',form)
         .then((response)=>{
           const data = response.data
           if(data.state === 'success') {

@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '@/axios/tokenInterceptor';
 import { defineStore } from 'pinia'
 import { useUtilsStore, useAPIStore } from '@/store'
 import { useAssetStore } from './_index';
@@ -48,12 +48,7 @@ export const useEditStore = defineStore('Edit', {
         form.append('deleteFile', assetStore.Form.deleteFile[i]);
       }
       try {
-        const token = await apiStore.GetAntiForgeryToken();
-        const response = await axios.post('https://localhost:44302/InventoryMng/AssetEdit', form,{
-          headers: { 
-            'RequestVerificationToken': token,
-          }
-        });
+        const response = await axios.post('https://localhost:44302/InventoryMng/AssetEdit', form);
         const data = response.data;
         console.log(data);
         if (data.state === 'success') {

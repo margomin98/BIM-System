@@ -81,7 +81,7 @@
     useRouter
   } from "vue-router";
   import { goBack } from "@/assets/js/common_fn";
-  import axios from "axios";
+  import axios from '@/axios/tokenInterceptor';
   export default {
     components: {
       Navbar,

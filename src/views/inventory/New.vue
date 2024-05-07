@@ -284,7 +284,6 @@
     getApplication,
     getAccount,
     getProject,
-    GetAntiForgeryToken
   } from '@/assets/js/common_api'
   import {
     UpdatePageParameter,
@@ -294,7 +293,7 @@
   import {
     PlanType
   } from "@/assets/js/dropdown";
-  import axios from "axios";
+  import axios from '@/axios/tokenInterceptor';
   export default {
     components: {
       DataTable,
@@ -415,7 +414,6 @@
           }
         }
         // 送出
-        const axios = require('axios');
         let requestData = {};
         for (const keyname in formParams) {
           requestData[keyname] = formParams[keyname]
@@ -426,12 +424,7 @@
         }
         console.log('requestData:', requestData);
         try {
-          const token = await GetAntiForgeryToken();
-          const response = await axios.post('https://localhost:44302/StocktakingMng/CreatePlan', requestData,{
-            headers:{
-              'RequestVerificationToken': token,
-            }
-          });
+          const response = await axios.post('https://localhost:44302/StocktakingMng/CreatePlan', requestData);
           const data = response.data;
           console.log(data);
           if (data.state === 'success') {
@@ -477,14 +470,8 @@
           }
         }
         UpdatePageParameter(datagrid1, event, type, form)
-        const axios = require('axios');
         try {
-          const token = await GetAntiForgeryToken();
-          const response = await axios.post('https://localhost:44302/StocktakingMng/SearchInventory', form,{
-            headers:{
-              'RequestVerificationToken': token,
-            }
-          });
+          const response = await axios.post('https://localhost:44302/StocktakingMng/SearchInventory', form);
           const data = response.data;
           if (data.state === 'success') {
             console.log('搜尋結果', data.resultList);
@@ -518,12 +505,7 @@
           }
         }
         UpdatePageParameter(datagrid2, event, type, form)
-        const token = await GetAntiForgeryToken();
-        axios.post('https://localhost:44302/StocktakingMng/RangeOfPlan', form,{
-          headers:{
-            'RequestVerificationToken': token,
-          }
-        })
+        axios.post('https://localhost:44302/StocktakingMng/RangeOfPlan', form)
           .then((response) => {
             const data = response.data
             if (data.state === 'success') {
@@ -664,12 +646,7 @@
               form.append('AssetList', item)
             }
           }
-          const token = await GetAntiForgeryToken();
-          axios.post('https://localhost:44302/StocktakingMng/SelectAllGrid', form,{
-            headers:{
-              'RequestVerificationToken': token,
-            }
-          })
+          axios.post('https://localhost:44302/StocktakingMng/SelectAllGrid', form)
             .then((response) => {
               const data = response.data
               if (data.state === 'success') {

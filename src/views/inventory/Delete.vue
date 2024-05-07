@@ -140,7 +140,7 @@ import List_view_button from "@/components/Inventory_view_button";
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Navbar from "@/components/Navbar.vue";
-import axios from "axios";
+import axios from '@/axios/tokenInterceptor';
 import {
   onMounted,
   ref,
@@ -227,7 +227,6 @@ export default {
     async function deleteData() {
       const form = new FormData();
       form.append('PlanId', IP_ID);
-      const axios = require('axios');
       const response = await axios.post(`https://localhost:44302/StocktakingMng/DeletePlan`, form);
       try {
         const data = response.data;
@@ -247,7 +246,6 @@ export default {
     }
     // 帶入資料
     async function getDetails() {
-      const axios = require('axios');
       try {
         const response = await axios.get(`https://localhost:44302/GetDBdata/GetInventoryPlanInfo?id=${IP_ID}`);
         const data = response.data;

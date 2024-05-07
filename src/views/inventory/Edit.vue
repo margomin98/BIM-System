@@ -268,7 +268,6 @@
     getLayer,
     getAccount,
     getProject,
-    GetAntiForgeryToken
   } from '@/assets/js/common_api'
   import {
     goBack,
@@ -290,7 +289,7 @@ watch,
     useRoute,
     useRouter
   } from "vue-router";
-  import axios from "axios";
+  import axios from '@/axios/tokenInterceptor';
   export default {
     components: {
       DataTable,
@@ -394,7 +393,6 @@ watch,
       });
       // 帶入資料
       async function getDetails() {
-        const axios = require('axios');
         try {
           const response = await axios.get(`https://localhost:44302/GetDBdata/GetInventoryPlanInfo?id=${IP_ID}`);
           const data = response.data;
@@ -443,7 +441,6 @@ watch,
           }
         }
         // 送出
-        const axios = require('axios');
         let requestData = {};
         for (const keyname in formParams) {
           requestData[keyname] = formParams[keyname]
@@ -454,12 +451,7 @@ watch,
         }
         console.log('requestData:', requestData);
         try {
-          const token = await GetAntiForgeryToken();
-          const response = await axios.post('https://localhost:44302/StocktakingMng/EditPlan', requestData,{
-            headers:{
-              'RequestVerificationToken': token,
-            }
-          });
+          const response = await axios.post('https://localhost:44302/StocktakingMng/EditPlan', requestData);
           const data = response.data;
           if (data.state === 'success') {
             let msg = data.messages;
@@ -504,14 +496,8 @@ watch,
           }
         }
         UpdatePageParameter(datagrid1, event, type, form)
-        const axios = require('axios');
         try {
-          const token = await GetAntiForgeryToken();
-          const response = await axios.post('https://localhost:44302/StocktakingMng/SearchInventory', form,{
-            headers:{
-              'RequestVerificationToken': token,
-            }
-          });
+          const response = await axios.post('https://localhost:44302/StocktakingMng/SearchInventory', form);
           const data = response.data;
           if (data.state === 'success') {
             console.log('搜尋結果', data.resultList);
@@ -546,12 +532,7 @@ watch,
           }
         }
         UpdatePageParameter(datagrid2, event, type, form)
-          const token = await GetAntiForgeryToken();
-        axios.post('https://localhost:44302/StocktakingMng/RangeOfPlan', form,{
-          headers:{
-            'RequestVerificationToken': token,
-          }
-        })
+        axios.post('https://localhost:44302/StocktakingMng/RangeOfPlan', form)
           .then((response) => {
             const data = response.data
             if (data.state === 'success') {
@@ -675,12 +656,7 @@ watch,
               form.append('AssetList', item)
             }
           }
-          const token = await GetAntiForgeryToken();
-          axios.post('https://localhost:44302/StocktakingMng/SelectAllGrid', form,{
-            headers:{
-              'RequestVerificationToken': token,
-            }
-          })
+          axios.post('https://localhost:44302/StocktakingMng/SelectAllGrid', form)
             .then((response) => {
               const data = response.data
               if (data.state === 'success') {

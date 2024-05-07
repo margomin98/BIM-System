@@ -34,8 +34,8 @@ import Navbar from '@/components/Navbar.vue';
 import Order_component from '@/components/order_page/Order_component.vue';
 import router from '@/router';
 import { goBack } from '@/assets/js/common_fn.js'
-import { getDetails , GetAntiForgeryToken } from '@/assets/js/common_api'
-import axios from 'axios'
+import { getDetails } from '@/assets/js/common_api'
+import axios from '@/axios/tokenInterceptor';
 import { useRoute } from 'vue-router';
 const route = useRoute();
 const PO_ID = route.query.search_id;
@@ -95,12 +95,7 @@ async function deleteData() {
   const form = new FormData();
   form.append('PO_ID', PO_ID);
   try {
-    const token =  await GetAntiForgeryToken();
-    const response = await axios.post(`https://localhost:44302/PurchasingMng/DeleteOrder`, form,{
-      headers: { 
-        'RequestVerificationToken': token,
-      }
-    });
+    const response = await axios.post(`https://localhost:44302/PurchasingMng/DeleteOrder`, form);
     const data = response.data;
     if (data.state === 'success') {
       alert(data.messages + '\n單號:' + data.resultList.PO_ID);
