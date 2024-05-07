@@ -109,16 +109,16 @@
                 <div class="col">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">型號：</div>
-                        <input v-show="PageType === 'view'" type="text" class="form-control readonly_box" readonly v-model="Form.ProductSpec"/>
-                        <input v-show="PageType === 'edit'" type="text" class="form-control" placeholder="最多輸入100字" v-model="Form.ProductSpec"/>
+                        <input v-show="PageType === 'view'" type="text" class="form-control readonly_box" readonly v-model="Form.ProductType"/>
+                        <input v-show="PageType === 'edit'" type="text" class="form-control" placeholder="最多輸入100字" v-model="Form.ProductType"/>
                     </div>
                 </div>
                 <!-- 規格 -->
                 <div class="col">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">規格：</div>
-                        <input v-show="PageType === 'view'" type="text" class="form-control readonly_box" readonly v-model="Form.ProductType"/>
-                        <input v-show="PageType === 'edit'" type="text" class="form-control" placeholder="最多輸入100字" v-model="Form.ProductType"/>
+                        <input v-show="PageType === 'view'" type="text" class="form-control readonly_box" readonly v-model="Form.ProductSpec"/>
+                        <input v-show="PageType === 'edit'" type="text" class="form-control" placeholder="最多輸入100字" v-model="Form.ProductSpec"/>
                     </div>
                 </div>
                 <!-- S/N -->
