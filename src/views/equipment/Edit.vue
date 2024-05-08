@@ -383,9 +383,6 @@ export default {
           // console.log('details', details.value.AssetList);
         } else if (data.state === 'error') {
           alert(data.messages);
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
         }
       } catch (error) {
         console.error(error);
@@ -473,9 +470,6 @@ export default {
           datagrid.key++;
         } else if (data.state === 'error') {
           alert(data.messages);
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
         }
       } catch (error) {
         console.error(error);
@@ -527,9 +521,6 @@ export default {
               details.value.AssetList[index].error_msg = '　目前庫存量：' + item.Number;
             }
           });
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
         }
       } catch (error) {
         console.error(error);

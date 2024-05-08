@@ -436,9 +436,6 @@
             });
           } else if (data.state === 'error') {
             alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
           }
         } catch (error) {
           console.error(error);
@@ -484,9 +481,6 @@
             }
           } else if (data.state === 'error') {
             alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
           }
         } catch (error) {
           console.error(error);

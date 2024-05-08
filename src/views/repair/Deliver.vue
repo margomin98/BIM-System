@@ -269,9 +269,6 @@ export default {
           if (data.state === 'success') {
             canEnterPage(data.resultList.Status, Repair_Deliver_Status)
             details.value = data.resultList;
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
           } else {
             alert(data.messages);
           }
@@ -368,9 +365,6 @@ export default {
             router.push({
               name: 'Repair_Datagrid'
             });
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
           } else {
             alert(data.messages);
           }

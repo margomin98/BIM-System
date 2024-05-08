@@ -69,9 +69,6 @@
             emit('updategrid');
           } else if (data.state === "error") {
             alert(data.message);
-          } else if (data.state === "account_error") {
-            alert(data.message);
-            router.push("/");
           }
         } catch (error) {
           console.log(error);

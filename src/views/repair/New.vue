@@ -201,9 +201,6 @@ export default {
             router.push({
               name: 'Repair_Datagrid'
             });
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
           } else {
             alert('新增報修單失敗')
           }

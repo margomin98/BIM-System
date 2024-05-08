@@ -91,9 +91,6 @@ export const useQuickRentStore = defineStore('QuickRent', {
           router.push({
             name: 'Rent_Datagrid'
           })
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
         } else {
           alert(data.messages);
         }

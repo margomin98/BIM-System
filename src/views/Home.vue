@@ -923,10 +923,6 @@ const getAlertMsg = async () => {
     const data = response.data;
     if (data.state === 'success') {
       alertMsgArray.value = data.resultList.MsgArray;
-    }
-    else if (data.state === 'account_error') {
-      alert(data.messages);
-      router.push('/');
     } else {
       alert(data.messages);
     }
@@ -1056,12 +1052,7 @@ const changeIsExcute = async (itemData) => {
   try {
     const response = await axios.post('https://localhost:44302/HomePage/SetExecuteOfDeliveredItem', { OM_ID: itemData.OM_ID, IsExecute: itemData.IsExecute });
     const data = response.data;
-    if (data.state === 'account_error') {
-      alert(data.messages);
-      router.push('/');
-    } else {
-      alert(data.messages);
-    }
+    alert(data.messages);
   } catch (error) {
     console.error(error);
   } finally {
@@ -1082,10 +1073,6 @@ const getLineNotificationStatus = async () => {
       // 無開啟
       lineSwitch.value.checked = false;
       SwitchProps.value = false;
-    }
-    else if (data.state === 'account_error') {
-      alert(data.messages);
-      router.push('/');
     }
     else {
       alert(data.messages);
@@ -1115,10 +1102,6 @@ const handleLineSwitch = async () => {
           alert(data.resultList.ResponseMsg);
           break;
       }
-    }
-    else if (data.state === 'account_error') {
-      alert(data.messages);
-      router.push('/');
     } else {
       alert(data.messages);
     }

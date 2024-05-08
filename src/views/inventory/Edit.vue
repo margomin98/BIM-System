@@ -410,9 +410,6 @@ watch,
             getRangeOfPlan('', 'search');
           } else if (data.state === 'error') {
             alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
           }
         } catch (error) {
           console.error(error);
@@ -462,9 +459,6 @@ watch,
             });
           } else if (data.state === 'error') {
             alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
           }
         } catch (error) {
           console.error(error);
@@ -510,9 +504,6 @@ watch,
             }
           } else if (data.state === 'error') {
             alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
           }
         } catch (error) {
           console.error(error);

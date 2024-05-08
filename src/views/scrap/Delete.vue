@@ -267,9 +267,6 @@ export default {
               .catch((error) => {
                 console.error(error);
               })
-          } else if (data.state === 'account_error') {
-            alert(data.messages)
-            router.push('/');
           } else {
             alert(data.messages)
           }

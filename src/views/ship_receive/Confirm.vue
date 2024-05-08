@@ -59,9 +59,6 @@ const submit = async () => {
     if(data.state === 'success') {
       alert(`${data.messages}\n單號:${data.resultList.AO_ID}`);
       router.push({name: 'Ship_Receive_Datagrid'});
-    } else if (data.state === 'account_error') {
-      alert(data.messages);
-      router.push('/');
     } else {
       alert(data.messages);
     }

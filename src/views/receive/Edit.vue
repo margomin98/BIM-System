@@ -260,36 +260,33 @@
             }
           }
           console.log('單筆資料如下\n', details.value);
-        if (details.value.InformedPersons) {
-          details.value.InformedPersons = details.value.InformedPersons.map((name) => ({
-            name
-          }))
-        }
-        if (details.value.ReceivedDate) {
-          details.value.ReceivedDate = details.value.ReceivedDate.replace(/\//g, '-');
-        }
-        // 若有已上傳的物流文件 則新增key值 exist: true
-        if (details.value.existDocument) {
-          details.value.existDocument.forEach(item => {
-            item.exist = true;
-          });
-        }
-        // 若有已上傳的相片 則新增key值 exist: true
-        if (details.value.existFile) {
-          details.value.existFile.forEach(item => {
-            item.exist = true;
-            item.type = 'pic';
-          });
-          // 處理完後將existFile加入fileParams.viewPic
-          fileParams.viewPic = details.value.existFile
-        }
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
+          if (details.value.InformedPersons) {
+            details.value.InformedPersons = details.value.InformedPersons.map((name) => ({
+              name
+            }))
           }
-        })
+          if (details.value.ReceivedDate) {
+            details.value.ReceivedDate = details.value.ReceivedDate.replace(/\//g, '-');
+          }
+          // 若有已上傳的物流文件 則新增key值 exist: true
+          if (details.value.existDocument) {
+            details.value.existDocument.forEach(item => {
+              item.exist = true;
+            });
+          }
+          // 若有已上傳的相片 則新增key值 exist: true
+          if (details.value.existFile) {
+            details.value.existFile.forEach(item => {
+              item.exist = true;
+              item.type = 'pic';
+            });
+            // 處理完後將existFile加入fileParams.viewPic
+            fileParams.viewPic = details.value.existFile
+          }
+        } else if (data.state === 'error') {
+          alert(data.messages);
+        }
+      })
       .catch((error)=> {
         console.error(error);
       })

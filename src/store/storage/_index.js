@@ -519,9 +519,6 @@ export const useStorageStore = defineStore('Storage', {
 									name: 'Store_Process_Datagrid'
 								});
 							}
-						} else if (data.state === 'account_error') {
-							alert(data.messages);
-							router.push('/');
 						} else {
 							alert(data.messages);
 						}

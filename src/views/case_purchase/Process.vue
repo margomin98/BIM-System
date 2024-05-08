@@ -411,9 +411,6 @@ const submit = async (isDone) => {
             } else {
                 window.location.reload();
             }
-        } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
         } else {
             alert(data.messages);
         }

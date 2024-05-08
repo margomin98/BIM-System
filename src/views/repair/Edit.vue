@@ -211,9 +211,6 @@ export default {
             }
             // 可送出
             canSubmit.value = true;
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
           } else {
             alert(data.messages);
           }
@@ -260,9 +257,6 @@ export default {
             router.push({
               name: 'Repair_Datagrid'
             });
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
           } else {
             alert('編輯報修單失敗')
           }

@@ -4,10 +4,6 @@ import router from '@/router';
 export const GetAntiForgeryToken = async () => {
   try {
     const response = await axios.post('https://localhost:44302/Manage/GetAntiForgeryToken');
-    if(response.data.state === 'account_error') {
-      alert(response.data.messages);
-      router.push('/');
-    }
     return response.data;
   } catch (error) {
     console.error(error);
@@ -41,10 +37,6 @@ export const getMngDatagrid = (async (url , rowData, datagrid,form)=>{
         rowData.value = data.resultList.rows;
         datagrid.totalRecords = data.resultList.total;
         datagrid.key++;
-      } else if (data.state === 'account_error') {
-        //尚未登入
-        alert(data.messages);
-        router.push('/');
       } else {
         //取得datagrid失敗
         alert(data.messages);
@@ -69,9 +61,6 @@ export const getApplication = (async ()=> {
       return data.resultList.Applicant;
     } else if (data.state === 'error') {
       alert(data.messages);
-    } else if (data.state === 'account_error') {
-      alert(data.messages);
-      router.push('/');
     }
   } catch (error) {
     console.error('申請人取得失敗:',error);
@@ -87,9 +76,6 @@ export const getEquipType = (async ()=> {
       return data.resultList.TypeList;
     } else if (data.state === 'error') {
       alert(data.messages);
-    } else if (data.state === 'account_error') {
-      alert(data.messages);
-      router.push('/');
     }
   } catch (error) {
     console.error('總類取得失敗:',error);
@@ -105,9 +91,6 @@ export const getEquipCategory = (async (EquipType_Id) => {
       return data.resultList.CategoryList;
     } else if (data.state === 'error') {
       alert(data.messages);
-    } else if (data.state === 'account_error') {
-      alert(data.messages);
-      router.push('/');
     }
   } catch (error) {
     console.error('分類取得失敗:',error);
@@ -123,9 +106,6 @@ export const getArea = (async () => {
       return data.resultList.AreaList;
     } else if (data.state === 'error') {
       alert(data.messages);
-    } else if (data.state === 'account_error') {
-      alert(data.messages);
-      router.push('/');
     }
   } catch (error) {
     console.error('區域取得失敗:',error);
@@ -141,9 +121,6 @@ export const getLayer = (async (Area_Id)=> {
       return data.resultList.LayerList;
     } else if (data.state === 'error') {
       alert(data.messages);
-    } else if (data.state === 'account_error') {
-      alert(data.messages);
-      router.push('/');
     }
   } catch (error) {
     console.error('櫃位取得失敗:',error);
@@ -171,9 +148,6 @@ export const getProject = (async (projectCode) => {
     const data = response.data;
     if (data.state === 'success') {
       return data.resultList;
-    } else if (data.state === 'account_error') {
-      alert(data.messages);
-      router.push('/');
     } else {
       // 查無此專案代碼
       return data.messages.toString();
@@ -193,9 +167,6 @@ export const getAssets = (async (AssetsId)=> {
     } else if (data.state === 'error') {
       // console.log(data.messages);
       throw new Error('查無此產編')
-    } else if (data.state === 'account_error') {
-      alert(data.messages);
-      router.push('/');
     }
   } catch (error) {
     // console.error(error);

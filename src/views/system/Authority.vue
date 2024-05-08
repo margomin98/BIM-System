@@ -423,8 +423,6 @@ const permissionCUDI = async (type) => {
       DropdownArray.role = await apiStore.getRoleOption();
       rowData.value = DropdownArray.role;
       grid.value.setRowData(rowData.value);
-    } else if (data.state === 'account_error') {
-      router.push('/');
     }
   } catch (error) {
     console.error(error);

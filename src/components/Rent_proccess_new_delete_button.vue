@@ -29,9 +29,6 @@ import axios from '@/axios/tokenInterceptor';
             console.log('刪除暫存結果:' +data);
             // props.params.deleteMaterial(props.params.data)
             emit('deleteMaterial',props.params.data);
-          } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
           }
           else {
             alert(data.messages);

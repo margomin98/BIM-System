@@ -104,9 +104,6 @@ export const usePurchaseStore = defineStore('Purchase', {
         if(data.state === 'success') {
           alert(data.messages + '\n單號:' + data.resultList.PP_ID);
           router.push({name: 'Case_Purchase_Datagrid'});
-        } else if(data.sate === 'account_error') {
-          alert(data.messages);
-          router.push('/');
         } else {
           alert(data.messages);
         }

@@ -28,8 +28,9 @@ axios.interceptors.response.use(
     if(response.data.state === 'account_error') {
       alert(response.data.messages);
       router.push('/');
+    } else {
+      return response;
     }
-    return response;
   }
 )
 export default axios;

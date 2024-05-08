@@ -240,9 +240,6 @@
                   formParams[key] = details.value[key]
                 }
               }
-            } else if (data.state === 'account_error') {
-              alert(data.messages)
-              router.push('/');
             } else {
               alert(data.messages)
             }
@@ -305,9 +302,6 @@
               router.push({
                 name: 'Scrap_Datagrid'
               });
-            } else if (data.state === 'account_error') {
-              alert(data.messages);
-              router.push('/');
             } else {
               alert(data.messages)
             }

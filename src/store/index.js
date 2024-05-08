@@ -40,9 +40,6 @@ export const useUtilsStore = defineStore('Utils',{
           this.userName =  data.resultList.Applicant;
         } else if (data.state === 'error') {
           alert(data.messages);
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
         }
       } catch (error) {
         console.error('申請人取得失敗:',error);
@@ -474,9 +471,6 @@ export const useAPIStore = defineStore('API',{
           return data.resultList.TypeList;
         } else if (data.state === 'error') {
           alert(data.messages);
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
         }
       } catch (error) {
         console.error('總類取得失敗:',error);
@@ -497,9 +491,6 @@ export const useAPIStore = defineStore('API',{
           return data.resultList.CategoryList;
         } else if (data.state === 'error') {
           alert(data.messages);
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
         }
       } catch (error) {
         console.error('分類取得失敗:',error);
@@ -518,9 +509,6 @@ export const useAPIStore = defineStore('API',{
           return data.resultList.AreaList;
         } else if (data.state === 'error') {
           alert(data.messages);
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
         }
       } catch (error) {
         console.error('區域取得失敗:',error);
@@ -541,9 +529,6 @@ export const useAPIStore = defineStore('API',{
           return data.resultList.LayerList;
         } else if (data.state === 'error') {
           alert(data.messages);
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
         }
       } catch (error) {
         console.error('櫃位取得失敗:',error);
@@ -595,9 +580,6 @@ export const useAPIStore = defineStore('API',{
         const data = response.data;
         if (data.state === 'success') {
           return data.resultList;
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
         } else {
           // 查無此專案代碼
           return data.messages.toString();
@@ -678,9 +660,6 @@ export const useAPIStore = defineStore('API',{
           // console.log('物流單號查詢結果', data.resultList);
           data.resultList.splice(0,0,{ShipmentNum:'--請選擇--' , AR_ID: ''});
           return data.resultList;
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
         } else {
           alert(data.messages);
         }
@@ -708,10 +687,6 @@ export const useAPIStore = defineStore('API',{
           // datagrid.totalRecords = data.resultList.total;
           // datagrid.key++;
           return data.resultList;
-        } else if (data.state === 'account_error') {
-          //尚未登入
-          alert(data.messages);
-          router.push('/');
         } else {
           //取得datagrid失敗
           alert(data.messages);
@@ -736,9 +711,6 @@ export const useAPIStore = defineStore('API',{
           return data.resultList;
         } else if (data.state === 'error') {
           alert(data.messages);
-        } else if (data.state === 'account_error') {
-          alert(data.messages);
-          router.push('/');
         }
       } catch (e) {
         console.error(e);

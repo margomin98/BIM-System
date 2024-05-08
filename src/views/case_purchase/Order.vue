@@ -257,9 +257,6 @@ const submitOrder = async (type) => {
                     OrderedList.value = Array(Form.value.Ordered.length).fill(false);
                     break;
             }
-        } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
         } else {
             alert(data.messages);
         }
@@ -280,9 +277,6 @@ const submit = async () => {
         if (data.state === 'success') {
             alert(data.messages + '\n' + data.resultList.PP_ID);
             router.push({ name: 'Case_Purchase_Datagrid' });
-        } else if (data.state === 'account_error') {
-            alert(data.messages);
-            router.push('/');
         } else {
             alert(data.messages);
         }

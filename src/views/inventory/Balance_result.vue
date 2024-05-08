@@ -400,9 +400,6 @@
         rowData1.value = data.resultList.AssetList
       } else if (data.state === 'error') {
         alert(data.messages);
-      } else if (data.state === 'account_error') {
-        alert(data.messages);
-        router.push('/');
       }
     } catch (error) {
       console.error(error);
@@ -432,9 +429,6 @@
         datagrid2.totalRecords = data.resultList.total;
       } else if (data.state === 'error') {
         alert(data.messages);
-      } else if (data.state === 'account_error') {
-        alert(data.messages);
-        router.push('/');
       }
     } catch (error) {
       console.error(error);
