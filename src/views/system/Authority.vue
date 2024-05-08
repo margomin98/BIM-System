@@ -379,6 +379,7 @@ const saveUserRole = async () => {
  * @param {string} type determine Create/Update/Delete/IndexEdit
  */
 const permissionCUDI = async (type) => {
+  let baseUrl = 'https://localhost:44302/'
   let url = ''
   let requestData = {};
   switch (type) {
@@ -414,7 +415,7 @@ const permissionCUDI = async (type) => {
       }
   }
   try {
-    const response = await axios.post(url, requestData);
+    const response = await axios.post(baseUrl + url, requestData);
     const data = response.data;
     alert(data.messages);
     if (data.state === 'success') {

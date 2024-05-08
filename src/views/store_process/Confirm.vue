@@ -96,6 +96,7 @@
     DeliveryOperator: '',
   })
   onMounted(async() => {
+    storageStore.$reset();
     PageType.value = 'confirm'
     DropdownArray.value.Custodian = await apiStore.getCustodian('');
     await storageStore.getDetails(AI_ID, false, StoreProcess_Confirm_Status);

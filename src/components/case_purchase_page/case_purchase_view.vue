@@ -162,7 +162,7 @@
                                 <td class="table_content">
                                     <div class="item_number_wrap">
                                         <div v-for="asset in item.AssetList" :key="asset.AssetsId" class="item_number">
-                                            <span>{{ asset.AssetsId }}</span></div>
+                                            <span>{{ asset.AssetsId }}&nbsp;&nbsp;&nbsp;&nbsp;*{{ asset.Number }}</span></div>
                                     </div>
                                 </td>
                                 <td class="table_content">{{ item.ItemName }}</td>

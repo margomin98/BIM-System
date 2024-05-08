@@ -249,7 +249,6 @@
     getArea,
     getLayer,
     getAccount,
-GetAntiForgeryToken
   } from '@/assets/js/common_api'
   import {
     UpdatePageParameter,

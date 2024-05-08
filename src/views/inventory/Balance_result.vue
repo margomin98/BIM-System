@@ -276,7 +276,6 @@
     getEquipCategory,
     getArea,
     getLayer,
-GetAntiForgeryToken
   } from '@/assets/js/common_api'
   import {
     goBack,

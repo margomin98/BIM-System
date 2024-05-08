@@ -23,12 +23,13 @@ axios.interceptors.request.use(
   }
 );
 
-// axios.interceptors.response.use(
-//   async response => {
-//     if(response.data.state === 'account_error') {
-//       alert(response.data.messages);
-//       router.push('/');
-//     }
-//   }
-// )
+axios.interceptors.response.use(
+  async response => {
+    if(response.data.state === 'account_error') {
+      alert(response.data.messages);
+      router.push('/');
+    }
+    return response;
+  }
+)
 export default axios;
