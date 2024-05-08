@@ -29,7 +29,6 @@ const route = useRoute();
 const AssetsId = route.query.search_id;
 
 onMounted(async () => {
-  utilsStore.$reset();
   assetStore.$reset();
   assetStore.PageType = 'view';
   DropdownArray.value.Custodian = await apiStore.getCustodian('');

@@ -52,7 +52,7 @@
       const errorHint = ref('');
       onMounted(()=>{
         // 檢查是否有已登入(有cookie)
-        // checkCookieIsExist();
+        checkCookieIsExist();
       });
       // 登入
       async function login() {
@@ -79,14 +79,13 @@
       }
       async function checkCookieIsExist() {
         try {
-          const response = await axios.get('https://localhost:44302/GetDBdata/GetApplicant');
+          const response = await axios.get('https://localhost:44302/GetDBdata/GetApplicant?no=y');
           const data = response.data;
           if (data.state === 'success') {
-            console.log('申請人名稱:', data.resultList.Applicant);
             router.push('/home');
           } 
         } catch (error) {
-          console.error('申請人取得失敗:',error);
+          console.error(error);
         }
       }
       return {

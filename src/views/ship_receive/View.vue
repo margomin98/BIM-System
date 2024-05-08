@@ -24,7 +24,6 @@ const route = useRoute();
 const AO_ID = route.query.search_id;
 onMounted(()=>{
   rentStore.$reset();
-  utilsStore.$reset();
   apiStore.$reset();
   rentStore.PageType = 'ShipReceiveView'
   rentStore.getDetails(AO_ID);

@@ -151,7 +151,6 @@ import Authorized from "../views/Authorized";
 //權限不足
 
 import axios from '@/axios/tokenInterceptor'
-import { useTempSearchStore } from "@/store";
 
 const routes = [
   {
@@ -731,10 +730,6 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const TempSearchStore = useTempSearchStore();
-  if (to.name !== 'Assets_Edit' && to.name !== 'Assets_View' && to.name !== 'Assets_Datagrid') {
-    TempSearchStore.$reset();
-  }
   if (to.meta.auth) {
     try {
       const request = to.meta.request
@@ -784,8 +779,9 @@ router.beforeEach(async (to, from, next) => {
         console.error('Error checking permission:', error);
         next(false); // 阻止导航继续
       }
+    } else {
+      next();
     }
-    next();
   }
 });
 export default router;

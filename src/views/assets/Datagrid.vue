@@ -180,14 +180,12 @@ import Assets_return_button from "@/components/Assets_return_button";
 import Navbar from "@/components/Navbar.vue";
 import { onMounted, reactive, ref, onUnmounted } from "vue";
 import { Asset_StastusArray } from "@/assets/js/dropdown"
-import { useUtilsStore, useAPIStore, useTempSearchStore } from '@/store'
+import { useUtilsStore, useAPIStore } from '@/store'
 import { storeToRefs } from 'pinia';
 import axios from '@/axios/tokenInterceptor'
 const utilsStore = useUtilsStore();
 const apiStore = useAPIStore();
-const tempSearchStore = useTempSearchStore();
 const { dgSearchParams , dg , dgRowData } = storeToRefs(utilsStore);
-const { tempData, tempDg } = storeToRefs(tempSearchStore);
 
 const searchParams = reactive({
   EquipType_Id: '',
@@ -239,16 +237,6 @@ onMounted(async () => {
     dgSearchParams.value[key] = '';
   }
   dg.value.sortField = 'AssetsId';
-  // if tempData & tempDg
-  if(tempData.value) {
-    dgSearchParams.value = tempData.value;
-    console.log('dgSearchParams.value.EquipType_Id',dgSearchParams.value.EquipType_Id);
-    if(dgSearchParams.value.EquipType_Id) DropdownArray.EquipCategory = await apiStore.getEquipCategory(dgSearchParams.value.EquipType_Id);
-    if(dgSearchParams.value.Area_Id) DropdownArray.Layer = await apiStore.getLayer(dgSearchParams.value.Area_Id);
-  }
-  if(tempDg.value) {
-    dg.value = tempDg.value;
-  }
   // console.log('dg.value', dg.value);
   submit('', '');
   DropdownArray.EquipType = await apiStore.getEquipType();
@@ -269,13 +257,10 @@ onUnmounted(()=>{
     }
     utilsStore.UpdatePageParameter(dg.value, event, type, form);
     // update pinia tempSearch
-    tempData.value = dgSearchParams.value ;
     const resultList = await apiStore.getMngDatagrid('/InventoryMng/Assets', dg.value, form);
     dgRowData.value = resultList.rows;
     dg.value.totalRecords = resultList.total;
     dg.value.key++;
-    tempDg.value = dg.value;
-    // console.log('tempDg.value', tempDg.value);
   }
   async function importExcel(event) {
     const selectedFile = event.target.files[0];

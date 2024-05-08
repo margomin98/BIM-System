@@ -1,5 +1,9 @@
 <template>
-    <router-view />
+    <router-view v-slot="{ Component }">
+        <keep-alive :include="[/Datagrid/]" :max="1">
+            <component :is="Component" />
+        </keep-alive>
+    </router-view>
 </template>
 
 <script>
