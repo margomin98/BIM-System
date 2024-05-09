@@ -1234,7 +1234,13 @@ span {
     }
   }
 }
-
+.col-form-label {
+  color: white;
+  font-weight: 700;
+  font-size: 20px;
+  width: 130px;
+  text-align: end;
+}
 @media only screen and (min-width: 1200px) {
   .main_section {
 
