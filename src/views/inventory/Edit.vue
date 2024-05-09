@@ -427,6 +427,11 @@ watch,
           alert('標題不可輸入超過20字');
           return
         }
+        // 一次盤點不超過1000項
+        if (formParams.AssetList.length > 1000) {
+          alert('一次盤點項目不超過1000項');
+          return
+        }        
         // 類型為"專案盤點" => 額外檢查 專案代碼
         if( formParams.PlanType === '專案盤點' ) {
           if(!formParams.ProjectCode) {
