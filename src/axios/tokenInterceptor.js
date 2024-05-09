@@ -25,9 +25,8 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   async response => {
-    const sourceUrl = new URL(response.config.url).toString();
-    console.log('response.config.url', sourceUrl);
-    console.log(sourceUrl.includes('/GetDBdata/GetApplicant?no=y'));
+    const sourceUrl = response.config.url;
+    // * ?no=y為檢查是否已登入的API才有的參數，如果返回account_error 不用alert跟導向
     if(response.data.state === 'account_error' && !sourceUrl.includes('/GetDBdata/GetApplicant?no=y')) {
       alert(response.data.messages);
       router.push({path: '/', query: {return: 'y'}});
