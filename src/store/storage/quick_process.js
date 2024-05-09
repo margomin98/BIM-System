@@ -91,7 +91,7 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 			// 檢查頁籤內容
 			if(!this.checkTabContent()) return ;
 			// 檢查有無重複資產編號
-			if(!(await storageStore.checkAssetsIdRepeat())) return ;
+			if(await storageStore.checkAssetsIdRepeat()) return ;
 			// 傳送整個資料(包括Form、tabData)
 			utilsStore.isLoading = true ; 
 			let originTabData =  _.cloneDeep(storageStore.tabData);
