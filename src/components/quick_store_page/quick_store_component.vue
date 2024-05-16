@@ -1480,6 +1480,11 @@ span {
   padding: 10px;
   flex-direction: column;
 }
+ .input-group-prepend {
+              margin-bottom: 5px;
+              margin-right: 10px;
+              text-align: left;
+            }
         .content {
           @include content_bg;
 
@@ -1500,15 +1505,12 @@ span {
             flex-direction: column;
 
             .input-number,
-            .form-control {
+            .form-control,
+            .form-select {
               width: 100%;
             }
 
-            .input-group-prepend {
-              margin-bottom: 5px;
-              margin-right: 10px;
-              text-align: left;
-            }
+           
           }
 
           .info {

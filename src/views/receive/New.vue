@@ -200,12 +200,14 @@
             </div>
             <!-- 通知對象 -->
             <div class="col">
-              <div class="input-group  mb-3">
+              <div class="input-group  mb-3 tab_inform_user">
                 <div class="input-group-prepend">通知對象：</div>
+                <!-- <input class="input-number readonly_box" type="number" readonly /> -->
+                <PerfectScrollbar>
                 <div class="selected_user_wrap">
                   <span v-for="person in tab.InformedPersons" class="selected_user">{{ person }}</span>
                 </div>
-                <!-- <input class="input-number readonly_box" type="number" readonly /> -->
+                </PerfectScrollbar>
               </div>
             </div>
             <!-- 備註 -->
@@ -741,7 +743,7 @@
   span {
     cursor: pointer;
     position: absolute;
-    background: #E94B4B;
+    background: #e94b4b;
     height: 30px;
     width: 30px;
     border-radius: 50%;
@@ -803,7 +805,7 @@
 }
 
 span {
-  @include red_star
+  @include red_star;
 }
 
 .selected_user_wrap {
@@ -811,7 +813,7 @@ span {
   display: flex;
 
   .selected_user {
-    background: #8B8989;
+    background: #8b8989;
     color: white !important;
     border-radius: 7px;
     padding: 5px;
@@ -828,7 +830,7 @@ span {
 .view_icon,
 .trash_icon {
   cursor: pointer;
-  margin: 0 3px
+  margin: 0 3px;
 }
 
 .fixed_bottom_info {
@@ -839,7 +841,7 @@ span {
   display: flex;
   cursor: pointer;
   justify-content: space-around;
-  background: #E94B4B;
+  background: #e94b4b;
   color: white;
   font-size: 20px;
   font-weight: 700;
@@ -882,14 +884,14 @@ span {
   border: none;
   display: flex;
   padding: 10px;
-  background: #314F7A;
+  background: #314f7a;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
   color: white;
 
   &:hover {
-    background: #586d8b
+    background: #586d8b;
   }
 }
 
@@ -917,7 +919,7 @@ span {
 
 .file_name::before {
   margin-right: 10px;
-  content: '·';
+  content: "·";
   font-weight: 700;
   color: white;
 }
@@ -986,7 +988,7 @@ button.send_btn {
 
     .active {
       @include tab_section_num;
-      background: #3E4E5F;
+      background: #3e4e5f;
     }
   }
 
@@ -1004,25 +1006,24 @@ button.send_btn {
     border: 1px solid rgb(86, 85, 85);
   }
 
-
   .nav-tabs {
     button {
       @include tab_section_num;
-      background: #5C7897;
+      background: #5c7897;
     }
   }
 
   .tab-content {
-    background: #3E4E5F;
+    background: #3e4e5f;
     position: relative;
-    background: #3E4E5F;
+    background: #3e4e5f;
     position: relative;
     padding: 50px 30px;
     border-radius: 0 10px 0 0;
 
     .modal {
       .modal-header {
-        background: #3D4E61;
+        background: #3d4e61;
         color: white;
 
         .close_icon {
@@ -1034,7 +1035,7 @@ button.send_btn {
     }
 
     .input-group {
-      flex-wrap: nowrap;
+      // flex-wrap: nowrap;
 
       .selected_file {
         .file_upload_box {
@@ -1080,7 +1081,7 @@ button.send_btn {
 @media only screen and (min-width: 1200px) {
   .main_section {
     .multi_user_select {
-      width: 80%
+      width: 80%;
     }
 
     .swiper_section {
@@ -1111,7 +1112,7 @@ button.send_btn {
 
           .input-number {
             @include count_btn;
-            height: 35px
+            height: 35px;
           }
 
           .input-group-prepend {
@@ -1133,6 +1134,13 @@ button.send_btn {
           }
         }
       }
+
+      .tab_inform_user {
+        flex-wrap: nowrap;
+        .ps {
+          width: 78%;
+        }
+      }
     }
   }
 }
@@ -1140,7 +1148,7 @@ button.send_btn {
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
     .multi_user_select {
-      width: 80%
+      width: 80%;
     }
 
     .swiper_section {
@@ -1211,19 +1219,21 @@ button.send_btn {
     }
   }
 
-  .selected_user_wrap {
-    flex-flow: wrap;
-    gap: 10px 5px;
+  .tab_inform_user {
+    flex-wrap: nowrap;
+    .ps {
+      width: 72%;
+    }
   }
 }
 
 @media only screen and (max-width: 767px) {
   .main_section {
-
     .number-input-box,
+    .tab_inform_user .ps,
     input,
     textarea {
-      width: 100%
+      width: 100%;
     }
 
     .swiper_section swiper-slide {
@@ -1233,11 +1243,14 @@ button.send_btn {
       }
 
       img {
-        padding: 40px
+        padding: 40px;
       }
     }
 
-    .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    .input-group
+      > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+        .valid-feedback
+      ):not(.invalid-tooltip):not(.invalid-feedback) {
       margin-left: 0 !important;
       border-radius: 5px;
     }
@@ -1286,7 +1299,10 @@ button.send_btn {
     }
 
     .info_wrap:nth-child(3) {
-      .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+      .input-group
+        > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+          .valid-feedback
+        ):not(.invalid-tooltip):not(.invalid-feedback) {
         margin-left: unset !important;
         border-radius: 5px;
       }
@@ -1322,7 +1338,7 @@ button.send_btn {
 
       .active {
         @include tab_section_num;
-        background: #3E4E5F;
+        background: #3e4e5f;
       }
     }
 
@@ -1340,14 +1356,17 @@ button.send_btn {
       border: 1px solid rgb(86, 85, 85);
     }
 
-    .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    .input-group
+      > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+        .valid-feedback
+      ):not(.invalid-tooltip):not(.invalid-feedback) {
       margin-left: unset !important;
     }
 
     .nav-tabs {
       button {
         @include tab_section_num;
-        background: #5C7897;
+        background: #5c7897;
       }
     }
   }
@@ -1357,4 +1376,5 @@ button.send_btn {
     gap: 10px 5px;
   }
 }
+
 </style>

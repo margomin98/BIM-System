@@ -1052,11 +1052,43 @@ textarea {
 }
 @media only screen and (max-width: 767px) {
   .main_section {
+    .input-group
+      > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+        .valid-feedback
+      ):not(.invalid-tooltip):not(.invalid-feedback) {
+      margin-left: unset;
+      border-radius: 5px;
+    }
+
+    .input-group {
+      flex-direction: column;
+
+      .input-number {
+        width: 100%;
+        @include count_btn;
+      }
+
+      .form-control {
+        height: 35px;
+        width: 100%;
+      }
+
+      .input-group-prepend {
+        margin-bottom: 5px;
+        margin-right: 10px;
+        white-space: nowrap;
+        justify-content: left;
+        display: flex;
+      }
+    }
+
     .purchase_amount {
       margin-bottom: 16px;
+
       span.note {
         margin-left: unset;
       }
+
       .amount_input {
         margin-bottom: 5px;
       }
@@ -1065,48 +1097,28 @@ textarea {
     .form_search_btn {
       margin-top: 10px;
     }
+
     .info_wrap {
       padding: 0 5%;
-      .fixed_info{
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    height: unset !important;
-  }
+
+      .fixed_info {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        height: unset !important;
+      }
+
       .content {
         @include content_bg;
+
         .check_box_wrap {
           flex-direction: row;
+
           .check_box {
             margin-right: 10px;
           }
         }
 
-        .input-group
-          > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
-            .valid-feedback
-          ):not(.invalid-tooltip):not(.invalid-feedback) {
-          margin-left: unset;
-          border-radius: 5px;
-        }
-        .input-group {
-          flex-direction: column;
-          .input-number {
-            width: 100%;
-            @include count_btn;
-          }
-          .form-control {
-            height: 35px;
-            width: 100%;
-          }
-          .input-group-prepend {
-            margin-bottom: 5px;
-            margin-right: 10px;
-            white-space: nowrap;
-            justify-content: left;
-            display: flex;
-          }
-        }
         .info {
           display: flex;
           flex-direction: row-reverse;
@@ -1114,6 +1126,7 @@ textarea {
         }
       }
     }
+
     .tab_section {
       .input-group
         > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
@@ -1124,12 +1137,15 @@ textarea {
 
       .tab-content {
         padding: 50px 30px;
+
         .selected_file {
           display: flex;
           align-items: center;
+
           .input-group {
             flex-direction: column;
           }
+
           .file_upload_wrap {
             align-items: center;
 
@@ -1140,17 +1156,21 @@ textarea {
             }
           }
         }
+
         .check_box_wrap {
           flex-direction: column;
+
           .radio_wrap {
             gap: 0 10px;
             padding-left: 10px;
           }
+
           .input-group-prepend {
             width: auto !important;
             align-self: self-start;
           }
         }
+
         .dropdown {
           margin-left: unset !important;
           margin-top: 5px;
@@ -1163,6 +1183,7 @@ textarea {
               margin-left: unset !important;
               margin-top: 5px;
             }
+
             .input-group-prepend {
               width: 100%;
             }
@@ -1172,5 +1193,6 @@ textarea {
     }
   }
 }
+
 
 </style>

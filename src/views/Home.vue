@@ -92,15 +92,15 @@
           <input type="text" placeholder="請輸入代碼或名稱" v-model="project.input">
         </div>
         <div class="search_result">
-          <div class="search_result_wrap">
-            <!-- <perfect-scrollbar> -->
+          <PerfectScrollbar>
+        <div class="search_result_wrap">
             <div v-for="option in filterProject" class="result_wrap"
               :class="{ 'selected': project.Project_Id === option.Value }" @click="selectProject(option)">
               <p class="case_code d-flex">{{ option.Value }}</p>
               <p class="case_name">{{ option.Text }}</p>
             </div>
           </div>
-          <!-- </perfect-scrollbar> -->
+        </PerfectScrollbar>
         </div>
       </div>
     </div>
@@ -1120,7 +1120,6 @@ $content_title_bg: #364E68;
 .user_info,
 .line_notification,
 .code_search,
-.tab-pane,
 .warn_window,
 .amount_chart,
 .case_chart {
@@ -1328,9 +1327,6 @@ $content_title_bg: #364E68;
   }
 
   .tab-pane {
-
-    border-radius: 0 10px 10px 10px;
-
     select {
       white-space: nowrap;
       overflow: hidden;
@@ -1422,9 +1418,9 @@ $content_title_bg: #364E68;
 .search_result {
   border-radius: 0 0 20px 20px;
 
-  .search_result_wrap {
-    overflow-y: scroll;
-  }
+  // .search_result_wrap {
+  //   overflow-y: scroll;
+  // }
 }
 
 .pt_left {
@@ -1542,9 +1538,6 @@ $content_title_bg: #364E68;
     }
   }
 
-  .with_search_input .search_result {
-    border-radius: 20px;
-  }
 }
 
 .pt_right {
@@ -1617,6 +1610,7 @@ $content_title_bg: #364E68;
 
   .tab-pane {
     padding: 16px;
+    border-radius: 0 10px 10px 10px;
 
     .dg_search_wrap {
       margin-bottom: 16px;
@@ -1672,7 +1666,7 @@ $content_title_bg: #364E68;
 
   .tab-pane {
     padding: 16px;
-
+    border-radius: 0 10px 10px 10px;
     .dg_search_wrap {
       margin-bottom: 16px;
 
@@ -1724,12 +1718,9 @@ $content_title_bg: #364E68;
 
   .code_search .ps {
     height: 485px;
-    gap: 16px 0;
+    // gap: 16px 0;
   }
 
-  .with_search_input .search_result .ps {
-    height: 556px;
-  }
 
   .warn_window .ps {
     height: 225px;
@@ -1805,18 +1796,14 @@ $content_title_bg: #364E68;
         padding: 16px;
 
 
-        .search_result_wrap {
-          height: 469px;
-        }
+        // .search_result_wrap {
+        //   height: 469px;
+        // }
 
         .result_wrap {
           padding: 10px;
         }
       }
-    }
-
-    .with_search_input .search_result {
-      height: 588px;
     }
   }
 
@@ -1874,6 +1861,9 @@ $content_title_bg: #364E68;
 }
 
 @media only screen and (min-width: 1000px)and (max-width: 1350px) {
+  .tab-pane{
+    border-radius: 0 10px 10px 10px;
+  }
   .PurchaseList .purchase_list_wrap {
     flex-direction: column;
 
@@ -1895,7 +1885,7 @@ $content_title_bg: #364E68;
 
   .tab-pane {
     padding: 16px;
-
+    border-radius: 0 10px 10px 10px;
     .dg_search_wrap {
       margin-bottom: 16px;
       grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -1922,10 +1912,6 @@ $content_title_bg: #364E68;
   .code_search .ps {
     height: 485px;
     gap: 16px 0;
-  }
-
-  .with_search_input .search_result .ps {
-    height: 556px;
   }
 
   .warn_window .ps {
@@ -2008,10 +1994,6 @@ $content_title_bg: #364E68;
         }
       }
     }
-
-    .with_search_input .search_result {
-      height: 588px;
-    }
   }
 
   .pt_center {
@@ -2073,7 +2055,7 @@ $content_title_bg: #364E68;
 
   .tab-pane {
     padding: 16px;
-
+    border-radius: 0 10px 10px 10px;
     .dg_search_wrap {
       margin-bottom: 16px;
 
@@ -2190,10 +2172,6 @@ $content_title_bg: #364E68;
           padding: 10px;
         }
       }
-    }
-
-    .with_search_input .search_result {
-      height: 588px;
     }
   }
 
@@ -2340,10 +2318,6 @@ $content_title_bg: #364E68;
           padding: 10px;
         }
       }
-    }
-
-    .with_search_input .search_result {
-      height: 588px;
     }
   }
 

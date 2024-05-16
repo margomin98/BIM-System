@@ -63,11 +63,13 @@
         </div>
         <!-- 通知對象 -->
         <div class="col">
-          <div class="input-group  mb-3">
+          <div class="input-group  mb-3 tab_inform_user">
             <div class="input-group-prepend">通知對象：</div>
+            <PerfectScrollbar>
             <div v-show="details.InformedPersons" class="selected_user_wrap">
               <span v-for="person in details.InformedPersons" class="selected_user">{{ person }}</span>
             </div>
+        </PerfectScrollbar>
           </div>
         </div>
         <!-- 備註 -->
@@ -180,6 +182,7 @@ import {
   useRouter
 } from "vue-router";
 import axios from '@/axios/tokenInterceptor';
+import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 export default {
   components: {
     Navbar,
@@ -447,6 +450,12 @@ span {
     .info_wrap:nth-child(3) {
       margin-top: 3%;
     }
+    .tab_inform_user {
+  flex-wrap: nowrap;
+  .ps {
+    width: 81%;
+  }
+}
   }
 }
 
@@ -500,7 +509,12 @@ span {
       }
     }
   }
-
+  .tab_inform_user {
+  flex-wrap: nowrap;
+  .ps {
+    width: 72%;
+  }
+}
 }
 
 @media only screen and (max-width: 767px) {
@@ -524,7 +538,7 @@ span {
       }
     }
 
-    .number-input-box,
+    .number-input-box,  .tab_inform_user .ps ,
     input {
       width: 100%
     }
@@ -576,5 +590,6 @@ span {
       }
     }
   }
+
 }
 </style>
