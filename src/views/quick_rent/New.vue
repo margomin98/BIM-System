@@ -641,7 +641,7 @@ span {
   }
   .main_section {
     .info_wrap {
-      padding: 5%;
+      padding:0 5% 5%;
       .input-group {
         flex-direction: column;
         align-items: flex-start;

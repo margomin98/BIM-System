@@ -1048,7 +1048,7 @@ export default {
 
   .main_section {
     .info_wrap {
-      padding: 0 5%;
+      padding: 0 5% 5%;
 
       .tab_section {
         .nav-tabs {

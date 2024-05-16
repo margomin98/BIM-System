@@ -684,7 +684,13 @@ textarea {
 @media only screen and (max-width: 767px) {
   .main_section {
     .info_wrap {
+      .form_search_btn,.form-control {
+        margin-left: unset !important;
+      }
       padding: 1% 5% 0;
+      .form_search_btn{
+        margin-top: 10px;
+      }
       .fixed_info {
         height: unset !important;
         padding: 10px;
@@ -698,7 +704,6 @@ textarea {
             height: 35px;
             width: 100%;
             margin-top: 5px;
-            margin-left: unset !important;
           }
           .input-group-prepend {
             width: 100%;

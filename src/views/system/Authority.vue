@@ -964,7 +964,7 @@ p {
 @media only screen and (max-width: 767px) {
   .main_section {
     .info_wrap {
-      padding: 5%;
+      padding:0 5% 5%;
 
       .tab-pane_wrap {
         height: 640px;

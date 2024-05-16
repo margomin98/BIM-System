@@ -1001,7 +1001,7 @@ textarea {
 }
 
 .store_option_wrap {
-  padding: 10px 0;
+  // padding: 10px 0;
 
   .content {
     .option_wrap {

@@ -388,7 +388,7 @@ onMounted(() => {
 @media only screen and (max-width: 767px) {
   .main_section {
     .info_wrap {
-      padding:5%;
+      padding:0 5%;
 
       .fixed_info {
         height: unset;
