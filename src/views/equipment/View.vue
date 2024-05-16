@@ -76,13 +76,13 @@
         </div>
       </div>
       <div class="content">
+        <PerfectScrollbar>
         <div class="item_wrap">
-
           <list-item v-for="(item, index) in details.AssetList" :key="index" :edit_btn="false" :delete_btn="false"
             :AssetData="item">
           </list-item>
-
         </div>
+        </PerfectScrollbar>
       </div>
     </div>
     <div class="info_wrap col">
@@ -200,9 +200,11 @@ span {
   @include red_star;
 }
 
+.ps{
+  height: 350px
+}
+
 .item_wrap {
-  height: 350px;
-  overflow: auto;
   display: grid;
   gap: 20px 0;
 }

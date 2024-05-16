@@ -223,11 +223,13 @@
             </div>
           </div>
         </div>
+        <PerfectScrollbar>
         <div class="item_wrap">
           <list-item v-for="(item, index) in formParams.AssetList" :key="index" :edit_btn="true" :delete_btn="true"
             :AssetData="item" @editAction="handleEdit" @deleteId="handleDelete">
           </list-item>
         </div>
+        </PerfectScrollbar>
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
@@ -657,10 +659,11 @@ span {
 .modal-body {
   padding: 0 !important;
 }
+.ps{
+  height: 350px
+}
 
 .item_wrap {
-  height: 350px;
-  overflow: auto;
   display: grid;
   gap: 20px 0;
 }

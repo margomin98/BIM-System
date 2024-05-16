@@ -76,11 +76,13 @@
         </div>
       </div>
       <div class="content">
+        <PerfectScrollbar>
         <div class="item_wrap">
           <list-item v-for="(item, index) in details.AssetList" :key="index" :edit_btn="false" :delete_btn="false"
             :AssetData="item">
           </list-item>
         </div>
+        </PerfectScrollbar>
       </div>
     </div>
     <div class="info_wrap col">
@@ -281,13 +283,14 @@ span {
   }
 }
 
+.ps{
+  height: 350px
+}
+
 .item_wrap {
-  height: 350px;
-  overflow: auto;
   display: grid;
   gap: 20px 0;
 }
-
 
 .readonly_box {
   @include readonly_box;
@@ -400,11 +403,6 @@ span {
             text-align: end;
           }
         }
-
-        .item_wrap {
-          height: 350px;
-          overflow: auto;
-        }
       }
 
       .dropdown {
@@ -507,10 +505,7 @@ span {
       }
 
       .item_wrap {
-        height: 350px;
-        overflow: auto;
-
-        .item {
+         .item {
           background-color: #526f8e;
           border-radius: 10px;
           padding: 20px;
@@ -567,9 +562,6 @@ span {
       }
 
       .item_wrap {
-        height: 350px;
-        overflow: auto;
-
         .item {
           background-color: #526f8e;
           border-radius: 10px;

@@ -120,9 +120,10 @@
               <div class="input-group mb-3">
                 <div class="input-group-prepend flex">設備分類：</div>
                 <div class="dropdown">
-                  <button style='overflow: hidden;text-overflow: ellipsis;white-space: nowrap' class="btn dropdown-toggle"
-                    type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
+                  <button style='overflow: hidden;text-overflow: ellipsis;white-space: nowrap'
+                    class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"
+                    :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
                     {{ searchParams.EquipCategoryName || EquipCategoryInit }}
                   </button>
                   <div class="dropdown-menu" aria-labelledby="categoryDropdown">
@@ -152,8 +153,9 @@
                         <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
                           <p>設備總類</p>
                           <div class="dropdown">
-                            <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown"
-                              aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
+                            <button class="btn dropdown-toggle" type="button" id="typeDropdown"
+                              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                              @click="getEquipTypeName">
                               {{ searchParams.EquipTypeName || '請選擇' }}
                             </button>
                             <div class="dropdown-menu" aria-labelledby="typeDropdown">
@@ -184,7 +186,8 @@
                         </div>
                       </div>
                       <div class='col d-flex justify-content-center'>
-                        <button class="btn submit_btn" type="button" @click="searchInventory('', 'search')">搜尋庫存</button>
+                        <button class="btn submit_btn" type="button"
+                          @click="searchInventory('', 'search')">搜尋庫存</button>
                       </div>
                     </div>
                   </div>
@@ -193,11 +196,11 @@
                       <p>目前資產庫存（請優先選擇存貨）</p>
                     </div>
                   </div>
-                  <DataTable lazy :key="datagrid.key" :first="datagrid.first" :size="'small'" :loading="datagrid.loading"
-                    :value="rowData" :sort-field="datagrid.sortField" :sort-order="datagrid.sortOrder" resizableColumns
-                    columnResizeMode="expand" showGridlines scrollable scrollHeight="420px"
-                    @page="searchInventory($event, 'page')" @sort="searchInventory($event, 'sort')" paginator
-                    :rows="datagrid.rows" :totalRecords="datagrid.totalRecords"
+                  <DataTable lazy :key="datagrid.key" :first="datagrid.first" :size="'small'"
+                    :loading="datagrid.loading" :value="rowData" :sort-field="datagrid.sortField"
+                    :sort-order="datagrid.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
+                    scrollHeight="420px" @page="searchInventory($event, 'page')" @sort="searchInventory($event, 'sort')"
+                    paginator :rows="datagrid.rows" :totalRecords="datagrid.totalRecords"
                     paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
                     currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
                     <Column style="min-width: 60px;">
@@ -223,11 +226,13 @@
             </div>
           </div>
         </div>
-        <div class="item_wrap">
-          <list-item v-for="(item, index) in formParams.AssetList" :key="index" :edit_btn="false" :delete_btn="true"
-            :AssetData="item" @deleteId="handleDelete">
-          </list-item>
-        </div>
+        <PerfectScrollbar>
+          <div class="item_wrap">
+            <list-item v-for="(item, index) in formParams.AssetList" :key="index" :edit_btn="false" :delete_btn="true"
+              :AssetData="item" @deleteId="handleDelete">
+            </list-item>
+          </div>
+        </PerfectScrollbar>
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="goBack">回上一頁</button>
@@ -627,9 +632,11 @@ span {
   padding: 0 !important;
 }
 
+.ps{
+  height: 350px
+}
+
 .item_wrap {
-  height: 350px;
-  overflow: auto;
   display: grid;
   gap: 20px 0;
 }
@@ -692,14 +699,10 @@ span {
 
   .info_wrap {
     .item_wrap {
-      height: 350px;
-      overflow: auto;
-
       .item {
         background-color: #526f8e;
         border-radius: 10px;
         padding: 20px;
-        margin: 20px 0;
       }
 
       .failed_storage {
