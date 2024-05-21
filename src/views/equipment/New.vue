@@ -1212,9 +1212,9 @@ span {
 
     .second_content {
       .wrap1 {
-        padding: 20px 20px 0;
+        padding: 20px;
         flex-direction: column;
-
+        gap:6px 0;
         // .dropdown {
         //   button {
         //     background: white;

@@ -1430,7 +1430,7 @@ padding: 0 ;
 
     .second_content {
       .wrap1 {
-        padding: 20px 20px 0;
+        padding: 20px;
 
         flex-direction: column;
 

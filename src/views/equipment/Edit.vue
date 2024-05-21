@@ -1248,9 +1248,9 @@ p{
   font-weight: 700;
 }
       .wrap1 {
-        padding: 20px 20px 0;
+        padding: 20px;
         flex-direction: column;
-
+        gap:6px 0;
         // .dropdown {
         //   button {
         //     background: white;
@@ -1268,7 +1268,7 @@ p{
         //   }
         // }
         div {
-          margin: 10px 0;
+          margin: 5px 0;
         }
       }
     }
