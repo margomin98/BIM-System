@@ -1040,6 +1040,9 @@ textarea {
     .info_wrap {
       width: 700px;
       margin: auto;
+      .apply_btn{
+      width: 120px;
+      }
      
       .content {
       

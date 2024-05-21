@@ -106,7 +106,9 @@
                 <select class="form-select" id="floatingSelect" v-model="middleForm.itemEquipType_Id"
                   @change="async () => { DropdownArray.EquipCategory = await apiStore.getEquipCategory(middleForm.itemEquipType_Id); middleForm.itemCategory_Id = ''; }">
                   <option value="">--請選擇--</option>
-                  <option v-for="option in DropdownArray.EquipType" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
+                  <option v-for="option in DropdownArray.EquipType" :key="option.Id" :value="option.Id">{{ option.Name
+                    }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -121,7 +123,8 @@
                   <option v-if="DropdownArray.EquipCategory.length == 0" value="">--請先選擇設備總類--</option>
                   <template v-else>
                     <option value="">--請選擇--</option>
-                    <option v-for="option in DropdownArray.EquipCategory" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
+                    <option v-for="option in DropdownArray.EquipCategory" :key="option.Id" :value="option.Id">{{
+            option.Name }}</option>
                   </template>
                 </select>
               </div>
@@ -158,7 +161,8 @@
               <div class="dropdown">
                 <select class="form-select" id="floatingSelect" v-model="middleForm.itemPackageUnit">
                   <option value="">--請選擇--</option>
-                  <option v-for="option in DropdownArray.PackageUnit" :key="option" :value="option">{{ option }}</option>
+                  <option v-for="option in DropdownArray.PackageUnit" :key="option" :value="option">{{ option }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -210,7 +214,7 @@
         </div>
       </div>
       <!-- 入庫方式 -->
-      <div v-show="!quickprocessStore.editHidden" class="store_option_wrap mt-5">
+      <div v-show="!quickprocessStore.editHidden" class="store_option_wrap mt-5 mb-3">
         <div class="fixed_info">
           <p><span>*</span>入庫方式</p>
         </div>
@@ -264,21 +268,22 @@
           </div>
           <!-- 儲位區域/儲位櫃位 -->
           <div v-show="middleForm.itemInboundWay === '直接入庫'" class="store_location row g-0">
-            <div class="col row">
-              <label for="inputPassword" class="col col-form-label"><span>*</span>儲位區域：</label>
+            <div class="col row g-0">
+              <label for="inputPassword" class="col col-form-label"><span>*</span>儲位區域 :</label>
               <select class="form-select col" v-model="middleForm.itemArea_Id"
                 @change="async () => { DropdownArray.Layer = await apiStore.getLayer(middleForm.itemArea_Id); middleForm.itemLayer_Id = ''; }">
                 <option value="">--請選擇--</option>
                 <option v-for="option in DropdownArray.Area" :key="option" :value="option.Id">{{ option.Name }}</option>
               </select>
             </div>
-            <div class="col row">
-              <label for="inputPassword" class="col col-form-label"><span>*</span>儲位櫃位：</label>
+            <div class="col row g-0">
+              <label for="inputPassword" class="col col-form-label"><span>*</span>儲位櫃位 :</label>
               <select class="form-select col" v-model="middleForm.itemLayer_Id">
                 <option v-if="DropdownArray.Layer.length == 0" value="">--請先選擇儲位區域--</option>
                 <template v-else>
                   <option value="">--請選擇--</option>
-                  <option v-for="option in DropdownArray.Layer" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
+                  <option v-for="option in DropdownArray.Layer" :key="option.Id" :value="option.Id">{{ option.Name }}
+                  </option>
                 </template>
               </select>
             </div>
@@ -372,7 +377,9 @@
                     <select class="form-select" id="floatingSelect" v-model="tab.itemEquipType_Id"
                       @change="async () => { tab.EquipCategoryArray = await apiStore.getEquipCategory(tab.itemEquipType_Id); tab.itemCategory_Id = ''; }">
                       <option value="">--請選擇--</option>
-                      <option v-for="option in DropdownArray.EquipType" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
+                      <option v-for="option in DropdownArray.EquipType" :key="option.Id" :value="option.Id">{{
+            option.Name }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -387,7 +394,8 @@
                       <option v-if="tab.EquipCategoryArray.length == 0" value="">--請先選擇設備總類--</option>
                       <template v-else>
                         <option value="">--請選擇--</option>
-                        <option v-for="option in tab.EquipCategoryArray" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
+                        <option v-for="option in tab.EquipCategoryArray" :key="option.Id" :value="option.Id">{{
+            option.Name }}</option>
                       </template>
                     </select>
                   </div>
@@ -453,7 +461,7 @@
                   </div>
                   <div class="amount_input">
                     <span class="symbol">$</span>
-                    <input class="" type="number" v-model="tab.itemPrice" min="1">
+                    <input class="form-control" type="number" v-model="tab.itemPrice" min="1">
                   </div>
                 </div>
               </div>
@@ -489,7 +497,8 @@
                   <div class="dropdown">
                     <select class="form-select" id="floatingSelect" v-model="tab.itemPackageUnit">
                       <option value="">--請選擇--</option>
-                      <option v-for="option in DropdownArray.PackageUnit" :key="option" :value="option">{{ option }}</option>
+                      <option v-for="option in DropdownArray.PackageUnit" :key="option" :value="option">{{ option }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -540,7 +549,7 @@
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    保固期限：
+                    保固期限 :
                   </div>
                   <input type="text" class="form-control" placeholder="最多輸入10字" v-model="tab.itemWarranty">
                 </div>
@@ -550,13 +559,13 @@
             <div v-show="!quickprocessStore.createHidden" class="row">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">保固開始日：</div>
+                  <div class="input-group-prepend">保固開始日 :</div>
                   <input type="date" class="form-control " v-model="tab.itemWarrantyStartDate" />
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">保固到期日：</div>
+                  <div class="input-group-prepend">保固到期日 :</div>
                   <input type="date" class="form-control " v-model="tab.itemWarrantyEndDate" />
                 </div>
               </div>
@@ -571,7 +580,7 @@
             <!-- 頁籤選擇檔案 -->
             <div v-show="!quickprocessStore.createHidden" class="col">
               <div class="input-group">
-                <div class="input-group-prepend">資產照片：</div>
+                <div class="input-group-prepend">資產照片 :</div>
                 <div class="mb-3 file_wrap">
                   <button class='choose_btn' @click="storageStore.chooseFile(index)">選擇檔案</button>
                   <input type="file" accept="image/*" style="display: none;" multiple
@@ -582,7 +591,7 @@
             <!-- 頁籤已選擇檔案 -->
             <div v-show="!quickprocessStore.createHidden" class="selected_file col">
               <div class="input-group my-3">
-                <div class="input-group-prepend">已選擇檔案：</div>
+                <div class="input-group-prepend">已選擇檔案 :</div>
                 <div class="selected_file_wrap">
                   <div v-for="(file, file_index) in tab.viewFile" :key="file_index" class="file_upload_wrap">
                     <p>{{ file.FileName }}
@@ -599,7 +608,7 @@
             <!-- 已上傳檔案 -->
             <div v-show="!quickprocessStore.createHidden" class="selected_file col">
               <div class="input-group my-3">
-                <div class="input-group-prepend">已上傳檔案：</div>
+                <div class="input-group-prepend">已上傳檔案 :</div>
                 <div class="selected_file_wrap">
                   <div v-for="(file, file_index) in tab.existFile" :key="file_index" class="file_upload_wrap">
                     <p>{{ file.FileName }}
@@ -626,8 +635,7 @@
                       <div class="input-group-prepend check_box">
                         <span>*</span>入庫方式 :
                       </div>
-                      <div v-if="!quickprocessStore.editHidden"
-                        class="d-flex align-items-center radio_wrap store_staff">
+                      <div v-if="!quickprocessStore.editHidden" class="d-flex radio_wrap store_staff">
                         <template v-for="(item, InboundIndex) in DropdownArray.InboundWay"
                           :key="'radio' + (InboundIndex + 1)">
                           <div class="form-check">
@@ -639,8 +647,7 @@
                           </div>
                         </template>
                       </div>
-                      <div v-else-if="!quickprocessStore.createHidden"
-                        class="d-flex align-items-center radio_wrap store_staff">
+                      <div v-else-if="!quickprocessStore.createHidden" class="d-flex radio_wrap store_staff">
                         <template v-for="(item, InboundIndex) in DropdownArray.InboundWay"
                           :key="'radio' + (InboundIndex + 1)">
                           <div class="form-check">
@@ -680,27 +687,30 @@
                     <div class="input-group-prepend"> <span>*</span>保管人員 :</div>
                     <select class="form-select" v-model="tab.itemCustodian">
                       <option value="">--請選擇--</option>
-                      <option v-for="option in DropdownArray.Custodian" :key="option" :value="option">{{ option }}</option>
+                      <option v-for="option in DropdownArray.Custodian" :key="option" :value="option">{{ option }}
+                      </option>
                     </select>
                   </div>
                 </div>
                 <!-- 儲位區域/儲位櫃位 -->
                 <div v-show="tab.itemInboundWay === '直接入庫'" class="store_location row g-xl-0 g-lg-0 g-md-0">
                   <div class="col row">
-                    <label for="inputPassword" class="col col-form-label"><span>*</span>儲位區域：</label>
+                    <label for="inputPassword" class="col col-form-label"><span>*</span>儲位區域 :</label>
                     <select class="form-select col" v-model="tab.itemArea_Id"
                       @change="async () => { tab.LayerArray = await apiStore.getLayer(tab.itemArea_Id); tab.itemLayer_Id = ''; }">
                       <option value="">--請選擇--</option>
-                      <option v-for="option in DropdownArray.Area" :key="option" :value="option.Id">{{ option.Name }}</option>
+                      <option v-for="option in DropdownArray.Area" :key="option" :value="option.Id">{{ option.Name }}
+                      </option>
                     </select>
                   </div>
                   <div class="col row">
-                    <label for="inputPassword" class="col col-form-label"><span>*</span>儲位櫃位：</label>
+                    <label for="inputPassword" class="col col-form-label"><span>*</span>儲位櫃位 :</label>
                     <select class="form-select col" v-model="tab.itemLayer_Id">
                       <option v-if="tab.LayerArray.length == 0" value="">--請先選擇設備總類--</option>
                       <template v-else>
                         <option value="">--請選擇--</option>
-                        <option v-for="option in tab.LayerArray" :key="option.Id" :value="option.Id">{{ option.Name }}</option>
+                        <option v-for="option in tab.LayerArray" :key="option.Id" :value="option.Id">{{ option.Name }}
+                        </option>
                       </template>
                     </select>
                   </div>
@@ -764,6 +774,7 @@ textarea {
 
   .amount_input {
     display: flex;
+    margin-left: unset !important;
   }
 
   span {
@@ -786,7 +797,6 @@ textarea {
 }
 
 .dropdown {
-
   #typeDropdown,
   #categoryDropdown,
   #areaDropdown {
@@ -987,7 +997,7 @@ textarea {
 
     .store_location {
       .col-form-label {
-        padding: 0 3px;
+        // padding: 0 3px;
         display: flex;
         align-items: center;
         justify-content: end;
@@ -1017,10 +1027,8 @@ textarea {
     }
 
     .store_location {
-      gap: 0 30px;
-
       .col-form-label {
-        padding: 0 3px;
+        // padding: 0 3px;
         display: flex;
         align-items: center;
         justify-content: end;
@@ -1087,7 +1095,8 @@ span {
       margin-bottom: 0;
     }
   }
-  .search_option_section{
+
+  .search_option_section {
     width: 100%;
   }
 
@@ -1186,11 +1195,6 @@ span {
         font-weight: 700;
         color: white;
         font-size: 18px;
-
-        div:nth-child(2) {
-          gap: 0 10px;
-          display: flex;
-        }
       }
 
       .dropdown {
@@ -1234,6 +1238,7 @@ span {
     }
   }
 }
+
 .col-form-label {
   color: white;
   font-weight: 700;
@@ -1241,26 +1246,48 @@ span {
   width: 130px;
   text-align: end;
 }
+
 @media only screen and (min-width: 1200px) {
   .main_section {
-
     .info_wrap {
       width: 800px;
 
       .input-group-prepend {
         width: calc(100px + 6%);
         text-align: end;
-
       }
 
       .input-number {
         width: 57%;
       }
 
+      .store_option_wrap {
+        .store_location {
+          gap: 0 43px;
+        }
+      }
+
       .content {
         @include content_bg;
-        .option_section{
-          width:78.5%
+
+        .store_location {
+          display: flex;
+
+          .col {
+            align-items: center;
+          }
+
+          .col-form-label {
+            padding-right: 13px;
+          }
+
+          .form-select {
+            margin-left: -3px;
+          }
+        }
+
+        .option_section {
+          width: 78.5%;
         }
 
         .input-group-prepend {
@@ -1281,10 +1308,6 @@ span {
         }
 
         .row_wrap {
-          .input-group {
-            flex-wrap: nowrap;
-          }
-
           .flex {
             width: 130px;
           }
@@ -1296,26 +1319,38 @@ span {
           .dropdown-menu {
             max-height: 250px;
             overflow-y: auto;
-
           }
-
         }
       }
     }
 
     .tab_section {
+      .amount_input {
+        gap: 0 14px;
+      }
 
       .tab-content {
         padding: 50px 20px;
 
+        .store_option .check_box_wrap {
+          margin-left: 3.2%;
+        }
+
+        .store_location {
+          gap: 0 10px;
+
+          .col {
+            align-items: center;
+          }
+        }
+
         .selected_file {
           display: flex;
           align-items: center;
-
         }
 
         .input-number {
-          width: 62.5%;
+          width: 60.5%;
         }
 
         .check_box_wrap {
@@ -1333,20 +1368,18 @@ span {
           .dropdown-menu {
             max-height: 250px;
             overflow-y: auto;
-
           }
-
         }
 
         .input-group {
-          flex-wrap: nowrap;
-
-
           .input-group-prepend {
             width: 130px;
             text-align: end;
           }
 
+          .option_section {
+            width: 82%;
+          }
         }
       }
     }
@@ -1355,25 +1388,24 @@ span {
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
-
-
     .info_wrap {
       width: 700px;
 
       .input-group-prepend {
-        width: calc(100px + 6%);
+        width: 117px;
         text-align: end;
       }
 
-      .input-number {
-        width: 62%;
+      .input-number,
+      .dropdown {
+        width: 60%;
       }
-
-      .content {
-        @include content_bg;
-        padding: 17px;
-        .option_section{
-          width:80.5%
+      .radio_wrap {
+        gap: 0 10px;
+      }
+      .store_option_wrap {
+        .option_section {
+          width: 80.5%;
         }
 
         .input-group-prepend {
@@ -1391,10 +1423,6 @@ span {
         }
 
         .row_wrap {
-          .input-group {
-            flex-wrap: nowrap;
-          }
-
           .flex {
             width: 130px;
           }
@@ -1406,206 +1434,273 @@ span {
           .dropdown-menu {
             max-height: 250px;
             overflow-y: auto;
+          }
+        }
+        .store_location {
+          gap: 0 77px;
+        }
+      }
+      .content {
+        @include content_bg;
+        padding: 17px;
 
+        .store_location {
+          display: flex;
 
+          .col {
+            align-items: center;
+          }
+
+          .col-form-label {
+            padding-right: 13px;
+          }
+
+          .form-select {
+            margin-left: -3px;
+          }
+        }
+      }
+    }
+
+    .tab_section {
+      .purchase_amount {
+        flex-wrap: nowrap;
+
+        span.note {
+          position: relative;
+          right: 8%;
+        }
+
+        .amount_input {
+          gap: 0 5px;
+
+          input {
+            width: 73%;
           }
         }
       }
 
-      .tab_section {
+      .tab-content {
+        padding: 50px 20px;
 
+        .check_box_wrap {
+          font-weight: 700;
+          align-items: center;
+          color: white;
+          font-size: 18px;
 
-        .tab-content {
-          padding: 50px 20px;
-
-          .input-number {
-            width: 59%;
+          div:nth-child(2) {
+            gap: 0 10px;
+            display: flex;
           }
+        }
 
-          .check_box_wrap {
-            font-weight: 700;
-            align-items: center;
+        .dropdown {
+          width: 190px;
+
+          .dropdown-menu {
+            max-height: 250px;
+            overflow-y: auto;
+          }
+        }
+
+        .input-group {
+          .input-group-prepend {
             color: white;
-            font-size: 18px;
-
-            div:nth-child(2) {
-              gap: 0 10px;
-              display: flex;
-            }
+            font-weight: 700;
+            font-size: 20px;
+            width: 130px;
+            text-align: end;
           }
 
-          .dropdown {
-            width: 190px;
-
-            .dropdown-menu {
-              max-height: 250px;
-              overflow-y: auto;
-
-            }
-
-          }
-
-          .input-group {
-            flex-wrap: nowrap;
-
-            .input-group-prepend {
-              color: white;
-              font-weight: 700;
-              font-size: 20px;
-              width: 130px;
-              text-align: end;
-            }
-
-          }
-
-          .purchase_amount {
-            flex-wrap: nowrap;
+          .option_section {
+            width: 80%;
           }
         }
       }
     }
   }
 }
-  @media only screen and (max-width: 767px) {
-    .main_section {
 
-.form_search_btn{
-  margin-top:10px;
-}
+@media only screen and (max-width: 767px) {
+  .main_section {
+    .form_search_btn {
+      margin-top: 10px;
+    }
 
-      .info_wrap {
-        padding: 0 5%;
-.fixed_info{
-  height: unset !important;
-  padding: 10px;
-  flex-direction: column;
-}
- .input-group-prepend {
-              margin-bottom: 5px;
-              margin-right: 10px;
-              text-align: left;
-            }
-        .content {
-          @include content_bg;
+    .info_wrap {
+      padding: 0 5%;
 
-          .check_box_wrap {
-            flex-direction: row;
+      .store_option_wrap {
+        .row {
+          flex-direction: column;
 
-            .check_box {
-              margin-right: 10px;
-            }
+          .col-form-label {
+            padding-top: 0;
+            justify-content: left;
+            margin-bottom: 5px;
           }
+        }
 
-          .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-            margin-left: unset;
-            border-radius: 5px;
-          }
-
-          .input-group {
-            flex-direction: column;
-
-            .input-number,
-            .form-control,
-            .form-select {
-              width: 100%;
-            }
-
-           
-          }
-
-          .info {
-            display: flex;
-            flex-direction: row-reverse;
-            justify-content: flex-end;
-          }
+        .store_location {
+          gap: 16px 0;
         }
       }
 
-      .tab_section {
+      .store_staff,
+      .store_option {
+        flex-direction: column;
+      }
 
-        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-          margin-left: unset !important;
+      .fixed_info {
+        height: unset !important;
+        padding: 10px;
+        flex-direction: column;
+      }
+
+      .input-group-prepend {
+        margin-bottom: 5px;
+        margin-right: 10px;
+        text-align: left;
+      }
+
+      .content {
+        @include content_bg;
+
+        .check_box_wrap {
+          flex-direction: row;
+
+          .check_box {
+            margin-right: 10px;
+          }
         }
 
-        .tab-content {
-          padding: 50px 30px;
+        .input-group
+          > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+            .valid-feedback
+          ):not(.invalid-tooltip):not(.invalid-feedback) {
+          margin-left: unset;
+          border-radius: 5px;
+        }
 
-          .selected_file {
-            display: flex;
-            align-items: center;
+        .input-group {
+          flex-direction: column;
 
-            .input-group {
-              flex-direction: column;
-            }
-
+          .input-number,
+          .form-control,
+          .form-select {
+            width: 100%;
           }
+        }
 
-          .check_box_wrap {
-            flex-direction: column;
-            font-weight: 700;
-            color: white;
-            font-size: 18px;
+        .info {
+          display: flex;
+          flex-direction: row-reverse;
+          justify-content: flex-end;
+        }
+      }
+    }
 
-            .radio_wrap {
-              gap: 0 10px;
-              padding-left: 10px;
-            }
+    .tab_section {
+      .input-group
+        > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+          .valid-feedback
+        ):not(.invalid-tooltip):not(.invalid-feedback) {
+        margin-left: unset !important;
+      }
 
-            .input-group-prepend {
-              width: auto !important;
-              align-self: self-start;
-            }
-          }
+      .tab-content {
+        padding: 50px 30px;
 
-          .dropdown {
-            margin-left: unset !important;
-            margin-top: 5px;
-
-            .dropdown-menu {
-              max-height: 250px;
-              overflow-y: auto;
-
-            }
-
-          }
+        .selected_file {
+          display: flex;
+          align-items: center;
 
           .input-group {
             flex-direction: column;
+          }
+        }
 
-            .form-control {
-              width: 100%;
-              margin-left: unset !important;
-              margin-top: 5px;
-            }
+        .check_box_wrap {
+          flex-direction: column;
+          font-weight: 700;
+          color: white;
+          font-size: 18px;
 
-
+          .input-group-prepend {
+            width: auto !important;
+            align-self: self-start;
           }
 
-          .purchase_amount {
-            .amount_input {
-              display: flex;
-              gap: 0 10px;
-              font-size: 20px;
-              align-items: center;
-            }
+          .radio_wrap {
+            gap: 0 10px;
+          }
+        }
 
-            .input-group-prepend {
-              margin-right: 10px;
-            }
+        .dropdown {
+          margin-left: unset !important;
+          margin-top: 5px;
+          width: 100%;
 
-            span {
-              color: white !important;
-            }
+          .dropdown-menu {
+            max-height: 250px;
+            overflow-y: auto;
+          }
+        }
 
-            span.note {
-              margin-top: 5px;
-              margin-bottom: 16px;
-              display: block;
-              font-weight: 700;
-              font-size: 18px;
-            }
+        .input-group {
+          flex-direction: column;
+
+          .form-control {
+            width: 100%;
+            margin-left: unset !important;
+            margin-top: 5px;
+          }
+        }
+
+        .purchase_amount {
+          .amount_input {
+            display: flex;
+            gap: 0 10px;
+            font-size: 20px;
+            align-items: center;
+          }
+
+          .input-group-prepend {
+            margin-right: 10px;
+          }
+
+          span {
+            color: white !important;
+          }
+
+          span.note {
+            margin-top: 5px;
+            margin-bottom: 16px;
+            display: block;
+            font-weight: 700;
+            font-size: 18px;
+          }
+        }
+
+        .store_location {
+          justify-content: center;
+          flex-direction: column;
+          gap: 16px 0;
+
+          .row {
+            margin: 0;
+            flex-direction: column;
+          }
+
+          label {
+            padding-left: 0;
+            justify-content: left;
           }
         }
       }
     }
-  }</style>
+  }
+}
+
+</style>

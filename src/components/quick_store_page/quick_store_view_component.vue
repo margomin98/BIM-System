@@ -67,7 +67,8 @@
                   <div class="d-flex align-items-center radio_wrap">
                     <div class="form-check" v-for="(item, typeIndex) in DropdownArray.AssetType"
                       :key="'radio' + (typeIndex + 1)">
-                      <input type="radio" class="form-check-input check_box" :id="'radio_' + (index + 1) + (typeIndex + 1)"
+                      <input type="radio" class="form-check-input check_box"
+                        :id="'radio_' + (index + 1) + (typeIndex + 1)"
                         style="border-radius: 100%; width: 16px; height: 16px;" :value="item"
                         v-model="tab.itemAssetType" :disabled="item !== tab.itemAssetType" />
                       <label class="form-check-label check_box" :for="'radio_' + (index + 1) + (typeIndex + 1)"
@@ -327,7 +328,7 @@
                       <div class="input-group-prepend check_box">
                         入庫方式 :
                       </div>
-                      <div class="d-flex align-items-center radio_wrap store_staff">
+                      <div class="d-flex radio_wrap store_staff">
                         <template v-for="(item, InboundIndex) in DropdownArray.InboundWay"
                           :key="'radio' + (InboundIndex + 1)">
                           <div class="form-check">
@@ -427,6 +428,7 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
+
 textarea {
   padding: 5px 10px 30px;
 }
@@ -448,6 +450,7 @@ span {
 }
 
 .dropdown {
+
   #typeDropdown,
   #categoryDropdown,
   #areaDropdown {
@@ -643,8 +646,12 @@ span {
     }
 
     .store_location {
+      .col {
+        align-items: center;
+      }
+
       .col-form-label {
-        padding: 0 3px;
+        // padding: 0 3px;
         display: flex;
         align-items: center;
         justify-content: end;
@@ -677,7 +684,7 @@ span {
       gap: 0 30px;
 
       .col-form-label {
-        padding: 0 3px;
+        // padding: 0 3px;
         display: flex;
         align-items: center;
         justify-content: end;
@@ -902,7 +909,7 @@ span {
         }
 
         .input-group {
-          flex-wrap: nowrap;
+          // flex-wrap: nowrap;
 
           .form-control {
             height: 35px;
@@ -1199,15 +1206,23 @@ span {
     .info_wrap {
       padding: 0 5%;
 
-      .store_option .content {
-        .option_wrap {
+      .store_option {
+        .col {
           flex-direction: column;
-          align-items: self-start;
+        margin: auto;
+        .col-form-label{
+          align-items: start;
+          padding-left: 0;
+        }
         }
 
-        .store_location {
-          gap: 10px 0;
-          flex-direction: column;
+        .content {
+
+
+          .store_location {
+            gap: 10px 0;
+            flex-direction: column;
+          }
         }
       }
 
@@ -1228,10 +1243,7 @@ span {
           flex-direction: row;
         }
 
-        .input-group
-          > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
-            .valid-feedback
-          ):not(.invalid-tooltip):not(.invalid-feedback) {
+        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
           margin-left: unset;
           border-radius: 5px;
         }
@@ -1254,10 +1266,8 @@ span {
     }
 
     .tab_section {
-      .input-group
-        > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
-          .valid-feedback
-        ):not(.invalid-tooltip):not(.invalid-feedback),
+
+      .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback),
       .dropdown,
       .form-control {
         margin-left: unset !important;
@@ -1268,7 +1278,6 @@ span {
 
         .store_staff {
           flex-direction: column;
-          align-items: unset !important;
         }
 
         .selected_file {
@@ -1282,7 +1291,7 @@ span {
 
           .radio_wrap {
             gap: 0 10px;
-            padding-left: 10px;
+            margin-right: auto;
           }
 
           .input-group-prepend {
@@ -1304,5 +1313,4 @@ span {
     }
   }
 }
-
 </style>

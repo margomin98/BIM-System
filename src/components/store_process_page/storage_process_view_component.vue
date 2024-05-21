@@ -598,7 +598,7 @@ textarea {
           .input-group {
             flex-wrap: nowrap;
             .input-number {
-              width: 62%;
+              width: 67%;
             }
 
             .input-group-prepend {
@@ -667,7 +667,7 @@ textarea {
           .input-group {
             flex-wrap: nowrap;
             .input-number {
-              width: 56.5%;
+              width: 63%;
             }
 
             .input-group-prepend {
