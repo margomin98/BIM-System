@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="content">
-        <div class="row g-0">
+        <div class="row">
           <!-- 報廢人員 -->
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-4">
@@ -766,7 +766,7 @@ span {
 
     .info_wrap {
       margin: 8px auto 5%;
-      padding: 0 5%;
+      width: 700px;
 
       .content {
         .input-group {

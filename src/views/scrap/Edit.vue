@@ -642,6 +642,9 @@ span {
 
     .info_wrap {
       padding: 0 5%;
+      .button_wrap{
+        width: 200px;
+      }
       .fixed_info {
         height: unset;
         flex-direction: column;

@@ -826,12 +826,6 @@ span {
           height: 80px;
           padding: 20px;
 
-
-          .input-group-prepend {
-            width: 120px;
-
-          }
-
           .checkmark-icon {
             top: 10%;
             left: 93%;
