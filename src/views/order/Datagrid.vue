@@ -281,6 +281,7 @@ const clear = () => {
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
+    padding:0 5%;
     .datagrid_section {
       .row {
         display: grid;
