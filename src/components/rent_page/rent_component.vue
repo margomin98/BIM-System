@@ -499,7 +499,9 @@ form {
         flex-direction: column;
         gap: 16px 0;
         }
-
+.text_input{
+  gap:0 5px;
+}
         .form-label {
           margin-bottom: 0;
         }

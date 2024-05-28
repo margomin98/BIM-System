@@ -73,7 +73,7 @@ function setData() {
 
 .button_wrap {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin: 30px auto 5%;
   width: 210px;
 }

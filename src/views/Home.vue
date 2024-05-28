@@ -92,15 +92,16 @@
           <input type="text" placeholder="請輸入代碼或名稱" v-model="project.input">
         </div>
         <div class="search_result">
-          <PerfectScrollbar>
+
         <div class="search_result_wrap">
+                  <PerfectScrollbar>
             <div v-for="option in filterProject" class="result_wrap"
               :class="{ 'selected': project.Project_Id === option.Value }" @click="selectProject(option)">
               <p class="case_code d-flex">{{ option.Value }}</p>
               <p class="case_name">{{ option.Text }}</p>
-            </div>
+            </div>        </PerfectScrollbar>
           </div>
-        </PerfectScrollbar>
+
         </div>
       </div>
     </div>
@@ -417,11 +418,11 @@
           <button class="refresh_btn" @click="getAlertMsg">刷新</button>
         </div>
         <div class="content">
-          <perfect-scrollbar>
+          <PerfectScrollbar>
             <div class="warn_info">
               <p class="case_name" v-for="object in alertMsgArray">{{ object.Message }}</p>
             </div>
-          </perfect-scrollbar>
+          </PerfectScrollbar>
         </div>
       </div>
       <!-- 金額支出窗口 -->

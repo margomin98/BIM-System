@@ -257,7 +257,6 @@
         }
       }
       .right {
-        margin-top: 80px;
         padding: 0 15%;
         h1 {
           color: #132238;
