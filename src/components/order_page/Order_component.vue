@@ -135,7 +135,7 @@
               <div>
                 <p v-for="(item, index) in formParams.Link" :key="item" class="">
                   <span>連結_{{ index+1 }}</span>
-                  <a :href="item" target="_blank"><img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(item, modalParams)"></a>
+                  <a :href="item" target="_blank"><img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"></a>
                   <img v-if="!hidden.input.file_trashcan" class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteLink('new', index)">
                 </p>
               </div>

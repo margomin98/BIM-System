@@ -21,14 +21,29 @@
             <input type="text" class="form-control readonly_box" v-model="upperForm.AI_ID" readonly>
           </div>
         </div>
-        <!-- 物流單號 -->
+        <!-- 訂購單號 -->
         <div class="col form_search_wrap mb-3">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              訂購單號 :
+            </div>
+            <div class="search_section">
+              <vue-multiselect v-model="upperForm.PO_IDSelect" :options="DropdownArray.PO_ID" :allow-empty="false" :max-height="300" placeholder="請選擇" label="PO_ID" :showLabels="false" track-by="PO_ID" :show-no-results="false" @select="storageStore.onOrderSelect">
+              </vue-multiselect>
+            </div>
+            <button class="form_search_btn" @click="storageStore.viewOrder(upperForm)">檢視</button>
+            <!-- 隱藏跳轉按鈕 -->
+            <router-link :to="{name: 'Order_View' , query:{ search_id : upperForm.PO_ID}}" target="_blank" id="view-order" style="display: none;"></router-link>
+          </div>
+        </div>
+        <!-- 物流單號 -->
+        <div v-if="false" class="col form_search_wrap mb-3">
           <div class="input-group">
             <div class="input-group-prepend">
               物流單號 :
             </div>
             <div class="search_section">
-              <vue-multiselect v-model="upperForm.ShipmentSelect" :options="DropdownArray.ShipmentNum" :allow-empty="false" :max-height="300" placeholder="請選擇" label="ShipmentNum" :showLabels="false" track-by="ShipmentNum" :show-no-results="false" @select="storageStore.onShipmentnumSelect">
+              <vue-multiselect v-model="upperForm.ShipmentSelect" :options="DropdownArray.ShipmentNum" :allow-empty="false" :max-height="300" placeholder="請選擇" label="ShipmentNum" :showLabels="false" track-by="AR_ID" :show-no-results="false" @select="storageStore.onShipmentnumSelect">
               </vue-multiselect>
             </div>
             <button class="form_search_btn" @click="storageStore.viewReceive(upperForm)">檢視</button>

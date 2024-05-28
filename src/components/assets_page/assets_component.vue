@@ -52,6 +52,18 @@
                         <input type="text" class="form-control readonly_box" readonly v-model="Form.ProjectName" />
                     </div>
                 </div>
+                <!-- 訂購單號 -->
+                <div class="col form_search_wrap">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            訂購單號：
+                        </div>
+                        <input type="text" class="form-control readonly_box" v-model="Form.PO_ID" readonly />
+                        <button class="form_search_btn" @click="storageStore.viewOrder(Form)">檢視</button>
+                        <!-- 隱藏跳轉按鈕 -->
+                        <router-link :to="{ name: 'Order_View', query: { search_id: Form.PO_ID } }" target="_blank" id="view-order" style="display: none;"></router-link>
+                    </div>
+                </div> 
                 <!-- 物流單號 -->
                 <div class="col form_search_wrap">
                     <div class="input-group mb-3">

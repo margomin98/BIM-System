@@ -154,7 +154,7 @@ export const useApplyStore = defineStore('Apply', {
 					})
 					url = 'https://localhost:44302/AssetsInMng/ApplicationEdit'
 				}
-				form.append('AR_ID', storageStore.upperForm.AR_ID);
+				form.append('PO_ID', storageStore.upperForm.PO_ID);
 				form.append('tab_count', storageStore.tabData.length);
 				form.append('Memo', storageStore.upperForm.Memo);
 				axios.post(url, form)

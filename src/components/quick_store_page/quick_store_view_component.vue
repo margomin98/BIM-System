@@ -18,6 +18,20 @@
             <input type="text" class="form-control readonly_box" v-model="upperForm.AI_ID" readonly>
           </div>
         </div>
+        <!-- 訂購單號 -->
+        <div v-show="!quickprocessStore.createHidden" class="col form_search_wrap mb-3">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              訂購單號 :
+            </div>
+            <div class="search_section">
+              <input type="text" class="form-control readonly_box" v-model="upperForm.PO_ID" readonly />
+            </div>
+            <button class="form_search_btn" @click="storageStore.viewOrder(upperForm)">檢視</button>
+            <!-- 隱藏跳轉按鈕 -->
+            <router-link :to="{ name: 'Order_View', query: { search_id: upperForm.PO_ID } }" target="_blank" id="view-order" style="display: none;"></router-link>
+          </div>
+        </div>
         <!-- 物流單號 -->
         <div v-show="!quickprocessStore.createHidden" class="col form_search_wrap mb-3">
           <div class="input-group">

@@ -627,6 +627,25 @@ export const useAPIStore = defineStore('API',{
       }
     },
     /**
+     * 取得訂購單號的下拉選單選項
+     * @returns {Promise<{PO_ID: string, PurchaseNum: string}>>} 返回專案列表Array
+     */        
+    async getFuzzyOrder() {
+      try {
+        const response = await axios.get(`https://localhost:44302/GetDBdata/SearchPurchaseOrderID?id=`);
+        let data = response.data;
+        console.log(data);
+        if (data.state === 'success') {
+          data.resultList.splice(0,0,{PO_ID:'--請選擇--' , PurchaseNum: ''});
+          return data.resultList;
+        } else {
+          return [{PO_ID:'--請選擇--' , PurchaseNum: ''}]
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },    
+    /**
      * 檢查專案代碼是否有效
      * @param {Array} projectCodeList 要檢查的專案代碼Array
      * @returns {Promise<string>} "success" | error_message

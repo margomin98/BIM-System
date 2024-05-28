@@ -5,7 +5,7 @@
     <Store_Component></Store_Component>
     <div class="col button_wrap">
       <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
-      <button class="send_btn" @click="applyStore.submit">送出</button>
+      <button class="send_btn" @click="applyStore.submit('create')">送出</button>
     </div>
   </div>
 </template>
@@ -34,6 +34,7 @@ onMounted(async() => {
   hidden.value = true;
   DropdownArray.value.EquipType = await apiStore.getEquipType();
   DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();
+  DropdownArray.value.PO_ID = await apiStore.getFuzzyOrder();
   if(route.query.ShipmentNum && route.query.search_id) {
     upperForm.value.ShipmentNum = route.query.ShipmentNum;
     upperForm.value.AR_ID = route.query.search_id;

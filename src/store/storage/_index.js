@@ -30,6 +30,7 @@ export const useStorageStore = defineStore('Storage', {
 			fuzzyShipmentNum: [],
 			EquipType: [],
 			EquipCategory: [],
+			PO_ID: [], // 訂購單號陣列
 			Area: [],
 			Layer: [],
 			Custodian: [],
@@ -50,8 +51,10 @@ export const useStorageStore = defineStore('Storage', {
 			ShipmentNum: '',
 			ShipmentSelect: {ShipmentNum:'--請選擇--' , AR_ID: ''},
 			Status: '',
-			AR_ID: '',
-			AI_ID: '',
+			AR_ID: '', // 收貨單號(檢視用)
+			AI_ID: '', // 入庫單號
+			PO_ID: '', // 入庫單號
+			PO_IDSelect: {PO_ID:'--請選擇--' , PurchaseNum: ''}, // 訂購單號(檢視用)
 			Memo: '',
 			DeliveryOperator: '',
 			DeliveryDate: '',
@@ -287,6 +290,16 @@ export const useStorageStore = defineStore('Storage', {
 				link.click();
 			}
 		},
+		/**
+		 * 查看收貨單(如果有formParams.PO_ID)則取得 #view-order按鈕並click()
+		 * @param {object} formParams 
+		 */
+		viewOrder(formParams) {
+			if (formParams.PO_ID) {
+				const link = document.getElementById('view-order');
+				link.click();
+			}
+		},
 		// ----圖片相關function
 		/**
 		 * 選擇檔案
@@ -296,7 +309,7 @@ export const useStorageStore = defineStore('Storage', {
 			const fileInput = document.querySelectorAll('input[type="file"]')[index];
 			fileInput.click();
 		},
-		// 將vue multiselect選項轉換給對應key值(分為 表單專案代碼 頁籤專案代碼 物流單號)
+		// 將vue multiselect選項轉換給對應key值(分為 表單專案代碼 頁籤專案代碼 物流單號 訂購單號)
 		onFormProjectcodeSelect(option) {
 			this.middleForm.itemProjectCode = option.Value;
 		},
@@ -306,6 +319,9 @@ export const useStorageStore = defineStore('Storage', {
 		},
 		onShipmentnumSelect(option) {
 			this.upperForm.AR_ID = option.AR_ID;
+		},
+		onOrderSelect(option) {
+			this.upperForm.PO_ID = option.PO_ID;
 		},
 		// 以及各自的取消function
 		onFormProjectcodeUnselect() {
@@ -356,6 +372,9 @@ export const useStorageStore = defineStore('Storage', {
 							//
 							if(key === 'ShipmentNum') {
 								this.upperForm.ShipmentSelect = {AR_ID: data.resultList.AR_ID , ShipmentNum: data.resultList.ShipmentNum};
+							}
+							if(key === 'PO_ID') {
+								this.upperForm.PO_IDSelect = {PO_ID: data.resultList.PO_ID , ShipmentNum: data.resultList.ShipmentNum};
 							}
 							this.upperForm[key] = data.resultList[key];
 						}

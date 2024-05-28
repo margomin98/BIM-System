@@ -172,7 +172,7 @@ export const useQuickProcessStore = defineStore('QuickProcess', {
 				const form = new FormData();
 				form.append('Done', isDone);
 				form.append('AI_ID', storageStore.upperForm.AI_ID);
-				form.append('AR_ID', storageStore.upperForm.AR_ID);
+				form.append('PO_ID', storageStore.upperForm.PO_ID);
 				form.append('Memo', storageStore.upperForm.Memo);
 				axios.post('https://localhost:44302/AssetsInMng/ExpressEdit', form)
 					.then(response => {

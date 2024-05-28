@@ -41,20 +41,13 @@ onMounted(async() => {
     storageStore.$reset();
     quickprocessStore.$reset();
     quickprocessStore.editHidden = true;
-    // DropdownArray.value.ProjectCode = [
-    //     {Text: '專案1', Value: '0001'},
-    //     {Text: '專案2', Value: '0002'},
-    //     {Text: '專案3', Value: '0003'},
-    //     {Text: '專案4', Value: '0004'},
-    //     {Text: '專案5', Value: '0005'}
-    // ]
     DropdownArray.value.EquipType = await apiStore.getEquipType();
     DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();
     DropdownArray.value.Area = await apiStore.getArea();
     DropdownArray.value.Custodian = await apiStore.getCustodian('');
     DropdownArray.value.ProjectCode = await apiStore.getFuzzyProjectAll();
+    DropdownArray.value.PO_ID = await apiStore.getFuzzyOrder();
     await storageStore.getDetails(AI_ID, true, Store_Edit_Status, false);
-//   console.log(DropdownArray.value);
 });
 onUnmounted(()=>{
     utilsStore.$dispose();

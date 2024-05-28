@@ -33,6 +33,7 @@ onMounted(async()=>{
   storageStore.$reset();
   DropdownArray.value.EquipType = await apiStore.getEquipType();
   DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();
+  DropdownArray.value.PO_ID = await apiStore.getFuzzyOrder();
   await storageStore.getDetails(AI_ID, false, Store_Edit_Status, true);
 })
 onUnmounted(()=>{

@@ -32,6 +32,7 @@ export const useAssetStore = defineStore('Asset', {
 			ProjectCode: '',
 			ProjectName: '',
       ShipmentNum: '',
+      PO_ID: '', // 訂購單號
 			AR_ID: '', //編輯
 			EquipType_Id: '',
       EquipTypeName: '',
