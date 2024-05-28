@@ -22,19 +22,24 @@
               <div class="input-group-prepend">
                 編號：
               </div>
-              <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="formParams.PO_ID">
+              <input ref="inputElement" type="text" class="form-control readonly_box" readonly
+                v-model="formParams.PO_ID">
             </div>
           </div>
           <!-- 訂單類型： -->
           <div class="col-12">
-            <div class="input-group mb-3">
+            <div class="input-group mb-3 check_box_wrap">
               <div class="input-group-prepend">
                 <span v-if="!props.disabled">*</span>訂單類型：
               </div>
-              <div class="form-check" v-for="(option, useIndex) in Order_UseArray" :key="option">
-                <input v-if="!hidden.input.Type" type="radio" class="form-check-input check_box" :value="option" :id="`useOption_${useIndex}`" v-model="formParams.Type">
-                <input v-else type="radio" class="form-check-input check_box" :value="option" :id="`useOption_${useIndex}`" v-model="formParams.Type" :disabled="formParams.Type !== option">
-                <label :for="`useOption_${useIndex}`" class="form-check-label check_box">{{ option }}</label>
+              <div class="d-flex align-items-center radio_wrap">
+                <div class="form-check" v-for="(option, useIndex) in Order_UseArray" :key="option">
+                  <input v-if="!hidden.input.Type" type="radio" class="form-check-input check_box" :value="option"
+                    :id="`useOption_${useIndex}`" v-model="formParams.Type">
+                  <input v-else type="radio" class="form-check-input check_box" :value="option"
+                    :id="`useOption_${useIndex}`" v-model="formParams.Type" :disabled="formParams.Type !== option">
+                  <label :for="`useOption_${useIndex}`" class="form-check-label check_box">{{ option }}</label>
+                </div>
               </div>
             </div>
           </div>
@@ -44,7 +49,9 @@
               <div class="input-group-prepend">
                 <span v-if="!props.disabled">*</span>商家訂單編號：
               </div>
-              <input ref="inputElement" type="text" class="form-control" :class="{ 'readonly_box': props.disabled }" :placeholder="props.placeholder.PurchaseNum" v-model="formParams.PurchaseNum" :readonly="props.disabled">
+              <input ref="inputElement" type="text" class="form-control" :class="{ 'readonly_box': props.disabled }"
+                :placeholder="props.placeholder.PurchaseNum" v-model="formParams.PurchaseNum"
+                :readonly="props.disabled">
             </div>
           </div>
           <!-- 採購來源 -->
@@ -84,7 +91,7 @@
             </div>
           </div>
           <!-- 下訂日期 -->
-          <div class="row g-0">
+          <div class="row g-0 order_date">
             <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
               <div class="input-group mb-3">
                 <div class="input-group-prepend"><span v-if="!props.disabled">*</span>下訂日期：</div>
@@ -106,53 +113,64 @@
                 </div>
               </div>
             </div>
-          </div>          
+          </div>
           <!-- 採購說明 -->
           <div class="col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 採購說明：
               </div>
-              <textarea :class="[{'readonly_box': props.disabled}, 'col']" rows="5" maxlength="256" v-model="formParams.Memo" :readonly="props.disabled" :placeholder="placeholder.Memo"></textarea>
+              <textarea :class="[{ 'readonly_box': props.disabled }, 'col']" rows="5" maxlength="256"
+                v-model="formParams.Memo" :readonly="props.disabled" :placeholder="placeholder.Memo"></textarea>
             </div>
           </div>
           <!-- 採購連結 -->
-          <div v-if="!hidden.div.Link" class="col-12">
+          <div v-if="!hidden.div.Link" class="col-12 order_link">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 採購連結：
               </div>
               <div>
                 <input type="text" name="" id="" v-model="link">
-                <button type="button" @click="()=>{ formParams.Link.push(link); link = '';}">新增連結</button>
+                <button class="add_link_btn" type="button"
+                  @click="() => { formParams.Link.push(link); link = ''; }">新增連結</button>
               </div>
             </div>
           </div>
           <!-- 已選擇連結 -->
-          <div v-if="!hidden.div.Link" class="col-12">
+          <div v-if="!hidden.div.Link" class="col-12 selected_file">
             <div class="input-group mb-3">
               <div class="input-group-prepend">已選擇連結：</div>
               <div>
                 <p v-for="(item, index) in formParams.Link" :key="item" class="">
-                  <span>連結_{{ index+1 }}</span>
-                  <a :href="item" target="_blank"><img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(item, modalParams)"></a>
-                  <img v-if="!hidden.input.file_trashcan" class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteLink('new', index)">
+                  <span>連結_{{ index + 1 }}</span>
+                  <a :href="item" target="_blank"><img class="view_icon" src="@/assets/view.png"
+                      style="margin-left: 10px;" @click="handlePreview(item, modalParams)"></a>
+                  <img v-if="!hidden.input.file_trashcan" class="trash_icon" src="@/assets/trash.png"
+                    style="margin-left: 10px;" @click="deleteLink('new', index)">
                 </p>
               </div>
             </div>
           </div>
           <!-- 已上傳連結 -->
-          <div v-if="!hidden.div.existLink" class="col-12">
+          <div v-if="!hidden.div.existLink" class="col">
             <div class="input-group mb-3">
               <div class="input-group-prepend">已上傳連結：</div>
-              <div>
-                <div v-for="(item, index) in formParams.existLink" :key="item" class="">
-                  <span>連結_{{ index+1 }}</span>
-                  <a :href="item" target="_blank"><img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"></a>
-                  <img v-if="!hidden.input.file_trashcan" class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteLink('exist', index)">
+              <div class="selected_file col">
+                <div class="input-group pt-2">
+                  <div class="file_upload_box">
+                    <div v-for="(item, index) in formParams.existLink" :key="item" class="file_upload_wrap">
+                      <p>連結_{{ index + 1 }}</p>
+                      <a :href="item" target="_blank"><img class="view_icon" src="@/assets/view.png"
+                          style="margin-left: 10px;"></a>
+                      <img v-if="!hidden.input.file_trashcan" class="trash_icon" src="@/assets/trash.png"
+                        style="margin-left: 10px;" @click="deleteLink('exist', index)">
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+
           </div>
           <!-- 文件上傳 -->
           <div v-if="!hidden.div.selected_btn" class="col-12 repair_photo_section">
@@ -172,8 +190,10 @@
                 <div class="file_upload_box">
                   <div v-for="(item, index) in fileParams.viewDoc" :key="index" class="file_upload_wrap">
                     <p>{{ item.FileName }}
-                      <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(item, modalParams)">
-                      <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteDocument(index, item, fileParams)">
+                      <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"
+                        @click="handlePreview(item, modalParams)">
+                      <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;"
+                        @click="deleteDocument(index, item, fileParams)">
                     </p>
                   </div>
                 </div>
@@ -242,7 +262,7 @@ const fileInputs = ref(null);
 const formParams = inject('form');//表單參數
 const fileParams = inject('file');//表單參數
 const DropdownArray = inject('DropdownArray'); // 下拉選單(專案代碼)
-const link = ref(''); 
+const link = ref('');
 onMounted(() => {
 });
 const onProjectSelect = (option) => {
@@ -251,11 +271,11 @@ const onProjectSelect = (option) => {
 const deleteLink = (type, index) => {
   switch (type) {
     case 'new':
-    formParams.Link.splice(index,1);
+      formParams.Link.splice(index, 1);
       break;
     case 'exist':
-    formParams.deleteLink.push(formParams.existLink[index]);
-    formParams.existLink.splice(index,1);
+      formParams.deleteLink.push(formParams.existLink[index]);
+      formParams.existLink.splice(index, 1);
       break;
   }
 }
@@ -263,6 +283,21 @@ const deleteLink = (type, index) => {
 
 <style lang="scss" scoped>
 @import '@/assets/css/global.scss';
+
+.add_link_btn {
+  background: #3D4E61;
+  border: none;
+  border-radius: 5px;
+  height: 37px;
+  font-weight: 700;
+  margin-left: 10px;
+  color: white;
+  width: 100px;
+
+  &:hover {
+    background-color: #5e7aa2;
+  }
+}
 
 .readonly_box {
   @include readonly_box;
@@ -347,6 +382,22 @@ const deleteLink = (type, index) => {
 }
 
 .selected_file {
+
+  p,
+  a {
+    margin-bottom: 0;
+    font-weight: 700;
+    color: white;
+  }
+
+  p::before {
+    margin-right: 10px;
+    content: "·";
+    font-weight: 700;
+    color: white;
+
+  }
+
   .file_upload_box {
     .file_upload_wrap {
       margin-bottom: 0;
@@ -358,18 +409,7 @@ const deleteLink = (type, index) => {
         height: 25px;
       }
 
-      p {
-        margin-bottom: 0;
-        font-weight: 700;
-        color: white;
 
-        &::before {
-          margin-right: 10px;
-          content: "·";
-          font-weight: 700;
-          color: white;
-        }
-      }
     }
   }
 }
@@ -380,6 +420,19 @@ const deleteLink = (type, index) => {
 
 .content {
   @include content_bg;
+
+  .radio_wrap {
+    gap: 0 10px;
+    font-weight: 700;
+    color: white;
+    font-size: 18px;
+  }
+}
+
+.order_link input,
+.order_date input {
+  height: 37px;
+  border-radius: 5px;
 }
 
 .input-group {
@@ -394,9 +447,19 @@ const deleteLink = (type, index) => {
     }
   }
 
+  textarea {
+    padding: 5px 10px;
+  }
+
+  input,
+  textarea {
+    border: none;
+
+  }
+
   .form-control {
+
     height: 37px;
-    border-radius: 0;
   }
 
   .date-selector {
@@ -404,9 +467,7 @@ const deleteLink = (type, index) => {
 
     input {
       width: 100%;
-      border: none;
       height: 35px;
-      border-radius: 5px;
       padding: 5px;
     }
   }
@@ -433,11 +494,12 @@ const deleteLink = (type, index) => {
 
     .content {
       padding: 35px 50px;
+
+      .order_date input {
+        width: 215px;
+      }
     }
 
-    .warn {
-      width: 800px;
-    }
   }
 }
 
@@ -446,12 +508,14 @@ const deleteLink = (type, index) => {
     .info_wrap {
       width: 800px;
 
-      .warn {
-        width: 750px;
-      }
+
 
       .content {
         padding: 35px 50px;
+
+        .order_date input {
+          width: 190px;
+        }
 
         .input-group {
           .num_wrap {
@@ -485,8 +549,10 @@ const deleteLink = (type, index) => {
         .input-group {
           flex-direction: column;
 
+          textarea,
+          .option_section,
           .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-            margin-left: unset;
+            margin-left: unset !important;
             border-radius: 5px;
             margin-top: 5px;
             height: 35px;
