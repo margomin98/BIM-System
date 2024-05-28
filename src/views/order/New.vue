@@ -1,5 +1,5 @@
 <template>
-  <Navbar @username="getUserName"/>
+  <Navbar/>
   <div class="main_section">
     <div class="title col">
       <h1>
@@ -15,17 +15,29 @@
 </template>
 
 <script setup>
-  import { provide, reactive, ref, } from 'vue';
+  import { onMounted, provide, reactive, ref, } from 'vue';
   import Navbar from '@/components/Navbar.vue';
   import Order_component from '@/components/order_page/Order_component.vue';
   import router from '@/router';
   import { goBack, checkRequire, checkMaxLetter, } from '@/assets/js/common_fn.js'
   import axios from '@/axios/tokenInterceptor';
+  import { useAPIStore } from '@/store';
+  const apiStore = useAPIStore();
+  const DropdownArray = reactive({
+    ProjectCode: []
+  })
 	const formParams = reactive({
 		PO_ID: '',
+    Type: '',
 		PurchaseNum: '',
 		Source: '',
+    ProjectCode: '',
+    ProjectSelect: '',
 		Use: '',
+    Memo: '',
+    Link: [],
+    deleteLink: [],
+    existLink:[],
 		PurchaseDate: '',
 		Executor: '',//承辦人員
 		Quantity: 1,
@@ -33,13 +45,15 @@
   const fileParams = reactive({
     newDoc: [],
     viewDoc: [],
-    deleteDoc: [], //將刪除的 已上傳物流文件記錄於此
+    deleteDoc: [], //將刪除的 已上傳訂單文件記錄於此
     existDoc: [],
   })
   const hidden = {
     div: {
       warning: true,
       existFile: true,
+      existLink: true,
+      ProjectName: true,
     },
     input: {
       PO_ID: true,
@@ -50,19 +64,21 @@
     PurchaseNum: '最多50字',
     Source: '最多50字',
     Use: '最多100字',
+    Memo: '最多256字',
   }
   const loading = ref(false);
+  onMounted( async () => {
+    DropdownArray.ProjectCode = await apiStore.getFuzzyProjectAll();
+  })
   provide("form",formParams);
   provide("file",fileParams);
-  const getUserName = ((name)=>{
-    formParams.Executor = name;
-  })
+  provide("DropdownArray",DropdownArray);
   const submit = (async ()=>{
-    const RequireCheckList = ['PurchaseNum','PurchaseDate','Quantity'];
+    const RequireCheckList = ['PurchaseNum','PurchaseDate','Quantity','Type'];
     const FormLetterCheckList = {
-      PurchaseNum: {field:'訂單編號',max:50},
+      PurchaseNum: {field:'商家訂單編號',max:50},
       Source: {field:'採購來源',max:50},
-      Use: {field:'使用專案',max:100},
+      Memo: {field:'採購說明', max: 256}
     }
     // 檢查必填
     if(!checkRequire(RequireCheckList,formParams,fileParams)) { return }
@@ -105,8 +121,14 @@
     return new Promise((resolve, reject) => {
       const form = new FormData();
       for (const key in formParams) {
-        if(formParams[key]) {
+        if(formParams[key] && !Array.isArray(formParams[key])) {
           form.append(key, formParams[key]);
+          console.log(`${key}, ${formParams[key]}`);
+        }
+      }
+      if(formParams.Link.length >0) {
+        for(const item of formParams.Link) {
+          form.append('Link', item);
         }
       }
       axios.post('https://localhost:44302/PurchasingMng/CreateOrder', form)

@@ -782,7 +782,7 @@ export const useAPIStore = defineStore('API',{
     /**
      * 查詢User權限名稱
      * @param {string} userName 使用者名稱
-     * @returns {Promise<number | string>} 成功返回roleId, 失敗返回異常訊息
+     * @returns {Promise<number | string>} 成功返回roleName, 失敗返回異常訊息
      */   
     async getRoleName(userName) {
       return new Promise(async(resolve, reject)=>{
@@ -792,7 +792,7 @@ export const useAPIStore = defineStore('API',{
           // console.log('userName', this.userName);
           // console.log('Applicant',Applicant);
           if (data.state === 'success') {
-            resolve(data.resultList.role.Name);
+            resolve(data.resultList.role?.Name || "");
           } 
           // 存取失敗
           else {
