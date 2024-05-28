@@ -6,6 +6,7 @@ export const PackageUnitArray = ['個', '對', '箱', '包', '組', '台', '件'
 export const CasePurchase_StatusArray = ['待採購' , '採購中' , '沖銷中' , '已完成'];
 export const CasePurchase_DateCategory = ['申請日期' , '採購日期' , '沖銷日期' , '交貨期限'];
 // 訂單管理
+export const Order_UseArray = ['專案使用', '內部使用', '其他'];
 export const Order_StatusArray = ['待收貨' , '已收貨']
 // 入庫管理
 export const Store_StatusArray = ['申請入庫', '申請歸還', '可交付', '待入庫', '已入庫', '已歸還', '待補資料', '快速入庫完成',]

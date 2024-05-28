@@ -10,7 +10,7 @@
       <div class="fixed_info">
         <div>
           <p>
-            承辦人員 : {{ formParams.Executor }}
+            承辦人員 : {{ formParams.Executor || utilsStore.userName }}
           </p>
         </div>
       </div>
@@ -25,14 +25,26 @@
               <input ref="inputElement" type="text" class="form-control readonly_box" readonly v-model="formParams.PO_ID">
             </div>
           </div>
+          <!-- 訂單類型： -->
+          <div class="col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span v-if="!props.disabled">*</span>訂單類型：
+              </div>
+              <div class="form-check" v-for="(option, useIndex) in Order_UseArray" :key="option">
+                <input v-if="!hidden.input.Type" type="radio" class="form-check-input check_box" :value="option" :id="`useOption_${useIndex}`" v-model="formParams.Type">
+                <input v-else type="radio" class="form-check-input check_box" :value="option" :id="`useOption_${useIndex}`" v-model="formParams.Type" :disabled="formParams.Type !== option">
+                <label :for="`useOption_${useIndex}`" class="form-check-label check_box">{{ option }}</label>
+              </div>
+            </div>
+          </div>
           <!-- 訂單編號： -->
           <div class="col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span v-if="!props.disabled">*</span>訂單編號：
+                <span v-if="!props.disabled">*</span>商家訂單編號：
               </div>
-              <input ref="inputElement" type="text" class="form-control" :class="{ 'readonly_box': props.disabled }"
-                :placeholder="props.placeholder.PurchaseNum" v-model="formParams.PurchaseNum" :readonly="props.disabled">
+              <input ref="inputElement" type="text" class="form-control" :class="{ 'readonly_box': props.disabled }" :placeholder="props.placeholder.PurchaseNum" v-model="formParams.PurchaseNum" :readonly="props.disabled">
             </div>
           </div>
           <!-- 採購來源 -->
@@ -45,14 +57,30 @@
                 :placeholder="props.placeholder.Source" v-model="formParams.Source" :readonly="props.disabled">
             </div>
           </div>
-          <!-- 使用專案 -->
+          <!-- 專案代碼 -->
           <div class="col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                使用專案：
+                專案代碼：
               </div>
-              <input ref="inputElement" type="text" class="form-control" :class="{ 'readonly_box': props.disabled }"
-                :placeholder="props.placeholder.Use" v-model="formParams.Use" :readonly="props.disabled">
+              <input v-if="props.disabled" type="text" class="form-control" :class="{ 'readonly_box': props.disabled }"
+                v-model="formParams.ProjectCode" :readonly="props.disabled">
+              <div v-else class="option_section col">
+                <vue-multiselect v-model="formParams.ProjectSelect" :options="DropdownArray.ProjectCode"
+                  :allow-empty="false" :max-height="300" placeholder="請選擇" label="Text" :showLabels="false"
+                  track-by="Text" :show-no-results="false" @select="onProjectSelect">
+                </vue-multiselect>
+              </div>
+            </div>
+          </div>
+          <!-- 專案名稱 -->
+          <div v-show="!hidden.div.ProjectName" class="col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                專案名稱：
+              </div>
+              <input v-if="props.disabled" type="text" class="form-control" :class="{ 'readonly_box': props.disabled }"
+                v-model="formParams.ProjectName" :readonly="props.disabled">
             </div>
           </div>
           <!-- 下訂日期 -->
@@ -78,11 +106,58 @@
                 </div>
               </div>
             </div>
+          </div>          
+          <!-- 採購說明 -->
+          <div class="col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                採購說明：
+              </div>
+              <textarea :class="[{'readonly_box': props.disabled}, 'col']" rows="5" maxlength="256" v-model="formParams.Memo" :readonly="props.disabled" :placeholder="placeholder.Memo"></textarea>
+            </div>
+          </div>
+          <!-- 採購連結 -->
+          <div v-if="!hidden.div.Link" class="col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                採購連結：
+              </div>
+              <div>
+                <input type="text" name="" id="" v-model="link">
+                <button type="button" @click="()=>{ formParams.Link.push(link); link = '';}">新增連結</button>
+              </div>
+            </div>
+          </div>
+          <!-- 已選擇連結 -->
+          <div v-if="!hidden.div.Link" class="col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">已選擇連結：</div>
+              <div>
+                <p v-for="(item, index) in formParams.Link" :key="item" class="">
+                  <span>連結_{{ index+1 }}</span>
+                  <a :href="item" target="_blank"><img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(item, modalParams)"></a>
+                  <img v-if="!hidden.input.file_trashcan" class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteLink('new', index)">
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- 已上傳連結 -->
+          <div v-if="!hidden.div.existLink" class="col-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">已上傳連結：</div>
+              <div>
+                <div v-for="(item, index) in formParams.existLink" :key="item" class="">
+                  <span>連結_{{ index+1 }}</span>
+                  <a :href="item" target="_blank"><img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"></a>
+                  <img v-if="!hidden.input.file_trashcan" class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteLink('exist', index)">
+                </div>
+              </div>
+            </div>
           </div>
           <!-- 文件上傳 -->
-          <div v-show="!hidden.div.selected_btn" class="col-12 repair_photo_section">
+          <div v-if="!hidden.div.selected_btn" class="col-12 repair_photo_section">
             <div class="input-group ">
-              <div class="input-group-prepend"> <span>*</span>文件上傳：</div>
+              <div class="input-group-prepend"> <span>*</span>訂單文件上傳：</div>
               <div class="file_wrap">
                 <button type="button" class="choose_btn" @click="openFileExplorer(fileInputs)">選擇檔案</button>
                 <input type="file" ref="fileInputs" accept="image/*,.doc,.docx,.pdf" multiple style="display: none;"
@@ -90,25 +165,23 @@
               </div>
             </div>
           </div>
-          <div v-show="!hidden.div.selected_file" class="col selected_file">
-  <div class="input-group">
-    <div class="input-group-prepend">已選擇檔案：</div>
-  <div class="selected_file col">
-      <div class="file_upload_box">
-                <div v-for="(item, index) in fileParams.viewDoc" :key="index" class="file_upload_wrap">
-                  <p>{{ item.FileName }}
-                    <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"
-                      @click="handlePreview(item, modalParams)">
-                    <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;"
-                      @click="deleteDocument(index, item, fileParams)">
-                  </p>
+          <div v-if="!hidden.div.selected_file" class="col selected_file">
+            <div class="input-group">
+              <div class="input-group-prepend">已選擇檔案：</div>
+              <div class="selected_file col">
+                <div class="file_upload_box">
+                  <div v-for="(item, index) in fileParams.viewDoc" :key="index" class="file_upload_wrap">
+                    <p>{{ item.FileName }}
+                      <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;" @click="handlePreview(item, modalParams)">
+                      <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteDocument(index, item, fileParams)">
+                    </p>
+                  </div>
                 </div>
               </div>
-      </div>
-  </div>
-  </div>
+            </div>
+          </div>
           <!-- 已上傳的檔案 -->
-          <div v-show="!hidden.div.existFile" class="col-12 selected_file">
+          <div v-if="!hidden.div.existFile" class="col-12 selected_file">
             <div class="input-group">
               <div class="input-group-prepend">已上傳文件：</div>
               <div class="file_upload_box">
@@ -116,7 +189,7 @@
                   <p>{{ item.FileName }}
                     <img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"
                       @click="handlePreview(item, modalParams)">
-                    <img v-show="!hidden.input.file_trashcan" class="trash_icon" src="@/assets/trash.png"
+                    <img v-if="!hidden.input.file_trashcan" class="trash_icon" src="@/assets/trash.png"
                       style="margin-left: 10px;" @click="deleteDocument(index, item, fileParams)">
                   </p>
                 </div>
@@ -153,16 +226,14 @@ import {
   reactive,
   ref,
 } from 'vue';
-import router from '@/router';
+import VueMultiselect from 'vue-multiselect'
+import { Order_UseArray } from '@/assets/js/dropdown';
 import {
-  getDate, handleDocumentFile, openFileExplorer, handlePreview, deleteDocument,
+  handleDocumentFile, openFileExplorer, handlePreview, deleteDocument,
 } from '@/assets/js/common_fn.js'
-import {
-  getApplication,
-  getAssets
-} from '@/assets/js/common_api.js'
+import { useUtilsStore } from '@/store';
+const utilsStore = useUtilsStore();
 const props = defineProps(['hidden', 'placeholder', 'disabled']);
-const ApplicationDate = ref('');
 const modalParams = reactive({
   title: '',
   src: '',
@@ -170,12 +241,24 @@ const modalParams = reactive({
 const fileInputs = ref(null);
 const formParams = inject('form');//表單參數
 const fileParams = inject('file');//表單參數
-const Applicant = ref('');//申請人員參數
+const DropdownArray = inject('DropdownArray'); // 下拉選單(專案代碼)
+const link = ref(''); 
 onMounted(() => {
-  ApplicationDate.value = getDate()
-  Applicant.value = props.applicant;
 });
-
+const onProjectSelect = (option) => {
+  formParams.ProjectCode = option.Value;
+}
+const deleteLink = (type, index) => {
+  switch (type) {
+    case 'new':
+    formParams.Link.splice(index,1);
+      break;
+    case 'exist':
+    formParams.deleteLink.push(formParams.existLink[index]);
+    formParams.existLink.splice(index,1);
+      break;
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -330,7 +413,7 @@ onMounted(() => {
 
   .input-group-prepend {
     text-align: end;
-    width: 140px;
+    width: 150px;
   }
 
   .selected_file {
@@ -346,10 +429,12 @@ onMounted(() => {
 
 @media only screen and (min-width: 1200px) {
   .info_wrap {
-    width: 800px;
-.content{
-  padding: 35px 50px;
-}
+    width: 850px;
+
+    .content {
+      padding: 35px 50px;
+    }
+
     .warn {
       width: 800px;
     }
@@ -359,7 +444,7 @@ onMounted(() => {
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
     .info_wrap {
-      width: 750px;
+      width: 800px;
 
       .warn {
         width: 750px;
@@ -388,7 +473,7 @@ onMounted(() => {
 @media only screen and (max-width: 767px) {
   .main_section {
     .info_wrap {
-      padding:0 5%;
+      padding: 0 5%;
 
       .fixed_info {
         height: unset;

@@ -24,9 +24,17 @@
   const PO_ID = route.query.search_id;
 	const formParams = reactive({
 		PO_ID: '',
+    Type: '專案使用',
 		PurchaseNum: '',
 		Source: '',
+    ProjectCode: '0000-1    ',
+    ProjectName: '資產管理系統開發-內部領用/借測',
+    ProjectSelect: '',
 		Use: '',
+    Memo: '',
+    Link: [],
+    deleteLink: [],
+    existLink:['test'],
 		PurchaseDate: '',
 		Executor: '',//承辦人員
 		Quantity: 1,
@@ -42,20 +50,26 @@
       warning: true,
       selected_btn: true,
       selected_file: true,
+      Link: true,
     },
     input: {
       file_trashcan: true,
+      Type: true,
     },
   }
   const placeholder = {
     PurchaseNum: '',
     Source: '',
-    Use: '',
+    Memo: '',
   }
   const disabled = ref(true);
   const details = ref();
+  const DropdownArray = reactive({
+    ProjectCode: []
+  })
   provide("form",formParams);
   provide("file",fileParams);
+  provide("DropdownArray",DropdownArray);
   onMounted(()=>{
     getDetails('/GetDBdata/PurchasingGetData?po_id=',PO_ID)
     .then((r)=>{

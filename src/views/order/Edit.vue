@@ -22,13 +22,26 @@
   import { goBack, checkRequire, checkMaxLetter, } from '@/assets/js/common_fn.js'
   import axios from '@/axios/tokenInterceptor';
   import { useRoute } from 'vue-router';
+  import { useAPIStore } from '@/store';
+  const apiStore = useAPIStore();
   const route = useRoute();
   const PO_ID = route.query.search_id;
+  const DropdownArray = reactive({
+    ProjectCode: []
+  })
 	const formParams = reactive({
 		PO_ID: '',
+    Type: '專案使用',
 		PurchaseNum: '',
 		Source: '',
+    ProjectCode: '0000-1    ',
+    ProjectName: '資產管理系統開發-內部領用/借測',
+    ProjectSelect: '',
 		Use: '',
+    Memo: '',
+    Link: [],
+    deleteLink: [],
+    existLink:['test'],
 		PurchaseDate: '',
 		Executor: '',//承辦人員
 		Quantity: 1,
@@ -42,21 +55,25 @@
   const hidden = {
     div: {
       warning: true,
+      ProjectName: true,
     },
     input: {
       // file_trashcan: true,
+      Type: true,
     },
   }
   const placeholder = {
     PurchaseNum: '最多50字',
     Source: '最多50字',
-    Use: '最多100字',
+    Memo: '最多256字',
   }
   const loading = ref(false);
   const details = ref();
   provide("form",formParams);
   provide("file",fileParams);
-  onMounted(()=>{
+  provide("DropdownArray",DropdownArray);
+  onMounted( async ()=>{
+    DropdownArray.ProjectCode = await apiStore.getFuzzyProjectAll();
     getDetails();
   })
   const getDetails = async()=>{
@@ -70,6 +87,13 @@
           formParams[key] = details.value[key];
         } else if(key == 'PO_PurchaseNum') {
           formParams['PurchaseNum'] = details.value[key];
+        }
+        // 組合專案代碼
+        if(formParams.ProjectCode && formParams.ProjectName) {
+          formParams.ProjectSelect = {
+            Text: `${formParams.ProjectCode.trim()} ${formParams.ProjectName}`,
+            Value: formParams.ProjectName,
+          }
         }
         // 檔案部分
         if(details.value.existDocument) {
@@ -135,8 +159,18 @@
     return new Promise((resolve, reject) => {
       const form = new FormData();
       for (const key in formParams) {
-        if(formParams[key]) {
+        if(formParams[key] && !Array.isArray(formParams[key])) {
           form.append(key, formParams[key]);
+        }
+      }
+      if(formParams.Link.length >0) {
+        for(const item of formParams.Link) {
+          form.append('Link', item);
+        }
+      }
+      if(formParams.deleteLink.length >0) {
+        for(const item of formParams.deleteLink) {
+          form.append('deleteLink', item);
         }
       }
       // 可能有deleteFile

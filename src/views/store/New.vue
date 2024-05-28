@@ -30,6 +30,7 @@ const route = useRoute();
 
 onMounted(async() => {
   storageStore.$reset();
+  utilsStore.getDate();
   hidden.value = true;
   DropdownArray.value.EquipType = await apiStore.getEquipType();
   DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();
