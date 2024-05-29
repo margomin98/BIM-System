@@ -31,17 +31,15 @@
   })
 	const formParams = reactive({
 		PO_ID: '',
-    Type: '專案使用',
+    Type: '',
 		PurchaseNum: '',
 		Source: '',
-    ProjectCode: '0000-1    ',
-    ProjectName: '資產管理系統開發-內部領用/借測',
+    ProjectCode: '',
+    ProjectName: '',
     ProjectSelect: '',
 		Use: '',
     Memo: '',
-    Link: [],
-    deleteLink: [],
-    existLink:['test'],
+    Links: [],
 		PurchaseDate: '',
 		Executor: '',//承辦人員
 		Quantity: 1,
@@ -163,14 +161,9 @@
           form.append(key, formParams[key]);
         }
       }
-      if(formParams.Link.length >0) {
-        for(const item of formParams.Link) {
-          form.append('Link', item);
-        }
-      }
-      if(formParams.deleteLink.length >0) {
-        for(const item of formParams.deleteLink) {
-          form.append('deleteLink', item);
+      if(formParams.Links.length >0) {
+        for(const item of formParams.Links) {
+          form.append('Links', item);
         }
       }
       // 可能有deleteFile

@@ -17,7 +17,7 @@
       const router = useRouter();
       const search_id = props.params.data.AR_ID;
       const canEdit = ref(props.params.data.canEdit);
-      const ShipmentNum = props.params.data.ShipmentNum;
+      const PO_ID = props.params.data.PO_ID;
       function viewDetails() {
         if (search_id !== '') {
           router.push({
@@ -39,12 +39,11 @@
         }
       }
       function viewStore() {
-        if (search_id !== '') {
+        if (PO_ID !== '') {
           router.push({
             name: 'Store_New',
             query: {
-              search_id,
-              ShipmentNum,
+              PO_ID,
             }
           });
         }

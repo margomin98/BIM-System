@@ -19,10 +19,10 @@
             <input type="text" class="form-control " placeholder="最多輸入20字" v-model="formParams.ShipmentCompany" />
           </div>
         </div>
-        <!-- 訂購單號 -->
+        <!-- 商家訂單編號 -->
         <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend">訂購單號：</div>
+            <div class="input-group-prepend">商家訂單編號：</div>
             <div class="search_section">
               <input @input="getPurchaseNum" class="form-control" placeholder="最多輸入20字" @focus="showOptions = true;"
                 @blur="closeOption()" v-model="formParams.PurchaseNum" />

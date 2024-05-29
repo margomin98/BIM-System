@@ -35,10 +35,9 @@ onMounted(async() => {
   DropdownArray.value.EquipType = await apiStore.getEquipType();
   DropdownArray.value.ShipmentNum = await apiStore.getShipmentNum();
   DropdownArray.value.PO_ID = await apiStore.getFuzzyOrder();
-  if(route.query.ShipmentNum && route.query.search_id) {
-    upperForm.value.ShipmentNum = route.query.ShipmentNum;
-    upperForm.value.AR_ID = route.query.search_id;
-    upperForm.value.ShipmentSelect = {ShipmentNum: upperForm.value.ShipmentNum , AR_ID: upperForm.value.AR_ID};
+  if(route.query.PO_ID) {
+    upperForm.value.PO_ID = route.query.PO_ID;
+    upperForm.value.PO_IDSelect = {PO_ID: upperForm.value.PO_ID , ShipmentNum: ''}; // track-by 的值有對到就OK
   }
 });
 onUnmounted(()=>{

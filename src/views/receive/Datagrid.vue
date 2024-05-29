@@ -80,8 +80,8 @@
 <script setup>
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import Receive_button from "@/components/Receive_button";
-import Delete from "@/components/Receive_delete_button";
+import Receive_button from "@/components/receive_page/Receive_button";
+import Delete from "@/components/receive_page/Receive_delete_button";
 import Navbar from "@/components/Navbar.vue";
 import {
   onMounted,

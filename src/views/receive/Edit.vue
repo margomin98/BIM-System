@@ -20,7 +20,7 @@
         </div>
         <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend">訂購單號：</div>
+            <div class="input-group-prepend">商家訂單編號：</div>
             <input @input="details.PO_ID = ''; getPurchaseNum()" placeholder="最多輸入20字" class="form-control"
               @focus="showOptions = true;" @blur="closeOption()" v-model="details.PurchaseNum" />
             <ul v-if="showOptions" class="options-list">

@@ -26,18 +26,17 @@
   const DropdownArray = reactive({
     ProjectCode: []
   })
-	const formParams = reactive({
+  const formParams = reactive({
 		PO_ID: '',
     Type: '',
 		PurchaseNum: '',
 		Source: '',
     ProjectCode: '',
+    ProjectName: '',
     ProjectSelect: '',
 		Use: '',
     Memo: '',
-    Link: [],
-    deleteLink: [],
-    existLink:[],
+    Links: [],
 		PurchaseDate: '',
 		Executor: '',//承辦人員
 		Quantity: 1,
@@ -52,7 +51,6 @@
     div: {
       warning: true,
       existFile: true,
-      existLink: true,
       ProjectName: true,
     },
     input: {
@@ -126,9 +124,9 @@
           console.log(`${key}, ${formParams[key]}`);
         }
       }
-      if(formParams.Link.length >0) {
-        for(const item of formParams.Link) {
-          form.append('Link', item);
+      if(formParams.Links.length >0) {
+        for(const item of formParams.Links) {
+          form.append('Links', item);
         }
       }
       axios.post('https://localhost:44302/PurchasingMng/CreateOrder', form)

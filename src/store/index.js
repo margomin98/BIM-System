@@ -410,7 +410,7 @@ export const useUtilsStore = defineStore('Utils',{
             } 
             // 都不是
             else {
-              resolve(false);
+              reject('get role failed');
             }
           } 
           // 存取失敗

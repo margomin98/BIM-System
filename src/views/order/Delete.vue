@@ -41,17 +41,15 @@ const route = useRoute();
 const PO_ID = route.query.search_id;
 const formParams = reactive({
 		PO_ID: '',
-    Type: '專案使用',
+    Type: '',
 		PurchaseNum: '',
 		Source: '',
-    ProjectCode: '0000-1    ',
-    ProjectName: '資產管理系統開發-內部領用/借測',
+    ProjectCode: '',
+    ProjectName: '',
     ProjectSelect: '',
 		Use: '',
     Memo: '',
-    Link: [],
-    deleteLink: [],
-    existLink:['test'],
+    Links: [],
 		PurchaseDate: '',
 		Executor: '',//承辦人員
 		Quantity: 1,

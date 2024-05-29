@@ -30,7 +30,7 @@
           <div class="col-12">
             <div class="input-group mb-3 check_box_wrap">
               <div class="input-group-prepend">
-                <span v-if="!props.disabled">*</span>訂單類型：
+                <span v-if="!hidden.input.Type">*</span>訂單類型：
               </div>
               <div class="d-flex align-items-center radio_wrap">
                 <div class="form-check" v-for="(option, useIndex) in Order_UseArray" :key="option">
@@ -50,7 +50,7 @@
                 <span v-if="!props.disabled">*</span>商家訂單編號：
               </div>
               <input ref="inputElement" type="text" class="form-control" :class="{ 'readonly_box': props.disabled }"
-                :placeholder="props.placeholder.PurchaseNum" v-model="formParams.PurchaseNum"
+                :placeholder="props.placeholder.PurchaseNum" v-model="formParams.PurchaseNum" maxlength="50"
                 :readonly="props.disabled">
             </div>
           </div>
@@ -61,7 +61,8 @@
                 採購來源：
               </div>
               <input ref="inputElement" type="text" class="form-control" :class="{ 'readonly_box': props.disabled }"
-                :placeholder="props.placeholder.Source" v-model="formParams.Source" :readonly="props.disabled">
+                :placeholder="props.placeholder.Source" v-model="formParams.Source" maxlength="50"
+                :readonly="props.disabled" >
             </div>
           </div>
           <!-- 專案代碼 -->
@@ -133,42 +134,22 @@
               <div>
                 <input type="text" name="" id="" v-model="link">
                 <button class="add_link_btn" type="button"
-                  @click="() => { formParams.Link.push(link); link = ''; }">新增連結</button>
+                  @click="() => { formParams.Links.push(link); link = ''; }">新增連結</button>
               </div>
             </div>
           </div>
           <!-- 已選擇連結 -->
-          <div v-if="!hidden.div.Link" class="col-12 selected_file">
+          <div class="col-12 selected_file">
             <div class="input-group mb-3">
               <div class="input-group-prepend">已選擇連結：</div>
               <div>
-                <p v-for="(item, index) in formParams.Link" :key="item" class="">
+                <p v-for="(item, index) in formParams.Links" :key="item" class="">
                   <span>連結_{{ index+1 }}</span>
                   <a :href="item" target="_blank"><img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"></a>
-                  <img v-if="!hidden.input.file_trashcan" class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteLink('new', index)">
+                  <img v-if="!hidden.input.file_trashcan" class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteLink(index)">
                 </p>
               </div>
             </div>
-          </div>
-          <!-- 已上傳連結 -->
-          <div v-if="!hidden.div.existLink" class="col">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">已上傳連結：</div>
-              <div class="selected_file col">
-                <div class="input-group pt-2">
-                  <div class="file_upload_box">
-                    <div v-for="(item, index) in formParams.existLink" :key="item" class="file_upload_wrap">
-                      <p>連結_{{ index + 1 }}</p>
-                      <a :href="item" target="_blank"><img class="view_icon" src="@/assets/view.png"
-                          style="margin-left: 10px;"></a>
-                      <img v-if="!hidden.input.file_trashcan" class="trash_icon" src="@/assets/trash.png"
-                        style="margin-left: 10px;" @click="deleteLink('exist', index)">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
           </div>
           <!-- 文件上傳 -->
           <div v-if="!hidden.div.selected_btn" class="col-12 repair_photo_section">
@@ -266,16 +247,8 @@ onMounted(() => {
 const onProjectSelect = (option) => {
   formParams.ProjectCode = option.Value;
 }
-const deleteLink = (type, index) => {
-  switch (type) {
-    case 'new':
-      formParams.Link.splice(index, 1);
-      break;
-    case 'exist':
-      formParams.deleteLink.push(formParams.existLink[index]);
-      formParams.existLink.splice(index, 1);
-      break;
-  }
+const deleteLink = (index) => {
+  formParams.Links.splice(index, 1);
 }
 </script>
 
