@@ -131,11 +131,10 @@
               <div class="input-group-prepend">
                 商品網頁連結：
               </div>
-              <div>
-                <input type="text" name="" id="" v-model="link">
-                <button class="add_link_btn" type="button"
-                  @click="() => { formParams.Links.push(link); link = ''; }">新增連結</button>
+              <div style="display: flex; flex: 1 0 0; ">
+                <input type="text" name="" id="" v-model="link" class="w-100">
               </div>
+              <button class="add_link_btn" type="button" @click="() => { formParams.Links.push(link); link = ''; }">新增連結</button>
             </div>
           </div>
           <!-- 已上傳連結 -->
