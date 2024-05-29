@@ -118,6 +118,7 @@
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import {
+  onActivated,
   onMounted,
   reactive,
   ref
@@ -172,6 +173,9 @@ export default {
       { header: "整合人員", field: "Integrator", width: '150px' },
     ]
     const rowData = ref([]);
+    onActivated(()=>{
+      submit('', ''); // 透過keep-alive 觸發的情況下，不更改條件刷新datagrid
+    })
     onMounted(() => {
       datagrid.sortField = 'IntegrationId'
       submit('', 'search');

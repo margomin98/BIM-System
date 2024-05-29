@@ -66,6 +66,7 @@
   import System_log_button from "@/components/System_log_view_button";
   import Navbar from "@/components/Navbar.vue";
   import {
+    onActivated,
     onMounted,
     reactive,
     ref
@@ -132,6 +133,9 @@
         }
       ]
       const rowData = ref([]);
+      onActivated(()=>{
+        submit('', ''); // 透過keep-alive 觸發的情況下，不更改條件刷新datagrid
+      })
       onMounted(() => {
         datagrid.sortField = 'LogTime'
         submit('', 'search');

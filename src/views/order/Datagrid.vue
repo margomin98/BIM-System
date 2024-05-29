@@ -27,10 +27,12 @@
               <option v-for="item in Order_StatusArray" :key="item" :value="item">{{ item }}</option>
             </select>
           </div>
-          <!-- 使用專案 -->
+          <!-- 專案代碼 -->
           <div class="col">
-            <p>使用專案</p>
-            <input type="text" v-model="dgSearchParams.Use" />
+            <p>專案代碼</p>
+            <multiselect v-model="dgSearchParams.ProjectSelect" :allow-empty="false"
+              @select="utilsStore.onDGProjectSelect" :options="DropdownArray.ProjectCode" :max-height="300"
+              placeholder="請選擇" label="Text" :showLabels="false" track-by="Text"></multiselect>
           </div>
           <!-- 採購來源 -->
           <div class="col">
@@ -96,12 +98,14 @@
 </template>
 
 <script setup>
+import Multiselect from 'vue-multiselect'
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Order_button from "@/components/Order_button";
 import Delete from "@/components/Order_delete_button";
 import Navbar from "@/components/Navbar.vue";
 import {
+  onActivated,
   onMounted,
   onUnmounted,
   reactive,
@@ -129,6 +133,7 @@ const {
 } = storeToRefs(utilsStore);
 const DropdownArray = reactive({
   Staff: [],
+  ProjectCode: [],
 })
 const searchParams = reactive({
   PO_ID: '',
@@ -157,7 +162,7 @@ const datagridfield = [{
 },
 {
   header: "使用專案",
-  field: "Use",
+  field: "ProjectName",
   width: '180px'
 },
 {
@@ -181,6 +186,9 @@ const datagridfield = [{
   width: '130px'
 },
 ]
+onActivated(()=>{
+  submit('', ''); // 透過keep-alive 觸發的情況下，不更改條件刷新datagrid
+})
 onMounted(async () => {
   utilsStore.$reset();
   for (const key in searchParams) {
@@ -188,6 +196,7 @@ onMounted(async () => {
   }
   submit('', 'search');
   DropdownArray.Staff = await apiStore.getStaff();
+  DropdownArray.ProjectCode = await apiStore.getFuzzyProject();
 });
 onUnmounted(() => {
   utilsStore.$dispose();
@@ -208,6 +217,10 @@ async function submit(event, type) {
 }
 const clear = () => {
   utilsStore.clearSearchParams(dgSearchParams.value);
+  dgSearchParams.value.ProjectSelect = {
+    Text: '--請選擇--',
+    Value: ''
+  };
   submit('', 'search');
 };
 </script>

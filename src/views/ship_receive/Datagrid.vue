@@ -97,7 +97,8 @@
     ref,
     reactive,
     onMounted,
-    onUnmounted
+    onUnmounted,
+    onActivated
   } from 'vue';
   import ship_receive_btn from "@/components/ship_receive_page/ship_receive_btn.vue";
   import Navbar from "@/components/Navbar.vue";
@@ -172,6 +173,9 @@
       width: '170px'
     },
   ]);
+  onActivated(()=>{
+    submit('', ''); // 透過keep-alive 觸發的情況下，不更改條件刷新datagrid
+  })
   onMounted(async() => {
     utilsStore.$reset();
     for (const key in searchParams) {

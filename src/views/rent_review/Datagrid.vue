@@ -98,7 +98,7 @@
 import Multiselect from 'vue-multiselect'
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import { ref, reactive, onMounted, onUnmounted } from "vue";
+import { ref, reactive, onMounted, onUnmounted, onActivated } from "vue";
 import { Rent_Review_UseArray, Rent_Review_StatusArray, Rent_Review_DateCategory } from "@/assets/js/dropdown";
 import Rent_review_button from "@/components/Rent_review_button";
 import Navbar from "@/components/Navbar.vue";
@@ -136,6 +136,9 @@ const datagridfield = [
   {header: "審核日期",field: "VerifyDate",width: '150px'},
   {header: "審核人員",field: "VerifyPerson",width: '150px'},
 ]
+onActivated(()=>{
+  submit('', ''); // 透過keep-alive 觸發的情況下，不更改條件刷新datagrid
+})
 onMounted(async () => {
   utilsStore.$reset();
   for(const key in searchParams) {

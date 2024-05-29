@@ -114,6 +114,7 @@
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import {
+  onActivated,
   onMounted,
   reactive,
   ref
@@ -208,6 +209,9 @@ export default {
       width: '150px',
     },
     ];
+    onActivated(()=>{
+      submit('', ''); // 透過keep-alive 觸發的情況下，不更改條件刷新datagrid
+    })
     onMounted(() => {
       datagrid.sortField = 'PlanId';
       submit('', 'search');

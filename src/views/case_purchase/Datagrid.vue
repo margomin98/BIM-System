@@ -146,7 +146,8 @@ import {
   ref,
   reactive,
   onMounted,
-  onUnmounted
+  onUnmounted,
+  onActivated
 } from 'vue';
 import case_purchase_btn from '@/components/case_purchase_page/case_purchase_btn.vue';
 import Delete from '@/components/case_purchase_page/delete_btn.vue'
@@ -200,6 +201,9 @@ const datagridfield = ref([
   { header: "沖銷人員", field: "WriteOffPerson", width: '150px' },
   { header: "沖銷日期", field: "WriteOffDate", width: '170px' },
 ]);
+onActivated(()=>{
+  submit('', ''); // 透過keep-alive 觸發的情況下，不更改條件刷新datagrid
+})
 onMounted(async () => {
   utilsStore.$reset();
   for (const key in searchParams) {

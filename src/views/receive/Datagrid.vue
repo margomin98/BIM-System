@@ -84,6 +84,7 @@ import Receive_button from "@/components/receive_page/Receive_button";
 import Delete from "@/components/receive_page/Receive_delete_button";
 import Navbar from "@/components/Navbar.vue";
 import {
+  onActivated,
   onMounted,
   onUnmounted,
   reactive,
@@ -144,6 +145,9 @@ const datagridfield = [{
   width: '150px'
 },
 ]
+onActivated(()=>{
+  submit('', ''); // 透過keep-alive 觸發的情況下，不更改條件刷新datagrid
+})
 onMounted(async () => {
   utilsStore.$reset();
   for (const key in searchParams) {

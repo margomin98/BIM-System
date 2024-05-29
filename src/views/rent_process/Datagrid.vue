@@ -100,7 +100,8 @@
     ref,
     reactive,
     onMounted,
-    onUnmounted
+    onUnmounted,
+    onActivated
   } from "vue";
   import Rent_process_button from "@/components/rent_process_page/Rent_process_button";
   import Delete from "@/components/rent_process_page/Rent_process_delete_button ";
@@ -194,6 +195,9 @@
       width: '170px'
     },
   ]
+  onActivated(()=>{
+    submit('', ''); // 透過keep-alive 觸發的情況下，不更改條件刷新datagrid
+  })
   onMounted(async() => {
     utilsStore.$reset();
     for (const key in searchParams) {

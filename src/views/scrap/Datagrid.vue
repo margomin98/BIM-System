@@ -121,6 +121,7 @@
   import DataTable from 'primevue/datatable';
   import Column from 'primevue/column';
   import {
+    onActivated,
     onMounted,
     onUnmounted,
     reactive,
@@ -214,6 +215,9 @@
       width: '120px'
     },
   ]
+  onActivated(()=>{
+    submit('', ''); // 透過keep-alive 觸發的情況下，不更改條件刷新datagrid
+  })
   onMounted(async() => {
     utilsStore.$reset();
     for (const key in searchParams) {

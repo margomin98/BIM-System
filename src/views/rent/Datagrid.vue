@@ -108,7 +108,8 @@ import {
   ref,
   reactive,
   onMounted,
-  onUnmounted
+  onUnmounted,
+  onActivated
 } from "vue";
 import Rent_button from "@/components/rent_page/Rent_button";
 import Delete from "@/components/rent_page/Rent_delete_button.vue";
@@ -184,6 +185,9 @@ const datagridfield = [{
   width: '170px'
 },
 ]
+onActivated(()=>{
+  submit('', ''); // 透過keep-alive 觸發的情況下，不更改條件刷新datagrid
+})
 onMounted(async () => {
   utilsStore.$reset();
   for (const key in searchParams) {

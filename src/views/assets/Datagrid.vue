@@ -178,7 +178,7 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Assets_return_button from "@/components/Assets_return_button";
 import Navbar from "@/components/Navbar.vue";
-import { onMounted, reactive, ref, onUnmounted } from "vue";
+import { onMounted, reactive, ref, onUnmounted, onActivated } from "vue";
 import { Asset_StastusArray } from "@/assets/js/dropdown"
 import { useUtilsStore, useAPIStore } from '@/store'
 import { storeToRefs } from 'pinia';
@@ -230,7 +230,9 @@ const datagridfield = [
 ];
 const inputfile = ref(null);
 const isLoading = ref(false);
-
+onActivated(()=>{
+  submit('', ''); // 透過keep-alive 觸發的情況下，不更改條件刷新datagrid
+})
 onMounted(async () => {
   utilsStore.$reset();
   for(const key in searchParams) {
