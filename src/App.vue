@@ -304,9 +304,20 @@ a {
         }
     }
 }
-
-//放大Swiper圖片
+.order_dg,.assets_dg{
+ .multiselect__single {
+      text-overflow: ellipsis; 
+      white-space: nowrap;
+      overflow: hidden;
+    }
+   
+}
 @media only screen and (min-width: 1200px) {
+    .order_dg,.assets_dg{
+ .multiselect__single {
+      width: 270px;
+    }
+}
 
     .main_button_wrap {
         justify-content: left !important;
@@ -336,8 +347,20 @@ a {
         font-size: 16px !important;
     }
 }
-
+@media only screen and (min-width: 1200px) and (max-width: 1999px){
+    .order_dg,.assets_dg{
+ .multiselect__single {
+      width: 200px;
+    }
+}
+}
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .order_dg,.assets_dg{
+ .multiselect__single {
+      width: 160px;
+ }
+    }
+
     .main_button_wrap {
         justify-content: left !important;
     }
@@ -365,7 +388,6 @@ a {
         font-size: 16px !important;
     }
 }
-
 @media only screen and (max-width: 767px) {
 
     h1 {

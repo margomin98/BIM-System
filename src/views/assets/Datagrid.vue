@@ -1,6 +1,6 @@
 <template>
   <Navbar />
-  <div class="main_section">
+  <div class="main_section assets_dg">
     <div class="title col">
       <h1>資產管理</h1>
     </div>

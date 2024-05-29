@@ -1,6 +1,6 @@
 <template>
   <Navbar />
-  <div class="main_section">
+  <div class="main_section order_dg">
     <div class="title col">
       <h1>訂單管理</h1>
     </div>
@@ -186,7 +186,7 @@ const datagridfield = [{
   width: '130px'
 },
 ]
-onActivated(()=>{
+onActivated(() => {
   submit('', ''); // 透過keep-alive 觸發的情況下，不更改條件刷新datagrid
 })
 onMounted(async () => {
@@ -279,7 +279,6 @@ const clear = () => {
 @media only screen and (min-width: 1200px) {
   .main_section {
     padding: 0 10%;
-
     .datagrid_section {
       .row {
         display: grid;
@@ -294,7 +293,8 @@ const clear = () => {
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   .main_section {
-    padding:0 5%;
+    padding: 0 5%;
+
     .datagrid_section {
       .row {
         display: grid;
