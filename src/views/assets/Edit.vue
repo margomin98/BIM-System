@@ -34,10 +34,12 @@ onMounted(async ()=>{
   DropdownArray.value.Custodian = await apiStore.getCustodian('');
   DropdownArray.value.Area = await apiStore.getArea();
   DropdownArray.value.EquipType = await apiStore.getEquipType();
+  DropdownArray.value.PO_ID = await apiStore.getFuzzyOrder();
   utilsStore.getUserName();
   const roleId = await apiStore.getRoleId(utilsStore.userName);
   if(roleId === 1 || roleId === 4) isPermitted.value = true ;
   await assetStore.getDetails(AssetsId);
+  if(Form.value.PO_ID) Form.value.PO_IDSelect = {PO_ID: Form.value.PO_ID};
   assetStore.searchHistory('','search');
 })
 

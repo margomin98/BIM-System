@@ -58,7 +58,11 @@
                         <div class="input-group-prepend">
                             訂購單號：
                         </div>
-                        <input type="text" class="form-control readonly_box" v-model="Form.PO_ID" readonly />
+                        <div class="search_section">
+                            <vue-multiselect v-if="PageType === 'edit'" v-model="Form.PO_IDSelect" :options="DropdownArray.PO_ID" :allow-empty="false" :max-height="300" placeholder="請選擇" label="PO_ID" :showLabels="false" track-by="PO_ID" :show-no-results="false" @select="onOrderSelect">
+                            </vue-multiselect>
+                            <input v-else type="text" class="form-control readonly_box" v-model="Form.PO_ID" readonly />
+                        </div>
                         <button class="form_search_btn" @click="storageStore.viewOrder(Form)">檢視</button>
                         <!-- 隱藏跳轉按鈕 -->
                         <router-link :to="{ name: 'Order_View', query: { search_id: Form.PO_ID } }" target="_blank" id="view-order" style="display: none;"></router-link>
@@ -362,6 +366,7 @@
   </template>
 
 <script setup>
+    import VueMultiselect from 'vue-multiselect'
     import Storage_list_view_button from '../Storage_list_view_button.vue';
     import DataTable from 'primevue/datatable';
     import Column from 'primevue/column';
@@ -431,11 +436,18 @@
     const openFileExplorer = () => {
         fileInput.value.click();
     }
+    const onOrderSelect = (option) => {
+        Form.value.PO_ID = option.PO_ID;
+    }
 </script>
 
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
-
+.search_section {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+}
 .remove_img{
     display: flex;
     background: red;

@@ -31,7 +31,7 @@
     ProjectName: '',
     ProjectSelect: '',
 		Use: '',
-    Memo: '',
+    Description: '',
     Links: [],
 		PurchaseDate: '',
 		Executor: '',//承辦人員
@@ -58,7 +58,7 @@
   const placeholder = {
     PurchaseNum: '',
     Source: '',
-    Memo: '',
+    Description: '',
   }
   const disabled = ref(true);
   const details = ref();

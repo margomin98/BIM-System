@@ -38,7 +38,7 @@
     ProjectName: '',
     ProjectSelect: '',
 		Use: '',
-    Memo: '',
+    Description: '',
     Links: [],
 		PurchaseDate: '',
 		Executor: '',//承辦人員
@@ -63,7 +63,7 @@
   const placeholder = {
     PurchaseNum: '最多50字',
     Source: '最多50字',
-    Memo: '最多256字',
+    Description: '最多256字',
   }
   const loading = ref(false);
   const details = ref();

@@ -122,14 +122,14 @@
                 採購說明：
               </div>
               <textarea :class="[{ 'readonly_box': props.disabled }, 'col']" rows="5" maxlength="256"
-                v-model="formParams.Memo" :readonly="props.disabled" :placeholder="placeholder.Memo"></textarea>
+                v-model="formParams.Description" :readonly="props.disabled" :placeholder="placeholder.Description"></textarea>
             </div>
           </div>
-          <!-- 採購連結 -->
+          <!-- 商品網頁連結 -->
           <div v-if="!hidden.div.Link" class="col-12 order_link">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                採購連結：
+                商品網頁連結：
               </div>
               <div>
                 <input type="text" name="" id="" v-model="link">
@@ -138,10 +138,10 @@
               </div>
             </div>
           </div>
-          <!-- 已選擇連結 -->
+          <!-- 已上傳連結 -->
           <div class="col-12 selected_file">
             <div class="input-group mb-3">
-              <div class="input-group-prepend">已選擇連結：</div>
+              <div class="input-group-prepend">已上傳連結：</div>
               <div>
                 <p v-for="(item, index) in formParams.Links" :key="item" class="">
                   <span>連結_{{ index+1 }}</span>

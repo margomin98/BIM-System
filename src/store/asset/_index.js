@@ -20,6 +20,7 @@ export const useAssetStore = defineStore('Asset', {
 			Area: [],
 			Layer: [],
 			Custodian: [],
+      PO_ID: [],
       Actions: HistoryAction,
 			Unit: UnitArray,
 			PackageUnit: PackageUnitArray,
@@ -33,6 +34,7 @@ export const useAssetStore = defineStore('Asset', {
 			ProjectName: '',
       ShipmentNum: '',
       PO_ID: '', // 訂購單號
+      PO_IDSelect: {},
 			AR_ID: '', //編輯
 			EquipType_Id: '',
       EquipTypeName: '',

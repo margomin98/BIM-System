@@ -35,7 +35,7 @@
     ProjectName: '',
     ProjectSelect: '',
 		Use: '',
-    Memo: '',
+    Description: '',
     Links: [],
 		PurchaseDate: '',
 		Executor: '',//承辦人員
@@ -62,7 +62,7 @@
     PurchaseNum: '最多50字',
     Source: '最多50字',
     Use: '最多100字',
-    Memo: '最多256字',
+    Description: '最多256字',
   }
   const loading = ref(false);
   onMounted( async () => {
@@ -76,7 +76,7 @@
     const FormLetterCheckList = {
       PurchaseNum: {field:'商家訂單編號',max:50},
       Source: {field:'採購來源',max:50},
-      Memo: {field:'採購說明', max: 256}
+      Description: {field:'採購說明', max: 256}
     }
     // 檢查必填
     if(!checkRequire(RequireCheckList,formParams,fileParams)) { return }

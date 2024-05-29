@@ -24,13 +24,8 @@
           <div class="input-group mb-3">
             <div class="input-group-prepend">商家訂單編號：</div>
             <div class="search_section">
-              <input @input="getPurchaseNum" class="form-control" placeholder="最多輸入20字" @focus="showOptions = true;"
-                @blur="closeOption()" v-model="formParams.PurchaseNum" />
-              <ul v-if="showOptions" class="options-list">
-                <li v-for="(option, index) in DropdownArray.PurchaseNum" :key="index" @click="selectPurchaseNum(option)">
-                  {{ option.PurchaseNum }}
-                </li>
-              </ul>
+              <vue-multiselect v-model="formParams.PO_IDSelect" :options="DropdownArray.PO_ID" :allow-empty="false" :max-height="300" placeholder="請選擇" label="PurchaseNum" :showLabels="false" track-by="PO_ID" :show-no-results="false" @select="onOrderSelect">
+              </vue-multiselect>
             </div>
             <view-order :id="formParams.PO_ID"></view-order>
           </div>
@@ -325,7 +320,7 @@
   const Applicant = ref('')
   const DropdownArray = reactive({
     InformedPersons: [],
-    PurchaseNum: [],
+    PO_ID: [],
   })
   // 上半部表單參數
   const formParams = reactive({
@@ -333,6 +328,7 @@
     ReceivedDate: '',
     PurchaseNum: route.query.PurchaseNum || '',
     PO_ID: '',
+    PO_IDSelect: {PO_ID:'' , PurchaseNum: '--請選擇--'},
   })
   const showOptions = ref(false);
   // 中間 填報細項&文件&檔案
@@ -362,6 +358,8 @@
     getAccountName();
     getPurchaseNum();
     formParams.PO_ID = route.query.search_id || '';
+    formParams.PO_IDSelect.PO_ID = route.query.search_id || '';
+    formParams.PO_IDSelect.PurchaseNum = route.query.PurchaseNum || '--請選擇--';
   });
   // 控制 "選擇檔案"按鈕
   const openFileInput = (index) => {
@@ -554,8 +552,8 @@
           alert('貨運公司不可輸入超過20字');
           return false;
         }
-        if (!/^[\s\S]{0,20}$/.test(formParams.PurchaseNum)) {
-          alert('訂購單號不可輸入超過20字');
+        if (!/^[\s\S]{0,50}$/.test(formParams.PurchaseNum)) {
+          alert('商家訂單編號不可輸入超過50字');
           return false;
         }
         if (Tabs.value.length === 0) {
@@ -707,26 +705,21 @@
     });
   }
   // -------訂購單號 function
-  // close option(模糊搜尋使用, EX: 物流單號、訂購單號)
-  const closeOption = () => {
-    setTimeout(() => {
-      showOptions.value = false;
-    }, 100);
-  }
   // 選擇
-  const selectPurchaseNum = ((option)=>{
+  const onOrderSelect = ((option)=>{
     formParams.PurchaseNum = option.PurchaseNum;
     formParams.PO_ID = option.PO_ID;
   });
   // 取得訂購單號 下拉
   const getPurchaseNum = (() => {
     formParams.PO_ID = '';
-    axios.get(`https://localhost:44302/GetDBdata/SearchPurchaseOrderID?id=${formParams.PurchaseNum}`)
+    axios.get(`https://localhost:44302/GetDBdata/SearchPurchaseOrderID?id=`)
     .then((r)=>{
       const data = r.data;
       if(data.state === 'success') {
+        data.resultList.splice(0,0,{PO_ID:'' , PurchaseNum: '--請選擇--'});
         console.log('pu',data.resultList);
-        DropdownArray.PurchaseNum = data.resultList;
+        DropdownArray.PO_ID = data.resultList;
       }
     })
     .catch((e)=>{

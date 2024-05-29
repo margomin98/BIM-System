@@ -48,7 +48,7 @@ const formParams = reactive({
     ProjectName: '',
     ProjectSelect: '',
 		Use: '',
-    Memo: '',
+    Description: '',
     Links: [],
 		PurchaseDate: '',
 		Executor: '',//承辦人員

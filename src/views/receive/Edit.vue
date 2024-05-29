@@ -21,13 +21,10 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">商家訂單編號：</div>
-            <input @input="details.PO_ID = ''; getPurchaseNum()" placeholder="最多輸入20字" class="form-control"
-              @focus="showOptions = true;" @blur="closeOption()" v-model="details.PurchaseNum" />
-            <ul v-if="showOptions" class="options-list">
-              <li v-for="(option, index) in DropdownArray.PurchaseNum" :key="index" @click="selectPurchaseNum(option)">{{
-                option.PurchaseNum }}
-              </li>
-            </ul>
+            <div class="search_section">
+              <vue-multiselect v-model="details.PO_IDSelect" :options="DropdownArray.PO_ID" :allow-empty="false" :max-height="300" placeholder="請選擇" label="PurchaseNum" :showLabels="false" track-by="PO_ID" :show-no-results="false" @select="onOrderSelect">
+              </vue-multiselect>
+            </div>
             <view-order :id="details.PO_ID"></view-order>
           </div>
         </div>
@@ -204,7 +201,7 @@
   const details = ref({});
   const DropdownArray = reactive({
     InformedPersons: [],
-    PurchaseNum: [],
+    PO_ID: [],
   })
   const previewParams = reactive({
     title: '',
@@ -268,6 +265,7 @@
           if (details.value.ReceivedDate) {
             details.value.ReceivedDate = details.value.ReceivedDate.replace(/\//g, '-');
           }
+          if(details.value.PO_ID) details.value.PO_IDSelect = {PO_ID: details.value.PO_ID, PurchaseNum: details.value.PurchaseNum}
           // 若有已上傳的物流文件 則新增key值 exist: true
           if (details.value.existDocument) {
             details.value.existDocument.forEach(item => {
@@ -317,8 +315,8 @@
       alert('物流單號不可輸入超過20字')
       return
     }
-    if (details.value.PurchaseNum && !/^[\s\S]{1,20}$/.test(details.value.PurchaseNum)) {
-      alert('訂購單號不可輸入超過20字')
+    if (details.value.PurchaseNum && !/^[\s\S]{1,50}$/.test(details.value.PurchaseNum)) {
+      alert('商家訂單編號不可輸入超過50字')
       return
     }
     if (details.value.ShipmentCompany && !/^[\s\S]{1,20}$/.test(details.value.ShipmentCompany)) {
@@ -606,27 +604,20 @@
     console.log('username:', checkname.value);
     getDetails();
   }
-  // -------訂購單號 function
-  // close option(模糊搜尋使用, EX: 物流單號、訂購單號)
-  const closeOption = () => {
-    setTimeout(() => {
-      showOptions.value = false;
-    }, 100);
-  }
   // 選擇
-  const selectPurchaseNum = ((option)=>{
+  const onOrderSelect = ((option)=>{
     details.value.PurchaseNum = option.PurchaseNum;
     details.value.PO_ID = option.PO_ID;
   });  
   // 取得訂購單號 下拉
   const getPurchaseNum = (() => {
-    const value = details.value.PurchaseNum || '';
-    axios.get(`https://localhost:44302/GetDBdata/SearchPurchaseOrderID?id=${value}`)
+    axios.get(`https://localhost:44302/GetDBdata/SearchPurchaseOrderID?id=`)
     .then((r)=>{
       const data = r.data;
       if(data.state === 'success') {
+        data.resultList.splice(0,0,{PO_ID:'' , PurchaseNum: '--請選擇--'});
         console.log(data.resultList);
-        DropdownArray.PurchaseNum = data.resultList;
+        DropdownArray.PO_ID = data.resultList;
       }
     })
     .catch((e)=>{
@@ -637,6 +628,11 @@
 <style src="@/assets/css/vue-multiselect.css"></style>
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
+.search_section {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+}
 .remove_img {
   display: flex;
   background: red;
