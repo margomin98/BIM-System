@@ -77,11 +77,11 @@
       </div>
       <div class="content">
         <PerfectScrollbar>
-        <div class="item_wrap">
-          <list-item v-for="(item, index) in details.AssetList" :key="index" :edit_btn="false" :delete_btn="false"
-            :AssetData="item">
-          </list-item>
-        </div>
+          <div class="item_wrap">
+            <list-item v-for="(item, index) in details.AssetList" :key="index" :edit_btn="false" :delete_btn="false"
+              :AssetData="item">
+            </list-item>
+          </div>
         </PerfectScrollbar>
       </div>
     </div>
@@ -235,9 +235,6 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
 
-span {
-  @include red_star;
-}
 
 .delete_modal {
   .modal-content {
@@ -283,7 +280,7 @@ span {
   }
 }
 
-.ps{
+.ps {
   height: 350px
 }
 
@@ -349,24 +346,26 @@ span {
 
 .button_wrap {
   display: flex;
-            justify-content: space-between;
-            margin: 30px auto 5%;
-            width: 210px;
-  .back_btn{
-          @include back_to_previous_btn;
+  justify-content: space-between;
+  margin: 30px auto 5%;
+  width: 210px;
 
-          &:hover {
-            background-color: #5d85bb;
-          }
-        }
+  .back_btn {
+    @include back_to_previous_btn;
 
-    .delete_btn {
-     @include delete_btn;
-          &:hover {
-            background-color: #a51e1e;
-        }
-      }
+    &:hover {
+      background-color: #5d85bb;
     }
+  }
+
+  .delete_btn {
+    @include delete_btn;
+
+    &:hover {
+      background-color: #a51e1e;
+    }
+  }
+}
 
 @media only screen and (min-width: 1200px) {
   .main_section {
@@ -505,7 +504,7 @@ span {
       }
 
       .item_wrap {
-         .item {
+        .item {
           background-color: #526f8e;
           border-radius: 10px;
           padding: 20px;

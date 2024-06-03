@@ -23,7 +23,7 @@
         <div class="col-12">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              <span>*</span>資產編號：
+              <span class='red_star'>*</span>資產編號：
             </div>
             <input ref="inputElement" type="text" class="form-control" placeholder="請輸入資產編號"
               v-model="formParams.AssetsId">
@@ -51,7 +51,7 @@
           <div class="col-xl-6 col-lg-12 col-md-12 col-12">
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                <span>*</span>數量：
+                <span class='red_star'>*</span>數量：
               </div>
               <input class="input-number " type="number" v-model="formParams.Count" min="1" :readonly="!canEdit"
                 :class="{ readonly_box: !canEdit }" />
@@ -295,9 +295,6 @@ export default {
   @include count_btn;
 }
 
-span {
-  @include red_star;
-}
 
 .main_section {
   .info_wrap {

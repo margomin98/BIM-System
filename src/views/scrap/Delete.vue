@@ -320,9 +320,6 @@ export default {
   @include count_btn;
 }
 
-span {
-  @include red_star;
-}
 
 .scrap_quantity,
 .scrap_quantity_storage {
@@ -514,10 +511,13 @@ span {
       margin-bottom: 0;
     }
   }
+
   .content {
     @include content_bg;
+
     .input-group {
       flex-wrap: nowrap;
+
       .readonly_box,
       .form-control {
         height: 37px;
@@ -587,16 +587,19 @@ span {
 
 @media only screen and (max-width: 767px) {
   .main_section {
+
     .readonly_box,
     .input-group .num_wrap,
     .form-control {
       margin-left: unset !important;
     }
+
     .form-control,
     .input-number,
     .num_wrap .number-input-box {
       width: 100%;
     }
+
     .info_wrap {
       padding: 0 5%;
 
@@ -607,10 +610,7 @@ span {
       }
 
       .content {
-        .input-group
-          > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
-            .valid-feedback
-          ):not(.invalid-tooltip):not(.invalid-feedback) {
+        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
           margin-left: unset;
           border-radius: 5px;
           margin-top: 5px;
@@ -635,5 +635,4 @@ span {
     }
   }
 }
-
 </style>

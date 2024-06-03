@@ -62,7 +62,7 @@
               </div>
               <input ref="inputElement" type="text" class="form-control" :class="{ 'readonly_box': props.disabled }"
                 :placeholder="props.placeholder.Source" v-model="formParams.Source" maxlength="50"
-                :readonly="props.disabled" >
+                :readonly="props.disabled">
             </div>
           </div>
           <!-- 專案代碼 -->
@@ -122,7 +122,8 @@
                 採購說明：
               </div>
               <textarea :class="[{ 'readonly_box': props.disabled }, 'col']" rows="5" maxlength="256"
-                v-model="formParams.Description" :readonly="props.disabled" :placeholder="placeholder.Description"></textarea>
+                v-model="formParams.Description" :readonly="props.disabled"
+                :placeholder="placeholder.Description"></textarea>
             </div>
           </div>
           <!-- 商品網頁連結 -->
@@ -134,7 +135,8 @@
               <div style="display: flex; flex: 1 0 0; ">
                 <input type="text" name="" id="" v-model="link" class="w-100">
               </div>
-              <button class="add_link_btn" type="button" @click="() => { formParams.Links.push(link); link = ''; }">新增連結</button>
+              <button class="add_link_btn" type="button"
+                @click="() => { formParams.Links.push(link); link = ''; }">新增連結</button>
             </div>
           </div>
           <!-- 已上傳連結 -->
@@ -143,9 +145,11 @@
               <div class="input-group-prepend">已上傳連結：</div>
               <div>
                 <p v-for="(item, index) in formParams.Links" :key="item" class="">
-                  <span>連結_{{ index+1 }}</span>
-                  <a :href="item" target="_blank"><img class="view_icon" src="@/assets/view.png" style="margin-left: 10px;"></a>
-                  <img v-if="!hidden.input.file_trashcan" class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;" @click="deleteLink(index)">
+                  <span>連結_{{ index + 1 }}</span>
+                  <a :href="item" target="_blank"><img class="view_icon" src="@/assets/view.png"
+                      style="margin-left: 10px;"></a>
+                  <img v-if="!hidden.input.file_trashcan" class="trash_icon" src="@/assets/trash.png"
+                    style="margin-left: 10px;" @click="deleteLink(index)">
                 </p>
               </div>
             </div>
@@ -153,7 +157,7 @@
           <!-- 文件上傳 -->
           <div v-if="!hidden.div.selected_btn" class="col-12 repair_photo_section">
             <div class="input-group ">
-              <div class="input-group-prepend"> <span>*</span>訂單文件上傳：</div>
+              <div class="input-group-prepend"> <span class='red_star'>*</span>訂單文件上傳：</div>
               <div class="file_wrap">
                 <button type="button" class="choose_btn" @click="openFileExplorer(fileInputs)">選擇檔案</button>
                 <input type="file" ref="fileInputs" accept="image/*,.doc,.docx,.pdf" multiple style="display: none;"
@@ -332,9 +336,7 @@ const deleteLink = (index) => {
   font-weight: 700;
   font-size: 20px;
 
-  span {
-    @include red_star;
-  }
+
 }
 
 .file_wrap {

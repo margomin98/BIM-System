@@ -77,11 +77,11 @@
       </div>
       <div class="content">
         <PerfectScrollbar>
-        <div class="item_wrap">
-          <list-item v-for="(item, index) in details.AssetList" :key="index" :edit_btn="false" :delete_btn="false"
-            :AssetData="item">
-          </list-item>
-        </div>
+          <div class="item_wrap">
+            <list-item v-for="(item, index) in details.AssetList" :key="index" :edit_btn="false" :delete_btn="false"
+              :AssetData="item">
+            </list-item>
+          </div>
         </PerfectScrollbar>
       </div>
     </div>
@@ -196,11 +196,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
-span {
-  @include red_star;
-}
 
-.ps{
+.ps {
   height: 350px
 }
 
@@ -282,6 +279,7 @@ span {
   justify-content: center;
   margin: 30px auto 5%;
   width: 220px;
+
   button.back_btn {
     @include back_to_previous_btn;
 
@@ -445,6 +443,7 @@ span {
           .input-group-prepend {
             margin-bottom: 5px;
           }
+
           .form-control {
             width: 100%;
             margin-left: unset !important;
@@ -454,10 +453,7 @@ span {
     }
 
     .info_wrap:nth-child(3) {
-      .input-group
-        > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
-          .valid-feedback
-        ):not(.invalid-tooltip):not(.invalid-feedback) {
+      .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
         margin-left: unset !important;
         border-radius: 5px;
       }

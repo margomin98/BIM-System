@@ -34,7 +34,8 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">貨運公司：</div>
-            <input type="text" class="form-control text-center readonly_box" v-model="details.ShipmentCompany" readonly />
+            <input type="text" class="form-control text-center readonly_box" v-model="details.ShipmentCompany"
+              readonly />
           </div>
         </div>
         <div class="col">
@@ -66,17 +67,18 @@
           <div class="input-group  mb-3 tab_inform_user">
             <div class="input-group-prepend">通知對象：</div>
             <PerfectScrollbar>
-            <div v-show="details.InformedPersons" class="selected_user_wrap">
-              <span v-for="person in details.InformedPersons" class="selected_user">{{ person }}</span>
-            </div>
-        </PerfectScrollbar>
+              <div v-show="details.InformedPersons" class="selected_user_wrap">
+                <span v-for="person in details.InformedPersons" class="selected_user">{{ person }}</span>
+              </div>
+            </PerfectScrollbar>
           </div>
         </div>
         <!-- 備註 -->
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">備註：</div>
-            <textarea class="form-control readonly_box" style="height: 250px;" readonly v-model="details.Memo"></textarea>
+            <textarea class="form-control readonly_box" style="height: 250px;" readonly
+              v-model="details.Memo"></textarea>
           </div>
         </div>
       </div>
@@ -130,7 +132,8 @@
       </div>
       <div class="content">
         <swiper-container :autoHeight="true" class='swiper_section' :space-between="40" :pagination="pagination"
-          :modules="modules" :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
+          :modules="modules"
+          :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
           <swiper-slide v-for="(file, index) in details.existFile" :key="index" class="custom-slide">
             <img class="swiper_bottom_img" :src="file.FileLink" alt="">
             <button class='zoom_img' @click="handlePreview(file)">
@@ -332,9 +335,7 @@ export default {
   }
 }
 
-span {
-  @include red_star
-}
+
 
 .selected_file {
   flex-direction: column;
@@ -450,12 +451,14 @@ span {
     .info_wrap:nth-child(3) {
       margin-top: 3%;
     }
+
     .tab_inform_user {
-  flex-wrap: nowrap;
-  .ps {
-    width: 81%;
-  }
-}
+      flex-wrap: nowrap;
+
+      .ps {
+        width: 81%;
+      }
+    }
   }
 }
 
@@ -509,12 +512,14 @@ span {
       }
     }
   }
+
   .tab_inform_user {
-  flex-wrap: nowrap;
-  .ps {
-    width: 72%;
+    flex-wrap: nowrap;
+
+    .ps {
+      width: 72%;
+    }
   }
-}
 }
 
 @media only screen and (max-width: 767px) {
@@ -538,7 +543,8 @@ span {
       }
     }
 
-    .number-input-box,  .tab_inform_user .ps ,
+    .number-input-box,
+    .tab_inform_user .ps,
     input {
       width: 100%
     }

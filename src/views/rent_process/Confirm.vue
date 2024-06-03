@@ -68,20 +68,21 @@
         </div>
       </div>
       <div class="second_content">
-        <DataTable :size="'small'" :value="Form.ItemList" resizableColumns columnResizeMode="expand" showGridlines scrollable
-          scroll-height="420px">
-          <Column v-for="item in rentStore.ItemList_field" :key="item.field" :field="item.field" :header="item.header" sortable
-            :style="{ 'min-width': item.width }"></Column>
+        <DataTable :size="'small'" :value="Form.ItemList" resizableColumns columnResizeMode="expand" showGridlines
+          scrollable scroll-height="420px">
+          <Column v-for="item in rentStore.ItemList_field" :key="item.field" :field="item.field" :header="item.header"
+            sortable :style="{ 'min-width': item.width }"></Column>
         </DataTable>
       </div>
       <div class="fixed_info">
         <div>
-          <p><span>*</span>資產出庫細項(請至少勾選一項)</p>
+          <p><span class='red_star'>*</span>資產出庫細項(請至少勾選一項)</p>
         </div>
       </div>
       <div class="third_content">
-        <DataTable :size="'small'" :value="Form.OM_List" resizableColumns columnResizeMode="expand" showGridlines scrollable
-          scroll-height="600px" :row-style="({ OM_IsExecute }) => !OM_IsExecute ? 'background-color: #CEE4EB;' : null">
+        <DataTable :size="'small'" :value="Form.OM_List" resizableColumns columnResizeMode="expand" showGridlines
+          scrollable scroll-height="600px"
+          :row-style="({ OM_IsExecute }) => !OM_IsExecute ? 'background-color: #CEE4EB;' : null">
           <Column header="交付確認" class="datatable_checkbox">
             <template #body="slotProps">
               <input type="checkbox" class="p-checkbox p-component" v-model="slotProps.data.OM_IsExecute">
@@ -92,8 +93,8 @@
               <AssetsView :params="slotProps" />
             </template>
           </Column>
-          <Column v-for="item in rentStore.OMList_field" :key="item.field" :field="item.field" :header="item.header" :sortable="item.sortable"
-            :style="{ 'min-width': item.width }"></Column>
+          <Column v-for="item in rentStore.OMList_field" :key="item.field" :field="item.field" :header="item.header"
+            :sortable="item.sortable" :style="{ 'min-width': item.width }"></Column>
         </DataTable>
       </div>
       <div class="fixed_info_count">
@@ -191,10 +192,10 @@
         </div>
         <div class="row g-0">
           <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-            <label for="inputWithButton" class="form-label "><span>*</span>
+            <label for="inputWithButton" class="form-label "><span class='red_star'>*</span>
               <p>領用人員</p>
             </label>
-            <div class="input-group user_acc input-with-icon" >
+            <div class="input-group user_acc input-with-icon">
               <select name="" id="" class="form-select" v-model="Form.Recipient">
                 <option value="">--請選擇--</option>
                 <option v-for="option in DropdownArray.Recipient" :key="option" :value="option">{{ option }}</option>
@@ -224,8 +225,8 @@
     </div>
     <div class="col button_wrap">
       <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
-      <button class="send_btn" :disabled="!Form.Recipient" :class="{ send_btn_disabled: !Form.Recipient }" data-bs-toggle="modal"
-        data-bs-target="#ConfirmModal">送出</button>
+      <button class="send_btn" :disabled="!Form.Recipient" :class="{ send_btn_disabled: !Form.Recipient }"
+        data-bs-toggle="modal" data-bs-target="#ConfirmModal">送出</button>
     </div>
     <!-- confirmModal -->
     <confirm_modal :id="'ConfirmModal'" @confirm="submit()" :text="warningText" />
@@ -270,7 +271,7 @@ const DeliveryMemo = ref(''); // 交付備註
 const loading = ref(false); // 防止提交過程中再次提交
 const { Form, DropdownArray } = storeToRefs(rentStore);
 const warningText = ref('按下確認後將無法再次變更交付項目，請確認資產出庫細項是否交付正確')
-onMounted(async() => {
+onMounted(async () => {
   rentStore.$reset();
   apiStore.$reset();
   DropdownArray.value.Recipient = await apiStore.getCustodian('');
@@ -353,6 +354,7 @@ async function submit() {
 
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
+
 .readonly_box {
   @include readonly_box;
   width: 100%;
@@ -373,9 +375,6 @@ async function submit() {
   align-items: center;
 }
 
-span {
-  @include red_star;
-}
 
 .modal {
   .modal-body {
@@ -487,8 +486,10 @@ span {
   justify-content: space-between;
   margin: 30px auto 5%;
   width: 210px;
+
   .back_btn {
     @include back_to_previous_btn;
+
     &:hover {
       background-color: #5d85bb;
     }
@@ -496,10 +497,12 @@ span {
 
   .send_btn {
     @include search_and_send_btn;
+
     &:hover {
       background-color: #5d85bd;
     }
   }
+
   .send_btn_disabled {
     background: #878787;
 
@@ -508,6 +511,7 @@ span {
     }
   }
 }
+
 .main_section {
   .info_wrap {
     margin: auto;
@@ -516,9 +520,11 @@ span {
       width: 100% !important;
       text-align: center !important;
     }
-    .form-select{
+
+    .form-select {
       border-radius: 0
     }
+
     .fixed_info {
       @include fixed_info;
       background: #528091;
@@ -531,12 +537,15 @@ span {
         margin-bottom: 0;
       }
     }
+
     .fixed_info:nth-child(5) {
       border-top: unset;
     }
+
     #readonly_box {
       background-color: #b4b4b4;
     }
+
     .third_content {
       .list {
         button {
@@ -548,6 +557,7 @@ span {
         }
       }
     }
+
     .fixed_info_count {
       display: flex;
       background: #3d5c67;
@@ -568,6 +578,7 @@ span {
         margin-bottom: 0;
       }
     }
+
     .fourth_content {
       border-left: 1px solid black;
       border-right: 1px solid black;
@@ -601,6 +612,7 @@ span {
         }
       }
     }
+
     .five_content {
       border-left: 1px solid black;
       border-bottom: 1px solid black;
@@ -638,6 +650,7 @@ span {
         }
       }
     }
+
     .six_content {
       border-left: 1px solid black;
       background: white;
@@ -646,6 +659,7 @@ span {
       .fixed_info {
         position: relative;
         border-right: 1px solid black;
+
         .six_content_date {
           right: 10px;
 
@@ -667,6 +681,7 @@ span {
       .wrap {
         background: white;
         align-items: center;
+
         button {
           border-radius: 7px;
           border: none;
@@ -696,6 +711,7 @@ span {
         }
       }
     }
+
     form {
       border-top: 1px solid black;
       border-left: 1px solid black;
@@ -738,6 +754,7 @@ span {
           text-align: center;
         }
       }
+
       .input-group-prepend {
         color: white;
         font-weight: 700;
@@ -748,196 +765,203 @@ span {
     }
   }
 }
+
 @media only screen and (min-width: 1200px) {
   .main_section {
-  .modal-content {
-    width: 400px;
-    margin: auto;
-  }
-
-  .info_wrap {
-    width: 1000px;
-
-    .option {
-      display: flex;
+    .modal-content {
+      width: 400px;
+      margin: auto;
     }
 
-    .fixed_info {
-      p {
-        font-size: 20px;
+    .info_wrap {
+      width: 1000px;
+
+      .option {
+        display: flex;
       }
-    }
 
-    #readonly_box {
-      padding: 0;
-      border-left: black 1px solid;
-    }
-
-    .third_content {
-      .list {
-        border-top: 1px solid black;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-      }
-    }
-
-    .fourth_content {
       .fixed_info {
-        border-bottom: 1px solid black;
-      }
-
-      .form-control {
-        padding: 0;
-      }
-
-      .form-label {
-        height: 50px;
-        padding: 0 10px;
-        width: 150px;
+        p {
+          font-size: 20px;
+        }
       }
 
       #readonly_box {
-        border-right: 1px solid black;
-      }
-
-      .wrap:nth-child(3) #readonly_box {
-        border-right: none;
-      }
-    }
-
-    .five_content {
-      .fixed_info {
-        border-top: 1px solid black;
-        border-right: 1px solid black;
-      }
-
-      .form-control {
         padding: 0;
+        border-left: black 1px solid;
       }
 
-      .form-label {
-        height: 50px;
-        padding: 0 16px;
-        width: 120px;
-      }
-
-      .wrap:nth-child(1) #readonly_box,
-      .wrap:nth-child(3) #readonly_box {
-        border-right: 1px solid black;
-      }
-
-      .wrap:nth-child(2) {
-        label {
-          width: 205px;
-        }
-
-        .input-group {
+      .third_content {
+        .list {
+          border-top: 1px solid black;
           border-left: 1px solid black;
           border-right: 1px solid black;
-          display: flex;
-          justify-content: center;
-          align-content: center;
-          gap: 5px;
-        }
-      }
-    }
-
-    .six_content {
-      .fixed_info {
-        .six_content_title,
-        .six_content_date {
-          position: absolute;
-        }
-        border-left: none;
-        border-top: none;
-      }
-
-      .form-control {
-        padding: 5px 10px 0;
-      }
-      .row:nth-child(2) {
-        border-right: 1px solid black;
-        border-top: 1px solid black;
-      }
-      .row:nth-child(3) {
-        border-top: 1px solid black;
-      }
-      .wrap {
-        button {
-          margin: 0 10px;
-          border-radius: 7px;
-          height: 30px;
-          width: 100px;
         }
       }
 
-      .form-label {
-        height: 50px;
-        padding: 0 10px;
-        width: 135px;
-      }
-
-      .wrap:nth-child(2) {
-        label {
-          width: 80%;
-        }
-      }
-
-      .wrap:nth-child(1) {
-        textarea {
-          border-bottom: 0;
+      .fourth_content {
+        .fixed_info {
+          border-bottom: 1px solid black;
         }
 
-        #memo {
-          width: 120px;
-          border: none;
+        .form-control {
+          padding: 0;
         }
-      }
 
-      #memo_input,.user_acc select {
-        border-left: 1px solid black;
-      }
-
-      .wrap:nth-child(1),
-      .wrap:nth-child(2) {
-        border-right: 1px solid black;
-      }
-    }
-
-    form {
-      .row:nth-child(3) {
-        textarea {
-          padding: 5px 10px 0;
+        .form-label {
+          height: 50px;
+          padding: 0 10px;
+          width: 150px;
         }
-      }
 
-      .form-control {
-        padding: 0;
-      }
-
-      .wrap {
-        label.use {
+        #readonly_box {
           border-right: 1px solid black;
         }
 
-        .option {
-          .content {
+        .wrap:nth-child(3) #readonly_box {
+          border-right: none;
+        }
+      }
+
+      .five_content {
+        .fixed_info {
+          border-top: 1px solid black;
+          border-right: 1px solid black;
+        }
+
+        .form-control {
+          padding: 0;
+        }
+
+        .form-label {
+          height: 50px;
+          padding: 0 16px;
+          width: 120px;
+        }
+
+        .wrap:nth-child(1) #readonly_box,
+        .wrap:nth-child(3) #readonly_box {
+          border-right: 1px solid black;
+        }
+
+        .wrap:nth-child(2) {
+          label {
+            width: 205px;
+          }
+
+          .input-group {
+            border-left: 1px solid black;
+            border-right: 1px solid black;
             display: flex;
+            justify-content: center;
+            align-content: center;
+            gap: 5px;
+          }
+        }
+      }
+
+      .six_content {
+        .fixed_info {
+
+          .six_content_title,
+          .six_content_date {
+            position: absolute;
+          }
+
+          border-left: none;
+          border-top: none;
+        }
+
+        .form-control {
+          padding: 5px 10px 0;
+        }
+
+        .row:nth-child(2) {
+          border-right: 1px solid black;
+          border-top: 1px solid black;
+        }
+
+        .row:nth-child(3) {
+          border-top: 1px solid black;
+        }
+
+        .wrap {
+          button {
+            margin: 0 10px;
+            border-radius: 7px;
+            height: 30px;
+            width: 100px;
           }
         }
 
-        .project_name {
+        .form-label {
+          height: 50px;
+          padding: 0 10px;
+          width: 135px;
+        }
+
+        .wrap:nth-child(2) {
+          label {
+            width: 80%;
+          }
+        }
+
+        .wrap:nth-child(1) {
+          textarea {
+            border-bottom: 0;
+          }
+
+          #memo {
+            width: 120px;
+            border: none;
+          }
+        }
+
+        #memo_input,
+        .user_acc select {
           border-left: 1px solid black;
+        }
+
+        .wrap:nth-child(1),
+        .wrap:nth-child(2) {
+          border-right: 1px solid black;
         }
       }
 
-      .form-label {
-        padding: 0 20px;
-        width: 150px;
+      form {
+        .row:nth-child(3) {
+          textarea {
+            padding: 5px 10px 0;
+          }
+        }
+
+        .form-control {
+          padding: 0;
+        }
+
+        .wrap {
+          label.use {
+            border-right: 1px solid black;
+          }
+
+          .option {
+            .content {
+              display: flex;
+            }
+          }
+
+          .project_name {
+            border-left: 1px solid black;
+          }
+        }
+
+        .form-label {
+          padding: 0 20px;
+          width: 150px;
+        }
       }
     }
   }
-}
 
 }
 
@@ -1045,10 +1069,12 @@ span {
 
       .six_content {
         .fixed_info {
+
           .six_content_title,
-        .six_content_date {
-          position: absolute;
-        }
+          .six_content_date {
+            position: absolute;
+          }
+
           border-left: none;
           border-top: none;
         }
@@ -1056,15 +1082,18 @@ span {
         .form-control {
           padding: 5px 10px 0;
         }
+
         .row:nth-child(2) {
-        border-right: 1px solid black;
-        border-top: 1px solid black;
-      }
-      .row:nth-child(3) {
-        border-top: 1px solid black;
-      }
+          border-right: 1px solid black;
+          border-top: 1px solid black;
+        }
+
+        .row:nth-child(3) {
+          border-top: 1px solid black;
+        }
+
         .wrap {
-           button {
+          button {
             margin: 0 10px;
             height: 30px;
             width: 70px;
@@ -1098,11 +1127,12 @@ span {
           }
         }
 
-        #memo_input,.user_acc {
+        #memo_input,
+        .user_acc {
           border-left: 1px solid black;
         }
 
-        .wrap:nth-child(1){
+        .wrap:nth-child(1) {
           border-right: 1px solid black;
         }
       }
@@ -1244,9 +1274,11 @@ span {
           padding: 5px;
           border-bottom: 1px solid black;
         }
-.row{
-  border-right: 1px solid black;
-}
+
+        .row {
+          border-right: 1px solid black;
+        }
+
         .wrap {
           flex-direction: column;
 
@@ -1328,5 +1360,4 @@ span {
     }
   }
 }
-
 </style>

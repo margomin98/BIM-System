@@ -146,7 +146,7 @@
                 <div class="row">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
-                            <div class="input-group-prepend"><span>*</span>採購人員：</div>
+                            <div class="input-group-prepend"><span class='red_star'>*</span>採購人員：</div>
                             <input type="text" class="form-control readonly_box" readonly v-model="user.resultName" />
                             <span class="icon-container">
                                 <img src="@/assets/accept.png" class="checkmark-icon" v-show="user.isValidate" />
@@ -385,10 +385,6 @@ onUnmounted(() => {
 
     .content {
         @include content_bg;
-
-        span {
-            @include red_star
-        }
 
         .input-group {
             .input-number {

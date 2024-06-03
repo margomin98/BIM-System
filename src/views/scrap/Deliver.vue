@@ -451,9 +451,7 @@ export default {
   @include count_btn;
 }
 
-span {
-  @include red_star
-}
+
 
 .scrap_quantity,
 .scrap_quantity_storage {

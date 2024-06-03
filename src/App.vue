@@ -19,6 +19,10 @@ h1 {
     font-weight: 700 !important;
     color: #132238 !important;
 }
+span.red_star{
+    font-weight: 700;
+    color: red;
+}
 
 nav .navbar-collapse {
     z-index: 999;

@@ -410,9 +410,6 @@ export default {
   @include count_btn;
 }
 
-span {
-  @include red_star;
-}
 
 .button_wrap {
   display: flex;

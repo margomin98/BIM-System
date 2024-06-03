@@ -29,7 +29,8 @@
             </div>
             <button class="form_search_btn" @click="storageStore.viewOrder(upperForm)">檢視</button>
             <!-- 隱藏跳轉按鈕 -->
-            <router-link :to="{ name: 'Order_View', query: { search_id: upperForm.PO_ID } }" target="_blank" id="view-order" style="display: none;"></router-link>
+            <router-link :to="{ name: 'Order_View', query: { search_id: upperForm.PO_ID } }" target="_blank"
+              id="view-order" style="display: none;"></router-link>
           </div>
         </div>
         <!-- 物流單號 -->
@@ -455,9 +456,6 @@ textarea {
   @include readonly_box;
 }
 
-span {
-  @include red_star;
-}
 
 .input-number {
   @include count_btn;
@@ -1223,11 +1221,12 @@ span {
       .store_option {
         .col {
           flex-direction: column;
-        margin: auto;
-        .col-form-label{
-          align-items: start;
-          padding-left: 0;
-        }
+          margin: auto;
+
+          .col-form-label {
+            align-items: start;
+            padding-left: 0;
+          }
         }
 
         .content {

@@ -46,7 +46,7 @@ const totalNeed = ref(0); //總所需數量
 const totalSelect = ref(0); //總已備數量
 const options = Rent_UseArray; // 用途。Array for input[radio]
 const { Form, PageType } = storeToRefs(rentStore);
-onMounted(async() => {
+onMounted(async () => {
   rentStore.$reset();
   apiStore.$reset();
   PageType.value = 'delete';
@@ -99,6 +99,7 @@ async function deleteData() {
 
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
+
 textarea {
   padding: 5px 0 0 5px !important;
 }
@@ -171,9 +172,6 @@ textarea {
   align-items: center;
 }
 
-span {
-  @include red_star;
-}
 
 .button_wrap {
   display: flex;
@@ -184,10 +182,12 @@ span {
 
 .delete_btn {
   @include delete_btn;
+
   &:hover {
     background-color: #a51e1e;
   }
 }
+
 .back_btn {
   @include back_to_previous_btn;
 
@@ -195,6 +195,7 @@ span {
     background-color: #5d85bb;
   }
 }
+
 .main_section {
   .info_wrap {
     margin: auto;
@@ -203,6 +204,7 @@ span {
       width: 100% !important;
       text-align: center !important;
     }
+
     .fixed_info {
       @include fixed_info;
       background: #528091;
@@ -215,16 +217,20 @@ span {
         margin-bottom: 0;
       }
     }
+
     .fixed_info:nth-child(5) {
       border-top: unset;
     }
+
     #readonly_box {
       background-color: #b4b4b4;
     }
+
     .third_content {
       .fixed_info {
         border-top: unset;
       }
+
       .list {
         button {
           @include content_delete_button;
@@ -235,6 +241,7 @@ span {
         }
       }
     }
+
     .fixed_info_count {
       display: flex;
       background: #3d5c67;
@@ -298,6 +305,7 @@ span {
           text-align: center;
         }
       }
+
       .input-group-prepend {
         color: white;
         font-weight: 700;
@@ -308,6 +316,7 @@ span {
     }
   }
 }
+
 @media only screen and (min-width: 1200px) {
   .main_section {
     .modal-content {
@@ -517,5 +526,4 @@ span {
     }
   }
 }
-
 </style>

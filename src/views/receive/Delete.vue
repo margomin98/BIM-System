@@ -6,7 +6,7 @@
     </div>
     <!-- 收貨資訊 -->
     <div class="info_wrap col">
-      <warn/>
+      <warn />
       <div class="fixed_info">
         <div>
           <p>收貨資訊</p>
@@ -16,7 +16,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">收貨單號：</div>
-            <input type="text" class="form-control text-center readonly_box" v-model="details.AR_ID" readonly/>
+            <input type="text" class="form-control text-center readonly_box" v-model="details.AR_ID" readonly />
           </div>
         </div>
         <div class="col">
@@ -35,7 +35,8 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">貨運公司：</div>
-            <input type="text" class="form-control text-center readonly_box" v-model="details.ShipmentCompany" readonly/>
+            <input type="text" class="form-control text-center readonly_box" v-model="details.ShipmentCompany"
+              readonly />
           </div>
         </div>
         <div class="col">
@@ -43,7 +44,7 @@
             <div class="input-group-prepend">到貨件數：</div>
             <div class="num_wrap d-flex ">
               <div class="number-input-box">
-                <input class="input-number readonly_box" type="number" v-model="details.GoodsNum" readonly/>
+                <input class="input-number readonly_box" type="number" v-model="details.GoodsNum" readonly />
               </div>
             </div>
           </div>
@@ -74,7 +75,7 @@
       <div class="content row g-0">
         <div class="d-flex selected_file col">
           <!-- v-for讀取已上傳物流文件 -->
-          <div v-for="(file , index) in details.existDocument" :key="index" class="icon">
+          <div v-for="(file, index) in details.existDocument" :key="index" class="icon">
             <p>{{ file.FileName }}
               <!-- 在handlePreview依據不同副檔名做不同處理 -->
               <img src="@/assets/view.png" @click="handlePreview(file)">
@@ -83,7 +84,8 @@
           <!-- doc/docx download hidden Link -->
           <a href="" style="display: none;" id="download-link"></a>
           <!-- Modal Trigger -->
-          <button type="button" style="display: none" id="openModal" data-bs-toggle="modal" data-bs-target="#documentModal"></button>
+          <button type="button" style="display: none" id="openModal" data-bs-toggle="modal"
+            data-bs-target="#documentModal"></button>
           <!-- Exist Document Modal -->
           <div class="modal fade" id="documentModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -111,12 +113,14 @@
         </div>
       </div>
       <div class="content">
-        <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination" :modules="modules" :breakpoints="{0: {slidesPerView: 1,},768: {slidesPerView: 3,},1200: {slidesPerView: 3,},}">
-          <swiper-slide v-for="(file , index) in details.existFile" :key="index" class="custom-slide">
-            <img  class="swiper_bottom_img" :src="file.FileLink" alt="">
+        <swiper-container class='swiper_section' :autoHeight="true" :space-between="40" :pagination="pagination"
+          :modules="modules"
+          :breakpoints="{ 0: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, }">
+          <swiper-slide v-for="(file, index) in details.existFile" :key="index" class="custom-slide">
+            <img class="swiper_bottom_img" :src="file.FileLink" alt="">
             <button class='zoom_img' @click="handlePreview(file)">
-      <img src="@/assets/zoom.png">
-    </button>
+              <img src="@/assets/zoom.png">
+            </button>
           </swiper-slide>
         </swiper-container>
         <div class="swiper_pagination">
@@ -149,7 +153,8 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">否</button>
-              <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" @click="deleteData">是</button>
+              <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"
+                @click="deleteData">是</button>
             </div>
           </div>
         </div>
@@ -159,134 +164,134 @@
 </template>
 
 <script>
-  import {
-    register
-  } from 'swiper/element/bundle';
-  import {
-    Pagination
-  } from 'swiper/modules';
-  register();
-  import warn from '@/components/utils/warn_title.vue'
-  import Navbar from "@/components/Navbar.vue";
-  import viewOrder from "@/components/receive_page/order_view_btn.vue"
-  import {
-    onMounted,
-    ref,
-    reactive,
-  } from "vue";
-  import {
-    useRoute,
-    useRouter
-  } from "vue-router";
-  import axios from '@/axios/tokenInterceptor';
-  export default {
-    components: {
-      Navbar,
-      viewOrder,
-      warn
-    },
-    setup() {
-      const route = useRoute();
-      const router = useRouter();
-      const AR_ID = route.query.search_id;
-      const details = ref({});
-      const previewParams = reactive({
-        title: '',
-        src: '',
-      })
-      onMounted(() => {
-        getDetails();
-      })
-      async function getDetails() {
-        try {
-          const response = await axios.get(`https://localhost:44302/GetDBdata/ReceivingGetData?ar_id=${AR_ID}`);
-          console.log(response);
-          const data = response.data;
-          if (data.state === 'success') {
-            // if(data.resultList.Status !== '待入庫') {
-            // window.history.back();
-            // // router.push({name: 'Store_Process_Datagrid'});
-            // }
-            details.value = data.resultList;
-            console.log('單筆資料如下\n', details.value);
-            if (details.value.WarrantyStartDate) {
-              details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
-            }
-            if (details.value.WarrantyEndDate) {
-              details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
-            }
-          } else if (data.state === 'error') {
-            alert(data.messages);
+import {
+  register
+} from 'swiper/element/bundle';
+import {
+  Pagination
+} from 'swiper/modules';
+register();
+import warn from '@/components/utils/warn_title.vue'
+import Navbar from "@/components/Navbar.vue";
+import viewOrder from "@/components/receive_page/order_view_btn.vue"
+import {
+  onMounted,
+  ref,
+  reactive,
+} from "vue";
+import {
+  useRoute,
+  useRouter
+} from "vue-router";
+import axios from '@/axios/tokenInterceptor';
+export default {
+  components: {
+    Navbar,
+    viewOrder,
+    warn
+  },
+  setup() {
+    const route = useRoute();
+    const router = useRouter();
+    const AR_ID = route.query.search_id;
+    const details = ref({});
+    const previewParams = reactive({
+      title: '',
+      src: '',
+    })
+    onMounted(() => {
+      getDetails();
+    })
+    async function getDetails() {
+      try {
+        const response = await axios.get(`https://localhost:44302/GetDBdata/ReceivingGetData?ar_id=${AR_ID}`);
+        console.log(response);
+        const data = response.data;
+        if (data.state === 'success') {
+          // if(data.resultList.Status !== '待入庫') {
+          // window.history.back();
+          // // router.push({name: 'Store_Process_Datagrid'});
+          // }
+          details.value = data.resultList;
+          console.log('單筆資料如下\n', details.value);
+          if (details.value.WarrantyStartDate) {
+            details.value.WarrantyStartDate = details.value.WarrantyStartDate.replace(/-/g, '/');
           }
-        } catch (error) {
-          console.error(error);
-        }
-      }
-      async function deleteData() {
-        const form = new FormData();
-        form.append('AR_ID', AR_ID);
-        try {
-          const response = await axios.post(`https://localhost:44302/ReceivingMng/DeleteReceipt`, form);
-          const data = response.data;
-          if (data.state === 'success') {
-            let msg = data.messages + '\n';
-            msg += '單號:' + data.resultList.ShipmentNum;
-            alert(msg);
-            router.push({
-              name: 'Receive_Datagrid'
-            });
-          } else if (data.state === 'error') {
-            alert(data.messages);
+          if (details.value.WarrantyEndDate) {
+            details.value.WarrantyEndDate = details.value.WarrantyEndDate.replace(/-/g, '/');
           }
-        } catch (error) {
-          console.error(error);
+        } else if (data.state === 'error') {
+          alert(data.messages);
         }
+      } catch (error) {
+        console.error(error);
       }
-      function handlePreview(file) {
-        // 先提取副檔名
-        // 以"."為基準分割字串
-        const part = file.FileName.split(".");
-        let extension = '';
-        // 如果part長度大於1表示xxxx.aaa => ['xxxx','aaa']
-        if (part.length > 1) {
-          extension = part[part.length - 1];
+    }
+    async function deleteData() {
+      const form = new FormData();
+      form.append('AR_ID', AR_ID);
+      try {
+        const response = await axios.post(`https://localhost:44302/ReceivingMng/DeleteReceipt`, form);
+        const data = response.data;
+        if (data.state === 'success') {
+          let msg = data.messages + '\n';
+          msg += '單號:' + data.resultList.ShipmentNum;
+          alert(msg);
+          router.push({
+            name: 'Receive_Datagrid'
+          });
+        } else if (data.state === 'error') {
+          alert(data.messages);
         }
-        // 1. pdf 2. word 3. picture
-        switch (extension) {
-          case 'pdf':
-            window.open(file.FileLink)
-            break;
-          case 'doc':
-          case 'docx':
-            const downloadElement = document.getElementById('download-link');
-            downloadElement.href = file.FileLink;
-            downloadElement.download = file.FileName;
-            downloadElement.click();
-            break;
-          default:
-            previewParams.title = file.FileName;
-            previewParams.src = file.FileLink;
-            const modal = document.querySelector('#openModal');
-            modal.click();
-            break;
-        }
+      } catch (error) {
+        console.error(error);
       }
-      function goBack() {
-        window.history.back();
+    }
+    function handlePreview(file) {
+      // 先提取副檔名
+      // 以"."為基準分割字串
+      const part = file.FileName.split(".");
+      let extension = '';
+      // 如果part長度大於1表示xxxx.aaa => ['xxxx','aaa']
+      if (part.length > 1) {
+        extension = part[part.length - 1];
       }
-      return {
-        details,
-        previewParams,
-        deleteData,
-        handlePreview,
-        goBack,
-        pagination: {
-          clickable: true,
-        },
-        modules: [Pagination],
+      // 1. pdf 2. word 3. picture
+      switch (extension) {
+        case 'pdf':
+          window.open(file.FileLink)
+          break;
+        case 'doc':
+        case 'docx':
+          const downloadElement = document.getElementById('download-link');
+          downloadElement.href = file.FileLink;
+          downloadElement.download = file.FileName;
+          downloadElement.click();
+          break;
+        default:
+          previewParams.title = file.FileName;
+          previewParams.src = file.FileLink;
+          const modal = document.querySelector('#openModal');
+          modal.click();
+          break;
       }
-    },
-  }
+    }
+    function goBack() {
+      window.history.back();
+    }
+    return {
+      details,
+      previewParams,
+      deleteData,
+      handlePreview,
+      goBack,
+      pagination: {
+        clickable: true,
+      },
+      modules: [Pagination],
+    }
+  },
+}
 </script>
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
@@ -350,9 +355,7 @@
   }
 }
 
-span {
-  @include red_star
-}
+
 
 .selected_file {
   flex-direction: column;
@@ -421,24 +424,26 @@ span {
 
 .button_wrap {
   display: flex;
-            justify-content: space-between;
-            margin: 30px auto 5%;
-            width: 210px;
-  .back_btn{
-          @include back_to_previous_btn;
+  justify-content: space-between;
+  margin: 30px auto 5%;
+  width: 210px;
 
-          &:hover {
-            background-color: #5d85bb;
-          }
-        }
+  .back_btn {
+    @include back_to_previous_btn;
 
-    .delete_btn {
-     @include delete_btn;
-          &:hover {
-            background-color: #a51e1e;
-        }
-      }
+    &:hover {
+      background-color: #5d85bb;
     }
+  }
+
+  .delete_btn {
+    @include delete_btn;
+
+    &:hover {
+      background-color: #a51e1e;
+    }
+  }
+}
 
 @media only screen and (min-width: 1200px) {
   .main_section {

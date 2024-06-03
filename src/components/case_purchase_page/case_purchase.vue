@@ -197,10 +197,6 @@ onUnmounted(() => {
         }
     }
 
-    span.red_star {
-        @include red_star
-    }
-
     .date_note {
         color: white;
         font-weight: 700;

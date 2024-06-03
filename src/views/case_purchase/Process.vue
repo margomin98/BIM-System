@@ -39,7 +39,8 @@
                                 <select class="form-select" v-model="searchParams.EquipType_Id"
                                     @change="async () => { DropdownArray.EquipCategory = await apiStore.getEquipCategory(searchParams.EquipType_Id); searchParams.Category_Id = ''; }">
                                     <option value="">--請選擇--</option>
-                                    <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name }}
+                                    <option v-for="option in DropdownArray.EquipType" :value="option.Id">{{ option.Name
+                                        }}
                                     </option>
                                 </select>
                             </div>
@@ -47,11 +48,12 @@
                             <div class='col'>
                                 <p>設備分類</p>
                                 <select class="form-select" v-model="searchParams.Category_Id">
-                                    <option v-if="DropdownArray.EquipCategory.length == 0" value="">--請先選擇設備總類--</option>
+                                    <option v-if="DropdownArray.EquipCategory.length == 0" value="">--請先選擇設備總類--
+                                    </option>
                                     <template v-else>
                                         <option value="">--請選擇--</option>
                                         <option v-for="option in DropdownArray.EquipCategory" :value="option.Id">{{
-                                            option.Name }}</option>
+        option.Name }}</option>
                                     </template>
                                 </select>
                             </div>
@@ -72,7 +74,8 @@
                                     <option v-if="DropdownArray.Layer.length == 0" value="">--請先選擇儲位區域--</option>
                                     <template v-else>
                                         <option value="">--請選擇--</option>
-                                        <option v-for="option in DropdownArray.Layer" :value="option.Id">{{ option.Name }}
+                                        <option v-for="option in DropdownArray.Layer" :value="option.Id">{{ option.Name
+                                            }}
                                         </option>
                                     </template>
                                 </select>
@@ -80,7 +83,7 @@
                             <!-- 專案代碼 -->
                             <div class='col'>
                                 <p>專案代碼</p>
-                                <p class="form-control readonly_box">{{ `${Form.ProjectCode}  ${Form.ProjectName}` }}</p>
+                                <p class="form-control readonly_box">{{ `${Form.ProjectCode} ${Form.ProjectName}` }}</p>
                             </div>
                             <!-- 資產編號 -->
                             <div class='col'>
@@ -96,7 +99,8 @@
                             </div>
                         </div>
                         <div class='col d-flex justify-content-center'>
-                            <button class="btn submit_btn" type="button" @click="searchInventory('', 'search')">搜尋</button>
+                            <button class="btn submit_btn" type="button"
+                                @click="searchInventory('', 'search')">搜尋</button>
                             <button class="btn submit_btn" style="margin-left: 0.5rem;" type="button"
                                 @click="clear">清空</button>
                             <!-- <button class="btn add_btn" style="margin-left: 0.5rem;" type="button" data-bs-dismiss="modal" @click="addList">加入</button> -->
@@ -201,32 +205,37 @@
                 </div>
                 <div class="purchase_table">
                     <PerfectScrollbar>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="check_col"></th>
-                                <th class="to_buy_list"><span>所選清單</span></th>
-                                <th class="item_col"><span>採購項目</span></th>
-                                <th class="amount_col"><span>已沖/待沖數量</span></th>
-                                <th><span>規格需求</span></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(item, index) in itemData" :key="item.PI_ID">
-                                <td class="table_content"><button class="writeoff_btn" data-bs-toggle="modal"
-                                        data-bs-target="#propertymodal" @click="updateSearchingModal(index)">沖銷</button>
-                                </td>
-                                <td class="table_content">
-                                    <div class="item_number_wrap">
-                                        <div v-for="(asset, assetIndex) in item.AssetList" class="item_number"><img src="@/assets/delete.png" @click="deleteFromList(index, assetIndex)"><span>{{ asset.AssetsId}}&nbsp;&nbsp;&nbsp;&nbsp;*{{asset.Number}}</span></div>
-                                    </div>
-                                </td>
-                                <td class="table_content">{{ item.ItemName }}</td>
-                                <td class="table_content">{{ item.SelectedNumber }}/{{ item.Number }}</td>
-                                <td class="table_content">{{ item.RequiredSpec }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="check_col"></th>
+                                    <th class="to_buy_list"><span>所選清單</span></th>
+                                    <th class="item_col"><span>採購項目</span></th>
+                                    <th class="amount_col"><span>已沖/待沖數量</span></th>
+                                    <th><span>規格需求</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(item, index) in itemData" :key="item.PI_ID">
+                                    <td class="table_content"><button class="writeoff_btn" data-bs-toggle="modal"
+                                            data-bs-target="#propertymodal"
+                                            @click="updateSearchingModal(index)">沖銷</button>
+                                    </td>
+                                    <td class="table_content">
+                                        <div class="item_number_wrap">
+                                            <div v-for="(asset, assetIndex) in item.AssetList" class="item_number"><img
+                                                    src="@/assets/delete.png"
+                                                    @click="deleteFromList(index, assetIndex)"><span>{{
+        asset.AssetsId }}&nbsp;&nbsp;&nbsp;&nbsp;*{{ asset.Number }}</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="table_content">{{ item.ItemName }}</td>
+                                    <td class="table_content">{{ item.SelectedNumber }}/{{ item.Number }}</td>
+                                    <td class="table_content">{{ item.RequiredSpec }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </PerfectScrollbar>
                 </div>
             </div>
@@ -242,7 +251,7 @@
                 <div class="row">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="input-group mb-3">
-                            <div class="input-group-prepend"><span>*</span>沖銷人員：</div>
+                            <div class="input-group-prepend"><span class='red_star'>*</span>沖銷人員：</div>
                             <input type="text" class="form-control readonly_box" readonly v-model="user.resultName" />
                             <span class="icon-container">
                                 <img src="@/assets/accept.png" class="checkmark-icon" v-show="user.isValidate" />
@@ -357,7 +366,7 @@ const tempCombine = computed(() => {
 onMounted(async () => {
     purchaseStore.$reset();
     await purchaseStore.getDetails(PP_ID, CasePurchase_Process);
-    itemData.value = [...Form.value.NotOrdered,...Form.value.Ordered];
+    itemData.value = [...Form.value.NotOrdered, ...Form.value.Ordered];
     DropdownArray.value.ProjectCode = await apiStore.getFuzzyProject();
     DropdownArray.value.EquipType = await apiStore.getEquipType();
     DropdownArray.value.Area = await apiStore.getArea();
@@ -380,7 +389,7 @@ const submit = async (isDone) => {
     if (isDone) {
         for (let i = 0; i < itemData.value.length; i++) {
             let total = 0;
-            itemData.value[i].AssetList.forEach(item =>{
+            itemData.value[i].AssetList.forEach(item => {
                 total += item.Number;
             })
             if (total !== itemData.value[i].Number) {
@@ -445,15 +454,15 @@ const updateSearchingModal = (index) => {
 // 更新各採購項目的已沖數量
 const updateSelectedNumber = () => {
     itemData.value.forEach(item => {
-        const total = item.AssetList.reduce((total,asset)=> total + asset.Number,0);
+        const total = item.AssetList.reduce((total, asset) => total + asset.Number, 0);
         item.SelectedNumber = total;
     })
 }
 // 更新搜尋時的AssetList清單
 const updateSelectedList = () => {
     searchParams.AssetList = [];
-    itemData.value.forEach((item)=>{
-        item.AssetList.forEach((asset)=>{
+    itemData.value.forEach((item) => {
+        item.AssetList.forEach((asset) => {
             searchParams.AssetList.push(asset);
         })
     })
@@ -491,8 +500,8 @@ const searchInventory = async (event, type) => {
 }
 // 刪除已沖項目
 const deleteFromList = (index, itemIndex) => {
-    if(itemData.value[index].AssetList[itemIndex].Deletable) {
-        itemData.value[index].AssetList.splice(itemIndex,1);
+    if (itemData.value[index].AssetList[itemIndex].Deletable) {
+        itemData.value[index].AssetList.splice(itemIndex, 1);
         updateSelectedNumber()
     } else {
         alert('此資產已被本專案出庫使用，因此無法移除');
@@ -505,14 +514,14 @@ const addToList = (data) => {
     }
     const index = tempParams.index;
     let exist = false;
-    itemData.value[index].AssetList.forEach(item=>{
-        if(item.AssetsId === data.AssetsId) {
-            item.Number += data.selectNumber ;
+    itemData.value[index].AssetList.forEach(item => {
+        if (item.AssetsId === data.AssetsId) {
+            item.Number += data.selectNumber;
             exist = true;
         }
     })
-    if(!exist) {
-        itemData.value[index].AssetList.splice(0,0,{
+    if (!exist) {
+        itemData.value[index].AssetList.splice(0, 0, {
             AssetsId: data.AssetsId,
             Number: data.selectNumber,
             Deletable: true
@@ -757,10 +766,6 @@ const addToList = (data) => {
     .content {
         @include content_bg;
 
-        span {
-            @include red_star
-        }
-
         .input-group {
             .input-number {
                 @include count_btn;
@@ -790,7 +795,8 @@ const addToList = (data) => {
     .purchase_table {
         background: white;
     }
-    .ps{
+
+    .ps {
         height: 250px;
     }
 
@@ -869,10 +875,10 @@ const addToList = (data) => {
 }
 
 .button_wrap {
-   display: flex;
-  justify-content: space-between;
-  margin: 30px auto 5%;
-  width: 320px;
+    display: flex;
+    justify-content: space-between;
+    margin: 30px auto 5%;
+    width: 320px;
 
     .back_btn {
         @include back_to_previous_btn;
@@ -923,7 +929,7 @@ const addToList = (data) => {
     }
 
     .main_section {
-    
+
 
         .info_wrap {
             margin: auto;
@@ -957,7 +963,7 @@ const addToList = (data) => {
     }
 
     .main_section {
-   
+
 
         .info_wrap {
             margin: auto;
@@ -1007,7 +1013,7 @@ const addToList = (data) => {
     }
 
     .main_section {
-   
+
         .fixed_info {
             flex-direction: column;
             height: unset;
@@ -1047,8 +1053,9 @@ const addToList = (data) => {
 
                 .input-group {
                     flex-direction: column;
-                } 
-                .input-group-prepend{
+                }
+
+                .input-group-prepend {
                     margin-bottom: 5px;
                 }
             }
@@ -1060,4 +1067,5 @@ const addToList = (data) => {
         left: 96%;
     }
 
-}</style>
+}
+</style>

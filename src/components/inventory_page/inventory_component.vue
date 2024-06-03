@@ -9,14 +9,14 @@
       <div class="content">
         <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend"><span>*</span>標題：</div>
+            <div class="input-group-prepend"><span class='red_star'>*</span>標題：</div>
             <input type="text" class="form-control text-center" placeholder="最多輸入20字" />
           </div>
         </div>
         <div class="row organizer_wrap">
           <div class="col-xl-6 col-lg-12 col-md-12 col-12 d-flex">
             <div class="input-group mb-3">
-              <div class="input-group-prepend flex"><span>*</span>盤點人員：</div>
+              <div class="input-group-prepend flex"><span class='red_star'>*</span>盤點人員：</div>
               <div class="dropdown">
                 <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                   請選擇
@@ -37,7 +37,7 @@
         <div class="row">
           <div class="col-xl-6 col-lg-12 col-md-12 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend"><span>*</span>盤點開始日期：</div>
+              <div class="input-group-prepend"><span class='red_star'>*</span>盤點開始日期：</div>
               <div class="date-selector">
                 <div class="input-container">
                   <input type="date" class="date-input" />
@@ -47,7 +47,7 @@
           </div>
           <div class="col-xl-6 col-lg-12 col-md-12 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend"><span>*</span>盤點結束日期：</div>
+              <div class="input-group-prepend"><span class='red_star'>*</span>盤點結束日期：</div>
               <div class="date-selector">
                 <div class="input-container">
                   <input type="date" class="date-input" />
@@ -60,7 +60,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span>*</span>專案代碼：
+              <span class='red_star'>*</span>專案代碼：
             </div>
             <input type="text" class="form-control" placeholder="最多輸入10字" />
             <button class="form_search_btn" @click="getProjectName('upperForm')">搜尋</button>
@@ -78,7 +78,7 @@
         </div>
         <div class="col">
           <div class="input-group" style="   justify-content: flex-start;">
-            <div class="input-group-prepend"><span>*</span>盤點類型：</div>
+            <div class="input-group-prepend"><span class='red_star'>*</span>盤點類型：</div>
             <!-- <div class="check_section">
                   <template v-for="(item , index) in PlanType" :key="item">
                     <div class="form-check d-flex align-items-center">
@@ -86,7 +86,7 @@
                       <label :for="`no${index}`">{{ item }}</label>
                     </div>
 </template>
-        </div> -->
+</div> -->
           </div>
         </div>
       </div>
@@ -279,7 +279,7 @@
       </div>
       <div class="fixed_info">
         <div>
-          <p><span>*</span>盤點範圍(請至少新增一項)</p>
+          <p><span class='red_star'>*</span>盤點範圍(請至少新增一項)</p>
         </div>
       </div>
       <div class="content">
@@ -362,9 +362,6 @@
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
 
-span {
-  @include red_star;
-}
 
 h1 {
   text-align: center;
@@ -428,12 +425,12 @@ h1 {
 
         button {
           border: none;
-    border-radius: 5px;
-    font-size: 18px;
-    width: 100%;
-    color: black;
-    justify-content: space-between;
-    align-items: center;
+          border-radius: 5px;
+          font-size: 18px;
+          width: 100%;
+          color: black;
+          justify-content: space-between;
+          align-items: center;
         }
       }
 
@@ -715,7 +712,8 @@ h1 {
 
   .input-group {
     height: auto;
-    input{
+
+    input {
       width: 100% !important;
     }
   }
@@ -917,6 +915,7 @@ h1 {
     .info_wrap:nth-child(1) {
       margin-bottom: 3%;
     }
+
     h1 {
       margin-top: 80px;
       margin-bottom: 40px;
@@ -1039,14 +1038,12 @@ h1 {
 @media only screen and (max-width: 767px) {
   .main_section {
     padding: 5% 0;
+
     .info_wrap:nth-child(2) {
       margin: 5% 0;
     }
 
-    .input-group
-      > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
-        .valid-feedback
-      ):not(.invalid-tooltip):not(.invalid-feedback) {
+    .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
       margin-left: 0 !important;
       border-radius: 5px;
     }
@@ -1094,8 +1091,8 @@ h1 {
         }
 
         .input-group {
-        flex-direction: column;
-    
+          flex-direction: column;
+
           .input-number {
             width: 100%;
           }
@@ -1112,8 +1109,9 @@ h1 {
           }
         }
       }
-      .auth_section{
-        .input-group{
+
+      .auth_section {
+        .input-group {
           flex-direction: unset;
           flex-wrap: nowrap;
         }
@@ -1130,16 +1128,19 @@ h1 {
           margin: 20px 0;
         }
       }
+
       .dropdown {
         height: 35px;
         @include dropdown_btn;
       }
+
       .button_wrap,
       .search_wrap .search_section {
         padding: unset;
       }
+
       .bottom_fixed {
-        padding:0 10px;
+        padding: 0 10px;
       }
     }
   }
@@ -1203,5 +1204,4 @@ h1 {
     margin-left: 0 !important;
   }
 }
-
 </style>

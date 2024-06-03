@@ -25,7 +25,7 @@
         <div class="col-12">
           <div class="input-group mb-4">
             <div class="input-group-prepend">
-              <span>*</span>資產編號：
+              <span class='red_star'>*</span>資產編號：
             </div>
             <input ref="inputElement" type="text" class="form-control" placeholder="請掃描輸入產編"
               v-model="formParams.AssetsId">
@@ -382,9 +382,6 @@ export default {
   @include count_btn;
 }
 
-span {
-  @include red_star;
-}
 
 .main_section {
   .info_wrap {

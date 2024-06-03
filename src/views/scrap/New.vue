@@ -25,7 +25,7 @@
         <div class="col-12">
           <div class="input-group">
             <div class="input-group-prepend">
-              <span>*</span>資產編號：
+              <span class='red_star'>*</span>資產編號：
             </div>
             <input ref="inputElement" type="text" class="form-control" placeholder="請掃描輸入資產編號"
               v-model="formParams.AssetsId">
@@ -54,7 +54,7 @@
         <!-- 報廢方式 -->
         <div v-show="Assets.Type === '耗材'" class="col-12">
           <div class="input-group">
-            <div class="input-group-prepend"><span>*</span>報廢方式：</div>
+            <div class="input-group-prepend"><span class='red_star'>*</span>報廢方式：</div>
             <div class="check_section d-flex">
               <template v-for="(item, index) in Scrap_TypeArray" :key="item">
                 <div class="form-check d-flex align-items-center">
@@ -80,7 +80,7 @@
         <!-- 報廢數量 -->
         <div v-show="Assets.Type === '耗材'" class="col-12">
           <div class="input-group">
-            <div class="input-group-prepend"><span>*</span>報廢數量：</div>
+            <div class="input-group-prepend"><span class='red_star'>*</span>報廢數量：</div>
             <div class="num_wrap d-flex ">
               <div class="number-input-box">
                 <input v-if="formParams.ConsumableScrap !== '庫內報廢'" class="input-number scrap_input_length"
@@ -501,9 +501,6 @@ export default {
   @include count_btn;
 }
 
-span {
-  @include red_star;
-}
 
 .main_section {
   .scrap_input_length {

@@ -14,14 +14,14 @@
       <div class="content">
         <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend"><span>*</span>標題：</div>
+            <div class="input-group-prepend"><span class='red_star'>*</span>標題：</div>
             <input type="text" class="form-control text-center" placeholder="最多輸入20字" v-model="formParams.PlanTitle" />
           </div>
         </div>
         <div class="row organizer_wrap">
           <div class="col-xl-6 col-lg-12 col-md-12 col-12 d-flex">
             <div class="input-group mb-3">
-              <div class="input-group-prepend flex"><span>*</span>盤點人員：</div>
+              <div class="input-group-prepend flex"><span class='red_star'>*</span>盤點人員：</div>
               <select class="form-select" v-model="formParams.InventoryStaffName">
                 <option value="">--請選擇--</option>
                 <option v-for="option in DropdownArray.InventoryStaff" :value="option">{{ option }}</option>
@@ -47,7 +47,7 @@
         <div class="row">
           <div class="col-xl-6 col-lg-12 col-md-12 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend"><span>*</span>盤點開始日期：</div>
+              <div class="input-group-prepend"><span class='red_star'>*</span>盤點開始日期：</div>
               <div class="date-selector">
                 <div class="input-container">
                   <input type="date" class="date-input" v-model="formParams.PlanStart" />
@@ -57,7 +57,7 @@
           </div>
           <div class="col-xl-6 col-lg-12 col-md-12 col-12">
             <div class="input-group mb-3">
-              <div class="input-group-prepend"><span>*</span>盤點結束日期：</div>
+              <div class="input-group-prepend"><span class='red_star'>*</span>盤點結束日期：</div>
               <div class="date-selector">
                 <div class="input-container">
                   <input type="date" class="date-input" v-model="formParams.PlanEnd" />
@@ -70,7 +70,7 @@
         <div v-show="formParams.PlanType === '專案盤點'" class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span>*</span>專案代碼：
+              <span class='red_star'>*</span>專案代碼：
             </div>
             <input type="text" class="form-control" placeholder="最多輸入10字" v-model="formParams.ProjectCode">
             <button class="form_search_btn" @click="getProjectName('upperForm')">搜尋</button>
@@ -88,7 +88,7 @@
         </div>
         <div class="col">
           <div class="input-group" style="   justify-content: flex-start;">
-            <div class="input-group-prepend"><span>*</span>盤點類型：</div>
+            <div class="input-group-prepend"><span class='red_star'>*</span>盤點類型：</div>
             <div class="check_section">
               <template v-for="(item, index) in PlanType" :key="item">
                 <div class="form-check d-flex align-items-center">
@@ -220,7 +220,7 @@
       </div>
       <div class="fixed_info">
         <div>
-          <p><span>*</span>盤點範圍(請至少新增一項)</p>
+          <p><span class='red_star'>*</span>盤點範圍(請至少新增一項)</p>
         </div>
       </div>
       <div class="content">
@@ -261,483 +261,480 @@
 </template>
 
 <script>
-  import List_view_button from "@/components/Inventory_view_button";
-  import Inventory_delete_button from "@/components/Inventory_delete_button";
-  import Navbar from "@/components/Navbar.vue";
-  import {
-    onMounted,
-    ref,
-    reactive,
-    computed,
-    watch,
-  } from "vue";
-  import DataTable from 'primevue/datatable';
-  import Column from 'primevue/column';
-  import {
-    useRouter
-  } from "vue-router";
-  import {
-    getEquipType,
-    getEquipCategory,
-    getArea,
-    getLayer,
-    getApplication,
-    getAccount,
-    getProject,
-  } from '@/assets/js/common_api'
-  import {
-    UpdatePageParameter,
-    createDatagrid,
-    goBack
-  } from "@/assets/js/common_fn";
-  import {
-    PlanType
-  } from "@/assets/js/dropdown";
-  import axios from '@/axios/tokenInterceptor';
-  export default {
-    components: {
-      DataTable,
-      Column,
-      Navbar,
-      List_view_button,
-      Inventory_delete_button,
+import List_view_button from "@/components/Inventory_view_button";
+import Inventory_delete_button from "@/components/Inventory_delete_button";
+import Navbar from "@/components/Navbar.vue";
+import {
+  onMounted,
+  ref,
+  reactive,
+  computed,
+  watch,
+} from "vue";
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import {
+  useRouter
+} from "vue-router";
+import {
+  getEquipType,
+  getEquipCategory,
+  getArea,
+  getLayer,
+  getApplication,
+  getAccount,
+  getProject,
+} from '@/assets/js/common_api'
+import {
+  UpdatePageParameter,
+  createDatagrid,
+  goBack
+} from "@/assets/js/common_fn";
+import {
+  PlanType
+} from "@/assets/js/dropdown";
+import axios from '@/axios/tokenInterceptor';
+export default {
+  components: {
+    DataTable,
+    Column,
+    Navbar,
+    List_view_button,
+    Inventory_delete_button,
+  },
+  setup() {
+    const router = useRouter();
+    const ConvenerName = ref('');
+    const DropdownArray = reactive({
+      EquipType: [],
+      EquipCategory: [],
+      Area: [],
+      Layer: [],
+      InventoryStaff: [],
+    });
+    const EquipCategoryInit = ref('請先選擇設備總類');
+    const LayerInit = ref('請先選擇區域');
+    const formParams = reactive({
+      PlanTitle: '',
+      InventoryStaffName: '',
+      ProjectName: '',
+      ProjectCode: '',
+      PlanStart: '',
+      PlanEnd: '',
+      PlanType: '',
+      AssetList: [],
+    })
+    const searchParams = reactive({
+      EquipTypeName: '',
+      EquipType_Id: '',
+      EquipCategoryName: '',
+      Category_Id: '',
+      AssetName: '',
+      AreaName: '',
+      Area_Id: '',
+      LayerName: '',
+      Layer_Id: '',
+      ProjectCode: '',
+    })
+    // 搜尋資產 datagrid
+    const datagrid1 = createDatagrid();
+    const datagrid1field = [{
+      field: 'AssetStatus',
+      header: '資產狀態',
+      width: '150px',
     },
-    setup() {
-      const router = useRouter();
-      const ConvenerName = ref('');
-      const DropdownArray = reactive({
-        EquipType: [],
-        EquipCategory: [],
-        Area: [],
-        Layer: [],
-        InventoryStaff: [],
-      });
-      const EquipCategoryInit = ref('請先選擇設備總類');
-      const LayerInit = ref('請先選擇區域');
-      const formParams = reactive({
-        PlanTitle: '',
-        InventoryStaffName: '',
-        ProjectName: '',
-        ProjectCode: '',
-        PlanStart: '',
-        PlanEnd: '',
-        PlanType: '',
-        AssetList: [],
-      })
-      const searchParams = reactive({
-        EquipTypeName: '',
-        EquipType_Id: '',
-        EquipCategoryName: '',
-        Category_Id: '',
-        AssetName: '',
-        AreaName: '',
-        Area_Id: '',
-        LayerName: '',
-        Layer_Id: '',
-        ProjectCode: '',
-      })
-      // 搜尋資產 datagrid
-      const datagrid1 = createDatagrid();
-      const datagrid1field = [{
-          field: 'AssetStatus',
-          header: '資產狀態',
-          width: '150px',
-        },
-        {
-          field: 'AssetsId',
-          header: '資產編號',
-          width: '150px',
-        },
-        {
-          field: 'AssetName',
-          header: '物品名稱',
-          width: '150px',
-        },
-        {
-          field: 'EquipTypeName',
-          header: '設備總類',
-          width: '150px',
-        },
-        {
-          field: 'EquipCategoryName',
-          header: '設備分類',
-          width: '150px',
-        },
-        {
-          field: 'AreaName',
-          header: '儲位區域',
-          width: '150px',
-        },
-        {
-          field: 'LayerName',
-          header: '儲位櫃位',
-          width: '150px',
-        },
-      ];
-      const unselectList = ref([]);
-      // 盤點範圍項目 datagrid
-      const datagrid2 = createDatagrid();
-      const rowData1 = ref([]);
-      const rowData2 = ref([]);
-      onMounted(() => {
-        datagrid2.rows = 20;
-        getAccountName();
-        getApplicationInfo();
-      });
-      watch(formParams, (newValue, oldValue) => {
-        if (newValue.PlanType !== '專案盤點') {
-          formParams.ProjectCode = '';
-          formParams.ProjectName = '';
-          searchParams.ProjectCode = '';
-        }
-      });
-      // 送出新增計畫單
-      async function submit() {
-        // console.log(details.value);
-        // 檢查必填項目
-        if (!formParams.PlanTitle || !formParams.InventoryStaffName || !formParams.PlanStart || !formParams.PlanEnd || !formParams.PlanType || formParams.AssetList.length === 0) {
+    {
+      field: 'AssetsId',
+      header: '資產編號',
+      width: '150px',
+    },
+    {
+      field: 'AssetName',
+      header: '物品名稱',
+      width: '150px',
+    },
+    {
+      field: 'EquipTypeName',
+      header: '設備總類',
+      width: '150px',
+    },
+    {
+      field: 'EquipCategoryName',
+      header: '設備分類',
+      width: '150px',
+    },
+    {
+      field: 'AreaName',
+      header: '儲位區域',
+      width: '150px',
+    },
+    {
+      field: 'LayerName',
+      header: '儲位櫃位',
+      width: '150px',
+    },
+    ];
+    const unselectList = ref([]);
+    // 盤點範圍項目 datagrid
+    const datagrid2 = createDatagrid();
+    const rowData1 = ref([]);
+    const rowData2 = ref([]);
+    onMounted(() => {
+      datagrid2.rows = 20;
+      getAccountName();
+      getApplicationInfo();
+    });
+    watch(formParams, (newValue, oldValue) => {
+      if (newValue.PlanType !== '專案盤點') {
+        formParams.ProjectCode = '';
+        formParams.ProjectName = '';
+        searchParams.ProjectCode = '';
+      }
+    });
+    // 送出新增計畫單
+    async function submit() {
+      // console.log(details.value);
+      // 檢查必填項目
+      if (!formParams.PlanTitle || !formParams.InventoryStaffName || !formParams.PlanStart || !formParams.PlanEnd || !formParams.PlanType || formParams.AssetList.length === 0) {
+        alert('請填寫所有必填項目');
+        return
+      }
+      if (!/^.{1,20}$/.test(formParams.PlanTitle)) {
+        alert('標題不可輸入超過20字');
+        return
+      }
+      // 一次盤點不超過1000項
+      if (formParams.AssetList.length > 1000) {
+        alert('一次盤點項目不超過1000項');
+        return
+      }
+      // 類型為"專案盤點" => 額外檢查 專案代碼
+      if (formParams.PlanType === '專案盤點') {
+        if (!formParams.ProjectCode) {
           alert('請填寫所有必填項目');
           return
-        }
-        if (!/^.{1,20}$/.test(formParams.PlanTitle)) {
-          alert('標題不可輸入超過20字');
+        } else if (!/^[\s\S]{0,10}$/.test(formParams.ProjectCode)) {
+          alert('專案代碼不可輸入超過10字');
           return
-        }
-        // 一次盤點不超過1000項
-        if (formParams.AssetList.length > 1000) {
-          alert('一次盤點項目不超過1000項');
-          return
-        }
-        // 類型為"專案盤點" => 額外檢查 專案代碼
-        if (formParams.PlanType === '專案盤點') {
-          if (!formParams.ProjectCode) {
-            alert('請填寫所有必填項目');
-            return
-          } else if (!/^[\s\S]{0,10}$/.test(formParams.ProjectCode)) {
-            alert('專案代碼不可輸入超過10字');
-            return
-          }
-        }
-        // 送出
-        let requestData = {};
-        for (const keyname in formParams) {
-          requestData[keyname] = formParams[keyname]
-        }
-        if (formParams.PlanType !== '專案盤點') {
-          delete requestData.ProjectCode;
-          delete requestData.ProjectName;
-        }
-        console.log('requestData:', requestData);
-        try {
-          const response = await axios.post('https://localhost:44302/StocktakingMng/CreatePlan', requestData);
-          const data = response.data;
-          console.log(data);
-          if (data.state === 'success') {
-            let msg = data.messages;
-            msg += '\n單號:' + data.resultList.IP_Id;
-            alert(msg);
-            router.push({
-              name: 'Inventory_Datagrid'
-            });
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          }
-        } catch (error) {
-          console.error(error);
         }
       }
-      // 搜尋function
-      async function searchInventory(event, type) {
-        // 檢查物品名稱字數
-        if (!/^.{0,20}$/.test(searchParams.AssetName)) {
-          alert('物品名稱不可輸入超過20字')
-          return
+      // 送出
+      let requestData = {};
+      for (const keyname in formParams) {
+        requestData[keyname] = formParams[keyname]
+      }
+      if (formParams.PlanType !== '專案盤點') {
+        delete requestData.ProjectCode;
+        delete requestData.ProjectName;
+      }
+      console.log('requestData:', requestData);
+      try {
+        const response = await axios.post('https://localhost:44302/StocktakingMng/CreatePlan', requestData);
+        const data = response.data;
+        console.log(data);
+        if (data.state === 'success') {
+          let msg = data.messages;
+          msg += '\n單號:' + data.resultList.IP_Id;
+          alert(msg);
+          router.push({
+            name: 'Inventory_Datagrid'
+          });
+        } else if (data.state === 'error') {
+          alert(data.messages);
         }
-        if (!/^.{0,10}$/.test(searchParams.ProjectCode)) {
-          alert('專案代碼不可輸入超過10字')
-          return
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    // 搜尋function
+    async function searchInventory(event, type) {
+      // 檢查物品名稱字數
+      if (!/^.{0,20}$/.test(searchParams.AssetName)) {
+        alert('物品名稱不可輸入超過20字')
+        return
+      }
+      if (!/^.{0,10}$/.test(searchParams.ProjectCode)) {
+        alert('專案代碼不可輸入超過10字')
+        return
+      }
+      datagrid1.loading = true;
+      const form = new FormData();
+      // 將搜尋參數加入form
+      for (const key in searchParams) {
+        if (searchParams[key]) {
+          form.append(key, searchParams[key])
         }
-        datagrid1.loading = true;
+      }
+      // 將已有的項目AssetsId加入form (給後端做篩選)
+      if (formParams.AssetList.length !== 0) {
+        for (const item of formParams.AssetList) {
+          form.append('AssetList', item)
+        }
+      }
+      UpdatePageParameter(datagrid1, event, type, form)
+      try {
+        const response = await axios.post('https://localhost:44302/StocktakingMng/SearchInventory', form);
+        const data = response.data;
+        if (data.state === 'success') {
+          console.log('搜尋結果', data.resultList);
+          rowData1.value = data.resultList.rows
+          datagrid1.totalRecords = data.resultList.total
+          if (datagrid1.selectAll) {
+            datagrid1.selectedList = rowData1.value
+            // 然後unselect 排除List的項目
+            datagrid1.selectedList = datagrid1.selectedList.filter(item => !unselectList.value.includes(item.AssetsId));
+          }
+        } else if (data.state === 'error') {
+          alert(data.messages);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        datagrid1.loading = false;
+      }
+    }
+    // 取得盤點範圍datagrid
+    async function getRangeOfPlan(event, type) {
+      datagrid2.loading = true;
+      const form = new FormData();
+      // 將已有的項目AssetsId加入form
+      if (formParams.AssetList.length !== 0) {
+        for (const item of formParams.AssetList) {
+          form.append('AssetList', item)
+        }
+      }
+      UpdatePageParameter(datagrid2, event, type, form)
+      axios.post('https://localhost:44302/StocktakingMng/RangeOfPlan', form)
+        .then((response) => {
+          const data = response.data
+          if (data.state === 'success') {
+            console.log('盤點範圍:', data.resultList.rows);
+            datagrid2.totalRecords = data.resultList.total
+            rowData2.value = data.resultList.rows
+          } else {
+            // state為error
+            alert(data.messages);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+      datagrid2.loading = false;
+    }
+    // 取得召集人員名稱
+    async function getApplicationInfo() {
+      getApplication()
+        .then((data) => {
+          ConvenerName.value = data;
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+    }
+    // 取得盤點人員DropdownArray
+    async function getAccountName() {
+      getAccount('')
+        .then((data) => {
+          DropdownArray.InventoryStaff = data;
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+    }
+    async function getEquipTypeName() {
+      if (DropdownArray.EquipType.length == 0) {
+        getEquipType()
+          .then((data) => {
+            DropdownArray.EquipType = data;
+          })
+          .catch((error) => {
+            console.error(error);
+          })
+      }
+    }
+    async function getEquipCategoryName() {
+      getEquipCategory(searchParams.EquipType_Id)
+        .then((data) => {
+          DropdownArray.EquipCategory = data;
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+    }
+    async function getAreaName() {
+      if (DropdownArray.Area.length == 0) {
+        getArea()
+          .then((data) => {
+            DropdownArray.Area = data;
+          })
+          .catch((error) => {
+            console.error(error);
+          })
+      }
+    }
+    async function getLayerName() {
+      getLayer(searchParams.Area_Id)
+        .then((data) => {
+          DropdownArray.Layer = data;
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+    }
+    // 專案代碼查詢
+    async function getProjectName() {
+      getProject(formParams.ProjectCode)
+        .then((data) => {
+          formParams.ProjectName = data;
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+    }
+    function selectType(item) {
+      searchParams.EquipTypeName = item.Name;
+      searchParams.EquipType_Id = item.Id;
+      searchParams.EquipCategoryName = '';
+      searchParams.Category_Id = '';
+      getEquipCategoryName();
+      EquipCategoryInit.value = '請選擇';
+    }
+    function selectCategory(item) {
+      searchParams.EquipCategoryName = item.Name;
+      searchParams.Category_Id = item.Id;
+    }
+    function selectArea(item) {
+      searchParams.AreaName = item.Name;
+      searchParams.Area_Id = item.Id;
+      searchParams.LayerName = '';
+      searchParams.Layer_Id = '';
+      getLayerName();
+      LayerInit.value = '請選擇';
+    };
+    function selectLayer(item) {
+      searchParams.LayerName = item.Name;
+      searchParams.Layer_Id = item.Id;
+    };
+    const selectStaff = (item) => {
+      formParams.InventoryStaffName = item;
+    }
+    function deleteFromAssetList(data) {
+      rowData2.value = rowData2.value.filter(item => item.AssetsId !== data.AssetsId);
+      formParams.AssetList = formParams.AssetList.filter(AssetsId => AssetsId !== data.AssetsId);
+      if (formParams.AssetList.length !== 0) {
+        getRangeOfPlan('', 'search');
+      }
+    }
+    const clear = () => {
+      for (const key in searchParams) {
+        searchParams[key] = '';
+      }
+      EquipCategoryInit.value = '請先選擇設備總類'
+      LayerInit.value = '請先選擇區域'
+      searchInventory('', 'search')
+    }
+    async function addList() {
+      if (datagrid1.selectAll) {
         const form = new FormData();
-        // 將搜尋參數加入form
         for (const key in searchParams) {
-          if (searchParams[key]) {
-            form.append(key, searchParams[key])
-          }
+          form.append(key, searchParams[key]);
         }
-        // 將已有的項目AssetsId加入form (給後端做篩選)
+        // 排除已有細項
         if (formParams.AssetList.length !== 0) {
           for (const item of formParams.AssetList) {
             form.append('AssetList', item)
           }
         }
-        UpdatePageParameter(datagrid1, event, type, form)
-        try {
-          const response = await axios.post('https://localhost:44302/StocktakingMng/SearchInventory', form);
-          const data = response.data;
-          if (data.state === 'success') {
-            console.log('搜尋結果', data.resultList);
-            rowData1.value = data.resultList.rows
-            datagrid1.totalRecords = data.resultList.total
-            if (datagrid1.selectAll) {
-              datagrid1.selectedList = rowData1.value
-              // 然後unselect 排除List的項目
-              datagrid1.selectedList = datagrid1.selectedList.filter(item => !unselectList.value.includes(item.AssetsId));
-            }
-          } else if (data.state === 'error') {
-            alert(data.messages);
-          }
-        } catch (error) {
-          console.error(error);
-        } finally {
-          datagrid1.loading = false;
-        }
-      }
-      // 取得盤點範圍datagrid
-      async function getRangeOfPlan(event, type) {
-        datagrid2.loading = true;
-        const form = new FormData();
-        // 將已有的項目AssetsId加入form
-        if (formParams.AssetList.length !== 0) {
-          for (const item of formParams.AssetList) {
-            form.append('AssetList', item)
-          }
-        }
-        UpdatePageParameter(datagrid2, event, type, form)
-        axios.post('https://localhost:44302/StocktakingMng/RangeOfPlan', form)
+        axios.post('https://localhost:44302/StocktakingMng/SelectAllGrid', form)
           .then((response) => {
             const data = response.data
             if (data.state === 'success') {
-              console.log('盤點範圍:', data.resultList.rows);
-              datagrid2.totalRecords = data.resultList.total
-              rowData2.value = data.resultList.rows
-            } else {
-              // state為error
-              alert(data.messages);
+              // 將符合情況的AssetsId List放入formParams.AssetList
+              console.log('allgrid:', data.resultList);
+              data.resultList.rows.forEach(id => {
+                formParams.AssetList.push(id);
+              });
+              // 全選情況下，扣掉排除List
+              formParams.AssetList = formParams.AssetList.filter(id => !unselectList.value.includes(id));
+              getRangeOfPlan('', 'search');
+              // 清空排除List、selectedList
+              datagrid1.selectAll = false;
+              datagrid1.selectedList = [];
+              unselectList.value = [];
             }
           })
           .catch((error) => {
             console.error(error);
           })
-        datagrid2.loading = false;
+      } else {
+        // 非全選情況下，加入selectedList
+        datagrid1.selectedList.forEach(item => {
+          formParams.AssetList.push(item.AssetsId);
+          rowData2.value.push(item);
+        })
+        // 加入後清空selectedList
+        datagrid1.selectedList = [];
+        getRangeOfPlan('', 'search');
       }
-      // 取得召集人員名稱
-      async function getApplicationInfo() {
-        getApplication()
-          .then((data) => {
-            ConvenerName.value = data;
-          })
-          .catch((error) => {
-            console.error(error);
-          })
+      // 取得切頁的formParams.AssetList
+    }
+    function onSelectAll(event) {
+      datagrid1.selectAll = event.checked;
+      if (datagrid1.selectAll) {
+        // 全選的情況selectedList僅用來顯示
+        datagrid1.selectedList = rowData1.value
+      } else {
+        // 清空selectedList與排除List
+        datagrid1.selectedList = [];
+        unselectList.value = [];
       }
-      // 取得盤點人員DropdownArray
-      async function getAccountName() {
-        getAccount('')
-          .then((data) => {
-            DropdownArray.InventoryStaff = data;
-          })
-          .catch((error) => {
-            console.error(error);
-          })
+    }
+    function onRowUnselect(event) {
+      if (datagrid1.selectAll) {
+        // console.log('unselect:', event.data.AssetsId);
+        //加入排除List
+        unselectList.value.push(event.data.AssetsId);
       }
-      async function getEquipTypeName() {
-        if (DropdownArray.EquipType.length == 0) {
-          getEquipType()
-            .then((data) => {
-              DropdownArray.EquipType = data;
-            })
-            .catch((error) => {
-              console.error(error);
-            })
-        }
-      }
-      async function getEquipCategoryName() {
-        getEquipCategory(searchParams.EquipType_Id)
-          .then((data) => {
-            DropdownArray.EquipCategory = data;
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-      }
-      async function getAreaName() {
-        if (DropdownArray.Area.length == 0) {
-          getArea()
-            .then((data) => {
-              DropdownArray.Area = data;
-            })
-            .catch((error) => {
-              console.error(error);
-            })
-        }
-      }
-      async function getLayerName() {
-        getLayer(searchParams.Area_Id)
-          .then((data) => {
-            DropdownArray.Layer = data;
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-      }
-      // 專案代碼查詢
-      async function getProjectName() {
-        getProject(formParams.ProjectCode)
-          .then((data) => {
-            formParams.ProjectName = data;
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-      }
-      function selectType(item) {
-        searchParams.EquipTypeName = item.Name;
-        searchParams.EquipType_Id = item.Id;
-        searchParams.EquipCategoryName = '';
-        searchParams.Category_Id = '';
-        getEquipCategoryName();
-        EquipCategoryInit.value = '請選擇';
-      }
-      function selectCategory(item) {
-        searchParams.EquipCategoryName = item.Name;
-        searchParams.Category_Id = item.Id;
-      }
-      function selectArea(item) {
-        searchParams.AreaName = item.Name;
-        searchParams.Area_Id = item.Id;
-        searchParams.LayerName = '';
-        searchParams.Layer_Id = '';
-        getLayerName();
-        LayerInit.value = '請選擇';
-      };
-      function selectLayer(item) {
-        searchParams.LayerName = item.Name;
-        searchParams.Layer_Id = item.Id;
-      };
-      const selectStaff = (item) => {
-        formParams.InventoryStaffName = item;
-      }
-      function deleteFromAssetList(data) {
-        rowData2.value = rowData2.value.filter(item => item.AssetsId !== data.AssetsId);
-        formParams.AssetList = formParams.AssetList.filter(AssetsId => AssetsId !== data.AssetsId);
-        if (formParams.AssetList.length !== 0) {
-          getRangeOfPlan('', 'search');
-        }
-      }
-      const clear = () => {
-        for (const key in searchParams) {
-          searchParams[key] = '';
-        }
-        EquipCategoryInit.value = '請先選擇設備總類'
-        LayerInit.value = '請先選擇區域'
-        searchInventory('', 'search')
-      }
-      async function addList() {
-        if (datagrid1.selectAll) {
-          const form = new FormData();
-          for (const key in searchParams) {
-            form.append(key, searchParams[key]);
-          }
-          // 排除已有細項
-          if (formParams.AssetList.length !== 0) {
-            for (const item of formParams.AssetList) {
-              form.append('AssetList', item)
-            }
-          }
-          axios.post('https://localhost:44302/StocktakingMng/SelectAllGrid', form)
-            .then((response) => {
-              const data = response.data
-              if (data.state === 'success') {
-                // 將符合情況的AssetsId List放入formParams.AssetList
-                console.log('allgrid:', data.resultList);
-                data.resultList.rows.forEach(id => {
-                  formParams.AssetList.push(id);
-                });
-                // 全選情況下，扣掉排除List
-                formParams.AssetList = formParams.AssetList.filter(id => !unselectList.value.includes(id));
-                getRangeOfPlan('', 'search');
-                // 清空排除List、selectedList
-                datagrid1.selectAll = false;
-                datagrid1.selectedList = [];
-                unselectList.value = [];
-              }
-            })
-            .catch((error) => {
-              console.error(error);
-            })
-        } else {
-          // 非全選情況下，加入selectedList
-          datagrid1.selectedList.forEach(item => {
-            formParams.AssetList.push(item.AssetsId);
-            rowData2.value.push(item);
-          })
-          // 加入後清空selectedList
-          datagrid1.selectedList = [];
-          getRangeOfPlan('', 'search');
-        }
-        // 取得切頁的formParams.AssetList
-      }
-      function onSelectAll(event) {
-        datagrid1.selectAll = event.checked;
-        if (datagrid1.selectAll) {
-          // 全選的情況selectedList僅用來顯示
-          datagrid1.selectedList = rowData1.value
-        } else {
-          // 清空selectedList與排除List
-          datagrid1.selectedList = [];
-          unselectList.value = [];
-        }
-      }
-      function onRowUnselect(event) {
-        if (datagrid1.selectAll) {
-          // console.log('unselect:', event.data.AssetsId);
-          //加入排除List
-          unselectList.value.push(event.data.AssetsId);
-        }
-      }
-      return {
-        ConvenerName,
-        DropdownArray,
-        EquipCategoryInit,
-        LayerInit,
-        formParams,
-        searchParams,
-        datagrid1,
-        datagrid1field,
-        unselectList,
-        datagrid2,
-        rowData1,
-        rowData2,
-        rowHeight: 35,
-        PlanType,
-        submit,
-        searchInventory,
-        getRangeOfPlan,
-        getEquipTypeName,
-        getAreaName,
-        getProjectName,
-        selectType,
-        selectCategory,
-        selectArea,
-        selectLayer,
-        selectStaff,
-        deleteFromAssetList,
-        clear,
-        addList,
-        onSelectAll,
-        onRowUnselect,
-        goBack,
-      };
-    },
-  }
+    }
+    return {
+      ConvenerName,
+      DropdownArray,
+      EquipCategoryInit,
+      LayerInit,
+      formParams,
+      searchParams,
+      datagrid1,
+      datagrid1field,
+      unselectList,
+      datagrid2,
+      rowData1,
+      rowData2,
+      rowHeight: 35,
+      PlanType,
+      submit,
+      searchInventory,
+      getRangeOfPlan,
+      getEquipTypeName,
+      getAreaName,
+      getProjectName,
+      selectType,
+      selectCategory,
+      selectArea,
+      selectLayer,
+      selectStaff,
+      deleteFromAssetList,
+      clear,
+      addList,
+      onSelectAll,
+      onRowUnselect,
+      goBack,
+    };
+  },
+}
 </script>
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
 
-span {
-  @include red_star;
-}
 
 .form_search_btn {
   @include form_search_btn;

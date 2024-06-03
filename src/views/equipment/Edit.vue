@@ -19,8 +19,9 @@
         </div>
         <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend"><span>*</span>名稱：</div>
-            <input type="text" class="form-control text-center" v-model="details.IntegrationName" placeholder="最多輸入20字" />
+            <div class="input-group-prepend"><span class='red_star'>*</span>名稱：</div>
+            <input type="text" class="form-control text-center" v-model="details.IntegrationName"
+              placeholder="最多輸入20字" />
           </div>
         </div>
         <div class="row row_wrap">
@@ -94,7 +95,7 @@
     <div class="info_wrap col mt-5">
       <div class="fixed_info">
         <div>
-          <p><span>*</span>整合箱內容物(請至少新增一項)</p>
+          <p><span class='red_star'>*</span>整合箱內容物(請至少新增一項)</p>
         </div>
       </div>
       <div class="content">
@@ -119,9 +120,10 @@
               <div class="input-group mb-3">
                 <div class="input-group-prepend flex">設備分類：</div>
                 <div class="dropdown">
-                  <button style='overflow: hidden;text-overflow: ellipsis;white-space: nowrap' class="btn dropdown-toggle"
-                    type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
+                  <button style='overflow: hidden;text-overflow: ellipsis;white-space: nowrap'
+                    class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"
+                    :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
                     {{ searchParams.EquipCategoryName || EquipCategoryInit }}
                   </button>
                   <div class="dropdown-menu" aria-labelledby="categoryDropdown">
@@ -151,8 +153,9 @@
                         <div class='col-xl-3 col-lg-3 col-md-3 col-12' style='padding-left:0'>
                           <p>設備總類</p>
                           <div class="dropdown">
-                            <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown"
-                              aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
+                            <button class="btn dropdown-toggle" type="button" id="typeDropdown"
+                              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                              @click="getEquipTypeName">
                               {{ searchParams.EquipTypeName || '請選擇' }}
                             </button>
                             <div class="dropdown-menu" aria-labelledby="typeDropdown">
@@ -183,7 +186,8 @@
                         </div>
                       </div>
                       <div class='col d-flex justify-content-center'>
-                        <button class="btn submit_btn" type="button" @click="searchInventory('', 'search')">搜尋庫存</button>
+                        <button class="btn submit_btn" type="button"
+                          @click="searchInventory('', 'search')">搜尋庫存</button>
                       </div>
                     </div>
                   </div>
@@ -192,10 +196,10 @@
                       <p>目前資產庫存（請優先選擇存貨）</p>
                     </div>
                   </div>
-                  <DataTable lazy :key="datagrid.key" :first="datagrid.first" :size="'small'" :loading="datagrid.loading"
-                    :value="rowData" :sort-field="datagrid.sortField" :sort-order="datagrid.sortOrder" resizableColumns
-                    columnResizeMode="expand" showGridlines scrollable scrollHeight="420px"
-                    @page="searchInventory($event, 'page')" @sort="searchInventory($event, 'sort')"
+                  <DataTable lazy :key="datagrid.key" :first="datagrid.first" :size="'small'"
+                    :loading="datagrid.loading" :value="rowData" :sort-field="datagrid.sortField"
+                    :sort-order="datagrid.sortOrder" resizableColumns columnResizeMode="expand" showGridlines scrollable
+                    scrollHeight="420px" @page="searchInventory($event, 'page')" @sort="searchInventory($event, 'sort')"
                     :rows="datagrid.rows" :totalRecords="datagrid.totalRecords" paginator
                     paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
                     currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
@@ -224,11 +228,11 @@
           </div>
         </div>
         <PerfectScrollbar>
-        <div class="item_wrap">
-          <list-item v-for="(item, index) in formParams.AssetList" :key="index" :edit_btn="true" :delete_btn="true"
-            :AssetData="item" @editAction="handleEdit" @deleteId="handleDelete">
-          </list-item>
-        </div>
+          <div class="item_wrap">
+            <list-item v-for="(item, index) in formParams.AssetList" :key="index" :edit_btn="true" :delete_btn="true"
+              :AssetData="item" @editAction="handleEdit" @deleteId="handleDelete">
+            </list-item>
+          </div>
         </PerfectScrollbar>
       </div>
       <div class="col button_wrap">
@@ -240,34 +244,34 @@
 </template>
 
 <script>
-  import DataTable from 'primevue/datatable';
-  import Column from 'primevue/column';
-  import AssetsView from "@/components/Rent_process_new_view_button";
-  import Equipment_add from "@/components/Equipment_add_button";
-  import Equipment_number from "@/components/Equipment_number_input.vue";
-  import {
-    getEquipType,
-    getEquipCategory,
-    getArea,
-    getLayer,
-    getAccount,
-  } from '@/assets/js/common_api'
-  import {
-    UpdatePageParameter,
-    createDatagrid,
-    goBack
-  } from "@/assets/js/common_fn";
-  import ListItem from "@/components/Equipment/item.vue"
-  import Navbar from "@/components/Navbar.vue";
-  import {
-    onMounted,
-    ref,
-    reactive,
-  } from "vue";
-  import {
-    useRoute,
-    useRouter
-  } from "vue-router";
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import AssetsView from "@/components/Rent_process_new_view_button";
+import Equipment_add from "@/components/Equipment_add_button";
+import Equipment_number from "@/components/Equipment_number_input.vue";
+import {
+  getEquipType,
+  getEquipCategory,
+  getArea,
+  getLayer,
+  getAccount,
+} from '@/assets/js/common_api'
+import {
+  UpdatePageParameter,
+  createDatagrid,
+  goBack
+} from "@/assets/js/common_fn";
+import ListItem from "@/components/Equipment/item.vue"
+import Navbar from "@/components/Navbar.vue";
+import {
+  onMounted,
+  ref,
+  reactive,
+} from "vue";
+import {
+  useRoute,
+  useRouter
+} from "vue-router";
 import axios from '@/axios/tokenInterceptor'
 export default {
   components: {
@@ -652,14 +656,12 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
 
-span {
-  @include red_star;
-}
 
 .modal-body {
   padding: 0 !important;
 }
-.ps{
+
+.ps {
   height: 350px
 }
 
@@ -755,9 +757,10 @@ span {
 
 .button_wrap {
   display: flex;
-            justify-content: space-between;
-            margin: 30px auto 5%;
-            width: 210px;
+  justify-content: space-between;
+  margin: 30px auto 5%;
+  width: 210px;
+
   button.back_btn {
     @include back_to_previous_btn;
 
@@ -850,7 +853,8 @@ span {
     .wrap1 {
       display: flex;
       justify-content: center;
-border-top:1px solid black;
+      border-top: 1px solid black;
+
       input {
         border-radius: 5px;
       }
@@ -1121,16 +1125,18 @@ border-top:1px solid black;
 
       p {
         font-size: 20px;
-      
+
       }
     }
 
     .second_content {
       .wrap1 {
         padding: 10px 0;
-p{
-  font-weight: 700;
-}
+
+        p {
+          font-weight: 700;
+        }
+
         // .dropdown {
         //   button {
         //     background: white;
@@ -1244,13 +1250,15 @@ p{
     }
 
     .second_content {
-      p{
-  font-weight: 700;
-}
+      p {
+        font-weight: 700;
+      }
+
       .wrap1 {
         padding: 20px;
         flex-direction: column;
-        gap:6px 0;
+        gap: 6px 0;
+
         // .dropdown {
         //   button {
         //     background: white;
@@ -1273,4 +1281,5 @@ p{
       }
     }
   }
-}</style>
+}
+</style>

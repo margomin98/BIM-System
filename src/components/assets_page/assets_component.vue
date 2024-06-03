@@ -557,9 +557,6 @@
 .info_wrap:nth-child(1) {
  margin-bottom: 3% !important;
 }
-span.red_star {
- @include red_star;
-}
  .readonly_box {
    @include readonly_box;
   }

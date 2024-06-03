@@ -26,15 +26,16 @@
             </div>
             <div class="search_section">
               <div class="search_option_section">
-                <vue-multiselect v-model="upperForm.PO_IDSelect" :options="DropdownArray.PO_ID"
-                  :allow-empty="false" :max-height="300" placeholder="請選擇" label="PO_ID" :showLabels="false"
-                  track-by="PO_ID" :show-no-results="false" @select="storageStore.onOrderSelect">
+                <vue-multiselect v-model="upperForm.PO_IDSelect" :options="DropdownArray.PO_ID" :allow-empty="false"
+                  :max-height="300" placeholder="請選擇" label="PO_ID" :showLabels="false" track-by="PO_ID"
+                  :show-no-results="false" @select="storageStore.onOrderSelect">
                 </vue-multiselect>
               </div>
             </div>
             <button class="form_search_btn" @click="storageStore.viewOrder(upperForm)">檢視</button>
             <!-- 隱藏跳轉按鈕 -->
-            <router-link :to="{ name: 'Order_View', query: { search_id: upperForm.PO_ID } }" target="_blank" id="view-order" style="display: none;"></router-link>
+            <router-link :to="{ name: 'Order_View', query: { search_id: upperForm.PO_ID } }" target="_blank"
+              id="view-order" style="display: none;"></router-link>
           </div>
         </div>
         <!-- 備註 -->
@@ -50,7 +51,7 @@
     <div class="info_wrap col my-5">
       <div v-show="!quickprocessStore.editHidden" class="fixed_info">
         <div>
-          <p><span>*</span>填寫資產資訊(請至少填寫一項)</p>
+          <p><span class='red_star'>*</span>填寫資產資訊(請至少填寫一項)</p>
         </div>
       </div>
       <div v-show="!quickprocessStore.editHidden" class="content">
@@ -59,7 +60,7 @@
           <div class="col-12">
             <div class="input-group mb-3 check_box_wrap">
               <div class="input-group-prepend check_box">
-                <span>*</span>資產類型 :
+                <span class='red_star'>*</span>資產類型 :
               </div>
               <div class="d-flex align-items-center radio_wrap">
                 <template v-for="(item, index) in DropdownArray.AssetType" :key="'radio' + (index + 1)">
@@ -99,7 +100,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend equipment_wrap">
-                <span>*</span>設備總類 :
+                <span class='red_star'>*</span>設備總類 :
               </div>
               <div class="dropdown">
                 <select class="form-select" id="floatingSelect" v-model="middleForm.itemEquipType_Id"
@@ -115,7 +116,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span>*</span>設備分類 :
+                <span class='red_star'>*</span>設備分類 :
               </div>
               <div class="dropdown">
                 <select class="form-select" id="floatingSelect" v-model="middleForm.itemCategory_Id">
@@ -134,7 +135,7 @@
         <div class="col">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span>*</span>物品名稱 :
+              <span class='red_star'>*</span>物品名稱 :
             </div>
             <input type="text" class="form-control" placeholder="最多輸入20字" v-model="middleForm.itemAssetName">
           </div>
@@ -146,7 +147,7 @@
               <div class="input-group-prepend info  ">
                 <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none"
                   src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
-                <span>*</span>包裝數量 :<img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block"
+                <span class='red_star'>*</span>包裝數量 :<img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block"
                   src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
               </div>
               <input class="input-number" type="number" min="1" v-model="middleForm.itemPackageNum">
@@ -155,7 +156,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3" id='unit'>
               <div class="input-group-prepend">
-                <span>*</span>包裝單位 :
+                <span class='red_star'>*</span>包裝單位 :
               </div>
               <div class="dropdown">
                 <select class="form-select" id="floatingSelect" v-model="middleForm.itemPackageUnit">
@@ -215,7 +216,7 @@
       <!-- 入庫方式 -->
       <div v-show="!quickprocessStore.editHidden" class="store_option_wrap mt-5 mb-3">
         <div class="fixed_info">
-          <p><span>*</span>入庫方式</p>
+          <p><span class='red_star'>*</span>入庫方式</p>
         </div>
         <div class="content">
           <!-- 直接入庫/指派給保管人 -->
@@ -223,7 +224,7 @@
             <div class="col-12">
               <div class="input-group mb-3 check_box_wrap">
                 <div class="input-group-prepend check_box">
-                  <span>*</span>入庫方式 :
+                  <span class='red_star'>*</span>入庫方式 :
                 </div>
                 <div class="d-flex align-items-center radio_wrap">
                   <template v-for="(item, index) in DropdownArray.InboundWay" :key="'radio' + (index + 1)">
@@ -241,7 +242,7 @@
             <div class="col-12">
               <div class="input-group mb-3 check_box_wrap">
                 <div class="input-group-prepend check_box">
-                  <span>*</span>用途 :
+                  <span class='red_star'>*</span>用途 :
                 </div>
                 <div class="d-flex align-items-center radio_wrap">
                   <template v-for="(item, index) in DropdownArray.Use" :key="'radio' + (index + 1)">
@@ -258,7 +259,7 @@
           <!-- 保管人員 -->
           <div v-show="middleForm.itemInboundWay === '指派給保管人'" class="col">
             <div class="input-group mb-3">
-              <div class="input-group-prepend"> <span>*</span>保管人員 :</div>
+              <div class="input-group-prepend"> <span class='red_star'>*</span>保管人員 :</div>
               <select class="form-select" v-model="middleForm.itemCustodian">
                 <option value="">--請選擇--</option>
                 <option v-for="option in DropdownArray.Custodian" :key="option" :value="option">{{ option }}</option>
@@ -268,7 +269,7 @@
           <!-- 儲位區域/儲位櫃位 -->
           <div v-show="middleForm.itemInboundWay === '直接入庫'" class="store_location row g-0">
             <div class="col row g-0">
-              <label for="inputPassword" class="col col-form-label"><span>*</span>儲位區域 :</label>
+              <label for="inputPassword" class="col col-form-label"><span class='red_star'>*</span>儲位區域 :</label>
               <select class="form-select col" v-model="middleForm.itemArea_Id"
                 @change="async () => { DropdownArray.Layer = await apiStore.getLayer(middleForm.itemArea_Id); middleForm.itemLayer_Id = ''; }">
                 <option value="">--請選擇--</option>
@@ -276,7 +277,7 @@
               </select>
             </div>
             <div class="col row g-0">
-              <label for="inputPassword" class="col col-form-label"><span>*</span>儲位櫃位 :</label>
+              <label for="inputPassword" class="col col-form-label"><span class='red_star'>*</span>儲位櫃位 :</label>
               <select class="form-select col" v-model="middleForm.itemLayer_Id">
                 <option v-if="DropdownArray.Layer.length == 0" value="">--請先選擇儲位區域--</option>
                 <template v-else>
@@ -314,7 +315,7 @@
               <div class="col-12">
                 <div class="input-group mb-3 check_box_wrap">
                   <div class="input-group-prepend check_box">
-                    <span>*</span>專案類型 :
+                    <span class='red_star'>*</span>專案類型 :
                   </div>
                   <div class="d-flex align-items-center radio_wrap">
                     <template v-for="(item, typeIndex) in DropdownArray.AssetType" :key="'radio' + (typeIndex + 1)">
@@ -337,7 +338,7 @@
               <div class="col-12">
                 <div class="input-group mb-3 check_box_wrap">
                   <div class="input-group-prepend check_box">
-                    <span>*</span>專案類型 :
+                    <span class='red_star'>*</span>專案類型 :
                   </div>
                   <div class="d-flex align-items-center radio_wrap">
                     <div v-if="tab.itemAssetType !== '耗材'" class="dropdown">
@@ -370,7 +371,7 @@
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend equipment_wrap">
-                    <span>*</span>設備總類 :
+                    <span class='red_star'>*</span>設備總類 :
                   </div>
                   <div class="dropdown">
                     <select class="form-select" id="floatingSelect" v-model="tab.itemEquipType_Id"
@@ -386,7 +387,7 @@
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span>*</span>設備分類 :
+                    <span class='red_star'>*</span>設備分類 :
                   </div>
                   <div class="dropdown">
                     <select class="form-select" id="floatingSelect" v-model="tab.itemCategory_Id">
@@ -404,14 +405,14 @@
             <!-- 頁籤物品名稱 -->
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend"><span>*</span>物品名稱 :</div>
+                <div class="input-group-prepend"><span class='red_star'>*</span>物品名稱 :</div>
                 <input type="text" class="form-control" placeholder="最多輸入20字" v-model="tab.itemAssetName">
               </div>
             </div>
             <!-- 頁籤資產編號 -->
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend"><span>*</span>資產編號 :</div>
+                <div class="input-group-prepend"><span class='red_star'>*</span>資產編號 :</div>
                 <input type="text" class="form-control" :class="{ 'readonly_box': quickprocessStore.editHidden }"
                   placeholder="BFXXXXXXXX" v-model="tab.itemAssetsId" :readonly="quickprocessStore.editHidden">
               </div>
@@ -479,8 +480,9 @@
                   <div class="input-group-prepend info  ">
                     <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none"
                       src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
-                    <span>*</span>包裝數量 :<img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block"
-                      src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
+                    <span class='red_star'>*</span>包裝數量 :<img
+                      class="info_icon d-xl-none d-lg-none d-md-none d-inline-block" src="@/assets/info.png"
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="資產數量 ex: 3包螺絲釘">
                   </div>
                   <input v-if="tab.itemAssetType === '耗材'" class="input-number" type="number"
                     v-model="tab.itemPackageNum" min="1">
@@ -491,7 +493,7 @@
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3" id='unit'>
                   <div class="input-group-prepend">
-                    <span>*</span>包裝單位 :
+                    <span class='red_star'>*</span>包裝單位 :
                   </div>
                   <div class="dropdown">
                     <select class="form-select" id="floatingSelect" v-model="tab.itemPackageUnit">
@@ -632,7 +634,7 @@
                   <div class="col-12">
                     <div class="input-group mb-3 check_box_wrap">
                       <div class="input-group-prepend check_box">
-                        <span>*</span>入庫方式 :
+                        <span class='red_star'>*</span>入庫方式 :
                       </div>
                       <div v-if="!quickprocessStore.editHidden" class="d-flex radio_wrap store_staff">
                         <template v-for="(item, InboundIndex) in DropdownArray.InboundWay"
@@ -666,7 +668,7 @@
                   <div class="col-12">
                     <div class="input-group mb-3 check_box_wrap">
                       <div class="input-group-prepend check_box">
-                        <span>*</span>用途 :
+                        <span class='red_star'>*</span>用途 :
                       </div>
                       <div class="d-flex align-items-center radio_wrap">
                         <template v-for="(item, UseIndex) in DropdownArray.Use" :key="'radio' + (UseIndex + 1)">
@@ -683,7 +685,7 @@
                 <!-- 保管人員 -->
                 <div v-show="tab.itemInboundWay === '指派給保管人'" class="col">
                   <div class="input-group mb-3">
-                    <div class="input-group-prepend"> <span>*</span>保管人員 :</div>
+                    <div class="input-group-prepend"> <span class='red_star'>*</span>保管人員 :</div>
                     <select class="form-select" v-model="tab.itemCustodian">
                       <option value="">--請選擇--</option>
                       <option v-for="option in DropdownArray.Custodian" :key="option" :value="option">{{ option }}
@@ -694,7 +696,7 @@
                 <!-- 儲位區域/儲位櫃位 -->
                 <div v-show="tab.itemInboundWay === '直接入庫'" class="store_location row g-xl-0 g-lg-0 g-md-0">
                   <div class="col row">
-                    <label for="inputPassword" class="col col-form-label"><span>*</span>儲位區域 :</label>
+                    <label for="inputPassword" class="col col-form-label"><span class='red_star'>*</span>儲位區域 :</label>
                     <select class="form-select col" v-model="tab.itemArea_Id"
                       @change="async () => { tab.LayerArray = await apiStore.getLayer(tab.itemArea_Id); tab.itemLayer_Id = ''; }">
                       <option value="">--請選擇--</option>
@@ -703,7 +705,7 @@
                     </select>
                   </div>
                   <div class="col row">
-                    <label for="inputPassword" class="col col-form-label"><span>*</span>儲位櫃位 :</label>
+                    <label for="inputPassword" class="col col-form-label"><span class='red_star'>*</span>儲位櫃位 :</label>
                     <select class="form-select col" v-model="tab.itemLayer_Id">
                       <option v-if="tab.LayerArray.length == 0" value="">--請先選擇設備總類--</option>
                       <template v-else>
@@ -747,6 +749,7 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
+
 textarea {
   padding: 5px 10px 30px;
 }
@@ -796,6 +799,7 @@ textarea {
 }
 
 .dropdown {
+
   #typeDropdown,
   #categoryDropdown,
   #areaDropdown {
@@ -1075,9 +1079,6 @@ textarea {
   @include readonly_box;
 }
 
-span {
-  @include red_star;
-}
 
 .input-number {
   @include count_btn;
@@ -1399,9 +1400,11 @@ span {
       .dropdown {
         width: 60%;
       }
+
       .radio_wrap {
         gap: 0 10px;
       }
+
       .store_option_wrap {
         .option_section {
           width: 80.5%;
@@ -1435,10 +1438,12 @@ span {
             overflow-y: auto;
           }
         }
+
         .store_location {
           gap: 0 77px;
         }
       }
+
       .content {
         @include content_bg;
         padding: 17px;
@@ -1574,10 +1579,7 @@ span {
           }
         }
 
-        .input-group
-          > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
-            .valid-feedback
-          ):not(.invalid-tooltip):not(.invalid-feedback) {
+        .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
           margin-left: unset;
           border-radius: 5px;
         }
@@ -1601,10 +1603,7 @@ span {
     }
 
     .tab_section {
-      .input-group
-        > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
-          .valid-feedback
-        ):not(.invalid-tooltip):not(.invalid-feedback) {
+      .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
         margin-left: unset !important;
       }
 
@@ -1701,5 +1700,4 @@ span {
     }
   }
 }
-
 </style>

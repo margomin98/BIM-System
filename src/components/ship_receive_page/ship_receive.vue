@@ -1,309 +1,307 @@
 <template>
-    <Viewmodal />
-    <!-- 上傳人員 -->
-    <validate_modal :modal_id="'auth_modal'" :user="rentStore.user1"></validate_modal>
-    <div>
-        <div class="info_wrap col">
-            <div class="fixed_info">
-                <div>
-                    <p>單號：{{ Form.AO_ID }}</p>
+  <Viewmodal />
+  <!-- 上傳人員 -->
+  <validate_modal :modal_id="'auth_modal'" :user="rentStore.user1"></validate_modal>
+  <div>
+    <div class="info_wrap col">
+      <div class="fixed_info">
+        <div>
+          <p>單號：{{ Form.AO_ID }}</p>
+        </div>
+        <div>
+          <p>申請人員：{{ Form.Applicant }}</p>
+        </div>
+        <div>
+          <p>申請日期：{{ Form.ApplicationDate }}</p>
+        </div>
+      </div>
+      <form>
+        <div class="row g-0">
+          <div class="col d-flex wrap column_section">
+            <label for="inputTitle1" class="form-label use">
+              <p>用&ensp;&ensp;&ensp;&ensp;途</p>
+            </label>
+            <div class="option">
+              <div class='content'>
+                <div class="form-check" v-for="(option, index) in DropdownArray.Use" :key="index">
+                  <input class="form-check-input" type="radio" :value="option" :id="'radio' + (index + 1)"
+                    :disabled="option !== Form.Use" v-model="Form.Use">
+                  <label class="form-check-label" :for="'radio' + (index + 1)">{{ option }}</label>
                 </div>
-                <div>
-                    <p>申請人員：{{ Form.Applicant }}</p>
-                </div>
-                <div>
-                    <p>申請日期：{{ Form.ApplicationDate }}</p>
-                </div>
+              </div>
             </div>
-            <form>
-                <div class="row g-0">
-                    <div class="col d-flex wrap column_section">
-                        <label for="inputTitle1" class="form-label use">
-                            <p>用&ensp;&ensp;&ensp;&ensp;途</p>
-                        </label>
-                        <div class="option">
-                            <div class='content'>
-                                <div class="form-check" v-for="(option, index) in DropdownArray.Use" :key="index">
-                                    <input class="form-check-input" type="radio" :value="option"
-                                        :id="'radio' + (index + 1)" :disabled="option !== Form.Use" v-model="Form.Use">
-                                    <label class="form-check-label" :for="'radio' + (index + 1)">{{ option }}</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row g-0 project_details">
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-                        <label for="inputWithButton" class="form-label">
-                            <p>專案代碼</p>
-                        </label>
-                        <div class="input-group" id="readonly_box">
-                            <p class="readonly_box">{{ Form.ProjectCode }}</p>
-                        </div>
-                    </div>
-                    <div class="col d-flex wrap">
-                        <label for="inputWithTitle" class="form-label project_name">
-                            <p>專案名稱</p>
-                        </label>
-                        <div class="input-group" id="readonly_box">
-                            <p class="readonly_box" readonly> {{ Form.ProjectName }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row g-0 ">
-                    <div class="col d-flex wrap">
-                        <label for="inputTextarea" class="form-label">
-                            <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
-                        </label>
-                        <div class="input-group" id='readonly_box'>
-                            <textarea class="form-control readonly_box" readonly v-model="Form.Description"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div v-show="Form.Status === '快速出庫完成'" class="row g-0 project_date_wrap">
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-                        <label for="inputWithButton" class="form-label">
-                            <p>領用人員</p>
-                        </label>
-                        <div class="input-group" id="readonly_box">
-                            <p class="readonly_box">{{ Form.Recipient }}</p>
-                        </div>
-                    </div>
-                    <div class="col-xl-8 col-lg-8 col-md-8 col-12 d-flex wrap">
-                        <label for="inputWithTitle" class="form-label project_date">
-                            <p>交付完成日期</p>
-                        </label>
-                        <div class="input-group" id="readonly_box">
-                            <p class="readonly_box"> {{ Form.DeliveryDate }}</p>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <div v-show="Form.Status !== '快速出庫完成'" class="fixed_info">
-                <div>
-                    <p>資產出庫項目</p>
-                </div>
+          </div>
+        </div>
+        <div class="row g-0 project_details">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
+            <label for="inputWithButton" class="form-label">
+              <p>專案代碼</p>
+            </label>
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box">{{ Form.ProjectCode }}</p>
             </div>
-            <div v-show="Form.Status !== '快速出庫完成'" class="second_content">
-                <DataTable size="small" :value="Form.ItemList" resizableColumns columnResizeMode="expand" showGridlines
-                    scrollable scroll-height="420px">
-                    <Column v-for="item in rentStore.ItemList_field" :field="item.field" :header="item.header" sortable
-                        :style="{ 'min-width': item.width }"></Column>
-                </DataTable>
+          </div>
+          <div class="col d-flex wrap">
+            <label for="inputWithTitle" class="form-label project_name">
+              <p>專案名稱</p>
+            </label>
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box" readonly> {{ Form.ProjectName }}</p>
             </div>
-            <div class="fixed_info">
-                <div>
-                    <p>資產出庫細項</p>
-                </div>
+          </div>
+        </div>
+        <div class="row g-0 ">
+          <div class="col d-flex wrap">
+            <label for="inputTextarea" class="form-label">
+              <p>說&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明</p>
+            </label>
+            <div class="input-group" id='readonly_box'>
+              <textarea class="form-control readonly_box" readonly v-model="Form.Description"></textarea>
             </div>
-            <div class="third_content">
-                <DataTable :size="'small'" :value="Form.OM_List" resizableColumns columnResizeMode="expand"
-                    showGridlines scrollable scroll-height="600px">
-                    <Column header="交付確認" class="datatable_checkbox">
-                        <template style="min-width:50px; " #body="slotProps">
-                            <input type="checkbox" class="p-checkbox p-component" v-model="slotProps.data.OM_IsExecute"
-                                disabled>
-                        </template>
-                    </Column>
-                    <Column>
-                        <template #body="slotProps">
-                            <asset_view_btn :params="slotProps" />
-                        </template>
-                    </Column>
-                    <Column v-for="item in rentStore.OMList_field" :field="item.field" :header="item.header"
-                        :sortable="item.sortable" :style="{ 'min-width': item.width }"></Column>
-                </DataTable>
+          </div>
+        </div>
+        <div v-show="Form.Status === '快速出庫完成'" class="row g-0 project_date_wrap">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
+            <label for="inputWithButton" class="form-label">
+              <p>領用人員</p>
+            </label>
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box">{{ Form.Recipient }}</p>
             </div>
-            <div class="fixed_info_count">
+          </div>
+          <div class="col-xl-8 col-lg-8 col-md-8 col-12 d-flex wrap">
+            <label for="inputWithTitle" class="form-label project_date">
+              <p>交付完成日期</p>
+            </label>
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box"> {{ Form.DeliveryDate }}</p>
             </div>
-            <div v-show="Form.Status !== '快速出庫完成'" class="fourth_content">
-                <div class="fixed_info">
-                    <div>
-                        <p>備料簽章</p>
-                    </div>
-                </div>
-                <div class="row g-0">
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-                        <label for="inputWithButton" class="form-label">
-                            <p>備料人員</p>
-                        </label>
-                        <div class="input-group" id="readonly_box">
-                            <p class="readonly_box">{{ Form.PreparedPerson }}</p>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-                        <label for="inputWithTitle" class="form-label project_name">
-                            <p>備料完成日期</p>
-                        </label>
-                        <div class="input-group" id="readonly_box">
-                            <p class="readonly_box">{{ Form.PrepareDate }}</p>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-                        <label for="inputWithTitle" class="form-label project_name">
-                            <p>備註</p>
-                        </label>
-                        <div class="input-group" id='readonly_box'>
-                            <textarea class="form-control readonly_box" v-model="Form.PrepareMemo" readonly></textarea>
-                        </div>
-                    </div>
-                </div>
+          </div>
+        </div>
+      </form>
+      <div v-show="Form.Status !== '快速出庫完成'" class="fixed_info">
+        <div>
+          <p>資產出庫項目</p>
+        </div>
+      </div>
+      <div v-show="Form.Status !== '快速出庫完成'" class="second_content">
+        <DataTable size="small" :value="Form.ItemList" resizableColumns columnResizeMode="expand" showGridlines
+          scrollable scroll-height="420px">
+          <Column v-for="item in rentStore.ItemList_field" :field="item.field" :header="item.header" sortable
+            :style="{ 'min-width': item.width }"></Column>
+        </DataTable>
+      </div>
+      <div class="fixed_info">
+        <div>
+          <p>資產出庫細項</p>
+        </div>
+      </div>
+      <div class="third_content">
+        <DataTable :size="'small'" :value="Form.OM_List" resizableColumns columnResizeMode="expand" showGridlines
+          scrollable scroll-height="600px">
+          <Column header="交付確認" class="datatable_checkbox">
+            <template style="min-width:50px; " #body="slotProps">
+              <input type="checkbox" class="p-checkbox p-component" v-model="slotProps.data.OM_IsExecute" disabled>
+            </template>
+          </Column>
+          <Column>
+            <template #body="slotProps">
+              <asset_view_btn :params="slotProps" />
+            </template>
+          </Column>
+          <Column v-for="item in rentStore.OMList_field" :field="item.field" :header="item.header"
+            :sortable="item.sortable" :style="{ 'min-width': item.width }"></Column>
+        </DataTable>
+      </div>
+      <div class="fixed_info_count">
+      </div>
+      <div v-show="Form.Status !== '快速出庫完成'" class="fourth_content">
+        <div class="fixed_info">
+          <div>
+            <p>備料簽章</p>
+          </div>
+        </div>
+        <div class="row g-0">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
+            <label for="inputWithButton" class="form-label">
+              <p>備料人員</p>
+            </label>
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box">{{ Form.PreparedPerson }}</p>
             </div>
-            <div v-show="Form.Status !== '快速出庫完成'" class="five_content">
-                <div class="fixed_info">
-                    <div>
-                        <p>審核簽章</p>
-                    </div>
-                </div>
-                <div class="row g-0">
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-                        <label for="inputWithButton" class="form-label">
-                            <p>審核人員</p>
-                        </label>
-                        <div class="input-group" id="readonly_box">
-                            <p class="readonly_box">{{ Form.VerifyPerson }}</p>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-                        <label for="inputWithTitle" class="form-label project_name">
-                            <p>審核結果</p>
-                        </label>
-                        <div class="input-group" id="readonly_box">
-                            <p class="readonly_box" style="margin-bottom: 0;">{{ Form.VerifyResult }}</p>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-                        <label for="inputWithTitle" class="form-label project_name">
-                            <p>審核日期</p>
-                        </label>
-                        <div class="input-group" id="readonly_box">
-                            <p class="readonly_box">{{ Form.VerifyDate }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row g-0">
-                    <div class="col d-flex wrap">
-                        <label for="inputWithButton" class="form-label">
-                            <p>審核意見</p>
-                        </label>
-                        <div class="input-group" id="readonly_box">
-                            <textarea class="readonly_box form-control" readonly v-model="Form.VerifyMemo"></textarea>
-                        </div>
-                    </div>
-                </div>
+          </div>
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
+            <label for="inputWithTitle" class="form-label project_name">
+              <p>備料完成日期</p>
+            </label>
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box">{{ Form.PrepareDate }}</p>
             </div>
-            <div v-show="Form.Status !== '快速出庫完成'" class="six_content">
-                <div class="fixed_info">
-                    <div class="six_content_title">
-                        <p>交付簽章</p>
-                    </div>
-                </div>
-                <div class="row g-0">
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-                        <label for="inputWithButton" class="form-label">
-                            <p>領用人員</p>
-                        </label>
-                        <div class="input-group" id="readonly_box">
-                            <p class="readonly_box">{{ Form.Recipient }}</p>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-                        <label for="inputWithTitle" class="form-label project_name">
-                            <p>交付人員</p>
-                        </label>
-                        <div class="input-group" id="readonly_box">
-                            <p class="readonly_box" style="margin-bottom: 0;">{{ Form.DeliveryOperator }}</p>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
-                        <label for="inputWithTitle" class="form-label project_name">
-                            <p>交付完成日期</p>
-                        </label>
-                        <div class="input-group" id="readonly_box">
-                            <p class="readonly_box">{{ Form.DeliveryDate }}</p>
-                        </div>
-                    </div>
-                </div>
+          </div>
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
+            <label for="inputWithTitle" class="form-label project_name">
+              <p>備註</p>
+            </label>
+            <div class="input-group" id='readonly_box'>
+              <textarea class="form-control readonly_box" v-model="Form.PrepareMemo" readonly></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-show="Form.Status !== '快速出庫完成'" class="five_content">
+        <div class="fixed_info">
+          <div>
+            <p>審核簽章</p>
+          </div>
+        </div>
+        <div class="row g-0">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
+            <label for="inputWithButton" class="form-label">
+              <p>審核人員</p>
+            </label>
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box">{{ Form.VerifyPerson }}</p>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
+            <label for="inputWithTitle" class="form-label project_name">
+              <p>審核結果</p>
+            </label>
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box" style="margin-bottom: 0;">{{ Form.VerifyResult }}</p>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
+            <label for="inputWithTitle" class="form-label project_name">
+              <p>審核日期</p>
+            </label>
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box">{{ Form.VerifyDate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="row g-0">
+          <div class="col d-flex wrap">
+            <label for="inputWithButton" class="form-label">
+              <p>審核意見</p>
+            </label>
+            <div class="input-group" id="readonly_box">
+              <textarea class="readonly_box form-control" readonly v-model="Form.VerifyMemo"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-show="Form.Status !== '快速出庫完成'" class="six_content">
+        <div class="fixed_info">
+          <div class="six_content_title">
+            <p>交付簽章</p>
+          </div>
+        </div>
+        <div class="row g-0">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
+            <label for="inputWithButton" class="form-label">
+              <p>領用人員</p>
+            </label>
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box">{{ Form.Recipient }}</p>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
+            <label for="inputWithTitle" class="form-label project_name">
+              <p>交付人員</p>
+            </label>
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box" style="margin-bottom: 0;">{{ Form.DeliveryOperator }}</p>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-4 col-md-4 col-12 d-flex wrap">
+            <label for="inputWithTitle" class="form-label project_name">
+              <p>交付完成日期</p>
+            </label>
+            <div class="input-group" id="readonly_box">
+              <p class="readonly_box">{{ Form.DeliveryDate }}</p>
+            </div>
+          </div>
+        </div>
 
-                <div class="row g-0">
-                    <div class="col d-flex wrap">
-                        <label for="inputWithButton" class="form-label" id="memo">
-                            <p>備註</p>
-                        </label>
-                        <div class="input-group" id="memo_input">
-                            <textarea class="form-control readonly_box" readonly v-model="Form.DeliveryMemo"></textarea>
-                        </div>
-                    </div>
-                </div>
+        <div class="row g-0">
+          <div class="col d-flex wrap">
+            <label for="inputWithButton" class="form-label" id="memo">
+              <p>備註</p>
+            </label>
+            <div class="input-group" id="memo_input">
+              <textarea class="form-control readonly_box" readonly v-model="Form.DeliveryMemo"></textarea>
             </div>
+          </div>
         </div>
-        <!-- 空白簽收單 -->
-        <div class="info_wrap print_section">
-            <div class='content  d-flex'>
-                <p>空白簽收單</p>
-                <print-btn :datagrid="Form.OM_List" :title="Form" />
-            </div>
-        </div>
-        <!-- 上傳簽收單 -->
-        <div class="info_wrap upload_receive_section">
-            <div class='content'>
-                <div class="d-flex content_wrap">
-                    <p class='title col-xl-2 col-lg-2 col-md-3 col' v-show="PageType === 'ShipReceiveConfirm'"><span>*</span>上傳簽收單</p>
-                    <div class="upload_wrap">
-                        <button v-show="PageType === 'ShipReceiveConfirm'"
-                            @click="openFileExplorer(fileinput)">選擇檔案</button>
-                        <input type="file" accept="image/*,.doc,.docs,.pdf" style="display: none;" ref="fileinput"
-                            @input="utilsStore.handleFileChange($event, { newDoc: Form.newFile, viewDoc: Form.viewFile, existDoc: Form.existFile }, 1)">
-                        <button type="button" id="openModal" data-bs-toggle="modal" data-bs-target="#viewFile_modal"
-                            style="display:none;">開啟modal隱藏按鈕</button>
-                        <div class="selected_file col">
-                            <div class="input-group">
-                                <div class="store_edit_file">
-                                    <div class="file_upload_wrap">
-                                        <p v-for="(file, file_index) in Form.viewFile">{{ file.FileName }}
-                                            <img class="view_icon" src="@/assets/view.png" style="margin-left:10px"
-                                                @click="utilsStore.viewImgFile(file)">
-                                            <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;"
-                                                @click="utilsStore.deleteImgFile('new', Form, file_index)">
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <p  class='title'>已上傳簽收單</p>
-                    <div class="upload_wrap">
-                        <div class="selected_file col">
-                            <div class="input-group">
-                                <div class="store_edit_file">
-                                    <div class="file_upload_wrap">
-                                        <p v-for="(file, file_index) in Form.existFile">{{ file.FileName }}
-                                            <img class="view_icon" src="@/assets/view.png" style="margin-left:10px"
-                                                @click="utilsStore.viewImgFile(file)">
-                                            <img v-show="PageType === 'ShipReceiveConfirm'" class="trash_icon"
-                                                src="@/assets/trash.png" style="margin-left: 10px;"
-                                                @click="utilsStore.deleteImgFile('exist', Form, file_index)">
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="auth_section d-flex">
-                <p><span v-show="PageType === 'ShipReceiveConfirm'" class="red_star">*</span>上傳人員</p>
-                <input v-show="PageType === 'ShipReceiveConfirm'" type="text" class="readonly_box"
-                    v-model="user1.resultName" readonly>
-                <input v-show="PageType === 'ShipReceiveView'" type="text" class="readonly_box"
-                    v-model="Form.UploadPerson" readonly>
-                <button v-show="PageType === 'ShipReceiveConfirm'" data-bs-toggle="modal"
-                    data-bs-target="#auth_modal">驗證</button>
-            </div>
-        </div>
+      </div>
     </div>
+    <!-- 空白簽收單 -->
+    <div class="info_wrap print_section">
+      <div class='content  d-flex'>
+        <p>空白簽收單</p>
+        <print-btn :datagrid="Form.OM_List" :title="Form" />
+      </div>
+    </div>
+    <!-- 上傳簽收單 -->
+    <div class="info_wrap upload_receive_section">
+      <div class='content'>
+        <div class="d-flex content_wrap">
+          <p class='title col-xl-2 col-lg-2 col-md-3 col' v-show="PageType === 'ShipReceiveConfirm'"><span
+              class='red_star'>*</span>上傳簽收單</p>
+          <div class="upload_wrap">
+            <button v-show="PageType === 'ShipReceiveConfirm'" @click="openFileExplorer(fileinput)">選擇檔案</button>
+            <input type="file" accept="image/*,.doc,.docs,.pdf" style="display: none;" ref="fileinput"
+              @input="utilsStore.handleFileChange($event, { newDoc: Form.newFile, viewDoc: Form.viewFile, existDoc: Form.existFile }, 1)">
+            <button type="button" id="openModal" data-bs-toggle="modal" data-bs-target="#viewFile_modal"
+              style="display:none;">開啟modal隱藏按鈕</button>
+            <div class="selected_file col">
+              <div class="input-group">
+                <div class="store_edit_file">
+                  <div class="file_upload_wrap">
+                    <p v-for="(file, file_index) in Form.viewFile">{{ file.FileName }}
+                      <img class="view_icon" src="@/assets/view.png" style="margin-left:10px"
+                        @click="utilsStore.viewImgFile(file)">
+                      <img class="trash_icon" src="@/assets/trash.png" style="margin-left: 10px;"
+                        @click="utilsStore.deleteImgFile('new', Form, file_index)">
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p class='title'>已上傳簽收單</p>
+          <div class="upload_wrap">
+            <div class="selected_file col">
+              <div class="input-group">
+                <div class="store_edit_file">
+                  <div class="file_upload_wrap">
+                    <p v-for="(file, file_index) in Form.existFile">{{ file.FileName }}
+                      <img class="view_icon" src="@/assets/view.png" style="margin-left:10px"
+                        @click="utilsStore.viewImgFile(file)">
+                      <img v-show="PageType === 'ShipReceiveConfirm'" class="trash_icon" src="@/assets/trash.png"
+                        style="margin-left: 10px;" @click="utilsStore.deleteImgFile('exist', Form, file_index)">
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="auth_section d-flex">
+        <p><span v-show="PageType === 'ShipReceiveConfirm'" class="red_star">*</span>上傳人員</p>
+        <input v-show="PageType === 'ShipReceiveConfirm'" type="text" class="readonly_box" v-model="user1.resultName"
+          readonly>
+        <input v-show="PageType === 'ShipReceiveView'" type="text" class="readonly_box" v-model="Form.UploadPerson"
+          readonly>
+        <button v-show="PageType === 'ShipReceiveConfirm'" data-bs-toggle="modal"
+          data-bs-target="#auth_modal">驗證</button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -314,34 +312,35 @@ import validate_modal from '@/components/utils/validate_modal.vue';
 import asset_view_btn from '@/components/utils/asset_view_btn.vue';
 import printBtn from '@/components/ship_receive_page/ship_receive_print_btn.vue'
 import {
-    useAPIStore,
-    useUtilsStore
+  useAPIStore,
+  useUtilsStore
 } from '@/store';
 import {
-    useRentStore
+  useRentStore
 } from '@/store/rent/_index';
 import {
-    storeToRefs
+  storeToRefs
 } from 'pinia';
 import {
-    openFileExplorer
+  openFileExplorer
 } from '@/assets/js/common_fn';
 import {
-    ref
+  ref
 } from 'vue';
 const utilsStore = useUtilsStore();
 const rentStore = useRentStore();
 const apiStore = useAPIStore();
 const {
-    Form,
-    DropdownArray,
-    PageType,
-    user1
+  Form,
+  DropdownArray,
+  PageType,
+  user1
 } = storeToRefs(rentStore)
 const fileinput = ref();
 </script>
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
+
 .auth_section {
   justify-content: center;
   align-items: center;
@@ -476,9 +475,6 @@ const fileinput = ref();
   align-items: center;
 }
 
-span {
-  @include red_star;
-}
 
 .modal {
   .modal-body {
@@ -589,6 +585,7 @@ span {
 .main_section {
   .info_wrap {
     margin: auto;
+
     .input-group-prepend {
       width: 100% !important;
       text-align: center !important;
@@ -607,6 +604,7 @@ span {
         margin-bottom: 0;
       }
     }
+
     .third_content {
       .list {
         button {
@@ -618,6 +616,7 @@ span {
         }
       }
     }
+
     .fixed_info_count {
       display: flex;
       background: #3d5c67;
@@ -638,6 +637,7 @@ span {
         margin-bottom: 0;
       }
     }
+
     .fourth_content {
       border-left: 1px solid black;
       border-right: 1px solid black;
@@ -671,6 +671,7 @@ span {
         }
       }
     }
+
     .five_content {
       border-left: 1px solid black;
       border-bottom: 1px solid black;
@@ -713,6 +714,7 @@ span {
         }
       }
     }
+
     .six_content {
       border-left: 1px solid black;
       background: white;
@@ -721,6 +723,7 @@ span {
       .fixed_info {
         position: relative;
         border-right: 1px solid black;
+
         .six_content_title,
         .six_content_date {
           position: absolute;
@@ -747,6 +750,7 @@ span {
       .wrap {
         background: white;
         align-items: center;
+
         button {
           border-radius: 7px;
           height: 30px;
@@ -783,6 +787,7 @@ span {
         border-right: 1px solid black;
       }
     }
+
     form {
       border-top: 1px solid black;
       border-left: 1px solid black;
@@ -791,6 +796,7 @@ span {
       .form-check {
         margin-left: 10px;
       }
+
       .form-control {
         height: auto;
         border-radius: 0;
@@ -823,6 +829,7 @@ span {
         }
       }
     }
+
     .input-group-prepend {
       color: white;
       font-weight: 700;
@@ -832,11 +839,13 @@ span {
     }
   }
 }
+
 @media only screen and (min-width: 1200px) {
   .main_section {
     .upload_wrap {
       margin-left: -20px;
     }
+
     .modal-content {
       width: 400px;
       margin: auto;
@@ -891,9 +900,11 @@ span {
           border-top: 1px solid black;
           border-right: 1px solid black;
         }
-.wrap{
-    border-top: 1px solid black;
-}
+
+        .wrap {
+          border-top: 1px solid black;
+        }
+
         .form-label {
           height: 50px;
           padding: 0 16px;
@@ -1026,6 +1037,7 @@ span {
   .upload_wrap {
     margin-left: -50px;
   }
+
   .main_section {
     .modal-content {
       width: 400px;
@@ -1081,9 +1093,11 @@ span {
       .five_content {
         border-left: 1px solid black;
         border-bottom: 1px solid black;
-        .wrap{
-    border-top: 1px solid black;
-}
+
+        .wrap {
+          border-top: 1px solid black;
+        }
+
         .fixed_info {
           border-top: 1px solid black;
           border-right: 1px solid black;
@@ -1222,13 +1236,16 @@ span {
   .main_section {
     .upload_receive_section .content {
       flex-direction: column;
+
       .title,
       .file_upload_wrap p {
         text-align: left;
       }
+
       .file_upload_wrap p {
         margin-bottom: 20px;
       }
+
       .upload_wrap {
         margin-left: unset;
         margin-top: 10px;
@@ -1260,7 +1277,7 @@ span {
 
         .wrap {
           background: white;
-         align-items: center;
+          align-items: center;
           flex-direction: column;
 
           .option {
@@ -1273,6 +1290,7 @@ span {
           height: 30px;
           border-bottom: 1px solid black;
           border-top: 1px solid black;
+
           p {
             font-size: 18px;
           }
@@ -1281,7 +1299,7 @@ span {
 
       .five_content {
         border-right: 1px solid black;
-    
+
         #readonly_box {
           display: flex;
           justify-content: center;
@@ -1297,9 +1315,11 @@ span {
             display: flex;
           }
         }
-    .wrap:nth-child(1) {
+
+        .wrap:nth-child(1) {
           border-top: 1px solid black;
         }
+
         .form-label {
           border-bottom: 1px solid black;
           height: 50px;
@@ -1315,8 +1335,8 @@ span {
       .six_content {
         .fixed_info {
           height: 47px;
-          border-left:none;
-          border-top:none;
+          border-left: none;
+          border-top: none;
           border-bottom: 1px solid black;
         }
 
@@ -1435,5 +1455,4 @@ span {
     }
   }
 }
-
 </style>

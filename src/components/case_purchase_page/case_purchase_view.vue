@@ -258,11 +258,6 @@ const editOrder = (PO_ID) => {
 
     .content {
         @include content_bg;
-
-        span {
-            @include red_star
-        }
-
         .input-group {
             .input-number {
                 @include count_btn;

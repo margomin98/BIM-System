@@ -1,44 +1,44 @@
 <template>
-   <div class="info_wrap col">
-      <div class="fixed_info">
-        <div>
-          <p>設備整合箱</p>
+  <div class="info_wrap col">
+    <div class="fixed_info">
+      <div>
+        <p>設備整合箱</p>
+      </div>
+    </div>
+    <div class="content">
+      <div class="col">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend"><span class='red_star'>*</span>產編：</div>
+          <input type="text" class="form-control text-center" placeholder="請輸入資產編號" />
         </div>
       </div>
-      <div class="content">
-        <div class="col">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend"><span>*</span>產編：</div>
-            <input type="text" class="form-control text-center" placeholder="請輸入資產編號" />
-          </div>
+      <div class="col">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend"><span class='red_star'>*</span>名稱：</div>
+          <input type="text" class="form-control text-center" placeholder="最多輸入20字" />
         </div>
-        <div class="col">
+      </div>
+      <div class="row row_wrap">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
           <div class="input-group mb-3">
-            <div class="input-group-prepend"><span>*</span>名稱：</div>
-            <input type="text" class="form-control text-center" placeholder="最多輸入20字" />
-          </div>
-        </div>
-        <div class="row row_wrap">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend flex">儲位區域：</div>
-              <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false" @click="getAreaName">
-                  {{ '請選擇' }}
-                </button>
-                <div class="dropdown-menu" aria-labelledby="areaDropdown">
-                  <!-- <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item"
+            <div class="input-group-prepend flex">儲位區域：</div>
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="areaDropdown" data-bs-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false" @click="getAreaName">
+                {{ '請選擇' }}
+              </button>
+              <div class="dropdown-menu" aria-labelledby="areaDropdown">
+                <!-- <p v-for="(item, index) in DropdownArray.Area" :key="index" class="dropdown-item"
                                     @click="selectArea(item)">{{ item.Name }}</p> -->
-                </div>
               </div>
             </div>
           </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend flex">儲位櫃位：</div>
-              <div class="dropdown">
-                <!-- <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown"
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend flex">儲位櫃位：</div>
+            <div class="dropdown">
+              <!-- <button class="btn dropdown-toggle" type="button" id="cabinetDropdown" data-bs-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false" :disabled="formParams.AreaName === ''">
                                 {{ LayerInit }}
                             </button>
@@ -46,16 +46,16 @@
                                 <p v-for="(item, index) in DropdownArray.Layer" :key="index" class="dropdown-item"
                                     @click="selectLayer(item)">{{ item.Name }}</p>
                             </div> -->
-              </div>
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">保管人員：</div>
-              <div class="dropdown">
-                <!-- <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown"
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">保管人員：</div>
+            <div class="dropdown">
+              <!-- <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 {{ '請選擇' }}
                             </button>
@@ -63,40 +63,40 @@
                                 <p v-for="(item, index) in DropdownArray.Custodian" :key="index" class="dropdown-item"
                                     @click="selectAccount(item)">{{ item }}</p>
                             </div> -->
-              </div>
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">整合人員：</div>
-              <input type="text" class="form-control readonly_box" readonly />
-            </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">整合人員：</div>
+            <input type="text" class="form-control readonly_box" readonly />
           </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">整合日期：</div>
-              <input type="text" class="form-control readonly_box" readonly />
-            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">整合日期：</div>
+            <input type="text" class="form-control readonly_box" readonly />
           </div>
         </div>
       </div>
     </div>
-    <div class="info_wrap col">
-      <div class="fixed_info">
-        <div>
-          <p><span>*</span>整合箱內容物(請至少新增一項)</p>
-        </div>
+  </div>
+  <div class="info_wrap col">
+    <div class="fixed_info">
+      <div>
+        <p><span class='red_star'>*</span>整合箱內容物(請至少新增一項)</p>
       </div>
-      <div class="content">
-        <div class="search_section">
-          <div class="row row_wrap">
-            <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend flex">設備總類：</div>
-                <div class="dropdown">
-                  <!-- <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown"
+    </div>
+    <div class="content">
+      <div class="search_section">
+        <div class="row row_wrap">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend flex">設備總類：</div>
+              <div class="dropdown">
+                <!-- <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
                         {{ searchParams.EquipTypeName || '請選擇' }}
                       </button>
@@ -104,14 +104,14 @@
                         <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item"
                           @click="selectType(item)">{{ item.Name }}</p>
                       </div> -->
-                </div>
               </div>
             </div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend flex">設備分類：</div>
-                <div class="dropdown">
-                  <!-- <button style='overflow: hidden;text-overflow: ellipsis;white-space: nowrap' class="btn dropdown-toggle"
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-12 d-flex">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend flex">設備分類：</div>
+              <div class="dropdown">
+                <!-- <button style='overflow: hidden;text-overflow: ellipsis;white-space: nowrap' class="btn dropdown-toggle"
                         type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false" :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
                         {{ searchParams.EquipCategoryName || EquipCategoryInit }}
@@ -120,30 +120,30 @@
                         <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item"
                           @click="selectCategory(item)">{{ item.Name }}</p>
                       </div> -->
-                </div>
               </div>
             </div>
           </div>
-          <div class="btn_section">
-            <!-- <button class="send_btn" data-bs-toggle="modal" data-bs-target="#searchModal"
+        </div>
+        <div class="btn_section">
+          <!-- <button class="send_btn" data-bs-toggle="modal" data-bs-target="#searchModal"
                   @click="searchInventory('', 'search', 'add')">搜索庫存</button> -->
-            <!-- Modal -->
-            <div class="modal fade" data-bs-backdrop="static" id="searchModal" tabindex="-1">
-              <div class="modal-dialog modal-xl modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-body">
-                    <div class="fixed_info">
-                      <div>
-                        <p>檢索資產</p>
-                      </div>
-                      <button type="button" class="close" data-bs-dismiss="modal">x</button>
+          <!-- Modal -->
+          <div class="modal fade" data-bs-backdrop="static" id="searchModal" tabindex="-1">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <div class="fixed_info">
+                    <div>
+                      <p>檢索資產</p>
                     </div>
-                    <div class='second_content'>
-                      <div class='wrap1'>
-                        <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-                          <p>設備總類</p>
-                          <div class="dropdown">
-                            <!-- <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown"
+                    <button type="button" class="close" data-bs-dismiss="modal">x</button>
+                  </div>
+                  <div class='second_content'>
+                    <div class='wrap1'>
+                      <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
+                        <p>設備總類</p>
+                        <div class="dropdown">
+                          <!-- <button class="btn dropdown-toggle" type="button" id="typeDropdown" data-bs-toggle="dropdown"
                                   aria-haspopup="true" aria-expanded="false" @click="getEquipTypeName">
                                   {{ searchParams.EquipTypeName || '請選擇' }}
                                 </button>
@@ -151,12 +151,12 @@
                                   <p v-for="(item, index) in DropdownArray.EquipType" :key="index" class="dropdown-item"
                                     @click="selectType(item)">{{ item.Name }}</p>
                                 </div> -->
-                          </div>
                         </div>
-                        <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-                          <p>設備分類</p>
-                          <div class="dropdown">
-                            <!-- <button style='overflow: hidden;text-overflow: ellipsis;white-space: nowrap'
+                      </div>
+                      <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
+                        <p>設備分類</p>
+                        <div class="dropdown">
+                          <!-- <button style='overflow: hidden;text-overflow: ellipsis;white-space: nowrap'
                                   class="btn dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown"
                                   aria-haspopup="true" aria-expanded="false"
                                   :class="{ disabled: !(searchParams.EquipTypeName !== '') }">
@@ -166,24 +166,24 @@
                                   <p v-for="(item, index) in DropdownArray.EquipCategory" :key="index" class="dropdown-item"
                                     @click="selectCategory(item)">{{ item.Name }}</p>
                                 </div> -->
-                          </div>
-                        </div>
-                        <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
-                          <p>物品名稱</p>
-                          <input type="text" class="form-control text-center" placeholder="最多輸入20字" />
                         </div>
                       </div>
-                      <div class='col d-flex justify-content-center'>
-                        <button class="btn submit_btn" type="button" @click="searchInventory('', 'search')">搜尋庫存</button>
+                      <div class='col-xl-3 col-lg-3 col-md-3 col-12'>
+                        <p>物品名稱</p>
+                        <input type="text" class="form-control text-center" placeholder="最多輸入20字" />
                       </div>
                     </div>
-                  </div>
-                  <div class="fixed_info">
-                    <div>
-                      <p>目前資產庫存</p>
+                    <div class='col d-flex justify-content-center'>
+                      <button class="btn submit_btn" type="button" @click="searchInventory('', 'search')">搜尋庫存</button>
                     </div>
                   </div>
-                  <!-- <DataTable lazy :key="datagrid.key" :first="datagrid.first" :size="'small'" :loading="datagrid.loading"
+                </div>
+                <div class="fixed_info">
+                  <div>
+                    <p>目前資產庫存</p>
+                  </div>
+                </div>
+                <!-- <DataTable lazy :key="datagrid.key" :first="datagrid.first" :size="'small'" :loading="datagrid.loading"
                         :value="rowData" :sort-field="datagrid.sortField" :sort-order="datagrid.sortOrder" resizableColumns
                         columnResizeMode="expand" showGridlines scrollable scrollHeight="420px"
                         @page="searchInventory($event, 'page')" @sort="searchInventory($event, 'sort')" paginator
@@ -194,40 +194,40 @@
                           <template #body="slotProps">
                             <AssetsView :params="slotProps" />
 </template>
-                    </Column>
-                    <Column style="min-width: 60px;" header="選擇">
-<template #body="slotProps">
+</Column>
+<Column style="min-width: 60px;" header="選擇">
+  <template #body="slotProps">
   <Equipment_add :params="slotProps" :action="action" @addAssetList="addAssetList" />
 </template>
-                    </Column>
-                    <Column style="min-width: 100px;" header="數量">
-<template #body="slotProps">
+</Column>
+<Column style="min-width: 100px;" header="數量">
+  <template #body="slotProps">
   <Equipment_number :params="slotProps" />
 </template>
-                    </Column>
-                    <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable
-                      :style="{ 'min-width': item.width }"></Column>
-                  </DataTable> -->
-                </div>
+</Column>
+<Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable
+  :style="{ 'min-width': item.width }"></Column>
+</DataTable> -->
               </div>
             </div>
           </div>
         </div>
-        <div class="item_wrap">
-          <!-- <list-item v-for="(item, index) in formParams.AssetList" :key="index" :edit_btn="false" :delete_btn="true"
+      </div>
+      <div class="item_wrap">
+        <!-- <list-item v-for="(item, index) in formParams.AssetList" :key="index" :edit_btn="false" :delete_btn="true"
             :AssetData="item" @deleteId="handleDelete">
           </list-item> -->
-        </div>
       </div>
     </div>
-    <div class="info_wrap col">
-      <div class="fixed_info">
-        <div>
-          <p>更換設備歷史紀錄</p>
-        </div>
+  </div>
+  <div class="info_wrap col">
+    <div class="fixed_info">
+      <div>
+        <p>更換設備歷史紀錄</p>
       </div>
-      <div style="width: 100%" class="content">
-        <!-- <DataTable
+    </div>
+    <div style="width: 100%" class="content">
+      <!-- <DataTable
           lazy
           :key="datagrid.key"
           :first= "datagrid.first"
@@ -251,9 +251,9 @@
           currentPageReportTemplate=" 第{currentPage}頁 ，共{totalPages}頁 總筆數 {totalRecords}">
           <Column v-for="item in datagridfield" :field="item.field" :header="item.header" sortable :style="{'min-width': item.width}"></Column>
         </DataTable> -->
-      </div>
-
     </div>
+
+  </div>
 </template>
 
 <script>
@@ -267,12 +267,12 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
-span {
-  @include red_star;
-}
+
+
 .readonly_box {
   @include readonly_box;
 }
+
 .input-number {
   @include count_btn;
 }
@@ -286,6 +286,7 @@ h1 {
 .fixed_title {
   @include fixed_title;
 }
+
 .item_wrap {
   height: 350px;
   overflow: auto;
@@ -445,9 +446,11 @@ h1 {
     }
   }
 }
+
 .main_section {
   .info_wrap {
     margin: auto;
+
     .fixed_info {
       @include fixed_info;
 
@@ -515,6 +518,7 @@ h1 {
       }
     }
   }
+
   .info_wrap:nth-child(3) {
     margin-top: 3%;
 
@@ -539,6 +543,7 @@ h1 {
     }
   }
 }
+
 @media only screen and (min-width: 1200px) {
   .main_section {
     h1 {
@@ -697,17 +702,16 @@ h1 {
     .dropdown,
     .form-control,
     .count .number-input-box,
-    .input-group
-      > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
-        .valid-feedback
-      ):not(.invalid-tooltip):not(.invalid-feedback) {
+    .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
       margin-left: unset !important;
     }
+
     .input-number,
     .form-control,
     .count .number-input-box {
       width: 100%;
     }
+
     .info_wrap {
       padding: 1% 5% 0;
 
@@ -724,6 +728,7 @@ h1 {
 
         .input-group {
           flex-direction: column;
+
           .input-group-prepend {
             margin-bottom: 5px;
           }
@@ -732,10 +737,7 @@ h1 {
     }
 
     .info_wrap:nth-child(3) {
-      .input-group
-        > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
-          .valid-feedback
-        ):not(.invalid-tooltip):not(.invalid-feedback) {
+      .input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
         border-radius: 5px;
       }
     }
@@ -753,5 +755,4 @@ h1 {
     }
   }
 }
-
 </style>

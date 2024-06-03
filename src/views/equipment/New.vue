@@ -13,14 +13,14 @@
       <div class="content">
         <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend"><span>*</span>產編：</div>
+            <div class="input-group-prepend"><span class='red_star'>*</span>產編：</div>
             <input type="text" class="form-control text-center" v-model="formParams.IntegrationId"
               placeholder="請輸入資產編號" />
           </div>
         </div>
         <div class="col">
           <div class="input-group mb-3">
-            <div class="input-group-prepend"><span>*</span>名稱：</div>
+            <div class="input-group-prepend"><span class='red_star'>*</span>名稱：</div>
             <input type="text" class="form-control text-center" v-model="formParams.IntegrationName"
               placeholder="最多輸入20字" />
           </div>
@@ -95,7 +95,7 @@
     <div class="info_wrap col">
       <div class="fixed_info">
         <div>
-          <p><span>*</span>整合箱內容物(請至少新增一項)</p>
+          <p><span class='red_star'>*</span>整合箱內容物(請至少新增一項)</p>
         </div>
       </div>
       <div class="content">
@@ -620,9 +620,6 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/css/global.scss";
 
-span {
-  @include red_star;
-}
 
 .readonly_box {
   @include readonly_box;
@@ -632,7 +629,7 @@ span {
   padding: 0 !important;
 }
 
-.ps{
+.ps {
   height: 350px
 }
 
@@ -1214,7 +1211,7 @@ span {
       .wrap1 {
         padding: 20px;
         flex-direction: column;
-        gap:6px 0;
+        gap: 6px 0;
         // .dropdown {
         //   button {
         //     background: white;

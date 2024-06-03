@@ -23,7 +23,8 @@
                 <div class="input-with-icon">
                   <select class="form-select" name="" id="" v-model="requestData.DeliveryOperator">
                     <option value="">--請選擇--</option>
-                    <option v-for="option in DropdownArray.Custodian" :key="option" :value="option">{{ option }}</option>
+                    <option v-for="option in DropdownArray.Custodian" :key="option" :value="option">{{ option }}
+                    </option>
                   </select>
                 </div>
               </div>
@@ -32,7 +33,7 @@
               <div class="input-group">
                 <div class="input-group-prepend">入庫人員：</div>
                 <div class="input-with-icon">
-                  <input type="text" class="form-control readonly_box" v-model="utilsStore.userName" readonly/>
+                  <input type="text" class="form-control readonly_box" v-model="utilsStore.userName" readonly />
                 </div>
               </div>
             </div>
@@ -41,108 +42,109 @@
       </div>
       <div class="col button_wrap">
         <button class="back_btn" @click="utilsStore.goBack">回上一頁</button>
-        <button class="send_btn" @click="submit" :disabled="!requestData.DeliveryOperator" :class="{ send_btn_disabled: !requestData.DeliveryOperator }">送出</button>
+        <button class="send_btn" @click="submit" :disabled="!requestData.DeliveryOperator"
+          :class="{ send_btn_disabled: !requestData.DeliveryOperator }">送出</button>
       </div>
     </div>
   </div>
-  <view_modal/>
+  <view_modal />
 </template>
 
 <script setup>
-  import storage_process_view from '@/components/store_process_page/storage_process_view_component.vue';
-  import view_modal from "@/components/view_modal.vue"
-  import Navbar from "@/components/Navbar.vue";
-  import {
-    onMounted,
-    onUnmounted,
-    ref,
-    reactive
-  } from "vue";
-  import {
-    useRoute,
-    useRouter
-  } from "vue-router";
-  import {
-    useUtilsStore,
-    useAPIStore
-  } from '@/store'
-  import {
-    useApplyStore
-  } from '@/store/storage/apply.js'
-  import {
-    useStorageStore
-  } from '@/store/storage/_index'
-  import {
-    storeToRefs
-  } from "pinia";
-  import {
-    StoreProcess_Confirm_Status
-  } from "@/assets/js/enter_status"
-  import axios from '@/axios/tokenInterceptor'
-  const storageStore = useStorageStore();
-  const applyStore = useApplyStore();
-  const utilsStore = useUtilsStore();
-  const apiStore = useAPIStore();
-  const {
-    DropdownArray,
-    upperForm,
-    tabData,
-    PageType,
-  } = storeToRefs(storageStore);
-  const route = useRoute();
-  const router = useRouter();
-  const AI_ID = route.query.search_id;
-  const requestData = reactive({
-    DeliveryOperator: '',
-  })
-  onMounted(async() => {
-    storageStore.$reset();
-    PageType.value = 'confirm'
-    DropdownArray.value.Custodian = await apiStore.getCustodian('');
-    await storageStore.getDetails(AI_ID, false, StoreProcess_Confirm_Status);
-    await utilsStore.getUserName(); // 重新拿使用者名稱
-    requestData.DeliveryOperator = upperForm.value.Applicant;
-  });
-  onUnmounted(()=>{
-    applyStore.$dispose();
-    storageStore.$dispose();
-    utilsStore.$dispose();
-    apiStore.$dispose();
-  })
-  /**
-   * 提交交付內容
-   */
-  async function submit() {
-    const formData = new FormData();
-    const formFields = {
-      'AI_ID': AI_ID,
-      'DeliveryOperator': requestData.DeliveryOperator,
-      'AssetsInOperator': utilsStore.userName,
-    };
-    //將表格資料append到 formData
-    for (const fieldName in formFields) {
-      formData.append(fieldName, formFields[fieldName]);
-      console.log(formData.get(`${fieldName}`));
-    }
-    const response = await axios.post('https://localhost:44302/AssetsInMng/Delivery', formData);
-    try {
-      const data = response.data;
-      console.log(data);
-      if (data.state === 'success') {
-        let msg = data.messages;
-        msg += '\n單號:' + data.resultList.AI_ID;
-        alert(msg);
-        router.push({
-          name: 'Store_Process_Datagrid'
-        });
-      } else if (data.state === 'error') {
-        alert(data.messages);
-        console.log('error state', response);
-      }
-    } catch (error) {
-      console.error(error);
-    }
+import storage_process_view from '@/components/store_process_page/storage_process_view_component.vue';
+import view_modal from "@/components/view_modal.vue"
+import Navbar from "@/components/Navbar.vue";
+import {
+  onMounted,
+  onUnmounted,
+  ref,
+  reactive
+} from "vue";
+import {
+  useRoute,
+  useRouter
+} from "vue-router";
+import {
+  useUtilsStore,
+  useAPIStore
+} from '@/store'
+import {
+  useApplyStore
+} from '@/store/storage/apply.js'
+import {
+  useStorageStore
+} from '@/store/storage/_index'
+import {
+  storeToRefs
+} from "pinia";
+import {
+  StoreProcess_Confirm_Status
+} from "@/assets/js/enter_status"
+import axios from '@/axios/tokenInterceptor'
+const storageStore = useStorageStore();
+const applyStore = useApplyStore();
+const utilsStore = useUtilsStore();
+const apiStore = useAPIStore();
+const {
+  DropdownArray,
+  upperForm,
+  tabData,
+  PageType,
+} = storeToRefs(storageStore);
+const route = useRoute();
+const router = useRouter();
+const AI_ID = route.query.search_id;
+const requestData = reactive({
+  DeliveryOperator: '',
+})
+onMounted(async () => {
+  storageStore.$reset();
+  PageType.value = 'confirm'
+  DropdownArray.value.Custodian = await apiStore.getCustodian('');
+  await storageStore.getDetails(AI_ID, false, StoreProcess_Confirm_Status);
+  await utilsStore.getUserName(); // 重新拿使用者名稱
+  requestData.DeliveryOperator = upperForm.value.Applicant;
+});
+onUnmounted(() => {
+  applyStore.$dispose();
+  storageStore.$dispose();
+  utilsStore.$dispose();
+  apiStore.$dispose();
+})
+/**
+ * 提交交付內容
+ */
+async function submit() {
+  const formData = new FormData();
+  const formFields = {
+    'AI_ID': AI_ID,
+    'DeliveryOperator': requestData.DeliveryOperator,
+    'AssetsInOperator': utilsStore.userName,
+  };
+  //將表格資料append到 formData
+  for (const fieldName in formFields) {
+    formData.append(fieldName, formFields[fieldName]);
+    console.log(formData.get(`${fieldName}`));
   }
+  const response = await axios.post('https://localhost:44302/AssetsInMng/Delivery', formData);
+  try {
+    const data = response.data;
+    console.log(data);
+    if (data.state === 'success') {
+      let msg = data.messages;
+      msg += '\n單號:' + data.resultList.AI_ID;
+      alert(msg);
+      router.push({
+        name: 'Store_Process_Datagrid'
+      });
+    } else if (data.state === 'error') {
+      alert(data.messages);
+      console.log('error state', response);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -194,9 +196,7 @@ h2 {
 .form_search_btn {
   @include form_search_btn;
 }
-span {
-  @include red_star;
-}
+
 .info_wrap {
   margin: auto;
 
@@ -316,9 +316,10 @@ span {
   font-weight: 700;
   align-items: center;
   color: white;
+
   label {
-              font-size: 18px;
-            }
+    font-size: 18px;
+  }
 
 
 }
@@ -425,8 +426,9 @@ span {
   .main_section {
     .auth {
       height: 80px;
-      .input-with-icon{
-        width:180px
+
+      .input-with-icon {
+        width: 180px
       }
     }
 
@@ -474,8 +476,9 @@ span {
   .main_section {
     .auth {
       height: 80px;
-      .input-with-icon{
-        width:150px
+
+      .input-with-icon {
+        width: 150px
       }
     }
 
@@ -617,9 +620,10 @@ span {
           }
         }
       }
-      .confirm_section .auth .input-group{
+
+      .confirm_section .auth .input-group {
         flex-direction: column;
-        
+
       }
     }
   }

@@ -203,7 +203,7 @@
             <!-- 審核結果 -->
             <div class="col-xl-6 col-lg-6 col-md-6 col-12 input-container">
               <div class="input-group">
-                <div class="input-group-prepend"><span>*</span>審核結果：</div>
+                <div class="input-group-prepend"><span class='red_star'>*</span>審核結果：</div>
                 <div class="review_result d-flex">
                   <div class="form-check">
                     <input class="form-check-input" type="radio" name="pass" id="pass" value="true"
@@ -392,9 +392,6 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/css/global.scss';
 
-span {
-  @include red_star;
-}
 
 .input-number {
   @include count_btn;
