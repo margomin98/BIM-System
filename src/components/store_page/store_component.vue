@@ -100,7 +100,7 @@
         <div class="col form_search_wrap">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span v-show="middleForm.itemAssetType === '存貨'">*</span>專案代碼 :
+              <span class="red_star" v-show="middleForm.itemAssetType === '存貨'">*</span>專案代碼 :
             </div>
             <input type="text" class="form-control" placeholder="最多輸入10字" v-model="middleForm.itemProjectCode">
             <button class="form_search_btn"
@@ -253,7 +253,7 @@
                 <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none"
                   src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top"
                   title="每單位資產所包裝的內容物數量 ex:100根螺絲釘">
-                <span v-show="middleForm.itemAssetType === '耗材'">*</span>數量 :
+                <span class="red_star" v-show="middleForm.itemAssetType === '耗材'">*</span>數量 :
                 <img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block" src="@/assets/info.png"
                   data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘">
               </div>
@@ -266,7 +266,7 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-12">
             <div class="input-group mb-3" id='unit'>
               <div class="input-group-prepend">
-                <span v-show="middleForm.itemAssetType === '耗材'">*</span>單位 :
+                <span class="red_star" v-show="middleForm.itemAssetType === '耗材'">*</span>單位 :
               </div>
               <div v-if="middleForm.itemAssetType === '耗材'" class="dropdown">
                 <select class="form-select" id="floatingSelect" v-model="middleForm.itemUnit">
@@ -334,7 +334,7 @@
             <div class="col form_search_wrap">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span v-show="tab.itemAssetType === '存貨'">*</span>專案代碼 :
+                  <span class="red_star" v-show="tab.itemAssetType === '存貨'">*</span>專案代碼 :
                 </div>
                 <input type="text" class="form-control" placeholder="最多輸入10字" v-model="tab.itemProjectCode">
                 <button class="form_search_btn"
@@ -495,7 +495,7 @@
                     <img class="info_icon d-xl-inline-block d-lg-inline-block d-md-inline-block d-none"
                       src="@/assets/info.png" data-bs-toggle="tooltip" data-bs-placement="top"
                       title="每單位資產所包裝的內容物數量 ex:100根螺絲釘">
-                    <span v-show="tab.itemAssetType === '耗材'">*</span>數量 :
+                    <span class="red_star" v-show="tab.itemAssetType === '耗材'">*</span>數量 :
                     <img class="info_icon d-xl-none d-lg-none d-md-none d-inline-block" src="@/assets/info.png"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘">
                   </div>
@@ -509,7 +509,7 @@
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3" id='unit'>
                   <div class="input-group-prepend">
-                    <span v-show="tab.itemAssetType === '耗材'">*</span>單位 :
+                    <span class="red_star" v-show="tab.itemAssetType === '耗材'">*</span>單位 :
                   </div>
 
                   <div class="dropdown">

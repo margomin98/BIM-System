@@ -142,7 +142,7 @@
               <div class="col-12">
                 <div class="input-group mb-3 check_box_wrap">
                   <div class="input-group-prepend check_box">
-                    <span class="required">*</span>專案類型：
+                    <span class="required red_star">*</span>專案類型：
                   </div>
                   <div class="d-flex align-items-center radio_wrap">
                     <input type="radio" class='form-check-input check_box' id="radio1"
@@ -166,7 +166,7 @@
             <div class="col form_search_wrap">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span v-show="tab.itemAssetType === '存貨'" class="required">*</span>專案代碼：
+                  <span v-show="tab.itemAssetType === '存貨'" class="required red_star">*</span>專案代碼：
                 </div>
                 <input type="text" class="form-control" placeholder="最多輸入10字" maxlength="10" v-model="tab.itemProjectCode">
                 <button class="form_search_btn"  @click="async()=>{ tab.itemProjectName = await apiStore.getProject(tab.itemProjectCode)}">搜尋</button>
@@ -183,7 +183,7 @@
             <div class="row g-0">
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend"><span class="required">*</span>設備總類：</div>
+                  <div class="input-group-prepend"><span class="required red_star">*</span>設備總類：</div>
                   <div class="dropdown">
                     <select class="form-select" id="floatingSelect" v-model="tab.itemEquipType_Id" @change="async()=>{tab.EquipCategoryArray = await apiStore.getEquipCategory(tab.itemEquipType_Id); tab.itemCategory_Id = '';}">
                       <option value="">--請選擇--</option>
@@ -194,7 +194,7 @@
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3 justify-content-end">
-                  <div class="input-group-prepend"><span class="required">*</span>設備分類：</div>
+                  <div class="input-group-prepend"><span class="required red_star">*</span>設備分類：</div>
                   <div class="dropdown">
                     <select class="form-select" id="floatingSelect" v-model="tab.itemCategory_Id">
                       <option v-if="tab.EquipCategoryArray.length == 0" value="">--請先選擇設備總類--</option>
@@ -211,7 +211,7 @@
             <div class="row g-0 storage_dropdown">
               <div class="col">
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend"><span class="required">*</span>儲位區域：</div>
+                  <div class="input-group-prepend"><span class="required red_star">*</span>儲位區域：</div>
                   <div class="dropdown">
                     <select class="form-select" id="floatingSelect" v-model="tab.itemArea_Id" @change="async()=>{tab.LayerArray = await apiStore.getLayer(tab.itemArea_Id); tab.itemLayer_Id = '';}">
                       <option value="">--請選擇--</option>
@@ -222,7 +222,7 @@
               </div>
               <div class="col">
                 <div class="input-group mb-3 justify-content-end">
-                  <div class="input-group-prepend"><span class="required">*</span>儲位櫃位：</div>
+                  <div class="input-group-prepend"><span class="required red_star">*</span>儲位櫃位：</div>
                   <div class="dropdown">
                     <select class="form-select" id="floatingSelect" v-model="tab.itemLayer_Id">
                       <option v-if="tab.LayerArray.length == 0" value="">--請先選擇區域櫃位--</option>
@@ -239,14 +239,14 @@
             <!-- 頁籤物品名稱 -->
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend"><span class="required">*</span>物品名稱：</div>
+                <div class="input-group-prepend"><span class="required red_star">*</span>物品名稱：</div>
                 <input type="text" class="form-control" placeholder="最多輸入20字" maxlength="20" v-model="tab.itemAssetName" />
               </div>
             </div>
             <!-- 頁籤資產編號 -->
             <div class="col">
               <div class="input-group mb-3">
-                <div class="input-group-prepend"><span class="required">*</span>資產編號：</div>
+                <div class="input-group-prepend"><span class="required red_star">*</span>資產編號：</div>
                 <input type="text" class="form-control" v-model="tab.itemAssetsId" maxlength="10" placeholder="BFXXXXXXXX"
                   :class="{ 'readonly_box': details.Type === 1 }" :disabled="details.Type === 1" />
               </div>
@@ -291,7 +291,7 @@
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3 justify-content-end">
-                  <div class="input-group-prepend"><span class="required">*</span>包裝單位：</div>
+                  <div class="input-group-prepend"><span class="required red_star">*</span>包裝單位：</div>
                   <div class="dropdown">
                     <select class="form-select" id="floatingSelect" v-model="tab.itemPackageUnit">
                       <option value="">--請選擇--</option>
@@ -307,7 +307,7 @@
                 <div class="input-group mb-3">
                   <div class="input-group-prepend info"><img class="info_icon" src="@/assets/info.png"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="每單位資產所包裝的內容物數量 ex:100根螺絲釘/包">
-                    <span v-show="tab.itemAssetType === '耗材'" class="required">*</span>數量：
+                    <span v-show="tab.itemAssetType === '耗材'" class="required red_star">*</span>數量：
                   </div>
                   <input v-if="tab.itemAssetType === '耗材'" class="input-number" type="number" v-model="tab.itemCount" min="1">
                   <input v-else class="input-number readonly_box" type="number" v-model="tab.itemPackageNum" min="1" readonly>
@@ -315,7 +315,7 @@
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                 <div class="input-group mb-3 justify-content-end">
-                  <div class="input-group-prepend"><span v-show="tab.itemAssetType === '耗材'" class="required">*</span>單位：</div>
+                  <div class="input-group-prepend"><span v-show="tab.itemAssetType === '耗材'" class="required red_star">*</span>單位：</div>
                   <div v-if="tab.itemAssetType === '耗材'" class="dropdown">
                     <select class="form-select" id="floatingSelect" v-model="tab.itemUnit">
                       <option value="">--請選擇--</option>
